@@ -23,9 +23,10 @@
   color: #ec1414;
 }
 
-.bg-custom,
-.btn-custom {
-  background-color: #08556d;
+html,
+body {
+  height: 100%;
+  width: 100%;
 }
 
 h3 {
@@ -35,14 +36,6 @@ h3 {
 
 h5 {
   margin-top: 1rem;
-}
-
-.header-image {
-  background-image: url("../images/rachtig.jpg");
-  height: 250px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
 }
 
 a {
@@ -60,4 +53,17 @@ footer a:hover {
 
 .alert {
   border-radius: 0 !important;
+}
+
+.header-image {
+  background-image: url("../images/rachtig.jpg");
+  height: 250px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.bg-custom,
+.btn-custom {
+  background-color: #08556d;
 }

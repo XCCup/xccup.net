@@ -1,10 +1,10 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css");
 @import "wertungsklassen";
 
-.bg-custom,
-.btn-custom {
-  background-color: rgb(8, 85, 109);
-  //background-color: rgb(255, 0, 0);
+html,
+body {
+  height: 100%;
+  width: 100%;
 }
 h3 {
   margin-bottom: 1rem;
@@ -14,13 +14,6 @@ h5 {
   margin-top: 1rem;
 }
 
-.header-image {
-  background-image: url("../images/rachtig.jpg");
-  height: 250px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-}
 a {
   text-decoration: none;
 }
@@ -35,4 +28,45 @@ footer {
 }
 .alert {
   border-radius: 0 !important;
+}
+
+.header-image {
+  background-image: url("../images/rachtig.jpg");
+  height: 250px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.bg-custom,
+.btn-custom {
+  background-color: rgb(8, 85, 109);
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 786px) {
+}
+
+@media (max-width: 576px) {
+}
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
 }
