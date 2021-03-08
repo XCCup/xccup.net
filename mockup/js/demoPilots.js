@@ -46,3 +46,46 @@ for (element of table) {
   generateTableHead(element, data);
   generateTable(element, demoPilots.slice(0, 3));
 }
+
+let fivePilots = document.querySelectorAll(".fiveDemoPilots");
+for (element of fivePilots) {
+  element.innerHTML = `
+  <thead>
+  <tr>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <th scope="row">1</th>
+    <td>1.1.2021</td>
+    <td>Great Pilot</td>
+    <td>Jojo</td>
+    <td>250 km</td>
+    <td>300 P</td>
+  </tr>
+  <tr>
+    <th scope="row">1</th>
+    <td>1.1.2021</td>
+    <td>Great Pilot</td>
+    <td>Jojo</td>
+    <td>250 km</td>
+    <td>300 P</td>
+  </tr>
+  <tr>
+    <th scope="row">1</th>
+    <td>1.1.2021</td>
+    <td>Great Pilot</td>
+    <td>Jojo</td>
+    <td>250 km</td>
+    <td>300 P</td>
+  </tr>
+  <tr>
+    <th scope="row">1</th>
+    <td>1.1.2021</td>
+    <td>Great Pilot</td>
+    <td>Jojo</td>
+    <td>250 km</td>
+    <td>300 P</td>
+  </tr>
+  </tbody>`;
+}
