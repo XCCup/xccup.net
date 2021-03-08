@@ -1,38 +1,15 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css");
-.gs-sport {
-  color: #68d16d;
-}
-
-.gs-intermediate {
-  color: #df8c1f;
-}
-
-.gs-performance {
-  color: #dd1b1b;
-}
-
-.gs-tandem {
-  color: #ffee04;
-}
-
-.hg-flex {
-  color: #7325b3;
-}
-
-.hg-starre {
-  color: #ec1414;
-}
+@import "wertungsklassen";
 
 .bg-custom,
 .btn-custom {
-  background-color: #08556d;
+  background-color: rgb(8, 85, 109);
+  //background-color: rgb(255, 0, 0);
 }
-
 h3 {
   margin-bottom: 1rem;
   margin-top: 1rem;
 }
-
 h5 {
   margin-top: 1rem;
 }
@@ -44,20 +21,18 @@ h5 {
   background-size: cover;
   background-position: center center;
 }
-
 a {
   text-decoration: none;
 }
-
-footer a {
-  text-decoration: none;
-  color: #fff;
+footer {
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+  a:hover {
+    color: #333;
+  }
 }
-
-footer a:hover {
-  color: #333;
-}
-
 .alert {
   border-radius: 0 !important;
 }
