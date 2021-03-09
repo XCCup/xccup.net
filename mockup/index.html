@@ -103,20 +103,175 @@
   <!-- Top Flüge -->
   <section class="topFluege bg-custom text-light">
     <div class="container pt-1">
-      <h3>Top Flüge</h3>
-      <div class="row text-light">
-        <div class="col-lg-6 col-md-12">
+      <h3>Tageswertung</h3>
+      <div class="text-light">
+        <!-- <div class="col-lg-6 col-md-12">
           <h6>Gesamt</h6>
           <table class="table text-light fiveDemoPilots"></table>
-        </div>
-        <div class="col-lg-6 col-md-12">
-          <h6>Tageswertung</h6>
-          <table class="table text-light fiveDemoPilots"></table>
-        </div>
+        </div> -->
+        <!-- <div class="col-lg-6 col-md-12"> -->
+        <!-- <h6>Tageswertung</h6> -->
+        <table class="table text-light fiveDemoPilots"></table>
       </div>
-      <br>
+      <a href="#" class="btn btn-outline-light btn-sm my-1">Alle Flüge anzeigen</a>
+    </div>
+    <br>
   </section>
   <!-- ./Top Flüge -->
+
+  <!-- Tabs -->
+  <div class="container mt-2">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="topFluege-tab" data-bs-toggle="tab" data-bs-target="#topFluege"
+          type="button" role="tab" aria-controls="topFluege" aria-selected="true">Top Flüge</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+          role="tab" aria-controls="profile" aria-selected="false">Gerätewertung</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="club-tab" data-bs-toggle="tab" data-bs-target="#club" type="button" role="tab"
+          aria-controls="contact" aria-selected="false">Vereinswertung</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="team-tab" data-bs-toggle="tab" data-bs-target="#team" type="button" role="tab"
+          aria-controls="contact" aria-selected="false">Teamwertung</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="topFluege" role="tabpanel" aria-labelledby="topFluege-tab">
+        <table class="table  tenDemoPilots"></table>
+        <!--  -->
+      </div>
+      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <!-- Gerätewertung -->
+        <div class="row">
+          <div class="col-xxl-2 col-md-4 col-6 my-1">
+            <h6>
+              <i class="bi bi-trophy gs-sport"></i>
+              GS Sport
+            </h6>
+            <table class="table threeDemoPilots"></table>
+          </div>
+          <div class="col-xxl-2 col-md-4 col-6 my-1">
+            <h6>
+              <i class="bi bi-trophy gs-intermediate"></i>
+              GS Intermediate
+            </h6>
+            <table class="table threeDemoPilots"></table>
+          </div>
+          <div class="col-xxl-2 col-md-4 col-6 my-1">
+            <h6>
+              <i class="bi bi-trophy gs-performance"></i>
+              GS Performance
+            </h6>
+            <table class="table threeDemoPilots"></table>
+          </div>
+          <div class="col-xxl-2 col-md-4 col-6 my-1">
+            <h6>
+              <i class="bi bi-trophy gs-tandem"></i>
+              GS Tandem
+            </h6>
+            <table class="table threeDemoPilots"></table>
+          </div>
+          <div class="col-xxl-2 col-md-4 col-6 my-1">
+            <h6>
+              <i class="bi bi-triangle-half hg-flex"></i>
+              HG Flex
+            </h6>
+            <table class="table threeDemoPilots"></table>
+          </div>
+          <div class="col-xxl-2 col-md-4 col-6 my-1">
+            <h6>
+              <i class="bi bi-triangle-half hg-starre"></i>
+              HG Starre
+            </h6>
+            <table class="table threeDemoPilots"></table>
+          </div>
+        </div>
+        <!--  -->
+      </div>
+      <div class="tab-pane fade" id="club" role="tabpanel" aria-labelledby="club-tab">
+        <!-- Vereinswertung -->
+        <table class="table">
+          <thead>
+            <tr>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Moselfalken</td>
+              <td>300 P</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>D.G.F. Rhein-Mosel-Lahn</td>
+              <td>300 P</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>SauerlandAir e.V</td>
+              <td>300 P</td>
+            </tr>
+          </tbody>
+        </table>
+        <!--  -->
+      </div>
+      <div class="tab-pane fade" id="team" role="tabpanel" aria-labelledby="team-tab">
+        <!-- Teamwertung -->
+        <table class="table">
+          <thead>
+            <tr>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>SKYWALKER</td>
+              <td>6421 P</td>
+              <td>3000km</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>auch namenlos grandios</td>
+              <td>6421 P</td>
+              <td>300km</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Die sympathischen Speeditöre</td>
+              <td>5 P</td>
+              <td>10km</td>
+            </tr>
+          </tbody>
+        </table>
+        <!--  -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <section class="topFluege bg-custom text-light p-4">
+    <br>
+  </section>
+
+  <!-- Sponsoren -->
+  <section class="sponsoren">
+    <div class="container">
+      <h3>Sponsoren</h3>
+      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus qui est error at. Similique quam neque
+        accusantium totam, incidunt provident voluptas quasi aliquid nihil a, ex, sunt vel perferendis doloremque
+        quidem. Similique quam laudantium sed aliquam nihil perferendis modi amet!</p>
+    </div>
+  </section>
+
+  <section class="topFluege bg-custom text-light p-4">
+    <h5>Alternativen:</h5>
+  </section>
+
+  <!-- ./Sponsoren -->
 
   <!-- Gerätewertung -->
   <section class="geraetewertung">
@@ -321,17 +476,8 @@
       <br>
   </section>
   <!-- ./Wertung -->
-  <!-- Sponsoren -->
-  <section class="sponsoren">
-    <div class="container">
-      <h3>Sponsoren</h3>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus qui est error at. Similique quam neque
-        accusantium totam, incidunt provident voluptas quasi aliquid nihil a, ex, sunt vel perferendis doloremque
-        quidem. Similique quam laudantium sed aliquam nihil perferendis modi amet!</p>
-    </div>
-  </section>
 
-  <!-- ./Sponsoren -->
+
 
   <!-- Footer -->
   <footer class="p-3 text-light bg-custom m-0">
