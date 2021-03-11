@@ -64,12 +64,42 @@
             <a class="nav-link active" aria-current="page" href="#">Datenschutz</a>
           </li>
         </ul>
+        <!-- Login dropdown  -->
+        <div class="dropdown">
+          <button type="button" class="btn btn-outline-light btn-sm m-1 dropdown-toggle" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i>
+            Login / Profil
+          </button>
+          <div class="dropdown-menu " style="width: 250px;">
+            <form class=" px-4 py-3">
+              <div class="mb-3">
+                <h6 class="fst-italic">Führt angemeldete Nutzer direkt zu ihrem Profil</h6>
+                <!-- <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label> -->
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="E-Mail">
+              </div>
+              <div class="mb-3">
+                <!-- <label for="exampleDropdownFormPassword1" class="form-label">Passwort</label> -->
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Passwort">
+              </div>
+              <div class="mb-3">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                  <label class="form-check-label" for="dropdownCheck">
+                    Angemeldet bleiben
+                  </label>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Anmelden</button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Registrieren</a>
+            <a class="dropdown-item" href="#">Password vergessen?</a>
+          </div>
+        </div>
 
-        <button type="button" class="btn btn-outline-light btn-sm mx-1">
-          <i class="bi bi-person"></i>
-          Login
-        </button>
-        <a href="#upload" class="btn btn-danger btn-sm mx-1">Flug hochladen</a>
+
+        <a href="#upload" class="btn btn-danger btn-sm m-1">Flug hochladen</a>
       </div>
     </div>
   </nav>

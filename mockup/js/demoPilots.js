@@ -1,3 +1,5 @@
+//This file is a mess. :D
+
 let demoPilots = [
   {
     position: "1",
