@@ -85,6 +85,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+    <td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">2</th>
@@ -94,6 +95,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">3</th>
@@ -103,6 +105,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">4</th>
@@ -112,6 +115,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">5</th>
@@ -121,6 +125,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">6</th>
@@ -130,6 +135,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">7</th>
@@ -139,6 +145,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">8</th>
@@ -148,6 +155,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>  
   <tr>
     <th scope="row">7</th>
@@ -157,6 +165,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">8</th>
@@ -166,6 +175,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
   <th scope="row">9</th>
@@ -175,6 +185,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
   <td>250 km</td>
   <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
 </tr>
 <tr>
   <th scope="row">10</th>
@@ -184,6 +195,7 @@ for (element of tenPilots) {
 <td>Take Off</td>
   <td>250 km</td>
   <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
 </tr>
   </tbody>`;
 }
@@ -204,6 +216,7 @@ for (element of fivePilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">2</th>
@@ -213,6 +226,7 @@ for (element of fivePilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">3</th>
@@ -222,6 +236,7 @@ for (element of fivePilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">4</th>
@@ -231,6 +246,7 @@ for (element of fivePilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   <tr>
     <th scope="row">5</th>
@@ -240,6 +256,7 @@ for (element of fivePilots) {
 <td>Take Off</td>
     <td>250 km</td>
     <td>300 P</td>
+<td><a href="FlugDetails.html">Zum Flug <i class="bi bi-arrow-right"></i></a></td>
   </tr>
   </tbody>`;
 }

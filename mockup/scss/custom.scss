@@ -36,6 +36,12 @@ footer {
   border-radius: 0 !important;
 }
 
+.bg-primary {
+  a {
+    color: $light;
+  }
+}
+
 .header-image {
   background-image: url("../images/rachtig.jpg");
   height: 250px;

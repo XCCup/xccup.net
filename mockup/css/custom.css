@@ -10745,6 +10745,10 @@ textarea.form-control-lg {
   color: #dd1b1b;
 }
 
+.gs-performance-high {
+  color: #911865;
+}
+
 .gs-tandem {
   color: #ffee04;
 }
@@ -10785,6 +10789,10 @@ footer a:hover {
 
 .alert {
   border-radius: 0 !important;
+}
+
+.bg-primary a {
+  color: #f8f9fa;
 }
 
 .header-image {
