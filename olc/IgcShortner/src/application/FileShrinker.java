@@ -16,6 +16,7 @@ public class FileShrinker {
 		try {
 			System.out.println("Begin reading from file: " + pathToIgcFile);
 			allLines = Files.readAllLines(Paths.get(pathToIgcFile));
+			System.out.println();
 		} catch (final IOException e) {
 			e.printStackTrace();
 		}
