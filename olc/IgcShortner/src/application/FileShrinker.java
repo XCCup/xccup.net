@@ -67,7 +67,7 @@ public class FileShrinker {
 	 * copied. Only lines which contain a position will be shrunken.
 	 */
 	private void shrink() {
-		System.out.println("Beginn shrinking for factor: " + Constants.SHRINKING_FACTOR);
+		System.out.println("Begin shrinking for factor: " + Constants.SHRINKING_FACTOR);
 		final Pattern pattern = Pattern.compile(Constants.IGC_POS_TIME_REGEX);
 		Matcher matcher;
 		linesToKeep = new ArrayList<>();
@@ -92,7 +92,7 @@ public class FileShrinker {
 
 	private void writeShrinkedFile(final String pathToIgcFile) {
 		final String shrinkedFilePath = pathToIgcFile.replace(".igc", "_shringed.igc");
-		System.out.println("Will shrinked file to: " + shrinkedFilePath);
+		System.out.println("Will write shrinked file to: " + shrinkedFilePath);
 		final byte[] bytes = String.join("\n", linesToKeep).getBytes();
 		try {
 			Files.write(Paths.get(shrinkedFilePath), bytes);
