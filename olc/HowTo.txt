@@ -1,0 +1,44 @@
+Der Sourcecode und die Exe wurden von https://github.com/leonardoxc/leonardoxc/tree/master/server bezogen.
+
+Folgende Flüge aus dem aktuellem XCCup wurden zum testen verwendet:
+6h15m: https://www.xccup.net/FlugDetails/68396
+4h8m: https://www.xccup.net/FlugDetails/69075
+1h18m: https://www.xccup.net/FlugDetails/68908
+
+Die Exe kann wie folgt aus der Kommandozeile gestartet werden
+olc.exe < [SOURCE_FILE].igc > [REPORT_FILE]
+
+Dabei wird mit dem "<" auf den STDIN, dass zu analyisierende IGC-File angegeben
+Das File welches ">" folgt, gibt den STDOUT an. Also das Ziel wohin die Ergebnisse geschrieben werden.
+
+
+Vergleich Auswertungen
+
+		XCCup		No Shring		Shring 3x	Shring 5x	Shring 10x
+4h8m	79,35 km	mem: No error	79.345		79.335		79.277
+6h15m	97,16 km	mem: No error	97.182		97.171		97.135
+
+
+Berechnungsdauer auf einem i5_5300
+		Shring 5x	Shring10x
+4h8m	13s			4s
+6h15m	7m44s		49s
+
+
+Erläuterung zum IGC-Format:
+B1230454924243N00843582EA0047400543
+
+B = Dein GPS-Gerät konnte eine Positionsbestimmung durchführen (GPS-Fix).
+123045 = Diese Position wurde um 12:30:45 Uhr aufgezeichnet. Zeit in Zeitzone UTC (= GMT = MEZ - 1 = MESZ - 2)
+4924243 = Latitude (Breitengrad) 49 Grad und 24,243 Minuten
+N = Nördliche Hemisphäre
+00843582E = Longitude (Längengrad) 008 Grad und 43,584 Minuten
+E = Östliche Hemispähre
+A = Dein GPS-Gerät konnte eine 3D Position bestimmen (also nicht nur Latitude und Longitude sondern auch die Höhe).
+00474 = Offiziell wäre dies die Höhe über Meeresspiegel nach ICAO ISA Standardatmosphäre (1013,25 HPa). (Das kann bei manchen Geräten anders sein.)
+00543 = Offiziell wäre dies die Höhe über das WGS84 Ellipsoid. Diese muss nicht immer die Höhe auf deiner Landkarte entsprechen.
+
+
+
+
+
