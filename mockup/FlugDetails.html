@@ -170,251 +170,252 @@
     <canvas id="myChart" width="400" height="60"></canvas>
 
     <!-- Content -->
-    <div class="container">
-      <!-- Flug Details -->
+    <div class="container"></div>
+    <!-- Flug Details -->
 
-      <section class="flug-eigenschaften">
-        <h3>Flugeigenschaften</h3>
-        <div class="row">
-          <div class="col-md-6 col-12 my-1">
-            <table class="table table-sm">
-              <thead></thead>
-              <tbody>
-                <tr>
-                  <th>Pilot:</th>
-                  <td><a href="#">Stephan Schöpe</a></td>
-                </tr>
-                <tr>
-                  <th>Verein:</th>
-                  <td><a href="#">D.G.F. Rhein-Mosel-Lahn</a></td>
-                </tr>
-                <tr>
-                  <th>Team:</th>
-                  <td><a href="#">Die sympathischen Speeditöre</a></td>
-                </tr>
-                <tr>
-                  <th>Fluggerät:</th>
-                  <td>Flow XCRacer</td>
-                </tr>
-                <tr>
-                  <th>Geräteklasse:</th>
-                  <td>
-                    <i class="bi bi-trophy gs-performance"></i> GS Performance
-                    low
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- Backup 
+    <section class="flug-eigenschaften">
+      <h3>Flugeigenschaften</h3>
+      <div class="row">
+        <div class="col-md-6 col-12 my-1">
+          <table class="table table-sm">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <th>Pilot:</th>
+                <td><a href="#">Stephan Schöpe</a></td>
+              </tr>
+              <tr>
+                <th>Verein:</th>
+                <td><a href="#">D.G.F. Rhein-Mosel-Lahn</a></td>
+              </tr>
+              <tr>
+                <th>Team:</th>
+                <td><a href="#">Die sympathischen Speeditöre</a></td>
+              </tr>
+              <tr>
+                <th>Fluggerät:</th>
+                <td>Flow XCRacer</td>
+              </tr>
+              <tr>
+                <th>Geräteklasse:</th>
+                <td>
+                  <i class="bi bi-trophy gs-performance"></i> GS Performance low
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Backup 
            <tr>
                   <th>Flugstatus:</th>
                   <td>😃 (In Wertung)</td>
                 </tr>
-          --></div>
-          <div class="col-md-6 col-12 my-1">
+          -->
+        </div>
+        <div class="col-md-6 col-12 my-1">
+          <table class="table table-sm">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <th>Flugzeit:</th>
+                <td>5:57</td>
+              </tr>
+              <tr>
+                <th>Strecke:</th>
+                <td>100,49 km <i class="bi bi-triangle"></i></td>
+              </tr>
+              <tr>
+                <th>Punkte:</th>
+                <td>555</td>
+              </tr>
+
+              <tr>
+                <th>Startplatz:</th>
+                <td>Bremm (SSO-SSW)</td>
+              </tr>
+              <tr>
+                <th>Uhrzeit:</th>
+                <td>
+                  <i class="bi bi-arrow-up"></i> 12:09 Uhr
+                  <i class="bi bi-arrow-down"></i> 18:06 Uhr
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Details -->
+      <button
+        class="btn btn-primary btn-sm dropdown-toggle"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseExample"
+        aria-expanded="false"
+        aria-controls="collapseExample"
+      >
+        Details anzeigen
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-cloud-download"></i> .igc
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="row">
+          <div class="col-md-6 col-12">
             <table class="table table-sm">
               <thead></thead>
               <tbody>
                 <tr>
-                  <th>Flugzeit:</th>
-                  <td>5:57</td>
+                  <th>Flugstatus:</th>
+                  <td>😃 (In Wertung)</td>
                 </tr>
                 <tr>
-                  <th>Strecke:</th>
-                  <td>100,49 km <i class="bi bi-triangle"></i></td>
+                  <th>Höhe min/max (GPS):</th>
+                  <td>359m / 2665m</td>
                 </tr>
                 <tr>
-                  <th>Punkte:</th>
-                  <td>555</td>
-                </tr>
-
-                <tr>
-                  <th>Startplatz:</th>
-                  <td>Bremm (SSO-SSW)</td>
+                  <th>Steigen min/max:</th>
+                  <td>-10,0m/s / 7,0m/s</td>
                 </tr>
                 <tr>
-                  <th>Uhrzeit:</th>
-                  <td>
-                    <i class="bi bi-arrow-up"></i> 12:09 Uhr
-                    <i class="bi bi-arrow-down"></i> 18:06 Uhr
-                  </td>
+                  <th>Geschwindigkeit max:</th>
+                  <td>124,0km/h</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6 col-12">
+            <table class="table table-sm">
+              <thead></thead>
+              <tbody>
+                <tr>
+                  <th>Landeplatz:</th>
+                  <td>Bremm - DE[~1,29km]</td>
+                </tr>
+                <tr>
+                  <th>Ø Geschwindigkeit:</th>
+                  <td>38,0km/h</td>
+                </tr>
+                <tr>
+                  <th>Aufgaben-Geschwindigkeit:</th>
+                  <td>16,9km/h</td>
+                </tr>
+                <tr>
+                  <th>Eingereicht am:</th>
+                  <td>23.07.2020 18:50:23</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- Details -->
-        <button
-          class="btn btn-primary btn-sm dropdown-toggle"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseExample"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-        >
-          Details anzeigen
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-primary">
-          <i class="bi bi-cloud-download"></i> .igc
-        </button>
-        <div class="collapse" id="collapseExample">
-          <div class="row">
-            <div class="col-md-6 col-12">
-              <table class="table table-sm">
-                <thead></thead>
-                <tbody>
-                  <tr>
-                    <th>Flugstatus:</th>
-                    <td>😃 (In Wertung)</td>
-                  </tr>
-                  <tr>
-                    <th>Höhe min/max (GPS):</th>
-                    <td>359m / 2665m</td>
-                  </tr>
-                  <tr>
-                    <th>Steigen min/max:</th>
-                    <td>-10,0m/s / 7,0m/s</td>
-                  </tr>
-                  <tr>
-                    <th>Geschwindigkeit max:</th>
-                    <td>124,0km/h</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-md-6 col-12">
-              <table class="table table-sm">
-                <thead></thead>
-                <tbody>
-                  <tr>
-                    <th>Landeplatz:</th>
-                    <td>Bremm - DE[~1,29km]</td>
-                  </tr>
-                  <tr>
-                    <th>Ø Geschwindigkeit:</th>
-                    <td>38,0km/h</td>
-                  </tr>
-                  <tr>
-                    <th>Aufgaben-Geschwindigkeit:</th>
-                    <td>16,9km/h</td>
-                  </tr>
-                  <tr>
-                    <th>Eingereicht am:</th>
-                    <td>23.07.2020 18:50:23</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="flug-bericht">
-        <div class="row mt-4">
-          <h3>Flugbericht</h3>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Consequuntur numquam, accusamus dolor minus inventore libero saepe
-            quo exercitationem praesentium dolorem magni, quis quia tenetur
-            similique sint? Tenetur magnam magni molestias veniam, accusantium
-            vel dolorem consectetur? Dicta fugiat saepe nesciunt minima illo
-            ipsa, voluptas quia aliquam libero. Nisi quo doloremque nam?
-            Adipisci assumenda, ipsam hic a consequatur explicabo eligendi
-            architecto commodi?
-          </p>
-        </div>
-      </section>
-
-      <div class="row mb-4">
-        <div class="col-4">
-          <figure class="figure">
-            <img
-              src="images/rachtig.jpg"
-              class="figure-img img-fluid img-thumbnail"
-              alt=""
-            />
-            <figcaption class="figure-caption text-center">
-              Lorem, ipsum dolor.
-            </figcaption>
-          </figure>
-        </div>
-        <div class="col-4">
-          <figure class="figure">
-            <img
-              src="images/rachtig.jpg"
-              class="figure-img img-fluid img-thumbnail"
-              alt=""
-            />
-            <figcaption class="figure-caption text-center">
-              Lorem, ipsum dolor.
-            </figcaption>
-          </figure>
-        </div>
-        <div class="col-4">
-          <figure class="figure">
-            <img
-              src="images/rachtig.jpg"
-              class="figure-img img-fluid img-thumbnail"
-              alt=""
-            />
-            <figcaption class="figure-caption text-center">
-              Lorem, ipsum dolor.
-            </figcaption>
-          </figure>
-        </div>
       </div>
+    </section>
 
-      <section class="air-buddies">
-        <div class="row mt-4">
-          <h3>Airbuddies</h3>
-          <p>Lorem ipsum dolor sit amet.</p>
-        </div>
-      </section>
+    <section class="flug-bericht">
+      <div class="row mt-4">
+        <h3>Flugbericht</h3>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur
+          numquam, accusamus dolor minus inventore libero saepe quo
+          exercitationem praesentium dolorem magni, quis quia tenetur similique
+          sint? Tenetur magnam magni molestias veniam, accusantium vel dolorem
+          consectetur? Dicta fugiat saepe nesciunt minima illo ipsa, voluptas
+          quia aliquam libero. Nisi quo doloremque nam? Adipisci assumenda,
+          ipsam hic a consequatur explicabo eligendi architecto commodi?
+        </p>
+      </div>
+    </section>
 
-      <section class="kommentare">
-        <div class="row mb-4">
-          <div class="card-box col-12">
-            <div class="ml-3 mr-3">
-              <h3>Kommentare</h3>
-              <div id="comments" class="mb-3">
-                <div class="comment row mb-3">
-                  <div class="cpilot col-xl-2 col-lg-3">
-                    <div class="d-flex">
-                      <img
-                        src=""
-                        style="margin-right: 6px"
-                        height="24"
-                        width="24"
-                      />
-                      <a href="#">Pilot 1</a>
-                    </div>
-                  </div>
-                  <div class="ccontent col-xl-9 col-lg-8">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Accusamus, explicabo?
+    <div class="row mb-4">
+      <div class="col-4">
+        <figure class="figure">
+          <img
+            src="images/rachtig.jpg"
+            class="figure-img img-fluid img-thumbnail"
+            alt=""
+          />
+          <figcaption class="figure-caption text-center">
+            Lorem, ipsum dolor.
+          </figcaption>
+        </figure>
+      </div>
+      <div class="col-4">
+        <figure class="figure">
+          <img
+            src="images/rachtig.jpg"
+            class="figure-img img-fluid img-thumbnail"
+            alt=""
+          />
+          <figcaption class="figure-caption text-center">
+            Lorem, ipsum dolor.
+          </figcaption>
+        </figure>
+      </div>
+      <div class="col-4">
+        <figure class="figure">
+          <img
+            src="images/rachtig.jpg"
+            class="figure-img img-fluid img-thumbnail"
+            alt=""
+          />
+          <figcaption class="figure-caption text-center">
+            Lorem, ipsum dolor.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Airbuddies -->
+
+    <section class="air-buddies">
+      <div class="row mt-4">
+        <h3>Airbuddies</h3>
+        <p>Lorem ipsum dolor sit amet.</p>
+      </div>
+    </section>
+    <!-- Kommentare -->
+    <section class="kommentare">
+      <div class="row mb-4">
+        <div class="card-box col-12">
+          <div class="ml-3 mr-3">
+            <h3>Kommentare</h3>
+            <div id="comments" class="mb-3">
+              <div class="comment row mb-3">
+                <div class="cpilot col-xl-2 col-lg-3">
+                  <div class="d-flex">
+                    <img
+                      src=""
+                      style="margin-right: 6px"
+                      height="24"
+                      width="24"
+                    />
+                    <a href="#">Pilot 1</a>
                   </div>
                 </div>
-                <div class="comment row mb-3">
-                  <div class="cpilot col-xl-2 col-lg-3">
-                    <div class="d-flex">
-                      <img
-                        src=""
-                        style="margin-right: 6px"
-                        height="24"
-                        width="24"
-                      /><a href="#">Pilot 2</a>
-                    </div>
+                <div class="ccontent col-xl-9 col-lg-8">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Accusamus, explicabo?
+                </div>
+              </div>
+              <div class="comment row mb-3">
+                <div class="cpilot col-xl-2 col-lg-3">
+                  <div class="d-flex">
+                    <img
+                      src=""
+                      style="margin-right: 6px"
+                      height="24"
+                      width="24"
+                    /><a href="#">Pilot 2</a>
                   </div>
-                  <div class="ccontent col-xl-9 col-lg-8">
-                    Lorem, ipsum dolor.
-                  </div>
+                </div>
+                <div class="ccontent col-xl-9 col-lg-8">
+                  Lorem, ipsum dolor.
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="p-3 text-light bg-primary m-0">
       <p class="float-end"><a href="#">Nach oben</a></p>
@@ -447,21 +448,66 @@
 
     <!-- Fetch demo flight data and update chart -->
     <script>
+      let latLongData = [];
+      // Create Map
+      var mymap = L.map("mapid");
+      // Icon
+      var myIcon = L.icon({
+        iconUrl: "images/glider.png",
+        iconSize: [35, 35],
+        //iconAnchor: [22, 94],
+        //popupAnchor: [-3, -76],
+        // shadowUrl: 'my-icon-shadow.png',
+        // shadowSize: [68, 95],
+        // shadowAnchor: [22, 94]
+      });
+      // Setup Icon
+      let icon = L.marker([0, 0], { icon: myIcon }).addTo(mymap);
+      //Setup Map options
+
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "mapbox/outdoors-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          //preferCanvas: true,
+          r: "@2x",
+          accessToken:
+            "pk.eyJ1IjoiYmx1ZW9yYyIsImEiOiJja205bm12ajIxNGV0MndsYWVqeDc4enE3In0.38AVZ2_Gjy_ST_4LxcgahA",
+        }
+      ).addTo(mymap);
+
       async function getDemoFlight(chart) {
         let response = await fetch("demoData/flight.json");
         let flightData = await response.json();
         let data = [];
         for (var i = 0; i < flightData.fixes.length; i++) {
           //Skip every 10th point for drawing
-          if (i % 10 === 0) {
+          if (i % 2 === 0) {
             data.push({
               t: moment(flightData.fixes[i].time, "HH:mm:ss"),
               y: flightData.fixes[i].gpsAltitude,
             });
+            latLongData.push([
+              flightData.fixes[i].latitude,
+              flightData.fixes[i].longitude,
+            ]);
           }
         }
+        // Update barogram
         chart.data.datasets[0].data = data;
         chart.update();
+
+        //Draw track on map
+        mymap.setView(latLongData[0], 12);
+        var polyline = L.polyline(latLongData, { color: "red" }).addTo(mymap);
+
+        // zoom the map to the polyline
+        mymap.fitBounds(polyline.getBounds());
       }
     </script>
 
@@ -487,7 +533,6 @@
           y: 80,
         },
       ];
-
       let cfg = {
         data: {
           type: "line",
@@ -601,6 +646,11 @@
                   label += ": ";
                 }
                 label = parseFloat(tooltipItem.value).toFixed();
+
+                icon.setLatLng(latLongData[tooltipItem.index]);
+                mymap.setView(latLongData[tooltipItem.index]);
+                console.log(myData);
+                console.log(tooltipItem);
                 return label + "m";
               },
               title: function (tooltipItem, myData) {
@@ -613,23 +663,6 @@
 
       var chart = new Chart(ctx, cfg);
       getDemoFlight(chart);
-    </script>
-
-    <script>
-      // Creating map options
-      var mymap = L.map("mapid").setView([51.505, -0.09], 13);
-      L.tileLayer(
-        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-        {
-          attribution:
-            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          maxZoom: 18,
-          id: "mapbox/streets-v11",
-          tileSize: 512,
-          zoomOffset: -1,
-          accessToken: "your.mapbox.access.token",
-        }
-      ).addTo(mymap);
     </script>
   </body>
 </html>
