@@ -10805,4 +10805,11 @@ footer a:hover {
 
 #mapid {
   height: 400px;
+}
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 20vh;
+  width: 100%;
 }/*# sourceMappingURL=custom.css.map */

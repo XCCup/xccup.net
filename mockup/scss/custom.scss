@@ -53,6 +53,13 @@ footer {
 #mapid {
   height: 400px;
 }
+// Fix for responsive scaling
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 20vh;
+  width: 100%;
+}
 
 @media (max-width: 992px) {
 }
@@ -81,3 +88,5 @@ footer {
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
 }
+
+
