@@ -171,9 +171,52 @@
     <div class="chart-container">
       <canvas id="myChart"></canvas>
     </div>
-    <!-- <canvas id="myChart" width="400" height="80"></canvas> -->
     <!-- Content -->
     <div class="container">
+      <div class="airbuddies">
+        <button
+          class="btn btn-primary btn-sm dropdown-toggle"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseAirbuddies"
+          aria-expanded="false"
+          aria-controls="collapseAirbuddies"
+        >
+          Airbuddies
+        </button>
+      </div>
+
+      <div class="collapse" id="collapseAirbuddies">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckChecked"
+            checked
+          />
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge" style="background-color: darkblue">
+              Kai Wissel
+            </span>
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckChecked"
+            checked
+          />
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge" style="background-color: yellowgreen">
+              Noch einer
+            </span>
+          </label>
+        </div>
+      </div>
+
       <!-- Flug Details -->
 
       <section class="flug-eigenschaften">
@@ -367,14 +410,6 @@
         </div>
       </div>
 
-      <!-- Airbuddies -->
-
-      <section class="air-buddies">
-        <div class="row mt-4">
-          <h3>Airbuddies</h3>
-          <p>Lorem ipsum dolor sit amet.</p>
-        </div>
-      </section>
       <!-- Kommentare -->
       <section class="kommentare">
         <div class="row mb-4">
@@ -454,6 +489,7 @@
     <!-- Fetch demo flight data and update chart -->
     <script>
       let latLongData = [];
+      let latLongData2 = [];
       // Create Map
       var mymap = L.map("mapid");
       // Icon
@@ -466,8 +502,29 @@
         // shadowSize: [68, 95],
         // shadowAnchor: [22, 94]
       });
-      // Setup Icon
+      // Setup Icon (unsused)
       let icon = L.marker([0, 0], { icon: myIcon }).addTo(mymap);
+      let icon2 = L.marker([0, 0], { icon: myIcon }).addTo(mymap);
+
+      // Setup cirlce marker
+      var circle = L.circleMarker([51.508, -0.11], {
+        color: "#fff",
+        fillColor: "DarkRed",
+        fillOpacity: 0.8,
+        radius: 8,
+        weight: 2,
+        stroke: true,
+      }).addTo(mymap);
+
+      var circle2 = L.circleMarker([51.508, -0.11], {
+        color: "#fff",
+        fillColor: "DarkSlateBlue",
+        fillOpacity: 0.8,
+        radius: 8,
+        weight: 2,
+        stroke: true,
+      }).addTo(mymap);
+
       //Setup Map options
 
       L.tileLayer(
@@ -488,28 +545,53 @@
 
       async function getDemoFlight(chart) {
         let response = await fetch("demoData/flight.json");
-        let flightData = await response.json();
-        let data = [];
-        for (var i = 0; i < flightData.fixes.length; i++) {
+        let flightData1 = await response.json();
+
+        let response2 = await fetch("demoData/flight2.json");
+        let flightData2 = await response2.json();
+
+        let flight1 = [];
+        let flight2 = [];
+        for (var i = 0; i < flightData1.fixes.length; i++) {
           //Skip every 10th point for drawing
           if (i % 2 === 0) {
-            data.push({
-              t: moment(flightData.fixes[i].time, "HH:mm:ss"),
-              y: flightData.fixes[i].gpsAltitude,
+            flight1.push({
+              t: moment(flightData1.fixes[i].time, "HH:mm:ss"),
+              y: flightData1.fixes[i].gpsAltitude,
             });
             latLongData.push([
-              flightData.fixes[i].latitude,
-              flightData.fixes[i].longitude,
+              flightData1.fixes[i].latitude,
+              flightData1.fixes[i].longitude,
             ]);
           }
         }
+        for (var i = 0; i < flightData2.fixes.length; i++) {
+          //Skip every 10th point for drawing
+          if (i % 2 === 0) {
+            flight2.push({
+              t: moment(flightData2.fixes[i].time, "HH:mm:ss"),
+              y: flightData2.fixes[i].gpsAltitude,
+            });
+            latLongData2.push([
+              flightData2.fixes[i].latitude,
+              flightData2.fixes[i].longitude,
+            ]);
+          }
+        }
+
         // Update barogram
-        chart.data.datasets[0].data = data;
+        chart.data.datasets[0].data = flight1;
+        chart.data.datasets[1].data = flight2;
         chart.update();
 
         //Draw track on map
         mymap.setView(latLongData[0], 12);
-        var polyline = L.polyline(latLongData, { color: "red" }).addTo(mymap);
+        var polyline = L.polyline(latLongData, { color: "DarkRed" }).addTo(
+          mymap
+        );
+        var polyline2 = L.polyline(latLongData2, {
+          color: "DarkSlateBlue",
+        }).addTo(mymap);
 
         // zoom the map to the polyline
         mymap.fitBounds(polyline.getBounds());
@@ -532,25 +614,37 @@
     <script>
       var ctx = document.getElementById("myChart").getContext("2d");
       //Initial data - Without custom tick generation will fail…
-      let data = [
-        {
-          t: moment("203404", "HHmmss"),
-          y: 80,
-        },
-      ];
+      let data,
+        flight2 = [
+          {
+            t: moment("203404", "HHmmss"),
+            y: 80,
+          },
+        ];
       let cfg = {
         data: {
           type: "line",
 
           datasets: [
             {
-              label: "GPS Höhe",
-              //backgroundColor: "rgba(8, 85, 6, 1)",
-              borderColor: "rgba(8, 85, 6, 1)",
+              label: "Stephan",
+              backgroundColor: "rgb(139, 0, 0)",
+              borderColor: "rgb(139, 0, 0)",
               data: data,
               type: "line",
               pointRadius: 0,
-              fill: true,
+              fill: false,
+              lineTension: 0,
+              borderWidth: 2,
+            },
+            {
+              label: "Kai",
+              backgroundColor: "rgb(72, 61, 139)",
+              borderColor: "rgb(72, 61, 139)",
+              data: flight2,
+              type: "line",
+              pointRadius: 0,
+              fill: false,
               lineTension: 0,
               borderWidth: 2,
             },
@@ -641,7 +735,6 @@
               },
             ],
           },
-          // Coming soon
           tooltips: {
             intersect: false,
             mode: "index",
@@ -653,12 +746,19 @@
                   label += ": ";
                 }
                 label = parseFloat(tooltipItem.value).toFixed();
+                let name = myData.datasets[tooltipItem.datasetIndex].label;
 
-                icon.setLatLng(latLongData[tooltipItem.index]);
+                // Update position on map
+                if (latLongData[tooltipItem.index]) {
+                  circle.setLatLng(latLongData[tooltipItem.index]);
+                }
+                if (latLongData2[tooltipItem.index]) {
+                  circle2.setLatLng(latLongData2[tooltipItem.index]);
+                }
+                //  Center map on main flight
                 mymap.setView(latLongData[tooltipItem.index]);
-                console.log(myData);
-                console.log(tooltipItem);
-                return label + "m";
+
+                return name + ": " + label + "m";
               },
               title: function (tooltipItem, myData) {
                 return "";
