@@ -1,4 +1,4 @@
-# Aktuell vorhanden:
+### Aktuell vorhanden:
 
 - Index
 - Flug hochladen
@@ -6,8 +6,7 @@
 
 Preview: http://kaiwissel.github.io/XCCup-2.0/mockup
 
-
-##Libraries:
+### Libraries:
 
 - https://github.com/chartjs/Chart.js
 - https://github.com/Leaflet/Leaflet
