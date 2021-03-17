@@ -1,379 +1,795 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Optional meta tags -->
+    <meta name="description" content="XCCup Streckenflugwettbewerb" />
+    <meta name="author" content="" />
 
-  <!-- Optional meta tags -->
-  <meta name="description" content="XCCup Streckenflugwettbewerb" />
-  <meta name="author" content="" />
+    <!-- Custom Bootstrap CSS -->
+    <link rel="stylesheet" href="css/custom.css" />
 
+    <!-- Leaflet -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
 
-  <!-- Custom Bootstrap CSS -->
-  <link rel="stylesheet" href="css/custom.css" />
+    <title>XCCup</title>
+  </head>
 
-  <!-- Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" />
-
-
-
-  <title>XCCup</title>
-</head>
-
-<body>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">
-        <img src="images/xccup_white.svg" alt="XCCup" height="50">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Ergebnisse
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Eingereichte Flüge</a></li>
-              <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
-              <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><a class="dropdown-item" href="#">…</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Listen
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Sponsoren</a></li>
-              <li><a class="dropdown-item" href="#">Vereine</a></li>
-              <li><a class="dropdown-item" href="#">Registrierte Piloten</a></li>
-              <li><a class="dropdown-item" href="#">Teams 2021</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link active" aria-current="page" href="#">Kontakt / Impressum</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link active" aria-current="page" href="#">Datenschutz</a>
-          </li>
-        </ul>
-        <!-- Login dropdown  -->
-        <div class="dropdown">
-          <button type="button" class="btn btn-outline-light btn-sm m-1 dropdown-toggle" id="dropdownMenuButton1"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person"></i>
-            Login / Profil
-          </button>
-          <div class="dropdown-menu " style="width: 250px;">
-            <form class=" px-4 py-3">
-              <div class="mb-3">
-                <h6 class="fst-italic">Führt angemeldete Nutzer direkt zu ihrem Profil</h6>
-                <!-- <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label> -->
-                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="E-Mail">
-              </div>
-              <div class="mb-3">
-                <!-- <label for="exampleDropdownFormPassword1" class="form-label">Passwort</label> -->
-                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Passwort">
-              </div>
-              <div class="mb-3">
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                  <label class="form-check-label" for="dropdownCheck">
-                    Angemeldet bleiben
-                  </label>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          <img src="images/xccup_white.svg" alt="XCCup" height="50" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Ergebnisse
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="#">Eingereichte Flüge</a>
+                </li>
+                <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
+                <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li><a class="dropdown-item" href="#">…</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Listen
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="#">Sponsoren</a></li>
+                <li><a class="dropdown-item" href="#">Vereine</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Registrierte Piloten</a>
+                </li>
+                <li><a class="dropdown-item" href="#">Teams 2021</a></li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Kontakt / Impressum</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Datenschutz</a
+              >
+            </li>
+          </ul>
+          <!-- Login dropdown  -->
+          <div class="dropdown">
+            <button
+              type="button"
+              class="btn btn-outline-light btn-sm m-1 dropdown-toggle"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="bi bi-person"></i>
+              Login / Profil
+            </button>
+            <div class="dropdown-menu" style="width: 250px">
+              <form class="px-4 py-3">
+                <div class="mb-3">
+                  <h6 class="fst-italic">
+                    Führt angemeldete Nutzer direkt zu ihrem Profil
+                  </h6>
+                  <!-- <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label> -->
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="exampleDropdownFormEmail1"
+                    placeholder="E-Mail"
+                  />
                 </div>
-              </div>
-              <button type="submit" class="btn btn-primary">Anmelden</button>
-            </form>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Registrieren</a>
-            <a class="dropdown-item" href="#">Password vergessen?</a>
+                <div class="mb-3">
+                  <!-- <label for="exampleDropdownFormPassword1" class="form-label">Passwort</label> -->
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="exampleDropdownFormPassword1"
+                    placeholder="Passwort"
+                  />
+                </div>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="dropdownCheck"
+                    />
+                    <label class="form-check-label" for="dropdownCheck">
+                      Angemeldet bleiben
+                    </label>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Anmelden</button>
+              </form>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Registrieren</a>
+              <a class="dropdown-item" href="#">Password vergessen?</a>
+            </div>
           </div>
+          <a href="FlugHochladen.html" class="btn btn-danger btn-sm m-1"
+            >Flug hochladen</a
+          >
         </div>
-        <a href="FlugHochladen.html" class="btn btn-danger btn-sm m-1">Flug hochladen</a>
       </div>
-    </div>
-  </nav>
-  <!-- ./Navigation -->
+    </nav>
+    <!-- ./Navigation -->
 
-
-  <section class="track">
-    <div class="container-fluid">
-      <div class="row">
-        <!-- <h3>Track</h3> -->
-        <div id="mapid"></div>
+    <section class="track">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- <h3>Track</h3> -->
+          <div id="mapid"></div>
+        </div>
       </div>
+    </section>
+
+    <div class="chart-container">
+      <canvas id="myChart"></canvas>
     </div>
-  </section>
-  <!-- Content -->
-  <div class="container">
-    <!-- Flug Details -->
+    <!-- Content -->
+    <div class="container">
+      <i class="bi bi-exclamation-triangle"></i> Die Ground Anzeige macht
+      natürlich nur Sinn, wenn keine Airbuddies eingezeichent sind.
+      <i class="bi bi-exclamation-triangle"></i>
+      <div class="airbuddies">
+        <button
+          class="btn btn-primary btn-sm dropdown-toggle"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseAirbuddies"
+          aria-expanded="false"
+          aria-controls="collapseAirbuddies"
+        >
+          Airbuddies
+        </button>
+      </div>
 
-    <section class="flug-eigenschaften">
-      <h3>Flugeigenschaften</h3>
-      <div class="row">
-        <div class="col-md-6 col-12 my-1">
-          <table class="table table-sm">
-            <thead></thead>
-            <tbody>
-              <tr>
-                <th>Pilot:</th>
-                <td><a href="#">Stephan Schöpe</a></td>
-              </tr>
-              <tr>
-                <th>Verein:</th>
-                <td><a href="#">D.G.F. Rhein-Mosel-Lahn</a></td>
-              </tr>
-              <tr>
-                <th>Team:</th>
-                <td><a href="#">Die sympathischen Speeditöre</a></td>
-              </tr>
-              <tr>
-                <th>Fluggerät:</th>
-                <td>Flow XCRacer </td>
-              </tr>
-              <tr>
-                <th>Geräteklasse:</th>
-                <td><i class="bi bi-trophy gs-performance"></i> GS Performance low
-                </td>
-              </tr>
+      <div class="collapse" id="collapseAirbuddies">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckChecked"
+            checked
+          />
+          <label class="form-check-label" for="flexCheckChecked">
+            <span class="badge" style="background-color: darkblue">
+              Kai Wissel
+            </span>
+          </label>
+        </div>
+      </div>
 
+      <!-- Flug Details -->
 
-            </tbody>
-          </table>
-          <!-- Backup 
+      <section class="flug-eigenschaften">
+        <h3>Flugeigenschaften</h3>
+        <div class="row">
+          <div class="col-md-6 col-12 my-1">
+            <table class="table table-sm">
+              <thead></thead>
+              <tbody>
+                <tr>
+                  <th>Pilot:</th>
+                  <td><a href="#">Stephan Schöpe</a></td>
+                </tr>
+                <tr>
+                  <th>Verein:</th>
+                  <td><a href="#">D.G.F. Rhein-Mosel-Lahn</a></td>
+                </tr>
+                <tr>
+                  <th>Team:</th>
+                  <td><a href="#">Die sympathischen Speeditöre</a></td>
+                </tr>
+                <tr>
+                  <th>Fluggerät:</th>
+                  <td>Flow XCRacer</td>
+                </tr>
+                <tr>
+                  <th>Geräteklasse:</th>
+                  <td>
+                    <i class="bi bi-trophy gs-performance"></i> GS Performance
+                    low
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Backup 
            <tr>
                   <th>Flugstatus:</th>
                   <td>😃 (In Wertung)</td>
                 </tr>
-          -->
-
-        </div>
-        <div class="col-md-6 col-12 my-1">
-          <table class="table table-sm">
-            <thead></thead>
-            <tbody>
-              <tr>
-                <th>Flugzeit:</th>
-                <td>5:57</td>
-              </tr>
-              <tr>
-                <th>Strecke:</th>
-                <td>100,49 km <i class="bi bi-triangle"></i></td>
-              </tr>
-              <tr>
-                <th>Punkte:</th>
-                <td>555</td>
-              </tr>
-
-              <tr>
-                <th>Startplatz:</th>
-                <td>Bremm (SSO-SSW)</td>
-              </tr>
-              <tr>
-                <th>Uhrzeit:</th>
-                <td>
-                  <i class="bi bi-arrow-up"></i> 12:09 Uhr
-                  <i class="bi bi-arrow-down"></i> 18:06 Uhr
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!-- Details -->
-      <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
-        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Details
-        anzeigen</button>
-      <button type="button" class="btn btn-sm btn-outline-primary">
-        <i class="bi bi-cloud-download"></i> .igc
-      </button>
-      <div class="collapse" id="collapseExample">
-        <div class="row">
-          <div class="col-md-6 col-12">
+          --></div>
+          <div class="col-md-6 col-12 my-1">
             <table class="table table-sm">
               <thead></thead>
               <tbody>
                 <tr>
-                  <th>Flugstatus:</th>
-                  <td>😃 (In Wertung)</td>
+                  <th>Flugzeit:</th>
+                  <td>5:57</td>
                 </tr>
                 <tr>
-                  <th>Höhe min/max (GPS):</th>
-                  <td>359m / 2665m</td>
+                  <th>Strecke:</th>
+                  <td>100,49 km <i class="bi bi-triangle"></i></td>
                 </tr>
                 <tr>
-                  <th>Steigen min/max:</th>
-                  <td>-10,0m/s / 7,0m/s</td>
+                  <th>Punkte:</th>
+                  <td>555</td>
+                </tr>
+
+                <tr>
+                  <th>Startplatz:</th>
+                  <td>Bremm (SSO-SSW)</td>
                 </tr>
                 <tr>
-                  <th>Geschwindigkeit max:</th>
-                  <td>124,0km/h</td>
+                  <th>Uhrzeit:</th>
+                  <td>
+                    <i class="bi bi-arrow-up"></i> 12:09 Uhr
+                    <i class="bi bi-arrow-down"></i> 18:06 Uhr
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div class="col-md-6 col-12">
-            <table class="table table-sm">
-              <thead></thead>
-              <tbody>
-                <tr>
-                  <th>Landeplatz:</th>
-                  <td>Bremm - DE[~1,29km]</td>
-                </tr>
-                <tr>
-                  <th>Ø Geschwindigkeit:</th>
-                  <td>38,0km/h</td>
-                </tr>
-                <tr>
-                  <th>Aufgaben-Geschwindigkeit:</th>
-                  <td>16,9km/h</td>
-                </tr>
-                <tr>
-                  <th>Eingereicht am:</th>
-                  <td>23.07.2020 18:50:23</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-
         </div>
+        <!-- Details -->
+        <button
+          class="btn btn-primary btn-sm dropdown-toggle"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          Details anzeigen
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-primary">
+          <i class="bi bi-cloud-download"></i> .igc
+        </button>
+        <div class="collapse" id="collapseExample">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <table class="table table-sm">
+                <thead></thead>
+                <tbody>
+                  <tr>
+                    <th>Flugstatus:</th>
+                    <td>😃 (In Wertung)</td>
+                  </tr>
+                  <tr>
+                    <th>Höhe min/max (GPS):</th>
+                    <td>359m / 2665m</td>
+                  </tr>
+                  <tr>
+                    <th>Steigen min/max:</th>
+                    <td>-10,0m/s / 7,0m/s</td>
+                  </tr>
+                  <tr>
+                    <th>Geschwindigkeit max:</th>
+                    <td>124,0km/h</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6 col-12">
+              <table class="table table-sm">
+                <thead></thead>
+                <tbody>
+                  <tr>
+                    <th>Landeplatz:</th>
+                    <td>Bremm - DE[~1,29km]</td>
+                  </tr>
+                  <tr>
+                    <th>Ø Geschwindigkeit:</th>
+                    <td>38,0km/h</td>
+                  </tr>
+                  <tr>
+                    <th>Aufgaben-Geschwindigkeit:</th>
+                    <td>16,9km/h</td>
+                  </tr>
+                  <tr>
+                    <th>Eingereicht am:</th>
+                    <td>23.07.2020 18:50:23</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      </div>
+      <section class="flug-bericht">
+        <div class="row mt-4">
+          <h3>Flugbericht</h3>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+            Consequuntur numquam, accusamus dolor minus inventore libero saepe
+            quo exercitationem praesentium dolorem magni, quis quia tenetur
+            similique sint? Tenetur magnam magni molestias veniam, accusantium
+            vel dolorem consectetur? Dicta fugiat saepe nesciunt minima illo
+            ipsa, voluptas quia aliquam libero. Nisi quo doloremque nam?
+            Adipisci assumenda, ipsam hic a consequatur explicabo eligendi
+            architecto commodi?
+          </p>
+        </div>
+      </section>
 
-    </section>
-
-    <section class="flug-bericht">
-      <div class="row mt-4">
-        <h3>Flugbericht</h3>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur numquam, accusamus dolor minus
-          inventore libero saepe quo exercitationem praesentium dolorem magni, quis quia tenetur similique sint?
-          Tenetur magnam magni molestias veniam, accusantium vel dolorem consectetur? Dicta fugiat saepe nesciunt
-          minima illo ipsa, voluptas quia aliquam libero. Nisi quo doloremque nam? Adipisci assumenda, ipsam hic a
-          consequatur explicabo eligendi architecto commodi?
-        </p>
-      </div>
-    </section>
-
-    <div class="row mb-4">
-      <div class="col-4">
-        <figure class="figure">
-          <img src="images/rachtig.jpg" class="figure-img img-fluid img-thumbnail" alt="">
-          <figcaption class="figure-caption text-center">Lorem, ipsum dolor.</figcaption>
-        </figure>
-      </div>
-      <div class="col-4">
-        <figure class="figure">
-          <img src="images/rachtig.jpg" class="figure-img img-fluid img-thumbnail" alt="">
-          <figcaption class="figure-caption text-center">Lorem, ipsum dolor.</figcaption>
-        </figure>
-      </div>
-      <div class="col-4">
-        <figure class="figure">
-          <img src="images/rachtig.jpg" class="figure-img img-fluid img-thumbnail" alt="">
-          <figcaption class="figure-caption text-center">Lorem, ipsum dolor.</figcaption>
-        </figure>
-      </div>
-
-    </div>
-
-
-
-    <!-- <section class="gps">
-      <div class="row">
-        <img src="https://www.xccup.net/FlugDetails/GpsHeightGraph_69221.png" class="img-fluid" alt="">
-      </div>
-    </section> -->
-
-    <section class="kommentare">
       <div class="row mb-4">
-        <div class="card-box col-12">
-          <div class="ml-3 mr-3">
-            <h3>Kommentare</h3>
-            <div id="comments" class="mb-3">
-              <div class="comment row mb-3">
-                <div class="cpilot col-xl-2 col-lg-3">
-                  <div class="d-flex">
-                    <img src="" style="margin-right: 6px;" height="24" width="24">
-                    <a href="#">Pilot 1</a>
+        <div class="col-4">
+          <figure class="figure">
+            <img
+              src="images/rachtig.jpg"
+              class="figure-img img-fluid img-thumbnail"
+              alt=""
+            />
+            <figcaption class="figure-caption text-center">
+              Lorem, ipsum dolor.
+            </figcaption>
+          </figure>
+        </div>
+        <div class="col-4">
+          <figure class="figure">
+            <img
+              src="images/rachtig.jpg"
+              class="figure-img img-fluid img-thumbnail"
+              alt=""
+            />
+            <figcaption class="figure-caption text-center">
+              Lorem, ipsum dolor.
+            </figcaption>
+          </figure>
+        </div>
+        <div class="col-4">
+          <figure class="figure">
+            <img
+              src="images/rachtig.jpg"
+              class="figure-img img-fluid img-thumbnail"
+              alt=""
+            />
+            <figcaption class="figure-caption text-center">
+              Lorem, ipsum dolor.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- Kommentare -->
+      <section class="kommentare">
+        <div class="row mb-4">
+          <div class="card-box col-12">
+            <div class="ml-3 mr-3">
+              <h3>Kommentare</h3>
+              <div id="comments" class="mb-3">
+                <div class="comment row mb-3">
+                  <div class="cpilot col-xl-2 col-lg-3">
+                    <div class="d-flex">
+                      <img
+                        src=""
+                        style="margin-right: 6px"
+                        height="24"
+                        width="24"
+                      />
+                      <a href="#">Pilot 1</a>
+                    </div>
+                  </div>
+                  <div class="ccontent col-xl-9 col-lg-8">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    Accusamus, explicabo?
                   </div>
                 </div>
-                <div class="ccontent col-xl-9 col-lg-8">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Accusamus, explicabo?</div>
-              </div>
-              <div class="comment row mb-3">
-                <div class="cpilot col-xl-2 col-lg-3">
-                  <div class="d-flex"><img src="" style="margin-right: 6px;" height="24" width="24"><a href="#">Pilot
-                      2</a></div>
+                <div class="comment row mb-3">
+                  <div class="cpilot col-xl-2 col-lg-3">
+                    <div class="d-flex">
+                      <img
+                        src=""
+                        style="margin-right: 6px"
+                        height="24"
+                        width="24"
+                      /><a href="#">Pilot 2</a>
+                    </div>
+                  </div>
+                  <div class="ccontent col-xl-9 col-lg-8">
+                    Lorem, ipsum dolor.
+                  </div>
                 </div>
-                <div class="ccontent col-xl-9 col-lg-8">Lorem, ipsum dolor.</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
-  </div>
-  <!-- Footer -->
-  <footer class="p-3 text-light bg-primary m-0">
-    <p class="float-end"><a href="#">Nach oben</a></p>
-    <p>
-      © XCCup 2021 ·
-      <a href="#">Datenschutz</a> ·
-      <a href="#">Impressum</a> ·
-      <a href="https://github.com/KaiWissel/XCCup-2.0"><i class="bi bi-github"></i></a>
+    <!-- Footer -->
+    <footer class="p-3 text-light bg-primary m-0">
+      <p class="float-end"><a href="#">Nach oben</a></p>
+      <p>
+        © XCCup 2021 ·
+        <a href="#">Datenschutz</a> · <a href="#">Impressum</a> ·
+        <a href="https://github.com/KaiWissel/XCCup-2.0"
+          ><i class="bi bi-github"></i
+        ></a>
+      </p>
+    </footer>
+    <!-- ./Footer -->
 
+    <!-- Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+      crossorigin="anonymous"
+    ></script>
 
-    </p>
-  </footer>
-  <!-- ./Footer -->
+    <!-- Generating demo pilot data -->
+    <script src="js/demoPilots.js"></script>
 
-  <!-- Bootstrap Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-    crossorigin="anonymous"></script>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
 
-  <!-- Generating demo pilot data -->
-  <script src="js/demoPilots.js"></script>
+    <!-- Fetch demo flight data and update chart -->
+    <script>
+      let latLongData = [];
+      let latLongData2 = [];
+      // Create Map
+      var mymap = L.map("mapid");
+      // Icon
+      var myIcon = L.icon({
+        iconUrl: "images/glider.png",
+        iconSize: [35, 35],
+        //iconAnchor: [22, 94],
+        //popupAnchor: [-3, -76],
+        // shadowUrl: 'my-icon-shadow.png',
+        // shadowSize: [68, 95],
+        // shadowAnchor: [22, 94]
+      });
+      // Setup Icon (unsused)
+      let icon = L.marker([0, 0], { icon: myIcon }).addTo(mymap);
+      let icon2 = L.marker([0, 0], { icon: myIcon }).addTo(mymap);
 
-  <!-- Make sure you put this AFTER Leaflet's CSS -->
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+      // Setup cirlce marker
+      var circle = L.circleMarker([51.508, -0.11], {
+        color: "#fff",
+        fillColor: "DarkRed",
+        fillOpacity: 0.8,
+        radius: 8,
+        weight: 2,
+        stroke: true,
+      }).addTo(mymap);
 
-  <script>
+      var circle2 = L.circleMarker([51.508, -0.11], {
+        color: "#fff",
+        fillColor: "DarkSlateBlue",
+        fillOpacity: 0.8,
+        radius: 8,
+        weight: 2,
+        stroke: true,
+      }).addTo(mymap);
 
-    // Creating map options
-    var mymap = L.map('mapid').setView([51.505, -0.09], 13);
-    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-      maxZoom: 18,
-      id: 'mapbox/streets-v11',
-      tileSize: 512,
-      zoomOffset: -1,
-      accessToken: 'your.mapbox.access.token'
-    }).addTo(mymap);
-  </script>
+      //Setup Map options
 
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "mapbox/outdoors-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          //preferCanvas: true,
+          r: "@2x",
+          accessToken:
+            "pk.eyJ1IjoiYmx1ZW9yYyIsImEiOiJja205bm12ajIxNGV0MndsYWVqeDc4enE3In0.38AVZ2_Gjy_ST_4LxcgahA",
+        }
+      ).addTo(mymap);
 
-</body>
+      async function getDemoFlight(chart) {
+        let response = await fetch("demoData/flight.json");
+        let flightData1 = await response.json();
 
+        let response2 = await fetch("demoData/flight2.json");
+        let flightData2 = await response2.json();
+
+        let response3 = await fetch("demoData/elevationData.json");
+        let elevationData = await response3.json();
+
+        let flight1 = [];
+        let flight2 = [];
+        let elevation = [];
+        for (var i = 0; i < flightData1.fixes.length; i++) {
+          //Skip every 10th point for drawing
+          if (i % 10 === 0) {
+            flight1.push({
+              t: moment(flightData1.fixes[i].time, "HH:mm:ss"),
+              y: flightData1.fixes[i].gpsAltitude,
+            });
+            latLongData.push([
+              flightData1.fixes[i].latitude,
+              flightData1.fixes[i].longitude,
+            ]);
+          }
+        }
+        for (var i = 0; i < flightData2.fixes.length; i++) {
+          //Skip every 10th point for drawing
+          if (i % 10 === 0) {
+            flight2.push({
+              t: moment(flightData2.fixes[i].time, "HH:mm:ss"),
+              y: flightData2.fixes[i].gpsAltitude,
+            });
+            latLongData2.push([
+              flightData2.fixes[i].latitude,
+              flightData2.fixes[i].longitude,
+            ]);
+          }
+        }
+
+        for (var i = 0; i < elevationData.length; i++) {
+          //Skip every 10th point for drawing
+          if (i % 10 === 0) {
+            elevation.push({
+              t: moment(elevationData[i].t, "HH:mm:ss"),
+              y: elevationData[i].y,
+            });
+          }
+        }
+
+        // Update barogram
+        chart.data.datasets[0].data = flight1;
+        chart.data.datasets[1].data = flight2;
+        chart.data.datasets[2].data = elevation;
+        chart.update();
+
+        //Draw track on map
+        mymap.setView(latLongData[0], 12);
+        var polyline = L.polyline(latLongData, { color: "DarkRed" }).addTo(
+          mymap
+        );
+        var polyline2 = L.polyline(latLongData2, {
+          color: "DarkSlateBlue",
+        }).addTo(mymap);
+
+        // zoom the map to the polyline
+        mymap.fitBounds(polyline.getBounds());
+      }
+    </script>
+
+    <!-- Chart.js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"
+      integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA=="
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      var ctx = document.getElementById("myChart").getContext("2d");
+      //Initial data - Without custom tick generation will fail…
+      let data,
+        flight2,
+        elevation = [
+          {
+            t: moment("203404", "HHmmss"),
+            y: 80,
+          },
+        ];
+      let cfg = {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "Stephan",
+              backgroundColor: "rgb(139, 0, 0)",
+              borderColor: "rgb(139, 0, 0)",
+              data: data,
+              pointRadius: 0,
+              fill: false,
+              //lineTension: 0,
+              //borderWidth: 2,
+            },
+            {
+              label: "Kai",
+              backgroundColor: "rgb(72, 61, 139)",
+              borderColor: "rgb(72, 61, 139)",
+              data: flight2,
+              pointRadius: 0,
+              fill: false,
+              //lineTension: 0,
+              // borderWidth: 2,
+            },
+            {
+              label: "GND",
+              backgroundColor: "rgb(139, 69, 19)",
+              borderColor: "rgb(139, 69, 19)",
+              data: elevation,
+              pointRadius: 0,
+              fill: true,
+              // lineTension: 0,
+              // borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+
+          legend: {
+            display: false,
+          },
+          animation: {
+            duration: 0,
+          },
+          scales: {
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  displayFormats: {
+                    //millisecond: "HH:mm:ss.SSS",
+                    second: "HH:mm:ss",
+                    minute: "HH:mm",
+                    hour: "HH:mm",
+                  },
+                },
+                distribution: "series",
+                offset: true,
+                ticks: {
+                  major: {
+                    enabled: true,
+                    //fontStyle: 'bold'
+                  },
+                  source: "data",
+                  autoSkip: true,
+                  autoSkipPadding: 75,
+                  maxRotation: 0,
+                  sampleSize: 100,
+                },
+                //Custom ticks to full hour
+                afterBuildTicks: function (scale, ticks) {
+                  var majorUnit = scale._majorUnit;
+                  var firstTick = ticks[0];
+                  var i, ilen, val, tick, currMajor, lastMajor;
+
+                  val = moment(ticks[0].value);
+                  if (
+                    (majorUnit === "minute" && val.second() === 0) ||
+                    (majorUnit === "hour" && val.minute() === 0) ||
+                    (majorUnit === "day" && val.hour() === 9) ||
+                    (majorUnit === "month" &&
+                      val.date() <= 3 &&
+                      val.isoWeekday() === 1) ||
+                    (majorUnit === "year" && val.month() === 0)
+                  ) {
+                    firstTick.major = true;
+                  } else {
+                    firstTick.major = false;
+                  }
+                  lastMajor = val.get(majorUnit);
+
+                  for (i = 1, ilen = ticks.length; i < ilen; i++) {
+                    tick = ticks[i];
+                    val = moment(tick.value);
+                    currMajor = val.get(majorUnit);
+                    tick.major = currMajor !== lastMajor;
+                    lastMajor = currMajor;
+                  }
+                  return ticks;
+                },
+              },
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  drawBorder: false,
+                },
+                scaleLabel: {
+                  display: true,
+                  //labelString: 'Höhe'
+                },
+                ticks: {
+                  // Add "m" to altitude
+                  callback: function (value, index, values) {
+                    return value + " m";
+                  },
+                },
+              },
+            ],
+          },
+          hover: {
+            mode: "nearest",
+            intersect: true,
+            animationDuration: 0,
+          },
+          tooltips: {
+            intersect: false,
+            mode: "index",
+            position: "nearest",
+            enabled: true,
+            callbacks: {
+              label: function (tooltipItem, myData) {
+                var label =
+                  myData.datasets[tooltipItem.datasetIndex].label || "";
+                if (label) {
+                  label += ": ";
+                }
+                label = parseFloat(tooltipItem.value).toFixed();
+                let name = myData.datasets[tooltipItem.datasetIndex].label;
+
+                // Update position on map
+                if (latLongData[tooltipItem.index]) {
+                  circle.setLatLng(latLongData[tooltipItem.index]);
+                }
+                if (latLongData2[tooltipItem.index]) {
+                  circle2.setLatLng(latLongData2[tooltipItem.index]);
+                }
+                //  Center map on main flight
+                mymap.setView(latLongData[tooltipItem.index]);
+
+                return name + ": " + label + "m";
+              },
+              title: function (tooltipItem, myData) {
+                return "";
+              },
+            },
+          },
+        },
+      };
+
+      var chart = new Chart(ctx, cfg);
+      getDemoFlight(chart);
+    </script>
+  </body>
 </html>
