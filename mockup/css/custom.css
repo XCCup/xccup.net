@@ -10803,13 +10803,6 @@ footer a:hover {
   background-position: center center;
 }
 
-#mapid {
-  height: 450px;
-}
-
-.chart-container {
-  position: relative;
-  margin: auto;
-  height: 20vh;
-  width: 100%;
+#map {
+  height: 430px;
 }/*# sourceMappingURL=custom.css.map */

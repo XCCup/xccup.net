@@ -162,18 +162,19 @@
     <section class="track">
       <div class="container-fluid">
         <div class="row">
-          <div id="map"></div>
+          <!-- <h3>Track</h3> -->
+          <div id="mapid"></div>
         </div>
       </div>
     </section>
 
-    <div class="container barogramm-container">
-      <canvas id="barogramm" width="400" height="200"></canvas>
+    <div class="chart-container">
+      <canvas id="myChart"></canvas>
     </div>
     <!-- Content -->
     <div class="container">
-      <i class="bi bi-exclamation-triangle"></i> Hover mit Höhenanzeige fehlt
-      noch
+      <i class="bi bi-exclamation-triangle"></i> Die Ground Anzeige macht
+      natürlich nur Sinn, wenn keine Airbuddies eingezeichent sind.
       <i class="bi bi-exclamation-triangle"></i>
       <div class="airbuddies">
         <button
@@ -195,7 +196,7 @@
             type="checkbox"
             value=""
             id="flexCheckChecked"
-            onclick="checkbox(this)"
+            checked
           />
           <label class="form-check-label" for="flexCheckChecked">
             <span class="badge" style="background-color: darkblue">
@@ -464,31 +465,331 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- Leaflet -->
+    <!-- Generating demo pilot data -->
+    <script src="js/demoPilots.js"></script>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script
       src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
       integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
       crossorigin=""
     ></script>
 
-    <!-- Map -->
-    <script src="js/map.js"></script>
+    <!-- Fetch demo flight data and update chart -->
+    <script>
+      let latLongData = [];
+      let latLongData2 = [];
+      // Create Map
+      var mymap = L.map("mapid");
+      // Icon
+      var myIcon = L.icon({
+        iconUrl: "images/glider.png",
+        iconSize: [35, 35],
+        //iconAnchor: [22, 94],
+        //popupAnchor: [-3, -76],
+        // shadowUrl: 'my-icon-shadow.png',
+        // shadowSize: [68, 95],
+        // shadowAnchor: [22, 94]
+      });
+      // Setup Icon (unsused)
+      let icon = L.marker([0, 0], { icon: myIcon }).addTo(mymap);
+      let icon2 = L.marker([0, 0], { icon: myIcon }).addTo(mymap);
+
+      // Setup cirlce marker
+      var circle = L.circleMarker([51.508, -0.11], {
+        color: "#fff",
+        fillColor: "DarkRed",
+        fillOpacity: 0.8,
+        radius: 8,
+        weight: 2,
+        stroke: true,
+      }).addTo(mymap);
+
+      var circle2 = L.circleMarker([51.508, -0.11], {
+        color: "#fff",
+        fillColor: "DarkSlateBlue",
+        fillOpacity: 0.8,
+        radius: 8,
+        weight: 2,
+        stroke: true,
+      }).addTo(mymap);
+
+      //Setup Map options
+
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+        {
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: "mapbox/outdoors-v11",
+          tileSize: 512,
+          zoomOffset: -1,
+          //preferCanvas: true,
+          r: "@2x",
+          accessToken:
+            "pk.eyJ1IjoiYmx1ZW9yYyIsImEiOiJja205bm12ajIxNGV0MndsYWVqeDc4enE3In0.38AVZ2_Gjy_ST_4LxcgahA",
+        }
+      ).addTo(mymap);
+
+      async function getDemoFlight(chart) {
+        let response = await fetch("demoData/flight.json");
+        let flightData1 = await response.json();
+
+        let response2 = await fetch("demoData/flight2.json");
+        let flightData2 = await response2.json();
+
+        let response3 = await fetch("demoData/elevationData.json.bak");
+        let elevationData = await response3.json();
+
+        let flight1 = [];
+        let flight2 = [];
+        let elevation = [];
+        for (var i = 0; i < flightData1.fixes.length; i++) {
+          //Skip every 10th point for drawing
+          if (i % 10 === 0) {
+            flight1.push({
+              t: moment(flightData1.fixes[i].time, "HH:mm:ss"),
+              y: flightData1.fixes[i].gpsAltitude,
+            });
+            latLongData.push([
+              flightData1.fixes[i].latitude,
+              flightData1.fixes[i].longitude,
+            ]);
+          }
+        }
+        for (var i = 0; i < flightData2.fixes.length; i++) {
+          //Skip every 10th point for drawing
+          if (i % 10 === 0) {
+            flight2.push({
+              t: moment(flightData2.fixes[i].time, "HH:mm:ss"),
+              y: flightData2.fixes[i].gpsAltitude,
+            });
+            latLongData2.push([
+              flightData2.fixes[i].latitude,
+              flightData2.fixes[i].longitude,
+            ]);
+          }
+        }
+
+        for (var i = 0; i < elevationData.length; i++) {
+          //Skip every 10th point for drawing
+          if (i % 10 === 0) {
+            elevation.push({
+              t: moment(elevationData[i].t, "HH:mm:ss"),
+              y: elevationData[i].y,
+            });
+          }
+        }
+
+        // Update barogram
+        chart.data.datasets[0].data = flight1;
+        chart.data.datasets[1].data = flight2;
+        chart.data.datasets[2].data = elevation;
+        chart.update();
+
+        //Draw track on map
+        mymap.setView(latLongData[0], 12);
+        var polyline = L.polyline(latLongData, { color: "DarkRed" }).addTo(
+          mymap
+        );
+        var polyline2 = L.polyline(latLongData2, {
+          color: "DarkSlateBlue",
+        }).addTo(mymap);
+
+        // zoom the map to the polyline
+        mymap.fitBounds(polyline.getBounds());
+      }
+    </script>
 
     <!-- Chart.js -->
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-beta.13/chart.js"
-      integrity="sha512-JS/WtaFglOYbXbMt9s52TO0QEzWljfCG2dFTC6aW9bJdP40kC37uoV+EzI06/LgpfX65oTnS1jUXxscH2xlG1Q=="
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"
+      integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA=="
       crossorigin="anonymous"
     ></script>
 
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"
-      integrity="sha512-F+u8eWHrfY8Xw9BLzZ8rG/0wIvs0y+JyRJrXjp3VjtFPylAEEGwKbua5Ip/oiVhaTDaDs4eU2Xtsxjs/9ag2bQ=="
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
       crossorigin="anonymous"
     ></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script>
+      var ctx = document.getElementById("myChart").getContext("2d");
+      //Initial data - Without custom tick generation will fail…
+      let data,
+        flight2,
+        elevation = [
+          {
+            t: moment("203404", "HHmmss"),
+            y: 80,
+          },
+        ];
+      let cfg = {
+        type: "line",
+        data: {
+          datasets: [
+            {
+              label: "Stephan",
+              backgroundColor: "rgb(139, 0, 0)",
+              borderColor: "rgb(139, 0, 0)",
+              data: data,
+              pointRadius: 0,
+              fill: false,
+              //lineTension: 0,
+              //borderWidth: 2,
+            },
+            {
+              label: "Kai",
+              backgroundColor: "rgb(72, 61, 139)",
+              borderColor: "rgb(72, 61, 139)",
+              data: flight2,
+              pointRadius: 0,
+              fill: false,
+              //lineTension: 0,
+              // borderWidth: 2,
+            },
+            {
+              label: "GND",
+              backgroundColor: "rgb(139, 69, 19)",
+              borderColor: "rgb(139, 69, 19)",
+              data: elevation,
+              pointRadius: 0,
+              fill: true,
+              // lineTension: 0,
+              // borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
 
-    <script src="js/barogramm.js"></script>
+          legend: {
+            display: false,
+          },
+          animation: {
+            duration: 0,
+          },
+          scales: {
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  displayFormats: {
+                    //millisecond: "HH:mm:ss.SSS",
+                    second: "HH:mm:ss",
+                    minute: "HH:mm",
+                    hour: "HH:mm",
+                  },
+                },
+                distribution: "series",
+                offset: true,
+                ticks: {
+                  major: {
+                    enabled: true,
+                    //fontStyle: 'bold'
+                  },
+                  source: "data",
+                  autoSkip: true,
+                  autoSkipPadding: 75,
+                  maxRotation: 0,
+                  sampleSize: 100,
+                },
+                //Custom ticks to full hour
+                afterBuildTicks: function (scale, ticks) {
+                  var majorUnit = scale._majorUnit;
+                  var firstTick = ticks[0];
+                  var i, ilen, val, tick, currMajor, lastMajor;
+
+                  val = moment(ticks[0].value);
+                  if (
+                    (majorUnit === "minute" && val.second() === 0) ||
+                    (majorUnit === "hour" && val.minute() === 0) ||
+                    (majorUnit === "day" && val.hour() === 9) ||
+                    (majorUnit === "month" &&
+                      val.date() <= 3 &&
+                      val.isoWeekday() === 1) ||
+                    (majorUnit === "year" && val.month() === 0)
+                  ) {
+                    firstTick.major = true;
+                  } else {
+                    firstTick.major = false;
+                  }
+                  lastMajor = val.get(majorUnit);
+
+                  for (i = 1, ilen = ticks.length; i < ilen; i++) {
+                    tick = ticks[i];
+                    val = moment(tick.value);
+                    currMajor = val.get(majorUnit);
+                    tick.major = currMajor !== lastMajor;
+                    lastMajor = currMajor;
+                  }
+                  return ticks;
+                },
+              },
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  drawBorder: false,
+                },
+                scaleLabel: {
+                  display: true,
+                  //labelString: 'Höhe'
+                },
+                ticks: {
+                  // Add "m" to altitude
+                  callback: function (value, index, values) {
+                    return value + " m";
+                  },
+                },
+              },
+            ],
+          },
+          hover: {
+            mode: "nearest",
+            intersect: true,
+            animationDuration: 0,
+          },
+          tooltips: {
+            intersect: false,
+            mode: "index",
+            position: "nearest",
+            enabled: true,
+            callbacks: {
+              label: function (tooltipItem, myData) {
+                var label =
+                  myData.datasets[tooltipItem.datasetIndex].label || "";
+                if (label) {
+                  label += ": ";
+                }
+                label = parseFloat(tooltipItem.value).toFixed();
+                let name = myData.datasets[tooltipItem.datasetIndex].label;
+
+                // Update position on map
+                if (latLongData[tooltipItem.index]) {
+                  circle.setLatLng(latLongData[tooltipItem.index]);
+                }
+                if (latLongData2[tooltipItem.index]) {
+                  circle2.setLatLng(latLongData2[tooltipItem.index]);
+                }
+                //  Center map on main flight
+                mymap.setView(latLongData[tooltipItem.index]);
+
+                return name + ": " + label + "m";
+              },
+              title: function (tooltipItem, myData) {
+                return "";
+              },
+            },
+          },
+        },
+      };
+
+      var chart = new Chart(ctx, cfg);
+      getDemoFlight(chart);
+    </script>
   </body>
 </html>

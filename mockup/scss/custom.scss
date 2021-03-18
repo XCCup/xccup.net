@@ -50,16 +50,17 @@ footer {
   background-position: center center;
 }
 
-#mapid {
-  height: 450px;
+#map {
+  height: 430px;
 }
+
 // Fix for responsive scaling of barogramm
-.chart-container {
-  position: relative;
-  margin: auto;
-  height: 20vh;
-  width: 100%;
-}
+// .barogramm-container {
+//   position: relative;
+//   margin: auto;
+//   height: 20vh;
+//   width: 100%;
+// }
 
 @media (max-width: 992px) {
 }
@@ -88,5 +89,3 @@ footer {
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
 }
-
-
