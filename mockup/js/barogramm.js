@@ -7,6 +7,9 @@ Chart.defaults.elements.point.pointRadius = 0;
 //Chart.defaults.elements.point.pointHitRadius = 0;
 Chart.defaults.elements.point.pointHoverRadius = 0;
 
+// Chart.defaults.plugins.decimation.enabled = true;
+// console.log(Chart.defaults.plugins.decimation);
+
 let flightData = [];
 let flightDataBuddy1 = [];
 let elevation = [];
@@ -57,6 +60,11 @@ var barogramm = new Chart(ctx, {
     // console.log(barogramm.scales.x);
     // },
     plugins: {
+      // decimation: {
+      //   enabled: false,
+      //   algorithm: "lttb",
+      //   samples: 20,
+      // },
       title: {
         display: false,
         text: "Barogramm",

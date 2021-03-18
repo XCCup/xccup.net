@@ -1,494 +1,435 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Optional meta tags -->
-    <meta name="description" content="XCCup Streckenflugwettbewerb" />
-    <meta name="author" content="" />
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Custom Bootstrap CSS -->
-    <link rel="stylesheet" href="css/custom.css" />
+  <!-- Optional meta tags -->
+  <meta name="description" content="XCCup Streckenflugwettbewerb" />
+  <meta name="author" content="" />
 
-    <!-- Leaflet -->
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""
-    />
+  <!-- Custom Bootstrap CSS -->
+  <link rel="stylesheet" href="css/custom.css" />
 
-    <title>XCCup</title>
-  </head>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
 
-  <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-          <img src="images/xccup_white.svg" alt="XCCup" height="50" />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Ergebnisse
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="#">Eingereichte Flüge</a>
-                </li>
-                <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
-                <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">…</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Listen
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Sponsoren</a></li>
-                <li><a class="dropdown-item" href="#">Vereine</a></li>
-                <li>
-                  <a class="dropdown-item" href="#">Registrierte Piloten</a>
-                </li>
-                <li><a class="dropdown-item" href="#">Teams 2021</a></li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link active" aria-current="page" href="#"
-                >Kontakt / Impressum</a
-              >
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link active" aria-current="page" href="#"
-                >Datenschutz</a
-              >
-            </li>
-          </ul>
-          <!-- Login dropdown  -->
-          <div class="dropdown">
-            <button
-              type="button"
-              class="btn btn-outline-light btn-sm m-1 dropdown-toggle"
-              id="dropdownMenuButton1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i class="bi bi-person"></i>
-              Login / Profil
-            </button>
-            <div class="dropdown-menu" style="width: 250px">
-              <form class="px-4 py-3">
-                <div class="mb-3">
-                  <h6 class="fst-italic">
-                    Führt angemeldete Nutzer direkt zu ihrem Profil
-                  </h6>
-                  <!-- <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label> -->
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="exampleDropdownFormEmail1"
-                    placeholder="E-Mail"
-                  />
+  <!-- Lightbox -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.css"
+    integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA=="
+    crossorigin="anonymous" />
+
+  <title>XCCup</title>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img src="images/xccup_white.svg" alt="XCCup" height="50" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Ergebnisse
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="#">Eingereichte Flüge</a>
+              </li>
+              <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
+              <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li><a class="dropdown-item" href="#">…</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Listen
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Sponsoren</a></li>
+              <li><a class="dropdown-item" href="#">Vereine</a></li>
+              <li>
+                <a class="dropdown-item" href="#">Registrierte Piloten</a>
+              </li>
+              <li><a class="dropdown-item" href="#">Teams 2021</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link active" aria-current="page" href="#">Kontakt / Impressum</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link active" aria-current="page" href="#">Datenschutz</a>
+          </li>
+        </ul>
+        <!-- Login dropdown  -->
+        <div class="dropdown">
+          <button type="button" class="btn btn-outline-light btn-sm m-1 dropdown-toggle" id="dropdownMenuButton1"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-person"></i>
+            Login / Profil
+          </button>
+          <div class="dropdown-menu" style="width: 250px">
+            <form class="px-4 py-3">
+              <div class="mb-3">
+                <h6 class="fst-italic">
+                  Führt angemeldete Nutzer direkt zu ihrem Profil
+                </h6>
+                <!-- <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label> -->
+                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="E-Mail" />
+              </div>
+              <div class="mb-3">
+                <!-- <label for="exampleDropdownFormPassword1" class="form-label">Passwort</label> -->
+                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Passwort" />
+              </div>
+              <div class="mb-3">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="dropdownCheck" />
+                  <label class="form-check-label" for="dropdownCheck">
+                    Angemeldet bleiben
+                  </label>
                 </div>
-                <div class="mb-3">
-                  <!-- <label for="exampleDropdownFormPassword1" class="form-label">Passwort</label> -->
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="exampleDropdownFormPassword1"
-                    placeholder="Passwort"
-                  />
-                </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="dropdownCheck"
-                    />
-                    <label class="form-check-label" for="dropdownCheck">
-                      Angemeldet bleiben
-                    </label>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Anmelden</button>
-              </form>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Registrieren</a>
-              <a class="dropdown-item" href="#">Password vergessen?</a>
-            </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Anmelden</button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Registrieren</a>
+            <a class="dropdown-item" href="#">Password vergessen?</a>
           </div>
-          <a href="FlugHochladen.html" class="btn btn-danger btn-sm m-1"
-            >Flug hochladen</a
-          >
         </div>
+        <a href="FlugHochladen.html" class="btn btn-danger btn-sm m-1">Flug hochladen</a>
       </div>
-    </nav>
-    <!-- ./Navigation -->
-
-    <section class="track">
-      <div class="container-fluid">
-        <div class="row">
-          <div id="map"></div>
-        </div>
-      </div>
-    </section>
-
-    <div class="container barogramm-container">
-      <canvas id="barogramm" width="400" height="200"></canvas>
     </div>
-    <!-- Content -->
-    <div class="container">
-      <i class="bi bi-exclamation-triangle"></i> Hover mit Höhenanzeige fehlt
-      noch
-      <i class="bi bi-exclamation-triangle"></i>
-      <div class="airbuddies">
-        <button
-          class="btn btn-primary btn-sm dropdown-toggle"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseAirbuddies"
-          aria-expanded="false"
-          aria-controls="collapseAirbuddies"
-        >
-          Airbuddies
-        </button>
+  </nav>
+  <!-- ./Navigation -->
+  <div class="container-fluid flight-info text-light mb-0 p-1">
+    <p class="m-0">
+      <a href="#"><i class="bi bi-chevron-left mx-2"></i></a>Flug von <a href="#">Stephan Schöpe</a> am <a
+        href="#">23.07.2020</a>
+    </p>
+  </div>
+
+  <section class="track">
+    <div class="container-fluid mt-0">
+      <div class="row">
+        <div id="map"></div>
       </div>
+    </div>
+  </section>
 
-      <div class="collapse" id="collapseAirbuddies">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="flexCheckChecked"
-            onclick="checkbox(this)"
-          />
-          <label class="form-check-label" for="flexCheckChecked">
-            <span class="badge" style="background-color: darkblue">
-              Kai Wissel
-            </span>
-          </label>
-        </div>
+  <div class="container barogramm-container">
+    <canvas id="barogramm" width="400" height="200"></canvas>
+  </div>
+  <!-- Content -->
+  <div class="container">
+    <i class="bi bi-exclamation-triangle"></i> Hover mit Höhenanzeige fehlt
+    noch
+    <i class="bi bi-exclamation-triangle"></i>
+    <div class="airbuddies">
+      <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapseAirbuddies" aria-expanded="false" aria-controls="collapseAirbuddies">
+        Airbuddies
+      </button>
+    </div>
+
+    <div class="collapse mt-2" id="collapseAirbuddies">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="checkbox(this)" />
+        <label class="form-check-label" for="flexCheckChecked">
+          <span class="badge" style="background-color: darkblue">
+            Kai Wissel
+          </span>
+        </label>
       </div>
+    </div>
 
-      <!-- Flug Details -->
+    <!-- Flug Details -->
 
-      <section class="flug-eigenschaften">
-        <h3>Flugeigenschaften</h3>
-        <div class="row">
-          <div class="col-md-6 col-12 my-1">
-            <table class="table table-sm">
-              <thead></thead>
-              <tbody>
-                <tr>
-                  <th>Pilot:</th>
-                  <td><a href="#">Stephan Schöpe</a></td>
-                </tr>
-                <tr>
-                  <th>Verein:</th>
-                  <td><a href="#">D.G.F. Rhein-Mosel-Lahn</a></td>
-                </tr>
-                <tr>
-                  <th>Team:</th>
-                  <td><a href="#">Die sympathischen Speeditöre</a></td>
-                </tr>
-                <tr>
-                  <th>Fluggerät:</th>
-                  <td>Flow XCRacer</td>
-                </tr>
-                <tr>
-                  <th>Geräteklasse:</th>
-                  <td>
-                    <i class="bi bi-trophy gs-performance"></i> GS Performance
-                    low
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- Backup 
+    <section class="flug-eigenschaften">
+      <h3>Flugeigenschaften</h3>
+      <div class="row">
+        <div class="col-md-6 col-12 my-1">
+          <table class="table table-sm">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <th>Pilot:</th>
+                <td><a href="#">Stephan Schöpe</a></td>
+              </tr>
+              <tr>
+                <th>Verein:</th>
+                <td><a href="#">D.G.F. Rhein-Mosel-Lahn</a></td>
+              </tr>
+              <tr>
+                <th>Team:</th>
+                <td><a href="#">Die sympathischen Speeditöre</a></td>
+              </tr>
+              <tr>
+                <th>Fluggerät:</th>
+                <td>Flow XCRacer</td>
+              </tr>
+              <tr>
+                <th>Geräteklasse:</th>
+                <td>
+                  <i class="bi bi-trophy gs-performance"></i> GS Performance
+                  low
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Backup 
            <tr>
                   <th>Flugstatus:</th>
                   <td>😃 (In Wertung)</td>
                 </tr>
-          --></div>
-          <div class="col-md-6 col-12 my-1">
+          -->
+        </div>
+        <div class="col-md-6 col-12 my-1">
+          <table class="table table-sm">
+            <thead></thead>
+            <tbody>
+              <tr>
+                <th>Flugzeit:</th>
+                <td>5:57</td>
+              </tr>
+              <tr>
+                <th>Strecke:</th>
+                <td>100,49 km <i class="bi bi-triangle"></i></td>
+              </tr>
+              <tr>
+                <th>Punkte:</th>
+                <td>555</td>
+              </tr>
+
+              <tr>
+                <th>Startplatz:</th>
+                <td>Bremm (SSO-SSW)</td>
+              </tr>
+              <tr>
+                <th>Uhrzeit:</th>
+                <td>
+                  <i class="bi bi-arrow-up"></i> 12:09 Uhr
+                  <i class="bi bi-arrow-down"></i> 18:06 Uhr
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- Details -->
+      <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="collapse"
+        data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Details anzeigen
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-cloud-download"></i> .igc
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="row">
+          <div class="col-md-6 col-12">
             <table class="table table-sm">
               <thead></thead>
               <tbody>
                 <tr>
-                  <th>Flugzeit:</th>
-                  <td>5:57</td>
+                  <th>Flugstatus:</th>
+                  <td>😃 (In Wertung)</td>
                 </tr>
                 <tr>
-                  <th>Strecke:</th>
-                  <td>100,49 km <i class="bi bi-triangle"></i></td>
+                  <th>Höhe min/max (GPS):</th>
+                  <td>359m / 2665m</td>
                 </tr>
                 <tr>
-                  <th>Punkte:</th>
-                  <td>555</td>
-                </tr>
-
-                <tr>
-                  <th>Startplatz:</th>
-                  <td>Bremm (SSO-SSW)</td>
+                  <th>Steigen min/max:</th>
+                  <td>-10,0m/s / 7,0m/s</td>
                 </tr>
                 <tr>
-                  <th>Uhrzeit:</th>
-                  <td>
-                    <i class="bi bi-arrow-up"></i> 12:09 Uhr
-                    <i class="bi bi-arrow-down"></i> 18:06 Uhr
-                  </td>
+                  <th>Geschwindigkeit max:</th>
+                  <td>124,0km/h</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6 col-12">
+            <table class="table table-sm">
+              <thead></thead>
+              <tbody>
+                <tr>
+                  <th>Landeplatz:</th>
+                  <td>Bremm - DE[~1,29km]</td>
+                </tr>
+                <tr>
+                  <th>Ø Geschwindigkeit:</th>
+                  <td>38,0km/h</td>
+                </tr>
+                <tr>
+                  <th>Aufgaben-Geschwindigkeit:</th>
+                  <td>16,9km/h</td>
+                </tr>
+                <tr>
+                  <th>Eingereicht am:</th>
+                  <td>23.07.2020 18:50:23</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- Details -->
-        <button
-          class="btn btn-primary btn-sm dropdown-toggle"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseExample"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-        >
-          Details anzeigen
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-primary">
-          <i class="bi bi-cloud-download"></i> .igc
-        </button>
-        <div class="collapse" id="collapseExample">
-          <div class="row">
-            <div class="col-md-6 col-12">
-              <table class="table table-sm">
-                <thead></thead>
-                <tbody>
-                  <tr>
-                    <th>Flugstatus:</th>
-                    <td>😃 (In Wertung)</td>
-                  </tr>
-                  <tr>
-                    <th>Höhe min/max (GPS):</th>
-                    <td>359m / 2665m</td>
-                  </tr>
-                  <tr>
-                    <th>Steigen min/max:</th>
-                    <td>-10,0m/s / 7,0m/s</td>
-                  </tr>
-                  <tr>
-                    <th>Geschwindigkeit max:</th>
-                    <td>124,0km/h</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="col-md-6 col-12">
-              <table class="table table-sm">
-                <thead></thead>
-                <tbody>
-                  <tr>
-                    <th>Landeplatz:</th>
-                    <td>Bremm - DE[~1,29km]</td>
-                  </tr>
-                  <tr>
-                    <th>Ø Geschwindigkeit:</th>
-                    <td>38,0km/h</td>
-                  </tr>
-                  <tr>
-                    <th>Aufgaben-Geschwindigkeit:</th>
-                    <td>16,9km/h</td>
-                  </tr>
-                  <tr>
-                    <th>Eingereicht am:</th>
-                    <td>23.07.2020 18:50:23</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="flug-bericht">
-        <div class="row mt-4">
-          <h3>Flugbericht</h3>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Consequuntur numquam, accusamus dolor minus inventore libero saepe
-            quo exercitationem praesentium dolorem magni, quis quia tenetur
-            similique sint? Tenetur magnam magni molestias veniam, accusantium
-            vel dolorem consectetur? Dicta fugiat saepe nesciunt minima illo
-            ipsa, voluptas quia aliquam libero. Nisi quo doloremque nam?
-            Adipisci assumenda, ipsam hic a consequatur explicabo eligendi
-            architecto commodi?
-          </p>
-        </div>
-      </section>
-
-      <div class="row mb-4">
-        <div class="col-4">
-          <figure class="figure">
-            <img
-              src="images/rachtig.jpg"
-              class="figure-img img-fluid img-thumbnail"
-              alt=""
-            />
-            <figcaption class="figure-caption text-center">
-              Lorem, ipsum dolor.
-            </figcaption>
-          </figure>
-        </div>
-        <div class="col-4">
-          <figure class="figure">
-            <img
-              src="images/rachtig.jpg"
-              class="figure-img img-fluid img-thumbnail"
-              alt=""
-            />
-            <figcaption class="figure-caption text-center">
-              Lorem, ipsum dolor.
-            </figcaption>
-          </figure>
-        </div>
-        <div class="col-4">
-          <figure class="figure">
-            <img
-              src="images/rachtig.jpg"
-              class="figure-img img-fluid img-thumbnail"
-              alt=""
-            />
-            <figcaption class="figure-caption text-center">
-              Lorem, ipsum dolor.
-            </figcaption>
-          </figure>
-        </div>
       </div>
+    </section>
 
-      <!-- Kommentare -->
-      <section class="kommentare">
-        <div class="row mb-4">
-          <div class="card-box col-12">
-            <div class="ml-3 mr-3">
-              <h3>Kommentare</h3>
-              <div id="comments" class="mb-3">
-                <div class="comment row mb-3">
-                  <div class="cpilot col-xl-2 col-lg-3">
-                    <div class="d-flex">
-                      <img
-                        src=""
-                        style="margin-right: 6px"
-                        height="24"
-                        width="24"
-                      />
-                      <a href="#">Pilot 1</a>
-                    </div>
-                  </div>
-                  <div class="ccontent col-xl-9 col-lg-8">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Accusamus, explicabo?
-                  </div>
-                </div>
-                <div class="comment row mb-3">
-                  <div class="cpilot col-xl-2 col-lg-3">
-                    <div class="d-flex">
-                      <img
-                        src=""
-                        style="margin-right: 6px"
-                        height="24"
-                        width="24"
-                      /><a href="#">Pilot 2</a>
-                    </div>
-                  </div>
-                  <div class="ccontent col-xl-9 col-lg-8">
-                    Lorem, ipsum dolor.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    <section class="flug-bericht">
+      <div class="row mt-4">
+        <h3>Flugbericht</h3>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+          Consequuntur numquam, accusamus dolor minus inventore libero saepe
+          quo exercitationem praesentium dolorem magni, quis quia tenetur
+          similique sint? Tenetur magnam magni molestias veniam, accusantium
+          vel dolorem consectetur? Dicta fugiat saepe nesciunt minima illo
+          ipsa, voluptas quia aliquam libero. Nisi quo doloremque nam?
+          Adipisci assumenda, ipsam hic a consequatur explicabo eligendi
+          architecto commodi?
+        </p>
+      </div>
+    </section>
+
+    <div class="row mb-4">
+      <div class="col-4">
+        <figure class="figure">
+          <a href="images/rachtig.jpg" data-lightbox="images" data-title="Lorem, ipsum dolor."><img
+              src="images/rachtig.jpg" class="figure-img img-fluid img-thumbnail" alt="" /></a>
+
+          <figcaption class="figure-caption text-center">
+            Lorem, ipsum dolor.
+          </figcaption>
+        </figure>
+      </div>
+      <div class="col-4">
+        <figure class="figure">
+          <a href="images/rachtig.jpg" data-lightbox="images" data-title="Lorem, ipsum dolor."><img
+              src="images/rachtig.jpg" class="figure-img img-fluid img-thumbnail" alt="" /></a>
+          <figcaption class="figure-caption text-center">
+            Lorem, ipsum dolor.
+          </figcaption>
+        </figure>
+      </div>
+      <div class="col-4">
+        <figure class="figure">
+          <a href="images/rachtig.jpg" data-lightbox="images" data-title="Lorem, ipsum dolor."><img
+              src="images/rachtig.jpg" class="figure-img img-fluid img-thumbnail" alt="" /></a>
+          <figcaption class="figure-caption text-center">
+            Lorem, ipsum dolor.
+          </figcaption>
+        </figure>
+      </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="p-3 text-light bg-primary m-0">
-      <p class="float-end"><a href="#">Nach oben</a></p>
-      <p>
-        © XCCup 2021 ·
-        <a href="#">Datenschutz</a> · <a href="#">Impressum</a> ·
-        <a href="https://github.com/KaiWissel/XCCup-2.0"
-          ><i class="bi bi-github"></i
-        ></a>
-      </p>
-    </footer>
-    <!-- ./Footer -->
+    <!-- Kommentare -->
+    <section class="kommentare">
+      <div class="row">
+        <h3>Kommentare</h3>
+        <div class="col-xxl-10">
+          <!-- Comment 1 -->
+          <div class="shadow p-3 mb-3">
+            <div class="d-flex mb-2">
+              <img src="images/avatar.png" class="rounded-circle" style="margin-right: 6px" height="24" width="24" />
+              <a href="#">Pilot Name</a>
+              <span class="ms-auto fw-light text-secondary">5 days ago</span>
+            </div>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Accusamus, explicabo?
+            </p>
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-      crossorigin="anonymous"
-    ></script>
+          </div>
+          <!-- Comment 2 -->
+          <div class="shadow p-3 mb-3">
+            <div class="d-flex mb-2">
+              <img src="images/avatar2.png" class="rounded-circle" style="margin-right: 6px" height="24" width="24" />
+              <a href="#">Pilot Name</a>
+              <span class="ms-auto fw-light text-secondary">10.03.2021</span>
+            </div>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi ducimus molestiae magni quaerat optio,
+              hic aut? A nesciunt odit odio.
+            </p>
 
-    <!-- Leaflet -->
-    <script
-      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""
-    ></script>
+            <div class="text-secondary text-end">
+              <a href="#"><i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a>
+              <a href="#"><i class="bi bi-trash mx-1"></i>Löschen</a>
+            </div>
+          </div>
 
-    <!-- Map -->
-    <script src="js/map.js"></script>
+          <!-- New comment -->
+          <div class="shadow p-3 mb-3">
+            <div class="d-flex mb-2">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Kommentar verfassen:</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <button class="btn btn-primary">Senden</button>
+            <button class="btn btn-outline-danger">Löschen</button>
+          </div>
+        </div>
+    </section>
+  </div>
 
-    <!-- Chart.js -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-beta.13/chart.js"
-      integrity="sha512-JS/WtaFglOYbXbMt9s52TO0QEzWljfCG2dFTC6aW9bJdP40kC37uoV+EzI06/LgpfX65oTnS1jUXxscH2xlG1Q=="
-      crossorigin="anonymous"
-    ></script>
+  <!-- Footer -->
+  <footer class="p-3 text-light bg-primary m-0">
+    <p class="float-end"><a href="#">Nach oben</a></p>
+    <p>
+      © XCCup 2021 ·
+      <a href="#">Datenschutz</a> · <a href="#">Impressum</a> ·
+      <a href="https://github.com/KaiWissel/XCCup-2.0"><i class="bi bi-github"></i></a>
+    </p>
+  </footer>
+  <!-- ./Footer -->
 
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"
-      integrity="sha512-F+u8eWHrfY8Xw9BLzZ8rG/0wIvs0y+JyRJrXjp3VjtFPylAEEGwKbua5Ip/oiVhaTDaDs4eU2Xtsxjs/9ag2bQ=="
-      crossorigin="anonymous"
-    ></script>
+  <!-- Lightbox -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"
+    integrity="sha512-6gudNVbNM/cVsLUMOb8g2b/RBqtQJ3aDfRFgU+5paeaCTtbYY/Dg00MzZq7r6RvJGI2KKtPBhjkHGTL/iOe21A=="
+    crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
 
-    <script src="js/barogramm.js"></script>
-  </body>
+  <!-- Leaflet -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <!-- Map -->
+  <script src="js/map.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.0.0-beta.13/chart.js"
+    integrity="sha512-JS/WtaFglOYbXbMt9s52TO0QEzWljfCG2dFTC6aW9bJdP40kC37uoV+EzI06/LgpfX65oTnS1jUXxscH2xlG1Q=="
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"
+    integrity="sha512-F+u8eWHrfY8Xw9BLzZ8rG/0wIvs0y+JyRJrXjp3VjtFPylAEEGwKbua5Ip/oiVhaTDaDs4eU2Xtsxjs/9ag2bQ=="
+    crossorigin="anonymous"></script>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+  <script src="js/barogramm.js"></script>
+</body>
+
 </html>

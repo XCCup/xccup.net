@@ -1,5 +1,8 @@
 // Create Map
-var mymap = L.map("map");
+var mymap = L.map("map", {
+  dragging: !L.Browser.mobile,
+  tap: !L.Browser.mobile,
+});
 
 let latLongDataPilot = [];
 let latLongDataBuddy1 = [];

@@ -10794,6 +10794,13 @@ footer a:hover {
 .text-light a {
   color: #f8f9fa;
 }
+.text-light a:hover {
+  color: #6c757d;
+}
+
+.flight-info {
+  background-color: #064255;
+}
 
 .header-image {
   background-image: url("../images/rachtig.jpg");
