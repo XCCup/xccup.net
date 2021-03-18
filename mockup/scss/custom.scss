@@ -7,6 +7,7 @@ $table-striped-bg: rgba($primary, $table-striped-bg-factor);
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css");
 @import "wertungsklassen";
+@import "comments";
 
 html,
 body {
@@ -40,6 +41,12 @@ footer {
   a {
     color: $light;
   }
+  a:hover {
+    color: $secondary;
+  }
+}
+.flight-info {
+  background-color: darken($primary, 5 %);
 }
 
 .header-image {
