@@ -10,10 +10,6 @@ Chart.defaults.elements.point.pointHoverRadius = 0;
 // Chart.defaults.plugins.decimation.enabled = true;
 // console.log(Chart.defaults.plugins.decimation);
 
-let flightData = [];
-let flightDataBuddy1 = [];
-let elevation = [];
-
 // Barogramm setup
 var ctx = document.getElementById("barogramm");
 var barogramm = new Chart(ctx, {
@@ -166,8 +162,6 @@ var barogramm = new Chart(ctx, {
 // Disable all animations
 // barogramm.options.animation = false;
 
-getDemoFlight();
-
 async function getDemoFlight(chart) {
   let response = await fetch("demoData/flight.json");
   flightData = await response.json();
@@ -230,13 +224,18 @@ async function getDemoFlight(chart) {
   barogramm.update();
 
   // Update map
-  updateMap();
+  tracksOnMap = createTrackLines([latLongDataPilot, latLongDataBuddy1]);
+  centerMapOn(latLongDataPilot);
+  fitMap(tracksOnMap[0]);
+
+  // Create markers
+  markers = createMarkers(tracksOnMap);
 }
 
 const updateMapPosition = (context) => {
   if (context.datasetIndex === 0) {
     if (latLongDataPilot[context.dataIndex]) {
-      markerPilot.setLatLng(latLongDataPilot[context.dataIndex]);
+      markers[0].setLatLng(latLongDataPilot[context.dataIndex]);
       //  Center map on main flight
       mymap.setView(latLongDataPilot[context.dataIndex]);
     }
@@ -244,7 +243,7 @@ const updateMapPosition = (context) => {
 
   if (context.datasetIndex === 1) {
     if (latLongDataBuddy1[context.dataIndex]) {
-      markerBuddy1.setLatLng(latLongDataBuddy1[context.dataIndex]);
+      markers[1].setLatLng(latLongDataBuddy1[context.dataIndex]);
     }
   }
 };
@@ -254,13 +253,13 @@ const checkbox = (context) => {
     barogramm.setDatasetVisibility(1, true);
     barogramm.setDatasetVisibility(2, false);
     barogramm.update();
-    tracklogBuddy1.addTo(mymap);
-    markerBuddy1.addTo(mymap);
+    tracksOnMap[1].addTo(mymap);
+    markers[1].addTo(mymap);
   } else {
     barogramm.setDatasetVisibility(1, false);
     barogramm.setDatasetVisibility(2, true);
     barogramm.update();
-    tracklogBuddy1.remove();
-    markerBuddy1.remove();
+    tracksOnMap[1].remove();
+    markers[1].remove();
   }
 };
