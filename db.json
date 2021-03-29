@@ -189,7 +189,7 @@
     },
     {
       "rankingClass": "gsTandem",
-      "rankingName": "",
+      "rankingName": "GS Tandem",
       "pilots": [
         { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
         { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
