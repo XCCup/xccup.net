@@ -2,55 +2,55 @@
   "pilots": [
     {
       "id": "1",
-      "name": "Pilot 1",
+      "name": "Nikki Fernandez",
       "club": "Some Club",
       "team": "Some Team"
     },
     {
       "id": "2",
-      "name": "Pilot 2",
+      "name": "Noor Fountain",
       "club": "Some Club",
       "team": "Some Team"
     },
     {
       "id": "3",
-      "name": "Pilot 3",
+      "name": "Joey Tierney",
       "club": "Some Club",
       "team": "Some Team"
     },
     {
       "id": "4",
-      "name": "Pilot 4",
+      "name": "Dru Wolf",
       "club": "Some Club",
       "team": "Some Team"
     },
     {
       "id": "1",
-      "name": "Pilot 5",
+      "name": "Tobias Rees",
       "club": "Some Club",
       "team": "Some Team"
     },
     {
       "id": "5",
-      "name": "Pilot 6",
+      "name": "Mckenzie Benitez",
       "club": "Some Club",
       "team": "Some Team"
     },
     {
       "id": "6",
-      "name": "Pilot 1",
+      "name": "Huda Cabrera",
       "club": "Some Club",
       "team": "Some Team"
     },
     {
       "id": "7",
-      "name": "Pilot 7",
+      "name": "Ziggy Zavala",
       "club": "Some Club",
       "team": "Some Team"
     },
     {
       "id": "8",
-      "name": "Pilot 8",
+      "name": "Hadiya Mcgrath",
       "club": "Some Club",
       "team": "Some Team"
     },
@@ -62,7 +62,7 @@
     },
     {
       "id": "10",
-      "name": "Pilot 10",
+      "name": "Vivaan Molloy",
       "club": "Some Club",
       "team": "Some Team"
     }
@@ -70,7 +70,7 @@
   "tageswertung": [
     {
       "id": "1",
-      "pilot": "Some Pilot",
+      "pilot": "Teddy Weber",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -79,7 +79,7 @@
     },
     {
       "id": "2",
-      "pilot": "Some Pilot",
+      "pilot": "Kira Hobbs",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -88,7 +88,7 @@
     },
     {
       "id": "3",
-      "pilot": "Some Pilot",
+      "pilot": "Jamie-Leigh Holcomb",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -97,7 +97,7 @@
     },
     {
       "id": "4",
-      "pilot": "Some Pilot",
+      "pilot": "Celyn Molloy",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -106,7 +106,7 @@
     },
     {
       "id": "5",
-      "pilot": "Some Pilot",
+      "pilot": "Ewan Smyth",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -115,7 +115,7 @@
     },
     {
       "id": "6",
-      "pilot": "Some Pilot",
+      "pilot": "Allison Humphries",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -124,7 +124,7 @@
     },
     {
       "id": "7",
-      "pilot": "Some Pilot",
+      "pilot": "Mikey Shepherd",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -133,7 +133,7 @@
     },
     {
       "id": "8",
-      "pilot": "Some Pilot",
+      "pilot": "Aniya Reyna",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -142,7 +142,7 @@
     },
     {
       "id": "9",
-      "pilot": "Some Pilot",
+      "pilot": "Lillie-Rose Brown",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -151,7 +151,7 @@
     },
     {
       "id": "10",
-      "pilot": "Some Pilot",
+      "pilot": "Gemma Montoya",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
       "distance": 100,
@@ -164,54 +164,54 @@
       "rankingClass": "gsSport",
       "rankingName": "GS Sport",
       "pilots": [
-        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
-        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
-        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+        { "name": "Allan Hanna", "ranking": 1, "pilotId": "1" },
+        { "name": "Alisa Riley", "ranking": 2, "pilotId": "2" },
+        { "name": "Khalil Mayo", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
       "rankingClass": "gsIntermediate",
       "rankingName": "GS Intermediate",
       "pilots": [
-        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
-        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
-        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+        { "name": "Nicole Grimes", "ranking": 1, "pilotId": "1" },
+        { "name": "Georga Stone", "ranking": 2, "pilotId": "2" },
+        { "name": "Kaila Melton", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
       "rankingClass": "gsPerformance",
       "rankingName": "GS Performance",
       "pilots": [
-        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
-        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
-        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+        { "name": "Dakota Cobb", "ranking": 1, "pilotId": "1" },
+        { "name": "Megan Needham", "ranking": 2, "pilotId": "2" },
+        { "name": "Mark Kerr", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
       "rankingClass": "gsTandem",
       "rankingName": "GS Tandem",
       "pilots": [
-        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
-        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
-        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+        { "name": "Gianni Stephenson", "ranking": 1, "pilotId": "1" },
+        { "name": "Kendall Rich", "ranking": 2, "pilotId": "2" },
+        { "name": "Brian Bell", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
       "rankingClass": "hgFlex",
       "rankingName": "HG Flex",
       "pilots": [
-        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
-        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
-        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+        { "name": "Farhan Palacios", "ranking": 1, "pilotId": "1" },
+        { "name": "Pamela Mccartney", "ranking": 2, "pilotId": "2" },
+        { "name": "Lyla Coles", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
       "rankingClass": "hgStarr",
       "rankingName": "HG Starre",
       "pilots": [
-        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
-        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
-        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+        { "name": "Misha Jackson", "ranking": 1, "pilotId": "1" },
+        { "name": "Anabel Perry", "ranking": 2, "pilotId": "2" },
+        { "name": "Alistair Harris", "ranking": 3, "pilotId": "3" }
       ]
     }
   ]
