@@ -158,5 +158,49 @@
       "points": 200,
       "flightId": "1"
     }
+  ],
+  "geraetewertung": [
+    {
+      "gsSport": [
+        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
+        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
+        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+      ]
+    },
+    {
+      "gsIntermediate": [
+        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
+        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
+        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+      ]
+    },
+    {
+      "gsPerformance": [
+        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
+        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
+        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+      ]
+    },
+    {
+      "gsTandem": [
+        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
+        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
+        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+      ]
+    },
+    {
+      "hgFlex": [
+        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
+        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
+        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+      ]
+    },
+    {
+      "hgStarr": [
+        { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
+        { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
+        { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
+      ]
+    }
   ]
 }
