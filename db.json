@@ -161,42 +161,54 @@
   ],
   "geraetewertung": [
     {
-      "gsSport": [
+      "rankingClass": "gsSport",
+      "rankingName": "GS Sport",
+      "pilots": [
         { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
         { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
         { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
-      "gsIntermediate": [
+      "rankingClass": "gsIntermediate",
+      "rankingName": "GS Intermediate",
+      "pilots": [
         { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
         { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
         { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
-      "gsPerformance": [
+      "rankingClass": "gsPerformance",
+      "rankingName": "GS Performance",
+      "pilots": [
         { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
         { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
         { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
-      "gsTandem": [
+      "rankingClass": "gsTandem",
+      "rankingName": "",
+      "pilots": [
         { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
         { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
         { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
-      "hgFlex": [
+      "rankingClass": "hgFlex",
+      "rankingName": "HG Flex",
+      "pilots": [
         { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
         { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
         { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
       ]
     },
     {
-      "hgStarr": [
+      "rankingClass": "hgStarr",
+      "rankingName": "HG Starre",
+      "pilots": [
         { "name": "Pilot 1", "ranking": 1, "pilotId": "1" },
         { "name": "Pilot 2", "ranking": 2, "pilotId": "2" },
         { "name": "Pilot 3", "ranking": 3, "pilotId": "3" }
