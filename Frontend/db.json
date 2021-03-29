@@ -1,0 +1,162 @@
+{
+  "pilots": [
+    {
+      "id": "1",
+      "name": "Pilot 1",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "2",
+      "name": "Pilot 2",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "3",
+      "name": "Pilot 3",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "4",
+      "name": "Pilot 4",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "1",
+      "name": "Pilot 5",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "5",
+      "name": "Pilot 6",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "6",
+      "name": "Pilot 1",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "7",
+      "name": "Pilot 7",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "8",
+      "name": "Pilot 8",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "9",
+      "name": "Pilot 9",
+      "club": "Some Club",
+      "team": "Some Team"
+    },
+    {
+      "id": "10",
+      "name": "Pilot 10",
+      "club": "Some Club",
+      "team": "Some Team"
+    }
+  ],
+  "tageswertung": [
+    {
+      "id": "1",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "2",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "3",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "4",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "5",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "6",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "7",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "8",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "9",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    },
+    {
+      "id": "10",
+      "pilot": "Some Pilot",
+      "taskType": "Jojo",
+      "takeoff": "Some takeoff",
+      "distance": 100,
+      "points": 200,
+      "flightId": "1"
+    }
+  ]
+}

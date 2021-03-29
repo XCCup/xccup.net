@@ -162,7 +162,7 @@ var barogramm = new Chart(ctx, {
 // Disable all animations
 // barogramm.options.animation = false;
 
-async function getDemoFlight(chart) {
+async function getDemoFlight() {
   let response = await fetch("demoData/flight.json");
   flightData = await response.json();
 

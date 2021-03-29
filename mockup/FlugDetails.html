@@ -570,6 +570,15 @@
       let elevation = [];
       let markers = [];
 
+      const getApiData = async () => {
+        let response = await fetch(
+          "https://xccup.lurb.org/flights/605999bc289f584e58cceb17"
+        );
+        let apiData = await response.json();
+        console.log(apiData);
+      };
+
+      getApiData();
       getDemoFlight();
     </script>
   </body>
