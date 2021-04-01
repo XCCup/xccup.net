@@ -25,6 +25,8 @@
     </div>
 
     <FlugEigenschaften :flight="this.flight" :pilot="this.pilot" />
+    <FlightDescription :description="description" />
+    <Comments :comments="comments" />
   </div>
 </template>
 
@@ -34,6 +36,8 @@ import FlugEigenschaften from "@/components/FlugEigenschaften";
 import Barogramm from "@/components/Barogramm.vue";
 import Airbuddies from "@/components/Airbuddies.vue";
 import Map from "@/components/Map";
+import Comments from "@/components/Comments";
+import FlightDescription from "@/components/FlightDescription";
 export default {
   name: "FlugDetails",
   components: {
@@ -41,6 +45,8 @@ export default {
     Barogramm,
     Map,
     Airbuddies,
+    FlightDescription,
+    Comments,
   },
   data() {
     return {
@@ -56,6 +62,8 @@ export default {
       flight: {},
       tracklogs: [[]],
       pilot: { club: "Good Club" },
+      comments: [],
+      description: {},
     };
   },
   created() {
@@ -80,6 +88,12 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+    FlightService.getComments().then((response) => {
+      this.comments = response.data;
+    });
+    FlightService.getDescription().then((response) => {
+      this.description = response.data[0];
+    });
   },
 };
 </script>

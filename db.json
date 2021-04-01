@@ -235,7 +235,11 @@
     {
       "id": "605e2181b2b5a2de2e0c6f63",
       "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur numquam, accusamus dolor minus inventore libero saepe quo exercitationem praesentium dolorem magni, quis quia tenetur similique sint? Tenetur magnam magni molestias veniam, accusantium vel dolorem consectetur? Dicta fugiat saepe nesciunt minima illo ipsa, voluptas quia aliquam libero. Nisi quo doloremque nam? Adipisci assumenda, ipsam hic a consequatur explicabo eligendi architecto commodi?",
-      "images": ["rachtig.jpg", "rachtig.jpg", "rachtig.jpg"]
+      "images": [
+        { "file": "rachtig.jpg", "caption": "Lorem Ipsum" },
+        { "file": "rachtig.jpg", "caption": "Lorem Ipsum" },
+        { "file": "rachtig.jpg", "caption": "Lorem Ipsum" }
+      ]
     }
   ]
 }

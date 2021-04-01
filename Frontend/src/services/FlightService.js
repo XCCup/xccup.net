@@ -38,4 +38,10 @@ export default {
   getGeraetewertung() {
     return apiClient2.get("/geraetewertung");
   },
+  getComments() {
+    return apiClient2.get("/comments");
+  },
+  getDescription() {
+    return apiClient2.get("/flightDescription");
+  },
 };
