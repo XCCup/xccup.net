@@ -214,5 +214,28 @@
         { "name": "Alistair Harris", "ranking": 3, "pilotId": "3" }
       ]
     }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "name": "Nikki Fernandez",
+      "pilotId": "1",
+      "comment": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, explicabo?",
+      "date": "10.3.2021"
+    },
+    {
+      "id": "2",
+      "name": "Noor Fountain",
+      "pilotId": "2",
+      "comment": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi ducimus molestiae magni quaerat optio, hic aut? A nesciunt odit odio.",
+      "date": "8.3.2021"
+    }
+  ],
+  "flightDescription": [
+    {
+      "id": "605e2181b2b5a2de2e0c6f63",
+      "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequuntur numquam, accusamus dolor minus inventore libero saepe quo exercitationem praesentium dolorem magni, quis quia tenetur similique sint? Tenetur magnam magni molestias veniam, accusantium vel dolorem consectetur? Dicta fugiat saepe nesciunt minima illo ipsa, voluptas quia aliquam libero. Nisi quo doloremque nam? Adipisci assumenda, ipsam hic a consequatur explicabo eligendi architecto commodi?",
+      "images": ["rachtig.jpg", "rachtig.jpg", "rachtig.jpg"]
+    }
   ]
 }
