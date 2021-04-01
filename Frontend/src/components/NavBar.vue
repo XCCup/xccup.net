@@ -123,9 +123,13 @@
             <a class="dropdown-item" href="#">Password vergessen?</a>
           </div>
         </div>
-        <a href="FlugHochladen.html" class="btn btn-danger btn-sm m-1"
-          >Flug hochladen</a
-        >
+        <router-link
+          class="btn btn-danger btn-sm m-1"
+          :to="{
+            name: 'UploadFlight',
+          }"
+          >Flug hochladen
+        </router-link>
       </div>
     </div>
   </nav>

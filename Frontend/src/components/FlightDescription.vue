@@ -6,25 +6,25 @@
         {{ description.description }}
       </p>
     </div>
-    <div
-      class="row mb-4"
-      v-for="(image, index) in description.images"
-      :key="index"
-    >
-      <div class="col-4">
+    <div class="row mb-4">
+      <div
+        class="col-4"
+        v-for="(image, index) in description.images"
+        :key="index"
+      >
         <figure class="figure">
           <a
-            href="@/assets/images/rachtig.jpg"
+            :href="require('@/assets/images/' + image.file)"
             data-lightbox="images"
             data-title="Lorem, ipsum dolor."
             ><img
-              src="@/assets/images/rachtig.jpg"
+              :src="require('@/assets/images/' + image.file)"
               class="figure-img img-fluid img-thumbnail"
               alt=""
           /></a>
 
           <figcaption class="figure-caption text-center">
-            Lorem, ipsum dolor.
+            {{ image.caption }}
           </figcaption>
         </figure>
       </div>
