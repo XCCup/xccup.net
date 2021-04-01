@@ -26,17 +26,20 @@
     <div class="shadow p-3 mb-3">
       <div class="d-flex mb-2"></div>
       <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label"
-          >Kommentar verfassen:</label
-        >
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="3"
-        ></textarea>
+        <form @submit.prevent="onSubmit">
+          <label for="comment" class="form-label">Kommentar verfassen:</label>
+          <textarea
+            class="form-control mb-2"
+            id="comment"
+            v-model="comment"
+            rows="3"
+          ></textarea>
+          <button class="btn btn-primary me-1" type="submit">Senden</button>
+          <button class="btn btn-outline-danger mx-1" type="reset">
+            Löschen
+          </button>
+        </form>
       </div>
-      <button class="btn btn-primary me-1">Senden</button>
-      <button class="btn btn-outline-danger mx-1">Löschen</button>
     </div>
   </div>
 </template>
@@ -48,6 +51,22 @@ export default {
     comments: {
       type: Array,
       required: true,
+    },
+  },
+  data() {
+    return {
+      comment: "",
+    };
+  },
+  methods: {
+    onSubmit() {
+      let comment = {
+        comment: this.comment,
+        name: "Me",
+        date: new Date(),
+      };
+      this.$emit("comment-submitted", comment);
+      this.comment = "";
     },
   },
 };

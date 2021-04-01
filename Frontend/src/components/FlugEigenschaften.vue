@@ -31,7 +31,8 @@
             <tr>
               <th>Geräteklasse:</th>
               <td>
-                <i class="bi bi-trophy gs-performance"></i> GS Performance low
+                <i class="bi bi-trophy" :class="flight.rankingClass"></i>
+                {{ flight.rankingName }}
               </td>
             </tr>
           </tbody>

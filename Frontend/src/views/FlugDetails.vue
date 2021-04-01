@@ -26,7 +26,7 @@
 
     <FlugEigenschaften :flight="this.flight" :pilot="this.pilot" />
     <FlightDescription :description="description" />
-    <Comments :comments="comments" />
+    <Comments :comments="comments" @comment-submitted="addComment" />
   </div>
 </template>
 
@@ -65,6 +65,11 @@ export default {
       comments: [],
       description: {},
     };
+  },
+  methods: {
+    addComment(comment) {
+      this.comments.push(comment);
+    },
   },
   created() {
     FlightService.getFlight(this.$route.params.flightId)
