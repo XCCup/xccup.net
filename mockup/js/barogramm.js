@@ -113,6 +113,7 @@ var barogramm = new Chart(ctx, {
               label += context.parsed.y + "m";
             }
             // Update position on map
+            console.log(context);
             updateMapPosition(context);
             return label;
           },

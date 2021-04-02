@@ -38,6 +38,8 @@ import Airbuddies from "@/components/Airbuddies.vue";
 import Map from "@/components/Map";
 import Comments from "@/components/Comments";
 import FlightDescription from "@/components/FlightDescription";
+import trackColors from "@/assets/js/trackColors";
+
 export default {
   name: "FlugDetails",
   components: {
@@ -50,17 +52,10 @@ export default {
   },
   data() {
     return {
-      baroData: [
-        {
-          label: "Stephan",
-          data: [],
-          backgroundColor: "rgb(139, 0, 0)",
-          borderColor: "rgb(139, 0, 0)",
-        },
-      ],
+      baroData: [],
       baroDataUpdated: 0,
       flight: {},
-      tracklogs: [[]],
+      tracklogs: [],
       pilot: { club: "Good Club" },
       comments: [],
       description: {},
@@ -84,11 +79,46 @@ export default {
           });
           tracklog.push([flight.fixes[i].latitude, flight.fixes[i].longitude]);
         }
-        this.baroData[0].data = baroData;
+        this.baroData[0] = {
+          label: "Pilot 1",
+          data: baroData,
+          backgroundColor: trackColors[0],
+          borderColor: trackColors[0],
+        };
         this.tracklogs = [tracklog];
         this.flight = response.data;
         // This is a workaround to trigger the re-render of the chart
         this.baroDataUpdated++;
+
+        // Testing second flight (hardcoded)
+        FlightService.getFlight("605922ae657fe94af9071e63")
+          .then((response) => {
+            let flight = response.data;
+            let baroData = [];
+            let tracklog = [];
+            for (var i = 0; i < response.data.fixes.length; i++) {
+              baroData.push({
+                x: flight.fixes[i].timestamp,
+                y: flight.fixes[i].gpsAltitude,
+              });
+              tracklog.push([
+                flight.fixes[i].latitude,
+                flight.fixes[i].longitude,
+              ]);
+            }
+            this.baroData[1] = {
+              label: "Pilot 2",
+              data: baroData,
+              backgroundColor: trackColors[1],
+              borderColor: trackColors[1],
+            };
+            this.tracklogs = [...this.tracklogs, tracklog];
+            // This is a workaround to trigger the re-render of the chart
+            this.baroDataUpdated++;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error);

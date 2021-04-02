@@ -1,6 +1,6 @@
 <template>
-  <div class="container barogramm-container">
-    <canvas ref="myChart" height="70"></canvas>
+  <div class="container">
+    <canvas ref="myChart"></canvas>
   </div>
 </template>
 
@@ -24,17 +24,18 @@ export default {
       chart: null,
     };
   },
+
   watch: {
+    // Currently not in use because .update() crashes
     datasets(newDatasets) {
       // Replace the datasets and call the update() method on Chart.js
       // instance to re-render the chart.
-      this.chart.data.datasets = newDatasets;
-
+      // this.chart.data.datasets = newDatasets;
       // this.chart.update();
-
       console.log("updated");
     },
   },
+
   mounted() {
     this.chart = new Chart(this.$refs.myChart, {
       type: "line",
@@ -44,16 +45,17 @@ export default {
       },
       options: options,
     });
-  },
-  beforeUnmount() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+    // mybaro = this;
   },
 };
 
+let mybaro;
+
 let options = {
-  //responsive: true,
+  // responsive: true,
+  // parsing: true,
+  // locale: "de-DE",
+  maintainAspectRatio: false,
 
   plugins: {
     title: {
@@ -63,14 +65,70 @@ let options = {
     legend: {
       display: false,
     },
+
+    tooltip: {
+      enabled: false,
+      mode: "x",
+      intersect: false,
+      animation: {
+        duration: 5,
+      },
+      // filter: function (tooltipItem, data, third, four,) {
+      //   // if (third)
+      //   console.log(tooltipItem);
+      //   return true;
+      // },
+      external: function (tooltipModel) {
+        // console.log(tooltipModel);
+        // if (tooltipModel.tooltip.dataPoints.length > 1) {
+        //   const dataPointIdexes = [];
+        //   const result = [];
+        //   const result1 = [];
+        //   tooltipModel.tooltip.dataPoints.forEach((dp, index) => {
+        //     if (!dataPointIdexes.includes(dp.datasetIndex)) {
+        //       result.push(dp);
+        //       dataPointIdexes.push(dp.datasetIndex);
+        //       result1.push(tooltipModel.tooltip.body[index]);
+        //     }
+        //   });
+        //   tooltipModel.tooltip.dataPoints = result;
+        //   tooltipModel.tooltip.body = result1;
+        //   tooltipModel.tooltip.height = 322;
+        //   tooltipHeaderHeight +
+        //   tooltipItemHeight * tooltipModel.tooltip.body.length;
+        // }
+      },
+      callbacks: {
+        label: function (context) {
+          if (context.dataset.label == "GND") {
+            return;
+          }
+          var label = context.dataset.label || "";
+          if (label) {
+            label += ": ";
+          }
+          if (context.parsed.y !== null) {
+            label += context.parsed.y + "m";
+          }
+          // Update position on map
+          // this.position = context.dataIndex;
+          const event = new CustomEvent("positionUpdated", {
+            detail: context,
+          });
+          // mybaro.updatePosition(context.dataIndex);
+          document.dispatchEvent(event);
+          return label;
+        },
+      },
+    },
   },
 
   scales: {
     x: {
       type: "time",
-      //distribution: "linear",
+      // distribution: "linear",
       time: {
-        //parser: "HH:mm:ss",
+        // parser: "HH:mm:ss",
         round: "second",
         displayFormats: {
           minute: "HH:mm",
@@ -79,7 +137,6 @@ let options = {
         tooltipFormat: "HH:mm:ss",
         minUnit: "hour",
       },
-      ticks: {},
       title: {
         display: false,
         text: "Date",
@@ -92,7 +149,7 @@ let options = {
       },
       beginAtZero: true,
       ticks: {
-        callback: function (value, index, values) {
+        callback: function (value) {
           return value + "m";
         },
       },
@@ -115,6 +172,6 @@ Chart.defaults.elements.point.pointHoverRadius = 0;
 </script>
 <style lang="scss" scoped>
 // #barogramm {
-//   height: 100px;
+//   height: 200px;
 // }
 </style>

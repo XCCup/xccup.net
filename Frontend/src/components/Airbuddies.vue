@@ -26,7 +26,10 @@
             id="flexCheckChecked"
           />
           <label class="form-check-label" for="flexCheckChecked">
-            <span class="badge" style="background-color: darkblue">
+            <span
+              class="badge"
+              :style="{ backgroundColor: this.trackColors[index + 1] }"
+            >
               {{ pilot }}
             </span>
           </label>
@@ -37,8 +40,15 @@
 </template>
 
 <script>
+import trackColors from "@/assets/js/trackColors";
+
 export default {
   name: "Airbuddies",
+  data() {
+    return {
+      trackColors: trackColors,
+    };
+  },
   props: {
     airbuddies: {
       type: Array,
