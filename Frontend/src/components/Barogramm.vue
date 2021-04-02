@@ -5,7 +5,9 @@
 </template>
 
 <script>
-//  This helps: https://medium.com/risan/vue-chart-component-with-chart-js-db85a2d21288
+//  This helps:
+// https://medium.com/risan/vue-chart-component-with-chart-js-db85a2d21288
+// https://dev.to/23subbhashit/fetching-and-visualizing-data-in-vue-using-axios-and-chart-js-k2h
 
 import Chart from "chart.js/auto";
 import "chartjs-adapter-date-fns";
@@ -49,7 +51,7 @@ export default {
   },
 };
 
-let mybaro;
+// let mybaro;
 
 let options = {
   // responsive: true,
@@ -111,7 +113,6 @@ let options = {
             label += context.parsed.y + "m";
           }
           // Update position on map
-          // this.position = context.dataIndex;
           const event = new CustomEvent("positionUpdated", {
             detail: context,
           });
