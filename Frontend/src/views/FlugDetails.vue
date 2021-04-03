@@ -8,7 +8,16 @@
     </div>
 
     <Map :tracklogs="tracklogs" />
-    <Barogramm :datasets="baroData" :key="baroDataUpdated" />
+    <div class="d-flex justify-content-center" v-if="baroData.length === 0">
+      <div class="spinner-border text-primary m-5" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <Barogramm
+      :datasets="baroData"
+      :key="baroDataUpdated"
+      v-if="baroData.length != 0"
+    />
     <Airbuddies
       v-if="this.flight.airbuddies"
       :airbuddies="this.flight.airbuddies"
@@ -67,62 +76,68 @@ export default {
     },
   },
   created() {
-    FlightService.getFlight(this.$route.params.flightId)
-      .then((response) => {
-        let flight = response.data;
-        let baroData = [];
-        let tracklog = [];
-        for (var i = 0; i < response.data.fixes.length; i++) {
-          baroData.push({
-            x: flight.fixes[i].timestamp,
-            y: flight.fixes[i].gpsAltitude,
-          });
-          tracklog.push([flight.fixes[i].latitude, flight.fixes[i].longitude]);
-        }
-        this.baroData[0] = {
-          label: "Pilot 1",
-          data: baroData,
-          backgroundColor: trackColors[0],
-          borderColor: trackColors[0],
-        };
-        this.tracklogs = [tracklog];
-        this.flight = response.data;
-        // This is a workaround to trigger the re-render of the chart
-        this.baroDataUpdated++;
+    setTimeout(() => {
+      FlightService.getFlight(this.$route.params.flightId)
+        .then((response) => {
+          let flight = response.data;
+          let baroData = [];
+          let tracklog = [];
+          for (var i = 0; i < response.data.fixes.length; i++) {
+            baroData.push({
+              x: flight.fixes[i].timestamp,
+              y: flight.fixes[i].gpsAltitude,
+            });
+            tracklog.push([
+              flight.fixes[i].latitude,
+              flight.fixes[i].longitude,
+            ]);
+          }
+          this.baroData[0] = {
+            label: "Pilot 1",
+            data: baroData,
+            backgroundColor: trackColors[0],
+            borderColor: trackColors[0],
+          };
+          this.tracklogs = [tracklog];
+          this.flight = response.data;
+          // This is a workaround to trigger the re-render of the chart
+          this.baroDataUpdated++;
 
-        // Testing second flight (hardcoded)
-        FlightService.getFlight("605922ae657fe94af9071e63")
-          .then((response) => {
-            let flight = response.data;
-            let baroData = [];
-            let tracklog = [];
-            for (var i = 0; i < response.data.fixes.length; i++) {
-              baroData.push({
-                x: flight.fixes[i].timestamp,
-                y: flight.fixes[i].gpsAltitude,
-              });
-              tracklog.push([
-                flight.fixes[i].latitude,
-                flight.fixes[i].longitude,
-              ]);
-            }
-            this.baroData[1] = {
-              label: "Pilot 2",
-              data: baroData,
-              backgroundColor: trackColors[1],
-              borderColor: trackColors[1],
-            };
-            this.tracklogs = [...this.tracklogs, tracklog];
-            // This is a workaround to trigger the re-render of the chart
-            this.baroDataUpdated++;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+          // Testing second flight (hardcoded)
+          FlightService.getFlight("605922ae657fe94af9071e63")
+            .then((response) => {
+              let flight = response.data;
+              let baroData = [];
+              let tracklog = [];
+              for (var i = 0; i < response.data.fixes.length; i++) {
+                baroData.push({
+                  x: flight.fixes[i].timestamp,
+                  y: flight.fixes[i].gpsAltitude,
+                });
+                tracklog.push([
+                  flight.fixes[i].latitude,
+                  flight.fixes[i].longitude,
+                ]);
+              }
+              this.baroData[1] = {
+                label: "Pilot 2",
+                data: baroData,
+                backgroundColor: trackColors[1],
+                borderColor: trackColors[1],
+              };
+              this.tracklogs = [...this.tracklogs, tracklog];
+              // This is a workaround to trigger the re-render of the chart
+              this.baroDataUpdated++;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, 1);
+
     FlightService.getComments().then((response) => {
       this.comments = response.data;
     });

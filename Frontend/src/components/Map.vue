@@ -18,8 +18,8 @@ export default {
   data() {
     return {
       map: null,
-      tracks: [],
-      markers: [],
+      tracks: Array,
+      markers: Array,
     };
   },
   props: {
@@ -37,6 +37,12 @@ export default {
         this.tracks[index] = L.polyline(track, {
           color: trackColors[index],
         }).addTo(this.map);
+
+        // Center map view on first track
+        if (index === 0) {
+          this.map.fitBounds(this.tracks[0].getBounds());
+        }
+        // Create markers for every track
         this.markers[index] = L.circleMarker([51.508, -0.11], {
           color: "#fff",
           fillColor: trackColors[index],
@@ -46,7 +52,6 @@ export default {
           stroke: true,
         }).addTo(this.map);
       });
-      this.map.fitBounds(this.tracks[0].getBounds());
     },
   },
   mounted() {
@@ -60,22 +65,17 @@ export default {
 
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
-      {
-        attribution:
-          'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: "mapbox/outdoors-v11",
-        tileSize: 512,
-        zoomOffset: -1,
-        //preferCanvas: true,
-        r: "@2x",
-        accessToken:
-          "pk.eyJ1IjoiYmx1ZW9yYyIsImEiOiJja205bm12ajIxNGV0MndsYWVqeDc4enE3In0.38AVZ2_Gjy_ST_4LxcgahA",
-      }
+      tileOptions
     ).addTo(this.map);
 
+    // Event listener for updating marker positions. Input comes from the Barogramm component
     this.positionUpdateListener = (event) => {
-      let positions = event.detail;
+      this.updatePositions(event.detail);
+    };
+    document.addEventListener("positionUpdated", this.positionUpdateListener);
+  },
+  methods: {
+    updatePositions(positions) {
       this.tracklogs.forEach((_, index) => {
         if (positions.datasetIndex === index) {
           if (this.tracklogs[index][positions.dataIndex]) {
@@ -89,8 +89,7 @@ export default {
       // if (positions.datasetIndex === 0) {
       //   this.map.setView(this.tracklogs[0][positions.dataIndex]);
       // }
-    };
-    document.addEventListener("positionUpdated", this.positionUpdateListener);
+    },
   },
   unmounted() {
     document.removeEventListener(
@@ -98,6 +97,19 @@ export default {
       this.positionUpdateListener
     );
   },
+};
+
+const tileOptions = {
+  attribution:
+    'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  maxZoom: 18,
+  id: "mapbox/outdoors-v11",
+  tileSize: 512,
+  zoomOffset: -1,
+  //preferCanvas: true,
+  r: "@2x",
+  accessToken:
+    "pk.eyJ1IjoiYmx1ZW9yYyIsImEiOiJja205bm12ajIxNGV0MndsYWVqeDc4enE3In0.38AVZ2_Gjy_ST_4LxcgahA",
 };
 </script>
 
