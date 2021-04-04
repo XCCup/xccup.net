@@ -37,7 +37,7 @@
           </div>
         </div>
 
-        <select class="form-select mb-3" aria-label="Default select example">
+        <select class="form-select mb-3">
           <option selected>Fluggerät wählen</option>
           <option value="1">Enzo 3 S</option>
           <option value="2">XC Racer S</option>

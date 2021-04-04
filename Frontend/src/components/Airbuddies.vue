@@ -7,8 +7,6 @@
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseAirbuddies"
-        aria-expanded="false"
-        aria-controls="collapseAirbuddies"
       >
         Airbuddies
       </button>

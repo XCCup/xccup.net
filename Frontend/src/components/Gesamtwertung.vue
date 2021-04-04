@@ -11,8 +11,6 @@
           data-bs-target="#topFluege"
           type="button"
           role="tab"
-          aria-controls="topFluege"
-          aria-selected="true"
         >
           Top Flüge
         </button>
@@ -25,8 +23,6 @@
           data-bs-target="#profile"
           type="button"
           role="tab"
-          aria-controls="profile"
-          aria-selected="false"
         >
           Gerätewertung
         </button>
@@ -39,8 +35,6 @@
           data-bs-target="#club"
           type="button"
           role="tab"
-          aria-controls="contact"
-          aria-selected="false"
         >
           Vereinswertung
         </button>
@@ -53,8 +47,6 @@
           data-bs-target="#team"
           type="button"
           role="tab"
-          aria-controls="contact"
-          aria-selected="false"
         >
           Teamwertung
         </button>

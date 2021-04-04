@@ -9,9 +9,6 @@
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -24,11 +21,10 @@
               id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
-              aria-expanded="false"
             >
               Ergebnisse
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Eingereichte Flüge</a></li>
               <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
               <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
@@ -45,11 +41,10 @@
               id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
-              aria-expanded="false"
             >
               Listen
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Sponsoren</a></li>
               <li><a class="dropdown-item" href="#">Vereine</a></li>
               <li>
@@ -59,14 +54,10 @@
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link active" aria-current="page" href="#"
-              >Kontakt / Impressum</a
-            >
+            <a class="nav-link active" href="#">Kontakt / Impressum</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link active" aria-current="page" href="#"
-              >Datenschutz</a
-            >
+            <a class="nav-link active" href="#">Datenschutz</a>
           </li>
         </ul>
         <!-- Login dropdown  -->
@@ -76,7 +67,6 @@
             class="btn btn-outline-light btn-sm m-1 dropdown-toggle"
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
-            aria-expanded="false"
           >
             <i class="bi bi-person"></i>
             Login / Profil
