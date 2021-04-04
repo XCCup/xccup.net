@@ -53,36 +53,16 @@
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div
-        class="tab-pane fade show active"
-        id="topFluege"
-        role="tabpanel"
-        aria-labelledby="topFluege-tab"
-      >
+      <div class="tab-pane fade show active" id="topFluege" role="tabpanel">
         <TopFluege />
       </div>
-      <div
-        class="tab-pane fade"
-        id="profile"
-        role="tabpanel"
-        aria-labelledby="profile-tab"
-      >
+      <div class="tab-pane fade" id="profile" role="tabpanel">
         <Geraetewertung />
       </div>
-      <div
-        class="tab-pane fade"
-        id="club"
-        role="tabpanel"
-        aria-labelledby="club-tab"
-      >
+      <div class="tab-pane fade" id="club" role="tabpanel">
         <Vereinswertung />
       </div>
-      <div
-        class="tab-pane fade"
-        id="team"
-        role="tabpanel"
-        aria-labelledby="team-tab"
-      >
+      <div class="tab-pane fade" id="team" role="tabpanel">
         <Teamwertung />
       </div>
     </div>
