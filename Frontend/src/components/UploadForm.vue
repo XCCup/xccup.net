@@ -2,7 +2,7 @@
   <div class="flug-melden mb-5">
     <div id="upload" class="container">
       <h3>Flug hochladen</h3>
-      <form>
+      <form @submit.prevent="sendForm">
         <div class="mb-3">
           <label for="formFile" class="form-label">.igc auswählen</label>
           <input class="form-control" type="file" id="formFile" />
@@ -46,25 +46,16 @@
         <div class="mb-3">
           <p>Oder neues Fluggerät hinzufügen:</p>
 
-          <select class="form-select mb-3" aria-label="Default select example">
-            <option selected>Hersteller</option>
-            <option value="1">Ozone</option>
-            <option value="2">Skywalk</option>
-          </select>
-          <div class="form-floating mb-3">
-            <input
-              type="text"
-              class="form-control"
-              id="floatingInput"
-              placeholder="Fluggerät"
-            />
-            <label for="floatingInput">Fluggerät</label>
-          </div>
-          <select class="form-select mb-3" aria-label="Default select example">
-            <option selected>Geräteklasse</option>
-            <option value="1">Sport</option>
-            <option value="2">Performance</option>
-          </select>
+          <BaseSelect :options="brands" v-model="brand" label="Hersteller" />
+
+          <BaseInput v-model="glider" label="Fluggerät" type="text" />
+
+          <BaseSelect
+            :options="rankingClass"
+            v-model="brand"
+            label="Geräteklasse"
+          />
+
           <div class="form-floating mb-3">
             <textarea
               class="form-control"
@@ -121,6 +112,17 @@
 <script>
 export default {
   name: "UploadForm",
+  data() {
+    return {
+      glider: "",
+      brand: "",
+      rankingClass: [
+        "GS Competition high (EN-D oder CCC und einer Streckung von 7,0 und mehr)",
+        "GS Performance low (EN-D und einer Streckung von <7,0)",
+      ],
+      brands: ["Ozone", "Flow", "AirG"],
+    };
+  },
 };
 </script>
 
