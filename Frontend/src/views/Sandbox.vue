@@ -12,6 +12,8 @@ export default {
     MapV2,
   },
   async setup() {
+    // To simulate longer loading times
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     let { data: flight } = await FlightService.getFlight(
       "60699294a7c2069af1246316" /*this.$route.params.flightId*/
     );

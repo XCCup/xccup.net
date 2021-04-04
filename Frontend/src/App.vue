@@ -1,11 +1,19 @@
 <template>
   <NavBar />
-  <Suspense>
-    <template #default>
-      <router-view />
+  <router-view v-slot="{ Component }">
+    <template v-if="Component">
+      <suspense>
+        <component :is="Component"></component>
+        <template #fallback>
+          <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary m-5" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </template>
+      </suspense>
     </template>
-    <template #fallback> Loading... </template>
-  </Suspense>
+  </router-view>
   <Footer />
 </template>
 
