@@ -30,7 +30,7 @@
               class="badge"
               :style="{ backgroundColor: this.trackColors[index + 1] }"
             >
-              {{ pilot }}
+              {{ pilot.pilotName }}
             </span>
           </label>
         </div>

@@ -77,7 +77,8 @@ export default {
   methods: {
     updatePositions(positions) {
       this.tracklogs.forEach((_, index) => {
-        if (positions.datasetIndex === index) {
+        // Index + 1 because first dataset is GND ans wee need to skip that one
+        if (positions.datasetIndex === index + 1) {
           if (this.tracklogs[index][positions.dataIndex]) {
             this.markers[index].setLatLng(
               this.tracklogs[index][positions.dataIndex]
@@ -86,7 +87,7 @@ export default {
         }
       });
       // Center map on pilot - currently too CPU intense
-      // if (positions.datasetIndex === 0) {
+      // if (positions.datasetIndex === 1) {
       //   this.map.setView(this.tracklogs[0][positions.dataIndex]);
       // }
     },

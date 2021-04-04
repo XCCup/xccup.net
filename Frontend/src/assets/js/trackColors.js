@@ -1,2 +1,2 @@
-const trackColors = ["DarkRed", "DarkSlateBlue", "DarkCyan"];
+const trackColors = ["DarkSlateBlue", "DarkRed", "DarkCyan"];
 export default trackColors;

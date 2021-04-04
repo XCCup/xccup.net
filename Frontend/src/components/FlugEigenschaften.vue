@@ -50,7 +50,14 @@
           <tbody>
             <tr>
               <th>Flugzeit:</th>
-              <td>{{ flight.flightDuration }}</td>
+              <td>
+                {{
+                  calcFlightDuration(
+                    flight.fixes[flight.fixes.length - 1].timestamp -
+                      flight.fixes[0].timestamp
+                  )
+                }}
+              </td>
             </tr>
             <tr>
               <th>Strecke:</th>
@@ -67,9 +74,14 @@
             </tr>
             <tr>
               <th>Uhrzeit:</th>
-              <td>
-                <i class="bi bi-arrow-up"></i> {{ flight.takeoffTime }} Uhr
-                <i class="bi bi-arrow-down"></i> {{ flight.landingTime }} Uhr
+              <td v-if="true">
+                <i class="bi bi-arrow-up"></i>
+                {{ formatTime(flight.fixes[0].timestamp) }}
+                Uhr <i class="bi bi-arrow-down"></i>
+                {{
+                  formatTime(flight.fixes[flight.fixes.length - 1].timestamp)
+                }}
+                Uhr (UTC)
               </td>
             </tr>
           </tbody>
@@ -82,8 +94,6 @@
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#collapseExample"
-      aria-expanded="false"
-      aria-controls="collapseExample"
     >
       Details anzeigen
     </button>
@@ -154,6 +164,32 @@ export default {
     pilot: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    formatTime(timestamp) {
+      // convert unix timestamp to milliseconds
+      var ts_ms = timestamp * 1000;
+      var date_ob = new Date(ts_ms);
+
+      // hours as 2 digits (hh)
+      var hours = ("0" + date_ob.getHours()).slice(-2);
+
+      // minutes as 2 digits (mm)
+      var minutes = ("0" + date_ob.getMinutes()).slice(-2);
+
+      return hours + ":" + minutes;
+    },
+    calcFlightDuration(ms) {
+      var milliseconds = parseInt((ms % 1000) / 100),
+        seconds = parseInt((ms / 1000) % 60),
+        minutes = parseInt((ms / (1000 * 60)) % 60),
+        hours = parseInt((ms / (1000 * 60 * 60)) % 24);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      return hours + ":" + minutes + "h";
     },
   },
 };
