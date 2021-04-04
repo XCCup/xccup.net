@@ -1,15 +1,15 @@
 <template>
-  <Map :tracklogs="tracklogs" />
+  <MapV2 :tracklogs="tracklogs" />
 </template>
 
 <script>
 import { ref } from "vue";
 import FlightService from "@/services/FlightService.js";
-import Map from "@/components/Map";
+import MapV2 from "@/components/MapV2";
 
 export default {
   components: {
-    Map,
+    MapV2,
   },
   async setup() {
     let { data: flight } = await FlightService.getFlight(
