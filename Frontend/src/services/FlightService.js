@@ -1,5 +1,8 @@
 import axios from "axios";
 
+// Local Dev server
+// const baseURL = "http://localhost:4000";
+
 const baseURL = "https://xccup.lurb.org/";
 
 const apiClient = axios.create({
@@ -43,5 +46,8 @@ export default {
   },
   getDescription() {
     return apiClient2.get("/flightDescription");
+  },
+  uploadFlight(data) {
+    return apiClient.post("/flights/upload", data);
   },
 };

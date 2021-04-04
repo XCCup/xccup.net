@@ -46,13 +46,17 @@
         <div class="mb-3">
           <p>Oder neues Fluggerät hinzufügen:</p>
 
-          <BaseSelect :options="brands" v-model="brand" label="Hersteller" />
+          <BaseSelect
+            :options="brands"
+            v-model="flight.brand"
+            label="Hersteller"
+          />
 
-          <BaseInput v-model="glider" label="Fluggerät" type="text" />
+          <BaseInput v-model="flight.glider" label="Fluggerät" type="text" />
 
           <BaseSelect
             :options="rankingClass"
-            v-model="brand"
+            v-model="flight.rankingClass"
             label="Geräteklasse"
           />
 
@@ -110,18 +114,32 @@
 </template>
 
 <script>
+import FlightService from "@/services/FlightService";
 export default {
   name: "UploadForm",
   data() {
     return {
-      glider: "",
-      brand: "",
+      flight: {
+        glider: "",
+        brand: "",
+        rankingClass: "",
+      },
+
       rankingClass: [
         "GS Competition high (EN-D oder CCC und einer Streckung von 7,0 und mehr)",
         "GS Performance low (EN-D und einer Streckung von <7,0)",
       ],
       brands: ["Ozone", "Flow", "AirG"],
     };
+  },
+  methods: {
+    sendForm() {
+      try {
+        FlightService.uploadFlight(this.flight);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>

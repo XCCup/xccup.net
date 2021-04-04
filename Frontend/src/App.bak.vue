@@ -1,11 +1,6 @@
 <template>
   <NavBar />
-  <Suspense>
-    <template #default>
-      <router-view />
-    </template>
-    <template #fallback> Loading... </template>
-  </Suspense>
+  <router-view />
   <Footer />
 </template>
 
