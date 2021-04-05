@@ -1,6 +1,6 @@
 <template>
   <Infobox />
-  <Tageswertung />
+  <Tageswertung :maxRows="5" />
   <Gesamtwertung />
   <Sponsoren />
 </template>
