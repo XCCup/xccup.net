@@ -70,7 +70,7 @@
   "tageswertung": [
     {
       "id": "1",
-      "date": "28.02.2021",
+      "date": "2021-01-28",
       "pilot": "Teddy Weber",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
@@ -80,7 +80,7 @@
     },
     {
       "id": "2",
-      "date": "28.02.2021",
+      "date": "2021-01-28",
       "pilot": "Kira Hobbs",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
@@ -90,7 +90,7 @@
     },
     {
       "id": "3",
-      "date": "28.02.2021",
+      "date": "2021-01-28",
       "pilot": "Jamie-Leigh Holcomb",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
@@ -100,7 +100,7 @@
     },
     {
       "id": "4",
-      "date": "28.02.2021",
+      "date": "2021-01-28",
       "pilot": "Celyn Molloy",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
@@ -110,6 +110,7 @@
     },
     {
       "id": "5",
+      "date": "2021-01-28",
       "pilot": "Ewan Smyth",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
@@ -119,7 +120,7 @@
     },
     {
       "id": "6",
-      "date": "28.02.2021",
+      "date": "2021-01-28",
       "pilot": "Allison Humphries",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
@@ -129,7 +130,7 @@
     },
     {
       "id": "7",
-      "date": "28.02.2021",
+      "date": "2021-01-28",
       "pilot": "Mikey Shepherd",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
@@ -148,7 +149,7 @@
     },
     {
       "id": "9",
-      "date": "28.02.2021",
+      "date": "2021-01-28",
       "pilot": "Lillie-Rose Brown",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
@@ -158,7 +159,7 @@
     },
     {
       "id": "10",
-      "date": "28.02.2021",
+      "date": "2021-01-28",
       "pilot": "Gemma Montoya",
       "taskType": "Jojo",
       "takeoff": "Some takeoff",
