@@ -1,15 +1,16 @@
 <template>
-  <MapV2 :tracklogs="tracklogs" />
+  <MapV3 :tracklogs="tracklogs" />
 </template>
 
 <script>
 import { ref } from "vue";
 import FlightService from "@/services/FlightService.js";
 import MapV2 from "@/components/MapV2";
+import MapV3 from "@/components/MapV3";
 
 export default {
   components: {
-    MapV2,
+    MapV3,
   },
   async setup() {
     // To simulate longer loading times

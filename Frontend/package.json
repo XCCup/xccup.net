@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.9.2",
+    "@vue-leaflet/vue-leaflet": "^0.6.0",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.0-beta3",
     "chart.js": "^3.0.0-rc.6",
