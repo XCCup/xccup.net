@@ -1,5 +1,5 @@
 <template>
-  <table class="table">
+  <table class="table table-hover">
     <thead>
       <tr></tr>
     </thead>
@@ -57,10 +57,6 @@ export default {
 
 <style scoped lang="scss">
 tr:hover {
-  /* background-color: hsl(0, 0%, 10%); */
-  /* filter: brightness(150%); */
-  box-shadow: inset 0 0 0 10em rgba(8, 85, 109, 0.1);
-
   cursor: pointer;
 }
 </style>
