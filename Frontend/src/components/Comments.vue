@@ -10,7 +10,9 @@
           width="24"
         />
         <a href="#">{{ comment.name }}</a>
-        <span class="ms-auto fw-light text-secondary">{{ comment.date }}</span>
+        <span class="ms-auto fw-light text-secondary">{{
+          format(new Date(comment.date), "dd.MM.yy")
+        }}</span>
       </div>
       <p>
         {{ comment.comment }}
@@ -45,6 +47,7 @@
 </template>
 
 <script>
+import { format } from "date-fns";
 export default {
   name: "Comments",
   props: {
@@ -55,6 +58,7 @@ export default {
   },
   data() {
     return {
+      format,
       comment: "",
     };
   },
