@@ -81,85 +81,80 @@ export default {
     },
   },
   created() {
-    setTimeout(() => {
-      // Hard coded for development
-      FlightService.getFlight(
-        "60699294a7c2069af1246316" /*this.$route.params.flightId*/
-      )
-        .then((response) => {
-          let flight = response.data;
-          let baroData = [];
-          let elevation = [];
-          let tracklog = [];
-          for (var i = 0; i < response.data.fixes.length; i++) {
-            elevation.push({
-              x: flight.fixes[i].timestamp,
-              y: flight.fixes[i].elevation,
-            });
-            baroData.push({
-              x: flight.fixes[i].timestamp,
-              y: flight.fixes[i].gpsAltitude,
-            });
-            tracklog.push([
-              flight.fixes[i].latitude,
-              flight.fixes[i].longitude,
-            ]);
-          }
-          this.baroData[0] = {
-            label: "GND",
-            fill: true,
-            data: elevation,
-            backgroundColor: "SaddleBrown",
-            borderColor: "SaddleBrown",
-          };
-          this.baroData[1] = {
-            label: "Pilot 1",
-            data: baroData,
-            backgroundColor: trackColors[0],
-            borderColor: trackColors[0],
-          };
-          this.tracklogs = [tracklog];
-          this.flight = response.data;
-          // This is a workaround to trigger the re-render of the chart
-          this.baroDataUpdated++;
+    // Hard coded for development
+    FlightService.getFlight(
+      "60699294a7c2069af1246316" /*this.$route.params.flightId*/
+    )
+      .then((response) => {
+        let flight = response.data;
+        let baroData = [];
+        let elevation = [];
+        let tracklog = [];
+        for (var i = 0; i < response.data.fixes.length; i++) {
+          elevation.push({
+            x: flight.fixes[i].timestamp,
+            y: flight.fixes[i].elevation,
+          });
+          baroData.push({
+            x: flight.fixes[i].timestamp,
+            y: flight.fixes[i].gpsAltitude,
+          });
+          tracklog.push([flight.fixes[i].latitude, flight.fixes[i].longitude]);
+        }
+        this.baroData[0] = {
+          label: "GND",
+          fill: true,
+          data: elevation,
+          backgroundColor: "SaddleBrown",
+          borderColor: "SaddleBrown",
+        };
+        this.baroData[1] = {
+          label: "Pilot 1",
+          data: baroData,
+          backgroundColor: trackColors[0],
+          borderColor: trackColors[0],
+        };
+        this.tracklogs = [tracklog];
+        this.flight = response.data;
+        // This is a workaround to trigger the re-render of the chart
+        this.baroDataUpdated++;
 
-          // Testing second flight (hardcoded)
-          // FlightService.getFlight("605922ae657fe94af9071e63")
-          //   .then((response) => {
-          //     let flight = response.data;
-          //     let baroData = [];
-          //     let tracklog = [];
-          //     for (var i = 0; i < response.data.fixes.length; i++) {
-          //       baroData.push({
-          //         x: flight.fixes[i].timestamp,
-          //         y: flight.fixes[i].gpsAltitude,
-          //       });
-          //       tracklog.push([
-          //         flight.fixes[i].latitude,
-          //         flight.fixes[i].longitude,
-          //       ]);
-          //     }
-          //     this.baroData[1] = {
-          //       label: "Pilot 2",
-          //       data: baroData,
-          //       backgroundColor: trackColors[1],
-          //       borderColor: trackColors[1],
-          //     };
-          //     this.tracklogs = [...this.tracklogs, tracklog];
-          //     // This is a workaround to trigger the re-render of the chart
-          //     this.baroDataUpdated++;
-          //   })
-          //   .catch((error) => {
-          //     console.log(error);
-          //   });
-        })
-        .then(() => {
-          this.loaded = true;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }, 1000);
+        // Testing second flight (hardcoded)
+        // FlightService.getFlight("605922ae657fe94af9071e63")
+        //   .then((response) => {
+        //     let flight = response.data;
+        //     let baroData = [];
+        //     let tracklog = [];
+        //     for (var i = 0; i < response.data.fixes.length; i++) {
+        //       baroData.push({
+        //         x: flight.fixes[i].timestamp,
+        //         y: flight.fixes[i].gpsAltitude,
+        //       });
+        //       tracklog.push([
+        //         flight.fixes[i].latitude,
+        //         flight.fixes[i].longitude,
+        //       ]);
+        //     }
+        //     this.baroData[1] = {
+        //       label: "Pilot 2",
+        //       data: baroData,
+        //       backgroundColor: trackColors[1],
+        //       borderColor: trackColors[1],
+        //     };
+        //     this.tracklogs = [...this.tracklogs, tracklog];
+        //     // This is a workaround to trigger the re-render of the chart
+        //     this.baroDataUpdated++;
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+      })
+      .then(() => {
+        this.loaded = true;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     FlightService.getComments().then((response) => {
       this.comments = response.data;
