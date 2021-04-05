@@ -1,10 +1,13 @@
 <template>
   <div>
-    <div class="container-fluid flight-info text-light mb-0 p-1">
+    <div v-if="loaded" class="container-fluid flight-info text-light mb-0 p-1">
       <p class="m-0">
-        <a href="#"><i class="bi bi-chevron-left mx-2"></i></a>Flug von
-        <a href="#">{{ flight.pilot }}</a> am
-        <a href="#">{{ flight.date }}</a>
+        <router-link to="/"
+          ><i class="bi bi-chevron-left mx-2"></i>
+        </router-link>
+
+        Flug von <a href="#">{{ flight.pilot }}</a> am
+        <a href="#">{{ format(new Date(flight.date), "dd.MM.yyyy") }}</a>
       </p>
     </div>
 
@@ -51,6 +54,7 @@ import Comments from "@/components/Comments";
 import FlightDescription from "@/components/FlightDescription";
 import trackColors from "@/assets/js/trackColors";
 import InlineAlert from "@/components/InlineAlert";
+import { format } from "date-fns";
 
 export default {
   name: "FlugDetails",
@@ -65,6 +69,7 @@ export default {
   },
   data() {
     return {
+      format,
       baroData: [],
       baroDataUpdated: 0,
       flight: {},

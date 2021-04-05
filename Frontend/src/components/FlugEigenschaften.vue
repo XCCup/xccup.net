@@ -32,7 +32,7 @@
               <th>Geräteklasse:</th>
               <td>
                 <i class="bi bi-trophy" :class="flight.rankingClass"></i>
-                {{ flight.rankingName }}
+                {{ flight.rankingClass }}
               </td>
             </tr>
           </tbody>
@@ -51,12 +51,7 @@
             <tr>
               <th>Flugzeit:</th>
               <td>
-                {{
-                  calcFlightDuration(
-                    flight.fixes[flight.fixes.length - 1].timestamp -
-                      flight.fixes[0].timestamp
-                  )
-                }}
+                {{ calcFlightDuration(flight) }}
               </td>
             </tr>
             <tr>
@@ -76,12 +71,10 @@
               <th>Uhrzeit:</th>
               <td v-if="true">
                 <i class="bi bi-arrow-up"></i>
-                {{ formatTime(flight.fixes[0].timestamp) }}
+                {{ getTakeoffTime(flight) }}
                 Uhr <i class="bi bi-arrow-down"></i>
-                {{
-                  formatTime(flight.fixes[flight.fixes.length - 1].timestamp)
-                }}
-                Uhr (UTC)
+                {{ getlandingTime(flight) }}
+                Uhr
               </td>
             </tr>
           </tbody>
@@ -154,8 +147,14 @@
 </template>
 
 <script>
+import { format } from "date-fns";
 export default {
   name: "FlugEigenschaften",
+  data() {
+    return {
+      format,
+    };
+  },
   props: {
     flight: {
       type: Object,
@@ -167,22 +166,21 @@ export default {
     },
   },
   methods: {
-    formatTime(timestamp) {
-      // convert unix timestamp to milliseconds
-      var ts_ms = timestamp * 1000;
-      var date_ob = new Date(ts_ms);
-
-      // hours as 2 digits (hh)
-      var hours = ("0" + date_ob.getHours()).slice(-2);
-
-      // minutes as 2 digits (mm)
-      var minutes = ("0" + date_ob.getMinutes()).slice(-2);
-
-      return hours + ":" + minutes;
+    getlandingTime(flight) {
+      return format(
+        new Date(flight.fixes[flight.fixes.length - 1].timestamp),
+        "HH:mm"
+      );
     },
-    calcFlightDuration(ms) {
-      var milliseconds = parseInt((ms % 1000) / 100),
-        seconds = parseInt((ms / 1000) % 60),
+    getTakeoffTime(flight) {
+      return format(new Date(flight.fixes[0].timestamp), "HH:mm");
+    },
+    calcFlightDuration(flight) {
+      let ms =
+        flight.fixes[flight.fixes.length - 1].timestamp -
+        flight.fixes[0].timestamp;
+
+      var seconds = parseInt((ms / 1000) % 60),
         minutes = parseInt((ms / (1000 * 60)) % 60),
         hours = parseInt((ms / (1000 * 60 * 60)) % 24);
 
