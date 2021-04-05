@@ -33,6 +33,7 @@ export default {
 <style lang="scss">
 // Include custom variable default overrides here
 $primary: #08556d;
+$table-bg-scale: 0;
 
 $table-striped-bg-factor: 0.05;
 $table-striped-bg: rgba($primary, $table-striped-bg-factor);

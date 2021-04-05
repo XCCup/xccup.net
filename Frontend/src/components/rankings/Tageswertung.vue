@@ -1,33 +1,25 @@
 <template>
-  <section class="topFluege bg-primary text-light pb-3">
-    <div class="container pt-1">
+  <section class="bg-primary pb-3">
+    <div class="container text-light pt-1">
       <h3>Tageswertung</h3>
-      <div class="text-light">
-        <div class="flights"></div>
-        <table class="table text-light">
-          <thead>
-            <tr></tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(flight, index) in flights.slice(0, maxRows)"
-              v-bind:item="flight"
-              v-bind:index="index"
-              v-bind:key="flight._id"
-              @click="routeToFlight(flight.flightId)"
-            >
-              <td scope="row">{{ index + 1 }}</td>
-              <td>{{ flight.date }}</td>
-              <td>{{ flight.pilot }}</td>
-              <td>{{ flight.takeoff }}</td>
-              <td>{{ flight.distance }} km</td>
-              <td>{{ flight.taskType }}</td>
-
-              <td>{{ flight.points }} P</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <table class="table table-primary text-light table-hover">
+        <tbody>
+          <tr
+            v-for="(flight, index) in flights.slice(0, maxRows)"
+            v-bind:item="flight"
+            v-bind:index="index"
+            v-bind:key="flight._id"
+            @click="routeToFlight(flight.flightId)"
+          >
+            <td scope="row">{{ index + 1 }}</td>
+            <td>{{ flight.pilot }}</td>
+            <td>{{ flight.takeoff }}</td>
+            <td>{{ flight.distance }} km</td>
+            <td>{{ flight.taskType }}</td>
+            <td>{{ flight.points }} P</td>
+          </tr>
+        </tbody>
+      </table>
       <a href="#" class="btn btn-outline-light btn-sm my-1"
         >Alle Flüge anzeigen</a
       >
@@ -80,9 +72,10 @@ export default {
 </script>
 <style scoped>
 tr:hover {
-  /* background-color: hsl(0, 0%, 10%); */
-  /* filter: brightness(150%); */
-  box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
+  /* 
+  -moz-box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
+  -webkit-box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1); */
 
   cursor: pointer;
 }
