@@ -15,6 +15,7 @@ export default {
   async setup() {
     // To simulate longer loading times
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Hardcoded for development
     let { data: flight } = await FlightService.getFlight(
       "60699294a7c2069af1246316" /*this.$route.params.flightId*/
     );

@@ -9,6 +9,7 @@
         v-bind:item="flight"
         v-bind:index="index"
         v-bind:key="flight._id"
+        @click="routeToFlight(flight.flightId)"
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>{{ flight.date }}</td>
@@ -17,16 +18,6 @@
         <td>{{ flight.distance }} km</td>
         <td>{{ flight.taskType }}</td>
         <td>{{ flight.points }} P</td>
-        <td>
-          <router-link
-            :to="{
-              name: 'FlugDetails',
-              params: { flightId: '605e2181b2b5a2de2e0c6f63' /*flight._id*/ },
-            }"
-          >
-            Zum Flug <i class="bi bi-arrow-right"></i>
-          </router-link>
-        </td>
       </tr>
     </tbody>
   </table>
@@ -51,7 +42,25 @@ export default {
         console.log(error);
       });
   },
+  methods: {
+    routeToFlight(flightId) {
+      this.$router.push({
+        name: "FlugDetails",
+        params: {
+          flightId: flightId,
+        },
+      });
+    },
+  },
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+tr:hover {
+  /* background-color: hsl(0, 0%, 10%); */
+  /* filter: brightness(150%); */
+  box-shadow: inset 0 0 0 10em rgba(8, 85, 109, 0.1);
+
+  cursor: pointer;
+}
+</style>

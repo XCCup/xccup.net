@@ -84,7 +84,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "2"
     },
     {
       "id": "3",
@@ -93,7 +93,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "3"
     },
     {
       "id": "4",
@@ -102,7 +102,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "4"
     },
     {
       "id": "5",
@@ -111,7 +111,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "5"
     },
     {
       "id": "6",
@@ -120,7 +120,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "6"
     },
     {
       "id": "7",
@@ -129,7 +129,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "7"
     },
     {
       "id": "8",
@@ -138,7 +138,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "8"
     },
     {
       "id": "9",
@@ -147,7 +147,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "9"
     },
     {
       "id": "10",
@@ -156,7 +156,7 @@
       "takeoff": "Some takeoff",
       "distance": 100,
       "points": 200,
-      "flightId": "1"
+      "flightId": "10"
     }
   ],
   "geraetewertung": [
