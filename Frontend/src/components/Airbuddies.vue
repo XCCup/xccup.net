@@ -7,28 +7,39 @@
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#collapseAirbuddies"
+        @click="getFlights"
       >
         Airbuddies
       </button>
-      <div
-        class="collapse mt-2"
-        id="collapseAirbuddies"
-        v-for="(pilot, index) in this.airbuddies"
-        :key="index"
-      >
-        <div class="form-check">
+
+      <div class="collapse mt-2" id="collapseAirbuddies">
+        <!-- Spinner -->
+        <div
+          class="spinner-border text-primary m-2"
+          v-if="!loaded"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <!-- Checkboxes -->
+        <div
+          class="form-check"
+          v-for="(pilot, index) in this.buddyFlights"
+          :key="pilot.buddyFlightId"
+        >
           <input
             class="form-check-input"
             type="checkbox"
-            value="{{index}}"
+            :value="pilot.buddyFlightId"
             id="flexCheckChecked"
+            v-model="checkedFlights"
           />
           <label class="form-check-label" for="flexCheckChecked">
             <span
               class="badge"
               :style="{ backgroundColor: this.trackColors[index + 1] }"
             >
-              {{ pilot.pilotName }}
+              {{ pilot.buddyName }}
             </span>
           </label>
         </div>
@@ -39,21 +50,52 @@
 
 <script>
 import trackColors from "@/assets/js/trackColors";
+import FlightService from "@/services/FlightService";
 
 export default {
   name: "Airbuddies",
   data() {
     return {
+      checkedFlights: [],
+      buddyFlights: null,
       trackColors: trackColors,
+      loaded: false,
     };
   },
   props: {
-    airbuddies: {
-      type: Array,
+    flight: {
+      type: Object,
       required: true,
     },
   },
+  methods: {
+    async getFlights() {
+      try {
+        if (!this.buddyFlights && this.flight.airbuddies.length > 0) {
+          // await new Promise((resolve) => setTimeout(resolve, 2000));
+          let response = await FlightService.getAirbuddies(this.flight._id);
+          this.buddyFlights = response.data;
+          this.loaded = true;
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  watch: {
+    checkedFlights() {
+      let airbuddyTracks = [];
+      this.buddyFlights.forEach((element) => {
+        airbuddyTracks.push({
+          buddyName: element.buddyName,
+          buddyFlightId: element.buddyFlightId,
+          isActive: this.checkedFlights.includes(element.buddyFlightId),
+          fixes: element.fixes,
+        });
+      });
+      this.$emit("updateAirbuddies", airbuddyTracks);
+    },
+  },
+  emits: ["updateAirbuddies"],
 };
 </script>
-
-<style scoped></style>

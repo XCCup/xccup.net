@@ -1,173 +1,188 @@
 <template>
-  <div>
-    <div v-if="loaded" class="container-fluid flight-info text-light mb-0 p-1">
-      <p class="m-0">
-        <router-link to="/"
-          ><i class="bi bi-chevron-left mx-2"></i>
-        </router-link>
+  <!-- Subnav -->
+  <div class="container-fluid flight-info text-light mb-0 p-1">
+    <p class="m-0">
+      <router-link to="/"><i class="bi bi-chevron-left mx-2"></i> </router-link>
 
-        Flug von <a href="#">{{ flight.pilot }}</a> am
-        <a href="#">{{ format(new Date(flight.date), "dd.MM.yyyy") }}</a>
-      </p>
-    </div>
-
-    <Map :tracklogs="tracklogs" />
-    <div class="d-flex justify-content-center" v-if="baroData.length === 0">
-      <div class="spinner-border text-primary m-5" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-    <Barogramm
-      :datasets="baroData"
-      :key="baroDataUpdated"
-      v-if="baroData.length != 0"
-    />
-    <Airbuddies
-      v-if="this.flight.airbuddies"
-      :airbuddies="this.flight.airbuddies"
-    />
-    <Inline-alert
-      text="Hover mit Höhenanzeige fehlt
-      noch."
-    />
-    <Inline-alert text="Automatisches zentrieren optional?" />
-    <Inline-alert text="Airbuddies funktionieren noch nicht" />
-    <Inline-alert text="Button glow?" />
-
-    <FlugEigenschaften
-      :flight="this.flight"
-      :pilot="this.pilot"
-      v-if="this.loaded"
-    />
-    <FlightDescription :description="description" />
-    <Comments :comments="comments" @comment-submitted="addComment" />
+      Flug von <a href="#">{{ flight.pilot }}</a> am
+      <a href="#">{{ format(new Date(flight.date), "dd.MM.yyyy") }}</a>
+    </p>
   </div>
+
+  <MapV2 :tracklogs="tracklogs" />
+  <Barogramm :datasets="baroData" :key="baroDataUpdated" />
+  <Airbuddies
+    v-if="this.flight.airbuddies"
+    :flight="this.flight"
+    @updateAirbuddies="updateAirbuddies"
+  />
+  <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
+  <Inline-alert text="Automatisches zentrieren fehlt noch" />
+  <FlugEigenschaften :flight="this.flight" :pilot="this.pilot" />
+  <FlightDescription :description="description" />
+  <Comments :comments="comments" @comment-submitted="addComment" />
 </template>
 
 <script>
+// !!! Note to my future self !!!
+// The connection between Airbuddies, Barogramm and Map needs refactoring.
+// It's to ineffective and you can do better now.
+
+import { ref } from "vue";
 import FlightService from "@/services/FlightService.js";
-import FlugEigenschaften from "@/components/FlugEigenschaften";
+import MapV2 from "@/components/MapV2";
+import Airbuddies from "@/components/Airbuddies";
 import Barogramm from "@/components/Barogramm.vue";
-import Airbuddies from "@/components/Airbuddies.vue";
-import Map from "@/components/Map";
+import trackColors from "@/assets/js/trackColors";
+import { format } from "date-fns";
+import InlineAlert from "@/components/InlineAlert";
+import FlugEigenschaften from "@/components/FlugEigenschaften";
 import Comments from "@/components/Comments";
 import FlightDescription from "@/components/FlightDescription";
-import trackColors from "@/assets/js/trackColors";
-import InlineAlert from "@/components/InlineAlert";
-import { format } from "date-fns";
 
 export default {
-  name: "FlugDetails",
   components: {
-    FlugEigenschaften,
-    Barogramm,
-    Map,
+    MapV2,
     Airbuddies,
-    FlightDescription,
-    Comments,
+    Barogramm,
     InlineAlert,
+    FlugEigenschaften,
+    Comments,
+    FlightDescription,
+  },
+  async setup() {
+    // To simulate longer loading times
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Hardcoded for development
+    let { data: flight } = await FlightService.getFlight(
+      "60699294a7c2069af1246316" /*this.$route.params.flightId*/
+    );
+    let { data: comments } = await FlightService.getComments();
+    let { data: description } = await FlightService.getDescription();
+
+    return {
+      flight: ref(flight, comments, description),
+      comments: ref(comments),
+      description: ref(description[0]),
+    };
+  },
+  props: {
+    flightId: String,
   },
   data() {
     return {
-      format,
-      baroData: [],
+      buddyTracks: null,
       baroDataUpdated: 0,
-      flight: {},
-      tracklogs: [],
+      format,
       pilot: { club: "Good Club", team: "Die sympathischen Speeditöre" },
-      comments: [],
-      description: {},
-      loaded: false,
     };
   },
   methods: {
+    updateAirbuddies(buddyTracks) {
+      this.buddyTracks = buddyTracks;
+    },
     addComment(comment) {
       this.comments.push(comment);
     },
   },
-  created() {
-    // Hard coded for development
-    FlightService.getFlight(
-      "60699294a7c2069af1246316" /*this.$route.params.flightId*/
-    )
-      .then((response) => {
-        let flight = response.data;
-        let baroData = [];
-        let elevation = [];
-        let tracklog = [];
-        for (var i = 0; i < response.data.fixes.length; i++) {
-          elevation.push({
-            x: flight.fixes[i].timestamp,
-            y: flight.fixes[i].elevation,
-          });
-          baroData.push({
-            x: flight.fixes[i].timestamp,
-            y: flight.fixes[i].gpsAltitude,
-          });
-          tracklog.push([flight.fixes[i].latitude, flight.fixes[i].longitude]);
-        }
-        this.baroData[0] = {
-          label: "GND",
-          fill: true,
-          data: elevation,
-          backgroundColor: "SaddleBrown",
-          borderColor: "SaddleBrown",
-        };
-        this.baroData[1] = {
-          label: "Pilot 1",
-          data: baroData,
-          backgroundColor: trackColors[0],
-          borderColor: trackColors[0],
-        };
-        this.tracklogs = [tracklog];
-        this.flight = response.data;
-        // This is a workaround to trigger the re-render of the chart
-        this.baroDataUpdated++;
+  watch: {
+    baroData() {
+      this.baroDataUpdated++;
+    },
+  },
+  computed: {
+    baroData() {
+      let allBaroData = [];
+      let baroData = [];
+      let elevation = [];
+      for (var i = 0; i < this.flight.fixes.length; i++) {
+        elevation.push({
+          x: this.flight.fixes[i].timestamp,
+          y: this.flight.fixes[i].elevation,
+        });
+        baroData.push({
+          x: this.flight.fixes[i].timestamp,
+          y: this.flight.fixes[i].gpsAltitude,
+        });
+      }
+      let hideGND = false;
+      if (this.buddyTracks) {
+        this.buddyTracks.forEach((element) => {
+          if (element.isActive) {
+            hideGND = true;
+          }
+        });
+      }
 
-        // Testing second flight (hardcoded)
-        // FlightService.getFlight("605922ae657fe94af9071e63")
-        //   .then((response) => {
-        //     let flight = response.data;
-        //     let baroData = [];
-        //     let tracklog = [];
-        //     for (var i = 0; i < response.data.fixes.length; i++) {
-        //       baroData.push({
-        //         x: flight.fixes[i].timestamp,
-        //         y: flight.fixes[i].gpsAltitude,
-        //       });
-        //       tracklog.push([
-        //         flight.fixes[i].latitude,
-        //         flight.fixes[i].longitude,
-        //       ]);
-        //     }
-        //     this.baroData[1] = {
-        //       label: "Pilot 2",
-        //       data: baroData,
-        //       backgroundColor: trackColors[1],
-        //       borderColor: trackColors[1],
-        //     };
-        //     this.tracklogs = [...this.tracklogs, tracklog];
-        //     // This is a workaround to trigger the re-render of the chart
-        //     this.baroDataUpdated++;
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-      })
-      .then(() => {
-        this.loaded = true;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      allBaroData[0] = {
+        label: "GND",
+        hidden: hideGND,
+        fill: true,
+        data: elevation,
+        backgroundColor: "SaddleBrown",
+        borderColor: "SaddleBrown",
+      };
+      allBaroData[1] = {
+        label: "Pilot 1",
+        data: baroData,
+        backgroundColor: trackColors[0],
+        borderColor: trackColors[0],
+      };
 
-    FlightService.getComments().then((response) => {
-      this.comments = response.data;
-    });
-    FlightService.getDescription().then((response) => {
-      this.description = response.data[0];
-    });
+      if (this.buddyTracks) {
+        this.buddyTracks.forEach((element, index) => {
+          let buddyBaro = [];
+          if (element.isActive) {
+            for (var i = 0; i < element.fixes.length; i++) {
+              buddyBaro.push([
+                element.fixes[i].timestamp,
+                element.fixes[i].gpsAltitude,
+              ]);
+            }
+          }
+          allBaroData[index + 2] = {
+            label: element.buddyName,
+            data: buddyBaro,
+            backgroundColor: trackColors[index + 1],
+            borderColor: trackColors[index + 1],
+          };
+        });
+      }
+
+      return allBaroData;
+    },
+
+    tracklogs() {
+      let tracklogs = [];
+      let tracklog = [];
+      for (var i = 0; i < this.flight.fixes.length; i++) {
+        tracklog.push([
+          this.flight.fixes[i].latitude,
+          this.flight.fixes[i].longitude,
+        ]);
+      }
+      tracklogs.push(tracklog);
+
+      if (this.buddyTracks) {
+        this.buddyTracks.forEach((element) => {
+          let track = [];
+          if (element.isActive) {
+            for (var i = 0; i < element.fixes.length; i++) {
+              track.push([
+                element.fixes[i].latitude,
+                element.fixes[i].longitude,
+              ]);
+            }
+          }
+          tracklogs.push(track);
+        });
+      }
+
+      return tracklogs;
+    },
   },
 };
 </script>
+
 <style scoped></style>

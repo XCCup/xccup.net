@@ -19,7 +19,7 @@ export default {
     return {
       map: null,
       tracks: Array,
-      markers: Array,
+      markers: [],
     };
   },
   props: {
@@ -32,8 +32,7 @@ export default {
   },
   watch: {
     tracklogs(newTrackLogs) {
-      console.log(newTrackLogs);
-      this.tracks(newTrackLogs);
+      this.drawTracks(newTrackLogs);
     },
   },
   mounted() {
@@ -50,6 +49,7 @@ export default {
       tileOptions
     ).addTo(this.map);
 
+    // Draw tracks
     this.drawTracks(this.tracklogs);
 
     // Event listener for updating marker positions. Input comes from the Barogramm component
@@ -59,26 +59,41 @@ export default {
     document.addEventListener("positionUpdated", this.positionUpdateListener);
   },
   methods: {
-    drawTracks(newTracks) {
-      newTracks.forEach((track, index) => {
-        this.tracks[index] = L.polyline(track, {
-          color: trackColors[index],
-        }).addTo(this.map);
+    drawTracks(tracks) {
+      let lines = [];
+      let markers = [];
 
-        // Center map view on first track
-        if (index === 0) {
-          this.map.fitBounds(this.tracks[0].getBounds());
+      // Remove all markers to prevet orphaned ones
+      if (this.markers.length > 0) {
+        this.markers.forEach((_, index) => {
+          this.tracks[index].remove();
+        });
+      }
+
+      tracks.forEach((track, index) => {
+        // Check if a previously drawn track is removed
+        if (track.length > 0) {
+          // Create a line for every track
+          lines[index] = L.polyline(track, {
+            color: trackColors[index],
+          }).addTo(this.map);
+          // Center map view on first track
+          if (index === 0) {
+            this.map.fitBounds(lines[0].getBounds());
+          }
+          // Create markers for every track
+          markers[index] = L.circleMarker([51.508, -0.11], {
+            color: "#fff",
+            fillColor: trackColors[index],
+            fillOpacity: 0.8,
+            radius: 8,
+            weight: 2,
+            stroke: true,
+          }).addTo(this.map);
         }
-        // Create markers for every track
-        this.markers[index] = L.circleMarker([51.508, -0.11], {
-          color: "#fff",
-          fillColor: trackColors[index],
-          fillOpacity: 0.8,
-          radius: 8,
-          weight: 2,
-          stroke: true,
-        }).addTo(this.map);
       });
+      this.tracks = lines;
+      this.markers = markers;
     },
     updatePositions(positions) {
       this.tracklogs.forEach((_, index) => {

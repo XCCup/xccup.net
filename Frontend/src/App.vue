@@ -93,7 +93,7 @@ footer {
 
 .header-image {
   background-image: url("assets/images/rachtig.jpg");
-  height: 250px;
+  height: 22vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;

@@ -50,4 +50,7 @@ export default {
   uploadFlight(data) {
     return apiClient.post("/flights/upload", data);
   },
+  getAirbuddies(flightId) {
+    return apiClient.get("/airbuddies/" + flightId);
+  },
 };
