@@ -1,5 +1,5 @@
 <template>
-  <section class="flug-eigenschaften container">
+  <section class="container">
     <h3>Flugeigenschaften</h3>
     <div class="row">
       <div class="col-md-6 col-12 my-1">
@@ -149,7 +149,7 @@
 <script>
 import { format } from "date-fns";
 export default {
-  name: "FlugEigenschaften",
+  name: "FlightDetails",
   data() {
     return {
       format,

@@ -1,17 +1,17 @@
 <template>
-  <div class="card" v-if="wertung">
+  <div class="card" v-if="ranking">
     <div class="card-body">
       <h6 class="card-title">
-        <i class="bi bi-trophy" :class="wertung.rankingClass"></i>
-        {{ wertung.rankingName }}
+        <i class="bi bi-trophy" :class="ranking.rankingClass"></i>
+        {{ ranking.rankingName }}
       </h6>
       <p class="card-text"></p>
       <table class="table">
         <thead></thead>
         <tbody>
-          <tr v-for="(pilot, _, i) in wertung" :key="i">
+          <tr v-for="(pilot, _, i) in ranking" :key="i">
             <td>{{ i + 1 }}</td>
-            <td>{{ wertung.pilots[i].name }}</td>
+            <td>{{ ranking.pilots[i].name }}</td>
           </tr>
         </tbody>
       </table>
@@ -21,11 +21,9 @@
 
 <script>
 export default {
-  name: "Wertungstabelle",
+  name: "ResultsTable",
   props: {
-    wertung: Object,
+    ranking: Object,
   },
 };
 </script>
-
-<style scoped lang="scss"></style>

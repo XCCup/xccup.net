@@ -27,7 +27,7 @@
 import FlightService from "@/services/FlightService";
 import { format } from "date-fns";
 export default {
-  name: "TopFluege",
+  name: "TopFlights",
   components: {},
   data() {
     return {
@@ -36,7 +36,7 @@ export default {
     };
   },
   created() {
-    FlightService.getTageswertung()
+    FlightService.getDailyRanking()
       .then((response) => {
         this.flights = response.data;
       })
@@ -47,7 +47,7 @@ export default {
   methods: {
     routeToFlight(flightId) {
       this.$router.push({
-        name: "FlugDetails",
+        name: "Flight",
         params: {
           flightId: flightId,
         },

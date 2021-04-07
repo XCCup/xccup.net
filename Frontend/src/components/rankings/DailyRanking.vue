@@ -40,14 +40,14 @@
 <script>
 import FlightService from "@/services/FlightService";
 export default {
-  name: "Tageswertung",
+  name: "DailyRanking",
   data() {
     return {
       flights: [],
     };
   },
   created() {
-    FlightService.getTageswertung()
+    FlightService.getDailyRanking()
       .then((response) => {
         this.flights = response.data;
       })
@@ -61,7 +61,7 @@ export default {
   methods: {
     routeToFlight(flightId) {
       this.$router.push({
-        name: "FlugDetails",
+        name: "Flight",
         params: {
           flightId: flightId,
         },

@@ -18,7 +18,7 @@
   />
   <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
   <Inline-alert text="Automatisches zentrieren fehlt noch" />
-  <FlugEigenschaften :flight="this.flight" :pilot="this.pilot" />
+  <FlightDetails :flight="this.flight" :pilot="this.pilot" />
   <FlightDescription :description="description" />
   <Comments :comments="comments" @comment-submitted="addComment" />
 </template>
@@ -36,7 +36,7 @@ import Barogramm from "@/components/Barogramm.vue";
 import trackColors from "@/assets/js/trackColors";
 import { format } from "date-fns";
 import InlineAlert from "@/components/InlineAlert";
-import FlugEigenschaften from "@/components/FlugEigenschaften";
+import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
 import FlightDescription from "@/components/FlightDescription";
 
@@ -46,7 +46,7 @@ export default {
     Airbuddies,
     Barogramm,
     InlineAlert,
-    FlugEigenschaften,
+    FlightDetails,
     Comments,
     FlightDescription,
   },

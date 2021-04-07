@@ -2,31 +2,31 @@
   <div class="row">
     <div
       class="col-xxl-2 col-md-4 col-6 my-1"
-      v-for="(table, index) in this.geraetewertung"
+      v-for="(table, index) in this.classRanking"
       :key="index"
     >
-      <Wertungstabelle :wertung="table" />
+      <ResultsTable :ranking="table" />
     </div>
   </div>
 </template>
 
 <script>
-import Wertungstabelle from "@/components/rankings/Wertungstabelle";
+import ResultsTable from "@/components/rankings/ResultsTable";
 import FlightService from "@/services/FlightService";
 export default {
-  name: "Geraetewertung",
+  name: "ClassRanking",
   components: {
-    Wertungstabelle,
+    ResultsTable,
   },
   data() {
     return {
-      geraetewertung: {},
+      classRanking: {},
     };
   },
   created() {
-    FlightService.getGeraetewertung()
+    FlightService.getClassRanking()
       .then((response) => {
-        this.geraetewertung = response.data;
+        this.classRanking = response.data;
       })
       .catch((error) => {
         console.log(error);

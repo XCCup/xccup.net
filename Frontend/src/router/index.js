@@ -9,13 +9,13 @@ const routes = [
   },
   {
     path: "/flug/:flightId",
-    name: "FlugDetails",
+    name: "Flight",
     props: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "flug-details" */ "../views/FlugDetails.vue"),
+      import(/* webpackChunkName: "flug-details" */ "../views/Flight.vue"),
   },
   {
     path: "/upload",

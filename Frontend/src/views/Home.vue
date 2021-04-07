@@ -1,23 +1,23 @@
 <template>
   <Infobox />
-  <Tageswertung :maxRows="5" />
-  <Gesamtwertung />
-  <Sponsoren />
+  <DailyRanking :maxRows="5" />
+  <OverallResults />
+  <Sponsors />
 </template>
 
 <script>
-import Tageswertung from "@/components/rankings/Tageswertung.vue";
+import DailyRanking from "@/components/rankings/DailyRanking.vue";
 import Infobox from "@/components/Infobox.vue";
-import Gesamtwertung from "@/components/Gesamtwertung.vue";
-import Sponsoren from "@/components/Sponsoren.vue";
+import OverallResults from "@/components/OverallResults.vue";
+import Sponsors from "@/components/Sponsors.vue";
 
 export default {
   name: "Home",
   components: {
-    Tageswertung,
+    DailyRanking,
     Infobox,
-    Gesamtwertung,
-    Sponsoren,
+    OverallResults,
+    Sponsors,
   },
 };
 </script>

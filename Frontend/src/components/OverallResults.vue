@@ -6,9 +6,9 @@
       <li class="nav-item" role="presentation">
         <button
           class="nav-link active"
-          id="topFluege-tab"
+          id="topFlights-tab"
           data-bs-toggle="tab"
-          data-bs-target="#topFluege"
+          data-bs-target="#topFlights"
           type="button"
           role="tab"
         >
@@ -53,31 +53,31 @@
       </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="topFluege" role="tabpanel">
-        <TopFluege />
+      <div class="tab-pane fade show active" id="topFlights" role="tabpanel">
+        <TopFlights />
       </div>
       <div class="tab-pane fade" id="profile" role="tabpanel">
-        <Geraetewertung />
+        <ClassRanking />
       </div>
       <div class="tab-pane fade" id="club" role="tabpanel">
-        <Vereinswertung />
+        <ClubRanking />
       </div>
       <div class="tab-pane fade" id="team" role="tabpanel">
-        <Teamwertung />
+        <TeamRanking />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Geraetewertung from "@/components/rankings/Geraetewertung.vue";
-import Vereinswertung from "@/components/rankings/Vereinswertung.vue";
-import Teamwertung from "@/components/rankings/Teamwertung";
-import TopFluege from "@/components/rankings/TopFluege";
+import ClassRanking from "@/components/rankings/ClassRanking.vue";
+import ClubRanking from "@/components/rankings/ClubRanking.vue";
+import TeamRanking from "@/components/rankings/TeamRanking";
+import TopFlights from "@/components/rankings/TopFlights";
 
 export default {
-  components: { Geraetewertung, Vereinswertung, Teamwertung, TopFluege },
-  name: "Gesamtwertung",
+  components: { ClassRanking, ClubRanking, TeamRanking, TopFlights },
+  name: "OverallResults",
 };
 </script>
 

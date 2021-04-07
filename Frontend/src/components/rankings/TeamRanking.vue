@@ -1,5 +1,5 @@
 <template>
-  <!-- Vereinswertung -->
+  <!-- TeamRanking -->
   <table class="table">
     <thead>
       <tr></tr>
@@ -7,18 +7,21 @@
     <tbody>
       <tr>
         <th scope="row">1</th>
-        <td>Moselfalken</td>
-        <td>300 P</td>
+        <td>SKYWALKER</td>
+        <td>6421 P</td>
+        <td>3000km</td>
       </tr>
       <tr>
         <th scope="row">2</th>
-        <td>D.G.F. Rhein-Mosel-Lahn</td>
-        <td>300 P</td>
+        <td>auch namenlos grandios</td>
+        <td>6421 P</td>
+        <td>300km</td>
       </tr>
       <tr>
         <th scope="row">3</th>
-        <td>SauerlandAir e.V</td>
-        <td>300 P</td>
+        <td>Die sympathischen Speeditöre</td>
+        <td>5 P</td>
+        <td>10km</td>
       </tr>
     </tbody>
   </table>
@@ -27,7 +30,7 @@
 
 <script>
 export default {
-  name: "Vereinswertung",
+  name: "TeamRanking",
   components: {},
   data() {
     return {};

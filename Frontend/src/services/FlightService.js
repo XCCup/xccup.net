@@ -35,10 +35,10 @@ export default {
   getPilots() {
     return apiClient2.get("/pilots");
   },
-  getTageswertung() {
+  getDailyRanking() {
     return apiClient2.get("/tageswertung");
   },
-  getGeraetewertung() {
+  getClassRanking() {
     return apiClient2.get("/geraetewertung");
   },
   getComments() {
