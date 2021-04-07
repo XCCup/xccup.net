@@ -34,6 +34,7 @@ export default {
 // Include custom variable default overrides here
 $primary: #08556d;
 $table-bg-scale: 0;
+$form-check-input-width: 1.1em;
 
 $table-striped-bg-factor: 0.05;
 $table-striped-bg: rgba($primary, $table-striped-bg-factor);

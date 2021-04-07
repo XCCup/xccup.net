@@ -12,7 +12,7 @@
         Airbuddies
       </button>
 
-      <div class="collapse mt-2" id="collapseAirbuddies">
+      <div class="collapse mt-1" id="collapseAirbuddies">
         <!-- Spinner -->
         <div
           class="spinner-border text-primary m-2"
@@ -23,25 +23,27 @@
         </div>
         <!-- Checkboxes -->
         <div
-          class="form-check"
+          class="form-check form-check-inline"
           v-for="(pilot, index) in this.buddyFlights"
           :key="pilot.buddyFlightId"
         >
-          <input
-            class="form-check-input"
-            type="checkbox"
-            :value="pilot.buddyFlightId"
-            id="flexCheckChecked"
-            v-model="checkedFlights"
-          />
-          <label class="form-check-label" for="flexCheckChecked">
-            <span
-              class="badge"
-              :style="{ backgroundColor: this.trackColors[index + 1] }"
-            >
-              {{ pilot.buddyName }}
-            </span>
-          </label>
+          <h5 class="ms-2">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              :value="pilot.buddyFlightId"
+              :id="index"
+              v-model="checkedFlights"
+            />
+            <label class="form-check-label" :for="index">
+              <span
+                class="badge"
+                :style="{ backgroundColor: this.trackColors[index + 1] }"
+              >
+                {{ pilot.buddyName }}
+              </span>
+            </label>
+          </h5>
         </div>
       </div>
     </div>
@@ -99,3 +101,5 @@ export default {
   emits: ["updateAirbuddies"],
 };
 </script>
+
+>
