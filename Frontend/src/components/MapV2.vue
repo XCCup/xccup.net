@@ -63,10 +63,11 @@ export default {
       let lines = [];
       let markers = [];
 
-      // Remove all markers to prevet orphaned ones
+      // Remove all tracks & markers to prevet orphaned ones
       if (this.markers.length > 0) {
         this.markers.forEach((_, index) => {
           this.tracks[index].remove();
+          this.markers[index].remove();
         });
       }
 
