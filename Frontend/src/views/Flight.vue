@@ -62,7 +62,7 @@ export default {
     let { data: description } = await FlightService.getDescription();
 
     return {
-      flight: ref(flight, comments, description),
+      flight: ref(flight),
       comments: ref(comments),
       description: ref(description[0]),
     };
