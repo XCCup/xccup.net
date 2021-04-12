@@ -229,14 +229,14 @@
       "id": "1",
       "name": "Nikki Fernandez",
       "pilotId": "1",
-      "comment": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, explicabo?",
+      "text": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, explicabo?",
       "date": "2021-03-04"
     },
     {
       "id": "2",
       "name": "Noor Fountain",
       "pilotId": "2",
-      "comment": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi ducimus molestiae magni quaerat optio, hic aut? A nesciunt odit odio.",
+      "text": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi ducimus molestiae magni quaerat optio, hic aut? A nesciunt odit odio.",
       "date": "2021-03-05"
     }
   ],
