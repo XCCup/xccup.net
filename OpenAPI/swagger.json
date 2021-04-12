@@ -32,9 +32,32 @@
     "name" : "club"
   }, {
     "name" : "ranking"
+  }, {
+    "name" : "home"
   } ],
   "schemes" : [ "https", "http" ],
   "paths" : {
+    "/start" : {
+      "get" : {
+        "tags" : [ "home" ],
+        "summary" : "Get all information for the landing page",
+        "description" : "Returns all necessary information for the landing page",
+        "operationId" : "getStartingInformation",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/LandingPageInformation"
+              }
+            }
+          }
+        }
+      }
+    },
     "/flight" : {
       "get" : {
         "tags" : [ "flight" ],
@@ -989,6 +1012,91 @@
     }
   },
   "definitions" : {
+    "LandingPageInformation" : {
+      "type" : "object",
+      "properties" : {
+        "sponsors" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Sponsor"
+          }
+        },
+        "flightsOfTheDay" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Flight"
+          }
+        },
+        "topFlights" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Flight"
+          }
+        },
+        "topClubs" : {
+          "type" : "object",
+          "properties" : {
+            "name" : {
+              "type" : "string"
+            },
+            "id" : {
+              "type" : "integer",
+              "format" : "int64"
+            },
+            "points" : {
+              "type" : "number"
+            },
+            "distance" : {
+              "type" : "number"
+            }
+          }
+        },
+        "topTeams" : {
+          "type" : "object",
+          "properties" : {
+            "name" : {
+              "type" : "string"
+            },
+            "id" : {
+              "type" : "integer",
+              "format" : "int64"
+            },
+            "points" : {
+              "type" : "number"
+            },
+            "distance" : {
+              "type" : "number"
+            }
+          }
+        },
+        "topClasses" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "className" : {
+                "type" : "string"
+              },
+              "topPilots" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "object",
+                  "properties" : {
+                    "pilotName" : {
+                      "type" : "string"
+                    },
+                    "pilotId" : {
+                      "type" : "integer",
+                      "format" : "int64"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "Flight" : {
       "type" : "object",
       "properties" : {
@@ -1013,8 +1121,8 @@
         "teamName" : {
           "type" : "string"
         },
-        "device" : {
-          "$ref" : "#/definitions/FlyingDevice"
+        "aircraft" : {
+          "$ref" : "#/definitions/Aircraft"
         },
         "flightType" : {
           "type" : "string",
@@ -1030,7 +1138,7 @@
         "flightPoints" : {
           "type" : "number"
         },
-        "summited" : {
+        "submitted" : {
           "type" : "string",
           "format" : "date-time"
         },
@@ -1127,8 +1235,8 @@
           "type" : "string",
           "enum" : [ "S", "M", "L", "XL", "XXL" ]
         },
-        "device" : {
-          "$ref" : "#/definitions/FlyingDevice"
+        "aircraft" : {
+          "$ref" : "#/definitions/Aircraft"
         },
         "emailOptions" : {
           "type" : "object",
@@ -1146,7 +1254,7 @@
         }
       }
     },
-    "FlyingDevice" : {
+    "Aircraft" : {
       "type" : "object",
       "properties" : {
         "brand" : {
@@ -1155,12 +1263,9 @@
         "model" : {
           "type" : "string"
         },
-        "class" : {
+        "rankingClass" : {
           "type" : "string"
         }
-      },
-      "xml" : {
-        "name" : "FlyingDevice"
       }
     },
     "Team" : {
@@ -1181,8 +1286,8 @@
               "name" : {
                 "type" : "string"
               },
-              "device" : {
-                "$ref" : "#/definitions/FlyingDevice"
+              "id" : {
+                "type" : "string"
               }
             }
           }
@@ -1241,8 +1346,8 @@
     "TakeoffRecord" : {
       "type" : "object",
       "properties" : {
-        "device" : {
-          "$ref" : "#/definitions/FlyingDevice"
+        "aircraft" : {
+          "$ref" : "#/definitions/Aircraft"
         },
         "pilotName" : {
           "type" : "string"
