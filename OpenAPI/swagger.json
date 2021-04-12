@@ -3,7 +3,7 @@
   "info" : {
     "description" : "This is the API for the new version of the XCCup.net.\n",
     "version" : "1.0.0",
-    "title" : "XCCup",
+    "title" : "XCCup 2",
     "termsOfService" : "https://www.xccup.net",
     "contact" : {
       "email" : "admin@xccup.net"
