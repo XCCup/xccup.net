@@ -3,7 +3,7 @@
   "info" : {
     "description" : "This is the API for the new version of the XCCup.net.\n",
     "version" : "1.0.0",
-    "title" : "XCCup 2",
+    "title" : "XCCup",
     "termsOfService" : "https://www.xccup.net",
     "contact" : {
       "email" : "admin@xccup.net"
@@ -1205,7 +1205,7 @@
         "logoPath" : {
           "type" : "string"
         },
-        "representive" : {
+        "represantative" : {
           "type" : "string",
           "description" : "The pilot with represents the club within the competion."
         }
@@ -1238,7 +1238,7 @@
         }
       }
     },
-    "FlyingSiteRecord" : {
+    "TakeoffRecord" : {
       "type" : "object",
       "properties" : {
         "device" : {
@@ -1292,7 +1292,7 @@
                 "type" : "string"
               },
               "record" : {
-                "$ref" : "#/definitions/FlyingSiteRecord"
+                "$ref" : "#/definitions/TakeoffRecord"
               }
             }
           }
