@@ -35,7 +35,7 @@ export default {
       let comment = {
         text: this.text,
         name: "Me",
-        date: new Date(),
+        date: Date.now(),
       };
       this.$emit("comment-submitted", comment);
       this.text = "";

@@ -13,7 +13,7 @@ export default {
   },
   props: {
     timestamp: {
-      type: [String],
+      type: [String, Number],
       required: true,
     },
     dateFormat: {
