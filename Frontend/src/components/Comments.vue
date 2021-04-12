@@ -34,7 +34,7 @@
             class="form-control mb-2"
             id="comment"
             v-model="comment"
-            rows="3"
+            :rows="3"
           ></textarea>
           <button class="btn btn-primary me-1" type="submit">Senden</button>
           <button class="btn btn-outline-danger mx-1" type="reset">

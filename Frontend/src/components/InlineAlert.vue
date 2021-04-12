@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "Airbuddies",
+  name: "InlineAlert",
 
   props: {
     text: {
