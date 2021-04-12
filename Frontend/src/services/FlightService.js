@@ -14,10 +14,12 @@ const apiClient = axios.create({
   },
 });
 
+const JSONUrl = "http://localhost:3000";
+// const JSONUrl =
+//   "https://my-json-server.typicode.com/KaiWissel/XCCup-2.0/blob/master";
 // For https://my-json-server.typicode.com
 const apiClient2 = axios.create({
-  baseURL:
-    "https://my-json-server.typicode.com/KaiWissel/XCCup-2.0/blob/master",
+  baseURL: JSONUrl,
   withCredentials: false,
   headers: {
     Accept: "application/json",

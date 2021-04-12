@@ -41,6 +41,7 @@ import Comments from "@/components/Comments";
 import FlightDescription from "@/components/FlightDescription";
 
 export default {
+  name: "FlightView",
   components: {
     MapV2,
     Airbuddies,
@@ -83,7 +84,11 @@ export default {
       this.buddyTracks = buddyTracks;
     },
     addComment(comment) {
-      this.comments.push(comment);
+      this.comments.push({
+        ...comment,
+        id: String(Math.floor(Math.random() * 100000)),
+        pilotId: "1",
+      });
     },
   },
   watch: {
