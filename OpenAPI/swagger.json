@@ -1,0 +1,1318 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is the API for the new version of the XCCup.net.\n",
+    "version" : "1.0.0",
+    "title" : "XCCup",
+    "termsOfService" : "https://www.xccup.net",
+    "contact" : {
+      "email" : "admin@xccup.net"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/KaiWissel/XCCup/1.0.0",
+  "tags" : [ {
+    "name" : "flight",
+    "description" : "Everything regarding flights"
+  }, {
+    "name" : "user",
+    "description" : "Operations about user"
+  }, {
+    "name" : "sponsor",
+    "description" : "Operations about sponsors"
+  }, {
+    "name" : "team"
+  }, {
+    "name" : "sites"
+  }, {
+    "name" : "club"
+  }, {
+    "name" : "ranking"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/flight" : {
+      "get" : {
+        "tags" : [ "flight" ],
+        "summary" : "Get all flights of current season",
+        "description" : "Returns all flights of the current season",
+        "operationId" : "getFlightsOfCurrentSeason",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Flight"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "flight" ],
+        "summary" : "Add a new flight to the database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Flight object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Flight"
+          }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "flight" ],
+        "summary" : "Update an existing flight",
+        "operationId" : "updateFlight",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Flight object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Flight"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Flight not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      }
+    },
+    "/flight/{flightId}" : {
+      "get" : {
+        "tags" : [ "flight" ],
+        "summary" : "Find flight by ID",
+        "description" : "Returns a single flight",
+        "operationId" : "getFlightById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flightId",
+          "in" : "path",
+          "description" : "ID of flight to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Flight"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Flight not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "flight" ],
+        "summary" : "Deletes a flight",
+        "operationId" : "deleteFlight",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "flightId",
+          "in" : "path",
+          "description" : "Flight id to delete",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Flight not found"
+          }
+        }
+      }
+    },
+    "/flight/season/{year}" : {
+      "get" : {
+        "tags" : [ "flight" ],
+        "summary" : "Find flight by year",
+        "description" : "Returns all flights of the required season",
+        "operationId" : "getFlightBySeason",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "year",
+          "in" : "path",
+          "description" : "The year of the season of the flights to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Flight"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Flight not found"
+          }
+        }
+      }
+    },
+    "/user" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Create user",
+        "description" : "Add a new user to the database",
+        "operationId" : "createUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Created user object",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/user/login" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Logs user into the system",
+        "operationId" : "loginUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "description" : "The user name for login",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "description" : "The password for login in clear text",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "headers" : {
+              "X-Rate-Limit" : {
+                "type" : "integer",
+                "format" : "int32",
+                "description" : "calls per hour allowed by the user"
+              },
+              "X-Expires-After" : {
+                "type" : "string",
+                "format" : "date-time",
+                "description" : "date in UTC when token expires"
+              }
+            },
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "400" : {
+            "description" : "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/logout" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Logs out current logged in user session",
+        "operationId" : "logoutUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/user/{username}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get user by user name",
+        "operationId" : "getUserByName",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The name that needs to be fetched. Use user1 for testing.",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "400" : {
+            "description" : "Invalid username supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "Updated user",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "updateUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "name that need to be updated",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Updated user object",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid user supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "Delete user",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "deleteUser",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The name that needs to be deleted",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid username supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      }
+    },
+    "/sponsors" : {
+      "get" : {
+        "tags" : [ "sponsor" ],
+        "summary" : "Find all sponsors",
+        "description" : "Returns all current sponsors",
+        "operationId" : "getSponsors",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Sponsor"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "sponsor" ],
+        "summary" : "Add a new flight to the database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Sponsor object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Sponsor"
+          }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "sponsor" ],
+        "summary" : "Update an existing flight",
+        "operationId" : "updateSponsor",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Sponsor object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Sponsor"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Sponsor not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      }
+    },
+    "/sponsors/{sponsorId}" : {
+      "get" : {
+        "tags" : [ "sponsor" ],
+        "summary" : "Find Sponsor by ID",
+        "description" : "Returns a single sponsor",
+        "operationId" : "getSponsorById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "sponsorId",
+          "in" : "path",
+          "description" : "ID of Sponsor to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Sponsor"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Sponsor not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "sponsor" ],
+        "summary" : "Deletes a sponsor",
+        "operationId" : "deleteSponsor",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "sponsorId",
+          "in" : "path",
+          "description" : "Sponsor id to delete",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Sponsor not found"
+          }
+        }
+      }
+    },
+    "/ranking" : {
+      "get" : {
+        "tags" : [ "ranking" ],
+        "summary" : "Find all rankings",
+        "description" : "Returns all current rankings",
+        "operationId" : "getRankings",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Ranking"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "ranking" ],
+        "summary" : "Add a new ranking to the database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "A RankingDefinition that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/RankingDefinition"
+          }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "ranking" ],
+        "summary" : "Update an existing ranking",
+        "operationId" : "updateRanking",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "RankingDefinition object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/RankingDefinition"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "RankingDefinition not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      }
+    },
+    "/ranking/{rankingId}" : {
+      "get" : {
+        "tags" : [ "ranking" ],
+        "summary" : "Find ranking by ID",
+        "description" : "Returns a single ranking",
+        "operationId" : "getRankingById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "rankingId",
+          "in" : "path",
+          "description" : "ID of ranking to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Ranking"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Ranking not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "ranking" ],
+        "summary" : "Deletes a ranking",
+        "operationId" : "deleteRanking",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "rankingId",
+          "in" : "path",
+          "description" : "Ranking id to delete",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Ranking not found"
+          }
+        }
+      }
+    },
+    "/ranking/season/{year}" : {
+      "get" : {
+        "tags" : [ "ranking" ],
+        "summary" : "Find rankings by season",
+        "description" : "Returns all rankings of a season",
+        "operationId" : "getRankingBySeason",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "year",
+          "in" : "path",
+          "description" : "year of ranking to return",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Ranking"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid year supplied"
+          },
+          "404" : {
+            "description" : "Ranking not found"
+          }
+        }
+      }
+    },
+    "/sites" : {
+      "get" : {
+        "tags" : [ "sites" ],
+        "summary" : "Find all sites",
+        "description" : "Returns all current sites",
+        "operationId" : "getSites",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FlyingSite"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "sites" ],
+        "summary" : "Add a new site to the database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Site object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/FlyingSite"
+          }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "sites" ],
+        "summary" : "Update an existing site",
+        "operationId" : "updateSite",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Site object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/FlyingSite"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Site not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      }
+    },
+    "/sites/{siteId}" : {
+      "get" : {
+        "tags" : [ "sites" ],
+        "summary" : "Find site by ID",
+        "description" : "Returns a single site",
+        "operationId" : "getSiteById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "siteId",
+          "in" : "path",
+          "description" : "ID of Sponsor to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FlyingSite"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Site not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "sites" ],
+        "summary" : "Deletes a site",
+        "operationId" : "deleteSite",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "siteId",
+          "in" : "path",
+          "description" : "Site id to delete",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Site not found"
+          }
+        }
+      }
+    },
+    "/team" : {
+      "get" : {
+        "tags" : [ "team" ],
+        "summary" : "Find all teams",
+        "description" : "Returns all current teams",
+        "operationId" : "getTeams",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Team"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "team" ],
+        "summary" : "Add a new team to the database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Team object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Team"
+          }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "team" ],
+        "summary" : "Update an existing team",
+        "operationId" : "updateTeam",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Team object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Team"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Team not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      }
+    },
+    "/team/{teamId}" : {
+      "get" : {
+        "tags" : [ "team" ],
+        "summary" : "Find team by ID",
+        "description" : "Returns a single team",
+        "operationId" : "getTeamById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "teamId",
+          "in" : "path",
+          "description" : "ID of team to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Team"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Team not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "team" ],
+        "summary" : "Deletes a team",
+        "operationId" : "deleteTeam",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "teamId",
+          "in" : "path",
+          "description" : "Team id to delete",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Team not found"
+          }
+        }
+      }
+    },
+    "/club" : {
+      "get" : {
+        "tags" : [ "club" ],
+        "summary" : "Find all clubs",
+        "description" : "Returns all current clubs",
+        "operationId" : "getClubs",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Club"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "club" ],
+        "summary" : "Add a new club to the database",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Club object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Club"
+          }
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "club" ],
+        "summary" : "Update an existing club",
+        "operationId" : "updateClub",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Club object that needs to be added to the store",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Club"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Club not found"
+          },
+          "405" : {
+            "description" : "Validation exception"
+          }
+        }
+      }
+    },
+    "/club/{clubId}" : {
+      "get" : {
+        "tags" : [ "club" ],
+        "summary" : "Find club by ID",
+        "description" : "Returns a single club",
+        "operationId" : "getClubById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "clubId",
+          "in" : "path",
+          "description" : "ID of club to return",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Club"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Club not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "club" ],
+        "summary" : "Deletes a club",
+        "operationId" : "deleteClub",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "clubId",
+          "in" : "path",
+          "description" : "Club id to delete",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Club not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Flight" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "pilot" : {
+          "type" : "object",
+          "properties" : {
+            "name" : {
+              "type" : "string"
+            },
+            "photoUrl" : {
+              "type" : "string"
+            }
+          }
+        },
+        "clubName" : {
+          "type" : "string"
+        },
+        "teamName" : {
+          "type" : "string"
+        },
+        "device" : {
+          "$ref" : "#/definitions/FlyingDevice"
+        },
+        "flightType" : {
+          "type" : "string",
+          "enum" : [ "JOJO", "Dreieck", "FAI Dreieck" ]
+        },
+        "flightStatus" : {
+          "type" : "string",
+          "enum" : [ "Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung" ]
+        },
+        "flightDistance" : {
+          "type" : "number"
+        },
+        "flightPoints" : {
+          "type" : "number"
+        },
+        "summited" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "photoUrls" : {
+          "type" : "array",
+          "xml" : {
+            "name" : "photoUrl",
+            "wrapped" : true
+          },
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "igcUrl" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Ranking" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "season" : {
+          "type" : "string"
+        },
+        "flights" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Flight"
+          }
+        }
+      }
+    },
+    "RankingDefinition" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "season" : {
+          "type" : "string"
+        },
+        "sqlQuery" : {
+          "type" : "string"
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "birthday" : {
+          "type" : "string",
+          "description" : "Needed for special rankings (e.g. Seniorenwertung)."
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string",
+          "description" : "The state the user lives in (e.g. RLP, NRW, LUX). Needed for possible state championships."
+        },
+        "gender" : {
+          "type" : "string",
+          "description" : "Needed for special rankings (e.g. Damenwertung).",
+          "enum" : [ "male", "female", "other" ]
+        },
+        "tshirtSize" : {
+          "type" : "string",
+          "enum" : [ "S", "M", "L", "XL", "XXL" ]
+        },
+        "device" : {
+          "$ref" : "#/definitions/FlyingDevice"
+        },
+        "emailOptions" : {
+          "type" : "object",
+          "properties" : {
+            "informIfComment" : {
+              "type" : "boolean"
+            },
+            "newsletter" : {
+              "type" : "boolean"
+            },
+            "teamSearch" : {
+              "type" : "boolean"
+            }
+          }
+        }
+      }
+    },
+    "FlyingDevice" : {
+      "type" : "object",
+      "properties" : {
+        "brand" : {
+          "type" : "string"
+        },
+        "model" : {
+          "type" : "string"
+        },
+        "class" : {
+          "type" : "string"
+        }
+      },
+      "xml" : {
+        "name" : "FlyingDevice"
+      }
+    },
+    "Team" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "numberOfFlights" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "members" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "name" : {
+                "type" : "string"
+              },
+              "device" : {
+                "$ref" : "#/definitions/FlyingDevice"
+              }
+            }
+          }
+        }
+      }
+    },
+    "Club" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "urlPath" : {
+          "type" : "string"
+        },
+        "logoPath" : {
+          "type" : "string"
+        },
+        "representive" : {
+          "type" : "string",
+          "description" : "The pilot with represents the club within the competion."
+        }
+      }
+    },
+    "Sponsor" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "urlPath" : {
+          "type" : "string"
+        },
+        "logoPath" : {
+          "type" : "string"
+        },
+        "adress" : {
+          "type" : "string"
+        },
+        "contactInformation" : {
+          "type" : "string"
+        },
+        "goldSponsor" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "FlyingSiteRecord" : {
+      "type" : "object",
+      "properties" : {
+        "device" : {
+          "$ref" : "#/definitions/FlyingDevice"
+        },
+        "pilotName" : {
+          "type" : "string"
+        },
+        "distance" : {
+          "type" : "number"
+        },
+        "date" : {
+          "type" : "string",
+          "format" : "date"
+        }
+      }
+    },
+    "FlyingSite" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "region" : {
+          "type" : "string"
+        },
+        "club" : {
+          "type" : "string"
+        },
+        "coodinates" : {
+          "type" : "object",
+          "properties" : {
+            "latitute" : {
+              "type" : "string"
+            },
+            "longitute" : {
+              "type" : "string"
+            }
+          }
+        },
+        "records" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : {
+              "name" : {
+                "type" : "string"
+              },
+              "record" : {
+                "$ref" : "#/definitions/FlyingSiteRecord"
+              }
+            }
+          }
+        }
+      }
+    },
+    "ApiResponse" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
