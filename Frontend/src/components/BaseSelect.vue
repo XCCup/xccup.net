@@ -24,6 +24,7 @@
 
 <script>
 export default {
+  name: "BaseSelect",
   props: {
     label: {
       type: String,

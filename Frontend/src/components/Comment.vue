@@ -8,9 +8,9 @@
       width="24"
     />
     <a href="#">{{ comment.name }}</a>
-    <span class="ms-auto fw-light text-secondary">{{
-      format(new Date(comment.date), "dd.MM.yy")
-    }}</span>
+    <span class="ms-auto fw-light text-secondary"
+      ><BaseDate :timestamp="comment.date" dateFormat="dd.MM"
+    /></span>
   </div>
   <p>
     {{ comment.text }}
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import { format } from "date-fns";
 export default {
   name: "Comment",
   props: {
@@ -31,11 +30,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  data() {
-    return {
-      format,
-    };
   },
 };
 </script>

@@ -12,7 +12,7 @@
         @click="routeToFlight(flight.flightId)"
       >
         <th scope="row">{{ index + 1 }}</th>
-        <td>{{ format(new Date(flight.date), "dd.MM") }}</td>
+        <td><BaseDate :timestamp="flight.date" dateFormat="dd.MM" /></td>
         <td>{{ flight.pilot }}</td>
         <td>{{ flight.takeoff }}</td>
         <td>{{ flight.distance }} km</td>
@@ -25,13 +25,11 @@
 
 <script>
 import FlightService from "@/services/FlightService";
-import { format } from "date-fns";
 export default {
   name: "TopFlights",
   components: {},
   data() {
     return {
-      format,
       flights: [],
     };
   },

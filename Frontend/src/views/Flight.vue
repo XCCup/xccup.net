@@ -5,7 +5,7 @@
       <router-link to="/"><i class="bi bi-chevron-left mx-2"></i> </router-link>
 
       Flug von <a href="#">{{ flight.pilot }}</a> am
-      <a href="#">{{ format(new Date(flight.date), "dd.MM.yyyy") }}</a>
+      <a href="#"><BaseDate :timestamp="flight.date" /></a>
     </p>
   </div>
 
@@ -34,7 +34,6 @@ import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
 import Barogramm from "@/components/Barogramm.vue";
 import trackColors from "@/assets/js/trackColors";
-import { format } from "date-fns";
 import InlineAlert from "@/components/InlineAlert";
 import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
@@ -80,7 +79,6 @@ export default {
     return {
       buddyTracks: null,
       baroDataUpdated: 0,
-      format,
       pilot: { club: "Good Club", team: "Die sympathischen Speeditöre" },
     };
   },
