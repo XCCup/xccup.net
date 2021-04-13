@@ -34,9 +34,50 @@
     "name" : "ranking"
   }, {
     "name" : "home"
+  }, {
+    "name" : "mail"
   } ],
   "schemes" : [ "https", "http" ],
   "paths" : {
+    "/mail" : {
+      "post" : {
+        "tags" : [ "mail" ],
+        "summary" : "Send a message to a number of users",
+        "description" : "With this method it is possible to send a message to a variety of users",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "message",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "properties" : {
+              "addressees" : {
+                "type" : "array",
+                "description" : "A list of users to address",
+                "items" : {
+                  "type" : "string"
+                }
+              },
+              "titleOfMessage" : {
+                "type" : "string"
+              },
+              "bodyOfMessage" : {
+                "type" : "string"
+              }
+            }
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Mail send"
+          },
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
     "/start" : {
       "get" : {
         "tags" : [ "home" ],
@@ -368,6 +409,26 @@
           },
           "404" : {
             "description" : "User not found"
+          }
+        }
+      }
+    },
+    "/user/names" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get all usernames in the system",
+        "operationId" : "getUserNames",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
           }
         }
       }
@@ -1332,7 +1393,7 @@
         "logoPath" : {
           "type" : "string"
         },
-        "adress" : {
+        "address" : {
           "type" : "string"
         },
         "contactInformation" : {
