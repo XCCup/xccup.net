@@ -14,18 +14,18 @@
       </suspense>
     </template>
   </router-view>
-  <Footer />
+  <TheFooter />
 </template>
 
 <script>
 import TheNavbar from "@/components/TheNavbar.vue";
-import Footer from "@/components/Footer";
+import TheFooter from "@/components/TheFooter";
 
 export default {
   name: "App",
   components: {
     TheNavbar,
-    Footer,
+    TheFooter,
   },
 };
 </script>
