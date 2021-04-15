@@ -4,6 +4,7 @@ import router from "./router";
 import "bootstrap";
 import upperFirst from "lodash/upperFirst";
 import camelCase from "lodash/camelCase";
+import store from "@/store";
 
 // Import Base Components
 const requireComponent = require.context(
@@ -12,7 +13,9 @@ const requireComponent = require.context(
   /Base[A-Z]\w+\.(vue|js)$/
 );
 
-let app = createApp(App).use(router);
+let app = createApp(App);
+app.use(router);
+app.use(store);
 
 // Also required for Base components
 requireComponent.keys().forEach((fileName) => {

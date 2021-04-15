@@ -20,7 +20,8 @@
     "leaflet": "^1.7.1",
     "leaflet-gesture-handling": "^1.2.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
