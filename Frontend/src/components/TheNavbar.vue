@@ -115,9 +115,7 @@
         </div>
         <router-link
           class="btn btn-danger btn-sm m-1"
-          :to="{
-            name: 'UploadFlight',
-          }"
+          :to="{ name: 'UploadFlight' }"
           >Flug hochladen
         </router-link>
       </div>
@@ -127,7 +125,7 @@
 
 <script>
 export default {
-  name: "NavBar",
+  name: "TheNavbar",
 };
 </script>
 
