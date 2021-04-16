@@ -1076,6 +1076,23 @@
     "LandingPageInformation" : {
       "type" : "object",
       "properties" : {
+        "stats" : {
+          "type" : "object",
+          "properties" : {
+            "totalXcKm" : {
+              "type" : "number"
+            },
+            "numberOfTeams" : {
+              "type" : "integer"
+            },
+            "numberOfClubs" : {
+              "type" : "integer"
+            },
+            "numberOfPilots" : {
+              "type" : "integer"
+            }
+          }
+        },
         "sponsors" : {
           "type" : "array",
           "items" : {
