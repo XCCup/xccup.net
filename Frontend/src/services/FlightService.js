@@ -15,8 +15,7 @@ const apiClient = axios.create({
 });
 
 // For https://my-json-server.typicode.com
-const JSONUrl =
-  "https://my-json-server.typicode.com/KaiWissel/XCCup-2.0/blob/master";
+const JSONUrl = "http://my-json-server.typicode.com/XCCup/xccup.net";
 
 // Use this if using local JSON Server
 // const JSONUrl = "http://localhost:3000";
