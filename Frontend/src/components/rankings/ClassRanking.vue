@@ -12,27 +12,16 @@
 
 <script>
 import ResultsTable from "@/components/rankings/ResultsTable";
-import FlightService from "@/services/FlightService";
 export default {
   name: "ClassRanking",
   components: {
     ResultsTable,
   },
-  data() {
-    return {
-      classRanking: {},
-    };
-  },
-  created() {
-    FlightService.getClassRanking()
-      .then((response) => {
-        this.classRanking = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  props: {
+    classRanking: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>
-
-<style scoped lang="scss"></style>
