@@ -4,7 +4,7 @@
     <p>
       © XCCup 2021 ·
       <a href="#">Datenschutz</a> · <a href="#">Impressum</a> ·
-      <a href="https://github.com/KaiWissel/XCCup-2.0"
+      <a href="https://github.com/XCCup/xccup.net"
         ><i class="bi bi-github"></i
       ></a>
     </p>
