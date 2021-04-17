@@ -15,8 +15,7 @@ const apiClient = axios.create({
 });
 
 // For https://my-json-server.typicode.com
-const JSONUrl =
-  "https://my-json-server.typicode.com/KaiWissel/XCCup-2.0/blob/master";
+const JSONUrl = "https://my-json-server.typicode.com/XCCup/xccup.net";
 
 // Use this if using local JSON Server
 // const JSONUrl = "http://localhost:3000";
@@ -37,15 +36,15 @@ export default {
   getFlight(flightId) {
     return apiClient.get("/flights/" + flightId);
   },
-  getPilots() {
-    return apiClient2.get("/pilots");
-  },
-  getDailyRanking() {
-    return apiClient2.get("/tageswertung");
-  },
-  getClassRanking() {
-    return apiClient2.get("/geraetewertung");
-  },
+  // getPilots() {
+  //   return apiClient2.get("/pilots");
+  // },
+  // getDailyRanking() {
+  //   return apiClient2.get("/tageswertung");
+  // },
+  // getClassRanking() {
+  //   return apiClient2.get("/geraetewertung");
+  // },
   getComments() {
     return apiClient2.get("/comments");
   },
@@ -57,5 +56,8 @@ export default {
   },
   getAirbuddies(flightId) {
     return apiClient.get("/airbuddies/" + flightId);
+  },
+  getInitialData() {
+    return apiClient2.get("/db");
   },
 };

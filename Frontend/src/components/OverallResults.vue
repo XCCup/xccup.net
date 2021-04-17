@@ -54,10 +54,10 @@
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="topFlights" role="tabpanel">
-        <TopFlights />
+        <TopFlights :flights="topFlights" />
       </div>
       <div class="tab-pane fade" id="profile" role="tabpanel">
-        <ClassRanking />
+        <ClassRanking :classRanking="rankings" />
       </div>
       <div class="tab-pane fade" id="club" role="tabpanel">
         <ClubRanking />
@@ -78,7 +78,15 @@ import TopFlights from "@/components/rankings/TopFlights";
 export default {
   components: { ClassRanking, ClubRanking, TeamRanking, TopFlights },
   name: "OverallResults",
+  props: {
+    rankings: {
+      type: Object,
+      required: true,
+    },
+    topFlights: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
-
-<style scoped></style>

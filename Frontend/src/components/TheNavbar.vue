@@ -69,13 +69,14 @@
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
-            Login / Profil
+            {{ authUser.name }}
           </button>
           <div class="dropdown-menu" style="width: 250px">
             <form class="px-4 py-3">
               <div class="mb-3">
                 <h6 class="fst-italic">
-                  Führt angemeldete Nutzer direkt zu ihrem Profil
+                  Führt angemeldete Nutzer direkt zu ihrem
+                  <router-link :to="{ name: 'Profile' }"> Profil</router-link>
                 </h6>
                 <!-- <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label> -->
                 <input
@@ -115,9 +116,7 @@
         </div>
         <router-link
           class="btn btn-danger btn-sm m-1"
-          :to="{
-            name: 'UploadFlight',
-          }"
+          :to="{ name: 'UploadFlight' }"
           >Flug hochladen
         </router-link>
       </div>
@@ -126,8 +125,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  name: "NavBar",
+  name: "TheNavbar",
+  computed: {
+    ...mapGetters(["authUser"]),
+  },
 };
 </script>
 

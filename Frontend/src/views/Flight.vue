@@ -54,11 +54,12 @@ export default {
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    // Is this try/vatch smart?
     try {
       // Hardcoded for development
 
       let { data: flight } = await FlightService.getFlight(
-        "60699294a7c2069af1246316" /*this.$route.params.flightId*/
+        "60699294a7c2069af1246316" /*this.flightId or this.$route.params.flightId*/
       );
       let { data: comments } = await FlightService.getComments();
       let { data: description } = await FlightService.getDescription();
@@ -73,7 +74,7 @@ export default {
     }
   },
   props: {
-    flightId: String,
+    flightId: { type: String, required: true },
   },
   data() {
     return {

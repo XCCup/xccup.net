@@ -1,5 +1,5 @@
 <template>
-  <NavBar />
+  <TheNavbar />
   <router-view v-slot="{ Component }">
     <template v-if="Component">
       <suspense>
@@ -14,18 +14,18 @@
       </suspense>
     </template>
   </router-view>
-  <Footer />
+  <TheFooter />
 </template>
 
 <script>
-import NavBar from "@/components/NavBar.vue";
-import Footer from "@/components/Footer";
+import TheNavbar from "@/components/TheNavbar.vue";
+import TheFooter from "@/components/TheFooter";
 
 export default {
   name: "App",
   components: {
-    NavBar,
-    Footer,
+    TheNavbar,
+    TheFooter,
   },
 };
 </script>

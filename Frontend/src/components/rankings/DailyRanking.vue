@@ -38,24 +38,13 @@
 </template>
 
 <script>
-import FlightService from "@/services/FlightService";
 export default {
   name: "DailyRanking",
-  data() {
-    return {
-      flights: [],
-    };
-  },
-  created() {
-    FlightService.getDailyRanking()
-      .then((response) => {
-        this.flights = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
   props: {
+    flights: {
+      type: Array,
+      required: true,
+    },
     maxRows: Number,
   },
   methods: {
