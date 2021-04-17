@@ -4,7 +4,6 @@
       <div id="mapContainer"></div>
     </div>
   </div>
-  {{ mapPositionFromState }}
 </template>
 
 <script>
