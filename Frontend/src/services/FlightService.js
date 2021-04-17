@@ -45,12 +45,15 @@ export default {
   // getClassRanking() {
   //   return apiClient2.get("/geraetewertung");
   // },
+
+  // These will be obsolete if the flight modell contains comments and description
   getComments() {
     return apiClient2.get("/comments");
   },
   getDescription() {
     return apiClient2.get("/flightDescription");
   },
+
   uploadFlight(data) {
     return apiClient.post("/flights/upload", data);
   },

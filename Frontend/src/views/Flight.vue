@@ -65,6 +65,8 @@ export default {
       let { data: flight } = await FlightService.getFlight(
         "60699294a7c2069af1246316" /*this.flightId or this.$route.params.flightId*/
       );
+
+      // These will be obsolete if the flight modell contains comments and description
       let { data: comments } = await FlightService.getComments();
       let { data: description } = await FlightService.getDescription();
 
