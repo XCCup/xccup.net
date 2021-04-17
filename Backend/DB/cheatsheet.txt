@@ -1,0 +1,2 @@
+Access DB in container:
+docker exec -it db_db_1 psql -U xccup_user xccup_db

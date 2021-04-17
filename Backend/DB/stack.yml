@@ -1,19 +1,23 @@
-# Use postgres/example user/password credentials
-version: '3.1'
+version: "3.1"
 
 services:
-
   db:
     image: postgres
     restart: always
     environment:
-      POSTGRES_PASSWORD: example
+      POSTGRES_PASSWORD: xccup_pw
+      POSTGRES_USER: xccup_user
+      POSTGRES_DB: xccup_db
+    ports:
+      - "65432:5432"
+    volumes:
+      - /home/postgres/data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
     restart: always
     environment:
-        PGADMIN_DEFAULT_EMAIL: kai.wpkt@gmail.com
-        PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
+      PGADMIN_DEFAULT_EMAIL: kai.wpkt@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
     ports:
       - 65080:80
