@@ -93,16 +93,8 @@ export default {
     updateAirbuddies(buddyTracks) {
       this.buddyTracks = buddyTracks;
     },
-    // addComment(comment) {
-    //   this.comments.push({
-    //     ...comment,
-    //     id: String(Math.floor(Math.random() * 100000)),
-    //   });
-    // },
     async addComment(comment) {
       try {
-        // To simulate longer loading times
-        // await new Promise((resolve) => setTimeout(resolve, 2000));
         const res = await FlightService.addComment({
           id: String(Math.floor(Math.random() * 100000)),
           ...comment,
@@ -122,7 +114,6 @@ export default {
       }
     },
   },
-
   watch: {
     baroData() {
       this.baroDataUpdated++;
@@ -221,5 +212,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

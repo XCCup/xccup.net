@@ -16,7 +16,9 @@
     {{ comment.text }}
   </p>
   <div v-if="comment.pilotId === authUser.id" class="text-secondary text-end">
-    <a href="#"> <i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a>
+    <a href="#" @click.prevent="editComment"
+      ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a
+    >
     <a href="#" @click.prevent="deleteComment">
       <i class="bi bi-trash mx-1"></i>Löschen
     </a>
@@ -37,6 +39,9 @@ export default {
   methods: {
     deleteComment() {
       this.$emit("comment-deleted", this.comment.id);
+    },
+    editComment() {
+      console.log("edit clicked");
     },
   },
   computed: {
