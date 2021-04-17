@@ -1,2 +1,7 @@
 Access DB in container:
 docker exec -it db_db_1 psql -U xccup_user xccup_db
+
+Working with timezones in psql:
+SHOW TIMEZONE;
+SELECT * FROM pg_timezone_names; 
+SET TIMEZONE='Europe/Berlin';
