@@ -118,6 +118,8 @@ let options = {
           });
           // mybaro.updatePosition(context.dataIndex);
           document.dispatchEvent(event);
+          // Update map positions with state
+          // this.$store.dispatch("updateMapPoitions", context);
           return label;
         },
       },

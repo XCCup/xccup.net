@@ -4,6 +4,7 @@
       <div id="mapContainer"></div>
     </div>
   </div>
+  {{ mapPositionFromState }}
 </template>
 
 <script>
@@ -33,6 +34,11 @@ export default {
   watch: {
     tracklogs(newTrackLogs) {
       this.drawTracks(newTrackLogs);
+    },
+  },
+  computed: {
+    mapPositionFromState() {
+      return this.$store.state.mapPosition;
     },
   },
   mounted() {

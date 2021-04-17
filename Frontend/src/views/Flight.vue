@@ -18,9 +18,14 @@
   />
   <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
   <Inline-alert text="Automatisches zentrieren fehlt noch" />
+
   <FlightDetails :flight="this.flight" :pilot="this.pilot" />
   <FlightDescription :description="description" />
-  <Comments :comments="comments" @comment-submitted="addComment" />
+  <Comments
+    :comments="comments"
+    @comment-submitted="addComment"
+    @comment-deleted="deleteComment"
+  />
 </template>
 
 <script>
@@ -54,10 +59,9 @@ export default {
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    // Is this try/vatch smart?
+    // Is this try/catch smart?
     try {
-      // Hardcoded for development
-
+      // Hardcoded flight for development
       let { data: flight } = await FlightService.getFlight(
         "60699294a7c2069af1246316" /*this.flightId or this.$route.params.flightId*/
       );
@@ -87,14 +91,36 @@ export default {
     updateAirbuddies(buddyTracks) {
       this.buddyTracks = buddyTracks;
     },
-    addComment(comment) {
-      this.comments.push({
-        ...comment,
-        id: String(Math.floor(Math.random() * 100000)),
-        pilotId: "1",
-      });
+    // addComment(comment) {
+    //   this.comments.push({
+    //     ...comment,
+    //     id: String(Math.floor(Math.random() * 100000)),
+    //   });
+    // },
+    async addComment(comment) {
+      try {
+        // To simulate longer loading times
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
+        const res = await FlightService.addComment({
+          id: String(Math.floor(Math.random() * 100000)),
+          ...comment,
+        });
+        this.comments = [...this.comments, res.data];
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async deleteComment(id) {
+      try {
+        const res = await FlightService.deleteComment(id);
+        const res2 = await FlightService.getComments();
+        this.comments = res2.data;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
+
   watch: {
     baroData() {
       this.baroDataUpdated++;
