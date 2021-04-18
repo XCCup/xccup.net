@@ -54,6 +54,7 @@ export default {
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
       tileOptions
     ).addTo(this.map);
+
     // Wepback fix for marker images in dist
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.imagePath = "/";
@@ -121,7 +122,7 @@ export default {
     },
     updatePositions(positions) {
       this.tracklogs.forEach((_, index) => {
-        // Index + 1 because first dataset is GND ans wee need to skip that one
+        // Index + 1 because first dataset is GND and wee need to skip that one
         if (positions.datasetIndex === index + 1) {
           if (this.tracklogs[index][positions.dataIndex]) {
             this.positionMarkers[index].setLatLng(
