@@ -32,21 +32,27 @@ export default {
     },
   },
   watch: {
-    tracklogs(newTrackLogs) {
-      this.drawTracks(newTrackLogs);
+    // Check if there are new tracklogs present
+    tracklogs(newTracklogs) {
+      this.drawTracks(newTracklogs);
     },
+    // Watch the computed prop getting the marker positions from state
+    // markerMapPositionFromState(newPosition) {
+    //   console.log(newPosition.datasetIndex);
+    //   this.updateMarkerPosition(newPosition);
+    // },
   },
   computed: {
-    mapPositionFromState() {
-      return this.$store.state.mapPosition;
-    },
+    // Getting the marker positions from state
+    // markerMapPositionFromState() {
+    //   return this.$store.state.markerMapPosition;
+    // },
   },
   mounted() {
+    // Setup leaflet
     L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
     this.map = L.map("mapContainer", {
-      // dragging: !L.Browser.mobile,
-      // tap: !L.Browser.mobile,
       gestureHandling: true,
     }).setView([50.143, 7.146], 8);
 
@@ -55,7 +61,7 @@ export default {
       tileOptions
     ).addTo(this.map);
 
-    // Wepback fix for marker images in dist
+    // Wepback fix for default marker image paths
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.imagePath = "/";
     L.Icon.Default.mergeOptions({
@@ -64,14 +70,8 @@ export default {
       shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
     });
 
-    // Draw tracks
+    // Draw tracklogs
     this.drawTracks(this.tracklogs);
-
-    // Event listener for updating marker positions. Input comes from the Barogramm component
-    this.positionUpdateListener = (event) => {
-      this.updatePositions(event.detail);
-    };
-    document.addEventListener("positionUpdated", this.positionUpdateListener);
   },
   methods: {
     drawTracks(tracks) {
@@ -94,10 +94,13 @@ export default {
           lines[index] = L.polyline(track, {
             color: trackColors[index],
           }).addTo(this.map);
-          // Center map view on first track and add takeoff & landing markers
+
+          // Only for main tracklog:
           if (index === 0) {
+            // Center map view on first track
             this.map.fitBounds(lines[0].getBounds());
 
+            // Create takeoff & landing markers
             markers.push(
               L.marker(track[0], { title: "Start" }).addTo(this.map),
               L.marker(track[track.length - 1], { title: "Landeplatz" }).addTo(
@@ -106,7 +109,7 @@ export default {
             );
           }
           // Create position markers for every track
-          positionMarkers[index] = L.circleMarker([51.508, -0.11], {
+          positionMarkers[index] = L.circleMarker(track[0], {
             color: "#fff",
             fillColor: trackColors[index],
             fillOpacity: 0.8,
@@ -116,17 +119,28 @@ export default {
           }).addTo(this.map);
         }
       });
+
+      // Event listener for updating marker positions. Input comes from the barogramm component
+      this.markerPositionUpdateListener = (event) => {
+        this.updateMarkerPosition(event.detail);
+      };
+      document.addEventListener(
+        "markerPositionUpdated",
+        this.markerPositionUpdateListener
+      );
+
+      // Update data
       this.tracks = lines;
       this.markers = markers;
       this.positionMarkers = positionMarkers;
     },
-    updatePositions(positions) {
+    updateMarkerPosition(position) {
       this.tracklogs.forEach((_, index) => {
-        // Index + 1 because first dataset is GND and wee need to skip that one
-        if (positions.datasetIndex === index + 1) {
-          if (this.tracklogs[index][positions.dataIndex]) {
+        // Index + 1 because first dataset is GND and we need to skip that one
+        if (position.datasetIndex === index + 1) {
+          if (this.tracklogs[index][position.dataIndex]) {
             this.positionMarkers[index].setLatLng(
-              this.tracklogs[index][positions.dataIndex]
+              this.tracklogs[index][position.dataIndex]
             );
           }
         }
@@ -136,12 +150,6 @@ export default {
       //   this.map.setView(this.tracklogs[0][positions.dataIndex]);
       // }
     },
-  },
-  unmounted() {
-    document.removeEventListener(
-      "positionUpdated",
-      this.positionUpdateListener
-    );
   },
 };
 

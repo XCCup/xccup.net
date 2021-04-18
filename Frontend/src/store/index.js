@@ -5,22 +5,22 @@ export default createStore({
     // Hardcoded for development
     users: [{ name: "testUser", id: "testId" }],
     authId: "testId",
-    mapPosition: { name: "test" },
+    markerMapPosition: {},
   },
   getters: {
     authUser: (state) => state.users.find((user) => user.id === state.authId),
-    mapPosition() {
-      return this.mapPosition;
+    markerMapPosition() {
+      return this.markerMapPosition;
     },
   },
   actions: {
-    updateMapPositions(context, positions) {
-      context.commit("setMapPosition", positions);
+    updateMarkerMapPosition(context, Position) {
+      context.commit("setMarkerMapPosition", Position);
     },
   },
   mutations: {
-    setMapPositions(state, mapPositions) {
-      state.mapPosition = mapPositions;
+    setMarkerMapPosition(state, Position) {
+      state.markerMapPosition = Position;
     },
   },
 });
