@@ -15,10 +15,10 @@ const apiClient = axios.create({
 });
 
 // For https://my-json-server.typicode.com
-const JSONUrl = "https://my-json-server.typicode.com/XCCup/xccup.net";
+let JSONUrl = "https://my-json-server.typicode.com/XCCup/xccup.net";
 
 // Use this if using local JSON Server
-// const JSONUrl = "http://localhost:3000";
+// JSONUrl = "http://localhost:3000";
 
 const apiClient2 = axios.create({
   baseURL: JSONUrl,
@@ -45,12 +45,15 @@ export default {
   // getClassRanking() {
   //   return apiClient2.get("/geraetewertung");
   // },
+
+  // These will be obsolete if the flight modell contains comments and description
   getComments() {
     return apiClient2.get("/comments");
   },
   getDescription() {
     return apiClient2.get("/flightDescription");
   },
+
   uploadFlight(data) {
     return apiClient.post("/flights/upload", data);
   },
@@ -59,5 +62,11 @@ export default {
   },
   getInitialData() {
     return apiClient2.get("/db");
+  },
+  addComment(comment) {
+    return apiClient2.post("/comments", comment);
+  },
+  deleteComment(commentId) {
+    return apiClient2.delete("/comments/", { params: { id: commentId } });
   },
 };

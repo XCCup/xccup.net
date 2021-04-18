@@ -20,7 +20,10 @@ export default {
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 2000));
     try {
-      let { data: initialData } = await FlightService.getInitialData();
+      const { data: initialData } = await FlightService.getInitialData();
+
+      // const reponse = await FlightService.getInitialData();
+      // const {tageswertung, geraetewertung} = response.data
 
       return {
         dailyRanking: ref(initialData.tageswertung),

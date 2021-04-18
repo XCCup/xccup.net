@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="shadow p-3 mb-3" v-for="comment in comments" :key="comment.id">
-      <Comment :comment="comment" />
+      <Comment :comment="comment" @comment-deleted="deleteComment" />
     </div>
     <CommentEditor @comment-submitted="onSubmit" />
   </div>
@@ -30,7 +30,11 @@ export default {
     onSubmit(comment) {
       this.$emit("comment-submitted", comment);
     },
+    deleteComment(id) {
+      this.$emit("comment-deleted", id);
+    },
   },
+  emits: ["comment-deleted", "comment-submitted"],
 };
 </script>
 

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "CommentEditor",
 
@@ -30,16 +31,21 @@ export default {
       text: "",
     };
   },
+  computed: {
+    ...mapGetters(["authUser"]),
+  },
   methods: {
     onSubmit() {
       let comment = {
         text: this.text,
-        name: "Me",
+        pilotId: this.authUser.id,
+        name: this.authUser.name,
         date: Date.now(),
       };
       this.$emit("comment-submitted", comment);
       this.text = "";
     },
   },
+  emits: ["comment-submitted"],
 };
 </script>

@@ -35,6 +35,11 @@ export default {
       this.drawTracks(newTrackLogs);
     },
   },
+  computed: {
+    mapPositionFromState() {
+      return this.$store.state.mapPosition;
+    },
+  },
   mounted() {
     L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
