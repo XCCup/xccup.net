@@ -99,6 +99,7 @@ export default {
           id: String(Math.floor(Math.random() * 100000)),
           ...comment,
         });
+        // Only as long as the API doesnt exist
         this.comments = [...this.comments, res.data];
       } catch (error) {
         console.log(error);
