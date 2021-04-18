@@ -6,7 +6,6 @@
         v-model="zoom"
         v-model:zoom="zoom"
         :center="[50.143, 7.146]"
-        @ready="doSomethingOnReady()"
       >
         <l-tile-layer
           url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}"
@@ -19,20 +18,22 @@
           :lat-lngs="track"
           :color="trackColors[index]"
         ></l-polyline>
-        <l-marker :lat-lng="takeoff">
+        <!-- <l-marker :lat-lng="takeoff">
           <l-tooltip>Start</l-tooltip>
         </l-marker>
         <l-marker :lat-lng="landingField">
           <l-tooltip>Landeplatz</l-tooltip>
-        </l-marker>
+        </l-marker> -->
       </l-map>
     </div>
   </div>
+  <button class="btn btn-primary" @click="doSomethingOnReady()">
+    getBounds()
+  </button>
 </template>
 
 <script>
 import "leaflet/dist/leaflet.css";
-import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
 import {
@@ -52,8 +53,8 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LMarker,
-    LTooltip,
+    // LMarker,
+    // LTooltip,
     LPolyline,
   },
   name: "Map",

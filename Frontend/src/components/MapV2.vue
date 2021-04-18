@@ -19,6 +19,7 @@ export default {
     return {
       map: null,
       tracks: Array,
+      positionMarkers: [],
       markers: [],
     };
   },
@@ -53,6 +54,14 @@ export default {
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
       tileOptions
     ).addTo(this.map);
+    // Wepback fix for marker images in dist
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.imagePath = "/";
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+      iconUrl: require("leaflet/dist/images/marker-icon.png"),
+      shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+    });
 
     // Draw tracks
     this.drawTracks(this.tracklogs);
@@ -66,13 +75,14 @@ export default {
   methods: {
     drawTracks(tracks) {
       let lines = [];
+      let positionMarkers = [];
       let markers = [];
 
       // Remove all tracks & markers to prevet orphaned ones
-      if (this.markers.length > 0) {
-        this.markers.forEach((_, index) => {
+      if (this.positionMarkers.length > 0) {
+        this.positionMarkers.forEach((_, index) => {
           this.tracks[index].remove();
-          this.markers[index].remove();
+          this.positionMarkers[index].remove();
         });
       }
 
@@ -83,12 +93,19 @@ export default {
           lines[index] = L.polyline(track, {
             color: trackColors[index],
           }).addTo(this.map);
-          // Center map view on first track
+          // Center map view on first track and add takeoff & landing markers
           if (index === 0) {
             this.map.fitBounds(lines[0].getBounds());
+
+            markers.push(
+              L.marker(track[0], { title: "Start" }).addTo(this.map),
+              L.marker(track[track.length - 1], { title: "Landeplatz" }).addTo(
+                this.map
+              )
+            );
           }
-          // Create markers for every track
-          markers[index] = L.circleMarker([51.508, -0.11], {
+          // Create position markers for every track
+          positionMarkers[index] = L.circleMarker([51.508, -0.11], {
             color: "#fff",
             fillColor: trackColors[index],
             fillOpacity: 0.8,
@@ -100,19 +117,20 @@ export default {
       });
       this.tracks = lines;
       this.markers = markers;
+      this.positionMarkers = positionMarkers;
     },
     updatePositions(positions) {
       this.tracklogs.forEach((_, index) => {
         // Index + 1 because first dataset is GND ans wee need to skip that one
         if (positions.datasetIndex === index + 1) {
           if (this.tracklogs[index][positions.dataIndex]) {
-            this.markers[index].setLatLng(
+            this.positionMarkers[index].setLatLng(
               this.tracklogs[index][positions.dataIndex]
             );
           }
         }
       });
-      // Center map on pilot - currently too CPU intense
+      // Center map on pilot - currently too CPU intense. Needs refactoring
       // if (positions.datasetIndex === 1) {
       //   this.map.setView(this.tracklogs[0][positions.dataIndex]);
       // }
