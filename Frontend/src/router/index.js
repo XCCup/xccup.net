@@ -11,9 +11,14 @@ const routes = [
     path: "/flug/:flightId",
     name: "Flight",
     props: true,
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "flug-details" */ "../views/Flight.vue"),
+  },
+  // Route old links to the new name scheme
+  {
+    path: "/FlugDetails/:oldFlightId",
+    name: "OldFlights",
+    props: true,
     component: () =>
       import(/* webpackChunkName: "flug-details" */ "../views/Flight.vue"),
   },

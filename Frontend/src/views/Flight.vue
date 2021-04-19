@@ -80,7 +80,8 @@ export default {
     }
   },
   props: {
-    flightId: { type: String, required: true },
+    flightId: { type: String },
+    oldFlightId: { type: String },
   },
   data() {
     return {
