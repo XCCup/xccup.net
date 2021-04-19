@@ -14,13 +14,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "flug-details" */ "../views/Flight.vue"),
   },
-  // Route old links to the new name scheme
+  // Route old links to the new url scheme
   {
-    path: "/FlugDetails/:oldFlightId",
-    name: "OldFlights",
-    props: true,
-    component: () =>
-      import(/* webpackChunkName: "flug-details" */ "../views/Flight.vue"),
+    path: "/FlugDetails/:flightId",
+    redirect: () => ({
+      name: "Flight",
+    }),
   },
   {
     path: "/upload",
