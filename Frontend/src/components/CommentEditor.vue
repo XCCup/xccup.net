@@ -11,6 +11,7 @@
           id="comment-editor"
           v-model="text"
           :rows="3"
+          @input="updateLocalStorage"
         ></textarea>
         <button class="btn btn-primary me-1" type="submit">Senden</button>
         <button class="btn btn-outline-danger mx-1" type="reset">
@@ -34,6 +35,12 @@ export default {
   computed: {
     ...mapGetters(["authUser"]),
   },
+  mounted() {
+    console.log((this.text = localStorage.getItem("commentText")));
+    if (!localStorage.getItem("commentText") === null) {
+      this.text = localStorage.getItem("commentText");
+    }
+  },
   methods: {
     onSubmit() {
       let comment = {
@@ -44,6 +51,13 @@ export default {
       };
       this.$emit("comment-submitted", comment);
       this.text = "";
+      this.clearLocalStorage();
+    },
+    updateLocalStorage() {
+      localStorage.setItem("commentText", this.text);
+    },
+    clearLocalStorage() {
+      localStorage.setItem("commentText", "");
     },
   },
   emits: ["comment-submitted"],
