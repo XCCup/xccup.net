@@ -20,7 +20,7 @@ async function dbConnectionTest() {
     );
   } catch (error) {
     console.error(
-      "Unable to connect to the database ${postDb} on ${host}:${port}.:",
+      `Unable to connect to the database ${postDb} on ${host}:${port}.:`,
       error
     );
     process.exit(1);
