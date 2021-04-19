@@ -19,6 +19,7 @@ export default {
     return {
       map: null,
       tracks: Array,
+      positionMarkers: [],
       markers: [],
     };
   },
@@ -31,21 +32,27 @@ export default {
     },
   },
   watch: {
-    tracklogs(newTrackLogs) {
-      this.drawTracks(newTrackLogs);
+    // Check if there are new tracklogs present
+    tracklogs(newTracklogs) {
+      this.drawTracks(newTracklogs);
     },
+    // Watch the computed prop getting the marker positions from state
+    // markerMapPositionFromState(newPosition) {
+    //   console.log(newPosition.datasetIndex);
+    //   this.updateMarkerPosition(newPosition);
+    // },
   },
   computed: {
-    mapPositionFromState() {
-      return this.$store.state.mapPosition;
-    },
+    // Getting the marker positions from state
+    // markerMapPositionFromState() {
+    //   return this.$store.state.markerMapPosition;
+    // },
   },
   mounted() {
+    // Setup leaflet
     L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
     this.map = L.map("mapContainer", {
-      // dragging: !L.Browser.mobile,
-      // tap: !L.Browser.mobile,
       gestureHandling: true,
     }).setView([50.143, 7.146], 8);
 
@@ -54,25 +61,29 @@ export default {
       tileOptions
     ).addTo(this.map);
 
-    // Draw tracks
-    this.drawTracks(this.tracklogs);
+    // Wepback fix for default marker image paths
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.imagePath = "/";
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+      iconUrl: require("leaflet/dist/images/marker-icon.png"),
+      shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+    });
 
-    // Event listener for updating marker positions. Input comes from the Barogramm component
-    this.positionUpdateListener = (event) => {
-      this.updatePositions(event.detail);
-    };
-    document.addEventListener("positionUpdated", this.positionUpdateListener);
+    // Draw tracklogs
+    this.drawTracks(this.tracklogs);
   },
   methods: {
     drawTracks(tracks) {
       let lines = [];
+      let positionMarkers = [];
       let markers = [];
 
       // Remove all tracks & markers to prevet orphaned ones
-      if (this.markers.length > 0) {
-        this.markers.forEach((_, index) => {
+      if (this.positionMarkers.length > 0) {
+        this.positionMarkers.forEach((_, index) => {
           this.tracks[index].remove();
-          this.markers[index].remove();
+          this.positionMarkers[index].remove();
         });
       }
 
@@ -83,12 +94,22 @@ export default {
           lines[index] = L.polyline(track, {
             color: trackColors[index],
           }).addTo(this.map);
-          // Center map view on first track
+
+          // Only for main tracklog:
           if (index === 0) {
+            // Center map view on first track
             this.map.fitBounds(lines[0].getBounds());
+
+            // Create takeoff & landing markers
+            markers.push(
+              L.marker(track[0], { title: "Start" }).addTo(this.map),
+              L.marker(track[track.length - 1], { title: "Landeplatz" }).addTo(
+                this.map
+              )
+            );
           }
-          // Create markers for every track
-          markers[index] = L.circleMarker([51.508, -0.11], {
+          // Create position markers for every track
+          positionMarkers[index] = L.circleMarker(track[0], {
             color: "#fff",
             fillColor: trackColors[index],
             fillOpacity: 0.8,
@@ -98,31 +119,37 @@ export default {
           }).addTo(this.map);
         }
       });
+
+      // Event listener for updating marker positions. Input comes from the barogramm component
+      this.markerPositionUpdateListener = (event) => {
+        this.updateMarkerPosition(event.detail);
+      };
+      document.addEventListener(
+        "markerPositionUpdated",
+        this.markerPositionUpdateListener
+      );
+
+      // Update data
       this.tracks = lines;
       this.markers = markers;
+      this.positionMarkers = positionMarkers;
     },
-    updatePositions(positions) {
+    updateMarkerPosition(position) {
       this.tracklogs.forEach((_, index) => {
-        // Index + 1 because first dataset is GND ans wee need to skip that one
-        if (positions.datasetIndex === index + 1) {
-          if (this.tracklogs[index][positions.dataIndex]) {
-            this.markers[index].setLatLng(
-              this.tracklogs[index][positions.dataIndex]
+        // Index + 1 because first dataset is GND and we need to skip that one
+        if (position.datasetIndex === index + 1) {
+          if (this.tracklogs[index][position.dataIndex]) {
+            this.positionMarkers[index].setLatLng(
+              this.tracklogs[index][position.dataIndex]
             );
           }
         }
       });
-      // Center map on pilot - currently too CPU intense
+      // Center map on pilot - currently too CPU intense. Needs refactoring
       // if (positions.datasetIndex === 1) {
       //   this.map.setView(this.tracklogs[0][positions.dataIndex]);
       // }
     },
-  },
-  unmounted() {
-    document.removeEventListener(
-      "positionUpdated",
-      this.positionUpdateListener
-    );
   },
 };
 

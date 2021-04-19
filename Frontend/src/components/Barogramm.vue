@@ -11,6 +11,7 @@
 
 import Chart from "chart.js/auto";
 import "chartjs-adapter-date-fns";
+import store from "../store";
 
 export default {
   name: "Barogramm",
@@ -39,6 +40,7 @@ export default {
   },
 
   mounted() {
+    // Create a new chart
     this.chart = new Chart(this.$refs.myChart, {
       type: "line",
       data: {
@@ -47,12 +49,10 @@ export default {
       },
       options: options,
     });
-    // mybaro = this;
   },
 };
 
-// let mybaro;
-
+// Chart options
 let options = {
   // responsive: true,
   // parsing: true,
@@ -112,14 +112,24 @@ let options = {
           if (context.parsed.y !== null) {
             label += context.parsed.y + "m";
           }
-          // Update position on map
-          const event = new CustomEvent("positionUpdated", {
-            detail: context,
+
+          // Update marker position on map vie event listener
+          const event = new CustomEvent("markerPositionUpdated", {
+            detail: {
+              dataIndex: context.dataIndex,
+              datasetIndex: context.datasetIndex,
+            },
           });
-          // mybaro.updatePosition(context.dataIndex);
           document.dispatchEvent(event);
-          // Update map positions with state
-          // this.$store.dispatch("updateMapPoitions", context);
+
+          // Alternative via state:
+          // Update pilot marker positions in state via delegate function
+          // const markerPosition = {
+          //   datasetIndex: context.datasetIndex,
+          //   dataIndex: context.dataIndex,
+          // };
+          // updateMarkerMapPosition(markerPosition);
+
           return label;
         },
       },
@@ -160,19 +170,21 @@ let options = {
   },
 };
 
-// Barogramm
+// Delegate function to update the pilot marker position state from the tooltip callback
+// function updateMarkerMapPosition(mapPosition) {
+//   store.dispatch("updateMarkerMapPosition", mapPosition);
+// }
 
-// Set defaults
+// Set chart defaults
 Chart.defaults.elements.line.borderWidth = 2;
 Chart.defaults.elements.line.tension = 1;
-
 Chart.defaults.elements.point.pointBorderWidth = 0;
 Chart.defaults.elements.point.pointRadius = 0;
 //Chart.defaults.elements.point.pointHitRadius = 0;
 Chart.defaults.elements.point.pointHoverRadius = 0;
-
 // Chart.defaults.plugins.decimation.enabled = true;
 </script>
+
 <style lang="scss" scoped>
 // #barogramm {
 //   height: 200px;
