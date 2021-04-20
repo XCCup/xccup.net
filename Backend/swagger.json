@@ -1202,19 +1202,29 @@
         "aircraft" : {
           "$ref" : "#/definitions/Aircraft"
         },
-        "flightType" : {
-          "type" : "string",
-          "enum" : [ "JOJO", "Dreieck", "FAI Dreieck" ]
-        },
-        "flightStatus" : {
-          "type" : "string",
-          "enum" : [ "Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung" ]
-        },
-        "flightDistance" : {
-          "type" : "number"
-        },
-        "flightPoints" : {
-          "type" : "number"
+        "result" : {
+          "type" : "object",
+          "properties" : {
+            "status" : {
+              "type" : "string",
+              "enum" : [ "Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung" ]
+            },
+            "points" : {
+              "type" : "number"
+            },
+            "distance" : {
+              "type" : "number"
+            },
+            "type" : {
+              "type" : "string"
+            },
+            "cornerPoints" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
         },
         "submitted" : {
           "type" : "string",
