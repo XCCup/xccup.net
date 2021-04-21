@@ -114,7 +114,7 @@ export default {
     },
     async deleteComment(id) {
       try {
-        const res = await FlightService.deleteComment(id);
+        await FlightService.deleteComment(id);
         const res2 = await FlightService.getComments();
         this.comments = res2.data;
       } catch (error) {
