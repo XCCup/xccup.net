@@ -55,15 +55,21 @@ export default {
     Comments,
     FlightDescription,
   },
-  async setup() {
+  async setup(props) {
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Is this try/catch smart?
     try {
       // Hardcoded flight for development
+      let demoFlightId = "60699294a7c2069af1246316";
+
+      if (props.flightId === "607fc418d24f48f5fa426a73") {
+        demoFlightId = "607fc418d24f48f5fa426a73";
+      }
       let { data: flight } = await FlightService.getFlight(
-        "60699294a7c2069af1246316" /*this.flightId or this.$route.params.flightId*/
+        demoFlightId
+        /*this.flightId or this.$route.params.flightId*/
       );
 
       // These will be obsolete if the flight modell contains comments and description
@@ -80,7 +86,8 @@ export default {
     }
   },
   props: {
-    flightId: { type: String, required: true },
+    flightId: { type: String },
+    oldFlightId: { type: String },
   },
   data() {
     return {
