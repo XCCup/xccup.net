@@ -25,13 +25,13 @@
         <div
           class="form-check form-check-inline"
           v-for="(pilot, index) in this.buddyFlights"
-          :key="pilot._id"
+          :key="pilot.buddyFlightId"
         >
           <h5 class="ms-2">
             <input
               class="form-check-input"
               type="checkbox"
-              :value="pilot._id"
+              :value="pilot.buddyFlightId"
               :id="index"
               v-model="checkedFlights"
             />
@@ -40,7 +40,7 @@
                 class="badge"
                 :style="{ backgroundColor: this.trackColors[index + 1] }"
               >
-                {{ pilot.pilot }}
+                {{ pilot.buddyName }}
               </span>
             </label>
           </h5>
@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       checkedFlights: [],
-      buddyFlights: [],
+      buddyFlights: null,
       trackColors: trackColors,
       loaded: false,
     };
@@ -73,17 +73,10 @@ export default {
   methods: {
     async getFlights() {
       try {
-        if (
-          this.buddyFlights.length === 0 &&
-          this.flight.airbuddies.length > 0
-        ) {
-          this.flight.airbuddies.forEach(async (buddy) => {
-            let response = await FlightService.getFlight(buddy.pilotId);
-            this.buddyFlights.push(response.data);
-          });
+        if (!this.buddyFlights && this.flight.airbuddies.length > 0) {
           // await new Promise((resolve) => setTimeout(resolve, 2000));
-          // let response = await FlightService.getAirbuddies(this.flight._id);
-          // this.buddyFlights = response.data;
+          let response = await FlightService.getAirbuddies(this.flight._id);
+          this.buddyFlights = response.data;
           this.loaded = true;
         }
       } catch (error) {
@@ -96,9 +89,9 @@ export default {
       let airbuddyTracks = [];
       this.buddyFlights.forEach((element) => {
         airbuddyTracks.push({
-          buddyName: element.pilot,
-          buddyFlightId: element._id,
-          isActive: this.checkedFlights.includes(element._id),
+          buddyName: element.buddyName,
+          buddyFlightId: element.buddyFlightId,
+          isActive: this.checkedFlights.includes(element.buddyFlightId),
           fixes: element.fixes,
         });
       });
