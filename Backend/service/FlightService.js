@@ -14,6 +14,15 @@ const flightService = {
     console.log("Service: ", flights);
     return flights;
   },
+  addResult: async (result) => {
+    console.log("ADD RESULT TO FLIGHT");
+    // const flights = await Flight.findOne({
+    //   where: { id: flightId },
+    //   include: { all: true },
+    // });
+    // console.log("Service: ", flights);
+    // return flights;
+  },
 };
 
 module.exports = flightService;
