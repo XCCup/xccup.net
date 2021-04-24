@@ -1,8 +1,11 @@
-.gsSport {
+.gsSport,
+.gsSportlow,
+.gsSportHigh {
   color: rgb(104, 209, 109);
 }
-
-.gsIntermediate {
+.gsIntermediate,
+.gsIntermediateLow,
+.gsIntermediateHigh {
   color: rgb(223, 140, 31);
 }
 
@@ -10,7 +13,7 @@
   color: rgb(221, 27, 27);
 }
 
-.gsComp {
+.gsCompetition {
   color: rgb(145, 24, 101);
 }
 
@@ -18,7 +21,9 @@
   color: rgb(255, 238, 4);
 }
 
-.hgFlex {
+.hgFlex,
+.hgFlexTurm,
+.hgFlexTurmlos {
   color: rgb(115, 37, 179);
 }
 

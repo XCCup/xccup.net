@@ -167,6 +167,7 @@ function processBaroData(flight, buddyTracks) {
   const allBaroData = [];
   const baroData = [];
   const elevation = [];
+  if (!flight) return null;
   for (var i = 0; i < flight.fixes.length; i++) {
     elevation.push({
       x: flight.fixes[i].timestamp,
