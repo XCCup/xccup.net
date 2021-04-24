@@ -13,7 +13,7 @@
     "@vue-leaflet/vue-leaflet": "^0.6.0",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.0-beta3",
-    "chart.js": "^3.1.1",
+    "chart.js": "^3.2.0",
     "chartjs-adapter-date-fns": "^2.0.0",
     "core-js": "^3.10.1",
     "date-fns": "^2.21.1",

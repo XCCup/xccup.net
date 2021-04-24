@@ -69,7 +69,7 @@ let options = {
     },
 
     tooltip: {
-      enabled: false,
+      enabled: true,
       mode: "x",
       intersect: false,
       animation: {

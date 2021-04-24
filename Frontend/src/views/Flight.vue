@@ -8,18 +8,18 @@
       <a href="#"><BaseDate :timestamp="flight.date" /></a>
     </p>
   </div>
-
+  <!-- Content -->
   <MapV2 :tracklogs="tracklogs" />
   <Barogramm :datasets="baroData" :key="baroDataUpdated" />
   <Airbuddies
-    v-if="this.flight.airbuddies"
-    :flight="this.flight"
+    v-if="flight.airbuddies"
+    :flight="flight"
     @updateAirbuddies="updateAirbuddies"
   />
   <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
   <Inline-alert text="Automatisches zentrieren fehlt noch" />
 
-  <FlightDetails :flight="this.flight" :pilot="this.pilot" />
+  <FlightDetails :flight="flight" :pilot="pilot" />
   <FlightDescription :description="description" />
   <Comments
     :comments="comments"
