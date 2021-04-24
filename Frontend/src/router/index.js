@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "@/views/Home.vue";
+import Flight from "@/views/Flight.vue";
 
 const routes = [
   {
@@ -11,11 +12,7 @@ const routes = [
     path: "/flug/:flightId",
     name: "Flight",
     props: true,
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "flug-details" */ "../views/Flight.vue"),
+    component: Flight,
   },
   {
     path: "/upload",

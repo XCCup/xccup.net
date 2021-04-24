@@ -56,38 +56,15 @@ export default {
     FlightDescription,
   },
   async setup(props) {
-    // To simulate longer loading times
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    const flight = ref(null);
+    // const loading = ref(false)
+    flight.value = await fetchFlightData(props.flightId);
+    const { comments, description } = await fetchDemoData();
 
-    // Is this try/catch smart?
-    try {
-      // Hardcoded flight for development
-      let demoFlightId = "60699294a7c2069af1246316";
-
-      if (props.flightId === "607fc418d24f48f5fa426a73") {
-        demoFlightId = "607fc418d24f48f5fa426a73";
-      }
-      let { data: flight } = await FlightService.getFlight(
-        demoFlightId
-        /*this.flightId or this.$route.params.flightId*/
-      );
-
-      // These will be obsolete if the flight modell contains comments and description
-      let { data: comments } = await FlightService.getComments();
-      let { data: description } = await FlightService.getDescription();
-
-      return {
-        flight: ref(flight),
-        comments: ref(comments),
-        description: ref(description[0]),
-      };
-    } catch (error) {
-      console.log(error);
-    }
+    return { flight, comments, description };
   },
   props: {
     flightId: { type: String },
-    oldFlightId: { type: String },
   },
   data() {
     return {
@@ -137,6 +114,44 @@ export default {
     },
   },
 };
+
+// Fetch flight data
+async function fetchFlightData(flightId) {
+  // To simulate longer loading times
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  // Is this try/catch smart?
+  try {
+    // Hardcoded flight for development
+    let demoFlightId = "60699294a7c2069af1246316";
+
+    if (flightId === "607fc418d24f48f5fa426a73") {
+      demoFlightId = "607fc418d24f48f5fa426a73";
+    }
+    let { data: flight } = await FlightService.getFlight(
+      demoFlightId
+      /*this.flightId or this.$route.params.flightId*/
+    );
+    return flight;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// This will be obsolete if the flight model contains comments and description
+async function fetchDemoData() {
+  try {
+    let { data: comments } = await FlightService.getComments();
+    let { data: description } = await FlightService.getDescription();
+
+    return {
+      comments: ref(comments),
+      description: ref(description[0]),
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // Process tracklog data for map
 function processTracklogs(flight, buddyTracks) {
