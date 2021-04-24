@@ -27,4 +27,20 @@ router.get("/:id", async (req, res) => {
   res.json(flights);
 });
 
+// @desc Add the result of a igc analysis to a flight
+// @route PUT /flight/result
+
+router.post("/result", async (req, res) => {
+  console.log("IGC Result controller");
+  console.log(req.body);
+  // const flights = await service.getById(req.params.id);
+  // if (!flights) {
+  //   res.sendStatus(404);
+  //   return;
+  // }
+  // console.log("Controller:", flights);
+  // res.json(flights);
+  res.sendStatus(200);
+});
+
 module.exports = router;

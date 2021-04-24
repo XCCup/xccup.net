@@ -49,31 +49,31 @@ const Flight = require("./model/Flight");
 // })();
 
 // Create tables in db
-(async () => {
-  // await FlightComment.sync({ force: true });
-  // await Flight.sync({ force: true });
-  // Flight.create({ points: 789 });
-  // FlightComment.create({
-  //   pilot: "Stephan",
-  //   message: "Eine erste Nachricht",
-  //   flightId: 1,
-  // });
-  // FlightComment.create({
-  //   pilot: "Kai",
-  //   message: "Eine zweite Nachricht",
-  //   flightId: 1,
-  // });
-  // const flight = await Flight.findOne({
-  //   where: {
-  //     points: 123,
-  //   },
-  // });
-  // console.log("Found id:", flight.id);
-  // console.log("Comment:", JSON.stringify(await flight.getComments(), null, 4));
-  // flight.destroy(flight);
-  // await User.sync({ alter: true });
-  // await Club.sync({ alter: true });
-})();
+// (async () => {
+//   await FlightComment.sync({ force: true });
+//   await Flight.sync({ force: true });
+// Flight.create({ points: 789 });
+// FlightComment.create({
+//   pilot: "Stephan",
+//   message: "Eine erste Nachricht",
+//   flightId: 1,
+// });
+// FlightComment.create({
+//   pilot: "Kai",
+//   message: "Eine zweite Nachricht",
+//   flightId: 1,
+// });
+// const flight = await Flight.findOne({
+//   where: {
+//     points: 123,
+//   },
+// });
+// console.log("Found id:", flight.id);
+// console.log("Comment:", JSON.stringify(await flight.getComments(), null, 4));
+// flight.destroy(flight);
+// await User.sync({ alter: true });
+// await Club.sync({ alter: true });
+// })();
 
 // //Build instance
 // const jane = User.build({ name: "jane", email: "jane@mail.com" });
@@ -137,6 +137,11 @@ const Flight = require("./model/Flight");
 //   });
 //   console.log(JSON.stringify(result, null, 4));
 // })();
+
+(async () => {
+  const IgcAnalyzer = require("./igc/IgcAnalyzer");
+  const result = IgcAnalyzer.parse("fai");
+})();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
