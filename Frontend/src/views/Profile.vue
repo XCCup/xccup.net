@@ -1,15 +1,13 @@
 <template>
-  <div class="container">
+  <div class="container mt-3">
     <!-- Editor -->
-    <div class="rounded bg-white mt-5 mb-5">
+    <div class="rounded bg-white">
       <div class="row">
         <!-- Left -->
         <div class="col-md-3 border-end">
-          <div
-            class="d-flex flex-column align-items-center text-center p-3 py-5"
-          >
+          <div class="d-flex flex-column align-items-center text-center p-3">
             <img
-              class="rounded-circle mt-5"
+              class="rounded-circle"
               width="150px"
               src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
             /><span class="font-weight-bold">Lorem Ipsum</span
@@ -19,7 +17,7 @@
 
         <!-- Center -->
         <div class="col-md-9">
-          <div class="p-3 py-5">
+          <div class="p-3">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 class="text-right">Profil</h4>
             </div>
@@ -222,44 +220,6 @@ export default {
 </script>
 
 <style scoped>
-body {
-  background: rgb(99, 39, 120);
-}
-
-.form-control:focus {
-  box-shadow: none;
-  border-color: #ba68c8;
-}
-
-.profile-button {
-  background: rgb(99, 39, 120);
-  box-shadow: none;
-  border: none;
-}
-
-.profile-button:hover {
-  background: #682773;
-}
-
-.profile-button:focus {
-  background: #682773;
-  box-shadow: none;
-}
-
-.profile-button:active {
-  background: #682773;
-  box-shadow: none;
-}
-
-.back:hover {
-  color: #682773;
-  cursor: pointer;
-}
-
-.labels {
-  font-size: 11px;
-}
-
 .add-experience:hover {
   background: #ba68c8;
   color: #fff;
