@@ -23,6 +23,9 @@ const flightService = {
     // console.log("Service: ", flights);
     // return flights;
   },
+  save: async (flight) => {
+    return await Flight.create(flight);
+  },
 };
 
 module.exports = flightService;

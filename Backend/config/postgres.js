@@ -44,7 +44,25 @@ async function sleep(ms) {
 }
 
 //Initial start of connection test
-dbConnectionTest();
+dbConnectionTest().then((result) => {
+  if (process.env.NODE_ENV === "init_db") {
+    createDbTables();
+  }
+});
+
+function createDbTables() {
+  const User = require("../model/User");
+  const Flight = require("../model/Flight");
+  const FlightComment = require("../model/FlightComment");
+
+  (async () => {
+    console.log("Will create DB Tables");
+
+    await User.sync({ force: true });
+    await Flight.sync({ force: true });
+    await FlightComment.sync({ force: true });
+  })();
+}
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

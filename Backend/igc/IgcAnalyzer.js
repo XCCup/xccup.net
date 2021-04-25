@@ -22,7 +22,7 @@ const IgcAnalyzer = {
     const stripFactor = requiredResolution / currentResolutionInSeconds;
     console.log(`Will strip igc fixes by factor ${stripFactor}`);
     igcWithReducedFixes = stripByFactor(stripFactor, igcAsPlainText);
-    writeFile(flightId, igcWithReducedFixes, `striped_by_${stripFactor}`);
+    writeFile(flightId, igcWithReducedFixes, stripFactor);
   },
 };
 
@@ -108,11 +108,19 @@ function parseOlcData(data, flightId, isCornerpointsIteration) {
     result.dist = freeDistance;
     cornerStartIndex = freeStartIndex + 4;
   }
-  result.cornerpoints.push(stripCornerpoint(dataLines[cornerStartIndex]));
-  result.cornerpoints.push(stripCornerpoint(dataLines[cornerStartIndex + 1]));
-  result.cornerpoints.push(stripCornerpoint(dataLines[cornerStartIndex + 2]));
-  result.cornerpoints.push(stripCornerpoint(dataLines[cornerStartIndex + 3]));
-  result.cornerpoints.push(stripCornerpoint(dataLines[cornerStartIndex + 4]));
+  result.cornerpoints.push(extractCornerpointData(dataLines[cornerStartIndex]));
+  result.cornerpoints.push(
+    extractCornerpointData(dataLines[cornerStartIndex + 1])
+  );
+  result.cornerpoints.push(
+    extractCornerpointData(dataLines[cornerStartIndex + 2])
+  );
+  result.cornerpoints.push(
+    extractCornerpointData(dataLines[cornerStartIndex + 3])
+  );
+  result.cornerpoints.push(
+    extractCornerpointData(dataLines[cornerStartIndex + 4])
+  );
 
   if (isCornerpointsIteration) {
     console.log("IGC Result from cornerpoint iteration: ", result);
@@ -124,7 +132,7 @@ function parseOlcData(data, flightId, isCornerpointsIteration) {
   }
 }
 
-function stripCornerpoint(cornerpoint) {
+function extractCornerpointData(cornerpoint) {
   let result = {};
   const IGC_FIX_REGEX = /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
   const matchingResult = cornerpoint.match(IGC_FIX_REGEX);

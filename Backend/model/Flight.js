@@ -3,9 +3,31 @@ const db = require("../config/postgres.js");
 const FlightComment = require("./FlightComment.js");
 
 const Flight = db.sequelize.define("Flight", {
-  points: {
+  report: {
+    type: DataTypes.STRING(5000), //Default is VARCHAR(255)
+  },
+  flightPoints: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+  },
+  flightDistance: {
+    type: DataTypes.DOUBLE,
+  },
+  flightType: {
+    type: DataTypes.ENUM,
+    values: ["JOJO", "FLAT", "FAI"],
+  },
+  flightStatus: {
+    type: DataTypes.ENUM,
+    values: ["Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung"],
+  },
+  flightCornerpoints: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+  },
+  igcUrl: {
+    type: DataTypes.STRING,
+  },
+  aircraft: {
+    type: DataTypes.STRING,
   },
 });
 
