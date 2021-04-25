@@ -88,7 +88,7 @@ export default {
   },
   async beforeMount() {
     // HERE is where to load Leaflet components!
-    const { getBounds } = await import("leaflet/dist/leaflet-src.esm");
+    // const { getBounds } = await import("leaflet/dist/leaflet-src.esm");
   },
   methods: {
     doSomethingOnReady() {

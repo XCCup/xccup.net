@@ -3,7 +3,33 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     // Hardcoded for development
-    users: [{ name: "testUser", id: "testId" }],
+    users: [
+      {
+        name: "Steph",
+        surname: "foo",
+        email: "foo@bar.org",
+        sex: "männlich",
+        club: "Good Club",
+        birthday: "1.1.1970",
+        country: "Deutschland",
+        aircrafts: [
+          {
+            brand: "Flow",
+            model: "XCRacer S",
+            rankingClass: "gsPerfomance",
+            default: true,
+          },
+          {
+            brand: "Ozone",
+            model: "Enzo 3 S",
+            rankingClass: "gsComp",
+            default: false,
+          },
+        ],
+        shirtSize: "M",
+        id: "testId",
+      },
+    ],
     authId: "testId",
     markerMapPosition: {},
   },

@@ -92,7 +92,7 @@ export default {
       // }
     },
   },
-  unmounted() {
+  beforeUnmount() {
     document.removeEventListener(
       "positionUpdated",
       this.positionUpdateListener

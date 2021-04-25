@@ -6,6 +6,7 @@
       :placeholder="label"
       @input="$emit('update:modelValue', $event.target.value)"
       class="form-control"
+      :disabled="disabled"
       id="floatingInput"
     />
     <label for="floatingInput" v-if="label">{{ label }}</label>
@@ -22,6 +23,10 @@ export default {
     modelValue: {
       type: [String, Number],
       default: "",
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 };

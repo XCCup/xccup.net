@@ -54,11 +54,7 @@ export default {
 
 // Chart options
 let options = {
-  // responsive: true,
-  // parsing: true,
-  // locale: "de-DE",
   maintainAspectRatio: false,
-
   plugins: {
     title: {
       display: false,
@@ -75,45 +71,12 @@ let options = {
       animation: {
         duration: 5,
       },
-      // filter: function (tooltipItem, data, third, four,) {
-      //   // if (third)
-      //   console.log(tooltipItem);
-      //   return true;
-      // },
-      external: function (tooltipModel) {
-        // console.log(tooltipModel);
-        // if (tooltipModel.tooltip.dataPoints.length > 1) {
-        //   const dataPointIdexes = [];
-        //   const result = [];
-        //   const result1 = [];
-        //   tooltipModel.tooltip.dataPoints.forEach((dp, index) => {
-        //     if (!dataPointIdexes.includes(dp.datasetIndex)) {
-        //       result.push(dp);
-        //       dataPointIdexes.push(dp.datasetIndex);
-        //       result1.push(tooltipModel.tooltip.body[index]);
-        //     }
-        //   });
-        //   tooltipModel.tooltip.dataPoints = result;
-        //   tooltipModel.tooltip.body = result1;
-        //   tooltipModel.tooltip.height = 322;
-        //   tooltipHeaderHeight +
-        //   tooltipItemHeight * tooltipModel.tooltip.body.length;
-        // }
-      },
+      // This does nothing but it is needed to trigger the callback
+      // even if the tooltip is disabled
+      external: function () {},
       callbacks: {
         label: function (context) {
-          if (context.dataset.label == "GND") {
-            return;
-          }
-          var label = context.dataset.label || "";
-          if (label) {
-            label += ": ";
-          }
-          if (context.parsed.y !== null) {
-            label += context.parsed.y + "m";
-          }
-
-          // Update marker position on map vie event listener
+          // Update marker position on map view event listener
           const event = new CustomEvent("markerPositionUpdated", {
             detail: {
               dataIndex: context.dataIndex,
@@ -129,8 +92,6 @@ let options = {
           //   dataIndex: context.dataIndex,
           // };
           // updateMarkerMapPosition(markerPosition);
-
-          return label;
         },
       },
     },
@@ -139,9 +100,7 @@ let options = {
   scales: {
     x: {
       type: "time",
-      // distribution: "linear",
       time: {
-        // parser: "HH:mm:ss",
         round: "second",
         displayFormats: {
           minute: "HH:mm",

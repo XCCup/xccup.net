@@ -28,11 +28,5 @@
 <script>
 export default {
   name: "ClubRanking",
-  components: {},
-  data() {
-    return {};
-  },
 };
 </script>
-
-<style scoped lang="scss"></style>

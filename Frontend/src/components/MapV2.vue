@@ -73,6 +73,13 @@ export default {
     // Draw tracklogs
     this.drawTracks(this.tracklogs);
   },
+  beforeUnmount() {
+    // Remove the map position update listener
+    document.removeEventListener(
+      "positionUpdated",
+      this.positionUpdateListener
+    );
+  },
   methods: {
     drawTracks(tracks) {
       let lines = [];
@@ -134,6 +141,7 @@ export default {
       this.markers = markers;
       this.positionMarkers = positionMarkers;
     },
+
     updateMarkerPosition(position) {
       this.tracklogs.forEach((_, index) => {
         // Index + 1 because first dataset is GND and we need to skip that one

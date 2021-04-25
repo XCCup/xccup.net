@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">
+      <router-link :to="{ name: 'Home' }" class="navbar-brand" href="/">
         <img src="../assets/images/xccup_white.svg" alt="XCCup" height="50" />
-      </a>
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"

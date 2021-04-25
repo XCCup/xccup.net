@@ -1,15 +1,15 @@
 <template>
   <TheNavbar />
-  <router-view v-slot="{ Component }">
+  <div v-if="error" class="error-message">Uh oh .. {{ error }}</div>
+  <router-view v-else v-slot="{ Component }">
     <template v-if="Component">
-      <suspense>
-        <component :is="Component"></component>
+      <suspense timeout="500">
+        <template #default>
+          <!-- Main thing to show -->
+          <component :is="Component"></component>
+        </template>
         <template #fallback>
-          <div class="d-flex justify-content-center">
-            <div class="spinner-border text-primary m-5" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </div>
+          <BaseSpinner />
         </template>
       </suspense>
     </template>
@@ -20,12 +20,21 @@
 <script>
 import TheNavbar from "@/components/TheNavbar.vue";
 import TheFooter from "@/components/TheFooter";
+import { ref, onErrorCaptured } from "vue";
 
 export default {
   name: "App",
   components: {
     TheNavbar,
     TheFooter,
+  },
+  setup() {
+    const error = ref(null);
+    onErrorCaptured((e) => {
+      error.value = e;
+      return true;
+    });
+    return { error };
   },
 };
 </script>
@@ -98,6 +107,10 @@ footer {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+}
+
+.error-message {
+  height: 60vh;
 }
 
 // Fix for responsive scaling of barogramm

@@ -31,8 +31,7 @@
             <tr>
               <th>Geräteklasse:</th>
               <td>
-                <i class="bi bi-trophy" :class="flight.rankingClass"></i>
-                {{ flight.rankingClass }}
+                <RankingClass :rankingClass="flight.rankingClass" />
               </td>
             </tr>
           </tbody>
@@ -148,8 +147,12 @@
 
 <script>
 import { format } from "date-fns";
+import RankingClass from "@/components/RankingClass";
 export default {
   name: "FlightDetails",
+  components: {
+    RankingClass,
+  },
   data() {
     return {
       format,
