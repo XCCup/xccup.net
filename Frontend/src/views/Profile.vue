@@ -70,7 +70,13 @@
                   </div>
                   <div class="col-md-3">
                     <div class="d-grid gap-2">
-                      <button class="btn btn-primary">Hinzufügen</button>
+                      <button
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      >
+                        Hinzufügen
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -185,6 +191,48 @@
     </div>
     <!-- Editor -->
   </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            Fluggerät hinzufügen
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <BaseSelect :options="brands" label="Hersteller" />
+
+          <BaseInput label="Fluggerät" type="text" />
+
+          <BaseSelect :options="rankingClass" label="Geräteklasse" />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            data-bs-dismiss="modal"
+          >
+            Abbrechen
+          </button>
+          <button type="button" class="btn btn-primary">Speichern</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -192,6 +240,15 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Profile",
+  data() {
+    return {
+      brands: ["Ozone", "Flow", "AirG"],
+      rankingClass: [
+        "GS Competition high (EN-D oder CCC und einer Streckung von 7,0 und mehr)",
+        "GS Performance low (EN-D und einer Streckung von <7,0)",
+      ],
+    };
+  },
   computed: {
     ...mapGetters(["authUser"]),
     listOfAircrafts() {
