@@ -1,12 +1,7 @@
 <template>
   <div class="container-fluid mt-0">
     <div style="height: 430px">
-      <l-map
-        ref="map"
-        v-model="zoom"
-        v-model:zoom="zoom"
-        :center="[50.143, 7.146]"
-      >
+      <l-map ref="map" v-model="zoom" v-model:zoom="zoom">
         <l-tile-layer
           url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}"
           :options="tileOptions"
@@ -17,6 +12,7 @@
           :key="index"
           :lat-lngs="track"
           :color="trackColors[index]"
+          @ready="doSomethingOnReady"
         ></l-polyline>
         <!-- <l-marker :lat-lng="takeoff">
           <l-tooltip>Start</l-tooltip>
@@ -93,10 +89,9 @@ export default {
   methods: {
     doSomethingOnReady() {
       this.map = this.$refs.map.leafletObject;
-      this.track = this.$refs.track;
-      this.map.fitBounds(this.track.getBounds());
-      // console.log(this.track);
-      // console.log(this.map);
+      this.track = this.$refs.track.leafletObject;
+      const trackBounds = this.track.getBounds();
+      this.map.fitBounds(trackBounds);
     },
   },
   computed: {

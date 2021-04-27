@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <span class="badge bg-primary">Höhe: {{ altitudeLabels[1] }}</span>
+  </div>
+  <div class="container">
     <canvas ref="myChart"></canvas>
   </div>
 </template>
@@ -25,9 +28,14 @@ export default {
   data() {
     return {
       chart: null,
+      altitudeLabels: [],
     };
   },
-
+  computed: {
+    activeDatasets() {
+      return this.datasets.filter((e) => e.data.length > 0);
+    },
+  },
   watch: {
     // Currently not in use because .update() crashes
     datasets(newDatasets) {
@@ -35,7 +43,7 @@ export default {
       // instance to re-render the chart.
       // this.chart.data.datasets = newDatasets;
       // this.chart.update();
-      console.log("updated");
+      console.log("datasets updated");
     },
   },
 
@@ -47,87 +55,95 @@ export default {
         // labels: this.labels,
         datasets: this.datasets,
       },
-      options: options,
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          title: {
+            display: false,
+            text: "Barogramm",
+          },
+          legend: {
+            display: false,
+          },
+
+          tooltip: {
+            enabled: false,
+            mode: "x",
+            intersect: false,
+            animation: {
+              duration: 5,
+            },
+            // This does nothing but it is needed to trigger the callback
+            // even if the tooltip is disabled
+            external: function () {},
+            callbacks: {
+              label: (context) => {
+                // Update marker position on map view event listener
+                const event = new CustomEvent("markerPositionUpdated", {
+                  detail: {
+                    dataIndex: context.dataIndex,
+                    datasetIndex: context.datasetIndex,
+                  },
+                });
+                document.dispatchEvent(event);
+                this.updateAltitudeLabels(context);
+
+                // updateAltitudeLabels(context);
+
+                // Alternative via state:
+                // Update pilot marker positions in state via delegate function
+                // const markerPosition = {
+                //   datasetIndex: context.datasetIndex,
+                //   dataIndex: context.dataIndex,
+                // };
+                // updateMarkerMapPosition(markerPosition);
+              },
+            },
+          },
+        },
+
+        scales: {
+          x: {
+            type: "time",
+            time: {
+              round: "second",
+              displayFormats: {
+                minute: "HH:mm",
+                hour: "HH:mm",
+              },
+              tooltipFormat: "HH:mm:ss",
+              minUnit: "hour",
+            },
+            title: {
+              display: false,
+              text: "Date",
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "GPS Höhe",
+            },
+            beginAtZero: true,
+            ticks: {
+              callback: function (value) {
+                return value + "m";
+              },
+            },
+          },
+        },
+      },
     });
+  },
+  methods: {
+    updateAltitudeLabels(context) {
+      this.altitudeLabels[context.datasetIndex] = `${context.raw.y}m`;
+      // console.log(raw.y);
+    },
   },
 };
 
 // Chart options
-let options = {
-  maintainAspectRatio: false,
-  plugins: {
-    title: {
-      display: false,
-      text: "Barogramm",
-    },
-    legend: {
-      display: false,
-    },
-
-    tooltip: {
-      enabled: false,
-      mode: "x",
-      intersect: false,
-      animation: {
-        duration: 5,
-      },
-      // This does nothing but it is needed to trigger the callback
-      // even if the tooltip is disabled
-      external: function () {},
-      callbacks: {
-        label: function (context) {
-          // Update marker position on map view event listener
-          const event = new CustomEvent("markerPositionUpdated", {
-            detail: {
-              dataIndex: context.dataIndex,
-              datasetIndex: context.datasetIndex,
-            },
-          });
-          document.dispatchEvent(event);
-
-          // Alternative via state:
-          // Update pilot marker positions in state via delegate function
-          // const markerPosition = {
-          //   datasetIndex: context.datasetIndex,
-          //   dataIndex: context.dataIndex,
-          // };
-          // updateMarkerMapPosition(markerPosition);
-        },
-      },
-    },
-  },
-
-  scales: {
-    x: {
-      type: "time",
-      time: {
-        round: "second",
-        displayFormats: {
-          minute: "HH:mm",
-          hour: "HH:mm",
-        },
-        tooltipFormat: "HH:mm:ss",
-        minUnit: "hour",
-      },
-      title: {
-        display: false,
-        text: "Date",
-      },
-    },
-    y: {
-      title: {
-        display: true,
-        text: "GPS Höhe",
-      },
-      beginAtZero: true,
-      ticks: {
-        callback: function (value) {
-          return value + "m";
-        },
-      },
-    },
-  },
-};
 
 // Delegate function to update the pilot marker position state from the tooltip callback
 // function updateMarkerMapPosition(mapPosition) {

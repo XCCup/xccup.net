@@ -108,5 +108,3 @@ export default {
   emits: ["updateAirbuddies"],
 };
 </script>
-
->
