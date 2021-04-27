@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="description">
     <div class="row mt-4">
       <h3>Flugbericht</h3>
       <p>

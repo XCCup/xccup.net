@@ -43,7 +43,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
   },
   {
-    path: "/sandbox",
+    path: "/sandbox/:flightId",
     name: "Sandbox",
     props: true,
     component: () => import(/* webpackChunkName: "" */ "../views/Sandbox.vue"),

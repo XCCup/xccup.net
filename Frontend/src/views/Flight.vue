@@ -1,31 +1,35 @@
 <template>
-  <!-- Subnav -->
-  <div class="container-fluid flight-info text-light mb-0 p-1">
-    <p class="m-0">
-      <router-link to="/"><i class="bi bi-chevron-left mx-2"></i> </router-link>
+  <div v-if="flight">
+    <!-- Subnav -->
+    <div class="container-fluid flight-info text-light mb-0 p-1">
+      <p class="m-0">
+        <router-link to="/"
+          ><i class="bi bi-chevron-left mx-2"></i>
+        </router-link>
 
-      Flug von <a href="#">{{ flight.pilot }}</a> am
-      <a href="#"><BaseDate :timestamp="flight.date" /></a>
-    </p>
+        Flug von <a href="#">{{ flight.pilot }}</a> am
+        <a href="#"><BaseDate :timestamp="flight.date" /></a>
+      </p>
+    </div>
+    <!-- Content -->
+    <MapV2 :tracklogs="tracklogs" />
+    <Barogramm :datasets="baroData" :key="baroDataUpdated" />
+    <Airbuddies
+      v-if="flight.airbuddies"
+      :flight="flight"
+      @updateAirbuddies="updateAirbuddies"
+    />
+    <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
+    <Inline-alert text="Automatisches zentrieren fehlt noch" />
+
+    <FlightDetails :flight="flight" :pilot="pilot" />
+    <FlightDescription :description="description" />
+    <Comments
+      :comments="comments"
+      @comment-submitted="addComment"
+      @comment-deleted="deleteComment"
+    />
   </div>
-  <!-- Content -->
-  <MapV2 :tracklogs="tracklogs" />
-  <Barogramm :datasets="baroData" :key="baroDataUpdated" />
-  <Airbuddies
-    v-if="flight.airbuddies"
-    :flight="flight"
-    @updateAirbuddies="updateAirbuddies"
-  />
-  <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
-  <Inline-alert text="Automatisches zentrieren fehlt noch" />
-
-  <FlightDetails :flight="flight" :pilot="pilot" />
-  <FlightDescription :description="description" />
-  <Comments
-    :comments="comments"
-    @comment-submitted="addComment"
-    @comment-deleted="deleteComment"
-  />
 </template>
 
 <script>
@@ -59,7 +63,9 @@ export default {
   async setup(props) {
     const router = useRouter();
     const route = useRoute();
-    // const loading = ref(false)
+    const flight = ref(null);
+    const comments = ref([]);
+    const description = ref(null);
 
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -73,12 +79,14 @@ export default {
         // route.params.flightId
         // props.flightId
       );
-      const { comments, description } = await fetchDemoData();
-      return {
-        flight: ref(response.data),
-        comments: ref(comments),
-        description: ref(description),
-      };
+      if (!response.data.fixes) {
+        throw "Unvalid response";
+      }
+      flight.value = response.data;
+
+      const response2 = await fetchDemoData();
+      comments.value = response2.comments;
+      description.value = response2.description;
     } catch (error) {
       console.log(error);
       if (error.response && error.response.status == 404) {
@@ -90,6 +98,11 @@ export default {
         router.push({ name: "NetworkError" });
       }
     }
+    return {
+      flight,
+      comments,
+      description,
+    };
   },
   props: {
     flightId: { type: String },
