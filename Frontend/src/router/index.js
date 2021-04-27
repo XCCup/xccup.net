@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Flight from "@/views/Flight.vue";
+import NotFound from "@/components/NotFound.vue";
+import NetworkError from "@/components/NetworkError.vue";
 
 const routes = [
   {
@@ -45,6 +47,22 @@ const routes = [
     name: "Sandbox",
     props: true,
     component: () => import(/* webpackChunkName: "" */ "../views/Sandbox.vue"),
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: NotFound,
+  },
+  {
+    path: "/404/:resource",
+    name: "404Resource",
+    component: NotFound,
+    props: true,
+  },
+  {
+    path: "/network-error",
+    name: "NetworkError",
+    component: NetworkError,
   },
 ];
 

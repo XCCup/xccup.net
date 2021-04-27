@@ -34,6 +34,7 @@
 // It's to ineffective and you can do better now.
 
 import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import FlightService from "@/services/FlightService.js";
 import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
@@ -56,12 +57,39 @@ export default {
     FlightDescription,
   },
   async setup(props) {
-    const flight = ref(null);
+    const router = useRouter();
+    const route = useRoute();
     // const loading = ref(false)
-    flight.value = await fetchFlightData(props.flightId);
-    const { comments, description } = await fetchDemoData();
 
-    return { flight, comments, description };
+    // To simulate longer loading times
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    // Is this try/catch smart?
+    try {
+      // Hardcoded flight for development
+      let demoFlightId = "60699294a7c2069af1246316";
+      const response = await FlightService.getFlight(
+        demoFlightId
+        // route.params.flightId
+        // props.flightId
+      );
+      const { comments, description } = await fetchDemoData();
+      return {
+        flight: ref(response.data),
+        comments: ref(comments),
+        description: ref(description),
+      };
+    } catch (error) {
+      console.log(error);
+      if (error.response && error.response.status == 404) {
+        router.push({
+          name: "404Resource",
+          params: { resource: "Flug" },
+        });
+      } else {
+        router.push({ name: "NetworkError" });
+      }
+    }
   },
   props: {
     flightId: { type: String },
@@ -115,29 +143,6 @@ export default {
   },
 };
 
-// Fetch flight data
-async function fetchFlightData(flightId) {
-  // To simulate longer loading times
-  // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  // Is this try/catch smart?
-  try {
-    // Hardcoded flight for development
-    let demoFlightId = "60699294a7c2069af1246316";
-
-    if (flightId === "607fc418d24f48f5fa426a73") {
-      demoFlightId = "607fc418d24f48f5fa426a73";
-    }
-    let { data: flight } = await FlightService.getFlight(
-      demoFlightId
-      /*this.flightId or this.$route.params.flightId*/
-    );
-    return flight;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 // This will be obsolete if the flight model contains comments and description
 async function fetchDemoData() {
   try {
@@ -145,11 +150,11 @@ async function fetchDemoData() {
     let { data: description } = await FlightService.getDescription();
 
     return {
-      comments: ref(comments),
-      description: ref(description[0]),
+      comments: comments,
+      description: description[0],
     };
   } catch (error) {
-    console.log(error);
+    console.log("fetchDemoData: ", error);
   }
 }
 
