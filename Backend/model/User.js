@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/postgres.js");
 const bcrypt = require("bcrypt");
+const Flight = require("./Flight.js");
 
 const User = db.sequelize.define(
   "User",
@@ -42,6 +43,14 @@ const getNames = async () => {
     attributes: ["name"],
   });
 };
+
+User.hasMany(Flight, {
+  as: "flights",
+  foreignKey: {
+    name: "userId",
+    allowNull: false,
+  },
+});
 
 User.getNames = getNames;
 

@@ -1,0 +1,31 @@
+POST http://localhost:3000/users HTTP/1.1
+content-type: application/json
+
+{
+    "name": "kai",
+    "email": "kai@mail.com"
+}
+
+###
+
+DELETE http://localhost:3000/users/5 HTTP/1.1
+
+
+###
+POST http://localhost/flight/ HTTP/1.1
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="userId"
+
+1234
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="aircraft"
+
+Ozone Alpina 2
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="jojo_79km35_4h8m.igc"
+Content-Type: text/plain
+
+< ./jojo_79km35_4h8m.igc
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const faker = require("faker");
+const path = require("path");
 const app = express();
 
 const { Sequelize, DataTypes } = require("sequelize");
@@ -30,13 +31,8 @@ if (process.env.NODE_ENV === "development") {
 //   next();
 // });
 
-// //Static folder
-// app.use(express.static(path.join(__dirname, "public")));
-
-// //Routes
-// app.use("/", require("./routes/index"));
-// app.use("/auth", require("./routes/auth"));
-// app.use("/stories", require("./routes/stories"));
+//Static folder
+app.use(express.static(path.join(__dirname, "public")));
 
 const User = require("./model/User");
 const FlightComment = require("./model/FlightComment");
@@ -44,15 +40,21 @@ const Flight = require("./model/Flight");
 
 // // Delete table
 // (async () => {
-//   await User.drop();
-//   await User.sync({ alter: true });
+//   const flight = await Flight.create({
+//     report: "Eine erste Nachricht",
+//     userId: 1234,
+//   });
+//   console.log(flight);
 // })();
 
 // Create tables in db
 // (async () => {
-//   await FlightComment.sync({ force: true });
-//   await Flight.sync({ force: true });
-// Flight.create({ points: 789 });
+// const user = {
+//   id: "1234",
+//   name: "Kai",
+//   password: "A password",
+// };
+// User.create(user);
 // FlightComment.create({
 //   pilot: "Stephan",
 //   message: "Eine erste Nachricht",
@@ -138,10 +140,10 @@ const Flight = require("./model/Flight");
 //   console.log(JSON.stringify(result, null, 4));
 // })();
 
-(async () => {
-  const IgcAnalyzer = require("./igc/IgcAnalyzer");
-  const result = IgcAnalyzer.parse("fai");
-})();
+// (async () => {
+//   const IgcAnalyzer = require("./igc/IgcAnalyzer");
+//   const result = IgcAnalyzer.parse("fai");
+// })();
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -149,7 +151,6 @@ app.use(express.json());
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
-
 app.use("/user", require("./controller/UserController.js"));
 app.use("/flight", require("./controller/FlightController.js"));
 
