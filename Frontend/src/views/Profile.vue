@@ -36,35 +36,32 @@
                   label="Verein"
                   :disabled="true"
                 />
-              </div>
-              <div class="col-md-12">
+
                 <BaseInput v-model="authUser.birthday" label="Geburtstag" />
-              </div>
-              <div class="col-md-12">
+
                 <BaseInput v-model="authUser.email" label="E-Mail" />
-              </div>
-              <div class="col-md-12">
+
                 <BaseSelect
                   v-model="authUser.sex"
                   label="Geschlecht"
+                  :showLabel="true"
                   :options="['männlich', 'weiblich']"
                 />
-              </div>
-              <div class="col-md-12">
+
                 <BaseSelect
                   v-model="authUser.shirtSize"
                   label="T-Shirt Größe"
+                  :showLabel="true"
                   :options="['S', 'M', 'L', 'XL', 'XXL']"
                 />
               </div>
               <div class="col-md-12">
-                <p>Fluggeräte:</p>
-
                 <div class="row mt-2">
                   <div class="col-md-9">
                     <BaseSelect
                       v-model="listOfAircrafts[0]"
-                      label="Geräte"
+                      label="Standard Gerät"
+                      :showLabel="true"
                       :options="listOfAircrafts"
                     />
                   </div>
@@ -83,7 +80,7 @@
               </div>
             </div>
             <hr />
-
+            {{ userProfile }}
             <h5>Benachrichtigungen</h5>
             <div class="form-check">
               <input
@@ -216,9 +213,9 @@
         <div class="modal-body">
           <BaseSelect :options="brands" label="Hersteller" />
 
-          <BaseInput label="Fluggerät" type="text" />
+          <BaseInput label="Fluggerät" />
 
-          <BaseSelect :options="rankingClass" label="Geräteklasse" />
+          <BaseSelect :options="getRankingClasses" label="Geräteklasse" />
         </div>
         <div class="modal-footer">
           <button
@@ -237,16 +234,14 @@
 
 <script>
 import { mapGetters } from "vuex";
+import rankingClassNames from "@/assets/js/rankingClassNames";
 
 export default {
   name: "Profile",
   data() {
     return {
+      userProfile: {},
       brands: ["Ozone", "Flow", "AirG"],
-      rankingClass: [
-        "GS Competition high (EN-D oder CCC und einer Streckung von 7,0 und mehr)",
-        "GS Performance low (EN-D und einer Streckung von <7,0)",
-      ],
     };
   },
   computed: {
@@ -258,11 +253,25 @@ export default {
       });
       return aircraftList;
     },
+
+    getRankingClasses() {
+      const entries = Object.entries(rankingClassNames);
+      let tmp = [];
+      entries.forEach((e) => {
+        tmp.push(e[1].long);
+      });
+      return tmp;
+    },
   },
   props: {
     edit: {
       type: Boolean,
       default: false,
+    },
+  },
+  watch: {
+    userProfile() {
+      this.userProfile = { ...this.authUser };
     },
   },
   methods: {

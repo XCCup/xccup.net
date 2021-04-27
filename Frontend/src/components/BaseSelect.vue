@@ -1,5 +1,5 @@
 <template>
-  <!-- <label v-if="label">{{ label }}</label> -->
+  <label v-if="showLabel">{{ label }}</label>
   <select
     class="form-select mb-3"
     :value="modelValue"
@@ -10,7 +10,7 @@
       },
     }"
   >
-    <option disabled value="" selected>{{ label }}</option>
+    <option v-if="!showLabel" disabled value="" selected>{{ label }}</option>
     <option
       v-for="option in options"
       :value="option"
@@ -37,6 +37,10 @@ export default {
     options: {
       type: Array,
       required: true,
+    },
+    showLabel: {
+      type: Boolean,
+      default: false,
     },
   },
 };

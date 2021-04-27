@@ -1,32 +1,32 @@
 const rankingClassNames = {
   gsSportLow: {
     short: "GS Sport",
-    long: "Sportklasse low Schirme EN A+B mit einer Streckung <5,2",
+    long: "Sportklasse low (EN A+B mit einer Streckung <5,2)",
   },
   gsSportHigh: {
     short: "GS Sport high",
-    long: "Sportklasse high Schirme EN A+B mit einer Streckung >=5,2",
+    long: "Sportklasse high (EN A+B mit einer Streckung >=5,2)",
   },
   gsIntermediateLow: {
     short: "GS Intermdediate low",
-    long: "Intermediate low Schirme EN C mit einer Streckung <6,4",
+    long: "Intermediate low (EN-C mit einer Streckung <6,4)",
   },
   gsIntermediateHigh: {
     short: "GS Intermediate high",
-    long: "Intermediate high Schirme EN C mit einer Streckung >=6,4",
+    long: "Intermediate high (EN-C mit einer Streckung >=6,4)",
   },
   gsPerformance: {
     short: "GS Performance low",
-    long: "Performance low Schirme mit EN-D und einer Streckung von <7,0",
+    long: "Performance low (EN-D mit einer Streckung von <7,0)",
   },
   gsCompetition: {
     short: "GS Competition high",
     long:
-      "Competition high Schirme mit EN-D oder CCC und einer Streckung von 7,0 und mehr",
+      "Competition high (EN-D oder CCC mit einer Streckung von 7,0 und mehr)",
   },
   gsTandem: {
     short: "GS Tandem ",
-    long: "ab 5 Teilnehmern mit Wertungsflügen, sonst Sportklasse",
+    long: "GS Tandem (ab 5 Teilnehmern mit Wertungsflügen, sonst Sportklasse)",
   },
   hgFlexTurm: { short: "HG Flex Turmdrachen", long: "HG Flex Turmdrachen" },
   hgFlexTurmlos: { short: "HG Flex turmlos", long: "HG Flex turmlos" },
