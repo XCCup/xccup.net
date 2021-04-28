@@ -23,33 +23,33 @@
             </div>
             <div class="row mt-2">
               <div class="col-md-6">
-                <BaseInput v-model="authUser.name" label="Name" />
+                <BaseInput v-model="userProfile.name" label="Name" />
               </div>
               <div class="col-md-6">
-                <BaseInput v-model="authUser.surname" label="Nachname" />
+                <BaseInput v-model="userProfile.surname" label="Nachname" />
               </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
                 <BaseInput
-                  v-model="authUser.club"
+                  v-model="userProfile.club"
                   label="Verein"
-                  :disabled="true"
+                  :isDisabled="true"
                 />
 
-                <BaseInput v-model="authUser.birthday" label="Geburtstag" />
+                <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
 
-                <BaseInput v-model="authUser.email" label="E-Mail" />
+                <BaseInput v-model="userProfile.email" label="E-Mail" />
 
                 <BaseSelect
-                  v-model="authUser.sex"
+                  v-model="userProfile.sex"
                   label="Geschlecht"
                   :showLabel="true"
                   :options="['männlich', 'weiblich']"
                 />
 
                 <BaseSelect
-                  v-model="authUser.shirtSize"
+                  v-model="userProfile.shirtSize"
                   label="T-Shirt Größe"
                   :showLabel="true"
                   :options="['S', 'M', 'L', 'XL', 'XXL']"
@@ -59,7 +59,7 @@
                 <div class="row mt-2">
                   <div class="col-md-9">
                     <BaseSelect
-                      v-model="listOfAircrafts[0]"
+                      v-model="userProfile.defaultAircraft.listName"
                       label="Standard Gerät"
                       :showLabel="true"
                       :options="listOfAircrafts"
@@ -240,7 +240,7 @@ export default {
   name: "Profile",
   data() {
     return {
-      userProfile: {},
+      userProfile: null,
       brands: ["Ozone", "Flow", "AirG"],
     };
   },
@@ -263,6 +263,9 @@ export default {
       return tmp;
     },
   },
+  beforeMount() {
+    this.userProfile = { ...this.authUser };
+  },
   props: {
     edit: {
       type: Boolean,
@@ -270,9 +273,9 @@ export default {
     },
   },
   watch: {
-    userProfile() {
-      this.userProfile = { ...this.authUser };
-    },
+    // userProfile() {
+    //   this.userProfile = { ...this.authUser };
+    // },
   },
   methods: {
     save() {

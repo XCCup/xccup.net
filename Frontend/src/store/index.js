@@ -12,6 +12,13 @@ export default createStore({
         club: "Good Club",
         birthday: "1.1.1970",
         country: "Deutschland",
+        defaultAircraft: {
+          brand: "Flow",
+          model: "XCRacer S",
+          listName: "Flow XCRacer S",
+          rankingClass: "gsPerfomance",
+          default: true,
+        },
         aircrafts: [
           {
             brand: "Flow",
