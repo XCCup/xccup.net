@@ -80,7 +80,6 @@
               </div>
             </div>
             <hr />
-            {{ userProfile }}
             <h5>Benachrichtigungen</h5>
             <div class="form-check">
               <input
