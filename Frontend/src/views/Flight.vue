@@ -80,7 +80,7 @@ export default {
         // props.flightId
       );
       if (!response.data.fixes) {
-        throw "Unvalid response";
+        throw "Invalid response";
       }
       flight.value = response.data;
 
