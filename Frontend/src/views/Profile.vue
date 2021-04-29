@@ -57,11 +57,12 @@
               </div>
               <div class="col-md-12">
                 <div class="row mt-2">
+                  <span>Standard Gerät</span>
                   <div class="col-md-9">
                     <BaseSelect
                       v-model="userProfile.defaultAircraft.listName"
                       label="Standard Gerät"
-                      :showLabel="true"
+                      :showLabel="false"
                       :options="listOfAircrafts"
                     />
                   </div>

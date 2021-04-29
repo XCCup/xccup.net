@@ -26,11 +26,12 @@
         </div>
         <div class="col-md-12">
           <div class="row mt-2">
+            <span>Fluggerät</span>
             <div class="col-md-9">
               <BaseSelect
                 v-model="flight.glider"
                 label="Fluggerät"
-                :showLabel="true"
+                :showLabel="false"
                 :options="[flight.glider]"
               />
             </div>
