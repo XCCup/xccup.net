@@ -1,7 +1,7 @@
 <template>
-  <label v-if="showLabel">{{ label }}</label>
+  <label v-if="showLabel" class="mt-3">{{ label }}</label>
   <select
-    class="form-select mb-3"
+    class="form-select"
     :value="modelValue"
     v-bind="{
       ...$attrs,

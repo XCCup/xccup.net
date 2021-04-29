@@ -56,17 +56,16 @@
                 />
               </div>
               <div class="col-md-12">
-                <div class="row mt-2">
-                  <span>Standard Gerät</span>
+                <div class="row d-flex align-items-end">
                   <div class="col-md-9">
                     <BaseSelect
                       v-model="userProfile.defaultAircraft.listName"
                       label="Standard Gerät"
-                      :showLabel="false"
+                      :showLabel="true"
                       :options="listOfAircrafts"
                     />
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-3 mt-3">
                     <div class="d-grid gap-2">
                       <button
                         type="button"
