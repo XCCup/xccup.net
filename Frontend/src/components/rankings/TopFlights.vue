@@ -1,5 +1,5 @@
 <template>
-  <table class="table table-hover">
+  <table v-if="flights" class="table table-hover">
     <thead>
       <tr></tr>
     </thead>

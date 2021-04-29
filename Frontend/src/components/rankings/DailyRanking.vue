@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-primary pb-3">
+  <section v-if="flights" class="bg-primary pb-3">
     <div class="container text-light pt-1">
       <h3>Tageswertung</h3>
       <table class="table table-primary text-light table-hover">
