@@ -133,9 +133,10 @@ export default {
     };
   },
   methods: {
-    sendForm() {
+    async sendForm() {
       try {
-        FlightService.uploadFlight(this.flight);
+        const response = await FlightService.uploadFlight(this.flight);
+        console.log(response);
       } catch (error) {
         console.log(error);
       }
