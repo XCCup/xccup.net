@@ -68,9 +68,10 @@
                   <div class="col-md-3">
                     <div class="d-grid gap-2">
                       <button
+                        type="button"
                         class="btn btn-primary"
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
+                        data-bs-target="#addAircraftModal"
                       >
                         Hinzufügen
                       </button>
@@ -189,58 +190,18 @@
   </div>
 
   <!-- Modal -->
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Fluggerät hinzufügen
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <BaseSelect :options="brands" label="Hersteller" />
-
-          <BaseInput label="Fluggerät" />
-
-          <BaseSelect :options="getRankingClasses" label="Geräteklasse" />
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            data-bs-dismiss="modal"
-          >
-            Abbrechen
-          </button>
-          <button type="button" class="btn btn-primary">Speichern</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <AddAircraftModal />
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import rankingClassNames from "@/assets/js/rankingClassNames";
-
+import AddAircraftModal from "@/components/AddAircraftModal";
 export default {
   name: "Profile",
+  components: { AddAircraftModal },
   data() {
     return {
       userProfile: null,
-      brands: ["Ozone", "Flow", "AirG"],
     };
   },
   computed: {
@@ -251,15 +212,6 @@ export default {
         aircraftList.push(`${element.brand} ${element.model}`);
       });
       return aircraftList;
-    },
-
-    getRankingClasses() {
-      const entries = Object.entries(rankingClassNames);
-      let tmp = [];
-      entries.forEach((e) => {
-        tmp.push(e[1].long);
-      });
-      return tmp;
     },
   },
   beforeMount() {

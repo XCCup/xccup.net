@@ -10,56 +10,46 @@
 
         <div class="row">
           <div class="col">
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="floatingInput"
-                placeholder="Fluggerät"
-                disabled
-                value="Zeltingen-Rachtig"
-              />
-              <label for="floatingInput">Startplatz</label>
-            </div>
+            <BaseInput
+              v-model="flight.takeoff"
+              label="Startplatz"
+              :isDisabled="true"
+            />
           </div>
           <div class="col">
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control"
-                id="floatingInput"
-                placeholder="Fluggerät"
-                disabled
-                value="Boppard"
+            <BaseInput
+              v-model="flight.landing"
+              label="Landeplatz"
+              :isDisabled="true"
+            />
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="row mt-2">
+            <div class="col-md-9">
+              <BaseSelect
+                v-model="flight.glider"
+                label="Fluggerät"
+                :showLabel="true"
+                :options="[flight.glider]"
               />
-              <label for="floatingInput">Landeplatz</label>
+            </div>
+            <div class="col-md-3">
+              <div class="d-grid gap-2">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addAircraftModal"
+                >
+                  Hinzufügen
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <select class="form-select mb-3">
-          <option selected>Fluggerät wählen</option>
-          <option value="1">Enzo 3 S</option>
-          <option value="2">XC Racer S</option>
-        </select>
-
         <div class="mb-3">
-          <p>Oder neues Fluggerät hinzufügen:</p>
-
-          <BaseSelect
-            :options="brands"
-            v-model="flight.brand"
-            label="Hersteller"
-          />
-
-          <BaseInput v-model="flight.glider" label="Fluggerät" type="text" />
-
-          <BaseSelect
-            :options="rankingClass"
-            v-model="flight.rankingClass"
-            label="Geräteklasse"
-          />
-
           <div class="form-floating mb-3">
             <textarea
               class="form-control"
@@ -110,19 +100,26 @@
         </div>
       </form>
     </div>
+    {{ flight }}
+    <AddAircraftModal />
   </div>
 </template>
 
 <script>
 import FlightService from "@/services/FlightService";
+import AddAircraftModal from "@/components/AddAircraftModal";
+
 export default {
   name: "UploadForm",
+  components: { AddAircraftModal },
   data() {
     return {
       flight: {
-        glider: "",
+        glider: "XCRacer S",
         brand: "",
         rankingClass: "",
+        takeoff: "Bremm",
+        landing: "Zeltingen-Rachtig",
       },
 
       rankingClass: [
@@ -135,7 +132,7 @@ export default {
   methods: {
     async sendForm() {
       try {
-        const response = await FlightService.uploadFlight(this.flight);
+        const response = await FlightService.uploadFlight(this.flight.takeoff);
         console.log(response);
       } catch (error) {
         console.log(error);
