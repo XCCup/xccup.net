@@ -21,7 +21,7 @@
         </div>
         <div class="modal-body">
           <BaseSelect :options="brands" label="Hersteller" />
-
+          <div class="mb-3"></div>
           <BaseInput label="Fluggerät" />
 
           <BaseSelect :options="getRankingClasses" label="Geräteklasse" />
