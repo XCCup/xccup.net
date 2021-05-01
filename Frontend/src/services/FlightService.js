@@ -31,7 +31,7 @@ const apiClient2 = axios.create({
 
 export default {
   getFlights() {
-    return apiClient.get("/flights");
+    return apiClient2.get("/tageswertung");
   },
   getFlight(flightId) {
     return apiClient.get("/flights/" + flightId);

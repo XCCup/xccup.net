@@ -38,7 +38,6 @@
                 />
 
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
-
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
 
                 <BaseSelect
@@ -47,17 +46,18 @@
                   :showLabel="true"
                   :options="['männlich', 'weiblich']"
                 />
-
+                <div class="mt-3"></div>
                 <BaseSelect
                   v-model="userProfile.shirtSize"
                   label="T-Shirt Größe"
                   :showLabel="true"
                   :options="['S', 'M', 'L', 'XL', 'XXL']"
                 />
+                <div class="mt-3"></div>
               </div>
               <div class="col-md-12">
                 <div class="row d-flex align-items-end">
-                  <div class="col-md-9">
+                  <div class="col-md-7">
                     <BaseSelect
                       v-model="userProfile.defaultAircraft.listName"
                       label="Standard Gerät"
@@ -65,8 +65,8 @@
                       :options="listOfAircrafts"
                     />
                   </div>
-                  <div class="col-md-3 mt-3">
-                    <div class="d-grid gap-2">
+                  <div class="col-md-5 mt-3">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                       <button
                         type="button"
                         class="btn btn-primary"
@@ -74,6 +74,15 @@
                         data-bs-target="#addAircraftModal"
                       >
                         Hinzufügen
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#removeAircraftModal"
+                      >
+                        Entfernen
                       </button>
                     </div>
                   </div>
@@ -189,16 +198,18 @@
     <!-- Editor -->
   </div>
 
-  <!-- Modal -->
+  <!-- Modals -->
   <AddAircraftModal />
+  <RemoveAircraftModal :aircraft="userProfile.defaultAircraft.listName" />
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import AddAircraftModal from "@/components/AddAircraftModal";
+import RemoveAircraftModal from "@/components/RemoveAircraftModal";
 export default {
   name: "Profile",
-  components: { AddAircraftModal },
+  components: { AddAircraftModal, RemoveAircraftModal },
   data() {
     return {
       userProfile: null,
@@ -230,7 +241,7 @@ export default {
   },
   methods: {
     save() {
-      console.log("save");
+      console.log("Profile saved");
     },
     cancel() {
       this.$router.push({ name: "Profile" });
