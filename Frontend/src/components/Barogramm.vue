@@ -56,6 +56,11 @@ export default {
         datasets: this.datasets,
       },
       options: {
+        onClick: () => {
+          // Center map at current position
+          const centerMapEvent = new CustomEvent("centerMapOnClick");
+          document.dispatchEvent(centerMapEvent);
+        },
         maintainAspectRatio: false,
         plugins: {
           title: {

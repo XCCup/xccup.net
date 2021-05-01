@@ -136,6 +136,15 @@ export default {
         this.markerPositionUpdateListener
       );
 
+      // Center listener
+      this.centerMapOnClickListener = () => {
+        this.centerMapOnClick();
+      };
+      document.addEventListener(
+        "centerMapOnClick",
+        this.centerMapOnClickListener
+      );
+
       // Update data
       this.tracks = lines;
       this.markers = markers;
@@ -157,6 +166,9 @@ export default {
       // if (positions.datasetIndex === 1) {
       //   this.map.setView(this.tracklogs[0][positions.dataIndex]);
       // }
+    },
+    centerMapOnClick() {
+      this.map.setView(this.positionMarkers[0].getLatLng());
     },
   },
 };
