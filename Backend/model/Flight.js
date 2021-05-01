@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/postgres.js");
 const FlightComment = require("./FlightComment.js");
+const FlightFixes = require("./FlightFixes.js");
 
 const Flight = db.sequelize.define("Flight", {
   report: {
@@ -21,7 +22,7 @@ const Flight = db.sequelize.define("Flight", {
     values: ["Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung"],
   },
   flightCornerpoints: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
+    type: DataTypes.JSON,
   },
   igcUrl: {
     type: DataTypes.STRING,
@@ -33,6 +34,16 @@ const Flight = db.sequelize.define("Flight", {
 
 Flight.hasMany(FlightComment, {
   as: "comments",
+  foreignKey: {
+    name: "flightId",
+    allowNull: false,
+  },
+  onDelete: "CASCADE",
+  hooks: true,
+});
+
+Flight.hasOne(FlightFixes, {
+  as: "fixes",
   foreignKey: {
     name: "flightId",
     allowNull: false,

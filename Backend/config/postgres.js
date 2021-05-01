@@ -54,6 +54,7 @@ function createDbTables() {
   const User = require("../model/User");
   const Flight = require("../model/Flight");
   const FlightComment = require("../model/FlightComment");
+  const FlightFixes = require("../model/FlightFixes");
 
   (async () => {
     console.log("Will create DB Tables");
@@ -61,6 +62,7 @@ function createDbTables() {
     await User.sync({ force: true });
     await Flight.sync({ force: true });
     await FlightComment.sync({ force: true });
+    await FlightFixes.sync({ force: true });
   })();
 }
 
