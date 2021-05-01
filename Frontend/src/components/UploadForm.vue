@@ -3,8 +3,16 @@
     <h3>Flug hochladen</h3>
     <form @submit.prevent="sendForm">
       <div class="mb-3">
-        <label for="formFile" class="form-label">.igc auswählen</label>
-        <input class="form-control" type="file" id="formFile" />
+        <label for="igcUploadForm" class="form-label">
+          Flug auswählen (.igc)
+        </label>
+        <input
+          class="form-control"
+          type="file"
+          accept=".igc"
+          id="igcUploadForm"
+          @change="handleIGC"
+        />
       </div>
 
       <div class="row">
@@ -100,7 +108,6 @@
       </div>
     </form>
   </div>
-  {{ flight }}
   <AddAircraftModal />
 </template>
 
@@ -114,18 +121,12 @@ export default {
   data() {
     return {
       flight: {
+        igcContent: null,
         glider: "XCRacer S",
-        brand: "",
-        rankingClass: "",
+        brand: "Flow",
         takeoff: "Bremm",
         landing: "Zeltingen-Rachtig",
       },
-
-      rankingClass: [
-        "GS Competition high (EN-D oder CCC und einer Streckung von 7,0 und mehr)",
-        "GS Performance low (EN-D und einer Streckung von <7,0)",
-      ],
-      brands: ["Ozone", "Flow", "AirG"],
     };
   },
   methods: {
@@ -133,6 +134,17 @@ export default {
       try {
         const response = await FlightService.uploadFlight(this.flight.takeoff);
         console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    handleIGC(file) {
+      try {
+        if (file.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (e) => (this.flight.igcContent = e.target.result);
+          reader.readAsText(file.target.files[0]);
+        }
       } catch (error) {
         console.log(error);
       }
