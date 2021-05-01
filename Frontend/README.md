@@ -1,6 +1,6 @@
 # xccup-frontend
 
-Preview of master branch: https://xccup.onrender.com
+Preview of main branch: https://xccup.onrender.com
 
 ## Project setup
 
