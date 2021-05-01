@@ -17,6 +17,11 @@ const routes = [
     component: Flight,
   },
   {
+    path: "/fluege/",
+    name: "Flights",
+    component: () => import(/* webpackChunkName: "" */ "../views/Flights.vue"),
+  },
+  {
     path: "/upload",
     name: "UploadFlight",
     props: true,

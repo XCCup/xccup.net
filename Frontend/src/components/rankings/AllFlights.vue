@@ -1,8 +1,8 @@
 <template>
-  <section v-if="flights" class="bg-primary pb-3">
-    <div class="container text-light pt-1">
-      <h3>Tageswertung</h3>
-      <table class="table table-primary text-light table-hover">
+  <section v-if="flights" class="pb-3">
+    <div class="container pt-1">
+      <h3>Streckenmeldungen 20XX</h3>
+      <table class="table table-hover">
         <tbody>
           <tr
             v-for="(flight, index) in flights.slice(0, maxRows)"
@@ -20,21 +20,6 @@
           </tr>
         </tbody>
       </table>
-      <router-link
-        :to="{ name: 'Flights' }"
-        class="btn btn-outline-light btn-sm my-1"
-        >Alle Flüge anzeigen</router-link
-      >
-    </div>
-  </section>
-  <!-- Karte der Tageswertung -->
-
-  <section class="dailyMap">
-    <div class="container">
-      <h3>Karte mit Overlays aller Flüge des Tages</h3>
-      <p>Soll hier mal irgendwo hin…</p>
-
-      <br />
     </div>
   </section>
 </template>
