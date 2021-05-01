@@ -12,7 +12,8 @@ const factors = {
 };
 
 const IgcAnalyzer = {
-  parse: (flightId) => {
+  startCalculation: (flight) => {
+    const flightId = flight.id.toString();
     const igcAsPlainText = readIgcFile(flightId);
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
@@ -22,7 +23,12 @@ const IgcAnalyzer = {
     const stripFactor = requiredResolution / currentResolutionInSeconds;
     console.log(`Will strip igc fixes by factor ${stripFactor}`);
     igcWithReducedFixes = stripByFactor(stripFactor, igcAsPlainText);
-    writeFile(flightId, igcWithReducedFixes, stripFactor);
+    const { writeStream, pathToFile } = writeFile(
+      flightId,
+      igcWithReducedFixes,
+      stripFactor
+    );
+    writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null));
   },
 };
 
@@ -36,7 +42,14 @@ function runCornerpointsIteration(resultStripIteration) {
     igcAsPlainText,
     resultStripIteration.cornerpoints
   );
-  writeFile(resultStripIteration.flightId, igcWithReducedFixes, null);
+  const { writeStream, pathToFile } = writeFile(
+    resultStripIteration.flightId,
+    igcWithReducedFixes,
+    null
+  );
+  writeStream.end(() =>
+    runOlc(pathToFile, resultStripIteration.flightId, true)
+  );
 }
 
 function runOlc(filePath, flightId, isCornerpointsIteration) {
@@ -49,7 +62,12 @@ function runOlc(filePath, flightId, isCornerpointsIteration) {
     if (platform.includes("win")) {
       exec("igc\\olc.exe < " + filePath, function (err, data) {
         console.log(err);
-        parseOlcData(data.toString(), flightId, isCornerpointsIteration);
+        parseOlcData(
+          data.toString(),
+          flightId,
+          isCornerpointsIteration,
+          filePath
+        );
       });
     } else {
       parseOlcData(null);
@@ -57,7 +75,7 @@ function runOlc(filePath, flightId, isCornerpointsIteration) {
   })();
 }
 
-function parseOlcData(data, flightId, isCornerpointsIteration) {
+function parseOlcData(data, flightId, isCornerpointsIteration, filePath) {
   dataLines = data.split("\n");
 
   for (let i = 0; i < dataLines.length; i++) {
@@ -125,6 +143,7 @@ function parseOlcData(data, flightId, isCornerpointsIteration) {
   if (isCornerpointsIteration) {
     console.log("IGC Result from cornerpoint iteration: ", result);
     const flightService = require("../service/FlightService");
+    result.igcUrl = filePath;
     flightService.addResult(result);
   } else {
     console.log("IGC Result from strip iteration: ", result);
@@ -155,7 +174,7 @@ function writeFile(flightId, inputArray, stripFactor) {
   }
 
   const store = process.env.FLIGHT_STORE;
-  const pathToFolder = path.join(__dirname, store, "temp", flightId);
+  const pathToFolder = path.join(store, "temp", flightId);
   const pathToFile = path.join(pathToFolder.toString(), name + ".igc");
   fs.mkdirSync(pathToFolder, { recursive: true });
   console.log(`Will start writing content to ${pathToFile}`);
@@ -169,8 +188,9 @@ function writeFile(flightId, inputArray, stripFactor) {
   writeStream.on("error", (err) => {
     console.error(`There is an error writing the file ${pathToFile} => ${err}`);
   });
-  writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null));
-  return pathToFile;
+  return { writeStream, pathToFile };
+  // writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null));
+  // return pathToFile;
 }
 
 function stripByFactor(factor, input) {
@@ -264,7 +284,7 @@ function getDuration(igcAsJson) {
 
 function findIgcFileForFlight(flightId) {
   const store = process.env.FLIGHT_STORE;
-  const pathToFlightFolder = path.join(__dirname, store, flightId);
+  const pathToFlightFolder = path.join(store, flightId);
   console.log(`Will look in folder ${pathToFlightFolder} for IGC-File`);
   const igcFile = fs
     .readdirSync(pathToFlightFolder)

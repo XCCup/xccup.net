@@ -49,17 +49,17 @@ const Flight = require("./model/Flight");
 
 // Create tables in db
 // (async () => {
-// const user = {
-//   id: "1234",
-//   name: "Kai",
-//   password: "A password",
-// };
-// User.create(user);
+//   const user = {
+//     id: "1234",
+//     name: "Kai",
+//     password: "A password",
+//   };
+//   User.create(user);
+// })();
 // FlightComment.create({
 //   pilot: "Stephan",
 //   message: "Eine erste Nachricht",
 //   flightId: 1,
-// });
 // FlightComment.create({
 //   pilot: "Kai",
 //   message: "Eine zweite Nachricht",
@@ -146,7 +146,7 @@ const Flight = require("./model/Flight");
 // })();
 
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json({ limit: "5mb" }));
 
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
