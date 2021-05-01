@@ -129,7 +129,7 @@ export default {
         takeoff: "Bremm",
         landing: "Zeltingen-Rachtig",
       },
-      rulesAccepted: true,
+      rulesAccepted: false,
     };
   },
   methods: {
