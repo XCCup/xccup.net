@@ -68,6 +68,9 @@ Preview of main branch: https://xccup.onrender.com
 
 ### Pages
 
+- [ ] Register
+- [ ] Imprint
+- [ ] Imprint
 - [ ] Clubs
 - [ ] Teams
 - [ ] Pilots
@@ -80,6 +83,7 @@ Preview of main branch: https://xccup.onrender.com
 - [ ] Beautify spinner (Paraglider animation?)
 - [ ] Icons for task types (FAI & flat triangle, one way)
 - [ ] Icons for ranking classes
+- [ ] Authentication
 
 ## Project setup
 
