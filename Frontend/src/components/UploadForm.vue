@@ -79,12 +79,11 @@
             multiple
           />
         </div>
-
         <div class="form-check mb-3">
           <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="rulesAccepted"
             id="flexCheckDefault"
           />
           <label class="form-check-label" for="flexCheckDefault">
@@ -101,10 +100,13 @@
           </label>
         </div>
 
-        <button type="submit" class="btn btn-primary me-1">
+        <button
+          type="submit"
+          class="btn btn-primary me-1"
+          :disabled="!rulesAccepted"
+        >
           Streckenmeldung absenden
         </button>
-        <button type="submit" class="btn btn-danger">Abbrechen</button>
       </div>
     </form>
   </div>
@@ -127,6 +129,7 @@ export default {
         takeoff: "Bremm",
         landing: "Zeltingen-Rachtig",
       },
+      rulesAccepted: true,
     };
   },
   methods: {
