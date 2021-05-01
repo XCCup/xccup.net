@@ -1,4 +1,4 @@
-# xccup-frontend
+# xccup.net frontend
 
 Preview of main branch: https://xccup.onrender.com
 
