@@ -4,7 +4,7 @@ const db = {};
 
 const port = process.env.POSTGRES_PORT;
 const user = process.env.POSTGRES_USER;
-const pw = process.env.POSTGRES_PW;
+const pw = process.env.POSTGRES_PASSWORD;
 const postDb = process.env.POSTGRES_DB;
 const host = process.env.POSTGRES_HOST;
 
@@ -44,9 +44,14 @@ async function sleep(ms) {
 }
 
 //Initial start of connection test
-dbConnectionTest().then((result) => {
-  if (process.env.NODE_ENV === "init_db") {
-    createDbTables();
+dbConnectionTest().then(async (result) => {
+  if (process.env.DB_SYNC_ALTER == "true") {
+    console.log("Will alter DB Tables");
+    await sequelize.sync({ alter: true });
+  }
+  if (process.env.DB_SYNC_FORCE == "true") {
+    console.log("Will create DB Tables");
+    await sequelize.sync({ force: true });
   }
 });
 

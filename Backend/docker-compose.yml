@@ -19,9 +19,10 @@ services:
     image: dpage/pgadmin4
     container_name: db_admin
     restart: always
+    env_file: .env
     environment:
-      PGADMIN_DEFAULT_EMAIL: kai.wpkt@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
+      - PGADMIN_DEFAULT_EMAIL=$PGADMIN_EMAIL
+      - PGADMIN_DEFAULT_PASSWORD=$PGADMIN_PASSWORD
     ports:
       - 65080:80
     networks:
