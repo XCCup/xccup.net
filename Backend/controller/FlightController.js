@@ -4,7 +4,6 @@ const router = express.Router();
 const service = require("../service/FlightService");
 const path = require("path");
 const { NOT_FOUND, BAD_REQUEST } = require("./Constants");
-const flightService = require("../service/FlightService");
 const fs = require("fs");
 
 // @desc Retrieves all flights
