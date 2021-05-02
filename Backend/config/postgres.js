@@ -43,15 +43,18 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-//Initial start of connection test
 dbConnectionTest().then(async (result) => {
   if (process.env.DB_SYNC_ALTER == "true") {
     console.log("Will alter DB Tables");
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ alter: true }).catch((error)=>{
+      console.error(error);
+    });
   }
   if (process.env.DB_SYNC_FORCE == "true") {
     console.log("Will create DB Tables");
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: true }).catch((error)=>{
+      console.error(error);
+    });
   }
 });
 

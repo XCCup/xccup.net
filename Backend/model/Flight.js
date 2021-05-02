@@ -14,12 +14,12 @@ const Flight = db.sequelize.define("Flight", {
     type: DataTypes.DOUBLE,
   },
   flightType: {
-    type: DataTypes.ENUM,
-    values: ["JOJO", "FLAT", "FAI"],
+    type: DataTypes.STRING,
+    // values: ["JOJO", "FLAT", "FAI"],
   },
   flightStatus: {
-    type: DataTypes.ENUM,
-    values: ["Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung"],
+    type: DataTypes.STRING,
+    // values: ["Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung"],
   },
   flightCornerpoints: {
     type: DataTypes.JSON,
