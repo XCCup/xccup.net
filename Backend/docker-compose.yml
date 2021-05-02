@@ -38,6 +38,7 @@ services:
     env_file: .env
     environment:
       - SERVER_PORT=$SERVER_PORT
+      - NODE_ENV=development
     ports:
       - "64080:80"
     volumes:

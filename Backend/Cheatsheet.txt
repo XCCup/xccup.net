@@ -9,3 +9,6 @@ SET TIMEZONE='Europe/Berlin';
 HowTo Connect PgAdmin to Postgres:
 Add New Server -> Connection -> Hostname: <<name_of_postgres_container>> Port: 5432
 Localhost as address doesn't work because PgAdmin runs in his own host!
+
+Compile C Code in linux
+gcc olc2002.c -o olc_lnx -lm

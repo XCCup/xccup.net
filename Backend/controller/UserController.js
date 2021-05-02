@@ -1,7 +1,11 @@
 const { request, json } = require("express");
 const express = require("express");
 const service = require("../service/UserService");
-const { NOT_FOUND, BAD_REQUEST } = require("./Constants");
+const {
+  NOT_FOUND,
+  BAD_REQUEST,
+  INTERNAL_SERVER_ERROR,
+} = require("./Constants");
 const router = express.Router();
 
 // @desc Retrieves all users
@@ -28,8 +32,15 @@ router.get("/:username", async (req, res) => {
 // @route POST /user/
 
 router.post("/", async (req, res) => {
-  const user = await service.save(req.body);
-  res.json(user);
+  const user = service
+    .save(req.body)
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(INTERNAL_SERVER_ERROR).send(error.message);
+    });
 });
 
 module.exports = router;

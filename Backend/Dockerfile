@@ -6,9 +6,12 @@ WORKDIR /home/node/app
 
 COPY package*.json ./
 
-USER node
+# USER node
 
-RUN npm install
+RUN apk add --no-cache \
+    libc6-compat \
+    libstdc++ \
+    && npm install
 
 COPY --chown=node:node . .
 

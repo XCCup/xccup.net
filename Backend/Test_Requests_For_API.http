@@ -1,11 +1,3 @@
-POST http://localhost:3000/users HTTP/1.1
-content-type: application/json
-
-{
-    "name": "kai",
-    "email": "kai@mail.com"
-}
-
 ###
 
 DELETE http://localhost:3000/users/5 HTTP/1.1
@@ -48,7 +40,7 @@ POST http://localhost:64080/flight/ HTTP/1.1
 content-type: application/json
 
 {
-    "userId": "ff62d7cc-2baa-45fb-9ae0-58b8946b7f90",
+    "userId": "7547e682-6a9c-43fc-8f21-e4803cd1d015",
     "glider": "Ozone Alpina 2",
     "igc": {
             "name" : "fai_60km42_3h53m.igc",

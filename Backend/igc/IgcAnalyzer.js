@@ -59,19 +59,18 @@ function runOlc(filePath, flightId, isCornerpointsIteration) {
     const os = require("os");
     const platform = os.platform();
     console.log("Running on OS: ", platform);
-    if (platform.includes("win")) {
-      exec("igc\\olc.exe < " + filePath, function (err, data) {
-        console.log(err);
-        parseOlcData(
-          data.toString(),
-          flightId,
-          isCornerpointsIteration,
-          filePath
-        );
-      });
-    } else {
-      parseOlcData(null);
-    }
+    const command = platform.includes("win")
+      ? "igc\\olc.exe < "
+      : "igc/olc_lnx < ";
+    exec(command + filePath, function (err, data) {
+      console.log(err);
+      parseOlcData(
+        data.toString(),
+        flightId,
+        isCornerpointsIteration,
+        filePath
+      );
+    });
   })();
 }
 
