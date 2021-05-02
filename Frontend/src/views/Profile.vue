@@ -71,7 +71,7 @@
                         type="button"
                         class="btn btn-primary"
                         data-bs-toggle="modal"
-                        data-bs-target="#addAircraftModal"
+                        data-bs-target="#addGliderModal"
                       >
                         Hinzufügen
                       </button>
@@ -80,7 +80,7 @@
                         type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
-                        data-bs-target="#removeAircraftModal"
+                        data-bs-target="#removeGliderModal"
                       >
                         Entfernen
                       </button>
@@ -199,17 +199,17 @@
   </div>
 
   <!-- Modals -->
-  <AddAircraftModal />
-  <RemoveAircraftModal :aircraft="userProfile.defaultAircraft.listName" />
+  <AddGliderModal />
+  <RemoveGliderModal :glider="userProfile.defaultAircraft.listName" />
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import AddAircraftModal from "@/components/AddAircraftModal";
-import RemoveAircraftModal from "@/components/RemoveAircraftModal";
+import AddGliderModal from "@/components/AddGliderModal";
+import RemoveGliderModal from "@/components/RemoveGliderModal";
 export default {
   name: "Profile",
-  components: { AddAircraftModal, RemoveAircraftModal },
+  components: { AddGliderModal, RemoveGliderModal },
   data() {
     return {
       userProfile: null,
@@ -218,11 +218,11 @@ export default {
   computed: {
     ...mapGetters(["authUser"]),
     listOfAircrafts() {
-      let aircraftList = [];
-      this.authUser.aircrafts.forEach((element) => {
-        aircraftList.push(`${element.brand} ${element.model}`);
+      let gliderList = [];
+      this.authUser.gliders.forEach((element) => {
+        gliderList.push(`${element.brand} ${element.model}`);
       });
-      return aircraftList;
+      return gliderList;
     },
   },
   beforeMount() {

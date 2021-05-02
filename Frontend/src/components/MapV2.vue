@@ -36,18 +36,8 @@ export default {
     tracklogs(newTracklogs) {
       this.drawTracks(newTracklogs);
     },
-    // Watch the computed prop getting the marker positions from state
-    // markerMapPositionFromState(newPosition) {
-    //   console.log(newPosition.datasetIndex);
-    //   this.updateMarkerPosition(newPosition);
-    // },
   },
-  computed: {
-    // Getting the marker positions from state
-    // markerMapPositionFromState() {
-    //   return this.$store.state.markerMapPosition;
-    // },
-  },
+
   mounted() {
     // Setup leaflet
     L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
@@ -78,6 +68,11 @@ export default {
     document.removeEventListener(
       "positionUpdated",
       this.positionUpdateListener
+    );
+    // Remove the center map on click listener
+    document.removeEventListener(
+      "centerMapOnClick",
+      this.centerMapOnClickListener
     );
   },
   methods: {

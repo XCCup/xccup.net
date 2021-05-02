@@ -48,7 +48,7 @@
                 type="button"
                 class="btn btn-primary"
                 data-bs-toggle="modal"
-                data-bs-target="#addAircraftModal"
+                data-bs-target="#addGliderModal"
               >
                 Hinzufügen
               </button>
@@ -110,16 +110,16 @@
       </div>
     </form>
   </div>
-  <AddAircraftModal />
+  <AddGliderModal />
 </template>
 
 <script>
 import FlightService from "@/services/FlightService";
-import AddAircraftModal from "@/components/AddAircraftModal";
+import AddGliderModal from "@/components/AddGliderModal";
 
 export default {
   name: "UploadForm",
-  components: { AddAircraftModal },
+  components: { AddGliderModal },
   data() {
     return {
       flight: {

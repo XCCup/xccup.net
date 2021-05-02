@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade"
-    id="removeAircraftModal"
+    id="removeGliderModal"
     tabindex="-1"
     aria-labelledby="removeAircraftModalLabel"
     aria-hidden="true"
@@ -19,7 +19,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">{{ aircraft }} entfernen</div>
+        <div class="modal-body">{{ glider }} entfernen</div>
         <div class="modal-footer">
           <button
             type="button"
@@ -36,12 +36,12 @@
 </template>
 <script>
 export default {
-  name: "removeAircraftModal",
+  name: "RemoveGliderModal",
   data() {
     return {};
   },
   props: {
-    aircraft: String,
+    glider: String,
   },
 };
 </script>

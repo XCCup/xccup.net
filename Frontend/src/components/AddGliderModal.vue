@@ -1,7 +1,7 @@
 <template>
   <div
     class="modal fade"
-    id="addAircraftModal"
+    id="addGliderModal"
     tabindex="-1"
     aria-labelledby="addAircraftModalLabel"
     aria-hidden="true"
@@ -44,7 +44,7 @@
 import rankingClassNames from "@/assets/js/rankingClassNames";
 
 export default {
-  name: "AddAircraftModal",
+  name: "AddGliderModal",
   data() {
     return { brands: ["Ozone", "Flow", "AirG"] };
   },

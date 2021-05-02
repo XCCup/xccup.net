@@ -19,7 +19,7 @@ export default createStore({
           rankingClass: "gsPerfomance",
           default: true,
         },
-        aircrafts: [
+        gliders: [
           {
             brand: "Flow",
             model: "XCRacer S",
