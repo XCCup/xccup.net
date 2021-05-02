@@ -25,7 +25,6 @@ const flightService = {
     flight.flightType = result.type;
     flight.flightStatus = "In Wertung";
     const cornerPointsAsString = JSON.stringify(result.cornerpoints);
-    console.log("CPAS: ", cornerPointsAsString);
     flight.flightCornerpoints = cornerPointsAsString;
     flight.igcUrl = result.igcUrl;
     flight.save();

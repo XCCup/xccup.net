@@ -3,21 +3,54 @@ version: "3.1"
 services:
   db:
     image: postgres
+    container_name: db
     restart: always
+    env_file: .env
     environment:
-      POSTGRES_PASSWORD: xccup_pw
-      POSTGRES_USER: xccup_user
-      POSTGRES_DB: xccup_db
-    ports:
-      - "65432:5432"
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_DB=$POSTGRES_DB
     volumes:
       - /home/postgres/data:/var/lib/postgresql/data
+    networks:
+      - xccup-network
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: db_admin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: kai.wpkt@gmail.com
       PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
     ports:
       - 65080:80
+    networks:
+      - xccup-network
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kai/xccup-server
+    container_name: server
+    restart: always
+    env_file: .env
+    environment:
+      - SERVER_PORT=$SERVER_PORT
+    ports:
+      - "64080:80"
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+    networks:
+      - xccup-network
+    depends_on:
+      - db
+    command: /home/node/app/node_modules/.bin/nodemon app.js
+
+networks:
+  xccup-network:
+    driver: bridge
+
+volumes:
+  node_modules:

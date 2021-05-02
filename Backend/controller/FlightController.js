@@ -66,7 +66,7 @@ function areRequiredFlightParamsInvalid(flight) {
     flight.pilotId === null ||
     flight.igc.name === null ||
     flight.igc.body === null ||
-    flight.aircraft === null;
+    flight.glider === null;
   console.log(`Parameter invalid: ${result}`);
   return result;
 }

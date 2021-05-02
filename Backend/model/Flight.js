@@ -27,7 +27,7 @@ const Flight = db.sequelize.define("Flight", {
   igcUrl: {
     type: DataTypes.STRING,
   },
-  aircraft: {
+  glider: {
     type: DataTypes.STRING,
   },
 });
