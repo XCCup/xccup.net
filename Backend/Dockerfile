@@ -2,9 +2,10 @@ FROM node:14-alpine
 
 RUN apk add --no-cache \
     libc6-compat \
-    libstdc++
+    libstdc++ \
+    && addgroup app \
+    && adduser -S -G app app    
 
-RUN addgroup app && adduser -S -G app app
 USER app
 
 WORKDIR /app

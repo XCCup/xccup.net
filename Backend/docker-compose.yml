@@ -40,7 +40,7 @@ services:
       - SERVER_PORT=$SERVER_PORT
       - NODE_ENV=development
     ports:
-      - "80:80"
+      - "80:65090"
     volumes:
       - .:/app
     networks:
