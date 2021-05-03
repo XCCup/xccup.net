@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.8"
 
 services:
   db:
@@ -11,7 +11,7 @@ services:
       - POSTGRES_USER=$POSTGRES_USER
       - POSTGRES_DB=$POSTGRES_DB
     volumes:
-      - /home/postgres/data:/var/lib/postgresql/data
+      - ./dbdata:/var/lib/postgresql/data
     networks:
       - xccup-network
 
@@ -28,31 +28,27 @@ services:
     networks:
       - xccup-network
 
-  server:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
-    image: kai/xccup-server
-    container_name: server
+    image: xcccup/api
+    container_name: api
     restart: always
     env_file: .env
     environment:
       - SERVER_PORT=$SERVER_PORT
       - NODE_ENV=development
     ports:
-      - "64080:80"
+      - "80:80"
     volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
+      - .:/app
     networks:
       - xccup-network
     depends_on:
       - db
-    command: /home/node/app/node_modules/.bin/nodemon app.js
+    command: ./docker-entrypoint.sh
 
 networks:
   xccup-network:
     driver: bridge
-
-volumes:
-  node_modules:

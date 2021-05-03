@@ -1,20 +1,18 @@
 FROM node:14-alpine
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-
-WORKDIR /home/node/app
-
-COPY package*.json ./
-
-# USER node
-
 RUN apk add --no-cache \
     libc6-compat \
-    libstdc++ \
-    && npm install
+    libstdc++
 
-COPY --chown=node:node . .
+RUN addgroup app && adduser -S -G app app
+USER app
+
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
 
 EXPOSE 80
 
-CMD [ "node", "app.js" ]
+CMD [ "npm", "start" ]
+
