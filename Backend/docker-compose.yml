@@ -42,7 +42,7 @@ services:
     ports:
       - "80:65090"
     volumes:
-      - .:/home/app/app
+      - .:/home/node/app
     networks:
       - xccup-network
     depends_on:
