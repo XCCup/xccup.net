@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const IGCParser = require("igc-parser");
-const flightService = require("../service/FlightService");
+const flightService = require("../service/FlightService"); // Why?
 
 const RESOLUTION_FACTOR = 4;
 const POINTS_AROUND_CORNER = 20;

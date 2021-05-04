@@ -1,4 +1,4 @@
-# xccup.net frontend
+# xccup.net backend
 
 #### Dev Server:
 
@@ -7,3 +7,8 @@
 #### Live Dev Server:
 
 `docker-compose -f docker-compose-live-dev.yml up -d`
+
+## Todo
+
+- [ ] Endpoint Hersteller erstellen
+- [ ] Glider im Profil löschen/hinzufügen

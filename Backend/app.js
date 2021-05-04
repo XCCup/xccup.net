@@ -8,7 +8,7 @@ const app = express();
 const { Sequelize, DataTypes } = require("sequelize");
 
 //Load config
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({ path: "./config/config.env" }); // Why?
 
 //Setup DB
 const db = require("./config/postgres.js");
@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === "development") {
 // });
 
 //Static folder
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"))); // Why?
 
 const User = require("./model/User");
 const FlightComment = require("./model/FlightComment");
