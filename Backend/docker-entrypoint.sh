@@ -10,5 +10,9 @@ npm uninstall bcrypt
 
 npm install bcrypt
 
+echo "Waiting for DB to start..."
+./wait-for db:5432 
+
+
 echo "Starting the API server..."
 npm run dev 
