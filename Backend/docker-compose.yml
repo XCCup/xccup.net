@@ -17,7 +17,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: db_admin
+    container_name: db-admin
     restart: always
     env_file: .env
     environment:
@@ -42,7 +42,7 @@ services:
     ports:
       - "80:65090"
     volumes:
-      - .:/app
+      - .:/home/app/app
     networks:
       - xccup-network
     depends_on:

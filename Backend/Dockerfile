@@ -8,7 +8,9 @@ RUN apk add --no-cache \
 
 USER app
 
-WORKDIR /app
+# Permission error on linux host, but why? Build nicely on MacOS
+#WORKDIR /app
+WORKDIR /home/app/app
 COPY package*.json ./
 RUN npm install
 COPY . .
