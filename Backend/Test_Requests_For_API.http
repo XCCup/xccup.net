@@ -23,7 +23,7 @@ Content-Type: text/plain
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###
-POST http://localhost:64080/user/ HTTP/1.1
+POST http://localhost/user/ HTTP/1.1
 content-type: application/json
 
 {
@@ -36,11 +36,11 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:64080/flight/ HTTP/1.1
+POST http://localhost/flight/ HTTP/1.1
 content-type: application/json
 
 {
-    "userId": "7547e682-6a9c-43fc-8f21-e4803cd1d015",
+    "userId": "ccee643a-8460-406f-a363-89072f0f5540",
     "glider": "Ozone Alpina 2",
     "igc": {
             "name" : "fai_60km42_3h53m.igc",
