@@ -24,8 +24,10 @@ const flightService = {
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
     flight.flightStatus = "In Wertung";
-    const cornerPointsAsString = JSON.stringify(result.cornerpoints);
-    flight.flightCornerpoints = cornerPointsAsString;
+    // const cornerPointsAsString = JSON.stringify(result.cornerpoints);
+    // flight.flightCornerpoints = cornerPointsAsString;
+    flight.flightCornerpoints = result.cornerpoints;
+
     flight.igcUrl = result.igcUrl;
     flight.save();
   },
