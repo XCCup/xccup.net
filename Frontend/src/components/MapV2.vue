@@ -104,7 +104,6 @@ export default {
         // Check if a previously drawn track is removed
         if (track.length > 0) {
           // Create a line for every track
-          console.log(track);
           lines[index] = L.polyline(track, {
             color: trackColors[index],
           }).addTo(this.map);
