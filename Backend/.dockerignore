@@ -1,4 +1,9 @@
+# Don't copy in existing node_modules
 node_modules
+
+# Docs are large
+docs
+
 npm-debug.log
 .gitignore
 .env

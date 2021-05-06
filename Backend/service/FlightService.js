@@ -24,8 +24,7 @@ const flightService = {
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
     flight.flightStatus = "In Wertung";
-    const cornerPointsAsString = JSON.stringify(result.cornerpoints);
-    flight.flightCornerpoints = cornerPointsAsString;
+    flight.flightTurnpoints = result.turnpoints;
     flight.igcUrl = result.igcUrl;
     flight.save();
   },
@@ -33,6 +32,7 @@ const flightService = {
     return await Flight.create(flight);
   },
   startResultCalculation: async (flight) => {
+    //TODO Use callback for return value
     IgcAnalyzer.startCalculation(flight);
   },
 };
