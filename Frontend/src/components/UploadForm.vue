@@ -64,7 +64,6 @@
             placeholder="Flugbericht"
             id="floatingTextarea2"
             style="height: 100px"
-            v-model="flight.report"
           ></textarea>
           <label for="floatingTextarea2">Flugbericht</label>
         </div>
@@ -124,24 +123,19 @@ export default {
   data() {
     return {
       flight: {
-        userId: "ccee643a-8460-406f-a363-89072f0f5540",
+        igcContent: null,
         glider: "XCRacer S",
-        // brand: "Flow",
-        // takeoff: "Bremm",
-        // landing: "Zeltingen-Rachtig",
-        report: "Lorem ipsum",
-        igc: {
-          name: "",
-          body: null,
-        },
+        brand: "Flow",
+        takeoff: "Bremm",
+        landing: "Zeltingen-Rachtig",
       },
-      rulesAccepted: true,
+      rulesAccepted: false,
     };
   },
   methods: {
     async sendForm() {
       try {
-        const response = await FlightService.uploadFlight(this.flight);
+        const response = await FlightService.uploadFlight(this.flight.takeoff);
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -151,10 +145,7 @@ export default {
       try {
         if (file.target.files[0]) {
           const reader = new FileReader();
-          reader.onload = (e) => {
-            this.flight.igc.body = e.target.result;
-          };
-          this.flight.igc.name = file.target.files[0].name;
+          reader.onload = (e) => (this.flight.igcContent = e.target.result);
           reader.readAsText(file.target.files[0]);
         }
       } catch (error) {

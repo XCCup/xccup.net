@@ -12,8 +12,6 @@ import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
-import parse from "date-fns/fp/parse";
-let parseDMS = require("parse-dms");
 
 export default {
   name: "Map",
@@ -23,13 +21,6 @@ export default {
       tracks: Array,
       positionMarkers: [],
       markers: [],
-      turnpoints: [
-        { time: "10:18:07", lat: "50:6.545", long: "7:6.512" },
-        { time: "11:54:22", lat: "49:52.333", long: "6:52.304" },
-        { time: "14:25:54", lat: "50:9.866", long: "6:45.834" },
-        { time: "15:51:20", lat: "50:9.274", long: "7:10.312" },
-        { time: "16:04:14", lat: "50:6.544", long: "7:6.511" },
-      ],
     };
   },
   props: {
@@ -71,8 +62,6 @@ export default {
 
     // Draw tracklogs
     this.drawTracks(this.tracklogs);
-
-    this.drawTurnpoints(this.turnpoints);
   },
   beforeUnmount() {
     // Remove the map position update listener
@@ -104,7 +93,6 @@ export default {
         // Check if a previously drawn track is removed
         if (track.length > 0) {
           // Create a line for every track
-          console.log(track);
           lines[index] = L.polyline(track, {
             color: trackColors[index],
           }).addTo(this.map);
@@ -156,17 +144,6 @@ export default {
       this.tracks = lines;
       this.markers = markers;
       this.positionMarkers = positionMarkers;
-    },
-
-    drawTurnpoints(turnpoints) {
-      let tmp = [];
-      turnpoints.forEach((tp) => {
-        let conv = [parseDMS(tp.lat), parseDMS(tp.long)];
-        tmp.push(conv);
-      });
-      L.polyline(tmp, {
-        color: "grey",
-      }).addTo(this.map);
     },
 
     updateMarkerPosition(position) {
