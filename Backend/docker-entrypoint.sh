@@ -10,6 +10,9 @@
 
 # npm install bcrypt
 
+# The reinstall of bcrypt has become for the time being obsolet due to the fact that the dependency was replaced by bcryptjs
+# TODO Evaluate if the usage of bcryptjs is sufficent enough
+
 echo "Waiting for DB to start..."
 ./wait-for db:5432 
 

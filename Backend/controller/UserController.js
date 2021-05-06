@@ -1,4 +1,3 @@
-const { request, json } = require("express"); // Why?
 const express = require("express");
 const service = require("../service/UserService");
 const {

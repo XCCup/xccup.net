@@ -1,6 +1,7 @@
 FROM node:14-alpine
 
-# Why?
+# Packages are necesseary to run c-compiled apps (e.g. OLC) on alpine
+# TODO: Replace compiled app through usage of Node’s N-API
 RUN apk add --no-cache \
     libc6-compat \
     libstdc++ 

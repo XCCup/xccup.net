@@ -28,12 +28,12 @@ services:
     networks:
       - xccup-network
 
-  api:
+  server:
     build:
       context: .
       dockerfile: Dockerfile
-    image: xcccup/api
-    container_name: api
+    image: xccup/server
+    container_name: server
     restart: always
     env_file: .env
     environment:

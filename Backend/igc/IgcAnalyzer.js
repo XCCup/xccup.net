@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const IGCParser = require("igc-parser");
-const flightService = require("../service/FlightService"); // Why?
 const parseDMS = require("parse-dms");
 
 const RESOLUTION_FACTOR = 4;
@@ -37,11 +36,11 @@ function readIgcFile(flightId) {
   return fs.readFileSync(findIgcFileForFlight(flightId), "utf8");
 }
 
-function runCornerpointsIteration(resultStripIteration) {
+function runturnpointsIteration(resultStripIteration) {
   const igcAsPlainText = readIgcFile(resultStripIteration.flightId);
-  igcWithReducedFixes = stripAroundCornerpoints(
+  igcWithReducedFixes = stripAroundturnpoints(
     igcAsPlainText,
-    resultStripIteration.cornerpoints
+    resultStripIteration.turnpoints
   );
   const { writeStream, pathToFile } = writeFile(
     resultStripIteration.flightId,
@@ -53,13 +52,14 @@ function runCornerpointsIteration(resultStripIteration) {
   );
 }
 
-function runOlc(filePath, flightId, isCornerpointsIteration) {
+function runOlc(filePath, flightId, isturnpointsIteration) {
   const { exec } = require("child_process");
   (() => {
     console.log("Start OLC analysis");
     const os = require("os");
     const platform = os.platform();
     console.log("Running on OS: ", platform);
+    //TODO: Replace compiled app through usage of Node’s N-API
     const command = platform.includes("win")
       ? "igc\\olc.exe < "
       : "igc/olc_lnx < ";
@@ -68,14 +68,14 @@ function runOlc(filePath, flightId, isCornerpointsIteration) {
       parseOlcData(
         data.toString(),
         flightId,
-        isCornerpointsIteration,
+        isturnpointsIteration,
         filePath
       );
     });
   })();
 }
 
-function parseOlcData(data, flightId, isCornerpointsIteration, filePath) {
+function parseOlcData(data, flightId, isturnpointsIteration, filePath) {
   dataLines = data.split("\n");
 
   for (let i = 0; i < dataLines.length; i++) {
@@ -108,7 +108,7 @@ function parseOlcData(data, flightId, isCornerpointsIteration, filePath) {
   console.log("FAI PTS: " + faiPts);
 
   const result = { flightId: flightId };
-  result.cornerpoints = [];
+  result.turnpoints = [];
   let cornerStartIndex;
   if (faiPts > flatPts && faiPts > freePts) {
     result.type = "FAI";
@@ -126,41 +126,42 @@ function parseOlcData(data, flightId, isCornerpointsIteration, filePath) {
     result.dist = freeDistance;
     cornerStartIndex = freeStartIndex + 4;
   }
-  result.cornerpoints.push(extractCornerpointData(dataLines[cornerStartIndex]));
-  result.cornerpoints.push(
-    extractCornerpointData(dataLines[cornerStartIndex + 1])
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex]));
+  result.turnpoints.push(
+    extractturnpointData(dataLines[cornerStartIndex + 1])
   );
-  result.cornerpoints.push(
-    extractCornerpointData(dataLines[cornerStartIndex + 2])
+  result.turnpoints.push(
+    extractturnpointData(dataLines[cornerStartIndex + 2])
   );
-  result.cornerpoints.push(
-    extractCornerpointData(dataLines[cornerStartIndex + 3])
+  result.turnpoints.push(
+    extractturnpointData(dataLines[cornerStartIndex + 3])
   );
-  result.cornerpoints.push(
-    extractCornerpointData(dataLines[cornerStartIndex + 4])
+  result.turnpoints.push(
+    extractturnpointData(dataLines[cornerStartIndex + 4])
   );
 
-  if (isCornerpointsIteration) {
-    console.log("IGC Result from cornerpoint iteration: ", result);
+  if (isturnpointsIteration) {
+    console.log("IGC Result from turnpoint iteration: ", result);
+    //TODO Use callback for return value
     const flightService = require("../service/FlightService");
     result.igcUrl = filePath;
     flightService.addResult(result);
   } else {
     console.log("IGC Result from strip iteration: ", result);
-    runCornerpointsIteration(result);
+    runturnpointsIteration(result);
   }
 }
 
-function extractCornerpointData(cornerpoint) {
+function extractturnpointData(turnpoint) {
   let result = {};
   const IGC_FIX_REGEX = /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
-  const matchingResult = cornerpoint.match(IGC_FIX_REGEX);
+  const matchingResult = turnpoint.match(IGC_FIX_REGEX);
   if (matchingResult != null) {
     result.time = matchingResult[1];
     result.lat = parseDMS(matchingResult[2]);
     result.long = parseDMS(matchingResult[3]);
   } else {
-    console.error("Could not extract cornerpoint");
+    console.error("Could not extract turnpoint");
   }
   return result;
 }
@@ -168,7 +169,7 @@ function extractCornerpointData(cornerpoint) {
 function writeFile(flightId, inputArray, stripFactor) {
   let name;
   if (stripFactor == null) {
-    name = `cornerpoints`;
+    name = `turnpoints`;
   } else {
     name = `striped_by_${stripFactor}`;
   }
@@ -189,8 +190,6 @@ function writeFile(flightId, inputArray, stripFactor) {
     console.error(`There is an error writing the file ${pathToFile} => ${err}`);
   });
   return { writeStream, pathToFile };
-  // writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null));
-  // return pathToFile;
 }
 
 function stripByFactor(factor, input) {
@@ -212,16 +211,16 @@ function stripByFactor(factor, input) {
   return reducedLines;
 }
 
-function stripAroundCornerpoints(input, cornerpoints) {
+function stripAroundturnpoints(input, turnpoints) {
   const lines = input.split("\n");
   let lineIndexes = [];
   let cpIndex = 0;
   for (i = 0; i < lines.length; i++) {
-    let timeToFind = cornerpoints[cpIndex].time.replace(/:/g, "");
+    let timeToFind = turnpoints[cpIndex].time.replace(/:/g, "");
     if (lines[i].includes("B" + timeToFind)) {
       lineIndexes.push(i);
       cpIndex++;
-      if (cpIndex == cornerpoints.length) {
+      if (cpIndex == turnpoints.length) {
         break;
       }
     }
@@ -265,7 +264,7 @@ function getResolution(igcAsJson) {
 
 function getResolutionForDuration(durationInMinutes) {
   //For every hour decrease resolution by 4 seconds
-  // Start by 1 hour with 4 seconds resolution
+  //Start by 1 hour with 4 seconds resolution
   resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
   console.log(
     `The flight will be calculated with a new resolution of ${resolution} seconds`
