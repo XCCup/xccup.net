@@ -1,5 +1,6 @@
 const Flight = require("../model/Flight.js");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
+const parseDMS = require("parse-dms");
 
 const flightService = {
   getAll: async () => {
@@ -27,7 +28,6 @@ const flightService = {
     // const cornerPointsAsString = JSON.stringify(result.cornerpoints);
     // flight.flightCornerpoints = cornerPointsAsString;
     flight.flightCornerpoints = result.cornerpoints;
-
     flight.igcUrl = result.igcUrl;
     flight.save();
   },

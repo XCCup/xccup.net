@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // Local Dev server
-// const baseURL = "http://localhost:3000";
+let baseURL = "http://localhost:3000";
 
-const baseURL = "https://xccup.lurb.org/";
+baseURL = "https://xccup.lurb.org/";
 
 const apiClient = axios.create({
   baseURL: baseURL,

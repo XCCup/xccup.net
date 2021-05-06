@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const IGCParser = require("igc-parser");
 const flightService = require("../service/FlightService"); // Why?
+const parseDMS = require("parse-dms");
 
 const RESOLUTION_FACTOR = 4;
 const POINTS_AROUND_CORNER = 20;
@@ -156,8 +157,8 @@ function extractCornerpointData(cornerpoint) {
   const matchingResult = cornerpoint.match(IGC_FIX_REGEX);
   if (matchingResult != null) {
     result.time = matchingResult[1];
-    result.lat = matchingResult[2];
-    result.long = matchingResult[3];
+    result.lat = parseDMS(matchingResult[2]);
+    result.long = parseDMS(matchingResult[3]);
   } else {
     console.error("Could not extract cornerpoint");
   }
