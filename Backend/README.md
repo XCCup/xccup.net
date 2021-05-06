@@ -10,5 +10,7 @@
 
 ## Todo
 
+- [ ] Elevation API einbinden
+- [ ] IgcAnalyzer mit Unit-Test versehen
 - [ ] Endpoint Hersteller erstellen
 - [ ] Glider im Profil löschen/hinzufügen
