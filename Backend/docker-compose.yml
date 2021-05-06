@@ -40,7 +40,7 @@ services:
       - SERVER_PORT=$SERVER_PORT
       - NODE_ENV=development
     ports:
-      - "80:65090"
+      - "3000:65090"
     volumes:
       - .:/home/node/app
     networks:

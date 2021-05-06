@@ -1,9 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
-const faker = require("faker");
+const faker = require("faker"); // Why?
 const path = require("path");
 const app = express();
+
+// https://expressjs.com/en/resources/middleware/cors.html
+// https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
+var cors = require("cors");
+app.use(cors());
 
 const { Sequelize, DataTypes } = require("sequelize");
 
