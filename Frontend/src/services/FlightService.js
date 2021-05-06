@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Local Dev server
-// const baseURL = "http://localhost:3000";
+// const baseURL = "http://localhost:4000";
 
 const baseURL = "https://xccup.lurb.org/";
 
@@ -55,7 +55,7 @@ export default {
   },
 
   uploadFlight(data) {
-    return apiClient.post("/flight/", data);
+    return apiClient2.post("/comments/", data);
   },
   getAirbuddies(flightId) {
     return apiClient.get("/airbuddies/" + flightId);

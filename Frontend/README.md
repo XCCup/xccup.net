@@ -31,7 +31,6 @@ Preview of main branch: https://xccup.onrender.com
 - [ ] Upload flight metadata (Aircraft, flight report, ...)
 - [ ] Connect to API
 - [ ] Form input validation
-- [ ] Handle .igc filenames containing whitespaces
 
 ### Flight
 

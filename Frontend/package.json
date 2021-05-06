@@ -19,7 +19,6 @@
     "date-fns": "^2.21.1",
     "leaflet": "^1.7.1",
     "leaflet-gesture-handling": "^1.2.1",
-    "parse-dms": "^0.0.5",
     "vue": "^3.0.11",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0"
