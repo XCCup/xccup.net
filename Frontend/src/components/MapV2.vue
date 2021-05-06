@@ -21,6 +21,13 @@ export default {
       tracks: Array,
       positionMarkers: [],
       markers: [],
+      turnpoints: [
+        { time: "10:18:07", lat: 50.10908333333333, long: 7.108533333333333 },
+        { time: "11:54:22", lat: 49.87221666666667, long: 6.871733333333333 },
+        { time: "14:25:54", lat: 50.164433333333335, long: 6.7639 },
+        { time: "15:51:20", lat: 50.15456666666667, long: 7.171866666666666 },
+        { time: "16:04:14", lat: 50.10906666666666, long: 7.108516666666667 },
+      ],
     };
   },
   props: {
@@ -62,6 +69,8 @@ export default {
 
     // Draw tracklogs
     this.drawTracks(this.tracklogs);
+
+    this.drawTurnpoints(this.turnpoints);
   },
   beforeUnmount() {
     // Remove the map position update listener
@@ -144,6 +153,16 @@ export default {
       this.tracks = lines;
       this.markers = markers;
       this.positionMarkers = positionMarkers;
+    },
+
+    drawTurnpoints(turnpoints) {
+      let tmp = [];
+      turnpoints.forEach((tp) => {
+        tmp.push([tp.lat, tp.long]);
+      });
+      L.polyline(tmp, {
+        color: "grey",
+      }).addTo(this.map);
     },
 
     updateMarkerPosition(position) {

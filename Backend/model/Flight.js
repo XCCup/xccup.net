@@ -21,7 +21,7 @@ const Flight = db.sequelize.define("Flight", {
     type: DataTypes.STRING,
     // values: ["Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung"],
   },
-  flightCornerpoints: {
+  flightTurnpoints: {
     type: DataTypes.JSON,
   },
   igcUrl: {

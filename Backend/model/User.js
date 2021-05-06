@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/postgres.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const Flight = require("./Flight.js");
 
 const User = db.sequelize.define(
