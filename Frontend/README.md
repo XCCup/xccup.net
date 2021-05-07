@@ -9,7 +9,7 @@ Preview of main branch: https://xccup.onrender.com
 - [x] Basic layout
 - [ ] Rankings
 - [ ] Connect to API
-- [ ] Map visualizing all flights of the day (heatmap?)
+- [ ] Map visualizing all flights of the day (DailyFlightsMap?)
 - [ ] Sponsors
 - [ ] Random image taken from the running season
 
