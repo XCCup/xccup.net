@@ -86,3 +86,23 @@ test('Validate an igc-File which should result to a free flight', done => {
         done(error)
     }
 });
+
+test('Validate that the number of fixes was reduced', ()=>{
+    process.env.FLIGHT_STORE="./igc/demo_igcs"
+    
+    const expectedFlight = {
+        id: "kai_free",
+    };
+    const numberOfFixes = 2979,
+    fixNr2345 = {
+        time: "13:13:26", lat: 50.35896666666667, long: 7.363816666666667,"gpsAltitude": 1088,"pressureAltitude": 1025
+    }
+
+    const reducedFixes = IgcAnalyzer.extractFixes(expectedFlight)
+    expect(reducedFixes.length).toBe(numberOfFixes);
+    expect(reducedFixes[2345].time).toBe(fixNr2345.time);
+    expect(reducedFixes[2345].latitude).toBe(fixNr2345.lat);
+    expect(reducedFixes[2345].longitude).toBe(fixNr2345.long);
+    expect(reducedFixes[2345].gpsAltitude).toBe(fixNr2345.gpsAltitude);
+    expect(reducedFixes[2345].pressureAltitude).toBe(fixNr2345.pressureAltitude);
+});

@@ -3,6 +3,7 @@ const path = require("path");
 const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
 
+const IGC_FIXES_RESOLUTION = 5;
 const RESOLUTION_FACTOR = 4;
 const POINTS_AROUND_CORNER = 20;
 const factors = {
@@ -31,6 +32,19 @@ const IgcAnalyzer = {
     );
     writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null, callback));
   },
+
+  extractFixes: (flight) =>{
+    //TODO Currently the file will be deserailized twice! 
+    //1x startCalculation and 1x extractFixes
+    const flightId = flight.id.toString();
+    const igcAsPlainText = readIgcFile(flightId);
+    const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
+    reducedFixes = [];
+    for (i = 0; i < igcAsJson.fixes.length; i += IGC_FIXES_RESOLUTION) {
+      reducedFixes.push(igcAsJson.fixes[i]);
+    }
+    return reducedFixes;
+  }
 };
 
 function readIgcFile(flightId) {
@@ -53,9 +67,8 @@ function runturnpointsIteration(resultStripIteration,callback) {
   );
 }
 
-function runOlc(filePath, flightId, isturnpointsIteration, callback) {
+function runOlc(filePath, flightId, isTurnpointsIteration, callback) {
   const { exec } = require("child_process");
-  (() => {
     console.log("Start OLC analysis");
     const os = require("os");
     const platform = os.platform();
@@ -69,14 +82,13 @@ function runOlc(filePath, flightId, isturnpointsIteration, callback) {
       parseOlcData(
         data.toString(),
         flightId,
-        isturnpointsIteration,
+        isTurnpointsIteration,
         filePath, callback
       );
-    });
-  })();
+  });
 }
 
-function parseOlcData(data, flightId, isturnpointsIteration, filePath, callback) {
+function parseOlcData(data, flightId, isTurnpointsIteration, filePath, callback) {
   dataLines = data.split("\n");
 
   for (let i = 0; i < dataLines.length; i++) {
@@ -141,7 +153,7 @@ function parseOlcData(data, flightId, isturnpointsIteration, filePath, callback)
     extractturnpointData(dataLines[cornerStartIndex + 4])
   );
 
-  if (isturnpointsIteration) {
+  if (isTurnpointsIteration) {
     console.log("IGC Result from turnpoint iteration: ", result);
     result.igcUrl = filePath;
     console.log("CB: ",callback);
@@ -193,13 +205,6 @@ function writeFile(flightId, inputArray, stripFactor) {
 }
 
 function stripByFactor(factor, input) {
-  // // For input as JSON
-  // reducedFixes = [];
-  // for (i = 0; i < igcAsJson.fixes.length; i += 4) {
-  //   reducedFixes.push(igcAsJson.fixes[i]);
-  // }
-  // return (igcAsJson.fixes = reducedFixes);
-
   const lines = input.split("\n");
   reducedLines = [];
   for (i = 0; i < lines.length; i++) {
