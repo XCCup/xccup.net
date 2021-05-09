@@ -36,6 +36,9 @@ content-type: application/json
 }
 
 ###
+DELETE http://localhost:3000/flight/5 HTTP/1.1
+
+###
 POST http://localhost:3000/flight/ HTTP/1.1
 content-type: application/json
 

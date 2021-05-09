@@ -27,6 +27,19 @@ router.get("/:id", async (req, res) => {
   res.json(flight);
 });
 
+// @desc Deletes a flight by id
+// @route DELETE /flight/:id
+
+router.delete("/:id", async (req, res) => {
+  console.log("Call controller");
+  const numberOfDestroyedRows = await service.delete(req.params.id);
+  if (!numberOfDestroyedRows) {
+    res.sendStatus(NOT_FOUND);
+    return;
+  }
+  res.json(numberOfDestroyedRows);
+});
+
 // @desc Saves a new flight to the database
 // @route POST /flight/
 

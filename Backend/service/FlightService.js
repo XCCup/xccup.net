@@ -15,6 +15,13 @@ const flightService = {
     console.log("Service: ", flight);
     return flight;
   },
+  delete: async (flightId) => {
+    const numberOfDestroyedRows = await Flight.destroy({
+      where: { id: flightId },
+    });
+    console.log("Entries deleted: ", numberOfDestroyedRows);
+    return numberOfDestroyedRows;
+  },
   addResult: async (result) => {
     console.log("ADD RESULT TO FLIGHT");
     const flight = await Flight.findOne({
