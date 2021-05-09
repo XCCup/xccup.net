@@ -32,8 +32,9 @@ const flightService = {
     return await Flight.create(flight);
   },
   startResultCalculation: async (flight) => {
-    //TODO Use callback for return value
-    IgcAnalyzer.startCalculation(flight);
+    IgcAnalyzer.startCalculation(flight, (result) =>{
+      flightService.addResult(result);
+    });
   },
 };
 

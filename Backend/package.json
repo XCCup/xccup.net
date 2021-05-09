@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node app",
-    "dev": "cross-env NODE_ENV=development nodemon app"
+    "dev": "cross-env NODE_ENV=development nodemon -L app",
+    "test": "jest --setupFiles dotenv/config"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.7"
   }
 }

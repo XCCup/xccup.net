@@ -12,7 +12,8 @@ const factors = {
 };
 
 const IgcAnalyzer = {
-  startCalculation: (flight) => {
+  startCalculation: (flight, callback) => {
+    console.log("CB: ",callback);
     const flightId = flight.id.toString();
     const igcAsPlainText = readIgcFile(flightId);
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
@@ -28,7 +29,7 @@ const IgcAnalyzer = {
       igcWithReducedFixes,
       stripFactor
     );
-    writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null));
+    writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null, callback));
   },
 };
 
@@ -36,7 +37,7 @@ function readIgcFile(flightId) {
   return fs.readFileSync(findIgcFileForFlight(flightId), "utf8");
 }
 
-function runturnpointsIteration(resultStripIteration) {
+function runturnpointsIteration(resultStripIteration,callback) {
   const igcAsPlainText = readIgcFile(resultStripIteration.flightId);
   igcWithReducedFixes = stripAroundturnpoints(
     igcAsPlainText,
@@ -48,11 +49,11 @@ function runturnpointsIteration(resultStripIteration) {
     null
   );
   writeStream.end(() =>
-    runOlc(pathToFile, resultStripIteration.flightId, true)
+    runOlc(pathToFile, resultStripIteration.flightId, true,callback)
   );
 }
 
-function runOlc(filePath, flightId, isturnpointsIteration) {
+function runOlc(filePath, flightId, isturnpointsIteration, callback) {
   const { exec } = require("child_process");
   (() => {
     console.log("Start OLC analysis");
@@ -69,13 +70,13 @@ function runOlc(filePath, flightId, isturnpointsIteration) {
         data.toString(),
         flightId,
         isturnpointsIteration,
-        filePath
+        filePath, callback
       );
     });
   })();
 }
 
-function parseOlcData(data, flightId, isturnpointsIteration, filePath) {
+function parseOlcData(data, flightId, isturnpointsIteration, filePath, callback) {
   dataLines = data.split("\n");
 
   for (let i = 0; i < dataLines.length; i++) {
@@ -142,13 +143,12 @@ function parseOlcData(data, flightId, isturnpointsIteration, filePath) {
 
   if (isturnpointsIteration) {
     console.log("IGC Result from turnpoint iteration: ", result);
-    //TODO Use callback for return value
-    const flightService = require("../service/FlightService");
     result.igcUrl = filePath;
-    flightService.addResult(result);
+    console.log("CB: ",callback);
+    callback(result);
   } else {
     console.log("IGC Result from strip iteration: ", result);
-    runturnpointsIteration(result);
+    runturnpointsIteration(result,callback);
   }
 }
 
@@ -283,6 +283,8 @@ function getDuration(igcAsJson) {
 
 function findIgcFileForFlight(flightId) {
   const store = process.env.FLIGHT_STORE;
+  console.log("ST: ",store);
+  console.log("ID: ",flightId);
   const pathToFlightFolder = path.join(store, flightId);
   console.log(`Will look in folder ${pathToFlightFolder} for IGC-File`);
   const igcFile = fs
