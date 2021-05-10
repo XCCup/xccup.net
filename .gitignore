@@ -7,6 +7,10 @@
 # BlueJ files
 *.ctxt
 
+# Temp IGC Files
+Backend/igc/temp/
+Backend/igc/demo_igcs/temp/
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

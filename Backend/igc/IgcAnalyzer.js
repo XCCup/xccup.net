@@ -3,6 +3,7 @@ const path = require("path");
 const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
 
+const IGC_FIXES_RESOLUTION = 5;
 const RESOLUTION_FACTOR = 4;
 const POINTS_AROUND_CORNER = 20;
 const factors = {
@@ -12,7 +13,7 @@ const factors = {
 };
 
 const IgcAnalyzer = {
-  startCalculation: (flight) => {
+  startCalculation: (flight, callback) => {
     const flightId = flight.id.toString();
     const igcAsPlainText = readIgcFile(flightId);
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
@@ -28,15 +29,53 @@ const IgcAnalyzer = {
       igcWithReducedFixes,
       stripFactor
     );
-    writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null));
+    writeStream.end(() =>
+      runOlc(pathToFile, flightId, stripFactor == null, callback)
+    );
+  },
+
+  extractFixes: (flight) => {
+    //TODO Currently the file will be deserailized twice!
+    //1x startCalculation and 1x extractFixes
+    const flightId = flight.id.toString();
+    console.log(`read file from`);
+    const igcAsPlainText = readIgcFile(flightId);
+    console.log(`start parsing`);
+    const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
+    console.log(`Finished parsing`);
+    const currentResolution =
+      (igcAsJson.fixes[1].timestamp - igcAsJson.fixes[0].timestamp) / 1000;
+    const strinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
+    console.log(`Will shrink extracted fixes by factor ${strinkingFactor}`);
+    reducedFixes = [];
+    if (strinkingFactor < 1) {
+      //Prevent endless loop for negative numbers
+      strinkingFactor = 1;
+    }
+    for (i = 0; i < igcAsJson.fixes.length; i += strinkingFactor) {
+      reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
+    }
+    return reducedFixes;
   },
 };
 
+function extractOnlyDefinedFieldsFromFix(fix) {
+  return {
+    timestamp: fix.timestamp,
+    time: fix.time,
+    latitude: fix.latitude,
+    longitude: fix.longitude,
+    pressureAltitude: fix.pressureAltitude,
+    gpsAltitude: fix.gpsAltitude,
+  };
+}
+
 function readIgcFile(flightId) {
+  console.log(``);
   return fs.readFileSync(findIgcFileForFlight(flightId), "utf8");
 }
 
-function runturnpointsIteration(resultStripIteration) {
+function runTurnpointIteration(resultStripIteration, callback) {
   const igcAsPlainText = readIgcFile(resultStripIteration.flightId);
   igcWithReducedFixes = stripAroundturnpoints(
     igcAsPlainText,
@@ -48,34 +87,39 @@ function runturnpointsIteration(resultStripIteration) {
     null
   );
   writeStream.end(() =>
-    runOlc(pathToFile, resultStripIteration.flightId, true)
+    runOlc(pathToFile, resultStripIteration.flightId, true, callback)
   );
 }
 
-function runOlc(filePath, flightId, isturnpointsIteration) {
+function runOlc(filePath, flightId, isTurnpointIteration, callback) {
   const { exec } = require("child_process");
-  (() => {
-    console.log("Start OLC analysis");
-    const os = require("os");
-    const platform = os.platform();
-    console.log("Running on OS: ", platform);
-    //TODO: Replace compiled app through usage of Node’s N-API
-    const command = platform.includes("win")
-      ? "igc\\olc.exe < "
-      : "igc/olc_lnx < ";
-    exec(command + filePath, function (err, data) {
-      console.log(err);
-      parseOlcData(
-        data.toString(),
-        flightId,
-        isturnpointsIteration,
-        filePath
-      );
-    });
-  })();
+  console.log("Start OLC analysis");
+  const os = require("os");
+  const platform = os.platform();
+  console.log("Running on OS: ", platform);
+  //TODO: Replace compiled app through usage of Node’s N-API
+  const command = platform.includes("win")
+    ? "igc\\olc.exe < "
+    : "igc/olc_lnx < ";
+  exec(command + filePath, function (err, data) {
+    console.log(err);
+    parseOlcData(
+      data.toString(),
+      flightId,
+      isTurnpointIteration,
+      filePath,
+      callback
+    );
+  });
 }
 
-function parseOlcData(data, flightId, isturnpointsIteration, filePath) {
+function parseOlcData(
+  data,
+  flightId,
+  isTurnpointsIteration,
+  filePath,
+  callback
+) {
   dataLines = data.split("\n");
 
   for (let i = 0; i < dataLines.length; i++) {
@@ -127,34 +171,26 @@ function parseOlcData(data, flightId, isturnpointsIteration, filePath) {
     cornerStartIndex = freeStartIndex + 4;
   }
   result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex]));
-  result.turnpoints.push(
-    extractturnpointData(dataLines[cornerStartIndex + 1])
-  );
-  result.turnpoints.push(
-    extractturnpointData(dataLines[cornerStartIndex + 2])
-  );
-  result.turnpoints.push(
-    extractturnpointData(dataLines[cornerStartIndex + 3])
-  );
-  result.turnpoints.push(
-    extractturnpointData(dataLines[cornerStartIndex + 4])
-  );
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 1]));
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 2]));
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 3]));
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 4]));
 
-  if (isturnpointsIteration) {
+  if (isTurnpointsIteration) {
     console.log("IGC Result from turnpoint iteration: ", result);
-    //TODO Use callback for return value
-    const flightService = require("../service/FlightService");
     result.igcUrl = filePath;
-    flightService.addResult(result);
+    console.log("CB: ", callback);
+    callback(result);
   } else {
     console.log("IGC Result from strip iteration: ", result);
-    runturnpointsIteration(result);
+    runTurnpointIteration(result, callback);
   }
 }
 
 function extractturnpointData(turnpoint) {
   let result = {};
-  const IGC_FIX_REGEX = /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
+  const IGC_FIX_REGEX =
+    /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
   const matchingResult = turnpoint.match(IGC_FIX_REGEX);
   if (matchingResult != null) {
     result.time = matchingResult[1];
@@ -193,13 +229,6 @@ function writeFile(flightId, inputArray, stripFactor) {
 }
 
 function stripByFactor(factor, input) {
-  // // For input as JSON
-  // reducedFixes = [];
-  // for (i = 0; i < igcAsJson.fixes.length; i += 4) {
-  //   reducedFixes.push(igcAsJson.fixes[i]);
-  // }
-  // return (igcAsJson.fixes = reducedFixes);
-
   const lines = input.split("\n");
   reducedLines = [];
   for (i = 0; i < lines.length; i++) {
