@@ -46,32 +46,29 @@ async function sleep(ms) {
 dbConnectionTest().then(async (result) => {
   if (process.env.DB_SYNC_ALTER == "true") {
     console.log("Will alter DB Tables");
-    await sequelize.sync({ alter: true }).catch((error)=>{
-      console.error(error);
-    });
+    await sequelize
+      .sync({ alter: true })
+      .then(() => addTestData())
+      .catch((error) => {
+        console.error(error);
+      });
   }
   if (process.env.DB_SYNC_FORCE == "true") {
     console.log("Will create DB Tables");
-    await sequelize.sync({ force: true }).catch((error)=>{
-      console.error(error);
-    });
+    await sequelize
+      .sync({ force: true })
+      .then(() => addTestData())
+      .catch((error) => {
+        console.error(error);
+      });
   }
 });
 
-function createDbTables() {
-  const User = require("../model/User");
-  const Flight = require("../model/Flight");
-  const FlightComment = require("../model/FlightComment");
-  const FlightFixes = require("../model/FlightFixes");
-
-  (async () => {
-    console.log("Will create DB Tables");
-
-    await User.sync({ force: true });
-    await Flight.sync({ force: true });
-    await FlightComment.sync({ force: true });
-    await FlightFixes.sync({ force: true });
-  })();
+function addTestData() {
+  if (process.env.DB_ADD_TESTDATA == "true") {
+    console.log("Will check for testdata");
+    require("../test/DbTestData").checkForTestDataAndAddIfMissing();
+  }
 }
 
 db.sequelize = sequelize;
