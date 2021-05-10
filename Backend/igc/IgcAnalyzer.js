@@ -14,7 +14,6 @@ const factors = {
 
 const IgcAnalyzer = {
   startCalculation: (flight, callback) => {
-    console.log("CB: ",callback);
     const flightId = flight.id.toString();
     const igcAsPlainText = readIgcFile(flightId);
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
@@ -30,28 +29,53 @@ const IgcAnalyzer = {
       igcWithReducedFixes,
       stripFactor
     );
-    writeStream.end(() => runOlc(pathToFile, flightId, stripFactor == null, callback));
+    writeStream.end(() =>
+      runOlc(pathToFile, flightId, stripFactor == null, callback)
+    );
   },
 
-  extractFixes: (flight) =>{
-    //TODO Currently the file will be deserailized twice! 
+  extractFixes: (flight) => {
+    //TODO Currently the file will be deserailized twice!
     //1x startCalculation and 1x extractFixes
     const flightId = flight.id.toString();
+    console.log(`read file from`);
     const igcAsPlainText = readIgcFile(flightId);
+    console.log(`start parsing`);
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
+    console.log(`Finished parsing`);
+    const currentResolution =
+      (igcAsJson.fixes[1].timestamp - igcAsJson.fixes[0].timestamp) / 1000;
+    const strinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
+    console.log(`Will shrink extracted fixes by factor ${strinkingFactor}`);
     reducedFixes = [];
-    for (i = 0; i < igcAsJson.fixes.length; i += IGC_FIXES_RESOLUTION) {
-      reducedFixes.push(igcAsJson.fixes[i]);
+    if (strinkingFactor < 1) {
+      //Prevent endless loop for negative numbers
+      strinkingFactor = 1;
+    }
+    for (i = 0; i < igcAsJson.fixes.length; i += strinkingFactor) {
+      reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
     }
     return reducedFixes;
-  }
+  },
 };
 
+function extractOnlyDefinedFieldsFromFix(fix) {
+  return {
+    timestamp: fix.timestamp,
+    time: fix.time,
+    latitude: fix.latitude,
+    longitude: fix.longitude,
+    pressureAltitude: fix.pressureAltitude,
+    gpsAltitude: fix.gpsAltitude,
+  };
+}
+
 function readIgcFile(flightId) {
+  console.log(``);
   return fs.readFileSync(findIgcFileForFlight(flightId), "utf8");
 }
 
-function runturnpointsIteration(resultStripIteration,callback) {
+function runTurnpointIteration(resultStripIteration, callback) {
   const igcAsPlainText = readIgcFile(resultStripIteration.flightId);
   igcWithReducedFixes = stripAroundturnpoints(
     igcAsPlainText,
@@ -63,32 +87,39 @@ function runturnpointsIteration(resultStripIteration,callback) {
     null
   );
   writeStream.end(() =>
-    runOlc(pathToFile, resultStripIteration.flightId, true,callback)
+    runOlc(pathToFile, resultStripIteration.flightId, true, callback)
   );
 }
 
-function runOlc(filePath, flightId, isTurnpointsIteration, callback) {
+function runOlc(filePath, flightId, isTurnpointIteration, callback) {
   const { exec } = require("child_process");
-    console.log("Start OLC analysis");
-    const os = require("os");
-    const platform = os.platform();
-    console.log("Running on OS: ", platform);
-    //TODO: Replace compiled app through usage of Node’s N-API
-    const command = platform.includes("win")
-      ? "igc\\olc.exe < "
-      : "igc/olc_lnx < ";
-    exec(command + filePath, function (err, data) {
-      console.log(err);
-      parseOlcData(
-        data.toString(),
-        flightId,
-        isTurnpointsIteration,
-        filePath, callback
-      );
+  console.log("Start OLC analysis");
+  const os = require("os");
+  const platform = os.platform();
+  console.log("Running on OS: ", platform);
+  //TODO: Replace compiled app through usage of Node’s N-API
+  const command = platform.includes("win")
+    ? "igc\\olc.exe < "
+    : "igc/olc_lnx < ";
+  exec(command + filePath, function (err, data) {
+    console.log(err);
+    parseOlcData(
+      data.toString(),
+      flightId,
+      isTurnpointIteration,
+      filePath,
+      callback
+    );
   });
 }
 
-function parseOlcData(data, flightId, isTurnpointsIteration, filePath, callback) {
+function parseOlcData(
+  data,
+  flightId,
+  isTurnpointsIteration,
+  filePath,
+  callback
+) {
   dataLines = data.split("\n");
 
   for (let i = 0; i < dataLines.length; i++) {
@@ -140,33 +171,26 @@ function parseOlcData(data, flightId, isTurnpointsIteration, filePath, callback)
     cornerStartIndex = freeStartIndex + 4;
   }
   result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex]));
-  result.turnpoints.push(
-    extractturnpointData(dataLines[cornerStartIndex + 1])
-  );
-  result.turnpoints.push(
-    extractturnpointData(dataLines[cornerStartIndex + 2])
-  );
-  result.turnpoints.push(
-    extractturnpointData(dataLines[cornerStartIndex + 3])
-  );
-  result.turnpoints.push(
-    extractturnpointData(dataLines[cornerStartIndex + 4])
-  );
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 1]));
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 2]));
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 3]));
+  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 4]));
 
   if (isTurnpointsIteration) {
     console.log("IGC Result from turnpoint iteration: ", result);
     result.igcUrl = filePath;
-    console.log("CB: ",callback);
+    console.log("CB: ", callback);
     callback(result);
   } else {
     console.log("IGC Result from strip iteration: ", result);
-    runturnpointsIteration(result,callback);
+    runTurnpointIteration(result, callback);
   }
 }
 
 function extractturnpointData(turnpoint) {
   let result = {};
-  const IGC_FIX_REGEX = /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
+  const IGC_FIX_REGEX =
+    /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
   const matchingResult = turnpoint.match(IGC_FIX_REGEX);
   if (matchingResult != null) {
     result.time = matchingResult[1];
@@ -288,8 +312,6 @@ function getDuration(igcAsJson) {
 
 function findIgcFileForFlight(flightId) {
   const store = process.env.FLIGHT_STORE;
-  console.log("ST: ",store);
-  console.log("ID: ",flightId);
   const pathToFlightFolder = path.join(store, flightId);
   console.log(`Will look in folder ${pathToFlightFolder} for IGC-File`);
   const igcFile = fs
