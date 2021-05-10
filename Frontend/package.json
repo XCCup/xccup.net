@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port 8000",
+    "serve-local": "VUE_APP_USE_LOCAL_API=true vue-cli-service serve --port 8000",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"

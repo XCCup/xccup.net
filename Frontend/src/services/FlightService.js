@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// Local Dev server
-let baseURL = "http://localhost:3000";
+let baseURL = "https://xccup.lurb.org/";
 
-if (process.env.NODE_ENV === "production") {
-  baseURL = "https://xccup.lurb.org/";
+if (process.env.VUE_APP_USE_LOCAL_API === "true") {
+  console.log("Using localhost:3000 for API calls");
+  baseURL = "http://localhost:3000";
 }
 
 const apiClient = axios.create({
@@ -38,16 +38,6 @@ export default {
   getFlight(flightId) {
     return apiClient.get("/flights/" + flightId);
   },
-  // getPilots() {
-  //   return apiClient2.get("/pilots");
-  // },
-  // getDailyRanking() {
-  //   return apiClient2.get("/tageswertung");
-  // },
-  // getClassRanking() {
-  //   return apiClient2.get("/geraetewertung");
-  // },
-
   // These will be obsolete if the flight modell contains comments and description
   getComments() {
     return apiClient2.get("/comments");
