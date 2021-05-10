@@ -69,8 +69,7 @@ export default {
         // zoomOffset: -1,
         // preferCanvas: true,
         r: "@2x",
-        accessToken:
-          "pk.eyJ1IjoiYmx1ZW9yYyIsImEiOiJja205bm12ajIxNGV0MndsYWVqeDc4enE3In0.38AVZ2_Gjy_ST_4LxcgahA",
+        accessToken: process.env.VUE_APP_MAPBOX_API_KEY,
       },
     };
   },
@@ -114,8 +113,7 @@ const tileOptions = {
   zoomOffset: -1,
   //preferCanvas: true,
   r: "@2x",
-  accessToken:
-    "pk.eyJ1IjoiYmx1ZW9yYyIsImEiOiJja205bm12ajIxNGV0MndsYWVqeDc4enE3In0.38AVZ2_Gjy_ST_4LxcgahA",
+  accessToken: process.env.VUE_APP_MAPBOX_API_KEY,
 };
 </script>
 
