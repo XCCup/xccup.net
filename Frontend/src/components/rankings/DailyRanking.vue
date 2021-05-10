@@ -1,36 +1,34 @@
 <template>
   <div class="row bg-primary">
-    <div class="col-md-6 col-12">
-      <section v-if="flights">
-        <div class="container-fluid text-light p-2 ps-4 pb-4">
-          <h3>Tageswertung</h3>
-          <table class="table table-primary text-light table-hover">
-            <tbody>
-              <tr
-                v-for="(flight, index) in flights.slice(0, maxRows)"
-                v-bind:item="flight"
-                v-bind:index="index"
-                v-bind:key="flight._id"
-                @click="routeToFlight(flight.flightId)"
-              >
-                <td scope="row">{{ index + 1 }}</td>
-                <td>{{ flight.pilot }}</td>
-                <td>{{ flight.takeoff }}</td>
-                <td>{{ flight.distance }} km</td>
-                <td>{{ flight.taskType }}</td>
-                <td>{{ flight.points }} P</td>
-              </tr>
-            </tbody>
-          </table>
-          <router-link
-            :to="{ name: 'Flights' }"
-            class="btn btn-outline-light btn-sm my-1"
-            >Alle Flüge anzeigen</router-link
-          >
-        </div>
-      </section>
+    <div class="col-xl-5 col-md-6 col-12">
+      <div v-if="flights" class="text-light p-4 pb-4">
+        <h3>Tageswertung</h3>
+        <table class="table table-primary text-light table-hover">
+          <tbody>
+            <tr
+              v-for="(flight, index) in flights.slice(0, maxRows)"
+              v-bind:item="flight"
+              v-bind:index="index"
+              v-bind:key="flight._id"
+              @click="routeToFlight(flight.flightId)"
+            >
+              <td scope="row">{{ index + 1 }}</td>
+              <td>{{ flight.pilot }}</td>
+              <td>{{ flight.takeoff }}</td>
+              <td>{{ flight.distance }} km</td>
+              <td>{{ flight.taskType }}</td>
+              <td>{{ flight.points }} P</td>
+            </tr>
+          </tbody>
+        </table>
+        <router-link
+          :to="{ name: 'Flights' }"
+          class="btn btn-outline-light btn-sm my-1"
+          >Alle Flüge anzeigen</router-link
+        >
+      </div>
     </div>
-    <div class="col-md-6 col-12 p-0 m-0">
+    <div class="col-xl-7 col-md-6 col-12 p-0 m-0">
       <DailyFlightsMap />
     </div>
   </div>
