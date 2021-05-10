@@ -3,7 +3,9 @@ import axios from "axios";
 // Local Dev server
 let baseURL = "http://localhost:3000";
 
-baseURL = "https://xccup.lurb.org/";
+if (process.env.NODE_ENV === "production") {
+  baseURL = "https://xccup.lurb.org/";
+}
 
 const apiClient = axios.create({
   baseURL: baseURL,
