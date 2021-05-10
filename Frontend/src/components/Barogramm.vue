@@ -36,17 +36,6 @@ export default {
       return this.datasets.filter((e) => e.data.length > 0);
     },
   },
-  watch: {
-    // Currently not in use because .update() crashes
-    datasets(newDatasets) {
-      // Replace the datasets and call the update() method on Chart.js
-      // instance to re-render the chart.
-      // this.chart.data.datasets = newDatasets;
-      // this.chart.update();
-      console.log("datasets updated");
-    },
-  },
-
   mounted() {
     // Create a new chart
     this.chart = new Chart(this.$refs.myChart, {
@@ -150,12 +139,6 @@ export default {
 
 // Chart options
 
-// Delegate function to update the pilot marker position state from the tooltip callback
-// function updateMarkerMapPosition(mapPosition) {
-//   store.dispatch("updateMarkerMapPosition", mapPosition);
-// }
-
-// Set chart defaults
 Chart.defaults.elements.line.borderWidth = 2;
 Chart.defaults.elements.line.tension = 1;
 Chart.defaults.elements.point.pointBorderWidth = 0;
