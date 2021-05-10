@@ -69,6 +69,7 @@ Preview of main branch: https://xccup.onrender.com
 
 ### Pages
 
+- [ ] Admin Panel
 - [ ] Register
 - [ ] Imprint
 - [ ] Imprint
