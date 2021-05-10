@@ -1,6 +1,7 @@
 const Flight = require("../model/Flight.js");
 const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
+const FlightComment = require("../model/FlightComment.js");
 
 const flightService = {
   getAll: async () => {
@@ -12,9 +13,19 @@ const flightService = {
   getById: async (flightId) => {
     const flight = await Flight.findOne({
       where: { id: flightId },
-      include: { all: true },
+      include: [
+        {
+          model: FlightFixes,
+          as: "fixes",
+          attributes: ["fixes"],
+        },
+        {
+          model: FlightComment,
+          as: "comments",
+        },
+      ],
     });
-    console.log("Service: ", flight);
+
     return flight;
   },
 
@@ -31,7 +42,7 @@ const flightService = {
     const flight = await Flight.findOne({
       where: { id: result.flightId },
     });
-    
+
     flight.flightPoints = Math.round(result.pts);
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
@@ -42,8 +53,8 @@ const flightService = {
     flight.fixes = IgcAnalyzer.extractFixes(flight);
     FlightFixes.create({
       flightId: flight.id,
-      fixes: flight.fixes
-    })
+      fixes: flight.fixes,
+    });
 
     flight.save();
   },
@@ -53,7 +64,7 @@ const flightService = {
   },
 
   startResultCalculation: async (flight) => {
-    IgcAnalyzer.startCalculation(flight, (result) =>{
+    IgcAnalyzer.startCalculation(flight, (result) => {
       flightService.addResult(result);
     });
   },
