@@ -9,6 +9,7 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
@@ -185,18 +186,6 @@ export default {
       this.map.setView(this.positionMarkers[0].getLatLng());
     },
   },
-};
-
-const tileOptions = {
-  attribution:
-    'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-  maxZoom: 18,
-  id: "mapbox/outdoors-v11",
-  tileSize: 512,
-  zoomOffset: -1,
-  //preferCanvas: true,
-  r: "@2x",
-  accessToken: process.env.VUE_APP_MAPBOX_API_KEY,
 };
 </script>
 
