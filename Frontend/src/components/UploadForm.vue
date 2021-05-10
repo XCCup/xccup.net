@@ -104,7 +104,7 @@
         <button
           type="submit"
           class="btn btn-primary me-1"
-          :disabled="!rulesAccepted"
+          :disabled="sendButtonIsDisabled"
         >
           Streckenmeldung absenden
         </button>
@@ -136,10 +136,19 @@ export default {
         },
       },
       rulesAccepted: true,
+      validIgcSelected: false,
     };
+  },
+  computed: {
+    sendButtonIsDisabled() {
+      return this.validIgcSelected && this.rulesAccepted === true
+        ? false
+        : true;
+    },
   },
   methods: {
     async sendForm() {
+      if (this.flight.igc.body == null) return;
       try {
         const response = await FlightService.uploadFlight(this.flight);
         console.log(response);
@@ -156,6 +165,7 @@ export default {
           };
           this.flight.igc.name = file.target.files[0].name;
           reader.readAsText(file.target.files[0]);
+          this.validIgcSelected = true;
         }
       } catch (error) {
         console.log(error);
