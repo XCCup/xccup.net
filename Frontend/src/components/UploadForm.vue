@@ -40,6 +40,7 @@
               label="Fluggerät"
               :showLabel="true"
               :options="[flight.glider]"
+              :isDisabled="!flightId"
             />
           </div>
           <div class="col-md-3 mt-3">
@@ -49,6 +50,7 @@
                 class="btn btn-primary"
                 data-bs-toggle="modal"
                 data-bs-target="#addGliderModal"
+                :disabled="!flightId"
               >
                 Hinzufügen
               </button>
@@ -65,6 +67,7 @@
             id="floatingTextarea2"
             style="height: 100px"
             v-model="flight.report"
+            :disabled="!flightId"
           ></textarea>
           <label for="floatingTextarea2">Flugbericht</label>
         </div>
@@ -78,6 +81,7 @@
             type="file"
             id="formFileMultiple"
             multiple
+            :disabled="!flightId"
           />
         </div>
         <div class="form-check mb-3">
@@ -86,6 +90,7 @@
             type="checkbox"
             v-model="rulesAccepted"
             id="flexCheckDefault"
+            :disabled="!flightId"
           />
           <label class="form-check-label" for="flexCheckDefault">
             Die Ausschreibung ist mir bekannt, flugrechtliche Auflagen wurden
@@ -136,36 +141,54 @@ export default {
         },
       },
       rulesAccepted: true,
-      validIgcSelected: false,
+      flightId: null,
     };
   },
   computed: {
     sendButtonIsDisabled() {
-      return this.validIgcSelected && this.rulesAccepted === true
-        ? false
-        : true;
+      return this.flightId && this.rulesAccepted === true ? false : true;
     },
   },
   methods: {
+    readFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = (res) => {
+          resolve(res.target.result);
+        };
+        reader.onerror = (err) => reject(err);
+
+        reader.readAsText(file);
+      });
+    },
     async sendForm() {
-      if (this.flight.igc.body == null) return;
       try {
-        const response = await FlightService.uploadFlight(this.flight);
-        console.log(response);
+        console.log("send");
       } catch (error) {
         console.log(error);
       }
     },
-    handleIGC(file) {
+    async sendIgc() {
+      if (this.flight.igc.body == null) return;
+      try {
+        const response = await FlightService.uploadFlight(this.flight);
+        return response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleIGC(file) {
+      this.flightId = null;
       try {
         if (file.target.files[0]) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            this.flight.igc.body = e.target.result;
-          };
+          this.flight.igc.body = await this.readFile(file.target.files[0]);
           this.flight.igc.name = file.target.files[0].name;
-          reader.readAsText(file.target.files[0]);
-          this.validIgcSelected = true;
+          const response = await this.sendIgc();
+          console.log(response);
+          if (response.status === 200) {
+            this.flightId = response.data;
+          }
         }
       } catch (error) {
         console.log(error);
