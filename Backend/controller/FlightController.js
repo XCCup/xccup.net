@@ -25,15 +25,13 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   console.log("Call controller");
-  const flightDbObject = await service.getById(req.params.id);
-  let flight = flightDbObject.toJSON();
+  const flight = await service.getById(req.params.id);
 
   if (!flight) {
     res.sendStatus(NOT_FOUND);
     return;
   }
-  //DIRTY Move the fixes one layer up
-  flight.fixes = flight.fixes.fixes;
+
   res.json(flight);
 });
 

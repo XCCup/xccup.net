@@ -11,7 +11,7 @@ const flightService = {
   },
 
   getById: async (flightId) => {
-    const flight = await Flight.findOne({
+    const flightDbObject = await Flight.findOne({
       where: { id: flightId },
       include: [
         {
@@ -25,8 +25,14 @@ const flightService = {
         },
       ],
     });
-
-    return flight;
+    if (flightDbObject) {
+      let flight = flightDbObject.toJSON();
+      //DIRTY Move the fixes one layer up
+      flight.fixes = flight.fixes.fixes;
+      return flight;
+    } else {
+      return null;
+    }
   },
 
   delete: async (flightId) => {
