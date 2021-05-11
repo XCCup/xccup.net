@@ -17,18 +17,10 @@
 
       <div class="row">
         <div class="col">
-          <BaseInput
-            v-model="flight.takeoff"
-            label="Startplatz"
-            :isDisabled="true"
-          />
+          <BaseInput v-model="takeoff" label="Startplatz" :isDisabled="true" />
         </div>
         <div class="col">
-          <BaseInput
-            v-model="flight.landing"
-            label="Landeplatz"
-            :isDisabled="true"
-          />
+          <BaseInput v-model="landing" label="Landeplatz" :isDisabled="true" />
         </div>
       </div>
 
@@ -132,8 +124,6 @@ export default {
         userId: "ccee643a-8460-406f-a363-89072f0f5540",
         glider: "XCRacer S",
         // brand: "Flow",
-        // takeoff: "Bremm",
-        // landing: "Zeltingen-Rachtig",
         report: "Lorem ipsum",
         igc: {
           name: "",
@@ -142,6 +132,8 @@ export default {
       },
       rulesAccepted: true,
       flightId: null,
+      takeoff: "",
+      landing: "",
     };
   },
   computed: {
@@ -185,7 +177,9 @@ export default {
         const response = await this.sendIgc();
         console.log(response);
         if (response.status != 200) throw "Server error";
-        this.flightId = response.data;
+        this.flightId = response.data.flightId;
+        this.takeoff = response.data.takeoff;
+        this.landing = response.data.landing;
       } catch (error) {
         console.log(error);
       }
