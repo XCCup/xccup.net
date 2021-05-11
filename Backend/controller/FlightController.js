@@ -24,11 +24,12 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   console.log("Call controller");
-  const flight = await service.getById(req.params.id);
+  let flight = JSON.parse(JSON.stringify(await service.getById(req.params.id)));
   if (!flight) {
     res.sendStatus(NOT_FOUND);
     return;
   }
+  flight.fixes = flight.fixes.fixes;
   res.json(flight);
 });
 
