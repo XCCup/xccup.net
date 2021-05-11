@@ -63,6 +63,8 @@ router.post("/", async (req, res) => {
   const igcFile = newFlight.igc;
   delete newFlight.igc;
 
+  service.validateIgc(igcFile);
+
   service.save(newFlight).then((result) => {
     writeIgcFileToDrive(result.id, igcFile)
       .then(() => {

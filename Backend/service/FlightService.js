@@ -2,6 +2,8 @@ const Flight = require("../model/Flight.js");
 const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const FlightComment = require("../model/FlightComment.js");
+const axios = require("axios");
+const FormData = require("form-data");
 
 const flightService = {
   getAll: async () => {
@@ -67,6 +69,33 @@ const flightService = {
     IgcAnalyzer.startCalculation(flight, (result) => {
       flightService.addResult(result);
     });
+  },
+  validateIgc: async (igc) => {
+    // http://vali.fai-civl.org/webservice.html
+    console.log("Validating igc file with FAI API");
+
+    try {
+      const url = "http://vali.fai-civl.org/api/vali/json";
+      const formData = new FormData();
+      var buffer = Buffer.from(igc.body);
+
+      formData.append("igcfile", buffer, {
+        filename: igc.name,
+        contentType: "application/octet-stream",
+      });
+
+      const config = {
+        headers: {
+          "Content-Type":
+            "multipart/form-data; boundary=" + formData.getBoundary(),
+          "Content-length": formData.getLengthSync(),
+        },
+      };
+      const res = await axios.post(url, formData, config);
+      return res.data.result;
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 
