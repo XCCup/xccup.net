@@ -99,6 +99,12 @@ yarn install
 yarn serve
 ```
 
+#### For use with local API
+
+```
+yarn serve-local
+```
+
 ### Compiles and minifies for production
 
 ```
