@@ -24,8 +24,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   console.log("Call controller");
-  // There may be a better way to convert the sequelize object to a regular object.
-  let flight = JSON.parse(JSON.stringify(await service.getById(req.params.id)));
+  const flightDbObject = await service.getById(req.params.id);
+  let flight = flightDbObject.toJSON();
+
   if (!flight) {
     res.sendStatus(NOT_FOUND);
     return;
@@ -70,7 +71,7 @@ router.post("/", async (req, res) => {
       .then(() => {
         service.startResultCalculation(result);
         // Return a hard coded flight id and takeoff & landing for development. Should be the data in future.
-        res.status(200).send({
+        res.status(OK).send({
           flightId: 40,
           takeoff: "Bremm",
           landing: "Zeltingen-Rachtig",
