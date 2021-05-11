@@ -11,7 +11,7 @@
           type="file"
           accept=".igc"
           id="igcUploadForm"
-          @change="handleIGC"
+          @change="igcSelected"
         />
       </div>
 
@@ -153,12 +153,10 @@ export default {
     readFile(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
-
         reader.onload = (res) => {
           resolve(res.target.result);
         };
         reader.onerror = (err) => reject(err);
-
         reader.readAsText(file);
       });
     },
@@ -172,24 +170,22 @@ export default {
     async sendIgc() {
       if (this.flight.igc.body == null) return;
       try {
-        const response = await FlightService.uploadFlight(this.flight);
-        return response;
+        return await FlightService.uploadFlight(this.flight);
       } catch (error) {
         console.log(error);
       }
     },
-    async handleIGC(file) {
+    async igcSelected(file) {
       this.flightId = null;
       try {
-        if (file.target.files[0]) {
-          this.flight.igc.body = await this.readFile(file.target.files[0]);
-          this.flight.igc.name = file.target.files[0].name;
-          const response = await this.sendIgc();
-          console.log(response);
-          if (response.status === 200) {
-            this.flightId = response.data;
-          }
-        }
+        if (!file.target.files[0]) return;
+
+        this.flight.igc.body = await this.readFile(file.target.files[0]);
+        this.flight.igc.name = file.target.files[0].name;
+        const response = await this.sendIgc();
+        console.log(response);
+        if (response.status != 200) throw "Server error";
+        this.flightId = response.data;
       } catch (error) {
         console.log(error);
       }
