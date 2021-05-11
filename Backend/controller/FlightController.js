@@ -24,11 +24,13 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   console.log("Call controller");
+  // There may be a better way to convert the sequelize object to a regular object.
   let flight = JSON.parse(JSON.stringify(await service.getById(req.params.id)));
   if (!flight) {
     res.sendStatus(NOT_FOUND);
     return;
   }
+  // Move the fixes one layer up
   flight.fixes = flight.fixes.fixes;
   res.json(flight);
 });
