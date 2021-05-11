@@ -64,8 +64,12 @@ router.post("/", async (req, res) => {
     writeIgcFileToDrive(result.id, igcFile)
       .then(() => {
         service.startResultCalculation(result);
-        // Return a hard coded flight id for development. Should be the real flight id in future.
-        res.status(200).send("40");
+        // Return a hard coded flight id and takeoff & landing for development. Should be the data in future.
+        res.status(200).send({
+          flightId: 40,
+          takeoff: "Bremm",
+          landing: "Zeltingen-Rachtig",
+        });
       })
       .catch((error) => {
         res.status(INTERNAL_SERVER_ERROR).send(error.message);
