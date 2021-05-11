@@ -43,7 +43,7 @@ POST http://localhost:3000/flight/ HTTP/1.1
 content-type: application/json
 
 {
-    "userId": "3332b281-3e47-4c09-a5d8-1a8f3d5e6a8e",
+    "userId": "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
     "glider": "Ozone Alpina 2",
     "report": "lorem ipsum",
     "igc": {
