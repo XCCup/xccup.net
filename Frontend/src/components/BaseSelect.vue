@@ -3,6 +3,7 @@
   <select
     class="form-select"
     :value="modelValue"
+    :disabled="isDisabled"
     v-bind="{
       ...$attrs,
       onChange: ($event) => {
@@ -29,6 +30,10 @@ export default {
     label: {
       type: String,
       default: "",
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false,
     },
     modelValue: {
       type: [String, Number],
