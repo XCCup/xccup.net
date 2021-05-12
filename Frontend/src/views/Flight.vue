@@ -73,12 +73,13 @@ export default {
     // Is this try/catch smart?
     try {
       // Hardcoded flight for development
-      let demoFlightId = "60699294a7c2069af1246316";
-      const response = await FlightService.getFlight(
-        demoFlightId
-        // route.params.flightId
+      let flightId = "60699294a7c2069af1246316";
+      if (process.env.VUE_APP_USE_LOCAL_API === "true") {
+        flightId = route.params.flightId;
         // props.flightId
-      );
+      }
+
+      const response = await FlightService.getFlight(flightId);
       if (!response.data.fixes) {
         throw "Invalid response";
       }
