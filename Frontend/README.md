@@ -12,6 +12,7 @@ Preview of main branch: https://xccup.onrender.com
 - [ ] Map visualizing all flights of the day (DailyFlightsMap?)
 - [ ] Sponsors
 - [ ] Random image taken from the running season
+- [ ] Make the table link to flight page a real link
 
 ### Profile
 
