@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/FlightService");
+const igcValidater = require("../igc/IgcValidater");
 const path = require("path");
 const {
   NOT_FOUND,
@@ -25,10 +26,12 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   console.log("Call controller");
   const flight = await service.getById(req.params.id);
+
   if (!flight) {
     res.sendStatus(NOT_FOUND);
     return;
   }
+
   res.json(flight);
 });
 
@@ -60,11 +63,20 @@ router.post("/", async (req, res) => {
   const igcFile = newFlight.igc;
   delete newFlight.igc;
 
+  //TODO Handle result; What happens if service not reachable?
+  igcValidater.execute(igcFile);
+
   service.save(newFlight).then((result) => {
     writeIgcFileToDrive(result.id, igcFile)
       .then(() => {
         service.startResultCalculation(result);
-        res.sendStatus(OK);
+        //TODO Replace the later statement
+        //Return a hard coded flight id and takeoff & landing for development. Should be the data in future.
+        res.status(OK).send({
+          flightId: 40,
+          takeoff: "Bremm",
+          landing: "Zeltingen-Rachtig",
+        });
       })
       .catch((error) => {
         res.status(INTERNAL_SERVER_ERROR).send(error.message);
@@ -72,6 +84,7 @@ router.post("/", async (req, res) => {
   });
 });
 
+//TODO Move to helper class "FileWriter"
 async function writeIgcFileToDrive(flightId, igcFile) {
   const store = process.env.FLIGHT_STORE;
   const pathToFolder = path.join(store, flightId.toString());

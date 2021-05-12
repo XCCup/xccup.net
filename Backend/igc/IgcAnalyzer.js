@@ -45,14 +45,14 @@ const IgcAnalyzer = {
     console.log(`Finished parsing`);
     const currentResolution =
       (igcAsJson.fixes[1].timestamp - igcAsJson.fixes[0].timestamp) / 1000;
-    const strinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
-    console.log(`Will shrink extracted fixes by factor ${strinkingFactor}`);
+    const shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
+    console.log(`Will shrink extracted fixes by factor ${shrinkingFactor}`);
     reducedFixes = [];
-    if (strinkingFactor < 1) {
+    if (shrinkingFactor < 1) {
       //Prevent endless loop for negative numbers
-      strinkingFactor = 1;
+      shrinkingFactor = 1;
     }
-    for (i = 0; i < igcAsJson.fixes.length; i += strinkingFactor) {
+    for (i = 0; i < igcAsJson.fixes.length; i += shrinkingFactor) {
       reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
     }
     return reducedFixes;
@@ -71,7 +71,6 @@ function extractOnlyDefinedFieldsFromFix(fix) {
 }
 
 function readIgcFile(flightId) {
-  console.log(``);
   return fs.readFileSync(findIgcFileForFlight(flightId), "utf8");
 }
 
@@ -170,11 +169,11 @@ function parseOlcData(
     result.dist = freeDistance;
     cornerStartIndex = freeStartIndex + 4;
   }
-  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex]));
-  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 1]));
-  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 2]));
-  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 3]));
-  result.turnpoints.push(extractturnpointData(dataLines[cornerStartIndex + 4]));
+  result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex]));
+  result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex + 1]));
+  result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex + 2]));
+  result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex + 3]));
+  result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex + 4]));
 
   if (isTurnpointsIteration) {
     console.log("IGC Result from turnpoint iteration: ", result);
@@ -187,7 +186,7 @@ function parseOlcData(
   }
 }
 
-function extractturnpointData(turnpoint) {
+function extractTurnpointData(turnpoint) {
   let result = {};
   const IGC_FIX_REGEX =
     /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
