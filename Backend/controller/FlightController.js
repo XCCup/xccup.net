@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/FlightService");
-const igcValidater = require("../igc/IgcValidater");
+const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const {
   NOT_FOUND,
@@ -64,7 +64,7 @@ router.post("/", async (req, res) => {
   delete newFlight.igc;
 
   //TODO Handle result; What happens if service not reachable?
-  igcValidater.execute(igcFile);
+  igcValidator.execute(igcFile);
 
   service.save(newFlight).then((result) => {
     writeIgcFileToDrive(result.id, igcFile)

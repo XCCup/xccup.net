@@ -1,7 +1,7 @@
 const axios = require("axios");
 const FormData = require("form-data");
 
-const igcValidater = {
+const igcValidator = {
   execute: async (igc) => {
     // http://vali.fai-civl.org/webservice.html
     console.log("Validating igc file with FAI API");
@@ -31,4 +31,4 @@ const igcValidater = {
   },
 };
 
-module.exports = igcValidater;
+module.exports = igcValidator;
