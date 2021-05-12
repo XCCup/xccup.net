@@ -1,6 +1,8 @@
 <template>
-  <i class="bi bi-trophy" :class="rankingClass"></i>
-  {{ getHumanReadableRankingClass(rankingClass) }}
+  <div v-if="rankingClass">
+    <i class="bi bi-trophy" :class="rankingClass"></i>
+    {{ getHumanReadableRankingClass(rankingClass) }}
+  </div>
 </template>
 
 <script>
