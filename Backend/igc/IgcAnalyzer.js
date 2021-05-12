@@ -89,17 +89,28 @@ function runTurnpointIteration(resultStripIteration, callback) {
     runOlc(pathToFile, resultStripIteration.flightId, true, callback)
   );
 }
+function determineOlcBinary() {
+  const os = require("os");
+  const platform = os.platform();
+  console.log(`Running on OS: ${platform} (${os.arch()})`);
+  // This is not failsafe, but good for now;)
+  if (platform.includes("win")) {
+    return "igc\\olc.exe < ";
+  }
+  if (os.arch() === "arm64") {
+    return "igc/olc_lnx_arm < ";
+  } else {
+    return "igc/olc_lnx < ";
+  }
+}
 
 function runOlc(filePath, flightId, isTurnpointIteration, callback) {
   const { exec } = require("child_process");
   console.log("Start OLC analysis");
-  const os = require("os");
-  const platform = os.platform();
-  console.log("Running on OS: ", platform);
+
   //TODO: Replace compiled app through usage of Node’s N-API
-  const command = platform.includes("win")
-    ? "igc\\olc.exe < "
-    : "igc/olc_lnx < ";
+  const command = determineOlcBinary();
+
   exec(command + filePath, function (err, data) {
     console.log(err);
     parseOlcData(
@@ -188,8 +199,7 @@ function parseOlcData(
 
 function extractTurnpointData(turnpoint) {
   let result = {};
-  const IGC_FIX_REGEX =
-    /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
+  const IGC_FIX_REGEX = /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
   const matchingResult = turnpoint.match(IGC_FIX_REGEX);
   if (matchingResult != null) {
     result.time = matchingResult[1];
