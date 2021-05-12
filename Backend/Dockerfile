@@ -13,6 +13,6 @@ COPY package*.json ./
 USER node
 RUN npm install
 COPY --chown=node:node . .
-RUN chmod +x ./igc/olc_lnx
+RUN chmod +x ./igc/olc_lnx && chmod +x ./igc/olc_lnx_arm
 
 CMD [ "node", "app.js" ]
