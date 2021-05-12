@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       flight: {
-        userId: "ccee643a-8460-406f-a363-89072f0f5540",
+        userId: "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
         glider: "XCRacer S",
         // brand: "Flow",
         report: "Lorem ipsum",
@@ -190,6 +190,6 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 900px !important;
+  max-width: 800px !important;
 }
 </style>
