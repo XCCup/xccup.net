@@ -7,15 +7,15 @@
       height="24"
       width="24"
     />
-    <a href="#">{{ comment.name }}</a>
+    <a href="#">{{ comment.name ? comment.name : "Pilot Name" }}</a>
     <span class="ms-auto fw-light text-secondary"
-      ><BaseDate :timestamp="comment.date" dateFormat="dd.MM.yyyy"
+      ><BaseDate :timestamp="comment.createdAt" dateFormat="dd.MM.yyyy"
     /></span>
   </div>
   <p>
-    {{ comment.text }}
+    {{ comment.message }}
   </p>
-  <div v-if="comment.pilotId === authUser.id" class="text-secondary text-end">
+  <div v-if="comment.userId === authUser.id" class="text-secondary text-end">
     <a href="#" @click.prevent="editComment"
       ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a
     >

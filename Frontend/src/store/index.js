@@ -34,10 +34,10 @@ export default createStore({
           },
         ],
         shirtSize: "M",
-        id: "testId",
+        id: "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
       },
     ],
-    authId: "testId",
+    authId: "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
     markerMapPosition: {},
   },
   getters: {

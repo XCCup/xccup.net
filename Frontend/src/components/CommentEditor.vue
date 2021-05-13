@@ -44,11 +44,9 @@ export default {
   },
   methods: {
     onSubmit() {
-      let comment = {
+      const comment = {
         text: this.text,
-        pilotId: this.authUser.id,
-        name: this.authUser.name,
-        date: Date.now(),
+        userId: this.authUser.id,
       };
       this.$emit("comment-submitted", comment);
       this.text = "";

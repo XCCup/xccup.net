@@ -56,9 +56,9 @@ export default {
     return apiClient2.get("/db");
   },
   addComment(comment) {
-    return apiClient2.post("/comments", comment);
+    return apiClient.post("/comments", comment);
   },
   deleteComment(commentId) {
-    return apiClient2.delete("/comments/", { params: { id: commentId } });
+    return apiClient.delete("/comments/" + commentId);
   },
 };
