@@ -1,17 +1,17 @@
 const FlightComment = require("../model/FlightComment.js");
 
 const commentService = {
-  addComment: async (flightId, userId, message) => {
-    return await FlightComment.create({ flightId, userId, message });
+  add: async (comment) => {
+    return await FlightComment.create(comment);
   },
 
-  editComment: async (id, newMessage) => {
+  edit: async (id, body) => {
     const comment = await FlightComment.findByPk(id);
-    comment.message = newMessage;
+    comment.message = body.message;
     return comment.save();
   },
 
-  deleteComment: async (id) => {
+  delete: async (id) => {
     const numberOfDestroyedRows = await FlightComment.destroy({
       where: { id: id },
     });

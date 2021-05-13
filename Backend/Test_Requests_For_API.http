@@ -40,13 +40,23 @@ POST http://localhost:3000/comments/ HTTP/1.1
 content-type: application/json
 
 {
-    "flightId": "UrmelAuasdsDerEifel",
-    "firstName": "Kai",
-    "birthday": "13.13.2013",
-    "glider": "Ozone Alpina 2",
-    "password": "$up€r$€cr€t",
-    "email": "super@dsecret.com"
+    "flightId": 26,
+    "userId": "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
+    "message": "Lorem Ipsum"
 }
+
+###
+DELETE http://localhost:3000/comments/c2f8da7d-1731-4c73-9c05-f0a3396040b4 HTTP/1.1
+content-type: application/json
+
+###
+PUT http://localhost:3000/comments/a39d930e-9e57-4018-a5cd-0d98fb728bfe HTTP/1.1
+content-type: application/json
+
+{
+    "message": "Lorem Ipsum Dolor"
+}
+
 
 ###
 DELETE http://localhost:3000/flight/5 HTTP/1.1

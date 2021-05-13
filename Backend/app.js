@@ -29,6 +29,7 @@ app.get("/", (request, response) => {
 });
 app.use("/user", require("./controller/UserController.js"));
 app.use("/flight", require("./controller/FlightController.js"));
+app.use("/comments", require("./controller/CommentController.js"));
 
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(
