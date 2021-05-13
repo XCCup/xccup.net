@@ -26,7 +26,7 @@
             </tr>
             <tr>
               <th>Fluggerät:</th>
-              <td>{{ flight.gliderType }}</td>
+              <td>{{ flight.glider }}</td>
             </tr>
             <tr>
               <th>Geräteklasse:</th>
