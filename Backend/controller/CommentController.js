@@ -9,6 +9,19 @@ const {
   INTERNAL_SERVER_ERROR,
 } = require("./Constants");
 
+// @desc Gets all comments of a flight
+// @route GET /comments/:flightId
+
+router.get("/flight/:flightId", async (req, res) => {
+  const comments = await service.getByFlightId(req.params.flightId);
+
+  if (!comments) {
+    res.sendStatus(NOT_FOUND);
+    return;
+  }
+  res.json(comments);
+});
+
 // @desc Adds a comment
 // @route POST /comments/
 
