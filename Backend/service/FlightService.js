@@ -1,6 +1,7 @@
 const Flight = require("../model/Flight.js");
 const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
+const ElevationAttacher = require("../igc/ElevationAttacher");
 const FlightComment = require("../model/FlightComment.js");
 
 const flightService = {
@@ -56,13 +57,18 @@ const flightService = {
     flight.flightTurnpoints = result.turnpoints;
     flight.igcUrl = result.igcUrl;
 
-    flight.fixes = IgcAnalyzer.extractFixes(flight);
-    FlightFixes.create({
-      flightId: flight.id,
-      fixes: flight.fixes,
-    });
+    ElevationAttacher.execute(
+      IgcAnalyzer.extractFixes(flight),
+      (fixesWithElevation) => {
+        flight.fixes = fixesWithElevation;
+        FlightFixes.create({
+          flightId: flight.id,
+          fixes: flight.fixes,
+        });
 
-    flight.save();
+        flight.save();
+      }
+    );
   },
 
   save: async (flight) => {

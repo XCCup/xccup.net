@@ -30,6 +30,16 @@ const Flight = db.sequelize.define("Flight", {
   glider: {
     type: DataTypes.STRING,
   },
+  gRecordInvalid: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
+  airspaceViolation: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
 });
 
 Flight.hasMany(FlightComment, {
