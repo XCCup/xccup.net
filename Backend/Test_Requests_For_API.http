@@ -4,7 +4,7 @@ DELETE http://localhost/users/5 HTTP/1.1
 
 
 ###
-POST http://localhost/flight/ HTTP/1.1
+POST http://localhost/flights/ HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -23,7 +23,7 @@ Content-Type: text/plain
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###
-POST http://localhost:3000/user/ HTTP/1.1
+POST http://localhost:3000/users/ HTTP/1.1
 content-type: application/json
 
 {
@@ -36,10 +36,33 @@ content-type: application/json
 }
 
 ###
-DELETE http://localhost:3000/flight/5 HTTP/1.1
+POST http://localhost:3000/comments/ HTTP/1.1
+content-type: application/json
+
+{
+    "flightId": 26,
+    "userId": "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
+    "message": "Lorem Ipsum"
+}
 
 ###
-POST http://localhost:3000/flight/ HTTP/1.1
+DELETE http://localhost:3000/comments/c2f8da7d-1731-4c73-9c05-f0a3396040b4 HTTP/1.1
+content-type: application/json
+
+###
+PUT http://localhost:3000/comments/a39d930e-9e57-4018-a5cd-0d98fb728bfe HTTP/1.1
+content-type: application/json
+
+{
+    "message": "Lorem Ipsum Dolor"
+}
+
+
+###
+DELETE http://localhost:3000/flights/5 HTTP/1.1
+
+###
+POST http://localhost:3000/flights/ HTTP/1.1
 content-type: application/json
 
 {

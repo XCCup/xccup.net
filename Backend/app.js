@@ -27,8 +27,9 @@ app.use(express.json({ limit: "5mb" }));
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
 });
-app.use("/user", require("./controller/UserController.js"));
-app.use("/flight", require("./controller/FlightController.js"));
+app.use("/users", require("./controller/UserController.js"));
+app.use("/flights", require("./controller/FlightController.js"));
+app.use("/comments", require("./controller/CommentController.js"));
 
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(
