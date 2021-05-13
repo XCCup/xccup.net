@@ -3,7 +3,7 @@
     <div class="shadow p-3 mb-3" v-for="comment in comments" :key="comment.id">
       <Comment :comment="comment" @comment-deleted="deleteComment" />
     </div>
-    <CommentEditor @comment-submitted="onSubmit" />
+    <CommentEditor ref="commentEditor" @comment-submitted="onSubmit" />
   </div>
 </template>
 
@@ -32,6 +32,9 @@ export default {
     },
     deleteComment(id) {
       this.$emit("comment-deleted", id);
+    },
+    clearCommentEditorInput() {
+      this.$refs.commentEditor.clearCommentEditorInput();
     },
   },
   emits: ["comment-deleted", "comment-submitted"],

@@ -25,7 +25,8 @@
     <FlightDetails :flight="flight" :pilot="pilot" />
     <FlightDescription :description="report" />
     <Comments
-      :comments="flight.comments"
+      ref="commentsRef"
+      :comments="comments"
       @comment-submitted="addComment"
       @comment-deleted="deleteComment"
     />
@@ -64,6 +65,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const flight = ref(null);
+    const comments = ref(null);
 
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -82,6 +84,7 @@ export default {
         throw "Invalid response";
       }
       flight.value = response.data;
+      comments.value = response.data.comments;
     } catch (error) {
       console.log(error);
       if (error.response && error.response.status == 404) {
@@ -95,6 +98,7 @@ export default {
     }
     return {
       flight,
+      comments,
     };
   },
   props: {
@@ -116,11 +120,12 @@ export default {
         const res = await FlightService.addComment({
           flightId: this.$route.params.flightId,
           userId: comment.userId,
-          message: "foo",
+          message: comment.message,
         });
-        console.log(res);
-        // Only as long as the API doesnt exist
+        if (res.status != 200)
+          throw `Error while posting comment: ${res.status}`;
         this.comments = [...this.comments, res.data];
+        this.$refs.commentsRef.clearCommentEditorInput();
         return res;
       } catch (error) {
         console.log(error);
@@ -129,9 +134,12 @@ export default {
     async deleteComment(id) {
       try {
         const res = await FlightService.deleteComment(id);
-        console.log(res);
-        // const res2 = await FlightService.getComments();
-        // this.comments = res2.data;
+        if (res.status != 200)
+          throw `Error while deleting comment: ${res.status}`;
+
+        this.comments = this.comments.filter((e) => {
+          return e.id != id;
+        });
       } catch (error) {
         console.log(error);
       }

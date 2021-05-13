@@ -9,15 +9,21 @@
         <textarea
           class="form-control mb-2"
           id="comment-editor"
-          v-model="text"
+          v-model="message"
           :rows="3"
-          @input="saveTextToLocalStorage"
+          @input="saveMessageToLocalStorage"
         ></textarea>
-        <button class="btn btn-primary me-1" type="submit">Senden</button>
+        <button
+          class="btn btn-primary me-1"
+          type="submit"
+          :disabled="sendButtonIsDisabled"
+        >
+          Senden
+        </button>
         <button
           class="btn btn-outline-danger mx-1"
           type="reset"
-          @click="removeTextFromLocalStorage"
+          @click="removeMessageFromLocalStorage"
         >
           Löschen
         </button>
@@ -33,47 +39,52 @@ export default {
 
   data() {
     return {
-      text: "",
+      message: "",
     };
   },
   computed: {
     ...mapGetters(["authUser"]),
+    sendButtonIsDisabled() {
+      return this.message.length < 5;
+    },
   },
   mounted() {
-    this.text = this.getTextFromLocalStorage();
+    this.message = this.getMessageFromLocalStorage();
   },
   methods: {
     onSubmit() {
       const comment = {
-        text: this.text,
+        message: this.message,
         userId: this.authUser.id,
       };
       this.$emit("comment-submitted", comment);
-      this.text = "";
-      this.removeTextFromLocalStorage();
     },
-    saveTextToLocalStorage() {
+    clearCommentEditorInput() {
+      this.message = "";
+      this.removeMessageFromLocalStorage();
+    },
+    saveMessageToLocalStorage() {
       localStorage.setItem(
-        "commentText",
+        "commentMessage",
         JSON.stringify({
-          text: this.text,
+          message: this.message,
           flightId: this.$route.params.flightId,
         })
       );
     },
-    removeTextFromLocalStorage() {
-      localStorage.removeItem("commentText");
+    removeMessageFromLocalStorage() {
+      localStorage.removeItem("commentMessage");
     },
-    getTextFromLocalStorage() {
-      if (localStorage.getItem("commentText") === null) {
+    getMessageFromLocalStorage() {
+      if (localStorage.getItem("commentMessage") === null) {
         return "";
       } else {
-        const { text, flightId } = JSON.parse(
-          localStorage.getItem("commentText")
+        const { message, flightId } = JSON.parse(
+          localStorage.getItem("commentMessage")
         );
         // Check if the comment in local storage belongs to this flight
         if (flightId === this.$route.params.flightId) {
-          return text;
+          return message;
         } else {
           return "";
         }
