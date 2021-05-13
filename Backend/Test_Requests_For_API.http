@@ -36,6 +36,19 @@ content-type: application/json
 }
 
 ###
+POST http://localhost:3000/comments/ HTTP/1.1
+content-type: application/json
+
+{
+    "flightId": "UrmelAuasdsDerEifel",
+    "firstName": "Kai",
+    "birthday": "13.13.2013",
+    "glider": "Ozone Alpina 2",
+    "password": "$up€r$€cr€t",
+    "email": "super@dsecret.com"
+}
+
+###
 DELETE http://localhost:3000/flight/5 HTTP/1.1
 
 ###
