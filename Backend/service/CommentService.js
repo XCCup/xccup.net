@@ -1,6 +1,15 @@
 const FlightComment = require("../model/FlightComment.js");
 
 const commentService = {
+  getByFlightId: async (flightId) => {
+    const comments = await FlightComment.findAll({
+      where: { flightId: flightId },
+    });
+    console.log("Service: ", comments);
+
+    return comments;
+  },
+
   add: async (comment) => {
     return await FlightComment.create(comment);
   },
