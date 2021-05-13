@@ -4,7 +4,7 @@ DELETE http://localhost/users/5 HTTP/1.1
 
 
 ###
-POST http://localhost/flight/ HTTP/1.1
+POST http://localhost/flights/ HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -23,7 +23,7 @@ Content-Type: text/plain
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ###
-POST http://localhost:3000/user/ HTTP/1.1
+POST http://localhost:3000/users/ HTTP/1.1
 content-type: application/json
 
 {
@@ -59,10 +59,10 @@ content-type: application/json
 
 
 ###
-DELETE http://localhost:3000/flight/5 HTTP/1.1
+DELETE http://localhost:3000/flights/5 HTTP/1.1
 
 ###
-POST http://localhost:3000/flight/ HTTP/1.1
+POST http://localhost:3000/flights/ HTTP/1.1
 content-type: application/json
 
 {
