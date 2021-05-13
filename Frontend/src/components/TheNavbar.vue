@@ -69,7 +69,7 @@
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
-            {{ authUser.name }}
+            {{ authUser?.name ?? "Default User" }}
           </button>
           <div class="dropdown-menu" style="width: 250px">
             <form class="px-4 py-3">
