@@ -5,7 +5,7 @@ export default createStore({
     // Hardcoded for development
     users: [
       {
-        name: "Steph",
+        name: "User",
         surname: "foo",
         email: "foo@bar.org",
         sex: "männlich",
