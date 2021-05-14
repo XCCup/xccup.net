@@ -59,7 +59,7 @@ export default {
       };
       this.$emit("comment-submitted", comment);
     },
-    clearCommentEditorInputField() {
+    clearCommentEditorInput() {
       this.message = "";
       this.removeMessageFromLocalStorage();
     },

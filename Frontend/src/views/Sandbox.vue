@@ -125,7 +125,7 @@ export default {
         if (res.status != 200)
           throw `Error while posting comment: ${res.status}`;
         this.comments = [...this.comments, res.data];
-        this.$refs.commentEditor.clearCommentEditorInputField();
+        this.$refs.commentsRef.clearCommentEditorInput();
         return res;
       } catch (error) {
         console.log(error);
