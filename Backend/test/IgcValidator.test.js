@@ -2,11 +2,12 @@
  * @jest-environment node
  */
 const IgcValidator = require("../igc/IgcValidator");
+const Helper = require("./IgcTestHelper");
 
 test("Validate an igc-File which should result to PASSED", (done) => {
   const igc = {
     name: "AValidFile.igc",
-    body: readIgcFile("kai_fai", "fai_60km42_3h53m.igc"),
+    body: Helper.readIgcFile("kai_fai", "fai_60km42_3h53m.igc"),
   };
 
   IgcValidator.execute(igc)
@@ -30,14 +31,3 @@ test("Validate an igc-File which should result to FAILED", (done) => {
     })
     .catch((error) => done(error));
 });
-
-//TODO Move also to a helper class?
-function readIgcFile(folder, file) {
-  const fs = require("fs");
-  const path = require("path");
-  const parentDir = path.resolve(__dirname, "..");
-  return fs.readFileSync(
-    path.join(parentDir, "/igc/demo_igcs", folder, file),
-    "utf8"
-  );
-}
