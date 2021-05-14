@@ -33,9 +33,6 @@ export default {
     deleteComment(id) {
       this.$emit("comment-deleted", id);
     },
-    clearCommentEditorInput() {
-      this.$refs.commentEditor.clearCommentEditorInput();
-    },
   },
   emits: ["comment-deleted", "comment-submitted"],
 };
