@@ -189,7 +189,6 @@ function parseOlcData(
   if (isTurnpointsIteration) {
     console.log("IGC Result from turnpoint iteration: ", result);
     result.igcUrl = filePath;
-    console.log("CB: ", callback);
     callback(result);
   } else {
     console.log("IGC Result from strip iteration: ", result);
@@ -199,7 +198,8 @@ function parseOlcData(
 
 function extractTurnpointData(turnpoint) {
   let result = {};
-  const IGC_FIX_REGEX = /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
+  const IGC_FIX_REGEX =
+    /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
   const matchingResult = turnpoint.match(IGC_FIX_REGEX);
   if (matchingResult != null) {
     result.time = matchingResult[1];
