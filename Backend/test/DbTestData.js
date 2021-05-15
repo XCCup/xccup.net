@@ -14,8 +14,7 @@ const dbTestData = {
       password: "$up€r$€cr€t",
       email: "super@dsecret.com",
     };
-    const returnUser = await userService.getByUsername(user.name);
-    console.log("User Add: ", returnUser);
+    const returnUser = await userService.getByName(user.name);
     if (!returnUser) {
       console.log("Required data was not found. Will now add data to db.");
       userService.save(user);

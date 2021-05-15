@@ -1,7 +1,6 @@
 ###
-
-DELETE http://localhost/users/5 HTTP/1.1
-
+DELETE http://localhost:3000/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e HTTP/1.1
+content-type: application/json
 
 ###
 POST http://localhost/flights/ HTTP/1.1

@@ -8,6 +8,7 @@ const FlightComment = db.sequelize.define("FlightComment", {
     allowNull: false,
     primaryKey: true,
   },
+
   message: {
     type: DataTypes.STRING,
     allowNull: false,

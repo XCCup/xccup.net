@@ -73,7 +73,7 @@ router.post("/", async (req, res) => {
         //TODO Replace the later statement
         //Return a hard coded flight id and takeoff & landing for development. Should be the data in future.
         res.status(OK).send({
-          flightId: 40,
+          flightId: result.id,
           takeoff: "Bremm",
           landing: "Zeltingen-Rachtig",
         });

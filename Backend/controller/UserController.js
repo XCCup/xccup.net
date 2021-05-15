@@ -16,10 +16,34 @@ router.get("/", async (req, res) => {
 });
 
 // @desc Retrieve user by his username
-// @route GET /user/:username
+// @route GET /user/name/:username
 
-router.get("/:username", async (req, res) => {
-  const user = await service.getByUsername(req.params.username);
+router.get("/name/:username", async (req, res) => {
+  const user = await service.getByName(req.params.username);
+  if (!user) {
+    res.sendStatus(NOT_FOUND);
+    return;
+  }
+  res.json(user);
+});
+
+// @desc Retrieve user by id
+// @route GET /user/:id
+
+router.get("/:id", async (req, res) => {
+  const user = await service.getById(req.params.id);
+  if (!user) {
+    res.sendStatus(NOT_FOUND);
+    return;
+  }
+  res.json(user);
+});
+
+// @desc Deletes user by id
+// @route DELETE /user/:id
+
+router.delete("/:id", async (req, res) => {
+  const user = await service.delete(req.params.id);
   if (!user) {
     res.sendStatus(NOT_FOUND);
     return;

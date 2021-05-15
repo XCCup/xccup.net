@@ -33,7 +33,6 @@ const resolveStack = debounce(async () => {
   let stack = tmpFixes.splice(0, numberOfFixesPerApiRequest);
   try {
     const response = await executeRequest(stack);
-    console.log("After request");
     const jsonData = response.data;
     stack.forEach(({ resolve }, index) => {
       const GND = jsonData.results[index].elevation;
