@@ -2,6 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/postgres.js");
 const bcrypt = require("bcryptjs");
 const Flight = require("./Flight.js");
+const FlightComment = require("./FlightComment");
 
 const User = db.sequelize.define(
   "User",
@@ -90,6 +91,16 @@ User.hasMany(Flight, {
     name: "userId",
     allowNull: false,
   },
+});
+
+User.hasMany(FlightComment, {
+  as: "comments",
+  foreignKey: {
+    name: "userId",
+    allowNull: false,
+  },
+  onDelete: "CASCADE",
+  hooks: true,
 });
 
 User.getNames = getNames;

@@ -6,14 +6,23 @@ const userService = {
     console.log("Service: ", users);
     return users;
   },
-  getByUsername: async (userName) => {
+  getById: async (id) => {
+    return await User.findByPk(id);
+  },
+  getName: (id) => {
+    return User.findByPk(id, { attributes: ["name"] });
+  },
+  getByName: async (userName) => {
     const user = await User.findOne({
       where: { name: userName },
     });
-    console.log("Service: ", user);
     return user;
   },
-
+  delete: async (id) => {
+    return await User.destroy({
+      where: { id: id },
+    });
+  },
   save: async (user) => {
     return await User.create(user);
   },
