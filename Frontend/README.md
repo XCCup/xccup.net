@@ -9,7 +9,7 @@ Preview of main branch: https://xccup.onrender.com
 - [x] Basic layout
 - [ ] Rankings
 - [ ] Connect to API
-- [ ] Map visualizing all flights of the day (DailyFlightsMap?)
+- [ ] Map visualizing all flights of the day
 - [ ] Sponsors
 - [ ] Random image taken from the running season
 - [ ] Make the table link to flight page a real link
@@ -40,11 +40,14 @@ Preview of main branch: https://xccup.onrender.com
 - [x] Center map view on pilot by clicking on the barogram
 - [x] Pilot markers follow the barogram timeline
 - [ ] Airspace overlay on map
-- [ ] Turnpoint overlay on map
+- [x] Turnpoint overlay on map
 - [ ] Custom icons for takeoff & landing
 - [ ] Display alitude for pilot and airbuddies
 - [ ] Delete flight button
 - [ ] Edit flight view
+- [x] Add comment
+- [x] Delete comment
+- [ ] Delete comment modal (Are you sure?)
 - [ ] Connect to API
 
 ### Flights
