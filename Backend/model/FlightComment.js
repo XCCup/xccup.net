@@ -8,10 +8,6 @@ const FlightComment = db.sequelize.define("FlightComment", {
     allowNull: false,
     primaryKey: true,
   },
-  userId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-  },
   message: {
     type: DataTypes.STRING,
     allowNull: false,
