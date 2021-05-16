@@ -3,13 +3,13 @@ const router = express.Router();
 const service = require("../service/FlightService");
 const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
+const fs = require("fs");
 const {
   NOT_FOUND,
   BAD_REQUEST,
   OK,
   INTERNAL_SERVER_ERROR,
 } = require("./Constants");
-const fs = require("fs");
 
 // @desc Retrieves all flights
 // @route GET /flight/

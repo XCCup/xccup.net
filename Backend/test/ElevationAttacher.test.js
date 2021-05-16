@@ -1,25 +1,25 @@
 /**
  * @jest-environment node
  */
-const Helper = require("./IgcTestHelper");
+const { readIgcFile } = require("./IgcTestHelper");
 const IGCParser = require("igc-parser");
 const ElevationAttacher = require("../igc/ElevationAttacher");
 
 function retrieveIgcFixes(folder, file) {
-  const igcAsPlainText = Helper.readIgcFile(folder, file);
+  const igcAsPlainText = readIgcFile(folder, file);
   return IGCParser.parse(igcAsPlainText, { lenient: true }).fixes;
 }
 
 test("Attach elevation data to position fixes and check values", (done) => {
   const fixes = retrieveIgcFixes("kai_short", "only_14_fixes.igc");
 
-  firstFix = {
+  const firstFix = {
     elevation: 250,
     latitude: 49.95786666666667,
     longitude: 6.994783333333333,
   };
 
-  lastFix = {
+  const lastFix = {
     elevation: 248,
     latitude: 49.95823333333333,
     longitude: 6.994166666666667,
