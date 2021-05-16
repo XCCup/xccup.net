@@ -1,5 +1,5 @@
 <template>
-  <div v-if="timestamp">{{ format(new Date(timestamp), dateFormat) }}</div>
+  <span v-if="timestamp">{{ format(new Date(timestamp), dateFormat) }}</span>
 </template>
 
 <script>
