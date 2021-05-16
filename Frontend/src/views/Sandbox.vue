@@ -12,7 +12,7 @@
       </p>
     </div>
     <!-- Content -->
-    <MapV2 :tracklogs="tracklogs" />
+    <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
     <Barogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
       v-if="flight.airbuddies"
@@ -27,8 +27,8 @@
     <Comments
       ref="commentsRef"
       :comments="comments"
-      @comment-submitted="addComment"
-      @comment-deleted="deleteComment"
+      @submit-comment="addComment"
+      @delete-comment="deleteComment"
     />
   </div>
 </template>

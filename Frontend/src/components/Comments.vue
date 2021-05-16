@@ -1,15 +1,46 @@
 <template>
   <div class="container">
     <div class="shadow p-3 mb-3" v-for="comment in comments" :key="comment.id">
-      <Comment :comment="comment" @comment-deleted="deleteComment" />
+      <Comment :comment="comment" @delete-comment="showCommentDeleteModal" />
     </div>
-    <CommentEditor ref="commentEditor" @comment-submitted="onSubmit" />
+    <CommentEditor ref="commentEditor" @submit-comment="onSubmit" />
+  </div>
+  <!-- Modal -->
+  <!-- TODO Refactor to BaseModal Component? -->
+  <div class="modal fade" id="deleteCommentModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Kommentar löschen?</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            data-bs-dismiss="modal"
+            @click="deleteComment"
+          >
+            Löschen
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            Abbrechen
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Comment from "@/components/Comment";
 import CommentEditor from "@/components/CommentEditor";
+
+import { Modal } from "bootstrap";
 
 export default {
   name: "Comments",
@@ -24,20 +55,29 @@ export default {
     },
   },
   data() {
-    return {};
+    return { deleteCommentModal: null, commentIdToDelete: null };
+  },
+  mounted() {
+    this.deleteCommentModal = new Modal(
+      document.getElementById("deleteCommentModal")
+    );
   },
   methods: {
     onSubmit(comment) {
-      this.$emit("comment-submitted", comment);
+      this.$emit("submit-comment", comment);
     },
-    deleteComment(id) {
-      this.$emit("comment-deleted", id);
+    showCommentDeleteModal(id) {
+      this.commentIdToDelete = id;
+      this.deleteCommentModal.show();
+    },
+    deleteComment() {
+      this.$emit("delete-comment", this.commentIdToDelete);
     },
     clearCommentEditorInput() {
       this.$refs.commentEditor.clearCommentEditorInput();
     },
   },
-  emits: ["comment-deleted", "comment-submitted"],
+  emits: ["delete-comment", "submit-comment"],
 };
 </script>
 
