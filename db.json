@@ -302,21 +302,21 @@
       "name": "Nikki Fernandez",
       "pilotId": "1",
       "message": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus, explicabo?",
-      "date": "2021-03-04"
+      "createdAt": "2021-03-04"
     },
     {
       "id": "2",
       "name": "Noor Fountain",
       "pilotId": "3",
       "message": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi ducimus molestiae magni quaerat optio, hic aut? A nesciunt odit odio.",
-      "date": "2021-03-05"
+      "createdAt": "2021-03-05"
     },
     {
       "id": "19841",
       "message": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi ducimus molestiae magni quaerat optio, hic aut? A nesciunt odit odio.",
       "pilotId": "testId",
       "name": "testUser",
-      "date": 1618692787138
+      "createdAt": 1618692787138
     }
   ],
   "flightDescription": [
