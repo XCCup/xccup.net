@@ -9,14 +9,13 @@ const userService = {
   getById: async (id) => {
     return await User.findByPk(id);
   },
-  getName: (id) => {
-    return User.findByPk(id, { attributes: ["name"] });
+  getName: async (id) => {
+    return await User.findByPk(id, { attributes: ["name"] });
   },
   getByName: async (userName) => {
-    const user = await User.findOne({
+    return await User.findOne({
       where: { name: userName },
     });
-    return user;
   },
   delete: async (id) => {
     return await User.destroy({
