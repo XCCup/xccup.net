@@ -1,13 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const path = require("path");
 const service = require("../service/CommentService");
-const {
-  NOT_FOUND,
-  BAD_REQUEST,
-  OK,
-  INTERNAL_SERVER_ERROR,
-} = require("./Constants");
+const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./Constants");
 
 // @desc Gets all comments of a flight
 // @route GET /comments/:flightId

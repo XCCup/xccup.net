@@ -1,10 +1,6 @@
 const express = require("express");
 const service = require("../service/UserService");
-const {
-  NOT_FOUND,
-  BAD_REQUEST,
-  INTERNAL_SERVER_ERROR,
-} = require("./Constants");
+const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./Constants");
 const router = express.Router();
 
 // @desc Retrieves all users
@@ -55,7 +51,7 @@ router.delete("/:id", async (req, res) => {
 // @route POST /user/
 
 router.post("/", async (req, res) => {
-  const user = service
+  service
     .save(req.body)
     .then((user) => {
       res.json(user);

@@ -43,7 +43,7 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-dbConnectionTest().then(async (result) => {
+dbConnectionTest().then(async () => {
   if (process.env.DB_SYNC_ALTER == "true") {
     console.log("Will alter DB Tables");
     await sequelize

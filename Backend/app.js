@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 //Setup DB
-const db = require("./config/postgres.js");
+require("./config/postgres.js");
 
 //Development Tools
 if (process.env.NODE_ENV === "development") {
