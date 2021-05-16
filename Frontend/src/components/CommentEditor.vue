@@ -20,13 +20,6 @@
         >
           Senden
         </button>
-        <button
-          class="btn btn-outline-danger mx-1"
-          type="reset"
-          @click="removeMessageFromLocalStorage"
-        >
-          Löschen
-        </button>
       </form>
     </div>
   </div>
@@ -57,7 +50,7 @@ export default {
         message: this.message,
         userId: this.authUser.id,
       };
-      this.$emit("comment-submitted", comment);
+      this.$emit("submit-comment", comment);
     },
     clearCommentEditorInput() {
       this.message = "";
@@ -91,6 +84,6 @@ export default {
       }
     },
   },
-  emits: ["comment-submitted"],
+  emits: ["submit-comment"],
 };
 </script>

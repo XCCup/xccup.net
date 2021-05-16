@@ -6,12 +6,19 @@ test("Takes a timestamp and a configuration parameter and renders a date", () =>
   const dateFormat = "dd.MM.yyyy";
   const wrapper = mount(BaseDate, { props: { timestamp, dateFormat } });
 
-  expect(wrapper.text()).toBe("15.05.2021");
+  expect(wrapper.html()).toMatchSnapshot();
 });
 
-test("Should use a default dateFormat if none is passed", () => {
+test("Use a default date format if none is passed", () => {
   const timestamp = 1621088955000;
   const wrapper = mount(BaseDate, { props: { timestamp } });
 
-  expect(wrapper.text()).toBe("15.05.2021");
+  expect(wrapper.html()).toMatchSnapshot();
+});
+
+test("Do not render if no timestamp prop is passed", () => {
+  const timestamp = null;
+  const wrapper = mount(BaseDate, { props: { timestamp } });
+
+  expect(wrapper.html()).toMatchSnapshot();
 });

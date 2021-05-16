@@ -26,8 +26,8 @@
     <FlightDescription :description="description" />
     <Comments
       :comments="comments"
-      @comment-submitted="addComment"
-      @comment-deleted="deleteComment"
+      @submit-comment="addComment"
+      @delete-comment="deleteComment"
     />
   </div>
 </template>

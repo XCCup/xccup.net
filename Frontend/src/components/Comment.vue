@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     deleteComment() {
-      this.$emit("comment-deleted", this.comment.id);
+      this.$emit("delete-comment", this.comment.id);
     },
     editComment() {
       console.log("edit clicked");
@@ -47,6 +47,6 @@ export default {
   computed: {
     ...mapGetters(["authUser"]),
   },
-  emits: ["comment-deleted"],
+  emits: ["delete-comment"],
 };
 </script>
