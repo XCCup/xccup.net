@@ -48,6 +48,30 @@ router.delete("/:id", async (req, res) => {
   res.json(numberOfDestroyedRows);
 });
 
+// @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File.
+// @route POST /flight/igc
+
+router.post("/igc", async (req, res) => {
+  const igc = req.body.igc;
+
+  try {
+    checkParamsForIgc(igc);
+  } catch (error) {
+    res.status(BAD_REQUEST).send(error);
+    return;
+  }
+  console.log(igc);
+  igcValidator.execute(igc).then((result) => {
+    if (result == "FAILED") {
+      res.status(BAD_REQUEST).send("Invalid G-Record");
+      return;
+    }
+    persistIgcFile(igc).then((pathToFile) => {
+      res.json(pathToFile);
+    });
+  });
+});
+
 // @desc Saves a new flight to the database
 // @route POST /flight/
 
@@ -55,7 +79,7 @@ router.post("/", async (req, res) => {
   const newFlight = req.body;
   newFlight.flightStatus = "In Bearbeitung";
 
-  if (areRequiredFlightParamsInvalid(newFlight)) {
+  if (checkParamsForIgc(newFlight)) {
     res.sendStatus(BAD_REQUEST);
     return;
   }
@@ -63,11 +87,8 @@ router.post("/", async (req, res) => {
   const igcFile = newFlight.igc;
   delete newFlight.igc;
 
-  //TODO Handle result; What happens if service not reachable?
-  igcValidator.execute(igcFile);
-
   service.save(newFlight).then((result) => {
-    writeIgcFileToDrive(result.id, igcFile)
+    persistIgcFile(result.id, igcFile)
       .then(() => {
         service.startResultCalculation(result);
         //TODO Replace the later statement
@@ -85,24 +106,20 @@ router.post("/", async (req, res) => {
 });
 
 //TODO Move to helper class "FileWriter"
-async function writeIgcFileToDrive(flightId, igcFile) {
+async function persistIgcFile(igcFile) {
   const store = process.env.FLIGHT_STORE;
-  const pathToFolder = path.join(store, flightId.toString());
-  const pathToFile = path.join(pathToFolder.toString(), igcFile.name);
+  const pathToFile = path.join(store, igcFile.name);
   const fsPromises = fs.promises;
-  fs.mkdirSync(pathToFolder, { recursive: true });
   console.log(`Will write received IGC File to: ${pathToFile}`);
   await fsPromises.writeFile(pathToFile.toString(), igcFile.body);
+  return pathToFile;
 }
 
-function areRequiredFlightParamsInvalid(flight) {
-  const result =
-    flight.pilotId === null ||
-    flight.igc.name === null ||
-    flight.igc.body === null ||
-    flight.glider === null;
-  console.log(`Parameter invalid: ${result}`);
-  return result;
+function checkParamsForIgc(igc) {
+  const result = igc.name && igc.body;
+  if (!result) {
+    throw "A parameter was invalid. The parameters igc.name and igc.body are required.";
+  }
 }
 
 module.exports = router;
