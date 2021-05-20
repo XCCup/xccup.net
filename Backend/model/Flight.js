@@ -4,6 +4,16 @@ const FlightComment = require("./FlightComment.js");
 const FlightFixes = require("./FlightFixes.js");
 
 const Flight = db.sequelize.define("Flight", {
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  externalId: {
+    type: DataTypes.INTEGER,
+    unique: true,
+  },
   report: {
     type: DataTypes.STRING(5000), //Default is VARCHAR(255)
   },

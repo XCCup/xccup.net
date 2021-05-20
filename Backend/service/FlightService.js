@@ -7,7 +7,6 @@ const FlightComment = require("../model/FlightComment.js");
 const flightService = {
   getAll: async () => {
     const flights = await Flight.findAll();
-    console.log("Service: ", flights);
     return flights;
   },
 
@@ -34,6 +33,10 @@ const flightService = {
     } else {
       return null;
     }
+  },
+
+  update: async (flight) => {
+    return flight.save();
   },
 
   delete: async (flightId) => {
@@ -71,7 +74,7 @@ const flightService = {
     );
   },
 
-  save: async (flight) => {
+  create: async (flight) => {
     return await Flight.create(flight);
   },
 

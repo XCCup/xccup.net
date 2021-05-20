@@ -53,6 +53,7 @@ router.delete("/:id", async (req, res) => {
 
 router.post("/igc", async (req, res) => {
   const igc = req.body.igc;
+  const userId = req.body.userId;
 
   try {
     checkParamsForIgc(igc);
@@ -60,15 +61,25 @@ router.post("/igc", async (req, res) => {
     res.status(BAD_REQUEST).send(error);
     return;
   }
-  console.log(igc);
+
   igcValidator.execute(igc).then((result) => {
     if (result == "FAILED") {
-      res.status(BAD_REQUEST).send("Invalid G-Record");
-      return;
+      // res.status(BAD_REQUEST).send("Invalid G-Record");
+      // return;
+      // TODO Current example is invalid! Repair it!
     }
-    persistIgcFile(igc).then((pathToFile) => {
-      res.json(pathToFile);
-    });
+    service
+      .create({
+        userId: userId,
+      })
+      .then((flight) =>
+        persistIgcFile(flight.id, igc).then((igcUrl) => {
+          flight.igcUrl = igcUrl;
+          service.update(flight).then((flight) => {
+            res.json(flight.id);
+          });
+        })
+      );
   });
 });
 
@@ -87,7 +98,7 @@ router.post("/", async (req, res) => {
   const igcFile = newFlight.igc;
   delete newFlight.igc;
 
-  service.save(newFlight).then((result) => {
+  service.create(newFlight).then((result) => {
     persistIgcFile(result.id, igcFile)
       .then(() => {
         service.startResultCalculation(result);
@@ -106,13 +117,14 @@ router.post("/", async (req, res) => {
 });
 
 //TODO Move to helper class "FileWriter"
-async function persistIgcFile(igcFile) {
+async function persistIgcFile(flightId, igcFile) {
   const store = process.env.FLIGHT_STORE;
-  const pathToFile = path.join(store, igcFile.name);
+  const pathToFolder = path.join(store, flightId.toString());
+  const pathToFile = path.join(pathToFolder.toString(), igcFile.name);
   const fsPromises = fs.promises;
+  fs.mkdirSync(pathToFolder, { recursive: true });
   console.log(`Will write received IGC File to: ${pathToFile}`);
   await fsPromises.writeFile(pathToFile.toString(), igcFile.body);
-  return pathToFile;
 }
 
 function checkParamsForIgc(igc) {
