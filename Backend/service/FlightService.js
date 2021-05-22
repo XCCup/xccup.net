@@ -1,6 +1,7 @@
 const Flight = require("../model/Flight.js");
 const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
+const { findTakeoffAndLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
 const FlightComment = require("../model/FlightComment.js");
 
@@ -71,17 +72,25 @@ const flightService = {
     flight.flightTurnpoints = result.turnpoints;
     flight.igcUrl = result.igcUrl;
 
-    ElevationAttacher.execute(
-      IgcAnalyzer.extractFixes(flight),
-      (fixesWithElevation) => {
-        flight.fixes = fixesWithElevation;
-        FlightFixes.create({
-          flightId: flight.id,
-          fixes: flight.fixes,
-        });
-        flight.save();
-      }
-    );
+    const fixes = IgcAnalyzer.extractFixes(flight);
+    ElevationAttacher.execute(fixes, (fixesWithElevation) => {
+      // flight.fixes = fixesWithElevation;
+      FlightFixes.create({
+        flightId: flight.id,
+        fixes: fixesWithElevation,
+      });
+    });
+
+    if (process.env.USE_GOOGLE_API === true) {
+      const places = await findTakeoffAndLanding(
+        fixes[0],
+        fixes[fixes.length - 1]
+      );
+      flight.takeoff = places.nameOfTakeoff;
+      flight.takeoff = places.nameOfLanding;
+    }
+
+    flight.save();
   },
 
   create: async (flight) => {

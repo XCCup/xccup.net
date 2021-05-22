@@ -15,6 +15,12 @@ const Flight = db.sequelize.define("Flight", {
     autoIncrement: true,
     unique: true,
   },
+  takeoff: {
+    type: DataTypes.STRING(),
+  },
+  landing: {
+    type: DataTypes.STRING(),
+  },
   report: {
     type: DataTypes.STRING(5000), //Default is VARCHAR(255)
   },
