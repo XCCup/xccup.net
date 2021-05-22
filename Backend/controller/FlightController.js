@@ -49,7 +49,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File.
-// @route POST /flight/igc
+// @route POST /flight/
 
 router.post("/", async (req, res) => {
   const igc = req.body.igc;
