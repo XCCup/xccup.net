@@ -23,7 +23,7 @@ const IgcAnalyzer = {
     const requiredResolution = getResolutionForDuration(durationInMinutes);
     const stripFactor = requiredResolution / currentResolutionInSeconds;
     console.log(`Will strip igc fixes by factor ${stripFactor}`);
-    igcWithReducedFixes = stripByFactor(stripFactor, igcAsPlainText);
+    let igcWithReducedFixes = stripByFactor(stripFactor, igcAsPlainText);
     const { writeStream, pathToFile } = writeFile(
       flightId,
       igcWithReducedFixes,
@@ -45,14 +45,14 @@ const IgcAnalyzer = {
     console.log(`Finished parsing`);
     const currentResolution =
       (igcAsJson.fixes[1].timestamp - igcAsJson.fixes[0].timestamp) / 1000;
-    const shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
+    let shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
     console.log(`Will shrink extracted fixes by factor ${shrinkingFactor}`);
-    reducedFixes = [];
+    let reducedFixes = [];
     if (shrinkingFactor < 1) {
       //Prevent endless loop for negative numbers
       shrinkingFactor = 1;
     }
-    for (i = 0; i < igcAsJson.fixes.length; i += shrinkingFactor) {
+    for (let i = 0; i < igcAsJson.fixes.length; i += shrinkingFactor) {
       reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
     }
     return reducedFixes;
@@ -76,7 +76,7 @@ function readIgcFile(flightId) {
 
 function runTurnpointIteration(resultStripIteration, callback) {
   const igcAsPlainText = readIgcFile(resultStripIteration.flightId);
-  igcWithReducedFixes = stripAroundturnpoints(
+  let igcWithReducedFixes = stripAroundturnpoints(
     igcAsPlainText,
     resultStripIteration.turnpoints
   );
@@ -130,8 +130,11 @@ function parseOlcData(
   filePath,
   callback
 ) {
-  dataLines = data.split("\n");
+  const dataLines = data.split("\n");
 
+  let freeStartIndex;
+  let flatStartIndex;
+  let faiStartIndex;
   for (let i = 0; i < dataLines.length; i++) {
     if (dataLines[i].startsWith("OUT TYPE FREE_FLIGHT")) freeStartIndex = i;
     if (dataLines[i].startsWith("OUT TYPE FREE_TRIANGLE")) flatStartIndex = i;
@@ -139,13 +142,13 @@ function parseOlcData(
   }
 
   const distancePrefix = "OUT FLIGHT_KM ";
-  freeDistance = dataLines[freeStartIndex + 1]
+  let freeDistance = dataLines[freeStartIndex + 1]
     .replace(distancePrefix, "")
     .replace("\r", "");
-  flatDistance = dataLines[flatStartIndex + 1]
+  let flatDistance = dataLines[flatStartIndex + 1]
     .replace(distancePrefix, "")
     .replace("\r", "");
-  faiDistance = dataLines[faiStartIndex + 1]
+  let faiDistance = dataLines[faiStartIndex + 1]
     .replace(distancePrefix, "")
     .replace("\r", "");
 
@@ -153,9 +156,9 @@ function parseOlcData(
   console.log("FLAT DIST: " + flatDistance);
   console.log("FAI DIST: " + faiDistance);
 
-  freePts = freeDistance * factors.free;
-  flatPts = flatDistance * factors.flat;
-  faiPts = faiDistance * factors.fai;
+  let freePts = freeDistance * factors.free;
+  let flatPts = flatDistance * factors.flat;
+  let faiPts = faiDistance * factors.fai;
 
   console.log("FREE PTS: " + freePts);
   console.log("FLAT PTS: " + flatPts);
@@ -239,8 +242,8 @@ function writeFile(flightId, inputArray, stripFactor) {
 
 function stripByFactor(factor, input) {
   const lines = input.split("\n");
-  reducedLines = [];
-  for (i = 0; i < lines.length; i++) {
+  let reducedLines = [];
+  for (let i = 0; i < lines.length; i++) {
     reducedLines.push(lines[i]);
     if (lines[i].startsWith("B")) {
       i = i + (factor - 1);
@@ -253,7 +256,7 @@ function stripAroundturnpoints(input, turnpoints) {
   const lines = input.split("\n");
   let lineIndexes = [];
   let cpIndex = 0;
-  for (i = 0; i < lines.length; i++) {
+  for (let i = 0; i < lines.length; i++) {
     let timeToFind = turnpoints[cpIndex].time.replace(/:/g, "");
     if (lines[i].includes("B" + timeToFind)) {
       lineIndexes.push(i);
@@ -266,10 +269,10 @@ function stripAroundturnpoints(input, turnpoints) {
 
   console.log("IN: ", lineIndexes);
 
-  reducedLines = [];
+  let reducedLines = [];
   let lineIndexesIndex = 0;
   let look = false;
-  for (i = 0; i < lines.length; i++) {
+  for (let i = 0; i < lines.length; i++) {
     if (!lines[i].startsWith("B")) {
       reducedLines.push(lines[i]);
     } else {
@@ -303,7 +306,7 @@ function getResolution(igcAsJson) {
 function getResolutionForDuration(durationInMinutes) {
   //For every hour decrease resolution by 4 seconds
   //Start by 1 hour with 4 seconds resolution
-  resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
+  const resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
   console.log(
     `The flight will be calculated with a new resolution of ${resolution} seconds`
   );

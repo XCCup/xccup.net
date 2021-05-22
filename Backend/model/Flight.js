@@ -4,6 +4,23 @@ const FlightComment = require("./FlightComment.js");
 const FlightFixes = require("./FlightFixes.js");
 
 const Flight = db.sequelize.define("Flight", {
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  externalId: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    unique: true,
+  },
+  takeoff: {
+    type: DataTypes.STRING(),
+  },
+  landing: {
+    type: DataTypes.STRING(),
+  },
   report: {
     type: DataTypes.STRING(5000), //Default is VARCHAR(255)
   },
@@ -27,13 +44,11 @@ const Flight = db.sequelize.define("Flight", {
   igcUrl: {
     type: DataTypes.STRING,
   },
+  imagesUrls: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+  },
   glider: {
     type: DataTypes.STRING,
-  },
-  gRecordInvalid: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-    allowNull: false,
   },
   airspaceViolation: {
     type: DataTypes.BOOLEAN,

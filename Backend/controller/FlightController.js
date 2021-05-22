@@ -7,8 +7,8 @@ const fs = require("fs");
 const {
   NOT_FOUND,
   BAD_REQUEST,
-  OK,
-  INTERNAL_SERVER_ERROR,
+  // OK,
+  // INTERNAL_SERVER_ERROR,
 } = require("./Constants");
 
 // @desc Retrieves all flights
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   console.log("Call controller");
-  const flight = await service.getById(req.params.id);
+  const flight = await service.getByIdForDisplay(req.params.id);
 
   if (!flight) {
     res.sendStatus(NOT_FOUND);
@@ -48,44 +48,76 @@ router.delete("/:id", async (req, res) => {
   res.json(numberOfDestroyedRows);
 });
 
-// @desc Saves a new flight to the database
+// @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File.
 // @route POST /flight/
 
 router.post("/", async (req, res) => {
-  const newFlight = req.body;
-  newFlight.flightStatus = "In Bearbeitung";
+  const igc = req.body.igc;
+  const userId = req.body.userId;
 
-  if (areRequiredFlightParamsInvalid(newFlight)) {
-    res.sendStatus(BAD_REQUEST);
+  try {
+    checkParamsForIgc(igc);
+  } catch (error) {
+    res.status(BAD_REQUEST).send(error);
     return;
   }
 
-  const igcFile = newFlight.igc;
-  delete newFlight.igc;
+  igcValidator
+    .execute(igc)
+    .then((result) => {
+      if (result == "FAILED") {
+        // res.status(BAD_REQUEST).send("Invalid G-Record");
+        // return;
+        // TODO Current example is invalid! Repair it!
+      }
+      service
+        .create({
+          userId: userId,
+        })
+        .then((flight) =>
+          persistIgcFile(flight.id, igc).then((igcUrl) => {
+            flight.igcUrl = igcUrl;
+            service.update(flight).then((flight) => {
+              res.json({
+                flightId: flight.id,
+                takeoff: "Bremm",
+                landing: "Zeltingen-Rachtig",
+              });
+            });
+          })
+        );
+    })
+    .catch((error) => {
+      //Couldn't execute request to FAI API
+      res.status(BAD_REQUEST).send(error);
+    });
+});
 
-  //TODO Handle result; What happens if service not reachable?
-  igcValidator.execute(igcFile);
+// @desc Adds futher data to a existing flight and starts the igc calculation if no igc result are present.
+// @route PUT /flight/:id
 
-  service.save(newFlight).then((result) => {
-    writeIgcFileToDrive(result.id, igcFile)
-      .then(() => {
-        service.startResultCalculation(result);
-        //TODO Replace the later statement
-        //Return a hard coded flight id and takeoff & landing for development. Should be the data in future.
-        res.status(OK).send({
-          flightId: result.id,
-          takeoff: "Bremm",
-          landing: "Zeltingen-Rachtig",
-        });
-      })
-      .catch((error) => {
-        res.status(INTERNAL_SERVER_ERROR).send(error.message);
+router.put("/:id", async (req, res) => {
+  const report = req.body.report;
+  const glider = req.body.glider;
+  const flightId = req.params.id;
+
+  service
+    .getById(flightId)
+    .then((flight) => {
+      flight.report = report;
+      flight.glider = glider;
+      service.update(flight).then((flight) => {
+        res.json(flight.externalId);
+        if (!flight.flightDistance) service.startResultCalculation(flight);
       });
-  });
+    })
+    .catch(() => {
+      res.sendStatus(NOT_FOUND);
+    });
 });
 
 //TODO Move to helper class "FileWriter"
-async function writeIgcFileToDrive(flightId, igcFile) {
+async function persistIgcFile(flightId, igcFile) {
   const store = process.env.FLIGHT_STORE;
   const pathToFolder = path.join(store, flightId.toString());
   const pathToFile = path.join(pathToFolder.toString(), igcFile.name);
@@ -93,16 +125,14 @@ async function writeIgcFileToDrive(flightId, igcFile) {
   fs.mkdirSync(pathToFolder, { recursive: true });
   console.log(`Will write received IGC File to: ${pathToFile}`);
   await fsPromises.writeFile(pathToFile.toString(), igcFile.body);
+  return pathToFile;
 }
 
-function areRequiredFlightParamsInvalid(flight) {
-  const result =
-    flight.pilotId === null ||
-    flight.igc.name === null ||
-    flight.igc.body === null ||
-    flight.glider === null;
-  console.log(`Parameter invalid: ${result}`);
-  return result;
+function checkParamsForIgc(igc) {
+  const result = igc.name && igc.body;
+  if (!result) {
+    throw "A parameter was invalid. The parameters igc.name and igc.body are required.";
+  }
 }
 
 module.exports = router;
