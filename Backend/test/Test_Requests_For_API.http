@@ -62,11 +62,12 @@ content-type: application/json
 DELETE http://localhost:3000/flights/5 HTTP/1.1
 
 ###
-POST http://localhost:3000/flights/77cb0c8c-b8fe-4440-8fea-b3455cb7bc58 HTTP/1.1
+PUT  http://localhost:3000/flights/517d83ac-c43e-44ae-89ce-5618812b2792 HTTP/1.1
 content-type: application/json
 
 {
-    "message": "Lorem Ipsum Dolor"
+    "report": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    "glider": "Ozone Alpina 2"
 }
 
 ###

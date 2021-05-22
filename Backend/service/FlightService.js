@@ -11,6 +11,10 @@ const flightService = {
   },
 
   getById: async (flightId) => {
+    return await Flight.findByPk(flightId);
+  },
+
+  getByIdForDisplay: async (flightId) => {
     const flightDbObject = await Flight.findOne({
       where: { id: flightId },
       include: [
@@ -28,7 +32,9 @@ const flightService = {
     if (flightDbObject) {
       let flight = flightDbObject.toJSON();
       //DIRTY Move the fixes one layer up
-      flight.fixes = flight.fixes.fixes;
+      if (flight.fixes) {
+        flight.fixes = flight.fixes.fixes;
+      }
       return flight;
     } else {
       return null;
@@ -56,7 +62,12 @@ const flightService = {
     flight.flightPoints = Math.round(result.pts);
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
-    flight.flightStatus = "In Wertung";
+    //TODO Replace threshold value by db query
+    if (flight.flightPoints >= 60) {
+      flight.flightStatus = "In Wertung";
+    } else {
+      flight.flightStatus = "Nicht in Wertung";
+    }
     flight.flightTurnpoints = result.turnpoints;
     flight.igcUrl = result.igcUrl;
 
@@ -68,7 +79,6 @@ const flightService = {
           flightId: flight.id,
           fixes: flight.fixes,
         });
-
         flight.save();
       }
     );

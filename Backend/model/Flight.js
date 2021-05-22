@@ -12,6 +12,7 @@ const Flight = db.sequelize.define("Flight", {
   },
   externalId: {
     type: DataTypes.INTEGER,
+    autoIncrement: true,
     unique: true,
   },
   report: {
@@ -37,13 +38,11 @@ const Flight = db.sequelize.define("Flight", {
   igcUrl: {
     type: DataTypes.STRING,
   },
+  imagesUrls: {
+    type: DataTypes.ARRAY(DataTypes.STRING),
+  },
   glider: {
     type: DataTypes.STRING,
-  },
-  gRecordInvalid: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-    allowNull: false,
   },
   airspaceViolation: {
     type: DataTypes.BOOLEAN,
