@@ -1,4 +1,4 @@
-const User = require("../model/User.js");
+const { User } = require("../model/DependentModels");
 
 const userService = {
   getAll: async () => {

@@ -1,13 +1,19 @@
-const Flight = require("../model/Flight.js");
+const { FlightComment, Flight, User } = require("../model/DependentModels");
 const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findTakeoffAndLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
-const FlightComment = require("../model/FlightComment.js");
 
 const flightService = {
   getAll: async () => {
-    const flights = await Flight.findAll();
+    const flights = await Flight.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+      ],
+    });
     return flights;
   },
 
@@ -27,6 +33,16 @@ const flightService = {
         {
           model: FlightComment,
           as: "comments",
+          include: [
+            {
+              model: User,
+              attributes: ["name"],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["name"],
         },
       ],
     });
@@ -37,9 +53,8 @@ const flightService = {
         flight.fixes = flight.fixes.fixes;
       }
       return flight;
-    } else {
-      return null;
     }
+    return null;
   },
 
   update: async (flight) => {

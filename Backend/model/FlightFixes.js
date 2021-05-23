@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const db = require("../config/postgres.js");
 
 const FlightFixes = db.sequelize.define("FlightFixes", {
