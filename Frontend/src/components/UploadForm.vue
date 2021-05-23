@@ -1,7 +1,7 @@
 <template>
   <div id="upload" class="container">
     <h3>Flug hochladen</h3>
-    <form @submit.prevent="sendForm">
+    <form @submit.prevent="sendFlightDetails">
       <div class="mb-3">
         <label for="igcUploadForm" class="form-label">
           Flug auswählen (.igc)
@@ -28,10 +28,10 @@
         <div class="row d-flex align-items-end">
           <div class="col-md-9">
             <BaseSelect
-              v-model="flight.glider"
+              v-model="flightDetails.glider"
               label="Fluggerät"
               :showLabel="true"
-              :options="[flight.glider]"
+              :options="[flightDetails.glider]"
               :isDisabled="!flightId"
             />
           </div>
@@ -58,7 +58,7 @@
             placeholder="Flugbericht"
             id="floatingTextarea2"
             style="height: 100px"
-            v-model="flight.report"
+            v-model="flightDetails.report"
             :disabled="!flightId"
           ></textarea>
           <label for="floatingTextarea2">Flugbericht</label>
@@ -114,6 +114,7 @@
 <script>
 import FlightService from "@/services/FlightService";
 import AddGliderModal from "@/components/AddGliderModal";
+import { mapGetters } from "vuex";
 
 export default {
   name: "UploadForm",
@@ -121,14 +122,16 @@ export default {
   data() {
     return {
       flight: {
-        userId: "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
-        glider: "XCRacer S",
-        // brand: "Flow",
-        report: "Lorem ipsum",
+        UserId: null,
         igc: {
           name: "",
           body: null,
         },
+      },
+      flightDetails: {
+        glider: "XCRacer S",
+        // brand: "Flow",
+        report: "Lorem ipsum",
       },
       rulesAccepted: true,
       flightId: null,
@@ -136,7 +139,11 @@ export default {
       landing: "",
     };
   },
+  created() {
+    this.flight.UserId = this.authUser.id;
+  },
   computed: {
+    ...mapGetters(["authUser"]),
     sendButtonIsDisabled() {
       return this.flightId && this.rulesAccepted === true ? false : true;
     },
@@ -152,9 +159,15 @@ export default {
         reader.readAsText(file);
       });
     },
-    async sendForm() {
+    async sendFlightDetails() {
       try {
-        console.log("send");
+        const response = await FlightService.uploadFlightDetails(
+          this.flightId,
+          this.flightDetails
+        );
+        console.log(response);
+        if (response.status != 200) throw response.statusText;
+        this.routeToFlight(this.flightId);
       } catch (error) {
         console.log(error);
       }
@@ -162,7 +175,7 @@ export default {
     async sendIgc() {
       if (this.flight.igc.body == null) return;
       try {
-        return await FlightService.uploadFlight(this.flight);
+        return await FlightService.uploadIgc(this.flight);
       } catch (error) {
         console.log(error);
       }
@@ -183,6 +196,14 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    routeToFlight(flightId) {
+      this.$router.push({
+        name: "Sandbox",
+        params: {
+          flightId: flightId,
+        },
+      });
     },
   },
 };
