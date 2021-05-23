@@ -91,7 +91,7 @@ const flightService = {
     ElevationAttacher.execute(fixes, (fixesWithElevation) => {
       // flight.fixes = fixesWithElevation;
       FlightFixes.create({
-        flightId: flight.id,
+        FlightId: flight.id,
         fixes: fixesWithElevation,
       });
     });
