@@ -1,4 +1,4 @@
-const FlightComment = require("../model/FlightComment.js");
+const { FlightComment } = require("../model/DependentModels");
 
 const commentService = {
   getByFlightId: async (flightId) => {

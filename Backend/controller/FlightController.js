@@ -53,7 +53,7 @@ router.delete("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const igc = req.body.igc;
-  const userId = req.body.userId;
+  const UserId = req.body.UserId;
 
   try {
     checkParamsForIgc(igc);
@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
       }
       service
         .create({
-          userId: userId,
+          UserId: UserId,
         })
         .then((flight) =>
           persistIgcFile(flight.id, igc).then((igcUrl) => {
