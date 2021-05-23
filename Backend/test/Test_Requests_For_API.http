@@ -3,25 +3,6 @@ DELETE http://localhost:3000/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e HTTP/1.1
 content-type: application/json
 
 ###
-POST http://localhost/flights/ HTTP/1.1
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="userId"
-
-1234
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="aircraft"
-
-Ozone Alpina 2
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image"; filename="jojo_79km35_4h8m.igc"
-Content-Type: text/plain
-
-< ./jojo_79km35_4h8m.igc
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-###
 POST http://localhost:3000/users/ HTTP/1.1
 content-type: application/json
 
