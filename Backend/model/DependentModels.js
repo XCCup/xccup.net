@@ -162,11 +162,15 @@ const FlightComment = db.sequelize.define("FlightComment", {
 
 User.hasMany(Flight, {
   as: "flights",
+  foreignKey: {
+    name: "userId",
+  },
 });
 
 User.hasMany(FlightComment, {
   as: "comments",
   foreignKey: {
+    name: "userId",
     //Through this constrain it's realized that every comment, will be delete if the user will be deleted
     allowNull: false,
   },
@@ -177,6 +181,7 @@ User.hasMany(FlightComment, {
 Flight.hasMany(FlightComment, {
   as: "comments",
   foreignKey: {
+    name: "flightId",
     //Through this constrain it's realized that every comment, will be delete if the user will be deleted
     allowNull: false,
   },
@@ -184,13 +189,21 @@ Flight.hasMany(FlightComment, {
   hooks: true,
 });
 
-Flight.belongsTo(User);
-FlightComment.belongsTo(User);
+Flight.belongsTo(User, {
+  foreignKey: {
+    name: "userId",
+  },
+});
+FlightComment.belongsTo(User, {
+  foreignKey: {
+    name: "userId",
+  },
+});
 
 Flight.hasOne(FlightFixes, {
   as: "fixes",
   foreignKey: {
-    name: "FlightId",
+    name: "flightId",
     //Through this constrain it's realized that every comment, will be delete if the user will be deleted
     allowNull: false,
   },
