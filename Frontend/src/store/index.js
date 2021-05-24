@@ -46,11 +46,13 @@ export default createStore({
       return this.markerMapPosition;
     },
   },
+  // TODO: Remove this if not used
   actions: {
     updateMarkerMapPosition(context, Position) {
       context.commit("setMarkerMapPosition", Position);
     },
   },
+  // TODO: Remove this if not used
   mutations: {
     setMarkerMapPosition(state, Position) {
       state.markerMapPosition = Position;

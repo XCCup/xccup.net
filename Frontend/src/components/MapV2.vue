@@ -163,6 +163,7 @@ export default {
     },
 
     drawTurnpoints(turnpoints) {
+      if (!turnpoints) return;
       let tmp = [];
       turnpoints.forEach((tp) => {
         tmp.push([tp.lat, tp.long]);

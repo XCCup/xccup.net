@@ -9,19 +9,22 @@
             <tr>
               <th>Pilot:</th>
               <td>
-                <a href="#">{{ flight.pilot }}</a>
+                <!-- TODO: Remove optional -->
+                <a href="#">{{ flight.User?.name }}</a>
               </td>
             </tr>
             <tr>
               <th>Verein:</th>
               <td>
-                <a href="#">{{ pilot.club }}</a>
+                <!-- TODO: Remove optinals -->
+                <a href="#">{{ flight.User?.club ?? "Club" }}</a>
               </td>
             </tr>
             <tr>
               <th>Team:</th>
               <td>
-                <a href="#">{{ pilot.team }}</a>
+                <!-- TODO: Remove optinals -->
+                <a href="#">{{ flight.User?.team ?? "Team Name" }}</a>
               </td>
             </tr>
             <tr>
@@ -55,11 +58,14 @@
             </tr>
             <tr>
               <th>Strecke:</th>
-              <td>{{ flight.distance }} km <i class="bi bi-triangle"></i></td>
+              <td>
+                {{ flight.flightDistance }} km
+                <i class="bi bi-triangle">{{ flight.flightType }}</i>
+              </td>
             </tr>
             <tr>
               <th>Punkte:</th>
-              <td>{{ flight.points }}</td>
+              <td>{{ flight.flightPoints }}</td>
             </tr>
 
             <tr>
@@ -100,19 +106,22 @@
             <tbody>
               <tr>
                 <th>Flugstatus:</th>
-                <td>😃 (In Wertung)</td>
+                <td>{{ flight.flightStatus }}</td>
               </tr>
               <tr>
                 <th>Höhe min/max (GPS):</th>
-                <td>359m / 2665m</td>
+                <td></td>
+                <!-- 359m / 2665m -->
               </tr>
               <tr>
                 <th>Steigen min/max:</th>
-                <td>-10,0m/s / 7,0m/s</td>
+                <td></td>
+                <!-- -10,0m/s / 7,0m/s -->
               </tr>
               <tr>
                 <th>Geschwindigkeit max:</th>
-                <td>124,0km/h</td>
+                <td></td>
+                <!-- 124,0km/h -->
               </tr>
             </tbody>
           </table>
@@ -123,19 +132,28 @@
             <tbody>
               <tr>
                 <th>Landeplatz:</th>
-                <td>Bremm - DE[~1,29km]</td>
+                <td>{{ flight.landing }}</td>
+                <!-- Bremm - DE[~1,29km] -->
               </tr>
               <tr>
                 <th>Ø Geschwindigkeit:</th>
-                <td>38,0km/h</td>
+                <td></td>
+                <!-- 38,0km/h -->
               </tr>
               <tr>
                 <th>Aufgaben-Geschwindigkeit:</th>
-                <td>16,9km/h</td>
+                <td></td>
+                <!-- 16,9km/h -->
               </tr>
               <tr>
                 <th>Eingereicht am:</th>
-                <td>23.07.2020 18:50:23</td>
+                <td>
+                  <BaseDate
+                    :timestamp="flight.createdAt"
+                    dateFormat="dd.MM.yyyy HH:mm"
+                  />
+                </td>
+                <!-- 23.07.2020 18:50:23 -->
               </tr>
             </tbody>
           </table>
@@ -170,15 +188,19 @@ export default {
   },
   methods: {
     getlandingTime(flight) {
+      if (!flight.fixes) return "";
+
       return format(
         new Date(flight.fixes[flight.fixes.length - 1].timestamp),
         "HH:mm"
       );
     },
     getTakeoffTime(flight) {
+      if (!flight.fixes) return "";
       return format(new Date(flight.fixes[0].timestamp), "HH:mm");
     },
     calcFlightDuration(flight) {
+      if (!flight.fixes) return "";
       let ms =
         flight.fixes[flight.fixes.length - 1].timestamp -
         flight.fixes[0].timestamp;

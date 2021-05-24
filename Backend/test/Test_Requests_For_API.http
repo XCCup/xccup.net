@@ -21,8 +21,8 @@ POST http://localhost:3000/comments/ HTTP/1.1
 content-type: application/json
 
 {
-    "flightId": 1,
-    "userId": "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
+    "FlightId": 1,
+    "UserId": "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
     "message": "Lorem Ipsum"
 }
 
@@ -43,7 +43,7 @@ content-type: application/json
 DELETE http://localhost:3000/flights/5 HTTP/1.1
 
 ###
-PUT  http://localhost:3000/flights/948e3147-9593-4a2c-a304-a458a5242cf0 HTTP/1.1
+PUT  http://localhost:3000/flights/fab39cf1-4e09-4524-babb-0526be235519 HTTP/1.1
 content-type: application/json
 
 {
