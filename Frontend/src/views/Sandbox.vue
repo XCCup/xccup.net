@@ -72,6 +72,7 @@ export default {
 
     // Is this try/catch smart?
     try {
+      // TODO: Remove this when ready
       // Hardcoded flight for development
       let flightId = "60699294a7c2069af1246316";
       if (process.env.VUE_APP_USE_LOCAL_API === "true") {
@@ -80,7 +81,7 @@ export default {
       }
 
       const response = await FlightService.getFlight(flightId);
-      if (!response.data.fixes) {
+      if (!response.data.id) {
         throw "Invalid response";
       }
       flight.value = response.data;
@@ -118,8 +119,8 @@ export default {
     async addComment(comment) {
       try {
         const res = await FlightService.addComment({
-          flightId: this.$route.params.flightId,
-          userId: comment.userId,
+          FlightId: this.$route.params.flightId,
+          UserId: comment.userId,
           message: comment.message,
         });
         if (res.status != 200)
@@ -156,6 +157,7 @@ export default {
     },
 
     tracklogs() {
+      if (!this.flight.fixes) return;
       return processTracklogs(this.flight, this.buddyTracks);
     },
 
@@ -194,7 +196,7 @@ function processBaroData(flight, buddyTracks) {
   const allBaroData = [];
   const baroData = [];
   const elevation = [];
-  if (!flight) return null;
+  if (!flight.fixes) return null;
   for (var i = 0; i < flight.fixes.length; i++) {
     elevation.push({
       x: flight.fixes[i].timestamp,

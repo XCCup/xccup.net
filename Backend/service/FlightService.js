@@ -95,14 +95,13 @@ const flightService = {
         fixes: fixesWithElevation,
       });
     });
-
-    if (process.env.USE_GOOGLE_API === true) {
+    if (process.env.USE_GOOGLE_API === "true") {
       const places = await findTakeoffAndLanding(
         fixes[0],
         fixes[fixes.length - 1]
       );
       flight.takeoff = places.nameOfTakeoff;
-      flight.takeoff = places.nameOfLanding;
+      flight.landing = places.nameOfLanding;
     }
 
     flight.save();

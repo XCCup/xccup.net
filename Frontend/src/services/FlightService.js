@@ -45,9 +45,11 @@ export default {
   getDescription() {
     return apiClient2.get("/flightDescription");
   },
-
-  uploadFlight(data) {
-    return apiClient.post("/flight/", data);
+  uploadIgc(data) {
+    return apiClient.post("/flights/", data);
+  },
+  uploadFlightDetails(flightId, data) {
+    return apiClient.put("/flights/" + flightId, data);
   },
   getAirbuddies(flightId) {
     return apiClient.get("/airbuddies/" + flightId);
