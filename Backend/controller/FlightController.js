@@ -15,7 +15,6 @@ const {
 // @route GET /flight/
 
 router.get("/", async (req, res) => {
-  console.log("Call controller");
   const flights = await service.getAll();
   res.json(flights);
 });
@@ -24,7 +23,6 @@ router.get("/", async (req, res) => {
 // @route GET /flight/:id
 
 router.get("/:id", async (req, res) => {
-  console.log("Call controller");
   const flight = await service.getByIdForDisplay(req.params.id);
 
   if (!flight) {
@@ -39,7 +37,6 @@ router.get("/:id", async (req, res) => {
 // @route DELETE /flight/:id
 
 router.delete("/:id", async (req, res) => {
-  console.log("Call controller");
   const numberOfDestroyedRows = await service.delete(req.params.id);
   if (!numberOfDestroyedRows) {
     res.sendStatus(NOT_FOUND);
@@ -53,7 +50,7 @@ router.delete("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const igc = req.body.igc;
-  const UserId = req.body.UserId;
+  const userId = req.body.userId;
 
   try {
     checkParamsForIgc(igc);
@@ -62,35 +59,34 @@ router.post("/", async (req, res) => {
     return;
   }
 
-  igcValidator
-    .execute(igc)
-    .then((result) => {
-      if (result == "FAILED") {
-        // res.status(BAD_REQUEST).send("Invalid G-Record");
-        // return;
-        // TODO Current example is invalid! Repair it!
-      }
-      service
-        .create({
-          UserId: UserId,
-        })
-        .then((flight) =>
-          persistIgcFile(flight.id, igc).then((igcUrl) => {
-            flight.igcUrl = igcUrl;
-            service.update(flight).then((flight) => {
-              res.json({
-                flightId: flight.id,
-                takeoff: "Bremm",
-                landing: "Zeltingen-Rachtig",
-              });
+  igcValidator.execute(igc).then((result) => {
+    if (result == igcValidator.G_RECORD_FAILED) {
+      // res.status(BAD_REQUEST).send("Invalid G-Record");
+      // return;
+      // TODO Current example is invalid! Repair it!
+    }
+    service
+      .create({
+        userId: userId,
+        uncheckedGRecord: result == undefined ? true : false,
+        flightStatus: service.STATE_IN_PROCESS,
+      })
+      .then((flight) =>
+        persistIgcFile(flight.id, igc).then(async (igcUrl) => {
+          flight.igcUrl = igcUrl;
+
+          await service.extractFixesAndAddLocations(flight);
+
+          service.update(flight).then((flight) => {
+            res.json({
+              flightId: flight.id,
+              takeoff: flight.takeoff,
+              landing: flight.landing,
             });
-          })
-        );
-    })
-    .catch((error) => {
-      //Couldn't execute request to FAI API
-      res.status(BAD_REQUEST).send(error);
-    });
+          });
+        })
+      );
+  });
 });
 
 // @desc Adds futher data to a existing flight and starts the igc calculation if no igc result are present.

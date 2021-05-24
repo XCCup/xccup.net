@@ -140,6 +140,11 @@ const Flight = db.sequelize.define("Flight", {
     defaultValue: false,
     allowNull: false,
   },
+  uncheckedGRecord: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
 });
 
 //-----------FlightComment-----------

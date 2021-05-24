@@ -14,6 +14,7 @@ const byLatLong = async (location) => {
     return nameOfTown;
   } catch (error) {
     console.log(error);
+    return "API Error";
   }
 };
 
