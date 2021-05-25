@@ -119,8 +119,8 @@ export default {
     async addComment(comment) {
       try {
         const res = await FlightService.addComment({
-          FlightId: this.$route.params.flightId,
-          UserId: comment.userId,
+          flightID: this.$route.params.flightId,
+          userID: comment.userId,
           message: comment.message,
         });
         if (res.status != 200)

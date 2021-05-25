@@ -21,8 +21,8 @@ POST http://localhost:3000/comments/ HTTP/1.1
 content-type: application/json
 
 {
-    "FlightId": 1,
-    "UserId": "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
+    "flightID": 1,
+    "userID": "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
     "message": "Lorem Ipsum"
 }
 

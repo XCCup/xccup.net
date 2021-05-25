@@ -15,7 +15,7 @@
   <p>
     {{ comment.message }}
   </p>
-  <div v-if="comment.UserId === authUser?.id" class="text-secondary text-end">
+  <div v-if="comment.userID === authUser?.id" class="text-secondary text-end">
     <a href="#" @click.prevent="editComment"
       ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a
     >

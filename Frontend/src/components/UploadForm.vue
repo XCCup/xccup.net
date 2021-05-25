@@ -122,7 +122,7 @@ export default {
   data() {
     return {
       flight: {
-        UserId: null,
+        userID: null,
         igc: {
           name: "",
           body: null,
@@ -140,7 +140,7 @@ export default {
     };
   },
   created() {
-    this.flight.UserId = this.authUser.id;
+    this.flight.userID = this.authUser.id;
   },
   computed: {
     ...mapGetters(["authUser"]),
