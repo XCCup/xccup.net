@@ -5,6 +5,11 @@ const { findTakeoffAndLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
 
 const flightService = {
+  STATE_IN_RANKING: "In Wertung",
+  STATE_NOT_IN_RANKING: "Nicht in Wertung",
+  STATE_FLIGHTBOOK: "Flugbuch",
+  STATE_IN_PROCESS: "In Bearbeitung",
+
   getAll: async () => {
     const flights = await Flight.findAll({
       include: [
@@ -18,7 +23,16 @@ const flightService = {
   },
 
   getById: async (flightId) => {
-    return await Flight.findByPk(flightId);
+    return await Flight.findOne({
+      where: { id: flightId },
+      include: [
+        {
+          model: FlightFixes,
+          as: "fixes",
+          attributes: ["fixes"],
+        },
+      ],
+    });
   },
 
   getByIdForDisplay: async (flightId) => {
@@ -71,38 +85,28 @@ const flightService = {
 
   addResult: async (result) => {
     console.log("ADD RESULT TO FLIGHT");
-    const flight = await Flight.findOne({
-      where: { id: result.flightId },
-    });
+    const flight = await flightService.getById(result.flightId);
 
     flight.flightPoints = Math.round(result.pts);
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
     //TODO Replace threshold value by db query
     if (flight.flightPoints >= 60) {
-      flight.flightStatus = "In Wertung";
+      flight.flightStatus = flightService.STATE_IN_RANKING;
     } else {
-      flight.flightStatus = "Nicht in Wertung";
+      flight.flightStatus = flightService.STATE_NOT_IN_RANKING;
     }
     flight.flightTurnpoints = result.turnpoints;
     flight.igcUrl = result.igcUrl;
 
-    const fixes = IgcAnalyzer.extractFixes(flight);
-    ElevationAttacher.execute(fixes, (fixesWithElevation) => {
-      // flight.fixes = fixesWithElevation;
-      FlightFixes.create({
-        FlightId: flight.id,
-        fixes: fixesWithElevation,
-      });
-    });
-    if (process.env.USE_GOOGLE_API === "true") {
-      const places = await findTakeoffAndLanding(
-        fixes[0],
-        fixes[fixes.length - 1]
-      );
-      flight.takeoff = places.nameOfTakeoff;
-      flight.landing = places.nameOfLanding;
-    }
+    ElevationAttacher.execute(
+      flight.toJSON().fixes.fixes,
+      async (fixesWithElevation) => {
+        let flightFixes = await retrieveDbObjectOfFlightFixes(flight.id);
+        flightFixes.fixes = fixesWithElevation;
+        flightFixes.save();
+      }
+    );
 
     flight.save();
   },
@@ -116,6 +120,31 @@ const flightService = {
       flightService.addResult(result);
     });
   },
+  extractFixesAndAddLocations: async (flight) => {
+    const fixes = IgcAnalyzer.extractFixes(flight);
+
+    if (process.env.USE_GOOGLE_API === "true") {
+      const places = await findTakeoffAndLanding(
+        fixes[0],
+        fixes[fixes.length - 1]
+      );
+      flight.takeoff = places.nameOfTakeoff;
+      flight.landing = places.nameOfLanding;
+    }
+
+    FlightFixes.create({
+      flightId: flight.id,
+      fixes: fixes,
+    });
+  },
 };
+
+async function retrieveDbObjectOfFlightFixes(flightId) {
+  return await FlightFixes.findOne({
+    where: {
+      flightId: flightId,
+    },
+  });
+}
 
 module.exports = flightService;
