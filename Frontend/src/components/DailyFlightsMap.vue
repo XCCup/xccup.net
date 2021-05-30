@@ -14,39 +14,39 @@ export default {
   data() {
     return {
       map: null,
-      lines: [],
+      trackLines: [],
       tracks: [
         {
-          flightId: 1,
+          flightId: "1",
           turnpoints: [
-            { lat: 49.6, long: 6.1 },
-            { lat: 50.6, long: 7.6 },
-            { lat: 50.3, long: 7.9 },
+            { lat: 49.2, long: 6.1 },
+            { lat: 50.2, long: 7.6 },
+            { lat: 50.2, long: 7.9 },
           ],
         },
         {
-          flightId: 2,
+          flightId: "2",
           turnpoints: [
             { lat: 49.7, long: 6.8 },
             { lat: 50.2, long: 6.6 },
           ],
         },
         {
-          flightId: 3,
+          flightId: "3",
           turnpoints: [
             { lat: 50.1, long: 7.3 },
             { lat: 50.2, long: 7.4 },
           ],
         },
         {
-          flightId: 4,
+          flightId: "4",
           turnpoints: [
             { lat: 50.3, long: 6.5 },
             { lat: 50.4, long: 7.6 },
           ],
         },
         {
-          flightId: 5,
+          flightId: "5",
           turnpoints: [
             { lat: 49.6, long: 6.1 },
             { lat: 50.6, long: 7.6 },
@@ -61,6 +61,14 @@ export default {
       default: () => {
         return [];
       },
+    },
+    highlightedFlight: {
+      type: String,
+    },
+  },
+  watch: {
+    highlightedFlight() {
+      this.highlightTrack(this.highlightedFlight);
     },
   },
   mounted() {
@@ -92,6 +100,20 @@ export default {
     popup(flightId) {
       return `Flight ID: ${flightId} <br/> <a href>Link</a>`;
     },
+    highlightTrack(flightId) {
+      // Reset color of all tracks to default
+      this.trackLines.forEach((e) =>
+        e.setStyle({ color: "darkred", weight: 3 })
+      );
+      if (!flightId) return; // @mouseleave in parent sends "null"
+
+      // Find highlighted track
+      let index = this.tracks.findIndex((e) => e.flightId === flightId);
+      if (index < 0 || index == null) return; // (!index) does not work because "0" is falsy
+
+      // Highlight track
+      this.trackLines[index].setStyle({ color: "#08556d", weight: 5 });
+    },
     drawTracks(tracks) {
       let trackGroup = new L.featureGroup();
       tracks.forEach((track) => {
@@ -99,11 +121,13 @@ export default {
         track.turnpoints.forEach((tp) => {
           tmp.push([tp.lat, tp.long]);
         });
-        L.polyline(tmp, {
-          color: "darkred",
-        })
-          .bindPopup(this.popup(track.flightId))
-          .addTo(trackGroup);
+        this.trackLines.push(
+          L.polyline(tmp, {
+            color: "darkred",
+          })
+            .bindPopup(this.popup(track.flightId))
+            .addTo(trackGroup)
+        );
       });
       this.map.addLayer(trackGroup);
       this.map.fitBounds(trackGroup.getBounds());

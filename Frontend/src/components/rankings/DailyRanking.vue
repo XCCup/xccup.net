@@ -11,6 +11,8 @@
               v-bind:index="index"
               v-bind:key="flight._id"
               @click="routeToFlight(flight.flightId)"
+              @mouseover="updateHighlightedFlight(flight.flightId)"
+              @mouseleave="updateHighlightedFlight(null)"
             >
               <td scope="row">{{ index + 1 }}</td>
               <td>{{ flight.pilot }}</td>
@@ -29,7 +31,7 @@
       </div>
     </div>
     <div class="col-xl-7 col-md-6 col-12 p-0 m-0">
-      <DailyFlightsMap />
+      <DailyFlightsMap :highlightedFlight="highlightedFlightId" />
     </div>
   </div>
 </template>
@@ -40,6 +42,11 @@ import DailyFlightsMap from "@/components/DailyFlightsMap";
 export default {
   name: "DailyRanking",
   components: { DailyFlightsMap },
+  data() {
+    return {
+      highlightedFlightId: null,
+    };
+  },
   props: {
     flights: {
       type: Array,
@@ -48,6 +55,9 @@ export default {
     maxRows: Number,
   },
   methods: {
+    updateHighlightedFlight(flightId) {
+      this.highlightedFlightId = flightId;
+    },
     routeToFlight(flightId) {
       this.$router.push({
         name: "Flight",
