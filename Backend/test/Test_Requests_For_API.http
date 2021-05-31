@@ -4,6 +4,14 @@ DELETE http://localhost:3000/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e HTTP/1.1
 content-type: application/json
 
 ###
+POST http://localhost:3000/users/token HTTP/1.1
+content-type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMjQ5ODAwNH0.UFfykI7Yn3BTh67vG_mhbub36tAei9Z9FVea7iyoeDM"
+}
+
+###
 POST http://localhost:3000/users/login HTTP/1.1
 content-type: application/json
 
@@ -14,7 +22,7 @@ content-type: application/json
 
 ###
 GET http://localhost:3000/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMjQwNzkwN30.SujgzNtN_hDasVNzwp8QzfkM9xqsynCOTz7K8HOogTY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMjQ5ODE4NSwiZXhwIjoxNjIyNDk4MTk1fQ.15oNF9ski5hSXFw6pJbWGVqlbp8s30sYOP_kp_ctu-A
 
 ###
 POST http://localhost:3000/users/ HTTP/1.1

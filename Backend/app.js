@@ -7,6 +7,10 @@ const app = express();
 //Setup DB
 require("./config/postgres.js");
 
+//Init authentication tokens
+const { initAuth } = require("./controller/Auth");
+initAuth();
+
 //Development Tools
 if (process.env.NODE_ENV === "development") {
   // https://expressjs.com/en/resources/middleware/cors.html

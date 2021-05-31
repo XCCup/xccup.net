@@ -1,23 +1,32 @@
 const express = require("express");
 const service = require("../service/UserService");
 const {
+  OK,
   NOT_FOUND,
+  FORBIDDEN,
   UNAUTHORIZED,
   INTERNAL_SERVER_ERROR,
-  FORBIDDEN,
 } = require("./Constants");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
+const {
+  authToken,
+  createToken,
+  belongsNotToId,
+  createRefreshToken,
+  logoutToken,
+  refreshToken,
+} = require("./Auth");
 
-// @desc Retrieves all users
+// @desc Retrieves all usernames
 // @route GET /users/
 
 router.get("/", async (req, res) => {
   const users = await service.getAll();
+
   res.json(users);
 });
 
-// @desc Retrieves all users
+// @desc Logs a user in by his credentials
 // @route GET /users/login
 
 router.post("/login", async (req, res) => {
@@ -25,57 +34,74 @@ router.post("/login", async (req, res) => {
   const password = req.body.password;
 
   const userId = await service.validate(name, password);
-
   if (!userId) {
     res.sendStatus(UNAUTHORIZED);
     return;
   }
 
-  const accessToken = jwt.sign(
-    {
-      id: userId,
-    },
-    process.env.JWT_LOGIN_TOKEN
-  );
+  const accessToken = createToken(userId);
+  const refreshToken = createRefreshToken(userId);
 
-  res.json(accessToken);
+  res.json({
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+  });
 });
 
-// @desc Retrieves all users
+// @desc Refreshes an user access token if it has expired
+// @route GET /users/token
+
+router.post("/token", async (req, res) => {
+  const token = req.body.token;
+
+  const accessToken = await refreshToken(token);
+  if (!accessToken) {
+    res.sendStatus(FORBIDDEN);
+    return;
+  }
+
+  res.json({
+    accessToken: accessToken,
+  });
+});
+
+// @desc Logs a user out
 // @route GET /users/logout
 
-router.get("/logout", async (req, res) => {
-  const users = await service.getAll();
-  res.json(users);
+router.post("/logout", async (req, res) => {
+  const token = req.body.token;
+
+  logoutToken(token)
+    .then(() => res.sendStatus(OK))
+    .catch((error) => res.status(500).send(error));
 });
 
-// @desc Retrieve user by his username
+// @desc Retrieve public user data by username
 // @route GET /users/name/:username
+// @access All logged-in user
 
-router.get("/name/:username", async (req, res) => {
+router.get("/name/:username", authToken, async (req, res) => {
   const user = await service.getByName(req.params.username);
   if (!user) {
     res.sendStatus(NOT_FOUND);
     return;
   }
+
   res.json(user);
 });
 
 // @desc Retrieve user by id
 // @route GET /users/:id
+// @access Only owner
 
 router.get("/:id", authToken, async (req, res) => {
-  const requestedId = req.params.id;
-  const idOfRequester = req.user.id;
+  const requestId = req.params.id;
 
-  console.log("rId: ", requestedId);
-  console.log("idOR: ", idOfRequester);
-  if (requestedId !== idOfRequester) {
-    res.sendStatus(FORBIDDEN);
+  if (belongsNotToId(req, res, requestId)) {
     return;
   }
 
-  const retrievedUser = await service.getById(requestedId);
+  const retrievedUser = await service.getById(requestId);
   if (!retrievedUser) {
     res.sendStatus(NOT_FOUND);
     return;
@@ -86,13 +112,21 @@ router.get("/:id", authToken, async (req, res) => {
 
 // @desc Deletes user by id
 // @route DELETE /users/:id
+// @access Only owner
 
 router.delete("/:id", authToken, async (req, res) => {
+  const requestId = req.params.id;
+
+  if (belongsNotToId(req, res, requestId)) {
+    return;
+  }
+
   const user = await service.delete(req.params.id);
   if (!user) {
     res.sendStatus(NOT_FOUND);
     return;
   }
+
   res.json(user);
 });
 
@@ -110,21 +144,5 @@ router.post("/", async (req, res) => {
       res.status(INTERNAL_SERVER_ERROR).send(error.message);
     });
 });
-
-function authToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  console.log("Token: ", token);
-
-  if (!token) return res.sendStatus(UNAUTHORIZED);
-
-  jwt.verify(token, process.env.JWT_LOGIN_TOKEN, (error, user) => {
-    console.log("Verify err: ", error);
-    if (error) return res.sendStatus(FORBIDDEN);
-    req.user = user;
-    next();
-  });
-}
 
 module.exports = router;

@@ -29,9 +29,6 @@ const User = db.sequelize.define(
     lastName: {
       type: DataTypes.STRING,
     },
-    firstname: {
-      type: DataTypes.STRING,
-    },
     birthday: {
       type: DataTypes.STRING,
     },

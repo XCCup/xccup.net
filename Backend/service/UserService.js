@@ -2,9 +2,7 @@ const { User } = require("../model/DependentModels");
 
 const userService = {
   getAll: async () => {
-    const users = await User.findAll();
-    console.log("Service: ", users);
-    return users;
+    return await User.findAll({ attributes: ["name"] });
   },
   getById: async (id) => {
     return await User.findByPk(id, { attributes: { exclude: ["password"] } });
