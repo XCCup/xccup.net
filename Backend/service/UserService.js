@@ -7,7 +7,7 @@ const userService = {
     return users;
   },
   getById: async (id) => {
-    return await User.findByPk(id);
+    return await User.findByPk(id, { attributes: { exclude: ["password"] } });
   },
   getName: async (id) => {
     return await User.findByPk(id, { attributes: ["name"] });
@@ -15,6 +15,7 @@ const userService = {
   getByName: async (userName) => {
     return await User.findOne({
       where: { name: userName },
+      attributes: ["name", "firstName", "lastName", "gender", "state"],
     });
   },
   delete: async (id) => {
