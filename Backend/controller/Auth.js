@@ -28,6 +28,9 @@ const auth = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_LOGIN_TOKEN, (error, user) => {
     if (error) {
+      if (error.toString().includes("jwt expired")) {
+        return res.status(FORBIDDEN).send("EXPIRED");
+      }
       console.log("Verify err: ", error);
       return res.sendStatus(FORBIDDEN);
     }
@@ -43,7 +46,7 @@ const auth = (req, res, next) => {
  */
 const create = (userId) => {
   const token = jwt.sign({ id: userId }, process.env.JWT_LOGIN_TOKEN, {
-    expiresIn: "10s",
+    expiresIn: "10m",
   });
   return token;
 };
