@@ -100,7 +100,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s =>
     id: "kai_free",
   };
   const numberOfFixes = 2979;
-  fixNr2345 = {
+  const fixNr2345 = {
     time: "13:13:26",
     timestamp: 1595078006000,
     latitude: 50.35896666666667,
@@ -122,7 +122,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s =>
     id: "kai_flat_res2",
   };
   const numberOfFixes = 3757;
-  fixNr2345 = {
+  const fixNr2345 = {
     time: "14:30:24",
     timestamp: 1589725824000,
     latitude: 49.81915,
@@ -144,7 +144,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s =
     id: "kai_free_res10",
   };
   const numberOfFixes = 1809;
-  fixNr234 = {
+  const fixNr234 = {
     time: "10:24:43",
     timestamp: 1595067883000,
     latitude: 50.10693333333333,

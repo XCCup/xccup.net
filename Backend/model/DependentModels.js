@@ -29,9 +29,6 @@ const User = db.sequelize.define(
     lastName: {
       type: DataTypes.STRING,
     },
-    firstname: {
-      type: DataTypes.STRING,
-    },
     birthday: {
       type: DataTypes.STRING,
     },
@@ -72,13 +69,13 @@ const User = db.sequelize.define(
         user.password = bcrypt.hashSync(user.password, salt);
       },
     },
-    instanceMethods: {
-      validPassword: function (password) {
-        return bcrypt.compareSync(password, this.password);
-      },
-    },
   }
 );
+
+//Define instance level methods for user
+User.prototype.validPassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
 const getNames = async () => {
   return User.findAll({
