@@ -1,0 +1,74 @@
+<template>
+  <form class="px-4 py-3" @submit.prevent="handleSubmit">
+    <div class="mb-3">
+      <h6 class="fst-italic">
+        Führt angemeldete Nutzer direkt zu ihrem
+        <router-link :to="{ name: 'Profile' }"> Profil</router-link>
+      </h6>
+      <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleDropdownFormEmail1"
+        placeholder="E-Mail"
+        v-model="username"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleDropdownFormPassword1" class="form-label"
+        >Passwort</label
+      >
+      <input
+        type="password"
+        class="form-control"
+        id="exampleDropdownFormPassword1"
+        placeholder="Passwort"
+        v-model="password"
+      />
+    </div>
+    <div class="mb-3">
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="dropdownCheck" />
+        <label class="form-check-label" for="dropdownCheck">
+          Angemeldet bleiben
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Anmelden</button>
+  </form>
+  <div class="dropdown-divider"></div>
+  <a class="dropdown-item" href="#">Registrieren</a>
+  <a class="dropdown-item" href="#">Password vergessen?</a>
+</template>
+
+<script>
+import FlightService from "@/services/FlightService";
+export default {
+  name: "BaseLogin",
+
+  data() {
+    return { username: "", password: "" };
+  },
+
+  methods: {
+    async handleSubmit() {
+      try {
+        const res = await FlightService.userLogin({
+          name: this.username,
+          password: this.password,
+        });
+        if (res.status != 200) throw "Login Error";
+        localStorage.setItem("user", res.data.userId);
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
+
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+};
+</script>
+
+<style scoped></style>
