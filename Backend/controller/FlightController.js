@@ -4,12 +4,8 @@ const service = require("../service/FlightService");
 const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const fs = require("fs");
-const {
-  NOT_FOUND,
-  BAD_REQUEST,
-  // OK,
-  // INTERNAL_SERVER_ERROR,
-} = require("./Constants");
+const { NOT_FOUND, BAD_REQUEST } = require("./Constants");
+const { authToken, belongsNotToId } = require("./Auth");
 
 // @desc Retrieves all flights
 // @route GET /flight/
@@ -35,22 +31,36 @@ router.get("/:id", async (req, res) => {
 
 // @desc Deletes a flight by id
 // @route DELETE /flight/:id
+// @access Only owner
 
-router.delete("/:id", async (req, res) => {
-  const numberOfDestroyedRows = await service.delete(req.params.id);
-  if (!numberOfDestroyedRows) {
+router.delete("/:id", authToken, async (req, res) => {
+  const flightId = req.params.id;
+  const flightToDelete = await service.getById(flightId);
+
+  if (!flightToDelete) {
     res.sendStatus(NOT_FOUND);
     return;
   }
+
+  if (belongsNotToId(req, res, flightToDelete.userId)) {
+    return;
+  }
+
+  const numberOfDestroyedRows = await service.delete(flightId);
   res.json(numberOfDestroyedRows);
 });
 
 // @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File.
 // @route POST /flight/
+// @access Only owner
 
-router.post("/", async (req, res) => {
+router.post("/", authToken, async (req, res) => {
   const igc = req.body.igc;
   const userId = req.body.userId;
+
+  if (belongsNotToId(req, res, userId)) {
+    return;
+  }
 
   try {
     checkParamsForIgc(igc);
@@ -91,25 +101,29 @@ router.post("/", async (req, res) => {
 
 // @desc Adds futher data to a existing flight and starts the igc calculation if no igc result are present.
 // @route PUT /flight/:id
+// @access Only owner
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", authToken, async (req, res) => {
   const report = req.body.report;
   const glider = req.body.glider;
   const flightId = req.params.id;
 
-  service
-    .getById(flightId)
-    .then((flight) => {
-      flight.report = report;
-      flight.glider = glider;
-      service.update(flight).then((flight) => {
-        res.json(flight.externalId);
-        if (!flight.flightDistance) service.startResultCalculation(flight);
-      });
-    })
-    .catch(() => {
-      res.sendStatus(NOT_FOUND);
-    });
+  const flight = await service.getById(flightId);
+
+  if (!flight) {
+    res.sendStatus(NOT_FOUND);
+  }
+
+  if (belongsNotToId(req, res, flight.userId)) {
+    return;
+  }
+
+  flight.report = report;
+  flight.glider = glider;
+  service.update(flight).then((flight) => {
+    res.json(flight.externalId);
+    if (!flight.flightDistance) service.startResultCalculation(flight);
+  });
 });
 
 //TODO Move to helper class "FileWriter"
