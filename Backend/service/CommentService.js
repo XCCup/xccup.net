@@ -1,6 +1,10 @@
 const { FlightComment } = require("../model/DependentModels");
 
 const commentService = {
+  getById: async (id) => {
+    return await FlightComment.findByPk(id);
+  },
+
   getByFlightId: async (flightId) => {
     const comments = await FlightComment.findAll({
       where: { flightId: flightId },
@@ -10,14 +14,12 @@ const commentService = {
     return comments;
   },
 
-  add: async (comment) => {
+  create: async (comment) => {
     return await FlightComment.create(comment);
   },
 
-  edit: async (id, body) => {
-    const comment = await FlightComment.findByPk(id);
-    comment.message = body.message;
-    return comment.save();
+  update: async (comment) => {
+    return await FlightComment.save(comment);
   },
 
   delete: async (id) => {
