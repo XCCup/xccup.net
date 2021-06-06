@@ -45,6 +45,7 @@ router.post("/login", async (req, res) => {
   res.json({
     accessToken: accessToken,
     refreshToken: refreshToken,
+    userId: userId,
   });
 });
 

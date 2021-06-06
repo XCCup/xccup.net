@@ -32,6 +32,9 @@ const apiClient2 = axios.create({
 });
 
 export default {
+  userLogin(data) {
+    return apiClient.post("/users/login", data);
+  },
   getFlights() {
     return apiClient2.get("/tageswertung");
   },

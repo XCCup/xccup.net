@@ -72,46 +72,7 @@
             {{ authUser?.name ?? "Default User" }}
           </button>
           <div class="dropdown-menu" style="width: 250px">
-            <form class="px-4 py-3">
-              <div class="mb-3">
-                <h6 class="fst-italic">
-                  Führt angemeldete Nutzer direkt zu ihrem
-                  <router-link :to="{ name: 'Profile' }"> Profil</router-link>
-                </h6>
-                <!-- <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label> -->
-                <input
-                  type="email"
-                  class="form-control"
-                  id="exampleDropdownFormEmail1"
-                  placeholder="E-Mail"
-                />
-              </div>
-              <div class="mb-3">
-                <!-- <label for="exampleDropdownFormPassword1" class="form-label">Passwort</label> -->
-                <input
-                  type="password"
-                  class="form-control"
-                  id="exampleDropdownFormPassword1"
-                  placeholder="Passwort"
-                />
-              </div>
-              <div class="mb-3">
-                <div class="form-check">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="dropdownCheck"
-                  />
-                  <label class="form-check-label" for="dropdownCheck">
-                    Angemeldet bleiben
-                  </label>
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary">Anmelden</button>
-            </form>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Registrieren</a>
-            <a class="dropdown-item" href="#">Password vergessen?</a>
+            <BaseLogin />
           </div>
         </div>
         <router-link

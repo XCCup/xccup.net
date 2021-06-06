@@ -46,14 +46,20 @@ export default createStore({
       return this.markerMapPosition;
     },
   },
-  // TODO: Remove this if not used
   actions: {
+    updateUserId(context, userId) {
+      context.commit("setUserId", userId);
+    },
+    // TODO: Remove this if not used
     updateMarkerMapPosition(context, Position) {
       context.commit("setMarkerMapPosition", Position);
     },
   },
-  // TODO: Remove this if not used
   mutations: {
+    setUserId(state, userId) {
+      state.authId = userId;
+    },
+    // TODO: Remove this if not used
     setMarkerMapPosition(state, Position) {
       state.markerMapPosition = Position;
     },
