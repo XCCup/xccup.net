@@ -3,7 +3,7 @@
     <div style="height: 430px">
       <l-map ref="map" v-model="zoom" v-model:zoom="zoom">
         <l-tile-layer
-          url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}"
+          url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?={accessToken}"
           :options="tileOptions"
         ></l-tile-layer>
         <l-polyline

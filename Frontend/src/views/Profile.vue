@@ -1,5 +1,10 @@
 <template>
   <div class="container mt-3">
+    <div>
+      <h1>Dashboard Page</h1>
+      <div>UserName -- {{ gettersAuthData.username }}</div>
+      <div>Id -- {{ gettersAuthData.userId }}</div>
+    </div>
     <!-- Editor -->
     <div class="rounded bg-white">
       <div class="row">
@@ -217,7 +222,11 @@ export default {
   },
   computed: {
     ...mapGetters(["authUser"]),
+    ...mapGetters("auth", {
+      gettersAuthData: "getAuthData",
+    }),
     listOfAircrafts() {
+      if (!this.authUser.gliders) return;
       let gliderList = [];
       this.authUser.gliders.forEach((element) => {
         gliderList.push(`${element.brand} ${element.model}`);

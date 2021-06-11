@@ -42,31 +42,54 @@
 </template>
 
 <script>
-import FlightService from "@/services/FlightService";
+// import FlightService from "@/services/FlightService";
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "BaseLogin",
 
   data() {
     return { username: "", password: "" };
   },
+  computed: {
+    ...mapGetters("auth", {
+      getterLoginStatus: "getLoginStatus",
+    }),
+  },
 
   methods: {
+    ...mapActions("auth", {
+      actionLogin: "login",
+    }),
     async handleSubmit() {
-      try {
-        const res = await FlightService.userLogin({
-          name: this.username,
-          password: this.password,
+      await this.actionLogin({
+        name: this.username,
+        password: this.password,
+      });
+      if (this.getterLoginStatus === "success") {
+        console.log("Router push");
+        this.$router.push({
+          name: "Profile",
         });
-        if (res.status != 200) throw "Login Error";
-        localStorage.setItem("user", res.data.userId);
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
-
-        console.log(res);
-      } catch (error) {
-        console.log(error);
+      } else {
+        alert("failed to login");
       }
     },
+    // async handleSubmit() {
+    //   try {
+    //     const res = await FlightService.userLogin({
+    //       name: this.username,
+    //       password: this.password,
+    //     });
+    //     if (res.status != 200) throw "Login Error";
+    //     localStorage.setItem("user", res.data.userId);
+    //     localStorage.setItem("accessToken", res.data.accessToken);
+    //     localStorage.setItem("refreshToken", res.data.refreshToken);
+    //     console.log(res);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
   },
 };
 </script>

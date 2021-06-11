@@ -3,6 +3,7 @@ import Home from "@/views/Home.vue";
 import Flight from "@/views/Flight.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
+import store from "@/store/index";
 
 const routes = [
   {
@@ -35,7 +36,7 @@ const routes = [
     path: "/profil",
     name: "Profile",
     props: true,
-    meta: { toTop: true, smoothScroll: true },
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
   },
   {
@@ -87,4 +88,29 @@ const router = createRouter({
   },
 });
 
+router.beforeEach((to, from, next) => {
+  console.log(store.getters["auth/getAuthData"].token);
+  if (!store.getters["auth/getAuthData"].token) {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (accessToken) {
+      const data = {
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      };
+      store.commit("auth/saveTokenData", data);
+    }
+  }
+  const auth = store.getters["auth/isTokenActive"];
+
+  if (to.fullPath == "/") {
+    return next();
+  } else if (auth && !to.meta.requiredAuth) {
+    return next({ path: "/profil" });
+  } else if (!auth && to.meta.requiredAuth) {
+    return next({ path: "/login" });
+  }
+
+  return next();
+});
 export default router;
