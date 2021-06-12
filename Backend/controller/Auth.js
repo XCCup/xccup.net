@@ -44,15 +44,22 @@ const auth = (req, res, next) => {
  * @param {*} userId The id of the user for which the token is created.
  * @returns A access token.
  */
-const create = (userId) => {
-  const token = jwt.sign({ id: userId }, process.env.JWT_LOGIN_TOKEN, {
-    expiresIn: "10m",
-  });
+const create = (userId, username) => {
+  const token = jwt.sign(
+    { id: userId, username: username },
+    process.env.JWT_LOGIN_TOKEN,
+    {
+      expiresIn: "10m",
+    }
+  );
   return token;
 };
 
-const createRefresh = (userId) => {
-  const token = jwt.sign({ id: userId }, process.env.JWT_REFRESH_TOKEN);
+const createRefresh = (userId, username) => {
+  const token = jwt.sign(
+    { id: userId, username: username },
+    process.env.JWT_REFRESH_TOKEN
+  );
   Token.create({ token: token });
   return token;
 };
