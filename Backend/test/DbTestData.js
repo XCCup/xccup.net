@@ -1,5 +1,4 @@
 const userService = require("../service/UserService");
-const flightService = require("../service/FlightService");
 
 const dbTestData = {
   checkForTestDataAndAddIfMissing: async () => {
@@ -11,7 +10,7 @@ const dbTestData = {
       lastName: "Pilot",
       birthday: "31.03.1953",
       glider: "Ozone Alpina 2",
-      password: "$up€r$€cr€t",
+      password: "pw",
       email: "super@dsecret.com",
     };
     const returnUser = await userService.getByName(user.name);
