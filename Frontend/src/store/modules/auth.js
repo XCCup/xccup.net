@@ -1,5 +1,4 @@
-import { jwtDecrypt } from "../../shared/jwtHelper";
-import { tokenAlive } from "../../shared/jwtHelper";
+import { jwtDecrypt, tokenAlive } from "@/shared/jwtHelper";
 import axios from "axios";
 
 let baseURL = "https://xccup.lurb.org/";
@@ -27,6 +26,9 @@ const getters = {
   getAuthData(state) {
     return state.authData;
   },
+  getUserId(state) {
+    return state.authData.userId;
+  },
   isTokenActive(state) {
     if (!state.authData.tokenExp) {
       return false;
@@ -44,6 +46,7 @@ const actions = {
       } else {
         commit("setLoginStatus", "failed");
       }
+      return response.status;
     } catch (error) {
       console.log(error);
     }
@@ -60,12 +63,14 @@ const mutations = {
       token: data.accessToken,
       refreshToken: data.refreshToken,
       tokenExp: jwtDecodedValue.exp,
-      userId: jwtDecodedValue.sub,
+      userId: jwtDecodedValue.id,
       username: jwtDecodedValue.username,
     };
     state.authData = newTokenData;
   },
   setLoginStatus(state, value) {
+    console.log("Logged in: " + value);
+
     state.loginStatus = value;
   },
 };

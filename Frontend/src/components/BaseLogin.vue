@@ -1,10 +1,6 @@
 <template>
   <form class="px-4 py-3" @submit.prevent="handleSubmit">
     <div class="mb-3">
-      <h6 class="fst-italic">
-        Führt angemeldete Nutzer direkt zu ihrem
-        <router-link :to="{ name: 'Profile' }"> Profil</router-link>
-      </h6>
       <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label>
       <input
         type="text"
@@ -62,34 +58,18 @@ export default {
       actionLogin: "login",
     }),
     async handleSubmit() {
-      await this.actionLogin({
+      const response = await this.actionLogin({
         name: this.username,
         password: this.password,
       });
-      if (this.getterLoginStatus === "success") {
-        console.log("Router push");
+      if (response === 200) {
         this.$router.push({
           name: "Profile",
         });
       } else {
-        alert("failed to login");
+        console.log(this.getterLoginStatus);
       }
     },
-    // async handleSubmit() {
-    //   try {
-    //     const res = await FlightService.userLogin({
-    //       name: this.username,
-    //       password: this.password,
-    //     });
-    //     if (res.status != 200) throw "Login Error";
-    //     localStorage.setItem("user", res.data.userId);
-    //     localStorage.setItem("accessToken", res.data.accessToken);
-    //     localStorage.setItem("refreshToken", res.data.refreshToken);
-    //     console.log(res);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
   },
 };
 </script>

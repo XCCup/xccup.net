@@ -50,26 +50,15 @@ export default createStore({
   },
   getters: {
     authUser: (state) => state.users.find((user) => user.id === state.authId),
-    markerMapPosition() {
-      return this.markerMapPosition;
-    },
   },
   actions: {
     updateUserId(context, userId) {
       context.commit("setUserId", userId);
     },
-    // TODO: Remove this if not used
-    updateMarkerMapPosition(context, Position) {
-      context.commit("setMarkerMapPosition", Position);
-    },
   },
   mutations: {
     setUserId(state, userId) {
       state.authId = userId;
-    },
-    // TODO: Remove this if not used
-    setMarkerMapPosition(state, Position) {
-      state.markerMapPosition = Position;
     },
   },
 });

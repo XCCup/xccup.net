@@ -1,10 +1,5 @@
 <template>
   <div class="container mt-3">
-    <div>
-      <h1>Dashboard Page</h1>
-      <div>UserName -- {{ gettersAuthData.username }}</div>
-      <div>Id -- {{ gettersAuthData.userId }}</div>
-    </div>
     <!-- Editor -->
     <div class="rounded bg-white">
       <div class="row">
@@ -200,6 +195,7 @@
         </div> -->
       </div>
     </div>
+    {{ userDetails }}
     <!-- Editor -->
   </div>
 
@@ -209,12 +205,32 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, useStore } from "vuex";
+import { computed, ref } from "vue";
+
 import AddGliderModal from "@/components/AddGliderModal";
 import RemoveGliderModal from "@/components/RemoveGliderModal";
+import UserService from "@/services/UserService";
+
 export default {
   name: "Profile",
   components: { AddGliderModal, RemoveGliderModal },
+  async setup() {
+    const store = useStore();
+    const userId = computed(() => store.getters["auth/getUserId"]);
+    // To simulate longer loading times
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const { data: userDetails } = await UserService.getUserDetails(
+        userId.value
+      );
+      return {
+        userDetails: ref(userDetails),
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   data() {
     return {
       userProfile: null,
@@ -242,11 +258,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  watch: {
-    // userProfile() {
-    //   this.userProfile = { ...this.authUser };
-    // },
   },
   methods: {
     save() {

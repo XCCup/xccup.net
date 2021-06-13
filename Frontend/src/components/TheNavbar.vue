@@ -69,10 +69,22 @@
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
-            {{ authUser?.name ?? "Default User" }}
+            {{ loggedIn ? gettersAuthData.username : "Login" }}
           </button>
           <div class="dropdown-menu" style="width: 250px">
-            <BaseLogin />
+            <BaseLogin v-if="!loggedIn" />
+            <div v-else>
+              <div class="mb-3">
+                <router-link :to="{ name: 'Profile' }" class="dropdown-item"
+                  >Profil</router-link
+                >
+                <router-link
+                  class="btn btn-danger btn-sm m-1"
+                  :to="{ name: 'UploadFlight' }"
+                  >Abmelden
+                </router-link>
+              </div>
+            </div>
           </div>
         </div>
         <router-link
@@ -91,6 +103,13 @@ export default {
   name: "TheNavbar",
   computed: {
     ...mapGetters(["authUser"]),
+    ...mapGetters("auth", {
+      gettersAuthData: "getAuthData",
+      getterLoginStatus: "getLoginStatus",
+    }),
+    loggedIn() {
+      return this.getterLoginStatus === "success";
+    },
   },
 };
 </script>

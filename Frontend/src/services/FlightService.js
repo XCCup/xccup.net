@@ -1,4 +1,5 @@
 import axios from "axios";
+import jwtInterceptor from "@/shared/jwtInterceptor";
 
 let baseURL = "https://xccup.lurb.org/";
 
@@ -49,7 +50,7 @@ export default {
     return apiClient2.get("/flightDescription");
   },
   uploadIgc(data) {
-    return apiClient.post("/flights/", data);
+    return jwtInterceptor.post("/flights/", data);
   },
   uploadFlightDetails(flightId, data) {
     return apiClient.put("/flights/" + flightId, data);
