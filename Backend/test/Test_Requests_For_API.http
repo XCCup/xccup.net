@@ -22,8 +22,7 @@ content-type: application/json
 
 ###
 GET http://localhost:3000/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e
-
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMjU3NjgwNywiZXhwIjoxNjIyNTc2ODE3fQ.uHT24VCYsYUZCvNTLKl-OXu8vOHJqfoyyGfHpgON9PM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMzI2NzU3MywiZXhwIjoxNjIzMjY4MTczfQ.0_QzLzvurXc_tzbdwLfgbZ2njrCMhBu8zAsxl77LyrY
 
 
 ###

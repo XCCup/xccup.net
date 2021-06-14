@@ -29,6 +29,10 @@ const User = db.sequelize.define(
     lastName: {
       type: DataTypes.STRING,
     },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: "Keine",
+    },
     birthday: {
       type: DataTypes.STRING,
     },
@@ -138,6 +142,11 @@ const Flight = db.sequelize.define("Flight", {
     allowNull: false,
   },
   uncheckedGRecord: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
+  isHike: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     allowNull: false,
