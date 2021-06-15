@@ -8,7 +8,7 @@ POST http://localhost:3000/users/token HTTP/1.1
 content-type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMzc4NDIwNX0.0uBQZaYgiW532_hCOTy1_u-SVnW15sDVSZedvFKIgAM"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMzI2NjQ1OH0.jgbc4R3umKXOlE5hOJHUH3Fcu8c_PfjEjomfJVtOzs8"
 }
 
 ###
@@ -17,7 +17,7 @@ content-type: application/json
 
 {
     "name": "Great Pilot",
-    "password": "pw"
+    "password": "$up€r$€cr€t"
 }
 
 ###

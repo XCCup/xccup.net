@@ -55,8 +55,11 @@ const create = (userId, username) => {
   return token;
 };
 
-const createRefresh = (userId) => {
-  const token = jwt.sign({ id: userId }, process.env.JWT_REFRESH_TOKEN);
+const createRefresh = (userId, username) => {
+  const token = jwt.sign(
+    { id: userId, username: username },
+    process.env.JWT_REFRESH_TOKEN
+  );
   Token.create({ token: token });
   return token;
 };
@@ -75,7 +78,7 @@ const refresh = async (token) => {
   });
   if (!found) return;
 
-  return jwt.verify(token, process.env.JWT_REFRESH_TOKEN, (error, user) => {
+  jwt.verify(token, process.env.JWT_REFRESH_TOKEN, (error, user) => {
     if (error) {
       console.log("Verify err: ", error);
       return;
