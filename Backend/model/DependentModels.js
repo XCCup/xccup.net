@@ -38,6 +38,7 @@ const User = db.sequelize.define(
     },
     gender: {
       type: DataTypes.STRING,
+      //M,W,D
     },
     tshirtSize: {
       type: DataTypes.STRING,

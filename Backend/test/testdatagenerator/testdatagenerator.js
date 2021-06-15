@@ -1,0 +1,74 @@
+// const { User } = require("../../model/DependentModels");
+const faker = require("faker");
+const fs = require("fs");
+const path = require("path");
+
+function selectRandomFromArray(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+function trueOrFalse() {
+  const values = [true, false];
+  return selectRandomFromArray(values);
+}
+
+//Create Users
+
+const users = new Array(20);
+
+for (let i = 0; i < users.length; i++) {
+  let user = {};
+  user.id = faker.datatype.uuid();
+  user.names = faker.name.findName().split(" ");
+  user.firstName = user.names[0];
+  user.lastName = user.names[1];
+  user.name = user.firstName + user.lastName;
+  user.birthday = faker.date
+    .past(10, new Date(2001, 0, 1))
+    .toLocaleDateString("de-DE");
+  const genders = ["D", "M", "W"];
+  user.gender = selectRandomFromArray(genders);
+  const sizes = ["S", "M", "L", "XL", "XXL"];
+  user.tshirtSize = selectRandomFromArray(sizes);
+  const gliders = [
+    "Ozone Alpina 2",
+    "Ozone Enzo 3",
+    "Flow XC Racer",
+    "Sky Apollo",
+    "U-Turn Bodyguard",
+    "Litte Cloud Spiruline",
+    "Air-G Emilie",
+  ];
+  user.gliders = new Array(
+    selectRandomFromArray(gliders),
+    selectRandomFromArray(gliders)
+  );
+  user.emailInformIfComment = trueOrFalse();
+  user.emailNewsletter = trueOrFalse();
+  user.emailTeamSearch = trueOrFalse();
+  const states = ["RP", "NW", "SR", "LUX", "BEL", "HE", "BW"];
+  user.state = selectRandomFromArray(states);
+  user.email =
+    user.firstName + "@" + user.lastName + "." + faker.internet.domainSuffix();
+  user.password = "PW_" + user.name;
+
+  users[i] = user;
+}
+
+console.log(users);
+
+//Create Flights
+
+const igcPath = path.join(__dirname, "igcs");
+console.log("path: ", igcPath);
+fs.readdir(igcPath, function (err, files) {
+  if (err) {
+    return console.log("Unable to scan directory: " + err);
+  }
+  files.forEach(function (file) {
+    console.log(file);
+    //Create Flight
+    //Create Fixes
+    //Attach Locations
+    //Attach Elevation
+  });
+});
