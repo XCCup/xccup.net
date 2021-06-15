@@ -13,6 +13,19 @@ const requireComponent = require.context(
   /Base[A-Z]\w+\.(vue|js)$/
 );
 
+// JWT
+// router.beforeEach((to, from, next) => {
+//   let authPages = ["/profil/", "/hochladen"];
+//   let authRequired = authPages.includes(to.path);
+//   let loggedIn = store.dispatch("auth/isLoggedIn");
+
+//   if (authRequired && !loggedIn) {
+//     return next("/login/");
+//   }
+
+//   next();
+// });
+
 let app = createApp(App);
 app.use(router);
 app.use(store);

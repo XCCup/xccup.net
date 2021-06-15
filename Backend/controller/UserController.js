@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
   }
 
   const accessToken = createToken(userId, name);
-  const refreshToken = createRefreshToken(userId, name);
+  const refreshToken = createRefreshToken(userId);
 
   res.json({
     accessToken: accessToken,
@@ -55,6 +55,7 @@ router.post("/token", async (req, res) => {
   const token = req.body.token;
 
   const accessToken = await refreshToken(token);
+  console.log(accessToken);
   if (!accessToken) {
     res.sendStatus(FORBIDDEN);
     return;
