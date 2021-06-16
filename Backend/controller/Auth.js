@@ -85,7 +85,6 @@ const refresh = async (token) => {
         console.log("Verify err: ", error);
         return;
       }
-      console.log(user);
       return create(user.id, user.username);
     }
   );
