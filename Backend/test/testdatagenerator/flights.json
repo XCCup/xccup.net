@@ -1,0 +1,1464 @@
+[
+  {
+    "flightId": "65974949-f4bc-4325-9cf3-b479faf00b1c",
+    "turnpoints": [
+      {
+        "time": "09:32:07",
+        "lat": 49.41263333333333,
+        "long": 8.724916666666667
+      },
+      {
+        "time": "10:20:19",
+        "lat": 49.39595,
+        "long": 8.718483333333333
+      },
+      {
+        "time": "10:42:34",
+        "lat": 49.43066666666667,
+        "long": 8.7194
+      },
+      {
+        "time": "11:19:48",
+        "lat": 49.442166666666665,
+        "long": 8.844333333333333
+      },
+      {
+        "time": "11:46:06",
+        "lat": 49.48076666666667,
+        "long": 8.82025
+      }
+    ],
+    "pts": 55.8558,
+    "type": "FREE",
+    "dist": "19.530",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\65974949-f4bc-4325-9cf3-b479faf00b1c\\turnpoints.igc"
+  },
+  {
+    "flightId": "f9964c1c-b411-4e12-8e55-96a915997168",
+    "turnpoints": [
+      {
+        "time": "10:45:27",
+        "lat": 49.87185,
+        "long": 7.7775
+      },
+      {
+        "time": "11:05:41",
+        "lat": 49.878,
+        "long": 7.781866666666667
+      },
+      {
+        "time": "12:02:10",
+        "lat": 49.82671666666667,
+        "long": 7.6494
+      },
+      {
+        "time": "12:25:33",
+        "lat": 49.84478333333333,
+        "long": 7.760016666666667
+      },
+      {
+        "time": "12:25:41",
+        "lat": 49.845333333333336,
+        "long": 7.7594666666666665
+      }
+    ],
+    "pts": 109.5003,
+    "type": "FLAT",
+    "dist": "20.055",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\f9964c1c-b411-4e12-8e55-96a915997168\\turnpoints.igc"
+  },
+  {
+    "flightId": "d8cd7701-dd42-42a8-8608-2775850d2d75",
+    "turnpoints": [
+      {
+        "time": "10:43:14",
+        "lat": 51.3142,
+        "long": 8.429366666666667
+      },
+      {
+        "time": "10:51:25",
+        "lat": 51.324466666666666,
+        "long": 8.4237
+      },
+      {
+        "time": "12:18:01",
+        "lat": 51.256366666666665,
+        "long": 8.981016666666667
+      },
+      {
+        "time": "13:25:43",
+        "lat": 50.99575,
+        "long": 9.101933333333333
+      },
+      {
+        "time": "13:34:16",
+        "lat": 50.99361666666667,
+        "long": 9.054366666666667
+      }
+    ],
+    "pts": 212.25775999999996,
+    "type": "FREE",
+    "dist": "74.216",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\d8cd7701-dd42-42a8-8608-2775850d2d75\\turnpoints.igc"
+  },
+  {
+    "flightId": "71e620f7-806f-49a1-a79e-aa538187fc46",
+    "turnpoints": [
+      {
+        "time": "10:33:52",
+        "lat": 50.1075,
+        "long": 7.11785
+      },
+      {
+        "time": "10:48:24",
+        "lat": 50.10281666666667,
+        "long": 7.108366666666667
+      },
+      {
+        "time": "10:58:04",
+        "lat": 50.13105,
+        "long": 7.154966666666667
+      },
+      {
+        "time": "11:20:17",
+        "lat": 50.0965,
+        "long": 7.14235
+      },
+      {
+        "time": "11:22:40",
+        "lat": 50.10375,
+        "long": 7.131433333333334
+      }
+    ],
+    "pts": 54.52356,
+    "type": "FLAT",
+    "dist": "9.986",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\71e620f7-806f-49a1-a79e-aa538187fc46\\turnpoints.igc"
+  },
+  {
+    "flightId": "15bf9618-3394-4d48-b20b-ca3e65c80047",
+    "turnpoints": [
+      {
+        "time": "11:34:49",
+        "lat": 49.88106666666667,
+        "long": 7.0195
+      },
+      {
+        "time": "11:47:00",
+        "lat": 49.864866666666664,
+        "long": 7.013433333333333
+      },
+      {
+        "time": "11:51:50",
+        "lat": 49.87385,
+        "long": 6.992783333333334
+      },
+      {
+        "time": "12:11:15",
+        "lat": 49.90656666666667,
+        "long": 7.0509
+      },
+      {
+        "time": "12:17:11",
+        "lat": 49.89116666666666,
+        "long": 7.018833333333333
+      }
+    ],
+    "pts": 63.057539999999996,
+    "type": "FLAT",
+    "dist": "11.549",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\15bf9618-3394-4d48-b20b-ca3e65c80047\\turnpoints.igc"
+  },
+  {
+    "flightId": "682b2236-17c2-4147-a0c2-bc665faac579",
+    "turnpoints": [
+      {
+        "time": "10:50:46",
+        "lat": 49.88158333333333,
+        "long": 7.011066666666666
+      },
+      {
+        "time": "11:19:41",
+        "lat": 49.90335,
+        "long": 7.063116666666667
+      },
+      {
+        "time": "11:46:53",
+        "lat": 49.91305,
+        "long": 7.0113666666666665
+      },
+      {
+        "time": "11:54:27",
+        "lat": 49.87825,
+        "long": 7.008283333333333
+      },
+      {
+        "time": "11:56:16",
+        "lat": 49.88158333333333,
+        "long": 7.0111
+      }
+    ],
+    "type": "FAI",
+    "pts": 75.06694000000002,
+    "dist": "12.553",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\682b2236-17c2-4147-a0c2-bc665faac579\\turnpoints.igc"
+  },
+  {
+    "flightId": "3ddf8d66-9338-4773-83d8-84086e51147c",
+    "turnpoints": [
+      {
+        "time": "15:03:23",
+        "lat": 49.463816666666666,
+        "long": 8.676866666666667
+      },
+      {
+        "time": "15:29:48",
+        "lat": 49.46893333333333,
+        "long": 8.678016666666666
+      },
+      {
+        "time": "16:55:05",
+        "lat": 49.43343333333333,
+        "long": 8.69545
+      },
+      {
+        "time": "17:21:45",
+        "lat": 49.45551666666667,
+        "long": 8.652533333333333
+      },
+      {
+        "time": "17:25:00",
+        "lat": 49.46085,
+        "long": 8.667366666666666
+      }
+    ],
+    "pts": 53.01114,
+    "type": "FLAT",
+    "dist": "9.709",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\3ddf8d66-9338-4773-83d8-84086e51147c\\turnpoints.igc"
+  },
+  {
+    "flightId": "87bbb855-1366-4a48-8d7f-11949ef6d482",
+    "turnpoints": [
+      {
+        "time": "13:29:06",
+        "lat": 51.48545,
+        "long": 6.433433333333333
+      },
+      {
+        "time": "13:30:24",
+        "lat": 51.4857,
+        "long": 6.423016666666666
+      },
+      {
+        "time": "13:49:51",
+        "lat": 51.466033333333336,
+        "long": 6.434316666666667
+      },
+      {
+        "time": "14:08:25",
+        "lat": 51.495133333333335,
+        "long": 6.4854
+      },
+      {
+        "time": "14:15:29",
+        "lat": 51.48546666666667,
+        "long": 6.4334
+      }
+    ],
+    "pts": 63.11214,
+    "type": "FLAT",
+    "dist": "11.559",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\87bbb855-1366-4a48-8d7f-11949ef6d482\\turnpoints.igc"
+  },
+  {
+    "flightId": "4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14",
+    "turnpoints": [
+      {
+        "time": "11:11:12",
+        "lat": 50.31445,
+        "long": 7.464266666666667
+      },
+      {
+        "time": "11:38:22",
+        "lat": 50.2879,
+        "long": 7.391666666666667
+      },
+      {
+        "time": "11:55:33",
+        "lat": 50.31271666666667,
+        "long": 7.2983
+      },
+      {
+        "time": "12:31:00",
+        "lat": 50.34623333333333,
+        "long": 7.5050333333333334
+      },
+      {
+        "time": "12:47:58",
+        "lat": 50.314433333333334,
+        "long": 7.46425
+      }
+    ],
+    "pts": 178.32359999999997,
+    "type": "FLAT",
+    "dist": "32.660",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14\\turnpoints.igc"
+  },
+  {
+    "flightId": "07b590f3-ca8a-4305-88a2-e11c314b4955",
+    "turnpoints": [
+      {
+        "time": "10:17:10",
+        "lat": 50.31645,
+        "long": 7.46175
+      },
+      {
+        "time": "10:43:10",
+        "lat": 50.330866666666665,
+        "long": 7.4347
+      },
+      {
+        "time": "11:42:22",
+        "lat": 50.28893333333333,
+        "long": 7.365316666666667
+      },
+      {
+        "time": "12:01:04",
+        "lat": 50.27255,
+        "long": 7.48175
+      },
+      {
+        "time": "12:09:41",
+        "lat": 50.314166666666665,
+        "long": 7.462933333333333
+      }
+    ],
+    "type": "FAI",
+    "pts": 133.25832,
+    "dist": "22.284",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\07b590f3-ca8a-4305-88a2-e11c314b4955\\turnpoints.igc"
+  },
+  {
+    "flightId": "60a73a31-f03e-40a3-87c5-03f8bc447007",
+    "turnpoints": [
+      {
+        "time": "13:48:00",
+        "lat": 49.62671666666667,
+        "long": 6.591466666666666
+      },
+      {
+        "time": "14:47:01",
+        "lat": 49.53825,
+        "long": 6.612516666666666
+      },
+      {
+        "time": "15:56:30",
+        "lat": 49.64046666666667,
+        "long": 6.8100000000000005
+      },
+      {
+        "time": "16:55:30",
+        "lat": 49.675716666666666,
+        "long": 6.6094
+      },
+      {
+        "time": "17:09:11",
+        "lat": 49.6267,
+        "long": 6.59145
+      }
+    ],
+    "type": "FAI",
+    "pts": 289.80874,
+    "dist": "48.463",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\60a73a31-f03e-40a3-87c5-03f8bc447007\\turnpoints.igc"
+  },
+  {
+    "flightId": "8d625d76-21e1-47b2-ad9a-ab0f28d3ed2f",
+    "turnpoints": [
+      {
+        "time": "11:53:19",
+        "lat": 51.10881666666667,
+        "long": 8.1526
+      },
+      {
+        "time": "12:04:46",
+        "lat": 51.11415,
+        "long": 8.184466666666667
+      },
+      {
+        "time": "12:16:49",
+        "lat": 51.108783333333335,
+        "long": 8.143283333333333
+      },
+      {
+        "time": "12:21:49",
+        "lat": 51.11298333333333,
+        "long": 8.160583333333333
+      },
+      {
+        "time": "14:17:10",
+        "lat": 50.79441666666666,
+        "long": 8.2356
+      }
+    ],
+    "pts": 121.10383999999999,
+    "type": "FREE",
+    "dist": "42.344",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\8d625d76-21e1-47b2-ad9a-ab0f28d3ed2f\\turnpoints.igc"
+  },
+  {
+    "flightId": "a7c8a11a-5a2c-4045-b3dc-7d8fbb6afabb",
+    "turnpoints": [
+      {
+        "time": "13:02:20",
+        "lat": 51.308083333333336,
+        "long": 8.191216666666667
+      },
+      {
+        "time": "13:27:12",
+        "lat": 51.30008333333333,
+        "long": 8.11885
+      },
+      {
+        "time": "14:13:35",
+        "lat": 51.2852,
+        "long": 8.195533333333334
+      },
+      {
+        "time": "14:28:58",
+        "lat": 51.33988333333333,
+        "long": 8.17125
+      },
+      {
+        "time": "14:48:10",
+        "lat": 51.309666666666665,
+        "long": 8.194683333333334
+      }
+    ],
+    "type": "FAI",
+    "pts": 103.60948,
+    "dist": "17.326",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\a7c8a11a-5a2c-4045-b3dc-7d8fbb6afabb\\turnpoints.igc"
+  },
+  {
+    "flightId": "77cdaf48-8f84-4d48-9ba6-1524c3598349",
+    "turnpoints": [
+      {
+        "time": "11:25:13",
+        "lat": 50.109,
+        "long": 7.13275
+      },
+      {
+        "time": "12:24:09",
+        "lat": 50.04338333333333,
+        "long": 6.908766666666667
+      },
+      {
+        "time": "14:04:48",
+        "lat": 50.305233333333334,
+        "long": 7.0808
+      },
+      {
+        "time": "14:17:18",
+        "lat": 50.3024,
+        "long": 7.064583333333333
+      },
+      {
+        "time": "14:34:38",
+        "lat": 50.32431666666667,
+        "long": 7.1728
+      }
+    ],
+    "pts": 167.06404,
+    "type": "FREE",
+    "dist": "58.414",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\77cdaf48-8f84-4d48-9ba6-1524c3598349\\turnpoints.igc"
+  },
+  {
+    "flightId": "d27d8bce-e30c-45ff-aebe-550100dd8203",
+    "turnpoints": [
+      {
+        "time": "10:56:21",
+        "lat": 51.248533333333334,
+        "long": 7.747533333333333
+      },
+      {
+        "time": "11:23:29",
+        "lat": 51.22155,
+        "long": 7.836016666666667
+      },
+      {
+        "time": "11:31:06",
+        "lat": 51.21508333333333,
+        "long": 7.827866666666667
+      },
+      {
+        "time": "11:42:05",
+        "lat": 51.22585,
+        "long": 7.881766666666667
+      },
+      {
+        "time": "12:21:54",
+        "lat": 51.13066666666667,
+        "long": 7.9996833333333335
+      }
+    ],
+    "pts": 71.81174,
+    "type": "FREE",
+    "dist": "25.109",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\d27d8bce-e30c-45ff-aebe-550100dd8203\\turnpoints.igc"
+  },
+  {
+    "flightId": "ecfa9c50-cc7d-436c-8b08-5f40ca7998ac",
+    "turnpoints": [
+      {
+        "time": "10:48:20",
+        "lat": 49.26571666666667,
+        "long": 8.071733333333333
+      },
+      {
+        "time": "11:15:19",
+        "lat": 49.2896,
+        "long": 8.101983333333333
+      },
+      {
+        "time": "11:32:14",
+        "lat": 49.2701,
+        "long": 8.152883333333333
+      },
+      {
+        "time": "11:56:47",
+        "lat": 49.25555,
+        "long": 8.071916666666667
+      },
+      {
+        "time": "11:59:24",
+        "lat": 49.2637,
+        "long": 8.075333333333333
+      }
+    ],
+    "type": "FAI",
+    "pts": 86.12396,
+    "dist": "14.402",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\ecfa9c50-cc7d-436c-8b08-5f40ca7998ac\\turnpoints.igc"
+  },
+  {
+    "flightId": "18ddd683-b966-45c9-83e9-6eb6fd96ddf6",
+    "turnpoints": [
+      {
+        "time": "14:24:09",
+        "lat": 51.02108333333333,
+        "long": 8.602333333333334
+      },
+      {
+        "time": "14:52:17",
+        "lat": 50.992016666666665,
+        "long": 8.564983333333334
+      },
+      {
+        "time": "15:42:55",
+        "lat": 51.00351666666667,
+        "long": 8.642933333333334
+      },
+      {
+        "time": "15:59:56",
+        "lat": 51.0312,
+        "long": 8.60215
+      },
+      {
+        "time": "16:00:57",
+        "lat": 51.0284,
+        "long": 8.60285
+      }
+    ],
+    "type": "FAI",
+    "pts": 84.07880000000002,
+    "dist": "14.060",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\18ddd683-b966-45c9-83e9-6eb6fd96ddf6\\turnpoints.igc"
+  },
+  {
+    "flightId": "26fd8ad5-1bab-450c-8c5c-14153ab25728",
+    "turnpoints": [
+      {
+        "time": "14:02:31",
+        "lat": 49.46438333333333,
+        "long": 8.679416666666667
+      },
+      {
+        "time": "14:09:53",
+        "lat": 49.46288333333333,
+        "long": 8.669633333333334
+      },
+      {
+        "time": "14:41:16",
+        "lat": 49.3884,
+        "long": 8.755383333333333
+      },
+      {
+        "time": "14:46:28",
+        "lat": 49.40748333333333,
+        "long": 8.791616666666666
+      },
+      {
+        "time": "15:34:47",
+        "lat": 49.35276666666667,
+        "long": 8.982516666666667
+      }
+    ],
+    "pts": 84.50156,
+    "type": "FREE",
+    "dist": "29.546",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\26fd8ad5-1bab-450c-8c5c-14153ab25728\\turnpoints.igc"
+  },
+  {
+    "flightId": "4232f4eb-d42a-4583-ad9f-f631b72fd691",
+    "turnpoints": [
+      {
+        "time": "16:30:32",
+        "lat": 49.40266666666667,
+        "long": 8.733183333333333
+      },
+      {
+        "time": "16:36:40",
+        "lat": 49.42365,
+        "long": 8.7105
+      },
+      {
+        "time": "17:06:00",
+        "lat": 49.31365,
+        "long": 8.702033333333333
+      },
+      {
+        "time": "17:33:26",
+        "lat": 49.35941666666667,
+        "long": 8.771783333333333
+      },
+      {
+        "time": "17:33:26",
+        "lat": 49.35941666666667,
+        "long": 8.771783333333333
+      }
+    ],
+    "pts": 121.5669,
+    "type": "FLAT",
+    "dist": "22.265",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\4232f4eb-d42a-4583-ad9f-f631b72fd691\\turnpoints.igc"
+  },
+  {
+    "flightId": "6f9f100a-1a1e-408b-9eaf-37c66c1de058",
+    "turnpoints": [
+      {
+        "time": "10:11:15",
+        "lat": 50.10655,
+        "long": 7.115083333333334
+      },
+      {
+        "time": "10:15:02",
+        "lat": 50.108666666666664,
+        "long": 7.128416666666666
+      },
+      {
+        "time": "11:03:58",
+        "lat": 49.96581666666667,
+        "long": 6.984966666666667
+      },
+      {
+        "time": "11:10:21",
+        "lat": 49.95258333333334,
+        "long": 7.003666666666667
+      },
+      {
+        "time": "11:12:35",
+        "lat": 49.9577,
+        "long": 6.999866666666667
+      }
+    ],
+    "pts": 64.35571999999999,
+    "type": "FREE",
+    "dist": "22.502",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\6f9f100a-1a1e-408b-9eaf-37c66c1de058\\turnpoints.igc"
+  },
+  {
+    "flightId": "6e7b81b7-6969-4114-94f0-a0351aad0830",
+    "turnpoints": [
+      {
+        "time": "10:54:12",
+        "lat": 49.876083333333334,
+        "long": 6.888066666666667
+      },
+      {
+        "time": "11:02:31",
+        "lat": 49.848933333333335,
+        "long": 6.860083333333334
+      },
+      {
+        "time": "12:29:58",
+        "lat": 49.85836666666667,
+        "long": 6.939416666666666
+      },
+      {
+        "time": "12:46:25",
+        "lat": 49.88865,
+        "long": 6.895383333333333
+      },
+      {
+        "time": "12:47:47",
+        "lat": 49.87615,
+        "long": 6.888216666666667
+      }
+    ],
+    "type": "FAI",
+    "pts": 92.54050000000001,
+    "dist": "15.475",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\6e7b81b7-6969-4114-94f0-a0351aad0830\\turnpoints.igc"
+  },
+  {
+    "flightId": "5363477a-93ef-4ed3-baab-655dba688c7b",
+    "turnpoints": [
+      {
+        "time": "11:50:53",
+        "lat": 49.87195,
+        "long": 6.889666666666667
+      },
+      {
+        "time": "12:10:38",
+        "lat": 49.866166666666665,
+        "long": 6.86395
+      },
+      {
+        "time": "13:09:24",
+        "lat": 49.97143333333333,
+        "long": 6.990433333333334
+      },
+      {
+        "time": "13:34:29",
+        "lat": 49.883583333333334,
+        "long": 7.0012
+      },
+      {
+        "time": "13:53:14",
+        "lat": 49.869416666666666,
+        "long": 6.895316666666667
+      }
+    ],
+    "type": "FAI",
+    "pts": 204.09142,
+    "dist": "34.129",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\5363477a-93ef-4ed3-baab-655dba688c7b\\turnpoints.igc"
+  },
+  {
+    "flightId": "3d15ce06-1d2f-4994-8869-37a2f5bb1cb4",
+    "turnpoints": [
+      {
+        "time": "09:47:41",
+        "lat": 49.965266666666665,
+        "long": 6.9945
+      },
+      {
+        "time": "10:33:06",
+        "lat": 49.86586666666667,
+        "long": 6.869266666666666
+      },
+      {
+        "time": "10:51:45",
+        "lat": 49.797466666666665,
+        "long": 6.860316666666667
+      },
+      {
+        "time": "11:46:28",
+        "lat": 49.6017,
+        "long": 6.5497499999999995
+      },
+      {
+        "time": "11:49:50",
+        "lat": 49.60565,
+        "long": 6.552183333333334
+      }
+    ],
+    "pts": 153.09008,
+    "type": "FREE",
+    "dist": "53.528",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\3d15ce06-1d2f-4994-8869-37a2f5bb1cb4\\turnpoints.igc"
+  },
+  {
+    "flightId": "1a1bfa34-301a-4412-a669-c8c2c777e577",
+    "turnpoints": [
+      {
+        "time": "14:49:11",
+        "lat": 51.31576666666667,
+        "long": 8.431166666666666
+      },
+      {
+        "time": "15:10:50",
+        "lat": 51.316383333333334,
+        "long": 8.413883333333333
+      },
+      {
+        "time": "15:47:37",
+        "lat": 51.253366666666665,
+        "long": 8.548116666666667
+      },
+      {
+        "time": "15:54:35",
+        "lat": 51.25103333333333,
+        "long": 8.63005
+      },
+      {
+        "time": "16:26:39",
+        "lat": 51.10138333333333,
+        "long": 8.82485
+      }
+    ],
+    "pts": 114.57731999999999,
+    "type": "FREE",
+    "dist": "40.062",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\1a1bfa34-301a-4412-a669-c8c2c777e577\\turnpoints.igc"
+  },
+  {
+    "flightId": "d174a309-1526-4ea8-99ad-655c32388d05",
+    "turnpoints": [
+      {
+        "time": "11:53:30",
+        "lat": 49.404266666666665,
+        "long": 8.725033333333334
+      },
+      {
+        "time": "12:08:46",
+        "lat": 49.4008,
+        "long": 8.7431
+      },
+      {
+        "time": "12:22:10",
+        "lat": 49.41538333333333,
+        "long": 8.711133333333333
+      },
+      {
+        "time": "12:57:41",
+        "lat": 49.37806666666667,
+        "long": 8.718866666666667
+      },
+      {
+        "time": "13:43:31",
+        "lat": 49.404266666666665,
+        "long": 8.725016666666667
+      }
+    ],
+    "type": "FAI",
+    "pts": 60.32624,
+    "dist": "10.088",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\d174a309-1526-4ea8-99ad-655c32388d05\\turnpoints.igc"
+  },
+  {
+    "flightId": "4e94979e-b6f8-4e41-80f1-8558afe6cb84",
+    "turnpoints": [
+      {
+        "time": "11:25:18",
+        "lat": 49.567683333333335,
+        "long": 6.616733333333333
+      },
+      {
+        "time": "11:44:37",
+        "lat": 49.59235,
+        "long": 6.65405
+      },
+      {
+        "time": "12:09:21",
+        "lat": 49.535016666666664,
+        "long": 6.610433333333333
+      },
+      {
+        "time": "12:44:45",
+        "lat": 49.59375,
+        "long": 6.5962499999999995
+      },
+      {
+        "time": "13:11:37",
+        "lat": 49.56766666666667,
+        "long": 6.61675
+      }
+    ],
+    "pts": 97.65755999999999,
+    "type": "FLAT",
+    "dist": "17.886",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\4e94979e-b6f8-4e41-80f1-8558afe6cb84\\turnpoints.igc"
+  },
+  {
+    "flightId": "d03c8b0e-690c-45e8-9d63-1f4cb97c5580",
+    "turnpoints": [
+      {
+        "time": "14:27:09",
+        "lat": 51.32576666666667,
+        "long": 7.661366666666667
+      },
+      {
+        "time": "14:37:06",
+        "lat": 51.3238,
+        "long": 7.653083333333333
+      },
+      {
+        "time": "14:45:59",
+        "lat": 51.3359,
+        "long": 7.662233333333333
+      },
+      {
+        "time": "14:55:34",
+        "lat": 51.31545,
+        "long": 7.669866666666667
+      },
+      {
+        "time": "14:59:44",
+        "lat": 51.3201,
+        "long": 7.667816666666667
+      }
+    ],
+    "type": "FAI",
+    "pts": 27.155180000000005,
+    "dist": "4.541",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\d03c8b0e-690c-45e8-9d63-1f4cb97c5580\\turnpoints.igc"
+  },
+  {
+    "flightId": "0c824549-50f8-47f0-8d44-701b5ab3d7b0",
+    "turnpoints": [
+      {
+        "time": "11:52:00",
+        "lat": 49.5685,
+        "long": 6.616383333333333
+      },
+      {
+        "time": "12:17:24",
+        "lat": 49.48031666666667,
+        "long": 6.61755
+      },
+      {
+        "time": "12:21:54",
+        "lat": 49.48538333333333,
+        "long": 6.6378
+      },
+      {
+        "time": "13:32:24",
+        "lat": 49.60511666666667,
+        "long": 6.60985
+      },
+      {
+        "time": "13:47:24",
+        "lat": 49.5685,
+        "long": 6.616433333333333
+      }
+    ],
+    "pts": 157.89228,
+    "type": "FLAT",
+    "dist": "28.918",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\0c824549-50f8-47f0-8d44-701b5ab3d7b0\\turnpoints.igc"
+  },
+  {
+    "flightId": "112c87c8-fcce-4082-aebf-7b1630aad93f",
+    "turnpoints": [
+      {
+        "time": "12:53:29",
+        "lat": 49.944266666666664,
+        "long": 7.05815
+      },
+      {
+        "time": "12:59:16",
+        "lat": 49.94551666666667,
+        "long": 7.05985
+      },
+      {
+        "time": "13:11:53",
+        "lat": 49.95596666666667,
+        "long": 7.026683333333334
+      },
+      {
+        "time": "15:42:23",
+        "lat": 49.92225,
+        "long": 7.082516666666667
+      },
+      {
+        "time": "15:54:41",
+        "lat": 49.94428333333333,
+        "long": 7.05815
+      }
+    ],
+    "pts": 61.00458,
+    "type": "FLAT",
+    "dist": "11.173",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\112c87c8-fcce-4082-aebf-7b1630aad93f\\turnpoints.igc"
+  },
+  {
+    "flightId": "e093571d-cc0d-41fd-a0f0-ed5f0557d8bb",
+    "turnpoints": [
+      {
+        "time": "13:39:29",
+        "lat": 49.8744,
+        "long": 7.7701
+      },
+      {
+        "time": "13:40:31",
+        "lat": 49.87286666666667,
+        "long": 7.77695
+      },
+      {
+        "time": "13:57:50",
+        "lat": 49.869733333333336,
+        "long": 7.72535
+      },
+      {
+        "time": "14:02:32",
+        "lat": 49.855199999999996,
+        "long": 7.755516666666667
+      },
+      {
+        "time": "14:11:33",
+        "lat": 49.8744,
+        "long": 7.770083333333333
+      }
+    ],
+    "type": "FAI",
+    "pts": 53.25788000000001,
+    "dist": "8.906",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\e093571d-cc0d-41fd-a0f0-ed5f0557d8bb\\turnpoints.igc"
+  },
+  {
+    "flightId": "b8b54a0a-e191-4495-9f04-f25e1f311e39",
+    "turnpoints": [
+      {
+        "time": "12:39:56",
+        "lat": 49.628933333333336,
+        "long": 7.932066666666667
+      },
+      {
+        "time": "13:11:07",
+        "lat": 49.66733333333333,
+        "long": 8.033383333333333
+      },
+      {
+        "time": "13:28:10",
+        "lat": 49.639466666666664,
+        "long": 7.9067
+      },
+      {
+        "time": "13:36:24",
+        "lat": 49.61411666666667,
+        "long": 7.9430499999999995
+      },
+      {
+        "time": "13:41:53",
+        "lat": 49.628933333333336,
+        "long": 7.932083333333333
+      }
+    ],
+    "pts": 121.60511999999999,
+    "type": "FLAT",
+    "dist": "22.272",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\b8b54a0a-e191-4495-9f04-f25e1f311e39\\turnpoints.igc"
+  },
+  {
+    "flightId": "0fd91a22-16a1-413c-8ebc-2e3e9d6505b7",
+    "turnpoints": [
+      {
+        "time": "13:31:15",
+        "lat": 49.88041666666667,
+        "long": 7.019216666666667
+      },
+      {
+        "time": "13:47:15",
+        "lat": 49.873066666666666,
+        "long": 7.014033333333333
+      },
+      {
+        "time": "14:24:07",
+        "lat": 49.9143,
+        "long": 7.037633333333333
+      },
+      {
+        "time": "14:27:07",
+        "lat": 49.92021666666667,
+        "long": 7.020566666666666
+      },
+      {
+        "time": "14:37:24",
+        "lat": 49.89346666666667,
+        "long": 7.019
+      }
+    ],
+    "pts": 55.080479999999994,
+    "type": "FLAT",
+    "dist": "10.088",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\0fd91a22-16a1-413c-8ebc-2e3e9d6505b7\\turnpoints.igc"
+  },
+  {
+    "flightId": "684a4def-4645-4742-a4fc-d6d5e9b42431",
+    "turnpoints": [
+      {
+        "time": "14:10:19",
+        "lat": 49.77011666666667,
+        "long": 7.6945
+      },
+      {
+        "time": "14:16:46",
+        "lat": 49.76815,
+        "long": 7.69135
+      },
+      {
+        "time": "14:22:09",
+        "lat": 49.769016666666666,
+        "long": 7.696466666666667
+      },
+      {
+        "time": "14:55:56",
+        "lat": 49.75901666666667,
+        "long": 7.5007166666666665
+      },
+      {
+        "time": "15:10:27",
+        "lat": 49.725966666666665,
+        "long": 7.434566666666667
+      }
+    ],
+    "pts": 59.508019999999995,
+    "type": "FREE",
+    "dist": "20.807",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\684a4def-4645-4742-a4fc-d6d5e9b42431\\turnpoints.igc"
+  },
+  {
+    "flightId": "cdd89b5f-fdbf-4bb2-9957-de9e38b87c47",
+    "turnpoints": [
+      {
+        "time": "14:04:20",
+        "lat": 49.24328333333333,
+        "long": 8.01655
+      },
+      {
+        "time": "14:14:34",
+        "lat": 49.25246666666666,
+        "long": 8.044316666666667
+      },
+      {
+        "time": "14:25:19",
+        "lat": 49.2299,
+        "long": 8.014983333333333
+      },
+      {
+        "time": "15:04:57",
+        "lat": 49.25,
+        "long": 8.011116666666666
+      },
+      {
+        "time": "15:11:05",
+        "lat": 49.2464,
+        "long": 8.01325
+      }
+    ],
+    "type": "FAI",
+    "pts": 45.137040000000006,
+    "dist": "7.548",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\cdd89b5f-fdbf-4bb2-9957-de9e38b87c47\\turnpoints.igc"
+  },
+  {
+    "flightId": "8a0216c9-a701-4cb7-a1de-ef21b258081f",
+    "turnpoints": [
+      {
+        "time": "12:01:21",
+        "lat": 49.8466,
+        "long": 6.8731
+      },
+      {
+        "time": "12:14:06",
+        "lat": 49.82273333333333,
+        "long": 6.891183333333333
+      },
+      {
+        "time": "12:33:01",
+        "lat": 49.85085,
+        "long": 6.872866666666667
+      },
+      {
+        "time": "13:21:30",
+        "lat": 49.837466666666664,
+        "long": 6.8373333333333335
+      },
+      {
+        "time": "13:30:26",
+        "lat": 49.8466,
+        "long": 6.873116666666666
+      }
+    ],
+    "type": "FAI",
+    "pts": 63.01126000000001,
+    "dist": "10.537",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\8a0216c9-a701-4cb7-a1de-ef21b258081f\\turnpoints.igc"
+  },
+  {
+    "flightId": "1780608e-d48e-4fa0-a427-9d0afca1fd0a",
+    "turnpoints": [
+      {
+        "time": "13:32:33",
+        "lat": 49.94446666666666,
+        "long": 7.008033333333334
+      },
+      {
+        "time": "14:00:37",
+        "lat": 49.93691666666667,
+        "long": 7.020533333333334
+      },
+      {
+        "time": "14:10:00",
+        "lat": 49.946533333333335,
+        "long": 7.0030166666666664
+      },
+      {
+        "time": "14:16:52",
+        "lat": 49.9407,
+        "long": 6.9779333333333335
+      },
+      {
+        "time": "14:26:33",
+        "lat": 49.94446666666666,
+        "long": 7.008033333333334
+      }
+    ],
+    "pts": 36.2271,
+    "type": "FLAT",
+    "dist": "6.635",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\1780608e-d48e-4fa0-a427-9d0afca1fd0a\\turnpoints.igc"
+  },
+  {
+    "flightId": "72baa559-577b-42ca-afd7-225ab1a08c18",
+    "turnpoints": [
+      {
+        "time": "14:03:09",
+        "lat": 49.84775,
+        "long": 6.871133333333333
+      },
+      {
+        "time": "14:10:27",
+        "lat": 49.83056666666667,
+        "long": 6.8866499999999995
+      },
+      {
+        "time": "14:29:47",
+        "lat": 49.853233333333336,
+        "long": 6.860333333333333
+      },
+      {
+        "time": "14:39:26",
+        "lat": 49.83545,
+        "long": 6.832483333333333
+      },
+      {
+        "time": "14:49:22",
+        "lat": 49.847766666666665,
+        "long": 6.8711166666666665
+      }
+    ],
+    "type": "FAI",
+    "pts": 59.08240000000001,
+    "dist": "9.880",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\72baa559-577b-42ca-afd7-225ab1a08c18\\turnpoints.igc"
+  },
+  {
+    "flightId": "ecdb4aad-87e5-42f2-b7e1-b6e76acc19b4",
+    "turnpoints": [
+      {
+        "time": "11:05:43",
+        "lat": 50.10916666666667,
+        "long": 7.123616666666667
+      },
+      {
+        "time": "11:55:28",
+        "lat": 49.96768333333333,
+        "long": 7.06815
+      },
+      {
+        "time": "13:52:11",
+        "lat": 49.6887,
+        "long": 6.635716666666667
+      },
+      {
+        "time": "15:08:34",
+        "lat": 49.373266666666666,
+        "long": 6.6334
+      },
+      {
+        "time": "15:41:10",
+        "lat": 49.3071,
+        "long": 6.763083333333333
+      }
+    ],
+    "pts": 306.30886,
+    "type": "FREE",
+    "dist": "107.101",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\ecdb4aad-87e5-42f2-b7e1-b6e76acc19b4\\turnpoints.igc"
+  },
+  {
+    "flightId": "ec214de1-de02-4618-9ddf-cceeccd377e6",
+    "turnpoints": [
+      {
+        "time": "09:31:23",
+        "lat": 50.107866666666666,
+        "long": 7.117816666666666
+      },
+      {
+        "time": "09:45:15",
+        "lat": 50.07318333333333,
+        "long": 7.115716666666667
+      },
+      {
+        "time": "10:34:18",
+        "lat": 50.001133333333335,
+        "long": 6.8904
+      },
+      {
+        "time": "10:40:35",
+        "lat": 49.97338333333333,
+        "long": 6.89505
+      },
+      {
+        "time": "10:43:19",
+        "lat": 49.97063333333333,
+        "long": 6.879666666666667
+      }
+    ],
+    "pts": 74.59452,
+    "type": "FREE",
+    "dist": "26.082",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\ec214de1-de02-4618-9ddf-cceeccd377e6\\turnpoints.igc"
+  },
+  {
+    "flightId": "51c93d0f-ef6e-4dc9-8a19-d0210354e608",
+    "turnpoints": [
+      {
+        "time": "10:53:10",
+        "lat": 50.108333333333334,
+        "long": 7.1203
+      },
+      {
+        "time": "10:56:21",
+        "lat": 50.11043333333333,
+        "long": 7.11885
+      },
+      {
+        "time": "14:13:06",
+        "lat": 49.78081666666667,
+        "long": 6.6822
+      },
+      {
+        "time": "16:49:05",
+        "lat": 50.10326666666667,
+        "long": 7.136
+      },
+      {
+        "time": "16:49:53",
+        "lat": 50.10405,
+        "long": 7.13085
+      }
+    ],
+    "pts": 530.20422,
+    "type": "FLAT",
+    "dist": "97.107",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\51c93d0f-ef6e-4dc9-8a19-d0210354e608\\turnpoints.igc"
+  },
+  {
+    "flightId": "0d3294d5-0031-4c5d-a6c9-fd173694ba21",
+    "turnpoints": [
+      {
+        "time": "11:03:02",
+        "lat": 49.84981666666667,
+        "long": 6.868483333333334
+      },
+      {
+        "time": "11:10:19",
+        "lat": 49.84203333333333,
+        "long": 6.88125
+      },
+      {
+        "time": "11:18:45",
+        "lat": 49.84928333333333,
+        "long": 6.85905
+      },
+      {
+        "time": "15:01:56",
+        "lat": 50.46596666666667,
+        "long": 7.810466666666667
+      },
+      {
+        "time": "15:14:33",
+        "lat": 50.428016666666664,
+        "long": 7.838266666666667
+      }
+    ],
+    "pts": 297.7689,
+    "type": "FREE",
+    "dist": "104.115",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\0d3294d5-0031-4c5d-a6c9-fd173694ba21\\turnpoints.igc"
+  },
+  {
+    "flightId": "40264d03-e88d-4682-8053-53edb6fffc17",
+    "turnpoints": [
+      {
+        "time": "12:03:21",
+        "lat": 49.945033333333335,
+        "long": 7.05825
+      },
+      {
+        "time": "12:23:27",
+        "lat": 49.95933333333333,
+        "long": 7.024866666666667
+      },
+      {
+        "time": "12:47:05",
+        "lat": 49.9327,
+        "long": 7.079316666666666
+      },
+      {
+        "time": "13:19:16",
+        "lat": 49.93213333333333,
+        "long": 7.0357666666666665
+      },
+      {
+        "time": "13:28:05",
+        "lat": 49.94493333333333,
+        "long": 7.058066666666667
+      }
+    ],
+    "type": "FAI",
+    "pts": 66.48564,
+    "dist": "11.118",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\40264d03-e88d-4682-8053-53edb6fffc17\\turnpoints.igc"
+  },
+  {
+    "flightId": "eefc442b-1fea-48b6-bfa0-69628b19fe41",
+    "turnpoints": [
+      {
+        "time": "13:00:21",
+        "lat": 50.244366666666664,
+        "long": 7.5738
+      },
+      {
+        "time": "13:26:46",
+        "lat": 50.22873333333333,
+        "long": 7.6085
+      },
+      {
+        "time": "13:38:05",
+        "lat": 50.26648333333333,
+        "long": 7.6033333333333335
+      },
+      {
+        "time": "13:47:36",
+        "lat": 50.24195,
+        "long": 7.569966666666667
+      },
+      {
+        "time": "13:52:22",
+        "lat": 50.24435,
+        "long": 7.5738
+      }
+    ],
+    "type": "FAI",
+    "pts": 65.40326,
+    "dist": "10.937",
+    "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\eefc442b-1fea-48b6-bfa0-69628b19fe41\\turnpoints.igc"
+  }
+]
