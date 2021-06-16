@@ -144,6 +144,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.fullPath == "/") {
     return next();
   } else if (auth && !to.meta.requiredAuth) {
+    // TODO: Redirect after login?
     // return next({ path: "/profil" });
     return next();
   } else if (!auth && to.meta.requiredAuth) {
