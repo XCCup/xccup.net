@@ -13,15 +13,22 @@ const factors = {
 };
 
 const IgcAnalyzer = {
-  startCalculation: (flight, callback) => {
+  startCalculation: (flight, callback, flightLocation) => {
     const flightId = flight.id.toString();
-    const igcAsPlainText = readIgcFile(flightId);
+    let igcAsPlainText;
+    if (flightLocation) {
+      igcAsPlainText = fs.readFileSync(flightLocation, "utf8");
+    } else {
+      igcAsPlainText = readIgcFile(flightId);
+    }
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
     const currentResolutionInSeconds = getResolution(igcAsJson);
     const durationInMinutes = getDuration(igcAsJson);
     const requiredResolution = getResolutionForDuration(durationInMinutes);
-    const stripFactor = requiredResolution / currentResolutionInSeconds;
+    const stripFactor = Math.ceil(
+      requiredResolution / currentResolutionInSeconds
+    );
     console.log(`Will strip igc fixes by factor ${stripFactor}`);
     let igcWithReducedFixes = stripByFactor(stripFactor, igcAsPlainText);
     const { writeStream, pathToFile } = writeFile(
@@ -30,16 +37,27 @@ const IgcAnalyzer = {
       stripFactor
     );
     writeStream.end(() =>
-      runOlc(pathToFile, flightId, stripFactor == null, callback)
+      runOlc(
+        pathToFile,
+        flightId,
+        stripFactor == null,
+        callback,
+        flightLocation
+      )
     );
   },
 
-  extractFixes: (flight) => {
+  extractFixes: (flight, flightLocation) => {
     //TODO Currently the file will be deserailized twice!
     //1x startCalculation and 1x extractFixes
     const flightId = flight.id.toString();
     console.log(`read file from`);
-    const igcAsPlainText = readIgcFile(flightId);
+    let igcAsPlainText;
+    if (flightLocation) {
+      igcAsPlainText = fs.readFileSync(flightLocation, "utf8");
+    } else {
+      igcAsPlainText = readIgcFile(flightId);
+    }
     console.log(`start parsing`);
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
     console.log(`Finished parsing`);
@@ -74,8 +92,13 @@ function readIgcFile(flightId) {
   return fs.readFileSync(findIgcFileForFlight(flightId), "utf8");
 }
 
-function runTurnpointIteration(resultStripIteration, callback) {
-  const igcAsPlainText = readIgcFile(resultStripIteration.flightId);
+function runTurnpointIteration(resultStripIteration, callback, flightLocation) {
+  let igcAsPlainText;
+  if (flightLocation) {
+    igcAsPlainText = fs.readFileSync(flightLocation, "utf8");
+  } else {
+    igcAsPlainText = readIgcFile(resultStripIteration.flightId);
+  }
   let igcWithReducedFixes = stripAroundturnpoints(
     igcAsPlainText,
     resultStripIteration.turnpoints
@@ -104,7 +127,13 @@ function determineOlcBinary() {
   }
 }
 
-function runOlc(filePath, flightId, isTurnpointIteration, callback) {
+function runOlc(
+  filePath,
+  flightId,
+  isTurnpointIteration,
+  callback,
+  flightLocation
+) {
   const { exec } = require("child_process");
   console.log("Start OLC analysis");
 
@@ -118,7 +147,8 @@ function runOlc(filePath, flightId, isTurnpointIteration, callback) {
       flightId,
       isTurnpointIteration,
       filePath,
-      callback
+      callback,
+      flightLocation
     );
   });
 }
@@ -128,7 +158,8 @@ function parseOlcData(
   flightId,
   isTurnpointsIteration,
   filePath,
-  callback
+  callback,
+  flightLocation
 ) {
   const dataLines = data.split("\n");
 
@@ -195,7 +226,7 @@ function parseOlcData(
     callback(result);
   } else {
     console.log("IGC Result from strip iteration: ", result);
-    runTurnpointIteration(result, callback);
+    runTurnpointIteration(result, callback, flightLocation);
   }
 }
 
@@ -245,7 +276,7 @@ function stripByFactor(factor, input) {
   let reducedLines = [];
   for (let i = 0; i < lines.length; i++) {
     reducedLines.push(lines[i]);
-    if (lines[i].startsWith("B")) {
+    if (lines[i] && lines[i].startsWith("B")) {
       i = i + (factor - 1);
     }
   }
@@ -266,8 +297,6 @@ function stripAroundturnpoints(input, turnpoints) {
       }
     }
   }
-
-  console.log("IN: ", lineIndexes);
 
   let reducedLines = [];
   let lineIndexesIndex = 0;
