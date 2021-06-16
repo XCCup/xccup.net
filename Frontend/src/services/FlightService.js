@@ -1,6 +1,4 @@
 import axios from "axios";
-import jwtInterceptor from "@/shared/jwtInterceptor";
-
 let baseURL = process.env.VUE_APP_API_URL;
 
 const apiClient = axios.create({
@@ -32,34 +30,34 @@ export default {
   //   return apiClient.post("/users/login", data);
   // },
   getFlights() {
-    return apiClient2.get("/tageswertung");
+    return apiClient2.get("tageswertung");
   },
   getFlight(flightId) {
-    return apiClient.get("/flights/" + flightId);
+    return apiClient.get("flights/" + flightId);
   },
   // These will be obsolete if the flight modell contains comments and description
   getComments() {
-    return apiClient2.get("/comments");
+    return apiClient2.get("comments");
   },
   getDescription() {
-    return apiClient2.get("/flightDescription");
+    return apiClient2.get("flightDescription");
   },
   uploadIgc(data) {
-    return jwtInterceptor.post("/flights/", data);
+    return apiClient.post("flights/", data);
   },
   uploadFlightDetails(flightId, data) {
-    return apiClient.put("/flights/" + flightId, data);
+    return apiClient.put("flights/" + flightId, data);
   },
   getAirbuddies(flightId) {
-    return apiClient.get("/airbuddies/" + flightId);
+    return apiClient.get("airbuddies/" + flightId);
   },
   getInitialData() {
-    return apiClient2.get("/db");
+    return apiClient2.get("db");
   },
   addComment(comment) {
-    return apiClient.post("/comments", comment);
+    return apiClient.post("comments", comment);
   },
   deleteComment(commentId) {
-    return apiClient.delete("/comments/" + commentId);
+    return apiClient.delete("comments/" + commentId);
   },
 };

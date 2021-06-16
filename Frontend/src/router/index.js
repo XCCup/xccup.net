@@ -102,7 +102,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  console.log(store.getters["auth/getAuthData"].token);
   if (!store.getters["auth/getAuthData"].token) {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
@@ -120,17 +119,23 @@ router.beforeEach(async (to, from, next) => {
     const authData = store.getters["auth/getAuthData"];
     if (authData.token) {
       const payload = {
-        accessToken: authData.token,
-        refreshToken: authData.refreshToken,
+        token: authData.refreshToken,
       };
-      let baseURL = process.env.VUE_APP_API_URL;
-
-      const refreshResponse = await axios.post(
-        baseURL + "users/token",
-        payload
-      );
-      store.commit("auth/saveTokenData", refreshResponse.data);
-      auth = true;
+      try {
+        const refreshResponse = await axios.post(
+          "http://localhost:3000/users/token",
+          payload
+        );
+        store.commit("auth/saveTokenData", {
+          accessToken: refreshResponse.data.accessToken,
+          refreshToken: authData.refreshToken,
+        });
+        auth = true;
+        store.commit("auth/setLoginStatus", "success");
+      } catch (error) {
+        store.dispatch("auth/logout");
+        console.log(error);
+      }
     }
   } else {
     store.commit("auth/setLoginStatus", "success");

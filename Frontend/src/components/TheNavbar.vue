@@ -78,11 +78,9 @@
                 <router-link :to="{ name: 'Profile' }" class="dropdown-item"
                   >Profil</router-link
                 >
-                <router-link
-                  class="btn btn-danger btn-sm m-1"
-                  :to="{ name: 'UploadFlight' }"
-                  >Abmelden
-                </router-link>
+                <button class="btn btn-danger btn-sm m-1" @click="actionLogout">
+                  Abmelden
+                </button>
               </div>
             </div>
           </div>
@@ -98,7 +96,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "TheNavbar",
   computed: {
@@ -109,6 +107,16 @@ export default {
     }),
     loggedIn() {
       return this.getterLoginStatus === "success";
+    },
+  },
+  methods: {
+    ...mapActions("auth", {
+      actionLogout: "logout",
+    }),
+    async handleLogout() {
+      await this.actionLogout();
+      // TODO: the redirect is not working right now
+      this.$router.push({ name: "Home" });
     },
   },
 };

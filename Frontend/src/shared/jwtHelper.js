@@ -14,7 +14,7 @@ export function jwtDecrypt(token) {
 }
 
 export function tokenAlive(exp) {
-  if (Date.now() >= exp * 1000) {
+  if (Date.now() >= (exp - 2) * 1000) {
     return false;
   }
   return true;
