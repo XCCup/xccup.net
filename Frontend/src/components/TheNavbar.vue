@@ -69,10 +69,20 @@
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
-            {{ authUser?.name ?? "Default User" }}
+            {{ loggedIn ? gettersAuthData.username : "Login" }}
           </button>
           <div class="dropdown-menu" style="width: 250px">
-            <BaseLogin />
+            <BaseLogin v-if="!loggedIn" />
+            <div v-else>
+              <div class="mb-3">
+                <router-link :to="{ name: 'Profile' }" class="dropdown-item"
+                  >Profil</router-link
+                >
+                <button class="btn btn-danger btn-sm m-1" @click="actionLogout">
+                  Abmelden
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <router-link
@@ -86,11 +96,28 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "TheNavbar",
   computed: {
     ...mapGetters(["authUser"]),
+    ...mapGetters("auth", {
+      gettersAuthData: "getAuthData",
+      getterLoginStatus: "getLoginStatus",
+    }),
+    loggedIn() {
+      return this.getterLoginStatus === "success";
+    },
+  },
+  methods: {
+    ...mapActions("auth", {
+      actionLogout: "logout",
+    }),
+    async handleLogout() {
+      await this.actionLogout();
+      // TODO: the redirect is not working right now
+      this.$router.push({ name: "Home" });
+    },
   },
 };
 </script>

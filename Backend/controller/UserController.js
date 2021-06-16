@@ -39,13 +39,12 @@ router.post("/login", async (req, res) => {
     return;
   }
 
-  const accessToken = createToken(userId);
-  const refreshToken = createRefreshToken(userId);
+  const accessToken = createToken(userId, name);
+  const refreshToken = createRefreshToken(userId, name);
 
   res.json({
     accessToken: accessToken,
     refreshToken: refreshToken,
-    userId: userId,
   });
 });
 
@@ -56,6 +55,7 @@ router.post("/token", async (req, res) => {
   const token = req.body.token;
 
   const accessToken = await refreshToken(token);
+  console.log(accessToken);
   if (!accessToken) {
     res.sendStatus(FORBIDDEN);
     return;

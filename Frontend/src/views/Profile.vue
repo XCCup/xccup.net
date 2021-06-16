@@ -195,6 +195,7 @@
         </div> -->
       </div>
     </div>
+    {{ userDetails }}
     <!-- Editor -->
   </div>
 
@@ -204,12 +205,32 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, useStore } from "vuex";
+import { computed, ref } from "vue";
+
 import AddGliderModal from "@/components/AddGliderModal";
 import RemoveGliderModal from "@/components/RemoveGliderModal";
+import UserService from "@/services/UserService";
+
 export default {
   name: "Profile",
   components: { AddGliderModal, RemoveGliderModal },
+  async setup() {
+    const store = useStore();
+    const userId = computed(() => store.getters["auth/getUserId"]);
+    // To simulate longer loading times
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const { data: userDetails } = await UserService.getUserDetails(
+        userId.value
+      );
+      return {
+        userDetails: ref(userDetails),
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   data() {
     return {
       userProfile: null,
@@ -217,7 +238,11 @@ export default {
   },
   computed: {
     ...mapGetters(["authUser"]),
+    ...mapGetters("auth", {
+      gettersAuthData: "getAuthData",
+    }),
     listOfAircrafts() {
+      if (!this.authUser.gliders) return;
       let gliderList = [];
       this.authUser.gliders.forEach((element) => {
         gliderList.push(`${element.brand} ${element.model}`);
@@ -233,11 +258,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  watch: {
-    // userProfile() {
-    //   this.userProfile = { ...this.authUser };
-    // },
   },
   methods: {
     save() {
