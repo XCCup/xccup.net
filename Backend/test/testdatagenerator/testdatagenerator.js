@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const IgcAnalyzer = require("../../igc/IgcAnalyzer");
 const ElevationAttacher = require("../../igc/ElevationAttacher");
+const LocationFinder = require("../../igc/LocationFinder");
 
 function writeAsJson(name, object) {
   fs.writeFileSync(name + ".json", JSON.stringify(object, null, 2));
@@ -140,28 +141,60 @@ function trueOrFalse() {
 //     writeAsJson("fixes", fixesWithElevation);
 //     return;
 //   }
-//   ElevationAttacher.execute(fixes.pop().fixes, (fWE) => {
-//     fixesWithElevation.push(fWE);
-//     attachElevation();
-//   });
+//   const poped = fixes.pop();
+//   ElevationAttacher.execute(
+//     poped.fixes,
+//     (fWE) => {
+//       fixesWithElevation.push(fWE);
+//       attachElevation();
+//     },
+//     poped
+//   );
 // }
 
-// Create comments
-const flights = require("./flights.json");
-const users = require("./users.json");
+// // Create comments
+// const flights = require("./flights.json");
+// const users = require("./users.json");
 
-const comments = [];
+// const comments = [];
 
-flights.forEach((flight) => {
-  for (let index = 0; index < Math.floor(Math.random() * 4); index++) {
-    const comment = {
-      id: faker.datatype.uuid(),
-      flightId: flight.id,
-      userId: selectRandomFromArray(users).id,
-      message: faker.lorem.words(Math.random() * 50),
-    };
-    comments.push(comment);
-  }
-});
+// flights.forEach((flight) => {
+//   for (let index = 0; index < Math.floor(Math.random() * 4); index++) {
+//     const comment = {
+//       id: faker.datatype.uuid(),
+//       flightId: flight.id,
+//       userId: selectRandomFromArray(users).id,
+//       message: faker.lorem.words(Math.random() * 50),
+//     };
+//     comments.push(comment);
+//   }
+// });
 
-writeAsJson("comments", comments);
+// writeAsJson("comments", comments);
+
+// Attach takeoff and landing
+const fixes = require("./fixes.json");
+
+const fixesWithLocation = [];
+(async () => {
+  await attachLocation(fixes);
+  console.log(fixesWithLocation);
+  writeAsJson("fixesWithLocation", fixesWithLocation);
+})();
+
+function attachLocation(fixes) {
+  Promise.all(
+    fixes.map(async (element) => {
+      const result = await LocationFinder.findTakeoffAndLanding(
+        element.fixes[0],
+        element.fixes[element.fixes.length - 1]
+      );
+      const ttt = {
+        flightId: element.flightId,
+        takeoff: result.nameOfTakeoff,
+        landing: result.nameOfLanding,
+      };
+      fixesWithLocation.push(ttt);
+    })
+  );
+}
