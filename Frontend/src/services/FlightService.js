@@ -1,12 +1,7 @@
 import axios from "axios";
 import jwtInterceptor from "@/shared/jwtInterceptor";
 
-let baseURL = "https://xccup.lurb.org/";
-
-if (process.env.VUE_APP_USE_LOCAL_API === "true") {
-  console.log("Using localhost:3000 for API calls");
-  baseURL = "http://localhost:3000";
-}
+let baseURL = process.env.VUE_APP_API_URL;
 
 const apiClient = axios.create({
   baseURL: baseURL,

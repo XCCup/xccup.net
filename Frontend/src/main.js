@@ -12,7 +12,6 @@ const requireComponent = require.context(
   false,
   /Base[A-Z]\w+\.(vue|js)$/
 );
-
 // JWT
 // router.beforeEach((to, from, next) => {
 //   let authPages = ["/profil/", "/hochladen"];
