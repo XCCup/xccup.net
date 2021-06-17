@@ -21,7 +21,9 @@ const IgcAnalyzer = {
     const currentResolutionInSeconds = getResolution(igcAsJson);
     const durationInMinutes = getDuration(igcAsJson);
     const requiredResolution = getResolutionForDuration(durationInMinutes);
-    const stripFactor = requiredResolution / currentResolutionInSeconds;
+    const stripFactor = Math.ceil(
+      requiredResolution / currentResolutionInSeconds
+    );
     console.log(`Will strip igc fixes by factor ${stripFactor}`);
     let igcWithReducedFixes = stripByFactor(stripFactor, igcAsPlainText);
     const { writeStream, pathToFile } = writeFile(
@@ -245,7 +247,7 @@ function stripByFactor(factor, input) {
   let reducedLines = [];
   for (let i = 0; i < lines.length; i++) {
     reducedLines.push(lines[i]);
-    if (lines[i].startsWith("B")) {
+    if (lines[i] && lines[i].startsWith("B")) {
       i = i + (factor - 1);
     }
   }
@@ -266,8 +268,6 @@ function stripAroundturnpoints(input, turnpoints) {
       }
     }
   }
-
-  console.log("IN: ", lineIndexes);
 
   let reducedLines = [];
   let lineIndexesIndex = 0;
