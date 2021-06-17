@@ -39,7 +39,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Heidelberg",
+    "landing": "Heddesbach"
   },
   {
     "id": "f9964c1c-b411-4e12-8e55-96a915997168",
@@ -81,7 +83,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Sommerloch",
+    "landing": "Weinsheim"
   },
   {
     "id": "d8cd7701-dd42-42a8-8608-2775850d2d75",
@@ -123,7 +127,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Bestwig",
+    "landing": "Gilserberg"
   },
   {
     "id": "71e620f7-806f-49a1-a79e-aa538187fc46",
@@ -165,7 +171,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Bremm",
+    "landing": "Ediger-Eller"
   },
   {
     "id": "15bf9618-3394-4d48-b20b-ca3e65c80047",
@@ -207,7 +215,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Veldenz",
+    "landing": "Veldenz"
   },
   {
     "id": "682b2236-17c2-4147-a0c2-bc665faac579",
@@ -249,7 +259,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Burgen",
+    "landing": "Burgen"
   },
   {
     "id": "3ddf8d66-9338-4773-83d8-84086e51147c",
@@ -291,7 +303,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Schriesheim",
+    "landing": "Schriesheim"
   },
   {
     "id": "87bbb855-1366-4a48-8d7f-11949ef6d482",
@@ -333,7 +347,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Issum",
+    "landing": "Issum"
   },
   {
     "id": "4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14",
@@ -375,7 +391,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Kobern-Gondorf",
+    "landing": "Kobern-Gondorf"
   },
   {
     "id": "07b590f3-ca8a-4305-88a2-e11c314b4955",
@@ -417,7 +435,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Kobern-Gondorf",
+    "landing": "Kobern-Gondorf"
   },
   {
     "id": "60a73a31-f03e-40a3-87c5-03f8bc447007",
@@ -459,7 +479,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Ockfen",
+    "landing": "Irsch"
   },
   {
     "id": "8d625d76-21e1-47b2-ad9a-ab0f28d3ed2f",
@@ -501,7 +523,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Lennestadt",
+    "landing": "Haiger"
   },
   {
     "id": "a7c8a11a-5a2c-4045-b3dc-7d8fbb6afabb",
@@ -543,7 +567,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Eslohe (Sauerland)",
+    "landing": "Meschede"
   },
   {
     "id": "77cdaf48-8f84-4d48-9ba6-1524c3598349",
@@ -585,7 +611,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Bremm",
+    "landing": "Reudelsterz"
   },
   {
     "id": "d27d8bce-e30c-45ff-aebe-550100dd8203",
@@ -627,7 +655,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Werdohl",
+    "landing": "Lennestadt"
   },
   {
     "id": "ecfa9c50-cc7d-436c-8b08-5f40ca7998ac",
@@ -669,7 +699,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Weyher in der Pfalz",
+    "landing": "Weyher in der Pfalz"
   },
   {
     "id": "18ddd683-b966-45c9-83e9-6eb6fd96ddf6",
@@ -711,7 +743,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Battenberg (Eder)",
+    "landing": "Battenberg (Eder)"
   },
   {
     "id": "26fd8ad5-1bab-450c-8c5c-14153ab25728",
@@ -753,7 +787,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Schriesheim",
+    "landing": "Aglasterhausen"
   },
   {
     "id": "4232f4eb-d42a-4583-ad9f-f631b72fd691",
@@ -795,7 +831,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Heidelberg",
+    "landing": "Bammental"
   },
   {
     "id": "6f9f100a-1a1e-408b-9eaf-37c66c1de058",
@@ -837,7 +875,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Bremm",
+    "landing": "Bernkastel-Kues"
   },
   {
     "id": "6e7b81b7-6969-4114-94f0-a0351aad0830",
@@ -879,7 +919,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Neumagen-Dhron",
+    "landing": "Neumagen-Dhron"
   },
   {
     "id": "5363477a-93ef-4ed3-baab-655dba688c7b",
@@ -921,7 +963,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Wintrich",
+    "landing": "Neumagen-Dhron"
   },
   {
     "id": "3d15ce06-1d2f-4994-8869-37a2f5bb1cb4",
@@ -963,7 +1007,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Zeltingen-Rachtig",
+    "landing": "Saarburg"
   },
   {
     "id": "1a1bfa34-301a-4412-a669-c8c2c777e577",
@@ -1005,7 +1051,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Bestwig",
+    "landing": "Frankenberg (Eder)"
   },
   {
     "id": "d174a309-1526-4ea8-99ad-655c32388d05",
@@ -1047,7 +1095,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Heidelberg",
+    "landing": "Heidelberg"
   },
   {
     "id": "4e94979e-b6f8-4e41-80f1-8558afe6cb84",
@@ -1089,7 +1139,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Serrig",
+    "landing": "Taben-Rodt"
   },
   {
     "id": "d03c8b0e-690c-45e8-9d63-1f4cb97c5580",
@@ -1131,7 +1183,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Iserlohn",
+    "landing": "Iserlohn"
   },
   {
     "id": "0c824549-50f8-47f0-8d44-701b5ab3d7b0",
@@ -1173,7 +1227,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Serrig",
+    "landing": "Taben-Rodt"
   },
   {
     "id": "112c87c8-fcce-4082-aebf-7b1630aad93f",
@@ -1215,7 +1271,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Graach an der Mosel",
+    "landing": "Graach an der Mosel"
   },
   {
     "id": "e093571d-cc0d-41fd-a0f0-ed5f0557d8bb",
@@ -1257,7 +1315,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Sommerloch",
+    "landing": "Sommerloch"
   },
   {
     "id": "b8b54a0a-e191-4495-9f04-f25e1f311e39",
@@ -1299,7 +1359,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Dannenfels",
+    "landing": "Dannenfels"
   },
   {
     "id": "0fd91a22-16a1-413c-8ebc-2e3e9d6505b7",
@@ -1341,7 +1403,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Burgen",
+    "landing": "Veldenz"
   },
   {
     "id": "684a4def-4645-4742-a4fc-d6d5e9b42431",
@@ -1383,7 +1447,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Odernheim am Glan",
+    "landing": "Mittelreidenbach"
   },
   {
     "id": "cdd89b5f-fdbf-4bb2-9957-de9e38b87c47",
@@ -1425,7 +1491,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Frankweiler",
+    "landing": "Dernbach"
   },
   {
     "id": "8a0216c9-a701-4cb7-a1de-ef21b258081f",
@@ -1467,7 +1535,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Klüsserath",
+    "landing": "Klüsserath"
   },
   {
     "id": "1780608e-d48e-4fa0-a427-9d0afca1fd0a",
@@ -1509,7 +1579,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Maring-Noviand",
+    "landing": "Maring-Noviand"
   },
   {
     "id": "72baa559-577b-42ca-afd7-225ab1a08c18",
@@ -1551,7 +1623,9 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Klüsserath",
+    "landing": "Klüsserath"
   },
   {
     "id": "ecdb4aad-87e5-42f2-b7e1-b6e76acc19b4",
@@ -1593,7 +1667,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Bremm",
+    "landing": "Saarlouis"
   },
   {
     "id": "ec214de1-de02-4618-9ddf-cceeccd377e6",
@@ -1635,7 +1711,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Bremm",
+    "landing": "Wittlich"
   },
   {
     "id": "51c93d0f-ef6e-4dc9-8a19-d0210354e608",
@@ -1677,7 +1755,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Bremm",
+    "landing": "Ediger-Eller"
   },
   {
     "id": "0d3294d5-0031-4c5d-a6c9-fd173694ba21",
@@ -1719,7 +1799,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Klüsserath",
+    "landing": "Montabaur"
   },
   {
     "id": "40264d03-e88d-4682-8053-53edb6fffc17",
@@ -1761,7 +1843,9 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": true
+    "isHike": true,
+    "takeoff": "Graach an der Mosel",
+    "landing": "Graach an der Mosel"
   },
   {
     "id": "eefc442b-1fea-48b6-bfa0-69628b19fe41",
@@ -1803,6 +1887,8 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false
+    "isHike": false,
+    "takeoff": "Boppard",
+    "landing": "Boppard"
   }
 ]

@@ -172,29 +172,44 @@ function trueOrFalse() {
 
 // writeAsJson("comments", comments);
 
-// Attach takeoff and landing
-const fixes = require("./fixes.json");
+// // Retrieve takeoff and landing
+// const fixes = require("./fixes.json");
 
-const fixesWithLocation = [];
-(async () => {
-  await attachLocation(fixes);
-  console.log(fixesWithLocation);
-  writeAsJson("fixesWithLocation", fixesWithLocation);
-})();
+// const attachLocation = async (fixes) => {
+//   const results = await Promise.all(
+//     fixes.map(async (element) => {
+//       const locations = await LocationFinder.findTakeoffAndLanding(
+//         element.fixes[0],
+//         element.fixes[element.fixes.length - 1]
+//       );
 
-function attachLocation(fixes) {
-  Promise.all(
-    fixes.map(async (element) => {
-      const result = await LocationFinder.findTakeoffAndLanding(
-        element.fixes[0],
-        element.fixes[element.fixes.length - 1]
-      );
-      const ttt = {
-        flightId: element.flightId,
-        takeoff: result.nameOfTakeoff,
-        landing: result.nameOfLanding,
-      };
-      fixesWithLocation.push(ttt);
-    })
+//       return {
+//         flightId: element.flightId,
+//         takeoff: locations.nameOfTakeoff,
+//         landing: locations.nameOfLanding,
+//       };
+//     })
+//   );
+//   return results;
+// };
+
+// (async () => {
+//   const locations = await attachLocation(fixes);
+//   console.log(locations);
+//   writeAsJson("fixesWithLocation", locations);
+// })();
+
+//Attach takeoff and landings
+const flightLocations = require("./flightLocations.json");
+const flights = require("./flights.json");
+
+flights.forEach((flight) => {
+  const match = flightLocations.find(
+    (flightLocation) => flightLocation.flightId == flight.id
   );
-}
+  flight.takeoff = match.takeoff;
+  flight.landing = match.landing;
+});
+
+console.log(flights);
+writeAsJson("flights", flights);
