@@ -21,19 +21,6 @@ jwtInterceptor.interceptors.response.use(
     console.log("Interceptor refresh…");
     // TODO: Should the server error code be 403?
     if (error.response.status === 401 || error.response.data === "EXPIRED") {
-      // const authData = store.getters["auth/getAuthData"];
-      // const payload = {
-      //   token: authData.refreshToken,
-      // };
-
-      // var response = await axios.post(
-      //   "http://localhost:3000/users/token",
-      //   payload
-      // );
-      // store.commit("auth/saveTokenData", {
-      //   accessToken: response.data.accessToken,
-      //   refreshToken: authData.refreshToken,
-      // });
       await store.dispatch("auth/refresh");
       const authData = store.getters["auth/getAuthData"];
       error.config.headers["Authorization"] = `Bearer ${authData.token}`;
