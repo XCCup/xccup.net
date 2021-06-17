@@ -46,6 +46,29 @@ const actions = {
       commit("setLoginStatus", "failed");
     }
   },
+  async refresh({ commit, getters, dispatch }) {
+    const authData = getters.getAuthData;
+    if (authData.token) {
+      const payload = {
+        token: authData.refreshToken,
+      };
+      try {
+        const refreshResponse = await axios.post(
+          baseURL + "users/token",
+          payload
+        );
+        commit("saveTokenData", {
+          accessToken: refreshResponse.data.accessToken,
+          refreshToken: authData.refreshToken,
+        });
+        commit("setLoginStatus", "success");
+        return true;
+      } catch (error) {
+        dispatch("logout");
+        console.log(error);
+      }
+    }
+  },
   async logout({ commit }) {
     const accessToken = localStorage.getItem("accessToken");
     await axios
@@ -73,8 +96,6 @@ const mutations = {
     };
 
     state.authData = newTokenData;
-    axios.defaults.headers.common["Authorization"] =
-      "Bearer " + localStorage.getItem("accessToken");
   },
   setLoginStatus(state, value) {
     state.loginStatus = value;

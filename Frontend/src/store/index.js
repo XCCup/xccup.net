@@ -1,9 +1,11 @@
 import { createStore } from "vuex";
 import authModule from "@/store/modules/auth";
+import userModule from "@/store/modules/user";
 
 export default createStore({
   modules: {
     auth: authModule,
+    user: userModule,
   },
   state: {
     // Hardcoded for development

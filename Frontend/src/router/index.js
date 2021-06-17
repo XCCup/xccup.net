@@ -4,26 +4,22 @@ import Flight from "@/views/Flight.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 import store from "@/store/index";
-import axios from "axios";
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    meta: { requiredAuth: false },
     component: Home,
   },
   {
     path: "/flug/:flightId",
     name: "Flight",
     props: true,
-    meta: { requiredAuth: false },
     component: Flight,
   },
   {
     path: "/fluege/",
     name: "Flights",
-    meta: { requiredAuth: false },
     component: () => import(/* webpackChunkName: "" */ "../views/Flights.vue"),
   },
   {
@@ -60,32 +56,27 @@ const routes = [
     path: "/sandbox/:flightId",
     name: "Sandbox",
     props: true,
-    meta: { requiredAuth: false },
     component: () => import(/* webpackChunkName: "" */ "../views/Sandbox.vue"),
   },
   {
     path: "/login/",
     name: "Login",
-    meta: { requiredAuth: false },
     component: () => import(/* webpackChunkName: "" */ "../views/Login.vue"),
   },
   {
     path: "/:catchAll(.*)",
     name: "NotFound",
-    meta: { requiredAuth: false },
     component: NotFound,
   },
   {
     path: "/404/:resource",
     name: "404Resource",
     component: NotFound,
-    meta: { requiredAuth: false },
     props: true,
   },
   {
     path: "/network-error",
     name: "NetworkError",
-    meta: { requiredAuth: false },
     component: NetworkError,
   },
 ];
@@ -116,27 +107,7 @@ router.beforeEach(async (to, from, next) => {
   let auth = store.getters["auth/isTokenActive"];
 
   if (!auth) {
-    const authData = store.getters["auth/getAuthData"];
-    if (authData.token) {
-      const payload = {
-        token: authData.refreshToken,
-      };
-      try {
-        const refreshResponse = await axios.post(
-          "http://localhost:3000/users/token",
-          payload
-        );
-        store.commit("auth/saveTokenData", {
-          accessToken: refreshResponse.data.accessToken,
-          refreshToken: authData.refreshToken,
-        });
-        auth = true;
-        store.commit("auth/setLoginStatus", "success");
-      } catch (error) {
-        store.dispatch("auth/logout");
-        console.log(error);
-      }
-    }
+    auth = await store.dispatch("auth/refresh");
   } else {
     store.commit("auth/setLoginStatus", "success");
   }
