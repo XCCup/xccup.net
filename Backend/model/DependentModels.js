@@ -165,7 +165,7 @@ const FlightComment = db.sequelize.define("FlightComment", {
   },
 
   message: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(2000),
     allowNull: false,
   },
 });

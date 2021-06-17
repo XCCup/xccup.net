@@ -4,7 +4,7 @@ const axios = require("axios");
 const byLatLong = async (location) => {
   try {
     // const location = "50.20524528622611,7.064103332484184";
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&language=de&result_type=locality&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&language=de&result_type=locality&key=AIzaSyDh9dojuHws-kUZ2eRFLndARMOG-Yib18I`;
     console.log(url);
     const result = await axios.get(url);
     // ZipCode TownName, CountryName

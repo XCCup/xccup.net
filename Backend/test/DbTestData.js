@@ -1,23 +1,56 @@
-const userService = require("../service/UserService");
-const flightService = require("../service/FlightService");
+const { User, Flight, FlightComment } = require("../model/DependentModels");
+const FlightFixes = require("../model/FlightFixes");
 
 const dbTestData = {
   checkForTestDataAndAddIfMissing: async () => {
     console.log("Check if required data is found in DB");
-    const user = {
-      id: "1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e",
-      name: "Great Pilot",
-      firstName: "Great",
-      lastName: "Pilot",
-      birthday: "31.03.1953",
-      glider: "Ozone Alpina 2",
-      password: "$up€r$€cr€t",
-      email: "super@dsecret.com",
-    };
-    const returnUser = await userService.getByName(user.name);
-    if (!returnUser) {
+    const userNames = await User.findAll();
+    const users = require("./testdatagenerator/users.json");
+    if (userNames != users.length) {
       console.log("Required data was not found. Will now add data to db.");
-      userService.save(user);
+
+      console.log("Start adding users");
+      await Promise.all(
+        users.map(async (user) => {
+          await User.create(user).catch((err) => {
+            console.log(err);
+          });
+        })
+      );
+      console.log("Finished adding users");
+
+      console.log("Start adding flights");
+      const flights = require("./testdatagenerator/flights.json");
+      await Promise.all(
+        flights.map(async (flight) => {
+          Flight.create(flight).catch((err) => {
+            console.log(err);
+          });
+        })
+      );
+      console.log("Finished adding flights");
+
+      console.log("Start adding comments");
+      const comments = require("./testdatagenerator/comments.json");
+      await Promise.all(
+        comments.map(async (comment) => {
+          FlightComment.create(comment).catch((err) => {
+            console.log(err);
+          });
+        })
+      );
+      console.log("Finished adding comments");
+
+      console.log("Start adding fixes");
+      const fixes = require("./testdatagenerator/fixes.json");
+      await Promise.all(
+        fixes.map(async (entry) => {
+          await FlightFixes.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding fixes");
     }
   },
 };

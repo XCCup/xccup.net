@@ -6,8 +6,8 @@ const dataset = process.env.ELEVATION_DATASET;
 const numberOfFixesPerApiRequest = 50;
 
 const elevationAttacher = {
-  execute: (fixes, callback) => {
-    getFixesWithElevation(fixes, callback);
+  execute: (fixes, callback, poped) => {
+    getFixesWithElevation(fixes, callback, poped);
   },
 };
 
@@ -24,7 +24,7 @@ function executeRequest(stack) {
   let locations = stack
     .map(({ fix }) => `${fix.latitude},${fix.longitude}`)
     .join("|");
-  let url = `${host}/${dataset}?locations=${locations}&nodata_value=0`;
+  let url = `https://elevation.lurb.org/v1/eudem25m?locations=${locations}&nodata_value=0`;
   console.log("Will execute request: ", url);
   return axios.get(url);
 }
@@ -54,7 +54,7 @@ const getElevationData = async (fix) => {
   return promise;
 };
 
-const getFixesWithElevation = async (fixes, callback) => {
+const getFixesWithElevation = async (fixes, callback, poped) => {
   const _fixesWithElevation = [];
 
   await Promise.all(
@@ -64,7 +64,8 @@ const getFixesWithElevation = async (fixes, callback) => {
     })
   );
   console.log("Done!");
-  callback(_fixesWithElevation);
+  poped.fixes = _fixesWithElevation;
+  callback(poped);
 };
 
 module.exports = elevationAttacher;

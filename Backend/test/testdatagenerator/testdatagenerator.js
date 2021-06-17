@@ -199,17 +199,17 @@ function trueOrFalse() {
 //   writeAsJson("fixesWithLocation", locations);
 // })();
 
-//Attach takeoff and landings
-const flightLocations = require("./flightLocations.json");
-const flights = require("./flights.json");
+// //Attach takeoff and landings
+// const flightLocations = require("./flightLocations.json");
+// const flights = require("./flights.json");
 
-flights.forEach((flight) => {
-  const match = flightLocations.find(
-    (flightLocation) => flightLocation.flightId == flight.id
-  );
-  flight.takeoff = match.takeoff;
-  flight.landing = match.landing;
-});
+// flights.forEach((flight) => {
+//   const match = flightLocations.find(
+//     (flightLocation) => flightLocation.flightId == flight.id
+//   );
+//   flight.takeoff = match.takeoff;
+//   flight.landing = match.landing;
+// });
 
-console.log(flights);
-writeAsJson("flights", flights);
+// console.log(flights);
+// writeAsJson("flights", flights);

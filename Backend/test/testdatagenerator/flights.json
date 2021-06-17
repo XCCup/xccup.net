@@ -28,12 +28,12 @@
         "long": 8.82025
       }
     ],
-    "flightPoints": 55.8558,
+    "flightPoints": 55,
     "flightType": "FREE",
     "flightDistance": "19.530",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\65974949-f4bc-4325-9cf3-b479faf00b1c\\flightTurnpoints.igc",
     "userId": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
-    "externalId": 0,
+    "externalId": 1,
     "report": "neque ipsa incidunt et magni et at veniam omnis quod non libero aut autem illum ullam culpa quasi non exercitationem non ut maiores velit non dolores natus et soluta non et vero nam totam delectus et nostrum earum suscipit accusantium fugit et itaque enim labore cum inventore impedit quo dolor facere amet et est repellendus voluptatum laudantium quis id placeat ut accusantium dolores nesciunt ea architecto tempora est vel vero quo earum iusto aperiam saepe non eos voluptatem assumenda quo aspernatur pariatur quia nemo est architecto et officiis molestiae est dolores facere sit rerum debitis quis amet labore eaque enim sapiente autem vero tempore amet dolores corrupti pariatur quia dolor a",
     "glider": "Litte Cloud Spiruline",
     "flightStatus": "Nicht in Wertung",
@@ -72,12 +72,12 @@
         "long": 7.7594666666666665
       }
     ],
-    "flightPoints": 109.5003,
+    "flightPoints": 109,
     "flightType": "FLAT",
     "flightDistance": "20.055",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\f9964c1c-b411-4e12-8e55-96a915997168\\flightTurnpoints.igc",
     "userId": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
-    "externalId": 1,
+    "externalId": 43,
     "report": "voluptatem dolores dignissimos aut sunt vitae minus qui inventore saepe saepe quia quia dolor atque eaque est in veniam totam quae eum",
     "glider": "Sky Apollo",
     "flightStatus": "In Wertung",
@@ -116,7 +116,7 @@
         "long": 9.054366666666667
       }
     ],
-    "flightPoints": 212.25775999999996,
+    "flightPoints": 212,
     "flightType": "FREE",
     "flightDistance": "74.216",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\d8cd7701-dd42-42a8-8608-2775850d2d75\\flightTurnpoints.igc",
@@ -160,7 +160,7 @@
         "long": 7.131433333333334
       }
     ],
-    "flightPoints": 54.52356,
+    "flightPoints": 54,
     "flightType": "FLAT",
     "flightDistance": "9.986",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\71e620f7-806f-49a1-a79e-aa538187fc46\\flightTurnpoints.igc",
@@ -204,7 +204,7 @@
         "long": 7.018833333333333
       }
     ],
-    "flightPoints": 63.057539999999996,
+    "flightPoints": 63,
     "flightType": "FLAT",
     "flightDistance": "11.549",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\15bf9618-3394-4d48-b20b-ca3e65c80047\\flightTurnpoints.igc",
@@ -249,7 +249,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 75.06694000000002,
+    "flightPoints": 75,
     "flightDistance": "12.553",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\682b2236-17c2-4147-a0c2-bc665faac579\\flightTurnpoints.igc",
     "userId": "bc8f46c2-fc95-4662-877c-d4a08806f482",
@@ -292,7 +292,7 @@
         "long": 8.667366666666666
       }
     ],
-    "flightPoints": 53.01114,
+    "flightPoints": 53,
     "flightType": "FLAT",
     "flightDistance": "9.709",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\3ddf8d66-9338-4773-83d8-84086e51147c\\flightTurnpoints.igc",
@@ -336,7 +336,7 @@
         "long": 6.4334
       }
     ],
-    "flightPoints": 63.11214,
+    "flightPoints": 63,
     "flightType": "FLAT",
     "flightDistance": "11.559",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\87bbb855-1366-4a48-8d7f-11949ef6d482\\flightTurnpoints.igc",
@@ -380,7 +380,7 @@
         "long": 7.46425
       }
     ],
-    "flightPoints": 178.32359999999997,
+    "flightPoints": 178,
     "flightType": "FLAT",
     "flightDistance": "32.660",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14\\flightTurnpoints.igc",
@@ -425,7 +425,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 133.25832,
+    "flightPoints": 133,
     "flightDistance": "22.284",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\07b590f3-ca8a-4305-88a2-e11c314b4955\\flightTurnpoints.igc",
     "userId": "e071350f-a7c3-4081-9e2f-709625b07a07",
@@ -469,7 +469,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 289.80874,
+    "flightPoints": 289,
     "flightDistance": "48.463",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\60a73a31-f03e-40a3-87c5-03f8bc447007\\flightTurnpoints.igc",
     "userId": "61895b0e-0e22-480d-87ac-c0040e682c5d",
@@ -512,7 +512,7 @@
         "long": 8.2356
       }
     ],
-    "flightPoints": 121.10383999999999,
+    "flightPoints": 121,
     "flightType": "FREE",
     "flightDistance": "42.344",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\8d625d76-21e1-47b2-ad9a-ab0f28d3ed2f\\flightTurnpoints.igc",
@@ -557,7 +557,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 103.60948,
+    "flightPoints": 103,
     "flightDistance": "17.326",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\a7c8a11a-5a2c-4045-b3dc-7d8fbb6afabb\\flightTurnpoints.igc",
     "userId": "0f6e6f97-b64b-4e04-a516-adada6f2cba0",
@@ -600,7 +600,7 @@
         "long": 7.1728
       }
     ],
-    "flightPoints": 167.06404,
+    "flightPoints": 167,
     "flightType": "FREE",
     "flightDistance": "58.414",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\77cdaf48-8f84-4d48-9ba6-1524c3598349\\flightTurnpoints.igc",
@@ -644,7 +644,7 @@
         "long": 7.9996833333333335
       }
     ],
-    "flightPoints": 71.81174,
+    "flightPoints": 71,
     "flightType": "FREE",
     "flightDistance": "25.109",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\d27d8bce-e30c-45ff-aebe-550100dd8203\\flightTurnpoints.igc",
@@ -689,7 +689,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 86.12396,
+    "flightPoints": 86,
     "flightDistance": "14.402",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\ecfa9c50-cc7d-436c-8b08-5f40ca7998ac\\flightTurnpoints.igc",
     "userId": "04bd7ffd-d792-4e90-ba9e-c4356e353135",
@@ -733,7 +733,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 84.07880000000002,
+    "flightPoints": 84,
     "flightDistance": "14.060",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\18ddd683-b966-45c9-83e9-6eb6fd96ddf6\\flightTurnpoints.igc",
     "userId": "388ab9dd-cb42-4c94-aa87-16b7a991b217",
@@ -776,7 +776,7 @@
         "long": 8.982516666666667
       }
     ],
-    "flightPoints": 84.50156,
+    "flightPoints": 84,
     "flightType": "FREE",
     "flightDistance": "29.546",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\26fd8ad5-1bab-450c-8c5c-14153ab25728\\flightTurnpoints.igc",
@@ -820,7 +820,7 @@
         "long": 8.771783333333333
       }
     ],
-    "flightPoints": 121.5669,
+    "flightPoints": 121,
     "flightType": "FLAT",
     "flightDistance": "22.265",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\4232f4eb-d42a-4583-ad9f-f631b72fd691\\flightTurnpoints.igc",
@@ -864,7 +864,7 @@
         "long": 6.999866666666667
       }
     ],
-    "flightPoints": 64.35571999999999,
+    "flightPoints": 64,
     "flightType": "FREE",
     "flightDistance": "22.502",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\6f9f100a-1a1e-408b-9eaf-37c66c1de058\\flightTurnpoints.igc",
@@ -909,7 +909,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 92.54050000000001,
+    "flightPoints": 92,
     "flightDistance": "15.475",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\6e7b81b7-6969-4114-94f0-a0351aad0830\\flightTurnpoints.igc",
     "userId": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
@@ -953,7 +953,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 204.09142,
+    "flightPoints": 204,
     "flightDistance": "34.129",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\5363477a-93ef-4ed3-baab-655dba688c7b\\flightTurnpoints.igc",
     "userId": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
@@ -996,7 +996,7 @@
         "long": 6.552183333333334
       }
     ],
-    "flightPoints": 153.09008,
+    "flightPoints": 153,
     "flightType": "FREE",
     "flightDistance": "53.528",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\3d15ce06-1d2f-4994-8869-37a2f5bb1cb4\\flightTurnpoints.igc",
@@ -1040,7 +1040,7 @@
         "long": 8.82485
       }
     ],
-    "flightPoints": 114.57731999999999,
+    "flightPoints": 114,
     "flightType": "FREE",
     "flightDistance": "40.062",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\1a1bfa34-301a-4412-a669-c8c2c777e577\\flightTurnpoints.igc",
@@ -1085,7 +1085,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 60.32624,
+    "flightPoints": 60,
     "flightDistance": "10.088",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\d174a309-1526-4ea8-99ad-655c32388d05\\flightTurnpoints.igc",
     "userId": "67e5230b-667f-4ff1-8750-17739e7d3ea4",
@@ -1128,7 +1128,7 @@
         "long": 6.61675
       }
     ],
-    "flightPoints": 97.65755999999999,
+    "flightPoints": 97,
     "flightType": "FLAT",
     "flightDistance": "17.886",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\4e94979e-b6f8-4e41-80f1-8558afe6cb84\\flightTurnpoints.igc",
@@ -1173,7 +1173,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 27.155180000000005,
+    "flightPoints": 27,
     "flightDistance": "4.541",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\d03c8b0e-690c-45e8-9d63-1f4cb97c5580\\flightTurnpoints.igc",
     "userId": "8131b218-ed76-4095-bd29-0bf3902358c2",
@@ -1216,7 +1216,7 @@
         "long": 6.616433333333333
       }
     ],
-    "flightPoints": 157.89228,
+    "flightPoints": 157,
     "flightType": "FLAT",
     "flightDistance": "28.918",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\0c824549-50f8-47f0-8d44-701b5ab3d7b0\\flightTurnpoints.igc",
@@ -1260,7 +1260,7 @@
         "long": 7.05815
       }
     ],
-    "flightPoints": 61.00458,
+    "flightPoints": 61,
     "flightType": "FLAT",
     "flightDistance": "11.173",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\112c87c8-fcce-4082-aebf-7b1630aad93f\\flightTurnpoints.igc",
@@ -1305,7 +1305,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 53.25788000000001,
+    "flightPoints": 53,
     "flightDistance": "8.906",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\e093571d-cc0d-41fd-a0f0-ed5f0557d8bb\\flightTurnpoints.igc",
     "userId": "e071350f-a7c3-4081-9e2f-709625b07a07",
@@ -1348,7 +1348,7 @@
         "long": 7.932083333333333
       }
     ],
-    "flightPoints": 121.60511999999999,
+    "flightPoints": 121,
     "flightType": "FLAT",
     "flightDistance": "22.272",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\b8b54a0a-e191-4495-9f04-f25e1f311e39\\flightTurnpoints.igc",
@@ -1392,7 +1392,7 @@
         "long": 7.019
       }
     ],
-    "flightPoints": 55.080479999999994,
+    "flightPoints": 55,
     "flightType": "FLAT",
     "flightDistance": "10.088",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\0fd91a22-16a1-413c-8ebc-2e3e9d6505b7\\flightTurnpoints.igc",
@@ -1436,7 +1436,7 @@
         "long": 7.434566666666667
       }
     ],
-    "flightPoints": 59.508019999999995,
+    "flightPoints": 59,
     "flightType": "FREE",
     "flightDistance": "20.807",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\684a4def-4645-4742-a4fc-d6d5e9b42431\\flightTurnpoints.igc",
@@ -1481,7 +1481,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 45.137040000000006,
+    "flightPoints": 45,
     "flightDistance": "7.548",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\cdd89b5f-fdbf-4bb2-9957-de9e38b87c47\\flightTurnpoints.igc",
     "userId": "2a33b726-8edf-4d4b-8da8-f97138371b6c",
@@ -1525,7 +1525,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 63.01126000000001,
+    "flightPoints": 63,
     "flightDistance": "10.537",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\8a0216c9-a701-4cb7-a1de-ef21b258081f\\flightTurnpoints.igc",
     "userId": "9efc1c62-ea6a-4659-b89c-421b57ab73f6",
@@ -1568,7 +1568,7 @@
         "long": 7.008033333333334
       }
     ],
-    "flightPoints": 36.2271,
+    "flightPoints": 36,
     "flightType": "FLAT",
     "flightDistance": "6.635",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\1780608e-d48e-4fa0-a427-9d0afca1fd0a\\flightTurnpoints.igc",
@@ -1613,7 +1613,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 59.08240000000001,
+    "flightPoints": 59,
     "flightDistance": "9.880",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\72baa559-577b-42ca-afd7-225ab1a08c18\\flightTurnpoints.igc",
     "userId": "388ab9dd-cb42-4c94-aa87-16b7a991b217",
@@ -1656,7 +1656,7 @@
         "long": 6.763083333333333
       }
     ],
-    "flightPoints": 306.30886,
+    "flightPoints": 306,
     "flightType": "FREE",
     "flightDistance": "107.101",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\ecdb4aad-87e5-42f2-b7e1-b6e76acc19b4\\flightTurnpoints.igc",
@@ -1700,7 +1700,7 @@
         "long": 6.879666666666667
       }
     ],
-    "flightPoints": 74.59452,
+    "flightPoints": 74,
     "flightType": "FREE",
     "flightDistance": "26.082",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\ec214de1-de02-4618-9ddf-cceeccd377e6\\flightTurnpoints.igc",
@@ -1744,7 +1744,7 @@
         "long": 7.13085
       }
     ],
-    "flightPoints": 530.20422,
+    "flightPoints": 530,
     "flightType": "FLAT",
     "flightDistance": "97.107",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\51c93d0f-ef6e-4dc9-8a19-d0210354e608\\flightTurnpoints.igc",
@@ -1788,7 +1788,7 @@
         "long": 7.838266666666667
       }
     ],
-    "flightPoints": 297.7689,
+    "flightPoints": 297,
     "flightType": "FREE",
     "flightDistance": "104.115",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\0d3294d5-0031-4c5d-a6c9-fd173694ba21\\flightTurnpoints.igc",
@@ -1833,7 +1833,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 66.48564,
+    "flightPoints": 66,
     "flightDistance": "11.118",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\40264d03-e88d-4682-8053-53edb6fffc17\\flightTurnpoints.igc",
     "userId": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
@@ -1877,7 +1877,7 @@
       }
     ],
     "flightType": "FAI",
-    "flightPoints": 65.40326,
+    "flightPoints": 65,
     "flightDistance": "10.937",
     "igcUrl": "C:\\Users\\Kai\\xccup.net\\Backend\\test\\testdatagenerator\\igcs\\temp\\eefc442b-1fea-48b6-bfa0-69628b19fe41\\flightTurnpoints.igc",
     "userId": "1c3fb13d-e725-4869-a816-87498833bee0",
