@@ -194,8 +194,10 @@
           </div>
         </div> -->
       </div>
+      <h5 v-if="userDetails">Raw user details</h5>
+      {{ userDetails }}
     </div>
-    {{ userDetails }}
+
     <!-- Editor -->
   </div>
 
@@ -210,26 +212,20 @@ import { computed, ref } from "vue";
 
 import AddGliderModal from "@/components/AddGliderModal";
 import RemoveGliderModal from "@/components/RemoveGliderModal";
-import UserService from "@/services/UserService";
 
 export default {
   name: "Profile",
   components: { AddGliderModal, RemoveGliderModal },
   async setup() {
     const store = useStore();
-    const userId = computed(() => store.getters["auth/getUserId"]);
-    // To simulate longer loading times
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
-    try {
-      const { data: userDetails } = await UserService.getUserDetails(
-        userId.value
-      );
-      return {
-        userDetails: ref(userDetails),
-      };
-    } catch (error) {
-      console.log(error);
-    }
+    store.dispatch(
+      "user/getUserDetails",
+      store.getters["auth/getAuthData"].userId
+    );
+    const userDetails = computed(() => store.getters["user/getUserDetails"]);
+    return {
+      userDetails: ref(userDetails),
+    };
   },
   data() {
     return {
@@ -238,9 +234,6 @@ export default {
   },
   computed: {
     ...mapGetters(["authUser"]),
-    ...mapGetters("auth", {
-      gettersAuthData: "getAuthData",
-    }),
     listOfAircrafts() {
       if (!this.authUser.gliders) return;
       let gliderList = [];

@@ -62,6 +62,7 @@ export default {
         name: this.username,
         password: this.password,
       });
+      // TODO: If we do want to redirect: Do it here or in router config?
       if (response === 200) {
         this.$router.push({
           name: "Profile",
