@@ -1,6 +1,12 @@
 const { User } = require("../model/DependentModels");
 
 const userService = {
+  ROLE: {
+    ADMIN: "Administrator",
+    MODERATOR: "Moderator",
+    CLUB_DELEGATE: "Clubdeligierter",
+    NONE: "Keine",
+  },
   getAll: async () => {
     return await User.findAll({ attributes: ["name"] });
   },

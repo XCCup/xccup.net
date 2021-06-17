@@ -32,6 +32,10 @@ const User = db.sequelize.define(
     birthday: {
       type: DataTypes.STRING,
     },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: "Keine",
+    },
     gender: {
       type: DataTypes.STRING,
     },
@@ -142,6 +146,11 @@ const Flight = db.sequelize.define("Flight", {
     defaultValue: false,
     allowNull: false,
   },
+  isHike: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false,
+  },
 });
 
 //-----------FlightComment-----------
@@ -155,7 +164,7 @@ const FlightComment = db.sequelize.define("FlightComment", {
   },
 
   message: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(2000),
     allowNull: false,
   },
 });
