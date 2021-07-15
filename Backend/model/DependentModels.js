@@ -118,7 +118,7 @@ const Flight = db.sequelize.define("Flight", {
   },
   flightType: {
     type: DataTypes.STRING,
-    // values: ["JOJO", "FLAT", "FAI"],
+    // values: ["FREE", "FLAT", "FAI"],
   },
   flightStatus: {
     type: DataTypes.STRING,
@@ -146,9 +146,15 @@ const Flight = db.sequelize.define("Flight", {
     defaultValue: false,
     allowNull: false,
   },
-  isHike: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
+  hikeAndFly: {
+	//We will save the climbed height directly, so it's easier to aggreate later
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull: false,
+  },
+  dateOfFlight: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
     allowNull: false,
   },
 });

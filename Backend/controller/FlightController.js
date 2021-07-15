@@ -85,7 +85,7 @@ router.post("/", authToken, async (req, res) => {
         persistIgcFile(flight.id, igc).then(async (igcUrl) => {
           flight.igcUrl = igcUrl;
 
-          await service.extractFixesAndAddLocations(flight);
+          await service.extractFixesAddLocationsAndDateOfFlight(flight);
 
           service.update(flight).then((flight) => {
             res.json({

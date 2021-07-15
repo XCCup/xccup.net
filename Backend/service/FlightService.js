@@ -120,14 +120,16 @@ const flightService = {
       flightService.addResult(result);
     });
   },
-  extractFixesAndAddLocations: async (flight) => {
+  extractFixesAddLocationsAndDateOfFlight: async (flight) => {
     const fixes = IgcAnalyzer.extractFixes(flight);
+    flight.dateOfFlight = new Date(fixes[0].timestamp);
 
     if (process.env.USE_GOOGLE_API === "true") {
       const places = await findTakeoffAndLanding(
         fixes[0],
         fixes[fixes.length - 1]
       );
+      //TODO Replace Takeoff with entry in DB
       flight.takeoff = places.nameOfTakeoff;
       flight.landing = places.nameOfLanding;
     }
