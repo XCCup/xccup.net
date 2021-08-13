@@ -37,6 +37,7 @@ app.get("/", (request, response) => {
 app.use("/users", require("./controller/UserController.js"));
 app.use("/flights", require("./controller/FlightController.js"));
 app.use("/comments", require("./controller/CommentController.js"));
+app.use("/seasons", require("./controller/SeasonController"));
 
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(

@@ -1,5 +1,6 @@
 const { User, Flight, FlightComment } = require("../model/DependentModels");
 const FlightFixes = require("../model/FlightFixes");
+const SeasonDetail = require("../model/SeasonDetail");
 
 const dbTestData = {
   checkForTestDataAndAddIfMissing: async () => {
@@ -51,6 +52,17 @@ const dbTestData = {
         })
       );
       console.log("Finished adding fixes");
+      
+      console.log("Start adding seasonDetails");
+      const seasonDetails = require("./testdatasets/seasonDetails.json");
+      await Promise.all(
+        seasonDetails.map(async (entry) => {
+          await SeasonDetail.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding seasonDetails");
     }
   },
 };

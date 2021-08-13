@@ -39,7 +39,7 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Heidelberg",
     "landing": "Heddesbach"
   },
@@ -215,7 +215,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Veldenz",
     "landing": "Veldenz"
   },
@@ -303,7 +303,7 @@
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Schriesheim",
     "landing": "Schriesheim"
   },
@@ -347,7 +347,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Issum",
     "landing": "Issum"
   },
@@ -391,7 +391,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Kobern-Gondorf",
     "landing": "Kobern-Gondorf"
   },
@@ -435,7 +435,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Kobern-Gondorf",
     "landing": "Kobern-Gondorf"
   },
@@ -479,7 +479,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Ockfen",
     "landing": "Irsch"
   },
@@ -567,7 +567,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Eslohe (Sauerland)",
     "landing": "Meschede"
   },
@@ -655,7 +655,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Werdohl",
     "landing": "Lennestadt"
   },
@@ -787,7 +787,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Schriesheim",
     "landing": "Aglasterhausen"
   },
@@ -875,7 +875,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Bremm",
     "landing": "Bernkastel-Kues"
   },
@@ -1007,7 +1007,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Zeltingen-Rachtig",
     "landing": "Saarburg"
   },
@@ -1051,7 +1051,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Bestwig",
     "landing": "Frankenberg (Eder)"
   },
@@ -1095,7 +1095,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Heidelberg",
     "landing": "Heidelberg"
   },
@@ -1227,7 +1227,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Serrig",
     "landing": "Taben-Rodt"
   },
@@ -1359,7 +1359,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Dannenfels",
     "landing": "Dannenfels"
   },
@@ -1535,7 +1535,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Klüsserath",
     "landing": "Klüsserath"
   },
@@ -1667,7 +1667,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Bremm",
     "landing": "Saarlouis"
   },
@@ -1711,7 +1711,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Bremm",
     "landing": "Wittlich"
   },
@@ -1887,7 +1887,7 @@
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
-    "isHike": false,
+    "isHike": 0,
     "takeoff": "Boppard",
     "landing": "Boppard"
   }

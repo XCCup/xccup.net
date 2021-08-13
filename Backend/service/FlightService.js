@@ -3,6 +3,8 @@ const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findTakeoffAndLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
+const { getCurrentActive } = require("./SeasonService");
+const { Sequelize } = require("sequelize");
 
 const flightService = {
   STATE_IN_RANKING: "In Wertung",
@@ -90,12 +92,16 @@ const flightService = {
     flight.flightPoints = Math.round(result.pts);
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
-    //TODO Replace threshold value by db query
-    if (flight.flightPoints >= 60) {
+
+    const currentSeason = await getCurrentActive();
+    const pointThreshold = currentSeason.pointThresholdForFlight;
+    console.log("TP: " + pointThreshold);
+    if (flight.flightPoints >= pointThreshold) {
       flight.flightStatus = flightService.STATE_IN_RANKING;
     } else {
       flight.flightStatus = flightService.STATE_NOT_IN_RANKING;
     }
+
     flight.flightTurnpoints = result.turnpoints;
     flight.igcUrl = result.igcUrl;
 
@@ -112,6 +118,8 @@ const flightService = {
   },
 
   create: async (flight) => {
+    //TODO ExternalID als Hook im Model realisieren?
+    await addExternalId(flight);
     return await Flight.create(flight);
   },
 
@@ -123,7 +131,6 @@ const flightService = {
   extractFixesAddLocationsAndDateOfFlight: async (flight) => {
     const fixes = IgcAnalyzer.extractFixes(flight);
     flight.dateOfFlight = new Date(fixes[0].timestamp);
-    flight.isWeekend = isWeekend(flight.dateOfFlight);
 
     if (process.env.USE_GOOGLE_API === "true") {
       const places = await findTakeoffAndLanding(
@@ -150,12 +157,13 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
   });
 }
 
-function isWeekend(flightDate) {
-  const numberOfDay = flightDate.getDay();
-  //TODO Evtl noch auf Feiertag prüfen?
-  return (
-    numberOfDay == 5 || numberOfDay == 6 || numberOfDay == 0
-  );
+async function addExternalId(flight) {
+  const result = await Flight.findAll({
+    attributes: [Sequelize.fn("max", Sequelize.col("externalId"))],
+    raw: true,
+  });
+  flight.externalId = result[0].max + 1;
+  console.log("New external ID was created: " + flight.externalId);
 }
 
 module.exports = flightService;

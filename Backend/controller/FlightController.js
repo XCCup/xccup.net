@@ -56,7 +56,7 @@ router.delete("/:id", authToken, async (req, res) => {
 
 router.post("/", async (req, res) => {
   //TODO Auth wieder einbauen
-// router.post("/", authToken, async (req, res) => {
+  // router.post("/", authToken, async (req, res) => {
   const igc = req.body.igc;
   const userId = req.body.userId;
 
@@ -87,7 +87,7 @@ router.post("/", async (req, res) => {
         persistIgcFile(flight.id, igc).then(async (igcUrl) => {
           flight.igcUrl = igcUrl;
 
-          service.startResultCalculation(flight)
+          service.startResultCalculation(flight);
           await service.extractFixesAddLocationsAndDateOfFlight(flight);
 
           service.update(flight).then((flight) => {
