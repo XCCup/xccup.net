@@ -123,6 +123,7 @@ const flightService = {
   extractFixesAddLocationsAndDateOfFlight: async (flight) => {
     const fixes = IgcAnalyzer.extractFixes(flight);
     flight.dateOfFlight = new Date(fixes[0].timestamp);
+    flight.isWeekend = isWeekend(flight.dateOfFlight);
 
     if (process.env.USE_GOOGLE_API === "true") {
       const places = await findTakeoffAndLanding(
@@ -147,6 +148,14 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
       flightId: flightId,
     },
   });
+}
+
+function isWeekend(flightDate) {
+  const numberOfDay = flightDate.getDay();
+  //TODO Evtl noch auf Feiertag prüfen?
+  return (
+    numberOfDay == 5 || numberOfDay == 6 || numberOfDay == 0
+  );
 }
 
 module.exports = flightService;

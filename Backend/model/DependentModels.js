@@ -147,7 +147,7 @@ const Flight = db.sequelize.define("Flight", {
     allowNull: false,
   },
   hikeAndFly: {
-	//We will save the climbed height directly, so it's easier to aggreate later
+    //We will save the climbed height directly, so it's easier to aggreate later
     type: DataTypes.INTEGER,
     defaultValue: 0,
     allowNull: false,
@@ -155,6 +155,11 @@ const Flight = db.sequelize.define("Flight", {
   dateOfFlight: {
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW,
+    allowNull: false,
+  },
+  isWeekend: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
     allowNull: false,
   },
 });

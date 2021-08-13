@@ -54,13 +54,15 @@ router.delete("/:id", authToken, async (req, res) => {
 // @route POST /flight/
 // @access Only owner
 
-router.post("/", authToken, async (req, res) => {
+router.post("/", async (req, res) => {
+  //TODO Auth wieder einbauen
+// router.post("/", authToken, async (req, res) => {
   const igc = req.body.igc;
   const userId = req.body.userId;
 
-  if (belongsNotToId(req, res, userId)) {
-    return;
-  }
+  // if (belongsNotToId(req, res, userId)) {
+  //   return;
+  // }
 
   try {
     checkParamsForIgc(igc);
@@ -85,6 +87,7 @@ router.post("/", authToken, async (req, res) => {
         persistIgcFile(flight.id, igc).then(async (igcUrl) => {
           flight.igcUrl = igcUrl;
 
+          service.startResultCalculation(flight)
           await service.extractFixesAddLocationsAndDateOfFlight(flight);
 
           service.update(flight).then((flight) => {
@@ -99,7 +102,7 @@ router.post("/", authToken, async (req, res) => {
   });
 });
 
-// @desc Adds futher data to a existing flight and starts the igc calculation if no igc result are present.
+// @desc Adds futher data to a existing flight
 // @route PUT /flight/:id
 // @access Only owner
 
@@ -120,9 +123,9 @@ router.put("/:id", authToken, async (req, res) => {
 
   flight.report = report;
   flight.glider = glider;
+  //TODO Erst nach Bekanntmachung des Glider können die Punkte für den Flug korrekt berechnet werden. Beachte evtl. ist Flugberechnung hier noch nicht abgeschlossen.
   service.update(flight).then((flight) => {
     res.json(flight.externalId);
-    if (!flight.flightDistance) service.startResultCalculation(flight);
   });
 });
 
