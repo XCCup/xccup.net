@@ -95,7 +95,6 @@ const flightService = {
 
     const currentSeason = await getCurrentActive();
     const pointThreshold = currentSeason.pointThresholdForFlight;
-    console.log("TP: " + pointThreshold);
     if (flight.flightPoints >= pointThreshold) {
       flight.flightStatus = flightService.STATE_IN_RANKING;
     } else {
@@ -158,11 +157,8 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
 }
 
 async function addExternalId(flight) {
-  const result = await Flight.findAll({
-    attributes: [Sequelize.fn("max", Sequelize.col("externalId"))],
-    raw: true,
-  });
-  flight.externalId = result[0].max + 1;
+  const result = await Flight.max("externalId");
+  flight.externalId = result + 1;
   console.log("New external ID was created: " + flight.externalId);
 }
 
