@@ -7,6 +7,8 @@ const userService = {
     CLUB_DELEGATE: "Clubdeligierter",
     NONE: "Keine",
   },
+  SHIRT_SIZES: ["XS", "S", "M", "L", "XL"],
+  GENDERS: ["M", "W", "D"],
   getAll: async () => {
     return await User.findAll({ attributes: ["name"] });
   },

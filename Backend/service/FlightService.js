@@ -4,7 +4,6 @@ const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findTakeoffAndLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
 const { getCurrentActive } = require("./SeasonService");
-const { Sequelize } = require("sequelize");
 
 const flightService = {
   STATE_IN_RANKING: "In Wertung",

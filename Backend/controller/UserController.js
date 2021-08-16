@@ -16,6 +16,14 @@ const {
   logoutToken,
   refreshToken,
 } = require("./Auth");
+const {
+  checkIsDateObject,
+  checkIsEmail,
+  checkOptionalIsBoolean,
+  checkOptionalIsOnlyOfValue,
+  checkStringObjectNotEmpty,
+  validationHasErrors,
+} = require("./Validation");
 
 // @desc Retrieves all usernames
 // @route GET /users/
@@ -29,24 +37,29 @@ router.get("/", async (req, res) => {
 // @desc Logs a user in by his credentials
 // @route GET /users/login
 
-router.post("/login", async (req, res) => {
-  const name = req.body.name;
-  const password = req.body.password;
+router.post(
+  "/login",
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("password"),
+  async (req, res) => {
+    const name = req.body.name;
+    const password = req.body.password;
 
-  const userId = await service.validate(name, password);
-  if (!userId) {
-    res.sendStatus(UNAUTHORIZED);
-    return;
+    const userId = await service.validate(name, password);
+    if (!userId) {
+      res.sendStatus(UNAUTHORIZED);
+      return;
+    }
+
+    const accessToken = createToken(userId, name);
+    const refreshToken = createRefreshToken(userId, name);
+
+    res.json({
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    });
   }
-
-  const accessToken = createToken(userId, name);
-  const refreshToken = createRefreshToken(userId, name);
-
-  res.json({
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-  });
-});
+);
 
 // @desc Refreshes an user access token if it has expired
 // @route GET /users/token
@@ -134,16 +147,31 @@ router.delete("/:id", authToken, async (req, res) => {
 // @desc Saves a new user to the database
 // @route POST /users/
 
-router.post("/", async (req, res) => {
-  service
-    .save(req.body)
-    .then((user) => {
-      res.json(user);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(INTERNAL_SERVER_ERROR).send(error.message);
-    });
-});
+router.post(
+  "/",
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("lastName"),
+  checkStringObjectNotEmpty("firstName"),
+  checkIsDateObject("birthday"),
+  checkIsEmail("email"),
+  checkOptionalIsOnlyOfValue("gender", service.GENDERS),
+  checkOptionalIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
+  checkOptionalIsOnlyOfValue("role", [service.ROLE.NONE]), //TODO Rollen werden vorerst nur über direkten DB Zugriff vergeben
+  checkOptionalIsBoolean("emailInformIfComment"),
+  checkOptionalIsBoolean("emailNewsletter"),
+  checkOptionalIsBoolean("emailTeamSearch"),
+  async (req, res) => {
+    if (validationHasErrors(req, res)) return;
+    service
+      .save(req.body)
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(INTERNAL_SERVER_ERROR).send(error);
+      });
+  }
+);
 
 module.exports = router;
