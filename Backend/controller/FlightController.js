@@ -6,6 +6,12 @@ const path = require("path");
 const fs = require("fs");
 const { NOT_FOUND, BAD_REQUEST } = require("./Constants");
 const { authToken, belongsNotToId } = require("./Auth");
+const {
+  checkIsUuidObject,
+  checkStringObjectNotEmpty,
+  checkOptionalStringObjectNotEmpty,
+  validationHasErrors,
+} = require("./Validation");
 
 // @desc Retrieves all flights
 // @route GET /flight/
@@ -54,15 +60,14 @@ router.delete("/:id", authToken, async (req, res) => {
 // @route POST /flight/
 // @access Only owner
 
-router.post("/", async (req, res) => {
-  //TODO Auth wieder einbauen
-  // router.post("/", authToken, async (req, res) => {
+router.post("/", authToken, checkIsUuidObject("userId"), async (req, res) => {
+  if (validationHasErrors(req, res)) return;
   const igc = req.body.igc;
   const userId = req.body.userId;
 
-  // if (belongsNotToId(req, res, userId)) {
-  //   return;
-  // }
+  if (belongsNotToId(req, res, userId)) {
+    return;
+  }
 
   try {
     checkParamsForIgc(igc);
@@ -106,28 +111,34 @@ router.post("/", async (req, res) => {
 // @route PUT /flight/:id
 // @access Only owner
 
-router.put("/:id", authToken, async (req, res) => {
-  const report = req.body.report;
-  const glider = req.body.glider;
-  const flightId = req.params.id;
+router.put(
+  "/:id",
+  authToken,
+  checkStringObjectNotEmpty("glider"),
+  checkOptionalStringObjectNotEmpty("report"),
+  async (req, res) => {
+    const report = req.body.report;
+    const glider = req.body.glider;
+    const flightId = req.params.id;
 
-  const flight = await service.getById(flightId);
+    const flight = await service.getById(flightId);
 
-  if (!flight) {
-    res.sendStatus(NOT_FOUND);
+    if (!flight) {
+      res.sendStatus(NOT_FOUND);
+    }
+
+    if (belongsNotToId(req, res, flight.userId)) {
+      return;
+    }
+
+    flight.report = report;
+    flight.glider = glider;
+    //TODO Erst nach Bekanntmachung des Glider können die Punkte für den Flug korrekt berechnet werden. Beachte evtl. ist Flugberechnung hier noch nicht abgeschlossen.
+    service.update(flight).then((flight) => {
+      res.json(flight.externalId);
+    });
   }
-
-  if (belongsNotToId(req, res, flight.userId)) {
-    return;
-  }
-
-  flight.report = report;
-  flight.glider = glider;
-  //TODO Erst nach Bekanntmachung des Glider können die Punkte für den Flug korrekt berechnet werden. Beachte evtl. ist Flugberechnung hier noch nicht abgeschlossen.
-  service.update(flight).then((flight) => {
-    res.json(flight.externalId);
-  });
-});
+);
 
 //TODO Move to helper class "FileWriter"
 async function persistIgcFile(flightId, igcFile) {
@@ -144,7 +155,7 @@ async function persistIgcFile(flightId, igcFile) {
 function checkParamsForIgc(igc) {
   const result = igc.name && igc.body;
   if (!result) {
-    throw "A parameter was invalid. The parameters igc.name and igc.body are required.";
+    throw "IGC parameter was invalid. The parameters igc.name and igc.body are required.";
   }
 }
 
