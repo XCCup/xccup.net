@@ -20,7 +20,8 @@
     "emailTeamSearch": false,
     "state": "LUX",
     "email": "Camille@Schaden.name",
-    "password": "PW_CamilleSchaden"
+    "password": "PW_CamilleSchaden",
+    "clubId": "b9be9235-d5ba-4100-85d7-c572ad3e9893"
   },
   {
     "id": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
@@ -43,7 +44,8 @@
     "emailTeamSearch": true,
     "state": "BEL",
     "email": "Frank@Jacobs.net",
-    "password": "PW_FrankJacobs"
+    "password": "PW_FrankJacobs",
+    "clubId": "b9be9235-d5ba-4100-85d7-c572ad3e9893"
   },
   {
     "id": "1c3fb13d-e725-4869-a816-87498833bee0",
@@ -66,7 +68,8 @@
     "emailTeamSearch": false,
     "state": "RP",
     "email": "Leo@Altenwerth.net",
-    "password": "PW_LeoAltenwerth"
+    "password": "PW_LeoAltenwerth",
+    "clubId": "b9be9235-d5ba-4100-85d7-c572ad3e9893"
   },
   {
     "id": "25346d86-de5b-48b0-9dee-bffe06e560c8",
@@ -89,7 +92,8 @@
     "emailTeamSearch": false,
     "state": "HE",
     "email": "Willis@Romaguera.name",
-    "password": "PW_WillisRomaguera"
+    "password": "PW_WillisRomaguera",
+    "clubId": "b9be9235-d5ba-4100-85d7-c572ad3e9893"
   },
   {
     "id": "67e5230b-667f-4ff1-8750-17739e7d3ea4",
@@ -113,7 +117,8 @@
     "emailTeamSearch": true,
     "state": "SR",
     "email": "Mrs.@Roman.name",
-    "password": "PW_Mrs.Roman"
+    "password": "PW_Mrs.Roman",
+    "clubId": "b9be9235-d5ba-4100-85d7-c572ad3e9893"
   },
   {
     "id": "bc8f46c2-fc95-4662-877c-d4a08806f482",
@@ -137,7 +142,8 @@
     "emailTeamSearch": false,
     "state": "BEL",
     "email": "Ms.@Laurie.net",
-    "password": "PW_Ms.Laurie"
+    "password": "PW_Ms.Laurie",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "8131b218-ed76-4095-bd29-0bf3902358c2",
@@ -160,7 +166,8 @@
     "emailTeamSearch": false,
     "state": "HE",
     "email": "Ramona@Gislason.name",
-    "password": "PW_RamonaGislason"
+    "password": "PW_RamonaGislason",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "1fddb1fe-f9fe-48ef-a76e-d70d53e5fb6a",
@@ -183,7 +190,8 @@
     "emailTeamSearch": true,
     "state": "BEL",
     "email": "Toby@Gerhold.name",
-    "password": "PW_TobyGerhold"
+    "password": "PW_TobyGerhold",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "67172eda-57c7-4bbc-af90-f4c56c30f5ec",
@@ -206,7 +214,8 @@
     "emailTeamSearch": true,
     "state": "BEL",
     "email": "Sonia@Harber.org",
-    "password": "PW_SoniaHarber"
+    "password": "PW_SoniaHarber",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "e071350f-a7c3-4081-9e2f-709625b07a07",
@@ -229,7 +238,8 @@
     "emailTeamSearch": false,
     "state": "BW",
     "email": "Ron@Crooks.info",
-    "password": "PW_RonCrooks"
+    "password": "PW_RonCrooks",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "61895b0e-0e22-480d-87ac-c0040e682c5d",
@@ -252,7 +262,8 @@
     "emailTeamSearch": true,
     "state": "RP",
     "email": "Bobby@Volkman.net",
-    "password": "PW_BobbyVolkman"
+    "password": "PW_BobbyVolkman",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "45907c75-9c14-42af-bc5a-993f4bec4b0f",
@@ -275,7 +286,8 @@
     "emailTeamSearch": true,
     "state": "SR",
     "email": "Tamara@Ledner.info",
-    "password": "PW_TamaraLedner"
+    "password": "PW_TamaraLedner",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "0f6e6f97-b64b-4e04-a516-adada6f2cba0",
@@ -298,7 +310,8 @@
     "emailTeamSearch": false,
     "state": "HE",
     "email": "Wilma@Hodkiewicz.biz",
-    "password": "PW_WilmaHodkiewicz"
+    "password": "PW_WilmaHodkiewicz",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "2a33b726-8edf-4d4b-8da8-f97138371b6c",
@@ -321,7 +334,8 @@
     "emailTeamSearch": false,
     "state": "BW",
     "email": "Adam@Bayer.org",
-    "password": "PW_AdamBayer"
+    "password": "PW_AdamBayer",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "9efc1c62-ea6a-4659-b89c-421b57ab73f6",
@@ -344,7 +358,8 @@
     "emailTeamSearch": true,
     "state": "SR",
     "email": "Melinda@Tremblay.org",
-    "password": "PW_MelindaTremblay"
+    "password": "PW_MelindaTremblay",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "04bd7ffd-d792-4e90-ba9e-c4356e353135",
@@ -367,7 +382,8 @@
     "emailTeamSearch": true,
     "state": "SR",
     "email": "Clinton@Hettinger.name",
-    "password": "PW_ClintonHettinger"
+    "password": "PW_ClintonHettinger",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "388ab9dd-cb42-4c94-aa87-16b7a991b217",
@@ -390,7 +406,8 @@
     "emailTeamSearch": false,
     "state": "HE",
     "email": "Christie@Schaefer.com",
-    "password": "PW_ChristieSchaefer"
+    "password": "PW_ChristieSchaefer",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "0032cc89-38bb-4763-a497-e64e5c5ec5f9",
@@ -413,7 +430,8 @@
     "emailTeamSearch": true,
     "state": "NW",
     "email": "Everett@Gislason.net",
-    "password": "PW_EverettGislason"
+    "password": "PW_EverettGislason",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "6e8764ec-c4b6-49b1-b804-f0871e390f31",
@@ -431,12 +449,14 @@
       "Air-G Emilie",
       "Ozone Enzo 3"
     ],
+    "role": "Moderator",
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": true,
     "state": "LUX",
     "email": "Olive@Emmerich.biz",
-    "password": "PW_OliveEmmerich"
+    "password": "PW_OliveEmmerich",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   },
   {
     "id": "1c3c8082-d82a-4c4a-a60c-80d4e089b4f7",
@@ -454,11 +474,13 @@
       "U-Turn Bodyguard",
       "Ozone Enzo 3"
     ],
+    "role": "Administrator",
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
     "state": "NW",
     "email": "Lois@White.biz",
-    "password": "PW_LoisWhite"
+    "password": "PW_LoisWhite",
+    "clubId": "02dbecbc-d550-46f9-aac6-246b9c5b197c"
   }
 ]

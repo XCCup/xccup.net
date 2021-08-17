@@ -11,7 +11,7 @@ const router = express.Router();
 const {
   authToken,
   createToken,
-  belongsNotToId,
+  requesterIsNotOwner,
   createRefreshToken,
   logoutToken,
   refreshToken,
@@ -22,6 +22,7 @@ const {
   checkOptionalIsBoolean,
   checkOptionalIsOnlyOfValue,
   checkStringObjectNotEmpty,
+  checkIsUuidObject,
   validationHasErrors,
 } = require("./Validation");
 
@@ -104,6 +105,7 @@ router.get("/name/:username", authToken, async (req, res) => {
   res.json(user);
 });
 
+
 // @desc Retrieve user by id
 // @route GET /users/:id
 // @access Only owner
@@ -111,9 +113,7 @@ router.get("/name/:username", authToken, async (req, res) => {
 router.get("/:id", authToken, async (req, res) => {
   const requestId = req.params.id;
 
-  if (belongsNotToId(req, res, requestId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, requestId)) return;
 
   const retrievedUser = await service.getById(requestId);
   if (!retrievedUser) {
@@ -131,9 +131,7 @@ router.get("/:id", authToken, async (req, res) => {
 router.delete("/:id", authToken, async (req, res) => {
   const requestId = req.params.id;
 
-  if (belongsNotToId(req, res, requestId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, requestId)) return;
 
   const user = await service.delete(req.params.id);
   if (!user) {
@@ -154,6 +152,7 @@ router.post(
   checkStringObjectNotEmpty("firstName"),
   checkIsDateObject("birthday"),
   checkIsEmail("email"),
+  checkIsUuidObject("clubId"),
   checkOptionalIsOnlyOfValue("gender", service.GENDERS),
   checkOptionalIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
   checkOptionalIsOnlyOfValue("role", [service.ROLE.NONE]), //TODO Rollen werden vorerst nur über direkten DB Zugriff vergeben

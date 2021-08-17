@@ -90,6 +90,8 @@ const getNames = async () => {
   });
 };
 
+User.getNames = getNames;
+
 //-----------Flight-----------
 
 const Flight = db.sequelize.define(
@@ -196,12 +198,45 @@ const FlightComment = db.sequelize.define("FlightComment", {
   },
 });
 
+//---------------Club----------------
+const Club = db.sequelize.define("Club", {
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  homepage: {
+    type: DataTypes.STRING,
+  },
+  urlLogo: {
+    type: DataTypes.STRING,
+  },
+  participantInSeasons: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER),
+  },
+  contact: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+});
+
 //-----------Associations-----------
 
 User.hasMany(Flight, {
   as: "flights",
   foreignKey: {
     name: "userId",
+  },
+});
+
+User.belongsTo(Club, {
+  foreignKey: {
+    name: "clubId",
   },
 });
 
@@ -220,7 +255,7 @@ Flight.hasMany(FlightComment, {
   as: "comments",
   foreignKey: {
     name: "flightId",
-    //Through this constrain it's realized that every comment, will be delete if the user will be deleted
+    //Through this constrain it's realized that every comment, will be delete if the flight will be deleted
     allowNull: false,
   },
   onDelete: "CASCADE",
@@ -249,8 +284,14 @@ Flight.hasOne(FlightFixes, {
   hooks: true,
 });
 
-User.getNames = getNames;
+Club.hasMany(User, {
+  as: "members",
+  foreignKey: {
+    name: "clubId",
+  },
+});
 
 exports.Flight = Flight;
 exports.FlightComment = FlightComment;
+exports.Club = Club;
 exports.User = User;

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/CommentService");
 const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./Constants");
-const { authToken, belongsNotToId } = require("./Auth");
+const { authToken, requesterIsNotOwner } = require("./Auth");
 const {
   checkStringObjectNotEmpty,
   checkIsUuidObject,
@@ -24,7 +24,7 @@ router.get("/flight/:flightId", async (req, res) => {
 
 // @desc Adds a comment
 // @route POST /comments/
-// @access All logged-in user
+// @access Only owner
 
 router.post(
   "/",
@@ -37,7 +37,7 @@ router.post(
 
     const comment = req.body;
 
-    if (belongsNotToId(req, res, comment.userId)) return;
+    if (await requesterIsNotOwner(req, res, comment.userId)) return;
 
     try {
       const result = await service.create(comment);
@@ -63,7 +63,7 @@ router.put(
     const commentId = req.params.id;
     const comment = await service.getById(commentId);
 
-    if (belongsNotToId(req, res, comment.userId)) return;
+    if (await requesterIsNotOwner(req, res, comment.userId)) return;
 
     comment.message = req.body.message;
     const result = await service.update(comment);
@@ -81,14 +81,9 @@ router.delete("/:id", authToken, async (req, res) => {
   const commentId = req.params.id;
   const comment = await service.getById(commentId);
 
-  if (!comment) {
-    res.sendStatus(NOT_FOUND);
-    return;
-  }
+  if (!comment) return res.sendStatus(NOT_FOUND);
 
-  if (belongsNotToId(req, res, comment.userId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, comment.userId)) return;
 
   const numberOfDestroyedRows = await service.delete(commentId);
   res.json(numberOfDestroyedRows);

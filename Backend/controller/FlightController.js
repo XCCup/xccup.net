@@ -5,7 +5,7 @@ const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const fs = require("fs");
 const { NOT_FOUND, BAD_REQUEST } = require("./Constants");
-const { authToken, belongsNotToId } = require("./Auth");
+const { authToken, requesterIsNotOwner } = require("./Auth");
 const {
   checkIsUuidObject,
   checkStringObjectNotEmpty,
@@ -43,14 +43,9 @@ router.delete("/:id", authToken, async (req, res) => {
   const flightId = req.params.id;
   const flightToDelete = await service.getById(flightId);
 
-  if (!flightToDelete) {
-    res.sendStatus(NOT_FOUND);
-    return;
-  }
+  if (!flightToDelete) return res.sendStatus(NOT_FOUND);
 
-  if (belongsNotToId(req, res, flightToDelete.userId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, flightToDelete.userId)) return;
 
   const numberOfDestroyedRows = await service.delete(flightId);
   res.json(numberOfDestroyedRows);
@@ -65,15 +60,12 @@ router.post("/", authToken, checkIsUuidObject("userId"), async (req, res) => {
   const igc = req.body.igc;
   const userId = req.body.userId;
 
-  if (belongsNotToId(req, res, userId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, userId)) return;
 
   try {
     checkParamsForIgc(igc);
   } catch (error) {
-    res.status(BAD_REQUEST).send(error);
-    return;
+    return res.status(BAD_REQUEST).send(error);
   }
 
   igcValidator.execute(igc).then((result) => {
@@ -123,13 +115,9 @@ router.put(
 
     const flight = await service.getById(flightId);
 
-    if (!flight) {
-      res.sendStatus(NOT_FOUND);
-    }
+    if (!flight) return res.sendStatus(NOT_FOUND);
 
-    if (belongsNotToId(req, res, flight.userId)) {
-      return;
-    }
+    if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
     flight.report = report;
     flight.glider = glider;

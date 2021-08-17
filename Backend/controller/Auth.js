@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { UNAUTHORIZED, FORBIDDEN } = require("./Constants");
 const Token = require("../model/Token");
+const userService = require("../service/UserService");
+require("../service/UserService");
 
 /**
  * Needs to be run on server start up to initialize the encryption tokens.
@@ -91,24 +93,42 @@ const refresh = async (token) => {
 };
 
 /**
- * Checks if the provided id matches with the id in the request token.
+ * Checks if the provided id matches with the userId in the request token or if the requester has role "moderator".
  * @param {*} req The request that will be checked for the token and the embedded id.
  * @param {*} res The response to the request. Will send FORBIDDEN if ids don't match.
  * @param {*} otherId The provided id which will be checked against.
  * @returns True if the ids are different. Otherwise false.
  */
-const belongsNotToId = (req, res, otherId) => {
-  if (otherId !== req.user.id) {
+const requesterIsNotOwner = async (req, res, otherId) => {
+  if (
+    otherId !== req.user.id &&
+    !(await userService.isModerator(req.user.id))
+  ) {
     res.sendStatus(FORBIDDEN);
     return true;
   }
   return false;
 };
 
+const requesterIsNotAdmin = async (req, res) => {
+  if (!(await userService.isAdmin(req.user.id))) {
+    return res.sendStatus(FORBIDDEN);
+  }
+};
+
+const requesterIsNotModerator = async (req, res) => {
+  if (!(await userService.isModerator(req.user.id))) {
+    console.log("req Mod");
+    return res.sendStatus(FORBIDDEN);
+  }
+};
+
 exports.initAuth = init;
-exports.authToken = auth;
 exports.createToken = create;
 exports.createRefreshToken = createRefresh;
+exports.authToken = auth;
 exports.refreshToken = refresh;
-exports.belongsNotToId = belongsNotToId;
 exports.logoutToken = logout;
+exports.requesterIsNotOwner = requesterIsNotOwner;
+exports.requesterIsNotAdmin = requesterIsNotAdmin;
+exports.requesterIsNotModerator = requesterIsNotModerator;
