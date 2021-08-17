@@ -6,23 +6,31 @@ const SeasonDetail = db.sequelize.define("SeasonDetail", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  startDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  endDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
   pointThresholdForFlight: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  numberOfFlightsForShirt:{
+  numberOfFlightsForShirt: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  active:{
+  active: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: false
+    defaultValue: false,
   },
-  factors:{
+  factors: {
     type: DataTypes.JSON,
     allowNull: false,
-  }
+  },
 });
 
 module.exports = SeasonDetail;
