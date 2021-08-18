@@ -194,8 +194,12 @@ const FlyingSite = db.sequelize.define("FlyingSite", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   point: {
-    type: DataTypes.GEOMETRY,
+    type: DataTypes.GEOMETRY("POINT", 4326),
     allowNull: false,
     /*
     We will use GEOMETRY on purpose. GEOGRAPHY would be more accurate, but also much slower.
@@ -205,6 +209,9 @@ const FlyingSite = db.sequelize.define("FlyingSite", {
     type: DataTypes.STRING,
   },
   club: {
+    type: DataTypes.STRING,
+  },
+  region: {
     type: DataTypes.STRING,
   },
   image: {

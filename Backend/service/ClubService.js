@@ -1,6 +1,6 @@
 const { Club, User } = require("../model/DependentModels");
 
-const commentService = {
+const clubService = {
   getAll: async () => {
     return await Club.findAll({ attributes: { exclude: ["contact"] } });
   },
@@ -41,4 +41,4 @@ const commentService = {
   },
 };
 
-module.exports = commentService;
+module.exports = clubService;

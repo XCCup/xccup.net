@@ -1,9 +1,10 @@
 const { FlightComment, Flight, User } = require("../model/DependentModels");
 const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
-const { findTakeoffAndLanding } = require("../igc/LocationFinder");
+const { findLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
 const { getCurrentActive } = require("./SeasonService");
+const { findClosestTakeoff } = require("./FlyingSiteService");
 
 const flightService = {
   STATE_IN_RANKING: "In Wertung",
@@ -130,14 +131,10 @@ const flightService = {
     const fixes = IgcAnalyzer.extractFixes(flight);
     flight.dateOfFlight = new Date(fixes[0].timestamp);
 
+    flight.takeoff = await findClosestTakeoff(fixes[0]);
+    console.log("TAKE: " + flight.takeoff);
     if (process.env.USE_GOOGLE_API === "true") {
-      const places = await findTakeoffAndLanding(
-        fixes[0],
-        fixes[fixes.length - 1]
-      );
-      //TODO Replace Takeoff with entry in DB
-      flight.takeoff = places.nameOfTakeoff;
-      flight.landing = places.nameOfLanding;
+      flight.landing = await findLanding(fixes[fixes.length - 1]);
     }
 
     FlightFixes.create({

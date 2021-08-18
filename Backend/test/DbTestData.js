@@ -3,6 +3,7 @@ const {
   Flight,
   FlightComment,
   Club,
+  FlyingSite,
 } = require("../model/DependentModels");
 const FlightFixes = require("../model/FlightFixes");
 const SeasonDetail = require("../model/SeasonDetail");
@@ -25,6 +26,17 @@ const dbTestData = {
         })
       );
       console.log("Finished adding clubs");
+
+      console.log("Start adding sites");
+      const sites = require("./testdatasets/flyingSites.json");
+      await Promise.all(
+        sites.map(async (entry) => {
+          await FlyingSite.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding sites");
 
       console.log("Start adding users");
       await Promise.all(
