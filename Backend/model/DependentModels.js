@@ -182,6 +182,39 @@ const Flight = db.sequelize.define(
   }
 );
 
+//------------FlyingSite-------------
+const FlyingSite = db.sequelize.define("FlyingSite", {
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  point: {
+    type: DataTypes.GEOMETRY,
+    allowNull: false,
+    /*
+    We will use GEOMETRY on purpose. GEOGRAPHY would be more accurate, but also much slower.
+    */
+  },
+  type: {
+    type: DataTypes.STRING,
+  },
+  club: {
+    type: DataTypes.STRING,
+  },
+  image: {
+    type: DataTypes.STRING,
+  },
+  heightDifference: {
+    type: DataTypes.INTEGER,
+  },
+});
+
 //-----------FlightComment-----------
 
 const FlightComment = db.sequelize.define("FlightComment", {
@@ -293,5 +326,6 @@ Club.hasMany(User, {
 
 exports.Flight = Flight;
 exports.FlightComment = FlightComment;
+exports.FlyingSite = FlyingSite;
 exports.Club = Club;
 exports.User = User;
