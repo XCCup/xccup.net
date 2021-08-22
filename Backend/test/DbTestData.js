@@ -7,6 +7,7 @@ const {
 } = require("../model/DependentModels");
 const FlightFixes = require("../model/FlightFixes");
 const SeasonDetail = require("../model/SeasonDetail");
+const Airspace = require("../model/Airspace");
 
 const dbTestData = {
   checkForTestDataAndAddIfMissing: async () => {
@@ -91,6 +92,17 @@ const dbTestData = {
         })
       );
       console.log("Finished adding seasonDetails");
+
+      console.log("Start adding airspaces");
+      const airspaces = require("./testdatasets/airspaces.json");
+      await Promise.all(
+        airspaces.map(async (entry) => {
+          await Airspace.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding airspaces");
     }
   },
 };
