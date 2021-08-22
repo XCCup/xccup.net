@@ -28,14 +28,14 @@ const siteService = {
   },
 
   findClosestTakeoff: async (location) => {
-    const maxDistanceToSearch = 0;
+    const maxDistanceToSearch = 5000;
     const query = `
     SELECT
-    "description", ST_Distance(ST_SetSRID(ST_MakePoint(:latitude, :longitude),4326), "point") AS distance
+    "description", ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
     FROM
     "FlyingSites"
     WHERE
-    ST_Distance(ST_SetSRID(ST_MakePoint(:latitude, :longitude),4326), "point") < :maxDistance
+    ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") < :maxDistance
     ORDER BY 
     distance
     LIMIT 1
