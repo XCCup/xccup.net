@@ -32,6 +32,9 @@ const User = db.sequelize.define(
     birthday: {
       type: DataTypes.STRING,
     },
+    urlProfilPicture: {
+      type: DataTypes.STRING,
+    },
     role: {
       type: DataTypes.STRING,
       defaultValue: "Keine",
@@ -87,75 +90,135 @@ const getNames = async () => {
   });
 };
 
+User.getNames = getNames;
+
 //-----------Flight-----------
 
-const Flight = db.sequelize.define("Flight", {
+const Flight = db.sequelize.define(
+  "Flight",
+  {
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      allowNull: false,
+      primaryKey: true,
+    },
+    externalId: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      unique: true,
+    },
+    takeoff: {
+      type: DataTypes.STRING(),
+    },
+    landing: {
+      type: DataTypes.STRING(),
+    },
+    report: {
+      type: DataTypes.STRING(5000), //Default is VARCHAR(255)
+    },
+    flightPoints: {
+      type: DataTypes.INTEGER,
+    },
+    flightDistance: {
+      type: DataTypes.DOUBLE,
+    },
+    flightType: {
+      type: DataTypes.STRING,
+      // values: ["FREE", "FLAT", "FAI"],
+    },
+    flightStatus: {
+      type: DataTypes.STRING,
+      // values: ["Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung"],
+    },
+    flightTurnpoints: {
+      type: DataTypes.JSON,
+    },
+    igcUrl: {
+      type: DataTypes.STRING,
+    },
+    imagesUrls: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    glider: {
+      type: DataTypes.STRING,
+    },
+    airspaceViolation: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    },
+    uncheckedGRecord: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    },
+    hikeAndFly: {
+      //We will save the climbed height directly, so it's easier to aggreate later
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+      allowNull: false,
+    },
+    dateOfFlight: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.NOW,
+      allowNull: false,
+    },
+    isWeekend: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    },
+  },
+  {
+    hooks: {
+      beforeCreate: (flight) => {
+        const numberOfDay = flight.dateOfFlight.getDay();
+        //TODO Evtl noch auf Feiertag prüfen?
+        flight.isWeekend =
+          numberOfDay == 5 || numberOfDay == 6 || numberOfDay == 0;
+      },
+    },
+  }
+);
+
+//------------FlyingSite-------------
+const FlyingSite = db.sequelize.define("FlyingSite", {
   id: {
     type: Sequelize.UUID,
     defaultValue: Sequelize.UUIDV4,
     allowNull: false,
     primaryKey: true,
   },
-  externalId: {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  point: {
+    type: DataTypes.GEOMETRY("POINT", 4326),
+    allowNull: false,
+    /*
+    We will use GEOMETRY on purpose. GEOGRAPHY would be more accurate, but also much slower.
+    */
+  },
+  type: {
+    type: DataTypes.STRING,
+  },
+  club: {
+    type: DataTypes.STRING,
+  },
+  region: {
+    type: DataTypes.STRING,
+  },
+  image: {
+    type: DataTypes.STRING,
+  },
+  heightDifference: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
-    unique: true,
-  },
-  takeoff: {
-    type: DataTypes.STRING(),
-  },
-  landing: {
-    type: DataTypes.STRING(),
-  },
-  report: {
-    type: DataTypes.STRING(5000), //Default is VARCHAR(255)
-  },
-  flightPoints: {
-    type: DataTypes.INTEGER,
-  },
-  flightDistance: {
-    type: DataTypes.DOUBLE,
-  },
-  flightType: {
-    type: DataTypes.STRING,
-    // values: ["FREE", "FLAT", "FAI"],
-  },
-  flightStatus: {
-    type: DataTypes.STRING,
-    // values: ["Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung"],
-  },
-  flightTurnpoints: {
-    type: DataTypes.JSON,
-  },
-  igcUrl: {
-    type: DataTypes.STRING,
-  },
-  imagesUrls: {
-    type: DataTypes.ARRAY(DataTypes.STRING),
-  },
-  glider: {
-    type: DataTypes.STRING,
-  },
-  airspaceViolation: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-    allowNull: false,
-  },
-  uncheckedGRecord: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-    allowNull: false,
-  },
-  hikeAndFly: {
-	//We will save the climbed height directly, so it's easier to aggreate later
-    type: DataTypes.INTEGER,
-    defaultValue: 0,
-    allowNull: false,
-  },
-  dateOfFlight: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-    allowNull: false,
   },
 });
 
@@ -175,12 +238,45 @@ const FlightComment = db.sequelize.define("FlightComment", {
   },
 });
 
+//---------------Club----------------
+const Club = db.sequelize.define("Club", {
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    allowNull: false,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  homepage: {
+    type: DataTypes.STRING,
+  },
+  urlLogo: {
+    type: DataTypes.STRING,
+  },
+  participantInSeasons: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER),
+  },
+  contact: {
+    type: DataTypes.JSON,
+    allowNull: false,
+  },
+});
+
 //-----------Associations-----------
 
 User.hasMany(Flight, {
   as: "flights",
   foreignKey: {
     name: "userId",
+  },
+});
+
+User.belongsTo(Club, {
+  foreignKey: {
+    name: "clubId",
   },
 });
 
@@ -199,7 +295,7 @@ Flight.hasMany(FlightComment, {
   as: "comments",
   foreignKey: {
     name: "flightId",
-    //Through this constrain it's realized that every comment, will be delete if the user will be deleted
+    //Through this constrain it's realized that every comment, will be delete if the flight will be deleted
     allowNull: false,
   },
   onDelete: "CASCADE",
@@ -228,8 +324,15 @@ Flight.hasOne(FlightFixes, {
   hooks: true,
 });
 
-User.getNames = getNames;
+Club.hasMany(User, {
+  as: "members",
+  foreignKey: {
+    name: "clubId",
+  },
+});
 
 exports.Flight = Flight;
 exports.FlightComment = FlightComment;
+exports.FlyingSite = FlyingSite;
+exports.Club = Club;
 exports.User = User;

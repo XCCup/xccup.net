@@ -1,0 +1,35 @@
+[
+  {
+    "id": "b9be9235-d5ba-4100-85d7-c572ad3e9893",
+    "name":"Alte Adler e.V.",
+    "homepage":"https://alte-alder.de",
+    "participantInSeasons": [2019,2020,2021],
+    "contact": {
+      "name": "Andre Adams",
+      "mail": "andre@admas.de",
+      "phone": "01501234567"
+    }
+  },
+  {
+    "id": "02dbecbc-d550-46f9-aac6-246b9c5b197c",
+    "name":"Unheilvolle Uhus e.V.",
+    "homepage":"https://uh-uhus.de",
+    "participantInSeasons": [2019,2021],
+    "contact": {
+      "name": "Ulla Übel",
+      "mail": "ulla@uhus.de",
+      "phone": "017045646499"
+    }
+  },
+  {
+    "id": "a64f6417-2273-4592-9f91-9f2b1f48e7ce",
+    "name":"Bissige Bussards e.V.",
+    "homepage":"https://bi-bu.de",
+    "participantInSeasons": [2019,2020],
+    "contact": {
+      "name": "Bernd Busemann",
+      "mail": "bernd@busenfreund.de",
+      "phone": "0160456489731"
+    }
+  }
+]

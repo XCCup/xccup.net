@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   db:
-    image: postgres
+    image: postgis/postgis
     container_name: db
     restart: always
     env_file: .env

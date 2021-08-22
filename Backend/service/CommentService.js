@@ -6,12 +6,9 @@ const commentService = {
   },
 
   getByFlightId: async (flightId) => {
-    const comments = await FlightComment.findAll({
+    return await FlightComment.findAll({
       where: { flightId: flightId },
     });
-    console.log("Service: ", comments);
-
-    return comments;
   },
 
   create: async (comment) => {

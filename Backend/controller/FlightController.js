@@ -5,7 +5,13 @@ const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const fs = require("fs");
 const { NOT_FOUND, BAD_REQUEST } = require("./Constants");
-const { authToken, belongsNotToId } = require("./Auth");
+const { authToken, requesterIsNotOwner } = require("./Auth");
+const {
+  checkIsUuidObject,
+  checkStringObjectNotEmpty,
+  checkOptionalStringObjectNotEmpty,
+  validationHasErrors,
+} = require("./Validation");
 
 // @desc Retrieves all flights
 // @route GET /flight/
@@ -37,14 +43,9 @@ router.delete("/:id", authToken, async (req, res) => {
   const flightId = req.params.id;
   const flightToDelete = await service.getById(flightId);
 
-  if (!flightToDelete) {
-    res.sendStatus(NOT_FOUND);
-    return;
-  }
+  if (!flightToDelete) return res.sendStatus(NOT_FOUND);
 
-  if (belongsNotToId(req, res, flightToDelete.userId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, flightToDelete.userId)) return;
 
   const numberOfDestroyedRows = await service.delete(flightId);
   res.json(numberOfDestroyedRows);
@@ -54,19 +55,17 @@ router.delete("/:id", authToken, async (req, res) => {
 // @route POST /flight/
 // @access Only owner
 
-router.post("/", authToken, async (req, res) => {
+router.post("/", authToken, checkIsUuidObject("userId"), async (req, res) => {
+  if (validationHasErrors(req, res)) return;
   const igc = req.body.igc;
   const userId = req.body.userId;
 
-  if (belongsNotToId(req, res, userId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, userId)) return;
 
   try {
     checkParamsForIgc(igc);
   } catch (error) {
-    res.status(BAD_REQUEST).send(error);
-    return;
+    return res.status(BAD_REQUEST).send(error);
   }
 
   igcValidator.execute(igc).then((result) => {
@@ -85,6 +84,7 @@ router.post("/", authToken, async (req, res) => {
         persistIgcFile(flight.id, igc).then(async (igcUrl) => {
           flight.igcUrl = igcUrl;
 
+          service.startResultCalculation(flight);
           await service.extractFixesAddLocationsAndDateOfFlight(flight);
 
           service.update(flight).then((flight) => {
@@ -99,32 +99,34 @@ router.post("/", authToken, async (req, res) => {
   });
 });
 
-// @desc Adds futher data to a existing flight and starts the igc calculation if no igc result are present.
+// @desc Adds futher data to a existing flight
 // @route PUT /flight/:id
 // @access Only owner
 
-router.put("/:id", authToken, async (req, res) => {
-  const report = req.body.report;
-  const glider = req.body.glider;
-  const flightId = req.params.id;
+router.put(
+  "/:id",
+  authToken,
+  checkStringObjectNotEmpty("glider"),
+  checkOptionalStringObjectNotEmpty("report"),
+  async (req, res) => {
+    const report = req.body.report;
+    const glider = req.body.glider;
+    const flightId = req.params.id;
 
-  const flight = await service.getById(flightId);
+    const flight = await service.getById(flightId);
 
-  if (!flight) {
-    res.sendStatus(NOT_FOUND);
+    if (!flight) return res.sendStatus(NOT_FOUND);
+
+    if (await requesterIsNotOwner(req, res, flight.userId)) return;
+
+    flight.report = report;
+    flight.glider = glider;
+    //TODO Erst nach Bekanntmachung des Glider können die Punkte für den Flug korrekt berechnet werden. Beachte evtl. ist Flugberechnung hier noch nicht abgeschlossen.
+    service.update(flight).then((flight) => {
+      res.json(flight.externalId);
+    });
   }
-
-  if (belongsNotToId(req, res, flight.userId)) {
-    return;
-  }
-
-  flight.report = report;
-  flight.glider = glider;
-  service.update(flight).then((flight) => {
-    res.json(flight.externalId);
-    if (!flight.flightDistance) service.startResultCalculation(flight);
-  });
-});
+);
 
 //TODO Move to helper class "FileWriter"
 async function persistIgcFile(flightId, igcFile) {
@@ -141,7 +143,7 @@ async function persistIgcFile(flightId, igcFile) {
 function checkParamsForIgc(igc) {
   const result = igc.name && igc.body;
   if (!result) {
-    throw "A parameter was invalid. The parameters igc.name and igc.body are required.";
+    throw "IGC parameter was invalid. The parameters igc.name and igc.body are required.";
   }
 }
 

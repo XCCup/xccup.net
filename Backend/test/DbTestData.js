@@ -1,5 +1,12 @@
-const { User, Flight, FlightComment } = require("../model/DependentModels");
+const {
+  User,
+  Flight,
+  FlightComment,
+  Club,
+  FlyingSite,
+} = require("../model/DependentModels");
 const FlightFixes = require("../model/FlightFixes");
+const SeasonDetail = require("../model/SeasonDetail");
 
 const dbTestData = {
   checkForTestDataAndAddIfMissing: async () => {
@@ -8,6 +15,28 @@ const dbTestData = {
     const users = require("./testdatasets/users.json");
     if (userNames != users.length) {
       console.log("Required data was not found. Will now add data to db.");
+
+      console.log("Start adding clubs");
+      const clubs = require("./testdatasets/clubs.json");
+      await Promise.all(
+        clubs.map(async (entry) => {
+          await Club.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding clubs");
+
+      console.log("Start adding sites");
+      const sites = require("./testdatasets/flyingSites.json");
+      await Promise.all(
+        sites.map(async (entry) => {
+          await FlyingSite.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding sites");
 
       console.log("Start adding users");
       await Promise.all(
@@ -51,6 +80,17 @@ const dbTestData = {
         })
       );
       console.log("Finished adding fixes");
+
+      console.log("Start adding seasonDetails");
+      const seasonDetails = require("./testdatasets/seasonDetails.json");
+      await Promise.all(
+        seasonDetails.map(async (entry) => {
+          await SeasonDetail.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding seasonDetails");
     }
   },
 };

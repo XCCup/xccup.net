@@ -11,11 +11,20 @@ const router = express.Router();
 const {
   authToken,
   createToken,
-  belongsNotToId,
+  requesterIsNotOwner,
   createRefreshToken,
   logoutToken,
   refreshToken,
 } = require("./Auth");
+const {
+  checkIsDateObject,
+  checkIsEmail,
+  checkOptionalIsBoolean,
+  checkOptionalIsOnlyOfValue,
+  checkStringObjectNotEmpty,
+  checkIsUuidObject,
+  validationHasErrors,
+} = require("./Validation");
 
 // @desc Retrieves all usernames
 // @route GET /users/
@@ -29,24 +38,29 @@ router.get("/", async (req, res) => {
 // @desc Logs a user in by his credentials
 // @route GET /users/login
 
-router.post("/login", async (req, res) => {
-  const name = req.body.name;
-  const password = req.body.password;
+router.post(
+  "/login",
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("password"),
+  async (req, res) => {
+    const name = req.body.name;
+    const password = req.body.password;
 
-  const userId = await service.validate(name, password);
-  if (!userId) {
-    res.sendStatus(UNAUTHORIZED);
-    return;
+    const userId = await service.validate(name, password);
+    if (!userId) {
+      res.sendStatus(UNAUTHORIZED);
+      return;
+    }
+
+    const accessToken = createToken(userId, name);
+    const refreshToken = createRefreshToken(userId, name);
+
+    res.json({
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    });
   }
-
-  const accessToken = createToken(userId, name);
-  const refreshToken = createRefreshToken(userId, name);
-
-  res.json({
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-  });
-});
+);
 
 // @desc Refreshes an user access token if it has expired
 // @route GET /users/token
@@ -91,6 +105,7 @@ router.get("/name/:username", authToken, async (req, res) => {
   res.json(user);
 });
 
+
 // @desc Retrieve user by id
 // @route GET /users/:id
 // @access Only owner
@@ -98,9 +113,7 @@ router.get("/name/:username", authToken, async (req, res) => {
 router.get("/:id", authToken, async (req, res) => {
   const requestId = req.params.id;
 
-  if (belongsNotToId(req, res, requestId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, requestId)) return;
 
   const retrievedUser = await service.getById(requestId);
   if (!retrievedUser) {
@@ -118,9 +131,7 @@ router.get("/:id", authToken, async (req, res) => {
 router.delete("/:id", authToken, async (req, res) => {
   const requestId = req.params.id;
 
-  if (belongsNotToId(req, res, requestId)) {
-    return;
-  }
+  if (await requesterIsNotOwner(req, res, requestId)) return;
 
   const user = await service.delete(req.params.id);
   if (!user) {
@@ -134,16 +145,32 @@ router.delete("/:id", authToken, async (req, res) => {
 // @desc Saves a new user to the database
 // @route POST /users/
 
-router.post("/", async (req, res) => {
-  service
-    .save(req.body)
-    .then((user) => {
-      res.json(user);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(INTERNAL_SERVER_ERROR).send(error.message);
-    });
-});
+router.post(
+  "/",
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("lastName"),
+  checkStringObjectNotEmpty("firstName"),
+  checkIsDateObject("birthday"),
+  checkIsEmail("email"),
+  checkIsUuidObject("clubId"),
+  checkOptionalIsOnlyOfValue("gender", service.GENDERS),
+  checkOptionalIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
+  checkOptionalIsOnlyOfValue("role", [service.ROLE.NONE]), //TODO Rollen werden vorerst nur über direkten DB Zugriff vergeben
+  checkOptionalIsBoolean("emailInformIfComment"),
+  checkOptionalIsBoolean("emailNewsletter"),
+  checkOptionalIsBoolean("emailTeamSearch"),
+  async (req, res) => {
+    if (validationHasErrors(req, res)) return;
+    service
+      .save(req.body)
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(INTERNAL_SERVER_ERROR).send(error);
+      });
+  }
+);
 
 module.exports = router;

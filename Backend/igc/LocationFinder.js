@@ -18,15 +18,9 @@ const byLatLong = async (location) => {
   }
 };
 
-const findTakeoffAndLanding = async (takeoffFix, landingFix) => {
-  console.log("Will add takeoff and landing name");
-  const nameOfTakeoff = await byLatLong(createRequestString(takeoffFix));
-  const nameOfLanding = await byLatLong(createRequestString(landingFix));
-
-  return {
-    nameOfTakeoff: nameOfTakeoff,
-    nameOfLanding: nameOfLanding,
-  };
+const findLanding = async (landingFix) => {
+  console.log("Will retrieve landing name from Google API");
+  return await byLatLong(createRequestString(landingFix));
 };
 
 function createRequestString(fix) {
@@ -34,4 +28,4 @@ function createRequestString(fix) {
 }
 
 exports.byLatLong = byLatLong;
-exports.findTakeoffAndLanding = findTakeoffAndLanding;
+exports.findLanding = findLanding;

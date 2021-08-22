@@ -1,8 +1,10 @@
 const { FlightComment, Flight, User } = require("../model/DependentModels");
 const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
-const { findTakeoffAndLanding } = require("../igc/LocationFinder");
+const { findLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
+const { getCurrentActive } = require("./SeasonService");
+const { findClosestTakeoff } = require("./FlyingSiteService");
 
 const flightService = {
   STATE_IN_RANKING: "In Wertung",
@@ -90,12 +92,15 @@ const flightService = {
     flight.flightPoints = Math.round(result.pts);
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
-    //TODO Replace threshold value by db query
-    if (flight.flightPoints >= 60) {
+
+    const currentSeason = await getCurrentActive();
+    const pointThreshold = currentSeason.pointThresholdForFlight;
+    if (flight.flightPoints >= pointThreshold) {
       flight.flightStatus = flightService.STATE_IN_RANKING;
     } else {
       flight.flightStatus = flightService.STATE_NOT_IN_RANKING;
     }
+
     flight.flightTurnpoints = result.turnpoints;
     flight.igcUrl = result.igcUrl;
 
@@ -112,6 +117,8 @@ const flightService = {
   },
 
   create: async (flight) => {
+    //TODO ExternalID als Hook im Model realisieren?
+    await addExternalId(flight);
     return await Flight.create(flight);
   },
 
@@ -124,14 +131,10 @@ const flightService = {
     const fixes = IgcAnalyzer.extractFixes(flight);
     flight.dateOfFlight = new Date(fixes[0].timestamp);
 
+    flight.takeoff = await findClosestTakeoff(fixes[0]);
+    console.log("TAKE: " + flight.takeoff);
     if (process.env.USE_GOOGLE_API === "true") {
-      const places = await findTakeoffAndLanding(
-        fixes[0],
-        fixes[fixes.length - 1]
-      );
-      //TODO Replace Takeoff with entry in DB
-      flight.takeoff = places.nameOfTakeoff;
-      flight.landing = places.nameOfLanding;
+      flight.landing = await findLanding(fixes[fixes.length - 1]);
     }
 
     FlightFixes.create({
@@ -147,6 +150,12 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
       flightId: flightId,
     },
   });
+}
+
+async function addExternalId(flight) {
+  const result = await Flight.max("externalId");
+  flight.externalId = result + 1;
+  console.log("New external ID was created: " + flight.externalId);
 }
 
 module.exports = flightService;

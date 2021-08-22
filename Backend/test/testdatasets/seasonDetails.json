@@ -1,0 +1,68 @@
+[
+  {
+    "year": 2018,
+    "startDate":"2018-03-01T00:00:00",
+    "endDate":"2018-10-01T00:00:00",
+    "pointThresholdForFlight": 60,
+    "numberOfFlightsForShirt": 2,
+    "active": true,
+    "factors": [
+      {
+        "AB_low": 2.8,
+        "AB_high": 2.7,
+        "C_low": 2.6,
+        "C_high": 2.5,
+        "D_low": 2.4,
+        "D_high": 2.2,
+        "Tandem": 3.0,
+        "HG_1_Turm": 2.2,
+        "HG_1_Turmlos": 1.9,
+        "HG_5_starr": 1.5
+      }
+    ]
+  },
+  {
+    "year": 2020,
+    "startDate":"2020-03-01T00:00:00",
+    "endDate":"2020-10-01T00:00:00",
+    "pointThresholdForFlight": 60,
+    "numberOfFlightsForShirt": 5,
+    "active": false,
+    "factors": [
+      {
+        "AB_low": 2.8,
+        "AB_high": 2.7,
+        "C_low": 2.6,
+        "C_high": 2.5,
+        "D_low": 2.4,
+        "D_high": 2.2,
+        "Tandem": 3.0,
+        "HG_1_Turm": 2.2,
+        "HG_1_Turmlos": 1.9,
+        "HG_5_starr": 1.5
+      }
+    ]
+  },
+  {
+    "year": 2022,
+    "startDate":"2022-03-01T00:00:00",
+    "endDate":"2022-10-01T00:00:00",
+    "pointThresholdForFlight": 60,
+    "numberOfFlightsForShirt": 3,
+    "active": true,
+    "factors": [
+      {
+        "AB_low": 2.8,
+        "AB_high": 2.7,
+        "C_low": 2.6,
+        "C_high": 2.5,
+        "D_low": 2.4,
+        "D_high": 2.2,
+        "Tandem": 3.0,
+        "HG_1_Turm": 2.2,
+        "HG_1_Turmlos": 1.9,
+        "HG_5_starr": 1.5
+      }
+    ]
+  }
+]
