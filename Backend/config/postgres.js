@@ -46,14 +46,14 @@ async function sleep(ms) {
 dbConnectionTest().then(async () => {
   if (process.env.DB_SYNC_ALTER == "true") {
     console.log("Will alter DB Tables");
-    await sequelize
-      .sync({ alter: true })
-      .then(() => addTestData())
-      .catch((error) => {
-        console.error(error);
-      });
+    await sequelize.sync({ alter: true }).catch((error) => {
+      console.error(error);
+    });
   }
-  if (process.env.DB_SYNC_FORCE == "true") {
+  if (
+    process.env.DB_SYNC_FORCE == "true" &&
+    process.env.NODE_ENV === "development"
+  ) {
     console.log("Will create DB Tables");
     await sequelize
       .sync({ force: true })

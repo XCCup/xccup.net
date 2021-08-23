@@ -31,7 +31,7 @@ const flightService = {
         {
           model: FlightFixes,
           as: "fixes",
-          attributes: ["fixes"],
+          attributes: ["geom", "timeAndHeights"],
         },
       ],
     });
@@ -44,7 +44,7 @@ const flightService = {
         {
           model: FlightFixes,
           as: "fixes",
-          attributes: ["fixes"],
+          attributes: ["geom", "timeAndHeights"],
         },
         {
           model: FlightComment,
@@ -64,10 +64,10 @@ const flightService = {
     });
     if (flightDbObject) {
       let flight = flightDbObject.toJSON();
-      //DIRTY Move the fixes one layer up
-      if (flight.fixes) {
-        flight.fixes = flight.fixes.fixes;
-      }
+
+      //TODO Merge directly when model is retrieved?
+      flight.fixes = FlightFixes.mergeCoordinatesAndOtherData(flight.fixes);
+
       return flight;
     }
     return null;
@@ -77,9 +77,9 @@ const flightService = {
     return flight.save();
   },
 
-  delete: async (flightId) => {
+  delete: async (id) => {
     const numberOfDestroyedRows = await Flight.destroy({
-      where: { id: flightId },
+      where: { id },
     });
     console.log("Entries deleted: ", numberOfDestroyedRows);
     return numberOfDestroyedRows;
@@ -105,10 +105,16 @@ const flightService = {
     flight.igcUrl = result.igcUrl;
 
     ElevationAttacher.execute(
-      flight.toJSON().fixes.fixes,
+      FlightFixes.mergeCoordinatesAndOtherData(flight.toJSON().fixes),
       async (fixesWithElevation) => {
+        //TODO Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
         let flightFixes = await retrieveDbObjectOfFlightFixes(flight.id);
-        flightFixes.fixes = fixesWithElevation;
+        for (let i = 0; i < flightFixes.timeAndHeights.length; i++) {
+          flightFixes.timeAndHeights[i].elevation =
+            fixesWithElevation[i].elevation;
+        }
+        //It is necessary to explicited call "changed" because a call to "save" will only updated data when a value has changed. Unforunatly the addition of elevation data doesn't trigger any change event.
+        flightFixes.changed("timeAndHeights", true);
         flightFixes.save();
       }
     );
@@ -139,7 +145,8 @@ const flightService = {
 
     FlightFixes.create({
       flightId: flight.id,
-      fixes: fixes,
+      geom: FlightFixes.createGeometry(fixes),
+      timeAndHeights: FlightFixes.extractTimeAndHeights(fixes),
     });
   },
 };

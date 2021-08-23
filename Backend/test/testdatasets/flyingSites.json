@@ -405,7 +405,7 @@
   {
     "name": "KANFENORT",
     "description": "Kanfen Ort",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGLAN",
@@ -422,7 +422,7 @@
   {
     "name": "KELL_SEGELFLUG",
     "description": "Kell Segelflugplatz",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "SFP",
@@ -439,7 +439,7 @@
   {
     "name": "SCHAUMBERGTURM",
     "description": "Schaumberg Turm",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Schaumberg01.jpg",
     "type": "AND",
     "club": "NULL",
@@ -471,7 +471,7 @@
   {
     "name": "HEUSWEILERA8SENDEMASTEN",
     "description": "Heusweiler A8 Sendemasten",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "HeusweilerA8Sendemasten01.jpg",
     "type": "AND",
     "club": "NULL",
@@ -487,7 +487,7 @@
   {
     "name": "WUSTWEILER_SEGELFLUG",
     "description": "Wustweiler Segelflugplatz",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "SFP",
@@ -504,7 +504,7 @@
   {
     "name": "SCHWARZENBACH_UL",
     "description": "Schwarzenbach Ultraleicht",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "UL",
@@ -1318,7 +1318,7 @@
   {
     "name": "OFFENBACH_SCHLEPP",
     "description": "Offenbach - Schlepp",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "OffenbachSchlepp01.jpg",
     "type": "HGPGSTA",
     "club": "",
@@ -1385,7 +1385,7 @@
   {
     "name": "KATHARINEN_AUF_UNTEREM_MERGESFELD_SCHLEPP",
     "description": "St. Katharinen - Schlepp (SO/NW)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1402,7 +1402,7 @@
   {
     "name": "KATHARINEN_HANG_START",
     "description": "St. Katharinen - Hang Start (SSW)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1419,7 +1419,7 @@
   {
     "name": "SOPHIENheightDifference_START",
     "description": "Sophienhöhe Start (NO-SO)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "SophienheightDifference_O_Start01.jpg",
     "type": "HGPGSTA",
     "club": "NULL",
@@ -1469,7 +1469,7 @@
   {
     "name": "HIMMIGHOFEN_HAINAU_SCHLEPP",
     "description": "Himmighofen-Hainau - Schlepp",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1486,7 +1486,7 @@
   {
     "name": "WALLERTHEIM_START",
     "description": "Wallertheim Start",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1503,7 +1503,7 @@
   {
     "name": "KATHARINEN_MERGESFELD_SUED_SCHLEPP",
     "description": "St. Katharinen - Schlepp (N/S)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1520,7 +1520,7 @@
   {
     "name": "RAUMBACH_HANG_START",
     "description": "Raumbach (SO-S)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1537,7 +1537,7 @@
   {
     "name": "LOSHEIM_SCHEID_SCHLEPP",
     "description": "Losheim am See/Scheid - Schlepp (N,O,S,W)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Losheim_Scheid01.jpg",
     "type": "HGPGSTA",
     "club": "NULL",
@@ -1618,7 +1618,7 @@
   {
     "name": "HOELLENBERG_START",
     "description": "Höllenberg Start (SSW-NW)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Hoellenberg_Start01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.duddefliecher.de",
@@ -1685,7 +1685,7 @@
   {
     "name": "LOSHEIM_AM_SEE_SCHLEPP",
     "description": "Losheim am See/Am See - Schlepp (NW/SO)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Losheim_Am_See01.jpg",
     "type": "HGPGSTA",
     "club": "",
@@ -1701,7 +1701,7 @@
   {
     "name": "LOSHEIM_HUNGERBERG_SCHLEPP",
     "description": "Losheim am See/Hungerberg - Schlepp (N)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1752,7 +1752,7 @@
   {
     "name": "LOSHEIM_KERZENBERG_SCHLEPP",
     "description": "Losheim am See/Kerzenberg - Schlepp (O bis W)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Losheim_Kerzenberg01.jpg",
     "type": "HGPGSTA",
     "club": "NULL",
@@ -1768,7 +1768,7 @@
   {
     "name": "LOSHEIM_GALGENBERG_START",
     "description": "Losheim am See/Galgenberg (N, S)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Losheim_Galgenberg01.jpg",
     "type": "HGPGSTA",
     "club": "NULL",
@@ -1818,7 +1818,7 @@
   {
     "name": "HASSLOCH_SCHLEPP",
     "description": "Hassloch - Windenschlepp",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1852,7 +1852,7 @@
   {
     "name": "OBERGAILBACH_SCHLEPP",
     "description": "Obergailbach - Schlepp (O-W)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1886,7 +1886,7 @@
   {
     "name": "KRAUSBERG_START",
     "description": "Krausberg Start (N)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Krausberg_Start01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
@@ -1902,7 +1902,7 @@
   {
     "name": "HOENNINGEN_START_OST",
     "description": "Hönningen Start (O)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Hoenningen_Start_Ost01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
@@ -1918,7 +1918,7 @@
   {
     "name": "HOENNINGEN_START_SUED",
     "description": "Hönningen Start (S)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Hoenningen_Start_Sued01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
@@ -1967,7 +1967,7 @@
   {
     "name": "HOHEN_UNKEL_SCHLEPP",
     "description": "Hohen Unkel Schlepp (N,O,S,W)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Hohenunkel_Schlepp01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
@@ -1983,7 +1983,7 @@
   {
     "name": "HAARDSKOPF_START",
     "description": "Haardskopf Start (SW-W)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Haardskopf_Start01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
@@ -2097,7 +2097,7 @@
   {
     "name": "RONNEBURG_START",
     "description": "Ronneburg Start (NW)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "Ronneburg01.jpg",
     "type": "HGPGSTA",
     "club": "NULL",
@@ -2130,7 +2130,7 @@
   {
     "name": "MORSBACH_START",
     "description": "Morsbach Start",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2147,7 +2147,7 @@
   {
     "name": "ROXHEIM_SCHLEPP",
     "description": "Roxheim - Windenschlepp",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2164,7 +2164,7 @@
   {
     "name": "MOSBACH_START",
     "description": "Mosbach (Finkenhof) Start (NO-O)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2181,7 +2181,7 @@
   {
     "name": "ODERNHEIM_NEUBERG_OST",
     "description": "Odernheim - Neuberg (O)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2434,7 +2434,7 @@
   {
     "name": "KESTEN_START",
     "description": "Kesten Startplatz",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2451,7 +2451,7 @@
   {
     "name": "NECKARGERACH_START",
     "description": "Neckargerach Startplatz (SW)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2468,7 +2468,7 @@
   {
     "name": "LAUBENHEIM_START",
     "description": "Laubenheim Startplatz (O)",
-    "heightDifference": "",
+    "heightDifference": "0",
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",

@@ -71,17 +71,6 @@ const dbTestData = {
       );
       console.log("Finished adding comments");
 
-      console.log("Start adding fixes");
-      const fixes = require("./testdatasets/fixes.json");
-      await Promise.all(
-        fixes.map(async (entry) => {
-          await FlightFixes.create(entry).catch((err) => {
-            console.log(err.message);
-          });
-        })
-      );
-      console.log("Finished adding fixes");
-
       console.log("Start adding seasonDetails");
       const seasonDetails = require("./testdatasets/seasonDetails.json");
       await Promise.all(
@@ -103,6 +92,17 @@ const dbTestData = {
         })
       );
       console.log("Finished adding airspaces");
+
+      console.log("Start adding fixes");
+      const fixes = require("./testdatasets/fixes.json");
+      await Promise.all(
+        fixes.map(async (entry) => {
+          await FlightFixes.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding fixes");
     }
   },
 };
