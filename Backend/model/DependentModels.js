@@ -108,9 +108,6 @@ const Flight = db.sequelize.define(
       autoIncrement: true,
       unique: true,
     },
-    takeoff: {
-      type: DataTypes.STRING(),
-    },
     landing: {
       type: DataTypes.STRING(),
     },
@@ -273,13 +270,6 @@ User.hasMany(Flight, {
     name: "userId",
   },
 });
-
-User.belongsTo(Club, {
-  foreignKey: {
-    name: "clubId",
-  },
-});
-
 User.hasMany(FlightComment, {
   as: "comments",
   foreignKey: {
@@ -290,7 +280,23 @@ User.hasMany(FlightComment, {
   onDelete: "CASCADE",
   hooks: true,
 });
+User.belongsTo(Club, {
+  foreignKey: {
+    name: "clubId",
+  },
+});
 
+Flight.belongsTo(User, {
+  foreignKey: {
+    name: "userId",
+  },
+});
+Flight.belongsTo(FlyingSite, {
+  as: "takeoff",
+  foreignKey: {
+    name: "siteId",
+  },
+});
 Flight.hasMany(FlightComment, {
   as: "comments",
   foreignKey: {
@@ -301,18 +307,6 @@ Flight.hasMany(FlightComment, {
   onDelete: "CASCADE",
   hooks: true,
 });
-
-Flight.belongsTo(User, {
-  foreignKey: {
-    name: "userId",
-  },
-});
-FlightComment.belongsTo(User, {
-  foreignKey: {
-    name: "userId",
-  },
-});
-
 Flight.hasOne(FlightFixes, {
   as: "fixes",
   foreignKey: {
@@ -324,10 +318,23 @@ Flight.hasOne(FlightFixes, {
   hooks: true,
 });
 
+FlightComment.belongsTo(User, {
+  foreignKey: {
+    name: "userId",
+  },
+});
+
 Club.hasMany(User, {
   as: "members",
   foreignKey: {
     name: "clubId",
+  },
+});
+
+FlyingSite.hasMany(Flight, {
+  as: "flights",
+  foreignKey: {
+    name: "siteId",
   },
 });
 

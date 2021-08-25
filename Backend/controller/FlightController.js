@@ -76,7 +76,7 @@ router.post("/", authToken, checkIsUuidObject("userId"), async (req, res) => {
     }
     service
       .create({
-        userId: userId,
+        userId,
         uncheckedGRecord: result == undefined ? true : false,
         flightStatus: service.STATE_IN_PROCESS,
       })
@@ -85,12 +85,13 @@ router.post("/", authToken, checkIsUuidObject("userId"), async (req, res) => {
           flight.igcUrl = igcUrl;
 
           service.startResultCalculation(flight);
-          await service.extractFixesAddLocationsAndDateOfFlight(flight);
+          const takeoffName =
+            await service.extractFixesAddLocationsAndDateOfFlight(flight);
 
           service.update(flight).then((flight) => {
             res.json({
               flightId: flight.id,
-              takeoff: flight.takeoff,
+              takeoff: takeoffName,
               landing: flight.landing,
             });
           });

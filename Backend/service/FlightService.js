@@ -1,4 +1,9 @@
-const { FlightComment, Flight, User } = require("../model/DependentModels");
+const {
+  FlightComment,
+  Flight,
+  User,
+  FlyingSite,
+} = require("../model/DependentModels");
 const FlightFixes = require("../model/FlightFixes");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findLanding } = require("../igc/LocationFinder");
@@ -20,6 +25,11 @@ const flightService = {
           model: User,
           attributes: ["name"],
         },
+        {
+          model: FlyingSite,
+          as: "takeoff",
+          attributes: ["id", "description"],
+        },
       ],
     });
     return flights;
@@ -33,6 +43,11 @@ const flightService = {
           model: FlightFixes,
           as: "fixes",
           attributes: ["geom", "timeAndHeights"],
+        },
+        {
+          model: FlyingSite,
+          as: "takeoff",
+          attributes: ["id", "description"],
         },
       ],
     });
@@ -61,6 +76,11 @@ const flightService = {
           model: User,
           attributes: ["name"],
         },
+        {
+          model: FlyingSite,
+          as: "takeoff",
+          attributes: ["id", "description"],
+        },
       ],
     });
     if (flightDbObject) {
@@ -79,11 +99,9 @@ const flightService = {
   },
 
   delete: async (id) => {
-    const numberOfDestroyedRows = await Flight.destroy({
+    return await Flight.destroy({
       where: { id },
     });
-    console.log("Entries deleted: ", numberOfDestroyedRows);
-    return numberOfDestroyedRows;
   },
 
   addResult: async (result) => {
@@ -126,7 +144,6 @@ const flightService = {
          * Because some airspace bounderies are defined in relation to the surface (e.g. Floor 1500FT AGL)
          */
         if (await hasAirspaceViolation(flightFixes)) {
-          console.log("VIOLATION");
           flight.airspaceViolation = true;
           flight.save();
         }
@@ -151,8 +168,9 @@ const flightService = {
     const fixes = IgcAnalyzer.extractFixes(flight);
     flight.dateOfFlight = new Date(fixes[0].timestamp);
 
-    flight.takeoff = await findClosestTakeoff(fixes[0]);
-    console.log("TAKE: " + flight.takeoff);
+    const flyingSite = await findClosestTakeoff(fixes[0]);
+    flight.siteId = flyingSite.id;
+
     if (process.env.USE_GOOGLE_API === "true") {
       flight.landing = await findLanding(fixes[fixes.length - 1]);
     }
@@ -162,6 +180,8 @@ const flightService = {
       geom: FlightFixes.createGeometry(fixes),
       timeAndHeights: FlightFixes.extractTimeAndHeights(fixes),
     });
+
+    return flyingSite.description;
   },
 };
 

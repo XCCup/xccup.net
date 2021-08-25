@@ -31,7 +31,7 @@ const siteService = {
     const maxDistanceToSearch = 5000;
     const query = `
     SELECT
-    "description", ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
+    "id","description", ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
     FROM
     "FlyingSites"
     WHERE
@@ -52,7 +52,7 @@ const siteService = {
 
     if (takeoffs.length == 1) {
       console.log("Found takeoff in DB");
-      return takeoffs[0].description;
+      return takeoffs[0];
     } else if (takeoffs.length > 1) {
       const errorMsg = `Found more than one takeoff in DB for location ${location} within distance of ${maxDistanceToSearch}m`;
       console.log(errorMsg);
