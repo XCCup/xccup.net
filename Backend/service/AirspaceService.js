@@ -13,17 +13,15 @@ const service = {
     });
   },
 
-  findIntersection: async function (fixesId) {
+  hasAirspaceViolation: async (fixesWithElevation) => {
     const startTime = new Date();
-    const result = await find2dIntersection(fixesId);
+    const intersections2D = await find2dIntersection(fixesWithElevation.id);
 
-    const line = FlightFixes.mergeCoordinatesAndOtherData(
-      await FlightFixes.findByPk(fixesId)
-    );
+    const line = FlightFixes.mergeCoordinatesAndOtherData(fixesWithElevation);
 
     let violationFound = false;
-    for (let rI = 0; rI < result.length && !violationFound; rI++) {
-      const intersection = result[rI];
+    for (let rI = 0; rI < intersections2D.length && !violationFound; rI++) {
+      const intersection = intersections2D[rI];
 
       for (
         let cI = 0;
@@ -103,7 +101,7 @@ async function find2dIntersection(fixesId) {
     type: FlightFixes.sequelize.QueryTypes.SELECT,
   });
 
-  if (result.length == 0) return null;
+  return result.length == 0 ? [] : result;
 }
 
 function convertToMeterMSL(heightValue, elevation) {

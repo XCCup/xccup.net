@@ -5,6 +5,7 @@ const { findLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
 const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
+const { hasAirspaceViolation } = require("./AirspaceService");
 
 const flightService = {
   STATE_IN_RANKING: "In Wertung",
@@ -113,9 +114,22 @@ const flightService = {
           flightFixes.timeAndHeights[i].elevation =
             fixesWithElevation[i].elevation;
         }
-        //It is necessary to explicited call "changed" because a call to "save" will only updated data when a value has changed. Unforunatly the addition of elevation data doesn't trigger any change event.
+        /**
+         * It is necessary to explicited call "changed", because a call to "save" will only updated data when a value has changed.
+         * Unforunatly the addition of elevation data inside the data object doesn't trigger any change event.
+         */
         flightFixes.changed("timeAndHeights", true);
-        flightFixes.save();
+        await flightFixes.save();
+
+        /**
+         * Before evaluating airspace violation it's necessary to determine the elevation data.
+         * Because some airspace bounderies are defined in relation to the surface (e.g. Floor 1500FT AGL)
+         */
+        if (await hasAirspaceViolation(flightFixes)) {
+          console.log("VIOLATION");
+          flight.airspaceViolation = true;
+          flight.save();
+        }
       }
     );
 
