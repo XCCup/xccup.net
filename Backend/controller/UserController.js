@@ -47,17 +47,14 @@ router.post(
     const password = req.body.password;
 
     const userId = await service.validate(name, password);
-    if (!userId) {
-      res.sendStatus(UNAUTHORIZED);
-      return;
-    }
+    if (!userId) return res.sendStatus(UNAUTHORIZED);
 
     const accessToken = createToken(userId, name);
     const refreshToken = createRefreshToken(userId, name);
 
     res.json({
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      accessToken,
+      refreshToken,
     });
   }
 );
@@ -70,13 +67,10 @@ router.post("/token", async (req, res) => {
 
   const accessToken = await refreshToken(token);
   console.log(accessToken);
-  if (!accessToken) {
-    res.sendStatus(FORBIDDEN);
-    return;
-  }
+  if (!accessToken) return res.sendStatus(FORBIDDEN);
 
   res.json({
-    accessToken: accessToken,
+    accessToken,
   });
 });
 
@@ -97,14 +91,10 @@ router.post("/logout", async (req, res) => {
 
 router.get("/name/:username", authToken, async (req, res) => {
   const user = await service.getByName(req.params.username);
-  if (!user) {
-    res.sendStatus(NOT_FOUND);
-    return;
-  }
+  if (!user) return res.sendStatus(NOT_FOUND);
 
   res.json(user);
 });
-
 
 // @desc Retrieve user by id
 // @route GET /users/:id
@@ -116,10 +106,7 @@ router.get("/:id", authToken, async (req, res) => {
   if (await requesterIsNotOwner(req, res, requestId)) return;
 
   const retrievedUser = await service.getById(requestId);
-  if (!retrievedUser) {
-    res.sendStatus(NOT_FOUND);
-    return;
-  }
+  if (!retrievedUser) return res.sendStatus(NOT_FOUND);
 
   res.json(retrievedUser);
 });
@@ -134,10 +121,7 @@ router.delete("/:id", authToken, async (req, res) => {
   if (await requesterIsNotOwner(req, res, requestId)) return;
 
   const user = await service.delete(req.params.id);
-  if (!user) {
-    res.sendStatus(NOT_FOUND);
-    return;
-  }
+  if (!user) return res.sendStatus(NOT_FOUND);
 
   res.json(user);
 });

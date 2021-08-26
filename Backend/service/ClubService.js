@@ -2,16 +2,22 @@ const { Club, User } = require("../model/DependentModels");
 
 const clubService = {
   getAll: async () => {
-    return await Club.findAll({ attributes: { exclude: ["contact"] } });
+    return await Club.findAll({ attributes: { exclude: ["contacts"] } });
   },
 
   getById: async (id) => {
     return await Club.findByPk(id);
   },
 
-  getAllMemberOfClub: async (clubId) => {
+  getByShortName: async (shortName) => {
+    console.log("getShort");
+    return await Club.findOne({
+      where: { shortName },
+    });
+  },
+
+  getAllMemberOfClub: async (shortName) => {
     return await User.findAll({
-      where: { clubId: clubId },
       attributes: [
         "name",
         "firstName",
@@ -22,6 +28,15 @@ const clubService = {
         "emailTeamSearch",
         "state",
       ],
+      include: {
+        model: Club,
+        attributes: ["name", "shortName"],
+        as: "Club",
+        where: {
+          shortName,
+        },
+      },
+      exclude: ["Club"],
     });
   },
 
@@ -30,7 +45,7 @@ const clubService = {
   },
 
   update: async (club) => {
-    return await Club.save(club);
+    return await club.save();
   },
 
   delete: async (id) => {

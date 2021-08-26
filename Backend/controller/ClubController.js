@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/ClubService");
-const { NOT_FOUND } = require("./Constants");
+const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./Constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
+const {
+  checkOptionalIsBoolean,
+  checkOptionalStringObjectNotEmpty,
+  checkStringObjectNotEmpty,
+  validationHasErrors,
+} = require("./Validation");
 
-// @desc Gets all clubs
+// @desc Gets all open information of all clubs
 // @route GET /clubs
 
 router.get("/", async (req, res) => {
@@ -13,30 +19,112 @@ router.get("/", async (req, res) => {
 });
 
 // @desc Gets all members of clubs
-// @route GET /clubs/member/:id
+// @route GET /clubs/:shortName/member/
 // @access All logged-in user
 
-router.get("/member/:id", authToken, async (req, res) => {
-  const clubId = req.params.id;
-  const members = await service.getAllMemberOfClub(clubId);
+router.get("/:shortName/member", async (req, res) => {
+  const shortName = req.params.shortName;
+  const members = await service.getAllMemberOfClub(shortName);
   res.json(members);
 });
 
-// @desc Gets all members of clubs
-// @route GET /clubs/member/:id
+// @desc Get all club information
+// @route GET /clubs/:id
 // @access Only moderator
 
 router.get("/:id", authToken, async (req, res) => {
+  if (await requesterIsNotModerator(req, res)) return;
+
   const clubId = req.params.id;
   const retrievedClub = await service.getById(clubId);
-
-  if (await requesterIsNotModerator(req, res)) {
-    console.log("Controller");
-    return;
-  }
   if (!retrievedClub) return res.sendStatus(NOT_FOUND);
 
   res.json(retrievedClub);
 });
+
+// @desc Saves a new user to the database
+// @route POST /clubs/
+// @access Only moderator
+
+router.post(
+  "/",
+  authToken,
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("shortName"),
+  checkOptionalStringObjectNotEmpty("homepage"),
+  checkOptionalStringObjectNotEmpty("urlLogo"),
+  checkOptionalIsBoolean("isActiveParticipant"),
+  async (req, res) => {
+    if (validationHasErrors(req, res)) return;
+    if (await requesterIsNotModerator(req, res)) return;
+
+    const transferObject = req.body;
+
+    console.log("TEST: " + transferObject.contacts);
+    console.log("HELLO MY DARLING");
+
+    const club = {
+      name: transferObject.name,
+      shortName: transferObject.shortName,
+      homepage: transferObject.homepage,
+      urlLogo: transferObject.urlLogo,
+      participantInSeasons: transferObject.isActiveParticipant
+        ? [new Date().getFullYear()]
+        : [],
+      contacts: transferObject.contacts,
+    };
+
+    service
+      .create(club)
+      .then((club) => res.json(club))
+      .catch((error) => {
+        console.error(error);
+        res.status(INTERNAL_SERVER_ERROR).send(error);
+      });
+  }
+);
+
+// @desc Edits a club
+// @route PUT /clubs/
+// @access Only moderator
+
+router.put(
+  "/:id",
+  authToken,
+  checkOptionalStringObjectNotEmpty("name"),
+  checkOptionalStringObjectNotEmpty("shortName"),
+  checkOptionalStringObjectNotEmpty("homepage"),
+  checkOptionalStringObjectNotEmpty("urlLogo"),
+  checkOptionalIsBoolean("isActiveParticipant"),
+  async (req, res) => {
+    if (validationHasErrors(req, res)) return;
+    if (await requesterIsNotModerator(req, res)) return;
+
+    const clubId = req.params.id;
+    const club = await service.getById(clubId);
+    if (!club) return res.sendStatus(NOT_FOUND);
+
+    const transferObject = req.body;
+    club.name = transferObject.name ?? club.name;
+    club.shortName = transferObject.shortName ?? club.shortName;
+    club.homepage = transferObject.homepage ?? club.homepage;
+    club.urlLogo = transferObject.urlLogo ?? club.urlLogo;
+    club.contacts = transferObject.contacts ?? club.contacts;
+    if (
+      transferObject.isActiveParticipant &&
+      !club.participantInSeasons.includes(new Date().getFullYear())
+    ) {
+      transferObject.isActiveParticipant.push(new Date().getFullYear());
+    }
+
+    service
+      .update(club)
+      .then((club) => res.json(club))
+      .catch((error) => {
+        console.error(error);
+        res.status(INTERNAL_SERVER_ERROR).send(error);
+      });
+  }
+);
 
 module.exports = router;

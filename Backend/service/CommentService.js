@@ -7,7 +7,7 @@ const commentService = {
 
   getByFlightId: async (flightId) => {
     return await FlightComment.findAll({
-      where: { flightId: flightId },
+      where: { flightId },
     });
   },
 
@@ -16,12 +16,12 @@ const commentService = {
   },
 
   update: async (comment) => {
-    return await FlightComment.save(comment);
+    return await comment.save();
   },
 
   delete: async (id) => {
     const numberOfDestroyedRows = await FlightComment.destroy({
-      where: { id: id },
+      where: { id },
     });
     return numberOfDestroyedRows;
   },
