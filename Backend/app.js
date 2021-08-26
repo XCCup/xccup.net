@@ -40,6 +40,7 @@ app.use("/comments", require("./controller/CommentController.js"));
 app.use("/seasons", require("./controller/SeasonController"));
 app.use("/clubs", require("./controller/ClubController"));
 app.use("/airspaces", require("./controller/AirspaceController"));
+app.use("/results", require("./controller/ResultController"));
 
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(
