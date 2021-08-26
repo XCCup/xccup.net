@@ -20,8 +20,10 @@ router.get("/", async (req, res) => {
 
 // @desc Gets all active and non-active clubs
 // @route GET /clubs/all
+// @access Only moderator
 
-router.get("/all", async (req, res) => {
+router.get("/all", authToken, async (req, res) => {
+  if (await requesterIsNotModerator(req, res)) return;
   const clubs = await service.getAll();
   res.json(clubs);
 });
@@ -134,5 +136,20 @@ router.put(
       });
   }
 );
+
+// @desc Deletes a club by id
+// @route DELETE /club/:id
+// @access Only moderator
+
+router.delete("/:id", authToken, async (req, res) => {
+  if (await requesterIsNotModerator(req, res)) return;
+
+  const clubId = req.params.id;
+  const club = await service.getById(clubId);
+  if (!club) return res.sendStatus(NOT_FOUND);
+
+  const numberOfDestroyedRows = await service.delete(clubId);
+  res.json(numberOfDestroyedRows);
+});
 
 module.exports = router;
