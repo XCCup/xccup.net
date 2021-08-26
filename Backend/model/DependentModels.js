@@ -247,6 +247,11 @@ const Club = db.sequelize.define("Club", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  shortName: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
   homepage: {
     type: DataTypes.STRING,
   },
@@ -256,9 +261,8 @@ const Club = db.sequelize.define("Club", {
   participantInSeasons: {
     type: DataTypes.ARRAY(DataTypes.INTEGER),
   },
-  contact: {
-    type: DataTypes.JSON,
-    allowNull: false,
+  contacts: {
+    type: DataTypes.ARRAY(DataTypes.JSON),
   },
 });
 
