@@ -10,10 +10,18 @@ const {
   validationHasErrors,
 } = require("./Validation");
 
-// @desc Gets all open information of all clubs
+// @desc Gets all open information of all active clubs
 // @route GET /clubs
 
 router.get("/", async (req, res) => {
+  const clubs = await service.getAllActive();
+  res.json(clubs);
+});
+
+// @desc Gets all active and non-active clubs
+// @route GET /clubs/all
+
+router.get("/all", async (req, res) => {
   const clubs = await service.getAll();
   res.json(clubs);
 });

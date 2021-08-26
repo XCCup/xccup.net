@@ -1,8 +1,19 @@
 const { Club, User } = require("../model/DependentModels");
+const { Op } = require("sequelize");
 
 const clubService = {
+  getAllActive: async () => {
+    return await Club.findAll({
+      where: {
+        participantInSeasons: {
+          [Op.contains]: [new Date().getFullYear()],
+        },
+      },
+      attributes: { exclude: ["contacts"] },
+    });
+  },
   getAll: async () => {
-    return await Club.findAll({ attributes: { exclude: ["contacts"] } });
+    return await Club.findAll();
   },
 
   getById: async (id) => {
@@ -10,7 +21,6 @@ const clubService = {
   },
 
   getByShortName: async (shortName) => {
-    console.log("getShort");
     return await Club.findOne({
       where: { shortName },
     });
@@ -36,7 +46,6 @@ const clubService = {
           shortName,
         },
       },
-      exclude: ["Club"],
     });
   },
 
@@ -50,7 +59,7 @@ const clubService = {
 
   delete: async (id) => {
     const numberOfDestroyedRows = await Club.destroy({
-      where: { id: id },
+      where: { id },
     });
     return numberOfDestroyedRows;
   },
