@@ -45,7 +45,13 @@ async function queryDb(where, gender, limit) {
         gender: gender ? gender : userService.GENDERS,
       },
     },
-    attributes: ["id", "flightPoints", "flightDistance", "glider"],
+    attributes: [
+      "id",
+      "flightPoints",
+      "flightDistance",
+      "glider",
+      "flightType",
+    ],
     order: [["flightPoints", "DESC"]],
   };
   if (limit) {
@@ -80,6 +86,7 @@ function aggreateFlightsOverUser(resultQuery) {
       flightPoints: entry.flightPoints,
       flightDistance: entry.flightDistance,
       glider: entry.glider,
+      flightType: entry.flightType,
     };
     if (found) {
       found.flights.push(flightEntry);

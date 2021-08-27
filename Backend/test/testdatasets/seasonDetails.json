@@ -19,7 +19,15 @@
         "HG_1_Turmlos": 1.9,
         "HG_5_starr": 1.5
       }
-    ]
+    ],
+    "ratingClasses":{
+      "sport":["AB_low","AB_high"],
+      "intermediate":["C_low","C_high"],
+      "performance":["D_low","D_high"],
+      "tandem":["Tandem"],
+      "flex":["HG_1_Turm","HG_1_Turmlos"],
+      "starre":["HG_5_starr"]
+    }
   },
   {
     "year": 2020,
@@ -41,7 +49,15 @@
         "HG_1_Turmlos": 1.9,
         "HG_5_starr": 1.5
       }
-    ]
+    ],
+    "ratingClasses":{
+      "sport":["AB_low","AB_high"],
+      "intermediate":["C_low","C_high"],
+      "performance":["D_low","D_high"],
+      "tandem":["Tandem"],
+      "flex":["HG_1_Turm","HG_1_Turmlos"],
+      "starre":["HG_5_starr"]
+    }
   },
   {
     "year": 2021,
@@ -63,6 +79,14 @@
         "HG_1_Turmlos": 1.9,
         "HG_5_starr": 1.5
       }
-    ]
+    ],
+    "ratingClasses":{
+      "sport":["AB_low","AB_high"],
+      "intermediate":["C_low","C_high"],
+      "performance":["D_low","D_high"],
+      "tandem":["Tandem"],
+      "flex":["HG_1_Turm","HG_1_Turmlos"],
+      "starre":["HG_5_starr"]
+    }
   }
 ]

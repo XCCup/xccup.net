@@ -43,16 +43,32 @@ router.get(
 // @route GET /region/:region
 
 router.get("/region/:region", async (req, res) => {
-  const result = await service.getOverall();
-  res.json(result);
+  // const result = await service.getOverall();
+  res.json(null);
 });
 
-// @desc Gets the result for a club
+// @desc Gets the result for a specific club
 // @route GET /club/:club
 
 router.get("/club/:club", async (req, res) => {
-  const result = await service.getOverall();
-  res.json(result);
+  // const result = await service.getOverall();
+  res.json(null);
+});
+
+// @desc Gets the result for the club ranking
+// @route GET /clubs
+
+router.get("/clubs", async (req, res) => {
+  // const result = await service.getOverall();
+  res.json(null);
+});
+
+// @desc Gets the result for the team ranking
+// @route GET /teams/
+
+router.get("/teams", async (req, res) => {
+  // const result = await service.getOverall();
+  res.json(null);
 });
 
 module.exports = router;
