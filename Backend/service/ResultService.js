@@ -1,67 +1,110 @@
 const { Flight, User } = require("../model/DependentModels");
+const seasonService = require("./SeasonService");
 const { Op } = require("sequelize");
+const userService = require("./UserService");
 
 const service = {
-  overall: async () => {
-    const resultQuery = await Flight.findAll({
-      where: {
-        dateOfFlight: {
-          [Op.between]: ["2021-02-01 00:00:00", "2021-09-30 00:00:00"],
-        },
-        flightPoints: {
-          [Op.gte]: 60,
-        },
-        airspaceViolation: false,
-        uncheckedGRecord: false,
+  getOverall: async (year, ratingClass, gender, isWeekend, limit) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const where = {
+      dateOfFlight: {
+        [Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
       },
-      include: {
-        model: User,
-        attributes: ["name", "id"],
+      flightPoints: {
+        [Op.gte]: seasonDetail.pointThresholdForFlight,
       },
-      attributes: ["id", "flightPoints", "flightDistance"],
-    });
+      airspaceViolation: false,
+      uncheckedGRecord: false,
+    };
+    if (ratingClass) {
+      where.glider = {
+        type: ratingClass,
+      };
+    }
+    if (isWeekend) {
+      where.isWeekend = true;
+    }
+    const resultQuery = await queryDb(where, gender, limit);
 
-    const result = [];
-
-    //Aggregate all flights over pilots
-    resultQuery.forEach((entry) => {
-      const found = result.find((e) => e.name == entry.User.name);
-      if (found) {
-        found.flights.push(entry);
-      } else {
-        result.push({
-          name: entry.User.name,
-          flights: [entry],
-        });
-      }
-    });
-
-    result.forEach((entry) => {
-      entry.totalFlights = 0;
-      //Sort flights of a pilot descending by points
-      entry.flights.sort((a, b) => b.flightPoints - a.flightPoints);
-      //Use only the 3 best flights
-      entry.totalFlights = entry.flights.length;
-      entry.flights = entry.flights.slice(0, 3);
-    });
-
-    //Aggregate points and distance over remaining flights
-    result.forEach((entry) => {
-      entry.totalDistance = entry.flights.reduce(
-        (acc, cur) => acc + cur.flightDistance,
-        0
-      );
-      entry.totalPoints = entry.flights.reduce(
-        (acc, cur) => acc + cur.flightPoints,
-        0
-      );
-    });
-
-    //Sort results descending by totalPoints
-    result.sort((a, b) => b.totalPoints - a.totalPoints);
+    const result = aggreateFlightsOverUser(resultQuery);
+    limitFlightsAndCalculateTotals(result, 3);
+    sortDescendingByTotalPoints(result);
 
     return result;
   },
 };
+
+async function queryDb(where, gender, limit) {
+  const queryObject = {
+    where,
+    include: {
+      model: User,
+      attributes: ["name", "id", "gender"],
+      where: {
+        gender: gender ? gender : userService.GENDERS,
+      },
+    },
+    attributes: ["id", "flightPoints", "flightDistance", "glider"],
+    order: [["flightPoints", "DESC"]],
+  };
+  if (limit) {
+    queryObject.limit = limit;
+  }
+  return Flight.findAll(queryObject);
+}
+
+function limitFlightsAndCalculateTotals(resultArray, maxNumberOfFlights) {
+  resultArray.forEach((entry) => {
+    entry.totalFlights = entry.flights.length;
+
+    entry.flights = entry.flights.slice(0, maxNumberOfFlights);
+
+    entry.totalDistance = entry.flights.reduce(
+      (acc, cur) => acc + cur.flightDistance,
+      0
+    );
+    entry.totalPoints = entry.flights.reduce(
+      (acc, cur) => acc + cur.flightPoints,
+      0
+    );
+  });
+}
+
+function aggreateFlightsOverUser(resultQuery) {
+  const result = [];
+  resultQuery.forEach((entry) => {
+    const found = result.find((e) => e.userName == entry.User.name);
+    const flightEntry = {
+      id: entry.id,
+      flightPoints: entry.flightPoints,
+      flightDistance: entry.flightDistance,
+      glider: entry.glider,
+    };
+    if (found) {
+      found.flights.push(flightEntry);
+    } else {
+      result.push({
+        userName: entry.User.name,
+        userId: entry.User.id,
+        gender: entry.User.gender,
+        flights: [flightEntry],
+      });
+    }
+  });
+  return result;
+}
+
+function sortDescendingByTotalPoints(resultArray) {
+  resultArray.sort((a, b) => b.totalPoints - a.totalPoints);
+}
+
+async function retrieveSeasonDetails(year) {
+  const requestedYear = year ?? new Date().getFullYear();
+  const seasonDetail =
+    (await seasonService.getByYear(requestedYear)) ??
+    (await seasonService.getCurrentActive());
+  return seasonDetail;
+}
 
 module.exports = service;

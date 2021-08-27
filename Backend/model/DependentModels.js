@@ -138,7 +138,7 @@ const Flight = db.sequelize.define(
       type: DataTypes.ARRAY(DataTypes.STRING),
     },
     glider: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
     },
     airspaceViolation: {
       type: DataTypes.BOOLEAN,

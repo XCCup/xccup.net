@@ -35,7 +35,11 @@
     "userId": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
     "externalId": 1,
     "report": "neque ipsa incidunt et magni et at veniam omnis quod non libero aut autem illum ullam culpa quasi non exercitationem non ut maiores velit non dolores natus et soluta non et vero nam totam delectus et nostrum earum suscipit accusantium fugit et itaque enim labore cum inventore impedit quo dolor facere amet et est repellendus voluptatum laudantium quis id placeat ut accusantium dolores nesciunt ea architecto tempora est vel vero quo earum iusto aperiam saepe non eos voluptatem assumenda quo aspernatur pariatur quia nemo est architecto et officiis molestiae est dolores facere sit rerum debitis quis amet labore eaque enim sapiente autem vero tempore amet dolores corrupti pariatur quia dolor a",
-    "glider": "Litte Cloud Spiruline",
+    "glider": {
+      "brand": "Litte Cloud",
+      "model": "Spiruline",
+      "type": "D_high"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -79,7 +83,11 @@
     "userId": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
     "externalId": 43,
     "report": "voluptatem dolores dignissimos aut sunt vitae minus qui inventore saepe saepe quia quia dolor atque eaque est in veniam totam quae eum",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -123,7 +131,11 @@
     "userId": "1c3fb13d-e725-4869-a816-87498833bee0",
     "externalId": 2,
     "report": "ea a incidunt consequuntur dolor voluptates quos enim excepturi necessitatibus a sit quia cumque labore omnis impedit velit beatae aut omnis odio rem odit repellat facere nobis aut neque soluta qui omnis sit aut fugiat deleniti aut sint expedita autem voluptatem et dolorem sed sint numquam animi dolorum assumenda explicabo dignissimos aspernatur iusto explicabo quisquam sequi illum assumenda eos est et excepturi deleniti eaque explicabo aut ea alias velit maiores iste architecto rerum quod officia sit quia vel quis nobis cupiditate voluptatibus deleniti voluptates nihil animi dicta natus velit est quo maxime sed laboriosam vero sit ipsam sint cum maxime expedita qui quidem nesciunt eum sit repellat corporis at sapiente quia ratione iure quos quo inventore sunt iusto consequatur natus qui delectus voluptas sed aut ab ducimus saepe dignissimos aliquam aut recusandae repudiandae ipsa et eligendi rerum aut voluptatem enim tempore consequatur temporibus placeat rerum dolores architecto dolor ullam voluptatum hic ab dolores nemo ex aut alias ad rerum totam debitis quia quisquam eveniet animi est rerum reiciendis perferendis nesciunt atque",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -167,7 +179,11 @@
     "userId": "25346d86-de5b-48b0-9dee-bffe06e560c8",
     "externalId": 3,
     "report": "quia animi non autem mollitia occaecati aut qui rem porro sint dicta perspiciatis temporibus aut illum molestiae recusandae officia placeat accusamus sequi est eos occaecati assumenda est sit similique non architecto et autem soluta cumque incidunt dolorum quisquam rerum saepe possimus minus doloremque enim modi accusamus enim sunt laudantium ab nesciunt aut necessitatibus fugiat nemo voluptatem nesciunt unde non cupiditate nihil",
-    "glider": "Air-G Emilie",
+    "glider": {
+      "brand": "Air-G",
+      "model": "Emilie",
+      "type": "D_high"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -211,7 +227,11 @@
     "userId": "67e5230b-667f-4ff1-8750-17739e7d3ea4",
     "externalId": 4,
     "report": "nostrum ut neque amet accusamus rerum voluptatum est delectus omnis qui qui repellat officiis consequatur aut aspernatur qui ut accusantium libero nisi enim molestiae asperiores maxime aliquam repellendus exercitationem in quia quibusdam ipsam porro id et nam ut dolores eveniet ut dolor culpa quos sit sint sint quia incidunt rerum hic odit unde distinctio ut in tempora molestiae sunt est velit aut quo rerum veritatis consequatur velit quo",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -255,7 +275,11 @@
     "userId": "bc8f46c2-fc95-4662-877c-d4a08806f482",
     "externalId": 5,
     "report": "est ut tenetur est impedit deleniti mollitia",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -299,7 +323,11 @@
     "userId": "8131b218-ed76-4095-bd29-0bf3902358c2",
     "externalId": 6,
     "report": "eius ullam omnis nesciunt amet dolorem architecto facilis cumque debitis soluta est et incidunt aspernatur et eveniet sit laborum eos recusandae alias in magnam voluptas sequi similique sint veniam qui vero illum beatae deleniti optio vel officiis laboriosam possimus quia ab quia ut magnam et voluptates ut id sit id qui vel amet assumenda hic dolor molestiae ipsa rem voluptatem itaque repellendus nesciunt aut nesciunt voluptatibus modi adipisci consectetur illum libero ut illo ipsa sit sed illo tenetur sunt consectetur et explicabo voluptatem perferendis voluptatem alias et consectetur ex illum officia earum autem laborum rem aliquam quas fuga consequuntur distinctio expedita enim sit qui est ea sit nam recusandae unde sed velit qui facilis molestiae dolores amet vel minima est odio commodi qui et ipsam velit rerum recusandae est eos error laboriosam ipsam doloremque magnam sed dignissimos vel reprehenderit sapiente temporibus delectus similique quos incidunt assumenda doloribus aut labore voluptatum sunt voluptate et nostrum quam modi consectetur non quaerat molestiae ut perferendis voluptas sit est cum cumque quis assumenda ea voluptatem voluptatem dolorum ex eos aliquam sed qui quis",
-    "glider": "Flow XC Racer",
+    "glider": {
+      "brand": "Flow",
+      "model": "XC Racer",
+      "type": "D_low"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -343,7 +371,11 @@
     "userId": "1fddb1fe-f9fe-48ef-a76e-d70d53e5fb6a",
     "externalId": 7,
     "report": "atque modi repellendus exercitationem sed quo alias eum dicta magni dolores dolor at ullam ipsam esse repellat eum maiores similique officiis debitis ducimus consequuntur aliquam expedita rerum maiores ipsa earum nostrum ullam sit odit quia magnam neque facere eos facere eum labore autem fuga et et provident alias aliquid nam enim animi rerum ex dolore qui recusandae sint rerum est necessitatibus rerum eos sint optio mollitia dolorum omnis enim sit voluptatem dolores quia earum omnis est natus tempore ullam vel enim recusandae autem inventore quas aut est enim itaque omnis aut necessitatibus aut sit atque aliquid quas voluptatem id est nemo accusamus ratione nostrum voluptatem et quaerat id eum iure quia neque omnis et nam debitis voluptatem amet numquam eveniet tempora tempora doloremque quod quidem est excepturi quia tempore ratione sed sunt quisquam itaque quia sequi dignissimos perspiciatis qui quisquam quo corrupti voluptatibus voluptatibus est ullam asperiores vitae et consequatur delectus suscipit numquam porro at atque aut magni",
-    "glider": "Air-G Emilie",
+    "glider": {
+      "brand": "Air-G",
+      "model": "Emilie",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -387,7 +419,11 @@
     "userId": "67172eda-57c7-4bbc-af90-f4c56c30f5ec",
     "externalId": 8,
     "report": "blanditiis quo eos enim aliquam aperiam error eaque voluptas consequatur doloribus minima quasi quia quis aliquam et sit aut omnis est eos ut beatae quam quia non iusto voluptatibus ut maxime nemo explicabo vel non maxime officia deleniti suscipit nesciunt et facere deleniti ipsum id modi ex qui fugiat ducimus quo ea ullam qui incidunt soluta aliquam et ducimus laboriosam qui at itaque sunt vel harum dignissimos repellendus quibusdam corrupti doloremque iste nihil numquam voluptatum voluptas provident enim ullam deserunt vel aspernatur omnis sed repudiandae possimus placeat ut ut maxime sint maxime mollitia sint quasi aut qui distinctio id aut ratione laudantium deserunt quos ipsum repudiandae doloremque reiciendis et qui eius iste aut maiores sunt explicabo consectetur id omnis aspernatur tempora eligendi quis explicabo fugiat quia asperiores officiis ratione vitae temporibus magni debitis quia id est consequuntur est qui error quaerat rerum consequatur et sed rerum deserunt doloremque qui eveniet aliquam",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -431,7 +467,11 @@
     "userId": "e071350f-a7c3-4081-9e2f-709625b07a07",
     "externalId": 9,
     "report": "quas quas molestiae quis hic quia sed laudantium enim in occaecati voluptatibus nihil quaerat harum unde sint et quas corrupti nobis impedit enim optio sed sed iure dolorem eius blanditiis distinctio ut est quo dolor quia voluptatem amet ea excepturi veniam minima nam ut impedit provident voluptates ipsam inventore laudantium fugiat asperiores sunt sint et ipsam aperiam et est tempora error fugit sequi atque accusantium dolorum non consequuntur dolore nobis eum quidem saepe quae accusamus iste quo in assumenda atque optio ratione veniam similique dolor quia non necessitatibus ut dolorum et veritatis et tenetur sed libero nostrum dolorem ratione sequi quia delectus aut qui quae quos odio eius aut sit ea assumenda maxime rem voluptates ipsum soluta quam assumenda fuga harum laudantium perspiciatis consectetur perspiciatis et molestiae sed et dolorem atque ex et sapiente dolor ut voluptatem minima qui ex sit quis earum repellat facilis saepe culpa aut aut exercitationem officia id nam et",
-    "glider": "U-Turn Bodyguard",
+    "glider": {
+      "brand": "U-Turn",
+      "model": "Bodyguard",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -475,7 +515,11 @@
     "userId": "61895b0e-0e22-480d-87ac-c0040e682c5d",
     "externalId": 10,
     "report": "laudantium in molestiae eaque nesciunt ullam aut voluptates sed et consequatur nam quasi consequatur non laboriosam nostrum labore quae earum libero veritatis eius sint quibusdam earum similique animi vero ut nihil dolorem qui voluptatem consequuntur tempore vel enim consectetur nihil facere mollitia dolores ex inventore est alias est culpa ipsum aut sed explicabo dignissimos ipsum et voluptatem excepturi quia aut aut rerum ut omnis adipisci impedit voluptatem rerum quia tempore sed culpa et magnam hic est consequuntur et quia laudantium nihil magnam ea ad expedita et dolor nihil excepturi recusandae sed qui et omnis nihil culpa facilis eum occaecati nemo praesentium sequi temporibus consequuntur",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -519,7 +563,11 @@
     "userId": "45907c75-9c14-42af-bc5a-993f4bec4b0f",
     "externalId": 11,
     "report": "amet perferendis voluptatem",
-    "glider": "U-Turn Bodyguard",
+    "glider": {
+      "brand": "U-Turn",
+      "model": "Bodyguard",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -563,7 +611,11 @@
     "userId": "0f6e6f97-b64b-4e04-a516-adada6f2cba0",
     "externalId": 12,
     "report": "esse quasi nemo reprehenderit temporibus adipisci dicta qui nihil voluptate neque et voluptates velit dicta dolore quasi voluptatem doloribus libero quam ipsum et ipsam necessitatibus modi non quo et accusamus cum vel consequuntur esse temporibus et alias quia eos placeat aut a voluptatibus labore excepturi optio blanditiis animi et est temporibus sit earum eaque et a dolor et voluptas quia ut laudantium veritatis ipsum",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -607,7 +659,11 @@
     "userId": "2a33b726-8edf-4d4b-8da8-f97138371b6c",
     "externalId": 13,
     "report": "est nihil aut vero rerum amet repellat placeat sed ipsa soluta quae omnis sunt pariatur nihil temporibus omnis dolorum voluptas nulla quia voluptas harum quod temporibus qui non rerum blanditiis aspernatur doloremque quo fugiat quia eius est quia sunt ut omnis ratione doloremque aliquid incidunt aut est quos cumque ut velit cum consequatur cum officia ut voluptatem accusamus ut quo et laborum et soluta voluptas incidunt qui ullam ut ab sed reprehenderit rerum dolore consequatur labore repellendus esse dicta tempora fugit vel dolor eaque magnam et consequuntur aperiam animi vitae ipsa eum possimus numquam rerum animi quibusdam fugiat sapiente nam temporibus eligendi animi laudantium ut placeat incidunt veniam et",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -651,7 +707,11 @@
     "userId": "9efc1c62-ea6a-4659-b89c-421b57ab73f6",
     "externalId": 14,
     "report": "quae voluptatem eos temporibus eum quae dignissimos nisi asperiores dolores expedita deserunt quis recusandae nulla libero molestiae officia ullam est minima eos beatae fuga asperiores ut consequuntur sunt placeat quia quia quisquam laborum ab est animi quia cum voluptatem officiis animi vitae debitis voluptatem ullam excepturi ratione eius praesentium non nobis accusantium odio perferendis corporis omnis perspiciatis occaecati consequuntur ut et nihil autem sint necessitatibus ut sit qui et ipsam reiciendis iure sed recusandae maxime excepturi omnis ducimus ut vero mollitia tempora earum",
-    "glider": "Flow XC Racer",
+    "glider": {
+      "brand": "Flow",
+      "model": "XC Racer",
+      "type": "D_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -695,7 +755,11 @@
     "userId": "04bd7ffd-d792-4e90-ba9e-c4356e353135",
     "externalId": 15,
     "report": "rerum sunt consequuntur pariatur ab fugit aut quia et est eveniet sapiente et odio et minus illo corporis voluptas sapiente voluptas laboriosam rerum expedita reprehenderit in quisquam soluta et amet dignissimos voluptate quis cupiditate laborum qui excepturi voluptatem quibusdam eos omnis officiis suscipit quia voluptatem consequatur nesciunt omnis ea modi odio saepe labore aut commodi delectus ut voluptatem ad reprehenderit mollitia incidunt dolor repellat hic consequuntur harum ut totam eveniet corrupti quas sequi consequatur quo aliquam ratione expedita eligendi laudantium quia molestias amet dolorem in esse aspernatur nisi dolor ut delectus tempore dolor ad eos voluptates alias non ad temporibus minus illo earum voluptas error perspiciatis impedit ad perferendis minima aut voluptatem dolorem inventore odio eveniet sed vero quos dolorem ipsa dolorem porro mollitia",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -739,7 +803,11 @@
     "userId": "388ab9dd-cb42-4c94-aa87-16b7a991b217",
     "externalId": 16,
     "report": "dolorem blanditiis numquam minus quisquam consequuntur nemo dolorem culpa reiciendis nihil sequi voluptatem quo laboriosam ea natus numquam earum quis magnam et maxime quis assumenda aut repudiandae excepturi modi nesciunt necessitatibus in magni qui deserunt sed sed aliquam consequatur qui non aut voluptatem doloribus aut quia ad officiis dolorum voluptas provident molestiae dicta qui qui aut impedit quam doloremque necessitatibus nulla ab ratione voluptates veritatis esse",
-    "glider": "Air-G Emilie",
+    "glider": {
+      "brand": "Air-G",
+      "model": "Emilie",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -783,7 +851,11 @@
     "userId": "0032cc89-38bb-4763-a497-e64e5c5ec5f9",
     "externalId": 17,
     "report": "dolore eveniet molestiae et dolorem dolorem exercitationem ex tempore velit repudiandae ipsam ut laboriosam reiciendis eligendi similique voluptas molestiae ut repellat sed laudantium consequuntur vero assumenda qui facere quaerat atque iusto rerum enim ea similique quos repellat est et ea ut et sequi dolor ut illum omnis dolorem sed dolorum ducimus ullam molestias nihil quas",
-    "glider": "Flow XC Racer",
+    "glider": {
+      "brand": "Flow",
+      "model": "XC Racer",
+      "type": "D_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -827,7 +899,11 @@
     "userId": "6e8764ec-c4b6-49b1-b804-f0871e390f31",
     "externalId": 18,
     "report": "quaerat est quibusdam voluptates cum sequi qui quasi vel dolorem voluptatem id similique reiciendis neque nesciunt ut explicabo repellat fugit pariatur voluptatem ullam ab fugit saepe suscipit repellendus et minima quaerat ducimus sed veniam nulla accusantium est ut sit repellendus quod placeat animi veniam assumenda quasi quod magnam consectetur autem sint unde maxime fugiat nobis sunt qui maiores qui eveniet alias dicta expedita nemo similique facere beatae accusantium pariatur et sunt laudantium rem perferendis consequatur adipisci voluptas omnis non non sunt ab qui vitae eligendi ut a id aut nulla facilis tempora ut tempore quaerat omnis dolores autem accusantium ut iste consequatur eveniet consequatur aut nam commodi magnam ut sed qui quidem asperiores et libero iste voluptatem quos dolores quod temporibus debitis porro dicta maiores accusamus numquam commodi natus id qui delectus",
-    "glider": "Air-G Emilie",
+    "glider": {
+      "brand": "Air-G",
+      "model": "Emilie",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -871,7 +947,11 @@
     "userId": "1c3c8082-d82a-4c4a-a60c-80d4e089b4f7",
     "externalId": 19,
     "report": "assumenda sint non unde fugiat ipsam reprehenderit recusandae vel magnam nemo quod eligendi explicabo cum nostrum voluptas pariatur tempora distinctio quos nostrum rem et omnis sint accusamus voluptatem molestias ducimus asperiores explicabo omnis deserunt quidem atque laudantium quibusdam quae possimus placeat odio asperiores deleniti et est aut dolores quaerat quod esse error sequi laborum voluptatibus nam vel cum esse nisi placeat perspiciatis atque dolore vero ducimus ad dignissimos facilis et non quis quae dolor quibusdam at necessitatibus tempora dolorem ea aut totam unde voluptatem sit veritatis sed cupiditate minima ut quo voluptas sit possimus aut porro natus quis quas consectetur sequi voluptatum rerum est maiores et sapiente qui distinctio doloribus minima totam ad tenetur similique alias aut qui nam deserunt dolorem voluptates sed distinctio vel sequi libero itaque rerum voluptas iure qui repudiandae quasi est porro aut labore voluptatem suscipit molestias incidunt qui quo eligendi sequi pariatur sequi cupiditate earum vitae nulla ut dicta suscipit deserunt minus labore vero hic sint",
-    "glider": "U-Turn Bodyguard",
+    "glider": {
+      "brand": "U-Turn",
+      "model": "Bodyguard",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -915,7 +995,11 @@
     "userId": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
     "externalId": 20,
     "report": "quo commodi quaerat minima molestias nihil consectetur ut fugiat vel voluptatem numquam sunt animi iure earum nobis nesciunt officiis aut inventore facilis laborum natus quaerat aspernatur ut commodi in ut cupiditate fugit saepe veritatis quibusdam id quo quis iusto temporibus esse ut amet vitae esse maiores occaecati amet",
-    "glider": "Litte Cloud Spiruline",
+    "glider": {
+      "brand": "Litte Cloud",
+      "model": "Spiruline",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -959,7 +1043,11 @@
     "userId": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
     "externalId": 21,
     "report": "sequi ut perspiciatis cumque aut sed mollitia itaque aperiam voluptas perferendis velit consequatur culpa occaecati veritatis adipisci accusantium quia sit libero ducimus quidem rerum est maxime et asperiores ipsam sed velit et impedit ullam vitae suscipit similique ut quod dolores exercitationem sunt fuga amet qui animi at occaecati est ea nisi cumque illum molestiae et dolores et nostrum iure et explicabo ipsum repudiandae praesentium esse quam quis ut sit error enim necessitatibus sequi cumque voluptas hic totam sit quis qui eum magnam est ducimus quidem ut sint explicabo facilis tempore mollitia dolore quis occaecati pariatur quisquam odit nobis officia",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1003,7 +1091,11 @@
     "userId": "1c3fb13d-e725-4869-a816-87498833bee0",
     "externalId": 22,
     "report": "provident sint doloribus distinctio voluptas corrupti dolorem et aut itaque perferendis sunt et vel dolorem explicabo aut est quia dolor perferendis eum mollitia et eos atque sit dignissimos et vel voluptatum illum velit ea voluptas sit ratione at aut dolorem soluta voluptatem vel necessitatibus voluptatem quo possimus nam consequuntur et quas voluptas sint ut ipsum dolor ipsa veritatis maxime deserunt totam veniam aspernatur molestiae illo repellat tempore",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1047,7 +1139,11 @@
     "userId": "25346d86-de5b-48b0-9dee-bffe06e560c8",
     "externalId": 23,
     "report": "esse fugiat et perspiciatis sit doloremque ut temporibus deleniti quis molestias maxime deserunt harum non esse architecto maiores adipisci eligendi eius ducimus rerum distinctio et omnis dolor dolore veritatis et aut earum reiciendis fugit sit quam fuga incidunt nihil dolor qui qui illum sit est velit eveniet repellendus ea beatae voluptas et voluptatibus quaerat ut autem consequatur illum autem nulla quibusdam distinctio sed omnis reprehenderit assumenda culpa ipsum perferendis aut ipsam fuga eum natus enim commodi aut est dolores architecto adipisci quidem suscipit non deleniti saepe est autem maxime modi quis saepe quas doloribus voluptatibus aut et et magnam placeat ex iusto voluptatem soluta illum aut voluptas possimus sed necessitatibus dolor itaque harum autem ipsa ut non aut ipsum vel velit eum debitis dolores dolore aliquam non et dolorem beatae ullam est officia commodi ut nihil soluta fuga ad tempora perferendis atque facilis ut debitis et officia quo nulla numquam modi eos fuga vero iusto dolor aliquam architecto eos voluptate modi",
-    "glider": "Air-G Emilie",
+    "glider": {
+      "brand": "Air-G",
+      "model": "Emilie",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1091,7 +1187,11 @@
     "userId": "67e5230b-667f-4ff1-8750-17739e7d3ea4",
     "externalId": 24,
     "report": "aut aut error illo adipisci qui quisquam rerum ea voluptas inventore sequi quia explicabo occaecati repudiandae in sed nisi libero dolorem voluptas non laudantium officiis quod non itaque molestiae vel animi ipsa consequatur sunt et qui unde et laboriosam dolores cupiditate libero expedita odit rerum distinctio quidem est repellendus et ut possimus laboriosam autem assumenda in quas beatae vel harum omnis voluptatibus et vel nesciunt reiciendis consequatur ducimus unde voluptatem corrupti expedita a quaerat natus fugiat dicta aperiam soluta error et et aut debitis ut eveniet ea animi dolore est quia beatae debitis quod eveniet adipisci voluptas est voluptatem aut modi quia voluptatem est qui ducimus est vel voluptatem et qui quo qui ea dolor corporis inventore libero laudantium id dolores quis excepturi porro voluptatem sapiente aut officiis molestiae molestias aut tempore qui error quis libero veritatis earum quaerat modi eius id facere qui quisquam nam assumenda illum quia officiis quidem fugit quia laborum quod soluta sunt consequatur dicta quis placeat eius atque est inventore sed sapiente possimus rerum accusamus aliquid at et modi eaque quos delectus perferendis dolorem atque ut dolorem vel quia voluptatem id rerum id iusto non quis eos tenetur quibusdam dolor sed sunt",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1135,7 +1235,11 @@
     "userId": "bc8f46c2-fc95-4662-877c-d4a08806f482",
     "externalId": 25,
     "report": "quae pariatur animi culpa voluptas necessitatibus quibusdam rem rerum maxime distinctio vero dolores quia veniam quos eum sint voluptates sint dolor temporibus sed aut est natus dolores omnis soluta maxime ut velit dolorem autem est ex repellendus minima enim numquam porro ut qui et fuga vero provident tenetur illum voluptatem fugiat earum consequuntur ipsum libero voluptatibus doloribus sint dolores voluptatem dolore voluptatem maxime nostrum est et natus atque et ipsa alias voluptas nostrum voluptatem quia aut molestiae quas ipsa nam temporibus ullam velit tempore vero omnis corporis dolore iure labore laborum dolor iusto iure sit dolores laborum quod voluptatem delectus reiciendis vel voluptatem doloremque voluptatem in laborum iste aut voluptatem explicabo voluptas ipsum eaque earum numquam quis quisquam hic dignissimos neque dolor hic fugiat odio quos quo est quasi nihil modi reiciendis non laudantium sed est impedit sed qui qui neque rerum dignissimos sit ducimus accusantium qui incidunt ut optio nesciunt fugit cum ut dolores eum nam ut qui enim nihil quibusdam illo nisi ut impedit iure sed dolores ratione ipsum minima maiores culpa dolorem laboriosam quos ipsum est sed sit nesciunt neque dolorem",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1179,7 +1283,11 @@
     "userId": "8131b218-ed76-4095-bd29-0bf3902358c2",
     "externalId": 26,
     "report": "autem molestiae corrupti facilis corporis et voluptatem adipisci temporibus alias et sunt necessitatibus qui tempore unde maiores ut totam dolor asperiores incidunt cumque iste similique quidem praesentium dolores quia dolorem",
-    "glider": "Flow XC Racer",
+    "glider": {
+      "brand": "Flow",
+      "model": "XC Racer",
+      "type": "D_low"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1223,7 +1331,11 @@
     "userId": "1fddb1fe-f9fe-48ef-a76e-d70d53e5fb6a",
     "externalId": 27,
     "report": "ipsum possimus id voluptatem rerum ut fugiat praesentium eum nulla quis et est quia rerum doloribus vel voluptatem occaecati quisquam optio veniam tenetur qui a dicta facilis eum omnis ut veritatis aliquam incidunt accusamus vero molestias voluptates necessitatibus corrupti aut ad repellat corrupti voluptatem exercitationem consequatur consequatur dolores laborum quia ullam numquam sapiente fugit blanditiis itaque exercitationem dignissimos eligendi ipsa rem atque et ipsam quia et nemo laboriosam aut libero quasi dolor et voluptatem autem ut officia iusto ut amet ipsa corrupti excepturi soluta omnis vitae libero quibusdam perferendis qui totam fugiat dolores est esse voluptatum deserunt odit qui ut possimus qui quasi quia et unde reiciendis rerum facere aperiam est dolor voluptas inventore animi debitis sed molestiae quia repellendus et ipsa dicta ex ex expedita atque perferendis alias accusamus molestiae voluptatem ducimus doloribus itaque recusandae inventore eveniet omnis eum corrupti aut autem voluptas dolor minima laboriosam minus sed laudantium quos et consectetur necessitatibus consequatur est beatae et dicta provident modi",
-    "glider": "Air-G Emilie",
+    "glider": {
+      "brand": "Air-G",
+      "model": "Emilie",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1267,7 +1379,11 @@
     "userId": "67172eda-57c7-4bbc-af90-f4c56c30f5ec",
     "externalId": 28,
     "report": "mollitia ut eius dolorem et illo tempora nesciunt ut modi excepturi totam dolores veniam laboriosam molestiae quia quas dolorum ducimus quas voluptatum recusandae minus quo voluptas neque error ducimus maxime sed velit esse qui hic aliquam sint tenetur dolorum corporis et iusto molestiae repudiandae quia repudiandae molestias qui et ipsa inventore numquam quaerat eius tenetur illum cumque molestias illo voluptas explicabo enim suscipit doloremque rerum voluptatum quisquam voluptatem et aspernatur deleniti ipsa tempora recusandae voluptatem modi et voluptatem in dolores reiciendis molestiae pariatur dolorum voluptatem",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1311,7 +1427,11 @@
     "userId": "e071350f-a7c3-4081-9e2f-709625b07a07",
     "externalId": 29,
     "report": "eaque blanditiis eius eos nihil tempore odio enim rerum quibusdam aspernatur voluptatibus deleniti dolor voluptas esse aliquam illum animi quidem distinctio consequatur aliquid rerum harum expedita vitae sed aliquid neque quaerat rerum laborum sint consequatur numquam voluptatem",
-    "glider": "U-Turn Bodyguard",
+    "glider": {
+      "brand": "U-Turn",
+      "model": "Bodyguard",
+      "type": "AB_low"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1355,7 +1475,11 @@
     "userId": "61895b0e-0e22-480d-87ac-c0040e682c5d",
     "externalId": 30,
     "report": "corporis dolorem animi reprehenderit nostrum adipisci ipsum deserunt dolor maiores cupiditate quidem ratione ipsum laborum aut odio distinctio tempore soluta soluta aliquam quia rerum at ad earum aut nihil quia perspiciatis sunt tenetur qui voluptatum ea ea eius quo asperiores cupiditate velit ut similique minus mollitia dolorum sit id dolores unde asperiores velit modi fuga iure id facilis voluptatibus amet vel officia error pariatur laborum asperiores possimus dolore nemo neque esse consectetur veniam omnis optio non quis harum quo placeat necessitatibus modi maxime architecto ut sapiente in sequi aspernatur laborum dicta velit quisquam nobis nostrum aut modi non et et magnam nihil quia dignissimos ut nisi aliquid suscipit non et minus quia consectetur cupiditate explicabo dolore veniam quia",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1399,7 +1523,11 @@
     "userId": "45907c75-9c14-42af-bc5a-993f4bec4b0f",
     "externalId": 31,
     "report": "placeat explicabo dicta distinctio nemo eveniet occaecati sapiente est eos maiores autem enim aut incidunt magni rerum nesciunt nihil sit deleniti consequatur odio ullam in praesentium voluptatem aperiam reprehenderit omnis saepe accusamus doloremque magni est repellendus aut sequi quo eligendi reiciendis consequatur qui nulla reprehenderit et est quaerat fugit error quaerat voluptatem consequatur ipsam dolorem est accusamus aut quidem et est voluptatum dolores sint dolores illo libero voluptatem iste dolore illo dolores quia provident rem ut numquam aliquid et delectus molestias non facere architecto ullam veritatis debitis odit voluptatibus id dicta inventore placeat porro autem accusamus necessitatibus qui perferendis voluptas accusantium voluptatem ut recusandae id amet autem sint voluptatibus suscipit voluptas ut est possimus in inventore distinctio quo recusandae eos animi omnis repellendus ipsa qui voluptatem esse quo nobis fugit temporibus rerum eum ab voluptas quidem praesentium ex consequatur minima porro impedit at qui aut modi fuga occaecati qui tempora voluptates repudiandae aut velit est enim praesentium quia minus ad dolore quis distinctio ullam ut aut dolorem distinctio dolorem eligendi veritatis sint ex laborum nihil nobis doloribus rerum reprehenderit rem quidem rerum in maiores architecto qui porro dicta sapiente tenetur quod nesciunt facere impedit magnam adipisci praesentium numquam",
-    "glider": "U-Turn Bodyguard",
+    "glider": {
+      "brand": "U-Turn",
+      "model": "Bodyguard",
+      "type": "AB_low"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1443,7 +1571,11 @@
     "userId": "0f6e6f97-b64b-4e04-a516-adada6f2cba0",
     "externalId": 32,
     "report": "ipsam cumque et provident aliquid vel expedita et possimus sed similique vitae est quibusdam ipsam impedit ex eos officiis cupiditate accusamus perferendis quod dolor necessitatibus qui id",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1487,7 +1619,11 @@
     "userId": "2a33b726-8edf-4d4b-8da8-f97138371b6c",
     "externalId": 33,
     "report": "provident in assumenda rerum perferendis odio ratione hic ducimus aut officia debitis debitis quia odit minima molestias a quaerat quo est quos veritatis qui aut animi et facere harum ut ut dolor autem rerum nisi beatae qui hic odio voluptates facilis velit autem quia dolorem qui quis dolorum similique qui est nemo voluptas sint ipsam debitis non sunt non excepturi debitis et dolores nesciunt error non debitis quo eaque numquam eveniet est neque voluptas vel saepe error suscipit consectetur dignissimos ea quaerat eos earum sit id dolore quaerat corporis ratione doloremque voluptatum et iusto mollitia quisquam voluptas exercitationem hic eligendi ut cum possimus consequatur omnis repellat beatae officiis ducimus ea quos sunt illo asperiores quaerat nesciunt aspernatur libero voluptates vel eveniet sed molestiae voluptates vero quibusdam itaque officia exercitationem illum ut est eveniet aut corrupti quos eaque qui excepturi sit optio sapiente ea est facilis odio consequuntur illo ad eum a qui et molestias est veniam nam beatae quod occaecati debitis deleniti ad et quia est tempore asperiores voluptatem quam sunt non et et nobis aut",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1531,7 +1667,11 @@
     "userId": "9efc1c62-ea6a-4659-b89c-421b57ab73f6",
     "externalId": 34,
     "report": "quis corrupti explicabo ipsam perferendis officiis ipsam quod aut odio veritatis dicta possimus eos itaque fugit magni voluptatem perspiciatis odit molestiae nisi vel est ipsam odio est ad eos culpa quia aut quis qui magnam non magni ut sed et et aut qui repellat modi dolorem quos culpa nihil natus est repudiandae nesciunt cum saepe dolor quam nihil aut aut ut deleniti itaque cumque ea inventore praesentium consequatur eum facere molestias dolor voluptas quisquam sequi omnis accusamus tempora illo quaerat totam modi tempora ipsa qui laudantium laudantium est praesentium animi deserunt quibusdam nostrum necessitatibus voluptatum ratione perspiciatis aspernatur aperiam atque id sed voluptatem voluptatem rerum aperiam et quibusdam eum ipsa aut neque quaerat est omnis cumque consequuntur dolorum accusantium eum esse dicta placeat debitis sint eligendi aperiam porro repellat autem dolores dicta et expedita enim ut fugiat optio ut eligendi dolor cupiditate sunt dignissimos magnam quia expedita id omnis odio similique",
-    "glider": "Flow XC Racer",
+    "glider": {
+      "brand": "Flow",
+      "model": "XC Racer",
+      "type": "D_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1575,7 +1715,11 @@
     "userId": "04bd7ffd-d792-4e90-ba9e-c4356e353135",
     "externalId": 35,
     "report": "maiores dignissimos delectus animi sequi et incidunt qui saepe tempore omnis dolores sed nostrum quia voluptatem aut rem veniam quos nulla error at dolorem perferendis ut nihil perferendis consequatur sapiente fugit quia dignissimos voluptate accusamus illum accusantium reiciendis magni velit assumenda officiis tenetur possimus qui quod soluta vel consequatur facere ut autem dolorem pariatur nulla et animi voluptas ut fugiat autem provident tempore asperiores pariatur in consequatur quia sit deleniti odit eos aperiam ea est consequatur dolores eveniet iusto minus officia neque numquam aliquid odio totam sit ipsum a sit asperiores adipisci accusamus non eius iure dolorem atque excepturi rerum cum ratione amet sapiente autem et enim et qui eum sed consectetur dolor sunt et velit commodi laborum possimus dolorem dicta expedita atque",
-    "glider": "Ozone Enzo 3",
+    "glider": {
+      "brand": "Ozone",
+      "model": "Enzo 3",
+      "type": "D_high"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1619,7 +1763,11 @@
     "userId": "388ab9dd-cb42-4c94-aa87-16b7a991b217",
     "externalId": 36,
     "report": "ut eos natus voluptates magnam debitis fuga facilis nemo ut omnis doloribus nisi aut at quaerat et ut quidem veniam perspiciatis blanditiis accusantium tempore eos cupiditate perferendis et voluptatibus impedit repudiandae excepturi rerum eligendi vel sed nulla voluptatem soluta eum excepturi autem qui et distinctio ipsum suscipit dolores expedita hic aut aperiam fuga sint eius commodi nemo pariatur consequatur dolorum cumque repudiandae doloribus id ipsa culpa ut est rerum molestias similique est id dolorem labore voluptates qui ut ea veritatis molestiae autem corrupti dolor tempora earum sit temporibus fugiat vel temporibus nisi est minima autem beatae aut quis non quia quod tenetur labore blanditiis deserunt sit similique quisquam quibusdam odit dicta beatae quam dolor recusandae consequatur perspiciatis excepturi nihil consequatur eius beatae quod fugit numquam velit in est beatae eos illo beatae omnis quod sit quaerat quas vero praesentium earum aliquam blanditiis sed quos alias sit iste laboriosam architecto error vel ipsa consequatur temporibus excepturi est et ut eligendi et provident earum consequatur dolores modi nam ea aut eum at sint reiciendis minima sed cupiditate facilis ratione veritatis quos rem aliquam at aperiam et deleniti inventore recusandae quis sed eos ipsum laborum rerum dolor sunt et",
-    "glider": "Air-G Emilie",
+    "glider": {
+      "brand": "Air-G",
+      "model": "Emilie",
+      "type": "D_high"
+    },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1663,7 +1811,11 @@
     "userId": "0032cc89-38bb-4763-a497-e64e5c5ec5f9",
     "externalId": 37,
     "report": "totam ducimus facilis et fugiat aut totam ducimus dignissimos cupiditate aliquid culpa rerum expedita ab alias quis dolor praesentium aut",
-    "glider": "Flow XC Racer",
+    "glider": {
+      "brand": "Flow",
+      "model": "XC Racer",
+      "type": "D_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1707,7 +1859,11 @@
     "userId": "6e8764ec-c4b6-49b1-b804-f0871e390f31",
     "externalId": 38,
     "report": "sit cupiditate est rerum sunt voluptatem fuga totam voluptas harum quam est placeat sed accusamus et voluptatem vitae ab incidunt fugiat laborum doloremque et nam rerum temporibus pariatur sint est quia id dolorem est alias dolores quis ea quia voluptatibus distinctio temporibus recusandae beatae quia vel culpa id quo aliquid aliquam dignissimos et omnis est sint porro voluptas totam tenetur quo quos est perspiciatis explicabo quia quis enim voluptatibus inventore non dolorum officiis sequi commodi adipisci dolor neque in id quod ipsam eligendi non aliquid suscipit natus inventore perspiciatis molestiae voluptatibus ea sit quis vero aut inventore labore rerum et id earum tempore neque non ut tenetur expedita laborum nulla qui rerum ratione non quae rerum voluptatum ipsum",
-    "glider": "Air-G Emilie",
+    "glider": {
+      "brand": "Air-G",
+      "model": "Emilie",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1751,7 +1907,11 @@
     "userId": "1c3c8082-d82a-4c4a-a60c-80d4e089b4f7",
     "externalId": 39,
     "report": "placeat minima nisi harum incidunt laboriosam dicta placeat voluptates aspernatur esse praesentium repudiandae a libero quod cupiditate pariatur amet ut illum eum ut ullam in a beatae nesciunt omnis facere mollitia nesciunt modi sed officiis error ipsam aperiam reprehenderit qui asperiores rem natus cum reiciendis consectetur nostrum alias soluta consequuntur molestias rem sit minus et dolores quas rerum omnis quod ad rem corporis commodi ab non vero id aliquam sit autem cupiditate maxime laborum deserunt provident veniam asperiores voluptas autem iste repellendus cupiditate quaerat blanditiis et et voluptas non tenetur blanditiis voluptas in saepe nesciunt ut blanditiis corporis nobis nam enim rem est expedita qui quis quas ullam dicta voluptatem dolor quia quod error id repudiandae veniam illum optio provident nam quos excepturi qui reiciendis placeat sed optio necessitatibus distinctio est cupiditate odit modi nobis et cupiditate eius libero qui eos",
-    "glider": "U-Turn Bodyguard",
+    "glider": {
+      "brand": "U-Turn",
+      "model": "Bodyguard",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1795,7 +1955,11 @@
     "userId": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
     "externalId": 40,
     "report": "voluptatem ut labore omnis ea qui quam voluptatem in similique illum vel ut fugiat qui nihil officia fuga deserunt ratione dolores blanditiis quam voluptatem recusandae aut ipsam qui magni illo aut voluptas magni asperiores omnis quo quasi qui voluptate pariatur sunt perspiciatis minima ut nesciunt et alias voluptates quia quidem cupiditate minima molestias modi atque ut labore similique sapiente dolores esse maxime possimus velit deleniti laboriosam blanditiis deleniti rem quasi est sit perferendis eum vero et ex et veritatis magni et qui corrupti deserunt quisquam distinctio ipsa et ad velit repellat est labore et corporis et fugit magnam ea error quos culpa officia hic consequatur dignissimos necessitatibus accusamus qui itaque dolorum officiis cupiditate praesentium dignissimos id temporibus voluptate blanditiis et et praesentium corporis ipsam harum velit fugit voluptatem qui architecto quia consectetur eum est dolorum officia voluptatem omnis voluptates eveniet facilis aut qui porro nam autem et ut est repudiandae deleniti quod quaerat quas amet ea quaerat accusamus aut est repudiandae nam sapiente non error et vel consequuntur modi voluptatem voluptatem perspiciatis sed non nam voluptatem corporis repellat quibusdam consequatur autem ipsa voluptas odio quasi rerum expedita laudantium ut porro explicabo facilis ut qui quia doloremque",
-    "glider": "Litte Cloud Spiruline",
+    "glider": {
+      "brand": "Litte Cloud",
+      "model": "Spiruline",
+      "type": "D_high"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1839,7 +2003,11 @@
     "userId": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
     "externalId": 41,
     "report": "odit iusto placeat ut nihil cum blanditiis quaerat inventore incidunt distinctio voluptas inventore ad velit tempore aspernatur similique aliquid id excepturi molestiae incidunt aut ut aut a velit veniam enim iusto fugiat ut a dolor ad ut eos deleniti provident laborum occaecati magnam provident saepe libero ipsa occaecati minima id aspernatur qui et natus qui sed nihil sapiente nobis et aspernatur voluptate dolor nihil eos et illo omnis vel aliquid consequatur qui quasi doloribus ut nisi numquam quia voluptatem est illo fuga incidunt ex et praesentium repudiandae ut molestiae architecto est ex ex vel corporis officiis molestias facere atque consequatur assumenda veritatis nemo quis odio quasi quaerat in praesentium ipsum quis ratione vel iusto in quos laudantium molestiae numquam rem velit harum maiores ut sunt culpa",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,
@@ -1883,7 +2051,11 @@
     "userId": "1c3fb13d-e725-4869-a816-87498833bee0",
     "externalId": 42,
     "report": "doloribus veniam et sapiente nesciunt repellendus omnis est id autem dolor voluptates animi impedit rerum quo ad aliquid ab soluta sed eaque maiores nisi asperiores dolores veritatis omnis accusantium odio fuga fugit enim dolores et et qui veniam nihil voluptatibus voluptatem aspernatur sint repudiandae quia",
-    "glider": "Sky Apollo",
+    "glider": {
+      "brand": "Sky",
+      "model": "Apollo",
+      "type": "AB_low"
+    },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
     "uncheckedGRecord": false,

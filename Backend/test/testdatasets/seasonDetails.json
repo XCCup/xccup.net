@@ -44,9 +44,9 @@
     ]
   },
   {
-    "year": 2022,
-    "startDate":"2022-03-01T00:00:00",
-    "endDate":"2022-10-01T00:00:00",
+    "year": 2021,
+    "startDate":"2021-03-01T00:00:00",
+    "endDate":"2021-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 3,
     "active": true,

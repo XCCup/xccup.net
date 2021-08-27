@@ -6,6 +6,14 @@ const commentService = {
     return await SeasonDetail.findByPk(id);
   },
 
+  getByYear: async (year) => {
+    return await SeasonDetail.findOne({
+      where: {
+        year,
+      },
+    });
+  },
+
   getAll: async () => {
     return await SeasonDetail.findAll({
       where: {
@@ -15,14 +23,13 @@ const commentService = {
   },
 
   getCurrentActive: async () => {
-    const today = new Date();
-    const currentYear = today.getFullYear();
     return await SeasonDetail.findOne({
       where: {
         active: true,
         year: {
-          [Op.lte]: currentYear,
+          [Op.lte]: new Date().getFullYear(),
         },
+        order: [["year", "DESC"]],
       },
     });
   },
