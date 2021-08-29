@@ -16,6 +16,8 @@ router.get(
     query("isWeekend").optional().isBoolean(),
     query("ratingClass").optional().not().isEmpty().trim().escape(),
     query("gender").optional().not().isEmpty().trim().escape(),
+    query("site").optional().not().isEmpty().trim().escape(),
+    query("region").optional().not().isEmpty().trim().escape(),
   ],
   async (req, res) => {
     if (validationHasErrors(req, res)) return;
@@ -24,6 +26,8 @@ router.get(
     let gender = req.query.gender;
     let isWeekend = req.query.weekend;
     let limit = req.query.limit;
+    let site = req.query.site;
+    let region = req.query.region;
 
     // let region = req.query.region --> Erfordert eine weitere Ebene bei include
     // let club = req.query.club --> Erfordert eine weitere Ebene bei include --> Lieber eigener Endpoint, ebenfalls besondere Regeln möglich
@@ -33,7 +37,9 @@ router.get(
       ratingClass,
       gender,
       isWeekend,
-      limit
+      limit,
+      site,
+      region
     );
     res.json(result);
   }

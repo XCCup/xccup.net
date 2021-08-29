@@ -1,10 +1,18 @@
-const { Flight, User } = require("../model/DependentModels");
+const { Flight, User, FlyingSite } = require("../model/DependentModels");
 const seasonService = require("./SeasonService");
 const { Op } = require("sequelize");
 const userService = require("./UserService");
 
 const service = {
-  getOverall: async (year, ratingClass, gender, isWeekend, limit) => {
+  getOverall: async (
+    year,
+    ratingClass,
+    gender,
+    isWeekend,
+    limit,
+    site,
+    region
+  ) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = {
@@ -25,7 +33,7 @@ const service = {
     if (isWeekend) {
       where.isWeekend = true;
     }
-    const resultQuery = await queryDb(where, gender, limit);
+    const resultQuery = await queryDb(where, gender, limit, site, region);
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsAndCalculateTotals(result, 3);
@@ -35,16 +43,36 @@ const service = {
   },
 };
 
-async function queryDb(where, gender, limit) {
+async function queryDb(where, gender, limit, site, region) {
+  const userInclude = {
+    model: User,
+    attributes: ["name", "id", "gender"],
+  };
+  if (gender) {
+    userInclude.where = {
+      gender: gender ? gender : userService.GENDERS,
+    };
+  }
+
+  const siteInclude = {
+    model: FlyingSite,
+    as: "takeoff",
+    attributes: ["name", "id", "region"],
+  };
+  if (site) {
+    siteInclude.where = {
+      name: site,
+    };
+  }
+  if (region) {
+    siteInclude.where = {
+      region: region,
+    };
+  }
+
   const queryObject = {
     where,
-    include: {
-      model: User,
-      attributes: ["name", "id", "gender"],
-      where: {
-        gender: gender ? gender : userService.GENDERS,
-      },
-    },
+    include: [userInclude, siteInclude],
     attributes: [
       "id",
       "flightPoints",
@@ -87,6 +115,9 @@ function aggreateFlightsOverUser(resultQuery) {
       flightDistance: entry.flightDistance,
       glider: entry.glider,
       flightType: entry.flightType,
+      takeoffName: entry.takeoff.name,
+      takeoffId: entry.takeoff.id,
+      takeoffRegion: entry.takeoff.region,
     };
     if (found) {
       found.flights.push(flightEntry);
