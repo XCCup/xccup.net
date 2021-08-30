@@ -14,10 +14,12 @@ router.get(
     query("year").optional().isInt(),
     query("limit").optional().isInt(),
     query("isWeekend").optional().isBoolean(),
+    query("isSenior").optional().isBoolean(),
     query("ratingClass").optional().not().isEmpty().trim().escape(),
     query("gender").optional().not().isEmpty().trim().escape(),
     query("site").optional().not().isEmpty().trim().escape(),
     query("region").optional().not().isEmpty().trim().escape(),
+    query("state").optional().not().isEmpty().trim().escape(),
   ],
   async (req, res) => {
     if (validationHasErrors(req, res)) return;
@@ -25,11 +27,12 @@ router.get(
     let ratingClass = req.query.class;
     let gender = req.query.gender;
     let isWeekend = req.query.weekend;
+    let isSenior = req.query.isSenior;
     let limit = req.query.limit;
     let site = req.query.site;
     let region = req.query.region;
+    let state = req.query.state;
 
-    // let region = req.query.region --> Erfordert eine weitere Ebene bei include
     // let club = req.query.club --> Erfordert eine weitere Ebene bei include --> Lieber eigener Endpoint, ebenfalls besondere Regeln möglich
 
     const result = await service.getOverall(
@@ -37,9 +40,11 @@ router.get(
       ratingClass,
       gender,
       isWeekend,
+      isSenior,
       limit,
       site,
-      region
+      region,
+      state
     );
     res.json(result);
   }

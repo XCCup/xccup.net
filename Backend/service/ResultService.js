@@ -9,9 +9,11 @@ const service = {
     ratingClass,
     gender,
     isWeekend,
+    isSenior,
     limit,
     site,
-    region
+    region,
+    state
   ) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
@@ -33,7 +35,15 @@ const service = {
     if (isWeekend) {
       where.isWeekend = true;
     }
-    const resultQuery = await queryDb(where, gender, limit, site, region);
+    const resultQuery = await queryDb(
+      where,
+      gender,
+      limit,
+      site,
+      region,
+      isSenior,
+      state
+    );
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsAndCalculateTotals(result, 3);
@@ -43,14 +53,23 @@ const service = {
   },
 };
 
-async function queryDb(where, gender, limit, site, region) {
+async function queryDb(where, gender, limit, site, region, isSenior, state) {
   const userInclude = {
     model: User,
     attributes: ["name", "id", "gender"],
   };
+  if (gender || isSenior || state) {
+    userInclude.where = {};
+  }
   if (gender) {
-    userInclude.where = {
-      gender: gender ? gender : userService.GENDERS,
+    userInclude.where.gender = gender ? gender : userService.GENDERS;
+  }
+  if (state) {
+    userInclude.where.state = state;
+  }
+  if (isSenior) {
+    userInclude.where.birthday = {
+      [Op.lt]: new Date(new Date().getFullYear() - 60, 1),
     };
   }
 

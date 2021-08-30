@@ -30,7 +30,7 @@ const User = db.sequelize.define(
       type: DataTypes.STRING,
     },
     birthday: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATEONLY,
     },
     urlProfilPicture: {
       type: DataTypes.STRING,
