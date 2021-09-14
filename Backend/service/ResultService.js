@@ -1,7 +1,12 @@
-const { Flight, User, FlyingSite, Club } = require("../model/DependentModels");
+const FlyingSite = require("../config/postgres")["FlyingSite"];
+const User = require("../config/postgres")["User"];
+const Flight = require("../config/postgres")["Flight"];
+const Club = require("../config/postgres")["Club"];
 const seasonService = require("./SeasonService");
 const { Op } = require("sequelize");
 const userService = require("./UserService");
+
+//TODO Currently "old" results will be calculated in relation to current club and team associations. When a season finishes, the results should be stored to the db and be retrieved from there.
 
 const service = {
   getOverall: async (
@@ -9,15 +14,22 @@ const service = {
     ratingClass,
     gender,
     isWeekend,
-    isSenior,
     limit,
     site,
-    region,
-    state
+    region
   ) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const where = createDefaultWhereForFlight(seasonDetail);
+    const where = {
+      dateOfFlight: {
+        [Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
+      },
+      flightPoints: {
+        [Op.gte]: seasonDetail.pointThresholdForFlight,
+      },
+      airspaceViolation: false,
+      uncheckedGRecord: false,
+    };
     if (ratingClass) {
       where.glider = {
         type: ratingClass,
@@ -26,15 +38,7 @@ const service = {
     if (isWeekend) {
       where.isWeekend = true;
     }
-    const resultQuery = await queryDb(
-      where,
-      gender,
-      limit,
-      site,
-      region,
-      isSenior,
-      state
-    );
+    const resultQuery = await queryDb(where, gender, limit, site, region);
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, 3);
@@ -107,7 +111,9 @@ function createIncludeStatementUser(gender, isSenior, state) {
     userInclude.where = {};
   }
   if (gender) {
-    userInclude.where.gender = gender ? gender : userService.GENDERS;
+    userInclude.where.gender = gender
+      ? gender.toUpperCase()
+      : userService.GENDERS;
   }
   if (state) {
     userInclude.where.state = state;

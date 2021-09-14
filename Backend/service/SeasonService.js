@@ -1,4 +1,4 @@
-const SeasonDetail = require("../model/SeasonDetail");
+const SeasonDetail = require("../config/postgres")["SeasonDetail"];
 const { Op } = require("sequelize");
 
 const commentService = {

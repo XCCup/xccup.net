@@ -1,6 +1,6 @@
 const { Sequelize } = require("sequelize");
-
 const db = {};
+const { loadModels } = require("../model/ModelLoader");
 
 const port = process.env.POSTGRES_PORT;
 const user = process.env.POSTGRES_USER;
@@ -11,6 +11,8 @@ const host = process.env.POSTGRES_HOST;
 const sequelize = new Sequelize(
   `postgres://${user}:${pw}@${host}:${port}/${postDb}`
 );
+
+loadModels(db, sequelize);
 
 async function dbConnectionTest(numberOfRetry = 0) {
   const maxNumberOfRetries = process.env.DB_CONNECT_MAX_ATTEMPTS;
