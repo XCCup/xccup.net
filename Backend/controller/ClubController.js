@@ -135,7 +135,7 @@ router.put(
 );
 
 // @desc Deletes a club by id
-// @route DELETE /club/:id
+// @route DELETE /clubs/:id
 // @access Only moderator
 
 router.delete("/:id", authToken, async (req, res) => {

@@ -79,7 +79,7 @@ router.post(
 );
 
 // @desc Deletes a team by id
-// @route DELETE /team/:id
+// @route DELETE /teams/:id
 // @access Only moderator
 
 router.delete("/:id", authToken, async (req, res) => {

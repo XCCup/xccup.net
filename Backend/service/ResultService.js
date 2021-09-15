@@ -2,6 +2,7 @@ const FlyingSite = require("../config/postgres")["FlyingSite"];
 const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
 const Club = require("../config/postgres")["Club"];
+const Team = require("../config/postgres")["Team"];
 const Result = require("../config/postgres")["Result"];
 const seasonService = require("./SeasonService");
 const { Op } = require("sequelize");
@@ -56,8 +57,8 @@ const service = {
     return result;
   },
 
-  getClub: async (year, limit) => {
-    if (new Date().getFullYear() != year) {
+  getClub: async (year) => {
+    if (year && new Date().getFullYear() != year) {
       const oldResult = findOldResult(year, "club");
       if (oldResult) return oldResult;
     }
@@ -65,7 +66,7 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
-    const resultQuery = await queryDb(where, null, limit);
+    const resultQuery = await queryDb(where);
 
     const resultOverUser = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(resultOverUser, 3);
@@ -73,6 +74,25 @@ const service = {
     sortDescendingByTotalPoints(resultOverClub);
 
     return resultOverClub;
+  },
+
+  getTeam: async (year, region) => {
+    if (year && new Date().getFullYear() != year) {
+      const oldResult = await findOldResult(year, "team");
+      if (oldResult) return oldResult;
+    }
+
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const where = createDefaultWhereForFlight(seasonDetail);
+    const resultQuery = await queryDb(where, null, null, null, region);
+
+    const resultOverUser = aggreateFlightsOverUser(resultQuery);
+    limitFlightsForUserAndCalcTotals(resultOverUser, 3);
+    const resultOverTeam = aggreateOverTeamAndCalcTotals(resultOverUser);
+    sortDescendingByTotalPoints(resultOverTeam);
+
+    return resultOverTeam;
   },
 };
 
@@ -99,12 +119,15 @@ async function queryDb(where, gender, limit, site, region, isSenior, state) {
 }
 
 async function findOldResult(year, type) {
-  return Result.findOne({
-    where: {
-      season: year,
-      type: type,
-    },
-  });
+  if (year && type) {
+    return Result.findOne({
+      where: {
+        season: year,
+        type: type,
+      },
+    });
+  }
+  return null;
 }
 
 function createDefaultWhereForFlight(seasonDetail) {
@@ -125,10 +148,14 @@ function createIncludeStatementUser(gender, isSenior, state) {
     model: Club,
     attributes: ["name", "id"],
   };
+  const teamInclude = {
+    model: Team,
+    attributes: ["name", "id"],
+  };
   const userInclude = {
     model: User,
     attributes: ["name", "id", "gender"],
-    include: clubInclude,
+    include: [clubInclude, teamInclude],
   };
   if (gender || isSenior || state) {
     userInclude.where = {};
@@ -143,7 +170,7 @@ function createIncludeStatementUser(gender, isSenior, state) {
   }
   if (isSenior) {
     userInclude.where.birthday = {
-      [Op.lt]: new Date(new Date().getFullYear() - 60, 1), //TODO Make this a check against db
+      [Op.lt]: new Date(new Date().getFullYear() - 60, 1), //TODO Make the value (60) a check against db
     };
   }
   return userInclude;
@@ -212,6 +239,35 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
   return result;
 }
 
+function aggreateOverTeamAndCalcTotals(resultOverUser) {
+  const result = [];
+  resultOverUser.forEach((entry) => {
+    const found = result.find((e) => e.teamId == entry.teamId);
+    const memberEntry = {
+      id: entry.userName,
+      name: entry.userId,
+      flights: entry.flights,
+      totalDistance: entry.totalDistance,
+      totalPoints: entry.totalPoints,
+    };
+    if (found) {
+      found.members.push(memberEntry);
+      found.totalPoints += memberEntry.totalPoints;
+      found.totalDistance += memberEntry.totalDistance;
+    } else if (entry.teamName) {
+      //Prevention for users with no team association
+      result.push({
+        teamName: entry.teamName,
+        teamId: entry.teamId,
+        members: [memberEntry],
+        totalDistance: memberEntry.totalPoints,
+        totalPoints: memberEntry.totalPoints,
+      });
+    }
+  });
+  return result;
+}
+
 function aggreateFlightsOverUser(resultQuery) {
   const result = [];
   resultQuery.forEach((entry) => {
@@ -233,8 +289,10 @@ function aggreateFlightsOverUser(resultQuery) {
         userName: entry.User.name,
         userId: entry.User.id,
         gender: entry.User.gender,
-        clubName: entry.User.Club.name,
+        clubName: entry.User.Club.name, //A user must always belong to a club
         clubId: entry.User.Club.id,
+        teamName: entry.User.Team?.name, //It is possible that a user has no team
+        teamId: entry.User.Team?.id,
         flights: [flightEntry],
       });
     }
