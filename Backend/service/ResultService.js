@@ -13,9 +13,11 @@ const service = {
     ratingClass,
     gender,
     isWeekend,
+    isSenior,
     limit,
     site,
-    region
+    region,
+    state
   ) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
@@ -37,7 +39,15 @@ const service = {
     if (isWeekend) {
       where.isWeekend = true;
     }
-    const resultQuery = await queryDb(where, gender, limit, site, region);
+    const resultQuery = await queryDb(
+      where,
+      gender,
+      limit,
+      site,
+      region,
+      isSenior,
+      state
+    );
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, 3);
