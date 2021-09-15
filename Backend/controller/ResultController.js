@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/ResultService");
-const { query } = require("express-validator/check");
+const { query } = require("express-validator");
 // const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./Constants");
 const { validationHasErrors } = require("./Validation");
 
@@ -32,8 +32,6 @@ router.get(
     let site = req.query.site;
     let region = req.query.region;
     let state = req.query.state;
-
-    // let club = req.query.club --> Erfordert eine weitere Ebene bei include --> Lieber eigener Endpoint, ebenfalls besondere Regeln möglich
 
     const result = await service.getOverall(
       year,

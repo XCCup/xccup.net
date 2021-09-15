@@ -1,4 +1,4 @@
-const { User } = require("../model/DependentModels");
+const User = require("../config/postgres")["User"];
 
 const userService = {
   ROLE: {

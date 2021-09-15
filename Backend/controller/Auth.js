@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { UNAUTHORIZED, FORBIDDEN } = require("./Constants");
-const Token = require("../model/Token");
 const userService = require("../service/UserService");
 require("../service/UserService");
+const Token = require("../config/postgres")["Token"];
 
 /**
  * Needs to be run on server start up to initialize the encryption tokens.
@@ -51,7 +51,7 @@ const create = (userId, username) => {
     { id: userId, username: username },
     process.env.JWT_LOGIN_TOKEN,
     {
-      expiresIn: "20s",
+      expiresIn: "200s",
     }
   );
   return token;

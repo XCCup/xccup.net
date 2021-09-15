@@ -1,11 +1,10 @@
-const { DataTypes } = require("sequelize");
-const db = require("../config/postgres.js");
+module.exports = (sequelize, DataTypes) => {
+  const Token = sequelize.define("Token", {
+    token: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  });
 
-const Token = db.sequelize.define("Token", {
-  token: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
-
-module.exports = Token;
+  return Token;
+};

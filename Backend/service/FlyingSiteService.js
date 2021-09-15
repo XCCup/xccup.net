@@ -1,4 +1,4 @@
-const { FlyingSite } = require("../model/DependentModels");
+const FlyingSite = require("../config/postgres")["FlyingSite"];
 
 const siteService = {
   getById: async (id) => {

@@ -1,10 +1,8 @@
-const {
-  FlightComment,
-  Flight,
-  User,
-  FlyingSite,
-} = require("../model/DependentModels");
-const FlightFixes = require("../model/FlightFixes");
+const FlightComment = require("../config/postgres")["FlightComment"];
+const Flight = require("../config/postgres")["Flight"];
+const User = require("../config/postgres")["User"];
+const FlyingSite = require("../config/postgres")["FlyingSite"];
+const FlightFixes = require("../config/postgres")["FlightFixes"];
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");

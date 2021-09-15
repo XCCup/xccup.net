@@ -1,4 +1,8 @@
-const { Flight, User, FlyingSite, Club } = require("../model/DependentModels");
+const FlyingSite = require("../config/postgres")["FlyingSite"];
+const User = require("../config/postgres")["User"];
+const Flight = require("../config/postgres")["Flight"];
+const Club = require("../config/postgres")["Club"];
+const Result = require("../config/postgres")["Result"];
 const seasonService = require("./SeasonService");
 const { Op } = require("sequelize");
 const userService = require("./UserService");
@@ -17,7 +21,16 @@ const service = {
   ) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const where = createDefaultWhereForFlight(seasonDetail);
+    const where = {
+      dateOfFlight: {
+        [Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
+      },
+      flightPoints: {
+        [Op.gte]: seasonDetail.pointThresholdForFlight,
+      },
+      airspaceViolation: false,
+      uncheckedGRecord: false,
+    };
     if (ratingClass) {
       where.glider = {
         type: ratingClass,
@@ -44,6 +57,11 @@ const service = {
   },
 
   getClub: async (year, limit) => {
+    if (new Date().getFullYear() != year) {
+      const oldResult = findOldResult(year, "club");
+      if (oldResult) return oldResult;
+    }
+
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
@@ -80,6 +98,15 @@ async function queryDb(where, gender, limit, site, region, isSenior, state) {
   return Flight.findAll(queryObject);
 }
 
+async function findOldResult(year, type) {
+  return Result.findOne({
+    where: {
+      season: year,
+      type: type,
+    },
+  });
+}
+
 function createDefaultWhereForFlight(seasonDetail) {
   return {
     dateOfFlight: {
@@ -107,7 +134,9 @@ function createIncludeStatementUser(gender, isSenior, state) {
     userInclude.where = {};
   }
   if (gender) {
-    userInclude.where.gender = gender ? gender : userService.GENDERS;
+    userInclude.where.gender = gender
+      ? gender.toUpperCase()
+      : userService.GENDERS;
   }
   if (state) {
     userInclude.where.state = state;

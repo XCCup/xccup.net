@@ -1,4 +1,4 @@
-const FlightFixes = require("../model/FlightFixes");
+const FlightFixes = require("../config/postgres")["FlightFixes"];
 
 const service = {
   getById: async (id) => {

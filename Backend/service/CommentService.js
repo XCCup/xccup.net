@@ -1,4 +1,4 @@
-const { FlightComment } = require("../model/DependentModels");
+const FlightComment = require("../config/postgres")["FlightComment"];
 
 const commentService = {
   getById: async (id) => {

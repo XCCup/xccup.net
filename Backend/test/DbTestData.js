@@ -1,13 +1,11 @@
-const {
-  User,
-  Flight,
-  FlightComment,
-  Club,
-  FlyingSite,
-} = require("../model/DependentModels");
-const FlightFixes = require("../model/FlightFixes");
-const SeasonDetail = require("../model/SeasonDetail");
-const Airspace = require("../model/Airspace");
+const User = require("../config/postgres")["User"];
+const Flight = require("../config/postgres")["Flight"];
+const FlightComment = require("../config/postgres")["FlightComment"];
+const Club = require("../config/postgres")["Club"];
+const FlyingSite = require("../config/postgres")["FlyingSite"];
+const FlightFixes = require("../config/postgres")["FlightFixes"];
+const SeasonDetail = require("../config/postgres")["SeasonDetail"];
+const Airspace = require("../config/postgres")["Airspace"];
 
 const dbTestData = {
   checkForTestDataAndAddIfMissing: async () => {

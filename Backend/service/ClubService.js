@@ -1,4 +1,5 @@
-const { Club, User } = require("../model/DependentModels");
+const Club = require("../config/postgres")["Club"];
+const User = require("../config/postgres")["User"];
 const { Op } = require("sequelize");
 
 const clubService = {
