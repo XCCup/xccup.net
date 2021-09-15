@@ -28,7 +28,6 @@ const service = {
     addRequestsForRatingClasses(currentSeason, dbRequests);
 
     // 5 Beste Flüge des Tages
-    // !!!! Rating Klassen korrigiren !!!!
 
     return Promise.all(Object.values(dbRequests)).then((values) => {
       const entries = Object.entries(dbRequests);

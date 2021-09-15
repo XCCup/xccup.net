@@ -24,7 +24,7 @@ router.get(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const year = req.query.year;
-    const ratingClass = req.query.class;
+    const ratingClass = req.query.ratingClass;
     const gender = req.query.gender;
     const isWeekend = req.query.weekend;
     const isSenior = req.query.isSenior;

@@ -33,8 +33,9 @@ const service = {
       uncheckedGRecord: false,
     };
     if (ratingClass) {
+      const ratingValues = seasonDetail.ratingClasses[ratingClass] ?? [];
       where.glider = {
-        type: ratingClass,
+        type: { [Op.in]: ratingValues },
       };
     }
     if (isWeekend) {
