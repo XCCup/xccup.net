@@ -42,6 +42,7 @@ app.use("/clubs", require("./controller/ClubController"));
 app.use("/teams", require("./controller/TeamController"));
 app.use("/airspaces", require("./controller/AirspaceController"));
 app.use("/results", require("./controller/ResultController"));
+app.use("/home", require("./controller/HomeController"));
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 // eslint-disable-next-line no-unused-vars
@@ -58,7 +59,7 @@ app.use(function (err, req, res, next) {
 app.use("*", (req, res) => {
   res.status(404).json({
     success: "false",
-    message: "Page not found",
+    message: "Endpoint not found",
     error: {
       statusCode: 404,
       message: "You reached a route that is not defined on this server",

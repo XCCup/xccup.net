@@ -65,13 +65,14 @@ router.get(
 
 router.get(
   "/clubs",
-  [query("year").optional().isInt()],
+  [query("year").optional().isInt(), query("limit").optional().isInt()],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const year = req.query.year;
+    const limit = req.query.limit;
 
     try {
-      const result = await service.getClub(year);
+      const result = await service.getClub(year, limit);
       res.json(result);
     } catch (error) {
       next(error);
@@ -87,14 +88,16 @@ router.get(
   [
     query("year").optional().isInt(),
     query("region").optional().not().isEmpty().trim().escape(),
+    query("limit").optional().isInt(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const year = req.query.year;
     const region = req.query.region;
+    const limit = req.query.limit;
 
     try {
-      const result = await service.getTeam(year, region);
+      const result = await service.getTeam(year, region, limit);
       res.json(result);
     } catch (error) {
       next(error);

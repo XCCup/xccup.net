@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const { NOT_FOUND } = require("./Constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
+const { query } = require("express-validator");
 const {
   checkIsUuidObject,
   checkStringObjectNotEmpty,
@@ -16,14 +17,28 @@ const {
 // @desc Retrieves all flights
 // @route GET /flight/
 
-router.get("/", async (req, res, next) => {
-  try {
-    const flights = await service.getAll();
-    res.json(flights);
-  } catch (error) {
-    next(error);
+router.get(
+  "/",
+  [
+    query("year").optional().isInt(),
+    query("site").optional().not().isEmpty().trim().escape(),
+    query("type").optional().not().isEmpty().trim().escape(),
+    query("limit").optional().isInt(),
+  ],
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const year = req.query.year;
+    const site = req.query.site;
+    const type = req.query.type;
+    const limit = req.query.limit;
+    try {
+      const flights = await service.getAll(year, site, type, limit);
+      res.json(flights);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Retrieve a flight by id
 // @route GET /flight/:id

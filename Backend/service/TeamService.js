@@ -40,6 +40,16 @@ const service = {
     });
   },
 
+  countActive: async () => {
+    return Team.count({
+      where: {
+        participantInSeasons: {
+          [Op.contains]: [new Date().getFullYear()],
+        },
+      },
+    });
+  },
+
   create: async (teamName, memberIds) => {
     const team = {
       name: teamName,

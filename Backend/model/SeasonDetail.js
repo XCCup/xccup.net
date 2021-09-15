@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
       allowNull: false,
     },
+    ratingClasses: {
+      type: DataTypes.JSON,
+      allowNull: false,
+    },
   });
   return SeasonDetail;
 };

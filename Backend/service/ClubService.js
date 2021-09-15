@@ -50,6 +50,10 @@ const clubService = {
     });
   },
 
+  count: async () => {
+    return Club.count();
+  },
+
   create: async (club) => {
     return await Club.create(club);
   },

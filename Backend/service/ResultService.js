@@ -43,7 +43,7 @@ const service = {
     const resultQuery = await queryDb(
       where,
       gender,
-      limit,
+      null,
       site,
       region,
       isSenior,
@@ -54,10 +54,10 @@ const service = {
     limitFlightsForUserAndCalcTotals(result, 3);
     sortDescendingByTotalPoints(result);
 
-    return result;
+    return limit ? result.slice(0, limit) : result;
   },
 
-  getClub: async (year) => {
+  getClub: async (year, limit) => {
     if (year && new Date().getFullYear() != year) {
       const oldResult = findOldResult(year, "club");
       if (oldResult) return oldResult;
@@ -73,10 +73,10 @@ const service = {
     const resultOverClub = aggreateOverClubAndCalcTotals(resultOverUser);
     sortDescendingByTotalPoints(resultOverClub);
 
-    return resultOverClub;
+    return limit ? resultOverClub.slice(0, limit) : resultOverClub;
   },
 
-  getTeam: async (year, region) => {
+  getTeam: async (year, region, limit) => {
     if (year && new Date().getFullYear() != year) {
       const oldResult = await findOldResult(year, "team");
       if (oldResult) return oldResult;
@@ -92,7 +92,7 @@ const service = {
     const resultOverTeam = aggreateOverTeamAndCalcTotals(resultOverUser);
     sortDescendingByTotalPoints(resultOverTeam);
 
-    return resultOverTeam;
+    return limit ? resultOverTeam.slice(0, limit) : resultOverTeam;
   },
 };
 

@@ -21,12 +21,12 @@
       }
     ],
     "ratingClasses":{
-      "sport":["AB_low","AB_high"],
-      "intermediate":["C_low","C_high"],
-      "performance":["D_low","D_high"],
-      "tandem":["Tandem"],
-      "flex":["HG_1_Turm","HG_1_Turmlos"],
-      "starre":["HG_5_starr"]
+      "gsSport":["AB_low","AB_high"],
+      "gsIntermediate":["C_low","C_high"],
+      "gsPerformance":["D_low","D_high"],
+      "gsTandem":["Tandem"],
+      "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
+      "hgFixed":["HG_5_starr"]
     }
   },
   {
@@ -51,12 +51,12 @@
       }
     ],
     "ratingClasses":{
-      "sport":["AB_low","AB_high"],
-      "intermediate":["C_low","C_high"],
-      "performance":["D_low","D_high"],
-      "tandem":["Tandem"],
-      "flex":["HG_1_Turm","HG_1_Turmlos"],
-      "starre":["HG_5_starr"]
+      "gsSport":["AB_low","AB_high"],
+      "gsIntermediate":["C_low","C_high"],
+      "gsPerformance":["D_low","D_high"],
+      "gsTandem":["Tandem"],
+      "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
+      "hgFixed":["HG_5_starr"]
     }
   },
   {
@@ -81,12 +81,12 @@
       }
     ],
     "ratingClasses":{
-      "sport":["AB_low","AB_high"],
-      "intermediate":["C_low","C_high"],
-      "performance":["D_low","D_high"],
-      "tandem":["Tandem"],
-      "flex":["HG_1_Turm","HG_1_Turmlos"],
-      "starre":["HG_5_starr"]
+      "gsSport":["AB_low","AB_high"],
+      "gsIntermediate":["C_low","C_high"],
+      "gsPerformance":["D_low","D_high"],
+      "gsTandem":["Tandem"],
+      "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
+      "hgFixed":["HG_5_starr"]
     }
   }
 ]

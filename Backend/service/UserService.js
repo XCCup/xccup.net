@@ -24,6 +24,9 @@ const userService = {
       attributes: ["name", "firstName", "lastName", "gender", "state"],
     });
   },
+  count: async () => {
+    return User.count();
+  },
   isAdmin: async (id) => {
     const user = await userService.getById(id);
     return user.role == userService.ROLE.ADMIN;

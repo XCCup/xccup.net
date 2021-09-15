@@ -9,6 +9,7 @@ const ElevationAttacher = require("../igc/ElevationAttacher");
 const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
+const sequelize = require("sequelize");
 
 const flightService = {
   STATE_IN_RANKING: "In Wertung",
@@ -16,20 +17,41 @@ const flightService = {
   STATE_FLIGHTBOOK: "Flugbuch",
   STATE_IN_PROCESS: "In Bearbeitung",
 
-  getAll: async () => {
-    const flights = await Flight.findAll({
+  FLIGHT_TYPES: ["FREE", "FLAT", "FAI"],
+
+  getAll: async (year, site, type, limit, sortByPoints) => {
+    year = year ?? new Date().getFullYear();
+    const whereStatement = {
+      andOp: sequelize.where(
+        sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
+        year
+      ),
+    };
+    const orderStatement = sortByPoints
+      ? ["flightPoints", "DESC"]
+      : ["dateOfFlight", "DESC"];
+
+    if (type) {
+      whereStatement.flightType = type;
+    }
+
+    const queryObject = {
       include: [
         {
           model: User,
           attributes: ["name"],
         },
-        {
-          model: FlyingSite,
-          as: "takeoff",
-          attributes: ["id", "description"],
-        },
+        createSiteInclude(site),
       ],
-    });
+      where: whereStatement,
+      order: [orderStatement],
+    };
+
+    if (limit) {
+      queryObject.limit = limit;
+    }
+
+    const flights = await Flight.findAll(queryObject);
     return flights;
   },
 
@@ -195,6 +217,20 @@ async function addExternalId(flight) {
   const result = await Flight.max("externalId");
   flight.externalId = result + 1;
   console.log("New external ID was created: " + flight.externalId);
+}
+
+function createSiteInclude(site) {
+  const siteInclude = {
+    model: FlyingSite,
+    as: "takeoff",
+    attributes: ["id", "description", "name"],
+  };
+  if (site) {
+    siteInclude.where = {
+      name: site,
+    };
+  }
+  return siteInclude;
 }
 
 module.exports = flightService;
