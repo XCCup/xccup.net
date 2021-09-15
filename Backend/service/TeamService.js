@@ -59,10 +59,6 @@ const service = {
     });
   },
 
-  update: async (team) => {
-    return await team.save();
-  },
-
   addMember: async (teamId, userId) => {
     const numberOfMembers = User.count({
       where: {
@@ -110,6 +106,7 @@ function createMemberInclude() {
   return {
     model: User,
     as: "members",
+    attributes: ["name", "id"],
   };
 }
 

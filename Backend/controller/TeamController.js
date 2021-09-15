@@ -78,18 +78,18 @@ router.post(
   }
 );
 
-// @desc Deletes a club by id
-// @route DELETE /club/:id
+// @desc Deletes a team by id
+// @route DELETE /team/:id
 // @access Only moderator
 
 router.delete("/:id", authToken, async (req, res) => {
   if (await requesterIsNotModerator(req, res)) return;
 
-  const clubId = req.params.id;
-  const club = await service.getById(clubId);
-  if (!club) return res.sendStatus(NOT_FOUND);
+  const teamId = req.params.id;
+  const team = await service.getById(teamId);
+  if (!team) return res.sendStatus(NOT_FOUND);
 
-  const numberOfDestroyedRows = await service.delete(clubId);
+  const numberOfDestroyedRows = await service.delete(teamId);
   res.json(numberOfDestroyedRows);
 });
 
