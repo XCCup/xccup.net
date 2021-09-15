@@ -1,12 +1,6 @@
 const express = require("express");
 const service = require("../service/UserService");
-const {
-  OK,
-  NOT_FOUND,
-  FORBIDDEN,
-  UNAUTHORIZED,
-  INTERNAL_SERVER_ERROR,
-} = require("./Constants");
+const { OK, NOT_FOUND, FORBIDDEN, UNAUTHORIZED } = require("./Constants");
 const router = express.Router();
 const {
   authToken,
@@ -29,10 +23,13 @@ const {
 // @desc Retrieves all usernames
 // @route GET /users/
 
-router.get("/", async (req, res) => {
-  const users = await service.getAll();
-
-  res.json(users);
+router.get("/", async (req, res, next) => {
+  try {
+    const users = await service.getAll();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc Logs a user in by his credentials
@@ -42,88 +39,106 @@ router.post(
   "/login",
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("password"),
-  async (req, res) => {
+  async (req, res, next) => {
     const name = req.body.name;
     const password = req.body.password;
 
-    const userId = await service.validate(name, password);
-    if (!userId) return res.sendStatus(UNAUTHORIZED);
+    try {
+      const userId = await service.validate(name, password);
+      if (!userId) return res.sendStatus(UNAUTHORIZED);
 
-    const accessToken = createToken(userId, name);
-    const refreshToken = createRefreshToken(userId, name);
+      const accessToken = createToken(userId, name);
+      const refreshToken = createRefreshToken(userId, name);
 
-    res.json({
-      accessToken,
-      refreshToken,
-    });
+      res.json({
+        accessToken,
+        refreshToken,
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 );
 
 // @desc Refreshes an user access token if it has expired
 // @route GET /users/token
 
-router.post("/token", async (req, res) => {
+router.post("/token", async (req, res, next) => {
   const token = req.body.token;
+  try {
+    const accessToken = await refreshToken(token);
+    if (!accessToken) return res.sendStatus(FORBIDDEN);
 
-  const accessToken = await refreshToken(token);
-  console.log(accessToken);
-  if (!accessToken) return res.sendStatus(FORBIDDEN);
-
-  res.json({
-    accessToken,
-  });
+    res.json({
+      accessToken,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc Logs a user out
 // @route GET /users/logout
 
-router.post("/logout", async (req, res) => {
+router.post("/logout", async (req, res, next) => {
   const token = req.body.token;
-
-  logoutToken(token)
-    .then(() => res.sendStatus(OK))
-    .catch((error) => res.status(500).send(error));
+  try {
+    logoutToken(token).then(() => res.sendStatus(OK));
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc Retrieve public user data by username
 // @route GET /users/name/:username
 // @access All logged-in user
 
-router.get("/name/:username", authToken, async (req, res) => {
-  const user = await service.getByName(req.params.username);
-  if (!user) return res.sendStatus(NOT_FOUND);
+router.get("/name/:username", authToken, async (req, res, next) => {
+  try {
+    const user = await service.getByName(req.params.username);
 
-  res.json(user);
+    if (!user) return res.sendStatus(NOT_FOUND);
+
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc Retrieve user by id
 // @route GET /users/:id
 // @access Only owner
 
-router.get("/:id", authToken, async (req, res) => {
+router.get("/:id", authToken, async (req, res, next) => {
   const requestId = req.params.id;
+  try {
+    if (await requesterIsNotOwner(req, res, requestId)) return;
 
-  if (await requesterIsNotOwner(req, res, requestId)) return;
+    const retrievedUser = await service.getById(requestId);
+    if (!retrievedUser) return res.sendStatus(NOT_FOUND);
 
-  const retrievedUser = await service.getById(requestId);
-  if (!retrievedUser) return res.sendStatus(NOT_FOUND);
-
-  res.json(retrievedUser);
+    res.json(retrievedUser);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc Deletes user by id
 // @route DELETE /users/:id
 // @access Only owner
 
-router.delete("/:id", authToken, async (req, res) => {
+router.delete("/:id", authToken, async (req, res, next) => {
   const requestId = req.params.id;
+  try {
+    if (await requesterIsNotOwner(req, res, requestId)) return;
 
-  if (await requesterIsNotOwner(req, res, requestId)) return;
+    const user = await service.delete(req.params.id);
+    if (!user) return res.sendStatus(NOT_FOUND);
 
-  const user = await service.delete(req.params.id);
-  if (!user) return res.sendStatus(NOT_FOUND);
-
-  res.json(user);
+    res.json(user);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc Saves a new user to the database
@@ -143,17 +158,15 @@ router.post(
   checkOptionalIsBoolean("emailInformIfComment"),
   checkOptionalIsBoolean("emailNewsletter"),
   checkOptionalIsBoolean("emailTeamSearch"),
-  async (req, res) => {
+  async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    service
-      .save(req.body)
-      .then((user) => {
+    try {
+      service.save(req.body).then((user) => {
         res.json(user);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(INTERNAL_SERVER_ERROR).send(error);
       });
+    } catch (error) {
+      next(error);
+    }
   }
 );
 

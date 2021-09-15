@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: "5mb" }));
 
 app.get("/", (request, response) => {
-  response.json({ info: "Node.js, Express, and Postgres API" });
+  response.json({ info: "Welcome to the XCCup API" });
 });
 app.use("/users", require("./controller/UserController.js"));
 app.use("/flights", require("./controller/FlightController.js"));
@@ -42,6 +42,29 @@ app.use("/clubs", require("./controller/ClubController"));
 app.use("/teams", require("./controller/TeamController"));
 app.use("/airspaces", require("./controller/AirspaceController"));
 app.use("/results", require("./controller/ResultController"));
+
+// Handle global errors on requests. Endpoints have to forward the error to their own next() function!
+// eslint-disable-next-line no-unused-vars
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res
+    .status(500)
+    .send(
+      "There was an internal error! Please forward this message to an administrator. Time: " +
+        new Date()
+    );
+});
+// Handle calls to non exisiting routes
+app.use("*", (req, res) => {
+  res.status(404).json({
+    success: "false",
+    message: "Page not found",
+    error: {
+      statusCode: 404,
+      message: "You reached a route that is not defined on this server",
+    },
+  });
+});
 
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(

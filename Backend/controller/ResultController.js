@@ -21,7 +21,7 @@ router.get(
     query("region").optional().not().isEmpty().trim().escape(),
     query("state").optional().not().isEmpty().trim().escape(),
   ],
-  async (req, res) => {
+  async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const year = req.query.year;
     const ratingClass = req.query.class;
@@ -33,25 +33,29 @@ router.get(
     const region = req.query.region;
     const state = req.query.state;
 
-    const result = await service.getOverall(
-      year,
-      ratingClass,
-      gender,
-      isWeekend,
-      isSenior,
-      limit,
-      site,
-      region,
-      state
-    );
-    res.json(result);
+    try {
+      const result = await service.getOverall(
+        year,
+        ratingClass,
+        gender,
+        isWeekend,
+        isSenior,
+        limit,
+        site,
+        region,
+        state
+      );
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 );
 
 // @desc Gets the result for a specific club
 // @route GET /results/club/:club
 
-// router.get("/club/:club", async (req, res) => {
+// router.get("/club/:club", async (req, res,next) => {
 //   // const result = await service.getOverall();
 //   res.json(null);
 // });
@@ -59,13 +63,21 @@ router.get(
 // @desc Gets the result for the club ranking
 // @route GET /results/clubs
 
-router.get("/clubs", [query("year").optional().isInt()], async (req, res) => {
-  if (validationHasErrors(req, res)) return;
-  const year = req.query.year;
+router.get(
+  "/clubs",
+  [query("year").optional().isInt()],
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const year = req.query.year;
 
-  const result = await service.getClub(year);
-  res.json(result);
-});
+    try {
+      const result = await service.getClub(year);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 // @desc Gets the result for the team ranking
 // @route GET /results/teams/
@@ -76,13 +88,17 @@ router.get(
     query("year").optional().isInt(),
     query("region").optional().not().isEmpty().trim().escape(),
   ],
-  async (req, res) => {
+  async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const year = req.query.year;
     const region = req.query.region;
 
-    const result = await service.getTeam(year, region);
-    res.json(result);
+    try {
+      const result = await service.getTeam(year, region);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
 );
 

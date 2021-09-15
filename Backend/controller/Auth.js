@@ -118,7 +118,6 @@ const requesterIsNotAdmin = async (req, res) => {
 
 const requesterIsNotModerator = async (req, res) => {
   if (!(await userService.isModerator(req.user.id))) {
-    console.log("req Mod");
     return res.sendStatus(FORBIDDEN);
   }
 };

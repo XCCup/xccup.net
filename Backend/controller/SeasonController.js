@@ -7,24 +7,32 @@ const service = require("../service/SeasonService");
 // @desc Gets all seasons
 // @route GET /seasons
 
-router.get("/", async (req, res) => {
-  const seasons = await service.getAll();
-  res.json(seasons);
+router.get("/", async (req, res, next) => {
+  try {
+    const seasons = await service.getAll();
+    res.json(seasons);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc Get current season detail
 // @route GET /seasons/current
 
-router.get("/current", async (req, res) => {
-  const seasons = await service.getCurrentActive();
-  res.json(seasons);
+router.get("/current", async (req, res, next) => {
+  try {
+    const seasons = await service.getCurrentActive();
+    res.json(seasons);
+  } catch (error) {
+    next(error);
+  }
 });
 
 // @desc Adds a season
 // @route POST /season/
 // @access Only admin
 
-// router.post("/", authToken, async (req, res) => {
+// router.post("/", authToken, async (req, res,next) => {
 //   try {
 //     const comment = await service.create(req.body);
 //     res.json(comment);
@@ -38,7 +46,7 @@ router.get("/current", async (req, res) => {
 // @route GET /season/
 // @access Only admin
 
-// router.put("/:id", authToken, async (req, res) => {
+// router.put("/:id", authToken, async (req, res,next) => {
 //   const commentId = req.params.id;
 //   const comment = await service.getById(commentId);
 
@@ -56,7 +64,7 @@ router.get("/current", async (req, res) => {
 // @route DELETE /comments/:id
 // @access Only admin
 
-// router.delete("/:id", authToken, async (req, res) => {
+// router.delete("/:id", authToken, async (req, res,next) => {
 //   const id = req.params.id;
 //   const comment = await service.getById(id);
 
