@@ -1,5 +1,4 @@
 const { Sequelize } = require("sequelize");
-const db = {};
 const { loadModels } = require("../model/ModelLoader");
 
 const port = process.env.POSTGRES_PORT;
@@ -7,6 +6,11 @@ const user = process.env.POSTGRES_USER;
 const pw = process.env.POSTGRES_PASSWORD;
 const postDb = process.env.POSTGRES_DB;
 const host = process.env.POSTGRES_HOST;
+const maxNumberOfRetries = process.env.DB_CONNECT_MAX_ATTEMPTS;
+const reconnectTimeout = process.env.DB_CONNECT_TIMEOUT;
+const failProcess = process.env.DB_CONNECT_FAIL_PROCESS;
+
+const db = {};
 
 const sequelize = new Sequelize(
   `postgres://${user}:${pw}@${host}:${port}/${postDb}`
@@ -15,9 +19,6 @@ const sequelize = new Sequelize(
 loadModels(db, sequelize);
 
 async function dbConnectionTest(numberOfRetry = 0) {
-  const maxNumberOfRetries = process.env.DB_CONNECT_MAX_ATTEMPTS;
-  const reconnectTimeout = process.env.DB_CONNECT_TIMEOUT;
-  const failProcess = process.env.DB_CONNECT_FAIL_PROCESS;
   try {
     await sequelize.authenticate();
     console.log(

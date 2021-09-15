@@ -24,6 +24,18 @@ function checkIsDateObject(field) {
     .withMessage(`${field} must be a valid date format`);
 }
 /**
+ * Checks if the field is a array.
+ * @param {*} field The field in the Request-Body to check.
+ * @param {*} length The length of the array to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkIsArray(field, length) {
+  return check(field)
+    .isArray()
+    .isLength(length)
+    .withMessage(`${field} must be a valid array of length ${length}`);
+}
+/**
  * Checks if the field is of a valid uuid format (e.g. 550e8400-e29b-11d4-a716-446655440000).
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -95,6 +107,7 @@ function validationHasErrors(req, res) {
 
 exports.checkIsDateObject = checkIsDateObject;
 exports.checkIsEmail = checkIsEmail;
+exports.checkIsArray = checkIsArray;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
 exports.checkStringObjectNotEmpty = checkStringObjectNotEmpty;

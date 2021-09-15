@@ -29,8 +29,8 @@ const commentService = {
         year: {
           [Op.lte]: new Date().getFullYear(),
         },
-        order: [["year", "DESC"]],
       },
+      order: [["year", "DESC"]],
     });
   },
 

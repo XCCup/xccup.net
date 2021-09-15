@@ -70,9 +70,6 @@ router.post(
 
     const transferObject = req.body;
 
-    console.log("TEST: " + transferObject.contacts);
-    console.log("HELLO MY DARLING");
-
     const club = {
       name: transferObject.name,
       shortName: transferObject.shortName,

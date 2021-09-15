@@ -2,6 +2,7 @@ const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
 const FlightComment = require("../config/postgres")["FlightComment"];
 const Club = require("../config/postgres")["Club"];
+const Team = require("../config/postgres")["Team"];
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 const SeasonDetail = require("../config/postgres")["SeasonDetail"];
@@ -25,6 +26,17 @@ const dbTestData = {
         })
       );
       console.log("Finished adding clubs");
+
+      console.log("Start adding teams");
+      const teams = require("./testdatasets/teams.json");
+      await Promise.all(
+        teams.map(async (entry) => {
+          await Team.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding teams");
 
       console.log("Start adding sites");
       const sites = require("./testdatasets/flyingSites.json");

@@ -1,284 +1,397 @@
 [
   {
     "id": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
-    "names": ["Camille", "Schaden"],
+    "names": [
+      "Camille",
+      "Schaden"
+    ],
     "firstName": "Camille",
     "lastName": "Schaden",
     "name": "CamilleSchaden",
     "birthday": "1979-08-15",
     "gender": "W",
     "tshirtSize": "XL",
-    "gliders": ["Litte Cloud Spiruline", "Flow XC Racer"],
+    "gliders": [
+      "Litte Cloud Spiruline",
+      "Flow XC Racer"
+    ],
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": false,
     "state": "LUX",
     "email": "Camille@Schaden.name",
     "password": "PW_CamilleSchaden",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
   },
   {
     "id": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
-    "names": ["Frank", "Jacobs"],
+    "names": [
+      "Frank",
+      "Jacobs"
+    ],
     "firstName": "Frank",
     "lastName": "Jacobs",
     "name": "FrankJacobs",
     "birthday": "1975-03-23",
     "gender": "W",
     "tshirtSize": "S",
-    "gliders": ["Sky Apollo", "U-Turn Bodyguard"],
+    "gliders": [
+      "Sky Apollo",
+      "U-Turn Bodyguard"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": true,
     "state": "BEL",
     "email": "Frank@Jacobs.net",
     "password": "PW_FrankJacobs",
-    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
   },
   {
     "id": "1c3fb13d-e725-4869-a816-87498833bee0",
-    "names": ["Leo", "Altenwerth"],
+    "names": [
+      "Leo",
+      "Altenwerth"
+    ],
     "firstName": "Leo",
     "lastName": "Altenwerth",
     "name": "LeoAltenwerth",
     "birthday": "1996-08-22",
     "gender": "D",
     "tshirtSize": "L",
-    "gliders": ["Sky Apollo", "Air-G Emilie"],
+    "gliders": [
+      "Sky Apollo",
+      "Air-G Emilie"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
     "state": "RP",
     "email": "Leo@Altenwerth.net",
     "password": "PW_LeoAltenwerth",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
   },
   {
     "id": "25346d86-de5b-48b0-9dee-bffe06e560c8",
-    "names": ["Willis", "Romaguera"],
+    "names": [
+      "Willis",
+      "Romaguera"
+    ],
     "firstName": "Willis",
     "lastName": "Romaguera",
     "name": "WillisRomaguera",
     "birthday": "1979-05-07",
     "gender": "D",
     "tshirtSize": "M",
-    "gliders": ["Air-G Emilie", "Sky Apollo"],
+    "gliders": [
+      "Air-G Emilie",
+      "Sky Apollo"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
     "state": "HE",
     "email": "Willis@Romaguera.name",
     "password": "PW_WillisRomaguera",
-    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec"
+    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
   },
   {
     "id": "67e5230b-667f-4ff1-8750-17739e7d3ea4",
-    "names": ["Mrs.", "Roman", "Jakubowski"],
+    "names": [
+      "Mrs.",
+      "Roman",
+      "Jakubowski"
+    ],
     "firstName": "Mrs.",
     "lastName": "Roman",
     "name": "Mrs.Roman",
     "birthday": "1985-09-24",
     "gender": "M",
     "tshirtSize": "XXL",
-    "gliders": ["Sky Apollo", "U-Turn Bodyguard"],
+    "gliders": [
+      "Sky Apollo",
+      "U-Turn Bodyguard"
+    ],
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": true,
     "state": "SR",
     "email": "Mrs.@Roman.name",
     "password": "PW_Mrs.Roman",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
   },
   {
     "id": "bc8f46c2-fc95-4662-877c-d4a08806f482",
-    "names": ["Ms.", "Laurie", "Leannon"],
+    "names": [
+      "Ms.",
+      "Laurie",
+      "Leannon"
+    ],
     "firstName": "Ms.",
     "lastName": "Laurie",
     "name": "Ms.Laurie",
     "birthday": "1975-03-16",
     "gender": "W",
     "tshirtSize": "XXL",
-    "gliders": ["Ozone Enzo 3", "U-Turn Bodyguard"],
+    "gliders": [
+      "Ozone Enzo 3",
+      "U-Turn Bodyguard"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
     "state": "BEL",
     "email": "Ms.@Laurie.net",
     "password": "PW_Ms.Laurie",
-    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
   },
   {
     "id": "8131b218-ed76-4095-bd29-0bf3902358c2",
-    "names": ["Ramona", "Gislason"],
+    "names": [
+      "Ramona",
+      "Gislason"
+    ],
     "firstName": "Ramona",
     "lastName": "Gislason",
     "name": "RamonaGislason",
     "birthday": "1983-01-16",
     "gender": "W",
     "tshirtSize": "M",
-    "gliders": ["Flow XC Racer", "U-Turn Bodyguard"],
+    "gliders": [
+      "Flow XC Racer",
+      "U-Turn Bodyguard"
+    ],
     "emailInformIfComment": false,
     "emailNewsletter": false,
     "emailTeamSearch": false,
     "state": "HE",
     "email": "Ramona@Gislason.name",
     "password": "PW_RamonaGislason",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
   },
   {
     "id": "1fddb1fe-f9fe-48ef-a76e-d70d53e5fb6a",
-    "names": ["Toby", "Gerhold"],
+    "names": [
+      "Toby",
+      "Gerhold"
+    ],
     "firstName": "Toby",
     "lastName": "Gerhold",
     "name": "TobyGerhold",
     "birthday": "1988-02-01",
     "gender": "M",
     "tshirtSize": "XXL",
-    "gliders": ["Air-G Emilie", "Litte Cloud Spiruline"],
+    "gliders": [
+      "Air-G Emilie",
+      "Litte Cloud Spiruline"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": true,
     "state": "BEL",
     "email": "Toby@Gerhold.name",
     "password": "PW_TobyGerhold",
-    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
   },
   {
     "id": "67172eda-57c7-4bbc-af90-f4c56c30f5ec",
-    "names": ["Sonia", "Harber"],
+    "names": [
+      "Sonia",
+      "Harber"
+    ],
     "firstName": "Sonia",
     "lastName": "Harber",
     "name": "SoniaHarber",
     "birthday": "1981-10-16",
     "gender": "W",
     "tshirtSize": "XL",
-    "gliders": ["Ozone Enzo 3", "U-Turn Bodyguard"],
+    "gliders": [
+      "Ozone Enzo 3",
+      "U-Turn Bodyguard"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
     "state": "BEL",
     "email": "Sonia@Harber.org",
     "password": "PW_SoniaHarber",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
   },
   {
     "id": "e071350f-a7c3-4081-9e2f-709625b07a07",
-    "names": ["Ron", "Crooks"],
+    "names": [
+      "Ron",
+      "Crooks"
+    ],
     "firstName": "Ron",
     "lastName": "Crooks",
     "name": "RonCrooks",
     "birthday": "1996-05-08",
     "gender": "W",
     "tshirtSize": "L",
-    "gliders": ["U-Turn Bodyguard", "Litte Cloud Spiruline"],
+    "gliders": [
+      "U-Turn Bodyguard",
+      "Litte Cloud Spiruline"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": false,
     "state": "BW",
     "email": "Ron@Crooks.info",
     "password": "PW_RonCrooks",
-    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
   },
   {
     "id": "61895b0e-0e22-480d-87ac-c0040e682c5d",
-    "names": ["Bobby", "Volkman"],
+    "names": [
+      "Bobby",
+      "Volkman"
+    ],
     "firstName": "Bobby",
     "lastName": "Volkman",
     "name": "BobbyVolkman",
     "birthday": "1993-08-18",
     "gender": "W",
     "tshirtSize": "M",
-    "gliders": ["Sky Apollo", "Ozone Alpina 2"],
+    "gliders": [
+      "Sky Apollo",
+      "Ozone Alpina 2"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
     "state": "RP",
     "email": "Bobby@Volkman.net",
     "password": "PW_BobbyVolkman",
-    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
   },
   {
     "id": "45907c75-9c14-42af-bc5a-993f4bec4b0f",
-    "names": ["Tamara", "Ledner"],
+    "names": [
+      "Tamara",
+      "Ledner"
+    ],
     "firstName": "Tamara",
     "lastName": "Ledner",
     "name": "TamaraLedner",
     "birthday": "1974-09-12",
     "gender": "W",
     "tshirtSize": "M",
-    "gliders": ["U-Turn Bodyguard", "Ozone Enzo 3"],
+    "gliders": [
+      "U-Turn Bodyguard",
+      "Ozone Enzo 3"
+    ],
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": true,
     "state": "SR",
     "email": "Tamara@Ledner.info",
     "password": "PW_TamaraLedner",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
   },
   {
     "id": "0f6e6f97-b64b-4e04-a516-adada6f2cba0",
-    "names": ["Wilma", "Hodkiewicz"],
+    "names": [
+      "Wilma",
+      "Hodkiewicz"
+    ],
     "firstName": "Wilma",
     "lastName": "Hodkiewicz",
     "name": "WilmaHodkiewicz",
     "birthday": "1990-06-30",
     "gender": "M",
     "tshirtSize": "XXL",
-    "gliders": ["Ozone Enzo 3", "U-Turn Bodyguard"],
+    "gliders": [
+      "Ozone Enzo 3",
+      "U-Turn Bodyguard"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
     "state": "HE",
     "email": "Wilma@Hodkiewicz.biz",
     "password": "PW_WilmaHodkiewicz",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
   },
   {
     "id": "2a33b726-8edf-4d4b-8da8-f97138371b6c",
-    "names": ["Adam", "Bayer"],
+    "names": [
+      "Adam",
+      "Bayer"
+    ],
     "firstName": "Adam",
     "lastName": "Bayer",
     "name": "AdamBayer",
     "birthday": "1983-12-31",
     "gender": "M",
     "tshirtSize": "XXL",
-    "gliders": ["Ozone Enzo 3", "Air-G Emilie"],
+    "gliders": [
+      "Ozone Enzo 3",
+      "Air-G Emilie"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
     "state": "BW",
     "email": "Adam@Bayer.org",
     "password": "PW_AdamBayer",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
   },
   {
     "id": "9efc1c62-ea6a-4659-b89c-421b57ab73f6",
-    "names": ["Melinda", "Tremblay"],
+    "names": [
+      "Melinda",
+      "Tremblay"
+    ],
     "firstName": "Melinda",
     "lastName": "Tremblay",
     "name": "MelindaTremblay",
     "birthday": "1955-02-16",
     "gender": "W",
     "tshirtSize": "L",
-    "gliders": ["Flow XC Racer", "U-Turn Bodyguard"],
+    "gliders": [
+      "Flow XC Racer",
+      "U-Turn Bodyguard"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
     "state": "SR",
     "email": "Melinda@Tremblay.org",
     "password": "PW_MelindaTremblay",
-    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
   },
   {
     "id": "04bd7ffd-d792-4e90-ba9e-c4356e353135",
-    "names": ["Clinton", "Hettinger"],
+    "names": [
+      "Clinton",
+      "Hettinger"
+    ],
     "firstName": "Clinton",
     "lastName": "Hettinger",
     "name": "ClintonHettinger",
     "birthday": "1972-04-02",
     "gender": "D",
     "tshirtSize": "S",
-    "gliders": ["Ozone Enzo 3", "Ozone Enzo 3"],
+    "gliders": [
+      "Ozone Enzo 3",
+      "Ozone Enzo 3"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
@@ -289,14 +402,20 @@
   },
   {
     "id": "388ab9dd-cb42-4c94-aa87-16b7a991b217",
-    "names": ["Christie", "Schaefer"],
+    "names": [
+      "Christie",
+      "Schaefer"
+    ],
     "firstName": "Christie",
     "lastName": "Schaefer",
     "name": "ChristieSchaefer",
     "birthday": "1981-07-15",
     "gender": "M",
     "tshirtSize": "XXL",
-    "gliders": ["Air-G Emilie", "Sky Apollo"],
+    "gliders": [
+      "Air-G Emilie",
+      "Sky Apollo"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
@@ -307,14 +426,20 @@
   },
   {
     "id": "0032cc89-38bb-4763-a497-e64e5c5ec5f9",
-    "names": ["Everett", "Gislason"],
+    "names": [
+      "Everett",
+      "Gislason"
+    ],
     "firstName": "Everett",
     "lastName": "Gislason",
     "name": "EverettGislason",
     "birthday": "1974-11-11",
     "gender": "W",
     "tshirtSize": "XXL",
-    "gliders": ["Flow XC Racer", "Litte Cloud Spiruline"],
+    "gliders": [
+      "Flow XC Racer",
+      "Litte Cloud Spiruline"
+    ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": true,
@@ -325,14 +450,20 @@
   },
   {
     "id": "6e8764ec-c4b6-49b1-b804-f0871e390f31",
-    "names": ["Olive", "Emmerich"],
+    "names": [
+      "Olive",
+      "Emmerich"
+    ],
     "firstName": "Olive",
     "lastName": "Emmerich",
     "name": "OliveEmmerich",
     "birthday": "1987-08-03",
     "gender": "M",
     "tshirtSize": "XXL",
-    "gliders": ["Air-G Emilie", "Ozone Enzo 3"],
+    "gliders": [
+      "Air-G Emilie",
+      "Ozone Enzo 3"
+    ],
     "role": "Moderator",
     "emailInformIfComment": false,
     "emailNewsletter": true,
@@ -344,14 +475,20 @@
   },
   {
     "id": "1c3c8082-d82a-4c4a-a60c-80d4e089b4f7",
-    "names": ["Lois", "White"],
+    "names": [
+      "Lois",
+      "White"
+    ],
     "firstName": "Lois",
     "lastName": "White",
     "name": "LoisWhite",
     "birthday": "1976-01-01",
     "gender": "W",
     "tshirtSize": "M",
-    "gliders": ["U-Turn Bodyguard", "Ozone Enzo 3"],
+    "gliders": [
+      "U-Turn Bodyguard",
+      "Ozone Enzo 3"
+    ],
     "role": "Administrator",
     "emailInformIfComment": true,
     "emailNewsletter": true,

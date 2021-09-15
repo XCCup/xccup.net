@@ -39,6 +39,7 @@ app.use("/flights", require("./controller/FlightController.js"));
 app.use("/comments", require("./controller/CommentController.js"));
 app.use("/seasons", require("./controller/SeasonController"));
 app.use("/clubs", require("./controller/ClubController"));
+app.use("/teams", require("./controller/TeamController"));
 app.use("/airspaces", require("./controller/AirspaceController"));
 app.use("/results", require("./controller/ResultController"));
 

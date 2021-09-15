@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User",
@@ -106,6 +107,11 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(models.Club, {
       foreignKey: {
         name: "clubId",
+      },
+    });
+    User.belongsTo(models.Team, {
+      foreignKey: {
+        name: "teamId",
       },
     });
   };

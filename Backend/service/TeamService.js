@@ -1,4 +1,5 @@
-const { Team, User } = require("../model/DependentModels");
+const Team = require("../config/postgres")["Team"];
+const User = require("../config/postgres")["User"];
 const { Op } = require("sequelize");
 
 const service = {
@@ -7,7 +8,6 @@ const service = {
       where: {
         participantInSeasons: {
           [Op.contains]: [new Date().getFullYear()],
-          active: true,
         },
       },
       include: createMemberInclude(),
@@ -31,7 +31,7 @@ const service = {
       attributes: ["name", "id"],
       include: {
         model: Team,
-        attributes: ["name", "id"],
+        attributes: [],
         as: "Team",
         where: {
           name,
@@ -40,8 +40,23 @@ const service = {
     });
   },
 
-  create: async (team) => {
-    return await Team.create(team);
+  create: async (teamName, memberIds) => {
+    const team = {
+      name: teamName,
+      participantInSeasons: [new Date().getFullYear()],
+    };
+    const newTeam = await Team.create(team);
+    const members = await User.findAll({
+      where: {
+        id: {
+          [Op.or]: memberIds,
+        },
+      },
+    });
+    members.forEach((member) => {
+      member.teamId = newTeam.id;
+      member.save();
+    });
   },
 
   update: async (team) => {
@@ -58,13 +73,29 @@ const service = {
       const user = await User.findByPk(userId);
       user.teamId = teamId;
       user.save();
-      if (numberOfMembers == 3) {
-        const team = await Team.findByPk(teamId);
-        team.active = true;
-      }
       return true;
     }
     return false;
+  },
+
+  findAvailableUsers: async () => {
+    const users = User.findAll({
+      where: {
+        teamId: null,
+      },
+      attributes: ["name", "id"],
+    });
+    return users;
+  },
+
+  checkMembersAlreadyAssigned: async (memberIds) => {
+    const availableUsers = await service.findAvailableUsers();
+    const availableUserIds = availableUsers.map((user) => user.id);
+    let result = memberIds.filter((id) => !availableUserIds.includes(id));
+    result.forEach((element) =>
+      console.log(`The user ${element} is already asigned to a team`)
+    );
+    return result.length;
   },
 
   delete: async (id) => {
