@@ -3,7 +3,6 @@ const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
 const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
-const Result = require("../config/postgres")["Result"];
 const seasonService = require("./SeasonService");
 const { Op } = require("sequelize");
 const userService = require("./UserService");
@@ -26,16 +25,7 @@ const service = {
   ) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const where = {
-      dateOfFlight: {
-        [Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
-      },
-      flightPoints: {
-        [Op.gte]: seasonDetail.pointThresholdForFlight,
-      },
-      airspaceViolation: false,
-      uncheckedGRecord: false,
-    };
+    const where = createDefaultWhereForFlight(seasonDetail, isSenior);
     if (ratingClass) {
       const ratingValues = seasonDetail.ratingClasses[ratingClass] ?? [];
       where.glider = {
@@ -45,15 +35,7 @@ const service = {
     if (isWeekend) {
       where.isWeekend = true;
     }
-    const resultQuery = await queryDb(
-      where,
-      gender,
-      null,
-      site,
-      region,
-      isSenior,
-      state
-    );
+    const resultQuery = await queryDb(where, gender, null, site, region, state);
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, 3);
@@ -91,14 +73,10 @@ const service = {
   },
 
   getSenior: async (year, region, limit) => {
-    if (isNotCurrentYear(year)) {
-      return await findOldResult(year, "senior");
-    }
-
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const where = createDefaultWhereForFlight(seasonDetail);
-    const resultQuery = await queryDb(where, null, null, null, region, true);
+    const where = createDefaultWhereForFlight(seasonDetail, true);
+    const resultQuery = await queryDb(where, null, null, null, region);
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, 3);
@@ -109,8 +87,8 @@ const service = {
   },
 };
 
-async function queryDb(where, gender, limit, site, region, isSenior, state) {
-  const userInclude = createIncludeStatementUser(gender, isSenior, state);
+async function queryDb(where, gender, limit, site, region, state) {
+  const userInclude = createIncludeStatementUser(gender, state);
   const siteInclude = createIncludeStatementSite(site, region);
   const clubInclude = {
     model: Club,
@@ -130,6 +108,7 @@ async function queryDb(where, gender, limit, site, region, isSenior, state) {
       "flightDistance",
       "glider",
       "flightType",
+      "ageOfUser",
     ],
     order: [["flightPoints", "DESC"]],
   };
@@ -139,20 +118,8 @@ async function queryDb(where, gender, limit, site, region, isSenior, state) {
   return Flight.findAll(queryObject);
 }
 
-async function findOldResult(year, type) {
-  if (year && type) {
-    return Result.findOne({
-      where: {
-        season: year,
-        type: type,
-      },
-    });
-  }
-  return {};
-}
-
-function createDefaultWhereForFlight(seasonDetail) {
-  return {
+function createDefaultWhereForFlight(seasonDetail, isSenior) {
+  const where = {
     dateOfFlight: {
       [Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
     },
@@ -162,14 +129,22 @@ function createDefaultWhereForFlight(seasonDetail) {
     airspaceViolation: false,
     uncheckedGRecord: false,
   };
+
+  if (isSenior) {
+    where.ageOfUser = {
+      [Op.gte]: seasonDetail.seniorStartAge,
+    };
+  }
+
+  return where;
 }
 
-function createIncludeStatementUser(gender, isSenior, state) {
+function createIncludeStatementUser(gender, state) {
   const userInclude = {
     model: User,
     attributes: ["name", "id", "gender", "birthday"],
   };
-  if (gender || isSenior || state) {
+  if (gender || state) {
     userInclude.where = {};
   }
   if (gender) {
@@ -179,15 +154,6 @@ function createIncludeStatementUser(gender, isSenior, state) {
   }
   if (state) {
     userInclude.where.state = state;
-  }
-  if (isSenior) {
-    userInclude.where.birthday = {
-      [Op.lt]: new Date(
-        new Date().getFullYear() -
-          seasonService.getCurrentActive().seniorStartAge,
-        1
-      ),
-    };
   }
   return userInclude;
 }
@@ -297,6 +263,7 @@ function aggreateFlightsOverUser(resultQuery) {
       takeoffName: entry.takeoff.name,
       takeoffId: entry.takeoff.id,
       takeoffRegion: entry.takeoff.region,
+      ageOfUser: entry.ageOfUser,
     };
     if (found) {
       found.flights.push(flightEntry);
@@ -305,7 +272,6 @@ function aggreateFlightsOverUser(resultQuery) {
         userName: entry.User.name,
         userId: entry.User.id,
         gender: entry.User.gender,
-        seniorBonus: calcSeniorBonusForUser(entry.User.birthday), //Necessary for senior ranking
         clubName: entry.Club.name, //A user must always belong to a club
         clubId: entry.Club.id,
         teamName: entry.Team?.name, //It is possible that a user has no team
@@ -332,17 +298,10 @@ async function retrieveSeasonDetails(year) {
   return seasonDetail;
 }
 
-function isNotCurrentYear(year) {
-  return year && new Date().getFullYear() != year;
-}
-
-function calcSeniorBonusForUser(birthday) {
+function calcSeniorBonusForFlight(age) {
   const seasonDetail = seasonService.getCurrentActive();
   const bonusPerYear = seasonDetail.seniorBonusPerAge;
   const startAge = seasonDetail.seniorStartAge;
-  const birthYear = new Date(Date.parse(birthday)).getFullYear();
-  const currentYear = new Date().getFullYear();
-  const age = currentYear - birthYear;
   return age > startAge ? bonusPerYear * (age - startAge) : 0;
 }
 
@@ -350,7 +309,8 @@ function calcSeniorBonusForFlightResult(result) {
   result.forEach((entry) => {
     let totalPoints = 0;
     entry.flights.forEach((flight) => {
-      flight.flightPoints *= (100 + entry.seniorBonus) / 100;
+      flight.flightPoints *=
+        (100 + calcSeniorBonusForFlight(flight.ageOfUser)) / 100;
       totalPoints += flight.flightPoints;
     });
     entry.totalPoints = totalPoints;

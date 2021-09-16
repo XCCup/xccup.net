@@ -79,6 +79,11 @@ module.exports = (sequelize, DataTypes) => {
   User.prototype.validPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
   };
+  User.prototype.getAge = function () {
+    const birthYear = new Date(Date.parse(this.birthday)).getFullYear();
+    const currentYear = new Date().getFullYear();
+    return currentYear - birthYear;
+  };
 
   const getNames = async () => {
     return User.findAll({

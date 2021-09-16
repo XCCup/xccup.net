@@ -178,6 +178,7 @@ const flightService = {
 
   create: async (flight) => {
     //TODO ExternalID als Hook im Model realisieren?
+    await addUserData(flight);
     await addExternalId(flight);
     return await Flight.create(flight);
   },
@@ -216,10 +217,33 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
   });
 }
 
+/**
+ * This method will generate a new externalId for a flight by finding the current heightest externalId and increment it by one.
+ *
+ * Postgres does not support auto increment on non PK columns.
+ * Therefore a manual auto increment is necessary.
+ *
+ * @param {*} flight The flight the externalId will be attached to.
+ */
 async function addExternalId(flight) {
   const result = await Flight.max("externalId");
   flight.externalId = result + 1;
   console.log("New external ID was created: " + flight.externalId);
+}
+
+/**
+ * This method will add specific user data (current clubId, teamId and age of the user) to the flight.
+ *
+ * It's necessary to add team and club id of user directly to the flight.
+ * Because user can change its assocation in the future.
+ *
+ * @param {*} flight The flight the user data will be attached to.
+ */
+async function addUserData(flight) {
+  const user = await User.findByPk(flight.userId);
+  flight.teamId = user.teamId;
+  flight.clubId = user.clubId;
+  flight.ageOfUser = user.getAge();
 }
 
 async function createWhereStatement(year, flightType, ratingClass) {
