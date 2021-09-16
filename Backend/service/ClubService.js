@@ -1,6 +1,7 @@
 const Club = require("../config/postgres")["Club"];
 const User = require("../config/postgres")["User"];
 const { Op } = require("sequelize");
+const cacheManager = require("./CacheManager");
 
 const clubService = {
   getAllActive: async () => {
@@ -55,14 +56,17 @@ const clubService = {
   },
 
   create: async (club) => {
+    cacheManager.invalidateCaches();
     return await Club.create(club);
   },
 
   update: async (club) => {
+    cacheManager.invalidateCaches();
     return await club.save();
   },
 
   delete: async (id) => {
+    cacheManager.invalidateCaches();
     const numberOfDestroyedRows = await Club.destroy({
       where: { id },
     });

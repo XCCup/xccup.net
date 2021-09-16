@@ -1,4 +1,5 @@
 const User = require("../config/postgres")["User"];
+const cacheManager = require("./CacheManager");
 
 const userService = {
   ROLE: {
@@ -40,12 +41,14 @@ const userService = {
     return result;
   },
   delete: async (id) => {
-    return await User.destroy({
-      where: { id: id },
+    cacheManager.invalidateCaches();
+    return User.destroy({
+      where: { id },
     });
   },
   save: async (user) => {
-    return await User.create(user);
+    cacheManager.invalidateCaches();
+    return User.create(user);
   },
   validate: async (name, password) => {
     const user = await User.findOne({

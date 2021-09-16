@@ -1,6 +1,7 @@
 const Team = require("../config/postgres")["Team"];
 const User = require("../config/postgres")["User"];
 const { Op } = require("sequelize");
+const cacheManager = require("./CacheManager");
 
 const service = {
   getAllActive: async () => {
@@ -51,6 +52,7 @@ const service = {
   },
 
   create: async (teamName, memberIds) => {
+    cacheManager.invalidateCaches();
     const team = {
       name: teamName,
       participantInSeasons: [new Date().getFullYear()],
@@ -70,6 +72,7 @@ const service = {
   },
 
   addMember: async (teamId, userId) => {
+    cacheManager.invalidateCaches();
     const numberOfMembers = User.count({
       where: {
         teamId,
@@ -105,6 +108,7 @@ const service = {
   },
 
   delete: async (id) => {
+    cacheManager.invalidateCaches();
     const numberOfDestroyedRows = await Team.destroy({
       where: { id },
     });

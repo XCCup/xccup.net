@@ -9,6 +9,7 @@ const ElevationAttacher = require("../igc/ElevationAttacher");
 const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
+const cacheManager = require("./CacheManager");
 const sequelize = require("sequelize");
 
 const flightService = {
@@ -20,6 +21,13 @@ const flightService = {
   FLIGHT_TYPES: ["FREE", "FLAT", "FAI"],
 
   getAll: async (year, site, type, ratingClass, limit, sortByPoints) => {
+    let fillCache = false;
+    if (isCacheSufficent(year, site, type, ratingClass, limit, sortByPoints)) {
+      const currentYearCache = cacheManager.getCurrentYearFlightCache();
+      if (currentYearCache) return currentYearCache;
+      else fillCache = true;
+    }
+
     const orderStatement = sortByPoints
       ? ["flightPoints", "DESC"]
       : ["dateOfFlight", "DESC"];
@@ -41,6 +49,9 @@ const flightService = {
     }
 
     const flights = await Flight.findAll(queryObject);
+
+    if (fillCache) cacheManager.setCurrentYearFlightCache(flights);
+
     return flights;
   },
 
@@ -104,16 +115,19 @@ const flightService = {
   },
 
   update: async (flight) => {
+    cacheManager.invalidateCaches();
     return flight.save();
   },
 
   delete: async (id) => {
+    cacheManager.invalidateCaches();
     return await Flight.destroy({
       where: { id },
     });
   },
 
   addResult: async (result) => {
+    cacheManager.invalidateCaches();
     console.log("ADD RESULT TO FLIGHT");
     const flight = await flightService.getById(result.flightId);
 
@@ -244,6 +258,23 @@ function createSiteInclude(site) {
     };
   }
   return siteInclude;
+}
+
+/**
+ * The most often request is to display the flights of the current year. Therefore a cache for this request is introduced.
+ * It is possible to use the cache, if only flights of the current year with no filter parameters are requested.
+ *
+ * @returns
+ */
+function isCacheSufficent(year, site, type, ratingClass, limit, sortByPoints) {
+  return (
+    year == new Date().getFullYear() &&
+    !sortByPoints &&
+    !site &&
+    !type &&
+    !ratingClass &&
+    !limit
+  );
 }
 
 module.exports = flightService;
