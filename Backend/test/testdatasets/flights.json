@@ -45,7 +45,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "8ff0d86a-ccdf-495f-950b-8f7d4b5b062c",
-    "landing": "Heddesbach"
+    "landing": "Heddesbach",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-06-13T09:21:32.000Z"
   },
   {
     "id": "f9964c1c-b411-4e12-8e55-96a915997168",
@@ -93,7 +96,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "ebe0c810-a5bc-4f1e-a5d6-20ea06fe6072",
-    "landing": "Weinsheim"
+    "landing": "Weinsheim",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-06-13T10:43:49.000Z"
   },
   {
     "id": "d8cd7701-dd42-42a8-8608-2775850d2d75",
@@ -141,7 +147,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "172f7441-d16e-472e-a8f4-1fec9c83f681",
-    "landing": "Gilserberg"
+    "landing": "Gilserberg",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-06-10T10:42:59.000Z"
   },
   {
     "id": "71e620f7-806f-49a1-a79e-aa538187fc46",
@@ -189,7 +198,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
-    "landing": "Ediger-Eller"
+    "landing": "Ediger-Eller",
+    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-06-10T10:28:06.000Z"
   },
   {
     "id": "15bf9618-3394-4d48-b20b-ca3e65c80047",
@@ -237,7 +249,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "a4d07fb6-df15-420c-8e89-6265c8a9c2aa",
-    "landing": "Veldenz"
+    "landing": "Veldenz",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-06-10T11:34:14.000Z"
   },
   {
     "id": "682b2236-17c2-4147-a0c2-bc665faac579",
@@ -285,7 +300,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "a4d07fb6-df15-420c-8e89-6265c8a9c2aa",
-    "landing": "Burgen"
+    "landing": "Burgen",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-06-09T10:38:57.000Z"
   },
   {
     "id": "3ddf8d66-9338-4773-83d8-84086e51147c",
@@ -333,7 +351,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "700dd217-5f5c-4323-89e0-9554bbb61c54",
-    "landing": "Schriesheim"
+    "landing": "Schriesheim",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-05-20T15:02:14.000Z"
   },
   {
     "id": "87bbb855-1366-4a48-8d7f-11949ef6d482",
@@ -381,7 +402,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "d9c90336-8f1b-4b88-9e81-5fbaa5ab6607",
-    "landing": "Issum"
+    "landing": "Issum",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-05-14T13:28:33.000Z"
   },
   {
     "id": "4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14",
@@ -429,7 +453,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "a72bccde-5700-4321-b727-fb5a430ce71c",
-    "landing": "Kobern-Gondorf"
+    "landing": "Kobern-Gondorf",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-05-13T10:56:53.000Z"
   },
   {
     "id": "07b590f3-ca8a-4305-88a2-e11c314b4955",
@@ -477,7 +504,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "a72bccde-5700-4321-b727-fb5a430ce71c",
-    "landing": "Kobern-Gondorf"
+    "landing": "Kobern-Gondorf",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-05-13T10:16:44.000Z"
   },
   {
     "id": "60a73a31-f03e-40a3-87c5-03f8bc447007",
@@ -525,7 +555,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "3f37d5f1-f66f-40b1-adad-c9d189e57fa4",
-    "landing": "Irsch"
+    "landing": "Irsch",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-05-12T13:45:28.000Z"
   },
   {
     "id": "8d625d76-21e1-47b2-ad9a-ab0f28d3ed2f",
@@ -573,7 +606,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "7c3b3f6d-e687-4503-a452-224877e28e0f",
-    "landing": "Haiger"
+    "landing": "Haiger",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-04-23T11:37:23.000Z"
   },
   {
     "id": "a7c8a11a-5a2c-4045-b3dc-7d8fbb6afabb",
@@ -621,7 +657,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "32c190ff-4408-4bca-b3cc-aaa23c1533fc",
-    "landing": "Meschede"
+    "landing": "Meschede",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-05-01T12:41:16.000Z"
   },
   {
     "id": "77cdaf48-8f84-4d48-9ba6-1524c3598349",
@@ -669,7 +708,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
-    "landing": "Reudelsterz"
+    "landing": "Reudelsterz",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-04-30T11:14:40.000Z"
   },
   {
     "id": "d27d8bce-e30c-45ff-aebe-550100dd8203",
@@ -717,7 +759,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "134c035d-2f1e-4a32-9023-60c23df26080",
-    "landing": "Lennestadt"
+    "landing": "Lennestadt",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-04-23T10:54:50.000Z"
   },
   {
     "id": "ecfa9c50-cc7d-436c-8b08-5f40ca7998ac",
@@ -765,7 +810,9 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "29806e5b-7ef5-4ca3-9d05-87b90122bd4c",
-    "landing": "Weyher in der Pfalz"
+    "landing": "Weyher in der Pfalz",
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "dateOfFlight": "2021-04-20T10:47:44.000Z"
   },
   {
     "id": "18ddd683-b966-45c9-83e9-6eb6fd96ddf6",
@@ -813,7 +860,9 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "7b499782-e8b8-404f-a62f-f4ca45a6ad80",
-    "landing": "Battenberg (Eder)"
+    "landing": "Battenberg (Eder)",
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "dateOfFlight": "2021-04-21T13:22:29.000Z"
   },
   {
     "id": "26fd8ad5-1bab-450c-8c5c-14153ab25728",
@@ -861,7 +910,9 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "700dd217-5f5c-4323-89e0-9554bbb61c54",
-    "landing": "Aglasterhausen"
+    "landing": "Aglasterhausen",
+    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
+    "dateOfFlight": "2021-04-21T14:02:22.000Z"
   },
   {
     "id": "4232f4eb-d42a-4583-ad9f-f631b72fd691",
@@ -909,7 +960,9 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "8ff0d86a-ccdf-495f-950b-8f7d4b5b062c",
-    "landing": "Bammental"
+    "landing": "Bammental",
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "dateOfFlight": "2021-04-20T16:11:37.000Z"
   },
   {
     "id": "6f9f100a-1a1e-408b-9eaf-37c66c1de058",
@@ -957,7 +1010,9 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
-    "landing": "Bernkastel-Kues"
+    "landing": "Bernkastel-Kues",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "dateOfFlight": "2021-04-20T10:11:15.000Z"
   },
   {
     "id": "6e7b81b7-6969-4114-94f0-a0351aad0830",
@@ -1005,7 +1060,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "76386969-edae-4bfc-9461-fcef7c5f2843",
-    "landing": "Neumagen-Dhron"
+    "landing": "Neumagen-Dhron",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-04-17T10:45:15.000Z"
   },
   {
     "id": "5363477a-93ef-4ed3-baab-655dba688c7b",
@@ -1053,7 +1111,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "a4d07fb6-df15-420c-8e89-6265c8a9c2aa",
-    "landing": "Neumagen-Dhron"
+    "landing": "Neumagen-Dhron",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-04-17T11:43:13.000Z"
   },
   {
     "id": "3d15ce06-1d2f-4994-8869-37a2f5bb1cb4",
@@ -1101,7 +1162,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "4c81a555-fcba-4c79-8127-ece934e5b9b1",
-    "landing": "Saarburg"
+    "landing": "Saarburg",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-04-14T09:45:44.000Z"
   },
   {
     "id": "1a1bfa34-301a-4412-a669-c8c2c777e577",
@@ -1149,7 +1213,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "172f7441-d16e-472e-a8f4-1fec9c83f681",
-    "landing": "Frankenberg (Eder)"
+    "landing": "Frankenberg (Eder)",
+    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-04-13T14:35:16.000Z"
   },
   {
     "id": "d174a309-1526-4ea8-99ad-655c32388d05",
@@ -1197,7 +1264,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "8ff0d86a-ccdf-495f-950b-8f7d4b5b062c",
-    "landing": "Heidelberg"
+    "landing": "Heidelberg",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-04-12T11:51:31.000Z"
   },
   {
     "id": "4e94979e-b6f8-4e41-80f1-8558afe6cb84",
@@ -1245,7 +1315,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "b9a05268-a802-423e-8981-b1c01dafc754",
-    "landing": "Taben-Rodt"
+    "landing": "Taben-Rodt",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-04-08T11:23:02.000Z"
   },
   {
     "id": "d03c8b0e-690c-45e8-9d63-1f4cb97c5580",
@@ -1293,7 +1366,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "8c71800d-eddc-461f-8a96-981552f559a5",
-    "landing": "Iserlohn"
+    "landing": "Iserlohn",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-03-25T14:27:09.000Z"
   },
   {
     "id": "0c824549-50f8-47f0-8d44-701b5ab3d7b0",
@@ -1341,7 +1417,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "b9a05268-a802-423e-8981-b1c01dafc754",
-    "landing": "Taben-Rodt"
+    "landing": "Taben-Rodt",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-03-25T11:45:36.000Z"
   },
   {
     "id": "112c87c8-fcce-4082-aebf-7b1630aad93f",
@@ -1389,7 +1468,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "5727014e-2909-408b-833c-18125302889e",
-    "landing": "Graach an der Mosel"
+    "landing": "Graach an der Mosel",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-03-24T12:45:51.000Z"
   },
   {
     "id": "e093571d-cc0d-41fd-a0f0-ed5f0557d8bb",
@@ -1437,7 +1519,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "ebe0c810-a5bc-4f1e-a5d6-20ea06fe6072",
-    "landing": "Sommerloch"
+    "landing": "Sommerloch",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-03-20T13:39:09.000Z"
   },
   {
     "id": "b8b54a0a-e191-4495-9f04-f25e1f311e39",
@@ -1485,7 +1570,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "b3d31a8e-0125-49a2-9609-b0d42da88437",
-    "landing": "Dannenfels"
+    "landing": "Dannenfels",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-03-08T12:19:48.000Z"
   },
   {
     "id": "0fd91a22-16a1-413c-8ebc-2e3e9d6505b7",
@@ -1533,7 +1621,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "a4d07fb6-df15-420c-8e89-6265c8a9c2aa",
-    "landing": "Veldenz"
+    "landing": "Veldenz",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-03-07T13:13:01.000Z"
   },
   {
     "id": "684a4def-4645-4742-a4fc-d6d5e9b42431",
@@ -1581,7 +1672,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "26971115-7003-462c-85c3-a228cfda1302",
-    "landing": "Mittelreidenbach"
+    "landing": "Mittelreidenbach",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2021-03-06T14:01:38.000Z"
   },
   {
     "id": "cdd89b5f-fdbf-4bb2-9957-de9e38b87c47",
@@ -1629,7 +1723,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "f195bdfd-97db-4e16-bfb9-a82413319395",
-    "landing": "Dernbach"
+    "landing": "Dernbach",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2021-02-25T12:42:33.000Z"
   },
   {
     "id": "8a0216c9-a701-4cb7-a1de-ef21b258081f",
@@ -1677,7 +1774,10 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "aa9b4b1e-24e1-4c31-ba2e-aee945a88941",
-    "landing": "Klüsserath"
+    "landing": "Klüsserath",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2021-02-21T11:58:34.000Z"
   },
   {
     "id": "1780608e-d48e-4fa0-a427-9d0afca1fd0a",
@@ -1725,7 +1825,9 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "790161fe-40b0-4ee8-bebe-a9cebc12d736",
-    "landing": "Maring-Noviand"
+    "landing": "Maring-Noviand",
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "dateOfFlight": "2021-02-20T13:17:49.000Z"
   },
   {
     "id": "72baa559-577b-42ca-afd7-225ab1a08c18",
@@ -1773,7 +1875,9 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "aa9b4b1e-24e1-4c31-ba2e-aee945a88941",
-    "landing": "Klüsserath"
+    "landing": "Klüsserath",
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "dateOfFlight": "2021-02-20T14:02:52.000Z"
   },
   {
     "id": "ecdb4aad-87e5-42f2-b7e1-b6e76acc19b4",
@@ -1821,7 +1925,9 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
-    "landing": "Saarlouis"
+    "landing": "Saarlouis",
+    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
+    "dateOfFlight": "2020-07-21T11:01:33.000Z"
   },
   {
     "id": "ec214de1-de02-4618-9ddf-cceeccd377e6",
@@ -1869,7 +1975,9 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
-    "landing": "Wittlich"
+    "landing": "Wittlich",
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "dateOfFlight": "2020-07-11T09:25:06.000Z"
   },
   {
     "id": "51c93d0f-ef6e-4dc9-8a19-d0210354e608",
@@ -1917,7 +2025,9 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
-    "landing": "Ediger-Eller"
+    "landing": "Ediger-Eller",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "dateOfFlight": "2020-05-17T10:36:30.000Z"
   },
   {
     "id": "0d3294d5-0031-4c5d-a6c9-fd173694ba21",
@@ -1965,7 +2075,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "aa9b4b1e-24e1-4c31-ba2e-aee945a88941",
-    "landing": "Montabaur"
+    "landing": "Montabaur",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "dateOfFlight": "2017-06-10T10:59:52.000Z"
   },
   {
     "id": "40264d03-e88d-4682-8053-53edb6fffc17",
@@ -2013,7 +2126,10 @@
     "uncheckedGRecord": false,
     "isHike": true,
     "siteId": "5727014e-2909-408b-833c-18125302889e",
-    "landing": "Graach an der Mosel"
+    "landing": "Graach an der Mosel",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "dateOfFlight": "2017-05-20T12:01:39.000Z"
   },
   {
     "id": "eefc442b-1fea-48b6-bfa0-69628b19fe41",
@@ -2061,6 +2177,9 @@
     "uncheckedGRecord": false,
     "isHike": 0,
     "siteId": "5991b282-9a45-49e8-b385-2e4a0a843002",
-    "landing": "Boppard"
+    "landing": "Boppard",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "dateOfFlight": "2017-05-06T12:59:55.000Z"
   }
 ]

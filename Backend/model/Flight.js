@@ -96,6 +96,16 @@ module.exports = (sequelize, DataTypes) => {
         name: "siteId",
       },
     });
+    Flight.belongsTo(models.Club, {
+      foreignKey: {
+        name: "clubId",
+      },
+    });
+    Flight.belongsTo(models.Team, {
+      foreignKey: {
+        name: "teamId",
+      },
+    });
     Flight.hasMany(models.FlightComment, {
       as: "comments",
       foreignKey: {

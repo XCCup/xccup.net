@@ -8,6 +8,10 @@ const seasonService = require("./SeasonService");
 const { Op } = require("sequelize");
 const userService = require("./UserService");
 
+//TODO Was passiert mit alten Flügen die gelöscht wurden? Aktuell würde die Wertung für diese Jahre nachträglich angepasst. Das sollte vermieden werden
+
+//TODO Implement newcomer result
+
 const service = {
   getOverall: async (
     year,
@@ -59,10 +63,6 @@ const service = {
   },
 
   getClub: async (year, limit) => {
-    if (isNotCurrentYear(year)) {
-      return findOldResult(year, "club");
-    }
-
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
@@ -77,10 +77,6 @@ const service = {
   },
 
   getTeam: async (year, region, limit) => {
-    if (isNotCurrentYear(year)) {
-      return await findOldResult(year, "team");
-    }
-
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
@@ -116,10 +112,18 @@ const service = {
 async function queryDb(where, gender, limit, site, region, isSenior, state) {
   const userInclude = createIncludeStatementUser(gender, isSenior, state);
   const siteInclude = createIncludeStatementSite(site, region);
+  const clubInclude = {
+    model: Club,
+    attributes: ["name", "id"],
+  };
+  const teamInclude = {
+    model: Team,
+    attributes: ["name", "id"],
+  };
 
   const queryObject = {
     where,
-    include: [userInclude, siteInclude],
+    include: [userInclude, siteInclude, clubInclude, teamInclude],
     attributes: [
       "id",
       "flightPoints",
@@ -161,18 +165,9 @@ function createDefaultWhereForFlight(seasonDetail) {
 }
 
 function createIncludeStatementUser(gender, isSenior, state) {
-  const clubInclude = {
-    model: Club,
-    attributes: ["name", "id"],
-  };
-  const teamInclude = {
-    model: Team,
-    attributes: ["name", "id"],
-  };
   const userInclude = {
     model: User,
     attributes: ["name", "id", "gender", "birthday"],
-    include: [clubInclude, teamInclude],
   };
   if (gender || isSenior || state) {
     userInclude.where = {};
@@ -311,10 +306,10 @@ function aggreateFlightsOverUser(resultQuery) {
         userId: entry.User.id,
         gender: entry.User.gender,
         seniorBonus: calcSeniorBonusForUser(entry.User.birthday), //Necessary for senior ranking
-        clubName: entry.User.Club.name, //A user must always belong to a club
-        clubId: entry.User.Club.id,
-        teamName: entry.User.Team?.name, //It is possible that a user has no team
-        teamId: entry.User.Team?.id,
+        clubName: entry.Club.name, //A user must always belong to a club
+        clubId: entry.Club.id,
+        teamName: entry.Team?.name, //It is possible that a user has no team
+        teamId: entry.Team?.id,
         flights: [flightEntry],
       });
     }

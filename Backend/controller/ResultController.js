@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/ResultService");
 const { query } = require("express-validator");
-// const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./Constants");
 const { validationHasErrors } = require("./Validation");
 
 // @desc Gets the overall result

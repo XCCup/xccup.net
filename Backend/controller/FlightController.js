@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/FlightService");
+const userService = require("../service/UserService");
 const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const fs = require("fs");
@@ -95,6 +96,11 @@ router.post(
     try {
       if (await requesterIsNotOwner(req, res, userId)) return;
 
+      //Retrieve current team and club id of user because user can change its assocation in the future
+      const user = await userService.getById(userId);
+      const teamId = user.teamId;
+      const clubId = user.clubId;
+
       igcValidator.execute(igc).then((result) => {
         if (result == igcValidator.G_RECORD_FAILED) {
           // res.status(BAD_REQUEST).send("Invalid G-Record");
@@ -104,6 +110,8 @@ router.post(
         service
           .create({
             userId,
+            teamId,
+            clubId,
             uncheckedGRecord: result == undefined ? true : false,
             flightStatus: service.STATE_IN_PROCESS,
           })

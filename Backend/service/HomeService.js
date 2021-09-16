@@ -10,6 +10,7 @@ const service = {
   get: async () => {
     const cache = cacheManager.getHomeCache();
     if (cache) return cache;
+
     const homeData = await prepareHomeData();
     cacheManager.setHomeCache(homeData);
     return homeData;
