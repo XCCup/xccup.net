@@ -1,7 +1,9 @@
 const SeasonDetail = require("../config/postgres")["SeasonDetail"];
 const { Op } = require("sequelize");
 
-const commentService = {
+let currentSeasonDetailCache;
+
+const service = {
   getById: async (id) => {
     return await SeasonDetail.findByPk(id);
   },
@@ -22,8 +24,15 @@ const commentService = {
     });
   },
 
-  getCurrentActive: async () => {
-    return await SeasonDetail.findOne({
+  getCurrentActive: () => {
+    return (currentSeasonDetailCache = currentSeasonDetailCache
+      ? currentSeasonDetailCache
+      : service.refreshCurrentSeasonDetails());
+  },
+
+  refreshCurrentSeasonDetails: async () => {
+    console.log("Refresh cache for currentSeasonDetails");
+    return (currentSeasonDetailCache = await SeasonDetail.findOne({
       where: {
         active: true,
         year: {
@@ -31,7 +40,7 @@ const commentService = {
         },
       },
       order: [["year", "DESC"]],
-    });
+    }));
   },
 
   create: async (season) => {
@@ -49,4 +58,9 @@ const commentService = {
   },
 };
 
-module.exports = commentService;
+(function init() {
+  console.log("Initialize SeasonDetails");
+  service.refreshCurrentSeasonDetails();
+})();
+
+module.exports = service;

@@ -5,6 +5,8 @@
     "endDate":"2018-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 2,
+    "seniorBonusPerAge" :2,
+    "seniorStartAge" : 60,
     "active": true,
     "factors": [
       {
@@ -35,6 +37,8 @@
     "endDate":"2020-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 5,
+    "seniorBonusPerAge" :2,
+    "seniorStartAge" : 60,
     "active": false,
     "factors": [
       {
@@ -65,6 +69,8 @@
     "endDate":"2021-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 3,
+    "seniorBonusPerAge" :2,
+    "seniorStartAge" : 60,
     "active": true,
     "factors": [
       {

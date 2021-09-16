@@ -59,9 +59,8 @@ const service = {
   },
 
   getClub: async (year, limit) => {
-    if (year && new Date().getFullYear() != year) {
-      const oldResult = findOldResult(year, "club");
-      if (oldResult) return oldResult;
+    if (isNotCurrentYear(year)) {
+      return findOldResult(year, "club");
     }
 
     const seasonDetail = await retrieveSeasonDetails(year);
@@ -78,9 +77,8 @@ const service = {
   },
 
   getTeam: async (year, region, limit) => {
-    if (year && new Date().getFullYear() != year) {
-      const oldResult = await findOldResult(year, "team");
-      if (oldResult) return oldResult;
+    if (isNotCurrentYear(year)) {
+      return await findOldResult(year, "team");
     }
 
     const seasonDetail = await retrieveSeasonDetails(year);
@@ -94,6 +92,24 @@ const service = {
     sortDescendingByTotalPoints(resultOverTeam);
 
     return limit ? resultOverTeam.slice(0, limit) : resultOverTeam;
+  },
+
+  getSenior: async (year, region, limit) => {
+    if (isNotCurrentYear(year)) {
+      return await findOldResult(year, "senior");
+    }
+
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const where = createDefaultWhereForFlight(seasonDetail);
+    const resultQuery = await queryDb(where, null, null, null, region, true);
+
+    const result = aggreateFlightsOverUser(resultQuery);
+    limitFlightsForUserAndCalcTotals(result, 3);
+    calcSeniorBonusForFlightResult(result);
+    sortDescendingByTotalPoints(result);
+
+    return limit ? result.slice(0, limit) : result;
   },
 };
 
@@ -128,7 +144,7 @@ async function findOldResult(year, type) {
       },
     });
   }
-  return null;
+  return {};
 }
 
 function createDefaultWhereForFlight(seasonDetail) {
@@ -155,7 +171,7 @@ function createIncludeStatementUser(gender, isSenior, state) {
   };
   const userInclude = {
     model: User,
-    attributes: ["name", "id", "gender"],
+    attributes: ["name", "id", "gender", "birthday"],
     include: [clubInclude, teamInclude],
   };
   if (gender || isSenior || state) {
@@ -171,7 +187,11 @@ function createIncludeStatementUser(gender, isSenior, state) {
   }
   if (isSenior) {
     userInclude.where.birthday = {
-      [Op.lt]: new Date(new Date().getFullYear() - 60, 1), //TODO Make the value (60) a check against db
+      [Op.lt]: new Date(
+        new Date().getFullYear() -
+          seasonService.getCurrentActive().seniorStartAge,
+        1
+      ),
     };
   }
   return userInclude;
@@ -290,6 +310,7 @@ function aggreateFlightsOverUser(resultQuery) {
         userName: entry.User.name,
         userId: entry.User.id,
         gender: entry.User.gender,
+        seniorBonus: calcSeniorBonusForUser(entry.User.birthday), //Necessary for senior ranking
         clubName: entry.User.Club.name, //A user must always belong to a club
         clubId: entry.User.Club.id,
         teamName: entry.User.Team?.name, //It is possible that a user has no team
@@ -309,11 +330,36 @@ function sortDescendingByTotalPoints(resultArray) {
 }
 
 async function retrieveSeasonDetails(year) {
-  const requestedYear = year ?? new Date().getFullYear();
   const seasonDetail =
-    (await seasonService.getByYear(requestedYear)) ??
-    (await seasonService.getCurrentActive());
+    year && year != new Date().getFullYear()
+      ? await seasonService.getByYear(year)
+      : seasonService.getCurrentActive();
   return seasonDetail;
+}
+
+function isNotCurrentYear(year) {
+  return year && new Date().getFullYear() != year;
+}
+
+function calcSeniorBonusForUser(birthday) {
+  const seasonDetail = seasonService.getCurrentActive();
+  const bonusPerYear = seasonDetail.seniorBonusPerAge;
+  const startAge = seasonDetail.seniorStartAge;
+  const birthYear = new Date(Date.parse(birthday)).getFullYear();
+  const currentYear = new Date().getFullYear();
+  const age = currentYear - birthYear;
+  return age > startAge ? bonusPerYear * (age - startAge) : 0;
+}
+
+function calcSeniorBonusForFlightResult(result) {
+  result.forEach((entry) => {
+    let totalPoints = 0;
+    entry.flights.forEach((flight) => {
+      flight.flightPoints *= (100 + entry.seniorBonus) / 100;
+      totalPoints += flight.flightPoints;
+    });
+    entry.totalPoints = totalPoints;
+  });
 }
 
 module.exports = service;

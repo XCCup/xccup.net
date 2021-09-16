@@ -7,7 +7,7 @@ const seasonService = require("../service/SeasonService");
 
 const service = {
   get: async () => {
-    const currentSeason = await seasonService.getCurrentActive();
+    const currentSeason = seasonService.getCurrentActive();
 
     const numberOfTeams = teamService.countActive();
     const numberOfClubs = clubService.count();

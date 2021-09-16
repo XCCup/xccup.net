@@ -33,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
       allowNull: false,
     },
+    seniorStartAge: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    seniorBonusPerAge: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   });
   return SeasonDetail;
 };
