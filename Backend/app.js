@@ -31,9 +31,9 @@ app.use(express.urlencoded({ extended: false }));
 //IGC-Files can easily exceed this limit
 app.use(express.json({ limit: "5mb" }));
 
-app.get("/", (request, response) => {
-  response.json({ info: "Welcome to the XCCup API" });
-});
+app.get("/", (request, response) =>
+  response.json({ info: "Welcome to the XCCup API" })
+);
 app.use("/users", require("./controller/UserController.js"));
 app.use("/flights", require("./controller/FlightController.js"));
 app.use("/comments", require("./controller/CommentController.js"));

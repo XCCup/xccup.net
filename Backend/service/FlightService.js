@@ -19,21 +19,10 @@ const flightService = {
 
   FLIGHT_TYPES: ["FREE", "FLAT", "FAI"],
 
-  getAll: async (year, site, type, limit, sortByPoints) => {
-    year = year ?? new Date().getFullYear();
-    const whereStatement = {
-      andOp: sequelize.where(
-        sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
-        year
-      ),
-    };
+  getAll: async (year, site, type, ratingClass, limit, sortByPoints) => {
     const orderStatement = sortByPoints
       ? ["flightPoints", "DESC"]
       : ["dateOfFlight", "DESC"];
-
-    if (type) {
-      whereStatement.flightType = type;
-    }
 
     const queryObject = {
       include: [
@@ -43,7 +32,7 @@ const flightService = {
         },
         createSiteInclude(site),
       ],
-      where: whereStatement,
+      where: await createWhereStatement(year, type, ratingClass),
       order: [orderStatement],
     };
 
@@ -217,6 +206,30 @@ async function addExternalId(flight) {
   const result = await Flight.max("externalId");
   flight.externalId = result + 1;
   console.log("New external ID was created: " + flight.externalId);
+}
+
+async function createWhereStatement(year, flightType, ratingClass) {
+  let whereStatement;
+  if (flightType || year || ratingClass) {
+    whereStatement = {};
+  }
+  if (flightType) {
+    whereStatement.flightType = flightType;
+  }
+  if (year) {
+    whereStatement.andOp = sequelize.where(
+      sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
+      year
+    );
+  }
+  if (ratingClass) {
+    const ratingValues =
+      (await getCurrentActive()).ratingClasses[ratingClass] ?? [];
+    whereStatement.glider = {
+      type: { [sequelize.Op.in]: ratingValues },
+    };
+  }
+  return whereStatement;
 }
 
 function createSiteInclude(site) {

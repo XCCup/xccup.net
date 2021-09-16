@@ -14,7 +14,14 @@ const service = {
     const numberOfUsers = userService.count();
     const bestTeams = resultService.getTeam(null, null, 3);
     const bestClubs = resultService.getClub(null, 3);
-    const bestFlightsOverall = flightService.getAll(null, null, null, 5, true);
+    const bestFlightsOverall = flightService.getAll(
+      null,
+      null,
+      null,
+      null,
+      5,
+      true
+    );
 
     const dbRequests = {
       numberOfClubs,

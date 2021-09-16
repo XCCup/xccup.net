@@ -96,12 +96,20 @@ router.delete("/:id", authToken, async (req, res, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
 
-    const teamId = req.params.id;
-    const team = await service.getById(teamId);
-    if (!team) return res.sendStatus(NOT_FOUND);
-
-    const numberOfDestroyedRows = await service.delete(teamId);
+    const numberOfDestroyedRows = await service.delete(req.team.id);
     res.json(numberOfDestroyedRows);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Handle not found db entry
+router.param("id", async (req, res, next, id) => {
+  try {
+    const team = await service.getById(id);
+    if (!team) return res.sendStatus(NOT_FOUND);
+    req.team = team;
+    next();
   } catch (error) {
     next(error);
   }

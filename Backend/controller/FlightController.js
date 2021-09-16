@@ -23,6 +23,7 @@ router.get(
     query("year").optional().isInt(),
     query("site").optional().not().isEmpty().trim().escape(),
     query("type").optional().not().isEmpty().trim().escape(),
+    query("ratingClass").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
   ],
   async (req, res, next) => {
@@ -30,9 +31,16 @@ router.get(
     const year = req.query.year;
     const site = req.query.site;
     const type = req.query.type;
+    const ratingClass = req.query.ratingClass;
     const limit = req.query.limit;
     try {
-      const flights = await service.getAll(year, site, type, limit);
+      const flights = await service.getAll(
+        year,
+        site,
+        type,
+        ratingClass,
+        limit
+      );
       res.json(flights);
     } catch (error) {
       next(error);
@@ -45,10 +53,7 @@ router.get(
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const flight = await service.getByIdForDisplay(req.params.id);
-
-    if (!flight) return res.sendStatus(NOT_FOUND);
-
+    const flight = req.flight;
     res.json(flight);
   } catch (error) {
     next(error);
@@ -62,9 +67,7 @@ router.get("/:id", async (req, res, next) => {
 router.delete("/:id", authToken, async (req, res, next) => {
   const flightId = req.params.id;
   try {
-    const flightToDelete = await service.getById(flightId);
-
-    if (!flightToDelete) return res.sendStatus(NOT_FOUND);
+    const flightToDelete = req.flight;
 
     if (await requesterIsNotOwner(req, res, flightToDelete.userId)) return;
 
@@ -140,13 +143,9 @@ router.put(
   async (req, res, next) => {
     const report = req.body.report;
     const glider = req.body.glider;
-    const flightId = req.params.id;
+    const flight = req.flight;
 
     try {
-      const flight = await service.getById(flightId);
-
-      if (!flight) return res.sendStatus(NOT_FOUND);
-
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
       flight.report = report;
@@ -160,6 +159,18 @@ router.put(
     }
   }
 );
+
+// Handle not found db entry
+router.param("id", async (req, res, next, id) => {
+  try {
+    const flight = await service.getByIdForDisplay(id);
+    if (!flight) return res.sendStatus(NOT_FOUND);
+    req.flight = flight;
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 //TODO Move to helper class "FileWriter"
 async function persistIgcFile(flightId, igcFile) {
