@@ -76,6 +76,9 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         allowNull: false,
       },
+      homeStateOfUser: {
+        type: DataTypes.STRING,
+      },
     },
     {
       hooks: {

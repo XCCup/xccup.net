@@ -25,7 +25,7 @@ router.get(
     const year = req.query.year;
     const ratingClass = req.query.ratingClass;
     const gender = req.query.gender;
-    const isWeekend = req.query.weekend;
+    const isWeekend = req.query.isWeekend;
     const isSenior = req.query.isSenior;
     const limit = req.query.limit;
     const site = req.query.site;
@@ -128,5 +128,17 @@ router.get(
     }
   }
 );
+
+// @desc Gets the result for the senior ranking (addional bonus per age)
+// @route GET /results/seniors/
+
+router.get("/siteRecords", async (req, res, next) => {
+  try {
+    const result = await service.getSiteRecords();
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

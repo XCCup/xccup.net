@@ -231,8 +231,7 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
  * @param {*} flight The flight the externalId will be attached to.
  */
 async function addExternalId(flight) {
-  const result = await Flight.max("externalId");
-  flight.externalId = result + 1;
+  flight.externalId = (await Flight.max("externalId")) + 1;
   console.log("New external ID was created: " + flight.externalId);
 }
 
@@ -248,6 +247,7 @@ async function addUserData(flight) {
   const user = await User.findByPk(flight.userId);
   flight.teamId = user.teamId;
   flight.clubId = user.clubId;
+  flight.homeStateOfUser = user.state;
   flight.ageOfUser = user.getAge();
 }
 

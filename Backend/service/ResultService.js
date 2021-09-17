@@ -35,7 +35,10 @@ const service = {
     if (isWeekend) {
       where.isWeekend = true;
     }
-    const resultQuery = await queryDb(where, gender, null, site, region, state);
+    if (state) {
+      where.homeStateOfUser = state;
+    }
+    const resultQuery = await queryDb(where, gender, null, site, region);
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, 3);
@@ -85,10 +88,16 @@ const service = {
 
     return limit ? result.slice(0, limit) : result;
   },
+
+  getSiteRecords: async () => {
+    // const where = createDefaultWhereForFlight(seasonDetail, true);
+    // const resultQuery = await queryDb(where, null, null, null, region);
+    // return limit ? result.slice(0, limit) : result;
+  },
 };
 
-async function queryDb(where, gender, limit, site, region, state) {
-  const userInclude = createIncludeStatementUser(gender, state);
+async function queryDb(where, gender, limit, site, region) {
+  const userInclude = createIncludeStatementUser(gender);
   const siteInclude = createIncludeStatementSite(site, region);
   const clubInclude = {
     model: Club,
@@ -139,21 +148,15 @@ function createDefaultWhereForFlight(seasonDetail, isSenior) {
   return where;
 }
 
-function createIncludeStatementUser(gender, state) {
+function createIncludeStatementUser(gender) {
   const userInclude = {
     model: User,
     attributes: ["name", "id", "gender", "birthday"],
   };
-  if (gender || state) {
-    userInclude.where = {};
-  }
   if (gender) {
     userInclude.where.gender = gender
       ? gender.toUpperCase()
       : userService.GENDERS;
-  }
-  if (state) {
-    userInclude.where.state = state;
   }
   return userInclude;
 }
