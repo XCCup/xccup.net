@@ -1,15 +1,14 @@
 const SeasonDetail = require("../config/postgres")["SeasonDetail"];
-const { Op } = require("sequelize");
 
 let currentSeasonDetailCache;
 
 const service = {
   getById: async (id) => {
-    return await SeasonDetail.findByPk(id);
+    return SeasonDetail.findByPk(id);
   },
 
   getByYear: async (year) => {
-    return await SeasonDetail.findOne({
+    return SeasonDetail.findOne({
       where: {
         year,
       },
@@ -17,11 +16,7 @@ const service = {
   },
 
   getAll: async () => {
-    return await SeasonDetail.findAll({
-      where: {
-        active: true,
-      },
-    });
+    return SeasonDetail.findAll();
   },
 
   getCurrentActive: () => {
@@ -32,28 +27,24 @@ const service = {
 
   refreshCurrentSeasonDetails: async () => {
     console.log("Refresh cache for currentSeasonDetails");
-    return (currentSeasonDetailCache = await SeasonDetail.findOne({
+    return (currentSeasonDetailCache = SeasonDetail.findOne({
       where: {
-        active: true,
-        year: {
-          [Op.lte]: new Date().getFullYear(),
-        },
+        year: new Date().getFullYear(),
       },
-      order: [["year", "DESC"]],
     }));
   },
 
   create: async (season) => {
-    return await SeasonDetail.create(season);
+    return SeasonDetail.create(season);
   },
 
   update: async (season) => {
-    return await SeasonDetail.save(season);
+    return SeasonDetail.save(season);
   },
 
   delete: async (id) => {
-    return await SeasonDetail.destroy({
-      where: { id: id },
+    return SeasonDetail.destroy({
+      where: { id },
     });
   },
 };

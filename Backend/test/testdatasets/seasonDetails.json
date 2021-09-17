@@ -1,15 +1,18 @@
 [
   {
-    "year": 2018,
-    "startDate":"2018-03-01T00:00:00",
-    "endDate":"2018-10-01T00:00:00",
+    "year": 2019,
+    "startDate":"2019-03-01T00:00:00",
+    "endDate":"2019-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 2,
     "seniorBonusPerAge" :2,
     "seniorStartAge" : 60,
-    "active": true,
-    "factors": [
-      {
+    "flightTypeFactors": {
+        "fai": 2,
+        "flat":1.5,
+        "free":1
+    },
+    "gliderFactors": {
         "AB_low": 2.8,
         "AB_high": 2.7,
         "C_low": 2.6,
@@ -20,8 +23,7 @@
         "HG_1_Turm": 2.2,
         "HG_1_Turmlos": 1.9,
         "HG_5_starr": 1.5
-      }
-    ],
+    },
     "ratingClasses":{
       "gsSport":["AB_low","AB_high"],
       "gsIntermediate":["C_low","C_high"],
@@ -39,9 +41,12 @@
     "numberOfFlightsForShirt": 5,
     "seniorBonusPerAge" :2,
     "seniorStartAge" : 60,
-    "active": false,
-    "factors": [
-      {
+    "flightTypeFactors": {
+      "fai": 2,
+      "flat":1.5,
+      "free":1
+    },
+    "gliderFactors": {
         "AB_low": 2.8,
         "AB_high": 2.7,
         "C_low": 2.6,
@@ -52,8 +57,7 @@
         "HG_1_Turm": 2.2,
         "HG_1_Turmlos": 1.9,
         "HG_5_starr": 1.5
-      }
-    ],
+    },
     "ratingClasses":{
       "gsSport":["AB_low","AB_high"],
       "gsIntermediate":["C_low","C_high"],
@@ -71,9 +75,12 @@
     "numberOfFlightsForShirt": 3,
     "seniorBonusPerAge" :2,
     "seniorStartAge" : 60,
-    "active": true,
-    "factors": [
-      {
+    "flightTypeFactors": {
+      "fai": 2,
+      "flat":1.5,
+      "free":1
+    },
+    "gliderFactors": {
         "AB_low": 2.8,
         "AB_high": 2.7,
         "C_low": 2.6,
@@ -84,8 +91,7 @@
         "HG_1_Turm": 2.2,
         "HG_1_Turmlos": 1.9,
         "HG_5_starr": 1.5
-      }
-    ],
+    },
     "ratingClasses":{
       "gsSport":["AB_low","AB_high"],
       "gsIntermediate":["C_low","C_high"],

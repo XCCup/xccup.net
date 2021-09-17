@@ -20,12 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    active: {
-      type: DataTypes.BOOLEAN,
+    gliderFactors: {
+      type: DataTypes.JSON,
       allowNull: false,
-      defaultValue: false,
     },
-    factors: {
+    flightTypeFactors: {
       type: DataTypes.JSON,
       allowNull: false,
     },

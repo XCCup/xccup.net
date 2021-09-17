@@ -37,7 +37,6 @@ const userService = {
     const result =
       user.role == userService.ROLE.ADMIN ||
       user.role == userService.ROLE.MODERATOR;
-    console.log("isMod: " + result);
     return result;
   },
   delete: async (id) => {
