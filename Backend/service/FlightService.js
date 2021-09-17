@@ -1,16 +1,20 @@
+const sequelize = require("sequelize");
 const FlightComment = require("../config/postgres")["FlightComment"];
 const Flight = require("../config/postgres")["Flight"];
 const User = require("../config/postgres")["User"];
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
+
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
 const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
+
 const cacheManager = require("./CacheManager");
-const sequelize = require("sequelize");
+
+const { isNoWorkday } = require("../helper/HolidayCalculator");
 
 const flightService = {
   STATE_IN_RANKING: "In Wertung",
@@ -191,6 +195,7 @@ const flightService = {
   extractFixesAddLocationsAndDateOfFlight: async (flight) => {
     const fixes = IgcAnalyzer.extractFixes(flight);
     flight.dateOfFlight = new Date(fixes[0].timestamp);
+    flight.isWeekend = isNoWorkday(flight.dateOfFlight);
 
     const flyingSite = await findClosestTakeoff(fixes[0]);
     flight.siteId = flyingSite.id;
