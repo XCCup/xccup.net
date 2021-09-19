@@ -3,9 +3,11 @@ const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
 const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
+
 const seasonService = require("./SeasonService");
-const { Op } = require("sequelize");
 const userService = require("./UserService");
+const { Op } = require("sequelize");
+const sequelize = require("sequelize");
 
 //TODO Was passiert mit alten Flügen die gelöscht wurden? Aktuell würde die Wertung für diese Jahre nachträglich angepasst. Das sollte vermieden werden
 
@@ -90,11 +92,88 @@ const service = {
   },
 
   getSiteRecords: async () => {
-    // const where = createDefaultWhereForFlight(seasonDetail, true);
-    // const resultQuery = await queryDb(where, null, null, null, region);
-    // return limit ? result.slice(0, limit) : result;
+    const freeRecords = findSiteRecordOfType("FREE");
+    const flatRecords = findSiteRecordOfType("FLAT");
+    const faiRecords = findSiteRecordOfType("FAI");
+
+    return await Promise.all([freeRecords, flatRecords, faiRecords]).then(
+      (values) => {
+        return mergeRecordsByTakeoffs(values);
+      }
+    );
   },
 };
+
+async function mergeRecordsByTakeoffs(records) {
+  const allSites = await FlyingSite.findAll();
+  return allSites.map((site) => {
+    const freeSite = records[0].find((entry) => site.id == entry.takeoff.id);
+    const flatSite = records[1].find((entry) => site.id == entry.takeoff.id);
+    const faiSite = records[2].find((entry) => site.id == entry.takeoff.id);
+
+    const res = { takeoff: {} };
+    res.takeoff.id = site.id;
+    res.takeoff.name = site.name;
+    res.takeoff.description = site.description;
+    res.free = createEntryOfRecord(freeSite);
+    res.flat = createEntryOfRecord(flatSite);
+    res.fai = createEntryOfRecord(faiSite);
+    return res;
+  });
+}
+
+function createEntryOfRecord(siteRecord) {
+  const res = {};
+  if (siteRecord) {
+    res.user = siteRecord.User;
+    res.flightId = siteRecord.id;
+    res.points = siteRecord.flightPoints;
+    res.distance = siteRecord.flightDistance;
+  } else {
+    res.user = null;
+    res.flightId = null;
+    res.points = 0;
+    res.distance = 0;
+  }
+  return res;
+}
+
+async function findSiteRecordOfType(type) {
+  return Flight.findAll({
+    include: [
+      {
+        model: FlyingSite,
+        as: "takeoff",
+        attributes: ["name", "id", "description"],
+      },
+      {
+        model: User,
+        attributes: ["name", "id"],
+      },
+    ],
+    where: {
+      flightType: type,
+    },
+    attributes: [
+      "id",
+      "flightPoints",
+      "flightDistance",
+      "flightType",
+      [sequelize.fn("max", sequelize.col("flightPoints")), "maxFlightPoints"],
+    ],
+    group: [
+      "User.id",
+      "User.name",
+      "Flight.id",
+      "Flight.flightPoints",
+      "Flight.flightDistance",
+      "Flight.flightType",
+      "takeoff.name",
+      "takeoff.id",
+      "takeoff.description",
+    ],
+  });
+}
 
 async function queryDb(where, gender, limit, site, region) {
   const userInclude = createIncludeStatementUser(gender);

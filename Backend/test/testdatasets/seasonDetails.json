@@ -25,10 +25,10 @@
         "HG_5_starr": 1.5
     },
     "ratingClasses":{
+      "gsTandem":["Tandem"],
       "gsSport":["AB_low","AB_high"],
       "gsIntermediate":["C_low","C_high"],
       "gsPerformance":["D_low","D_high"],
-      "gsTandem":["Tandem"],
       "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
       "hgFixed":["HG_5_starr"]
     }

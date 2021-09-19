@@ -8,7 +8,8 @@ SET TIMEZONE='Europe/Berlin';
 
 Enable PostGIS Extension:
 https://stackoverflow.com/questions/6850500/postgis-installation-type-geometry-does-not-exist
-psql -> CREATE EXTENSION postgis;
+docker exec -it db psql -U xccup_user xccup_db -c "create extension postgis;"
+docker exec -it db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
 
 HowTo Connect PgAdmin to Postgres:
 Add New Server -> Connection -> Hostname: <<name_of_postgres_container>> Port: 5432

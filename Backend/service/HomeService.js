@@ -18,7 +18,7 @@ const service = {
 };
 
 async function prepareHomeData() {
-  const currentSeason = seasonService.getCurrentActive();
+  const currentSeason = await seasonService.getCurrentActive();
 
   const numberOfTeams = teamService.countActive();
   const numberOfClubs = clubService.count();
@@ -53,6 +53,7 @@ async function prepareHomeData() {
     for (let index = 0; index < values.length; index++) {
       res[entries[index][0]] = values[index];
     }
+    res.seasonDetails = currentSeason;
     return res;
   });
 }
