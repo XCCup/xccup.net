@@ -25,13 +25,24 @@ async function prepareHomeData() {
   const numberOfUsers = userService.count();
   const bestTeams = resultService.getTeam(null, null, 3);
   const bestClubs = resultService.getClub(null, 3);
-  const bestFlightsOverall = flightService.getAll(
-    null,
+  const today = new Date();
+  const bestFlightsOverallCurrentYear = flightService.getAll(
+    today.getFullYear(),
     null,
     null,
     null,
     5,
     true
+  );
+  const todaysFlights = flightService.getAll(
+    null,
+    null,
+    null,
+    null,
+    null,
+    true,
+    new Date(today.getFullYear(), today.getMonth(), today.getDate()),
+    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
   );
 
   const dbRequests = {
@@ -40,12 +51,11 @@ async function prepareHomeData() {
     numberOfUsers,
     bestTeams,
     bestClubs,
-    bestFlightsOverall,
+    bestFlightsOverallCurrentYear,
+    todaysFlights,
   };
 
   addRequestsForRatingClasses(currentSeason, dbRequests);
-
-  // 5 Beste Flüge des Tages
 
   return Promise.all(Object.values(dbRequests)).then((values) => {
     const entries = Object.entries(dbRequests);

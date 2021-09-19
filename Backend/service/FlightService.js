@@ -24,9 +24,28 @@ const flightService = {
 
   FLIGHT_TYPES: ["FREE", "FLAT", "FAI"],
 
-  getAll: async (year, site, type, ratingClass, limit, sortByPoints) => {
+  getAll: async (
+    year,
+    site,
+    type,
+    ratingClass,
+    limit,
+    sortByPoints,
+    startDate,
+    endDate
+  ) => {
     let fillCache = false;
-    if (isCacheSufficent(year, site, type, ratingClass, limit, sortByPoints)) {
+    if (
+      isCacheSufficent(year, [
+        site,
+        type,
+        ratingClass,
+        limit,
+        sortByPoints,
+        startDate,
+        endDate,
+      ])
+    ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
       if (currentYearCache) return currentYearCache;
       else fillCache = true;
@@ -36,6 +55,7 @@ const flightService = {
       ? ["flightPoints", "DESC"]
       : ["dateOfFlight", "DESC"];
 
+
     const queryObject = {
       include: [
         {
@@ -44,7 +64,13 @@ const flightService = {
         },
         createSiteInclude(site),
       ],
-      where: await createWhereStatement(year, type, ratingClass),
+      where: await createWhereStatement(
+        year,
+        type,
+        ratingClass,
+        startDate,
+        endDate
+      ),
       order: [orderStatement],
     };
 
@@ -125,7 +151,7 @@ const flightService = {
 
   delete: async (id) => {
     cacheManager.invalidateCaches();
-    return await Flight.destroy({
+    return Flight.destroy({
       where: { id },
     });
   },
@@ -251,9 +277,15 @@ async function addUserData(flight) {
   flight.ageOfUser = user.getAge();
 }
 
-async function createWhereStatement(year, flightType, ratingClass) {
+async function createWhereStatement(
+  year,
+  flightType,
+  ratingClass,
+  startDate,
+  endDate
+) {
   let whereStatement;
-  if (flightType || year || ratingClass) {
+  if (flightType || year || ratingClass || startDate || endDate) {
     whereStatement = {};
   }
   if (flightType) {
@@ -265,6 +297,12 @@ async function createWhereStatement(year, flightType, ratingClass) {
       year
     );
   }
+  if (startDate && endDate) {
+    whereStatement.dateOfFlight = {
+      [sequelize.Op.between]: [startDate, endDate],
+    };
+  }
+
   if (ratingClass) {
     const ratingValues =
       (await getCurrentActive()).ratingClasses[ratingClass] ?? [];
@@ -295,14 +333,9 @@ function createSiteInclude(site) {
  *
  * @returns
  */
-function isCacheSufficent(year, site, type, ratingClass, limit, sortByPoints) {
+function isCacheSufficent(year, values) {
   return (
-    year == new Date().getFullYear() &&
-    !sortByPoints &&
-    !site &&
-    !type &&
-    !ratingClass &&
-    !limit
+    year == new Date().getFullYear() && values.every((e) => e == undefined)
   );
 }
 

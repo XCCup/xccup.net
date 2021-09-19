@@ -25,6 +25,8 @@ router.get(
     query("type").optional().not().isEmpty().trim().escape(),
     query("ratingClass").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
+    query("startDate").optional().isDate(), //e.g. 2002-07-15
+    query("endDate").optional().isDate(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -33,13 +35,19 @@ router.get(
     const type = req.query.type;
     const ratingClass = req.query.ratingClass;
     const limit = req.query.limit;
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+
     try {
       const flights = await service.getAll(
         year,
         site,
         type,
         ratingClass,
-        limit
+        limit,
+        null,
+        startDate,
+        endDate
       );
       res.json(flights);
     } catch (error) {
