@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    gliderFactors: {
+    gliderClasses: {
       type: DataTypes.JSON,
       allowNull: false,
     },

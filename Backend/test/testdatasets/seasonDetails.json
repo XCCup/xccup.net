@@ -12,7 +12,7 @@
       "flat": 1.5,
       "free": 1
     },
-    "gliderFactors": {
+    "gliderClasses": {
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2"
@@ -56,41 +56,41 @@
     },
     "ratingClasses": {
       "gsTandem": {
-        "values": [
+        "gliderClasses": [
           "Tandem"
         ],
         "description": "Gleitschirm Tandem"
       },
       "gsSport": {
-        "values": [
+        "gliderClasses": [
           "AB_low",
           "AB_high"
         ],
         "description": "Sportklasse (EN A + EN B, Tandem)"
       },
       "gsIntermediate": {
-        "values": [
+        "gliderClasses": [
           "C_low",
           "C_high"
         ],
         "description": "Intermediate-Klasse (EN C)"
       },
       "gsPerformance": {
-        "values": [
+        "gliderClasses": [
           "D_low",
           "D_high"
         ],
         "description": "Performance-Klasse (EN D + CCC)"
       },
       "hgFlex": {
-        "values": [
+        "gliderClasses": [
           "HG_1_Turm",
           "HG_1_Turmlos"
         ],
         "description": "Flexdrachen"
       },
       "hgFixed": {
-        "values": [
+        "gliderClasses": [
           "HG_5_starr"
         ],
         "description": "Starrflügler"
@@ -114,7 +114,7 @@
       "flat": 1.5,
       "free": 1
     },
-    "gliderFactors": {
+    "gliderClasses": {
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2"
@@ -158,41 +158,41 @@
     },
     "ratingClasses": {
       "gsSport": {
-        "values": [
+        "gliderClasses": [
           "AB_low",
           "AB_high"
         ],
         "description": "Sportklasse (EN A + EN B, Tandem)"
       },
       "gsIntermediate": {
-        "values": [
+        "gliderClasses": [
           "C_low",
           "C_high"
         ],
         "description": "Intermediate-Klasse (EN C)"
       },
       "gsPerformance": {
-        "values": [
+        "gliderClasses": [
           "D_low",
           "D_high"
         ],
         "description": "Performance-Klasse (EN D + CCC)"
       },
       "gsTandem": {
-        "values": [
+        "gliderClasses": [
           "Tandem"
         ],
         "description": "Gleitschirm Tandem"
       },
       "hgFlex": {
-        "values": [
+        "gliderClasses": [
           "HG_1_Turm",
           "HG_1_Turmlos"
         ],
         "description": "Flexdrachen"
       },
       "hgFixed": {
-        "values": [
+        "gliderClasses": [
           "HG_5_starr"
         ],
         "description": "Starrflügler"
@@ -216,7 +216,7 @@
       "flat": 1.5,
       "free": 1
     },
-    "gliderFactors": {
+    "gliderClasses": {
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2"
@@ -260,41 +260,41 @@
     },
     "ratingClasses": {
       "gsSport": {
-        "values": [
+        "gliderClasses": [
           "AB_low",
           "AB_high"
         ],
         "description": "Sportklasse (EN A + EN B, Tandem)"
       },
       "gsIntermediate": {
-        "values": [
+        "gliderClasses": [
           "C_low",
           "C_high"
         ],
         "description": "Intermediate-Klasse (EN C)"
       },
       "gsPerformance": {
-        "values": [
+        "gliderClasses": [
           "D_low",
           "D_high"
         ],
         "description": "Performance-Klasse (EN D + CCC)"
       },
       "gsTandem": {
-        "values": [
+        "gliderClasses": [
           "Tandem"
         ],
         "description": "Gleitschirm Tandem"
       },
       "hgFlex": {
-        "values": [
+        "gliderClasses": [
           "HG_1_Turm",
           "HG_1_Turmlos"
         ],
         "description": "Flexdrachen"
       },
       "hgFixed": {
-        "values": [
+        "gliderClasses": [
           "HG_5_starr"
         ],
         "description": "Starrflügler"
@@ -318,7 +318,7 @@
       "flat": 1.5,
       "free": 1
     },
-    "gliderFactors": {
+    "gliderClasses": {
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2"
@@ -362,7 +362,7 @@
     },
     "ratingClasses": {
       "gsSport": {
-        "values": [
+        "gliderClasses": [
           "AB_low",
           "AB_high",
           "Tandem"
@@ -370,7 +370,7 @@
         "description": "Sportklasse (EN A + EN B, Tandem)"
       },
       "gsIntermediate": {
-        "values": [
+        "gliderClasses": [
           "AB_low",
           "AB_high",
           "C_low",
@@ -380,7 +380,7 @@
         "description": "Intermediate-Klasse (EN C)"
       },
       "gsPerformance": {
-        "values": [
+        "gliderClasses": [
           "AB_low",
           "AB_high",
           "C_low",
@@ -392,20 +392,20 @@
         "description": "Performance-Klasse (EN D + CCC)"
       },
       "gsTandem": {
-        "values": [
+        "gliderClasses": [
           "Tandem"
         ],
         "description": "Gleitschirm Tandem"
       },
       "hgFlex": {
-        "values": [
+        "gliderClasses": [
           "HG_1_Turm",
           "HG_1_Turmlos"
         ],
         "description": "Flexdrachen"
       },
       "hgFixed": {
-        "values": [
+        "gliderClasses": [
           "HG_5_starr"
         ],
         "description": "Starrflügler"

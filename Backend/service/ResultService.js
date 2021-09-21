@@ -29,9 +29,10 @@ const service = {
 
     const where = createDefaultWhereForFlight(seasonDetail, isSenior);
     if (ratingClass) {
-      const ratingValues = seasonDetail.ratingClasses[ratingClass].values ?? [];
+      const gliderClasses =
+        seasonDetail.ratingClasses[ratingClass].gliderClasses ?? [];
       where.glider = {
-        type: { [Op.in]: ratingValues },
+        type: { [Op.in]: gliderClasses },
       };
     }
     if (isWeekend) {
@@ -73,6 +74,8 @@ const service = {
     limitFlightsForUserAndCalcTotals(resultOverUser, 3);
     const resultOverTeam = aggreateOverTeamAndCalcTotals(resultOverUser);
     sortDescendingByTotalPoints(resultOverTeam);
+
+    //TODO Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
 
     return limit ? resultOverTeam.slice(0, limit) : resultOverTeam;
   },

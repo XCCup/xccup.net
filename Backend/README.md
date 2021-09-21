@@ -23,6 +23,7 @@ After the first start up of the DB, it's necessary to activate the PostGIS plugi
 
 - Lookup credentials in .env
 - Add New Server -> Connection -> Hostname: <<name_of_ab_container>> Port: 5432
+- Tables can be via: Databases -> xccup_db -> Schemas -> public -> Tables
 
 #### Complie the OLC Binary
 
@@ -30,7 +31,7 @@ After the first start up of the DB, it's necessary to activate the PostGIS plugi
 
 ## Todo
 
-- [ ] Punkteauswertung erst nach commit des Glider starten, bzw. neu Berechnung bei Änderung durchführen
+- [ ] Punkteauswertung erst nach commit des Glider starten, bzw. neu Berechnung bei Änderung des Glidertypes durchführen
 - [ ] IgcAnalyzer mit Unit-Test versehen
 - [ ] Endpoint Hersteller erstellen
 - [ ] Glider im Profil löschen/hinzufügen
