@@ -110,12 +110,24 @@ const requesterIsNotOwner = async (req, res, otherId) => {
   return false;
 };
 
+/**
+ * Checks if the the userId in the request token belongs to a user of role "administrator".
+ * @param {*} req The request that will be checked for the token and the embedded id.
+ * @param {*} res The response to the request. Will send FORBIDDEN if ids don't match.
+ * @returns True if requester has role administrator. Otherwise false.
+ */
 const requesterIsNotAdmin = async (req, res) => {
   if (!(await userService.isAdmin(req.user.id))) {
     return res.sendStatus(FORBIDDEN);
   }
 };
 
+/**
+ * Checks if the the userId in the request token belongs to a user of role "moderator".
+ * @param {*} req The request that will be checked for the token and the embedded id.
+ * @param {*} res The response to the request. Will send FORBIDDEN if ids don't match.
+ * @returns True if requester has role moderator or higher. Otherwise false.
+ */
 const requesterIsNotModerator = async (req, res) => {
   if (!(await userService.isModerator(req.user.id))) {
     return res.sendStatus(FORBIDDEN);

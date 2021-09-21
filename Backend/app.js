@@ -43,6 +43,7 @@ app.use("/teams", require("./controller/TeamController"));
 app.use("/airspaces", require("./controller/AirspaceController"));
 app.use("/results", require("./controller/ResultController"));
 app.use("/home", require("./controller/HomeController"));
+app.use("/news", require("./controller/NewsController"));
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 // eslint-disable-next-line no-unused-vars
