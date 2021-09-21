@@ -1,6 +1,6 @@
 const FlightComment = require("../config/postgres")["FlightComment"];
 
-const commentService = {
+const service = {
   getById: async (id) => {
     return await FlightComment.findByPk(id);
   },
@@ -27,4 +27,4 @@ const commentService = {
   },
 };
 
-module.exports = commentService;
+module.exports = service;

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     type: {
-      type: DataTypes.STRING, //team, club, senior, newcomer
+      type: DataTypes.STRING, //newcomer
       allowNull: false,
     },
     result: {

@@ -1,14 +1,29 @@
 const FlightFixes = require("../config/postgres")["FlightFixes"];
+const Airspace = require("../config/postgres")["Airspace"];
+const { Op } = require("sequelize");
 
 const service = {
   getById: async (id) => {
-    return await FlightFixes.findByPk(id);
+    return Airspace.findByPk(id);
   },
 
   getByName: async (name) => {
-    return await FlightFixes.findOne({
+    return Airspace.findOne({
       where: {
         name,
+      },
+    });
+  },
+
+  /**
+   * class='RMZ', 'Q', 'W' will not be retrieved
+   */
+  getAllRelevant: async () => {
+    return Airspace.findAll({
+      where: {
+        class: {
+          [Op.notIn]: ["RMZ", "Q", "W"],
+        },
       },
     });
   },
