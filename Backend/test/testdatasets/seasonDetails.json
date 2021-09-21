@@ -1,142 +1,419 @@
 [
   {
     "year": 2019,
-    "startDate":"2019-03-01T00:00:00",
-    "endDate":"2019-10-01T00:00:00",
+    "startDate": "2019-03-01T00:00:00",
+    "endDate": "2019-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 2,
-    "seniorBonusPerAge" :2,
-    "seniorStartAge" : 60,
+    "seniorBonusPerAge": 2,
+    "seniorStartAge": 60,
     "flightTypeFactors": {
-        "fai": 2,
-        "flat":1.5,
-        "free":1
+      "fai": 2,
+      "flat": 1.5,
+      "free": 1
     },
     "gliderFactors": {
-        "AB_low": 2.8,
-        "AB_high": 2.7,
-        "C_low": 2.6,
-        "C_high": 2.5,
-        "D_low": 2.4,
-        "D_high": 2.2,
-        "Tandem": 3.0,
-        "HG_1_Turm": 2.2,
-        "HG_1_Turmlos": 1.9,
-        "HG_5_starr": 1.5
+      "AB_low": {
+        "value": 2.8,
+        "description": "Schirme EN A+B mit einer Streckung <5,2"
+      },
+      "AB_high": {
+        "value": 2.7,
+        "description": "Schirme EN A+B mit einer Streckung >=5,2"
+      },
+      "C_low": {
+        "value": 2.6,
+        "description": "Schirme EN C mit einer Streckung <6,4"
+      },
+      "C_high": {
+        "value": 2.5,
+        "description": "Schirme EN C mit einer Streckung >=6,4"
+      },
+      "D_low": {
+        "value": 2.4,
+        "description": "Schirme mit EN-D und einer Streckung von <7,0"
+      },
+      "D_high": {
+        "value": 2.2,
+        "description": "Schirme mit EN-D oder CCC und einer Streckung von 7,0 und mehr"
+      },
+      "Tandem": {
+        "value": 3,
+        "description": "Tandemschirme"
+      },
+      "HG_1_Turm": {
+        "value": 2.2,
+        "description": "Turmdrachen"
+      },
+      "HG_1_Turmlos": {
+        "value": 1.9,
+        "description": "Drachen turmlos"
+      },
+      "HG_5_starr": {
+        "value": 1.5,
+        "description": "Drachen Starre"
+      }
     },
-    "ratingClasses":{
-      "gsTandem":["Tandem"],
-      "gsSport":["AB_low","AB_high"],
-      "gsIntermediate":["C_low","C_high"],
-      "gsPerformance":["D_low","D_high"],
-      "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
-      "hgFixed":["HG_5_starr"]
+    "ratingClasses": {
+      "gsTandem": {
+        "values": [
+          "Tandem"
+        ],
+        "description": "Gleitschirm Tandem"
+      },
+      "gsSport": {
+        "values": [
+          "AB_low",
+          "AB_high"
+        ],
+        "description": "Sportklasse (EN A + EN B, Tandem)"
+      },
+      "gsIntermediate": {
+        "values": [
+          "C_low",
+          "C_high"
+        ],
+        "description": "Intermediate-Klasse (EN C)"
+      },
+      "gsPerformance": {
+        "values": [
+          "D_low",
+          "D_high"
+        ],
+        "description": "Performance-Klasse (EN D + CCC)"
+      },
+      "hgFlex": {
+        "values": [
+          "HG_1_Turm",
+          "HG_1_Turmlos"
+        ],
+        "description": "Flexdrachen"
+      },
+      "hgFixed": {
+        "values": [
+          "HG_5_starr"
+        ],
+        "description": "Starrflügler"
+      }
     },
-    "stateChampionChips": ["LUX","RP"]
+    "stateChampionChips": [
+      "LUX",
+      "RP"
+    ]
   },
   {
     "year": 2020,
-    "startDate":"2020-03-01T00:00:00",
-    "endDate":"2020-10-01T00:00:00",
+    "startDate": "2020-03-01T00:00:00",
+    "endDate": "2020-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 5,
-    "seniorBonusPerAge" :2,
-    "seniorStartAge" : 60,
+    "seniorBonusPerAge": 2,
+    "seniorStartAge": 60,
     "flightTypeFactors": {
       "fai": 2,
-      "flat":1.5,
-      "free":1
+      "flat": 1.5,
+      "free": 1
     },
     "gliderFactors": {
-        "AB_low": 2.8,
-        "AB_high": 2.7,
-        "C_low": 2.6,
-        "C_high": 2.5,
-        "D_low": 2.4,
-        "D_high": 2.2,
-        "Tandem": 3.0,
-        "HG_1_Turm": 2.2,
-        "HG_1_Turmlos": 1.9,
-        "HG_5_starr": 1.5
+      "AB_low": {
+        "value": 2.8,
+        "description": "Schirme EN A+B mit einer Streckung <5,2"
+      },
+      "AB_high": {
+        "value": 2.7,
+        "description": "Schirme EN A+B mit einer Streckung >=5,2"
+      },
+      "C_low": {
+        "value": 2.6,
+        "description": "Schirme EN C mit einer Streckung <6,4"
+      },
+      "C_high": {
+        "value": 2.5,
+        "description": "Schirme EN C mit einer Streckung >=6,4"
+      },
+      "D_low": {
+        "value": 2.4,
+        "description": "Schirme mit EN-D und einer Streckung von <7,0"
+      },
+      "D_high": {
+        "value": 2.2,
+        "description": "Schirme mit EN-D oder CCC und einer Streckung von 7,0 und mehr"
+      },
+      "Tandem": {
+        "value": 3,
+        "description": "Tandemschirme"
+      },
+      "HG_1_Turm": {
+        "value": 2.2,
+        "description": "Turmdrachen"
+      },
+      "HG_1_Turmlos": {
+        "value": 1.9,
+        "description": "Drachen turmlos"
+      },
+      "HG_5_starr": {
+        "value": 1.5,
+        "description": "Drachen Starre"
+      }
     },
-    "ratingClasses":{
-      "gsSport":["AB_low","AB_high"],
-      "gsIntermediate":["C_low","C_high"],
-      "gsPerformance":["D_low","D_high"],
-      "gsTandem":["Tandem"],
-      "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
-      "hgFixed":["HG_5_starr"]
+    "ratingClasses": {
+      "gsSport": {
+        "values": [
+          "AB_low",
+          "AB_high"
+        ],
+        "description": "Sportklasse (EN A + EN B, Tandem)"
+      },
+      "gsIntermediate": {
+        "values": [
+          "C_low",
+          "C_high"
+        ],
+        "description": "Intermediate-Klasse (EN C)"
+      },
+      "gsPerformance": {
+        "values": [
+          "D_low",
+          "D_high"
+        ],
+        "description": "Performance-Klasse (EN D + CCC)"
+      },
+      "gsTandem": {
+        "values": [
+          "Tandem"
+        ],
+        "description": "Gleitschirm Tandem"
+      },
+      "hgFlex": {
+        "values": [
+          "HG_1_Turm",
+          "HG_1_Turmlos"
+        ],
+        "description": "Flexdrachen"
+      },
+      "hgFixed": {
+        "values": [
+          "HG_5_starr"
+        ],
+        "description": "Starrflügler"
+      }
     },
-    "stateChampionChips": ["LUX","RP"]
+    "stateChampionChips": [
+      "LUX",
+      "RP"
+    ]
   },
   {
     "year": 2021,
-    "startDate":"2021-03-01T00:00:00",
-    "endDate":"2021-10-01T00:00:00",
+    "startDate": "2021-03-01T00:00:00",
+    "endDate": "2021-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 3,
-    "seniorBonusPerAge" :2,
-    "seniorStartAge" : 60,
+    "seniorBonusPerAge": 2,
+    "seniorStartAge": 60,
     "flightTypeFactors": {
       "fai": 2,
-      "flat":1.5,
-      "free":1
+      "flat": 1.5,
+      "free": 1
     },
     "gliderFactors": {
-        "AB_low": 2.8,
-        "AB_high": 2.7,
-        "C_low": 2.6,
-        "C_high": 2.5,
-        "D_low": 2.4,
-        "D_high": 2.2,
-        "Tandem": 3.0,
-        "HG_1_Turm": 2.2,
-        "HG_1_Turmlos": 1.9,
-        "HG_5_starr": 1.5
+      "AB_low": {
+        "value": 2.8,
+        "description": "Schirme EN A+B mit einer Streckung <5,2"
+      },
+      "AB_high": {
+        "value": 2.7,
+        "description": "Schirme EN A+B mit einer Streckung >=5,2"
+      },
+      "C_low": {
+        "value": 2.6,
+        "description": "Schirme EN C mit einer Streckung <6,4"
+      },
+      "C_high": {
+        "value": 2.5,
+        "description": "Schirme EN C mit einer Streckung >=6,4"
+      },
+      "D_low": {
+        "value": 2.4,
+        "description": "Schirme mit EN-D und einer Streckung von <7,0"
+      },
+      "D_high": {
+        "value": 2.2,
+        "description": "Schirme mit EN-D oder CCC und einer Streckung von 7,0 und mehr"
+      },
+      "Tandem": {
+        "value": 3,
+        "description": "Tandemschirme"
+      },
+      "HG_1_Turm": {
+        "value": 2.2,
+        "description": "Turmdrachen"
+      },
+      "HG_1_Turmlos": {
+        "value": 1.9,
+        "description": "Drachen turmlos"
+      },
+      "HG_5_starr": {
+        "value": 1.5,
+        "description": "Drachen Starre"
+      }
     },
-    "ratingClasses":{
-      "gsSport":["AB_low","AB_high"],
-      "gsIntermediate":["C_low","C_high"],
-      "gsPerformance":["D_low","D_high"],
-      "gsTandem":["Tandem"],
-      "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
-      "hgFixed":["HG_5_starr"]
+    "ratingClasses": {
+      "gsSport": {
+        "values": [
+          "AB_low",
+          "AB_high"
+        ],
+        "description": "Sportklasse (EN A + EN B, Tandem)"
+      },
+      "gsIntermediate": {
+        "values": [
+          "C_low",
+          "C_high"
+        ],
+        "description": "Intermediate-Klasse (EN C)"
+      },
+      "gsPerformance": {
+        "values": [
+          "D_low",
+          "D_high"
+        ],
+        "description": "Performance-Klasse (EN D + CCC)"
+      },
+      "gsTandem": {
+        "values": [
+          "Tandem"
+        ],
+        "description": "Gleitschirm Tandem"
+      },
+      "hgFlex": {
+        "values": [
+          "HG_1_Turm",
+          "HG_1_Turmlos"
+        ],
+        "description": "Flexdrachen"
+      },
+      "hgFixed": {
+        "values": [
+          "HG_5_starr"
+        ],
+        "description": "Starrflügler"
+      }
     },
-    "stateChampionChips": ["LUX","RP"]
+    "stateChampionChips": [
+      "LUX",
+      "RP"
+    ]
   },
   {
     "year": 2022,
-    "startDate":"2022-03-01T00:00:00",
-    "endDate":"2022-10-01T00:00:00",
+    "startDate": "2022-03-01T00:00:00",
+    "endDate": "2022-10-01T00:00:00",
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 2,
-    "seniorBonusPerAge" :2,
-    "seniorStartAge" : 60,
+    "seniorBonusPerAge": 2,
+    "seniorStartAge": 60,
     "flightTypeFactors": {
       "fai": 2,
-      "flat":1.5,
-      "free":1
+      "flat": 1.5,
+      "free": 1
     },
     "gliderFactors": {
-        "AB_low": 2.8,
-        "AB_high": 2.7,
-        "C_low": 2.6,
-        "C_high": 2.5,
-        "D_low": 2.4,
-        "D_high": 2.2,
-        "Tandem": 3.0,
-        "HG_1_Turm": 2.2,
-        "HG_1_Turmlos": 1.9,
-        "HG_5_starr": 1.5
+      "AB_low": {
+        "value": 2.8,
+        "description": "Schirme EN A+B mit einer Streckung <5,2"
+      },
+      "AB_high": {
+        "value": 2.7,
+        "description": "Schirme EN A+B mit einer Streckung >=5,2"
+      },
+      "C_low": {
+        "value": 2.6,
+        "description": "Schirme EN C mit einer Streckung <6,4"
+      },
+      "C_high": {
+        "value": 2.5,
+        "description": "Schirme EN C mit einer Streckung >=6,4"
+      },
+      "D_low": {
+        "value": 2.4,
+        "description": "Schirme mit EN-D und einer Streckung von <7,0"
+      },
+      "D_high": {
+        "value": 2.2,
+        "description": "Schirme mit EN-D oder CCC und einer Streckung von 7,0 und mehr"
+      },
+      "Tandem": {
+        "value": 3,
+        "description": "Tandemschirme"
+      },
+      "HG_1_Turm": {
+        "value": 2.2,
+        "description": "Turmdrachen"
+      },
+      "HG_1_Turmlos": {
+        "value": 1.9,
+        "description": "Drachen turmlos"
+      },
+      "HG_5_starr": {
+        "value": 1.5,
+        "description": "Drachen Starre"
+      }
     },
-    "ratingClasses":{
-      "gsSport":["AB_low","AB_high"],
-      "gsIntermediate":["AB_low","AB_high","C_low","C_high"],
-      "gsPerformance":["AB_low","AB_high","C_low","C_high","D_low","D_high"],
-      "gsTandem":["Tandem"],
-      "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
-      "hgFixed":["HG_5_starr"]
+    "ratingClasses": {
+      "gsSport": {
+        "values": [
+          "AB_low",
+          "AB_high",
+          "Tandem"
+        ],
+        "description": "Sportklasse (EN A + EN B, Tandem)"
+      },
+      "gsIntermediate": {
+        "values": [
+          "AB_low",
+          "AB_high",
+          "C_low",
+          "C_high",
+          "Tandem"
+        ],
+        "description": "Intermediate-Klasse (EN C)"
+      },
+      "gsPerformance": {
+        "values": [
+          "AB_low",
+          "AB_high",
+          "C_low",
+          "C_high",
+          "D_low",
+          "D_high",
+          "Tandem"
+        ],
+        "description": "Performance-Klasse (EN D + CCC)"
+      },
+      "gsTandem": {
+        "values": [
+          "Tandem"
+        ],
+        "description": "Gleitschirm Tandem"
+      },
+      "hgFlex": {
+        "values": [
+          "HG_1_Turm",
+          "HG_1_Turmlos"
+        ],
+        "description": "Flexdrachen"
+      },
+      "hgFixed": {
+        "values": [
+          "HG_5_starr"
+        ],
+        "description": "Starrflügler"
+      }
     },
-    "stateChampionChips": ["LUX","RP"]
+    "stateChampionChips": [
+      "LUX",
+      "RP"
+    ]
   }
 ]

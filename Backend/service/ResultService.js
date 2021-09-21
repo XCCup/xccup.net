@@ -29,7 +29,7 @@ const service = {
 
     const where = createDefaultWhereForFlight(seasonDetail, isSenior);
     if (ratingClass) {
-      const ratingValues = seasonDetail.ratingClasses[ratingClass] ?? [];
+      const ratingValues = seasonDetail.ratingClasses[ratingClass].values ?? [];
       where.glider = {
         type: { [Op.in]: ratingValues },
       };
