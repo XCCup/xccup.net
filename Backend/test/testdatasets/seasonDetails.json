@@ -31,7 +31,8 @@
       "gsPerformance":["D_low","D_high"],
       "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
       "hgFixed":["HG_5_starr"]
-    }
+    },
+    "stateChampionChips": ["LUX","RP"]
   },
   {
     "year": 2020,
@@ -65,7 +66,8 @@
       "gsTandem":["Tandem"],
       "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
       "hgFixed":["HG_5_starr"]
-    }
+    },
+    "stateChampionChips": ["LUX","RP"]
   },
   {
     "year": 2021,
@@ -99,7 +101,8 @@
       "gsTandem":["Tandem"],
       "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
       "hgFixed":["HG_5_starr"]
-    }
+    },
+    "stateChampionChips": ["LUX","RP"]
   },
   {
     "year": 2022,
@@ -133,6 +136,7 @@
       "gsTandem":["Tandem"],
       "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
       "hgFixed":["HG_5_starr"]
-    }
+    },
+    "stateChampionChips": ["LUX","RP"]
   }
 ]
