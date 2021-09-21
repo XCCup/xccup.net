@@ -100,5 +100,39 @@
       "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
       "hgFixed":["HG_5_starr"]
     }
+  },
+  {
+    "year": 2022,
+    "startDate":"2022-03-01T00:00:00",
+    "endDate":"2022-10-01T00:00:00",
+    "pointThresholdForFlight": 60,
+    "numberOfFlightsForShirt": 2,
+    "seniorBonusPerAge" :2,
+    "seniorStartAge" : 60,
+    "flightTypeFactors": {
+      "fai": 2,
+      "flat":1.5,
+      "free":1
+    },
+    "gliderFactors": {
+        "AB_low": 2.8,
+        "AB_high": 2.7,
+        "C_low": 2.6,
+        "C_high": 2.5,
+        "D_low": 2.4,
+        "D_high": 2.2,
+        "Tandem": 3.0,
+        "HG_1_Turm": 2.2,
+        "HG_1_Turmlos": 1.9,
+        "HG_5_starr": 1.5
+    },
+    "ratingClasses":{
+      "gsSport":["AB_low","AB_high"],
+      "gsIntermediate":["AB_low","AB_high","C_low","C_high"],
+      "gsPerformance":["AB_low","AB_high","C_low","C_high","D_low","D_high"],
+      "gsTandem":["Tandem"],
+      "hgFlex":["HG_1_Turm","HG_1_Turmlos"],
+      "hgFixed":["HG_5_starr"]
+    }
   }
 ]

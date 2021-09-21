@@ -57,9 +57,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         // The state the user lives in (e.g. RLP, NRW, LUX). Needed for possible state championships.
       },
+      address: {
+        type: DataTypes.STRING,
+        // Needed to send prices (e.g. T-Shirt) to an user.
+      },
       email: {
         type: DataTypes.STRING,
         // allowNull defaults to true
+      },
+      rankingNumber: {
+        type: DataTypes.INTEGER,
+        unique: true,
+        // The number should represent the position the user reached in last years overall ranking
       },
       password: {
         type: DataTypes.STRING,
