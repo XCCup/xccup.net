@@ -5,6 +5,8 @@ const User = require("../config/postgres")["User"];
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 
+const moment = require("moment");
+
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
@@ -54,7 +56,6 @@ const flightService = {
     const orderStatement = sortByPoints
       ? ["flightPoints", "DESC"]
       : ["dateOfFlight", "DESC"];
-
 
     const queryObject = {
       include: [
@@ -138,7 +139,7 @@ const flightService = {
 
       //TODO Merge directly when model is retrieved?
       flight.fixes = FlightFixes.mergeCoordinatesAndOtherData(flight.fixes);
-
+      flight.flightBuddies = await findFlightBuddies(flight);
       return flight;
     }
     return null;
@@ -218,6 +219,7 @@ const flightService = {
       flightService.addResult(result);
     });
   },
+
   extractFixesAddLocationsAndDateOfFlight: async (flight) => {
     const fixes = IgcAnalyzer.extractFixes(flight);
     flight.dateOfFlight = new Date(fixes[0].timestamp);
@@ -244,6 +246,51 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
   return await FlightFixes.findOne({
     where: {
       flightId: flightId,
+    },
+  });
+}
+
+/**
+ * This function will find flights with are related to a provided flight.
+ * A flight is related if,
+ * * it was lunched from the same takeoff,
+ * * within a timeframe of +- 2h to the provided flight
+ * * and exceeds a minimum flightPoints of 30 points (~5km FAI with AB_low)
+ *
+ * From the testdata the following to flights are related:
+ * * 4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14
+ * * 07b590f3-ca8a-4305-88a2-e11c314b4955
+ *
+ * @param {*} flight The flight to which flightBuddies should be found.
+ */
+async function findFlightBuddies(flight) {
+  //TODO Is it possible to join flightBuddiesfor to the provided flight directly with the first query to the db?
+  //Problem how can i back reference in an include statement (dateOfFlight, siteId)
+  const timeOffsetValue = 2;
+  const timeOffsetUnit = "h";
+  const pointThreshold = 30;
+
+  const from = moment(flight.dateOfFlight).subtract(
+    timeOffsetValue,
+    timeOffsetUnit
+  );
+  const till = moment(flight.dateOfFlight).add(timeOffsetValue, timeOffsetUnit);
+  return Flight.findAll({
+    where: {
+      id: {
+        [sequelize.Op.not]: flight.id,
+      },
+      siteId: flight.siteId,
+      dateOfFlight: {
+        [sequelize.Op.between]: [from, till],
+      },
+      flightPoints: {
+        [sequelize.Op.gte]: pointThreshold,
+      },
+    },
+    include: {
+      model: User,
+      attributes: ["name"],
     },
   });
 }
