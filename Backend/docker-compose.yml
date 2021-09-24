@@ -2,7 +2,8 @@ version: "3.8"
 
 services:
   db:
-    image: postgis/postgis:latest
+    # This provides an ARM version where the postgis repo only has x86/amd64
+    image: odidev/postgis:13-3.1-alpine #postgis/postgis:latest
     container_name: db
     restart: always
     env_file: .env
