@@ -10,37 +10,27 @@ const apiClient = axios.create({
   },
 });
 
-// For https://my-json-server.typicode.com
-let JSONUrl = "https://my-json-server.typicode.com/XCCup/xccup.net";
-
-// Use this if using local JSON Server
-// JSONUrl = "http://localhost:3000";
-
-const apiClient2 = axios.create({
-  baseURL: JSONUrl,
-  withCredentials: false,
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
-});
-
 export default {
   // userLogin(data) {
   //   return apiClient.post("/users/login", data);
   // },
+
+  // TODO: Needs implementation
   getFlights() {
-    return apiClient2.get("tageswertung");
+    return apiClient.get("tageswertung");
   },
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
   },
+  // TODO: Obsolete?
   // These will be obsolete if the flight modell contains comments and description
   getComments() {
-    return apiClient2.get("comments");
+    return apiClient.get("comments");
   },
+
+  // TODO: Obsolete?
   getDescription() {
-    return apiClient2.get("flightDescription");
+    return apiClient.get("flightDescription");
   },
   uploadIgc(data) {
     return apiClient.post("flights/", data);
@@ -52,7 +42,7 @@ export default {
     return apiClient.get("airbuddies/" + flightId);
   },
   getInitialData() {
-    return apiClient2.get("db");
+    return apiClient.get("home");
   },
   addComment(comment) {
     return apiClient.post("comments", comment);
