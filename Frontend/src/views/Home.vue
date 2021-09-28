@@ -26,10 +26,10 @@ export default {
       // const {tageswertung, geraetewertung} = response.data
 
       return {
-        dailyRanking: ref(initialData.tageswertung),
-        topFlights: ref(initialData.tageswertung),
-        rankingByGliderType: ref(initialData.geraetewertung),
-        overallRanking: ref(initialData.geraetewertung),
+        dailyRanking: ref(initialData.todaysFlights),
+        topFlights: ref(initialData.bestFlightsOverallCurrentYear),
+        rankingByGliderType: ref(initialData.xxxx),
+        overallRanking: ref(initialData.xxxx),
       };
     } catch (error) {
       console.log(error);
