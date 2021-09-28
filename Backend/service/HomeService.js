@@ -6,6 +6,11 @@ const flightService = require("./FlightService");
 const seasonService = require("./SeasonService");
 const cacheManager = require("./CacheManager");
 
+const BEST_FLIGHTS_HOUR_SWITCHOVER = 16;
+const NUMBER_OF_TEAMS = 3;
+const NUMBER_OF_CLUBS = 3;
+const NUMBER_OF_FLIGHTS_OVERALL = 5;
+
 const service = {
   get: async () => {
     const cache = cacheManager.getHomeCache();
@@ -23,15 +28,21 @@ async function prepareHomeData() {
   const numberOfTeams = teamService.countActive();
   const numberOfClubs = clubService.count();
   const numberOfUsers = userService.count();
-  const bestTeams = resultService.getTeam(null, null, 3);
-  const bestClubs = resultService.getClub(null, 3);
+  const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
+  const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
   const today = new Date();
+  let fromDay = today.getDate() - 1;
+  let tillDay = today.getDate();
+  if (today.getHours() > BEST_FLIGHTS_HOUR_SWITCHOVER) {
+    fromDay++;
+    tillDay++;
+  }
   const bestFlightsOverallCurrentYear = flightService.getAll(
     today.getFullYear(),
     null,
     null,
     null,
-    5,
+    NUMBER_OF_FLIGHTS_OVERALL,
     true
   );
   const todaysFlights = flightService.getAll(
@@ -41,8 +52,8 @@ async function prepareHomeData() {
     null,
     null,
     true,
-    new Date(today.getFullYear(), today.getMonth(), today.getDate()),
-    new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
+    new Date(today.getFullYear(), today.getMonth(), fromDay),
+    new Date(today.getFullYear(), today.getMonth(), tillDay)
   );
 
   const dbRequests = {
