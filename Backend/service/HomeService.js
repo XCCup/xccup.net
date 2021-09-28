@@ -87,9 +87,12 @@ function retrieveRatingClassResults(currentSeason) {
   }
   return Promise.all(Object.values(ratingRequests)).then((values) => {
     const keys = Object.keys(ratingRequests);
-    const res = {};
+    const res = [];
     for (let index = 0; index < values.length; index++) {
-      res[keys[index]] = values[index];
+      res.push({
+        name: keys[index],
+        values: values[index],
+      });
     }
     return res;
   });
