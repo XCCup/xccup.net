@@ -66,24 +66,33 @@ async function prepareHomeData() {
     todaysFlights,
   };
 
-  addRequestsForRatingClasses(currentSeason, dbRequests);
+  const resultRatingClasses = await retrieveRatingClassResults(currentSeason);
 
   return Promise.all(Object.values(dbRequests)).then((values) => {
-    const entries = Object.entries(dbRequests);
+    const keys = Object.keys(dbRequests);
     const res = {};
     for (let index = 0; index < values.length; index++) {
-      res[entries[index][0]] = values[index];
+      res[keys[index]] = values[index];
     }
+    res.ratingClasses = resultRatingClasses;
     res.seasonDetails = currentSeason;
     return res;
   });
 }
 
-function addRequestsForRatingClasses(currentSeason, dbRequests) {
-  // eslint-disable-next-line no-unused-vars
-  for (const [key, value] of Object.entries(currentSeason.ratingClasses)) {
-    dbRequests[key] = resultService.getOverall(null, key);
+function retrieveRatingClassResults(currentSeason) {
+  const ratingRequests = {};
+  for (const [key] of Object.entries(currentSeason.ratingClasses)) {
+    ratingRequests[key] = resultService.getOverall(null, key);
   }
+  return Promise.all(Object.values(ratingRequests)).then((values) => {
+    const keys = Object.keys(ratingRequests);
+    const res = {};
+    for (let index = 0; index < values.length; index++) {
+      res[keys[index]] = values[index];
+    }
+    return res;
+  });
 }
 
 module.exports = service;
