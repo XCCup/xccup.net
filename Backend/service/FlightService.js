@@ -86,6 +86,42 @@ const flightService = {
     return flights;
   },
 
+  getTodays: async () => {
+    const BEST_FLIGHTS_HOUR_SWITCHOVER = 12;
+
+    const today = new Date();
+    let fromDay = today.getDate() - 1;
+    let tillDay = today.getDate();
+    if (today.getHours() > BEST_FLIGHTS_HOUR_SWITCHOVER) {
+      fromDay++;
+      tillDay++;
+    }
+    const fromDate = new Date(today.getFullYear(), today.getMonth(), fromDay);
+    const tillDate = new Date(today.getFullYear(), today.getMonth(), tillDay);
+
+    const queryObject = {
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+        {
+          model: FlightFixes,
+          as: "fixes",
+          attributes: ["geom"],
+        },
+      ],
+      where: await createWhereStatement(null, null, null, fromDate, tillDate),
+      order: [["flightPoints", "DESC"]],
+    };
+
+    const flightDbObjects = await Flight.findAll(queryObject);
+
+    const flights = filterFilghtFixesForTodayRanking(flightDbObjects);
+
+    return flights;
+  },
+
   getById: async (flightId) => {
     return await Flight.findOne({
       where: { id: flightId },
@@ -248,6 +284,27 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
       flightId,
     },
   });
+}
+
+function filterFilghtFixesForTodayRanking(flightDbObjects) {
+  const FIXES_PER_HOUR = 60;
+  const flights = flightDbObjects.map((entry) => entry.toJSON());
+  flights.forEach((entry) => {
+    const fixes = entry.fixes.geom.coordinates;
+    entry.fixes = [];
+
+    //Fixes will be stored to db with an interval of 5s
+    const step = 3600 / 5 / FIXES_PER_HOUR;
+
+    for (let index = 0; index < fixes.length; index += step) {
+      entry.fixes.push(fixes[index]);
+    }
+    if (fixes.length % step !== 0) {
+      //Add always the last fix
+      entry.fixes.push(fixes[fixes.length - 1]);
+    }
+  });
+  return flights;
 }
 
 /**

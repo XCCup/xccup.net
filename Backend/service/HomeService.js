@@ -6,7 +6,6 @@ const flightService = require("./FlightService");
 const seasonService = require("./SeasonService");
 const cacheManager = require("./CacheManager");
 
-const BEST_FLIGHTS_HOUR_SWITCHOVER = 16;
 const NUMBER_OF_TEAMS = 3;
 const NUMBER_OF_CLUBS = 3;
 const NUMBER_OF_FLIGHTS_OVERALL = 5;
@@ -30,31 +29,16 @@ async function prepareHomeData() {
   const numberOfUsers = userService.count();
   const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
   const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
-  const today = new Date();
-  let fromDay = today.getDate() - 1;
-  let tillDay = today.getDate();
-  if (today.getHours() > BEST_FLIGHTS_HOUR_SWITCHOVER) {
-    fromDay++;
-    tillDay++;
-  }
+
   const bestFlightsOverallCurrentYear = flightService.getAll(
-    today.getFullYear(),
+    new Date().getFullYear(),
     null,
     null,
     null,
     NUMBER_OF_FLIGHTS_OVERALL,
     true
   );
-  const todaysFlights = flightService.getAll(
-    null,
-    null,
-    null,
-    null,
-    null,
-    true,
-    new Date(today.getFullYear(), today.getMonth(), fromDay),
-    new Date(today.getFullYear(), today.getMonth(), tillDay)
-  );
+  const todaysFlights = flightService.getTodays();
 
   const dbRequests = {
     numberOfClubs,
@@ -92,6 +76,7 @@ function retrieveRatingClassResults(currentSeason) {
       res.push({
         name: keys[index],
         values: values[index],
+        readableName: currentSeason.ratingClasses[keys[index]].description,
       });
     }
     return res;
