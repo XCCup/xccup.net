@@ -61,7 +61,7 @@ async function prepareHomeData() {
     for (let index = 0; index < values.length; index++) {
       res[keys[index]] = values[index];
     }
-    res.ratingClasses = resultRatingClasses;
+    res.rankingClasses = resultRatingClasses;
     res.seasonDetails = currentSeason;
     return res;
   });
@@ -69,7 +69,7 @@ async function prepareHomeData() {
 
 function retrieveRatingClassResults(currentSeason) {
   const ratingRequests = {};
-  for (const [key] of Object.entries(currentSeason.ratingClasses)) {
+  for (const [key] of Object.entries(currentSeason.rankingClasses)) {
     ratingRequests[key] = resultService.getOverall(null, key);
   }
   return Promise.all(Object.values(ratingRequests)).then((values) => {
@@ -79,7 +79,7 @@ function retrieveRatingClassResults(currentSeason) {
       res.push({
         name: keys[index],
         values: values[index],
-        readableName: currentSeason.ratingClasses[keys[index]].description,
+        readableName: currentSeason.rankingClasses[keys[index]].description,
       });
     }
     return res;

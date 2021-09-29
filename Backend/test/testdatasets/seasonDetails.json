@@ -54,7 +54,7 @@
         "description": "Drachen Starre"
       }
     },
-    "ratingClasses": {
+    "rankingClasses": {
       "gsTandem": {
         "gliderClasses": [
           "Tandem"
@@ -156,7 +156,7 @@
         "description": "Drachen Starre"
       }
     },
-    "ratingClasses": {
+    "rankingClasses": {
       "gsSport": {
         "gliderClasses": [
           "AB_low",
@@ -258,7 +258,7 @@
         "description": "Drachen Starre"
       }
     },
-    "ratingClasses": {
+    "rankingClasses": {
       "gsSport": {
         "gliderClasses": [
           "AB_low",
@@ -360,7 +360,7 @@
         "description": "Drachen Starre"
       }
     },
-    "ratingClasses": {
+    "rankingClasses": {
       "gsSport": {
         "gliderClasses": [
           "AB_low",
