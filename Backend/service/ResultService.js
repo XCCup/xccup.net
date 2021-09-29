@@ -117,7 +117,7 @@ async function mergeRecordsByTakeoffs(records) {
     const res = { takeoff: {} };
     res.takeoff.id = site.id;
     res.takeoff.name = site.name;
-    res.takeoff.description = site.description;
+    res.takeoff.shortName = site.shortName;
     res.free = createEntryOfRecord(freeSite);
     res.flat = createEntryOfRecord(flatSite);
     res.fai = createEntryOfRecord(faiSite);
@@ -147,7 +147,7 @@ async function findSiteRecordOfType(type) {
       {
         model: FlyingSite,
         as: "takeoff",
-        attributes: ["name", "id", "description"],
+        attributes: ["name", "id", "shortName"],
       },
       {
         model: User,
@@ -173,7 +173,7 @@ async function findSiteRecordOfType(type) {
       "Flight.flightType",
       "takeoff.name",
       "takeoff.id",
-      "takeoff.description",
+      "takeoff.shortName",
     ],
   });
 }
@@ -246,16 +246,16 @@ function createIncludeStatementSite(site, region) {
   const siteInclude = {
     model: FlyingSite,
     as: "takeoff",
-    attributes: ["name", "id", "region"],
+    attributes: ["name", "shortName", "id", "region"],
   };
   if (site) {
     siteInclude.where = {
-      name: site,
+      shortName: site,
     };
   }
   if (region) {
     siteInclude.where = {
-      region: region,
+      region,
     };
   }
   return siteInclude;
@@ -346,6 +346,7 @@ function aggreateFlightsOverUser(resultQuery) {
       glider: entry.glider,
       flightType: entry.flightType,
       takeoffName: entry.takeoff.name,
+      takeoffShortName: entry.takeoff.shortName,
       takeoffId: entry.takeoff.id,
       takeoffRegion: entry.takeoff.region,
       ageOfUser: entry.ageOfUser,

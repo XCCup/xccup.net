@@ -44,11 +44,11 @@ router.post(
     const password = req.body.password;
 
     try {
-      const userId = await service.validate(name, password);
-      if (!userId) return res.sendStatus(UNAUTHORIZED);
+      const user = await service.validate(name, password);
+      if (!user) return res.sendStatus(UNAUTHORIZED);
 
-      const accessToken = createToken(userId, name);
-      const refreshToken = createRefreshToken(userId, name);
+      const accessToken = createToken(user);
+      const refreshToken = createRefreshToken(user);
 
       res.json({
         accessToken,

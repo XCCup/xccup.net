@@ -51,7 +51,7 @@ const userService = {
   },
   validate: async (name, password) => {
     const user = await User.findOne({
-      where: { name: name },
+      where: { name },
     });
     if (!user) {
       console.log(`No user of name ${name} found`);
@@ -59,7 +59,7 @@ const userService = {
     }
     if (user.validPassword(password)) {
       console.log(`The password is valid`);
-      return user.id;
+      return user;
     }
     console.log(`The password is not valid`);
     return null;

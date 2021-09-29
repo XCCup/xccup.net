@@ -46,9 +46,9 @@ const auth = (req, res, next) => {
  * @param {*} userId The id of the user for which the token is created.
  * @returns A access token.
  */
-const create = (userId, username) => {
+const create = (user) => {
   const token = jwt.sign(
-    { id: userId, username: username },
+    { id: user.id, username: user.name, role: user.role },
     process.env.JWT_LOGIN_TOKEN,
     {
       expiresIn: "200s",
@@ -57,18 +57,18 @@ const create = (userId, username) => {
   return token;
 };
 
-const createRefresh = (userId, username) => {
+const createRefresh = (user) => {
   const token = jwt.sign(
-    { id: userId, username: username },
+    { id: user.id, username: user.name, role: user.role },
     process.env.JWT_REFRESH_TOKEN
   );
-  Token.create({ token: token });
+  Token.create({ token });
   return token;
 };
 
 const logout = async (token) => {
-  return await Token.destroy({
-    where: { token: token },
+  return Token.destroy({
+    where: { token },
   });
 };
 
@@ -76,7 +76,7 @@ const refresh = async (token) => {
   if (!token) return;
 
   const found = await Token.findOne({
-    where: { token: token },
+    where: { token },
   });
   if (!found) return;
   return await jwt.verify(

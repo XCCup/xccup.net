@@ -1,37 +1,38 @@
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 
+const MAX_DIST_TO_SEARCH = 5000;
+
 const siteService = {
   getById: async (id) => {
-    return await FlyingSite.findByPk(id);
+    return FlyingSite.findByPk(id);
   },
 
-  getByName: async (name) => {
-    return await FlyingSite.findOne({
+  getByName: async (shortName) => {
+    return FlyingSite.findOne({
       where: {
-        name: name,
+        name: shortName,
       },
     });
   },
 
-  create: async (season) => {
-    return await FlyingSite.create(season);
+  create: async (site) => {
+    return FlyingSite.create(site);
   },
 
-  update: async (season) => {
-    return await FlyingSite.save(season);
+  update: async (site) => {
+    return FlyingSite.save(site);
   },
 
   delete: async (id) => {
     return await FlyingSite.destroy({
-      where: { id: id },
+      where: { id },
     });
   },
 
   findClosestTakeoff: async (location) => {
-    const maxDistanceToSearch = 5000;
     const query = `
     SELECT
-    "id","description", ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
+    "id","name", ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
     FROM
     "FlyingSites"
     WHERE
@@ -45,7 +46,7 @@ const siteService = {
       replacements: {
         latitude: parseFloat(location.latitude),
         longitude: parseFloat(location.longitude),
-        maxDistance: maxDistanceToSearch,
+        maxDistance: MAX_DIST_TO_SEARCH,
       },
       type: FlyingSite.sequelize.QueryTypes.SELECT,
     });
@@ -54,11 +55,11 @@ const siteService = {
       console.log("Found takeoff in DB");
       return takeoffs[0];
     } else if (takeoffs.length > 1) {
-      const errorMsg = `Found more than one takeoff in DB for location ${location} within distance of ${maxDistanceToSearch}m`;
+      const errorMsg = `Found more than one takeoff in DB for location ${location} within distance of ${MAX_DIST_TO_SEARCH}m`;
       console.log(errorMsg);
       return errorMsg;
     } else {
-      const errorMsg = `Found no takeoff in DB within distance of ${maxDistanceToSearch}m`;
+      const errorMsg = `Found no takeoff in DB within distance of ${MAX_DIST_TO_SEARCH}m`;
       console.log(errorMsg);
       return errorMsg;
     }
