@@ -86,6 +86,42 @@ const flightService = {
     return flights;
   },
 
+  getTodays: async () => {
+    const SWITCHOVER_HOUR_TODAY_RANKING = 12;
+
+    const today = new Date();
+    let fromDay = today.getDate() - 1;
+    let tillDay = today.getDate();
+    if (today.getHours() > SWITCHOVER_HOUR_TODAY_RANKING) {
+      fromDay++;
+      tillDay++;
+    }
+    const fromDate = new Date(today.getFullYear(), today.getMonth(), fromDay);
+    const tillDate = new Date(today.getFullYear(), today.getMonth(), tillDay);
+
+    const queryObject = {
+      include: [
+        {
+          model: User,
+          attributes: ["name"],
+        },
+        {
+          model: FlightFixes,
+          as: "fixes",
+          attributes: ["geom"],
+        },
+      ],
+      where: await createWhereStatement(null, null, null, fromDate, tillDate),
+      order: [["flightPoints", "DESC"]],
+    };
+
+    const flightDbObjects = await Flight.findAll(queryObject);
+
+    const flights = filterFlightFixesForTodayRanking(flightDbObjects);
+
+    return flights;
+  },
+
   getById: async (flightId) => {
     return await Flight.findOne({
       where: { id: flightId },
@@ -143,6 +179,18 @@ const flightService = {
       return flight;
     }
     return null;
+  },
+
+  sumDistance: async (year) => {
+    const totalDistance = await Flight.sum("flightDistance", {
+      where: {
+        andOp: sequelize.where(
+          sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
+          year
+        ),
+      },
+    });
+    return Math.round(totalDistance);
   },
 
   update: async (flight) => {
@@ -248,6 +296,27 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
       flightId,
     },
   });
+}
+
+function filterFlightFixesForTodayRanking(flightDbObjects) {
+  const FIXES_PER_HOUR = 60;
+  const flights = flightDbObjects.map((entry) => entry.toJSON());
+  flights.forEach((entry) => {
+    const fixes = entry.fixes.geom.coordinates;
+    entry.fixes = [];
+
+    //Fixes are stored in db with an interval of 5s
+    const step = 3600 / 5 / FIXES_PER_HOUR;
+
+    for (let index = 0; index < fixes.length; index += step) {
+      entry.fixes.push(fixes[index]);
+    }
+    if (fixes.length % step !== 0) {
+      //Add always the last fix
+      entry.fixes.push(fixes[fixes.length - 1]);
+    }
+  });
+  return flights;
 }
 
 /**
