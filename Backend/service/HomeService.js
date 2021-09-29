@@ -23,7 +23,7 @@ const service = {
 
 async function prepareHomeData() {
   const currentSeason = await seasonService.getCurrentActive();
-  const currentYear = currentSeason.year;
+  const currentYear = new Date().getFullYear();
 
   const numberOfTeams = teamService.countActive();
   const numberOfClubs = clubService.count();

@@ -110,6 +110,11 @@ const flightService = {
           as: "fixes",
           attributes: ["geom"],
         },
+        {
+          model: FlyingSite,
+          as: "takeoff",
+          attributes: ["name"],
+        },
       ],
       where: await createWhereStatement(null, null, null, fromDate, tillDate),
       order: [["flightPoints", "DESC"]],
@@ -309,11 +314,14 @@ function filterFlightFixesForTodayRanking(flightDbObjects) {
     const step = 3600 / 5 / FIXES_PER_HOUR;
 
     for (let index = 0; index < fixes.length; index += step) {
-      entry.fixes.push(fixes[index]);
+      entry.fixes.push({ lat: fixes[index][1], long: fixes[index][0] });
     }
     if (fixes.length % step !== 0) {
       //Add always the last fix
-      entry.fixes.push(fixes[fixes.length - 1]);
+      entry.fixes.push({
+        lat: fixes[fixes.length - 1][1],
+        long: fixes[fixes.length - 1][0],
+      });
     }
   });
   return flights;
