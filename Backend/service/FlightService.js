@@ -181,6 +181,18 @@ const flightService = {
     return null;
   },
 
+  sumDistance: async (year) => {
+    const totalDistance = await Flight.sum("flightDistance", {
+      where: {
+        andOp: sequelize.where(
+          sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
+          year
+        ),
+      },
+    });
+    return Math.round(totalDistance);
+  },
+
   update: async (flight) => {
     cacheManager.invalidateCaches();
     return flight.save();

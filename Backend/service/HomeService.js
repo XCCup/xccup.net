@@ -23,15 +23,17 @@ const service = {
 
 async function prepareHomeData() {
   const currentSeason = await seasonService.getCurrentActive();
+  const currentYear = currentSeason.year;
 
   const numberOfTeams = teamService.countActive();
   const numberOfClubs = clubService.count();
   const numberOfUsers = userService.count();
+  const totalFlightDistance = flightService.sumDistance(currentYear);
   const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
   const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
 
   const bestFlightsOverallCurrentYear = flightService.getAll(
-    new Date().getFullYear(),
+    currentYear,
     null,
     null,
     null,
@@ -44,6 +46,7 @@ async function prepareHomeData() {
     numberOfClubs,
     numberOfTeams,
     numberOfUsers,
+    totalFlightDistance,
     bestTeams,
     bestClubs,
     bestFlightsOverallCurrentYear,
