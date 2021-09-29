@@ -8,14 +8,14 @@
         </router-link>
 
         Flug von <a href="#">{{ flight.pilot }}</a> am
-        <a href="#"><BaseDate :timestamp="flight.date" /></a>
+        <a href="#"><BaseDate :timestamp="flight.dateOfFlight" /></a>
       </p>
     </div>
     <!-- Content -->
-    <MapV2 :tracklogs="tracklogs" />
+    <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
     <Barogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
-      v-if="flight.airbuddies"
+      v-if="flight.flightBuddies"
       :flight="flight"
       @updateAirbuddies="updateAirbuddies"
     />
@@ -23,9 +23,12 @@
     <Inline-alert text="Automatisches zentrieren fehlt noch" />
 
     <FlightDetails :flight="flight" :pilot="pilot" />
-    <FlightDescription :description="description" />
+    <FlightDescription
+      :description="flight.report"
+      :images="flight.imageUrls"
+    />
     <Comments
-      :comments="comments"
+      :comments="flight.comments"
       @submit-comment="addComment"
       @delete-comment="deleteComment"
     />
@@ -64,30 +67,20 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const flight = ref(null);
-    const comments = ref([]);
-    const description = ref(null);
 
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Is this try/catch smart?
     try {
-      // Hardcoded flight for development
-      let flightId = "60699294a7c2069af1246316";
-      if (process.env.VUE_APP_USE_LOCAL_API === "true") {
-        flightId = route.params.flightId;
-        // props.flightId
-      }
+      let flightId = route.params.flightId;
+      // props.flightId
 
       const response = await FlightService.getFlight(flightId);
       if (!response.data.fixes) {
         throw "Invalid response";
       }
       flight.value = response.data;
-
-      const response2 = await fetchDemoData();
-      comments.value = response2.comments;
-      description.value = response2.description;
     } catch (error) {
       console.log(error);
       if (error.response && error.response.status == 404) {
@@ -101,8 +94,6 @@ export default {
     }
     return {
       flight,
-      comments,
-      description,
     };
   },
   props: {
@@ -156,21 +147,6 @@ export default {
     },
   },
 };
-
-// This will be obsolete if the flight model contains comments and description
-async function fetchDemoData() {
-  try {
-    let { data: comments } = await FlightService.getComments();
-    let { data: description } = await FlightService.getDescription();
-
-    return {
-      comments: comments,
-      description: description[0],
-    };
-  } catch (error) {
-    console.log("fetchDemoData: ", error);
-  }
-}
 
 // Process tracklog data for map
 function processTracklogs(flight, buddyTracks) {

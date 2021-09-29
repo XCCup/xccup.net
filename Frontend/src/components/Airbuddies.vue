@@ -25,13 +25,13 @@
         <div
           class="form-check form-check-inline"
           v-for="(pilot, index) in this.buddyFlights"
-          :key="pilot._id"
+          :key="pilot.id"
         >
           <h5 class="ms-2">
             <input
               class="form-check-input"
               type="checkbox"
-              :value="pilot._id"
+              :value="pilot.id"
               :id="index"
               v-model="checkedFlights"
             />
@@ -40,7 +40,7 @@
                 class="badge"
                 :style="{ backgroundColor: this.trackColors[index + 1] }"
               >
-                {{ pilot.pilot }}
+                {{ pilot.User.name }}
               </span>
             </label>
           </h5>
@@ -75,10 +75,10 @@ export default {
       try {
         if (
           this.buddyFlights.length === 0 &&
-          this.flight.airbuddies.length > 0
+          this.flight.flightBuddies.length > 0
         ) {
-          this.flight.airbuddies.forEach(async (buddy) => {
-            let response = await FlightService.getFlight(buddy.pilotId);
+          this.flight.flightBuddies.forEach(async (buddy) => {
+            let response = await FlightService.getFlight(buddy.id);
             this.buddyFlights.push(response.data);
           });
           // await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -96,9 +96,9 @@ export default {
       let airbuddyTracks = [];
       this.buddyFlights.forEach((element) => {
         airbuddyTracks.push({
-          buddyName: element.pilot,
-          buddyFlightId: element._id,
-          isActive: this.checkedFlights.includes(element._id),
+          buddyName: element.User.name,
+          buddyFlightId: element.id,
+          isActive: this.checkedFlights.includes(element.id),
           fixes: element.fixes,
         });
       });

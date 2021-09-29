@@ -23,12 +23,6 @@ export default {
     return apiClient.get("flights/" + flightId);
   },
   // TODO: Obsolete?
-  // These will be obsolete if the flight modell contains comments and description
-  getComments() {
-    return apiClient.get("comments");
-  },
-
-  // TODO: Obsolete?
   getDescription() {
     return apiClient.get("flightDescription");
   },

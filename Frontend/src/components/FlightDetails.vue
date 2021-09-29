@@ -29,7 +29,7 @@
             </tr>
             <tr>
               <th>Fluggerät:</th>
-              <td>{{ flight.glider }}</td>
+              <td>{{ flight.glider.brand }} {{ flight.glider.model }}</td>
             </tr>
             <tr>
               <th>Geräteklasse:</th>
@@ -39,12 +39,6 @@
             </tr>
           </tbody>
         </table>
-        <!-- Backup 
-           <tr>
-                  <th>Flugstatus:</th>
-                  <td>😃 (In Wertung)</td>
-                </tr>
-          -->
       </div>
       <div class="col-md-6 col-12 my-1">
         <table class="table table-sm">
@@ -60,7 +54,8 @@
               <th>Strecke:</th>
               <td>
                 {{ flight.flightDistance }} km
-                <i class="bi bi-triangle">{{ flight.flightType }}</i>
+                <!-- <i class="bi bi-triangle"></i> -->
+                {{ flight.flightType }}
               </td>
             </tr>
             <tr>
@@ -70,7 +65,7 @@
 
             <tr>
               <th>Startplatz:</th>
-              <td>{{ flight.takeoff }}</td>
+              <td>{{ flight.takeoff.name }} {{ flight.takeoff.direction }}</td>
             </tr>
             <tr>
               <th>Uhrzeit:</th>
@@ -153,7 +148,6 @@
                     dateFormat="dd.MM.yyyy HH:mm"
                   />
                 </td>
-                <!-- 23.07.2020 18:50:23 -->
               </tr>
             </tbody>
           </table>
