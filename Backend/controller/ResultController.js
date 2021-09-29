@@ -129,8 +129,8 @@ router.get(
   }
 );
 
-// @desc Gets the result for the senior ranking (addional bonus per age)
-// @route GET /results/seniors/
+// @desc Gets the records for all flightTypes over all flyingSites
+// @route GET /results/siteRecords/
 
 router.get("/siteRecords", async (req, res, next) => {
   try {

@@ -98,7 +98,7 @@ const flightService = {
         {
           model: FlyingSite,
           as: "takeoff",
-          attributes: ["id", "description"],
+          attributes: ["id", "name"],
         },
       ],
     });
@@ -130,7 +130,7 @@ const flightService = {
         {
           model: FlyingSite,
           as: "takeoff",
-          attributes: ["id", "description"],
+          attributes: ["id", "name", "direction"],
         },
       ],
     });
@@ -211,7 +211,7 @@ const flightService = {
     //TODO ExternalID als Hook im Model realisieren?
     await addUserData(flight);
     await addExternalId(flight);
-    return await Flight.create(flight);
+    return Flight.create(flight);
   },
 
   startResultCalculation: async (flight) => {
@@ -238,14 +238,14 @@ const flightService = {
       timeAndHeights: FlightFixes.extractTimeAndHeights(fixes),
     });
 
-    return flyingSite.description;
+    return flyingSite.name;
   },
 };
 
 async function retrieveDbObjectOfFlightFixes(flightId) {
-  return await FlightFixes.findOne({
+  return FlightFixes.findOne({
     where: {
-      flightId: flightId,
+      flightId,
     },
   });
 }
@@ -364,11 +364,11 @@ function createSiteInclude(site) {
   const siteInclude = {
     model: FlyingSite,
     as: "takeoff",
-    attributes: ["id", "description", "name"],
+    attributes: ["id", "shortName", "name", "direction"],
   };
   if (site) {
     siteInclude.where = {
-      name: site,
+      shortName: site,
     };
   }
   return siteInclude;
