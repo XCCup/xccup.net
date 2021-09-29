@@ -12,11 +12,13 @@
         @click="routeToFlight(flight.flightId)"
       >
         <th scope="row">{{ index + 1 }}</th>
-        <td><BaseDate :timestamp="flight.date" dateFormat="dd.MM" /></td>
+        <td>
+          <BaseDate :timestamp="flight.dateOfFlight" dateFormat="dd.MM" />
+        </td>
         <td>{{ flight.User.name }}</td>
-        <td>{{ flight.takeoff.description }}</td>
+        <td>{{ flight.takeoff.name }}</td>
         <td>{{ flight.flightDistance }} km</td>
-        <td>{{ flight.taskType }}</td>
+        <td>{{ flight.flightType }}</td>
         <td>{{ flight.flightPoints }} P</td>
       </tr>
     </tbody>

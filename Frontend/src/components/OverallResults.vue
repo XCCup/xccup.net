@@ -18,9 +18,9 @@
       <li class="nav-item" role="presentation">
         <button
           class="nav-link"
-          id="profile-tab"
+          id="class-tab"
           data-bs-toggle="tab"
-          data-bs-target="#profile"
+          data-bs-target="#class"
           type="button"
           role="tab"
         >
@@ -56,7 +56,7 @@
       <div class="tab-pane fade show active" id="topFlights" role="tabpanel">
         <TopFlights :flights="topFlights" />
       </div>
-      <div class="tab-pane fade" id="profile" role="tabpanel">
+      <div class="tab-pane fade" id="class" role="tabpanel">
         <ClassRanking :rankingByClass="rankingByClass" />
       </div>
       <div class="tab-pane fade" id="club" role="tabpanel">

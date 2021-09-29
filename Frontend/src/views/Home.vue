@@ -34,7 +34,6 @@ export default {
         dailyRanking: ref(initialData.todaysFlights),
         topFlights: ref(initialData.bestFlightsOverallCurrentYear),
         rankingByClass: ref(initialData.ratingClasses),
-        overallRanking: ref(initialData.xxxx),
         bestClubs: ref(initialData.bestClubs),
         bestTeams: ref(initialData.bestTeams),
       };

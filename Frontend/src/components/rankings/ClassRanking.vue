@@ -1,12 +1,11 @@
 <template>
-  {{ rankingByClass }}
   <div class="row">
     <div
       class="col-xxl-2 col-md-4 col-6 my-1"
-      v-for="(table, index) in this.classRanking"
+      v-for="(rankingClass, index) in rankingByClass"
       :key="index"
     >
-      <ResultsTable :ranking="table" />
+      <ResultsTable :ranking="rankingClass" />
     </div>
   </div>
 </template>
@@ -19,7 +18,7 @@ export default {
     ResultsTable,
   },
   props: {
-    classRanking: {
+    rankingByClass: {
       type: Array,
       required: true,
     },
