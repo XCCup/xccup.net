@@ -15,48 +15,10 @@ export default {
     return {
       map: null,
       trackLines: [],
-      tracks: [
-        {
-          flightId: "1",
-          turnpoints: [
-            { lat: 49.2, long: 6.1 },
-            { lat: 50.2, long: 7.6 },
-            { lat: 50.2, long: 7.9 },
-          ],
-        },
-        {
-          flightId: "2",
-          turnpoints: [
-            { lat: 49.7, long: 6.8 },
-            { lat: 50.2, long: 6.6 },
-          ],
-        },
-        {
-          flightId: "3",
-          turnpoints: [
-            { lat: 50.1, long: 7.3 },
-            { lat: 50.2, long: 7.4 },
-          ],
-        },
-        {
-          flightId: "4",
-          turnpoints: [
-            { lat: 50.3, long: 6.5 },
-            { lat: 50.4, long: 7.6 },
-          ],
-        },
-        {
-          flightId: "5",
-          turnpoints: [
-            { lat: 49.6, long: 6.1 },
-            { lat: 50.6, long: 7.6 },
-          ],
-        },
-      ],
     };
   },
   props: {
-    tracklogs: {
+    tracks: {
       type: Array,
       default: () => {
         return [];
@@ -115,6 +77,8 @@ export default {
       this.trackLines[index].setStyle({ color: "#08556d", weight: 5 });
     },
     drawTracks(tracks) {
+      if (tracks.length === 0) return;
+
       let trackGroup = new L.featureGroup();
       tracks.forEach((track) => {
         let tmp = [];

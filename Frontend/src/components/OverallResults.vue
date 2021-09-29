@@ -1,6 +1,6 @@
 <template>
   <!-- Tabs -->
-  <div class="container mt-2">
+  <div class="container my-2">
     <h3>Gesamtwertung</h3>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
@@ -18,9 +18,9 @@
       <li class="nav-item" role="presentation">
         <button
           class="nav-link"
-          id="profile-tab"
+          id="class-tab"
           data-bs-toggle="tab"
-          data-bs-target="#profile"
+          data-bs-target="#class"
           type="button"
           role="tab"
         >
@@ -56,14 +56,14 @@
       <div class="tab-pane fade show active" id="topFlights" role="tabpanel">
         <TopFlights :flights="topFlights" />
       </div>
-      <div class="tab-pane fade" id="profile" role="tabpanel">
-        <ClassRanking :classRanking="rankings" />
+      <div class="tab-pane fade" id="class" role="tabpanel">
+        <ClassRanking :rankingByClass="rankingByClass" />
       </div>
       <div class="tab-pane fade" id="club" role="tabpanel">
-        <ClubRanking />
+        <ClubRanking :bestClubs="bestClubs" />
       </div>
       <div class="tab-pane fade" id="team" role="tabpanel">
-        <TeamRanking />
+        <TeamRanking :bestTeams="bestTeams" />
       </div>
     </div>
   </div>
@@ -79,11 +79,19 @@ export default {
   components: { ClassRanking, ClubRanking, TeamRanking, TopFlights },
   name: "OverallResults",
   props: {
-    rankings: {
-      type: Object,
+    rankingByClass: {
+      type: Array,
       required: true,
     },
     topFlights: {
+      type: Object,
+      required: true,
+    },
+    bestClubs: {
+      type: Object,
+      required: true,
+    },
+    bestTeams: {
       type: Object,
       required: true,
     },

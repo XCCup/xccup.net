@@ -1,5 +1,11 @@
 # xccup.net backend
 
+## Project setup
+
+```
+npm install
+```
+
 ## StartUp
 
 #### Dev Server:
