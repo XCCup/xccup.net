@@ -9,22 +9,19 @@
             <tr>
               <th>Pilot:</th>
               <td>
-                <!-- TODO: Remove optional -->
-                <a href="#">{{ flight.User?.name }}</a>
+                <a href="#">{{ flight.User.name }}</a>
               </td>
             </tr>
             <tr>
               <th>Verein:</th>
               <td>
-                <!-- TODO: Remove optinals -->
-                <a href="#">{{ flight.User?.club ?? "Club" }}</a>
+                <a href="#">{{ flight.Club.name }}</a>
               </td>
             </tr>
             <tr>
               <th>Team:</th>
               <td>
-                <!-- TODO: Remove optinals -->
-                <a href="#">{{ flight.User?.team ?? "Team Name" }}</a>
+                <a href="#">{{ flight.Team.name }}</a>
               </td>
             </tr>
             <tr>

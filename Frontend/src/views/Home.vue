@@ -33,7 +33,7 @@ export default {
       return {
         dailyRanking: ref(initialData.todaysFlights),
         topFlights: ref(initialData.bestFlightsOverallCurrentYear),
-        rankingByClass: ref(initialData.ratingClasses),
+        rankingByClass: ref(initialData.rankingClasses),
         bestClubs: ref(initialData.bestClubs),
         bestTeams: ref(initialData.bestTeams),
       };
