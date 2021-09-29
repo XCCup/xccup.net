@@ -122,7 +122,7 @@ const flightService = {
 
     const flightDbObjects = await Flight.findAll(queryObject);
 
-    const flights = filterFilghtFixesForTodayRanking(flightDbObjects);
+    const flights = filterFlightFixesForTodayRanking(flightDbObjects);
 
     return flights;
   },
@@ -303,7 +303,7 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
   });
 }
 
-function filterFilghtFixesForTodayRanking(flightDbObjects) {
+function filterFlightFixesForTodayRanking(flightDbObjects) {
   const FIXES_PER_HOUR = 60;
   const flights = flightDbObjects.map((entry) => entry.toJSON());
   flights.forEach((entry) => {
