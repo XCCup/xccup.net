@@ -77,6 +77,8 @@ export default {
       this.trackLines[index].setStyle({ color: "#08556d", weight: 5 });
     },
     drawTracks(tracks) {
+      if (tracks.length === 0) return;
+
       let trackGroup = new L.featureGroup();
       tracks.forEach((track) => {
         let tmp = [];
