@@ -62,6 +62,8 @@ const dbTestData = {
 
       console.log("Start adding flights");
       const flights = require("./testdatasets/flights.json");
+      adjustYearOfEveryFlight(flights);
+      adjustDateOfFlightToToday(flights, 5);
       await Promise.all(
         flights.map(async (flight) => {
           Flight.create(flight).catch((err) => {
@@ -128,5 +130,30 @@ const dbTestData = {
     }
   },
 };
+
+function adjustDateOfFlightToToday(flights, numberOfEntriesToAdjust) {
+  for (let index = 0; index < numberOfEntriesToAdjust; index++) {
+    const date = new Date(flights[index].dateOfFlight);
+    const today = new Date();
+    date.setFullYear(today.getFullYear());
+    date.setMonth(today.getMonth());
+    date.setDate(today.getDate());
+    flights[index].dateOfFlight = date.toISOString();
+  }
+}
+
+function adjustYearOfEveryFlight(flights) {
+  const today = new Date();
+  for (let index = 0; index < flights.length - 1; index++) {
+    const date = new Date(flights[index].dateOfFlight);
+    date.setFullYear(today.getFullYear());
+    flights[index].dateOfFlight = date.toISOString();
+  }
+  //Ensure that one entry will always be from last year
+  const lastEntryIndex = flights.length - 1;
+  const date = new Date(flights[lastEntryIndex].dateOfFlight);
+  date.setFullYear(today.getFullYear() - 1);
+  flights[lastEntryIndex].dateOfFlight = date.toISOString();
+}
 
 module.exports = dbTestData;
