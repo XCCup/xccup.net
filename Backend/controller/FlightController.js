@@ -23,7 +23,7 @@ router.get(
     query("year").optional().isInt(),
     query("site").optional().not().isEmpty().trim().escape(),
     query("type").optional().not().isEmpty().trim().escape(),
-    query("ratingClass").optional().not().isEmpty().trim().escape(),
+    query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
     query("startDate").optional().isDate(), //e.g. 2002-07-15
     query("endDate").optional().isDate(),
@@ -33,7 +33,7 @@ router.get(
     const year = req.query.year;
     const site = req.query.site;
     const type = req.query.type;
-    const ratingClass = req.query.ratingClass;
+    const rankingClass = req.query.rankingClass;
     const limit = req.query.limit;
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
@@ -43,7 +43,7 @@ router.get(
         year,
         site,
         type,
-        ratingClass,
+        rankingClass,
         limit,
         null,
         startDate,

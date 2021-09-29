@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
       allowNull: false,
     },
-    ratingClasses: {
+    rankingClasses: {
       type: DataTypes.JSON,
       allowNull: false,
     },

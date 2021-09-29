@@ -14,7 +14,7 @@ router.get(
     query("limit").optional().isInt(),
     query("isWeekend").optional().isBoolean(),
     query("isSenior").optional().isBoolean(),
-    query("ratingClass").optional().not().isEmpty().trim().escape(),
+    query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("gender").optional().not().isEmpty().trim().escape(),
     query("site").optional().not().isEmpty().trim().escape(),
     query("region").optional().not().isEmpty().trim().escape(),
@@ -23,7 +23,7 @@ router.get(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const year = req.query.year;
-    const ratingClass = req.query.ratingClass;
+    const rankingClass = req.query.rankingClass;
     const gender = req.query.gender;
     const isWeekend = req.query.isWeekend;
     const isSenior = req.query.isSenior;
@@ -35,7 +35,7 @@ router.get(
     try {
       const result = await service.getOverall(
         year,
-        ratingClass,
+        rankingClass,
         gender,
         isWeekend,
         isSenior,

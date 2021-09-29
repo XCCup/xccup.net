@@ -9,6 +9,9 @@ const userService = require("./UserService");
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 
+const FLIGHTS_PER_USER = 3;
+const TEAM_DISMISSES = 3;
+const NUMBER_OF_TEAM_MEMBERS = 5;
 //TODO Was passiert mit alten Flügen die gelöscht wurden? Aktuell würde die Wertung für diese Jahre nachträglich angepasst. Das sollte vermieden werden
 
 //TODO Implement newcomer result
@@ -16,7 +19,7 @@ const sequelize = require("sequelize");
 const service = {
   getOverall: async (
     year,
-    ratingClass,
+    rankingClass,
     gender,
     isWeekend,
     isSenior,
@@ -28,9 +31,9 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail, isSenior);
-    if (ratingClass) {
+    if (rankingClass) {
       const gliderClasses =
-        seasonDetail.ratingClasses[ratingClass].gliderClasses ?? [];
+        seasonDetail.rankingClasses[rankingClass].gliderClasses ?? [];
       where.glider = {
         type: { [Op.in]: gliderClasses },
       };
@@ -44,7 +47,7 @@ const service = {
     const resultQuery = await queryDb(where, gender, null, site, region);
 
     const result = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(result, 3);
+    limitFlightsForUserAndCalcTotals(result, FLIGHTS_PER_USER);
     sortDescendingByTotalPoints(result);
 
     return limit ? result.slice(0, limit) : result;
@@ -57,7 +60,7 @@ const service = {
     const resultQuery = await queryDb(where);
 
     const resultOverUser = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(resultOverUser, 3);
+    limitFlightsForUserAndCalcTotals(resultOverUser, FLIGHTS_PER_USER);
     const resultOverClub = aggreateOverClubAndCalcTotals(resultOverUser);
     sortDescendingByTotalPoints(resultOverClub);
 
@@ -71,8 +74,9 @@ const service = {
     const resultQuery = await queryDb(where, null, null, null, region);
 
     const resultOverUser = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(resultOverUser, 3);
+    limitFlightsForUserAndCalcTotals(resultOverUser, FLIGHTS_PER_USER);
     const resultOverTeam = aggreateOverTeamAndCalcTotals(resultOverUser);
+    dissmissWorstFlights(resultOverTeam);
     sortDescendingByTotalPoints(resultOverTeam);
 
     //TODO Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
@@ -87,7 +91,7 @@ const service = {
     const resultQuery = await queryDb(where, null, null, null, region);
 
     const result = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(result, 3);
+    limitFlightsForUserAndCalcTotals(result, FLIGHTS_PER_USER);
     calcSeniorBonusForFlightResult(result);
     sortDescendingByTotalPoints(result);
 
@@ -283,8 +287,8 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
   resultOverUser.forEach((entry) => {
     const found = result.find((e) => e.clubId == entry.clubId);
     const memberEntry = {
-      id: entry.userName,
-      name: entry.userId,
+      id: entry.userId,
+      name: entry.userName,
       flights: entry.flights,
       totalDistance: entry.totalDistance,
       totalPoints: entry.totalPoints,
@@ -304,6 +308,27 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
     }
   });
   return result;
+}
+
+function dissmissWorstFlights(resultOverTeam) {
+  resultOverTeam.forEach((team) => {
+    let flights = [];
+    team.members.forEach((member) => {
+      flights = flights.concat(member.flights);
+    });
+    const numberOfFlightsToDismiss =
+      flights.length -
+      FLIGHTS_PER_USER * NUMBER_OF_TEAM_MEMBERS +
+      TEAM_DISMISSES;
+    if (numberOfFlightsToDismiss > 0) {
+      console.log("DISMISS");
+      flights.sort((a, b) => b.flightPoints - a.flightPoints);
+      flights.forEach((e) => console.log(e.flightPoints));
+      const worstFlights = flights.splice(numberOfFlightsToDismiss * -1);
+      worstFlights.forEach((e) => console.log(e.flightPoints));
+      //TODO Remove finally flights from result object
+    }
+  });
 }
 
 function aggreateOverTeamAndCalcTotals(resultOverUser) {
