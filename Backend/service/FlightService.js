@@ -2,6 +2,8 @@ const sequelize = require("sequelize");
 const FlightComment = require("../config/postgres")["FlightComment"];
 const Flight = require("../config/postgres")["Flight"];
 const User = require("../config/postgres")["User"];
+const Team = require("../config/postgres")["Team"];
+const Club = require("../config/postgres")["Club"];
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 
@@ -30,7 +32,7 @@ const flightService = {
     year,
     site,
     type,
-    ratingClass,
+    rankingClass,
     limit,
     sortByPoints,
     startDate,
@@ -41,7 +43,7 @@ const flightService = {
       isCacheSufficent(year, [
         site,
         type,
-        ratingClass,
+        rankingClass,
         limit,
         sortByPoints,
         startDate,
@@ -68,7 +70,7 @@ const flightService = {
       where: await createWhereStatement(
         year,
         type,
-        ratingClass,
+        rankingClass,
         startDate,
         endDate
       ),
@@ -166,6 +168,19 @@ const flightService = {
         },
         {
           model: User,
+          attributes: ["name"],
+        },
+        {
+          model: FlyingSite,
+          as: "takeoff",
+          attributes: ["id", "name", "direction"],
+        },
+        {
+          model: Club,
+          attributes: ["name"],
+        },
+        {
+          model: Team,
           attributes: ["name"],
         },
         {
@@ -404,12 +419,12 @@ async function addUserData(flight) {
 async function createWhereStatement(
   year,
   flightType,
-  ratingClass,
+  rankingClass,
   startDate,
   endDate
 ) {
   let whereStatement;
-  if (flightType || year || ratingClass || startDate || endDate) {
+  if (flightType || year || rankingClass || startDate || endDate) {
     whereStatement = {};
   }
   if (flightType) {
@@ -427,9 +442,9 @@ async function createWhereStatement(
     };
   }
 
-  if (ratingClass) {
+  if (rankingClass) {
     const ratingValues =
-      (await getCurrentActive()).ratingClasses[ratingClass] ?? [];
+      (await getCurrentActive()).rankingClasses[rankingClass] ?? [];
     whereStatement.glider = {
       type: { [sequelize.Op.in]: ratingValues },
     };
