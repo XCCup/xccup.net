@@ -110,6 +110,11 @@ const flightService = {
           as: "fixes",
           attributes: ["geom"],
         },
+        {
+          model: FlyingSite,
+          as: "takeoff",
+          attributes: ["name"],
+        },
       ],
       where: await createWhereStatement(null, null, null, fromDate, tillDate),
       order: [["flightPoints", "DESC"]],
