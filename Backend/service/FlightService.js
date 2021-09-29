@@ -87,12 +87,12 @@ const flightService = {
   },
 
   getTodays: async () => {
-    const BEST_FLIGHTS_HOUR_SWITCHOVER = 12;
+    const SWITCHOVER_HOUR_TODAY_RANKING = 12;
 
     const today = new Date();
     let fromDay = today.getDate() - 1;
     let tillDay = today.getDate();
-    if (today.getHours() > BEST_FLIGHTS_HOUR_SWITCHOVER) {
+    if (today.getHours() > SWITCHOVER_HOUR_TODAY_RANKING) {
       fromDay++;
       tillDay++;
     }
@@ -293,7 +293,7 @@ function filterFilghtFixesForTodayRanking(flightDbObjects) {
     const fixes = entry.fixes.geom.coordinates;
     entry.fixes = [];
 
-    //Fixes will be stored to db with an interval of 5s
+    //Fixes are stored in db with an interval of 5s
     const step = 3600 / 5 / FIXES_PER_HOUR;
 
     for (let index = 0; index < fixes.length; index += step) {
