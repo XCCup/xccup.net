@@ -13,11 +13,11 @@
       >
         <th scope="row">{{ index + 1 }}</th>
         <td><BaseDate :timestamp="flight.date" dateFormat="dd.MM" /></td>
-        <td>{{ flight.pilot }}</td>
-        <td>{{ flight.takeoff }}</td>
-        <td>{{ flight.distance }} km</td>
+        <td>{{ flight.User.name }}</td>
+        <td>{{ flight.takeoff.description }}</td>
+        <td>{{ flight.flightDistance }} km</td>
         <td>{{ flight.taskType }}</td>
-        <td>{{ flight.points }} P</td>
+        <td>{{ flight.flightPoints }} P</td>
       </tr>
     </tbody>
   </table>

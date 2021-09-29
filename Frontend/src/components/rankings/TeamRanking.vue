@@ -1,31 +1,27 @@
 <template>
-  <!-- TeamRanking -->
-  <table class="table">
+  <table v-if="bestTeams" class="table table-hover">
     <thead>
       <tr></tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>SKYWALKER</td>
-        <td>6421 P</td>
-        <td>3000km</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>auch namenlos grandios</td>
-        <td>6421 P</td>
-        <td>300km</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Die sympathischen Speeditöre</td>
-        <td>5 P</td>
-        <td>10km</td>
+      <tr
+        v-for="(team, index) in bestTeams.slice(0, 5)"
+        v-bind:item="team"
+        v-bind:index="index"
+        v-bind:key="team.teamId"
+      >
+        <th scope="row">{{ index + 1 }}</th>
+        <td>{{ team.teamName }}</td>
+        <td>{{ team.totalPoints }} Punkte</td>
+        <td>{{ team.totalDistance }} km</td>
       </tr>
     </tbody>
   </table>
-  <!--  -->
+  <router-link
+    :to="{ name: 'Home' }"
+    class="btn btn-outline-primary btn-sm my-1"
+    >Detailierte Liste anzeigen</router-link
+  >
 </template>
 
 <script>
@@ -34,6 +30,12 @@ export default {
   components: {},
   data() {
     return {};
+  },
+  props: {
+    bestTeams: {
+      type: Array,
+      required: true,
+    },
   },
 };
 </script>

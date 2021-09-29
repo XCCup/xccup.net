@@ -1,7 +1,12 @@
 <template>
   <Infobox />
   <DailyRanking :maxRows="5" :flights="dailyRanking" />
-  <OverallResults :rankings="overallRanking" :topFlights="topFlights" />
+  <OverallResults
+    :rankingByClass="rankingByClass"
+    :topFlights="topFlights"
+    :bestClubs="bestClubs"
+    :bestTeams="bestTeams"
+  />
   <Sponsors />
 </template>
 
@@ -28,8 +33,10 @@ export default {
       return {
         dailyRanking: ref(initialData.todaysFlights),
         topFlights: ref(initialData.bestFlightsOverallCurrentYear),
-        rankingByGliderType: ref(initialData.xxxx),
+        rankingByClass: ref(initialData.ratingClasses),
         overallRanking: ref(initialData.xxxx),
+        bestClubs: ref(initialData.bestClubs),
+        bestTeams: ref(initialData.bestTeams),
       };
     } catch (error) {
       console.log(error);

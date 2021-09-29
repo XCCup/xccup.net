@@ -1,4 +1,5 @@
 <template>
+  {{ rankingByClass }}
   <div class="row">
     <div
       class="col-xxl-2 col-md-4 col-6 my-1"
