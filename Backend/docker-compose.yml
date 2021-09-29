@@ -28,6 +28,8 @@ services:
       - 65080:80
     networks:
       - xccup-network
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
 
   server:
     build:
@@ -52,6 +54,7 @@ services:
 
 volumes:
   db:
+  pgadmin-data:
 
 networks:
   xccup-network:
