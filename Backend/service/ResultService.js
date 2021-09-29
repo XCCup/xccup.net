@@ -342,7 +342,7 @@ function aggreateFlightsOverUser(resultQuery) {
     const flightEntry = {
       id: entry.id,
       flightPoints: entry.flightPoints,
-      flightDistance: entry.flightDistance,
+      flightDistance: Math.round(entry.flightDistance * 100) / 100,
       glider: entry.glider,
       flightType: entry.flightType,
       takeoffName: entry.takeoff.name,

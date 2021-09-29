@@ -1,6 +1,6 @@
 [
   {
-    "name": "Neef/Petersberg Startplatz ",
+    "name": "Neef/Petersberg",
     "heightDifference": "260",
     "image": "",
     "region": "Mosel",
@@ -53,7 +53,7 @@
     "direction": ""
   },
   {
-    "name": "Gangelsberg Startplatz ",
+    "name": "Gangelsberg",
     "heightDifference": "300",
     "image": "",
     "region": "Pfalz",
@@ -71,7 +71,7 @@
     "direction": "O"
   },
   {
-    "name": "Duchroth Startplatz ",
+    "name": "Duchroth",
     "heightDifference": "209",
     "image": "",
     "region": "Pfalz",
@@ -89,7 +89,7 @@
     "direction": "N"
   },
   {
-    "name": "Offenbach-Hundheim Start ",
+    "name": "Offenbach-Hundheim",
     "heightDifference": "310",
     "image": "",
     "region": "",
@@ -107,7 +107,7 @@
     "direction": "S"
   },
   {
-    "name": "Halde Ensorf Start ",
+    "name": "Halde Ensorf",
     "heightDifference": "310",
     "image": "",
     "region": "",
@@ -125,7 +125,7 @@
     "direction": "S"
   },
   {
-    "name": "Urphar Startplatz ",
+    "name": "Urphar",
     "heightDifference": "266",
     "image": "",
     "region": "",
@@ -143,7 +143,7 @@
     "direction": "NO"
   },
   {
-    "name": "Urphar Startplatz ",
+    "name": "Urphar",
     "heightDifference": "270",
     "image": "",
     "region": "",
@@ -161,7 +161,7 @@
     "direction": "NW"
   },
   {
-    "name": "Schoden Startplatz ",
+    "name": "Schoden",
     "heightDifference": "260",
     "image": "",
     "region": "Mosel",
@@ -215,7 +215,7 @@
     "direction": ""
   },
   {
-    "name": "Donnersberg Moltkefelsen ",
+    "name": "Donnersberg Moltkefelsen",
     "heightDifference": "540",
     "image": "",
     "region": "Pfalz",
@@ -233,7 +233,7 @@
     "direction": "SO"
   },
   {
-    "name": "Vockrather Acker ",
+    "name": "Vockrather Acker",
     "heightDifference": "65",
     "image": "vockrather_acker.jpg",
     "type": "HGPGSTA",
@@ -247,10 +247,10 @@
     },
     "id": "b2f94426-5230-46d0-9064-003735519c79",
     "shortName": "HOLZHEIM_SCHLEPP",
-    "direction": "Holzheim Schlepp "
+    "direction": "Holzheim Schlepp"
   },
   {
-    "name": "Rosenberg Startplatz ",
+    "name": "Rosenberg",
     "heightDifference": "240",
     "image": "",
     "region": "Mosel",
@@ -286,7 +286,7 @@
     "direction": "NNW-NNO"
   },
   {
-    "name": "Gringlay Startplatz ",
+    "name": "Gringlay",
     "heightDifference": "426",
     "image": "",
     "region": "Luxemburg",
@@ -304,7 +304,7 @@
     "direction": "SW"
   },
   {
-    "name": "Saarburg-Kreuzberg Start ",
+    "name": "Saarburg-Kreuzberg",
     "heightDifference": "300",
     "image": "",
     "region": "",
@@ -322,7 +322,7 @@
     "direction": "SO"
   },
   {
-    "name": "Pfeffelbach Start ",
+    "name": "Pfeffelbach",
     "heightDifference": "586",
     "image": "PfeffStart01.jpg",
     "type": "HGPGSTA",
@@ -339,7 +339,7 @@
     "direction": "SO"
   },
   {
-    "name": "Serrig Start ",
+    "name": "Serrig",
     "heightDifference": "356",
     "image": "SerrigStart01.jpg",
     "type": "HGPGSTA",
@@ -357,7 +357,7 @@
     "direction": "SW-W"
   },
   {
-    "name": "Neumagen Start ",
+    "name": "Neumagen",
     "heightDifference": "385",
     "image": "Neumagen_Start01.jpg",
     "type": "HGPGSTA",
@@ -375,7 +375,7 @@
     "direction": "NO-SO"
   },
   {
-    "name": "Ockfen Start ",
+    "name": "Ockfen",
     "heightDifference": "350",
     "image": "OckfenStart01.jpg",
     "type": "HGPGSTA",
@@ -533,7 +533,7 @@
     "direction": ""
   },
   {
-    "name": "Zeltingen-Rachtig Start ",
+    "name": "Zeltingen-Rachtig",
     "heightDifference": "260",
     "image": "ZeltingenRachtigStart01.jpg",
     "type": "HGPGSTA",
@@ -551,7 +551,7 @@
     "direction": "O"
   },
   {
-    "name": "Dreiser Weiher Startplatz ",
+    "name": "Dreiser Weiher",
     "heightDifference": "545",
     "image": "Dreiserweiher01.jpg",
     "type": "HGPGSTA",
@@ -568,7 +568,7 @@
     "direction": "NW-NNO"
   },
   {
-    "name": "Lasserg/Küppchen Startplatz ",
+    "name": "Lasserg/Küppchen",
     "heightDifference": "260",
     "image": "Burgen_Lasserg_Start01.jpg",
     "type": "HGPGSTA",
@@ -586,7 +586,7 @@
     "direction": "O-SO"
   },
   {
-    "name": "Bremm Startplatz ",
+    "name": "Bremm",
     "heightDifference": "305",
     "image": "Bremmercalmontstart01.jpg",
     "type": "HGPGSTA",
@@ -604,7 +604,7 @@
     "direction": "SSO-SSW"
   },
   {
-    "name": "Schöneberg Schlepp ",
+    "name": "Schöneberg Schlepp",
     "heightDifference": "280",
     "image": "",
     "region": "",
@@ -622,7 +622,7 @@
     "direction": "O,W"
   },
   {
-    "name": "Eichen Schlepp ",
+    "name": "Eichen Schlepp",
     "heightDifference": "230",
     "image": "",
     "region": "",
@@ -640,7 +640,7 @@
     "direction": "N,S"
   },
   {
-    "name": "Gollershoben Schlepp ",
+    "name": "Gollershoben Schlepp",
     "heightDifference": "260",
     "image": "",
     "region": "",
@@ -658,7 +658,7 @@
     "direction": "O,W"
   },
   {
-    "name": "Schnellmannshausen Schlepp ",
+    "name": "Schnellmannshausen Schlepp",
     "heightDifference": "258",
     "image": "",
     "region": "",
@@ -676,7 +676,7 @@
     "direction": "NO,SW"
   },
   {
-    "name": "Wanfried-Aue Startplatz ",
+    "name": "Wanfried-Aue",
     "heightDifference": "345",
     "image": "",
     "region": "",
@@ -694,7 +694,7 @@
     "direction": "NW-N"
   },
   {
-    "name": "Kella Schleppgelände ",
+    "name": "Kella Schlepp",
     "heightDifference": "500",
     "image": "",
     "region": "",
@@ -712,7 +712,7 @@
     "direction": "NO,SW"
   },
   {
-    "name": "Kella-Berg Startplatz ",
+    "name": "Kella-Berg",
     "heightDifference": "500",
     "image": "",
     "region": "",
@@ -730,7 +730,7 @@
     "direction": "O-SO"
   },
   {
-    "name": "Hahnberg Startplatz ",
+    "name": "Hahnberg",
     "heightDifference": "540",
     "image": "",
     "region": "",
@@ -748,7 +748,7 @@
     "direction": "NNW"
   },
   {
-    "name": "Hoher Meissner Uengsterode Startplatz ",
+    "name": "Hoher Meissner Uengsterode",
     "heightDifference": "537",
     "image": "",
     "region": "",
@@ -766,7 +766,7 @@
     "direction": "W"
   },
   {
-    "name": "Wenholthausen Startplatz ",
+    "name": "Wenholthausen",
     "heightDifference": "571",
     "image": "",
     "region": "Sauerland",
@@ -784,7 +784,7 @@
     "direction": "S-SW"
   },
   {
-    "name": "Abtsrodaer Kuppe ",
+    "name": "Abtsrodaer Kuppe",
     "heightDifference": "933",
     "image": "",
     "region": "Rhön",
@@ -802,7 +802,7 @@
     "direction": "N-NO"
   },
   {
-    "name": "Pferdskopf Startplatz ",
+    "name": "Pferdskopf",
     "heightDifference": "840",
     "image": "",
     "region": "Rhön",
@@ -820,7 +820,7 @@
     "direction": "NW"
   },
   {
-    "name": "Ofentaler Berg Startplatz ",
+    "name": "Ofentaler Berg",
     "heightDifference": "312",
     "image": "",
     "region": "",
@@ -838,7 +838,7 @@
     "direction": "SO"
   },
   {
-    "name": "Wasserkuppe Westhang ",
+    "name": "Wasserkuppe Westhang",
     "heightDifference": "914",
     "image": "",
     "region": "Rhön",
@@ -856,7 +856,7 @@
     "direction": "W"
   },
   {
-    "name": "Kreuzberg Startplatz ",
+    "name": "Kreuzberg",
     "heightDifference": "750",
     "image": "",
     "region": "Rhön",
@@ -874,7 +874,7 @@
     "direction": "N-NO"
   },
   {
-    "name": "Kreuzberg Startplatz ",
+    "name": "Kreuzberg",
     "heightDifference": "882",
     "image": "",
     "region": "Rhön",
@@ -892,7 +892,7 @@
     "direction": "SO"
   },
   {
-    "name": "Oberhövels Schlepp ",
+    "name": "Oberhövels Schlepp",
     "heightDifference": "220",
     "image": "",
     "region": "",
@@ -910,7 +910,7 @@
     "direction": "N,S"
   },
   {
-    "name": "Asslar Segelfluggelände ",
+    "name": "Asslar Schlepp",
     "heightDifference": "290",
     "image": "",
     "region": "",
@@ -928,7 +928,7 @@
     "direction": "S,N"
   },
   {
-    "name": "Bruchhauser Steine Startplatz ",
+    "name": "Bruchhauser Steine",
     "heightDifference": "635",
     "image": "",
     "region": "Sauerland",
@@ -946,7 +946,7 @@
     "direction": "S"
   },
   {
-    "name": "Bruchhauser Steine Startplatz ",
+    "name": "Bruchhauser Steine",
     "heightDifference": "715",
     "image": "",
     "region": "Sauerland",
@@ -982,7 +982,7 @@
     "direction": ""
   },
   {
-    "name": "Harsberg Startplatz ",
+    "name": "Harsberg",
     "heightDifference": "465",
     "image": "",
     "region": "",
@@ -1000,7 +1000,7 @@
     "direction": "SW"
   },
   {
-    "name": "Altena-Hegenscheid Schleppstrecke ",
+    "name": "Altena-Hegenscheid Schlepp",
     "heightDifference": "473",
     "image": "",
     "region": "Sauerland",
@@ -1018,7 +1018,7 @@
     "direction": "NO-SW"
   },
   {
-    "name": "Eisenberg / Battenberg Startplatz ",
+    "name": "Eisenberg/Battenberg",
     "heightDifference": "450",
     "image": "",
     "region": "",
@@ -1054,7 +1054,7 @@
     "direction": ""
   },
   {
-    "name": "Niederzissen/Bausenberg Startplatz ",
+    "name": "Niederzissen/Bausenberg",
     "heightDifference": "317",
     "image": "",
     "region": "Mosel",
@@ -1072,7 +1072,7 @@
     "direction": "SO-S"
   },
   {
-    "name": "Willingen-Ettelsberg Startplatz ",
+    "name": "Willingen-Ettelsberg",
     "heightDifference": "794",
     "image": "",
     "region": "Sauerland",
@@ -1090,7 +1090,7 @@
     "direction": "N"
   },
   {
-    "name": "Reichenhausen Start ",
+    "name": "Reichenhausen",
     "heightDifference": "550",
     "image": "",
     "region": "Rhön",
@@ -1108,7 +1108,7 @@
     "direction": "S"
   },
   {
-    "name": "Maring-Noviand Start ",
+    "name": "Maring-Noviand",
     "heightDifference": "290",
     "image": "maring_start_so.jpg",
     "type": "HGPGSTA",
@@ -1126,7 +1126,7 @@
     "direction": "SO"
   },
   {
-    "name": "Martinsthal Startplatz ",
+    "name": "Martinsthal",
     "heightDifference": "225",
     "image": "",
     "region": "",
@@ -1144,7 +1144,7 @@
     "direction": "S"
   },
   {
-    "name": "Kautenbach Startplatz ",
+    "name": "Kautenbach",
     "heightDifference": "397",
     "image": "",
     "region": "Luxemburg",
@@ -1162,7 +1162,7 @@
     "direction": "NW"
   },
   {
-    "name": "Michaelau Startplatz ",
+    "name": "Michaelau",
     "heightDifference": "401",
     "image": "",
     "region": "Luxemburg",
@@ -1198,7 +1198,7 @@
     "direction": ""
   },
   {
-    "name": "Nassauer Berg Startplatz ",
+    "name": "Nassauer Berg",
     "heightDifference": "268",
     "image": "",
     "region": "Mosel",
@@ -1234,7 +1234,7 @@
     "direction": ""
   },
   {
-    "name": "Elpe-Steinmarkskopf Startplatz ",
+    "name": "Elpe-Steinmarkskopf",
     "heightDifference": "670",
     "image": "",
     "region": "",
@@ -1252,7 +1252,7 @@
     "direction": "NO-OSO"
   },
   {
-    "name": "Willingen Sonnenhang Startplatz ",
+    "name": "Willingen Sonnenhang",
     "heightDifference": "760",
     "image": "",
     "region": "Sauerland",
@@ -1270,7 +1270,7 @@
     "direction": "O"
   },
   {
-    "name": "Hohe Geba Startplatz ",
+    "name": "Hohe Geba",
     "heightDifference": "560",
     "image": "",
     "region": "Rhön",
@@ -1306,7 +1306,7 @@
     "direction": ""
   },
   {
-    "name": "Kanfen Startplatz ",
+    "name": "Kanfen",
     "heightDifference": "420",
     "image": "",
     "region": "",
@@ -1324,7 +1324,7 @@
     "direction": "O"
   },
   {
-    "name": "Spielberg Startplatz ",
+    "name": "Spielberg",
     "heightDifference": "531",
     "image": "",
     "region": "Rhön",
@@ -1342,7 +1342,7 @@
     "direction": "O"
   },
   {
-    "name": "Mehring Start ",
+    "name": "Mehring",
     "heightDifference": "356",
     "image": "",
     "region": "",
@@ -1394,7 +1394,7 @@
     "direction": ""
   },
   {
-    "name": "Ürzig-Erden Start ",
+    "name": "Ürzig-Erden",
     "heightDifference": "243",
     "image": "Erden_Start01.jpg",
     "type": "HGPGSTA",
@@ -1412,7 +1412,7 @@
     "direction": "SO"
   },
   {
-    "name": "Klüsserath Start ",
+    "name": "Klüsserath",
     "heightDifference": "290",
     "image": "Kluesserath_Start01.jpg",
     "type": "HGPGSTA",
@@ -1430,7 +1430,7 @@
     "direction": "S-W"
   },
   {
-    "name": "Rivenich Start ",
+    "name": "Rivenich",
     "heightDifference": "280",
     "image": "",
     "region": "Mosel",
@@ -1448,7 +1448,7 @@
     "direction": "W"
   },
   {
-    "name": "St. Katharinen Schlepp ",
+    "name": "St. Katharinen Schlepp",
     "heightDifference": "0",
     "image": "",
     "region": "",
@@ -1466,7 +1466,7 @@
     "direction": "SO,NW"
   },
   {
-    "name": "St. Katharinen Hang Start ",
+    "name": "St. Katharinen Hang",
     "heightDifference": "0",
     "image": "",
     "region": "",
@@ -1484,7 +1484,7 @@
     "direction": "SSW"
   },
   {
-    "name": "Sophienhöhe Start ",
+    "name": "Sophienhöhe",
     "heightDifference": "0",
     "image": "SophienheightDifference_O_Start01.jpg",
     "type": "HGPGSTA",
@@ -1501,7 +1501,7 @@
     "direction": "NO-SO"
   },
   {
-    "name": "Ürzig-Erden Start ",
+    "name": "Ürzig-Erden",
     "heightDifference": "290",
     "image": "",
     "region": "Mosel",
@@ -1519,7 +1519,7 @@
     "direction": "SW"
   },
   {
-    "name": "Burgen Start ",
+    "name": "Burgen",
     "heightDifference": "386",
     "image": "Burgen_Start01.jpg",
     "type": "HGPGSTA",
@@ -1573,7 +1573,7 @@
     "direction": ""
   },
   {
-    "name": "St. Katharinen Schlepp ",
+    "name": "St. Katharinen Schlepp",
     "heightDifference": "0",
     "image": "",
     "region": "",
@@ -1609,7 +1609,7 @@
     "direction": "SO-S"
   },
   {
-    "name": "Losheim am See/Scheid Schlepp ",
+    "name": "Losheim am See/Scheid Schlepp",
     "heightDifference": "0",
     "image": "Losheim_Scheid01.jpg",
     "type": "HGPGSTA",
@@ -1626,7 +1626,7 @@
     "direction": "N,O,S,W"
   },
   {
-    "name": "Meerfelder Maar Start ",
+    "name": "Meerfelder Maar",
     "heightDifference": "520",
     "image": "Meerfeld01.jpg",
     "type": "HGPGSTA",
@@ -1644,7 +1644,7 @@
     "direction": "S"
   },
   {
-    "name": "Orensberg Start ",
+    "name": "Orensberg",
     "heightDifference": "531",
     "image": "Orensberg_Start01.jpg",
     "type": "HGPGSTA",
@@ -1661,7 +1661,7 @@
     "direction": "SSW-W"
   },
   {
-    "name": "Adelberg Start ",
+    "name": "Adelberg",
     "heightDifference": "540",
     "image": "Adelberg_Start01.jpg",
     "type": "HGPGSTA",
@@ -1678,7 +1678,7 @@
     "direction": "ONO-SSO"
   },
   {
-    "name": "Förlenberg Start ",
+    "name": "Förlenberg",
     "heightDifference": "477",
     "image": "Foerlenberg_Start01.jpg",
     "type": "HGPGSTA",
@@ -1695,7 +1695,7 @@
     "direction": "NNO-ONO"
   },
   {
-    "name": "Höllenberg Start ",
+    "name": "Höllenberg",
     "heightDifference": "0",
     "image": "Hoellenberg_Start01.jpg",
     "type": "HGPGSTA",
@@ -1712,7 +1712,7 @@
     "direction": "SSW-NW"
   },
   {
-    "name": "Maring-Noviand Start ",
+    "name": "Maring-Noviand",
     "heightDifference": "275",
     "image": "maring_start_sw.jpg",
     "type": "HGPGSTA",
@@ -1730,7 +1730,7 @@
     "direction": "SW-S"
   },
   {
-    "name": "Hohenberg Start ",
+    "name": "Hohenberg",
     "heightDifference": "530",
     "image": "Hohenberg_Start_West01.jpg",
     "type": "HGPGSTA",
@@ -1748,7 +1748,7 @@
     "direction": "S-W"
   },
   {
-    "name": "Boppard Start ",
+    "name": "Boppard",
     "heightDifference": "276",
     "image": "",
     "region": "Mosel",
@@ -1766,7 +1766,7 @@
     "direction": "NO-SO"
   },
   {
-    "name": "Losheim am See/Am See Schlepp ",
+    "name": "Losheim am See/Am See Schlepp",
     "heightDifference": "0",
     "image": "Losheim_Am_See01.jpg",
     "type": "HGPGSTA",
@@ -1783,7 +1783,7 @@
     "direction": "NW,SO"
   },
   {
-    "name": "Losheim am See/Hungerberg Schlepp ",
+    "name": "Losheim am See/Hungerberg Schlepp",
     "heightDifference": "0",
     "image": "",
     "region": "",
@@ -1819,7 +1819,7 @@
     "direction": "N"
   },
   {
-    "name": "Graach Start ",
+    "name": "Graach",
     "heightDifference": "332",
     "image": "GraachHerbst_Start01.jpg",
     "type": "HGPGSTA",
@@ -1837,7 +1837,7 @@
     "direction": "S-SW"
   },
   {
-    "name": "Losheim am See/Kerzenberg Schlepp ",
+    "name": "Losheim am See/Kerzenberg Schlepp",
     "heightDifference": "0",
     "image": "Losheim_Kerzenberg01.jpg",
     "type": "HGPGSTA",
@@ -1871,7 +1871,7 @@
     "direction": "N,S"
   },
   {
-    "name": "Riol Start ",
+    "name": "Riol",
     "heightDifference": "415",
     "image": "RiolStart.jpg",
     "type": "HGPGSTA",
@@ -1889,7 +1889,7 @@
     "direction": "NNW-N"
   },
   {
-    "name": "Herdorf Sassenroth Start ",
+    "name": "Herdorf Sassenroth",
     "heightDifference": "380",
     "image": "",
     "region": "",
@@ -1943,7 +1943,7 @@
     "direction": "SW-NW"
   },
   {
-    "name": "Obergailbach Schlepp ",
+    "name": "Obergailbach Schlepp",
     "heightDifference": "0",
     "image": "",
     "region": "",
@@ -1961,7 +1961,7 @@
     "direction": "O-W"
   },
   {
-    "name": "Herbitzheim Schlepp ",
+    "name": "Herbitzheim Schlepp",
     "heightDifference": "275",
     "image": "",
     "region": "",
@@ -1979,7 +1979,7 @@
     "direction": "NO-SW"
   },
   {
-    "name": "Krausberg Start ",
+    "name": "Krausberg",
     "heightDifference": "0",
     "image": "Krausberg_Start01.jpg",
     "type": "HGPGSTA",
@@ -1996,7 +1996,7 @@
     "direction": "N"
   },
   {
-    "name": "Hönningen Start ",
+    "name": "Hönningen",
     "heightDifference": "0",
     "image": "Hoenningen_Start_Ost01.jpg",
     "type": "HGPGSTA",
@@ -2013,7 +2013,7 @@
     "direction": "O"
   },
   {
-    "name": "Hönningen Start ",
+    "name": "Hönningen",
     "heightDifference": "0",
     "image": "Hoenningen_Start_Sued01.jpg",
     "type": "HGPGSTA",
@@ -2030,7 +2030,7 @@
     "direction": "S"
   },
   {
-    "name": "Schriesheim-Ölberg Start ",
+    "name": "Schriesheim-Ölberg",
     "heightDifference": "400",
     "image": "Schriesheim01.jpg",
     "type": "HGPGSTA",
@@ -2065,7 +2065,7 @@
     "direction": ""
   },
   {
-    "name": "Hohen Unkel Schlepp ",
+    "name": "Hohen Unkel Schlepp",
     "heightDifference": "0",
     "image": "Hohenunkel_Schlepp01.jpg",
     "type": "HGPGSTA",
@@ -2082,7 +2082,7 @@
     "direction": "N,O,S,W"
   },
   {
-    "name": "Haardskopf Start ",
+    "name": "Haardskopf",
     "heightDifference": "0",
     "image": "Haardskopf_Start01.jpg",
     "type": "HGPGSTA",
@@ -2099,7 +2099,7 @@
     "direction": "SW-W"
   },
   {
-    "name": "Finkenberg Start ",
+    "name": "Finkenberg",
     "heightDifference": "255",
     "image": "Finkenberg_Start01.jpg",
     "type": "HGPGSTA",
@@ -2116,7 +2116,7 @@
     "direction": "S-SW"
   },
   {
-    "name": "Melibokus Start ",
+    "name": "Melibokus",
     "heightDifference": "500",
     "image": "Melibokus_Start01.jpg",
     "type": "HGPGSTA",
@@ -2133,7 +2133,7 @@
     "direction": "W-NW"
   },
   {
-    "name": "Hasloch-Heckenkopf Start ",
+    "name": "Hasloch-Heckenkopf",
     "heightDifference": "305",
     "image": "Hasloch_Heckenkopf_Start01.jpg",
     "type": "HGPGSTA",
@@ -2150,7 +2150,7 @@
     "direction": "O-S"
   },
   {
-    "name": "Großer Kopf/Römerturm Startplatz ",
+    "name": "Großer Kopf/Römerturm",
     "heightDifference": "430",
     "image": "GrosserKopfStart_01.jpg",
     "type": "HGPGSTA",
@@ -2167,7 +2167,7 @@
     "direction": "W-NW"
   },
   {
-    "name": "Erlau Start ",
+    "name": "Erlau",
     "heightDifference": "350",
     "image": "",
     "region": "",
@@ -2185,7 +2185,7 @@
     "direction": "O-SO"
   },
   {
-    "name": "Blättersberg Start ",
+    "name": "Blättersberg",
     "heightDifference": "550",
     "image": "",
     "region": "",
@@ -2203,7 +2203,7 @@
     "direction": "OSO-SSW"
   },
   {
-    "name": "Ronneburg Start ",
+    "name": "Ronneburg",
     "heightDifference": "0",
     "image": "Ronneburg01.jpg",
     "type": "HGPGSTA",
@@ -2220,7 +2220,7 @@
     "direction": "NW"
   },
   {
-    "name": "Königstuhl Startplatz ",
+    "name": "Königstuhl",
     "heightDifference": "540",
     "image": "KoenigstuhlStart01_650.jpg",
     "type": "HGPGSTA",
@@ -2274,7 +2274,7 @@
     "direction": ""
   },
   {
-    "name": "Mosbach/Finkenhof Start ",
+    "name": "Mosbach/Finkenhof",
     "heightDifference": "0",
     "image": "",
     "region": "",
@@ -2328,7 +2328,7 @@
     "direction": "S"
   },
   {
-    "name": "Weilerkopf Start ",
+    "name": "Weilerkopf",
     "heightDifference": "307",
     "image": "",
     "region": "",
@@ -2364,7 +2364,7 @@
     "direction": ""
   },
   {
-    "name": "Staudernheim Start ",
+    "name": "Staudernheim",
     "heightDifference": "218",
     "image": "",
     "region": "",
@@ -2400,7 +2400,7 @@
     "direction": ""
   },
   {
-    "name": "Donnersberg Start ",
+    "name": "Donnersberg",
     "heightDifference": "550",
     "image": "DonnersbergStart01.jpg",
     "type": "HGPGSTA",
@@ -2418,7 +2418,7 @@
     "direction": "NO-O"
   },
   {
-    "name": "Hasloch-Röttberg Start ",
+    "name": "Hasloch-Röttberg",
     "heightDifference": "290",
     "image": "Hasloch_Roettberg.jpg",
     "type": "HGPGSTA",
@@ -2452,7 +2452,7 @@
     "direction": ""
   },
   {
-    "name": "Norheim Start ",
+    "name": "Norheim",
     "heightDifference": "210",
     "image": "",
     "region": "Pfalz",
@@ -2470,7 +2470,7 @@
     "direction": "N"
   },
   {
-    "name": "Schreckhof Start ",
+    "name": "Schreckhof",
     "heightDifference": "250",
     "image": "",
     "region": "",
@@ -2542,7 +2542,7 @@
     "direction": ""
   },
   {
-    "name": "Heinsheim Startplatz ",
+    "name": "Heinsheim",
     "heightDifference": "227",
     "image": "",
     "region": "",
@@ -2578,7 +2578,7 @@
     "direction": ""
   },
   {
-    "name": "Neckargerach Startplatz ",
+    "name": "Neckargerach",
     "heightDifference": "0",
     "image": "",
     "region": "",
@@ -2596,7 +2596,7 @@
     "direction": "SW"
   },
   {
-    "name": "Laubenheim Startplatz ",
+    "name": "Laubenheim",
     "heightDifference": "0",
     "image": "",
     "region": "Pfalz",
@@ -2614,7 +2614,7 @@
     "direction": "O"
   },
   {
-    "name": "Entenberg Startplatz ",
+    "name": "Entenberg",
     "heightDifference": "520",
     "image": "",
     "region": "",
@@ -2650,7 +2650,7 @@
     "direction": ""
   },
   {
-    "name": "Bürgstadt Startplatz ",
+    "name": "Bürgstadt",
     "heightDifference": "385",
     "image": "",
     "region": "",
@@ -2668,7 +2668,7 @@
     "direction": "W"
   },
   {
-    "name": "Stolzenberg/Steckweiler Startplatz ",
+    "name": "Stolzenberg/Steckweiler",
     "heightDifference": "323",
     "image": "",
     "region": "Pfalz",
@@ -2686,7 +2686,7 @@
     "direction": "SW"
   },
   {
-    "name": "Stachelhardt Start ",
+    "name": "Stachelhardt",
     "heightDifference": "200",
     "image": "",
     "region": "",
@@ -2704,7 +2704,7 @@
     "direction": "S"
   },
   {
-    "name": "Schönbrunn Schlepp ",
+    "name": "Schönbrunn Schlepp",
     "heightDifference": "437",
     "image": "",
     "region": "",
@@ -2722,7 +2722,7 @@
     "direction": "SO,NW"
   },
   {
-    "name": "Meerfelder Maar Start ",
+    "name": "Meerfelder Maar",
     "heightDifference": "520",
     "image": "",
     "region": "Mosel",
@@ -2758,7 +2758,7 @@
     "direction": ""
   },
   {
-    "name": "Hohenöllen Start ",
+    "name": "Hohenöllen",
     "heightDifference": "290",
     "image": "",
     "region": "Nahe",
@@ -2776,7 +2776,7 @@
     "direction": "SW"
   },
   {
-    "name": "Boppard-Weiler Startplatz ",
+    "name": "Boppard-Weiler",
     "heightDifference": "385",
     "image": "",
     "region": "Mosel",
@@ -2794,7 +2794,7 @@
     "direction": "N-O"
   },
   {
-    "name": "Eschbach Startplatz ",
+    "name": "Eschbach",
     "heightDifference": "380",
     "image": "",
     "region": "",
@@ -2812,7 +2812,7 @@
     "direction": "SO"
   },
   {
-    "name": "Kaiskorb Schlepp ",
+    "name": "Kaiskorb Schlepp",
     "heightDifference": "115",
     "image": "",
     "region": "",
@@ -2848,7 +2848,7 @@
     "direction": ""
   },
   {
-    "name": "Sevelen Schlepp ",
+    "name": "Sevelen Schlepp",
     "heightDifference": "32",
     "image": "",
     "region": "",
@@ -2866,7 +2866,7 @@
     "direction": "O,W"
   },
   {
-    "name": "Flugplatz Alsfeld Schlepp ",
+    "name": "Flugplatz Alsfeld Schlepp",
     "heightDifference": "289",
     "image": "",
     "region": "",
@@ -2884,7 +2884,7 @@
     "direction": "ONO,WSW"
   },
   {
-    "name": "Neu-Anspach Schlepp ",
+    "name": "Neu-Anspach Schlepp",
     "heightDifference": "326",
     "image": "",
     "region": "",
@@ -2902,7 +2902,7 @@
     "direction": "SO,NW"
   },
   {
-    "name": "Brilon-Poppenberg Startplatz ",
+    "name": "Brilon-Poppenberg",
     "heightDifference": "600",
     "image": "",
     "region": "",
@@ -2938,7 +2938,7 @@
     "direction": ""
   },
   {
-    "name": "Wixberg Startplatz ",
+    "name": "Wixberg",
     "heightDifference": "423",
     "image": "",
     "region": "",
@@ -2956,7 +2956,7 @@
     "direction": "W"
   },
   {
-    "name": "Wixberg Startplatz ",
+    "name": "Wixberg",
     "heightDifference": "412",
     "image": "",
     "region": "",
@@ -2974,7 +2974,7 @@
     "direction": "S"
   },
   {
-    "name": "Kronenberg Startplatz ",
+    "name": "Kronenberg",
     "heightDifference": "207",
     "image": "",
     "region": "Nahe",
@@ -3010,7 +3010,7 @@
     "direction": ""
   },
   {
-    "name": "Stüppel Startplatz ",
+    "name": "Stüppel",
     "heightDifference": "730",
     "image": "",
     "region": "Sauerland",
@@ -3028,7 +3028,7 @@
     "direction": "W-NNW"
   },
   {
-    "name": "Oberacker Winde ",
+    "name": "Oberacker Schlepp",
     "heightDifference": "210",
     "image": "",
     "region": "",
@@ -3046,7 +3046,7 @@
     "direction": "NO,SW"
   },
   {
-    "name": "Werdohl-Riesenberg Startplatz ",
+    "name": "Werdohl-Riesenberg",
     "heightDifference": "250",
     "image": "",
     "region": "",
