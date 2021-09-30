@@ -1,6 +1,14 @@
 const { check, validationResult } = require("express-validator");
 
 /**
+ * Checks if the field is a string. Addionally escapes all special charcters (e.g. ">","<").
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkStringObject(field) {
+  return check(field).trim().escape();
+}
+/**
  * Checks if the field is a string and not empty. Addionally escapes all special charcters (e.g. ">","<").
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -79,6 +87,17 @@ function checkOptionalIsBoolean(field) {
     .withMessage(`${field} must be a boolean`);
 }
 /**
+ * Checks, when the field is present, if the field is a valid ISO8601 timestamp.
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkOptionalIsISO8601(field) {
+  return check(field)
+    .optional()
+    .isBoolean()
+    .withMessage(`${field} must be a ISO8601 timestamp`);
+}
+/**
  * Checks, when the field is present, if the field is a string and not empty. Addionally escapes all special charcters (e.g. ">","<").
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -111,6 +130,8 @@ exports.checkIsArray = checkIsArray;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
 exports.checkStringObjectNotEmpty = checkStringObjectNotEmpty;
+exports.checkStringObject = checkStringObject;
 exports.validationHasErrors = validationHasErrors;
 exports.checkIsUuidObject = checkIsUuidObject;
+exports.checkOptionalIsISO8601 = checkOptionalIsISO8601;
 exports.checkOptionalStringObjectNotEmpty = checkOptionalStringObjectNotEmpty;

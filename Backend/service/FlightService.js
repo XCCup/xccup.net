@@ -4,6 +4,7 @@ const Flight = require("../config/postgres")["Flight"];
 const User = require("../config/postgres")["User"];
 const Team = require("../config/postgres")["Team"];
 const Club = require("../config/postgres")["Club"];
+const UserMedia = require("../config/postgres")["UserMedia"];
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 
@@ -184,9 +185,7 @@ const flightService = {
           attributes: ["name"],
         },
         {
-          model: FlyingSite,
-          as: "takeoff",
-          attributes: ["id", "name", "direction"],
+          model: UserMedia,
         },
       ],
     });
