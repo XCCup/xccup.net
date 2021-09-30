@@ -13,7 +13,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ pilot.userName }}</td>
             <td>
-              <p class="fw-lighter">{{ pilot.totalPoints }} P.</p>
+              <p class="fw-lighter">{{ pilot.totalPoints }} P</p>
             </td>
           </tr>
         </tbody>

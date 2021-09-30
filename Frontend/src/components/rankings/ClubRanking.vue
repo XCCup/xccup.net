@@ -12,7 +12,7 @@
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>{{ club.clubName }}</td>
-        <td>{{ club.totalPoints }} Punkte</td>
+        <td>{{ club.totalPoints }} P</td>
         <td>{{ club.totalDistance }} km</td>
       </tr>
     </tbody>
