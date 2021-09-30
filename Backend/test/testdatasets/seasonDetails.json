@@ -8,15 +8,15 @@
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
     "flightTypeFactors": {
-      "fai": 2,
-      "flat": 1.5,
-      "free": 1
+      "FAI": 2,
+      "FLAT": 1.5,
+      "FREE": 1
     },
     "gliderClasses": {
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2",
-        "shortDescription": "GS Sport"
+        "shortDescription": "GS Sport low"
       },
       "AB_high": {
         "value": 2.7,
@@ -76,7 +76,7 @@
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A + EN B, Tandem)"
+        "description": "Sportklasse (EN A+EN B, Tandem)"
       },
       "gsIntermediate": {
         "gliderClasses": [
@@ -90,7 +90,7 @@
           "D_low",
           "D_high"
         ],
-        "description": "Performance-Klasse (EN D + CCC)"
+        "description": "Performance-Klasse (EN D+CCC)"
       },
       "hgFlex": {
         "gliderClasses": [
@@ -120,15 +120,15 @@
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
     "flightTypeFactors": {
-      "fai": 2,
-      "flat": 1.5,
-      "free": 1
+      "FAI": 2,
+      "FLAT": 1.5,
+      "FREE": 1
     },
     "gliderClasses": {
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2",
-        "shortDescription": "GS Sport"
+        "shortDescription": "GS Sport low"
       },
       "AB_high": {
         "value": 2.7,
@@ -182,7 +182,7 @@
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A + EN B, Tandem)"
+        "description": "Sportklasse (EN A+EN B, Tandem)"
       },
       "gsIntermediate": {
         "gliderClasses": [
@@ -196,7 +196,7 @@
           "D_low",
           "D_high"
         ],
-        "description": "Performance-Klasse (EN D + CCC)"
+        "description": "Performance-Klasse (EN D+CCC)"
       },
       "gsTandem": {
         "gliderClasses": [
@@ -232,15 +232,15 @@
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
     "flightTypeFactors": {
-      "fai": 2,
-      "flat": 1.5,
-      "free": 1
+      "FAI": 2,
+      "FLAT": 1.5,
+      "FREE": 1
     },
     "gliderClasses": {
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2",
-        "short": "GS Sport"
+        "short": "GS Sport low"
       },
       "AB_high": {
         "value": 2.7,
@@ -294,7 +294,7 @@
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A + EN B, Tandem)"
+        "description": "Sportklasse (EN A+EN B, Tandem)"
       },
       "gsIntermediate": {
         "gliderClasses": [
@@ -308,7 +308,7 @@
           "D_low",
           "D_high"
         ],
-        "description": "Performance-Klasse (EN D + CCC)"
+        "description": "Performance-Klasse (EN D+CCC)"
       },
       "gsTandem": {
         "gliderClasses": [
@@ -344,15 +344,15 @@
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
     "flightTypeFactors": {
-      "fai": 2,
-      "flat": 1.5,
-      "free": 1
+      "FAI": 2,
+      "FLAT": 1.5,
+      "FREE": 1
     },
     "gliderClasses": {
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2",
-        "shortDescription": "GS Sport"
+        "shortDescription": "GS Sport low"
       },
       "AB_high": {
         "value": 2.7,
@@ -407,7 +407,7 @@
           "AB_high",
           "Tandem"
         ],
-        "description": "Sportklasse (EN A + EN B, Tandem)"
+        "description": "Sportklasse (EN A+EN B, Tandem)"
       },
       "gsIntermediate": {
         "gliderClasses": [
@@ -429,7 +429,7 @@
           "D_high",
           "Tandem"
         ],
-        "description": "Performance-Klasse (EN D + CCC)"
+        "description": "Performance-Klasse (EN D+CCC)"
       },
       "gsTandem": {
         "gliderClasses": [

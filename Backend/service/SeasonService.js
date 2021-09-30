@@ -31,6 +31,7 @@ const service = {
       where: {
         year: new Date().getFullYear(),
       },
+      raw: true,
     }));
   },
 

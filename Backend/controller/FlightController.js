@@ -15,7 +15,7 @@ const {
 } = require("./Validation");
 
 // @desc Retrieves all flights
-// @route GET /flight/
+// @route GET /flights/
 
 router.get(
   "/",
@@ -57,7 +57,7 @@ router.get(
 );
 
 // @desc Retrieve a flight by id
-// @route GET /flight/:id
+// @route GET /flights/:id
 
 router.get("/:id", async (req, res, next) => {
   try {
@@ -69,15 +69,13 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // @desc Deletes a flight by id
-// @route DELETE /flight/:id
+// @route DELETE /flights/:id
 // @access Only owner
 
 router.delete("/:id", authToken, async (req, res, next) => {
   const flightId = req.params.id;
   try {
-    const flightToDelete = req.flight;
-
-    if (await requesterIsNotOwner(req, res, flightToDelete.userId)) return;
+    if (await requesterIsNotOwner(req, res, req.flight.userId)) return;
 
     const numberOfDestroyedRows = await service.delete(flightId);
     res.json(numberOfDestroyedRows);
@@ -87,7 +85,7 @@ router.delete("/:id", authToken, async (req, res, next) => {
 });
 
 // @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File.
-// @route POST /flight/
+// @route POST /flights/
 // @access Only owner
 
 router.post(
@@ -123,11 +121,11 @@ router.post(
               const takeoffName =
                 await service.extractFixesAddLocationsAndDateOfFlight(flight);
 
-              service.update(flight).then((flight) => {
+              service.update(flight).then((result) => {
                 res.json({
-                  flightId: flight.id,
+                  flightId: result.id,
                   takeoff: takeoffName,
-                  landing: flight.landing,
+                  landing: result.landing,
                 });
               });
             })
@@ -139,29 +137,31 @@ router.post(
   }
 );
 
-// @desc Adds futher data to a existing flight
-// @route PUT /flight/:id
+// @desc Edits flightReport and glider of a existing flight and calcs the flightPoints
+// @route PUT /flights/:id
 // @access Only owner
 
 router.put(
   "/:id",
   authToken,
-  checkStringObjectNotEmpty("glider"),
   checkOptionalStringObjectNotEmpty("report"),
+  checkStringObjectNotEmpty("glider.brand"),
+  checkStringObjectNotEmpty("glider.model"),
+  checkStringObjectNotEmpty("glider.type"),
   async (req, res, next) => {
+    const flight = req.flight;
     const report = req.body.report;
     const glider = req.body.glider;
-    const flight = req.flight;
 
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
-      flight.report = report;
-      flight.glider = glider;
-      //TODO Erst nach Bekanntmachung des Glider können die Punkte für den Flug korrekt berechnet werden. Beachte evtl. ist Flugberechnung hier noch nicht abgeschlossen.
-      service.update(flight).then((flight) => {
-        res.json(flight.externalId);
-      });
+      const result = await service.addEditReportAndGlider(
+        flight,
+        report,
+        glider
+      );
+      res.json({ flightPoints: result[1][0].flightPoints });
     } catch (error) {
       next(error);
     }

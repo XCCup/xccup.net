@@ -8,7 +8,6 @@ const {
   validationHasErrors,
   checkStringObject,
   checkOptionalIsISO8601,
-  checkOptionalIsBoolean,
 } = require("./Validation");
 const multer = require("multer");
 const path = require("path");

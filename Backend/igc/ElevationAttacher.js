@@ -25,7 +25,7 @@ function executeRequest(stack) {
     .map(({ fix }) => `${fix.latitude},${fix.longitude}`)
     .join("|");
   let url = `${host}/${dataset}?locations=${locations}&nodata_value=0`;
-  console.log("Will execute request: ", url);
+  // console.log("Will execute request: ", url);
   return axios.get(url);
 }
 
