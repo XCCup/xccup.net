@@ -7,7 +7,7 @@
           ><i class="bi bi-chevron-left mx-2"></i>
         </router-link>
 
-        Flug von <a href="#">{{ flight.pilot }}</a> am
+        Flug von <a href="#">{{ flight.User.name }}</a> am
         <a href="#"><BaseDate :timestamp="flight.dateOfFlight" /></a>
       </p>
     </div>
