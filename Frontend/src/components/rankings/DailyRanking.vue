@@ -6,7 +6,7 @@
           Tageswertung
           <BaseDate
             class="fs-6"
-            :timestamp="flights[0].dateOfFlight"
+            :timestamp="flights[0]?.dateOfFlight"
             dateFormat="dd.MM.yyyy"
           />
         </h3>
@@ -26,7 +26,7 @@
                 <td scope="row">{{ index + 1 }}</td>
                 <td>{{ flight.User.name }}</td>
                 <td>{{ flight.takeoff.name }}</td>
-                <td>{{ flight.flightDistance }} km</td>
+                <td>{{ Math.floor(flight.flightDistance) }} km</td>
                 <td>{{ flight.flightType }}</td>
                 <td>{{ flight.flightPoints }} P</td>
               </tr>
