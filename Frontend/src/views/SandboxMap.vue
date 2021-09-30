@@ -5,7 +5,7 @@
 <script>
 import MapV3 from "@/components/unused_components/MapV3";
 import { ref } from "vue";
-import FlightService from "@/services/FlightService.js";
+import ApiService from "@/services/ApiService.js";
 import trackColors from "@/assets/js/trackColors";
 
 export default {
@@ -20,13 +20,13 @@ export default {
     // Is this try/catch smart?
     try {
       // Hardcoded flight for development
-      let { data: flight } = await FlightService.getFlight(
+      let { data: flight } = await ApiService.getFlight(
         "60699294a7c2069af1246316" /*this.flightId or this.$route.params.flightId*/
       );
 
       // These will be obsolete if the flight modell contains comments and description
-      let { data: comments } = await FlightService.getComments();
-      let { data: description } = await FlightService.getDescription();
+      let { data: comments } = await ApiService.getComments();
+      let { data: description } = await ApiService.getDescription();
 
       return {
         flight: ref(flight),

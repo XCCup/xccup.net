@@ -42,7 +42,7 @@
 
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import FlightService from "@/services/FlightService.js";
+import ApiService from "@/services/ApiService.js";
 import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
 import Barogramm from "@/components/Barogramm.vue";
@@ -76,7 +76,7 @@ export default {
       let flightId = route.params.flightId;
       // props.flightId
 
-      const response = await FlightService.getFlight(flightId);
+      const response = await ApiService.getFlight(flightId);
       if (!response.data.fixes) {
         throw "Invalid response";
       }
@@ -112,7 +112,7 @@ export default {
     },
     async addComment(comment) {
       try {
-        const res = await FlightService.addComment({
+        const res = await ApiService.addComment({
           id: String(Math.floor(Math.random() * 100000)),
           ...comment,
         });
@@ -124,8 +124,8 @@ export default {
     },
     async deleteComment(id) {
       try {
-        await FlightService.deleteComment(id);
-        const res2 = await FlightService.getComments();
+        await ApiService.deleteComment(id);
+        const res2 = await ApiService.getComments();
         this.comments = res2.data;
       } catch (error) {
         console.log(error);

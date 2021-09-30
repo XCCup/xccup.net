@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import FlightService from "@/services/FlightService";
+import ApiService from "@/services/ApiService";
 import AddGliderModal from "@/components/AddGliderModal";
 import { mapGetters } from "vuex";
 
@@ -161,7 +161,7 @@ export default {
     },
     async sendFlightDetails() {
       try {
-        const response = await FlightService.uploadFlightDetails(
+        const response = await ApiService.uploadFlightDetails(
           this.flightId,
           this.flightDetails
         );
@@ -175,7 +175,7 @@ export default {
     async sendIgc() {
       if (this.flight.igc.body == null) return;
       try {
-        return await FlightService.uploadIgc(this.flight);
+        return await ApiService.uploadIgc(this.flight);
       } catch (error) {
         console.log(error);
       }

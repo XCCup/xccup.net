@@ -52,7 +52,7 @@
 
 <script>
 import trackColors from "@/assets/js/trackColors";
-import FlightService from "@/services/FlightService";
+import ApiService from "@/services/ApiService";
 
 export default {
   name: "Airbuddies",
@@ -78,11 +78,11 @@ export default {
           this.flight.flightBuddies.length > 0
         ) {
           this.flight.flightBuddies.forEach(async (buddy) => {
-            let response = await FlightService.getFlight(buddy.id);
+            let response = await ApiService.getFlight(buddy.id);
             this.buddyFlights.push(response.data);
           });
           // await new Promise((resolve) => setTimeout(resolve, 2000));
-          // let response = await FlightService.getAirbuddies(this.flight._id);
+          // let response = await ApiService.getAirbuddies(this.flight._id);
           // this.buddyFlights = response.data;
           this.loaded = true;
         }

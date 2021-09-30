@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import FlightService from "@/services/FlightService.js";
+import ApiService from "@/services/ApiService.js";
 import AllFlights from "@/components/rankings/AllFlights";
 
 import { ref } from "vue";
@@ -14,9 +14,9 @@ export default {
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 2000));
     try {
-      const { data: initialData } = await FlightService.getFlights();
+      const { data: initialData } = await ApiService.getFlights();
 
-      // const reponse = await FlightService.getInitialData();
+      // const reponse = await ApiService.getInitialData();
       // const {tageswertung, geraetewertung} = response.data
 
       return {
