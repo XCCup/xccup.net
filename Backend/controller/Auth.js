@@ -23,22 +23,26 @@ const init = () => {
  * @returns Nothing.
  */
 const auth = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  try {
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
 
-  if (!token) return res.sendStatus(UNAUTHORIZED);
+    if (!token) return res.sendStatus(UNAUTHORIZED);
 
-  jwt.verify(token, process.env.JWT_LOGIN_TOKEN, (error, user) => {
-    if (error) {
-      if (error.toString().includes("jwt expired")) {
-        return res.status(FORBIDDEN).send("EXPIRED");
+    jwt.verify(token, process.env.JWT_LOGIN_TOKEN, (error, user) => {
+      if (error) {
+        if (error.toString().includes("jwt expired")) {
+          return res.status(FORBIDDEN).send("EXPIRED");
+        }
+        console.log("Verify err: ", error);
+        return res.sendStatus(FORBIDDEN);
       }
-      console.log("Verify err: ", error);
-      return res.sendStatus(FORBIDDEN);
-    }
-    req.user = user;
-    next();
-  });
+      req.user = user;
+      next();
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 /**

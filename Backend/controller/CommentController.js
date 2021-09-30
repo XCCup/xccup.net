@@ -53,7 +53,7 @@ router.post(
 );
 
 // @desc Edits a comment
-// @route GET /comments/
+// @route PUT /comments/:id
 // @access Only owner
 
 router.put(

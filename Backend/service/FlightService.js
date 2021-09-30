@@ -4,6 +4,7 @@ const Flight = require("../config/postgres")["Flight"];
 const User = require("../config/postgres")["User"];
 const Team = require("../config/postgres")["Team"];
 const Club = require("../config/postgres")["Club"];
+const UserMedia = require("../config/postgres")["UserMedia"];
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 
@@ -184,9 +185,7 @@ const flightService = {
           attributes: ["name"],
         },
         {
-          model: FlyingSite,
-          as: "takeoff",
-          attributes: ["id", "name", "direction"],
+          model: UserMedia,
         },
       ],
     });
@@ -218,6 +217,45 @@ const flightService = {
     return flight.save();
   },
 
+  addEditReportAndGlider: async (flight, report, glider) => {
+    const columnsToUpdate = {};
+    if (report) {
+      columnsToUpdate.report = report;
+    }
+    if (glider) {
+      const currentSeason = await getCurrentActive();
+      const gliderClass = currentSeason.gliderClasses[glider.type];
+      createGliderObject(columnsToUpdate, glider, gliderClass);
+      const newGliderType = columnsToUpdate.glider.type.key;
+      if (newGliderType != flight?.glider?.type?.key) {
+        //TODO Be aware! Flight calculation could still be in process!
+        console.log(
+          `Glider type changed to ${newGliderType}. Will recalculate flightPoints`
+        );
+        const flightPoints = calcFlightPoints(
+          flight,
+          currentSeason,
+          gliderClass
+        );
+
+        const flightStatus = calcFlightStatus(currentSeason, flightPoints);
+
+        console.log(`Flight calculated with ${flightPoints} points`);
+        console.log(`Flight status set to ${flightStatus}`);
+        columnsToUpdate.flightPoints = flightPoints;
+        columnsToUpdate.flightStatus = flightStatus;
+      }
+      cacheManager.invalidateCaches();
+    }
+
+    return Flight.update(columnsToUpdate, {
+      where: {
+        id: flight.id,
+      },
+      returning: true,
+    });
+  },
+
   delete: async (id) => {
     cacheManager.invalidateCaches();
     return Flight.destroy({
@@ -230,17 +268,8 @@ const flightService = {
     console.log("ADD RESULT TO FLIGHT");
     const flight = await flightService.getById(result.flightId);
 
-    flight.flightPoints = Math.round(result.pts);
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
-
-    const currentSeason = await getCurrentActive();
-    const pointThreshold = currentSeason.pointThresholdForFlight;
-    if (flight.flightPoints >= pointThreshold) {
-      flight.flightStatus = flightService.STATE_IN_RANKING;
-    } else {
-      flight.flightStatus = flightService.STATE_NOT_IN_RANKING;
-    }
 
     flight.flightTurnpoints = result.turnpoints;
     flight.igcUrl = result.igcUrl;
@@ -309,6 +338,31 @@ const flightService = {
     return flyingSite.name;
   },
 };
+
+function calcFlightStatus(currentSeason, flightPoints) {
+  const pointThreshold = currentSeason.pointThresholdForFlight;
+  if (flightPoints >= pointThreshold) {
+    return flightService.STATE_IN_RANKING;
+  } else {
+    return flightService.STATE_NOT_IN_RANKING;
+  }
+}
+
+function createGliderObject(columnsToUpdate, glider, gliderClass) {
+  columnsToUpdate.glider = {};
+  columnsToUpdate.glider.brand = glider.brand;
+  columnsToUpdate.glider.model = glider.model;
+  columnsToUpdate.glider.type = {};
+  columnsToUpdate.glider.type.key = glider.type;
+  columnsToUpdate.glider.type.description = gliderClass.shortDescription;
+}
+
+function calcFlightPoints(flight, seasonDetail, gliderClass) {
+  const typeFactor = seasonDetail.flightTypeFactors[flight.flightType];
+  const gliderFactor = gliderClass.value;
+  const distance = flight.flightDistance;
+  return Math.round(typeFactor * gliderFactor * distance);
+}
 
 async function retrieveDbObjectOfFlightFixes(flightId) {
   return FlightFixes.findOne({
