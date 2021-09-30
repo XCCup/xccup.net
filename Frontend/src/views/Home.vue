@@ -1,5 +1,5 @@
 <template>
-  <Infobox />
+  <Infobox :seasonStats="seasonStats" />
   <DailyRanking :maxRows="5" :flights="dailyRanking" />
   <OverallResults
     :rankingByClass="rankingByClass"
@@ -36,6 +36,7 @@ export default {
         rankingByClass: ref(initialData.rankingClasses),
         bestClubs: ref(initialData.bestClubs),
         bestTeams: ref(initialData.bestTeams),
+        seasonStats: ref(initialData.seasonStats),
       };
     } catch (error) {
       console.log(error);
