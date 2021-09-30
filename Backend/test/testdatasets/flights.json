@@ -38,7 +38,10 @@
     "glider": {
       "brand": "U-Turn",
       "model": "Bodyguard",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -91,7 +94,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -144,7 +150,10 @@
     "glider": {
       "brand": "Litte Cloud",
       "model": "Spiruline",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -197,7 +206,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -250,7 +262,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -303,7 +318,10 @@
     "glider": {
       "brand": "Air-G",
       "model": "Emilie",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -356,7 +374,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -409,7 +430,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -462,7 +486,10 @@
     "glider": {
       "brand": "Flow",
       "model": "XC Racer",
-      "type": "D_low"
+      "type": {
+        "key": "D_low",
+        "description": "GS Performance low"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -515,7 +542,10 @@
     "glider": {
       "brand": "Air-G",
       "model": "Emilie",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -568,7 +598,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -621,7 +654,10 @@
     "glider": {
       "brand": "U-Turn",
       "model": "Bodyguard",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -674,7 +710,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -727,7 +766,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -780,7 +822,10 @@
     "glider": {
       "brand": "Flow",
       "model": "XC Racer",
-      "type": "D_low"
+      "type": {
+        "key": "D_low",
+        "description": "GS Performance low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -833,7 +878,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -885,7 +933,10 @@
     "glider": {
       "brand": "Air-G",
       "model": "Emilie",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -937,7 +988,10 @@
     "glider": {
       "brand": "Flow",
       "model": "XC Racer",
-      "type": "D_low"
+      "type": {
+        "key": "D_low",
+        "description": "GS Performance low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -989,7 +1043,10 @@
     "glider": {
       "brand": "Air-G",
       "model": "Emilie",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1041,7 +1098,10 @@
     "glider": {
       "brand": "U-Turn",
       "model": "Bodyguard",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1093,7 +1153,10 @@
     "glider": {
       "brand": "Litte Cloud",
       "model": "Spiruline",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1146,7 +1209,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1199,7 +1265,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1252,7 +1321,10 @@
     "glider": {
       "brand": "Air-G",
       "model": "Emilie",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1305,7 +1377,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1358,7 +1433,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1411,7 +1489,10 @@
     "glider": {
       "brand": "Flow",
       "model": "XC Racer",
-      "type": "D_low"
+      "type": {
+        "key": "D_low",
+        "description": "GS Performance low"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -1464,7 +1545,10 @@
     "glider": {
       "brand": "Air-G",
       "model": "Emilie",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1517,7 +1601,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1570,7 +1657,10 @@
     "glider": {
       "brand": "U-Turn",
       "model": "Bodyguard",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -1623,7 +1713,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1676,7 +1769,10 @@
     "glider": {
       "brand": "U-Turn",
       "model": "Bodyguard",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -1729,7 +1825,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -1782,7 +1881,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -1835,7 +1937,10 @@
     "glider": {
       "brand": "Flow",
       "model": "XC Racer",
-      "type": "D_low"
+      "type": {
+        "key": "D_low",
+        "description": "GS Performance low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1888,7 +1993,10 @@
     "glider": {
       "brand": "Ozone",
       "model": "Enzo 3",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -1940,7 +2048,10 @@
     "glider": {
       "brand": "Air-G",
       "model": "Emilie",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -1992,7 +2103,10 @@
     "glider": {
       "brand": "Flow",
       "model": "XC Racer",
-      "type": "D_low"
+      "type": {
+        "key": "D_low",
+        "description": "GS Performance low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2001,7 +2115,6 @@
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "landing": "Saarlouis",
     "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
-    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
     "dateOfFlight": "2020-07-21T11:01:33.000Z",
     "ageOfUser": 47,
     "homeStateOfUser": "NW"
@@ -2045,7 +2158,10 @@
     "glider": {
       "brand": "Air-G",
       "model": "Emilie",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2054,7 +2170,6 @@
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "landing": "Wittlich",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
-    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
     "dateOfFlight": "2020-07-11T09:25:06.000Z",
     "ageOfUser": 34,
     "homeStateOfUser": "LUX"
@@ -2098,7 +2213,10 @@
     "glider": {
       "brand": "U-Turn",
       "model": "Bodyguard",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2107,7 +2225,6 @@
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "landing": "Ediger-Eller",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
-    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
     "dateOfFlight": "2020-05-17T10:36:30.000Z",
     "ageOfUser": 45,
     "homeStateOfUser": "NW"
@@ -2151,7 +2268,10 @@
     "glider": {
       "brand": "Litte Cloud",
       "model": "Spiruline",
-      "type": "D_high"
+      "type": {
+        "key": "D_high",
+        "description": "GS Competition high"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2204,7 +2324,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2257,7 +2380,10 @@
     "glider": {
       "brand": "Sky",
       "model": "Apollo",
-      "type": "AB_low"
+      "type": {
+        "key": "AB_low",
+        "description": "GS Sport low"
+      }
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,

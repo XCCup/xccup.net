@@ -29,9 +29,15 @@ async function prepareHomeData() {
   const numberOfClubs = clubService.count();
   const numberOfUsers = userService.count();
   const totalFlightDistance = flightService.sumDistance(currentYear);
+  const dbRequestsStats = {
+    numberOfClubs,
+    numberOfTeams,
+    numberOfUsers,
+    totalFlightDistance,
+  };
+
   const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
   const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
-
   const bestFlightsOverallCurrentYear = flightService.getAll(
     currentYear,
     null,
@@ -41,23 +47,30 @@ async function prepareHomeData() {
     true
   );
   const todaysFlights = flightService.getTodays();
-
-  const dbRequests = {
-    numberOfClubs,
-    numberOfTeams,
-    numberOfUsers,
-    totalFlightDistance,
+  const dbRequestsRankings = {
     bestTeams,
     bestClubs,
     bestFlightsOverallCurrentYear,
     todaysFlights,
   };
 
+  const seasonStats = await Promise.all(Object.values(dbRequestsStats)).then(
+    (values) => {
+      const keys = Object.keys(dbRequestsStats);
+      const res = {};
+      for (let index = 0; index < values.length; index++) {
+        res[keys[index]] = values[index];
+      }
+      return res;
+    }
+  );
+
   const resultRatingClasses = await retrieveRatingClassResults(currentSeason);
 
-  return Promise.all(Object.values(dbRequests)).then((values) => {
-    const keys = Object.keys(dbRequests);
+  return Promise.all(Object.values(dbRequestsRankings)).then((values) => {
+    const keys = Object.keys(dbRequestsRankings);
     const res = {};
+    res.seasonStats = seasonStats;
     for (let index = 0; index < values.length; index++) {
       res[keys[index]] = values[index];
     }

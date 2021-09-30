@@ -2,20 +2,25 @@ const fs = require("fs");
 const path = require("path");
 const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
+const { getCurrentActive } = require("../service/SeasonService");
 
 const IGC_FIXES_RESOLUTION = 5;
 const RESOLUTION_FACTOR = 4;
 const POINTS_AROUND_CORNER = 20;
-const factors = {
-  fai: 5.98,
-  flat: 5.46,
-  free: 2.86,
-};
+
+let flightTypeFactors;
 
 const IgcAnalyzer = {
-  startCalculation: (flight, callback) => {
+  startCalculation: async (flight, callback) => {
     const flightId = flight.id.toString();
     const igcAsPlainText = readIgcFile(flightId);
+
+    if (!flightTypeFactors) {
+      const seasonDetails = await getCurrentActive();
+      flightTypeFactors = seasonDetails.flightTypeFactors;
+      console.log("FlightTypeFactors: ", flightTypeFactors);
+    }
+
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
     const currentResolutionInSeconds = getResolution(igcAsJson);
@@ -158,29 +163,25 @@ function parseOlcData(
   console.log("FLAT DIST: " + flatDistance);
   console.log("FAI DIST: " + faiDistance);
 
-  let freePts = freeDistance * factors.free;
-  let flatPts = flatDistance * factors.flat;
-  let faiPts = faiDistance * factors.fai;
+  const freeFactor = freeDistance * flightTypeFactors.FREE;
+  const flatFactor = flatDistance * flightTypeFactors.FLAT;
+  const faiFactor = faiDistance * flightTypeFactors.FAI;
 
-  console.log("FREE PTS: " + freePts);
-  console.log("FLAT PTS: " + flatPts);
-  console.log("FAI PTS: " + faiPts);
+  console.log("FREE Factor: " + freeFactor);
+  console.log("FLAT Factor: " + flatFactor);
+  console.log("FAI Factor: " + faiFactor);
 
-  const result = { flightId: flightId };
-  result.turnpoints = [];
+  const result = { flightId, turnpoints: [] };
   let cornerStartIndex;
-  if (faiPts > flatPts && faiPts > freePts) {
+  if (faiFactor > flatFactor && faiFactor > freeFactor) {
     result.type = "FAI";
-    result.pts = faiPts;
     result.dist = faiDistance;
     cornerStartIndex = faiStartIndex + 4;
-  } else if (flatPts > freePts) {
-    result.pts = flatPts;
+  } else if (flatFactor > freeFactor) {
     result.type = "FLAT";
     result.dist = flatDistance;
     cornerStartIndex = flatStartIndex + 4;
   } else {
-    result.pts = freePts;
     result.type = "FREE";
     result.dist = freeDistance;
     cornerStartIndex = freeStartIndex + 4;
@@ -257,13 +258,13 @@ function stripByFactor(factor, input) {
 function stripAroundturnpoints(input, turnpoints) {
   const lines = input.split("\n");
   let lineIndexes = [];
-  let cpIndex = 0;
+  let tpIndex = 0;
   for (let i = 0; i < lines.length; i++) {
-    let timeToFind = turnpoints[cpIndex].time.replace(/:/g, "");
+    let timeToFind = turnpoints[tpIndex].time.replace(/:/g, "");
     if (lines[i].includes("B" + timeToFind)) {
       lineIndexes.push(i);
-      cpIndex++;
-      if (cpIndex == turnpoints.length) {
+      tpIndex++;
+      if (tpIndex == turnpoints.length) {
         break;
       }
     }

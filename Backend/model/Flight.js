@@ -39,9 +39,6 @@ module.exports = (sequelize, DataTypes) => {
       igcUrl: {
         type: DataTypes.STRING,
       },
-      imagesUrls: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-      },
       glider: {
         type: DataTypes.JSON,
       },
@@ -116,6 +113,15 @@ module.exports = (sequelize, DataTypes) => {
     });
     Flight.hasMany(models.FlightComment, {
       as: "comments",
+      foreignKey: {
+        name: "flightId",
+        //Through this constrain it's realized that every comment, will be delete if the flight will be deleted
+        allowNull: false,
+      },
+      onDelete: "CASCADE",
+      hooks: true,
+    });
+    Flight.hasMany(models.UserMedia, {
       foreignKey: {
         name: "flightId",
         //Through this constrain it's realized that every comment, will be delete if the flight will be deleted
