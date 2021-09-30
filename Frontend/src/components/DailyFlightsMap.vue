@@ -46,7 +46,7 @@ export default {
       tileOptions
     ).addTo(this.map);
 
-    // Wepback fix for default marker image paths
+    // Webpack fix for default marker image paths
     delete L.Icon.Default.prototype._getIconUrl;
     L.Icon.Default.imagePath = "/";
     L.Icon.Default.mergeOptions({
