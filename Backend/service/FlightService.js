@@ -217,7 +217,11 @@ const flightService = {
     return flight.save();
   },
 
-  addEditReportAndGlider: async (flight, report, glider) => {
+  editReportGliderAndStartCalculationOfFlightPoints: async (
+    flight,
+    report,
+    glider
+  ) => {
     const columnsToUpdate = {};
     if (report) {
       columnsToUpdate.report = report;
@@ -284,7 +288,7 @@ const flightService = {
             fixesWithElevation[i].elevation;
         }
         /**
-         * It is necessary to explicited call "changed", because a call to "save" will only updated data when a value has changed.
+         * It is necessary to explicit call "changed", because a call to "save" will only updated data when a value has changed.
          * Unforunatly the addition of elevation data inside the data object doesn't trigger any change event.
          */
         flightFixes.changed("timeAndHeights", true);

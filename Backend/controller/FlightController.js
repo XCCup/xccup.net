@@ -156,11 +156,12 @@ router.put(
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
-      const result = await service.addEditReportAndGlider(
-        flight,
-        report,
-        glider
-      );
+      const result =
+        await service.editReportGliderAndStartCalculationOfFlightPoints(
+          flight,
+          report,
+          glider
+        );
       res.json({ flightPoints: result[1][0].flightPoints });
     } catch (error) {
       next(error);

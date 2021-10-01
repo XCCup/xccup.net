@@ -19,6 +19,16 @@ After the first start up of the DB, it's necessary to activate the PostGIS plugi
 
 ## HowTo
 
+#### Run tests
+
+##### All tests
+
+`npm run test`
+
+##### A single tests
+
+`npm test -- test/LocationFinder.test.js`
+
 #### Connect PgAdmin to Postgres:
 
 - Lookup credentials in .env

@@ -4,13 +4,51 @@ const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
 const { getCurrentActive } = require("../service/SeasonService");
 
+/**
+ * The resolution of fixes stored to the db
+ */
 const IGC_FIXES_RESOLUTION = 5;
+/**
+ * The factor by which the fixes within a igcFile will be parsed for the first iteration of the olc algorithm
+ * Starting with:
+ * * 1h = RESOLUTION_FACTOR
+ * * 2h = 2 x RESOLUTION_FACTOR
+ * * nh = n x RESOLUTION_FACTOR
+ */
 const RESOLUTION_FACTOR = 4;
-const POINTS_AROUND_CORNER = 20;
+/**
+ * The amount of fixes around a turnpoint which will be considered for the second iteration of the olc algorithm
+ */
+const FIXES_AROUND_TURNPOINT = 20;
 
 let flightTypeFactors;
 
 const IgcAnalyzer = {
+  /**
+   * This function determines
+   * * flightType
+   * * flightDistance
+   * * turnpoints (of a the best task (FREE, FLAT or FAI))
+   *
+   * of a given flight.
+   *
+   * Before calling this function, the corresponing igcFile has to be stored to the disk.
+   * The file must be within a location defined by the global var FLIGHT_STORE and a folder corresponing to the flightId.
+   *
+   * How does it work:
+   *
+   * The algorithm is based on the original OLC algorithm by Dietrich Münchmeyer.
+   *
+   * This wayfinding problem has a complexity of O(n^5).
+   * With resolutions for fixes of 1s and longer flights, this will result in an explosion of calculations.
+   *
+   * To minimize the problem the OLC algorithm will be run in two iterations.
+   * * First iteration: Minimize resolution of the igcFile in general and determine the turnpoints for each task (FREE, FLAT, FAI).
+   * * Second iteration: Dismiss all fixes of the original igcFile except a bubble of fixes around the turnpoints of the best task from the first iteration.
+   *
+   * @param {Flight} flight The flight to analyse
+   * @param {Function} callback The function which will be called when the analyse finishes. This function will receive an result object of type Flight.
+   */
   startCalculation: async (flight, callback) => {
     const flightId = flight.id.toString();
     const igcAsPlainText = readIgcFile(flightId);
@@ -100,7 +138,7 @@ function determineOlcBinary() {
   const os = require("os");
   const platform = os.platform();
   console.log(`Running on OS: ${platform} (${os.arch()})`);
-  // This is not failsafe, but good for now;)
+  //TODO: This is not failsafe, but good for now;)
   if (platform.includes("win")) {
     return "igc\\olc.exe < ";
   }
@@ -278,8 +316,8 @@ function stripAroundturnpoints(input, turnpoints) {
       reducedLines.push(lines[i]);
     } else {
       if (
-        i >= lineIndexes[lineIndexesIndex] - POINTS_AROUND_CORNER &&
-        i <= lineIndexes[lineIndexesIndex] + POINTS_AROUND_CORNER
+        i >= lineIndexes[lineIndexesIndex] - FIXES_AROUND_TURNPOINT &&
+        i <= lineIndexes[lineIndexesIndex] + FIXES_AROUND_TURNPOINT
       ) {
         reducedLines.push(lines[i]);
         look = true;
@@ -305,8 +343,7 @@ function getResolution(igcAsJson) {
 }
 
 function getResolutionForDuration(durationInMinutes) {
-  //For every hour decrease resolution by 4 seconds
-  //Start by 1 hour with 4 seconds resolution
+  //For every hour decrease resolution by factor of seconds
   const resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
   console.log(
     `The flight will be calculated with a new resolution of ${resolution} seconds`
