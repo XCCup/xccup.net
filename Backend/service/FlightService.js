@@ -358,7 +358,9 @@ function createGliderObject(columnsToUpdate, glider, gliderClass) {
   columnsToUpdate.glider.model = glider.model;
   columnsToUpdate.glider.gliderClass = {};
   columnsToUpdate.glider.gliderClass.key = glider.gliderClass;
-  columnsToUpdate.glider.gliderClass.description = gliderClass.shortDescription;
+  columnsToUpdate.glider.gliderClass.description = gliderClass.description;
+  columnsToUpdate.glider.gliderClass.shortDescription =
+    gliderClass.shortDescription;
 }
 
 function calcFlightPoints(flight, seasonDetail, gliderClass) {
