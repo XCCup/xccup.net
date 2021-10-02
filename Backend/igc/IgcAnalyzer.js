@@ -55,11 +55,11 @@ const IgcAnalyzer = {
     flightTypeFactorParameter,
     callbackFunction
   ) => {
-    const flightId = flightDataObject.id.toString();
-    const igcAsPlainText = readIgcFile(flightDataObject);
-
     flightTypeFactors = flightTypeFactorParameter;
     callback = callbackFunction;
+
+    const flightId = flightDataObject.id.toString();
+    const igcAsPlainText = readIgcFile(flightDataObject);
 
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });

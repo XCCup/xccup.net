@@ -135,7 +135,7 @@ router.post(
   }
 );
 
-// @desc Edits flightReport and glider of a existing flight and calcs the flightPoints
+// @desc Edits flightReport, flightStatus and glider of a existing flight and calcs the flightPoints
 // @route PUT /flights/:id
 // @access Only owner
 
@@ -143,24 +143,26 @@ router.put(
   "/:id",
   authToken,
   checkOptionalStringObjectNotEmpty("report"),
+  checkOptionalStringObjectNotEmpty("status"),
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
   checkStringObjectNotEmpty("glider.gliderClass"),
   async (req, res, next) => {
     const flight = req.flight;
     const report = req.body.report;
+    const status = req.body.status;
     const glider = req.body.glider;
 
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
-      const result =
-        await service.editReportGliderAndStartCalculationOfFlightPoints(
-          flight,
-          report,
-          glider
-        );
-      res.json({ flightPoints: result[1][0].flightPoints });
+      const result = await service.finalizeFlightSubmission(
+        flight,
+        report,
+        status,
+        glider
+      );
+      res.json({ flightPoints: result[1][0].flightPoints, status });
     } catch (error) {
       next(error);
     }

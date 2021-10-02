@@ -217,12 +217,11 @@ const flightService = {
     return flight.save();
   },
 
-  editReportGliderAndStartCalculationOfFlightPoints: async (
-    flight,
-    report,
-    glider
-  ) => {
+  finalizeFlightSubmission: async (flight, report, status, glider) => {
     const columnsToUpdate = {};
+    if (status) {
+      columnsToUpdate.flightStatus = status;
+    }
     if (report) {
       columnsToUpdate.report = report;
     }
@@ -242,7 +241,11 @@ const flightService = {
           gliderClass
         );
 
-        const flightStatus = calcFlightStatus(currentSeason, flightPoints);
+        const flightStatus = determineFlightStatus(
+          currentSeason,
+          flightPoints,
+          status
+        );
 
         console.log(`Flight calculated with ${flightPoints} points`);
         console.log(`Flight status set to ${flightStatus}`);
@@ -343,13 +346,13 @@ const flightService = {
   },
 };
 
-function calcFlightStatus(currentSeason, flightPoints) {
+function determineFlightStatus(currentSeason, flightPoints, submittedStatus) {
+  if (submittedStatus == flightService.STATE_FLIGHTBOOK) return submittedStatus;
+
   const pointThreshold = currentSeason.pointThresholdForFlight;
-  if (flightPoints >= pointThreshold) {
-    return flightService.STATE_IN_RANKING;
-  } else {
-    return flightService.STATE_NOT_IN_RANKING;
-  }
+  return flightPoints >= pointThreshold
+    ? flightService.STATE_IN_RANKING
+    : flightService.STATE_NOT_IN_RANKING;
 }
 
 function createGliderObject(columnsToUpdate, glider, gliderClass) {

@@ -25,6 +25,7 @@ docker-compose -f docker-compose-live-dev.yml up -d
 #### Config DB
 
 After the first start up of the DB, it's necessary to activate the PostGIS plugin and set the correct timezone
+
 ```
 docker exec -it db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
 ```
@@ -59,5 +60,5 @@ gcc olc2002.c -o olc_lnx -lm
 
 ## Todo
 
-- [ ] Endpoint Hersteller erstellen
+- [ ] Endpoint Hersteller/Sponsoren erstellen
 - [ ] Glider im Profil löschen/hinzufügen
