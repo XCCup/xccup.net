@@ -1,32 +1,37 @@
 <template>
-  <!-- ClubRanking -->
-  <table class="table">
+  <table v-if="bestClubs" class="table table-hover">
     <thead>
       <tr></tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Moselfalken</td>
-        <td>300 P</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>D.G.F. Rhein-Mosel-Lahn</td>
-        <td>300 P</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>SauerlandAir e.V</td>
-        <td>300 P</td>
+      <tr
+        v-for="(club, index) in bestClubs.slice(0, 5)"
+        v-bind:item="club"
+        v-bind:index="index"
+        v-bind:key="club.clubId"
+      >
+        <th scope="row">{{ index + 1 }}</th>
+        <td>{{ club.clubName }}</td>
+        <td>{{ club.totalPoints }} Punkte</td>
+        <td>{{ club.totalDistance }} km</td>
       </tr>
     </tbody>
   </table>
-  <!--  -->
+  <router-link
+    :to="{ name: 'Home' }"
+    class="btn btn-outline-primary btn-sm my-1"
+    >Detailierte Liste anzeigen</router-link
+  >
 </template>
 
 <script>
 export default {
   name: "ClubRanking",
+  props: {
+    bestClubs: {
+      type: Array,
+      required: true,
+    },
+  },
 };
 </script>

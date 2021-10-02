@@ -16,7 +16,7 @@ services:
       - xccup-network
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:5.7
     container_name: db-admin
     restart: always
     env_file: .env
@@ -27,6 +27,8 @@ services:
       - 65080:80
     networks:
       - xccup-network
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
 
   server:
     build:
@@ -51,6 +53,7 @@ services:
 
 volumes:
   db:
+  pgadmin-data:
 
 networks:
   xccup-network:
