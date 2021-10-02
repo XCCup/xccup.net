@@ -270,13 +270,12 @@ const flightService = {
   addResult: async (result) => {
     cacheManager.invalidateCaches();
     console.log("ADD RESULT TO FLIGHT");
-    const flight = await flightService.getById(result.flightId);
+    const flight = await flightService.getById(result.id);
 
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
 
     flight.flightTurnpoints = result.turnpoints;
-    flight.igcUrl = result.igcUrl;
 
     ElevationAttacher.execute(
       FlightFixes.mergeCoordinatesAndOtherData(flight.toJSON().fixes),
@@ -316,7 +315,8 @@ const flightService = {
   },
 
   startResultCalculation: async (flight) => {
-    IgcAnalyzer.startCalculation(flight, (result) => {
+    const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
+    IgcAnalyzer.startCalculation(flight, flightTypeFactors, (result) => {
       flightService.addResult(result);
     });
   },

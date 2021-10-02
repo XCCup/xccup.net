@@ -74,13 +74,17 @@ DELETE http://localhost:3000/flights/912135a6-28c8-4fb1-8054-2c8c4da9f011 HTTP/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMjU3NzQ5OCwiZXhwIjoxNjIyNTc4MDk4fQ.b7enVGmnTtgsS8C4C54ilPOc8pUmVYlDa3URWJNScTc
 
 ###
-PUT  http://localhost:3000/flights/7dfea782-4b6f-4676-915f-59f0679ce47c HTTP/1.1
+PUT  http://localhost:3000/flights/3ac17a2a-2984-4581-929e-9e04e8a40726 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMjU3NzQ5OCwiZXhwIjoxNjIyNTc4MDk4fQ.b7enVGmnTtgsS8C4C54ilPOc8pUmVYlDa3URWJNScTc
 content-type: application/json
 
 {
     "report": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    "glider": "Ozone Alpina 2"
+    "glider": {
+                "brank": "Ozone",
+                "model": "Alpina 2",
+                "gliderClass": "C_low"
+            }
 }
 
 ###

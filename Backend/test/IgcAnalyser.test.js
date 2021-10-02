@@ -1,31 +1,46 @@
+const path = require("path");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
+
+const flightTypeFactors = {
+  FAI: 2,
+  FLAT: 1.5,
+  FREE: 1,
+};
 
 test("Validate an igc-File which should result to a FAI triangle", (done) => {
   process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  const filePath = "demo_igcs/kai_fai/fai_60km42_3h53m.igc";
+
+  const flightToAnaylze = {
+    id: "kai_fai",
+    igcUrl: path.join(__dirname, "../igc", filePath),
+  };
 
   const expectedFlight = {
     id: "kai_fai",
     type: "FAI",
     dist: "60.428",
-    // In comparison to dist, the pts value will be of type integer.
-    // This happens due to the fact that the pts value is a result of the multiplication of dist and the factor for the glider.
-    pts: 361.35944,
     turnpoints: {
       time: "13:33:04",
       lat: 49.86705,
       long: 6.8431,
     },
+    igcUrl: filePath,
   };
 
   try {
-    IgcAnalyzer.startCalculation(expectedFlight, (result) => {
-      expect(result.type).toBe(expectedFlight.type);
-      expect(result.pts).toBe(expectedFlight.pts);
-      expect(result.dist).toBe(expectedFlight.dist);
-      expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
-      expect(result.flightId).toBe(expectedFlight.id);
-      done();
-    });
+    IgcAnalyzer.startCalculation(
+      flightToAnaylze,
+      flightTypeFactors,
+      (result) => {
+        expect(result.type).toBe(expectedFlight.type);
+        expect(result.dist).toBe(expectedFlight.dist);
+        expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
+        expect(result.id).toBe(expectedFlight.id);
+        expect(result.igcUrl).toContain(expectedFlight.igcUrl);
+        done();
+      }
+    );
   } catch (error) {
     done(error);
   }
@@ -33,30 +48,38 @@ test("Validate an igc-File which should result to a FAI triangle", (done) => {
 
 test("Validate an igc-File which should result to a FLAT triangle", (done) => {
   process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  const filePath = "demo_igcs/kai_flat/drei_97km16_6h15m.igc";
+
+  const flightToAnaylze = {
+    id: "kai_flat",
+    igcUrl: path.join(__dirname, "../igc", filePath),
+  };
 
   const expectedFlight = {
     id: "kai_flat",
     type: "FLAT",
     dist: "97.107",
-    // In comparison to dist, the pts value will be of type integer.
-    // This happens due to the fact that the pts value is a result of the multiplication of dist and the factor for the glider.
-    pts: 530.20422,
     turnpoints: {
       time: "14:13:06",
       lat: 49.78081666666667,
       long: 6.6822,
     },
+    igcUrl: filePath,
   };
 
   try {
-    IgcAnalyzer.startCalculation(expectedFlight, (result) => {
-      expect(result.type).toBe(expectedFlight.type);
-      expect(result.pts).toBe(expectedFlight.pts);
-      expect(result.dist).toBe(expectedFlight.dist);
-      expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
-      expect(result.flightId).toBe(expectedFlight.id);
-      done();
-    });
+    IgcAnalyzer.startCalculation(
+      flightToAnaylze,
+      flightTypeFactors,
+      (result) => {
+        expect(result.type).toBe(expectedFlight.type);
+        expect(result.dist).toBe(expectedFlight.dist);
+        expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
+        expect(result.id).toBe(expectedFlight.id);
+        expect(result.igcUrl).toContain(expectedFlight.igcUrl);
+        done();
+      }
+    );
   } catch (error) {
     done(error);
   }
@@ -64,30 +87,38 @@ test("Validate an igc-File which should result to a FLAT triangle", (done) => {
 
 test("Validate an igc-File which should result to a free flight", (done) => {
   process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  const filePath = "demo_igcs/kai_free/free_79km35_4h8m.igc";
+
+  const flightToAnaylze = {
+    id: "kai_free",
+    igcUrl: path.join(__dirname, "../igc", filePath),
+  };
 
   const expectedFlight = {
     id: "kai_free",
     type: "FREE",
     dist: "79.353",
-    // In comparison to dist, the pts value will be of type integer.
-    // This happens due to the fact that the pts value is a result of the multiplication of dist and the factor for the glider.
-    pts: 226.94957999999997,
     turnpoints: {
       time: "12:36:24",
       lat: 50.3127,
       long: 7.42125,
     },
+    igcUrl: filePath,
   };
 
   try {
-    IgcAnalyzer.startCalculation(expectedFlight, (result) => {
-      expect(result.type).toBe(expectedFlight.type);
-      expect(result.pts).toBe(expectedFlight.pts);
-      expect(result.dist).toBe(expectedFlight.dist);
-      expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
-      expect(result.flightId).toBe(expectedFlight.id);
-      done();
-    });
+    IgcAnalyzer.startCalculation(
+      flightToAnaylze,
+      flightTypeFactors,
+      (result) => {
+        expect(result.type).toBe(expectedFlight.type);
+        expect(result.dist).toBe(expectedFlight.dist);
+        expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
+        expect(result.id).toBe(expectedFlight.id);
+        expect(result.igcUrl).toContain(expectedFlight.igcUrl);
+        done();
+      }
+    );
   } catch (error) {
     done(error);
   }
@@ -95,9 +126,11 @@ test("Validate an igc-File which should result to a free flight", (done) => {
 
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s => Reducion by factor 5)", () => {
   process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  const filePath = "demo_igcs/kai_free/free_79km35_4h8m.igc";
 
   const expectedFlight = {
     id: "kai_free",
+    igcUrl: path.join(__dirname, "../igc", filePath),
   };
   const numberOfFixes = 2979;
   const fixNr2345 = {
@@ -117,10 +150,13 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s =>
 
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s => Reducion by factor 3 -> ceil(5/2))", () => {
   process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  const filePath = "demo_igcs/kai_flat_res2/kai_flat_res2.igc";
 
   const expectedFlight = {
     id: "kai_flat_res2",
+    igcUrl: path.join(__dirname, "../igc", filePath),
   };
+
   const numberOfFixes = 3757;
   const fixNr2345 = {
     time: "14:30:24",
@@ -140,9 +176,13 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s =>
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s => No Reducion)", () => {
   process.env.FLIGHT_STORE = "./igc/demo_igcs";
 
+  const filePath = "demo_igcs/kai_free_res10/kai_free_res10.igc";
+
   const expectedFlight = {
     id: "kai_free_res10",
+    igcUrl: path.join(__dirname, "../igc", filePath),
   };
+
   const numberOfFixes = 1809;
   const fixNr234 = {
     time: "10:24:43",
