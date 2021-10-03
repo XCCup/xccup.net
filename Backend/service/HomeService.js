@@ -5,6 +5,7 @@ const clubService = require("./ClubService");
 const flightService = require("./FlightService");
 const seasonService = require("./SeasonService");
 const sponsorService = require("./SponsorService");
+const newsService = require("./NewsService");
 const cacheManager = require("./CacheManager");
 
 const NUMBER_OF_TEAMS = 3;
@@ -38,6 +39,7 @@ async function prepareHomeData() {
   };
 
   const sponsors = sponsorService.getAllActive();
+  const activeNews = newsService.getActive();
   const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
   const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
   const bestFlightsOverallCurrentYear = flightService.getAll(
@@ -51,6 +53,7 @@ async function prepareHomeData() {
   const todaysFlights = flightService.getTodays();
   const dbRequestsOther = {
     sponsors,
+    activeNews,
     bestTeams,
     bestClubs,
     bestFlightsOverallCurrentYear,
