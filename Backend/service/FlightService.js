@@ -347,7 +347,11 @@ const flightService = {
 };
 
 function determineFlightStatus(currentSeason, flightPoints, submittedStatus) {
-  if (submittedStatus == flightService.STATE_FLIGHTBOOK) return submittedStatus;
+  if (
+    submittedStatus == flightService.STATE_FLIGHTBOOK ||
+    currentSeason.isPaused == true
+  )
+    return flightService.STATE_FLIGHTBOOK;
 
   const pointThreshold = currentSeason.pointThresholdForFlight;
   return flightPoints >= pointThreshold

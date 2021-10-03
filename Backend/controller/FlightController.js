@@ -162,7 +162,10 @@ router.put(
         status,
         glider
       );
-      res.json({ flightPoints: result[1][0].flightPoints, status });
+      res.json({
+        flightPoints: result[1][0].flightPoints,
+        flightStatus: result[1][0].flightStatus,
+      });
     } catch (error) {
       next(error);
     }
