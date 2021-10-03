@@ -1,7 +1,7 @@
 const { easter } = require("date-easter");
 
 function isEaster(currentDate) {
- // Eastern is meant as easter monday
+  // Eastern is meant as easter monday
   const easterDate = new Date(Date.parse(easter(currentDate)));
   return sameDay(currentDate, easterDate);
 }
@@ -27,7 +27,6 @@ function isAscension(currentDate) {
   const easterDate = new Date(Date.parse(easter(currentDate)));
   const ascensionDate = new Date(easterDate.valueOf());
   ascensionDate.setDate(ascensionDate.getDate() + 39);
-  console.log("AS: " + ascensionDate);
   return sameDay(currentDate, ascensionDate);
 }
 

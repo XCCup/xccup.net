@@ -3,7 +3,8 @@ const debounce = require("lodash/debounce");
 
 const host = process.env.ELEVATION_HOST;
 const dataset = process.env.ELEVATION_DATASET;
-const numberOfFixesPerApiRequest = 50;
+const numberOfFixesPerApiRequest =
+  process.env.USE_GOOGLE_ELEVATION_API == "true" ? 500 : 50;
 
 const elevationAttacher = {
   execute: (fixes, callback) => {
@@ -21,18 +22,41 @@ function createPromise() {
 }
 
 function executeRequest(stack) {
+  console.log("Request Elevation Data at lurb.org");
+
   let locations = stack
     .map(({ fix }) => `${fix.latitude},${fix.longitude}`)
     .join("|");
   let url = `${host}/${dataset}?locations=${locations}&nodata_value=0`;
-  // console.log("Will execute request: ", url);
   return axios.get(url);
+}
+
+function executeRequestGoogle(stack) {
+  console.log("Request Elevation Data at Google");
+
+  let locations = [];
+  stack.forEach(({ fix }) =>
+    locations.push({ lat: fix.latitude, lng: fix.longitude })
+  );
+
+  return client.elevation({
+    params: {
+      locations: locations,
+      key: process.env.GOOGLE_MAPS_API_KEY,
+    },
+    timeout: 1000, // milliseconds
+  });
 }
 
 const resolveStack = debounce(async () => {
   let stack = tmpFixes.splice(0, numberOfFixesPerApiRequest);
   try {
-    const response = await executeRequest(stack);
+    let response;
+    if (process.env.USE_GOOGLE_ELEVATION_API == "true") {
+      response = await executeRequestGoogle(stack);
+    } else {
+      response = await executeRequest(stack);
+    }
     const jsonData = response.data;
     stack.forEach(({ resolve }, index) => {
       const GND = jsonData.results[index].elevation;
@@ -54,9 +78,15 @@ const getElevationData = async (fix) => {
   return promise;
 };
 
+let client;
+
 const getFixesWithElevation = async (fixes, callback) => {
   const _fixesWithElevation = [];
-
+  const { Client } = require("@googlemaps/google-maps-services-js");
+  client = new Client({});
+  console.log(
+    "Will request elevation data in bunches of " + numberOfFixesPerApiRequest
+  );
   await Promise.all(
     fixes.map(async (fix) => {
       fix.elevation = await getElevationData(fix);
