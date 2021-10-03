@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
     },
     contacts: {
-      type: DataTypes.JSON,
+      type: DataTypes.STRING(5000),
     },
   });
 

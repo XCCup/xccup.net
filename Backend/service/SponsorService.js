@@ -3,11 +3,15 @@ const { Op } = require("sequelize");
 
 const service = {
   getById: async (id) => {
-    return await Sponsor.findByPk(id);
+    return Sponsor.findByPk(id);
+  },
+
+  getAll: async () => {
+    return Sponsor.findAll();
   },
 
   getAllActive: async () => {
-    return await Sponsor.findAll({
+    return Sponsor.findAll({
       where: {
         sponsorInSeasons: {
           [Op.contains]: [new Date().getFullYear()],

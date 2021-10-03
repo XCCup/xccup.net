@@ -60,5 +60,4 @@ gcc olc2002.c -o olc_lnx -lm
 
 ## Todo
 
-- [ ] Endpoint Hersteller/Sponsoren erstellen
 - [ ] Glider im Profil löschen/hinzufügen
