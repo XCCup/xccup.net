@@ -31,7 +31,7 @@
             <tr>
               <th>Geräteklasse:</th>
               <td>
-                <RankingClass :rankingClass="flight.rankingClass" />
+                <RankingClass :rankingClass="flight.glider.gliderClass" />
               </td>
             </tr>
           </tbody>

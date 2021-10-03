@@ -1,3 +1,4 @@
+// TODO: Is this obsolete?
 const rankingClassNames = {
   gsSportLow: {
     short: "GS Sport",
@@ -21,8 +22,7 @@ const rankingClassNames = {
   },
   gsCompetition: {
     short: "GS Competition high",
-    long:
-      "Competition high (EN-D oder CCC mit einer Streckung von 7,0 und mehr)",
+    long: "Competition high (EN-D oder CCC mit einer Streckung von 7,0 und mehr)",
   },
   gsTandem: {
     short: "GS Tandem ",
