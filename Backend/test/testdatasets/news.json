@@ -1,5 +1,6 @@
 [
   {
+    "title" : "Lorem ipsum",
     "message": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?",
     "from": "2021-03-01",
     "to": "2021-12-12",
@@ -7,6 +8,7 @@
     "mailAlreadySended": true
   },
   {
+    "title" : "Ad dolore",
     "message": "Ad dolore dignissimos asperiores dicta facere optio quod commodi nam tempore recusandae. Rerum sed nulla eum vero expedita ex delectus voluptates rem at neque quos facere sequi unde optio aliquam!",
     "from": "2021-11-01",
     "to": "2021-12-12",
@@ -14,6 +16,7 @@
     "mailAlreadySended": false
   },
   {
+    "title" : "Tenetur quod quidem",
     "message": "Tenetur quod quidem in voluptatem corporis dolorum dicta sit pariatur porro quaerat autem ipsam odit quam beatae tempora quibusdam illum! Modi velit odio nam nulla unde amet odit pariatur at!",
     "from": "2021-03-01",
     "to": "2021-12-12",

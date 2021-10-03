@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Token = sequelize.define("News", {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     message: {
       type: DataTypes.STRING(5000),
       allowNull: false,

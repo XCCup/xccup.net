@@ -32,6 +32,7 @@ router.get("/", authToken, async (req, res, next) => {
 router.post(
   "/",
   authToken,
+  checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("message"),
   checkIsDateObject("from"),
   checkIsDateObject("till"),
@@ -42,6 +43,7 @@ router.post(
       if (requesterIsNotModerator(res, req)) return;
 
       const news = await service.create({
+        title: req.body.title,
         message: req.body.message,
         from: req.body.from,
         till: req.body.till,
@@ -61,6 +63,7 @@ router.post(
 router.put(
   "/:id",
   authToken,
+  checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("message"),
   checkIsDateObject("from"),
   checkIsDateObject("till"),
@@ -70,6 +73,7 @@ router.put(
     try {
       if (requesterIsNotModerator(res, req)) return;
       const id = req.params.id;
+      const title = req.body.title;
       const message = req.body.message;
       const from = req.body.from;
       const till = req.body.till;
@@ -77,6 +81,7 @@ router.put(
 
       const news = await service.getById(id);
 
+      news.title = title;
       news.message = message;
       news.from = from;
       news.till = till;
