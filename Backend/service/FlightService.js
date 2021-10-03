@@ -224,13 +224,13 @@ const flightService = {
     }
     if (glider) {
       const currentSeason = await getCurrentActive();
-      const gliderClass = currentSeason.gliderClasses[glider.type];
+      const gliderClass = currentSeason.gliderClasses[glider.gliderClass];
       createGliderObject(columnsToUpdate, glider, gliderClass);
-      const newGliderType = columnsToUpdate.glider.type.key;
-      if (newGliderType != flight?.glider?.type?.key) {
+      const newGliderClass = columnsToUpdate.glider.gliderClass.key;
+      if (newGliderClass != flight?.glider?.gliderClass?.key) {
         //TODO Be aware! Flight calculation could still be in process!
         console.log(
-          `Glider type changed to ${newGliderType}. Will recalculate flightPoints`
+          `Glider class changed to ${newGliderClass}. Will recalculate flightPoints`
         );
         const flightPoints = calcFlightPoints(
           flight,
@@ -352,9 +352,9 @@ function createGliderObject(columnsToUpdate, glider, gliderClass) {
   columnsToUpdate.glider = {};
   columnsToUpdate.glider.brand = glider.brand;
   columnsToUpdate.glider.model = glider.model;
-  columnsToUpdate.glider.type = {};
-  columnsToUpdate.glider.type.key = glider.type;
-  columnsToUpdate.glider.type.description = gliderClass.shortDescription;
+  columnsToUpdate.glider.gliderClass = {};
+  columnsToUpdate.glider.gliderClass.key = glider.gliderClass;
+  columnsToUpdate.glider.gliderClass.description = gliderClass.shortDescription;
 }
 
 function calcFlightPoints(flight, seasonDetail, gliderClass) {
@@ -497,10 +497,13 @@ async function createWhereStatement(
   }
 
   if (rankingClass) {
-    const ratingValues =
-      (await getCurrentActive()).rankingClasses[rankingClass] ?? [];
+    const gliderClasses =
+      (await getCurrentActive()).rankingClasses[rankingClass].gliderClasses ??
+      [];
+
+    console.log("GL_C: ", gliderClasses);
     whereStatement.glider = {
-      type: { [sequelize.Op.in]: ratingValues },
+      gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
   }
   return whereStatement;

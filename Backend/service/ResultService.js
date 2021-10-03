@@ -35,7 +35,7 @@ const service = {
       const gliderClasses =
         seasonDetail.rankingClasses[rankingClass].gliderClasses ?? [];
       where.glider = {
-        type: { [Op.in]: gliderClasses },
+        gliderClass: { key: { [Op.in]: gliderClasses } },
       };
     }
     if (isWeekend) {
