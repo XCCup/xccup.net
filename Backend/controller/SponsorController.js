@@ -1,0 +1,158 @@
+const express = require("express");
+const router = express.Router();
+const service = require("../service/SponsorService");
+const { NOT_FOUND, OK } = require("./Constants");
+const { authToken, requesterIsNotModerator } = require("./Auth");
+const {
+  checkStringObjectNotEmpty,
+  checkOptionalStringObjectNotEmpty,
+  checkOptionalIsBoolean,
+  validationHasErrors,
+} = require("./Validation");
+
+// @desc Gets all sponsors
+// @route GET /sponsors/
+// @access Only moderator
+
+router.get("/", authToken, async (req, res, next) => {
+  try {
+    if (await requesterIsNotModerator(req, res)) return;
+
+    const sponsors = await service.getAll();
+    res.json(sponsors);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Adds a sponsor to the db
+// @route POST /sponsors/
+// @access Only moderator
+
+router.post(
+  "/",
+  authToken,
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("type"),
+  checkOptionalStringObjectNotEmpty("website"),
+  checkOptionalStringObjectNotEmpty("logoSmall"),
+  checkOptionalStringObjectNotEmpty("logoLarge"),
+  checkOptionalStringObjectNotEmpty("contacts"),
+  checkOptionalIsBoolean("isCurrentSponsor"),
+  checkOptionalIsBoolean("isGoldSponsor"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    try {
+      const name = req.body.name;
+      const type = req.body.type;
+      const website = req.body.website;
+      const logoSmall = req.body.logoSmall;
+      const logoLarge = req.body.logoLarge;
+      const contacts = req.body.contacts;
+      const isGoldSponsor = req.body.isGoldSponsor;
+      const sponsorInSeasons = req.body.isCurrentSponsor
+        ? [new Date().getFullYear()]
+        : [];
+
+      if (await requesterIsNotModerator(req, res)) return;
+
+      const result = await service.create({
+        name,
+        type,
+        website,
+        logoSmall,
+        logoLarge,
+        contacts,
+        isGoldSponsor,
+        sponsorInSeasons,
+      });
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Edits a sponsor
+// @route PUT /sponsors/:id
+// @access Only moderator
+
+router.put(
+  "/:id",
+  authToken,
+  checkOptionalStringObjectNotEmpty("name"),
+  checkOptionalStringObjectNotEmpty("type"),
+  checkOptionalStringObjectNotEmpty("website"),
+  checkOptionalStringObjectNotEmpty("logoSmall"),
+  checkOptionalStringObjectNotEmpty("logoLarge"),
+  checkOptionalStringObjectNotEmpty("contacts"),
+  checkOptionalIsBoolean("isCurrentSponsor"),
+  checkOptionalIsBoolean("isGoldSponsor"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      const sponsor = await service.getById(req.params.id);
+
+      sponsor.name = req.body.name ?? sponsor.name;
+      sponsor.type = req.body.type ?? sponsor.type;
+      sponsor.website = req.body.website ?? sponsor.website;
+      sponsor.logoSmall = req.body.logoSmall ?? sponsor.logoSmall;
+      sponsor.logoLarge = req.body.logoLarge ?? sponsor.logoLarge;
+      sponsor.contacts = req.body.contacts ?? sponsor.contacts;
+      const isCurrentSponsor = req.body.isCurrentSponsor;
+      const currentYear = new Date().getFullYear();
+      if (isCurrentSponsor != undefined) {
+        if (
+          isCurrentSponsor &&
+          !sponsor.sponsorInSeasons.includes(currentYear)
+        ) {
+          sponsor.sponsorInSeasons.push(currentYear);
+        }
+        if (
+          !isCurrentSponsor &&
+          sponsor.sponsorInSeasons.includes(currentYear)
+        ) {
+          sponsor.sponsorInSeasons.splice(
+            sponsor.sponsorInSeasons.indexOf(currentYear)
+          );
+        }
+      }
+      const isGoldSponsor = req.body.isGoldSponsor;
+      if (isCurrentSponsor != undefined) {
+        sponsor.isGoldSponsor = isGoldSponsor;
+      }
+
+      await service.update(sponsor);
+
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Deletes a sponsor by id
+// @route DELETE /sponsors/:id
+// @access Only owner
+
+router.delete("/:id", authToken, async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    if (await requesterIsNotModerator(req, res)) return;
+
+    const sponsor = await service.getById(id);
+
+    if (!sponsor) return res.sendStatus(NOT_FOUND);
+
+    const numberOfDestroyedRows = await service.delete(id);
+    res.json(numberOfDestroyedRows);
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = router;

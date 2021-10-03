@@ -101,35 +101,33 @@ router.post(
     try {
       if (await requesterIsNotOwner(req, res, userId)) return;
 
-      igcValidator.execute(igc).then((result) => {
-        if (result == igcValidator.G_RECORD_FAILED) {
-          // res.status(BAD_REQUEST).send("Invalid G-Record");
-          // return;
-          // TODO Current example is invalid! Repair it!
-        }
-        service
-          .create({
-            userId,
-            uncheckedGRecord: result == undefined ? true : false,
-            flightStatus: service.STATE_IN_PROCESS,
-          })
-          .then((flight) =>
-            persistIgcFile(flight.id, igc).then(async (igcUrl) => {
-              flight.igcUrl = igcUrl;
+      const validationResult = await igcValidator.execute(igc);
+      // if (validationResult == igcValidator.G_RECORD_FAILED) {
+      //   // res.status(BAD_REQUEST).send("Invalid G-Record");
+      //   // return;
+      //   // TODO Current example is invalid! Repair it!
+      // }
 
-              service.startResultCalculation(flight);
-              const takeoffName =
-                await service.extractFixesAddLocationsAndDateOfFlight(flight);
+      const flightDbObject = await service.create({
+        userId,
+        uncheckedGRecord: validationResult == undefined ? true : false,
+        flightStatus: service.STATE_IN_PROCESS,
+      });
 
-              service.update(flight).then((result) => {
-                res.json({
-                  flightId: result.id,
-                  takeoff: takeoffName,
-                  landing: result.landing,
-                });
-              });
-            })
-          );
+      flightDbObject.igcUrl = await persistIgcFile(flightDbObject.id, igc);
+
+      service.startResultCalculation(flightDbObject);
+
+      const takeoffName = await service.extractFixesAddLocationsAndDateOfFlight(
+        flightDbObject
+      );
+
+      const result = await service.update(flightDbObject);
+
+      res.json({
+        flightId: result.id,
+        takeoff: takeoffName,
+        landing: result.landing,
       });
     } catch (error) {
       next(error);
@@ -137,7 +135,7 @@ router.post(
   }
 );
 
-// @desc Edits flightReport and glider of a existing flight and calcs the flightPoints
+// @desc Edits flightReport, flightStatus and glider of a existing flight and calcs the flightPoints
 // @route PUT /flights/:id
 // @access Only owner
 
@@ -145,23 +143,29 @@ router.put(
   "/:id",
   authToken,
   checkOptionalStringObjectNotEmpty("report"),
+  checkOptionalStringObjectNotEmpty("status"),
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
-  checkStringObjectNotEmpty("glider.type"),
+  checkStringObjectNotEmpty("glider.gliderClass"),
   async (req, res, next) => {
     const flight = req.flight;
     const report = req.body.report;
+    const status = req.body.status;
     const glider = req.body.glider;
 
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
-      const result = await service.addEditReportAndGlider(
+      const result = await service.finalizeFlightSubmission(
         flight,
         report,
+        status,
         glider
       );
-      res.json({ flightPoints: result[1][0].flightPoints });
+      res.json({
+        flightPoints: result[1][0].flightPoints,
+        flightStatus: result[1][0].flightStatus,
+      });
     } catch (error) {
       next(error);
     }

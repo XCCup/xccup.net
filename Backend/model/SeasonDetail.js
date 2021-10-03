@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
+    isPaused: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     pointThresholdForFlight: {
       type: DataTypes.INTEGER,
       allowNull: false,

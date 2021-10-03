@@ -217,8 +217,11 @@ const flightService = {
     return flight.save();
   },
 
-  addEditReportAndGlider: async (flight, report, glider) => {
+  finalizeFlightSubmission: async (flight, report, status, glider) => {
     const columnsToUpdate = {};
+    if (status) {
+      columnsToUpdate.flightStatus = status;
+    }
     if (report) {
       columnsToUpdate.report = report;
     }
@@ -238,7 +241,11 @@ const flightService = {
           gliderClass
         );
 
-        const flightStatus = calcFlightStatus(currentSeason, flightPoints);
+        const flightStatus = determineFlightStatus(
+          currentSeason,
+          flightPoints,
+          status
+        );
 
         console.log(`Flight calculated with ${flightPoints} points`);
         console.log(`Flight status set to ${flightStatus}`);
@@ -266,13 +273,12 @@ const flightService = {
   addResult: async (result) => {
     cacheManager.invalidateCaches();
     console.log("ADD RESULT TO FLIGHT");
-    const flight = await flightService.getById(result.flightId);
+    const flight = await flightService.getById(result.id);
 
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
 
     flight.flightTurnpoints = result.turnpoints;
-    flight.igcUrl = result.igcUrl;
 
     ElevationAttacher.execute(
       FlightFixes.mergeCoordinatesAndOtherData(flight.toJSON().fixes),
@@ -284,7 +290,7 @@ const flightService = {
             fixesWithElevation[i].elevation;
         }
         /**
-         * It is necessary to explicited call "changed", because a call to "save" will only updated data when a value has changed.
+         * It is necessary to explicit call "changed", because a call to "save" will only updated data when a value has changed.
          * Unforunatly the addition of elevation data inside the data object doesn't trigger any change event.
          */
         flightFixes.changed("timeAndHeights", true);
@@ -312,7 +318,8 @@ const flightService = {
   },
 
   startResultCalculation: async (flight) => {
-    IgcAnalyzer.startCalculation(flight, (result) => {
+    const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
+    IgcAnalyzer.startCalculation(flight, flightTypeFactors, (result) => {
       flightService.addResult(result);
     });
   },
@@ -339,13 +346,17 @@ const flightService = {
   },
 };
 
-function calcFlightStatus(currentSeason, flightPoints) {
+function determineFlightStatus(currentSeason, flightPoints, submittedStatus) {
+  if (
+    submittedStatus == flightService.STATE_FLIGHTBOOK ||
+    currentSeason.isPaused == true
+  )
+    return flightService.STATE_FLIGHTBOOK;
+
   const pointThreshold = currentSeason.pointThresholdForFlight;
-  if (flightPoints >= pointThreshold) {
-    return flightService.STATE_IN_RANKING;
-  } else {
-    return flightService.STATE_NOT_IN_RANKING;
-  }
+  return flightPoints >= pointThreshold
+    ? flightService.STATE_IN_RANKING
+    : flightService.STATE_NOT_IN_RANKING;
 }
 
 function createGliderObject(columnsToUpdate, glider, gliderClass) {
@@ -354,7 +365,9 @@ function createGliderObject(columnsToUpdate, glider, gliderClass) {
   columnsToUpdate.glider.model = glider.model;
   columnsToUpdate.glider.gliderClass = {};
   columnsToUpdate.glider.gliderClass.key = glider.gliderClass;
-  columnsToUpdate.glider.gliderClass.description = gliderClass.shortDescription;
+  columnsToUpdate.glider.gliderClass.description = gliderClass.description;
+  columnsToUpdate.glider.gliderClass.shortDescription =
+    gliderClass.shortDescription;
 }
 
 function calcFlightPoints(flight, seasonDetail, gliderClass) {

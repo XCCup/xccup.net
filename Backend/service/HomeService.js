@@ -4,6 +4,8 @@ const userService = require("./UserService");
 const clubService = require("./ClubService");
 const flightService = require("./FlightService");
 const seasonService = require("./SeasonService");
+const sponsorService = require("./SponsorService");
+const newsService = require("./NewsService");
 const cacheManager = require("./CacheManager");
 
 const NUMBER_OF_TEAMS = 3;
@@ -36,6 +38,8 @@ async function prepareHomeData() {
     totalFlightDistance,
   };
 
+  const sponsors = sponsorService.getAllActive();
+  const activeNews = newsService.getActive();
   const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
   const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
   const bestFlightsOverallCurrentYear = flightService.getAll(
@@ -47,7 +51,9 @@ async function prepareHomeData() {
     true
   );
   const todaysFlights = flightService.getTodays();
-  const dbRequestsRankings = {
+  const dbRequestsOther = {
+    sponsors,
+    activeNews,
     bestTeams,
     bestClubs,
     bestFlightsOverallCurrentYear,
@@ -67,8 +73,8 @@ async function prepareHomeData() {
 
   const resultRatingClasses = await retrieveRatingClassResults(currentSeason);
 
-  return Promise.all(Object.values(dbRequestsRankings)).then((values) => {
-    const keys = Object.keys(dbRequestsRankings);
+  return Promise.all(Object.values(dbRequestsOther)).then((values) => {
+    const keys = Object.keys(dbRequestsOther);
     const res = {};
     res.seasonStats = seasonStats;
     for (let index = 0; index < values.length; index++) {

@@ -2,24 +2,64 @@ const fs = require("fs");
 const path = require("path");
 const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
-const { getCurrentActive } = require("../service/SeasonService");
 
+/**
+ * The resolution in seconds with which fixes are stored to the db
+ */
 const IGC_FIXES_RESOLUTION = 5;
+/**
+ * The factor by which the fixes within a igcFile will be parsed for the first iteration of the olc algorithm
+ * Starting with:
+ * * 1h = RESOLUTION_FACTOR
+ * * 2h = 2 x RESOLUTION_FACTOR
+ * * nh = n x RESOLUTION_FACTOR
+ */
 const RESOLUTION_FACTOR = 4;
-const POINTS_AROUND_CORNER = 20;
+/**
+ * The amount of fixes around a turnpoint which will be considered for the second iteration of the olc algorithm
+ */
+const FIXES_AROUND_TURNPOINT = 20;
 
 let flightTypeFactors;
+let callback;
 
 const IgcAnalyzer = {
-  startCalculation: async (flight, callback) => {
-    const flightId = flight.id.toString();
-    const igcAsPlainText = readIgcFile(flightId);
+  /**
+   * This function determines
+   * * flightType
+   * * flightDistance
+   * * turnpoints (of a the best task (FREE, FLAT or FAI))
+   *
+   * of a given flight.
+   *
+   * Before calling this function, the corresponing igcFile has to be stored to the disk.
+   * The file must be within a location defined by the global var FLIGHT_STORE and a folder corresponing to the flightId.
+   *
+   * How does it work:
+   *
+   * The algorithm is based on the original OLC algorithm by Dietrich Münchmeyer.
+   *
+   * This wayfinding problem has a complexity of O(n^5).
+   * With resolutions for fixes of 1s and longer flights, this will result in an explosion of calculations.
+   *
+   * To minimize the problem the OLC algorithm will be run in two iterations.
+   * * First iteration: Minimize resolution of the igcFile in general and determine the turnpoints for each task (FREE, FLAT, FAI).
+   * * Second iteration: Dismiss all fixes of the original igcFile except a bubble of fixes around the turnpoints of the best task from the first iteration.
+   *
+   * @param {Flight} flightDataObject The flight to analyse
+   * @param {Object} flightTypeFactorParameter The factors for the flightTypes (FREE, FLAT, FAI)
+   * @param {Function} callbackFunction The function which will be called when the analyse finishes. This function will receive an result object of type Flight.
+   */
+  startCalculation: async (
+    flightDataObject,
+    flightTypeFactorParameter,
+    callbackFunction
+  ) => {
+    flightTypeFactors = flightTypeFactorParameter;
+    callback = callbackFunction;
 
-    if (!flightTypeFactors) {
-      const seasonDetails = await getCurrentActive();
-      flightTypeFactors = seasonDetails.flightTypeFactors;
-      console.log("FlightTypeFactors: ", flightTypeFactors);
-    }
+    const flightId = flightDataObject.id.toString();
+    const igcAsPlainText = readIgcFile(flightDataObject);
 
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
@@ -37,16 +77,15 @@ const IgcAnalyzer = {
       stripFactor
     );
     writeStream.end(() =>
-      runOlc(pathToFile, flightId, stripFactor == null, callback)
+      runOlc(pathToFile, flightDataObject, stripFactor == null)
     );
   },
 
   extractFixes: (flight) => {
     //TODO Currently the file will be deserailized twice!
     //1x startCalculation and 1x extractFixes
-    const flightId = flight.id.toString();
     console.log(`read file from`);
-    const igcAsPlainText = readIgcFile(flightId);
+    const igcAsPlainText = readIgcFile(flight);
     console.log(`start parsing`);
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
     console.log(`Finished parsing`);
@@ -77,30 +116,28 @@ function extractOnlyDefinedFieldsFromFix(fix) {
   };
 }
 
-function readIgcFile(flightId) {
-  return fs.readFileSync(findIgcFileForFlight(flightId), "utf8");
+function readIgcFile(flight) {
+  return fs.readFileSync(flight.igcUrl.toString(), "utf8");
 }
 
-function runTurnpointIteration(resultStripIteration, callback) {
-  const igcAsPlainText = readIgcFile(resultStripIteration.flightId);
+function runTurnpointIteration(resultStripIteration) {
+  const igcAsPlainText = readIgcFile(resultStripIteration);
   let igcWithReducedFixes = stripAroundturnpoints(
     igcAsPlainText,
     resultStripIteration.turnpoints
   );
   const { writeStream, pathToFile } = writeFile(
-    resultStripIteration.flightId,
+    resultStripIteration.id,
     igcWithReducedFixes,
     null
   );
-  writeStream.end(() =>
-    runOlc(pathToFile, resultStripIteration.flightId, true, callback)
-  );
+  writeStream.end(() => runOlc(pathToFile, resultStripIteration, true));
 }
 function determineOlcBinary() {
   const os = require("os");
   const platform = os.platform();
   console.log(`Running on OS: ${platform} (${os.arch()})`);
-  // This is not failsafe, but good for now;)
+  //TODO: This is not failsafe, but good for now;)
   if (platform.includes("win")) {
     return "igc\\olc.exe < ";
   }
@@ -111,7 +148,7 @@ function determineOlcBinary() {
   }
 }
 
-function runOlc(filePath, flightId, isTurnpointIteration, callback) {
+function runOlc(filePath, flightDataObject, isTurnpointIteration) {
   const { exec } = require("child_process");
   console.log("Start OLC analysis");
 
@@ -119,24 +156,12 @@ function runOlc(filePath, flightId, isTurnpointIteration, callback) {
   const command = determineOlcBinary();
 
   exec(command + filePath, function (err, data) {
-    console.log(err);
-    parseOlcData(
-      data.toString(),
-      flightId,
-      isTurnpointIteration,
-      filePath,
-      callback
-    );
+    if (err) console.log(err);
+    parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
   });
 }
 
-function parseOlcData(
-  data,
-  flightId,
-  isTurnpointsIteration,
-  filePath,
-  callback
-) {
+function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
   const dataLines = data.split("\n");
 
   let freeStartIndex;
@@ -171,7 +196,11 @@ function parseOlcData(
   console.log("FLAT Factor: " + flatFactor);
   console.log("FAI Factor: " + faiFactor);
 
-  const result = { flightId, turnpoints: [] };
+  const result = {
+    id: flightDataObject.id,
+    turnpoints: [],
+    igcUrl: flightDataObject.igcUrl,
+  };
   let cornerStartIndex;
   if (faiFactor > flatFactor && faiFactor > freeFactor) {
     result.type = "FAI";
@@ -194,11 +223,10 @@ function parseOlcData(
 
   if (isTurnpointsIteration) {
     console.log("IGC Result from turnpoint iteration: ", result);
-    result.igcUrl = filePath;
     callback(result);
   } else {
     console.log("IGC Result from strip iteration: ", result);
-    runTurnpointIteration(result, callback);
+    runTurnpointIteration(result);
   }
 }
 
@@ -278,8 +306,8 @@ function stripAroundturnpoints(input, turnpoints) {
       reducedLines.push(lines[i]);
     } else {
       if (
-        i >= lineIndexes[lineIndexesIndex] - POINTS_AROUND_CORNER &&
-        i <= lineIndexes[lineIndexesIndex] + POINTS_AROUND_CORNER
+        i >= lineIndexes[lineIndexesIndex] - FIXES_AROUND_TURNPOINT &&
+        i <= lineIndexes[lineIndexesIndex] + FIXES_AROUND_TURNPOINT
       ) {
         reducedLines.push(lines[i]);
         look = true;
@@ -305,8 +333,7 @@ function getResolution(igcAsJson) {
 }
 
 function getResolutionForDuration(durationInMinutes) {
-  //For every hour decrease resolution by 4 seconds
-  //Start by 1 hour with 4 seconds resolution
+  //For every hour decrease resolution by factor of seconds
   const resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
   console.log(
     `The flight will be calculated with a new resolution of ${resolution} seconds`
@@ -321,17 +348,6 @@ function getDuration(igcAsJson) {
   const durationInMinutes = durationInMillis / 1000 / 60;
   console.log(`The duration of the flight is ${durationInMinutes} minutes`);
   return durationInMinutes;
-}
-
-function findIgcFileForFlight(flightId) {
-  const store = process.env.FLIGHT_STORE;
-  const pathToFlightFolder = path.join(store, flightId);
-  console.log(`Will look in folder ${pathToFlightFolder} for IGC-File`);
-  const igcFile = fs
-    .readdirSync(pathToFlightFolder)
-    .filter((fn) => fn.endsWith(".igc"));
-  console.log(`IGC-File ${igcFile} found`);
-  return path.join(pathToFlightFolder.toString(), igcFile.toString());
 }
 
 module.exports = IgcAnalyzer;

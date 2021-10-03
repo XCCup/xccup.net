@@ -13,7 +13,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const MEDIA_STORE = "data/images";
+const MEDIA_STORE = "data/images/flights";
 
 const imageUpload = multer({
   dest: MEDIA_STORE,

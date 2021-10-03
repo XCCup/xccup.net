@@ -1,0 +1,1051 @@
+[
+  {
+    "name": "Advance",
+    "website": "http://www.advance.ch",
+    "logoSmall": "advance_F.gif",
+    "logoLarge": "advance_S.gif",
+    "Logo_main": "main/Logoadvance.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: ADVANCE Thun AG Seestrasse 14 CH-3602 Thun\nEmail: info@advance.ch\nTel: +41 33 225 70 10\nMobil: "
+  },
+  {
+    "name": "Aeros",
+    "website": "http://www.aeros.com.ua",
+    "logoSmall": "aeros_F.gif",
+    "logoLarge": "aeros.gif",
+    "Logo_main": "",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "A-I-R",
+    "website": "http://www.a-i-r.de",
+    "logoSmall": "air_small.png",
+    "logoLarge": "air_medium.png",
+    "Logo_main": "air_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: Firma A-I-R Aeronautic Innovation Rühle & Co GmbH Sesselbahnstr. 887642 Halblech/Buching\nEmail: info@a-i-r.de\nTel: +49 8368 914 88 48\nMobil: "
+  },
+  {
+    "name": "Airborne",
+    "website": "http://www.airborne.com.au",
+    "logoSmall": "airborne.gif",
+    "logoLarge": "airborne.gif",
+    "Logo_main": "",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "Aircotec flight intruments",
+    "website": "http://www.aircotec.com/",
+    "logoSmall": "",
+    "logoLarge": "aircotec_S.gif",
+    "Logo_main": "main/aircotec_H.gif",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2009",
+      "2010",
+      "2011",
+      "2013"
+    ],
+    "contacts": "Add: Alteggerstraße 8 A-8083 St. Stefan i.R. Austria\nEmail: office@aircotec.com\nTel: +43 3116 81018-11\nMobil: "
+  },
+  {
+    "name": "Aircross",
+    "website": "http://www.aircross.eu",
+    "logoSmall": "Aircross_S.png",
+    "logoLarge": "Aircross_M.png",
+    "Logo_main": "Aircross_L.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2011",
+      "2012",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020"
+    ],
+    "contacts": "Add: Aircross Gut Grauhof 1 38644 Goslar\nEmail: info@aircross.eu, info@kontest.eu\nTel: +49 5321 3175239\nMobil: +49 179 5406769"
+  },
+  {
+    
+    "name": "Air Design Gliders",
+    "website": "https://www.ad-gliders.com",
+    "logoSmall": "airdesign_paragliders_small_2018.png",
+    "logoLarge": "airdesign_paragliders_medium_2018.png",
+    "Logo_main": "airdesign_paragliders_large_2018.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: AIRDESIGN GmbH Rhombergstraße 9, 4. Stock 6067 Absam Innsbruck Austria\nEmail: info@ad-gliders.com, martin@ad-gliders.com\nTel: +43 (0) 5223 22480\nMobil: "
+  },
+  {
+    "name": "Airtouch Jochen Henrichs",
+    "website": "https://air-touch.de",
+    "logoSmall": "airtouch_small.png",
+    "logoLarge": "airtouch_medium.png",
+    "Logo_main": "airtouch_large.png",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: AiR-touch DHV Flugschule Jochen Henrichs Hans-Böckler-Straße 3 D-56070 KOBLENZ\nEmail: fly@air-touch.de\nTel: \nMobil: 0176 18899666"
+  },
+  {
+    "name": "Airwave",
+    "website": "http://www.airwave-gliders.com",
+    "logoSmall": "airwave_F.gif",
+    "logoLarge": "airwave_s.gif",
+    "Logo_main": "airwave_Large.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2005",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012"
+    ],
+    "contacts": "Add: Firma Airwave, Villinger GmbH Gewerbepark 6 A-6142 Mieders\nEmail: sales@airwave-gliders.com\nTel: +43 5225 64455\nMobil: "
+  },
+  {
+    "name": "Apco",
+    "website": "http://www.fly-apco.de/",
+    "logoSmall": "apco.gif",
+    "logoLarge": "apco_S.gif",
+    "Logo_main": "main/apco.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2007",
+      "2008"
+    ],
+    "contacts": "Add: APCO Deutschland + Österreich Stefan Stautner Prälat-Wellenhofer-Str. 31 81377 München\nEmail: stefan.stautner@web.de\nTel: 089-12013673\nMobil: "
+  },
+  {
+    "name": "Baumer & Schilling Industrieservice GmbH",
+    "website": "http://www.baumer-industrieservice.de",
+    "logoSmall": "baumer.gif",
+    "logoLarge": "baumer_S.gif",
+    "Logo_main": "main/baumer_240.gif",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2008",
+      "2009",
+      "2010",
+      "2011"
+    ],
+    "contacts": "Add: Baumer & Schilling Industrieservice GmbH Geschäftsführer: Karl-Heinz Baumer Franzstr. 1 50226 Frechen\nEmail: info@baumer-industrieservice.de\nTel: 02234 95422-0\nMobil: "
+  },
+  {
+    "name": "Baumpflege Jochen Stingl",
+    "website": "http://www.baumpflege-stingl.de",
+    "logoSmall": "",
+    "logoLarge": "baumpflegestingl_medium.png",
+    "Logo_main": "baumpflegestingl_large.png",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Baumpflege Jochen Stingl Am Forsthaus 10 65719 Hofheim/Ts.\nEmail: stingl@baumpflege-stingl.de\nTel: 06192 23288\nMobil: "
+  },
+  {
+    "name": "Bautek",
+    "website": "http://www.bautek.com",
+    "logoSmall": "bautek_F.gif",
+    "logoLarge": "bautek_S.gif",
+    "Logo_main": "main/bautek-logo.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016"
+    ],
+    "contacts": "Add: bautek Fluggeräte GmbH Im Gewerbegebiet D-54344 Kenn\nEmail: info@bautek.com\nTel: +49 (0) 6502-3060\nMobil: "
+  },
+  {
+    "name": "Bruce Goldsmith Design",
+    "website": "http://www.flybgd.com",
+    "logoSmall": "bruce_goldsmith_design_small.png",
+    "logoLarge": "bruce_goldsmith_design_medium.png",
+    "Logo_main": "bruce_goldsmith_design_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2020"
+    ],
+    "contacts": "Add: Hügelweg 12 9400 Wolfsberg Austria\nEmail: sales@flybgd.com\nTel: +43 4352 35676\nMobil: "
+  },
+  {
+    "name": "Flytec Germany GmbH",
+    "website": "http://www.flytec.ch",
+    "logoSmall": "flytec_small.png",
+    "logoLarge": "flytec_medium.png",
+    "Logo_main": "flytec_large.png",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019"
+    ],
+    "contacts": "Add: Flytec Germany GmbH Dr.-Karl-Slevogt-Straße 5 82362 Weilheim\nEmail: info@flytec.de\nTel: +49 881 64 750\nMobil: "
+  },
+  {
+    "name": "Finsterwalder & Charly",
+    "website": "http://www.charly-produkte.de/",
+    "logoSmall": "fwc2008_F.png",
+    "logoLarge": "fwc_S.png",
+    "Logo_main": "fwc_L.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2013",
+      "2016"
+    ],
+    "contacts": "Add: Finsterwalder GmbH Pagodenburgstr. 8 D-81247 München\nEmail: info@charly-produkte.de\nTel: +49 (0)89 / 811 65 28 0\nMobil: "
+  },
+  {
+    "name": "DANKe Projekt GmbH",
+    "website": "http://www.dank-e.de",
+    "logoSmall": "danke_small.png",
+    "logoLarge": "danke_medium.png",
+    "Logo_main": "danke_large.png",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: DANKe Projekt GmbH Am Wiesengrund 23 65510 Hünstetten\nEmail: mboerner@dank-e.de\nTel: +49 (6126) 9593666\nMobil: +49 (6126) 9589379"
+  },
+  {
+    "name": "Dudek Paragliders",
+    "website": "http://dudek-paragliders.de",
+    "logoSmall": "dudek_germany_small.png",
+    "logoLarge": "dudek_germany_medium.png",
+    "Logo_main": "dudek_germany_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: Dudek Paragliders Sasse Paragliding GmbH Zum Waldwinkel 2 31737 Rinteln\nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "Elsenbach Design",
+    "website": "http://www.elsenbach-design.de",
+    "logoSmall": "",
+    "logoLarge": "elsenbach_design_medium.png",
+    "Logo_main": "elsenbach_design_large.png",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Elsenbach Design Dipl. Des. Nicole Elsenbach Südstraße 12 42499 Hückeswagen\nEmail: mail@elsenbach-design.de\nTel: 02192/9367948\nMobil: "
+  },
+  {
+    "name": "Flow Paragliders",
+    "website": "https://www.flowparagliders.de",
+    "logoSmall": "flow_paragliders_small.png",
+    "logoLarge": "flow_paragliders_medium.png",
+    "Logo_main": "flow_paragliders_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2020"
+    ],
+    "contacts": "Add: Dirk Weiss Höhe Roth 64 57234 Wilnsdorf\nEmail: info@flowparagliders.de\nTel: +491714947917\nMobil: "
+  },
+  {
+    "name": "Flugschule",
+    "website": "https://www.fly-a-glider.de/",
+    "logoSmall": "fly_gleitzeitgestaltung_2019_small.png",
+    "logoLarge": "fly_gleitzeitgestaltung_2019_medium.png",
+    "Logo_main": "fly_gleitzeitgestaltung_2019_large.png",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Robert Ruland Milostr. 12 54293 Trier\nEmail: rob@fly-a-glider.de, rob.ruland@web.de\nTel: +49 (0) 162 - 420 3000\nMobil: "
+  },
+  {
+    "name": "freeX",
+    "website": "http://www.freex.com",
+    "logoSmall": "freeX.gif",
+    "logoLarge": "freeX.gif",
+    "Logo_main": "NULL",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2006"
+    ],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "Fahrrad Freund OHG",
+    "website": "http://www.fahrrad-freund.com",
+    "logoSmall": "fahrrad_freund_small.png",
+    "logoLarge": "fahrrad_freund_medium.png",
+    "Logo_main": "fahrrad_freund_large.png",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2018",
+      "2019",
+      "2020"
+    ],
+    "contacts": "Add: Niederhofheimer Str. 49 65719 Hofheim\nEmail: wfreund@fahrradfreund.com\nTel: 06192 21482\nMobil: "
+  },
+  {
+    "name": "Freiflieger",
+    "website": "http://www.freiflieger.eu",
+    "logoSmall": "fs_freiflieger_small.png",
+    "logoLarge": "fs_freiflieger_medium.png",
+    "Logo_main": "fs_freiflieger_large.png",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2017"
+    ],
+    "contacts": "Add: Freiflieger Hermsdorfer Str. 12 56112 Lahnstein\nEmail: info@freiflieger.eu\nTel: +49 (0)2621-6968018\nMobil: +49 (0)171-6252331"
+  },
+  {
+    "name": "Flugschule Hirondelle",
+    "website": "http://www.fs-hirondelle.de",
+    "logoSmall": "",
+    "logoLarge": "fs_hirondelle_medium_2016.png",
+    "Logo_main": "fs_hirondelle_large_2016.png",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Flugschule Hierondelle Untergasse 27 D-69469 Weinheim\nEmail: info@fs-hirondelle.de\nTel: +49 (0)6341 / 1419165\nMobil: "
+  },
+  {
+    "name": "Flugschule Mittelrhein",
+    "website": "http://www.flugschule-mittelrhein.de",
+    "logoSmall": "",
+    "logoLarge": "fsmittelrhein_S.gif",
+    "Logo_main": "fsmittelrhein_H.gif",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2010",
+      "2011"
+    ],
+    "contacts": "Add: Klaus Killian 56170 Bendorf Schloßstraße 28\nEmail: info@skys-shop.de\nTel: +49 (0)2622-887006\nMobil: +49 171-9447830"
+  },
+  {
+    "name": "GIN Paragliders",
+    "website": "https://www.gingliders.com",
+    "logoSmall": "gin.gif",
+    "logoLarge": "gin.gif",
+    "Logo_main": "gin_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2020"
+    ],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "Holiday Flat Almunecar",
+    "website": "http://holiday-flat-almunecar.de",
+    "logoSmall": "holiday_flat_almunecar_small.png",
+    "logoLarge": "holiday_flat_almunecar_medium.png",
+    "Logo_main": "holiday_flat_almunecar_large.png",
+    "type": "HOLIDAY",
+    "sponsorInSeasons": [
+      "2016",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Bärbel Schüller und Martin Droste Mirker Höhe 52 42109 Wuppertal Deutschland\nEmail: info@holiday-flat-almunecar.de\nTel: \nMobil: "
+  },
+  {
+    "name": "ICARO Fly & more",
+    "website": "http://www.icaro-wings.de",
+    "logoSmall": "icaro_F.png",
+    "logoLarge": "icaro_S.png",
+    "Logo_main": "icaro.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019"
+    ],
+    "contacts": "Add: ICARO Fly & more Handels GmbH Hochriesstraße 1 D-83126 Flintsbach\nEmail: office@fly-more.com\nTel: +49(0)8034 - 909 700\nMobil: "
+  },
+  {
+    "name": "IMO Car Wash Group",
+    "website": "http://www.imo-carwash.com",
+    "logoSmall": "",
+    "logoLarge": "imo_F.jpg",
+    "Logo_main": "imo_S.jpg",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2008"
+    ],
+    "contacts": "Add: IMO Car Wash Group 35-37 Amersham Hill High Wycombe Bucks, HP13 6NU\nEmail: info@imocarwash.com\nTel: +44 1494 835 350\nMobil: "
+  },
+  {
+    "name": "Independence",
+    "website": "http://www.independence.aero/de/produkte/gleitschirme.html",
+    "logoSmall": "independence_small.png",
+    "logoLarge": "independence_medium.png",
+    "Logo_main": "independence_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: FlyMarket Flugsport-Zubehör D-87637 Eisenberg Pröbstenerstr. 15\nEmail: info@independence.aero\nTel: +49 8364 9833-0\nMobil: "
+  },
+  {
+    "name": "KiM GmbH",
+    "website": "http://www.kimweb.de",
+    "logoSmall": "kim.png",
+    "logoLarge": "kim.png",
+    "Logo_main": "main/KiM_Logo.gif",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007"
+    ],
+    "contacts": "Add: KiM GmbH Konstruktion & Internet im Maschinenbau Kapellenweg 31 D- 66606 St. Wendel\nEmail: info@kimweb.de\nTel: +49 (0)6851 / 80006-0\nMobil: "
+  },
+  {
+    "name": "Martin Laible",
+    "website": "",
+    "logoSmall": "",
+    "logoLarge": "",
+    "Logo_main": "",
+    "type": "OTHER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: In den Hainbuchen 8 76833 Böchingen\nEmail: thermik777@yahoo.de\nTel: 06341/60858\nMobil: 0172/6230195"
+  },
+  {
+    "name": "LinkingWings",
+    "website": "http://www.linkingwings.de",
+    "logoSmall": "linkingwings_small.png",
+    "logoLarge": "linkingwings_medium.png",
+    "Logo_main": "linkingwings_large.png",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2013"
+    ],
+    "contacts": "Add: Dirk Soboll Drachenflugschule Airborne Europa Winnertzhof 20, 47799 Krefeld\nEmail: dirk@linkingwings.de\nTel: 02151 6444456\nMobil: 0151 12147505"
+  },
+  {
+    "name": "LittleCloud",
+    "website": "",
+    "logoSmall": "little_cloud_small.png",
+    "logoLarge": "little_cloud_medium.png",
+    "Logo_main": "little_cloud_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "Macpara",
+    "website": "http://www.macpara.com",
+    "logoSmall": "MacPara_small.png",
+    "logoLarge": "MacPara_medium.png",
+    "Logo_main": "MacPara_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2013",
+      "2014",
+      "2015"
+    ],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "maier components",
+    "website": "http://maier-components.de",
+    "logoSmall": "",
+    "logoLarge": "maier_components_medium.png",
+    "Logo_main": "maier_components_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Mozartstraße 1A D-35392 Gießen phone: +49 641/5599957 (AB) action@maier-components.de\nEmail: action@maier-components.de\nTel: +49 641/5599957\nMobil: "
+  },
+  {
+    "name": "Moselglider",
+    "website": "http://www.moselglider.de",
+    "logoSmall": "moselglider_S.png",
+    "logoLarge": "moselglider_S.png",
+    "Logo_main": "main/Moselglider-Logo.gif",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015"
+    ],
+    "contacts": "Add: Moselglider Michael Müller Kapellenweg 25 D-54338 Schweich Issel\nEmail: mmueller@moselglider.de\nTel: \nMobil: 0179-7842871"
+  },
+  {
+    "name": "Moyes",
+    "website": "http://www.moyes.com.au",
+    "logoSmall": "moyes.gif",
+    "logoLarge": "moyes.gif",
+    "Logo_main": "",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: \nEmail: info@skyline-flightgear.de\nTel: \nMobil: "
+  },
+  {
+    "name": "Naviter SeeYou",
+    "website": "http://www.naviter.com",
+    "logoSmall": "seeyou.gif",
+    "logoLarge": "seeyou_S.gif",
+    "Logo_main": "main/sponsor_cu.jpg",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2019"
+    ],
+    "contacts": "Add: Naviter d.o.o. Gradnikova 89 4240 Radovljica Slowenien\nEmail: info@naviter.com\nTel: \nMobil: "
+  },
+  {
+    "name": "Niviuk",
+    "website": "http://www.niviuk.com",
+    "logoSmall": "niviuk_F.gif",
+    "logoLarge": "niviuk_S.gif",
+    "Logo_main": "niviuk_H.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2009"
+    ],
+    "contacts": "Add: NIVIUK Gliders C. Doctor Codina, 29 17165 La Callera de Ter - Girona Spanien\nEmail: \nTel: +34 972 42 28 78\nMobil: "
+  },
+  {
+    "name": "Nova Paragliders",
+    "website": "http://www.nova-wings.com/",
+    "logoSmall": "nova2019_small.png",
+    "logoLarge": "nova2019_medium.png",
+    "Logo_main": "nova2019_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2013",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: NOVA Vertriebsges.m.b.H Bernhard Hoefel Str. 14 6020 INNSBRUCK AUSTRIA\nEmail: info@nova-wings.com\nTel: +43 512 361340\nMobil: "
+  },
+  {
+    "name": "Ozone",
+    "website": "http://www.flyozone.com",
+    "logoSmall": "ozone_F.png",
+    "logoLarge": "ozone_S.png",
+    "Logo_main": "ozone_H.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Konny Karlheinz KONRAD Samerberg\nEmail: kk@flyozone.com\nTel: +49(0)8032 982931\nMobil: +49(0)171 4691968"
+  },
+  {
+    "name": "Papillon Paragliders",
+    "website": "https://papillon-paragliders.com",
+    "logoSmall": "papillon_paragliders_small.png",
+    "logoLarge": "papillon_paragliders_medium.png",
+    "Logo_main": "papillon_paragliders_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: PAPILLON PARAGLIDERS GLEITSCHIRM DIREKT GmbH Am Sandfeld 29 36163 Poppenhausen (Wasserkuppe)\nEmail: \nTel: +49 6654 91 90 55\nMobil: "
+  },
+  {
+    "name": "Parashop at",
+    "website": "http://www.parashop.at",
+    "logoSmall": "",
+    "logoLarge": "parashop_s.gif",
+    "Logo_main": "parashop_l.gif",
+    
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2009",
+      "2010",
+      "2011",
+      "2012"
+    ],
+    "contacts": "Add: Parashop Kössen Hütte 30 A-6345 Kössen\nEmail: pier@parashop.at\nTel: 0043 5375 2425\nMobil: 0043 664 2054321"
+  },
+  {
+    "name": "Paratech",
+    "website": "http://www.paratech.ch",
+    "logoSmall": "paratech_F.gif",
+    "logoLarge": "paratech_S.gif",
+    "Logo_main": "main/PARATECH_Slogan_bl_rgb_240.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011"
+    ],
+    "contacts": "Add: Paratech AG Schwendetalstrasse 85 CH-9057 Wasserauen\nEmail: info@paratech.ch\nTel: +41 (0)71 787 30 31\nMobil: "
+  },
+  {
+    "name": "PHI",
+    "website": "Https://Phi-air.com",
+    "logoSmall": "phi_paragliders_small.png",
+    "logoLarge": "phi_paragliders_medium.png",
+    "Logo_main": "phi_paragliders_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Achenseestraße 12 6212 Maurach, Austria - behind the Rofan cabel car -\nEmail: info@phi-air.com\nTel: +43 5243 93561\nMobil: "
+  },
+  {
+    "name": "PowerTrike GmbH",
+    "website": "http://www.powertrike.de",
+    "logoSmall": "powertrike_small.jpg",
+    "logoLarge": "powertrike_small.jpg",
+    "Logo_main": "main/powertrike.jpg",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008"
+    ],
+    "contacts": "Add: PowerTrike GmbH Siedlung 17 D-67686 Mackenbach\nEmail: info@powertrike.de\nTel: +49(0)6374-4403\nMobil: "
+  },
+  {
+    "name": "Pro-Design",
+    "website": "http://www.pro-design.at",
+    "logoSmall": "prodesign_F.gif",
+    "logoLarge": "prodesign_S.gif",
+    "Logo_main": "prodesign_H.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2009"
+    ],
+    "contacts": "Add: Zimmeterweg 4 6020 Innsbruck Austria / Europe\nEmail: office@pro-design.at\nTel: +43 512 546444\nMobil: +43 664 5403660"
+  },
+  {
+    "name": "Sky",
+    "website": "http://www.sky-cz.com",
+    "logoSmall": "sky.gif",
+    "logoLarge": "sky.gif",
+    "Logo_main": "NULL",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "SKYclimber",
+    "website": "http://www.skyclimber.de",
+    "logoSmall": "",
+    "logoLarge": "skyclimber_F.jpg",
+    "Logo_main": "skyclimber_S.jpg",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2008"
+    ],
+    "contacts": "Add: SKYclimber Jens Wiesner Stuttgarter Straße 100 70771 Leinfelden-Echterdingen\nEmail: jens@skyclimber.de\nTel: \nMobil: 0170 2144908"
+  },
+  {
+    "name": "Skyman",
+    "website": "http://www.skyman.aero",
+    "logoSmall": "skyman_small.png",
+    "logoLarge": "skyman_medium.png",
+    "Logo_main": "skyman_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Fly-market Flugsport-Zubehör GmbH & Co. KG Am Schönebach 3 87637 Eisenberg\nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "Skys-Shop Sportartikel",
+    "website": "http://www.skys-shop.de",
+    "logoSmall": "",
+    "logoLarge": "skysshop_S.gif",
+    "Logo_main": "skysshop_H.gif",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2008",
+      "2009",
+      "2010"
+    ],
+    "contacts": "Add: Skys-Shop K.M. Killian Schloßstraße 28 56170 Bendorf\nEmail: info@skys-shop.de\nTel: 02622-887006\nMobil: "
+  },
+  {
+    "name": "Skytraxx",
+    "website": "https://www.skytraxx.eu/",
+    "logoSmall": "skytraxx_small.png",
+    "logoLarge": "skytraxx_medium.png",
+    "Logo_main": "skytraxx_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2018",
+      "2019"
+    ],
+    "contacts": "Add: Skytraxx GmbH Im Bildstöckle 5 79822 Titisee-Neustadt\nEmail: info@skytraxx.eu\nTel: +49 (0) 7651 - 3732\nMobil: "
+  },
+  {
+    "name": "Skywalk",
+    "website": "http://www.skywalk.info",
+    "logoSmall": "skywalk.gif",
+    "logoLarge": "skywalk_S.gif",
+    "Logo_main": "skywalk_H.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: skywalk GmbH & Co. KG Bahnhofstraße 110 83224 GRASSAU\nEmail: info@skywalk.org\nTel: +49 (0) 8641 - 69 48 40\nMobil: "
+  },
+  {
+    "name": "SOL Paragliders",
+    "website": "http://www.solparagliders.com.br",
+    "logoSmall": "sol_small.png",
+    "logoLarge": "sol_medium.png",
+    "Logo_main": "sol_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: SOL SPORTS Indústria e Comércio Ltda Cep 89259-565 Jaraguá do Sul/SC - Brasil\nEmail: \nTel: +55 (47) 3275-7753\nMobil: "
+  },
+  {
+    "name": "SupAir",
+    "website": "",
+    "logoSmall": "supair_paragliders_small.png",
+    "logoLarge": "supair_paragliders_medium.png",
+    "Logo_main": "supair_paragliders_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "Swing",
+    "website": "http://www.swing.de",
+    "logoSmall": "swing.gif",
+    "logoLarge": "swing_S.gif",
+    "Logo_main": "main/swing_H.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Swing Flugsportgeräte GmbH An der Leiten 4 82290 Landsberied Germany\nEmail: info@swing.de\nTel: +49 8141 32 77 888\nMobil: "
+  },
+  {
+    "name": "Thermik",
+    "website": "http://www.thermik.at/",
+    "logoSmall": "thermik_F.gif",
+    "logoLarge": "thermik_S.gif",
+    "Logo_main": "thermik_H.gif",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2019"
+    ],
+    "contacts": "Add: Thermik Verlag e. U. Stelzhamerstraße 18 A-4600 Wels\nEmail: herausgeber@thermik.at\nTel: +43 (0)7242/45 224-0\nMobil: "
+  },
+  {
+    "name": "Triple Seven",
+    "website": "http://www.living-sky.de",
+    "logoSmall": "777_small.png",
+    "logoLarge": "777_medium.png",
+    "Logo_main": "777_large.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2016",
+      "2017",
+      "2018",
+      "2019"
+    ],
+    "contacts": "Add: Triple Seven Ulica IV. prekomorske 61 5270 Ajdovščina, Slowenien Tel: +386-40-777313\nEmail: tim@living-sky.de\nTel: +49 (0) 0175-7691521\nMobil: "
+  },
+  {
+    "name": "TURNPOINT fastline",
+    "website": "http://www.turnpoint.de",
+    "logoSmall": "",
+    "logoLarge": "turnpoint_S.gif",
+    "Logo_main": "turnpoint_H.gif",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2009"
+    ],
+    "contacts": "Add: Edlingerstraße 68 D-83071 Stephanskirchen/Baierbach\nEmail: Info@turnpoint.de\nTel: 08036 / 908 82 61\nMobil: "
+  },
+  {
+    "name": "UP",
+    "website": "http://www.up-europe.com",
+    "logoSmall": "up.png",
+    "logoLarge": "up_S.gif",
+    "Logo_main": "up_H.png",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: UP International GmbH Kreuzeckbahnstrasse 7 D-82467 Garmisch-Partenkirchen\nEmail: info@up-paragliders.com\nTel: +49 (0) 8821/73099-0\nMobil: "
+  },
+  {
+    "name": "U-Turn",
+    "website": "http://www.u-turn.de",
+    "logoSmall": "uturn_F.gif",
+    "logoLarge": "uturn_S.gif",
+    "Logo_main": "uturn_H.gif",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: U-Turn GmbH Esslinger Straße 23 D-78054 Villingen-Schwenningen\nEmail: info@u-turn.de\nTel: +49 (0) 7720 - 807 111\nMobil: "
+  },
+  {
+    "name": "Wills Wing",
+    "website": "http://www.willswing.com",
+    "logoSmall": "willswing.gif",
+    "logoLarge": "willswing.gif",
+    "Logo_main": "NULL",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "Windtech",
+    "website": "http://www.windtech.es",
+    "logoSmall": "windtech.gif",
+    "logoLarge": "windtech.gif",
+    "Logo_main": "",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": "Add: \nEmail: windtech-toni@t-online.de\nTel: \nMobil: "
+  },
+  {
+    "name": "Gleitschirmreisen Süd Afrika",
+    "website": "http://www.wolke9.info",
+    "logoSmall": "",
+    "logoLarge": "wolke9_medium.png",
+    "Logo_main": "wolke9_large.png",
+    "type": "HOLIDAY",
+    "sponsorInSeasons": [
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": "Add: Wolf Loehr Hauptstr.27 D-54538 Kinderbeuern 93 Vorster Ave Johannesburg/Glenanda South Africa +27764222244\nEmail: info@Wolke9.info\nTel: 065329557706\nMobil: 01733034107"
+  },
+  {
+    "name": "Sponsor des XCCup 2020 werden?",
+    "website": "http://www.xccup.net/Static/sponsorensuche.htm",
+    "logoSmall": "",
+    "logoLarge": "2010sponsorwerden-k.gif",
+    "Logo_main": "2010sponsorwerden.gif",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2013",
+      "2016",
+      "2017",
+      "2018",
+      "2020"
+    ],
+    "contacts": "Add: Wie werde ich Sponsor des XCCup 2020?\nEmail: \nTel: \nMobil: "
+  },
+  {
+    "name": "XIX Paragliders",
+    "type": "MANUFACTURER",
+    "website": "http://www.xix.ch",
+    "logoSmall": "xix_F.gif",
+    "logoLarge": "xix.gif",
+    "Logo_main": "NULL",
+    "sponsorInSeasons": [
+      "2005"
+    ],
+    "contacts": "Add: \nEmail: \nTel: \nMobil: "
+  }
+]
