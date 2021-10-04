@@ -1,6 +1,7 @@
 <template>
   <div id="upload" class="container">
     <h3>Flug hochladen</h3>
+    Flight ID: {{ flightId }}
     <form @submit.prevent="sendFlightDetails">
       <div class="mb-3">
         <label for="igcUploadForm" class="form-label">
@@ -122,15 +123,18 @@ export default {
   data() {
     return {
       flight: {
-        userID: null,
+        userId: null,
         igc: {
           name: "",
           body: null,
         },
       },
       flightDetails: {
-        glider: "XCRacer S",
-        // brand: "Flow",
+        glider: {
+          brand: "Ozone",
+          model: "Alpina 2",
+          gliderClass: "C_low",
+        },
         report: "Lorem ipsum",
       },
       rulesAccepted: true,
@@ -140,10 +144,13 @@ export default {
     };
   },
   created() {
-    this.flight.userID = this.authUser.id;
+    this.flight.userId = this.getterUserId;
   },
   computed: {
-    ...mapGetters(["authUser"]),
+    // ...mapGetters(["authUser"]),
+    ...mapGetters("auth", {
+      getterUserId: "getUserId",
+    }),
     sendButtonIsDisabled() {
       return this.flightId && this.rulesAccepted === true ? false : true;
     },
