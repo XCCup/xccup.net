@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/MediaService");
-const { NOT_FOUND, OK } = require("./Constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
+const { NOT_FOUND, OK } = require("./Constants");
+const { query } = require("express-validator");
 const {
   checkIsUuidObject,
   validationHasErrors,
@@ -12,6 +13,8 @@ const {
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+
+const { createThumbnail } = require("../helper/Thumbnail");
 
 const MEDIA_STORE = "data/images/flights";
 
@@ -25,7 +28,6 @@ const imageUpload = multer({
 
 router.post(
   "/",
-  authToken,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
   checkIsUuidObject("userId"),
@@ -41,6 +43,8 @@ router.post(
       const flightId = req.body.flightId;
       const userId = req.body.userId;
       const timestamp = req.body.timestamp; //TODO Will be done in backend or frontend???
+
+      createThumbnail(path);
 
       const media = await service.create({
         originalname,
@@ -89,19 +93,29 @@ router.put(
 // @desc Gets the media file
 // @route GET /medias/:id
 
-router.get("/:id", async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const media = await service.getById(id);
+router.get(
+  "/:id",
+  query("thumb").optional().isBoolean(),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    try {
+      const id = req.params.id;
+      const thumb = req.query.thumb;
 
-    if (!media) return res.sendStatus(NOT_FOUND);
+      const media = await service.getById(id);
 
-    const fullfilepath = path.join(path.resolve(), media.path);
-    return res.type(media.mimetype).sendFile(fullfilepath);
-  } catch (error) {
-    next(error);
+      if (!media) return res.sendStatus(NOT_FOUND);
+
+      const fullfilepath = thumb
+        ? path.join(path.resolve(), media.path + "-thumb")
+        : path.join(path.resolve(), media.path);
+
+      return res.type(media.mimetype).sendFile(fullfilepath);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Gets the meta-data to a media file
 // @route GET /medias/meta/:id
