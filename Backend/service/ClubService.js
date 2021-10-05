@@ -1,14 +1,17 @@
 const Club = require("../config/postgres")["Club"];
 const User = require("../config/postgres")["User"];
 const { Op } = require("sequelize");
+
 const cacheManager = require("./CacheManager");
+
+const { getCurrentYear } = require("../helper/Utils");
 
 const clubService = {
   getAllActive: async () => {
     return await Club.findAll({
       where: {
         participantInSeasons: {
-          [Op.contains]: [new Date().getFullYear()],
+          [Op.contains]: [getCurrentYear()],
         },
       },
       attributes: { exclude: ["contacts"] },

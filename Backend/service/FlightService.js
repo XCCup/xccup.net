@@ -20,6 +20,7 @@ const { hasAirspaceViolation } = require("./AirspaceService");
 const cacheManager = require("./CacheManager");
 
 const { isNoWorkday } = require("../helper/HolidayCalculator");
+const { getCurrentYear } = require("../helper/Utils");
 
 const flightService = {
   STATE_IN_RANKING: "In Wertung",
@@ -543,9 +544,7 @@ function createSiteInclude(site) {
  * @returns
  */
 function isCacheSufficent(year, values) {
-  return (
-    year == new Date().getFullYear() && values.every((e) => e == undefined)
-  );
+  return year == getCurrentYear() && values.every((e) => e == undefined);
 }
 
 module.exports = flightService;

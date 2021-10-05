@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const { UNAUTHORIZED, FORBIDDEN } = require("./Constants");
+const { sleep } = require("../helper/Utils");
 const userService = require("../service/UserService");
 require("../service/UserService");
 const Token = require("../config/postgres")["Token"];
@@ -15,6 +16,7 @@ const init = () => {
   console.log("L: ", process.env.JWT_LOGIN_TOKEN);
   console.log("R: ", process.env.JWT_REFRESH_TOKEN);
   //After restart all stored tokens will become invalid. Therefore all stored tokens will be deleted.
+  sleep(5000);
   Token.destroy({ truncate: true });
 };
 
