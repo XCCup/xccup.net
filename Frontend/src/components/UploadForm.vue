@@ -1,6 +1,7 @@
 <template>
   <div id="upload" class="container">
     <h3>Flug hochladen</h3>
+    <!-- TODO: Remove this for production -->
     Flight ID: {{ flightId }}
     <form @submit.prevent="sendFlightDetails">
       <div class="mb-3">
@@ -29,10 +30,10 @@
         <div class="row d-flex align-items-end">
           <div class="col-md-9">
             <BaseSelect
-              v-model="flightDetails.glider"
+              v-model="gliderName"
               label="Fluggerät"
               :showLabel="true"
-              :options="[flightDetails.glider]"
+              :options="[gliderName]"
               :isDisabled="!flightId"
             />
           </div>
@@ -64,19 +65,46 @@
           ></textarea>
           <label for="floatingTextarea2">Flugbericht</label>
         </div>
-
+        <!-- Images -->
         <div class="mb-3">
-          <label for="formFileMultiple" class="form-label"
-            >Bilder hinzufügen</label
-          >
-          <input
-            class="form-control"
-            type="file"
-            id="formFileMultiple"
-            multiple
-            :disabled="!flightId"
-          />
+          <form @submit.prevent="uploadImages">
+            <label for="formImageUpload" class="form-label"
+              >Bilder hinzufügen</label
+            >
+
+            <input
+              class="form-control"
+              type="file"
+              id="formImageUpload"
+              :disabled="flightId"
+              @change="imageSelected"
+            />
+            <div v-if="userImages[0]?.name" class="row my-4">
+              <div class="col-4">
+                <figure class="figure">
+                  <!-- <img id="preview-image" /> -->
+                  <img
+                    id="preview-image"
+                    class="figure-img img-fluid img-thumbnail"
+                    alt=""
+                  />
+
+                  <figcaption class="figure-caption text-center">
+                    {{ userImages[0]?.name }}
+                  </figcaption>
+                </figure>
+              </div>
+            </div>
+            <button
+              class="btn btn-primary mt-2"
+              :disabled="imageUploadButtonDisabled"
+            >
+              Bilder hochladen
+              <i v-if="imageUploadSuccessfull" class="bi bi-check2-circle"></i>
+            </button>
+          </form>
         </div>
+
         <div class="form-check mb-3">
           <input
             class="form-check-input"
@@ -98,7 +126,7 @@
             an.
           </label>
         </div>
-
+        <!-- Send Button -->
         <button
           type="submit"
           class="btn btn-primary me-1"
@@ -121,6 +149,7 @@ export default {
   name: "UploadForm",
   components: { AddGliderModal },
   data() {
+    // TODO: Clean up orphaned/duplicate variables
     return {
       flight: {
         userId: null,
@@ -130,17 +159,15 @@ export default {
         },
       },
       flightDetails: {
-        glider: {
-          brand: "Ozone",
-          model: "Alpina 2",
-          gliderClass: "C_low",
-        },
-        report: "Lorem ipsum",
+        glider: null,
       },
       rulesAccepted: true,
       flightId: null,
       takeoff: "",
       landing: "",
+      userImages: [],
+      imageUploadSuccessfull: false,
+      imageUploadButtonDisabled: true,
     };
   },
   created() {
@@ -153,6 +180,12 @@ export default {
     }),
     sendButtonIsDisabled() {
       return this.flightId && this.rulesAccepted === true ? false : true;
+    },
+    gliderName() {
+      if (!this.flightDetails.glider) return;
+      return (
+        this.flightDetails.glider.brand + " " + this.flightDetails.glider.model
+      );
     },
   },
   methods: {
@@ -175,6 +208,40 @@ export default {
         console.log(response);
         if (response.status != 200) throw response.statusText;
         this.routeToFlight(this.flightId);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    imageSelected(event) {
+      // This can already handle multiples files
+      event.target.files.forEach((element) => {
+        this.userImages.push(element);
+      });
+
+      var reader = new FileReader();
+      reader.onload = function () {
+        var output = document.getElementById("preview-image");
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+      this.imageUploadButtonDisabled = false;
+    },
+    async uploadImages() {
+      // TODO: Handle multiple file upload
+      try {
+        const formData = new FormData();
+        formData.append("image", this.userImages[0], this.userImages[0].name);
+        // TODO: Remove hardcoded IDs for development
+        formData.append("flightId", "6f9cc950-ffa8-45aa-841e-4586182942b5");
+        formData.append("userId", "cd1583d1-fb7f-4a93-b732-effd59e5c3ae");
+        // formData.append("flightId", this.flightId);
+        // formData.append("userId", this.flightDetails.userId);
+
+        const response = await ApiService.uploadImages(formData);
+        console.log(response);
+        if (response.status != 200) throw response.statusText;
+        this.imageUploadSuccessfull = true;
+        this.imageUploadButtonDisabled = true;
       } catch (error) {
         console.log(error);
       }
