@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/MediaService");
+const service = require("../service/mediaervice");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { NOT_FOUND, OK } = require("./Constants");
 const { query } = require("express-validator");
@@ -23,7 +23,7 @@ const imageUpload = multer({
 });
 
 // @desc Uploads a media file to the server and stores the meta-data to the db
-// @route POST /medias/
+// @route POST /media/
 // @access All logged-in users
 
 router.post(
@@ -64,7 +64,7 @@ router.post(
 );
 
 // @desc Edits the description of a media
-// @route PUT /medias/:id
+// @route PUT /media/:id
 // @access Only owner
 
 router.put(
@@ -91,7 +91,7 @@ router.put(
 );
 
 // @desc Gets the media file
-// @route GET /medias/:id
+// @route GET /media/:id
 
 router.get(
   "/:id",
@@ -118,7 +118,7 @@ router.get(
 );
 
 // @desc Gets the meta-data to a media file
-// @route GET /medias/meta/:id
+// @route GET /media/meta/:id
 
 router.get("/meta/:id", async (req, res, next) => {
   try {
@@ -134,7 +134,7 @@ router.get("/meta/:id", async (req, res, next) => {
 });
 
 // @desc Toggles (assigns or removes) the "like" to a media file from the requester
-// @route GET /medias/like/:id
+// @route GET /media/like/:id
 
 router.get("/like/:id", authToken, async (req, res, next) => {
   try {
@@ -153,7 +153,7 @@ router.get("/like/:id", authToken, async (req, res, next) => {
 });
 
 // @desc Deletes a media by id
-// @route DELETE /medias/:id
+// @route DELETE /media/:id
 // @access Only owner
 
 router.delete("/:id", authToken, async (req, res, next) => {
