@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/mediaervice");
+const service = require("../service/MediaFlightService");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { NOT_FOUND, OK } = require("./Constants");
 const { query } = require("express-validator");
 const {
-  checkIsUuidObject,
+  checkOptionalUuidObject,
   validationHasErrors,
   checkStringObject,
   checkOptionalIsISO8601,
@@ -14,7 +14,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-const { createThumbnail } = require("../helper/Thumbnail");
+const { createThumbnail, THUMBNAIL_POSTFIX } = require("../helper/Thumbnail");
 
 const MEDIA_STORE = "data/images/flights";
 
@@ -107,7 +107,7 @@ router.get(
       if (!media) return res.sendStatus(NOT_FOUND);
 
       const fullfilepath = thumb
-        ? path.join(path.resolve(), media.path + "-thumb")
+        ? path.join(path.resolve(), media.path + THUMBNAIL_POSTFIX)
         : path.join(path.resolve(), media.path);
 
       return res.type(media.mimetype).sendFile(fullfilepath);
@@ -165,18 +165,37 @@ router.delete("/:id", authToken, async (req, res, next) => {
 
     if (await requesterIsNotOwner(req, res, media.userId)) return;
 
-    const fullfilepath = path.join(path.resolve(), media.path);
-    const fileDeleteOperation = fs.unlink(fullfilepath, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
-
-    await Promise.all([service.delete(id), fileDeleteOperation]);
+    await Promise.all([service.delete(id), deleteFile(media.path)]);
     res.sendStatus(OK);
   } catch (error) {
     next(error);
   }
 });
+
+/**
+ * Deletes the image file given by the filePath as also the corresponding thumbnail file of that image
+ * @param {*} filePath The path to the image file
+ * @returns A promise of the delete operation
+ */
+async function deleteFile(filePath) {
+  const fullfilepath = path.join(path.resolve(), filePath);
+  const fileDeleteOperation = fs.unlink(fullfilepath, (err) => {
+    if (err) {
+      console.error(err);
+    }
+  });
+
+  const fullfilepathThumb = path.join(
+    path.resolve(),
+    filePath + THUMBNAIL_POSTFIX
+  );
+  const fileDeleteOperationThumb = fs.unlink(fullfilepathThumb, (err) => {
+    if (err) {
+      console.error(err);
+    }
+  });
+
+  return await Promise.all([fileDeleteOperation, fileDeleteOperationThumb]);
+}
 
 module.exports = router;
