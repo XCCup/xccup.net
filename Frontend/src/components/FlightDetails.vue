@@ -50,7 +50,7 @@
             <tr>
               <th>Strecke:</th>
               <td>
-                {{ flight.flightDistance }} km
+                {{ flight.flightDistance.toFixed(2) }} km
                 <!-- <i class="bi bi-triangle"></i> -->
                 {{ flight.flightType }}
               </td>
