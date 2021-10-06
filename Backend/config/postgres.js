@@ -12,11 +12,36 @@ const failProcess = process.env.DB_CONNECT_FAIL_PROCESS;
 
 const db = {};
 
+process.env.DB_SYNC_IN_PROGRESS = true;
+
 const sequelize = new Sequelize(
   `postgres://${user}:${pw}@${host}:${port}/${postDb}`
 );
 
 loadModels(db, sequelize);
+
+dbConnectionTest().then(async () => {
+  if (process.env.DB_SYNC_ALTER == "true") {
+    console.log("Will alter DB Tables");
+    await sequelize.sync({ alter: true }).catch((error) => {
+      console.error(error);
+    });
+  }
+  if (
+    process.env.DB_SYNC_FORCE == "true" &&
+    process.env.NODE_ENV === "development"
+  ) {
+    console.log("Will create DB Tables");
+    await sequelize
+      .sync({ force: true })
+      .then(() => addTestData())
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+});
+
+process.env.DB_SYNC_IN_PROGRESS = false;
 
 async function dbConnectionTest(numberOfRetry = 0) {
   try {
@@ -42,30 +67,10 @@ async function dbConnectionTest(numberOfRetry = 0) {
     dbConnectionTest(numberOfRetry + 1);
   }
 }
+
 async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
-dbConnectionTest().then(async () => {
-  if (process.env.DB_SYNC_ALTER == "true") {
-    console.log("Will alter DB Tables");
-    await sequelize.sync({ alter: true }).catch((error) => {
-      console.error(error);
-    });
-  }
-  if (
-    process.env.DB_SYNC_FORCE == "true" &&
-    process.env.NODE_ENV === "development"
-  ) {
-    console.log("Will create DB Tables");
-    await sequelize
-      .sync({ force: true })
-      .then(() => addTestData())
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-});
 
 function addTestData() {
   if (process.env.DB_ADD_TESTDATA == "true") {

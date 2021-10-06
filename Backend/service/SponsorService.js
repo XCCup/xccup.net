@@ -1,6 +1,8 @@
 const Sponsor = require("../config/postgres")["Sponsor"];
 const { Op } = require("sequelize");
 
+const { getCurrentYear } = require("../helper/Utils");
+
 const service = {
   getById: async (id) => {
     return Sponsor.findByPk(id);
@@ -14,7 +16,7 @@ const service = {
     return Sponsor.findAll({
       where: {
         sponsorInSeasons: {
-          [Op.contains]: [new Date().getFullYear()],
+          [Op.contains]: [getCurrentYear()],
         },
       },
       attributes: {

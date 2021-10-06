@@ -1,14 +1,17 @@
 const Team = require("../config/postgres")["Team"];
 const User = require("../config/postgres")["User"];
 const { Op } = require("sequelize");
+
 const cacheManager = require("./CacheManager");
+
+const { getCurrentYear } = require("../helper/Utils");
 
 const service = {
   getAllActive: async () => {
     return await Team.findAll({
       where: {
         participantInSeasons: {
-          [Op.contains]: [new Date().getFullYear()],
+          [Op.contains]: [getCurrentYear()],
         },
       },
       include: createMemberInclude(),
@@ -45,7 +48,7 @@ const service = {
     return Team.count({
       where: {
         participantInSeasons: {
-          [Op.contains]: [new Date().getFullYear()],
+          [Op.contains]: [getCurrentYear()],
         },
       },
     });
@@ -55,7 +58,7 @@ const service = {
     cacheManager.invalidateCaches();
     const team = {
       name: teamName,
-      participantInSeasons: [new Date().getFullYear()],
+      participantInSeasons: [getCurrentYear()],
     };
     const newTeam = await Team.create(team);
     const members = await User.findAll({

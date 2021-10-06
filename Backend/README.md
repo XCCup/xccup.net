@@ -3,8 +3,18 @@
 ## Project setup
 
 ```
-npm install
+npm install --arch=x64 --platform=linuxmusl
 ```
+
+### Why to set arch/platform parameters (Sharp dependency)
+
+Sharp is a high performance dependency for image compression which uses kernel functions.
+The sharp dependency comes with precompiled binaries for different platforms and architectures.
+During the build process of the docker image the sharp dependency will be installed according to the alpine linux version (platform=linuxmusl).
+This platform can differ from the project environment platform. It's important that sharp will be installed to the project with the same binaries as in the docker container.
+
+See also:
+https://sharp.pixelplumbing.com/install
 
 ## StartUp
 

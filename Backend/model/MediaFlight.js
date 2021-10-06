@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const UserMedia = sequelize.define("UserMedia", {
+  const MediaFlight = sequelize.define("MediaFlight", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -36,13 +36,20 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  UserMedia.associate = (models) => {
-    UserMedia.belongsTo(models.User, {
+  MediaFlight.associate = (models) => {
+    MediaFlight.belongsTo(models.User, {
       foreignKey: {
         name: "userId",
       },
     });
   };
+  MediaFlight.associate = (models) => {
+    MediaFlight.belongsTo(models.Flight, {
+      foreignKey: {
+        name: "flightId",
+      },
+    });
+  };
 
-  return UserMedia;
+  return MediaFlight;
 };

@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/MediaService");
-const { NOT_FOUND, OK } = require("./Constants");
+const service = require("../service/MediaFlightService");
 const { authToken, requesterIsNotOwner } = require("./Auth");
+const { NOT_FOUND, OK } = require("./Constants");
+const { query } = require("express-validator");
 const {
   checkIsUuidObject,
   validationHasErrors,
@@ -13,6 +14,8 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
+const { createThumbnail, THUMBNAIL_POSTFIX } = require("../helper/Thumbnail");
+
 const MEDIA_STORE = "data/images/flights";
 
 const imageUpload = multer({
@@ -20,12 +23,11 @@ const imageUpload = multer({
 });
 
 // @desc Uploads a media file to the server and stores the meta-data to the db
-// @route POST /medias/
+// @route POST /media/
 // @access All logged-in users
 
 router.post(
   "/",
-  authToken,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
   checkIsUuidObject("userId"),
@@ -41,6 +43,8 @@ router.post(
       const flightId = req.body.flightId;
       const userId = req.body.userId;
       const timestamp = req.body.timestamp; //TODO Will be done in backend or frontend???
+
+      createThumbnail(path);
 
       const media = await service.create({
         originalname,
@@ -60,7 +64,7 @@ router.post(
 );
 
 // @desc Edits the description of a media
-// @route PUT /medias/:id
+// @route PUT /media/:id
 // @access Only owner
 
 router.put(
@@ -87,24 +91,34 @@ router.put(
 );
 
 // @desc Gets the media file
-// @route GET /medias/:id
+// @route GET /media/:id
 
-router.get("/:id", async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const media = await service.getById(id);
+router.get(
+  "/:id",
+  query("thumb").optional().isBoolean(),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    try {
+      const id = req.params.id;
+      const thumb = req.query.thumb;
 
-    if (!media) return res.sendStatus(NOT_FOUND);
+      const media = await service.getById(id);
 
-    const fullfilepath = path.join(path.resolve(), media.path);
-    return res.type(media.mimetype).sendFile(fullfilepath);
-  } catch (error) {
-    next(error);
+      if (!media) return res.sendStatus(NOT_FOUND);
+
+      const fullfilepath = thumb
+        ? path.join(path.resolve(), media.path + THUMBNAIL_POSTFIX)
+        : path.join(path.resolve(), media.path);
+
+      return res.type(media.mimetype).sendFile(fullfilepath);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Gets the meta-data to a media file
-// @route GET /medias/meta/:id
+// @route GET /media/meta/:id
 
 router.get("/meta/:id", async (req, res, next) => {
   try {
@@ -120,7 +134,7 @@ router.get("/meta/:id", async (req, res, next) => {
 });
 
 // @desc Toggles (assigns or removes) the "like" to a media file from the requester
-// @route GET /medias/like/:id
+// @route GET /media/like/:id
 
 router.get("/like/:id", authToken, async (req, res, next) => {
   try {
@@ -139,7 +153,7 @@ router.get("/like/:id", authToken, async (req, res, next) => {
 });
 
 // @desc Deletes a media by id
-// @route DELETE /medias/:id
+// @route DELETE /media/:id
 // @access Only owner
 
 router.delete("/:id", authToken, async (req, res, next) => {
@@ -151,18 +165,37 @@ router.delete("/:id", authToken, async (req, res, next) => {
 
     if (await requesterIsNotOwner(req, res, media.userId)) return;
 
-    const fullfilepath = path.join(path.resolve(), media.path);
-    const fileDeleteOperation = fs.unlink(fullfilepath, (err) => {
-      if (err) {
-        console.error(err);
-      }
-    });
-
-    await Promise.all([service.delete(id), fileDeleteOperation]);
+    await Promise.all([service.delete(id), deleteFile(media.path)]);
     res.sendStatus(OK);
   } catch (error) {
     next(error);
   }
 });
+
+/**
+ * Deletes the image file given by the filePath as also the corresponding thumbnail file of that image
+ * @param {*} filePath The path to the image file
+ * @returns A promise of the delete operation
+ */
+async function deleteFile(filePath) {
+  const fullfilepath = path.join(path.resolve(), filePath);
+  const fileDeleteOperation = fs.unlink(fullfilepath, (err) => {
+    if (err) {
+      console.error(err);
+    }
+  });
+
+  const fullfilepathThumb = path.join(
+    path.resolve(),
+    filePath + THUMBNAIL_POSTFIX
+  );
+  const fileDeleteOperationThumb = fs.unlink(fullfilepathThumb, (err) => {
+    if (err) {
+      console.error(err);
+    }
+  });
+
+  return await Promise.all([fileDeleteOperation, fileDeleteOperationThumb]);
+}
 
 module.exports = router;

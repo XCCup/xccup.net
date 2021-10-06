@@ -24,7 +24,6 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
-    "form-data": "^4.0.0",
     "igc-parser": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
@@ -32,9 +31,10 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.3",
     "parse-dms": "^0.0.5",
-    "pg": "^8.6.0",
-    "pg-hstore": "^2.3.3",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.2",
+    "sharp": "^0.29.1",
     "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {

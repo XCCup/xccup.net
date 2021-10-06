@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:16-alpine
 
 # Packages are necesseary to run c-compiled apps (e.g. OLC) on alpine
 # TODO: Replace compiled app through usage of Node’s N-API
