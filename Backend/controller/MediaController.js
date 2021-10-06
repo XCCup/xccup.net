@@ -5,7 +5,7 @@ const { authToken, requesterIsNotOwner } = require("./Auth");
 const { NOT_FOUND, OK } = require("./Constants");
 const { query } = require("express-validator");
 const {
-  checkOptionalUuidObject,
+  checkIsUuidObject,
   validationHasErrors,
   checkStringObject,
   checkOptionalIsISO8601,

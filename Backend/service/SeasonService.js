@@ -1,5 +1,5 @@
 const SeasonDetail = require("../config/postgres")["SeasonDetail"];
-const { sleep, getCurrentYear } = require("../helper/Utils");
+const { waitTillDbHasSync, getCurrentYear } = require("../helper/Utils");
 
 let currentSeasonDetailCache;
 
@@ -51,8 +51,8 @@ const service = {
   },
 };
 
-(function init() {
-  sleep(5000);
+(async function init() {
+  await waitTillDbHasSync();
   console.log("Initialize SeasonDetails");
   service.refreshCurrentSeasonDetails();
 })();
