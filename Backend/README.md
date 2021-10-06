@@ -3,10 +3,10 @@
 ## Project setup
 
 ```
-npm install --arch=x64 --platform=linuxmusl #Because of the sharp dependency, it's necessary to explicitly define arch and platform parameters. Otherwise the platform binaries in regards to the host will be installed, which can differ from the binaries for the alpine image.
+npm install --arch=x64 --platform=linuxmusl
 ```
 
-### Sharp dependency
+### Why to set arch/platform parameters (Sharp dependency)
 
 Sharp is a high performance dependency for image compression which uses kernel functions.
 The sharp dependency comes with precompiled binaries for different platforms and architectures.
