@@ -25,7 +25,7 @@
     <FlightDetails :flight="flight" :pilot="pilot" />
     <FlightDescription
       :description="flight.report"
-      :images="flight.imageUrls"
+      :images="flight.UserMedia"
     />
     <Comments
       :comments="flight.comments"

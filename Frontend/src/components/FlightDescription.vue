@@ -1,26 +1,28 @@
 <template>
-  <div class="container" v-if="description">
+  <div v-if="description" class="container">
     <div class="row mt-4">
       <h3>Flugbericht</h3>
       <p>
         {{ description }}
       </p>
     </div>
-    <div class="row mb-4">
+    <div v-if="images" class="row mb-4">
       <div class="col-4" v-for="(image, index) in images" :key="index">
         <figure class="figure">
           <a
-            :href="require('@/assets/images/' + image.file)"
+            :href="image.path"
             data-lightbox="images"
-            data-title="Lorem, ipsum dolor."
+            :data-title="
+              image.description ? image.description : image.originalname
+            "
             ><img
-              :src="require('@/assets/images/' + image.file)"
+              :src="image.path"
               class="figure-img img-fluid img-thumbnail"
               alt=""
           /></a>
 
           <figcaption class="figure-caption text-center">
-            {{ image.caption }}
+            {{ image.description ? image.description : image.originalname }}
           </figcaption>
         </figure>
       </div>
