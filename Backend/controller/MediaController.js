@@ -28,6 +28,7 @@ const imageUpload = multer({
 
 router.post(
   "/",
+  authToken,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
   checkIsUuidObject("userId"),
@@ -135,6 +136,7 @@ router.get("/meta/:id", async (req, res, next) => {
 
 // @desc Toggles (assigns or removes) the "like" to a media file from the requester
 // @route GET /media/like/:id
+// @access All logged-in users
 
 router.get("/like/:id", authToken, async (req, res, next) => {
   try {
