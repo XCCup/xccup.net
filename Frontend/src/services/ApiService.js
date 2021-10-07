@@ -24,10 +24,6 @@ export default {
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
   },
-  // TODO: Obsolete?
-  getDescription() {
-    return apiClient.get("flightDescription");
-  },
   uploadIgc(data) {
     return jwtInterceptor.post(baseURL + "flights/", data);
     // return apiClient.post("flights/", data);
