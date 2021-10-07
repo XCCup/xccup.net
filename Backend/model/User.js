@@ -118,8 +118,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE",
       hooks: true,
     });
-    User.hasOne(models.MediaUser, {
-      as: "profileImage",
+    User.hasOne(models.ProfilPicture, {
       foreignKey: {
         name: "userId",
         //Through this constrain it's realized that every comment, will be delete if the user will be deleted
@@ -128,7 +127,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE",
       hooks: true,
     });
-    User.hasMany(models.MediaFlight, {
+    User.hasMany(models.FlightImages, {
       foreignKey: {
         name: "userId",
         //Through this constrain it's realized that every comment, will be delete if the user will be deleted

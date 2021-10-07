@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const MediaUser = sequelize.define("MediaUser", {
+  const ProfilPicture = sequelize.define("ProfilPicture", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -22,13 +22,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  MediaUser.associate = (models) => {
-    MediaUser.belongsTo(models.User, {
+  ProfilPicture.associate = (models) => {
+    ProfilPicture.belongsTo(models.User, {
       foreignKey: {
         name: "userId",
       },
     });
   };
 
-  return MediaUser;
+  return ProfilPicture;
 };

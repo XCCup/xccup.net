@@ -35,8 +35,8 @@ const userService = {
   isModerator: async (id) => {
     const user = await userService.getById(id);
     const result =
-      user.role == userService.ROLE.ADMIN ||
-      user.role == userService.ROLE.MODERATOR;
+      user?.role == userService.ROLE.ADMIN ||
+      user?.role == userService.ROLE.MODERATOR;
     return result;
   },
   delete: async (id) => {
