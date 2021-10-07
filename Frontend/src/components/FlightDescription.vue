@@ -10,13 +10,13 @@
       <div class="col-4" v-for="(image, index) in images" :key="index">
         <figure class="figure">
           <a
-            :href="image.path"
+            :href="baseURL + `media/` + image.id"
             data-lightbox="images"
             :data-title="
               image.description ? image.description : image.originalname
             "
             ><img
-              :src="image.path"
+              :src="baseURL + `media/` + image.id"
               class="figure-img img-fluid img-thumbnail"
               alt=""
           /></a>
@@ -33,6 +33,11 @@
 <script>
 export default {
   name: "FlightDescription",
+  data() {
+    return {
+      baseURL: process.env.VUE_APP_API_URL,
+    };
+  },
   props: {
     description: {
       type: String,

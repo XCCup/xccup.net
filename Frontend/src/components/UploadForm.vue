@@ -232,11 +232,10 @@ export default {
         const formData = new FormData();
         formData.append("image", this.userImages[0], this.userImages[0].name);
         // TODO: Remove hardcoded IDs for development
-        formData.append("flightId", "6f9cc950-ffa8-45aa-841e-4586182942b5");
+        formData.append("flightId", "0d3294d5-0031-4c5d-a6c9-fd173694ba21");
         formData.append("userId", "cd1583d1-fb7f-4a93-b732-effd59e5c3ae");
         // formData.append("flightId", this.flightId);
         // formData.append("userId", this.flightDetails.userId);
-
         const response = await ApiService.uploadImages(formData);
         console.log(response);
         if (response.status != 200) throw response.statusText;
