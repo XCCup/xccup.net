@@ -44,6 +44,7 @@
 - [ ] Display alitude for pilot and airbuddies
 - [ ] Delete flight button
 - [ ] Edit flight view
+- [ ] Mark picture point in map
 - [x] Add comment
 - [x] Delete comment
 - [ ] Delete comment modal (Are you sure?)
