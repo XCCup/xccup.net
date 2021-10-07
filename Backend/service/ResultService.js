@@ -9,6 +9,8 @@ const userService = require("./UserService");
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 
+const { getCurrentYear } = require("../helper/Utils");
+
 const FLIGHTS_PER_USER = 3;
 const TEAM_DISMISSES = 3;
 const NUMBER_OF_TEAM_MEMBERS = 5;
@@ -403,7 +405,7 @@ function sortDescendingByTotalPoints(resultArray) {
 
 async function retrieveSeasonDetails(year) {
   const seasonDetail =
-    year && year != new Date().getFullYear()
+    year && year != getCurrentYear()
       ? await seasonService.getByYear(year)
       : seasonService.getCurrentActive();
   return seasonDetail;

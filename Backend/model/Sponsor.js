@@ -37,5 +37,18 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
+  Sponsor.associate = (models) => {
+    Sponsor.hasOne(models.MediaSponsor, {
+      as: "logo",
+      foreignKey: {
+        name: "sponsorId",
+        //Through this constrain it's realized that every comment, will be delete if the user will be deleted
+        allowNull: false,
+      },
+      onDelete: "CASCADE",
+      hooks: true,
+    });
+  };
+
   return Sponsor;
 };

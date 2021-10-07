@@ -54,6 +54,17 @@ function checkIsUuidObject(field) {
     .withMessage(`${field} must be a valid uuid format`);
 }
 /**
+ * Checks, when the field is present, if the field is of a valid uuid format (e.g. 550e8400-e29b-11d4-a716-446655440000).
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkOptionalUuidObject(field) {
+  return check(field)
+    .optional()
+    .isUUID()
+    .withMessage(`${field} must be a valid uuid format`);
+}
+/**
  * Checks if the field is of a valid email format (e.g. best@mail.com).
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -133,5 +144,6 @@ exports.checkStringObjectNotEmpty = checkStringObjectNotEmpty;
 exports.checkStringObject = checkStringObject;
 exports.validationHasErrors = validationHasErrors;
 exports.checkIsUuidObject = checkIsUuidObject;
+exports.checkOptionalUuidObject = checkOptionalUuidObject;
 exports.checkOptionalIsISO8601 = checkOptionalIsISO8601;
 exports.checkOptionalStringObjectNotEmpty = checkOptionalStringObjectNotEmpty;

@@ -6,7 +6,10 @@ const flightService = require("./FlightService");
 const seasonService = require("./SeasonService");
 const sponsorService = require("./SponsorService");
 const newsService = require("./NewsService");
+
 const cacheManager = require("./CacheManager");
+
+const { getCurrentYear } = require("../helper/Utils");
 
 const NUMBER_OF_TEAMS = 3;
 const NUMBER_OF_CLUBS = 3;
@@ -25,12 +28,11 @@ const service = {
 
 async function prepareHomeData() {
   const currentSeason = await seasonService.getCurrentActive();
-  const currentYear = new Date().getFullYear();
 
   const numberOfTeams = teamService.countActive();
   const numberOfClubs = clubService.count();
   const numberOfUsers = userService.count();
-  const totalFlightDistance = flightService.sumDistance(currentYear);
+  const totalFlightDistance = flightService.sumDistance(getCurrentYear());
   const dbRequestsStats = {
     numberOfClubs,
     numberOfTeams,
@@ -43,7 +45,7 @@ async function prepareHomeData() {
   const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
   const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
   const bestFlightsOverallCurrentYear = flightService.getAll(
-    currentYear,
+    getCurrentYear(),
     null,
     null,
     null,
