@@ -21,7 +21,7 @@
             <tr>
               <th>Team:</th>
               <td>
-                <a href="#">{{ flight.Team.name }}</a>
+                <a href="#">{{ flight.Team?.name }}</a>
               </td>
             </tr>
             <tr>
