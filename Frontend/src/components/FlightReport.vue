@@ -1,9 +1,9 @@
 <template>
-  <div v-if="description" class="container">
+  <div v-if="report" class="container">
     <div class="row mt-4">
       <h3>Flugbericht</h3>
       <p>
-        {{ description }}
+        {{ report }}
       </p>
     </div>
     <div v-if="images" class="row mb-4">
@@ -32,14 +32,14 @@
 
 <script>
 export default {
-  name: "FlightDescription",
+  name: "FlightReport",
   data() {
     return {
       baseURL: process.env.VUE_APP_API_URL,
     };
   },
   props: {
-    description: {
+    report: {
       type: String,
       required: true,
     },

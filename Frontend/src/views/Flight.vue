@@ -23,10 +23,7 @@
     <Inline-alert text="Automatisches zentrieren fehlt noch" />
 
     <FlightDetails :flight="flight" :pilot="pilot" />
-    <FlightDescription
-      :description="flight.report"
-      :images="flight.MediaFlights"
-    />
+    <FlightReport :report="flight.report" :images="flight.MediaFlights" />
     <Comments
       :comments="flight.comments"
       @submit-comment="addComment"
@@ -50,7 +47,7 @@ import trackColors from "@/assets/js/trackColors";
 import InlineAlert from "@/components/InlineAlert";
 import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
-import FlightDescription from "@/components/FlightDescription";
+import FlightReport from "@/components/FlightReport";
 
 export default {
   name: "FlightView",
@@ -61,7 +58,7 @@ export default {
     InlineAlert,
     FlightDetails,
     Comments,
-    FlightDescription,
+    FlightReport,
   },
   async setup(props) {
     const router = useRouter();
