@@ -161,6 +161,7 @@ export default {
       flightDetails: {
         glider: null,
       },
+      // TODO: Change to false for production
       rulesAccepted: true,
       flightId: null,
       takeoff: "",
