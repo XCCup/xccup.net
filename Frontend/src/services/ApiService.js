@@ -1,4 +1,6 @@
 import axios from "axios";
+import jwtInterceptor from "@/shared/jwtInterceptor";
+
 let baseURL = process.env.VUE_APP_API_URL;
 
 const apiClient = axios.create({
@@ -22,21 +24,16 @@ export default {
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
   },
-  // TODO: Obsolete?
-  // These will be obsolete if the flight modell contains comments and description
-  getComments() {
-    return apiClient.get("comments");
-  },
-
-  // TODO: Obsolete?
-  getDescription() {
-    return apiClient.get("flightDescription");
-  },
   uploadIgc(data) {
-    return apiClient.post("flights/", data);
+    return jwtInterceptor.post(baseURL + "flights/", data);
+    // return apiClient.post("flights/", data);
   },
   uploadFlightDetails(flightId, data) {
-    return apiClient.put("flights/" + flightId, data);
+    return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
+    // return apiClient.put("flights/" + flightId, data);
+  },
+  uploadImages(data) {
+    return jwtInterceptor.post(baseURL + "media/", data);
   },
   getAirbuddies(flightId) {
     return apiClient.get("airbuddies/" + flightId);

@@ -9,42 +9,33 @@
             <tr>
               <th>Pilot:</th>
               <td>
-                <!-- TODO: Remove optional -->
-                <a href="#">{{ flight.User?.name }}</a>
+                <a href="#">{{ flight.User.name }}</a>
               </td>
             </tr>
             <tr>
               <th>Verein:</th>
               <td>
-                <!-- TODO: Remove optinals -->
-                <a href="#">{{ flight.User?.club ?? "Club" }}</a>
+                <a href="#">{{ flight.Club.name }}</a>
               </td>
             </tr>
             <tr>
               <th>Team:</th>
               <td>
-                <!-- TODO: Remove optinals -->
-                <a href="#">{{ flight.User?.team ?? "Team Name" }}</a>
+                <a href="#">{{ flight.Team?.name }}</a>
               </td>
             </tr>
             <tr>
               <th>Fluggerät:</th>
-              <td>{{ flight.glider }}</td>
+              <td>{{ flight.glider.brand }} {{ flight.glider.model }}</td>
             </tr>
             <tr>
               <th>Geräteklasse:</th>
               <td>
-                <RankingClass :rankingClass="flight.rankingClass" />
+                <RankingClass :rankingClass="flight.glider.gliderClass" />
               </td>
             </tr>
           </tbody>
         </table>
-        <!-- Backup 
-           <tr>
-                  <th>Flugstatus:</th>
-                  <td>😃 (In Wertung)</td>
-                </tr>
-          -->
       </div>
       <div class="col-md-6 col-12 my-1">
         <table class="table table-sm">
@@ -59,8 +50,9 @@
             <tr>
               <th>Strecke:</th>
               <td>
-                {{ flight.flightDistance }} km
-                <i class="bi bi-triangle">{{ flight.flightType }}</i>
+                {{ flight.flightDistance.toFixed(2) }} km
+                <!-- <i class="bi bi-triangle"></i> -->
+                {{ flight.flightType }}
               </td>
             </tr>
             <tr>
@@ -70,7 +62,7 @@
 
             <tr>
               <th>Startplatz:</th>
-              <td>{{ flight.takeoff }}</td>
+              <td>{{ flight.takeoff.name }} {{ flight.takeoff.direction }}</td>
             </tr>
             <tr>
               <th>Uhrzeit:</th>
@@ -153,7 +145,6 @@
                     dateFormat="dd.MM.yyyy HH:mm"
                   />
                 </td>
-                <!-- 23.07.2020 18:50:23 -->
               </tr>
             </tbody>
           </table>

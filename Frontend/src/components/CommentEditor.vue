@@ -36,7 +36,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["authUser"]),
+    ...mapGetters("auth", {
+      getterUserId: "getUserId",
+    }),
     sendButtonIsDisabled() {
       return this.message.length < 5;
     },
@@ -48,7 +50,7 @@ export default {
     onSubmit() {
       const comment = {
         message: this.message,
-        userId: this.authUser.id,
+        userId: this.getterUserId,
       };
       this.$emit("submit-comment", comment);
     },

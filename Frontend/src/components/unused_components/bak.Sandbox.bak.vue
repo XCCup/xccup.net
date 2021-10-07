@@ -8,7 +8,7 @@
 
 <script>
 // import "chartjs-adapter-date-fns";
-import FlightService from "@/services/FlightService";
+import ApiService from "@/services/ApiService";
 
 export default {
   name: "Sandbox",
@@ -16,7 +16,7 @@ export default {
   mounted() {},
 
   created() {
-    FlightService.getFlight("605e2181b2b5a2de2e0c6f63")
+    ApiService.getFlight("605e2181b2b5a2de2e0c6f63")
       .then((response) => {
         let flight = response.data;
         let track1 = [];

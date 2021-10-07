@@ -1,23 +1,17 @@
 <template>
   <div v-if="rankingClass">
-    <i class="bi bi-trophy" :class="rankingClass"></i>
-    {{ getHumanReadableRankingClass(rankingClass) }}
+    <i class="bi bi-trophy" :class="rankingClass.key"></i>
+    {{ rankingClass.description }}
   </div>
 </template>
 
 <script>
-import rankingClassNames from "@/assets/js/rankingClassNames";
 export default {
   name: "RankingClass",
   props: {
     rankingClass: {
-      type: String,
+      type: Object,
       required: true,
-    },
-  },
-  methods: {
-    getHumanReadableRankingClass(rankingClass) {
-      return rankingClassNames[rankingClass].short;
     },
   },
 };
