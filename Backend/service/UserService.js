@@ -49,12 +49,12 @@ const userService = {
     cacheManager.invalidateCaches();
     return User.create(user);
   },
-  validate: async (name, password) => {
+  validate: async (email, password) => {
     const user = await User.findOne({
-      where: { name },
+      where: { email },
     });
     if (!user) {
-      console.log(`No user of name ${name} found`);
+      console.log(`No user of name ${user.name} found for ${email}`);
       return null;
     }
     if (user.validPassword(password)) {

@@ -37,14 +37,14 @@ router.get("/", async (req, res, next) => {
 
 router.post(
   "/login",
-  checkStringObjectNotEmpty("name"),
+  checkIsEmail("email"),
   checkStringObjectNotEmpty("password"),
   async (req, res, next) => {
-    const name = req.body.name;
+    const email = req.body.email;
     const password = req.body.password;
 
     try {
-      const user = await service.validate(name, password);
+      const user = await service.validate(email, password);
       if (!user) return res.sendStatus(UNAUTHORIZED);
 
       const accessToken = createToken(user);
