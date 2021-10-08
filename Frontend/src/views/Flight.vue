@@ -25,6 +25,7 @@
     <FlightDetails :flight="flight" :pilot="pilot" />
     <FlightReport :report="flight.report" :images="flight.MediaFlights" />
     <Comments
+      ref="Comments"
       :comments="flight.comments"
       @submit-comment="addComment"
       @delete-comment="deleteComment"
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-// !!! Note to my future self !!!
+// TODO: Note to my future self:
 // The connection between Airbuddies, Barogramm and Map needs refactoring.
 // It's to ineffective and you can do better now.
 
@@ -110,23 +111,34 @@ export default {
     async addComment(comment) {
       try {
         const res = await ApiService.addComment({
-          id: String(Math.floor(Math.random() * 100000)),
+          flightId: this.flightId,
           ...comment,
         });
-        // Only as long as the API doesnt exist
-        this.comments = [...this.comments, res.data];
+
+        // TODO: Maybe use an optimistic aproach like:
+        // this.flight.comments = [...this.flight.comments, comment];
+
+        if (res.status != 200) throw res.statusText;
+        this.$refs.Comments.clearCommentEditorInput();
+        this.updateComments();
       } catch (error) {
         console.log(error);
       }
     },
     async deleteComment(id) {
       try {
-        await ApiService.deleteComment(id);
-        const res2 = await ApiService.getComments();
-        this.comments = res2.data;
+        const res = await ApiService.deleteComment(id);
+        if (res.status != 200) throw res.statusText;
+        this.updateComments();
       } catch (error) {
         console.log(error);
       }
+    },
+    async updateComments() {
+      const res = await ApiService.getCommentsOfFlight(this.flightId);
+
+      if (res.status != 200) throw res.statusText;
+      this.flight.comments = [...res.data];
     },
   },
   watch: {

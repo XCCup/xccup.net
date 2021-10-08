@@ -42,9 +42,12 @@ export default {
     return apiClient.get("home");
   },
   addComment(comment) {
-    return apiClient.post("comments", comment);
+    return jwtInterceptor.post(baseURL + "comments", comment);
   },
   deleteComment(commentId) {
-    return apiClient.delete("comments/" + commentId);
+    return jwtInterceptor.delete(baseURL + "comments/" + commentId);
+  },
+  getCommentsOfFlight(flightId) {
+    return apiClient.get("comments/flight/" + flightId);
   },
 };
