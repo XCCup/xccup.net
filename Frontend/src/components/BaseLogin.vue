@@ -3,11 +3,11 @@
     <div class="mb-3">
       <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label>
       <input
-        type="text"
+        type="email"
         class="form-control"
         id="exampleDropdownFormEmail1"
         placeholder="E-Mail"
-        v-model="username"
+        v-model="email"
       />
     </div>
     <div class="mb-3">
@@ -45,7 +45,7 @@ export default {
   name: "BaseLogin",
 
   data() {
-    return { username: "", password: "" };
+    return { email: "", password: "" };
   },
   computed: {
     ...mapGetters("auth", {
@@ -58,18 +58,18 @@ export default {
       actionLogin: "login",
     }),
     async handleSubmit() {
-      const response = await this.actionLogin({
-        name: this.username,
+      this.actionLogin({
+        email: this.email,
         password: this.password,
       });
       // TODO: If we do want to redirect: Do it here or in router config?
-      if (response === 200) {
-        this.$router.push({
-          name: "Profile",
-        });
-      } else {
-        console.log(this.getterLoginStatus);
-      }
+      // if (response === 200) {
+      //   this.$router.push({
+      //     name: "Profile",
+      //   });
+      // } else {
+      //   console.log(this.getterLoginStatus);
+      // }
     },
   },
 };
