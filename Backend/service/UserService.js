@@ -35,8 +35,8 @@ const userService = {
   isModerator: async (id) => {
     const user = await userService.getById(id);
     const result =
-      user.role == userService.ROLE.ADMIN ||
-      user.role == userService.ROLE.MODERATOR;
+      user?.role == userService.ROLE.ADMIN ||
+      user?.role == userService.ROLE.MODERATOR;
     return result;
   },
   delete: async (id) => {
@@ -49,12 +49,12 @@ const userService = {
     cacheManager.invalidateCaches();
     return User.create(user);
   },
-  validate: async (name, password) => {
+  validate: async (email, password) => {
     const user = await User.findOne({
-      where: { name },
+      where: { email },
     });
     if (!user) {
-      console.log(`No user of name ${name} found`);
+      console.log(`No user of name ${user.name} found for ${email}`);
       return null;
     }
     if (user.validPassword(password)) {

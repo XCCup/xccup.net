@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const MediaUser = sequelize.define("MediaUser", {
+  const Logo = sequelize.define("Logo", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     path: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    pathThumb: {
+      type: DataTypes.STRING,
     },
     originalname: {
       type: DataTypes.STRING,
@@ -22,13 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  MediaUser.associate = (models) => {
-    MediaUser.belongsTo(models.User, {
+  Logo.associate = (models) => {
+    Logo.belongsTo(models.Sponsor, {
       foreignKey: {
-        name: "userId",
+        name: "sponsorId",
       },
     });
   };
 
-  return MediaUser;
+  return Logo;
 };

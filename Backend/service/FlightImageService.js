@@ -1,12 +1,12 @@
-const MediaFlight = require("../config/postgres")["MediaFlight"];
+const FlightImage = require("../config/postgres")["FlightImage"];
 
 const service = {
   getById: (id) => {
-    return MediaFlight.findByPk(id);
+    return FlightImage.findByPk(id);
   },
 
   create: async (media) => {
-    return MediaFlight.create(media);
+    return FlightImage.create(media);
   },
 
   update: async (media) => {
@@ -24,7 +24,7 @@ const service = {
   },
 
   delete: async (id) => {
-    const numberOfDestroyedRows = await MediaFlight.destroy({
+    const numberOfDestroyedRows = await FlightImage.destroy({
       where: { id },
     });
     return numberOfDestroyedRows;

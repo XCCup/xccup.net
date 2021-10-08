@@ -7,6 +7,7 @@ const {
   checkStringObjectNotEmpty,
   checkIsDateObject,
   checkOptionalIsBoolean,
+  checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
 
@@ -63,6 +64,7 @@ router.post(
 router.put(
   "/:id",
   authToken,
+  checkParamIsUuid("id"),
   checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("message"),
   checkIsDateObject("from"),
@@ -70,14 +72,15 @@ router.put(
   checkOptionalIsBoolean("sendByMail"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
+    const title = req.body.title;
+    const message = req.body.message;
+    const from = req.body.from;
+    const till = req.body.till;
+    const sendByMail = req.body.sendByMail;
+
     try {
       if (requesterIsNotModerator(res, req)) return;
-      const id = req.params.id;
-      const title = req.body.title;
-      const message = req.body.message;
-      const from = req.body.from;
-      const till = req.body.till;
-      const sendByMail = req.body.sendByMail;
 
       const news = await service.getById(id);
 
@@ -98,17 +101,25 @@ router.put(
 // @route DELETE /news/:id
 // @access Only moderator
 
-router.delete("/:id", authToken, async (req, res, next) => {
-  try {
-    if (requesterIsNotModerator(res, req)) return;
-    const user = await service.delete(req.params.id);
-    if (!user) return res.sendStatus(NOT_FOUND);
+router.delete(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
-    res.json(user);
-  } catch (error) {
-    next(error);
+    try {
+      if (requesterIsNotModerator(res, req)) return;
+      const user = await service.delete(id);
+      if (!user) return res.sendStatus(NOT_FOUND);
+
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Gets all news
 // @route GET /news/active

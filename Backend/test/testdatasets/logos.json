@@ -1,0 +1,222 @@
+[
+  {
+    "id": "065fa142-3384-4d51-af69-6495674567fc",
+    "path": "test/testdatasets/images/sponsors/1633686374622-elsenbach_design_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686374622-elsenbach_design_large-thumb.png",
+    "originalname": "elsenbach_design_large.png",
+    "mimetype": "image/png",
+    "size": "3104",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "sponsorId": "8812deda-aeb6-40a4-91e1-0acce5c4a177"
+  },
+  {
+    "id": "68dbea5e-6bf6-4fb5-ad73-3e1199bc7657",
+    "path": "test/testdatasets/images/sponsors/1633686398789-ozone_F.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686398789-ozone_F-thumb.png",
+    "originalname": "ozone_F.png",
+    "mimetype": "image/png",
+    "size": "1012",
+    "createdAt": "2021-10-08T09:46:38.808Z",
+    "updatedAt": "2021-10-08T09:46:38.808Z",
+    "sponsorId": "d7aa1df6-fbbb-4ef3-a640-2bf8215a2bd3"
+  },
+  {
+    "id": "1bac1aab-b4b5-4926-89b4-c0fc877d5d2e",
+    "path": "test/testdatasets/images/sponsors/1633686430631-fly_glidezeit_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686430631-fly_glidezeit_large-thumb.png",
+    "originalname": "fly_glidezeit_large.png",
+    "mimetype": "image/png",
+    "size": "24882",
+    "createdAt": "2021-10-08T09:47:10.650Z",
+    "updatedAt": "2021-10-08T09:47:10.650Z",
+    "sponsorId": "f01cde63-d396-4bc6-8b34-4c13a6a68b04"
+  },
+  {
+    "id": "4e6097c0-87b1-434f-9193-6e1c5e596b76",
+    "path": "test/testdatasets/images/sponsors/1633686454870-airdesign_paragliders_large_2018.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686454870-airdesign_paragliders_large_2018-thumb.png",
+    "originalname": "airdesign_paragliders_large_2018.png",
+    "mimetype": "image/png",
+    "size": "15587",
+    "createdAt": "2021-10-08T09:47:34.890Z",
+    "updatedAt": "2021-10-08T09:47:34.890Z",
+    "sponsorId": "c9528f0e-631c-4942-bc35-50f21a33dbf4"
+  },
+  {
+    "id": "970d93f7-06d1-4753-9b57-e78b201e3549",
+    "path": "test/testdatasets/images/sponsors/1633686470947-wolke9_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686470947-wolke9_large-thumb.png",
+    "originalname": "wolke9_large.png",
+    "mimetype": "image/png",
+    "size": "43887",
+    "createdAt": "2021-10-08T09:47:51.006Z",
+    "updatedAt": "2021-10-08T09:47:51.006Z",
+    "sponsorId": "065e2806-e121-484a-aa2f-8cd9f130f68f"
+  },
+  {
+    "id": "75d4eafc-9d6d-4808-921f-6ae0c4626ae2",
+    "path": "test/testdatasets/images/sponsors/1633686514186-uturn_H.gif",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686514186-uturn_H-thumb.gif",
+    "originalname": "uturn_H.gif",
+    "mimetype": "image/gif",
+    "size": "4775",
+    "createdAt": "2021-10-08T09:48:34.206Z",
+    "updatedAt": "2021-10-08T09:48:34.206Z",
+    "sponsorId": "b1e9e897-0837-4b2f-96f6-ef99e82d501a"
+  },
+  {
+    "id": "acfb6392-4d45-45de-a2a8-d2c70db931a1",
+    "path": "test/testdatasets/images/sponsors/1633686706397-advance.jpg",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686706397-advance-thumb.jpg",
+    "originalname": "advance.jpg",
+    "mimetype": "image/jpeg",
+    "size": "42191",
+    "createdAt": "2021-10-08T09:51:46.460Z",
+    "updatedAt": "2021-10-08T09:51:46.460Z",
+    "sponsorId": "28bbee36-26fc-4a2c-805d-c33eb2815527"
+  },
+  {
+    "id": "c53e5148-119f-454c-889f-f5413e6e4165",
+    "path": "test/testdatasets/images/sponsors/1633686758023-danke_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686758023-danke_large-thumb.png",
+    "originalname": "danke_large.png",
+    "mimetype": "image/png",
+    "size": "35884",
+    "createdAt": "2021-10-08T09:52:38.077Z",
+    "updatedAt": "2021-10-08T09:52:38.077Z",
+    "sponsorId": "e370ee96-2943-4039-9934-e61e8041172d"
+  },
+  {
+    "id": "5b8b9701-6e47-4408-9ad0-c195ad4c434b",
+    "path": "test/testdatasets/images/sponsors/1633686821804-skyman_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686821804-skyman_large-thumb.png",
+    "originalname": "skyman_large.png",
+    "mimetype": "image/png",
+    "size": "15440",
+    "createdAt": "2021-10-08T09:53:41.823Z",
+    "updatedAt": "2021-10-08T09:53:41.823Z",
+    "sponsorId": "df08684c-16d0-4e9b-b51b-265351b38e2a"
+  },
+  {
+    "id": "76bcf325-d1da-4f23-9416-7ee4e0b0170f",
+    "path": "test/testdatasets/images/sponsors/1633686857264-up_H.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686857264-up_H-thumb.png",
+    "originalname": "up_H.png",
+    "mimetype": "image/png",
+    "size": "22108",
+    "createdAt": "2021-10-08T09:54:17.287Z",
+    "updatedAt": "2021-10-08T09:54:17.287Z",
+    "sponsorId": "707d17cb-1844-411c-8d36-2a2fdc138c63"
+  },
+  {
+    "id": "93d8829c-e453-4f3b-9aa0-6510aae804ee",
+    "path": "test/testdatasets/images/sponsors/1633686935921-swing.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686935921-swing-thumb.png",
+    "originalname": "swing.png",
+    "mimetype": "image/png",
+    "size": "2827",
+    "createdAt": "2021-10-08T09:55:35.939Z",
+    "updatedAt": "2021-10-08T09:55:35.939Z",
+    "sponsorId": "423149a9-d482-4471-a728-eae9555a9dd8"
+  },
+  {
+    "id": "758e8241-cf11-41ea-9ff9-df2bd7cbeb82",
+    "path": "test/testdatasets/images/sponsors/1633686958434-airtouch_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686958434-airtouch_large-thumb.png",
+    "originalname": "airtouch_large.png",
+    "mimetype": "image/png",
+    "size": "28003",
+    "createdAt": "2021-10-08T09:55:58.456Z",
+    "updatedAt": "2021-10-08T09:55:58.456Z",
+    "sponsorId": "8552dbdf-a9c1-449e-9801-b0afb3567808"
+  },
+  {
+    "id": "5b89f155-60a2-49e6-9aff-4a91240aa0ab",
+    "path": "test/testdatasets/images/sponsors/1633686985018-independence_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686985018-independence_large-thumb.png",
+    "originalname": "independence_large.png",
+    "mimetype": "image/png",
+    "size": "18913",
+    "createdAt": "2021-10-08T09:56:25.042Z",
+    "updatedAt": "2021-10-08T09:56:25.042Z",
+    "sponsorId": "a44d29df-72c6-4a1a-a063-14eb22a4f846"
+  },
+  {
+    "id": "72601f98-e710-4ca6-93c5-9660f0915eb0",
+    "path": "test/testdatasets/images/sponsors/1633686997292-nova2019_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633686997292-nova2019_large-thumb.png",
+    "originalname": "nova2019_large.png",
+    "mimetype": "image/png",
+    "size": "23825",
+    "createdAt": "2021-10-08T09:56:37.316Z",
+    "updatedAt": "2021-10-08T09:56:37.316Z",
+    "sponsorId": "d1850c5a-6992-449f-ab82-68e63882bc8f"
+  },
+  {
+    "id": "0c80a526-24c0-4956-860d-4eae53079124",
+    "path": "test/testdatasets/images/sponsors/1633687013673-maier_components_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633687013673-maier_components_large-thumb.png",
+    "originalname": "maier_components_large.png",
+    "mimetype": "image/png",
+    "size": "6250",
+    "createdAt": "2021-10-08T09:56:53.691Z",
+    "updatedAt": "2021-10-08T09:56:53.691Z",
+    "sponsorId": "20258e0b-3932-4a0f-a765-b916cd4b8d41"
+  },
+  {
+    "id": "c1f4f193-b328-4564-b12f-2ff3e6dfad95",
+    "path": "test/testdatasets/images/sponsors/1633687112277-skywalk.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633687112277-skywalk-thumb.png",
+    "originalname": "skywalk.png",
+    "mimetype": "image/png",
+    "size": "6363",
+    "createdAt": "2021-10-08T09:58:32.296Z",
+    "updatedAt": "2021-10-08T09:58:32.296Z",
+    "sponsorId": "f3faabcf-f31e-4ce7-b598-dd69298e93b5"
+  },
+  {
+    "id": "0e8d8bee-d43a-465d-8b86-90be1212730f",
+    "path": "test/testdatasets/images/sponsors/1633687165465-baumpflegestingl_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633687165465-baumpflegestingl_large-thumb.png",
+    "originalname": "baumpflegestingl_large.png",
+    "mimetype": "image/png",
+    "size": "15807",
+    "createdAt": "2021-10-08T09:59:25.485Z",
+    "updatedAt": "2021-10-08T09:59:25.485Z",
+    "sponsorId": "c6311b5a-4c09-4b09-929f-4cc8053148d9"
+  },
+  {
+    "id": "833b0831-46cf-4d39-8b89-859b2193cc95",
+    "path": "test/testdatasets/images/sponsors/1633687190168-phi_paragliders_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633687190168-phi_paragliders_large-thumb.png",
+    "originalname": "phi_paragliders_large.png",
+    "mimetype": "image/png",
+    "size": "3900",
+    "createdAt": "2021-10-08T09:59:50.185Z",
+    "updatedAt": "2021-10-08T09:59:50.185Z",
+    "sponsorId": "5171b8c7-d99e-47cb-ae63-6343007679ec"
+  },
+  {
+    "id": "1670f9b0-38f0-494e-aec4-dbfcc5678d15",
+    "path": "test/testdatasets/images/sponsors/1633687211737-fs_hirondelle_large_2016.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633687211737-fs_hirondelle_large_2016-thumb.png",
+    "originalname": "fs_hirondelle_large_2016.png",
+    "mimetype": "image/png",
+    "size": "18947",
+    "createdAt": "2021-10-08T10:00:11.755Z",
+    "updatedAt": "2021-10-08T10:00:11.755Z",
+    "sponsorId": "6e5d33d3-f5a3-420f-a21e-2627b8532458"
+  },
+  {
+    "id": "3b61af22-8b0f-4245-b89d-e8a46919f843",
+    "path": "test/testdatasets/images/sponsors/1633687226459-holiday_flat_almunecar_large.png",
+    "pathThumb": "test/testdatasets/images/sponsors/1633687226459-holiday_flat_almunecar_large-thumb.png",
+    "originalname": "holiday_flat_almunecar_large.png",
+    "mimetype": "image/png",
+    "size": "22314",
+    "createdAt": "2021-10-08T10:00:26.475Z",
+    "updatedAt": "2021-10-08T10:00:26.475Z",
+    "sponsorId": "e70e2ea3-4a93-44e6-bf41-89d245cb641b"
+  }
+]
