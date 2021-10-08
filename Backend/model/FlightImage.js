@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    pathThumb: {
+      type: DataTypes.STRING,
+    },
     originalname: {
       type: DataTypes.STRING,
       allowNull: false,

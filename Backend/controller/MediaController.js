@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/MediaFlightService");
+const service = require("../service/FlightImageService");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { NOT_FOUND, OK } = require("./Constants");
 const { query } = require("express-validator");
@@ -12,14 +12,14 @@ const {
 } = require("./Validation");
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 
-const { createThumbnail, THUMBNAIL_POSTFIX } = require("../helper/Thumbnail");
+const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
 
-const MEDIA_STORE = "data/images/flights";
+const IMAGE_STORE = "data/images/flights";
+const THUMBNAIL_IMAGE_HEIGHT = 200;
 
 const imageUpload = multer({
-  dest: MEDIA_STORE,
+  dest: IMAGE_STORE,
 });
 
 // @desc Uploads a media file to the server and stores the meta-data to the db
@@ -45,13 +45,14 @@ router.post(
       const userId = req.body.userId;
       const timestamp = req.body.timestamp; //TODO Will be done in backend or frontend???
 
-      createThumbnail(path);
+      const pathThumb = createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
 
       const media = await service.create({
         originalname,
         mimetype,
         size,
         path,
+        pathThumb,
         flightId,
         userId,
         timestamp,
@@ -108,7 +109,7 @@ router.get(
       if (!media) return res.sendStatus(NOT_FOUND);
 
       const fullfilepath = thumb
-        ? path.join(path.resolve(), media.path + THUMBNAIL_POSTFIX)
+        ? path.join(path.resolve(), media.pathThumb)
         : path.join(path.resolve(), media.path);
 
       return res.type(media.mimetype).sendFile(fullfilepath);
@@ -167,37 +168,11 @@ router.delete("/:id", authToken, async (req, res, next) => {
 
     if (await requesterIsNotOwner(req, res, media.userId)) return;
 
-    await Promise.all([service.delete(id), deleteFile(media.path)]);
+    await Promise.all([service.delete(id), deleteImages(media)]);
     res.sendStatus(OK);
   } catch (error) {
     next(error);
   }
 });
-
-/**
- * Deletes the image file given by the filePath as also the corresponding thumbnail file of that image
- * @param {*} filePath The path to the image file
- * @returns A promise of the delete operation
- */
-async function deleteFile(filePath) {
-  const fullfilepath = path.join(path.resolve(), filePath);
-  const fileDeleteOperation = fs.unlink(fullfilepath, (err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
-
-  const fullfilepathThumb = path.join(
-    path.resolve(),
-    filePath + THUMBNAIL_POSTFIX
-  );
-  const fileDeleteOperationThumb = fs.unlink(fullfilepathThumb, (err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
-
-  return await Promise.all([fileDeleteOperation, fileDeleteOperationThumb]);
-}
 
 module.exports = router;

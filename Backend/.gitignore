@@ -4,6 +4,7 @@ node_modules
 
 
 /igc/flights
+/data/images
 
 # local env files
 .env.local

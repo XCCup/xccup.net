@@ -19,12 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     website: {
       type: DataTypes.STRING,
     },
-    logoSmall: {
-      type: DataTypes.STRING,
-    },
-    logoLarge: {
-      type: DataTypes.STRING,
-    },
     isGoldSponsor: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,

@@ -9,6 +9,7 @@ const SeasonDetail = require("../config/postgres")["SeasonDetail"];
 const Airspace = require("../config/postgres")["Airspace"];
 const News = require("../config/postgres")["News"];
 const Sponsor = require("../config/postgres")["Sponsor"];
+const Logo = require("../config/postgres")["Logo"];
 
 const dbTestData = {
   checkForTestDataAndAddIfMissing: async () => {
@@ -139,6 +140,17 @@ const dbTestData = {
         })
       );
       console.log("Finished adding sponsors");
+
+      console.log("Start adding sponsor logos");
+      const logos = require("./testdatasets/logos.json");
+      await Promise.all(
+        logos.map(async (entry) => {
+          await Logo.create(entry).catch((err) => {
+            console.log(err.message);
+          });
+        })
+      );
+      console.log("Finished adding sponsor logos");
     }
   },
 };
