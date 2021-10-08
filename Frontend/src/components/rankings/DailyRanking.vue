@@ -2,7 +2,15 @@
   <div class="row bg-primary">
     <div class="col-xl-5 col-md-6 col-12">
       <div class="text-light p-4 pb-4">
-        <h3>Tageswertung</h3>
+        <h3>
+          Tageswertung
+          <BaseDate
+            class="fs-6"
+            :timestamp="flights[0]?.dateOfFlight"
+            dateFormat="dd.MM.yyyy"
+          />
+        </h3>
+
         <div v-if="flights.length > 0">
           <table class="table table-primary text-light table-hover">
             <tbody>
@@ -17,8 +25,8 @@
               >
                 <td scope="row">{{ index + 1 }}</td>
                 <td>{{ flight.User.name }}</td>
-                <!-- <td>{{ flight.takeoff.name }}</td> -->
-                <td>{{ flight.flightDistance }} km</td>
+                <td>{{ flight.takeoff.name }}</td>
+                <td>{{ Math.floor(flight.flightDistance) }} km</td>
                 <td>{{ flight.flightType }}</td>
                 <td>{{ flight.flightPoints }} P</td>
               </tr>

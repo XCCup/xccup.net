@@ -7,15 +7,15 @@
           ><i class="bi bi-chevron-left mx-2"></i>
         </router-link>
 
-        Flug von <a href="#">{{ flight.pilot }}</a> am
-        <a href="#"><BaseDate :timestamp="flight.date" /></a>
+        Flug von <a href="#">{{ flight.User.name }}</a> am
+        <a href="#"><BaseDate :timestamp="flight.dateOfFlight" /></a>
       </p>
     </div>
     <!-- Content -->
-    <MapV2 :tracklogs="tracklogs" />
+    <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
     <Barogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
-      v-if="flight.airbuddies"
+      v-if="flight.flightBuddies"
       :flight="flight"
       @updateAirbuddies="updateAirbuddies"
     />
@@ -23,9 +23,9 @@
     <Inline-alert text="Automatisches zentrieren fehlt noch" />
 
     <FlightDetails :flight="flight" :pilot="pilot" />
-    <FlightDescription :description="description" />
+    <FlightReport :report="flight.report" :images="flight.MediaFlights" />
     <Comments
-      :comments="comments"
+      :comments="flight.comments"
       @submit-comment="addComment"
       @delete-comment="deleteComment"
     />
@@ -39,7 +39,7 @@
 
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import FlightService from "@/services/FlightService.js";
+import ApiService from "@/services/ApiService.js";
 import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
 import Barogramm from "@/components/Barogramm.vue";
@@ -47,7 +47,7 @@ import trackColors from "@/assets/js/trackColors";
 import InlineAlert from "@/components/InlineAlert";
 import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
-import FlightDescription from "@/components/FlightDescription";
+import FlightReport from "@/components/FlightReport";
 
 export default {
   name: "FlightView",
@@ -58,36 +58,26 @@ export default {
     InlineAlert,
     FlightDetails,
     Comments,
-    FlightDescription,
+    FlightReport,
   },
   async setup(props) {
     const router = useRouter();
     const route = useRoute();
     const flight = ref(null);
-    const comments = ref([]);
-    const description = ref(null);
 
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Is this try/catch smart?
     try {
-      // Hardcoded flight for development
-      let flightId = "60699294a7c2069af1246316";
-      if (process.env.VUE_APP_USE_LOCAL_API === "true") {
-        flightId = route.params.flightId;
-        // props.flightId
-      }
+      let flightId = route.params.flightId;
+      // props.flightId
 
-      const response = await FlightService.getFlight(flightId);
+      const response = await ApiService.getFlight(flightId);
       if (!response.data.fixes) {
         throw "Invalid response";
       }
       flight.value = response.data;
-
-      const response2 = await fetchDemoData();
-      comments.value = response2.comments;
-      description.value = response2.description;
     } catch (error) {
       console.log(error);
       if (error.response && error.response.status == 404) {
@@ -101,8 +91,6 @@ export default {
     }
     return {
       flight,
-      comments,
-      description,
     };
   },
   props: {
@@ -121,7 +109,7 @@ export default {
     },
     async addComment(comment) {
       try {
-        const res = await FlightService.addComment({
+        const res = await ApiService.addComment({
           id: String(Math.floor(Math.random() * 100000)),
           ...comment,
         });
@@ -133,8 +121,8 @@ export default {
     },
     async deleteComment(id) {
       try {
-        await FlightService.deleteComment(id);
-        const res2 = await FlightService.getComments();
+        await ApiService.deleteComment(id);
+        const res2 = await ApiService.getComments();
         this.comments = res2.data;
       } catch (error) {
         console.log(error);
@@ -156,21 +144,6 @@ export default {
     },
   },
 };
-
-// This will be obsolete if the flight model contains comments and description
-async function fetchDemoData() {
-  try {
-    let { data: comments } = await FlightService.getComments();
-    let { data: description } = await FlightService.getDescription();
-
-    return {
-      comments: comments,
-      description: description[0],
-    };
-  } catch (error) {
-    console.log("fetchDemoData: ", error);
-  }
-}
 
 // Process tracklog data for map
 function processTracklogs(flight, buddyTracks) {
