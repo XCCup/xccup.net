@@ -42,8 +42,10 @@ const actions = {
     if (response && response.data) {
       commit("saveTokenData", response.data);
       commit("setLoginStatus", "success");
+      console.log("login successful");
     } else {
       commit("setLoginStatus", "failed");
+      console.log("login failed");
     }
   },
   async refresh({ commit, getters, dispatch }) {
