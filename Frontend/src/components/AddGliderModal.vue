@@ -41,8 +41,6 @@
   </div>
 </template>
 <script>
-import rankingClassNames from "@/assets/js/rankingClassNames";
-
 export default {
   name: "AddGliderModal",
   data() {
@@ -50,12 +48,14 @@ export default {
   },
   computed: {
     getRankingClasses() {
-      const entries = Object.entries(rankingClassNames);
-      let tmp = [];
-      entries.forEach((e) => {
-        tmp.push(e[1].long);
-      });
-      return tmp;
+      // TODO: This needs repair
+
+      // const entries = Object.entries(rankingClassNames);
+      // let tmp = [];
+      // entries.forEach((e) => {
+      //   tmp.push(e[1].long);
+      // });
+      return null;
     },
   },
 };
