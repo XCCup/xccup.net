@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/FlightImageService");
+const service = require("../service/FlightPhotoService");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { NOT_FOUND, OK } = require("./Constants");
 const { query } = require("express-validator");
