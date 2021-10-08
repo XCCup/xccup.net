@@ -75,9 +75,9 @@ export default {
       try {
         if (
           this.buddyFlights.length === 0 &&
-          this.flight.flightBuddies.length > 0
+          this.flight.airbuddies.length > 0
         ) {
-          this.flight.flightBuddies.forEach(async (buddy) => {
+          this.flight.airbuddies.forEach(async (buddy) => {
             let response = await ApiService.getFlight(buddy.id);
             this.buddyFlights.push(response.data);
           });
