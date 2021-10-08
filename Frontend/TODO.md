@@ -49,8 +49,9 @@
 - [ ] Mark picture point in map
 - [x] Add comment
 - [x] Delete comment
-- [ ] Delete comment modal (Are you sure?)
-- [ ] Connect to API
+- [ ] Edit comment
+- [x] Delete comment modal (Are you sure?)
+- [x] Connect to API
 
 ### Flights
 
@@ -92,3 +93,4 @@
 - [ ] Icons for task types (FAI & flat triangle, one way)
 - [ ] Icons for ranking classes
 - [ ] Authentication
+- [ ] Login error handling
