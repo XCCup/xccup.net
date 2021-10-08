@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/MediaFlightService");
+const service = require("../service/FlightImageService");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { NOT_FOUND, OK } = require("./Constants");
 const { query } = require("express-validator");
@@ -9,17 +9,18 @@ const {
   validationHasErrors,
   checkStringObject,
   checkOptionalIsISO8601,
+  checkParamIsUuid,
 } = require("./Validation");
 const multer = require("multer");
 const path = require("path");
-const fs = require("fs");
 
-const { createThumbnail, THUMBNAIL_POSTFIX } = require("../helper/Thumbnail");
+const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
 
-const MEDIA_STORE = "data/images/flights";
+const IMAGE_STORE = "data/images/flights";
+const THUMBNAIL_IMAGE_HEIGHT = 200;
 
 const imageUpload = multer({
-  dest: MEDIA_STORE,
+  dest: IMAGE_STORE,
 });
 
 // @desc Uploads a media file to the server and stores the meta-data to the db
@@ -28,6 +29,7 @@ const imageUpload = multer({
 
 router.post(
   "/",
+  authToken,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
   checkIsUuidObject("userId"),
@@ -44,13 +46,14 @@ router.post(
       const userId = req.body.userId;
       const timestamp = req.body.timestamp; //TODO Will be done in backend or frontend???
 
-      createThumbnail(path);
+      const pathThumb = createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
 
       const media = await service.create({
         originalname,
         mimetype,
         size,
         path,
+        pathThumb,
         flightId,
         userId,
         timestamp,
@@ -70,12 +73,13 @@ router.post(
 router.put(
   "/:id",
   authToken,
+  checkParamIsUuid("id"),
   checkStringObject("description"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
     try {
-      const id = req.params.id;
       const media = await service.getById(id);
 
       if (await requesterIsNotOwner(req, res, media.userId)) return;
@@ -95,19 +99,20 @@ router.put(
 
 router.get(
   "/:id",
+  checkParamIsUuid("id"),
   query("thumb").optional().isBoolean(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    try {
-      const id = req.params.id;
-      const thumb = req.query.thumb;
+    const id = req.params.id;
+    const thumb = req.query.thumb;
 
+    try {
       const media = await service.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
       const fullfilepath = thumb
-        ? path.join(path.resolve(), media.path + THUMBNAIL_POSTFIX)
+        ? path.join(path.resolve(), media.pathThumb)
         : path.join(path.resolve(), media.path);
 
       return res.type(media.mimetype).sendFile(fullfilepath);
@@ -120,9 +125,11 @@ router.get(
 // @desc Gets the meta-data to a media file
 // @route GET /media/meta/:id
 
-router.get("/meta/:id", async (req, res, next) => {
+router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
+  if (validationHasErrors(req, res)) return;
+  const id = req.params.id;
+
   try {
-    const id = req.params.id;
     const media = await service.getById(id);
 
     if (!media) return res.sendStatus(NOT_FOUND);
@@ -135,67 +142,56 @@ router.get("/meta/:id", async (req, res, next) => {
 
 // @desc Toggles (assigns or removes) the "like" to a media file from the requester
 // @route GET /media/like/:id
+// @access All logged-in users
 
-router.get("/like/:id", authToken, async (req, res, next) => {
-  try {
+router.get(
+  "/like/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const media = await service.getById(id);
 
-    if (!media) return res.sendStatus(NOT_FOUND);
+    try {
+      const media = await service.getById(id);
 
-    const requesterId = req.user.id;
-    await service.toggleLike(media, requesterId);
+      if (!media) return res.sendStatus(NOT_FOUND);
 
-    return res.sendStatus(OK);
-  } catch (error) {
-    next(error);
+      const requesterId = req.user.id;
+      await service.toggleLike(media, requesterId);
+
+      return res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Deletes a media by id
 // @route DELETE /media/:id
 // @access Only owner
 
-router.delete("/:id", authToken, async (req, res, next) => {
-  const id = req.params.id;
-  try {
-    const media = await service.getById(id);
+router.delete(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
-    if (!media) return res.sendStatus(NOT_FOUND);
+    try {
+      const media = await service.getById(id);
 
-    if (await requesterIsNotOwner(req, res, media.userId)) return;
+      if (!media) return res.sendStatus(NOT_FOUND);
 
-    await Promise.all([service.delete(id), deleteFile(media.path)]);
-    res.sendStatus(OK);
-  } catch (error) {
-    next(error);
+      if (await requesterIsNotOwner(req, res, media.userId)) return;
+
+      await Promise.all([service.delete(id), deleteImages(media)]);
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
   }
-});
-
-/**
- * Deletes the image file given by the filePath as also the corresponding thumbnail file of that image
- * @param {*} filePath The path to the image file
- * @returns A promise of the delete operation
- */
-async function deleteFile(filePath) {
-  const fullfilepath = path.join(path.resolve(), filePath);
-  const fileDeleteOperation = fs.unlink(fullfilepath, (err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
-
-  const fullfilepathThumb = path.join(
-    path.resolve(),
-    filePath + THUMBNAIL_POSTFIX
-  );
-  const fileDeleteOperationThumb = fs.unlink(fullfilepathThumb, (err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
-
-  return await Promise.all([fileDeleteOperation, fileDeleteOperationThumb]);
-}
+);
 
 module.exports = router;

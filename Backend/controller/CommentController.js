@@ -7,24 +7,31 @@ const {
   checkStringObjectNotEmpty,
   checkIsUuidObject,
   validationHasErrors,
+  checkParamIsUuid,
 } = require("./Validation");
 
 // @desc Gets all comments of a flight
 // @route GET /comments/:flightId
 
-router.get("/flight/:flightId", async (req, res, next) => {
-  try {
-    const comments = await service.getByFlightId(req.params.flightId);
+router.get(
+  "/flight/:flightId",
+  checkParamIsUuid("flightId"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
 
-    if (!comments) {
-      res.sendStatus(NOT_FOUND);
-      return;
+    try {
+      const comments = await service.getByFlightId(req.params.flightId);
+
+      if (!comments) {
+        res.sendStatus(NOT_FOUND);
+        return;
+      }
+      res.json(comments);
+    } catch (error) {
+      next(error);
     }
-    res.json(comments);
-  } catch (error) {
-    next(error);
   }
-});
+);
 
 // @desc Adds a comment
 // @route POST /comments/

@@ -6,6 +6,7 @@ const { authToken, requesterIsNotModerator } = require("./Auth");
 const {
   checkStringObjectNotEmpty,
   checkIsArray,
+  checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
 
@@ -92,16 +93,23 @@ router.post(
 // @route DELETE /teams/:id
 // @access Only moderator
 
-router.delete("/:id", authToken, async (req, res, next) => {
-  try {
-    if (await requesterIsNotModerator(req, res)) return;
+router.delete(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
 
-    const numberOfDestroyedRows = await service.delete(req.team.id);
-    res.json(numberOfDestroyedRows);
-  } catch (error) {
-    next(error);
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      const numberOfDestroyedRows = await service.delete(req.team.id);
+      res.json(numberOfDestroyedRows);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // Handle not found db entry
 router.param("id", async (req, res, next, id) => {

@@ -17,6 +17,7 @@ const {
   checkOptionalIsOnlyOfValue,
   checkStringObjectNotEmpty,
   checkIsUuidObject,
+  checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
 
@@ -37,14 +38,14 @@ router.get("/", async (req, res, next) => {
 
 router.post(
   "/login",
-  checkStringObjectNotEmpty("name"),
+  checkIsEmail("email"),
   checkStringObjectNotEmpty("password"),
   async (req, res, next) => {
-    const name = req.body.name;
+    const email = req.body.email;
     const password = req.body.password;
 
     try {
-      const user = await service.validate(name, password);
+      const user = await service.validate(email, password);
       if (!user) return res.sendStatus(UNAUTHORIZED);
 
       const accessToken = createToken(user);
@@ -109,37 +110,51 @@ router.get("/name/:username", authToken, async (req, res, next) => {
 // @route GET /users/:id
 // @access Only owner
 
-router.get("/:id", authToken, async (req, res, next) => {
-  const requestId = req.params.id;
-  try {
-    if (await requesterIsNotOwner(req, res, requestId)) return;
+router.get(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
-    const retrievedUser = await service.getById(requestId);
-    if (!retrievedUser) return res.sendStatus(NOT_FOUND);
+    try {
+      if (await requesterIsNotOwner(req, res, id)) return;
 
-    res.json(retrievedUser);
-  } catch (error) {
-    next(error);
+      const retrievedUser = await service.getById(id);
+      if (!retrievedUser) return res.sendStatus(NOT_FOUND);
+
+      res.json(retrievedUser);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Deletes user by id
 // @route DELETE /users/:id
 // @access Only owner
 
-router.delete("/:id", authToken, async (req, res, next) => {
-  const requestId = req.params.id;
-  try {
-    if (await requesterIsNotOwner(req, res, requestId)) return;
+router.delete(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
-    const user = await service.delete(req.params.id);
-    if (!user) return res.sendStatus(NOT_FOUND);
+    try {
+      if (await requesterIsNotOwner(req, res, id)) return;
 
-    res.json(user);
-  } catch (error) {
-    next(error);
+      const user = await service.delete(req.params.id);
+      if (!user) return res.sendStatus(NOT_FOUND);
+
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Saves a new user to the database
 // @route POST /users/

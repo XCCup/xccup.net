@@ -1,11 +1,18 @@
 const Sponsor = require("../config/postgres")["Sponsor"];
+const Logo = require("../config/postgres")["Logo"];
 const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
 
 const service = {
   getById: async (id) => {
-    return Sponsor.findByPk(id);
+    return Sponsor.findOne({
+      where: { id },
+      include: {
+        model: Logo,
+        attributes: ["id", "path", "pathThumb"],
+      },
+    });
   },
 
   getAll: async () => {
@@ -20,13 +27,11 @@ const service = {
         },
       },
       attributes: {
-        exclude: [
-          "contacts",
-          "sponsorInSeasons",
-          "createdAt",
-          "updatedAt",
-          "id",
-        ],
+        exclude: ["contacts", "sponsorInSeasons", "createdAt", "updatedAt"],
+      },
+      include: {
+        model: Logo,
+        attributes: ["id"],
       },
     });
   },
