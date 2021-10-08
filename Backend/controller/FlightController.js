@@ -11,6 +11,7 @@ const {
   checkIsUuidObject,
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
+  checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
 
@@ -59,7 +60,9 @@ router.get(
 // @desc Retrieve a flight by id
 // @route GET /flights/:id
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", checkParamIsUuid("id"), async (req, res, next) => {
+  if (validationHasErrors(req, res)) return;
+
   try {
     const flight = req.flight;
     res.json(flight);
@@ -72,17 +75,24 @@ router.get("/:id", async (req, res, next) => {
 // @route DELETE /flights/:id
 // @access Only owner
 
-router.delete("/:id", authToken, async (req, res, next) => {
-  const flightId = req.params.id;
-  try {
-    if (await requesterIsNotOwner(req, res, req.flight.userId)) return;
+router.delete(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const flightId = req.params.id;
 
-    const numberOfDestroyedRows = await service.delete(flightId);
-    res.json(numberOfDestroyedRows);
-  } catch (error) {
-    next(error);
+    try {
+      if (await requesterIsNotOwner(req, res, req.flight.userId)) return;
+
+      const numberOfDestroyedRows = await service.delete(flightId);
+      res.json(numberOfDestroyedRows);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File.
 // @route POST /flights/
@@ -142,12 +152,14 @@ router.post(
 router.put(
   "/:id",
   authToken,
+  checkParamIsUuid("id"),
   checkOptionalStringObjectNotEmpty("report"),
   checkOptionalStringObjectNotEmpty("status"),
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
   checkStringObjectNotEmpty("glider.gliderClass"),
   async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
     const flight = req.flight;
     const report = req.body.report;
     const status = req.body.status;

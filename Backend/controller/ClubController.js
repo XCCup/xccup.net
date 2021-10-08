@@ -7,6 +7,7 @@ const {
   checkOptionalIsBoolean,
   checkOptionalStringObjectNotEmpty,
   checkStringObjectNotEmpty,
+  checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
 
@@ -54,20 +55,25 @@ router.get("/:shortName/member", async (req, res, next) => {
 // @route GET /clubs/:id
 // @access Only moderator
 
-router.get("/:id", authToken, async (req, res, next) => {
-  try {
-    if (await requesterIsNotModerator(req, res)) return;
+router.get(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
 
-    const clubId = req.params.id;
+      const clubId = req.params.id;
 
-    const retrievedClub = await service.getById(clubId);
-    if (!retrievedClub) return res.sendStatus(NOT_FOUND);
+      const retrievedClub = await service.getById(clubId);
+      if (!retrievedClub) return res.sendStatus(NOT_FOUND);
 
-    res.json(retrievedClub);
-  } catch (error) {
-    next(error);
+      res.json(retrievedClub);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Saves a new user to the database
 // @route POST /clubs/
@@ -83,10 +89,10 @@ router.post(
   checkOptionalIsBoolean("isActiveParticipant"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+    const transferObject = req.body;
+
     try {
       if (await requesterIsNotModerator(req, res)) return;
-
-      const transferObject = req.body;
 
       const club = {
         name: transferObject.name,
@@ -113,6 +119,7 @@ router.post(
 router.put(
   "/:id",
   authToken,
+  checkParamIsUuid("id"),
   checkOptionalStringObjectNotEmpty("name"),
   checkOptionalStringObjectNotEmpty("shortName"),
   checkOptionalStringObjectNotEmpty("homepage"),
@@ -120,15 +127,15 @@ router.put(
   checkOptionalIsBoolean("isActiveParticipant"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+    const clubId = req.params.id;
+    const transferObject = req.body;
+
     try {
       if (await requesterIsNotModerator(req, res)) return;
-
-      const clubId = req.params.id;
 
       const club = await service.getById(clubId);
       if (!club) return res.sendStatus(NOT_FOUND);
 
-      const transferObject = req.body;
       club.name = transferObject.name ?? club.name;
       club.shortName = transferObject.shortName ?? club.shortName;
       club.homepage = transferObject.homepage ?? club.homepage;
@@ -152,20 +159,26 @@ router.put(
 // @route DELETE /clubs/:id
 // @access Only moderator
 
-router.delete("/:id", authToken, async (req, res, next) => {
-  try {
-    if (await requesterIsNotModerator(req, res)) return;
-
+router.delete(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
     const clubId = req.params.id;
 
-    const club = await service.getById(clubId);
-    if (!club) return res.sendStatus(NOT_FOUND);
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
 
-    const numberOfDestroyedRows = await service.delete(clubId);
-    res.json(numberOfDestroyedRows);
-  } catch (error) {
-    next();
+      const club = await service.getById(clubId);
+      if (!club) return res.sendStatus(NOT_FOUND);
+
+      const numberOfDestroyedRows = await service.delete(clubId);
+      res.json(numberOfDestroyedRows);
+    } catch (error) {
+      next();
+    }
   }
-});
+);
 
 module.exports = router;

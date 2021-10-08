@@ -1,4 +1,4 @@
-const { check, validationResult } = require("express-validator");
+const { check, param, validationResult } = require("express-validator");
 
 /**
  * Checks if the field is a string. Addionally escapes all special charcters (e.g. ">","<").
@@ -63,6 +63,16 @@ function checkOptionalUuidObject(field) {
     .optional()
     .isUUID()
     .withMessage(`${field} must be a valid uuid format`);
+}
+/**
+ * Checks if the parameter is of a valid uuid format (e.g. 550e8400-e29b-11d4-a716-446655440000).
+ * @param {*} name The name of the Request-Parameter to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkParamIsUuid(name) {
+  return param(name)
+    .isUUID()
+    .withMessage(`${name} must be a valid uuid format`);
 }
 /**
  * Checks if the field is of a valid email format (e.g. best@mail.com).
@@ -147,3 +157,4 @@ exports.checkIsUuidObject = checkIsUuidObject;
 exports.checkOptionalUuidObject = checkOptionalUuidObject;
 exports.checkOptionalIsISO8601 = checkOptionalIsISO8601;
 exports.checkOptionalStringObjectNotEmpty = checkOptionalStringObjectNotEmpty;
+exports.checkParamIsUuid = checkParamIsUuid;

@@ -10,6 +10,7 @@ const {
   checkOptionalStringObjectNotEmpty,
   checkOptionalIsBoolean,
   checkIsUuidObject,
+  checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
 const multer = require("multer");
@@ -48,13 +49,14 @@ router.get("/", authToken, async (req, res, next) => {
 
 router.get(
   "/logo/:id",
+  checkParamIsUuid("id"),
   query("thumb").optional().isBoolean(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    try {
-      const id = req.params.id;
-      const thumb = req.query.thumb;
+    const id = req.params.id;
+    const thumb = req.query.thumb;
 
+    try {
       const logo = await logoService.getById(id);
 
       if (!logo) return res.sendStatus(NOT_FOUND);
@@ -69,14 +71,6 @@ router.get(
     }
   }
 );
-router.get("/all/logo/", async (req, res, next) => {
-  try {
-    const logos = await logoService.getAll();
-    return res.json(logos);
-  } catch (error) {
-    next(error);
-  }
-});
 
 // @desc Uploads a new logo for a sponsor
 // @route POST /sponsors/logo
@@ -175,6 +169,7 @@ router.post(
 router.put(
   "/:id",
   authToken,
+  checkParamIsUuid("id"),
   checkOptionalStringObjectNotEmpty("name"),
   checkOptionalStringObjectNotEmpty("type"),
   checkOptionalStringObjectNotEmpty("website"),
@@ -185,11 +180,12 @@ router.put(
   checkOptionalIsBoolean("isGoldSponsor"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const sponsor = await service.getById(req.params.id);
+      const sponsor = await service.getById(id);
 
       sponsor.name = req.body.name ?? sponsor.name;
       sponsor.type = req.body.type ?? sponsor.type;
@@ -233,20 +229,27 @@ router.put(
 // @route DELETE /sponsors/:id
 // @access Only owner
 
-router.delete("/:id", authToken, async (req, res, next) => {
-  const id = req.params.id;
-  try {
-    if (await requesterIsNotModerator(req, res)) return;
+router.delete(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
-    const sponsor = await service.getById(id);
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
 
-    if (!sponsor) return res.sendStatus(NOT_FOUND);
+      const sponsor = await service.getById(id);
 
-    const numberOfDestroyedRows = await service.delete(id);
-    res.json(numberOfDestroyedRows);
-  } catch (error) {
-    next(error);
+      if (!sponsor) return res.sendStatus(NOT_FOUND);
+
+      const numberOfDestroyedRows = await service.delete(id);
+      res.json(numberOfDestroyedRows);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;

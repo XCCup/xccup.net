@@ -9,6 +9,7 @@ const {
   validationHasErrors,
   checkStringObject,
   checkOptionalIsISO8601,
+  checkParamIsUuid,
 } = require("./Validation");
 const multer = require("multer");
 const path = require("path");
@@ -72,12 +73,13 @@ router.post(
 router.put(
   "/:id",
   authToken,
+  checkParamIsUuid("id"),
   checkStringObject("description"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
     try {
-      const id = req.params.id;
       const media = await service.getById(id);
 
       if (await requesterIsNotOwner(req, res, media.userId)) return;
@@ -97,13 +99,14 @@ router.put(
 
 router.get(
   "/:id",
+  checkParamIsUuid("id"),
   query("thumb").optional().isBoolean(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    try {
-      const id = req.params.id;
-      const thumb = req.query.thumb;
+    const id = req.params.id;
+    const thumb = req.query.thumb;
 
+    try {
       const media = await service.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
@@ -122,9 +125,11 @@ router.get(
 // @desc Gets the meta-data to a media file
 // @route GET /media/meta/:id
 
-router.get("/meta/:id", async (req, res, next) => {
+router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
+  if (validationHasErrors(req, res)) return;
+  const id = req.params.id;
+
   try {
-    const id = req.params.id;
     const media = await service.getById(id);
 
     if (!media) return res.sendStatus(NOT_FOUND);
@@ -139,40 +144,54 @@ router.get("/meta/:id", async (req, res, next) => {
 // @route GET /media/like/:id
 // @access All logged-in users
 
-router.get("/like/:id", authToken, async (req, res, next) => {
-  try {
+router.get(
+  "/like/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const media = await service.getById(id);
 
-    if (!media) return res.sendStatus(NOT_FOUND);
+    try {
+      const media = await service.getById(id);
 
-    const requesterId = req.user.id;
-    await service.toggleLike(media, requesterId);
+      if (!media) return res.sendStatus(NOT_FOUND);
 
-    return res.sendStatus(OK);
-  } catch (error) {
-    next(error);
+      const requesterId = req.user.id;
+      await service.toggleLike(media, requesterId);
+
+      return res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Deletes a media by id
 // @route DELETE /media/:id
 // @access Only owner
 
-router.delete("/:id", authToken, async (req, res, next) => {
-  const id = req.params.id;
-  try {
-    const media = await service.getById(id);
+router.delete(
+  "/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
-    if (!media) return res.sendStatus(NOT_FOUND);
+    try {
+      const media = await service.getById(id);
 
-    if (await requesterIsNotOwner(req, res, media.userId)) return;
+      if (!media) return res.sendStatus(NOT_FOUND);
 
-    await Promise.all([service.delete(id), deleteImages(media)]);
-    res.sendStatus(OK);
-  } catch (error) {
-    next(error);
+      if (await requesterIsNotOwner(req, res, media.userId)) return;
+
+      await Promise.all([service.delete(id), deleteImages(media)]);
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 module.exports = router;
