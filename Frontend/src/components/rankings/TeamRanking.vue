@@ -12,8 +12,8 @@
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>{{ team.teamName }}</td>
-        <td>{{ team.totalPoints }} Punkte</td>
-        <td>{{ team.totalDistance }} km</td>
+        <td>{{ team.totalPoints }} P</td>
+        <td>{{ Math.floor(team.totalDistance) }} km</td>
       </tr>
     </tbody>
   </table>

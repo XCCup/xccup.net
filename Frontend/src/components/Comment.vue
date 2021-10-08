@@ -7,7 +7,7 @@
       height="24"
       width="24"
     />
-    <a href="#">{{ comment.name ? comment.name : "Pilot Name" }}</a>
+    <a href="#">{{ comment.User.name }}</a>
     <span class="ms-auto fw-light text-secondary"
       ><BaseDate :timestamp="comment.createdAt" dateFormat="dd.MM.yyyy"
     /></span>
@@ -15,7 +15,7 @@
   <p>
     {{ comment.message }}
   </p>
-  <div v-if="comment.userID === authUser?.id" class="text-secondary text-end">
+  <div v-if="comment.userID === getterUserId" class="text-secondary text-end">
     <a href="#" @click.prevent="editComment"
       ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a
     >
@@ -45,7 +45,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["authUser"]),
+    ...mapGetters("auth", {
+      getterUserId: "getUserId",
+    }),
   },
   emits: ["delete-comment"],
 };

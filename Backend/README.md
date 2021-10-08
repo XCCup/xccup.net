@@ -2,8 +2,14 @@
 
 ## Project setup
 
+Delete the node_modules folder and package-lock.json
+
 ```
 npm install --arch=x64 --platform=linuxmusl
+
+or on ARM:
+
+npm install --arch=arm64 --platform=linuxmusl
 ```
 
 ### Why to set arch/platform parameters (Sharp dependency)

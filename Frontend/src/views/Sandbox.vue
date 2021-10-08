@@ -23,7 +23,7 @@
     <Inline-alert text="Automatisches zentrieren fehlt noch" />
 
     <FlightDetails :flight="flight" :pilot="pilot" />
-    <FlightDescription :description="report" />
+    <FlightReport :description="report" />
     <Comments
       ref="commentsRef"
       :comments="comments"
@@ -40,7 +40,7 @@
 
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import FlightService from "@/services/FlightService.js";
+import ApiService from "@/services/ApiService.js";
 import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
 import Barogramm from "@/components/Barogramm.vue";
@@ -48,7 +48,7 @@ import trackColors from "@/assets/js/trackColors";
 import InlineAlert from "@/components/InlineAlert";
 import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
-import FlightDescription from "@/components/FlightDescription";
+import FlightReport from "@/components/FlightReport";
 
 export default {
   name: "FlightView",
@@ -59,7 +59,7 @@ export default {
     InlineAlert,
     FlightDetails,
     Comments,
-    FlightDescription,
+    FlightReport,
   },
   async setup(props) {
     const router = useRouter();
@@ -80,7 +80,7 @@ export default {
         // props.flightId
       }
 
-      const response = await FlightService.getFlight(flightId);
+      const response = await ApiService.getFlight(flightId);
       if (!response.data.id) {
         throw "Invalid response";
       }
@@ -118,7 +118,7 @@ export default {
     },
     async addComment(comment) {
       try {
-        const res = await FlightService.addComment({
+        const res = await ApiService.addComment({
           flightID: this.$route.params.flightId,
           userID: comment.userId,
           message: comment.message,
@@ -134,7 +134,7 @@ export default {
     },
     async deleteComment(id) {
       try {
-        const res = await FlightService.deleteComment(id);
+        const res = await ApiService.deleteComment(id);
         if (res.status != 200)
           throw `Error while deleting comment: ${res.status}`;
 

@@ -100,7 +100,8 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "TheNavbar",
   computed: {
-    ...mapGetters(["authUser"]),
+    // TODO: Remove this getter?
+    // ...mapGetters(["authUser"]),
     ...mapGetters("auth", {
       gettersAuthData: "getAuthData",
       getterLoginStatus: "getLoginStatus",

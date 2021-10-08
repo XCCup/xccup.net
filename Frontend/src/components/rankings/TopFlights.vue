@@ -8,16 +8,17 @@
         v-for="(flight, index) in flights.slice(0, 5)"
         v-bind:item="flight"
         v-bind:index="index"
-        v-bind:key="flight._id"
-        @click="routeToFlight(flight.flightId)"
+        v-bind:key="flight.id"
+        @click="routeToFlight(flight.id)"
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>
           <BaseDate :timestamp="flight.dateOfFlight" dateFormat="dd.MM" />
         </td>
+        <td>{{ flight.id }}</td>
         <td>{{ flight.User.name }}</td>
         <td>{{ flight.takeoff.name }}</td>
-        <td>{{ flight.flightDistance }} km</td>
+        <td>{{ Math.floor(flight.flightDistance) }} km</td>
         <td>{{ flight.flightType }}</td>
         <td>{{ flight.flightPoints }} P</td>
       </tr>
