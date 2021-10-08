@@ -16,7 +16,7 @@ const {
 const multer = require("multer");
 const path = require("path");
 
-const IMAGE_STORE = "test/testdatasets/images/sponsors";
+const IMAGE_STORE = "data/images/sponsors";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
