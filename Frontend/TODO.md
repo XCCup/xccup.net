@@ -43,6 +43,7 @@
 - [x] Turnpoint overlay on map
 - [ ] Custom icons for takeoff & landing
 - [ ] Display alitude for pilot and airbuddies
+- [ ] Fix spinner if no airbuddy is existent
 - [ ] Delete flight button
 - [ ] Edit flight view
 - [ ] Mark picture point in map
