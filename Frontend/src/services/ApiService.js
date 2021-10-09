@@ -11,13 +11,9 @@ const apiClient = axios.create({
     "Content-Type": "application/json",
   },
 });
+// Note: jwtInterceptor is used when a route needs authorization
 
 export default {
-  // userLogin(data) {
-  //   return apiClient.post("/users/login", data);
-  // },
-
-  // TODO: Needs implementation
   getFlights() {
     return apiClient.get("flights");
   },
@@ -26,11 +22,9 @@ export default {
   },
   uploadIgc(data) {
     return jwtInterceptor.post(baseURL + "flights/", data);
-    // return apiClient.post("flights/", data);
   },
   uploadFlightDetails(flightId, data) {
     return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
-    // return apiClient.put("flights/" + flightId, data);
   },
   uploadImages(data) {
     return jwtInterceptor.post(baseURL + "media/", data);
