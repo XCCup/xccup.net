@@ -80,16 +80,19 @@
     </div>
     <!-- Details -->
     <button
-      class="btn btn-primary btn-sm dropdown-toggle"
+      class="btn btn-primary btn-sm me-2 dropdown-toggle"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#collapseExample"
     >
       Details anzeigen
     </button>
-    <button type="button" class="btn btn-sm btn-outline-primary">
-      <i class="bi bi-cloud-download"></i> .igc
-    </button>
+    <a v-bind:href="flight.igcUrl"
+      ><button type="button" class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-cloud-download"></i> .igc
+      </button></a
+    >
+
     <div class="collapse" id="collapseExample">
       <div class="row">
         <div class="col-md-6 col-12">
