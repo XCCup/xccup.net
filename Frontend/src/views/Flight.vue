@@ -15,7 +15,7 @@
     <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
     <Barogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
-      v-if="flight.airbuddies"
+      v-if="flight.airbuddies.length > 0"
       :flight="flight"
       @updateAirbuddies="updateAirbuddies"
     />
