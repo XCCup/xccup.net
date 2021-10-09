@@ -47,6 +47,9 @@ export default {
   deleteComment(commentId) {
     return jwtInterceptor.delete(baseURL + "comments/" + commentId);
   },
+  editComment(comment) {
+    return jwtInterceptor.put(baseURL + "comments/" + comment.id, comment);
+  },
   getCommentsOfFlight(flightId) {
     return apiClient.get("comments/flight/" + flightId);
   },

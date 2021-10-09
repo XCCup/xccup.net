@@ -29,6 +29,7 @@
       :comments="flight.comments"
       @submit-comment="addComment"
       @delete-comment="deleteComment"
+      @comment-edited="editComment"
     />
   </div>
 </template>
@@ -130,6 +131,16 @@ export default {
         const res = await ApiService.deleteComment(id);
         if (res.status != 200) throw res.statusText;
         this.updateComments();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async editComment(comment) {
+      try {
+        const res = await ApiService.editComment(comment);
+        if (res.status != 200) throw res.statusText;
+        await this.updateComments();
+        this.$refs.Comments.$refs.Comment.closeMessageEditor();
       } catch (error) {
         console.log(error);
       }

@@ -12,10 +12,28 @@
       ><BaseDate :timestamp="comment.createdAt" dateFormat="dd.MM.yyyy"
     /></span>
   </div>
-  <p>
+  <p v-if="!showMessageEditor">
     {{ comment.message }}
   </p>
-  <div v-if="comment.userId === getterUserId" class="text-secondary text-end">
+  <!-- TODO: Maybe combine this editor with the one for new comments because parts of the logic are identical  -->
+  <div v-if="showMessageEditor">
+    <textarea
+      class="form-control mb-2"
+      id="comment-editor"
+      v-model="editedMessage"
+    ></textarea>
+    <button class="btn btn-primary me-2" @click.prevent="saveEditedMessage">
+      Speichern
+    </button>
+    <button class="btn btn-outline-danger" @click.prevent="closeMessageEditor">
+      Abbrechen
+    </button>
+  </div>
+
+  <div
+    v-if="comment.userId === getUserId && !showMessageEditor"
+    class="text-secondary text-end"
+  >
     <a href="#" @click.prevent="editComment"
       ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a
     >
@@ -30,6 +48,12 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Comment",
+  data() {
+    return {
+      showMessageEditor: false,
+      editedMessage: this.comment.message,
+    };
+  },
   props: {
     comment: {
       type: Object,
@@ -41,14 +65,25 @@ export default {
       this.$emit("delete-comment", this.comment.id);
     },
     editComment() {
-      console.log("edit clicked");
+      this.showMessageEditor = true;
+    },
+    saveEditedMessage() {
+      const comment = {
+        message: this.editedMessage,
+        userId: this.getUserId,
+        id: this.comment.id,
+      };
+      this.$emit("comment-edited", comment);
+    },
+
+    closeMessageEditor() {
+      this.showMessageEditor = false;
+      this.editedMessage = this.comment.message;
     },
   },
   computed: {
-    ...mapGetters("auth", {
-      getterUserId: "getUserId",
-    }),
+    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
   },
-  emits: ["delete-comment"],
+  emits: ["delete-comment", "comment-edited"],
 };
 </script>

@@ -2,7 +2,12 @@
   <div class="container">
     <h3>Kommentare</h3>
     <div class="shadow p-3 mb-3" v-for="comment in comments" :key="comment.id">
-      <Comment :comment="comment" @delete-comment="showCommentDeleteModal" />
+      <Comment
+        ref="Comment"
+        :comment="comment"
+        @delete-comment="showCommentDeleteModal"
+        @comment-edited="onCommentEdited"
+      />
     </div>
     <CommentEditor ref="commentEditor" @submit-comment="onSubmit" />
   </div>
@@ -67,6 +72,9 @@ export default {
     onSubmit(comment) {
       this.$emit("submit-comment", comment);
     },
+    onCommentEdited(comment) {
+      this.$emit("comment-edited", comment);
+    },
     showCommentDeleteModal(id) {
       this.commentIdToDelete = id;
       this.deleteCommentModal.show();
@@ -78,7 +86,7 @@ export default {
       this.$refs.commentEditor.clearCommentEditorInput();
     },
   },
-  emits: ["delete-comment", "submit-comment"],
+  emits: ["delete-comment", "submit-comment", "comment-edited"],
 };
 </script>
 

@@ -48,13 +48,13 @@ export default {
     return { email: "", password: "" };
   },
   computed: {
-    ...mapGetters("auth", {
+    ...mapGetters({
       getterLoginStatus: "getLoginStatus",
     }),
   },
 
   methods: {
-    ...mapActions("auth", {
+    ...mapActions({
       actionLogin: "login",
     }),
     async handleSubmit() {

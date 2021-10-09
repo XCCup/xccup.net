@@ -21,6 +21,9 @@
           Senden
         </button>
       </form>
+      <!-- TODO: Remove for production -->
+      Debug information: Login status: {{ getLoginStatus }} Token active?
+      {{ isTokenActive }}
     </div>
   </div>
 </template>
@@ -36,9 +39,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", {
-      getterUserId: "getUserId",
-    }),
+    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
+
     sendButtonIsDisabled() {
       return this.message.length < 5;
     },
@@ -50,7 +52,7 @@ export default {
     onSubmit() {
       const comment = {
         message: this.message,
-        userId: this.getterUserId,
+        userId: this.getUserId,
       };
       this.$emit("submit-comment", comment);
     },
