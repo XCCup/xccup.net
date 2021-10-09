@@ -49,14 +49,14 @@
 - [ ] Mark picture point in map
 - [x] Add comment
 - [x] Delete comment
-- [ ] Edit comment
+- [x] Edit comment
 - [x] Delete comment modal (Are you sure?)
 - [x] Connect to API
 
 ### Flights
 
 - [ ] Sort functionality
-- [ ] Connect to API
+- [x] Connect to API
 
 ### Rankings
 
