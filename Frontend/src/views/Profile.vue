@@ -218,10 +218,7 @@ export default {
   components: { AddGliderModal, RemoveGliderModal },
   async setup() {
     const store = useStore();
-    store.dispatch(
-      "user/getUserDetails",
-      store.getters["auth/getAuthData"].userId
-    );
+    store.dispatch("user/getUserDetails", store.getters["getAuthData"].userId);
     const userDetails = computed(() => store.getters["user/getUserDetails"]);
     return {
       userDetails: ref(userDetails),

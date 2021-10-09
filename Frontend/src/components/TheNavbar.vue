@@ -102,7 +102,7 @@ export default {
   computed: {
     // TODO: Remove this getter?
     // ...mapGetters(["authUser"]),
-    ...mapGetters("auth", {
+    ...mapGetters({
       gettersAuthData: "getAuthData",
       getterLoginStatus: "getLoginStatus",
     }),
@@ -111,7 +111,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", {
+    ...mapActions({
       actionLogout: "logout",
     }),
     async handleLogout() {

@@ -93,7 +93,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  if (!store.getters["auth/getAuthData"].token) {
+  if (!store.getters["getAuthData"].token) {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (accessToken) {
@@ -101,15 +101,15 @@ router.beforeEach(async (to, from, next) => {
         accessToken: accessToken,
         refreshToken: refreshToken,
       };
-      store.commit("auth/saveTokenData", data);
+      store.commit("saveTokenData", data);
     }
   }
-  let auth = store.getters["auth/isTokenActive"];
+  let auth = store.getters["isTokenActive"];
 
   if (!auth) {
-    auth = await store.dispatch("auth/refresh");
+    auth = await store.dispatch("refresh");
   } else {
-    store.commit("auth/setLoginStatus", "success");
+    store.commit("setLoginStatus", "success");
   }
 
   if (to.fullPath == "/") {

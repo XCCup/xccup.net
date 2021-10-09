@@ -4,7 +4,7 @@ import store from "../store/index";
 const jwtInterceptor = axios.create({});
 
 jwtInterceptor.interceptors.request.use((config) => {
-  const authData = store.getters["auth/getAuthData"];
+  const authData = store.getters["getAuthData"];
   if (authData == null) {
     return config;
   }
@@ -21,8 +21,8 @@ jwtInterceptor.interceptors.response.use(
     console.log("Interceptor refresh…");
     // TODO: Should the server error code be 403?
     if (error.response.status === 401 || error.response.data === "EXPIRED") {
-      await store.dispatch("auth/refresh");
-      const authData = store.getters["auth/getAuthData"];
+      await store.dispatch("refresh");
+      const authData = store.getters["getAuthData"];
       error.config.headers["Authorization"] = `Bearer ${authData.token}`;
       console.log("…done");
       return axios(error.config);
