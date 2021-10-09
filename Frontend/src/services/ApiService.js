@@ -19,7 +19,7 @@ export default {
 
   // TODO: Needs implementation
   getFlights() {
-    return apiClient.get("tageswertung");
+    return apiClient.get("flights");
   },
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
