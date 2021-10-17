@@ -12,9 +12,10 @@ function arrayRemove(array, elementToRemove) {
 }
 
 async function waitTillDbHasSync() {
+  const RETRY_TIMEOUT = 3000;
   while (process.env.DB_SYNC_IN_PROGRESS == "true") {
     console.log("Will wait till DB syncing has finished");
-    await sleep(3000);
+    await sleep(RETRY_TIMEOUT);
   }
   console.log("DB syncing finished");
 }
