@@ -37,12 +37,35 @@ POST http://localhost:3000/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "name": "UrmelAuasdsDerEifel",
-    "firstName": "Kai",
-    "birthday": "13.13.2013",
-    "glider": "Ozone Alpina 2",
-    "password": "$up€r$€cr€t",
+    "name": "UrmelAusDerEifel",
+    "firstName": "Super",
+    "lastName": "Mario",
+    "birthday": "2011-11-11",
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "state": "SR",
+    "address": "Hauptstr. 1, 66666 Saarbrücken",
+    "password": "$up€R$3cr€t",
     "email": "super@dsecret.com"
+}
+
+###
+PUT http://localhost:3000/users/gliders/cd1583d1-fb7f-4a93-b732-effd59e5c3ae HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsInVzZXJuYW1lIjoiQ2FtaWxsZVNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzQ1MDAzMTksImV4cCI6MTYzNDUwMDUxOX0.q3MXvosaiE2TFx6pnLYbVuCSrBo16u3uBme2uwdXWsU
+content-type: application/json
+
+{
+    "gliders": [
+        {
+            "brand":"U-Turn",
+            "model":"Bodyguard",
+            "gliderClass":"AB_low",
+        },
+        {
+            "brand":"Ozone",
+            "model":"Enzo 4",
+            "gliderClass":"D_high",
+        }
+    ]
 }
 
 # Comments

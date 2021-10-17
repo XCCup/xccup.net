@@ -22,6 +22,18 @@ function checkStringObjectNotEmpty(field) {
     .escape();
 }
 /**
+ * Checks if the field is a "strong" password (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1).
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkStrongPassword(field) {
+  return check(field)
+    .isStrongPassword()
+    .withMessage(
+      `${field} is requiered. (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1)`
+    );
+}
+/**
  * Checks if the field is of a valid date format (e.g. 2021-08-16).
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -38,10 +50,12 @@ function checkIsDateObject(field) {
  * @returns A ValidationChain object for the checked field.
  */
 function checkIsArray(field, length) {
-  return check(field)
-    .isArray()
-    .isLength(length)
-    .withMessage(`${field} must be a valid array of length ${length}`);
+  return length
+    ? check(field)
+        .isArray()
+        .isLength(length)
+        .withMessage(`${field} must be a valid array of length ${length}`)
+    : check(field).isArray().withMessage(`${field} must be a valid array`);
 }
 /**
  * Checks if the field is of a valid uuid format (e.g. 550e8400-e29b-11d4-a716-446655440000).
@@ -158,3 +172,4 @@ exports.checkOptionalUuidObject = checkOptionalUuidObject;
 exports.checkOptionalIsISO8601 = checkOptionalIsISO8601;
 exports.checkOptionalStringObjectNotEmpty = checkOptionalStringObjectNotEmpty;
 exports.checkParamIsUuid = checkParamIsUuid;
+exports.checkStrongPassword = checkStrongPassword;

@@ -75,5 +75,3 @@ gcc olc2002.c -o olc_lnx -lm
 ```
 
 ## Todo
-
-- [ ] Glider im Profil löschen/hinzufügen

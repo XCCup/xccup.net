@@ -66,6 +66,10 @@ const userService = {
     cacheManager.invalidateCaches();
     return User.create(user);
   },
+  update: async (user) => {
+    cacheManager.invalidateCaches();
+    return user.update();
+  },
   validate: async (email, password) => {
     const user = await User.findOne({
       where: { email },

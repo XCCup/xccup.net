@@ -18,7 +18,9 @@ const {
   checkStringObjectNotEmpty,
   checkIsUuidObject,
   checkParamIsUuid,
+  checkStrongPassword,
   validationHasErrors,
+  checkIsArray,
 } = require("./Validation");
 
 // All requests to /users/picture will be rerouted
@@ -172,20 +174,173 @@ router.post(
   checkIsUuidObject("clubId"),
   checkOptionalIsOnlyOfValue("gender", service.GENDERS),
   checkOptionalIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
-  checkOptionalIsOnlyOfValue("role", [service.ROLE.NONE]), //TODO Rollen werden vorerst nur über direkten DB Zugriff vergeben
   checkOptionalIsBoolean("emailInformIfComment"),
   checkOptionalIsBoolean("emailNewsletter"),
   checkOptionalIsBoolean("emailTeamSearch"),
+  checkStringObjectNotEmpty("state"),
+  checkStringObjectNotEmpty("address"),
+  checkStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+
+    const name = req.body.name;
+    const lastName = req.body.lastName;
+    const firstName = req.body.firstName;
+    const birthday = req.body.birthday;
+    const email = req.body.email;
+    const clubId = req.body.clubId;
+    const gender = req.body.gender;
+    const tshirtSize = req.body.tshirtSize;
+    const emailInformIfComment = req.body.emailInformIfComment;
+    const emailNewsletter = req.body.emailNewsletter;
+    const emailTeamSearch = req.body.emailTeamSearch;
+    const state = req.body.state;
+    const address = req.body.address;
+    const password = req.body.password;
+
+    const newUser = {
+      name,
+      lastName,
+      firstName,
+      birthday,
+      email,
+      clubId,
+      gender,
+      tshirtSize,
+      emailInformIfComment,
+      emailNewsletter,
+      emailTeamSearch,
+      state,
+      address,
+      password,
+    };
+
     try {
-      service.save(req.body).then((user) => {
-        res.json(user);
-      });
+      const user = await service.save(newUser);
+      res.json(user);
+    } catch (error) {
+      handleUniqueError(error, res, next);
+    }
+  }
+);
+
+// @desc Edits a user
+// @route PUT /users/:id
+// @access Only owner
+
+router.put(
+  "/:id",
+  authToken,
+  checkParamIsUuid("id"),
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("lastName"),
+  checkStringObjectNotEmpty("firstName"),
+  checkIsDateObject("birthday"),
+  checkIsEmail("email"),
+  checkIsUuidObject("clubId"),
+  checkOptionalIsOnlyOfValue("gender", service.GENDERS),
+  checkOptionalIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
+  checkOptionalIsBoolean("emailInformIfComment"),
+  checkOptionalIsBoolean("emailNewsletter"),
+  checkOptionalIsBoolean("emailTeamSearch"),
+  checkStringObjectNotEmpty("state"),
+  checkStringObjectNotEmpty("address"),
+  checkStrongPassword("password"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const id = req.params.id;
+
+    const name = req.body.name;
+    const lastName = req.body.lastName;
+    const firstName = req.body.firstName;
+    const birthday = req.body.birthday;
+    const email = req.body.email;
+    const clubId = req.body.clubId;
+    const gender = req.body.gender;
+    const tshirtSize = req.body.tshirtSize;
+    const emailInformIfComment = req.body.emailInformIfComment;
+    const emailNewsletter = req.body.emailNewsletter;
+    const emailTeamSearch = req.body.emailTeamSearch;
+    const state = req.body.state;
+    const address = req.body.address;
+    const password = req.body.password;
+
+    try {
+      if (await requesterIsNotOwner(req, res, id)) return;
+
+      const user = await service.getById(id);
+      user.name = name;
+      user.lastName = lastName;
+      user.firstName = firstName;
+      user.birthday = birthday;
+      user.email = email;
+      user.clubId = clubId;
+      user.gender = gender;
+      user.tshirtSize = tshirtSize;
+      user.emailInformIfComment = emailInformIfComment;
+      user.emailNewsletter = emailNewsletter;
+      user.emailTeamSearch = emailTeamSearch;
+      user.state = state;
+      user.address = address;
+      user.password = password;
+
+      const result = await service.update(user);
+      res.json(result);
+    } catch (error) {
+      handleUniqueError(error, res, next);
+    }
+  }
+);
+
+// @desc Edits the gliders of an user. Expects an array of glider objects with the props "brand", "model" and "key" (e.g. AB_low).
+// @route PUT /users/gliders/:id
+// @access Only owner
+
+router.put(
+  "/gliders/:id",
+  authToken,
+  checkIsArray("gliders"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const id = req.params.id;
+    const currentGliders = req.body.gliders;
+
+    console.log("BODY: ", req.body);
+
+    try {
+      const gliders = sanitizeGliders(currentGliders);
+
+      if (await requesterIsNotOwner(req, res, id)) return;
+
+      const user = await service.getById(id);
+      user.gliders = gliders;
+
+      const result = await service.update(user);
+      res.json(result);
     } catch (error) {
       next(error);
     }
   }
 );
+
+function handleUniqueError(error, res, next) {
+  if (error.name.includes("SequelizeUniqueConstraintError"))
+    return res.status(FORBIDDEN).send(error.errors[0].message);
+  next(error);
+}
+
+function sanitizeGliders(gliders) {
+  return gliders.map((glider) => {
+    if (glider.brand && glider.model && glider.gliderClass) {
+      return {
+        brand: glider.brand,
+        model: glider.model,
+        gliderClass: glider.gliderClass,
+      };
+    }
+  });
+}
 
 module.exports = router;

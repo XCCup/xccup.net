@@ -28,9 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       birthday: {
         type: DataTypes.DATEONLY,
       },
-      urlProfilPicture: {
-        type: DataTypes.STRING,
-      },
       role: {
         type: DataTypes.STRING,
         defaultValue: "Keine",
@@ -42,16 +39,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       gliders: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.JSON),
       },
       emailInformIfComment: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       emailNewsletter: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       emailTeamSearch: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       state: {
         type: DataTypes.STRING,
@@ -63,7 +63,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
-        // allowNull defaults to true
+        allowNull: false,
+        unique: true, //Constrain on DB
+        validate: {
+          //Validation will be performed before any sql interaction happens
+          notEmpty: true, //No empty string allowed
+        },
       },
       rankingNumber: {
         type: DataTypes.INTEGER,

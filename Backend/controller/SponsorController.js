@@ -13,6 +13,7 @@ const {
   checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
+const { getCurrentYear } = require("../helper/Utils");
 const multer = require("multer");
 const path = require("path");
 
@@ -118,8 +119,6 @@ router.post(
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("type"),
   checkOptionalStringObjectNotEmpty("website"),
-  checkOptionalStringObjectNotEmpty("logoSmall"),
-  checkOptionalStringObjectNotEmpty("logoLarge"),
   checkOptionalStringObjectNotEmpty("contacts"),
   checkOptionalIsBoolean("isCurrentSponsor"),
   checkOptionalIsBoolean("isGoldSponsor"),
@@ -130,12 +129,10 @@ router.post(
       const name = req.body.name;
       const type = req.body.type;
       const website = req.body.website;
-      const logoSmall = req.body.logoSmall;
-      const logoLarge = req.body.logoLarge;
       const contacts = req.body.contacts;
       const isGoldSponsor = req.body.isGoldSponsor;
       const sponsorInSeasons = req.body.isCurrentSponsor
-        ? [new Date().getFullYear()]
+        ? [getCurrentYear()]
         : [];
 
       if (await requesterIsNotModerator(req, res)) return;
@@ -144,8 +141,6 @@ router.post(
         name,
         type,
         website,
-        logoSmall,
-        logoLarge,
         contacts,
         isGoldSponsor,
         sponsorInSeasons,
@@ -168,8 +163,6 @@ router.put(
   checkOptionalStringObjectNotEmpty("name"),
   checkOptionalStringObjectNotEmpty("type"),
   checkOptionalStringObjectNotEmpty("website"),
-  checkOptionalStringObjectNotEmpty("logoSmall"),
-  checkOptionalStringObjectNotEmpty("logoLarge"),
   checkOptionalStringObjectNotEmpty("contacts"),
   checkOptionalIsBoolean("isCurrentSponsor"),
   checkOptionalIsBoolean("isGoldSponsor"),
@@ -185,11 +178,9 @@ router.put(
       sponsor.name = req.body.name ?? sponsor.name;
       sponsor.type = req.body.type ?? sponsor.type;
       sponsor.website = req.body.website ?? sponsor.website;
-      sponsor.logoSmall = req.body.logoSmall ?? sponsor.logoSmall;
-      sponsor.logoLarge = req.body.logoLarge ?? sponsor.logoLarge;
       sponsor.contacts = req.body.contacts ?? sponsor.contacts;
       const isCurrentSponsor = req.body.isCurrentSponsor;
-      const currentYear = new Date().getFullYear();
+      const currentYear = getCurrentYear();
       if (isCurrentSponsor != undefined) {
         if (
           isCurrentSponsor &&
