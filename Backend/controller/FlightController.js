@@ -8,12 +8,14 @@ const { NOT_FOUND } = require("./Constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { query } = require("express-validator");
 const {
-  checkIsUuidObject,
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
   checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
+
+// All requests to /flights/picture will be rerouted to this controller
+router.use("/picture", require("./FlightPictureController"));
 
 // @desc Retrieves all flights
 // @route GET /flights/
@@ -101,13 +103,12 @@ router.delete(
 router.post(
   "/",
   authToken,
-  checkIsUuidObject("userId"),
   checkStringObjectNotEmpty("igc.name"),
   checkStringObjectNotEmpty("igc.body"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const igc = req.body.igc;
-    const userId = req.body.userId;
+    const userId = req.user.id;
     try {
       if (await requesterIsNotOwner(req, res, userId)) return;
 

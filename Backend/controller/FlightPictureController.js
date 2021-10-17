@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/FlightImageService");
-const { authToken, requesterIsNotOwner } = require("./Auth");
+const pictureService = require("../service/FlightPictureService");
+const path = require("path");
 const { NOT_FOUND, OK } = require("./Constants");
+const { authToken, requesterIsNotOwner } = require("./Auth");
 const { query } = require("express-validator");
 const {
   checkIsUuidObject,
-  validationHasErrors,
-  checkStringObject,
-  checkOptionalIsISO8601,
   checkParamIsUuid,
+  checkOptionalIsISO8601,
+  checkStringObject,
+  validationHasErrors,
 } = require("./Validation");
 const multer = require("multer");
-const path = require("path");
 
 const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
 
@@ -23,8 +23,8 @@ const imageUpload = multer({
   dest: IMAGE_STORE,
 });
 
-// @desc Uploads a media file to the server and stores the meta-data to the db
-// @route POST /media/
+// @desc Uploads a flight picture to the server and stores the meta-data to the db
+// @route POST /flights/picture/
 // @access All logged-in users
 
 router.post(
@@ -32,7 +32,6 @@ router.post(
   authToken,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
-  checkIsUuidObject("userId"),
   checkOptionalIsISO8601("timestamp"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -43,12 +42,13 @@ router.post(
       const size = req.file.size;
       const path = req.file.path;
       const flightId = req.body.flightId;
-      const userId = req.body.userId;
       const timestamp = req.body.timestamp; //TODO Will be done in backend or frontend???
+
+      const userId = req.user.id;
 
       const pathThumb = createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
 
-      const media = await service.create({
+      const media = await pictureService.create({
         originalname,
         mimetype,
         size,
@@ -66,36 +66,8 @@ router.post(
   }
 );
 
-// @desc Edits the description of a media
-// @route PUT /media/:id
-// @access Only owner
-
-router.put(
-  "/:id",
-  authToken,
-  checkParamIsUuid("id"),
-  checkStringObject("description"),
-  async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-    const id = req.params.id;
-
-    try {
-      const media = await service.getById(id);
-
-      if (await requesterIsNotOwner(req, res, media.userId)) return;
-
-      media.description = req.body.description;
-      await service.update(media);
-
-      res.sendStatus(OK);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-// @desc Gets the media file
-// @route GET /media/:id
+// @desc Gets the flight picture
+// @route GET /flights/picture/:id
 
 router.get(
   "/:id",
@@ -107,7 +79,7 @@ router.get(
     const thumb = req.query.thumb;
 
     try {
-      const media = await service.getById(id);
+      const media = await pictureService.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
@@ -122,15 +94,16 @@ router.get(
   }
 );
 
-// @desc Gets the meta-data to a media file
-// @route GET /media/meta/:id
+// @desc Gets the meta-data to a flight picture
+// @route GET /flights/picture/meta/:id
+// TODO Is this endpoint of any interest?
 
 router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
   if (validationHasErrors(req, res)) return;
   const id = req.params.id;
 
   try {
-    const media = await service.getById(id);
+    const media = await pictureService.getById(id);
 
     if (!media) return res.sendStatus(NOT_FOUND);
 
@@ -140,8 +113,8 @@ router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
   }
 });
 
-// @desc Toggles (assigns or removes) the "like" to a media file from the requester
-// @route GET /media/like/:id
+// @desc Toggles (assigns or removes) the "like" to a flight picture from the requester
+// @route GET /picture/like/:id
 // @access All logged-in users
 
 router.get(
@@ -153,12 +126,12 @@ router.get(
     const id = req.params.id;
 
     try {
-      const media = await service.getById(id);
+      const media = await pictureService.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
       const requesterId = req.user.id;
-      await service.toggleLike(media, requesterId);
+      await pictureService.toggleLike(media, requesterId);
 
       return res.sendStatus(OK);
     } catch (error) {
@@ -167,8 +140,36 @@ router.get(
   }
 );
 
-// @desc Deletes a media by id
-// @route DELETE /media/:id
+// @desc Edits the description of a flight picture
+// @route PUT /flights/picture/:id
+// @access Only owner
+
+router.put(
+  "/:id",
+  authToken,
+  checkParamIsUuid("id"),
+  checkStringObject("description"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
+
+    try {
+      const media = await pictureService.getById(id);
+
+      if (await requesterIsNotOwner(req, res, media.userId)) return;
+
+      media.description = req.body.description;
+      await pictureService.update(media);
+
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Deletes a flight image by id
+// @route DELETE /picture/:id
 // @access Only owner
 
 router.delete(
@@ -180,13 +181,13 @@ router.delete(
     const id = req.params.id;
 
     try {
-      const media = await service.getById(id);
+      const media = await pictureService.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
       if (await requesterIsNotOwner(req, res, media.userId)) return;
 
-      await Promise.all([service.delete(id), deleteImages(media)]);
+      await Promise.all([pictureService.delete(id), deleteImages(media)]);
       res.sendStatus(OK);
     } catch (error) {
       next(error);
