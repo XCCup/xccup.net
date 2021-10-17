@@ -14,7 +14,7 @@ const {
   validationHasErrors,
 } = require("./Validation");
 
-// All requests to /flights/picture will be rerouted to this controller
+// All requests to /flights/picture will be rerouted
 router.use("/picture", require("./FlightPictureController"));
 
 // @desc Retrieves all flights

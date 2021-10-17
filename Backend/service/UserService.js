@@ -1,4 +1,5 @@
 const User = require("../config/postgres")["User"];
+const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const cacheManager = require("./CacheManager");
 
 const userService = {
@@ -14,15 +15,31 @@ const userService = {
     return await User.findAll({ attributes: ["name"] });
   },
   getById: async (id) => {
-    return await User.findByPk(id, { attributes: { exclude: ["password"] } });
+    return await User.findByPk(id, {
+      attributes: {
+        exclude: ["password"],
+      },
+      include: [
+        {
+          model: ProfilePicture,
+          attributes: ["id", "path", "pathThumb"],
+        },
+      ],
+    });
   },
   getName: async (id) => {
     return await User.findByPk(id, { attributes: ["name"] });
   },
-  getByName: async (userName) => {
+  getByName: async (name) => {
     return await User.findOne({
-      where: { name: userName },
+      where: { name },
       attributes: ["name", "firstName", "lastName", "gender", "state"],
+      include: [
+        {
+          model: ProfilePicture,
+          attributes: ["id"],
+        },
+      ],
     });
   },
   count: async () => {

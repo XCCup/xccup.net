@@ -40,7 +40,7 @@ router.get("/", authToken, async (req, res, next) => {
 });
 
 // @desc Gets the logo of an sponsor
-// @route GET /media/logo/:id
+// @route GET /sponsors/logo/:id
 
 router.get(
   "/logo/:id",

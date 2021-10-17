@@ -21,6 +21,9 @@ const {
   validationHasErrors,
 } = require("./Validation");
 
+// All requests to /users/picture will be rerouted
+router.use("/picture", require("./UserPictureController"));
+
 // @desc Retrieves all usernames
 // @route GET /users/
 
