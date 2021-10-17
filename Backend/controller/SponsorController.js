@@ -19,15 +19,10 @@ const path = require("path");
 const IMAGE_STORE = "data/images/sponsors";
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, IMAGE_STORE);
-  },
-  filename: function (req, file, cb) {
-    const prefix = Date.now();
-    cb(null, prefix + "-" + file.originalname);
-  },
+  destination: defineFileDestination(IMAGE_STORE),
+  filename: defineImageFileNameWithCurrentDateAsPrefix(),
 });
-const imageUpload = multer({ storage: storage });
+const imageUpload = multer({ storage });
 
 // @desc Gets all sponsors
 // @route GET /sponsors/
@@ -251,5 +246,22 @@ router.delete(
     }
   }
 );
+
+function defineFileDestination(destination) {
+  return function (req, file, cb) {
+    const fs = require("fs"); //
+    if (!fs.existsSync(destination)) {
+      fs.mkdirSync(destination, true);
+    }
+    cb(null, destination);
+  };
+}
+
+function defineImageFileNameWithCurrentDateAsPrefix() {
+  return function (req, file, cb) {
+    const prefix = Date.now();
+    cb(null, prefix + "-" + file.originalname);
+  };
+}
 
 module.exports = router;

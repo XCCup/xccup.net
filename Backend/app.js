@@ -44,7 +44,6 @@ app.use("/airspaces", require("./controller/AirspaceController"));
 app.use("/results", require("./controller/ResultController"));
 app.use("/home", require("./controller/HomeController"));
 app.use("/news", require("./controller/NewsController"));
-app.use("/media", require("./controller/MediaController"));
 app.use("/sponsors", require("./controller/SponsorController"));
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
