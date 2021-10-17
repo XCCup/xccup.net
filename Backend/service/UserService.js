@@ -54,7 +54,7 @@ const userService = {
       where: { email },
     });
     if (!user) {
-      console.log(`No user of name ${user.name} found for ${email}`);
+      console.log(`No user found for ${email}`);
       return null;
     }
     if (user.validPassword(password)) {
