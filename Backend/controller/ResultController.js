@@ -19,6 +19,7 @@ router.get(
     query("site").optional().not().isEmpty().trim().escape(),
     query("region").optional().not().isEmpty().trim().escape(),
     query("state").optional().not().isEmpty().trim().escape(),
+    query("club").optional().not().isEmpty().trim().escape(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -31,6 +32,7 @@ router.get(
     const site = req.query.site;
     const region = req.query.region;
     const state = req.query.state;
+    const club = req.query.club;
 
     try {
       const result = await service.getOverall(
@@ -42,7 +44,8 @@ router.get(
         limit,
         site,
         region,
-        state
+        state,
+        club
       );
       res.json(result);
     } catch (error) {

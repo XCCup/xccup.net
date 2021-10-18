@@ -28,7 +28,8 @@ const service = {
     limit,
     site,
     region,
-    state
+    state,
+    club
   ) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
@@ -46,7 +47,7 @@ const service = {
     if (state) {
       where.homeStateOfUser = state;
     }
-    const resultQuery = await queryDb(where, gender, null, site, region);
+    const resultQuery = await queryDb(where, gender, null, site, region, club);
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, FLIGHTS_PER_USER);
@@ -184,13 +185,18 @@ async function findSiteRecordOfType(type) {
   });
 }
 
-async function queryDb(where, gender, limit, site, region) {
+async function queryDb(where, gender, limit, site, region, club) {
   const userInclude = createIncludeStatementUser(gender);
   const siteInclude = createIncludeStatementSite(site, region);
   const clubInclude = {
     model: Club,
-    attributes: ["name", "id"],
+    attributes: ["name", "shortName", "id"],
   };
+  if (club) {
+    clubInclude.where = {
+      shortName: club,
+    };
+  }
   const teamInclude = {
     model: Team,
     attributes: ["name", "id"],
