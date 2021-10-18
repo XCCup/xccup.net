@@ -219,7 +219,7 @@ router.post(
       const user = await service.save(newUser);
       res.json(user);
     } catch (error) {
-      handleUniqueError(error, res, next);
+      next(error);
     }
   }
 );
@@ -288,7 +288,7 @@ router.put(
       const result = await service.update(user);
       res.json(result);
     } catch (error) {
-      handleUniqueError(error, res, next);
+      next(error);
     }
   }
 );
@@ -322,12 +322,6 @@ router.put(
     }
   }
 );
-
-function handleUniqueError(error, res, next) {
-  if (error.name.includes("SequelizeUniqueConstraintError"))
-    return res.status(FORBIDDEN).send(error.errors[0].message);
-  next(error);
-}
 
 function sanitizeGliders(gliders) {
   return gliders.map((glider) => {

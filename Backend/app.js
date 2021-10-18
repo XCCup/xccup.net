@@ -8,8 +8,7 @@ const app = express();
 require("./config/postgres.js");
 
 //Init authentication tokens
-const { initAuth } = require("./controller/Auth");
-initAuth();
+require("./controller/Auth").initAuth();
 
 //Development Tools
 if (process.env.NODE_ENV === "development") {
@@ -49,14 +48,14 @@ app.use("/sponsors", require("./controller/SponsorController"));
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 // eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res
-    .status(500)
-    .send(
-      "There was an internal error! Please forward this message to an administrator. Time: " +
-        new Date()
-    );
+  const {
+    handleSequelizeUniqueError,
+    handleGeneralError,
+  } = require("./helper/ErrorHandler");
+
+  handleSequelizeUniqueError(err, res, handleGeneralError);
 });
+
 // Handle calls to non exisiting routes
 app.use("*", (req, res) => {
   res.status(404).json({
