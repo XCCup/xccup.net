@@ -30,6 +30,7 @@ router.get(
     query("limit").optional().isInt(),
     query("startDate").optional().isDate(), //e.g. 2002-07-15
     query("endDate").optional().isDate(),
+    query("pilot").optional().not().isEmpty().trim().escape(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -40,6 +41,7 @@ router.get(
     const limit = req.query.limit;
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
+    const pilot = req.query.pilot;
 
     try {
       const flights = await service.getAll(
@@ -50,7 +52,8 @@ router.get(
         limit,
         null,
         startDate,
-        endDate
+        endDate,
+        pilot
       );
       res.json(flights);
     } catch (error) {

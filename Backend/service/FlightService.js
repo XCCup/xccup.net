@@ -38,7 +38,8 @@ const flightService = {
     limit,
     sortByPoints,
     startDate,
-    endDate
+    endDate,
+    pilot
   ) => {
     let fillCache = false;
     if (
@@ -50,6 +51,7 @@ const flightService = {
         sortByPoints,
         startDate,
         endDate,
+        pilot,
       ])
     ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
@@ -62,13 +64,7 @@ const flightService = {
       : ["dateOfFlight", "DESC"];
 
     const queryObject = {
-      include: [
-        {
-          model: User,
-          attributes: ["name"],
-        },
-        createSiteInclude(site),
-      ],
+      include: [createUserInclude(pilot), createSiteInclude(site)],
       where: await createWhereStatement(
         year,
         type,
@@ -262,7 +258,7 @@ const flightService = {
     flight.flightTurnpoints = result.turnpoints;
 
     if (flight.glider) {
-      // If true, the calculation took so long that the glider was already submitted by the user. 
+      // If true, the calculation took so long that the glider was already submitted by the user.
       // Therefore calculation of points and status can and will be started here.
       const result = await calcFlightPointsAndStatus(
         flight,
@@ -531,13 +527,11 @@ async function createWhereStatement(
       [sequelize.Op.between]: [startDate, endDate],
     };
   }
-
   if (rankingClass) {
     const gliderClasses =
       (await getCurrentActive()).rankingClasses[rankingClass].gliderClasses ??
       [];
 
-    console.log("GL_C: ", gliderClasses);
     whereStatement.glider = {
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
@@ -557,6 +551,19 @@ function createSiteInclude(site) {
     };
   }
   return siteInclude;
+}
+
+function createUserInclude(pilot) {
+  const userInclude = {
+    model: User,
+    attributes: ["name"],
+  };
+  if (pilot) {
+    userInclude.where = {
+      name: pilot,
+    };
+  }
+  return userInclude;
 }
 
 /**

@@ -300,14 +300,12 @@ router.put(
 router.put(
   "/gliders/:id",
   authToken,
-  checkIsArray("gliders"),
+  checkIsArray("gliders"), //TODO Create schema validation for gliders
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     const id = req.params.id;
     const currentGliders = req.body.gliders;
-
-    console.log("BODY: ", req.body);
 
     try {
       const gliders = sanitizeGliders(currentGliders);

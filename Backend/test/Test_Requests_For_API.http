@@ -37,7 +37,7 @@ POST http://localhost:3000/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "name": "UrmelAusDerEifel",
+    "name": "UrmelAuasdsDerEifel5",
     "firstName": "Super",
     "lastName": "Mario",
     "birthday": "2011-11-11",
@@ -50,7 +50,7 @@ content-type: application/json
 
 ###
 PUT http://localhost:3000/users/gliders/cd1583d1-fb7f-4a93-b732-effd59e5c3ae HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsInVzZXJuYW1lIjoiQ2FtaWxsZVNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzQ1MDAzMTksImV4cCI6MTYzNDUwMDUxOX0.q3MXvosaiE2TFx6pnLYbVuCSrBo16u3uBme2uwdXWsU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsInVzZXJuYW1lIjoiQ2FtaWxsZVNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzQ1MDA0NDksImV4cCI6MTYzNDUwMDY0OX0.UFnBDXqutN7c41Jm0W-JPui3Wdj0g_ZNmHMY5zFEPvs
 content-type: application/json
 
 {
@@ -58,12 +58,12 @@ content-type: application/json
         {
             "brand":"U-Turn",
             "model":"Bodyguard",
-            "gliderClass":"AB_low",
+            "gliderClass":"AB_low"
         },
         {
             "brand":"Ozone",
             "model":"Enzo 4",
-            "gliderClass":"D_high",
+            "gliderClass":"D_high"
         }
     ]
 }

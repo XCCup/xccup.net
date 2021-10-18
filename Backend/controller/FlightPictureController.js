@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pictureService = require("../service/FlightPictureService");
+const service = require("../service/FlightPictureService");
 const path = require("path");
 const { NOT_FOUND, OK } = require("./Constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
@@ -48,7 +48,7 @@ router.post(
 
       const pathThumb = createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
 
-      const media = await pictureService.create({
+      const media = await service.create({
         originalname,
         mimetype,
         size,
@@ -79,7 +79,7 @@ router.get(
     const thumb = req.query.thumb;
 
     try {
-      const media = await pictureService.getById(id);
+      const media = await service.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
@@ -103,7 +103,7 @@ router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
   const id = req.params.id;
 
   try {
-    const media = await pictureService.getById(id);
+    const media = await service.getById(id);
 
     if (!media) return res.sendStatus(NOT_FOUND);
 
@@ -126,12 +126,12 @@ router.get(
     const id = req.params.id;
 
     try {
-      const media = await pictureService.getById(id);
+      const media = await service.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
       const requesterId = req.user.id;
-      await pictureService.toggleLike(media, requesterId);
+      await service.toggleLike(media, requesterId);
 
       return res.sendStatus(OK);
     } catch (error) {
@@ -154,12 +154,12 @@ router.put(
     const id = req.params.id;
 
     try {
-      const media = await pictureService.getById(id);
+      const media = await service.getById(id);
 
       if (await requesterIsNotOwner(req, res, media.userId)) return;
 
       media.description = req.body.description;
-      await pictureService.update(media);
+      await service.update(media);
 
       res.sendStatus(OK);
     } catch (error) {
@@ -181,13 +181,13 @@ router.delete(
     const id = req.params.id;
 
     try {
-      const media = await pictureService.getById(id);
+      const media = await service.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
       if (await requesterIsNotOwner(req, res, media.userId)) return;
 
-      await Promise.all([pictureService.delete(id), deleteImages(media)]);
+      await Promise.all([service.delete(id), deleteImages(media)]);
       res.sendStatus(OK);
     } catch (error) {
       next(error);
