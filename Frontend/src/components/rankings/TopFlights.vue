@@ -15,8 +15,7 @@
         <td>
           <BaseDate :timestamp="flight.dateOfFlight" dateFormat="dd.MM" />
         </td>
-        <td>{{ flight.id }}</td>
-        <td>{{ flight.User.name }}</td>
+        <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
         <td>{{ flight.takeoff.name }}</td>
         <td>{{ Math.floor(flight.flightDistance) }} km</td>
         <td>{{ flight.flightType }}</td>

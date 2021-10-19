@@ -11,7 +11,7 @@
         <tbody>
           <tr v-for="(pilot, index) in ranking.values.slice(0, 3)" :key="index">
             <td>{{ index + 1 }}</td>
-            <td>{{ pilot.userName }}</td>
+            <td>{{ pilot.userFirstName + " " + pilot.userLastName }}</td>
             <td>
               <p class="fw-lighter">{{ pilot.totalPoints }} P</p>
             </td>
