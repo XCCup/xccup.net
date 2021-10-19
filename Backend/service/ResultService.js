@@ -158,7 +158,7 @@ async function findSiteRecordOfType(type) {
       },
       {
         model: User,
-        attributes: ["name", "id"],
+        attributes: ["firstName", "lastName", "id"],
       },
     ],
     where: {
@@ -173,7 +173,8 @@ async function findSiteRecordOfType(type) {
     ],
     group: [
       "User.id",
-      "User.name",
+      "User.firstName",
+      "User.lastName",
       "Flight.id",
       "Flight.flightPoints",
       "Flight.flightDistance",
@@ -245,7 +246,7 @@ function createDefaultWhereForFlight(seasonDetail, isSenior) {
 function createIncludeStatementUser(gender) {
   const userInclude = {
     model: User,
-    attributes: ["name", "id", "gender", "birthday"],
+    attributes: ["firstName", "lastName", "id", "gender", "birthday"],
   };
   if (gender) {
     userInclude.where.gender = gender
@@ -296,7 +297,8 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
     const found = result.find((e) => e.clubId == entry.clubId);
     const memberEntry = {
       id: entry.userId,
-      name: entry.userName,
+      firstName: entry.userFirstName,
+      lastName: entry.userLastName,
       flights: entry.flights,
       totalDistance: entry.totalDistance,
       totalPoints: entry.totalPoints,
@@ -344,8 +346,9 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
   resultOverUser.forEach((entry) => {
     const found = result.find((e) => e.teamId == entry.teamId);
     const memberEntry = {
-      id: entry.userName,
-      name: entry.userId,
+      id: entry.userId,
+      firstName: entry.userFirstName,
+      lastName: entry.userLastName,
       flights: entry.flights,
       totalDistance: entry.totalDistance,
       totalPoints: entry.totalPoints,
@@ -371,7 +374,7 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
 function aggreateFlightsOverUser(resultQuery) {
   const result = [];
   resultQuery.forEach((entry) => {
-    const found = result.find((e) => e.userName == entry.User.name);
+    const found = result.find((e) => e.userId == entry.User.id);
     const flightEntry = {
       id: entry.id,
       flightPoints: entry.flightPoints,
@@ -388,7 +391,8 @@ function aggreateFlightsOverUser(resultQuery) {
       found.flights.push(flightEntry);
     } else {
       result.push({
-        userName: entry.User.name,
+        userFirstName: entry.User.firstName,
+        userLastName: entry.User.lastName,
         userId: entry.User.id,
         gender: entry.User.gender,
         clubName: entry.Club.name, //A user must always belong to a club

@@ -10,15 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true, //Constrain on DB
-        validate: {
-          //Validation will be performed before any sql interaction happens
-          notEmpty: true, //No empty string allowed
-        },
-      },
       firstName: {
         type: DataTypes.STRING,
       },
