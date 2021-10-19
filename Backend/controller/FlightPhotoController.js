@@ -1,18 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/FlightImageService");
-const { authToken, requesterIsNotOwner } = require("./Auth");
+const service = require("../service/FlightPhotoService");
+const path = require("path");
 const { NOT_FOUND, OK } = require("./Constants");
+const { authToken, requesterIsNotOwner } = require("./Auth");
 const { query } = require("express-validator");
 const {
   checkIsUuidObject,
-  validationHasErrors,
-  checkStringObject,
-  checkOptionalIsISO8601,
   checkParamIsUuid,
+  checkOptionalIsISO8601,
+  checkStringObject,
+  validationHasErrors,
 } = require("./Validation");
 const multer = require("multer");
-const path = require("path");
 
 const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
 
@@ -23,8 +23,8 @@ const imageUpload = multer({
   dest: IMAGE_STORE,
 });
 
-// @desc Uploads a media file to the server and stores the meta-data to the db
-// @route POST /media/
+// @desc Uploads a flight photo to the server and stores the meta-data to the db
+// @route POST /flights/photos/
 // @access All logged-in users
 
 router.post(
@@ -32,7 +32,6 @@ router.post(
   authToken,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
-  checkIsUuidObject("userId"),
   checkOptionalIsISO8601("timestamp"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -43,8 +42,9 @@ router.post(
       const size = req.file.size;
       const path = req.file.path;
       const flightId = req.body.flightId;
-      const userId = req.body.userId;
       const timestamp = req.body.timestamp; //TODO Will be done in backend or frontend???
+
+      const userId = req.user.id;
 
       const pathThumb = createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
 
@@ -66,36 +66,8 @@ router.post(
   }
 );
 
-// @desc Edits the description of a media
-// @route PUT /media/:id
-// @access Only owner
-
-router.put(
-  "/:id",
-  authToken,
-  checkParamIsUuid("id"),
-  checkStringObject("description"),
-  async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-    const id = req.params.id;
-
-    try {
-      const media = await service.getById(id);
-
-      if (await requesterIsNotOwner(req, res, media.userId)) return;
-
-      media.description = req.body.description;
-      await service.update(media);
-
-      res.sendStatus(OK);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-// @desc Gets the media file
-// @route GET /media/:id
+// @desc Gets the flight photo
+// @route GET /flights/photos/:id
 
 router.get(
   "/:id",
@@ -122,8 +94,9 @@ router.get(
   }
 );
 
-// @desc Gets the meta-data to a media file
-// @route GET /media/meta/:id
+// @desc Gets the meta-data to a flight photo
+// @route GET /flights/photos/meta/:id
+// TODO Is this endpoint of any interest?
 
 router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
   if (validationHasErrors(req, res)) return;
@@ -140,8 +113,8 @@ router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
   }
 });
 
-// @desc Toggles (assigns or removes) the "like" to a media file from the requester
-// @route GET /media/like/:id
+// @desc Toggles (assigns or removes) the "like" to a flight photo from the requester
+// @route GET /photos/like/:id
 // @access All logged-in users
 
 router.get(
@@ -167,8 +140,36 @@ router.get(
   }
 );
 
-// @desc Deletes a media by id
-// @route DELETE /media/:id
+// @desc Edits the description of a flight photo
+// @route PUT /flights/photos/:id
+// @access Only owner
+
+router.put(
+  "/:id",
+  authToken,
+  checkParamIsUuid("id"),
+  checkStringObject("description"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
+
+    try {
+      const media = await service.getById(id);
+
+      if (await requesterIsNotOwner(req, res, media.userId)) return;
+
+      media.description = req.body.description;
+      await service.update(media);
+
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Deletes a flight image by id
+// @route DELETE /photos/:id
 // @access Only owner
 
 router.delete(

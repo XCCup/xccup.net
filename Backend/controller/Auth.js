@@ -54,7 +54,12 @@ const auth = (req, res, next) => {
  */
 const create = (user) => {
   const token = jwt.sign(
-    { id: user.id, username: user.name, role: user.role },
+    {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    },
     process.env.JWT_LOGIN_TOKEN,
     {
       expiresIn: "200s",
@@ -65,7 +70,12 @@ const create = (user) => {
 
 const createRefresh = (user) => {
   const token = jwt.sign(
-    { id: user.id, username: user.name, role: user.role },
+    {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    },
     process.env.JWT_REFRESH_TOKEN
   );
   Token.create({ token });
@@ -93,7 +103,7 @@ const refresh = async (token) => {
         console.log("Verify err: ", error);
         return;
       }
-      return create(user.id, user.username);
+      return create(user);
     }
   );
 };

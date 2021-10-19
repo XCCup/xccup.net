@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const FlightImage = sequelize.define("FlightImage", {
+  const FlightPhoto = sequelize.define("FlightPhoto", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -39,20 +39,20 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  FlightImage.associate = (models) => {
-    FlightImage.belongsTo(models.User, {
+  FlightPhoto.associate = (models) => {
+    FlightPhoto.belongsTo(models.User, {
       foreignKey: {
         name: "userId",
       },
     });
   };
-  FlightImage.associate = (models) => {
-    FlightImage.belongsTo(models.Flight, {
+  FlightPhoto.associate = (models) => {
+    FlightPhoto.belongsTo(models.Flight, {
       foreignKey: {
         name: "flightId",
       },
     });
   };
 
-  return FlightImage;
+  return FlightPhoto;
 };

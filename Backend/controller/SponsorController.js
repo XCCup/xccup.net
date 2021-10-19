@@ -13,21 +13,17 @@ const {
   checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
+const { getCurrentYear } = require("../helper/Utils");
 const multer = require("multer");
 const path = require("path");
 
 const IMAGE_STORE = "data/images/sponsors";
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, IMAGE_STORE);
-  },
-  filename: function (req, file, cb) {
-    const prefix = Date.now();
-    cb(null, prefix + "-" + file.originalname);
-  },
+  destination: defineFileDestination(IMAGE_STORE),
+  filename: defineImageFileNameWithCurrentDateAsPrefix(),
 });
-const imageUpload = multer({ storage: storage });
+const imageUpload = multer({ storage });
 
 // @desc Gets all sponsors
 // @route GET /sponsors/
@@ -45,7 +41,7 @@ router.get("/", authToken, async (req, res, next) => {
 });
 
 // @desc Gets the logo of an sponsor
-// @route GET /media/logo/:id
+// @route GET /sponsors/logo/:id
 
 router.get(
   "/logo/:id",
@@ -123,8 +119,6 @@ router.post(
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("type"),
   checkOptionalStringObjectNotEmpty("website"),
-  checkOptionalStringObjectNotEmpty("logoSmall"),
-  checkOptionalStringObjectNotEmpty("logoLarge"),
   checkOptionalStringObjectNotEmpty("contacts"),
   checkOptionalIsBoolean("isCurrentSponsor"),
   checkOptionalIsBoolean("isGoldSponsor"),
@@ -135,12 +129,10 @@ router.post(
       const name = req.body.name;
       const type = req.body.type;
       const website = req.body.website;
-      const logoSmall = req.body.logoSmall;
-      const logoLarge = req.body.logoLarge;
       const contacts = req.body.contacts;
       const isGoldSponsor = req.body.isGoldSponsor;
       const sponsorInSeasons = req.body.isCurrentSponsor
-        ? [new Date().getFullYear()]
+        ? [getCurrentYear()]
         : [];
 
       if (await requesterIsNotModerator(req, res)) return;
@@ -149,8 +141,6 @@ router.post(
         name,
         type,
         website,
-        logoSmall,
-        logoLarge,
         contacts,
         isGoldSponsor,
         sponsorInSeasons,
@@ -173,8 +163,6 @@ router.put(
   checkOptionalStringObjectNotEmpty("name"),
   checkOptionalStringObjectNotEmpty("type"),
   checkOptionalStringObjectNotEmpty("website"),
-  checkOptionalStringObjectNotEmpty("logoSmall"),
-  checkOptionalStringObjectNotEmpty("logoLarge"),
   checkOptionalStringObjectNotEmpty("contacts"),
   checkOptionalIsBoolean("isCurrentSponsor"),
   checkOptionalIsBoolean("isGoldSponsor"),
@@ -190,11 +178,9 @@ router.put(
       sponsor.name = req.body.name ?? sponsor.name;
       sponsor.type = req.body.type ?? sponsor.type;
       sponsor.website = req.body.website ?? sponsor.website;
-      sponsor.logoSmall = req.body.logoSmall ?? sponsor.logoSmall;
-      sponsor.logoLarge = req.body.logoLarge ?? sponsor.logoLarge;
       sponsor.contacts = req.body.contacts ?? sponsor.contacts;
       const isCurrentSponsor = req.body.isCurrentSponsor;
-      const currentYear = new Date().getFullYear();
+      const currentYear = getCurrentYear();
       if (isCurrentSponsor != undefined) {
         if (
           isCurrentSponsor &&
@@ -251,5 +237,22 @@ router.delete(
     }
   }
 );
+
+function defineFileDestination(destination) {
+  return function (req, file, cb) {
+    const fs = require("fs"); //
+    if (!fs.existsSync(destination)) {
+      fs.mkdirSync(destination, true);
+    }
+    cb(null, destination);
+  };
+}
+
+function defineImageFileNameWithCurrentDateAsPrefix() {
+  return function (req, file, cb) {
+    const prefix = Date.now();
+    cb(null, prefix + "-" + file.originalname);
+  };
+}
 
 module.exports = router;

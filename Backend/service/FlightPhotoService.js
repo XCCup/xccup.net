@@ -1,12 +1,12 @@
-const FlightImage = require("../config/postgres")["FlightImage"];
+const FlightPhoto = require("../config/postgres")["FlightPhoto"];
 
 const service = {
   getById: (id) => {
-    return FlightImage.findByPk(id);
+    return FlightPhoto.findByPk(id);
   },
 
   create: async (media) => {
-    return FlightImage.create(media);
+    return FlightPhoto.create(media);
   },
 
   update: async (media) => {
@@ -24,7 +24,7 @@ const service = {
   },
 
   delete: async (id) => {
-    const numberOfDestroyedRows = await FlightImage.destroy({
+    const numberOfDestroyedRows = await FlightPhoto.destroy({
       where: { id },
     });
     return numberOfDestroyedRows;

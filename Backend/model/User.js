@@ -10,15 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true, //Constrain on DB
-        validate: {
-          //Validation will be performed before any sql interaction happens
-          notEmpty: true, //No empty string allowed
-        },
-      },
       firstName: {
         type: DataTypes.STRING,
       },
@@ -27,9 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       birthday: {
         type: DataTypes.DATEONLY,
-      },
-      urlProfilPicture: {
-        type: DataTypes.STRING,
       },
       role: {
         type: DataTypes.STRING,
@@ -42,16 +30,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       gliders: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.ARRAY(DataTypes.JSON),
       },
       emailInformIfComment: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       emailNewsletter: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       emailTeamSearch: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       state: {
         type: DataTypes.STRING,
@@ -63,7 +54,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
-        // allowNull defaults to true
+        allowNull: false,
+        unique: true, //Constrain on DB
+        validate: {
+          //Validation will be performed before any sql interaction happens
+          notEmpty: true, //No empty string allowed
+        },
       },
       rankingNumber: {
         type: DataTypes.INTEGER,
@@ -118,7 +114,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE",
       hooks: true,
     });
-    User.hasOne(models.ProfilPicture, {
+    User.hasOne(models.ProfilePicture, {
       foreignKey: {
         name: "userId",
         //Through this constrain it's realized that every comment, will be delete if the user will be deleted
@@ -127,7 +123,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE",
       hooks: true,
     });
-    User.hasMany(models.FlightImage, {
+    User.hasMany(models.FlightPhoto, {
       foreignKey: {
         name: "userId",
         //Through this constrain it's realized that every comment, will be delete if the user will be deleted

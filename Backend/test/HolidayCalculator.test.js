@@ -5,6 +5,7 @@ const {
   isPentecost,
   isHoliday,
   isAscension,
+  isNoWorkday,
 } = require("../helper/HolidayCalculator");
 
 /**
@@ -99,4 +100,20 @@ test("Check correct date of first of may 2680 (isHoliday()-Function)", () => {
 
 test("Check date is no holiday)", () => {
   expect(isHoliday(new Date("2111-11-11 11:11:11+00"))).toBe(false);
+});
+
+test("Check incomplete date is false)", () => {
+  expect(isNoWorkday("2021-11")).toBe(false);
+});
+
+test("Check invalid date is false)", () => {
+  expect(isNoWorkday("2021-13-13")).toBe(false);
+});
+
+test("Check empty date is false)", () => {
+  expect(isNoWorkday("")).toBe(false);
+});
+
+test("Check no date is false)", () => {
+  expect(isNoWorkday()).toBe(false);
 });

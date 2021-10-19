@@ -1,4 +1,6 @@
 const User = require("../config/postgres")["User"];
+const Club = require("../config/postgres")["Club"];
+const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const cacheManager = require("./CacheManager");
 
 const userService = {
@@ -14,15 +16,35 @@ const userService = {
     return await User.findAll({ attributes: ["name"] });
   },
   getById: async (id) => {
-    return await User.findByPk(id, { attributes: { exclude: ["password"] } });
+    return await User.findByPk(id, {
+      attributes: {
+        exclude: ["password"],
+      },
+      include: [
+        {
+          model: ProfilePicture,
+          attributes: ["id", "path", "pathThumb"],
+        },
+        {
+          model: Club,
+          attributes: ["name"],
+        },
+      ],
+    });
   },
   getName: async (id) => {
     return await User.findByPk(id, { attributes: ["name"] });
   },
-  getByName: async (userName) => {
+  getByName: async (name) => {
     return await User.findOne({
-      where: { name: userName },
+      where: { name },
       attributes: ["name", "firstName", "lastName", "gender", "state"],
+      include: [
+        {
+          model: ProfilePicture,
+          attributes: ["id"],
+        },
+      ],
     });
   },
   count: async () => {
@@ -49,12 +71,16 @@ const userService = {
     cacheManager.invalidateCaches();
     return User.create(user);
   },
+  update: async (user) => {
+    cacheManager.invalidateCaches();
+    return user.update();
+  },
   validate: async (email, password) => {
     const user = await User.findOne({
       where: { email },
     });
     if (!user) {
-      console.log(`No user of name ${user.name} found for ${email}`);
+      console.log(`No user found for ${email}`);
       return null;
     }
     if (user.validPassword(password)) {
