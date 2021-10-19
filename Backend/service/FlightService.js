@@ -38,7 +38,8 @@ const flightService = {
     limit,
     sortByPoints,
     startDate,
-    endDate
+    endDate,
+    userId
   ) => {
     let fillCache = false;
     if (
@@ -50,6 +51,7 @@ const flightService = {
         sortByPoints,
         startDate,
         endDate,
+        userId,
       ])
     ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
@@ -62,19 +64,14 @@ const flightService = {
       : ["dateOfFlight", "DESC"];
 
     const queryObject = {
-      include: [
-        {
-          model: User,
-          attributes: ["name"],
-        },
-        createSiteInclude(site),
-      ],
+      include: [createUserInclude(), createSiteInclude(site)],
       where: await createWhereStatement(
         year,
         type,
         rankingClass,
         startDate,
-        endDate
+        endDate,
+        userId
       ),
       order: [orderStatement],
     };
@@ -107,7 +104,7 @@ const flightService = {
       include: [
         {
           model: User,
-          attributes: ["name"],
+          attributes: ["firstName", "lastName"],
         },
         {
           model: FlightFixes,
@@ -164,13 +161,13 @@ const flightService = {
           include: [
             {
               model: User,
-              attributes: ["name"],
+              attributes: ["firstName", "lastName"],
             },
           ],
         },
         {
           model: User,
-          attributes: ["name"],
+          attributes: ["firstName", "lastName"],
         },
         {
           model: FlyingSite,
@@ -472,7 +469,7 @@ async function findAirbuddies(flight) {
     },
     include: {
       model: User,
-      attributes: ["name"],
+      attributes: ["firstName", "lastName"],
     },
   });
 }
@@ -511,14 +508,18 @@ async function createWhereStatement(
   flightType,
   rankingClass,
   startDate,
-  endDate
+  endDate,
+  userId
 ) {
   let whereStatement;
-  if (flightType || year || rankingClass || startDate || endDate) {
+  if (flightType || year || rankingClass || startDate || endDate || userId) {
     whereStatement = {};
   }
   if (flightType) {
     whereStatement.flightType = flightType;
+  }
+  if (userId) {
+    whereStatement.userId = userId;
   }
   if (year) {
     whereStatement.andOp = sequelize.where(
@@ -531,13 +532,11 @@ async function createWhereStatement(
       [sequelize.Op.between]: [startDate, endDate],
     };
   }
-
   if (rankingClass) {
     const gliderClasses =
       (await getCurrentActive()).rankingClasses[rankingClass].gliderClasses ??
       [];
 
-    console.log("GL_C: ", gliderClasses);
     whereStatement.glider = {
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
@@ -557,6 +556,14 @@ function createSiteInclude(site) {
     };
   }
   return siteInclude;
+}
+
+function createUserInclude() {
+  const userInclude = {
+    model: User,
+    attributes: ["firstName", "lastName"],
+  };
+  return userInclude;
 }
 
 /**

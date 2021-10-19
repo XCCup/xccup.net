@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const ProfilPicture = sequelize.define("ProfilPicture", {
+  const ProfilePicture = sequelize.define("ProfilePicture", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     path: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    pathThumb: {
+      type: DataTypes.STRING,
     },
     originalname: {
       type: DataTypes.STRING,
@@ -22,13 +25,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  ProfilPicture.associate = (models) => {
-    ProfilPicture.belongsTo(models.User, {
+  ProfilePicture.associate = (models) => {
+    ProfilePicture.belongsTo(models.User, {
       foreignKey: {
         name: "userId",
       },
     });
   };
 
-  return ProfilPicture;
+  return ProfilePicture;
 };

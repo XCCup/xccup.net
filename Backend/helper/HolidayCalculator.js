@@ -35,6 +35,7 @@ function isFirstOfMay(currentDate) {
 }
 
 function isHoliday(currentDate) {
+  console.debug("Check for holiday");
   return (
     isFirstOfMay(currentDate) ||
     isEaster(currentDate) ||

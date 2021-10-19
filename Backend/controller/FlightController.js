@@ -8,12 +8,14 @@ const { NOT_FOUND } = require("./Constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { query } = require("express-validator");
 const {
-  checkIsUuidObject,
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
   checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
+
+// All requests to /flights/picture will be rerouted
+router.use("/pictures", require("./FlightPhotoController"));
 
 // @desc Retrieves all flights
 // @route GET /flights/
@@ -28,6 +30,7 @@ router.get(
     query("limit").optional().isInt(),
     query("startDate").optional().isDate(), //e.g. 2002-07-15
     query("endDate").optional().isDate(),
+    query("userId").optional().not().isEmpty().trim().escape(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -38,6 +41,7 @@ router.get(
     const limit = req.query.limit;
     const startDate = req.query.startDate;
     const endDate = req.query.endDate;
+    const userId = req.query.userId;
 
     try {
       const flights = await service.getAll(
@@ -48,7 +52,8 @@ router.get(
         limit,
         null,
         startDate,
-        endDate
+        endDate,
+        userId
       );
       res.json(flights);
     } catch (error) {
@@ -101,13 +106,12 @@ router.delete(
 router.post(
   "/",
   authToken,
-  checkIsUuidObject("userId"),
   checkStringObjectNotEmpty("igc.name"),
   checkStringObjectNotEmpty("igc.body"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const igc = req.body.igc;
-    const userId = req.body.userId;
+    const userId = req.user.id;
     try {
       if (await requesterIsNotOwner(req, res, userId)) return;
 
