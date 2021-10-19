@@ -58,18 +58,23 @@ export default {
       actionLogin: "login",
     }),
     async handleSubmit() {
-      this.actionLogin({
-        email: this.email,
-        password: this.password,
-      });
-      // TODO: If we do want to redirect: Do it here or in router config?
-      // if (response === 200) {
-      //   this.$router.push({
-      //     name: "Profile",
-      //   });
-      // } else {
-      //   console.log(this.getterLoginStatus);
-      // }
+      try {
+        this.actionLogin({
+          email: this.email,
+          password: this.password,
+        });
+        // TODO: If we do want to redirect: Do it here or in router config?
+        // if (response === 200) {
+        //   this.$router.push({
+        //     name: "Profile",
+        //   });
+        // } else {
+        //   console.log(this.getterLoginStatus);
+        // }
+      } catch (error) {
+        // TODO: Display error message
+        console.log(error);
+      }
     },
   },
 };
