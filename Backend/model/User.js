@@ -132,7 +132,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE",
       hooks: true,
     });
-    User.hasMany(models.FlightPicture, {
+    User.hasMany(models.FlightPhoto, {
       foreignKey: {
         name: "userId",
         //Through this constrain it's realized that every comment, will be delete if the user will be deleted

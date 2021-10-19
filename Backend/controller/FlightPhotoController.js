@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../service/FlightPictureService");
+const service = require("../service/FlightPhotoService");
 const path = require("path");
 const { NOT_FOUND, OK } = require("./Constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
@@ -23,8 +23,8 @@ const imageUpload = multer({
   dest: IMAGE_STORE,
 });
 
-// @desc Uploads a flight picture to the server and stores the meta-data to the db
-// @route POST /flights/picture/
+// @desc Uploads a flight photo to the server and stores the meta-data to the db
+// @route POST /flights/photos/
 // @access All logged-in users
 
 router.post(
@@ -66,8 +66,8 @@ router.post(
   }
 );
 
-// @desc Gets the flight picture
-// @route GET /flights/picture/:id
+// @desc Gets the flight photo
+// @route GET /flights/photos/:id
 
 router.get(
   "/:id",
@@ -94,8 +94,8 @@ router.get(
   }
 );
 
-// @desc Gets the meta-data to a flight picture
-// @route GET /flights/picture/meta/:id
+// @desc Gets the meta-data to a flight photo
+// @route GET /flights/photos/meta/:id
 // TODO Is this endpoint of any interest?
 
 router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
@@ -113,8 +113,8 @@ router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
   }
 });
 
-// @desc Toggles (assigns or removes) the "like" to a flight picture from the requester
-// @route GET /picture/like/:id
+// @desc Toggles (assigns or removes) the "like" to a flight photo from the requester
+// @route GET /photos/like/:id
 // @access All logged-in users
 
 router.get(
@@ -140,8 +140,8 @@ router.get(
   }
 );
 
-// @desc Edits the description of a flight picture
-// @route PUT /flights/picture/:id
+// @desc Edits the description of a flight photo
+// @route PUT /flights/photos/:id
 // @access Only owner
 
 router.put(
@@ -169,7 +169,7 @@ router.put(
 );
 
 // @desc Deletes a flight image by id
-// @route DELETE /picture/:id
+// @route DELETE /photos/:id
 // @access Only owner
 
 router.delete(
