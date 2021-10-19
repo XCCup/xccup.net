@@ -95,21 +95,29 @@ router.post("/logout", async (req, res, next) => {
   }
 });
 
-// @desc Retrieve public user data by username
-// @route GET /users/name/:username
+// @desc Retrieve public user data
+// @route GET /users/public/:id
 // @access All logged-in user
 
-router.get("/name/:username", authToken, async (req, res, next) => {
-  try {
-    const user = await service.getByName(req.params.username);
+router.get(
+  "/public/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
 
-    if (!user) return res.sendStatus(NOT_FOUND);
+    try {
+      const user = await service.getByIdPublic(id);
 
-    res.json(user);
-  } catch (error) {
-    next(error);
+      if (!user) return res.sendStatus(NOT_FOUND);
+
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Retrieve user by id
 // @route GET /users/:id
