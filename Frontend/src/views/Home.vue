@@ -7,7 +7,7 @@
     :bestClubs="bestClubs"
     :bestTeams="bestTeams"
   />
-  <Sponsors />
+  <Sponsors :sponsors="sponsors" />
 </template>
 
 <script>
@@ -37,6 +37,7 @@ export default {
         bestClubs: ref(initialData.bestClubs),
         bestTeams: ref(initialData.bestTeams),
         seasonStats: ref(initialData.seasonStats),
+        sponsors: ref(initialData.sponsors),
       };
     } catch (error) {
       console.log(error);
