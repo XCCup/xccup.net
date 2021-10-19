@@ -1,4 +1,5 @@
 const User = require("../config/postgres")["User"];
+const Club = require("../config/postgres")["Club"];
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const cacheManager = require("./CacheManager");
 
@@ -23,6 +24,10 @@ const userService = {
         {
           model: ProfilePicture,
           attributes: ["id", "path", "pathThumb"],
+        },
+        {
+          model: Club,
+          attributes: ["name"],
         },
       ],
     });
