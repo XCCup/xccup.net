@@ -21,9 +21,6 @@
           Senden
         </button>
       </form>
-      <!-- TODO: Remove for production -->
-      Debug information: Login status: {{ getLoginStatus }} Token active?
-      {{ isTokenActive }}
     </div>
   </div>
 </template>
