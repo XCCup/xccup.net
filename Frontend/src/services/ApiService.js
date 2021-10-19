@@ -47,4 +47,7 @@ export default {
   getCommentsOfFlight(flightId) {
     return apiClient.get("comments/flight/" + flightId);
   },
+  getUserDetails(userId) {
+    return jwtInterceptor.get(baseURL + "users/" + userId);
+  },
 };

@@ -9,7 +9,9 @@ const state = () => ({
     refreshToken: "",
     tokenExp: "",
     userId: "",
-    username: "",
+    firstName: "",
+    lastName: "",
+    role: "",
   },
   loginStatus: "",
 });
@@ -87,16 +89,16 @@ const mutations = {
   saveTokenData(state, data) {
     localStorage.setItem("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
-
     const jwtDecodedValue = jwtDecrypt(data.accessToken);
     const newTokenData = {
       token: data.accessToken,
       refreshToken: data.refreshToken,
       tokenExp: jwtDecodedValue.exp,
       userId: jwtDecodedValue.id,
-      username: jwtDecodedValue.username,
+      firstName: jwtDecodedValue.firstName,
+      lastName: jwtDecodedValue.lastName,
+      role: jwtDecodedValue.role,
     };
-
     state.authData = newTokenData;
   },
   setLoginStatus(state, value) {
@@ -111,7 +113,9 @@ const mutations = {
       refreshToken: "",
       tokenExp: "",
       userId: "",
-      username: "",
+      firstName: "",
+      lastName: "",
+      role: "",
     };
   },
 };
