@@ -35,9 +35,9 @@ const userService = {
   getName: async (id) => {
     return await User.findByPk(id, { attributes: ["name"] });
   },
-  getByName: async (name) => {
+  getByIdPublic: async (id) => {
     return await User.findOne({
-      where: { name },
+      where: { id },
       attributes: ["name", "firstName", "lastName", "gender", "state"],
       include: [
         {
