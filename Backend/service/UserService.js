@@ -1,5 +1,6 @@
 const User = require("../config/postgres")["User"];
 const Club = require("../config/postgres")["Club"];
+const flightService = require("../service/FlightService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const cacheManager = require("./CacheManager");
 
@@ -13,7 +14,7 @@ const userService = {
   SHIRT_SIZES: ["XS", "S", "M", "L", "XL"],
   GENDERS: ["M", "W", "D"],
   getAll: async () => {
-    return await User.findAll({ attributes: ["name"] });
+    return await User.findAll({ attributes: ["id", "firstName", "lastName"] });
   },
   getById: async (id) => {
     return await User.findByPk(id, {
@@ -36,9 +37,9 @@ const userService = {
     return await User.findByPk(id, { attributes: ["name"] });
   },
   getByIdPublic: async (id) => {
-    return await User.findOne({
+    const user = User.findOne({
       where: { id },
-      attributes: ["name", "firstName", "lastName", "gender", "state"],
+      attributes: ["id", "firstName", "lastName", "gender", "state"],
       include: [
         {
           model: ProfilePicture,
@@ -46,6 +47,18 @@ const userService = {
         },
       ],
     });
+    const bestFreeFlight = findFlightRecordOfType(id, "FREE");
+    const bestFlatFlight = findFlightRecordOfType(id, "FLAT");
+    const bestFaiFlight = findFlightRecordOfType(id, "FAI");
+    const results = await Promise.all([
+      user,
+      bestFreeFlight,
+      bestFlatFlight,
+      bestFaiFlight,
+    ]);
+    const userJson = results[0].toJSON();
+    userJson.records = [results[1], results[2], results[3]];
+    return userJson;
   },
   count: async () => {
     return User.count();
@@ -91,5 +104,19 @@ const userService = {
     return null;
   },
 };
+
+async function findFlightRecordOfType(id, type) {
+  return await flightService.getAll(
+    null,
+    null,
+    type,
+    null,
+    1,
+    true,
+    null,
+    null,
+    id
+  );
+}
 
 module.exports = userService;
