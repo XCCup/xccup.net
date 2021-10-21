@@ -1,8 +1,8 @@
 [
   {
    	"id": "4ba3f8dd-5dc0-4d67-8d70-9f56d82f72cd",
-   	"path": "test/images/flights/e395cd43832fc72961034a1d2850c626",
-   	"pathThumb": "test/images/flights/e395cd43832fc72961034a1d2850c626-thumb",
+   	"path": "test/testdatasets/images//flights/e395cd43832fc72961034a1d2850c626",
+   	"pathThumb": "test/testdatasets/images//flights/e395cd43832fc72961034a1d2850c626-thumb",
    	"originalname": "68886_1.jpg",
    	"description": null,
    	"timestamp": null,
@@ -17,8 +17,8 @@
   },
   {
    	"id": "6fa0b8bf-81b9-47be-af60-20a1e200f005",
-   	"path": "test/images/flights/627f3b6dad297b849507c719fab5995c",
-   	"pathThumb": "test/images/flights/627f3b6dad297b849507c719fab5995c-thumb",
+   	"path": "test/testdatasets/images//flights/627f3b6dad297b849507c719fab5995c",
+   	"pathThumb": "test/testdatasets/images//flights/627f3b6dad297b849507c719fab5995c-thumb",
    	"originalname": "68886_2.jpg",
    	"description": null,
    	"timestamp": null,
@@ -33,8 +33,8 @@
   },
   {
    	"id": "bf75f311-4615-4bf7-b260-84bcaea59770",
-   	"path": "test/images/flights/6802d3d44eff8ce1dbf8b867aa973e09",
-   	"pathThumb": "test/images/flights/6802d3d44eff8ce1dbf8b867aa973e09-thumb",
+   	"path": "test/testdatasets/images//flights/6802d3d44eff8ce1dbf8b867aa973e09",
+   	"pathThumb": "test/testdatasets/images//flights/6802d3d44eff8ce1dbf8b867aa973e09-thumb",
    	"originalname": "68886_3.jpg",
    	"description": null,
    	"timestamp": null,
@@ -49,8 +49,8 @@
   },
   {
    	"id": "5dfa8f5c-0a01-4e60-959e-ed59d5f1b59b",
-   	"path": "test/images/flights/d467310a34a9f88dd4b7bae115600d34",
-   	"pathThumb": "test/images/flights/d467310a34a9f88dd4b7bae115600d34-thumb",
+   	"path": "test/testdatasets/images//flights/d467310a34a9f88dd4b7bae115600d34",
+   	"pathThumb": "test/testdatasets/images//flights/d467310a34a9f88dd4b7bae115600d34-thumb",
    	"originalname": "68886_4.jpg",
    	"description": null,
    	"timestamp": null,
