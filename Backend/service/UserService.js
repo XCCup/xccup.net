@@ -39,7 +39,7 @@ const userService = {
   getByIdPublic: async (id) => {
     const user = User.findOne({
       where: { id },
-      attributes: ["id", "firstName", "lastName", "gender", "state"],
+      attributes: ["id", "firstName", "lastName", "gender", "state", "gliders"],
       include: [
         {
           model: ProfilePicture,
