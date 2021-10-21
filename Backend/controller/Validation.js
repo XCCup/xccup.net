@@ -34,6 +34,19 @@ function checkStrongPassword(field) {
     );
 }
 /**
+ * Checks if the field, if present, is a "strong" password (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1).
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkOptionalStrongPassword(field) {
+  return check(field)
+    .optional()
+    .isStrongPassword()
+    .withMessage(
+      `${field} is requiered. (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1)`
+    );
+}
+/**
  * Checks if the field is of a valid date format (e.g. 2021-08-16).
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -127,6 +140,17 @@ function checkOptionalIsOnlyOfValue(field, arrayOfValidValues) {
     .withMessage(`Value in ${field} must fit one of ${arrayOfValidValues}`);
 }
 /**
+ * Checks if the field value matches one value of the provided valid values.
+ * @param {*} field The field in the Request-Body to check.
+ * @param {*} arrayOfValidValues A array of valid values to check against.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkIsOnlyOfValue(field, arrayOfValidValues) {
+  return check(field)
+    .isIn(arrayOfValidValues)
+    .withMessage(`Value in ${field} must fit one of ${arrayOfValidValues}`);
+}
+/**
  * Checks, when the field is present, if the field is a valid boolean (true or false).
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -136,6 +160,14 @@ function checkOptionalIsBoolean(field) {
     .optional()
     .isBoolean()
     .withMessage(`${field} must be a boolean`);
+}
+/**
+ * Checks, if the field is a valid boolean (true or false).
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkIsBoolean(field) {
+  return check(field).isBoolean().withMessage(`${field} must be a boolean`);
 }
 /**
  * Checks, when the field is present, if the field is a valid ISO8601 timestamp.
@@ -179,15 +211,23 @@ exports.checkIsDateObject = checkIsDateObject;
 exports.checkIsEmail = checkIsEmail;
 exports.checkIsArray = checkIsArray;
 exports.checkIsInt = checkIsInt;
-exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
-exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
-exports.checkStringObjectNotEmpty = checkStringObjectNotEmpty;
-exports.checkStringObject = checkStringObject;
-exports.validationHasErrors = validationHasErrors;
 exports.checkIsUuidObject = checkIsUuidObject;
 exports.checkOptionalUuidObject = checkOptionalUuidObject;
+exports.checkIsBoolean = checkIsBoolean;
+exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
+exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
+
+exports.checkIsOnlyOfValue = checkIsOnlyOfValue;
 exports.checkOptionalIsISO8601 = checkOptionalIsISO8601;
+
+exports.checkStringObjectNotEmpty = checkStringObjectNotEmpty;
+exports.checkStringObject = checkStringObject;
 exports.checkOptionalStringObjectNotEmpty = checkOptionalStringObjectNotEmpty;
+
+exports.checkStrongPassword = checkStrongPassword;
+exports.checkOptionalStrongPassword = checkOptionalStrongPassword;
+
 exports.checkParamIsUuid = checkParamIsUuid;
 exports.checkParamIsInt = checkParamIsInt;
-exports.checkStrongPassword = checkStrongPassword;
+
+exports.validationHasErrors = validationHasErrors;

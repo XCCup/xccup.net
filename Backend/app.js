@@ -50,10 +50,14 @@ app.use("/sponsors", require("./controller/SponsorController"));
 app.use(function (err, req, res, next) {
   const {
     handleSequelizeUniqueError,
+    handleXccupRestrictionError,
     handleGeneralError,
   } = require("./helper/ErrorHandler");
 
-  handleSequelizeUniqueError(err, res, handleGeneralError);
+  if (handleSequelizeUniqueError(err, res)) return;
+  if (handleXccupRestrictionError(err, res)) return;
+
+  handleGeneralError(err, res);
 });
 
 // Handle calls to non exisiting routes
