@@ -146,9 +146,9 @@ const flightService = {
     });
   },
 
-  getByIdForDisplay: async (id) => {
+  getByExternalId: async (externalId) => {
     const flightDbObject = await Flight.findOne({
-      where: { id },
+      where: { externalId },
       include: [
         {
           model: FlightFixes,

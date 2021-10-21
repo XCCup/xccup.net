@@ -10,7 +10,7 @@ const { query } = require("express-validator");
 const {
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
-  checkParamIsUuid,
+  checkParamIsInt,
   validationHasErrors,
 } = require("./Validation");
 
@@ -65,11 +65,13 @@ router.get(
 // @desc Retrieve a flight by id
 // @route GET /flights/:id
 
-router.get("/:id", checkParamIsUuid("id"), async (req, res, next) => {
+router.get("/:id", checkParamIsInt("id"), async (req, res, next) => {
   if (validationHasErrors(req, res)) return;
 
+  const flight = await service.getByExternalId(req.params.id);
+  if (!flight) return res.sendStatus(NOT_FOUND);
+
   try {
-    const flight = req.flight;
     res.json(flight);
   } catch (error) {
     next(error);
@@ -82,11 +84,14 @@ router.get("/:id", checkParamIsUuid("id"), async (req, res, next) => {
 
 router.delete(
   "/:id",
-  checkParamIsUuid("id"),
+  checkParamIsInt("id"),
   authToken,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const flightId = req.params.id;
+
+    const flight = await service.getByExternalId(flightId);
+    if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
       if (await requesterIsNotOwner(req, res, req.flight.userId)) return;
@@ -156,7 +161,7 @@ router.post(
 router.put(
   "/:id",
   authToken,
-  checkParamIsUuid("id"),
+  checkParamIsInt("id"),
   checkOptionalStringObjectNotEmpty("report"),
   checkOptionalStringObjectNotEmpty("status"),
   checkStringObjectNotEmpty("glider.brand"),
@@ -164,7 +169,10 @@ router.put(
   checkStringObjectNotEmpty("glider.gliderClass"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const flight = req.flight;
+
+    const flight = await service.getByExternalId(req.params.id);
+    if (!flight) return res.sendStatus(NOT_FOUND);
+
     const report = req.body.report;
     const status = req.body.status;
     const glider = req.body.glider;
@@ -187,18 +195,6 @@ router.put(
     }
   }
 );
-
-// Handle not found db entry
-router.param("id", async (req, res, next, id) => {
-  try {
-    const flight = await service.getByIdForDisplay(id);
-    if (!flight) return res.sendStatus(NOT_FOUND);
-    req.flight = flight;
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
 
 //TODO Move to helper class "FileWriter"
 async function persistIgcFile(flightId, igcFile) {

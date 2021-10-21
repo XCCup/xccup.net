@@ -68,6 +68,14 @@ function checkIsUuidObject(field) {
     .withMessage(`${field} must be a valid uuid format`);
 }
 /**
+ * Checks if the field is of a valid integer.
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkIsInt(field) {
+  return check(field).isInt().withMessage(`${field} must be a valid integer`);
+}
+/**
  * Checks, when the field is present, if the field is of a valid uuid format (e.g. 550e8400-e29b-11d4-a716-446655440000).
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -87,6 +95,14 @@ function checkParamIsUuid(name) {
   return param(name)
     .isUUID()
     .withMessage(`${name} must be a valid uuid format`);
+}
+/**
+ * Checks if the parameter is of a valid integer.
+ * @param {*} name The name of the Request-Parameter to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkParamIsInt(name) {
+  return param(name).isInt().withMessage(`${name} must be a valid integer`);
 }
 /**
  * Checks if the field is of a valid email format (e.g. best@mail.com).
@@ -162,6 +178,7 @@ function validationHasErrors(req, res) {
 exports.checkIsDateObject = checkIsDateObject;
 exports.checkIsEmail = checkIsEmail;
 exports.checkIsArray = checkIsArray;
+exports.checkIsInt = checkIsInt;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
 exports.checkStringObjectNotEmpty = checkStringObjectNotEmpty;
@@ -172,4 +189,5 @@ exports.checkOptionalUuidObject = checkOptionalUuidObject;
 exports.checkOptionalIsISO8601 = checkOptionalIsISO8601;
 exports.checkOptionalStringObjectNotEmpty = checkOptionalStringObjectNotEmpty;
 exports.checkParamIsUuid = checkParamIsUuid;
+exports.checkParamIsInt = checkParamIsInt;
 exports.checkStrongPassword = checkStrongPassword;
