@@ -23,7 +23,7 @@
     <Inline-alert text="Automatisches zentrieren fehlt noch" />
 
     <FlightDetails :flight="flight" :pilot="pilot" />
-    <FlightReport :report="flight.report" :images="flight.MediaFlights" />
+    <FlightReport :report="flight.report" :photos="flight.FlightPhotos" />
     <Comments
       ref="Comments"
       :comments="flight.comments"

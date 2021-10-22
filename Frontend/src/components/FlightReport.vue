@@ -6,23 +6,22 @@
         {{ report }}
       </p>
     </div>
-    <div v-if="images" class="row mb-4">
-      <div class="col-4" v-for="(image, index) in images" :key="index">
+    <div v-if="photos" class="row mb-4">
+      <div class="col-4" v-for="(photo, index) in photos" :key="index">
         <figure class="figure">
           <a
-            :href="baseURL + `media/` + image.id"
+            :href="baseURL + `media/` + photo.id"
             data-lightbox="images"
-            :data-title="
-              image.description ? image.description : image.originalname
-            "
-            ><img
-              :src="baseURL + `media/` + image.id"
+            :data-title="photo.description ? photo.description : ``"
+          >
+            <img
+              :src="baseURL + `media/` + photo.id + `?thumb=true`"
               class="figure-img img-fluid img-thumbnail"
               alt=""
           /></a>
 
           <figcaption class="figure-caption text-center">
-            {{ image.description ? image.description : image.originalname }}
+            {{ photo.description ? photo.description : "" }}
           </figcaption>
         </figure>
       </div>
@@ -41,9 +40,9 @@ export default {
   props: {
     report: {
       type: String,
-      required: true,
+      required: false,
     },
-    images: {
+    photos: {
       type: Array,
       required: false,
     },
