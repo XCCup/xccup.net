@@ -21,9 +21,6 @@
       :flight="flight"
       @updateAirbuddies="updateAirbuddies"
     />
-    <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
-    <Inline-alert text="Automatisches zentrieren fehlt noch" />
-
     <FlightDetails :flight="flight" />
     <FlightReport :report="flight.report" :photos="flight.FlightPhotos" />
     <Comments
@@ -48,7 +45,6 @@ import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
 import Barogramm from "@/components/Barogramm.vue";
 import trackColors from "@/assets/js/trackColors";
-import InlineAlert from "@/components/InlineAlert";
 import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
 import FlightReport from "@/components/FlightReport";
@@ -59,7 +55,6 @@ export default {
     MapV2,
     Airbuddies,
     Barogramm,
-    InlineAlert,
     FlightDetails,
     Comments,
     FlightReport,
