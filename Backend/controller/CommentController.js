@@ -6,6 +6,7 @@ const { authToken, requesterIsNotOwner } = require("./Auth");
 const {
   checkStringObjectNotEmpty,
   checkIsUuidObject,
+  checkOptionalUuidObject,
   validationHasErrors,
   checkParamIsUuid,
 } = require("./Validation");
@@ -41,17 +42,21 @@ router.post(
   "/",
   authToken,
   checkStringObjectNotEmpty("message"),
-  checkIsUuidObject("userId"),
   checkIsUuidObject("flightId"),
+  checkOptionalUuidObject("relatedTo"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     try {
-      const comment = req.body;
+      const { message, flightId, relatedTo } = req.body;
+      const userId = req.user.id;
 
-      if (await requesterIsNotOwner(req, res, comment.userId)) return;
-
-      const result = await service.create(comment);
+      const result = await service.create({
+        message,
+        flightId,
+        userId,
+        relatedTo,
+      });
       res.json(result);
     } catch (error) {
       next(error);
