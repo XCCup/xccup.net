@@ -22,7 +22,7 @@
     <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
     <Inline-alert text="Automatisches zentrieren fehlt noch" />
 
-    <FlightDetails :flight="flight" :pilot="pilot" />
+    <FlightDetails :flight="flight" />
     <FlightReport :report="flight.report" :photos="flight.FlightPhotos" />
     <Comments
       ref="Comments"
@@ -95,14 +95,10 @@ export default {
       flight,
     };
   },
-  props: {
-    flightId: { type: String },
-  },
   data() {
     return {
       buddyTracks: null,
       baroDataUpdated: 0,
-      pilot: { club: "Good Club", team: "Die sympathischen Speeditöre" },
     };
   },
   methods: {
@@ -112,7 +108,7 @@ export default {
     async addComment(comment) {
       try {
         const res = await ApiService.addComment({
-          flightId: this.flightId,
+          flightId: this.flight.id,
           ...comment,
         });
 
@@ -146,7 +142,7 @@ export default {
       }
     },
     async updateComments() {
-      const res = await ApiService.getCommentsOfFlight(this.flightId);
+      const res = await ApiService.getCommentsOfFlight(this.flight.id);
 
       if (res.status != 200) throw res.statusText;
       this.flight.comments = [...res.data];
