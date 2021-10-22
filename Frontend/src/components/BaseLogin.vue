@@ -1,23 +1,21 @@
 <template>
   <form class="px-4 py-3" @submit.prevent="handleSubmit">
     <div class="mb-3">
-      <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label>
+      <label for="email" class="form-label">E-Mail</label>
       <input
         type="email"
         class="form-control"
-        id="exampleDropdownFormEmail1"
+        id="email"
         placeholder="E-Mail"
         v-model="email"
       />
     </div>
     <div class="mb-3">
-      <label for="exampleDropdownFormPassword1" class="form-label"
-        >Passwort</label
-      >
+      <label for="password" class="form-label">Passwort</label>
       <input
         type="password"
         class="form-control"
-        id="exampleDropdownFormPassword1"
+        id="password"
         placeholder="Passwort"
         v-model="password"
       />
