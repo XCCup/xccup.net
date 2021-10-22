@@ -85,7 +85,7 @@ const userService = {
     return User.create(user);
   },
   update: async (user) => {
-    await checkIfUserHasChangedClub(user);
+    await checkForClubChange(user);
 
     cacheManager.invalidateCaches();
     return user.save();
@@ -108,25 +108,43 @@ const userService = {
 };
 
 /**
- * A user is allowed to change a club in the off season as often as he wishes. In an ongoing season he is only allowed to change a club once.
+ * A user is allowed to change a club in the off-season as often as he wishes.
+ * In an ongoing season he is only allowed to change a club if he has no flights in the current season.
  * This function will throw an XccupRestrictionError if the above mentioned rule was violated.
  *
  * @param {*} user
  */
-async function checkIfUserHasChangedClub(user) {
+async function checkForClubChange(user) {
   if (Array.isArray(user.changed()) && user.changed().includes("clubId")) {
     const seasonDetails = await getCurrentActive();
     const seasonStart = moment(seasonDetails.startDate);
     const seasonEnd = moment(seasonDetails.endDate);
+
     if (
-      user.hasAlreadyChangedClub &&
-      moment().isBetween(seasonStart, seasonEnd)
+      moment().isBetween(seasonStart, seasonEnd) &&
+      (await hasUserFlightsWithinCurrentSeason(user))
     ) {
       throw new XccupRestrictionError(
         "It is not possible to change more then once a club within a season"
       );
-    } else user.hasAlreadyChangedClub = true;
+    }
   }
+}
+
+async function hasUserFlightsWithinCurrentSeason(user) {
+  const seasonDetails = await getCurrentActive();
+  const flights = await flightService.getAll(
+    null,
+    null,
+    null,
+    null,
+    1,
+    undefined,
+    seasonDetails.startDate,
+    seasonDetails.endDate,
+    user.id
+  );
+  return flights.length > 0;
 }
 
 async function findFlightRecordOfType(id, type) {

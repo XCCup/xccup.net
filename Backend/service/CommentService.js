@@ -1,4 +1,5 @@
 const FlightComment = require("../config/postgres")["FlightComment"];
+const User = require("../config/postgres")["User"];
 
 const service = {
   getById: async (id) => {
@@ -8,6 +9,12 @@ const service = {
   getByFlightId: async (flightId) => {
     return FlightComment.findAll({
       where: { flightId },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+      ],
     });
   },
 
