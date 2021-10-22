@@ -50,7 +50,12 @@ router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
   const id = req.params.id;
 
   try {
-    const media = await service.getById(id);
+    const results = await Promise.all([
+      FlightPhoto.findByPk(id),
+      Logo.findByPk(id),
+      ProfilePicture.findByPk(id),
+    ]);
+    const media = results.find((e) => e);
 
     if (!media) return res.sendStatus(NOT_FOUND);
 
