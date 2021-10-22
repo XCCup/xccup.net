@@ -44,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      hasAlreadyChangedClub: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
       state: {
         type: DataTypes.STRING,
         // The state the user lives in (e.g. RLP, NRW, LUX). Needed for possible state championships.
@@ -75,6 +79,11 @@ module.exports = (sequelize, DataTypes) => {
         beforeCreate: (user) => {
           const salt = bcrypt.genSaltSync();
           user.password = bcrypt.hashSync(user.password, salt);
+        },
+        beforeSave: (user) => {
+          const salt = bcrypt.genSaltSync();
+          if (user.password)
+            user.password = bcrypt.hashSync(user.password, salt);
         },
       },
     }

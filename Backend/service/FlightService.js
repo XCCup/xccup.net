@@ -128,9 +128,9 @@ const flightService = {
     return flights;
   },
 
-  getById: async (flightId) => {
+  getById: async (id) => {
     return await Flight.findOne({
-      where: { id: flightId },
+      where: { id },
       include: [
         {
           model: FlightFixes,
@@ -146,9 +146,9 @@ const flightService = {
     });
   },
 
-  getByIdForDisplay: async (flightId) => {
+  getByExternalId: async (externalId) => {
     const flightDbObject = await Flight.findOne({
-      where: { id: flightId },
+      where: { externalId },
       include: [
         {
           model: FlightFixes,

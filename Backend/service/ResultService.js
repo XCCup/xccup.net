@@ -294,7 +294,7 @@ function limitFlightsForUserAndCalcTotals(resultArray, maxNumberOfFlights) {
 function aggreateOverClubAndCalcTotals(resultOverUser) {
   const result = [];
   resultOverUser.forEach((entry) => {
-    const found = result.find((e) => e.clubId == entry.clubId);
+    const found = result.find((e) => e.clubId == entry.club.id);
     const memberEntry = {
       id: entry.userId,
       firstName: entry.userFirstName,
@@ -309,8 +309,8 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
       found.totalDistance += memberEntry.totalDistance;
     } else {
       result.push({
-        clubName: entry.clubName,
-        clubId: entry.clubId,
+        clubName: entry.club.name,
+        clubId: entry.club.id,
         members: [memberEntry],
         totalDistance: memberEntry.totalPoints,
         totalPoints: memberEntry.totalPoints,
@@ -344,11 +344,11 @@ function dissmissWorstFlights(resultOverTeam) {
 function aggreateOverTeamAndCalcTotals(resultOverUser) {
   const result = [];
   resultOverUser.forEach((entry) => {
-    const found = result.find((e) => e.teamId == entry.teamId);
+    const found = result.find((e) => e.teamId == entry.team.id);
     const memberEntry = {
-      id: entry.userId,
-      firstName: entry.userFirstName,
-      lastName: entry.userLastName,
+      id: entry.user.id,
+      firstName: entry.user.firstName,
+      lastName: entry.user.lastName,
       flights: entry.flights,
       totalDistance: entry.totalDistance,
       totalPoints: entry.totalPoints,
@@ -357,11 +357,11 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
       found.members.push(memberEntry);
       found.totalPoints += memberEntry.totalPoints;
       found.totalDistance += memberEntry.totalDistance;
-    } else if (entry.teamName) {
+    } else if (entry.team.name) {
       //Prevention for users with no team association
       result.push({
-        teamName: entry.teamName,
-        teamId: entry.teamId,
+        teamName: entry.team.name,
+        teamId: entry.team.id,
         members: [memberEntry],
         totalDistance: memberEntry.totalPoints,
         totalPoints: memberEntry.totalPoints,
@@ -374,7 +374,7 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
 function aggreateFlightsOverUser(resultQuery) {
   const result = [];
   resultQuery.forEach((entry) => {
-    const found = result.find((e) => e.userId == entry.User.id);
+    const found = result.find((e) => e.user.id == entry.User.id);
     const flightEntry = {
       id: entry.id,
       flightPoints: entry.flightPoints,
@@ -391,14 +391,20 @@ function aggreateFlightsOverUser(resultQuery) {
       found.flights.push(flightEntry);
     } else {
       result.push({
-        userFirstName: entry.User.firstName,
-        userLastName: entry.User.lastName,
-        userId: entry.User.id,
-        gender: entry.User.gender,
-        clubName: entry.Club.name, //A user must always belong to a club
-        clubId: entry.Club.id,
-        teamName: entry.Team?.name, //It is possible that a user has no team
-        teamId: entry.Team?.id,
+        user: {
+          id: entry.User.id,
+          firstName: entry.User.firstName,
+          lastName: entry.User.lastName,
+          gender: entry.User.gender,
+        },
+        club: {
+          name: entry.Club.name, //A user must always belong to a club
+          id: entry.Club.id,
+        },
+        team: {
+          name: entry.Team?.name, //It is possible that a user has no team
+          id: entry.Team?.id,
+        },
         flights: [flightEntry],
       });
     }
