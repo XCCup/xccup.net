@@ -7,13 +7,20 @@
     ],
     "firstName": "Camille",
     "lastName": "Schaden",
-    
     "birthday": "1979-08-15",
     "gender": "W",
     "tshirtSize": "XL",
     "gliders": [
-      "Litte Cloud Spiruline",
-      "Flow XC Racer"
+      {
+        "brand": "LitteCloud",
+        "model": "Spiruline",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "Flow",
+        "model": "XCRacer",
+        "gliderClass": "D_low"
+      }
     ],
     "emailInformIfComment": false,
     "emailNewsletter": true,
@@ -32,13 +39,20 @@
     ],
     "firstName": "Frank",
     "lastName": "Jacobs",
-    
     "birthday": "1975-03-23",
     "gender": "W",
     "tshirtSize": "S",
     "gliders": [
-      "Sky Apollo",
-      "U-Turn Bodyguard"
+      {
+        "brand": "Sky",
+        "model": "Apollo",
+        "gliderClass": "AB_low"
+      },
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -57,13 +71,20 @@
     ],
     "firstName": "Leo",
     "lastName": "Altenwerth",
-    
     "birthday": "1996-08-22",
     "gender": "D",
     "tshirtSize": "L",
     "gliders": [
-      "Sky Apollo",
-      "Air-G Emilie"
+      {
+        "brand": "Sky",
+        "model": "Apollo",
+        "gliderClass": "AB_low"
+      },
+      {
+        "brand": "Air-G",
+        "model": "Emilie",
+        "gliderClass": "D_high"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -82,13 +103,20 @@
     ],
     "firstName": "Willis",
     "lastName": "Romaguera",
-    
     "birthday": "1979-05-07",
     "gender": "D",
     "tshirtSize": "M",
     "gliders": [
-      "Air-G Emilie",
-      "Sky Apollo"
+      {
+        "brand": "Air-G",
+        "model": "Emilie",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "Sky",
+        "model": "Apollo",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -108,13 +136,20 @@
     ],
     "firstName": "Mrs.",
     "lastName": "Roman",
-    
     "birthday": "1985-09-24",
     "gender": "M",
     "tshirtSize": "XXL",
     "gliders": [
-      "Sky Apollo",
-      "U-Turn Bodyguard"
+      {
+        "brand": "Sky",
+        "model": "Apollo",
+        "gliderClass": "AB_low"
+      },
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": false,
     "emailNewsletter": true,
@@ -134,13 +169,20 @@
     ],
     "firstName": "Ms.",
     "lastName": "Laurie",
-    
     "birthday": "1975-03-16",
     "gender": "W",
     "tshirtSize": "XXL",
     "gliders": [
-      "Ozone Enzo 3",
-      "U-Turn Bodyguard"
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -159,13 +201,20 @@
     ],
     "firstName": "Ramona",
     "lastName": "Gislason",
-    
     "birthday": "1983-01-16",
     "gender": "W",
     "tshirtSize": "M",
     "gliders": [
-      "Flow XC Racer",
-      "U-Turn Bodyguard"
+      {
+        "brand": "Flow",
+        "model": "XCRacer",
+        "gliderClass": "D_low"
+      },
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": false,
     "emailNewsletter": false,
@@ -184,13 +233,20 @@
     ],
     "firstName": "Toby",
     "lastName": "Gerhold",
-    
     "birthday": "1988-02-01",
     "gender": "M",
     "tshirtSize": "XXL",
     "gliders": [
-      "Air-G Emilie",
-      "Litte Cloud Spiruline"
+      {
+        "brand": "Air-G",
+        "model": "Emilie",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "LitteCloud",
+        "model": "Spiruline",
+        "gliderClass": "D_high"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -209,13 +265,20 @@
     ],
     "firstName": "Sonia",
     "lastName": "Harber",
-    
     "birthday": "1981-10-16",
     "gender": "W",
     "tshirtSize": "XL",
     "gliders": [
-      "Ozone Enzo 3",
-      "U-Turn Bodyguard"
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
@@ -234,13 +297,20 @@
     ],
     "firstName": "Ron",
     "lastName": "Crooks",
-    
     "birthday": "1996-05-08",
     "gender": "W",
     "tshirtSize": "L",
     "gliders": [
-      "U-Turn Bodyguard",
-      "Litte Cloud Spiruline"
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      },
+      {
+        "brand": "LitteCloud",
+        "model": "Spiruline",
+        "gliderClass": "D_high"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
@@ -259,13 +329,20 @@
     ],
     "firstName": "Bobby",
     "lastName": "Volkman",
-    
     "birthday": "1993-08-18",
     "gender": "W",
     "tshirtSize": "M",
     "gliders": [
-      "Sky Apollo",
-      "Ozone Alpina 2"
+      {
+        "brand": "Sky",
+        "model": "Apollo",
+        "gliderClass": "AB_low"
+      },
+      {
+        "brand": "Ozone",
+        "model": "Alpina",
+        "gliderClass": "2"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
@@ -284,13 +361,20 @@
     ],
     "firstName": "Tamara",
     "lastName": "Ledner",
-    
     "birthday": "1974-09-12",
     "gender": "W",
     "tshirtSize": "M",
     "gliders": [
-      "U-Turn Bodyguard",
-      "Ozone Enzo 3"
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      },
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      }
     ],
     "emailInformIfComment": false,
     "emailNewsletter": true,
@@ -309,13 +393,20 @@
     ],
     "firstName": "Wilma",
     "lastName": "Hodkiewicz",
-    
     "birthday": "1990-06-30",
     "gender": "M",
     "tshirtSize": "XXL",
     "gliders": [
-      "Ozone Enzo 3",
-      "U-Turn Bodyguard"
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -334,13 +425,20 @@
     ],
     "firstName": "Adam",
     "lastName": "Bayer",
-    
     "birthday": "1983-12-31",
     "gender": "M",
     "tshirtSize": "XXL",
     "gliders": [
-      "Ozone Enzo 3",
-      "Air-G Emilie"
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "Air-G",
+        "model": "Emilie",
+        "gliderClass": "D_high"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -359,13 +457,20 @@
     ],
     "firstName": "Melinda",
     "lastName": "Tremblay",
-    
     "birthday": "1955-02-16",
     "gender": "W",
     "tshirtSize": "L",
     "gliders": [
-      "Flow XC Racer",
-      "U-Turn Bodyguard"
+      {
+        "brand": "Flow",
+        "model": "XCRacer",
+        "gliderClass": "D_low"
+      },
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
@@ -384,13 +489,20 @@
     ],
     "firstName": "Clinton",
     "lastName": "Hettinger",
-    
     "birthday": "1972-04-02",
     "gender": "D",
     "tshirtSize": "S",
     "gliders": [
-      "Ozone Enzo 3",
-      "Ozone Enzo 3"
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": true,
@@ -408,13 +520,20 @@
     ],
     "firstName": "Christie",
     "lastName": "Schaefer",
-    
     "birthday": "1981-07-15",
     "gender": "M",
     "tshirtSize": "XXL",
     "gliders": [
-      "Air-G Emilie",
-      "Sky Apollo"
+      {
+        "brand": "Air-G",
+        "model": "Emilie",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "Sky",
+        "model": "Apollo",
+        "gliderClass": "AB_low"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -432,13 +551,20 @@
     ],
     "firstName": "Everett",
     "lastName": "Gislason",
-    
     "birthday": "1974-11-11",
     "gender": "W",
     "tshirtSize": "XXL",
     "gliders": [
-      "Flow XC Racer",
-      "Litte Cloud Spiruline"
+      {
+        "brand": "Flow",
+        "model": "XCRacer",
+        "gliderClass": "D_low"
+      },
+      {
+        "brand": "LitteCloud",
+        "model": "Spiruline",
+        "gliderClass": "D_high"
+      }
     ],
     "emailInformIfComment": true,
     "emailNewsletter": false,
@@ -456,13 +582,20 @@
     ],
     "firstName": "Olive",
     "lastName": "Emmerich",
-    
     "birthday": "1987-08-03",
     "gender": "M",
     "tshirtSize": "XXL",
     "gliders": [
-      "Air-G Emilie",
-      "Ozone Enzo 3"
+      {
+        "brand": "Air-G",
+        "model": "Emilie",
+        "gliderClass": "D_high"
+      },
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      }
     ],
     "role": "Moderator",
     "emailInformIfComment": false,
@@ -481,13 +614,20 @@
     ],
     "firstName": "Lois",
     "lastName": "White",
-    
     "birthday": "1976-01-01",
     "gender": "W",
     "tshirtSize": "M",
     "gliders": [
-      "U-Turn Bodyguard",
-      "Ozone Enzo 3"
+      {
+        "brand": "U-Turn",
+        "model": "Bodyguard",
+        "gliderClass": "AB_low"
+      },
+      {
+        "brand": "Ozone",
+        "model": "Enzo3",
+        "gliderClass": "D_high"
+      }
     ],
     "role": "Administrator",
     "emailInformIfComment": true,

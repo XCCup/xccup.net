@@ -13,12 +13,13 @@ const {
 const {
   checkIsDateObject,
   checkIsEmail,
-  checkOptionalIsBoolean,
-  checkOptionalIsOnlyOfValue,
+  checkIsBoolean,
+  checkIsOnlyOfValue,
   checkStringObjectNotEmpty,
   checkIsUuidObject,
   checkParamIsUuid,
   checkStrongPassword,
+  checkOptionalStrongPassword,
   validationHasErrors,
   checkIsArray,
 } = require("./Validation");
@@ -174,24 +175,22 @@ router.delete(
 
 router.post(
   "/",
-  checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
   checkIsDateObject("birthday"),
   checkIsEmail("email"),
   checkIsUuidObject("clubId"),
-  checkOptionalIsOnlyOfValue("gender", service.GENDERS),
-  checkOptionalIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
-  checkOptionalIsBoolean("emailInformIfComment"),
-  checkOptionalIsBoolean("emailNewsletter"),
-  checkOptionalIsBoolean("emailTeamSearch"),
+  checkIsOnlyOfValue("gender", service.GENDERS),
+  checkIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
+  checkIsBoolean("emailInformIfComment"),
+  checkIsBoolean("emailNewsletter"),
+  checkIsBoolean("emailTeamSearch"),
   checkStringObjectNotEmpty("state"),
   checkStringObjectNotEmpty("address"),
   checkStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const name = req.body.name;
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
     const birthday = req.body.birthday;
@@ -207,7 +206,6 @@ router.post(
     const password = req.body.password;
 
     const newUser = {
-      name,
       lastName,
       firstName,
       birthday,
@@ -240,26 +238,24 @@ router.put(
   "/:id",
   authToken,
   checkParamIsUuid("id"),
-  checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
   checkIsDateObject("birthday"),
   checkIsEmail("email"),
   checkIsUuidObject("clubId"),
-  checkOptionalIsOnlyOfValue("gender", service.GENDERS),
-  checkOptionalIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
-  checkOptionalIsBoolean("emailInformIfComment"),
-  checkOptionalIsBoolean("emailNewsletter"),
-  checkOptionalIsBoolean("emailTeamSearch"),
+  checkIsOnlyOfValue("gender", service.GENDERS),
+  checkIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
+  checkIsBoolean("emailInformIfComment"),
+  checkIsBoolean("emailNewsletter"),
+  checkIsBoolean("emailTeamSearch"),
   checkStringObjectNotEmpty("state"),
   checkStringObjectNotEmpty("address"),
-  checkStrongPassword("password"),
+  checkOptionalStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     const id = req.params.id;
 
-    const name = req.body.name;
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
     const birthday = req.body.birthday;
@@ -278,7 +274,6 @@ router.put(
       if (await requesterIsNotOwner(req, res, id)) return;
 
       const user = await service.getById(id);
-      user.name = name;
       user.lastName = lastName;
       user.firstName = firstName;
       user.birthday = birthday;

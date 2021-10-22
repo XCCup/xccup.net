@@ -44,16 +44,21 @@ app.use("/results", require("./controller/ResultController"));
 app.use("/home", require("./controller/HomeController"));
 app.use("/news", require("./controller/NewsController"));
 app.use("/sponsors", require("./controller/SponsorController"));
+app.use("/media", require("./controller/MediaController"));
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 // eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
   const {
     handleSequelizeUniqueError,
+    handleXccupRestrictionError,
     handleGeneralError,
   } = require("./helper/ErrorHandler");
 
-  handleSequelizeUniqueError(err, res, handleGeneralError);
+  if (handleSequelizeUniqueError(err, res)) return;
+  if (handleXccupRestrictionError(err, res)) return;
+
+  handleGeneralError(err, res);
 });
 
 // Handle calls to non exisiting routes
