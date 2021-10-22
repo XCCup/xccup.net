@@ -12,7 +12,7 @@ const service = {
       include: [
         {
           model: User,
-          attributes: ["name"],
+          attributes: ["id", "firstName", "lastName"],
         },
       ],
     });
