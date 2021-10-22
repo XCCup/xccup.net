@@ -9,7 +9,9 @@
             <tr>
               <th>Pilot:</th>
               <td>
-                <a href="#">{{ flight.User.name }}</a>
+                <a href="#">{{
+                  flight.User.firstName + " " + flight.User.lastName
+                }}</a>
               </td>
             </tr>
             <tr>

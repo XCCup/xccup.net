@@ -7,7 +7,9 @@
           ><i class="bi bi-chevron-left mx-2"></i>
         </router-link>
 
-        Flug von <a href="#">{{ flight.User.name }}</a> am
+        Flug von
+        <a href="#">{{ flight.User.firstName + " " + flight.User.lastName }}</a>
+        am
         <a href="#"><BaseDate :timestamp="flight.dateOfFlight" /></a>
       </p>
     </div>
@@ -136,7 +138,7 @@ export default {
         const res = await ApiService.editComment(comment);
         if (res.status != 200) throw res.statusText;
         await this.updateComments();
-        this.$refs.Comments.$refs.Comment.closeMessageEditor();
+        this.$refs.Comments.$refs[`${comment.id}`].closeMessageEditor();
       } catch (error) {
         console.log(error);
       }

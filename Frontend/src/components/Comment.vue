@@ -22,7 +22,11 @@
       id="comment-editor"
       v-model="editedMessage"
     ></textarea>
-    <button class="btn btn-primary me-2" @click.prevent="saveEditedMessage">
+    <button
+      class="btn btn-primary me-2"
+      @click.prevent="saveEditedMessage"
+      :disabled="saveButtonIsDisabled"
+    >
       Speichern
     </button>
     <button class="btn btn-outline-danger" @click.prevent="closeMessageEditor">
@@ -83,6 +87,9 @@ export default {
   },
   computed: {
     ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
+    saveButtonIsDisabled() {
+      return this.editedMessage.length < 5;
+    },
   },
   emits: ["delete-comment", "comment-edited"],
 };

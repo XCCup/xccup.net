@@ -3,7 +3,7 @@
     <h3>Kommentare</h3>
     <div class="shadow p-3 mb-3" v-for="comment in comments" :key="comment.id">
       <Comment
-        ref="Comment"
+        :ref="comment.id"
         :comment="comment"
         @delete-comment="showCommentDeleteModal"
         @comment-edited="onCommentEdited"
