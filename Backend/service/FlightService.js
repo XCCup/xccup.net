@@ -161,7 +161,7 @@ const flightService = {
           include: [
             {
               model: User,
-              attributes: ["firstName", "lastName"],
+              attributes: ["id", "firstName", "lastName"],
             },
           ],
         },
@@ -186,10 +186,13 @@ const flightService = {
           model: FlightPhoto,
         },
       ],
+      order: [
+        [{ model: FlightComment, as: "comments" }, "createdAt", "ASC"],
+        [FlightPhoto, "createdAt", "ASC"],
+      ],
     });
     if (flightDbObject) {
-      let flight = flightDbObject.toJSON();
-
+      const flight = flightDbObject.toJSON();
       //TODO Merge directly when model is retrieved?
       flight.fixes = FlightFixes.mergeCoordinatesAndOtherData(flight.fixes);
       flight.flightBuddies = await findFlightBuddies(flight);
