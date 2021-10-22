@@ -9,7 +9,7 @@
         v-bind:item="flight"
         v-bind:index="index"
         v-bind:key="flight.id"
-        @click="routeToFlight(flight.id)"
+        @click="routeToFlight(flight.externalId)"
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>

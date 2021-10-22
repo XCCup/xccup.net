@@ -8,8 +8,8 @@
             v-for="(flight, index) in flights.slice(0, maxRows)"
             v-bind:item="flight"
             v-bind:index="index"
-            v-bind:key="flight._id"
-            @click="routeToFlight(flight.flightId)"
+            v-bind:key="flight.id"
+            @click="routeToFlight(flight.externalId)"
           >
             <td scope="row">{{ index + 1 }}</td>
             <td>{{ flight.pilot }}</td>

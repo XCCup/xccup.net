@@ -20,7 +20,7 @@
                 v-bind:item="flight"
                 v-bind:index="index"
                 v-bind:key="flight.id"
-                @click="routeToFlight(flight.id)"
+                @click="routeToFlight(flight.externalId)"
                 @mouseover="updateHighlightedFlight(flight.id)"
                 @mouseleave="updateHighlightedFlight(null)"
               >
