@@ -6,10 +6,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true,
     },
-
     message: {
       type: DataTypes.STRING(2000),
       allowNull: false,
+    },
+    relatedTo: {
+      type: DataTypes.UUID,
     },
   });
 
