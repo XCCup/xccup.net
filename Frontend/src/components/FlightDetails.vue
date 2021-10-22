@@ -175,10 +175,6 @@ export default {
       type: Object,
       required: true,
     },
-    pilot: {
-      type: Object,
-      required: true,
-    },
   },
   methods: {
     getlandingTime(flight) {
