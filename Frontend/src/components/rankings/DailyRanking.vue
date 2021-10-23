@@ -25,10 +25,12 @@
                 @mouseleave="updateHighlightedFlight(null)"
               >
                 <td scope="row">{{ index + 1 }}</td>
-                <td>{{ flight.User.name }}</td>
+                <td>
+                  {{ flight.User.firstName + " " + flight.User.lastName }}
+                </td>
                 <td>{{ flight.takeoff.name }}</td>
                 <td>{{ Math.floor(flight.flightDistance) }} km</td>
-                <td>{{ flight.flightType }}</td>
+                <td><FlightType :flightType="flight.flightType" /></td>
                 <td>{{ flight.flightPoints }} P</td>
               </tr>
             </tbody>
@@ -57,10 +59,11 @@
 
 <script>
 import DailyFlightsMap from "@/components/DailyFlightsMap";
+import FlightType from "@/components/FlightType";
 
 export default {
   name: "DailyRanking",
-  components: { DailyFlightsMap },
+  components: { DailyFlightsMap, FlightType },
   data() {
     return {
       highlightedFlightId: null,
