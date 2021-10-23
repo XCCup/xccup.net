@@ -4,6 +4,7 @@ const FlightPhoto = require("../config/postgres")["FlightPhoto"];
 const Logo = require("../config/postgres")["Logo"];
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const path = require("path");
+const _ = require("lodash");
 const { NOT_FOUND } = require("./Constants");
 const { query } = require("express-validator");
 const { checkParamIsUuid, validationHasErrors } = require("./Validation");
@@ -55,11 +56,14 @@ router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
       Logo.findByPk(id),
       ProfilePicture.findByPk(id),
     ]);
-    const media = results.find((e) => e);
+    const mediaDbObject = results.find((e) => e);
 
-    if (!media) return res.sendStatus(NOT_FOUND);
+    if (!mediaDbObject) return res.sendStatus(NOT_FOUND);
 
-    return res.json(media);
+    const media = mediaDbObject.toJSON();
+    media.description = _.unescape(mediaDbObject.description);
+
+    return res.json(mediaDbObject);
   } catch (error) {
     next(error);
   }

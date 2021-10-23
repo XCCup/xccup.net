@@ -1,13 +1,15 @@
 const FlightComment = require("../config/postgres")["FlightComment"];
 const User = require("../config/postgres")["User"];
 
+const _ = require("lodash");
+
 const service = {
   getById: async (id) => {
     return FlightComment.findByPk(id);
   },
 
   getByFlightId: async (flightId) => {
-    return FlightComment.findAll({
+    const commmentsDbOject = await FlightComment.findAll({
       where: { flightId },
       include: [
         {
@@ -17,6 +19,12 @@ const service = {
       ],
       order: [["createdAt", "ASC"]],
     });
+
+    const comments = commmentsDbOject.toJSON();
+    comments.forEach((comment) => {
+      comment.message = _.unescape(comment.message);
+    });
+    return comments;
   },
 
   create: async (comment) => {
