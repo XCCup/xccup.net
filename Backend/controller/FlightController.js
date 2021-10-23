@@ -137,9 +137,10 @@ router.post(
 
       service.startResultCalculation(flightDbObject);
 
-      const takeoffName = await service.extractFixesAddLocationsAndDateOfFlight(
-        flightDbObject
-      );
+      const takeoffName =
+        await service.extractFixesAndAddFurtherInformationToFlight(
+          flightDbObject
+        );
 
       const result = await service.update(flightDbObject);
 

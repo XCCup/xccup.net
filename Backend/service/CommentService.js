@@ -15,6 +15,7 @@ const service = {
           attributes: ["id", "firstName", "lastName"],
         },
       ],
+      order: [["createdAt", "ASC"]],
     });
   },
 

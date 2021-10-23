@@ -84,7 +84,7 @@ const IgcAnalyzer = {
   extractFixes: (flight) => {
     //TODO Currently the file will be deserailized twice!
     //1x startCalculation and 1x extractFixes
-    console.log(`read file from`);
+    console.log(`read file from ${flight.igcUrl}`);
     const igcAsPlainText = readIgcFile(flight);
     console.log(`start parsing`);
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
