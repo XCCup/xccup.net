@@ -32,11 +32,10 @@
             <div class="row mt-3">
               <div class="col-md-12">
                 <BaseInput
-                  v-model="userProfile.clubId"
+                  v-model="userProfile.Club.name"
                   label="Verein"
                   :isDisabled="true"
                 />
-
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
 
