@@ -70,41 +70,47 @@
         "gliderClasses": [
           "Tandem"
         ],
-        "description": "Gleitschirm Tandem"
+        "description": "Gleitschirm Tandem",
+        "shortDescription": "GS Tandem"
       },
       "gsSport": {
         "gliderClasses": [
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A+EN B, Tandem)"
+        "description": "Sportklasse (EN A+EN B, Tandem)",
+        "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
         "gliderClasses": [
           "C_low",
           "C_high"
         ],
-        "description": "Intermediate-Klasse (EN C)"
+        "description": "Intermediate-Klasse (EN C)",
+        "shortDescription": "GS Intermediate"
       },
       "gsPerformance": {
         "gliderClasses": [
           "D_low",
           "D_high"
         ],
-        "description": "Performance-Klasse (EN D+CCC)"
+        "description": "Performance-Klasse (EN D+CCC)",
+        "shortDescription": "GS Performance"
       },
       "hgFlex": {
         "gliderClasses": [
           "HG_1_Turm",
           "HG_1_Turmlos"
         ],
-        "description": "Flexdrachen"
+        "description": "Flexdrachen",
+        "shortDescription": "HG Flex"
       },
       "hgFixed": {
         "gliderClasses": [
           "HG_5_starr"
         ],
-        "description": "Starrflügler"
+        "description": "Starrflügler",
+        "shortDescription": "HG Starr"
       }
     },
     "stateChampionChips": [
@@ -179,45 +185,51 @@
       }
     },
     "rankingClasses": {
+      "gsTandem": {
+        "gliderClasses": [
+          "Tandem"
+        ],
+        "description": "Gleitschirm Tandem",
+        "shortDescription": "GS Tandem"
+      },
       "gsSport": {
         "gliderClasses": [
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A+EN B, Tandem)"
+        "description": "Sportklasse (EN A+EN B, Tandem)",
+        "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
         "gliderClasses": [
           "C_low",
           "C_high"
         ],
-        "description": "Intermediate-Klasse (EN C)"
+        "description": "Intermediate-Klasse (EN C)",
+        "shortDescription": "GS Intermediate"
       },
       "gsPerformance": {
         "gliderClasses": [
           "D_low",
           "D_high"
         ],
-        "description": "Performance-Klasse (EN D+CCC)"
-      },
-      "gsTandem": {
-        "gliderClasses": [
-          "Tandem"
-        ],
-        "description": "Gleitschirm Tandem"
+        "description": "Performance-Klasse (EN D+CCC)",
+        "shortDescription": "GS Performance"
       },
       "hgFlex": {
         "gliderClasses": [
           "HG_1_Turm",
           "HG_1_Turmlos"
         ],
-        "description": "Flexdrachen"
+        "description": "Flexdrachen",
+        "shortDescription": "HG Flex"
       },
       "hgFixed": {
         "gliderClasses": [
           "HG_5_starr"
         ],
-        "description": "Starrflügler"
+        "description": "Starrflügler",
+        "shortDescription": "HG Starr"
       }
     },
     "stateChampionChips": [
@@ -292,45 +304,51 @@
       }
     },
     "rankingClasses": {
+      "gsTandem": {
+        "gliderClasses": [
+          "Tandem"
+        ],
+        "description": "Gleitschirm Tandem",
+        "shortDescription": "GS Tandem"
+      },
       "gsSport": {
         "gliderClasses": [
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A+EN B, Tandem)"
+        "description": "Sportklasse (EN A+EN B, Tandem)",
+        "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
         "gliderClasses": [
           "C_low",
           "C_high"
         ],
-        "description": "Intermediate-Klasse (EN C)"
+        "description": "Intermediate-Klasse (EN C)",
+        "shortDescription": "GS Intermediate"
       },
       "gsPerformance": {
         "gliderClasses": [
           "D_low",
           "D_high"
         ],
-        "description": "Performance-Klasse (EN D+CCC)"
-      },
-      "gsTandem": {
-        "gliderClasses": [
-          "Tandem"
-        ],
-        "description": "Gleitschirm Tandem"
+        "description": "Performance-Klasse (EN D+CCC)",
+        "shortDescription": "GS Performance"
       },
       "hgFlex": {
         "gliderClasses": [
           "HG_1_Turm",
           "HG_1_Turmlos"
         ],
-        "description": "Flexdrachen"
+        "description": "Flexdrachen",
+        "shortDescription": "HG Flex"
       },
       "hgFixed": {
         "gliderClasses": [
           "HG_5_starr"
         ],
-        "description": "Starrflügler"
+        "description": "Starrflügler",
+        "shortDescription": "HG Starr"
       }
     },
     "stateChampionChips": [
@@ -405,54 +423,51 @@
       }
     },
     "rankingClasses": {
-      "gsSport": {
-        "gliderClasses": [
-          "AB_low",
-          "AB_high",
-          "Tandem"
-        ],
-        "description": "Sportklasse (EN A+EN B, Tandem)"
-      },
-      "gsIntermediate": {
-        "gliderClasses": [
-          "AB_low",
-          "AB_high",
-          "C_low",
-          "C_high",
-          "Tandem"
-        ],
-        "description": "Intermediate-Klasse (EN C)"
-      },
-      "gsPerformance": {
-        "gliderClasses": [
-          "AB_low",
-          "AB_high",
-          "C_low",
-          "C_high",
-          "D_low",
-          "D_high",
-          "Tandem"
-        ],
-        "description": "Performance-Klasse (EN D+CCC)"
-      },
       "gsTandem": {
         "gliderClasses": [
           "Tandem"
         ],
-        "description": "Gleitschirm Tandem"
+        "description": "Gleitschirm Tandem",
+        "shortDescription": "GS Tandem"
+      },
+      "gsSport": {
+        "gliderClasses": [
+          "AB_low",
+          "AB_high"
+        ],
+        "description": "Sportklasse (EN A+EN B, Tandem)",
+        "shortDescription": "GS Sport"
+      },
+      "gsIntermediate": {
+        "gliderClasses": [
+          "C_low",
+          "C_high"
+        ],
+        "description": "Intermediate-Klasse (EN C)",
+        "shortDescription": "GS Intermediate"
+      },
+      "gsPerformance": {
+        "gliderClasses": [
+          "D_low",
+          "D_high"
+        ],
+        "description": "Performance-Klasse (EN D+CCC)",
+        "shortDescription": "GS Performance"
       },
       "hgFlex": {
         "gliderClasses": [
           "HG_1_Turm",
           "HG_1_Turmlos"
         ],
-        "description": "Flexdrachen"
+        "description": "Flexdrachen",
+        "shortDescription": "HG Flex"
       },
       "hgFixed": {
         "gliderClasses": [
           "HG_5_starr"
         ],
-        "description": "Starrflügler"
+        "description": "Starrflügler",
+        "shortDescription": "HG Starr"
       }
     },
     "stateChampionChips": [
