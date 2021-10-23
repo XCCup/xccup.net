@@ -28,6 +28,10 @@ const service = {
     });
   },
 
+  getAllRelevantInPolygon: async (points) => {
+    return findAirspacesWithinPolygon(points);
+  },
+
   hasAirspaceViolation: async (fixesWithElevation) => {
     const startTime = new Date();
     const intersections2D = await find2dIntersection(fixesWithElevation.id);
@@ -117,6 +121,39 @@ async function find2dIntersection(fixesId) {
   });
 
   return result.length == 0 ? [] : result;
+}
+
+async function findAirspacesWithinPolygon(points) {
+  const polygonPoints = points.map((e) => e.replace(",", " "));
+  polygonPoints.push(polygonPoints[0]);
+  const polygonPointsAsLinestring = polygonPoints.join(",");
+
+  const query = `
+  SELECT id FROM(
+    SELECT *, (ST_Dump(ST_Intersection(
+      "Airspaces".polygon,
+      (SELECT ST_Polygon('LINESTRING(${polygonPointsAsLinestring})'::geometry, 4326))
+    ))).geom AS "intersectionPolygon"
+    FROM "Airspaces"
+    WHERE season=date_part('year',now()) 
+    AND NOT (class='RMZ' OR class='Q' OR class='W'))
+  AS "intersectionEntry"
+  `;
+
+  const intersections = await Airspace.sequelize.query(query, {
+    type: FlightFixes.sequelize.QueryTypes.SELECT,
+  });
+  const intersectionIds = intersections.map((e) => e.id);
+
+  const airspaces = await Airspace.findAll({
+    where: {
+      id: {
+        [Op.in]: intersectionIds,
+      },
+    },
+  });
+
+  return airspaces.length ? airspaces : [];
 }
 
 function convertToMeterMSL(heightValue, elevation) {
