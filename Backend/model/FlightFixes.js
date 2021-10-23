@@ -16,8 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       //Stores the height information (elevation, pressureAltitude, gpsAltitude) and time/timestamp of the track
       allowNull: false,
     },
+    stats: {
+      type: DataTypes.ARRAY(DataTypes.JSON),
+      //Stores information about climbrate and speed of the track
+    },
     /**
-     * lineString and heights data must correspond over indexes
+     * lineString and time, heights, stats data must correspond over indexes
      */
   });
 
