@@ -53,8 +53,7 @@
               <th>Strecke:</th>
               <td>
                 {{ flight.flightDistance.toFixed(2) }} km
-                <!-- <i class="bi bi-triangle"></i> -->
-                {{ flight.flightType }}
+                <FlightType :flightType="flight.flightType" />
               </td>
             </tr>
             <tr>
@@ -162,10 +161,12 @@
 <script>
 import { format } from "date-fns";
 import RankingClass from "@/components/RankingClass";
+import FlightType from "@/components/FlightType";
 export default {
   name: "FlightDetails",
   components: {
     RankingClass,
+    FlightType,
   },
   data() {
     return {
