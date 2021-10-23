@@ -44,6 +44,9 @@ export default {
 </script>
 
 <style scoped>
+img {
+  max-height: 55px;
+}
 .square-holder {
   padding: 15px;
   border: 1px solid #cecece;
