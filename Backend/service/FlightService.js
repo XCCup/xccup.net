@@ -9,6 +9,7 @@ const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 
 const moment = require("moment");
+const _ = require("lodash");
 
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findLanding } = require("../igc/LocationFinder");
@@ -94,7 +95,11 @@ const flightService = {
     const today = new Date();
     let fromDay = today.getDate() - 1;
     let tillDay = today.getDate();
-    if (today.getHours() > SWITCHOVER_HOUR_TODAY_RANKING) {
+
+    if (
+      today.getHours() + today.getTimezoneOffset() / 2 >=
+      SWITCHOVER_HOUR_TODAY_RANKING
+    ) {
       fromDay++;
       tillDay++;
     }
@@ -154,7 +159,7 @@ const flightService = {
         {
           model: FlightFixes,
           as: "fixes",
-          attributes: ["geom", "timeAndHeights"],
+          attributes: ["geom", "timeAndHeights", "stats"],
         },
         {
           model: FlightComment,
@@ -195,8 +200,18 @@ const flightService = {
     if (flightDbObject) {
       const flight = flightDbObject.toJSON();
       //TODO Merge directly when model is retrieved?
-      flight.fixes = FlightFixes.mergeCoordinatesAndOtherData(flight.fixes);
+      flight.fixes = FlightFixes.mergeData(flight.fixes);
       flight.flightBuddies = await findFlightBuddies(flight);
+
+      //Unescape characters with where sanitzied before stored to db
+      flight.report = _.unescape(flight.report);
+      flight.comments.forEach((comment) => {
+        comment.message = _.unescape(comment.message);
+      });
+      flight.FlightPhotos.forEach((photo) => {
+        photo.description = _.unescape(photo.description);
+      });
+
       return flight;
     }
     return null;
@@ -276,7 +291,7 @@ const flightService = {
     }
 
     ElevationAttacher.execute(
-      FlightFixes.mergeCoordinatesAndOtherData(flight.toJSON().fixes),
+      FlightFixes.mergeData(flight.toJSON().fixes),
       async (fixesWithElevation) => {
         //TODO Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
         let flightFixes = await retrieveDbObjectOfFlightFixes(flight.id);
