@@ -5,6 +5,7 @@
     xmlns="http://www.w3.org/2000/svg"
     width="16"
     height="16"
+    fill="currentColor"
     viewBox="0 0 487.047 487.047"
     style="enable-background: new 0 0 487.047 487.047"
     class="bi bi-alt"
@@ -30,15 +31,13 @@
   </svg>
 
   <svg
-    version="1.1"
     v-if="flightType === `FREE`"
-    id="Capa_1"
     xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
     x="0px"
     y="0px"
     width="25"
     height="25"
+    fill="currentColor"
     viewBox="0 0 63.067 63.067"
     style="enable-background: new 0 0 63.067 63.067"
     xml:space="preserve"
