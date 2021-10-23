@@ -7,24 +7,21 @@
   <section>
     <div class="container mt-2">
       <h2>Sponsoren</h2>
-
-      <strong>
-        <div class="row">
-          <div
-            v-for="sponsor in sponsors"
-            :key="sponsor.id"
-            class="col-4 col-sm-4 col-md-3 col-lg-2"
-          >
-            <div class="square-holder">
-              <a :href="sponsor.website">
-                <img
-                  :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
-                />
-              </a>
-            </div>
+      <div class="row">
+        <div
+          v-for="sponsor in sponsors"
+          :key="sponsor.id"
+          class="col-4 col-sm-4 col-md-3 col-lg-2"
+        >
+          <div class="square-holder">
+            <a :href="sponsor.website">
+              <img
+                :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+              />
+            </a>
           </div>
         </div>
-      </strong>
+      </div>
     </div>
   </section>
 </template>
