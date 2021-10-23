@@ -4,12 +4,27 @@
     <br />
   </div>
 
-  <section class="sponsoren">
-    <div class="container">
-      <h3>Sponsoren</h3>
-      <div v-for="sponsor in sponsors" :key="sponsor.id">
-        {{ sponsor.name }}
-      </div>
+  <section>
+    <div class="container mt-2">
+      <h2>Sponsoren</h2>
+
+      <strong>
+        <div class="row">
+          <div
+            v-for="sponsor in sponsors"
+            :key="sponsor.id"
+            class="col-4 col-sm-4 col-md-3 col-lg-2"
+          >
+            <div class="square-holder">
+              <a :href="sponsor.website">
+                <img
+                  :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </strong>
     </div>
   </section>
 </template>
@@ -17,7 +32,11 @@
 <script>
 export default {
   name: "Sponsors",
-
+  data() {
+    return {
+      baseURL: process.env.VUE_APP_API_URL,
+    };
+  },
   props: {
     sponsors: {
       type: Array,
@@ -27,4 +46,26 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.square-holder {
+  padding: 15px;
+  border: 1px solid #cecece;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: #f1f1f1;
+  min-height: 120px;
+}
+
+.square-holder img {
+  max-width: 100%;
+  filter: grayscale(100%);
+  transition: all 0.3s;
+}
+
+.square-holder:hover img {
+  filter: none;
+}
+</style>
