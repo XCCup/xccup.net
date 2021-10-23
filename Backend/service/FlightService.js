@@ -13,6 +13,7 @@ const moment = require("moment");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findLanding } = require("../igc/LocationFinder");
 const ElevationAttacher = require("../igc/ElevationAttacher");
+const FlightStatsCalculator = require("../igc/FlightStatsCalculator");
 const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
@@ -161,7 +162,7 @@ const flightService = {
           include: [
             {
               model: User,
-              attributes: ["firstName", "lastName"],
+              attributes: ["id", "firstName", "lastName"],
             },
           ],
         },
@@ -186,10 +187,13 @@ const flightService = {
           model: FlightPhoto,
         },
       ],
+      order: [
+        [{ model: FlightComment, as: "comments" }, "createdAt", "ASC"],
+        [FlightPhoto, "createdAt", "ASC"],
+      ],
     });
     if (flightDbObject) {
-      let flight = flightDbObject.toJSON();
-
+      const flight = flightDbObject.toJSON();
       //TODO Merge directly when model is retrieved?
       flight.fixes = FlightFixes.mergeCoordinatesAndOtherData(flight.fixes);
       flight.airbuddies = await findAirbuddies(flight);
@@ -257,6 +261,7 @@ const flightService = {
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
     flight.flightTurnpoints = result.turnpoints;
+    calculateTaskSpeed(result, flight);
 
     if (flight.glider) {
       // If true, the calculation took so long that the glider was already submitted by the user.
@@ -302,8 +307,7 @@ const flightService = {
 
   create: async (flight) => {
     //TODO ExternalID als Hook im Model realisieren?
-    await addUserData(flight);
-    await addExternalId(flight);
+    await Promise.all([addUserData(flight), addExternalId(flight)]);
     return Flight.create(flight);
   },
 
@@ -314,33 +318,72 @@ const flightService = {
     });
   },
 
-  extractFixesAddLocationsAndDateOfFlight: async (flight) => {
+  extractFixesAndAddFurtherInformationToFlight: async (flight) => {
     const fixes = IgcAnalyzer.extractFixes(flight);
+
     flight.dateOfFlight = new Date(fixes[0].timestamp);
+
     flight.isWeekend = isNoWorkday(flight.dateOfFlight);
 
-    const flyingSite = await findClosestTakeoff(fixes[0]);
-    flight.siteId = flyingSite.id;
+    flight.airtime = calcAirtime(fixes);
 
+    const requests = [findClosestTakeoff(fixes[0])];
     if (process.env.USE_GOOGLE_API === "true") {
-      flight.landing = await findLanding(fixes[fixes.length - 1]);
+      requests.push(findLanding(fixes[fixes.length - 1]));
     }
+    const results = await Promise.all(requests);
+    const flyingSite = results[0];
+    flight.siteId = flyingSite.id;
+    flight.landing = results.length > 1 ? results[1] : undefined;
+
+    const {
+      minHeightBaro,
+      maxHeightBaro,
+      minHeightGps,
+      maxHeightGps,
+      maxSink,
+      maxClimb,
+      maxSpeed,
+      fixesStats,
+    } = FlightStatsCalculator.execute(fixes);
+    flight.flightStats = {
+      minHeightBaro,
+      maxHeightBaro,
+      minHeightGps,
+      maxHeightGps,
+      maxSink,
+      maxClimb,
+      maxSpeed,
+    };
 
     FlightFixes.create({
       flightId: flight.id,
       geom: FlightFixes.createGeometry(fixes),
       timeAndHeights: FlightFixes.extractTimeAndHeights(fixes),
+      stats: fixesStats,
     });
 
     return flyingSite.name;
   },
 };
 
+function calculateTaskSpeed(result, flight) {
+  flight.flightStats.taskSpeed =
+    Math.round((result.dist / flight.airtime) * 600) / 10;
+  flight.changed("flightStats", true);
+}
+
+function calcAirtime(fixes) {
+  return Math.round(
+    (fixes[fixes.length - 1].timestamp - fixes[0].timestamp) / 1000 / 60
+  );
+}
+
 async function calcFlightPointsAndStatus(flight, glider, status) {
   const currentSeason = await getCurrentActive();
   const gliderClass = currentSeason.gliderClasses[glider.gliderClass];
   console.log(
-    `Glider class changed to ${gliderClass.key}. Will recalculate flightPoints`
+    `Glider class changed to ${gliderClass.shortDescription}. Will recalculate flightPoints`
   );
   const flightPoints = calcFlightPoints(flight, currentSeason, gliderClass);
 
