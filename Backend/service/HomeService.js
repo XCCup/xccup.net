@@ -101,6 +101,8 @@ function retrieveRankingClassResults(currentSeason) {
         name: keys[index],
         values: values[index],
         readableName: currentSeason.rankingClasses[keys[index]].description,
+        shortReadableName:
+          currentSeason.rankingClasses[keys[index]].shortDescription,
       });
     }
     return res;
