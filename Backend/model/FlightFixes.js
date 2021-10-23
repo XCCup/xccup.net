@@ -50,13 +50,17 @@ module.exports = (sequelize, DataTypes) => {
     return times;
   };
 
-  FlightFixes.mergeCoordinatesAndOtherData = function (fixes) {
+  FlightFixes.mergeData = function (fixes) {
     const coordinates = fixes.geom.coordinates;
-    const other = fixes.timeAndHeights;
-    const newOb = [...other];
-    for (let i = 0; i < other.length; i++) {
+    const timeAndHeights = fixes.timeAndHeights;
+    const stats = fixes.stats;
+
+    const newOb = [...timeAndHeights];
+    for (let i = 0; i < timeAndHeights.length; i++) {
       newOb[i].longitude = coordinates[i][0];
       newOb[i].latitude = coordinates[i][1];
+      newOb[i].speed = stats[i]?.speed;
+      newOb[i].climb = stats[i]?.climb;
     }
     return newOb;
   };

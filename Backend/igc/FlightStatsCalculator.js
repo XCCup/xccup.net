@@ -18,6 +18,15 @@ function execute(fixes) {
   let maxSpeed = 0.0;
   const fixesStats = [new FixStat(0, 0)];
 
+  // It's possible that some igc files have no baro data.
+  // Baro data is the preferred option because of accurrucy.
+  // If no baro data is available switch to gps data.
+  const noBaro =
+    fixes[0].pressureAltitude && fixes[fixes.length - 1].pressureAltitude;
+  const heightDifferenceFunction = noBaro
+    ? gpsHeightDifference
+    : pressureHeightDifference;
+
   for (let index = 1; index < step; index++) {
     //Fill gaps at the start
     fixesStats.push(new FixStat(0, 0));
@@ -28,7 +37,7 @@ function execute(fixes) {
     const precessorIndex = index - step;
     const precessor = fixes[precessorIndex];
 
-    const climbedHeight = current.pressureAltitude - precessor.pressureAltitude;
+    const climbedHeight = heightDifferenceFunction(current, precessor);
     const timeDeltaInSeconds = (current.timestamp - precessor.timestamp) / 1000;
 
     const climb = Math.round((climbedHeight / timeDeltaInSeconds) * 10) / 10;
@@ -71,6 +80,14 @@ function execute(fixes) {
     maxSpeed,
     fixesStats,
   };
+}
+
+function pressureHeightDifference(current, precessor) {
+  return current.pressureAltitude - precessor.pressureAltitude;
+}
+
+function gpsHeightDifference(current, precessor) {
+  return current.gpsAltitude - precessor.gpsAltitude;
 }
 
 function FixStat(climb, speed) {

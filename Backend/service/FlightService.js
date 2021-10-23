@@ -158,7 +158,7 @@ const flightService = {
         {
           model: FlightFixes,
           as: "fixes",
-          attributes: ["geom", "timeAndHeights"],
+          attributes: ["geom", "timeAndHeights", "stats"],
         },
         {
           model: FlightComment,
@@ -199,7 +199,7 @@ const flightService = {
     if (flightDbObject) {
       const flight = flightDbObject.toJSON();
       //TODO Merge directly when model is retrieved?
-      flight.fixes = FlightFixes.mergeCoordinatesAndOtherData(flight.fixes);
+      flight.fixes = FlightFixes.mergeData(flight.fixes);
       flight.flightBuddies = await findFlightBuddies(flight);
       return flight;
     }
@@ -280,7 +280,7 @@ const flightService = {
     }
 
     ElevationAttacher.execute(
-      FlightFixes.mergeCoordinatesAndOtherData(flight.toJSON().fixes),
+      FlightFixes.mergeData(flight.toJSON().fixes),
       async (fixesWithElevation) => {
         //TODO Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
         let flightFixes = await retrieveDbObjectOfFlightFixes(flight.id);
