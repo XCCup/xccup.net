@@ -66,7 +66,12 @@ const flightService = {
       : ["dateOfFlight", "DESC"];
 
     const queryObject = {
-      include: [createUserInclude(), createSiteInclude(site)],
+      include: [
+        createUserInclude(),
+        createSiteInclude(site),
+        createTeamInclude(),
+        createClubInclude(),
+      ],
       where: await createWhereStatement(
         year,
         type,
@@ -622,6 +627,22 @@ function createUserInclude() {
     attributes: ["firstName", "lastName"],
   };
   return userInclude;
+}
+
+function createClubInclude() {
+  const include = {
+    model: Club,
+    attributes: ["name"],
+  };
+  return include;
+}
+
+function createTeamInclude() {
+  const include = {
+    model: Team,
+    attributes: ["name"],
+  };
+  return include;
 }
 
 /**
