@@ -106,18 +106,21 @@
               </tr>
               <tr>
                 <th>Höhe min/max (GPS):</th>
-                <td></td>
-                <!-- 359m / 2665m -->
+                <td>
+                  {{ flight.flightStats.minHeightGps }}m /
+                  {{ flight.flightStats.maxHeightGps }}m
+                </td>
               </tr>
               <tr>
                 <th>Steigen min/max:</th>
-                <td></td>
-                <!-- -10,0m/s / 7,0m/s -->
+                <td>
+                  {{ flight.flightStats.maxSink }} m/s /
+                  {{ flight.flightStats.maxClimb }} m/s
+                </td>
               </tr>
               <tr>
                 <th>Geschwindigkeit max:</th>
-                <td></td>
-                <!-- 124,0km/h -->
+                <td>{{ flight.flightStats.maxSpeed }} km/h</td>
               </tr>
             </tbody>
           </table>
@@ -129,7 +132,6 @@
               <tr>
                 <th>Landeplatz:</th>
                 <td>{{ flight.landing }}</td>
-                <!-- Bremm - DE[~1,29km] -->
               </tr>
               <tr>
                 <th>Ø Geschwindigkeit:</th>
@@ -138,8 +140,7 @@
               </tr>
               <tr>
                 <th>Aufgaben-Geschwindigkeit:</th>
-                <td></td>
-                <!-- 16,9km/h -->
+                <td>{{ flight.flightStats.taskSpeed }} km/h</td>
               </tr>
               <tr>
                 <th>Eingereicht am:</th>
