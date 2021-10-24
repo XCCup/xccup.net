@@ -94,14 +94,8 @@
       </button></a
     >
 
-    <router-link :to="{ name: 'Home' }" class="navbar-brand" href="/">
-      <button
-        v-if="showEditButton"
-        class="btn btn-primary btn-sm ms-2"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-      >
+    <router-link :to="{ name: 'EditFlight' }">
+      <button v-if="showEditButton" class="btn btn-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>

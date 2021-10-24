@@ -35,6 +35,14 @@ const routes = [
       import(/* webpackChunkName: "" */ "../views/UploadFlight.vue"),
   },
   {
+    path: "/flug-bearbeiten",
+    name: "EditFlight",
+    // props: true,
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/EditFlight.vue"),
+  },
+  {
     path: "/profil",
     name: "Profile",
     props: true,
