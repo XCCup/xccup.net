@@ -94,6 +94,18 @@
       </button></a
     >
 
+    <router-link :to="{ name: 'Home' }" class="navbar-brand" href="/">
+      <button
+        v-if="showEditButton"
+        class="btn btn-primary btn-sm ms-2"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#collapseExample"
+      >
+        <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
+      </button>
+    </router-link>
+
     <div class="collapse" id="collapseExample">
       <div class="row">
         <div class="col-md-6 col-12">
@@ -160,6 +172,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import { format } from "date-fns";
 import RankingClass from "@/components/RankingClass";
 import FlightType from "@/components/FlightType";
@@ -207,6 +221,13 @@ export default {
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
       return hours + ":" + minutes + "h";
+    },
+  },
+  computed: {
+    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
+
+    showEditButton() {
+      return this.flight.userId === this.getUserId;
     },
   },
 };
