@@ -1,19 +1,6 @@
 <template>
   <div v-if="flight">
-    <!-- Subnav -->
-    <div class="container-fluid flight-info text-light mb-0 p-1">
-      <p class="m-0">
-        <router-link to="/"
-          ><i class="bi bi-chevron-left mx-2"></i>
-        </router-link>
-
-        Flug von
-        <a href="#">{{ flight.User.firstName + " " + flight.User.lastName }}</a>
-        am
-        <a href="#"><BaseDate :timestamp="flight.dateOfFlight" /></a>
-      </p>
-    </div>
-    <!-- Content -->
+    <TheSubnav :flight="flight" />
     <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
     <Barogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
@@ -48,6 +35,7 @@ import trackColors from "@/assets/js/trackColors";
 import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
 import FlightReport from "@/components/FlightReport";
+import TheSubnav from "@/components/TheSubnav";
 
 export default {
   name: "FlightView",
@@ -58,6 +46,7 @@ export default {
     FlightDetails,
     Comments,
     FlightReport,
+    TheSubnav,
   },
   async setup(props) {
     const router = useRouter();
