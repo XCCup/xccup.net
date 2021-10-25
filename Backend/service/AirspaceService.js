@@ -125,6 +125,7 @@ async function find2dIntersection(fixesId) {
 
 async function findAirspacesWithinPolygon(points) {
   const polygonPoints = points.map((e) => e.replace(",", " "));
+  //Close polygon and add first entry again as last entry
   polygonPoints.push(polygonPoints[0]);
   const polygonPointsAsLinestring = polygonPoints.join(",");
 

@@ -224,7 +224,7 @@ async function queryDb(where, gender, limit, site, region, club) {
 
 function createDefaultWhereForFlight(seasonDetail, isSenior) {
   const where = {
-    dateOfFlight: {
+    takeoffTime: {
       [Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
     },
     flightPoints: {

@@ -63,7 +63,7 @@ const flightService = {
 
     const orderStatement = sortByPoints
       ? ["flightPoints", "DESC"]
-      : ["dateOfFlight", "DESC"];
+      : ["takeoffTime", "DESC"];
 
     const queryObject = {
       include: [
@@ -226,7 +226,7 @@ const flightService = {
     const totalDistance = await Flight.sum("flightDistance", {
       where: {
         andOp: sequelize.where(
-          sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
+          sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
           year
         ),
       },
@@ -341,11 +341,10 @@ const flightService = {
   extractFixesAndAddFurtherInformationToFlight: async (flight) => {
     const fixes = IgcAnalyzer.extractFixes(flight);
 
-    flight.dateOfFlight = new Date(fixes[0].timestamp);
-
-    flight.isWeekend = isNoWorkday(flight.dateOfFlight);
-
     flight.airtime = calcAirtime(fixes);
+    flight.takeoffTime = new Date(fixes[0].timestamp);
+    flight.landingTime = new Date(fixes[fixes.length - 1].timestamp);
+    flight.isWeekend = isNoWorkday(flight.takeoffTime);
 
     const requests = [findClosestTakeoff(fixes[0])];
     if (process.env.USE_GOOGLE_API === "true") {
@@ -507,23 +506,23 @@ function filterFlightFixesForTodayRanking(flightDbObjects) {
  */
 async function findFlightBuddies(flight) {
   //TODO Is it possible to join flightBuddiesfor to the provided flight directly with the first query to the db?
-  //Problem how can i back reference in an include statement (dateOfFlight, siteId)
+  //Problem how can i back reference in an include statement (takeoffTime, siteId)
   const timeOffsetValue = 2;
   const timeOffsetUnit = "h";
   const pointThreshold = 30;
 
-  const from = moment(flight.dateOfFlight).subtract(
+  const from = moment(flight.takeoffTime).subtract(
     timeOffsetValue,
     timeOffsetUnit
   );
-  const till = moment(flight.dateOfFlight).add(timeOffsetValue, timeOffsetUnit);
+  const till = moment(flight.takeoffTime).add(timeOffsetValue, timeOffsetUnit);
   return Flight.findAll({
     where: {
       id: {
         [sequelize.Op.not]: flight.id,
       },
       siteId: flight.siteId,
-      dateOfFlight: {
+      takeoffTime: {
         [sequelize.Op.between]: [from, till],
       },
       flightPoints: {
@@ -586,12 +585,12 @@ async function createWhereStatement(
   }
   if (year) {
     whereStatement.andOp = sequelize.where(
-      sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
+      sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
       year
     );
   }
   if (startDate && endDate) {
-    whereStatement.dateOfFlight = {
+    whereStatement.takeoffTime = {
       [sequelize.Op.between]: [startDate, endDate],
     };
   }
