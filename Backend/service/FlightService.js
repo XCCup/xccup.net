@@ -206,7 +206,7 @@ const flightService = {
       const flight = flightDbObject.toJSON();
       //TODO Merge directly when model is retrieved?
       flight.fixes = FlightFixes.mergeData(flight.fixes);
-      flight.flightBuddies = await findFlightBuddies(flight);
+      flight.airbuddies = await findAirbuddies(flight);
 
       //Unescape characters which where sanitzied before stored to db
       flight.report = _.unescape(flight.report);

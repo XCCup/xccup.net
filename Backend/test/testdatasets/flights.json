@@ -308,11 +308,11 @@
     "externalId": 2,
     "report": "ea a incidunt consequuntur dolor voluptates quos enim excepturi necessitatibus a sit quia cumque labore omnis impedit velit beatae aut omnis odio rem odit repellat facere nobis aut neque soluta qui omnis sit aut fugiat deleniti aut sint expedita autem voluptatem et dolorem sed sint numquam animi dolorum assumenda explicabo dignissimos aspernatur iusto explicabo quisquam sequi illum assumenda eos est et excepturi deleniti eaque explicabo aut ea alias velit maiores iste architecto rerum quod officia sit quia vel quis nobis cupiditate voluptatibus deleniti voluptates nihil animi dicta natus velit est quo maxime sed laboriosam vero sit ipsam sint cum maxime expedita qui quidem nesciunt eum sit repellat corporis at sapiente quia ratione iure quos quo inventore sunt iusto consequatur natus qui delectus voluptas sed aut ab ducimus saepe dignissimos aliquam aut recusandae repudiandae ipsa et eligendi rerum aut voluptatem enim tempore consequatur temporibus placeat rerum dolores architecto dolor ullam voluptatum hic ab dolores nemo ex aut alias ad rerum totam debitis quia quisquam eveniet animi est rerum reiciendis perferendis nesciunt atque",
     "glider": {
-      "brand": "Sky",
-      "model": "Apollo",
+      "brand": "Ozone",
+      "model": "Alpina 2",
       "gliderClass": {
-        "key": "AB_low",
-        "description": "GS Sport low"
+        "key": "C_low",
+        "description": "GS Intermdediate low"
       }
     },
     "flightStatus": "In Wertung",
@@ -444,11 +444,11 @@
     "externalId": 4,
     "report": "nostrum ut neque amet accusamus rerum voluptatum est delectus omnis qui qui repellat officiis consequatur aut aspernatur qui ut accusantium libero nisi enim molestiae asperiores maxime aliquam repellendus exercitationem in quia quibusdam ipsam porro id et nam ut dolores eveniet ut dolor culpa quos sit sint sint quia incidunt rerum hic odit unde distinctio ut in tempora molestiae sunt est velit aut quo rerum veritatis consequatur velit quo",
     "glider": {
-      "brand": "Sky",
-      "model": "Apollo",
+      "brand": "Advance",
+      "model": "BiBeta 6",
       "gliderClass": {
-        "key": "AB_low",
-        "description": "GS Sport low"
+        "key": "Tandem",
+        "description": "GS Tandem"
       }
     },
     "flightStatus": "In Wertung",
