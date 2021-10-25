@@ -9,7 +9,7 @@ const service = {
   },
 
   getByFlightId: async (flightId) => {
-    const commmentsDbOject = await FlightComment.findAll({
+    const comments = await FlightComment.findAll({
       where: { flightId },
       include: [
         {
@@ -20,7 +20,6 @@ const service = {
       order: [["createdAt", "ASC"]],
     });
 
-    const comments = commmentsDbOject.toJSON();
     comments.forEach((comment) => {
       comment.message = _.unescape(comment.message);
     });

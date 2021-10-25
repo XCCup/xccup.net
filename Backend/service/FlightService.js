@@ -208,7 +208,7 @@ const flightService = {
       flight.fixes = FlightFixes.mergeData(flight.fixes);
       flight.flightBuddies = await findFlightBuddies(flight);
 
-      //Unescape characters with where sanitzied before stored to db
+      //Unescape characters which where sanitzied before stored to db
       flight.report = _.unescape(flight.report);
       flight.comments.forEach((comment) => {
         comment.message = _.unescape(comment.message);
@@ -502,10 +502,10 @@ function filterFlightFixesForTodayRanking(flightDbObjects) {
  * * 4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14
  * * 07b590f3-ca8a-4305-88a2-e11c314b4955
  *
- * @param {*} flight The flight to which flightBuddies should be found.
+ * @param {*} flight The flight to which airBuddies should be found.
  */
-async function findFlightBuddies(flight) {
-  //TODO Is it possible to join flightBuddiesfor to the provided flight directly with the first query to the db?
+async function findAirbuddies(flight) {
+  //TODO Is it possible to join airBuddiesfor to the provided flight directly with the first query to the db?
   //Problem how can i back reference in an include statement (takeoffTime, siteId)
   const timeOffsetValue = 2;
   const timeOffsetUnit = "h";

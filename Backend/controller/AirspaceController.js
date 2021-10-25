@@ -28,8 +28,6 @@ router.get(
       points = [matchResult[1], matchResult[2], matchResult[3], matchResult[4]];
     }
 
-    console.log(points);
-
     try {
       const airspaces = points
         ? await service.getAllRelevantInPolygon(points)
