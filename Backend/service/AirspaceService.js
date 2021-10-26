@@ -32,7 +32,7 @@ const service = {
     const startTime = new Date();
     const intersections2D = await find2dIntersection(fixesWithElevation.id);
 
-    const line = FlightFixes.mergeCoordinatesAndOtherData(fixesWithElevation);
+    const line = FlightFixes.mergeData(fixesWithElevation);
 
     let violationFound = false;
     for (let rI = 0; rI < intersections2D.length && !violationFound; rI++) {

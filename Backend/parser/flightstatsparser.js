@@ -32,7 +32,7 @@ fixes.forEach((e) => {
     maxSink,
     maxClimb,
     maxSpeed,
-    taskSpeed: Math.round((flight.airtime / flight.flightDistance) * 10) / 10,
+    taskSpeed: Math.round((flight.flightDistance / flight.airtime) * 600) / 10,
   };
 
   e.stats = fixesStats;

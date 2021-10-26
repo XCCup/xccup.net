@@ -61,9 +61,9 @@
       "minHeightGps": 81,
       "maxHeightGps": 1731,
       "maxSink": -3.4,
-      "maxClimb": 3.2,
+      "maxClimb": 3.1,
       "maxSpeed": 59.46,
-      "taskSpeed": 5.1
+      "taskSpeed": 11.7
     }
   },
   {
@@ -130,7 +130,7 @@
       "maxSink": -3,
       "maxClimb": 3.2,
       "maxSpeed": 65.39,
-      "taskSpeed": 3.5
+      "taskSpeed": 17.3
     }
   },
   {
@@ -194,10 +194,10 @@
       "maxHeightBaro": 1165,
       "minHeightGps": 246,
       "maxHeightGps": 1297,
-      "maxSink": -2.7,
-      "maxClimb": 2.7,
+      "maxSink": -2.9,
+      "maxClimb": 2.8,
       "maxSpeed": 61.94,
-      "taskSpeed": 7.5
+      "taskSpeed": 8
     }
   },
   {
@@ -264,7 +264,7 @@
       "maxSink": -2.5,
       "maxClimb": 4.9,
       "maxSpeed": 52.43,
-      "taskSpeed": 5.2
+      "taskSpeed": 11.6
     }
   },
   {
@@ -331,7 +331,7 @@
       "maxSink": 0,
       "maxClimb": 0,
       "maxSpeed": 75.39,
-      "taskSpeed": 2.3
+      "taskSpeed": 25.7
     }
   },
   {
@@ -395,10 +395,10 @@
       "maxHeightBaro": 1723,
       "minHeightGps": 140,
       "maxHeightGps": 1710,
-      "maxSink": -2.7,
-      "maxClimb": 3.3,
+      "maxSink": -2.8,
+      "maxClimb": 3.4,
       "maxSpeed": 51.57,
-      "taskSpeed": 5.7
+      "taskSpeed": 10.5
     }
   },
   {
@@ -465,7 +465,7 @@
       "maxSink": -4.1,
       "maxClimb": 2.7,
       "maxSpeed": 50.48,
-      "taskSpeed": 4
+      "taskSpeed": 15.1
     }
   },
   {
@@ -532,7 +532,7 @@
       "maxSink": -3.1,
       "maxClimb": 2.7,
       "maxSpeed": 50.41,
-      "taskSpeed": 6.1
+      "taskSpeed": 9.8
     }
   },
   {
@@ -596,10 +596,10 @@
       "maxHeightBaro": 803,
       "minHeightGps": 99,
       "maxHeightGps": 854,
-      "maxSink": -5.2,
+      "maxSink": -5.1,
       "maxClimb": 2.7,
       "maxSpeed": 61.24,
-      "taskSpeed": 14.8
+      "taskSpeed": 4
     }
   },
   {
@@ -663,10 +663,10 @@
       "maxHeightBaro": 1104,
       "minHeightGps": 50,
       "maxHeightGps": 1098,
-      "maxSink": -2.9,
+      "maxSink": -2.8,
       "maxClimb": 5.8,
       "maxSpeed": 56.31,
-      "taskSpeed": 4.1
+      "taskSpeed": 14.8
     }
   },
   {
@@ -733,7 +733,7 @@
       "maxSink": -3.1,
       "maxClimb": 3.5,
       "maxSpeed": 83.57,
-      "taskSpeed": 4.4
+      "taskSpeed": 13.8
     }
   },
   {
@@ -797,10 +797,10 @@
       "maxHeightBaro": 1549,
       "minHeightGps": 359,
       "maxHeightGps": 1661,
-      "maxSink": -3.4,
-      "maxClimb": 3.3,
+      "maxSink": -3.5,
+      "maxClimb": 3.2,
       "maxSpeed": 65.46,
-      "taskSpeed": 3.8
+      "taskSpeed": 15.6
     }
   },
   {
@@ -867,7 +867,7 @@
       "maxSink": -3,
       "maxClimb": 2.8,
       "maxSpeed": 58.77,
-      "taskSpeed": 7.3
+      "taskSpeed": 8.2
     }
   },
   {
@@ -932,9 +932,9 @@
       "minHeightGps": 352,
       "maxHeightGps": 1969,
       "maxSink": -3.7,
-      "maxClimb": 4.2,
+      "maxClimb": 4.3,
       "maxSpeed": 60.24,
-      "taskSpeed": 3.5
+      "taskSpeed": 17.3
     }
   },
   {
@@ -998,10 +998,10 @@
       "maxHeightBaro": 1240,
       "minHeightGps": 320,
       "maxHeightGps": 1308,
-      "maxSink": -3.6,
-      "maxClimb": 4,
+      "maxSink": -3.4,
+      "maxClimb": 3.7,
       "maxSpeed": 72.63,
-      "taskSpeed": 3.5
+      "taskSpeed": 17.1
     }
   },
   {
@@ -1064,10 +1064,10 @@
       "maxHeightBaro": 1129,
       "minHeightGps": 276,
       "maxHeightGps": 1164,
-      "maxSink": -2.6,
+      "maxSink": -2.5,
       "maxClimb": 2.6,
       "maxSpeed": 63.9,
-      "taskSpeed": 5.1
+      "taskSpeed": 11.7
     }
   },
   {
@@ -1130,10 +1130,10 @@
       "maxHeightBaro": 2093,
       "minHeightGps": 368,
       "maxHeightGps": 2125,
-      "maxSink": -4.3,
+      "maxSink": -4.4,
       "maxClimb": 4,
       "maxSpeed": 60.7,
-      "taskSpeed": 11.4
+      "taskSpeed": 5.3
     }
   },
   {
@@ -1196,10 +1196,10 @@
       "maxHeightBaro": 1280,
       "minHeightGps": 210,
       "maxHeightGps": 1282,
-      "maxSink": -3.2,
-      "maxClimb": 3,
+      "maxSink": -3.3,
+      "maxClimb": 3.3,
       "maxSpeed": 68.51,
-      "taskSpeed": 3.1
+      "taskSpeed": 19.1
     }
   },
   {
@@ -1262,10 +1262,10 @@
       "maxHeightBaro": 1756,
       "minHeightGps": 128,
       "maxHeightGps": 1783,
-      "maxSink": -2.6,
-      "maxClimb": 3.9,
+      "maxSink": -2.7,
+      "maxClimb": 3.8,
       "maxSpeed": 63.61,
-      "taskSpeed": 4
+      "taskSpeed": 14.8
     }
   },
   {
@@ -1331,7 +1331,7 @@
       "maxSink": -2.9,
       "maxClimb": 3.1,
       "maxSpeed": 51.52,
-      "taskSpeed": 2.8
+      "taskSpeed": 21.8
     }
   },
   {
@@ -1398,7 +1398,7 @@
       "maxSink": -4.3,
       "maxClimb": 4.5,
       "maxSpeed": 193.84,
-      "taskSpeed": 8.5
+      "taskSpeed": 7
     }
   },
   {
@@ -1462,10 +1462,10 @@
       "maxHeightBaro": 1750,
       "minHeightGps": 0,
       "maxHeightGps": 1797,
-      "maxSink": -3,
-      "maxClimb": 3.5,
+      "maxSink": -3.3,
+      "maxClimb": 15.5,
       "maxSpeed": 734.8,
-      "taskSpeed": 4
+      "taskSpeed": 15.2
     }
   },
   {
@@ -1529,10 +1529,10 @@
       "maxHeightBaro": 2008,
       "minHeightGps": 144,
       "maxHeightGps": 2045,
-      "maxSink": -3.8,
-      "maxClimb": 4.3,
+      "maxSink": -18.1,
+      "maxClimb": 19.5,
       "maxSpeed": 81.72,
-      "taskSpeed": 2.3
+      "taskSpeed": 25.9
     }
   },
   {
@@ -1599,7 +1599,7 @@
       "maxSink": -3.5,
       "maxClimb": 3.5,
       "maxSpeed": 85.45,
-      "taskSpeed": 2.8
+      "taskSpeed": 21.1
     }
   },
   {
@@ -1666,7 +1666,7 @@
       "maxSink": -3.8,
       "maxClimb": 2.6,
       "maxSpeed": 59.27,
-      "taskSpeed": 11.8
+      "taskSpeed": 5.1
     }
   },
   {
@@ -1730,10 +1730,10 @@
       "maxHeightBaro": 1738,
       "minHeightGps": 173,
       "maxHeightGps": 1701,
-      "maxSink": -3.8,
-      "maxClimb": 3.1,
+      "maxSink": -3.3,
+      "maxClimb": 2.7,
       "maxSpeed": 63.15,
-      "taskSpeed": 6.5
+      "taskSpeed": 9.3
     }
   },
   {
@@ -1797,10 +1797,10 @@
       "maxHeightBaro": 634,
       "minHeightGps": 308,
       "maxHeightGps": 706,
-      "maxSink": -1.9,
+      "maxSink": -2,
       "maxClimb": 1.6,
       "maxSpeed": 73.92,
-      "taskSpeed": 7.5
+      "taskSpeed": 8
     }
   },
   {
@@ -1864,10 +1864,10 @@
       "maxHeightBaro": 1133,
       "minHeightGps": 216,
       "maxHeightGps": 1174,
-      "maxSink": -5,
-      "maxClimb": 4.8,
+      "maxSink": -3.3,
+      "maxClimb": 3.5,
       "maxSpeed": 121.9,
-      "taskSpeed": 5
+      "taskSpeed": 12
     }
   },
   {
@@ -1934,7 +1934,7 @@
       "maxSink": -3.8,
       "maxClimb": 3.8,
       "maxSpeed": 84.21,
-      "taskSpeed": 18.4
+      "taskSpeed": 3.3
     }
   },
   {
@@ -1999,9 +1999,9 @@
       "minHeightGps": 212,
       "maxHeightGps": 1045,
       "maxSink": -2.5,
-      "maxClimb": 5.9,
+      "maxClimb": 6,
       "maxSpeed": 51.61,
-      "taskSpeed": 3.8
+      "taskSpeed": 15.7
     }
   },
   {
@@ -2065,10 +2065,10 @@
       "maxHeightBaro": 1411,
       "minHeightGps": 378,
       "maxHeightGps": 1451,
-      "maxSink": -3.2,
-      "maxClimb": 3.7,
+      "maxSink": -3.3,
+      "maxClimb": 3.6,
       "maxSpeed": 72.75,
-      "taskSpeed": 4.3
+      "taskSpeed": 13.9
     }
   },
   {
@@ -2132,10 +2132,10 @@
       "maxHeightBaro": 1001,
       "minHeightGps": 148,
       "maxHeightGps": 1066,
-      "maxSink": -3.6,
-      "maxClimb": 2.1,
+      "maxSink": -3.2,
+      "maxClimb": 1.9,
       "maxSpeed": 50.94,
-      "taskSpeed": 8.5
+      "taskSpeed": 7
     }
   },
   {
@@ -2202,7 +2202,7 @@
       "maxSink": -2.8,
       "maxClimb": 1.9,
       "maxSpeed": 82.83,
-      "taskSpeed": 3.4
+      "taskSpeed": 17.6
     }
   },
   {
@@ -2266,10 +2266,10 @@
       "maxHeightBaro": 1441,
       "minHeightGps": 257,
       "maxHeightGps": 1447,
-      "maxSink": -2.5,
-      "maxClimb": 2.6,
+      "maxSink": -3.2,
+      "maxClimb": 2.5,
       "maxSpeed": 52.62,
-      "taskSpeed": 19.7
+      "taskSpeed": 3
     }
   },
   {
@@ -2334,9 +2334,9 @@
       "minHeightGps": 251,
       "maxHeightGps": 733,
       "maxSink": -2.4,
-      "maxClimb": 2.1,
+      "maxClimb": 2.4,
       "maxSpeed": 74.55,
-      "taskSpeed": 11.4
+      "taskSpeed": 5.3
     }
   },
   {
@@ -2402,7 +2402,7 @@
       "maxSink": -2.1,
       "maxClimb": 1.3,
       "maxSpeed": 63.48,
-      "taskSpeed": 10.9
+      "taskSpeed": 5.5
     }
   },
   {
@@ -2465,10 +2465,10 @@
       "maxHeightBaro": 525,
       "minHeightGps": 203,
       "maxHeightGps": 533,
-      "maxSink": -1.9,
-      "maxClimb": 1.8,
+      "maxSink": -1.8,
+      "maxClimb": 2,
       "maxSpeed": 61.15,
-      "taskSpeed": 6.9
+      "taskSpeed": 8.7
     }
   },
   {
@@ -2531,10 +2531,10 @@
       "maxHeightBaro": 2133,
       "minHeightGps": 184,
       "maxHeightGps": 2230,
-      "maxSink": -4.3,
-      "maxClimb": 4.5,
+      "maxSink": -49.9,
+      "maxClimb": 51.7,
       "maxSpeed": 65.35,
-      "taskSpeed": 2.6
+      "taskSpeed": 23
     }
   },
   {
@@ -2597,10 +2597,10 @@
       "maxHeightBaro": 1796,
       "minHeightGps": 183,
       "maxHeightGps": 1872,
-      "maxSink": -4.2,
-      "maxClimb": 3.5,
+      "maxSink": -3.9,
+      "maxClimb": 3.3,
       "maxSpeed": 59.18,
-      "taskSpeed": 3
+      "taskSpeed": 19.8
     }
   },
   {
@@ -2663,10 +2663,10 @@
       "maxHeightBaro": 1939,
       "minHeightGps": 97,
       "maxHeightGps": 2011,
-      "maxSink": -3.7,
-      "maxClimb": 3.9,
+      "maxSink": -12.1,
+      "maxClimb": 13.8,
       "maxSpeed": 61.96,
-      "taskSpeed": 3.9
+      "taskSpeed": 15.5
     }
   },
   {
@@ -2731,9 +2731,9 @@
       "minHeightGps": 230,
       "maxHeightGps": 1868,
       "maxSink": -3.3,
-      "maxClimb": 3.1,
+      "maxClimb": 3.2,
       "maxSpeed": 72.33,
-      "taskSpeed": 2.4
+      "taskSpeed": 24.5
     }
   },
   {
@@ -2797,10 +2797,10 @@
       "maxHeightBaro": 1104,
       "minHeightGps": 210,
       "maxHeightGps": 1136,
-      "maxSink": -2.8,
-      "maxClimb": 3.1,
+      "maxSink": -2.7,
+      "maxClimb": 3.2,
       "maxSpeed": 57.85,
-      "taskSpeed": 7.8
+      "taskSpeed": 7.7
     }
   },
   {
@@ -2867,7 +2867,7 @@
       "maxSink": -1.9,
       "maxClimb": 2.2,
       "maxSpeed": 63.31,
-      "taskSpeed": 5.1
+      "taskSpeed": 11.7
     }
   }
 ]
