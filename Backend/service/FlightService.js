@@ -139,21 +139,22 @@ const flightService = {
     return flights;
   },
 
-  getById: async (id) => {
+  getById: async (id, noIncludes) => {
+    const includes = [
+      {
+        model: FlyingSite,
+        as: "takeoff",
+        attributes: ["id", "name"],
+      },
+      {
+        model: FlightFixes,
+        as: "fixes",
+        attributes: ["geom", "timeAndHeights"],
+      },
+    ];
     return await Flight.findOne({
       where: { id },
-      include: [
-        {
-          model: FlightFixes,
-          as: "fixes",
-          attributes: ["geom", "timeAndHeights"],
-        },
-        {
-          model: FlyingSite,
-          as: "takeoff",
-          attributes: ["id", "name"],
-        },
-      ],
+      include: noIncludes ? [] : includes,
     });
   },
 

@@ -11,6 +11,7 @@ const {
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
   checkParamIsInt,
+  checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
 
@@ -78,6 +79,26 @@ router.get("/:id", checkParamIsInt("id"), async (req, res, next) => {
   }
 });
 
+// @desc Retrieve the igc file of a flight
+// @route GET /flights/igc/:id
+
+router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
+  if (validationHasErrors(req, res)) return;
+  const id = req.params.id;
+
+  try {
+    const flight = await service.getById(id, true);
+
+    if (!flight) return res.sendStatus(NOT_FOUND);
+
+    const fullfilepath = path.join(path.resolve(), flight.igcPath);
+
+    return res.download(fullfilepath);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Deletes a flight by id
 // @route DELETE /flights/:id
 // @access Only owner
@@ -133,7 +154,7 @@ router.post(
         flightStatus: service.STATE_IN_PROCESS,
       });
 
-      flightDbObject.igcUrl = await persistIgcFile(flightDbObject.id, igc);
+      flightDbObject.igcPath = await persistIgcFile(flightDbObject.id, igc);
 
       service.startResultCalculation(flightDbObject);
 
@@ -163,7 +184,7 @@ router.post(
 router.put(
   "/:id",
   authToken,
-  checkParamIsInt("id"),
+  checkParamIsUuid("id"),
   checkOptionalStringObjectNotEmpty("report"),
   checkOptionalStringObjectNotEmpty("status"),
   checkStringObjectNotEmpty("glider.brand"),
@@ -172,7 +193,7 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const flight = await service.getByExternalId(req.params.id);
+    const flight = await service.getById(req.params.id, true);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     const report = req.body.report;

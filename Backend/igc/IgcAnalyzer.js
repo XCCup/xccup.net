@@ -84,7 +84,7 @@ const IgcAnalyzer = {
   extractFixes: (flight) => {
     //TODO Currently the file will be deserailized twice!
     //1x startCalculation and 1x extractFixes
-    console.log(`read file from ${flight.igcUrl}`);
+    console.log(`read file from ${flight.igcPath}`);
     const igcAsPlainText = readIgcFile(flight);
     console.log(`start parsing`);
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
@@ -117,7 +117,7 @@ function extractOnlyDefinedFieldsFromFix(fix) {
 }
 
 function readIgcFile(flight) {
-  return fs.readFileSync(flight.igcUrl.toString(), "utf8");
+  return fs.readFileSync(flight.igcPath.toString(), "utf8");
 }
 
 function runTurnpointIteration(resultStripIteration) {
@@ -199,7 +199,7 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
   const result = {
     id: flightDataObject.id,
     turnpoints: [],
-    igcUrl: flightDataObject.igcUrl,
+    igcPath: flightDataObject.igcPath,
   };
   let cornerStartIndex;
   if (faiFactor > flatFactor && faiFactor > freeFactor) {
