@@ -57,22 +57,29 @@ export default {
     }),
     async handleSubmit() {
       try {
-        this.actionLogin({
+        const response = await this.actionLogin({
           email: this.email,
           password: this.password,
         });
         // TODO: If we do want to redirect: Do it here or in router config?
-        // if (response === 200) {
-        //   this.$router.push({
-        //     name: "Profile",
-        //   });
-        // } else {
-        //   console.log(this.getterLoginStatus);
-        // }
+        if (response === 200 && this.redirectAfterLogin) {
+          this.$router.push({
+            name: "Profile",
+          });
+        } else {
+          console.log(this.getterLoginStatus);
+        }
       } catch (error) {
         // TODO: Display error message
         console.log(error);
       }
+    },
+  },
+  props: {
+    redirectAfterLogin: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 };
