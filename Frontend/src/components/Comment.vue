@@ -88,7 +88,7 @@ export default {
   computed: {
     ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
     saveButtonIsDisabled() {
-      return this.editedMessage.length < 5;
+      return this.editedMessage.length < 3;
     },
   },
   emits: ["delete-comment", "comment-edited"],
