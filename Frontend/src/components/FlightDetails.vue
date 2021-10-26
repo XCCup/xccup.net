@@ -46,7 +46,7 @@
             <tr>
               <th>Flugzeit:</th>
               <td>
-                {{ calcFlightDuration(flight) }}
+                {{ calcFlightDuration(flight.airtime) }}
               </td>
             </tr>
             <tr>
@@ -69,9 +69,9 @@
               <th>Uhrzeit:</th>
               <td v-if="true">
                 <i class="bi bi-arrow-up"></i>
-                {{ getTakeoffTime(flight) }}
+                <BaseDate :timestamp="flight.takeoffTime" dateFormat="HH:mm" />
                 Uhr <i class="bi bi-arrow-down"></i>
-                {{ getlandingTime(flight) }}
+                <BaseDate :timestamp="flight.landingTime" dateFormat="HH:mm" />
                 Uhr
               </td>
             </tr>
@@ -189,25 +189,11 @@ export default {
     },
   },
   methods: {
-    getlandingTime(flight) {
-      if (!flight.fixes) return "";
+    calcFlightDuration(duration) {
+      if (!duration) return "";
+      const ms = duration * 60 * 1000;
 
-      return format(
-        new Date(flight.fixes[flight.fixes.length - 1].timestamp),
-        "HH:mm"
-      );
-    },
-    getTakeoffTime(flight) {
-      if (!flight.fixes) return "";
-      return format(new Date(flight.fixes[0].timestamp), "HH:mm");
-    },
-    calcFlightDuration(flight) {
-      if (!flight.fixes) return "";
-      let ms =
-        flight.fixes[flight.fixes.length - 1].timestamp -
-        flight.fixes[0].timestamp;
-
-      var seconds = parseInt((ms / 1000) % 60),
+      let seconds = parseInt((ms / 1000) % 60),
         minutes = parseInt((ms / (1000 * 60)) % 60),
         hours = parseInt((ms / (1000 * 60 * 60)) % 24);
 
