@@ -38,20 +38,42 @@
                 />
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
+                <BaseInput v-model="userProfile.street" label="Strasse" />
+                <div class="row">
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.zip" label="PLZ" />
+                  </div>
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.city" label="Stadt" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.state" label="Bundesland" />
+                  </div>
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.country" label="Land" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <BaseSelect
+                      v-model="userProfile.gender"
+                      label="Geschlecht"
+                      :showLabel="true"
+                      :options="['M', 'W', 'D']"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <BaseSelect
+                      v-model="userProfile.tshirtSize"
+                      label="T-Shirt Größe"
+                      :showLabel="true"
+                      :options="['S', 'M', 'L', 'XL', 'XXL']"
+                    />
+                  </div>
+                </div>
 
-                <BaseSelect
-                  v-model="userProfile.gender"
-                  label="Geschlecht"
-                  :showLabel="true"
-                  :options="['M', 'W']"
-                />
-                <div class="mt-3"></div>
-                <BaseSelect
-                  v-model="userProfile.tshirtSize"
-                  label="T-Shirt Größe"
-                  :showLabel="true"
-                  :options="['S', 'M', 'L', 'XL', 'XXL']"
-                />
                 <div class="mt-3"></div>
               </div>
               <div class="col-md-12">
@@ -114,32 +136,7 @@
                 Newsletter abonnieren <i class="bi bi-info-circle"></i>
               </label>
             </div>
-            <!-- TODO Are those options obsolete? -->
-            <!-- <h5>Sonderwertungen</h5>
 
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="gsRLP"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                GS RLP <i class="bi bi-info-circle"></i>
-              </label>
-            </div> -->
-
-            <!-- <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="luxChampionat"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                Luxemburg XC-Championat <i class="bi bi-info-circle"></i>
-              </label>
-            </div> -->
             <br />
             <!-- Edit -->
             <div v-if="!edit">
