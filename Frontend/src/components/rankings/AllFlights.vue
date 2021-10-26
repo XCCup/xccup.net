@@ -25,7 +25,7 @@
           >
             <td>
               <BaseDate
-                :timestamp="flight.dateOfFlight"
+                :timestamp="flight.takeoffTime"
                 dateFormat="dd.MM.yyyy"
               />
             </td>

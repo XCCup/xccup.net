@@ -5,9 +5,9 @@
         <h3>
           Tageswertung
           <BaseDate
-            v-if="flights[0]?.dateOfFlight"
+            v-if="flights[0]?.takeoffTime"
             class="fs-6"
-            :timestamp="flights[0]?.dateOfFlight"
+            :timestamp="flights[0]?.takeoffTime"
             dateFormat="dd.MM.yyyy"
           />
         </h3>
