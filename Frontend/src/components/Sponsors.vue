@@ -68,4 +68,7 @@ img {
 .square-holder:hover img {
   filter: none;
 }
+.square-holder:hover {
+  border-color: #08556d;
+}
 </style>
