@@ -13,7 +13,7 @@ test("Validate an igc-File which should result to a FAI triangle", (done) => {
 
   const flightToAnaylze = {
     id: "kai_fai",
-    igcUrl: path.join(__dirname, "../igc", filePath),
+    igcPath: path.join(__dirname, "../igc", filePath),
   };
 
   const expectedFlight = {
@@ -25,7 +25,7 @@ test("Validate an igc-File which should result to a FAI triangle", (done) => {
       lat: 49.86705,
       long: 6.8431,
     },
-    igcUrl: filePath,
+    igcPath: filePath,
   };
 
   try {
@@ -37,7 +37,7 @@ test("Validate an igc-File which should result to a FAI triangle", (done) => {
         expect(result.dist).toBe(expectedFlight.dist);
         expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
         expect(result.id).toBe(expectedFlight.id);
-        expect(result.igcUrl).toContain(expectedFlight.igcUrl);
+        expect(result.igcPath).toContain(expectedFlight.igcPath);
         done();
       }
     );
@@ -52,7 +52,7 @@ test("Validate an igc-File which should result to a FLAT triangle", (done) => {
 
   const flightToAnaylze = {
     id: "kai_flat",
-    igcUrl: path.join(__dirname, "../igc", filePath),
+    igcPath: path.join(__dirname, "../igc", filePath),
   };
 
   const expectedFlight = {
@@ -64,7 +64,7 @@ test("Validate an igc-File which should result to a FLAT triangle", (done) => {
       lat: 49.78081666666667,
       long: 6.6822,
     },
-    igcUrl: filePath,
+    igcPath: filePath,
   };
 
   try {
@@ -76,7 +76,7 @@ test("Validate an igc-File which should result to a FLAT triangle", (done) => {
         expect(result.dist).toBe(expectedFlight.dist);
         expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
         expect(result.id).toBe(expectedFlight.id);
-        expect(result.igcUrl).toContain(expectedFlight.igcUrl);
+        expect(result.igcPath).toContain(expectedFlight.igcPath);
         done();
       }
     );
@@ -91,7 +91,7 @@ test("Validate an igc-File which should result to a free flight", (done) => {
 
   const flightToAnaylze = {
     id: "kai_free",
-    igcUrl: path.join(__dirname, "../igc", filePath),
+    igcPath: path.join(__dirname, "../igc", filePath),
   };
 
   const expectedFlight = {
@@ -103,7 +103,7 @@ test("Validate an igc-File which should result to a free flight", (done) => {
       lat: 50.3127,
       long: 7.42125,
     },
-    igcUrl: filePath,
+    igcPath: filePath,
   };
 
   try {
@@ -115,7 +115,7 @@ test("Validate an igc-File which should result to a free flight", (done) => {
         expect(result.dist).toBe(expectedFlight.dist);
         expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
         expect(result.id).toBe(expectedFlight.id);
-        expect(result.igcUrl).toContain(expectedFlight.igcUrl);
+        expect(result.igcPath).toContain(expectedFlight.igcPath);
         done();
       }
     );
@@ -130,7 +130,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s =>
 
   const expectedFlight = {
     id: "kai_free",
-    igcUrl: path.join(__dirname, "../igc", filePath),
+    igcPath: path.join(__dirname, "../igc", filePath),
   };
   const numberOfFixes = 2979;
   const fixNr2345 = {
@@ -154,7 +154,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s =>
 
   const expectedFlight = {
     id: "kai_flat_res2",
-    igcUrl: path.join(__dirname, "../igc", filePath),
+    igcPath: path.join(__dirname, "../igc", filePath),
   };
 
   const numberOfFixes = 3757;
@@ -180,7 +180,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s =
 
   const expectedFlight = {
     id: "kai_free_res10",
-    igcUrl: path.join(__dirname, "../igc", filePath),
+    igcPath: path.join(__dirname, "../igc", filePath),
   };
 
   const numberOfFixes = 1809;
