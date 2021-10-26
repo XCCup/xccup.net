@@ -1,23 +1,21 @@
 <template>
   <form class="px-4 py-3" @submit.prevent="handleSubmit">
     <div class="mb-3">
-      <label for="exampleDropdownFormEmail1" class="form-label">E-Mail</label>
+      <label for="email" class="form-label">E-Mail</label>
       <input
-        type="text"
+        type="email"
         class="form-control"
-        id="exampleDropdownFormEmail1"
+        id="email"
         placeholder="E-Mail"
-        v-model="username"
+        v-model="email"
       />
     </div>
     <div class="mb-3">
-      <label for="exampleDropdownFormPassword1" class="form-label"
-        >Passwort</label
-      >
+      <label for="password" class="form-label">Passwort</label>
       <input
         type="password"
         class="form-control"
-        id="exampleDropdownFormPassword1"
+        id="password"
         placeholder="Passwort"
         v-model="password"
       />
@@ -45,30 +43,35 @@ export default {
   name: "BaseLogin",
 
   data() {
-    return { username: "", password: "" };
+    return { email: "", password: "" };
   },
   computed: {
-    ...mapGetters("auth", {
+    ...mapGetters({
       getterLoginStatus: "getLoginStatus",
     }),
   },
 
   methods: {
-    ...mapActions("auth", {
+    ...mapActions({
       actionLogin: "login",
     }),
     async handleSubmit() {
-      const response = await this.actionLogin({
-        name: this.username,
-        password: this.password,
-      });
-      // TODO: If we do want to redirect: Do it here or in router config?
-      if (response === 200) {
-        this.$router.push({
-          name: "Profile",
+      try {
+        this.actionLogin({
+          email: this.email,
+          password: this.password,
         });
-      } else {
-        console.log(this.getterLoginStatus);
+        // TODO: If we do want to redirect: Do it here or in router config?
+        // if (response === 200) {
+        //   this.$router.push({
+        //     name: "Profile",
+        //   });
+        // } else {
+        //   console.log(this.getterLoginStatus);
+        // }
+      } catch (error) {
+        // TODO: Display error message
+        console.log(error);
       }
     },
   },

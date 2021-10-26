@@ -4,19 +4,49 @@
       <h3>Streckenmeldungen 20XX</h3>
       <table class="table table-hover">
         <tbody>
+          <th>Datum</th>
+          <th>Name</th>
+          <th>Verein</th>
+          <th>Team</th>
+
+          <th>Startplatz</th>
+          <th>Gerät</th>
+          <th>Strecke</th>
+          <th></th>
+          <th>Punkte</th>
+          <th>Status</th>
+
           <tr
             v-for="(flight, index) in flights.slice(0, maxRows)"
             v-bind:item="flight"
             v-bind:index="index"
-            v-bind:key="flight._id"
-            @click="routeToFlight(flight.flightId)"
+            v-bind:key="flight.id"
+            @click="routeToFlight(flight.externalId)"
           >
-            <td scope="row">{{ index + 1 }}</td>
-            <td>{{ flight.pilot }}</td>
-            <td>{{ flight.takeoff }}</td>
-            <td>{{ flight.distance }} km</td>
-            <td>{{ flight.taskType }}</td>
-            <td>{{ flight.points }} P</td>
+            <td>
+              <BaseDate
+                :timestamp="flight.dateOfFlight"
+                dateFormat="dd.MM.yyyy"
+              />
+            </td>
+
+            <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
+            <td>{{ flight.User.Club?.name }}</td>
+            <td>{{ flight.User.Team?.name }}</td>
+            <td>{{ flight.takeoff.name }}</td>
+
+            <td>
+              <i
+                class="bi bi-trophy"
+                :class="flight.glider.gliderClass.key"
+              ></i>
+              {{ flight.glider.brand + " " + flight.glider.model }}
+            </td>
+
+            <td>{{ Math.floor(flight.flightDistance) }} km</td>
+            <td><FlightType :flightType="flight.flightType" /></td>
+            <td>{{ flight.flightPoints }} P</td>
+            <td>{{ flight.flightStatus }}</td>
           </tr>
         </tbody>
       </table>
@@ -25,8 +55,12 @@
 </template>
 
 <script>
+import FlightType from "@/components/FlightType";
+
 export default {
   name: "DailyRanking",
+  components: { FlightType },
+
   props: {
     flights: {
       type: Array,

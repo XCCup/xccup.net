@@ -9,17 +9,16 @@
         v-bind:item="flight"
         v-bind:index="index"
         v-bind:key="flight.id"
-        @click="routeToFlight(flight.id)"
+        @click="routeToFlight(flight.externalId)"
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>
           <BaseDate :timestamp="flight.dateOfFlight" dateFormat="dd.MM" />
         </td>
-        <td>{{ flight.id }}</td>
-        <td>{{ flight.User.name }}</td>
+        <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
         <td>{{ flight.takeoff.name }}</td>
         <td>{{ Math.floor(flight.flightDistance) }} km</td>
-        <td>{{ flight.flightType }}</td>
+        <td><FlightType :flightType="flight.flightType" /></td>
         <td>{{ flight.flightPoints }} P</td>
       </tr>
     </tbody>
@@ -27,9 +26,10 @@
 </template>
 
 <script>
+import FlightType from "@/components/FlightType";
 export default {
   name: "TopFlights",
-  components: {},
+  components: { FlightType },
 
   props: {
     flights: {

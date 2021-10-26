@@ -9,7 +9,9 @@ const state = () => ({
     refreshToken: "",
     tokenExp: "",
     userId: "",
-    username: "",
+    firstName: "",
+    lastName: "",
+    role: "",
   },
   loginStatus: "",
 });
@@ -42,8 +44,10 @@ const actions = {
     if (response && response.data) {
       commit("saveTokenData", response.data);
       commit("setLoginStatus", "success");
+      console.log("login successful");
     } else {
       commit("setLoginStatus", "failed");
+      console.log("login failed");
     }
   },
   async refresh({ commit, getters, dispatch }) {
@@ -85,16 +89,16 @@ const mutations = {
   saveTokenData(state, data) {
     localStorage.setItem("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
-
     const jwtDecodedValue = jwtDecrypt(data.accessToken);
     const newTokenData = {
       token: data.accessToken,
       refreshToken: data.refreshToken,
       tokenExp: jwtDecodedValue.exp,
       userId: jwtDecodedValue.id,
-      username: jwtDecodedValue.username,
+      firstName: jwtDecodedValue.firstName,
+      lastName: jwtDecodedValue.lastName,
+      role: jwtDecodedValue.role,
     };
-
     state.authData = newTokenData;
   },
   setLoginStatus(state, value) {
@@ -109,13 +113,15 @@ const mutations = {
       refreshToken: "",
       tokenExp: "",
       userId: "",
-      username: "",
+      firstName: "",
+      lastName: "",
+      role: "",
     };
   },
 };
 
 export default {
-  namespaced: true,
+  namespaced: false,
   state,
   getters,
   actions,

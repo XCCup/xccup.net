@@ -5,6 +5,7 @@
         <h3>
           Tageswertung
           <BaseDate
+            v-if="flights[0]?.dateOfFlight"
             class="fs-6"
             :timestamp="flights[0]?.dateOfFlight"
             dateFormat="dd.MM.yyyy"
@@ -19,15 +20,17 @@
                 v-bind:item="flight"
                 v-bind:index="index"
                 v-bind:key="flight.id"
-                @click="routeToFlight(flight.id)"
+                @click="routeToFlight(flight.externalId)"
                 @mouseover="updateHighlightedFlight(flight.id)"
                 @mouseleave="updateHighlightedFlight(null)"
               >
                 <td scope="row">{{ index + 1 }}</td>
-                <td>{{ flight.User.name }}</td>
+                <td>
+                  {{ flight.User.firstName + " " + flight.User.lastName }}
+                </td>
                 <td>{{ flight.takeoff.name }}</td>
                 <td>{{ Math.floor(flight.flightDistance) }} km</td>
-                <td>{{ flight.flightType }}</td>
+                <td><FlightType :flightType="flight.flightType" /></td>
                 <td>{{ flight.flightPoints }} P</td>
               </tr>
             </tbody>
@@ -56,10 +59,11 @@
 
 <script>
 import DailyFlightsMap from "@/components/DailyFlightsMap";
+import FlightType from "@/components/FlightType";
 
 export default {
   name: "DailyRanking",
-  components: { DailyFlightsMap },
+  components: { DailyFlightsMap, FlightType },
   data() {
     return {
       highlightedFlightId: null,

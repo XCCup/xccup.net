@@ -4,22 +4,24 @@
     <br />
   </div>
 
-  <section class="sponsoren">
-    <div class="container">
-      <h3>Sponsoren</h3>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rerum,
-        laboriosam illum. Enim cum vel accusamus nostrum reiciendis error nulla
-        iure, omnis inventore in similique! Modi dolore corrupti ipsum possimus
-        dolorem mollitia voluptate vitae, praesentium saepe suscipit culpa esse
-        libero, nihil sapiente provident reprehenderit? Laborum fugiat culpa
-        maiores dolorum sed, fugit hic maxime impedit, ullam veniam quisquam
-        ducimus, consequatur officia explicabo quo. Impedit rerum consequuntur
-        incidunt dicta amet. Quam ex commodi voluptatem dolores, eligendi veniam
-        ab nemo ratione quae quaerat error, atque ullam, incidunt maiores
-        aperiam. Ex esse, sapiente molestias laudantium voluptate eligendi
-        nulla. Numquam, pariatur explicabo! Praesentium odit nemo fugiat.
-      </p>
+  <section>
+    <div class="container mt-2">
+      <h2>Sponsoren</h2>
+      <div class="row">
+        <div
+          v-for="sponsor in sponsors"
+          :key="sponsor.id"
+          class="col-4 col-sm-4 col-md-3 col-lg-2"
+        >
+          <div class="square-holder">
+            <a :href="sponsor.website">
+              <img
+                :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -27,7 +29,43 @@
 <script>
 export default {
   name: "Sponsors",
+  data() {
+    return {
+      baseURL: process.env.VUE_APP_API_URL,
+    };
+  },
+  props: {
+    sponsors: {
+      type: Array,
+      required: true,
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  max-height: 55px;
+}
+.square-holder {
+  padding: 15px;
+  border: 1px solid #cecece;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background-color: #f1f1f1;
+  min-height: 120px;
+}
+
+.square-holder img {
+  max-width: 100%;
+  filter: grayscale(100%);
+  transition: all 0.3s;
+}
+
+.square-holder:hover img {
+  filter: none;
+}
+</style>

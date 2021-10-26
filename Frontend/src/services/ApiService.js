@@ -11,26 +11,20 @@ const apiClient = axios.create({
     "Content-Type": "application/json",
   },
 });
+// Note: jwtInterceptor is used when a route needs authorization
 
 export default {
-  // userLogin(data) {
-  //   return apiClient.post("/users/login", data);
-  // },
-
-  // TODO: Needs implementation
   getFlights() {
-    return apiClient.get("tageswertung");
+    return apiClient.get("flights");
   },
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
   },
   uploadIgc(data) {
     return jwtInterceptor.post(baseURL + "flights/", data);
-    // return apiClient.post("flights/", data);
   },
   uploadFlightDetails(flightId, data) {
     return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
-    // return apiClient.put("flights/" + flightId, data);
   },
   uploadImages(data) {
     return jwtInterceptor.post(baseURL + "media/", data);
@@ -42,9 +36,18 @@ export default {
     return apiClient.get("home");
   },
   addComment(comment) {
-    return apiClient.post("comments", comment);
+    return jwtInterceptor.post(baseURL + "comments", comment);
   },
   deleteComment(commentId) {
-    return apiClient.delete("comments/" + commentId);
+    return jwtInterceptor.delete(baseURL + "comments/" + commentId);
+  },
+  editComment(comment) {
+    return jwtInterceptor.put(baseURL + "comments/" + comment.id, comment);
+  },
+  getCommentsOfFlight(flightId) {
+    return apiClient.get("comments/flight/" + flightId);
+  },
+  getUserDetails(userId) {
+    return jwtInterceptor.get(baseURL + "users/" + userId);
   },
 };
