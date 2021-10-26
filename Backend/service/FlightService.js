@@ -63,10 +63,15 @@ const flightService = {
 
     const orderStatement = sortByPoints
       ? ["flightPoints", "DESC"]
-      : ["dateOfFlight", "DESC"];
+      : ["takeoffTime", "DESC"];
 
     const queryObject = {
-      include: [createUserInclude(), createSiteInclude(site)],
+      include: [
+        createUserInclude(),
+        createSiteInclude(site),
+        createTeamInclude(),
+        createClubInclude(),
+      ],
       where: await createWhereStatement(
         year,
         type,
@@ -204,7 +209,7 @@ const flightService = {
       flight.fixes = FlightFixes.mergeData(flight.fixes);
       flight.airbuddies = await findAirbuddies(flight);
 
-      //Unescape characters with where sanitzied before stored to db
+      //Unescape characters which where sanitzied before stored to db
       flight.report = _.unescape(flight.report);
       flight.comments.forEach((comment) => {
         comment.message = _.unescape(comment.message);
@@ -222,7 +227,7 @@ const flightService = {
     const totalDistance = await Flight.sum("flightDistance", {
       where: {
         andOp: sequelize.where(
-          sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
+          sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
           year
         ),
       },
@@ -337,11 +342,10 @@ const flightService = {
   extractFixesAndAddFurtherInformationToFlight: async (flight) => {
     const fixes = IgcAnalyzer.extractFixes(flight);
 
-    flight.dateOfFlight = new Date(fixes[0].timestamp);
-
-    flight.isWeekend = isNoWorkday(flight.dateOfFlight);
-
     flight.airtime = calcAirtime(fixes);
+    flight.takeoffTime = new Date(fixes[0].timestamp);
+    flight.landingTime = new Date(fixes[fixes.length - 1].timestamp);
+    flight.isWeekend = isNoWorkday(flight.takeoffTime);
 
     const requests = [findClosestTakeoff(fixes[0])];
     if (process.env.USE_GOOGLE_API === "true") {
@@ -499,27 +503,28 @@ function filterFlightFixesForTodayRanking(flightDbObjects) {
  * * 4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14
  * * 07b590f3-ca8a-4305-88a2-e11c314b4955
  *
- * @param {*} flight The flight to which airbuddies should be found.
+ * @param {*} flight The flight to which airBuddies should be found.
  */
 async function findAirbuddies(flight) {
-  //TODO Is it possible to join airbuddiesfor to the provided flight directly with the first query to the db?
-  //Problem how can i back reference in an include statement (dateOfFlight, siteId)
+  //TODO Is it possible to join airBuddiesfor to the provided flight directly with the first query to the db?
+  //Problem how can i back reference in an include statement (takeoffTime, siteId)
+
   const timeOffsetValue = 2;
   const timeOffsetUnit = "h";
   const pointThreshold = 30;
 
-  const from = moment(flight.dateOfFlight).subtract(
+  const from = moment(flight.takeoffTime).subtract(
     timeOffsetValue,
     timeOffsetUnit
   );
-  const till = moment(flight.dateOfFlight).add(timeOffsetValue, timeOffsetUnit);
+  const till = moment(flight.takeoffTime).add(timeOffsetValue, timeOffsetUnit);
   return Flight.findAll({
     where: {
       id: {
         [sequelize.Op.not]: flight.id,
       },
       siteId: flight.siteId,
-      dateOfFlight: {
+      takeoffTime: {
         [sequelize.Op.between]: [from, till],
       },
       flightPoints: {
@@ -582,12 +587,12 @@ async function createWhereStatement(
   }
   if (year) {
     whereStatement.andOp = sequelize.where(
-      sequelize.fn("date_part", "year", sequelize.col("dateOfFlight")),
+      sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
       year
     );
   }
   if (startDate && endDate) {
-    whereStatement.dateOfFlight = {
+    whereStatement.takeoffTime = {
       [sequelize.Op.between]: [startDate, endDate],
     };
   }
@@ -623,6 +628,22 @@ function createUserInclude() {
     attributes: ["firstName", "lastName"],
   };
   return userInclude;
+}
+
+function createClubInclude() {
+  const include = {
+    model: Club,
+    attributes: ["name"],
+  };
+  return include;
+}
+
+function createTeamInclude() {
+  const include = {
+    model: Team,
+    attributes: ["name"],
+  };
+  return include;
 }
 
 /**

@@ -59,8 +59,10 @@ module.exports = (sequelize, DataTypes) => {
     for (let i = 0; i < timeAndHeights.length; i++) {
       newOb[i].longitude = coordinates[i][0];
       newOb[i].latitude = coordinates[i][1];
-      newOb[i].speed = stats[i]?.speed;
-      newOb[i].climb = stats[i]?.climb;
+      if (stats) {
+        newOb[i].speed = stats[i].speed;
+        newOb[i].climb = stats[i].climb;
+      }
     }
     return newOb;
   };

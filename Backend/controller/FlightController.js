@@ -146,6 +146,7 @@ router.post(
 
       res.json({
         flightId: result.id,
+        externalId: result.externalId,
         takeoff: takeoffName,
         landing: result.landing,
       });

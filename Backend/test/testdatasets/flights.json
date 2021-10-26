@@ -51,7 +51,6 @@
     "landing": "Kobern-Gondorf",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-05-13T10:16:44.000Z",
     "ageOfUser": 25,
     "homeStateOfUser": "BW",
     "airtime": 114,
@@ -64,7 +63,9 @@
       "maxClimb": 3.1,
       "maxSpeed": 59.46,
       "taskSpeed": 11.7
-    }
+    },
+    "takeoffTime": 1620901004000,
+    "landingTime": 1620907859000
   },
   {
     "id": "4d7cc8fe-f4ab-49fa-aea3-9b996ff5fa14",
@@ -118,7 +119,6 @@
     "landing": "Kobern-Gondorf",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-05-13T10:56:53.000Z",
     "ageOfUser": 40,
     "homeStateOfUser": "BEL",
     "airtime": 113,
@@ -131,7 +131,9 @@
       "maxClimb": 3.2,
       "maxSpeed": 65.39,
       "taskSpeed": 17.3
-    }
+    },
+    "takeoffTime": 1620903413000,
+    "landingTime": 1620910222000
   },
   {
     "id": "65974949-f4bc-4325-9cf3-b479faf00b1c",
@@ -185,7 +187,6 @@
     "landing": "Heddesbach",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-06-13T09:21:32.000Z",
     "ageOfUser": 42,
     "homeStateOfUser": "LUX",
     "airtime": 146,
@@ -198,7 +199,9 @@
       "maxClimb": 2.8,
       "maxSpeed": 61.94,
       "taskSpeed": 8
-    }
+    },
+    "takeoffTime": 1623576092000,
+    "landingTime": 1623584822000
   },
   {
     "id": "f9964c1c-b411-4e12-8e55-96a915997168",
@@ -252,7 +255,6 @@
     "landing": "Weinsheim",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-06-13T10:43:49.000Z",
     "ageOfUser": 46,
     "homeStateOfUser": "BEL",
     "airtime": 104,
@@ -265,7 +267,9 @@
       "maxClimb": 4.9,
       "maxSpeed": 52.43,
       "taskSpeed": 11.6
-    }
+    },
+    "takeoffTime": 1623581029000,
+    "landingTime": 1623587274000
   },
   {
     "id": "d8cd7701-dd42-42a8-8608-2775850d2d75",
@@ -304,11 +308,11 @@
     "externalId": 2,
     "report": "ea a incidunt consequuntur dolor voluptates quos enim excepturi necessitatibus a sit quia cumque labore omnis impedit velit beatae aut omnis odio rem odit repellat facere nobis aut neque soluta qui omnis sit aut fugiat deleniti aut sint expedita autem voluptatem et dolorem sed sint numquam animi dolorum assumenda explicabo dignissimos aspernatur iusto explicabo quisquam sequi illum assumenda eos est et excepturi deleniti eaque explicabo aut ea alias velit maiores iste architecto rerum quod officia sit quia vel quis nobis cupiditate voluptatibus deleniti voluptates nihil animi dicta natus velit est quo maxime sed laboriosam vero sit ipsam sint cum maxime expedita qui quidem nesciunt eum sit repellat corporis at sapiente quia ratione iure quos quo inventore sunt iusto consequatur natus qui delectus voluptas sed aut ab ducimus saepe dignissimos aliquam aut recusandae repudiandae ipsa et eligendi rerum aut voluptatem enim tempore consequatur temporibus placeat rerum dolores architecto dolor ullam voluptatum hic ab dolores nemo ex aut alias ad rerum totam debitis quia quisquam eveniet animi est rerum reiciendis perferendis nesciunt atque",
     "glider": {
-      "brand": "Sky",
-      "model": "Apollo",
+      "brand": "Ozone",
+      "model": "Alpina 2",
       "gliderClass": {
-        "key": "AB_low",
-        "description": "GS Sport low"
+        "key": "C_low",
+        "description": "GS Intermdediate low"
       }
     },
     "flightStatus": "In Wertung",
@@ -319,7 +323,6 @@
     "landing": "Gilserberg",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-06-10T10:42:59.000Z",
     "ageOfUser": 25,
     "homeStateOfUser": "RP",
     "airtime": 173,
@@ -332,7 +335,9 @@
       "maxClimb": 0,
       "maxSpeed": 75.39,
       "taskSpeed": 25.7
-    }
+    },
+    "takeoffTime": 1623321779000,
+    "landingTime": 1623332149000
   },
   {
     "id": "71e620f7-806f-49a1-a79e-aa538187fc46",
@@ -386,7 +391,6 @@
     "landing": "Ediger-Eller",
     "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-06-10T10:28:06.000Z",
     "ageOfUser": 42,
     "homeStateOfUser": "HE",
     "airtime": 57,
@@ -399,7 +403,9 @@
       "maxClimb": 3.4,
       "maxSpeed": 51.57,
       "taskSpeed": 10.5
-    }
+    },
+    "takeoffTime": 1623320886000,
+    "landingTime": 1623324296000
   },
   {
     "id": "15bf9618-3394-4d48-b20b-ca3e65c80047",
@@ -438,11 +444,11 @@
     "externalId": 4,
     "report": "nostrum ut neque amet accusamus rerum voluptatum est delectus omnis qui qui repellat officiis consequatur aut aspernatur qui ut accusantium libero nisi enim molestiae asperiores maxime aliquam repellendus exercitationem in quia quibusdam ipsam porro id et nam ut dolores eveniet ut dolor culpa quos sit sint sint quia incidunt rerum hic odit unde distinctio ut in tempora molestiae sunt est velit aut quo rerum veritatis consequatur velit quo",
     "glider": {
-      "brand": "Sky",
-      "model": "Apollo",
+      "brand": "Advance",
+      "model": "BiBeta 6",
       "gliderClass": {
-        "key": "AB_low",
-        "description": "GS Sport low"
+        "key": "Tandem",
+        "description": "GS Tandem"
       }
     },
     "flightStatus": "In Wertung",
@@ -453,7 +459,6 @@
     "landing": "Veldenz",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-06-10T11:34:14.000Z",
     "ageOfUser": 36,
     "homeStateOfUser": "SR",
     "airtime": 46,
@@ -466,7 +471,9 @@
       "maxClimb": 2.7,
       "maxSpeed": 50.48,
       "taskSpeed": 15.1
-    }
+    },
+    "takeoffTime": 1623324854000,
+    "landingTime": 1623327602000
   },
   {
     "id": "682b2236-17c2-4147-a0c2-bc665faac579",
@@ -520,7 +527,6 @@
     "landing": "Burgen",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-06-09T10:38:57.000Z",
     "ageOfUser": 46,
     "homeStateOfUser": "BEL",
     "airtime": 77,
@@ -533,7 +539,9 @@
       "maxClimb": 2.7,
       "maxSpeed": 50.41,
       "taskSpeed": 9.8
-    }
+    },
+    "takeoffTime": 1623235137000,
+    "landingTime": 1623239777000
   },
   {
     "id": "3ddf8d66-9338-4773-83d8-84086e51147c",
@@ -587,7 +595,6 @@
     "landing": "Schriesheim",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-05-20T15:02:14.000Z",
     "ageOfUser": 38,
     "homeStateOfUser": "HE",
     "airtime": 144,
@@ -600,7 +607,9 @@
       "maxClimb": 2.7,
       "maxSpeed": 61.24,
       "taskSpeed": 4
-    }
+    },
+    "takeoffTime": 1621522934000,
+    "landingTime": 1621531549000
   },
   {
     "id": "87bbb855-1366-4a48-8d7f-11949ef6d482",
@@ -654,7 +663,6 @@
     "landing": "Issum",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-05-14T13:28:33.000Z",
     "ageOfUser": 33,
     "homeStateOfUser": "BEL",
     "airtime": 47,
@@ -667,7 +675,9 @@
       "maxClimb": 5.8,
       "maxSpeed": 56.31,
       "taskSpeed": 14.8
-    }
+    },
+    "takeoffTime": 1620998913000,
+    "landingTime": 1621001748000
   },
   {
     "id": "60a73a31-f03e-40a3-87c5-03f8bc447007",
@@ -721,7 +731,6 @@
     "landing": "Irsch",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-05-12T13:45:28.000Z",
     "ageOfUser": 28,
     "homeStateOfUser": "RP",
     "airtime": 211,
@@ -734,7 +743,9 @@
       "maxClimb": 3.5,
       "maxSpeed": 83.57,
       "taskSpeed": 13.8
-    }
+    },
+    "takeoffTime": 1620827128000,
+    "landingTime": 1620839759000
   },
   {
     "id": "8d625d76-21e1-47b2-ad9a-ab0f28d3ed2f",
@@ -788,7 +799,6 @@
     "landing": "Haiger",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-04-23T11:37:23.000Z",
     "ageOfUser": 47,
     "homeStateOfUser": "SR",
     "airtime": 163,
@@ -801,7 +811,9 @@
       "maxClimb": 3.2,
       "maxSpeed": 65.46,
       "taskSpeed": 15.6
-    }
+    },
+    "takeoffTime": 1619177843000,
+    "landingTime": 1619187648000
   },
   {
     "id": "a7c8a11a-5a2c-4045-b3dc-7d8fbb6afabb",
@@ -855,7 +867,6 @@
     "landing": "Meschede",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-05-01T12:41:16.000Z",
     "ageOfUser": 31,
     "homeStateOfUser": "HE",
     "airtime": 127,
@@ -868,7 +879,9 @@
       "maxClimb": 2.8,
       "maxSpeed": 58.77,
       "taskSpeed": 8.2
-    }
+    },
+    "takeoffTime": 1619872876000,
+    "landingTime": 1619880491000
   },
   {
     "id": "77cdaf48-8f84-4d48-9ba6-1524c3598349",
@@ -922,7 +935,6 @@
     "landing": "Reudelsterz",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-04-30T11:14:40.000Z",
     "ageOfUser": 38,
     "homeStateOfUser": "BW",
     "airtime": 203,
@@ -935,7 +947,9 @@
       "maxClimb": 4.3,
       "maxSpeed": 60.24,
       "taskSpeed": 17.3
-    }
+    },
+    "takeoffTime": 1619781280000,
+    "landingTime": 1619793469000
   },
   {
     "id": "d27d8bce-e30c-45ff-aebe-550100dd8203",
@@ -989,7 +1003,6 @@
     "landing": "Lennestadt",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-04-23T10:54:50.000Z",
     "ageOfUser": 66,
     "homeStateOfUser": "SR",
     "airtime": 88,
@@ -1002,7 +1015,9 @@
       "maxClimb": 3.7,
       "maxSpeed": 72.63,
       "taskSpeed": 17.1
-    }
+    },
+    "takeoffTime": 1619175290000,
+    "landingTime": 1619180555000
   },
   {
     "id": "ecfa9c50-cc7d-436c-8b08-5f40ca7998ac",
@@ -1055,7 +1070,6 @@
     "siteId": "29806e5b-7ef5-4ca3-9d05-87b90122bd4c",
     "landing": "Weyher in der Pfalz",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
-    "dateOfFlight": "2021-04-20T10:47:44.000Z",
     "ageOfUser": 49,
     "homeStateOfUser": "SR",
     "airtime": 74,
@@ -1068,7 +1082,9 @@
       "maxClimb": 2.6,
       "maxSpeed": 63.9,
       "taskSpeed": 11.7
-    }
+    },
+    "takeoffTime": 1618915664000,
+    "landingTime": 1618920114000
   },
   {
     "id": "18ddd683-b966-45c9-83e9-6eb6fd96ddf6",
@@ -1121,7 +1137,6 @@
     "siteId": "7b499782-e8b8-404f-a62f-f4ca45a6ad80",
     "landing": "Battenberg (Eder)",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
-    "dateOfFlight": "2021-04-21T13:22:29.000Z",
     "ageOfUser": 40,
     "homeStateOfUser": "HE",
     "airtime": 160,
@@ -1134,7 +1149,9 @@
       "maxClimb": 4,
       "maxSpeed": 60.7,
       "taskSpeed": 5.3
-    }
+    },
+    "takeoffTime": 1619011349000,
+    "landingTime": 1619020954000
   },
   {
     "id": "26fd8ad5-1bab-450c-8c5c-14153ab25728",
@@ -1187,7 +1204,6 @@
     "siteId": "700dd217-5f5c-4323-89e0-9554bbb61c54",
     "landing": "Aglasterhausen",
     "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
-    "dateOfFlight": "2021-04-21T14:02:22.000Z",
     "ageOfUser": 47,
     "homeStateOfUser": "NW",
     "airtime": 93,
@@ -1200,7 +1216,9 @@
       "maxClimb": 3.3,
       "maxSpeed": 68.51,
       "taskSpeed": 19.1
-    }
+    },
+    "takeoffTime": 1619013742000,
+    "landingTime": 1619019340000
   },
   {
     "id": "4232f4eb-d42a-4583-ad9f-f631b72fd691",
@@ -1253,7 +1271,6 @@
     "siteId": "8ff0d86a-ccdf-495f-950b-8f7d4b5b062c",
     "landing": "Bammental",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
-    "dateOfFlight": "2021-04-20T16:11:37.000Z",
     "ageOfUser": 34,
     "homeStateOfUser": "LUX",
     "airtime": 90,
@@ -1266,7 +1283,9 @@
       "maxClimb": 3.8,
       "maxSpeed": 63.61,
       "taskSpeed": 14.8
-    }
+    },
+    "takeoffTime": 1618935097000,
+    "landingTime": 1618940481000
   },
   {
     "id": "6f9f100a-1a1e-408b-9eaf-37c66c1de058",
@@ -1319,7 +1338,6 @@
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "landing": "Bernkastel-Kues",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
-    "dateOfFlight": "2021-04-20T10:11:15.000Z",
     "ageOfUser": 45,
     "homeStateOfUser": "NW",
     "airtime": 62,
@@ -1332,7 +1350,9 @@
       "maxClimb": 3.1,
       "maxSpeed": 51.52,
       "taskSpeed": 21.8
-    }
+    },
+    "takeoffTime": 1618913475000,
+    "landingTime": 1618917179000
   },
   {
     "id": "6e7b81b7-6969-4114-94f0-a0351aad0830",
@@ -1386,7 +1406,6 @@
     "landing": "Neumagen-Dhron",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-04-17T10:45:15.000Z",
     "ageOfUser": 42,
     "homeStateOfUser": "LUX",
     "airtime": 132,
@@ -1399,7 +1418,9 @@
       "maxClimb": 4.5,
       "maxSpeed": 193.84,
       "taskSpeed": 7
-    }
+    },
+    "takeoffTime": 1618656315000,
+    "landingTime": 1618664228000
   },
   {
     "id": "5363477a-93ef-4ed3-baab-655dba688c7b",
@@ -1453,7 +1474,6 @@
     "landing": "Neumagen-Dhron",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-04-17T11:43:13.000Z",
     "ageOfUser": 46,
     "homeStateOfUser": "BEL",
     "airtime": 135,
@@ -1466,7 +1486,9 @@
       "maxClimb": 15.5,
       "maxSpeed": 734.8,
       "taskSpeed": 15.2
-    }
+    },
+    "takeoffTime": 1618659793000,
+    "landingTime": 1618667866000
   },
   {
     "id": "3d15ce06-1d2f-4994-8869-37a2f5bb1cb4",
@@ -1520,7 +1542,6 @@
     "landing": "Saarburg",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-04-14T09:45:44.000Z",
     "ageOfUser": 25,
     "homeStateOfUser": "RP",
     "airtime": 124,
@@ -1533,7 +1554,9 @@
       "maxClimb": 19.5,
       "maxSpeed": 81.72,
       "taskSpeed": 25.9
-    }
+    },
+    "takeoffTime": 1618393544000,
+    "landingTime": 1618401009000
   },
   {
     "id": "1a1bfa34-301a-4412-a669-c8c2c777e577",
@@ -1587,7 +1610,6 @@
     "landing": "Frankenberg (Eder)",
     "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-04-13T14:35:16.000Z",
     "ageOfUser": 42,
     "homeStateOfUser": "HE",
     "airtime": 114,
@@ -1600,7 +1622,9 @@
       "maxClimb": 3.5,
       "maxSpeed": 85.45,
       "taskSpeed": 21.1
-    }
+    },
+    "takeoffTime": 1618324516000,
+    "landingTime": 1618331332000
   },
   {
     "id": "d174a309-1526-4ea8-99ad-655c32388d05",
@@ -1654,7 +1678,6 @@
     "landing": "Heidelberg",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-04-12T11:51:31.000Z",
     "ageOfUser": 36,
     "homeStateOfUser": "SR",
     "airtime": 119,
@@ -1667,7 +1690,9 @@
       "maxClimb": 2.6,
       "maxSpeed": 59.27,
       "taskSpeed": 5.1
-    }
+    },
+    "takeoffTime": 1618228291000,
+    "landingTime": 1618235421000
   },
   {
     "id": "4e94979e-b6f8-4e41-80f1-8558afe6cb84",
@@ -1721,7 +1746,6 @@
     "landing": "Taben-Rodt",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-04-08T11:23:02.000Z",
     "ageOfUser": 46,
     "homeStateOfUser": "BEL",
     "airtime": 116,
@@ -1734,7 +1758,9 @@
       "maxClimb": 2.7,
       "maxSpeed": 63.15,
       "taskSpeed": 9.3
-    }
+    },
+    "takeoffTime": 1617880982000,
+    "landingTime": 1617887932000
   },
   {
     "id": "d03c8b0e-690c-45e8-9d63-1f4cb97c5580",
@@ -1788,7 +1814,6 @@
     "landing": "Iserlohn",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-03-25T14:27:09.000Z",
     "ageOfUser": 38,
     "homeStateOfUser": "HE",
     "airtime": 34,
@@ -1801,7 +1826,9 @@
       "maxClimb": 1.6,
       "maxSpeed": 73.92,
       "taskSpeed": 8
-    }
+    },
+    "takeoffTime": 1616682429000,
+    "landingTime": 1616684449000
   },
   {
     "id": "0c824549-50f8-47f0-8d44-701b5ab3d7b0",
@@ -1855,7 +1882,6 @@
     "landing": "Taben-Rodt",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-03-25T11:45:36.000Z",
     "ageOfUser": 33,
     "homeStateOfUser": "BEL",
     "airtime": 145,
@@ -1868,7 +1894,9 @@
       "maxClimb": 3.5,
       "maxSpeed": 121.9,
       "taskSpeed": 12
-    }
+    },
+    "takeoffTime": 1616672736000,
+    "landingTime": 1616681424000
   },
   {
     "id": "112c87c8-fcce-4082-aebf-7b1630aad93f",
@@ -1922,7 +1950,6 @@
     "landing": "Graach an der Mosel",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-03-24T12:45:51.000Z",
     "ageOfUser": 40,
     "homeStateOfUser": "BEL",
     "airtime": 206,
@@ -1935,7 +1962,9 @@
       "maxClimb": 3.8,
       "maxSpeed": 84.21,
       "taskSpeed": 3.3
-    }
+    },
+    "takeoffTime": 1616589951000,
+    "landingTime": 1616602337000
   },
   {
     "id": "e093571d-cc0d-41fd-a0f0-ed5f0557d8bb",
@@ -1989,7 +2018,6 @@
     "landing": "Sommerloch",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-03-20T13:39:09.000Z",
     "ageOfUser": 25,
     "homeStateOfUser": "BW",
     "airtime": 34,
@@ -2002,7 +2030,9 @@
       "maxClimb": 6,
       "maxSpeed": 51.61,
       "taskSpeed": 15.7
-    }
+    },
+    "takeoffTime": 1616247549000,
+    "landingTime": 1616249564000
   },
   {
     "id": "b8b54a0a-e191-4495-9f04-f25e1f311e39",
@@ -2056,7 +2086,6 @@
     "landing": "Dannenfels",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-03-08T12:19:48.000Z",
     "ageOfUser": 28,
     "homeStateOfUser": "RP",
     "airtime": 96,
@@ -2069,7 +2098,9 @@
       "maxClimb": 3.6,
       "maxSpeed": 72.75,
       "taskSpeed": 13.9
-    }
+    },
+    "takeoffTime": 1615205988000,
+    "landingTime": 1615211746000
   },
   {
     "id": "0fd91a22-16a1-413c-8ebc-2e3e9d6505b7",
@@ -2123,7 +2154,6 @@
     "landing": "Veldenz",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-03-07T13:13:01.000Z",
     "ageOfUser": 47,
     "homeStateOfUser": "SR",
     "airtime": 86,
@@ -2136,7 +2166,9 @@
       "maxClimb": 1.9,
       "maxSpeed": 50.94,
       "taskSpeed": 7
-    }
+    },
+    "takeoffTime": 1615122781000,
+    "landingTime": 1615127946000
   },
   {
     "id": "684a4def-4645-4742-a4fc-d6d5e9b42431",
@@ -2190,7 +2222,6 @@
     "landing": "Mittelreidenbach",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2021-03-06T14:01:38.000Z",
     "ageOfUser": 31,
     "homeStateOfUser": "HE",
     "airtime": 71,
@@ -2203,7 +2234,9 @@
       "maxClimb": 1.9,
       "maxSpeed": 82.83,
       "taskSpeed": 17.6
-    }
+    },
+    "takeoffTime": 1615039298000,
+    "landingTime": 1615043558000
   },
   {
     "id": "cdd89b5f-fdbf-4bb2-9957-de9e38b87c47",
@@ -2257,7 +2290,6 @@
     "landing": "Dernbach",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2021-02-25T12:42:33.000Z",
     "ageOfUser": 38,
     "homeStateOfUser": "BW",
     "airtime": 149,
@@ -2270,7 +2302,9 @@
       "maxClimb": 2.5,
       "maxSpeed": 52.62,
       "taskSpeed": 3
-    }
+    },
+    "takeoffTime": 1614256953000,
+    "landingTime": 1614265908000
   },
   {
     "id": "8a0216c9-a701-4cb7-a1de-ef21b258081f",
@@ -2324,7 +2358,6 @@
     "landing": "Klüsserath",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2021-02-21T11:58:34.000Z",
     "ageOfUser": 66,
     "homeStateOfUser": "SR",
     "airtime": 120,
@@ -2337,7 +2370,9 @@
       "maxClimb": 2.4,
       "maxSpeed": 74.55,
       "taskSpeed": 5.3
-    }
+    },
+    "takeoffTime": 1613908714000,
+    "landingTime": 1613915934000
   },
   {
     "id": "1780608e-d48e-4fa0-a427-9d0afca1fd0a",
@@ -2390,7 +2425,6 @@
     "siteId": "790161fe-40b0-4ee8-bebe-a9cebc12d736",
     "landing": "Maring-Noviand",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
-    "dateOfFlight": "2021-02-20T13:17:49.000Z",
     "ageOfUser": 49,
     "homeStateOfUser": "SR",
     "airtime": 72,
@@ -2403,7 +2437,9 @@
       "maxClimb": 1.3,
       "maxSpeed": 63.48,
       "taskSpeed": 5.5
-    }
+    },
+    "takeoffTime": 1613827069000,
+    "landingTime": 1613831368000
   },
   {
     "id": "72baa559-577b-42ca-afd7-225ab1a08c18",
@@ -2456,7 +2492,6 @@
     "siteId": "aa9b4b1e-24e1-4c31-ba2e-aee945a88941",
     "landing": "Klüsserath",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
-    "dateOfFlight": "2021-02-20T14:02:52.000Z",
     "ageOfUser": 40,
     "homeStateOfUser": "HE",
     "airtime": 68,
@@ -2469,7 +2504,9 @@
       "maxClimb": 2,
       "maxSpeed": 61.15,
       "taskSpeed": 8.7
-    }
+    },
+    "takeoffTime": 1613829772000,
+    "landingTime": 1613833847000
   },
   {
     "id": "ecdb4aad-87e5-42f2-b7e1-b6e76acc19b4",
@@ -2522,7 +2559,6 @@
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "landing": "Saarlouis",
     "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
-    "dateOfFlight": "2020-07-21T11:01:33.000Z",
     "ageOfUser": 47,
     "homeStateOfUser": "NW",
     "airtime": 280,
@@ -2535,7 +2571,9 @@
       "maxClimb": 51.7,
       "maxSpeed": 65.35,
       "taskSpeed": 23
-    }
+    },
+    "takeoffTime": 1595329293000,
+    "landingTime": 1595346113000
   },
   {
     "id": "ec214de1-de02-4618-9ddf-cceeccd377e6",
@@ -2588,7 +2626,6 @@
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "landing": "Wittlich",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
-    "dateOfFlight": "2020-07-11T09:25:06.000Z",
     "ageOfUser": 34,
     "homeStateOfUser": "LUX",
     "airtime": 79,
@@ -2601,7 +2638,9 @@
       "maxClimb": 3.3,
       "maxSpeed": 59.18,
       "taskSpeed": 19.8
-    }
+    },
+    "takeoffTime": 1594459506000,
+    "landingTime": 1594464216000
   },
   {
     "id": "51c93d0f-ef6e-4dc9-8a19-d0210354e608",
@@ -2654,7 +2693,6 @@
     "siteId": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "landing": "Ediger-Eller",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
-    "dateOfFlight": "2020-05-17T10:36:30.000Z",
     "ageOfUser": 45,
     "homeStateOfUser": "NW",
     "airtime": 375,
@@ -2667,7 +2705,9 @@
       "maxClimb": 13.8,
       "maxSpeed": 61.96,
       "taskSpeed": 15.5
-    }
+    },
+    "takeoffTime": 1589711790000,
+    "landingTime": 1589734270000
   },
   {
     "id": "0d3294d5-0031-4c5d-a6c9-fd173694ba21",
@@ -2721,7 +2761,6 @@
     "landing": "Montabaur",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
-    "dateOfFlight": "2017-06-10T10:59:52.000Z",
     "ageOfUser": 42,
     "homeStateOfUser": "LUX",
     "airtime": 255,
@@ -2734,7 +2773,9 @@
       "maxClimb": 3.2,
       "maxSpeed": 72.33,
       "taskSpeed": 24.5
-    }
+    },
+    "takeoffTime": 1497092392000,
+    "landingTime": 1497107670000
   },
   {
     "id": "40264d03-e88d-4682-8053-53edb6fffc17",
@@ -2788,7 +2829,6 @@
     "landing": "Graach an der Mosel",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
-    "dateOfFlight": "2017-05-20T12:01:39.000Z",
     "ageOfUser": 46,
     "homeStateOfUser": "BEL",
     "airtime": 87,
@@ -2801,7 +2841,9 @@
       "maxClimb": 3.2,
       "maxSpeed": 57.85,
       "taskSpeed": 7.7
-    }
+    },
+    "takeoffTime": 1495281699000,
+    "landingTime": 1495286889000
   },
   {
     "id": "eefc442b-1fea-48b6-bfa0-69628b19fe41",
@@ -2855,7 +2897,6 @@
     "landing": "Boppard",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
     "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
-    "dateOfFlight": "2017-05-06T12:59:55.000Z",
     "ageOfUser": 25,
     "homeStateOfUser": "RP",
     "airtime": 56,
@@ -2868,6 +2909,8 @@
       "maxClimb": 2.2,
       "maxSpeed": 63.31,
       "taskSpeed": 11.7
-    }
+    },
+    "takeoffTime": 1494075595000,
+    "landingTime": 1494078930000
   }
 ]
