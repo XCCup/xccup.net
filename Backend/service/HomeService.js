@@ -73,7 +73,7 @@ async function prepareHomeData() {
     }
   );
 
-  const resultRatingClasses = await retrieveRatingClassResults(currentSeason);
+  const resultRankingClasses = await retrieveRankingClassResults(currentSeason);
 
   return Promise.all(Object.values(dbRequestsOther)).then((values) => {
     const keys = Object.keys(dbRequestsOther);
@@ -82,19 +82,19 @@ async function prepareHomeData() {
     for (let index = 0; index < values.length; index++) {
       res[keys[index]] = values[index];
     }
-    res.rankingClasses = resultRatingClasses;
+    res.rankingClasses = resultRankingClasses;
     res.seasonDetails = currentSeason;
     return res;
   });
 }
 
-function retrieveRatingClassResults(currentSeason) {
-  const ratingRequests = {};
+function retrieveRankingClassResults(currentSeason) {
+  const rankingRequests = {};
   for (const [key] of Object.entries(currentSeason.rankingClasses)) {
-    ratingRequests[key] = resultService.getOverall(null, key);
+    rankingRequests[key] = resultService.getOverall(null, key);
   }
-  return Promise.all(Object.values(ratingRequests)).then((values) => {
-    const keys = Object.keys(ratingRequests);
+  return Promise.all(Object.values(rankingRequests)).then((values) => {
+    const keys = Object.keys(rankingRequests);
     const res = [];
     for (let index = 0; index < values.length; index++) {
       res.push({

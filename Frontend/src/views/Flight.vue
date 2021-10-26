@@ -1,39 +1,27 @@
 <template>
   <div v-if="flight">
-    <!-- Subnav -->
-    <div class="container-fluid flight-info text-light mb-0 p-1">
-      <p class="m-0">
-        <router-link to="/"
-          ><i class="bi bi-chevron-left mx-2"></i>
-        </router-link>
-
-        Flug von <a href="#">{{ flight.User.name }}</a> am
-        <a href="#"><BaseDate :timestamp="flight.dateOfFlight" /></a>
-      </p>
-    </div>
-    <!-- Content -->
+    <TheSubnav :flight="flight" />
     <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
     <Barogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
-      v-if="flight.flightBuddies"
+      v-if="flight.airbuddies.length > 0"
       :flight="flight"
       @updateAirbuddies="updateAirbuddies"
     />
-    <Inline-alert text="Hover mit Höhenanzeige fehlt noch." />
-    <Inline-alert text="Automatisches zentrieren fehlt noch" />
-
-    <FlightDetails :flight="flight" :pilot="pilot" />
-    <FlightReport :report="flight.report" :images="flight.MediaFlights" />
+    <FlightDetails :flight="flight" />
+    <FlightReport :report="flight.report" :photos="flight.FlightPhotos" />
     <Comments
+      ref="Comments"
       :comments="flight.comments"
       @submit-comment="addComment"
       @delete-comment="deleteComment"
+      @comment-edited="editComment"
     />
   </div>
 </template>
 
 <script>
-// !!! Note to my future self !!!
+// TODO: Note to my future self:
 // The connection between Airbuddies, Barogramm and Map needs refactoring.
 // It's to ineffective and you can do better now.
 
@@ -44,10 +32,10 @@ import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
 import Barogramm from "@/components/Barogramm.vue";
 import trackColors from "@/assets/js/trackColors";
-import InlineAlert from "@/components/InlineAlert";
 import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
 import FlightReport from "@/components/FlightReport";
+import TheSubnav from "@/components/TheSubnav";
 
 export default {
   name: "FlightView",
@@ -55,10 +43,10 @@ export default {
     MapV2,
     Airbuddies,
     Barogramm,
-    InlineAlert,
     FlightDetails,
     Comments,
     FlightReport,
+    TheSubnav,
   },
   async setup(props) {
     const router = useRouter();
@@ -93,14 +81,10 @@ export default {
       flight,
     };
   },
-  props: {
-    flightId: { type: String },
-  },
   data() {
     return {
       buddyTracks: null,
       baroDataUpdated: 0,
-      pilot: { club: "Good Club", team: "Die sympathischen Speeditöre" },
     };
   },
   methods: {
@@ -110,23 +94,44 @@ export default {
     async addComment(comment) {
       try {
         const res = await ApiService.addComment({
-          id: String(Math.floor(Math.random() * 100000)),
+          flightId: this.flight.id,
           ...comment,
         });
-        // Only as long as the API doesnt exist
-        this.comments = [...this.comments, res.data];
+
+        // TODO: Maybe use an optimistic aproach like:
+        // this.flight.comments = [...this.flight.comments, comment];
+
+        if (res.status != 200) throw res.statusText;
+        this.$refs.Comments.clearCommentEditorInput();
+        this.updateComments();
       } catch (error) {
         console.log(error);
       }
     },
     async deleteComment(id) {
       try {
-        await ApiService.deleteComment(id);
-        const res2 = await ApiService.getComments();
-        this.comments = res2.data;
+        const res = await ApiService.deleteComment(id);
+        if (res.status != 200) throw res.statusText;
+        this.updateComments();
       } catch (error) {
         console.log(error);
       }
+    },
+    async editComment(comment) {
+      try {
+        const res = await ApiService.editComment(comment);
+        if (res.status != 200) throw res.statusText;
+        await this.updateComments();
+        this.$refs.Comments.$refs[`${comment.id}`].closeMessageEditor();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateComments() {
+      const res = await ApiService.getCommentsOfFlight(this.flight.id);
+
+      if (res.status != 200) throw res.statusText;
+      this.flight.comments = [...res.data];
     },
   },
   watch: {

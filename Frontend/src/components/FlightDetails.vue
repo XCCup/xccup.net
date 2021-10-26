@@ -9,7 +9,9 @@
             <tr>
               <th>Pilot:</th>
               <td>
-                <a href="#">{{ flight.User.name }}</a>
+                <a href="#">{{
+                  flight.User.firstName + " " + flight.User.lastName
+                }}</a>
               </td>
             </tr>
             <tr>
@@ -51,8 +53,7 @@
               <th>Strecke:</th>
               <td>
                 {{ flight.flightDistance.toFixed(2) }} km
-                <!-- <i class="bi bi-triangle"></i> -->
-                {{ flight.flightType }}
+                <FlightType :flightType="flight.flightType" />
               </td>
             </tr>
             <tr>
@@ -80,16 +81,25 @@
     </div>
     <!-- Details -->
     <button
-      class="btn btn-primary btn-sm dropdown-toggle"
+      class="btn btn-primary btn-sm me-2 dropdown-toggle"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#collapseExample"
     >
       Details anzeigen
     </button>
-    <button type="button" class="btn btn-sm btn-outline-primary">
-      <i class="bi bi-cloud-download"></i> .igc
-    </button>
+    <a v-bind:href="flight.igcUrl"
+      ><button type="button" class="btn btn-sm btn-outline-primary">
+        <i class="bi bi-cloud-download"></i> .igc
+      </button></a
+    >
+
+    <router-link :to="{ name: 'EditFlight' }">
+      <button v-if="showEditButton" class="btn btn-primary btn-sm ms-2">
+        <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
+      </button>
+    </router-link>
+
     <div class="collapse" id="collapseExample">
       <div class="row">
         <div class="col-md-6 col-12">
@@ -102,18 +112,21 @@
               </tr>
               <tr>
                 <th>Höhe min/max (GPS):</th>
-                <td></td>
-                <!-- 359m / 2665m -->
+                <td>
+                  {{ flight.flightStats.minHeightGps }}m /
+                  {{ flight.flightStats.maxHeightGps }}m
+                </td>
               </tr>
               <tr>
                 <th>Steigen min/max:</th>
-                <td></td>
-                <!-- -10,0m/s / 7,0m/s -->
+                <td>
+                  {{ flight.flightStats.maxSink }} m/s /
+                  {{ flight.flightStats.maxClimb }} m/s
+                </td>
               </tr>
               <tr>
                 <th>Geschwindigkeit max:</th>
-                <td></td>
-                <!-- 124,0km/h -->
+                <td>{{ flight.flightStats.maxSpeed }} km/h</td>
               </tr>
             </tbody>
           </table>
@@ -125,7 +138,6 @@
               <tr>
                 <th>Landeplatz:</th>
                 <td>{{ flight.landing }}</td>
-                <!-- Bremm - DE[~1,29km] -->
               </tr>
               <tr>
                 <th>Ø Geschwindigkeit:</th>
@@ -134,8 +146,7 @@
               </tr>
               <tr>
                 <th>Aufgaben-Geschwindigkeit:</th>
-                <td></td>
-                <!-- 16,9km/h -->
+                <td>{{ flight.flightStats.taskSpeed }} km/h</td>
               </tr>
               <tr>
                 <th>Eingereicht am:</th>
@@ -155,12 +166,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import { format } from "date-fns";
 import RankingClass from "@/components/RankingClass";
+import FlightType from "@/components/FlightType";
 export default {
   name: "FlightDetails",
   components: {
     RankingClass,
+    FlightType,
   },
   data() {
     return {
@@ -169,10 +184,6 @@ export default {
   },
   props: {
     flight: {
-      type: Object,
-      required: true,
-    },
-    pilot: {
       type: Object,
       required: true,
     },
@@ -204,6 +215,13 @@ export default {
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
       return hours + ":" + minutes + "h";
+    },
+  },
+  computed: {
+    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
+
+    showEditButton() {
+      return this.flight.userId === this.getUserId;
     },
   },
 };

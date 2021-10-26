@@ -113,6 +113,7 @@ footer {
   height: 60vh;
 }
 
+// TODO: Is this obsolete?
 // Fix for responsive scaling of barogramm
 // .barogramm-container {
 //   position: relative;
