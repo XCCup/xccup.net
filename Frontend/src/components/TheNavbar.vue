@@ -69,7 +69,7 @@
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
-            {{ loggedIn ? gettersAuthData.username : "Login" }}
+            {{ loggedIn ? gettersAuthData.firstName : "Login" }}
           </button>
           <div class="dropdown-menu" style="width: 250px">
             <BaseLogin v-if="!loggedIn" />
@@ -102,7 +102,7 @@ export default {
   computed: {
     // TODO: Remove this getter?
     // ...mapGetters(["authUser"]),
-    ...mapGetters("auth", {
+    ...mapGetters({
       gettersAuthData: "getAuthData",
       getterLoginStatus: "getLoginStatus",
     }),
@@ -111,7 +111,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", {
+    ...mapActions({
       actionLogout: "logout",
     }),
     async handleLogout() {

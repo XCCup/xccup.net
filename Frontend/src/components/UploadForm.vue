@@ -176,7 +176,7 @@ export default {
   },
   computed: {
     // ...mapGetters(["authUser"]),
-    ...mapGetters("auth", {
+    ...mapGetters({
       getterUserId: "getUserId",
     }),
     sendButtonIsDisabled() {

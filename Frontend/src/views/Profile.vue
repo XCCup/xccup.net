@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <!-- Editor -->
-    <div class="rounded bg-white">
+    <div v-if="userDetails" class="rounded bg-white">
       <div class="row">
         <!-- Left -->
         <div class="col-md-3 border-end">
@@ -23,32 +23,31 @@
             </div>
             <div class="row mt-2">
               <div class="col-md-6">
-                <BaseInput v-model="userProfile.name" label="Name" />
+                <BaseInput v-model="userProfile.firstName" label="Name" />
               </div>
               <div class="col-md-6">
-                <BaseInput v-model="userProfile.surname" label="Nachname" />
+                <BaseInput v-model="userProfile.lastName" label="Nachname" />
               </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
                 <BaseInput
-                  v-model="userProfile.club"
+                  v-model="userProfile.Club.name"
                   label="Verein"
                   :isDisabled="true"
                 />
-
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
 
                 <BaseSelect
-                  v-model="userProfile.sex"
+                  v-model="userProfile.gender"
                   label="Geschlecht"
                   :showLabel="true"
-                  :options="['männlich', 'weiblich']"
+                  :options="['M', 'W']"
                 />
                 <div class="mt-3"></div>
                 <BaseSelect
-                  v-model="userProfile.shirtSize"
+                  v-model="userProfile.tshirtSize"
                   label="T-Shirt Größe"
                   :showLabel="true"
                   :options="['S', 'M', 'L', 'XL', 'XXL']"
@@ -59,10 +58,10 @@
                 <div class="row d-flex align-items-end">
                   <div class="col-md-7">
                     <BaseSelect
-                      v-model="userProfile.defaultAircraft.listName"
+                      v-model="userProfile.gliders[0]"
                       label="Standard Gerät"
                       :showLabel="true"
-                      :options="listOfAircrafts"
+                      :options="userDetails.gliders"
                     />
                   </div>
                   <div class="col-md-5 mt-3">
@@ -97,6 +96,7 @@
                 type="checkbox"
                 value=""
                 id="notifyForComment"
+                v-model="userProfile.emailInformIfComment"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 Email bei neuem Kommentar <i class="bi bi-info-circle"></i>
@@ -108,13 +108,14 @@
                 type="checkbox"
                 value=""
                 id="optInNewsletter"
+                v-model="userProfile.emailNewsletter"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 Newsletter abonnieren <i class="bi bi-info-circle"></i>
               </label>
             </div>
-
-            <h5>Sonderwertungen</h5>
+            <!-- TODO Are those options obsolete? -->
+            <!-- <h5>Sonderwertungen</h5>
 
             <div class="form-check">
               <input
@@ -126,9 +127,9 @@
               <label class="form-check-label" for="flexCheckDefault">
                 GS RLP <i class="bi bi-info-circle"></i>
               </label>
-            </div>
+            </div> -->
 
-            <div class="form-check">
+            <!-- <div class="form-check">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -138,7 +139,7 @@
               <label class="form-check-label" for="flexCheckDefault">
                 Luxemburg XC-Championat <i class="bi bi-info-circle"></i>
               </label>
-            </div>
+            </div> -->
             <br />
             <!-- Edit -->
             <div v-if="!edit">
@@ -197,16 +198,16 @@
       <h5 v-if="userDetails">Raw user details</h5>
       {{ userDetails }}
     </div>
-
-    <!-- Editor -->
   </div>
 
   <!-- Modals -->
   <AddGliderModal />
-  <RemoveGliderModal :glider="userProfile.defaultAircraft.listName" />
+  <RemoveGliderModal v-if="userDetails" :glider="userProfile.gliders[0]" />
 </template>
 
 <script>
+import ApiService from "@/services/ApiService.js";
+
 import { mapGetters, useStore } from "vuex";
 import { computed, ref } from "vue";
 
@@ -217,15 +218,22 @@ export default {
   name: "Profile",
   components: { AddGliderModal, RemoveGliderModal },
   async setup() {
-    const store = useStore();
-    store.dispatch(
-      "user/getUserDetails",
-      store.getters["auth/getAuthData"].userId
-    );
-    const userDetails = computed(() => store.getters["user/getUserDetails"]);
-    return {
-      userDetails: ref(userDetails),
-    };
+    // TODO: Remove if store will not be used for user details. Maybe leave it here for reference how to do it;)
+    // const store = useStore();
+    // store.dispatch("user/getUserDetails", store.getters["getAuthData"].userId);
+    // const userDetails = computed(() => store.getters["user/getUserDetails"]);
+    try {
+      const store = useStore();
+
+      const userId = store.getters["getAuthData"].userId;
+      const { data: initialData } = await ApiService.getUserDetails(userId);
+
+      return {
+        userDetails: ref(initialData),
+      };
+    } catch (error) {
+      console.log(error);
+    }
   },
   data() {
     return {
@@ -233,18 +241,21 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["authUser"]),
-    listOfAircrafts() {
-      if (!this.authUser.gliders) return;
-      let gliderList = [];
-      this.authUser.gliders.forEach((element) => {
-        gliderList.push(`${element.brand} ${element.model}`);
-      });
-      return gliderList;
-    },
+    // ...mapGetters(["authUser"]),
+    ...mapGetters({
+      getterUserId: "getUserId",
+    }),
+    // listOfAircrafts() {
+    //   if (!this.authUser.gliders) return;
+    //   let gliderList = [];
+    //   this.authUser.gliders.forEach((element) => {
+    //     gliderList.push(`${element.brand} ${element.model}`);
+    //   });
+    //   return gliderList;
+    // },
   },
   beforeMount() {
-    this.userProfile = { ...this.authUser };
+    this.userProfile = { ...this.userDetails };
   },
   props: {
     edit: {

@@ -43,18 +43,20 @@
 - [x] Turnpoint overlay on map
 - [ ] Custom icons for takeoff & landing
 - [ ] Display alitude for pilot and airbuddies
+- [ ] Fix spinner if no airbuddy is existent
 - [ ] Delete flight button
 - [ ] Edit flight view
 - [ ] Mark picture point in map
 - [x] Add comment
 - [x] Delete comment
-- [ ] Delete comment modal (Are you sure?)
-- [ ] Connect to API
+- [x] Edit comment
+- [x] Delete comment modal (Are you sure?)
+- [x] Connect to API
 
 ### Flights
 
 - [ ] Sort functionality
-- [ ] Connect to API
+- [x] Connect to API
 
 ### Rankings
 
@@ -91,3 +93,4 @@
 - [ ] Icons for task types (FAI & flat triangle, one way)
 - [ ] Icons for ranking classes
 - [ ] Authentication
+- [ ] Login error handling

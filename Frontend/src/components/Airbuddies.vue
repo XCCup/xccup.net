@@ -40,7 +40,7 @@
                 class="badge"
                 :style="{ backgroundColor: this.trackColors[index + 1] }"
               >
-                {{ pilot.User.name }}
+                {{ pilot.User.firstName }}
               </span>
             </label>
           </h5>
@@ -75,10 +75,10 @@ export default {
       try {
         if (
           this.buddyFlights.length === 0 &&
-          this.flight.flightBuddies.length > 0
+          this.flight.airbuddies.length > 0
         ) {
-          this.flight.flightBuddies.forEach(async (buddy) => {
-            let response = await ApiService.getFlight(buddy.id);
+          this.flight.airbuddies.forEach(async (buddy) => {
+            let response = await ApiService.getFlight(buddy.externalId);
             this.buddyFlights.push(response.data);
           });
           // await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -96,7 +96,7 @@ export default {
       let airbuddyTracks = [];
       this.buddyFlights.forEach((element) => {
         airbuddyTracks.push({
-          buddyName: element.User.name,
+          buddyName: element.User.firstName,
           buddyFlightId: element.id,
           isActive: this.checkedFlights.includes(element.id),
           fixes: element.fixes,

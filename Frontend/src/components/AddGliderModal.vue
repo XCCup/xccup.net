@@ -24,7 +24,7 @@
           <div class="mb-3"></div>
           <BaseInput label="Fluggerät" />
 
-          <BaseSelect :options="getRankingClasses" label="Geräteklasse" />
+          <BaseSelect :options="gliderClass" label="Geräteklasse" />
         </div>
         <div class="modal-footer">
           <button
@@ -41,21 +41,25 @@
   </div>
 </template>
 <script>
-import rankingClassNames from "@/assets/js/rankingClassNames";
-
 export default {
   name: "AddGliderModal",
   data() {
-    return { brands: ["Ozone", "Flow", "AirG"] };
+    return {
+      brands: ["Ozone", "Flow", "AirG"],
+      // DIRTY
+      gliderClass: ["EN-A", "EN-B"],
+    };
   },
   computed: {
     getRankingClasses() {
-      const entries = Object.entries(rankingClassNames);
-      let tmp = [];
-      entries.forEach((e) => {
-        tmp.push(e[1].long);
-      });
-      return tmp;
+      // TODO: This needs repair
+
+      // const entries = Object.entries(rankingClassNames);
+      // let tmp = [];
+      // entries.forEach((e) => {
+      //   tmp.push(e[1].long);
+      // });
+      return null;
     },
   },
 };

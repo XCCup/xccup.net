@@ -2,25 +2,32 @@
   <div class="shadow p-3 mb-3">
     <div class="d-flex mb-2"></div>
     <div class="mb-3">
-      <form @submit.prevent="onSubmit">
-        <label for="comment-editor" class="form-label"
-          >Kommentar verfassen:</label
-        >
-        <textarea
-          class="form-control mb-2"
-          id="comment-editor"
-          v-model="message"
-          :rows="3"
-          @input="saveMessageToLocalStorage"
-        ></textarea>
-        <button
-          class="btn btn-primary me-1"
-          type="submit"
-          :disabled="sendButtonIsDisabled"
-        >
-          Senden
-        </button>
-      </form>
+      <div v-if="getLoginStatus === `success`">
+        <form @submit.prevent="onSubmit">
+          <label for="comment-editor" class="form-label"
+            >Kommentar verfassen:</label
+          >
+
+          <textarea
+            class="form-control mb-2"
+            id="comment-editor"
+            v-model="message"
+            :rows="3"
+            @input="saveMessageToLocalStorage"
+          ></textarea>
+          <button
+            class="btn btn-primary me-1"
+            type="submit"
+            :disabled="sendButtonIsDisabled"
+          >
+            Senden
+          </button>
+        </form>
+      </div>
+      <div v-else>
+        Du musst angemeldet sein um einen Kommentar zu verfassen.
+        <BaseLogin />
+      </div>
     </div>
   </div>
 </template>
@@ -36,9 +43,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", {
-      getterUserId: "getUserId",
-    }),
+    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
+
     sendButtonIsDisabled() {
       return this.message.length < 5;
     },
@@ -50,7 +56,7 @@ export default {
     onSubmit() {
       const comment = {
         message: this.message,
-        userId: this.getterUserId,
+        userId: this.getUserId,
       };
       this.$emit("submit-comment", comment);
     },
