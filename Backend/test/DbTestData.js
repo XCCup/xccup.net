@@ -176,6 +176,18 @@ function adjustDateOfFlightToToday(flights, numberOfEntriesToAdjust) {
     date.setDate(today.getDate());
     flights[index].dateOfFlight = date.toISOString();
   }
+  for (
+    let index = numberOfEntriesToAdjust;
+    index < numberOfEntriesToAdjust * 2;
+    index++
+  ) {
+    const date = new Date(flights[index].dateOfFlight);
+    const today = new Date();
+    date.setFullYear(today.getFullYear());
+    date.setMonth(today.getMonth());
+    date.setDate(today.getDate() - 1);
+    flights[index].dateOfFlight = date.toISOString();
+  }
 }
 
 function adjustYearOfEveryFlight(flights) {

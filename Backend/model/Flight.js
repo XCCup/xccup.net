@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(),
     },
     report: {
-      type: DataTypes.STRING(5000), //Default is VARCHAR(255)
+      type: DataTypes.STRING(5000),
+      //Default is VARCHAR(255)
     },
     flightPoints: {
       type: DataTypes.INTEGER,
@@ -38,6 +39,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       // In minutes
     },
+    takeoffTime: {
+      type: DataTypes.DATE,
+    },
+    landingTime: {
+      type: DataTypes.DATE,
+    },
     igcUrl: {
       type: DataTypes.STRING,
     },
@@ -47,28 +54,19 @@ module.exports = (sequelize, DataTypes) => {
     airspaceViolation: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false,
     },
     uncheckedGRecord: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false,
     },
     hikeAndFly: {
       //We will save the climbed height directly, so it's easier to aggreate later
       type: DataTypes.INTEGER,
       defaultValue: 0,
-      allowNull: false,
-    },
-    dateOfFlight: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-      allowNull: false,
     },
     isWeekend: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false,
     },
     ageOfUser: {
       type: DataTypes.INTEGER,

@@ -230,6 +230,7 @@
   },
   {
     "name": "DANKe Projekt GmbH",
+    "isGoldSponsor": true,
     "website": "http://www.dank-e.de",
     "type": "OTHER",
     "sponsorInSeasons": [
@@ -323,6 +324,7 @@
   {
     "name": "Flugschule Hirondelle",
     "website": "http://www.fs-hirondelle.de",
+    "isGoldSponsor": true,
     "type": "SCHOOL",
     "sponsorInSeasons": [
       "2015",
@@ -626,6 +628,7 @@
     "name": "PHI",
     "website": "Https://Phi-air.com",
     "type": "MANUFACTURER",
+    "isGoldSponsor": true,
     "sponsorInSeasons": [
       "2019",
       "2020",
