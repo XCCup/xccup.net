@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     landingTime: {
       type: DataTypes.DATE,
     },
-    igcUrl: {
+    igcPath: {
       type: DataTypes.STRING,
     },
     glider: {
