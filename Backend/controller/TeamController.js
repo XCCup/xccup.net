@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/TeamService");
-const { NOT_FOUND, BAD_REQUEST } = require("./Constants");
+const {
+  NOT_FOUND,
+  BAD_REQUEST,
+} = require("../constants/http-status-constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const {
   checkStringObjectNotEmpty,

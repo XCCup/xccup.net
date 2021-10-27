@@ -24,14 +24,10 @@ const cacheManager = require("./CacheManager");
 const { isNoWorkday } = require("../helper/HolidayCalculator");
 const { getCurrentYear } = require("../helper/Utils");
 
+const { COUNTRY } = require("../constants/user-constants");
+const { STATE } = require("../constants/flight-constants");
+
 const flightService = {
-  STATE_IN_RANKING: "In Wertung",
-  STATE_NOT_IN_RANKING: "Nicht in Wertung",
-  STATE_FLIGHTBOOK: "Flugbuch",
-  STATE_IN_PROCESS: "In Bearbeitung",
-
-  FLIGHT_TYPES: ["FREE", "FLAT", "FAI"],
-
   getAll: async (
     year,
     site,
@@ -421,18 +417,15 @@ async function calcFlightPointsAndStatus(flight, glider, status) {
 }
 
 function determineFlightStatus(currentSeason, flightPoints, submittedStatus) {
-  if (!flightPoints) return flightService.STATE_IN_PROCESS;
+  if (!flightPoints) return STATE.IN_PROCESS;
 
-  if (
-    submittedStatus == flightService.STATE_FLIGHTBOOK ||
-    currentSeason.isPaused == true
-  )
-    return flightService.STATE_FLIGHTBOOK;
+  if (submittedStatus == STATE.FLIGHTBOOK || currentSeason.isPaused == true)
+    return STATE.FLIGHTBOOK;
 
   const pointThreshold = currentSeason.pointThresholdForFlight;
   return flightPoints >= pointThreshold
-    ? flightService.STATE_IN_RANKING
-    : flightService.STATE_NOT_IN_RANKING;
+    ? STATE.IN_RANKING
+    : STATE.NOT_IN_RANKING;
 }
 
 async function createGliderObject(columnsToUpdate, glider) {
@@ -564,7 +557,10 @@ async function addUserData(flight) {
   const user = await User.findByPk(flight.userId);
   flight.teamId = user.teamId;
   flight.clubId = user.clubId;
-  flight.homeStateOfUser = user.state;
+  flight.homeStateOfUser =
+    user.address.country == COUNTRY.GER
+      ? user.address.state
+      : user.address.country;
   flight.ageOfUser = user.getAge();
 }
 

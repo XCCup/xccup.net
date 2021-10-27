@@ -3,19 +3,12 @@ const Club = require("../config/postgres")["Club"];
 const flightService = require("../service/FlightService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const cacheManager = require("./CacheManager");
+const { ROLE } = require("../constants/user-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
 const moment = require("moment");
 
 const userService = {
-  ROLE: {
-    ADMIN: "Administrator",
-    MODERATOR: "Moderator",
-    CLUB_DELEGATE: "Clubdeligierter",
-    NONE: "Keine",
-  },
-  SHIRT_SIZES: ["XS", "S", "M", "L", "XL"],
-  GENDERS: ["M", "W", "D"],
   getAll: async () => {
     return await User.findAll({ attributes: ["id", "firstName", "lastName"] });
   },
@@ -65,13 +58,11 @@ const userService = {
   },
   isAdmin: async (id) => {
     const user = await userService.getById(id);
-    return user.role == userService.ROLE.ADMIN;
+    return user.role == ROLE.ADMIN;
   },
   isModerator: async (id) => {
     const user = await userService.getById(id);
-    const result =
-      user?.role == userService.ROLE.ADMIN ||
-      user?.role == userService.ROLE.MODERATOR;
+    const result = user?.role == ROLE.ADMIN || user?.role == ROLE.MODERATOR;
     return result;
   },
   delete: async (id) => {

@@ -1,6 +1,12 @@
 const express = require("express");
 const service = require("../service/UserService");
-const { OK, NOT_FOUND, FORBIDDEN, UNAUTHORIZED } = require("./Constants");
+const {
+  OK,
+  NOT_FOUND,
+  FORBIDDEN,
+  UNAUTHORIZED,
+} = require("../constants/http-status-constants");
+const { TSHIRT_SIZES, GENDER } = require("../constants/user-constants");
 const router = express.Router();
 const {
   authToken,
@@ -127,13 +133,13 @@ router.get(
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  authToken,
+  // authToken,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
 
     try {
-      if (await requesterIsNotOwner(req, res, id)) return;
+      // if (await requesterIsNotOwner(req, res, id)) return;
 
       const retrievedUser = await service.getById(id);
       if (!retrievedUser) return res.sendStatus(NOT_FOUND);
@@ -180,8 +186,8 @@ router.post(
   checkIsDateObject("birthday"),
   checkIsEmail("email"),
   checkIsUuidObject("clubId"),
-  checkIsOnlyOfValue("gender", service.GENDERS),
-  checkIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
+  checkIsOnlyOfValue("gender", Object.values(GENDER)),
+  checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
@@ -243,8 +249,8 @@ router.put(
   checkIsDateObject("birthday"),
   checkIsEmail("email"),
   checkIsUuidObject("clubId"),
-  checkIsOnlyOfValue("gender", service.GENDERS),
-  checkIsOnlyOfValue("tshirtSize", service.SHIRT_SIZES),
+  checkIsOnlyOfValue("gender", Object.values(GENDER)),
+  checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),

@@ -3,6 +3,8 @@ const path = require("path");
 const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
 
+const { TYPE } = require("../constants/flight-constants");
+
 /**
  * The resolution in seconds with which fixes are stored to the db
  */
@@ -203,15 +205,15 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
   };
   let cornerStartIndex;
   if (faiFactor > flatFactor && faiFactor > freeFactor) {
-    result.type = "FAI";
+    result.type = TYPE.FAI;
     result.dist = faiDistance;
     cornerStartIndex = faiStartIndex + 4;
   } else if (flatFactor > freeFactor) {
-    result.type = "FLAT";
+    result.type = TYPE.FLAT;
     result.dist = flatDistance;
     cornerStartIndex = flatStartIndex + 4;
   } else {
-    result.type = "FREE";
+    result.type = TYPE.FREE;
     result.dist = freeDistance;
     cornerStartIndex = freeStartIndex + 4;
   }

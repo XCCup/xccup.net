@@ -4,7 +4,7 @@ const service = require("../service/FlightService");
 const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const fs = require("fs");
-const { NOT_FOUND } = require("./Constants");
+const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { query } = require("express-validator");
 const {
