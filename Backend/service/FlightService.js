@@ -233,7 +233,6 @@ const flightService = {
   },
 
   update: async (flight) => {
-    cacheManager.invalidateCaches();
     return flight.save();
   },
 
@@ -253,8 +252,8 @@ const flightService = {
         columnsToUpdate.flightPoints = result.flightPoints;
         columnsToUpdate.flightStatus = result.flightStatus;
       }
-      cacheManager.invalidateCaches();
     }
+    cacheManager.invalidateCaches();
 
     return Flight.update(columnsToUpdate, {
       where: {
@@ -265,14 +264,12 @@ const flightService = {
   },
 
   delete: async (id) => {
-    cacheManager.invalidateCaches();
     return Flight.destroy({
       where: { id },
     });
   },
 
   addResult: async (result) => {
-    cacheManager.invalidateCaches();
     console.log("ADD RESULT TO FLIGHT");
     const flight = await flightService.getById(result.id);
 

@@ -2,7 +2,6 @@ const User = require("../config/postgres")["User"];
 const Club = require("../config/postgres")["Club"];
 const flightService = require("../service/FlightService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
-const cacheManager = require("./CacheManager");
 const { ROLE } = require("../constants/user-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
@@ -66,19 +65,16 @@ const userService = {
     return result;
   },
   delete: async (id) => {
-    cacheManager.invalidateCaches();
     return User.destroy({
       where: { id },
     });
   },
   save: async (user) => {
-    cacheManager.invalidateCaches();
     return User.create(user);
   },
   update: async (user) => {
     await checkForClubChange(user);
 
-    cacheManager.invalidateCaches();
     return user.save();
   },
   validate: async (email, password) => {
