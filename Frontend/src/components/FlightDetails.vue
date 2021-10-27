@@ -86,7 +86,7 @@
     >
       Details anzeigen
     </button>
-    <a v-bind:href="flight.igcUrl"
+    <a :href="igcDownloadUrl"
       ><button type="button" class="btn btn-sm btn-outline-primary">
         <i class="bi bi-cloud-download"></i> .igc
       </button></a
@@ -204,6 +204,10 @@ export default {
 
     showEditButton() {
       return this.flight.userId === this.getUserId;
+    },
+    igcDownloadUrl() {
+      let baseUrl = process.env.VUE_APP_API_URL;
+      return baseUrl + "flights/igc/" + this.flight.id;
     },
   },
 };
