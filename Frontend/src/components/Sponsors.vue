@@ -6,12 +6,29 @@
 
   <section>
     <div class="container mt-2">
-      <h2>Sponsoren</h2>
+      <h2>Gold Sponsoren</h2>
       <div class="row">
         <div
-          v-for="sponsor in sponsors"
+          v-for="sponsor in goldSponsors"
           :key="sponsor.id"
-          class="col-4 col-sm-4 col-md-3 col-lg-2"
+          class="col-4 col-sm-4 col-md-4 col-lg-3"
+        >
+          <div class="square-holder">
+            <a :href="sponsor.website">
+              <img
+                :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <h4>Sponsoren</h4>
+      <div class="row">
+        <div
+          v-for="sponsor in regularSponsors"
+          :key="sponsor.id"
+          class="col-3 col-sm-3 col-md-3 col-lg-2"
         >
           <div class="square-holder">
             <a :href="sponsor.website">
@@ -38,6 +55,14 @@ export default {
     sponsors: {
       type: Array,
       required: true,
+    },
+  },
+  computed: {
+    goldSponsors() {
+      return this.sponsors.filter((sponsor) => sponsor.isGoldSponsor);
+    },
+    regularSponsors() {
+      return this.sponsors.filter((sponsor) => !sponsor.isGoldSponsor);
     },
   },
 };
