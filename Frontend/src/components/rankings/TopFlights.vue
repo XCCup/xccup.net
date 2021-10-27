@@ -1,8 +1,5 @@
 <template>
   <table v-if="flights" class="table table-hover">
-    <thead>
-      <tr></tr>
-    </thead>
     <tbody>
       <tr
         v-for="(flight, index) in flights.slice(0, 5)"
