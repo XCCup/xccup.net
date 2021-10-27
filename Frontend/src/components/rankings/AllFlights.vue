@@ -31,8 +31,8 @@
             </td>
 
             <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
-            <td>{{ flight.User.Club?.name }}</td>
-            <td>{{ flight.User.Team?.name }}</td>
+            <td>{{ flight.Club.name }}</td>
+            <td>{{ flight.Team?.name }}</td>
             <td>{{ flight.takeoff.name }}</td>
 
             <td>
