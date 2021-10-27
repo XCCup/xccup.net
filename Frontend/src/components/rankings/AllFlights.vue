@@ -1,65 +1,70 @@
 <template>
   <section v-if="flights" class="pb-3">
-    <div class="container pt-1">
+    <div class="container-fluid pt-1">
       <h3>Streckenmeldungen 20XX</h3>
-      <table class="table table-hover">
-        <tbody>
-          <th>Datum</th>
-          <th>Name</th>
-          <th>Verein</th>
-          <th>Team</th>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover text-sm">
+          <thead>
+            <th>Datum</th>
+            <th>Name</th>
+            <th scope="col" class="d-none d-lg-table-cell">Verein</th>
+            <th scope="col" class="d-none d-lg-table-cell">Team</th>
 
-          <th>Startplatz</th>
-          <th>Gerät</th>
-          <th>Strecke</th>
-          <th></th>
-          <th>Punkte</th>
-          <th>Status</th>
+            <th>Startplatz</th>
+            <th scope="col" class="d-none d-lg-table-cell">Gerät</th>
+            <th>Strecke</th>
+            <th></th>
+            <th>Punkte</th>
+            <th>Status</th>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(flight, index) in flights.slice(0, maxRows)"
+              v-bind:item="flight"
+              v-bind:index="index"
+              v-bind:key="flight.id"
+              @click="routeToFlight(flight.externalId)"
+            >
+              <td>
+                <BaseDate :timestamp="flight.takeoffTime" dateFormat="dd.MM" />
+              </td>
 
-          <tr
-            v-for="(flight, index) in flights.slice(0, maxRows)"
-            v-bind:item="flight"
-            v-bind:index="index"
-            v-bind:key="flight.id"
-            @click="routeToFlight(flight.externalId)"
-          >
-            <td>
-              <BaseDate
-                :timestamp="flight.takeoffTime"
-                dateFormat="dd.MM.yyyy"
-              />
-            </td>
+              <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
+              <td scope="col" class="d-none d-lg-table-cell">
+                {{ flight.Club.name }}
+              </td>
+              <td scope="col" class="d-none d-lg-table-cell">
+                {{ flight.Team?.name }}
+              </td>
+              <td>{{ flight.takeoff.name }}</td>
 
-            <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
-            <td>{{ flight.Club.name }}</td>
-            <td>{{ flight.Team?.name }}</td>
-            <td>{{ flight.takeoff.name }}</td>
+              <td scope="col" class="d-none d-lg-table-cell">
+                <i
+                  class="bi bi-trophy"
+                  :class="flight.glider.gliderClass.key"
+                ></i>
+                {{ flight.glider.brand + " " + flight.glider.model }}
+              </td>
 
-            <td>
-              <i
-                class="bi bi-trophy"
-                :class="flight.glider.gliderClass.key"
-              ></i>
-              {{ flight.glider.brand + " " + flight.glider.model }}
-            </td>
-
-            <td>{{ Math.floor(flight.flightDistance) }} km</td>
-            <td><FlightType :flightType="flight.flightType" /></td>
-            <td>{{ flight.flightPoints }} P</td>
-            <td>{{ flight.flightStatus }}</td>
-          </tr>
-        </tbody>
-      </table>
+              <td>{{ Math.floor(flight.flightDistance) }} km</td>
+              <td><FlightType :flightType="flight.flightType" /></td>
+              <td>{{ flight.flightPoints }} P</td>
+              <td><FlightState :flightState="flight.flightStatus" /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
 import FlightType from "@/components/FlightType";
+import FlightState from "@/components/FlightState";
 
 export default {
   name: "DailyRanking",
-  components: { FlightType },
+  components: { FlightType, FlightState },
 
   props: {
     flights: {
