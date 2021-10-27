@@ -7,7 +7,7 @@
   <section>
     <div class="bg-primary text-light p-4">
       <div class="container">
-        <h2>Gold Sponsoren</h2>
+        <h2>Sponsoren</h2>
         <div class="row mt-3">
           <div
             v-for="sponsor in goldSponsors"
@@ -26,7 +26,6 @@
       </div>
     </div>
     <div class="container mt-3">
-      <h4>Sponsoren</h4>
       <div class="row mt-3">
         <div
           v-for="sponsor in regularSponsors"
