@@ -7,7 +7,7 @@
       height="24"
       width="24"
     />
-    <a href="#">{{ comment.User.name }}</a>
+    <a href="#">{{ comment.User.firstName + " " + comment.User.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
       ><BaseDate :timestamp="comment.createdAt" dateFormat="dd.MM.yyyy"
     /></span>
