@@ -58,13 +58,6 @@ export default {
     },
   },
 };
-
-function taskTypeHelper(taskType) {
-  if (taskType === "FAI") return `<i class="bi bi-triangle"></i>`;
-  if (taskType === "FLAT")
-    return `<img src="@/assets/images/flat-triangle.png" height="30" />`;
-  if (taskType === "FREE") return `<i class="bi bi-arrow-bar-right"></i>`;
-}
 </script>
 
 <style></style>
