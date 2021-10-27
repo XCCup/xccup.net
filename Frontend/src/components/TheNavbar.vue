@@ -25,7 +25,11 @@
               Ergebnisse
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Eingereichte Flüge</a></li>
+              <li>
+                <router-link :to="{ name: 'Flights' }" class="dropdown-item">
+                  Eingereichte Flüge
+                </router-link>
+              </li>
               <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
               <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
               <li>
