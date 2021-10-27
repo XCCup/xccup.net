@@ -4,7 +4,6 @@
     <div class="row">
       <div class="col-md-6 col-12 my-1">
         <table class="table table-sm">
-          <thead></thead>
           <tbody>
             <tr>
               <th>Pilot:</th>
@@ -41,7 +40,6 @@
       </div>
       <div class="col-md-6 col-12 my-1">
         <table class="table table-sm">
-          <thead></thead>
           <tbody>
             <tr>
               <th>Flugzeit:</th>
@@ -94,17 +92,16 @@
       </button></a
     >
 
-    <router-link :to="{ name: 'EditFlight' }">
+    <router-link :to="{ name: 'FlightEdit' }">
       <button v-if="showEditButton" class="btn btn-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>
 
-    <div class="collapse" id="collapseExample">
+    <div class="collapse mt-2" id="collapseExample">
       <div class="row">
         <div class="col-md-6 col-12">
           <table class="table table-sm">
-            <thead></thead>
             <tbody>
               <tr>
                 <th>Flugstatus:</th>
@@ -133,7 +130,6 @@
         </div>
         <div class="col-md-6 col-12">
           <table class="table table-sm">
-            <thead></thead>
             <tbody>
               <tr>
                 <th>Landeplatz:</th>
