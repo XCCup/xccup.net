@@ -70,7 +70,7 @@ export default {
 
 <style scoped>
 img {
-  max-height: 55px;
+  max-height: 60px;
 }
 .square-holder {
   padding: 15px;
