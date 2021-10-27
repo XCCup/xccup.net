@@ -58,10 +58,14 @@
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link active" href="#">Kontakt / Impressum</a>
+            <router-link :to="{ name: 'Privacy' }" class="nav-link active">
+              Datenschutz
+            </router-link>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link active" href="#">Datenschutz</a>
+            <router-link :to="{ name: 'Imprint' }" class="nav-link active">
+              Kontakt / Impressum</router-link
+            >
           </li>
         </ul>
         <!-- Login dropdown  -->

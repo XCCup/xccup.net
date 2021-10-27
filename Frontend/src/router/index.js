@@ -36,11 +36,11 @@ const routes = [
   },
   {
     path: "/flug-bearbeiten",
-    name: "EditFlight",
+    name: "FlightEdit",
     // props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () =>
-      import(/* webpackChunkName: "" */ "../views/EditFlight.vue"),
+      import(/* webpackChunkName: "" */ "../views/FlightEdit.vue"),
   },
   {
     path: "/profil",
@@ -70,6 +70,16 @@ const routes = [
     path: "/login/",
     name: "Login",
     component: () => import(/* webpackChunkName: "" */ "../views/Login.vue"),
+  },
+  {
+    path: "/impressum",
+    name: "Imprint",
+    component: () => import(/* webpackChunkName: "" */ "../views/Imprint.vue"),
+  },
+  {
+    path: "/datenschutz",
+    name: "Privacy",
+    component: () => import(/* webpackChunkName: "" */ "../views/Privacy.vue"),
   },
   {
     path: "/:catchAll(.*)",

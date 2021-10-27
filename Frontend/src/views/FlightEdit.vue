@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "EditFlight",
+  name: "FlightEdit",
 };
 </script>
 
