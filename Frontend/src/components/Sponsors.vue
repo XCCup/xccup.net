@@ -1,30 +1,33 @@
 <template>
   <!-- Divider -->
-  <div class="bg-primary text-light p-4">
+  <!-- <div class="bg-primary text-light p-4">
     <br />
-  </div>
+  </div> -->
 
   <section>
-    <div class="container mt-2">
-      <h2>Gold Sponsoren</h2>
-      <div class="row">
-        <div
-          v-for="sponsor in goldSponsors"
-          :key="sponsor.id"
-          class="col-4 col-sm-4 col-md-4 col-lg-3"
-        >
-          <div class="square-holder">
-            <a :href="sponsor.website">
-              <img
-                :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
-              />
-            </a>
+    <div class="bg-primary text-light p-4">
+      <div class="container">
+        <h2>Gold Sponsoren</h2>
+        <div class="row mt-3">
+          <div
+            v-for="sponsor in goldSponsors"
+            :key="sponsor.id"
+            class="col-4 col-sm-4 col-md-4 col-lg-3"
+          >
+            <div class="square-holder">
+              <a :href="sponsor.website">
+                <img
+                  :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </div>
-
+    </div>
+    <div class="container mt-3">
       <h4>Sponsoren</h4>
-      <div class="row">
+      <div class="row mt-3">
         <div
           v-for="sponsor in regularSponsors"
           :key="sponsor.id"
