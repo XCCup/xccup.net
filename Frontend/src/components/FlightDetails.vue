@@ -51,7 +51,7 @@
               <th>Strecke:</th>
               <td>
                 {{ flight.flightDistance.toFixed(2) }} km
-                <FlightType :flightType="flight.flightType" />
+                <FlightTypeIcon :flightType="flight.flightType" />
               </td>
             </tr>
             <tr>
@@ -166,12 +166,12 @@ import { mapGetters } from "vuex";
 
 import { format } from "date-fns";
 import RankingClass from "@/components/RankingClass";
-import FlightType from "@/components/FlightType";
+import FlightTypeIcon from "@/components/FlightTypeIcon";
 export default {
   name: "FlightDetails",
   components: {
     RankingClass,
-    FlightType,
+    FlightTypeIcon,
   },
   data() {
     return {

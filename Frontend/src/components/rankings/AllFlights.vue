@@ -47,7 +47,7 @@
               </td>
 
               <td>{{ Math.floor(flight.flightDistance) }} km</td>
-              <td><FlightType :flightType="flight.flightType" /></td>
+              <td><FlightTypeIcon :flightType="flight.flightType" /></td>
               <td>{{ flight.flightPoints }} P</td>
               <td><FlightState :flightState="flight.flightStatus" /></td>
             </tr>
@@ -59,12 +59,12 @@
 </template>
 
 <script>
-import FlightType from "@/components/FlightType";
+import FlightTypeIcon from "@/components/FlightTypeIcon";
 import FlightState from "@/components/FlightState";
 
 export default {
   name: "DailyRanking",
-  components: { FlightType, FlightState },
+  components: { FlightTypeIcon, FlightState },
 
   props: {
     flights: {
