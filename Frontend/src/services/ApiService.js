@@ -50,4 +50,7 @@ export default {
   getUserDetails(userId) {
     return jwtInterceptor.get(baseURL + "users/" + userId);
   },
+  updateUserProfile(userProfile) {
+    return jwtInterceptor.put(baseURL + "users/" + userProfile.id, userProfile);
+  },
 };
