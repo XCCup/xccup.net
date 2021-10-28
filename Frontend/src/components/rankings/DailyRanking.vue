@@ -36,7 +36,7 @@
             </tbody>
           </table>
           <router-link
-            :to="{ name: 'Flights' }"
+            :to="{ name: 'AllFlights' }"
             class="btn btn-outline-light btn-sm my-1"
             >Alle Flüge anzeigen</router-link
           >

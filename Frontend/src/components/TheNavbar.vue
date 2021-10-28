@@ -26,7 +26,7 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <router-link :to="{ name: 'Flights' }" class="dropdown-item">
+                <router-link :to="{ name: 'AllFlights' }" class="dropdown-item">
                   Eingereichte Flüge
                 </router-link>
               </li>

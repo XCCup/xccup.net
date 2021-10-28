@@ -9,7 +9,7 @@ import AllFlights from "@/components/rankings/AllFlights";
 import { ref } from "vue";
 
 export default {
-  name: "Flights",
+  name: "AllFlights",
   async setup() {
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 2000));
