@@ -24,7 +24,7 @@ const routes = [
   },
   {
     path: "/upload",
-    name: "UploadFlight",
+    name: "FlightUpload",
     props: true,
     meta: { requiredAuth: true },
 
@@ -32,7 +32,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "" */ "../views/UploadFlight.vue"),
+      import(/* webpackChunkName: "" */ "../views/FlightUpload.vue"),
   },
   {
     path: "/flug-bearbeiten",

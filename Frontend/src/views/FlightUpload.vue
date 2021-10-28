@@ -7,7 +7,7 @@
 <script>
 import UploadForm from "@/components/UploadForm";
 export default {
-  name: "UploadFlight",
+  name: "FlightUpload",
   components: {
     UploadForm,
   },

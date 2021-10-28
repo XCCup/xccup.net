@@ -95,7 +95,7 @@
         </div>
         <router-link
           class="btn btn-danger btn-sm m-1"
-          :to="{ name: 'UploadFlight' }"
+          :to="{ name: 'FlightUpload' }"
           >Flug hochladen
         </router-link>
       </div>
