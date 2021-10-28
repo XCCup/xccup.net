@@ -137,17 +137,17 @@
       </div>
     </form>
   </div>
-  <AddGliderModal />
+  <ModalAddGlider />
 </template>
 
 <script>
 import ApiService from "@/services/ApiService";
-import AddGliderModal from "@/components/AddGliderModal";
+import ModalAddGlider from "@/components/ModalAddGlider";
 import { mapGetters } from "vuex";
 
 export default {
   name: "UploadForm",
-  components: { AddGliderModal },
+  components: { ModalAddGlider },
   data() {
     // TODO: Clean up orphaned/duplicate variables
     return {
