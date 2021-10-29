@@ -38,21 +38,21 @@
                 />
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
-                <BaseInput v-model="userProfile.address" label="Strasse" />
+                <BaseInput v-model="userProfile.address.street" label="Strasse" />
                 <div class="row">
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.zip" label="PLZ" />
+                    <BaseInput v-model="userProfile.address.zip" label="PLZ" />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.city" label="Stadt" />
+                    <BaseInput v-model="userProfile.address.city" label="Stadt" />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.state" label="Bundesland" />
+                    <BaseInput v-model="userProfile.address.state" label="Bundesland" />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.country" label="Land" />
+                    <BaseInput v-model="userProfile.address.country" label="Land" />
                   </div>
                 </div>
                 <div class="row">
