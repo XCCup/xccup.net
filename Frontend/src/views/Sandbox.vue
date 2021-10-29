@@ -13,7 +13,7 @@
     </div>
     <!-- Content -->
     <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
-    <Barogramm :datasets="baroData" :key="baroDataUpdated" />
+    <FlightBarogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
       v-if="flight.airbuddies"
       :flight="flight"
@@ -35,7 +35,7 @@
 
 <script>
 // !!! Note to my future self !!!
-// The connection between Airbuddies, Barogramm and Map needs refactoring.
+// The connection between Airbuddies, FlightBarogramm and Map needs refactoring.
 // It's to ineffective and you can do better now.
 
 import { ref } from "vue";
@@ -43,7 +43,7 @@ import { useRouter, useRoute } from "vue-router";
 import ApiService from "@/services/ApiService.js";
 import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
-import Barogramm from "@/components/Barogramm.vue";
+import FlightBarogramm from "@/components/FlightBarogramm.vue";
 import trackColors from "@/assets/js/trackColors";
 import InlineAlert from "@/components/InlineAlert";
 import FlightDetails from "@/components/FlightDetails";
@@ -55,7 +55,7 @@ export default {
   components: {
     MapV2,
     Airbuddies,
-    Barogramm,
+    FlightBarogramm,
     InlineAlert,
     FlightDetails,
     Comments,
