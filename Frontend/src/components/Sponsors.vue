@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { shuffle } from "lodash";
+
 export default {
   name: "Sponsors",
   data() {
@@ -61,10 +63,10 @@ export default {
   },
   computed: {
     goldSponsors() {
-      return this.sponsors.filter((sponsor) => sponsor.isGoldSponsor);
+      return shuffle(this.sponsors.filter((sponsor) => sponsor.isGoldSponsor));
     },
     regularSponsors() {
-      return this.sponsors.filter((sponsor) => !sponsor.isGoldSponsor);
+      return shuffle(this.sponsors.filter((sponsor) => !sponsor.isGoldSponsor));
     },
   },
 };
