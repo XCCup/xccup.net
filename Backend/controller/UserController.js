@@ -133,13 +133,13 @@ router.get(
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  // authToken,
+  authToken,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
 
     try {
-      // if (await requesterIsNotOwner(req, res, id)) return;
+      if (await requesterIsNotOwner(req, res, id)) return;
 
       const retrievedUser = await service.getById(id);
       if (!retrievedUser) return res.sendStatus(NOT_FOUND);
