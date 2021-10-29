@@ -1,5 +1,6 @@
 const express = require("express");
 const service = require("../service/UserService");
+const { getCurrentActive } = require("../service/SeasonService");
 const {
   OK,
   NOT_FOUND,
@@ -308,7 +309,7 @@ router.put(
 
 router.put(
   "/gliders/:id",
-  authToken,
+  // authToken,
   checkIsArray("gliders"), //TODO Create schema validation for gliders
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -317,7 +318,8 @@ router.put(
     const currentGliders = req.body.gliders;
 
     try {
-      const gliders = sanitizeGliders(currentGliders);
+      const gliders = await sanitizeGliders(currentGliders);
+      await addGliderClassDescription(gliders);
 
       if (await requesterIsNotOwner(req, res, id)) return;
 
@@ -332,15 +334,35 @@ router.put(
   }
 );
 
-function sanitizeGliders(gliders) {
+async function addGliderClassDescription(gliders) {
+  const gliderClasses = (await getCurrentActive()).gliderClasses;
+
+  gliders.forEach((glider) => {
+    glider.gliderClassShortDescription =
+      gliderClasses[glider.gliderClass].shortDescription;
+  });
+}
+
+async function sanitizeGliders(gliders) {
+  const { XccupRestrictionError } = require("../helper/ErrorHandler");
+  const gliderClasses = (await getCurrentActive()).gliderClasses;
+
   return gliders.map((glider) => {
-    if (glider.brand && glider.model && glider.gliderClass) {
+    if (
+      glider.brand &&
+      glider.model &&
+      glider.gliderClass &&
+      gliderClasses[glider.gliderClass]
+    ) {
       return {
         brand: glider.brand,
         model: glider.model,
         gliderClass: glider.gliderClass,
       };
     }
+    throw new XccupRestrictionError(
+      `The gliderClass: "${glider.gliderClass}" is not valid for the current season`
+    );
   });
 }
 
