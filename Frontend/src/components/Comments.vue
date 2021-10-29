@@ -1,12 +1,18 @@
 <template>
   <div class="container">
     <h3>Kommentare</h3>
-    <div class="shadow p-3 mb-3" v-for="comment in comments" :key="comment.id">
+    <div
+      class="shadow p-3 mb-3"
+      v-for="comment in commentsWithReplies"
+      :key="comment.id"
+    >
       <Comment
         :ref="comment.id"
         :comment="comment"
         @delete-comment="showCommentDeleteModal"
+        @delete-reply="showCommentDeleteModal"
         @comment-edited="onCommentEdited"
+        @save-reply-message="onSubmit"
       />
     </div>
     <CommentEditor ref="commentEditor" @submit-comment="onSubmit" />
@@ -61,7 +67,10 @@ export default {
     },
   },
   data() {
-    return { deleteCommentModal: null, commentIdToDelete: null };
+    return {
+      deleteCommentModal: null,
+      commentIdToDelete: null,
+    };
   },
   mounted() {
     this.deleteCommentModal = new Modal(
@@ -86,7 +95,29 @@ export default {
       this.$refs.commentEditor.clearCommentEditorInput();
     },
   },
-  emits: ["delete-comment", "submit-comment", "comment-edited"],
+  computed: {
+    commentsWithReplies() {
+      let comments = [];
+      this.comments.forEach((comment) => {
+        if (!comment.relatedTo) {
+          comments.push(comment);
+        }
+      });
+      // Add replies
+      this.comments.forEach((comment) => {
+        if (comment.relatedTo) {
+          let parent = comments.findIndex(
+            (element) => element.id === comment.relatedTo
+          );
+          if (!comments[parent]?.replies) comments[parent].replies = [];
+          comments[parent].replies.push(comment);
+        }
+      });
+      return comments;
+    },
+  },
+
+  emits: ["delete-comment", "delete-reply", "submit-comment", "comment-edited"],
 };
 </script>
 

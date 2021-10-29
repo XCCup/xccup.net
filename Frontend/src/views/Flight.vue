@@ -15,6 +15,7 @@
       :comments="flight.comments"
       @submit-comment="addComment"
       @delete-comment="deleteComment"
+      @delete-reply="deleteComment"
       @comment-edited="editComment"
     />
   </div>
@@ -103,6 +104,9 @@ export default {
 
         if (res.status != 200) throw res.statusText;
         this.$refs.Comments.clearCommentEditorInput();
+        if (comment.relatedTo)
+          this.$refs.Comments.$refs[`${comment.relatedTo}`].closeReplyEditor();
+
         this.updateComments();
       } catch (error) {
         console.log(error);
@@ -122,7 +126,20 @@ export default {
         const res = await ApiService.editComment(comment);
         if (res.status != 200) throw res.statusText;
         await this.updateComments();
-        this.$refs.Comments.$refs[`${comment.id}`].closeMessageEditor();
+        // Check if the edited comment is a reply to a parent comment
+        // and close the comment editor via $ref. Needed because the $refs are nested.
+        if (
+          this.$refs.Comments.$refs[`${comment.relatedTo}`]?.$refs[
+            `${comment.id}`
+          ]
+        ) {
+          this.$refs.Comments.$refs[`${comment.relatedTo}`].$refs[
+            `${comment.id}`
+          ].closeCommentEditor();
+        } else {
+          // Else
+          this.$refs.Comments.$refs[`${comment.id}`].closeCommentEditor();
+        }
       } catch (error) {
         console.log(error);
       }
