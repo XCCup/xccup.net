@@ -191,8 +191,8 @@ router.post(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObjectNotEmpty("state"),
-  checkStringObjectNotEmpty("address"),
+  checkStringObjectNotEmpty("address.state"),
+  checkStringObjectNotEmpty("address.country"),
   checkStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -254,8 +254,8 @@ router.put(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObjectNotEmpty("state"),
-  checkStringObjectNotEmpty("address"),
+  checkStringObjectNotEmpty("address.state"),
+  checkStringObjectNotEmpty("address.country"),
   checkOptionalStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
