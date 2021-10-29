@@ -232,6 +232,18 @@ const flightService = {
     return Math.round(totalDistance);
   },
 
+  getAllBrands: async () => {
+    const query = `SELECT DISTINCT ON (glider->'brand') glider->'brand' AS "brand"
+    FROM "Flights";`;
+
+    const brands = await Flight.sequelize.query(query, {
+      type: Flight.sequelize.QueryTypes.SELECT,
+    });
+
+    // Refactor array of objects to plain array of strings
+    return brands.map((e) => e.brand);
+  },
+
   update: async (flight) => {
     return flight.save();
   },

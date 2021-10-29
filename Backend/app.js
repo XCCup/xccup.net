@@ -54,6 +54,7 @@ app.use("/home", require("./controller/HomeController"));
 app.use("/news", require("./controller/NewsController"));
 app.use("/sponsors", require("./controller/SponsorController"));
 app.use("/media", require("./controller/MediaController"));
+app.use("/general", require("./controller/GeneralController"));
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 // eslint-disable-next-line no-unused-vars
