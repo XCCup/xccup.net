@@ -40,7 +40,9 @@ const flightService = {
     endDate,
     userId,
     clubId,
-    teamId
+    teamId,
+    gliderClass,
+    status
   ) => {
     let fillCache = false;
     if (
@@ -56,6 +58,8 @@ const flightService = {
         userId,
         clubId,
         teamId,
+        gliderClass,
+        status,
       ])
     ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
@@ -80,7 +84,9 @@ const flightService = {
         rankingClass,
         startDate,
         endDate,
-        userId
+        userId,
+        gliderClass,
+        status
       ),
       order: [orderStatement],
     };
@@ -589,14 +595,28 @@ async function createWhereStatement(
   rankingClass,
   startDate,
   endDate,
-  userId
+  userId,
+  gliderClass,
+  flightStatus
 ) {
   let whereStatement;
-  if (flightType || year || rankingClass || startDate || endDate || userId) {
+  if (
+    flightType ||
+    year ||
+    rankingClass ||
+    startDate ||
+    endDate ||
+    userId ||
+    gliderClass ||
+    flightStatus
+  ) {
     whereStatement = {};
   }
   if (flightType) {
     whereStatement.flightType = flightType;
+  }
+  if (flightStatus) {
+    whereStatement.flightStatus = flightStatus;
   }
   if (userId) {
     whereStatement.userId = userId;
@@ -619,6 +639,11 @@ async function createWhereStatement(
 
     whereStatement.glider = {
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
+    };
+  }
+  if (gliderClass) {
+    whereStatement.glider = {
+      gliderClass: { key: gliderClass },
     };
   }
   return whereStatement;

@@ -51,6 +51,8 @@ router.get(
       userId,
       clubId,
       teamId,
+      gliderClass,
+      status,
     } = req.query;
 
     try {
@@ -66,7 +68,9 @@ router.get(
         endDate,
         userId,
         clubId,
-        teamId
+        teamId,
+        gliderClass,
+        status
       );
       res.json(flights);
     } catch (error) {
