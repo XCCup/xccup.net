@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/NewsService");
-const { NOT_FOUND } = require("./Constants");
+const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const {
   checkStringObjectNotEmpty,

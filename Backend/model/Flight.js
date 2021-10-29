@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     glider: {
-      type: DataTypes.JSON,
+      type: DataTypes.JSONB,
     },
     airspaceViolation: {
       type: DataTypes.BOOLEAN,

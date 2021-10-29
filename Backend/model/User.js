@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const { ROLE } = require("../constants/user-constants");
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
@@ -21,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       role: {
         type: DataTypes.STRING,
-        defaultValue: "Keine",
+        defaultValue: ROLE.NONE,
       },
       gender: {
         type: DataTypes.STRING,
@@ -49,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         // The state the user lives in (e.g. RLP, NRW, LUX). Needed for possible state championships.
       },
       address: {
-        type: DataTypes.STRING,
+        type: DataTypes.JSON,
         // Needed to send prices (e.g. T-Shirt) to an user.
       },
       email: {

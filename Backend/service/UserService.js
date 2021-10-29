@@ -2,20 +2,12 @@ const User = require("../config/postgres")["User"];
 const Club = require("../config/postgres")["Club"];
 const flightService = require("../service/FlightService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
-const cacheManager = require("./CacheManager");
+const { ROLE } = require("../constants/user-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
 const moment = require("moment");
 
 const userService = {
-  ROLE: {
-    ADMIN: "Administrator",
-    MODERATOR: "Moderator",
-    CLUB_DELEGATE: "Clubdeligierter",
-    NONE: "Keine",
-  },
-  SHIRT_SIZES: ["XS", "S", "M", "L", "XL"],
-  GENDERS: ["M", "W", "D"],
   getAll: async () => {
     return await User.findAll({ attributes: ["id", "firstName", "lastName"] });
   },
@@ -65,29 +57,24 @@ const userService = {
   },
   isAdmin: async (id) => {
     const user = await userService.getById(id);
-    return user.role == userService.ROLE.ADMIN;
+    return user.role == ROLE.ADMIN;
   },
   isModerator: async (id) => {
     const user = await userService.getById(id);
-    const result =
-      user?.role == userService.ROLE.ADMIN ||
-      user?.role == userService.ROLE.MODERATOR;
+    const result = user?.role == ROLE.ADMIN || user?.role == ROLE.MODERATOR;
     return result;
   },
   delete: async (id) => {
-    cacheManager.invalidateCaches();
     return User.destroy({
       where: { id },
     });
   },
   save: async (user) => {
-    cacheManager.invalidateCaches();
     return User.create(user);
   },
   update: async (user) => {
     await checkForClubChange(user);
 
-    cacheManager.invalidateCaches();
     return user.save();
   },
   validate: async (email, password) => {
@@ -139,7 +126,8 @@ async function hasUserFlightsWithinCurrentSeason(user) {
     null,
     null,
     1,
-    undefined,
+    0,
+    false,
     seasonDetails.startDate,
     seasonDetails.endDate,
     user.id
@@ -154,6 +142,7 @@ async function findFlightRecordOfType(id, type) {
     type,
     null,
     1,
+    0,
     true,
     null,
     null,

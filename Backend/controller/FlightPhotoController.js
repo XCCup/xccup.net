@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/FlightPhotoService");
 const path = require("path");
-const { NOT_FOUND, OK } = require("./Constants");
+const { NOT_FOUND, OK } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { query } = require("express-validator");
 const {

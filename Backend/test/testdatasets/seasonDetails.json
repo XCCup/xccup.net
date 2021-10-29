@@ -78,7 +78,7 @@
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A+EN B, Tandem)",
+        "description": "Sportklasse (EN A+EN B)",
         "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
@@ -197,7 +197,7 @@
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A+EN B, Tandem)",
+        "description": "Sportklasse (EN A+EN B)",
         "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
@@ -316,7 +316,7 @@
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A+EN B, Tandem)",
+        "description": "Sportklasse (EN A+EN B)",
         "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
@@ -435,7 +435,7 @@
           "AB_low",
           "AB_high"
         ],
-        "description": "Sportklasse (EN A+EN B, Tandem)",
+        "description": "Sportklasse (EN A+EN B)",
         "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
