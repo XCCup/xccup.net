@@ -25,11 +25,17 @@
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": false,
-    "state": "LUX",
     "email": "Camille@Schaden.name",
     "password": "PW_CamilleSchaden",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "address": {
+      "country": "Luxemburg",
+      "city": "Cordiechester",
+      "street": "224 Bailey Isle",
+      "zip": "63666-0885",
+      "state": ""
+    }
   },
   {
     "id": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
@@ -57,11 +63,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": true,
-    "state": "BEL",
     "email": "Frank@Jacobs.net",
     "password": "PW_FrankJacobs",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
-    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "address": {
+      "country": "Belgien",
+      "city": "Howellfort",
+      "street": "0180 Jaden Crossing",
+      "zip": "96655",
+      "state": ""
+    }
   },
   {
     "id": "1c3fb13d-e725-4869-a816-87498833bee0",
@@ -89,11 +101,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
-    "state": "RP",
     "email": "Leo@Altenwerth.net",
     "password": "PW_LeoAltenwerth",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "address": {
+      "state": "Rheinland-Pfalz",
+      "country": "Deutschland",
+      "city": "Abernathyburgh",
+      "street": "97327 Joshua Extension",
+      "zip": "26745"
+    }
   },
   {
     "id": "25346d86-de5b-48b0-9dee-bffe06e560c8",
@@ -121,11 +139,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
-    "state": "HE",
     "email": "Willis@Romaguera.name",
     "password": "PW_WillisRomaguera",
     "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
-    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "address": {
+      "state": "Hessen",
+      "country": "Deutschland",
+      "city": "Reston",
+      "street": "67649 Johnny Spurs",
+      "zip": "43190"
+    }
   },
   {
     "id": "67e5230b-667f-4ff1-8750-17739e7d3ea4",
@@ -154,11 +178,16 @@
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "state": "SR",
     "email": "Mrs.@Roman.name",
     "password": "PW_Mrs.Roman",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "address": {
+      "country": "Deutschland",
+      "city": "Jerroldton",
+      "street": "595 Zion Avenue",
+      "zip": "52265"
+    }
   },
   {
     "id": "bc8f46c2-fc95-4662-877c-d4a08806f482",
@@ -187,11 +216,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
-    "state": "BEL",
     "email": "Ms.@Laurie.net",
     "password": "PW_Ms.Laurie",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
-    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "address": {
+      "country": "Belgien",
+      "city": "East Sydniebury",
+      "street": "9657 Constantin Hills",
+      "zip": "85019",
+      "state": ""
+    }
   },
   {
     "id": "8131b218-ed76-4095-bd29-0bf3902358c2",
@@ -219,11 +254,17 @@
     "emailInformIfComment": false,
     "emailNewsletter": false,
     "emailTeamSearch": false,
-    "state": "HE",
     "email": "Ramona@Gislason.name",
     "password": "PW_RamonaGislason",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "address": {
+      "state": "Hessen",
+      "country": "Deutschland",
+      "city": "South Skye",
+      "street": "35975 Emmalee Forge",
+      "zip": "49453-5006"
+    }
   },
   {
     "id": "1fddb1fe-f9fe-48ef-a76e-d70d53e5fb6a",
@@ -251,11 +292,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": true,
-    "state": "BEL",
     "email": "Toby@Gerhold.name",
     "password": "PW_TobyGerhold",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
-    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "address": {
+      "country": "Belgien",
+      "city": "Mitchellbury",
+      "street": "80932 Mandy Port",
+      "zip": "58932",
+      "state": ""
+    }
   },
   {
     "id": "67172eda-57c7-4bbc-af90-f4c56c30f5ec",
@@ -283,11 +330,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "state": "BEL",
     "email": "Sonia@Harber.org",
     "password": "PW_SoniaHarber",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "address": {
+      "country": "Belgien",
+      "city": "Berwyn",
+      "street": "1643 Etha Square",
+      "zip": "39015",
+      "state": ""
+    }
   },
   {
     "id": "e071350f-a7c3-4081-9e2f-709625b07a07",
@@ -315,11 +368,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": false,
-    "state": "BW",
     "email": "Ron@Crooks.info",
     "password": "PW_RonCrooks",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
-    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "address": {
+      "state": "Baden-Württemberg",
+      "country": "Deutschland",
+      "city": "Artstad",
+      "street": "4129 Jillian Prairie",
+      "zip": "10607"
+    }
   },
   {
     "id": "61895b0e-0e22-480d-87ac-c0040e682c5d",
@@ -347,11 +406,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "state": "RP",
     "email": "Bobby@Volkman.net",
     "password": "PW_BobbyVolkman",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
-    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "address": {
+      "state": "Rheinland-Pfalz",
+      "country": "Deutschland",
+      "city": "Hellerhaven",
+      "street": "889 Quincy Junctions",
+      "zip": "68036"
+    }
   },
   {
     "id": "45907c75-9c14-42af-bc5a-993f4bec4b0f",
@@ -379,11 +444,16 @@
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "state": "SR",
     "email": "Tamara@Ledner.info",
     "password": "PW_TamaraLedner",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "address": {
+      "country": "Deutschland",
+      "city": "Loveland",
+      "street": "08276 Kris Flats",
+      "zip": "37823-9283"
+    }
   },
   {
     "id": "0f6e6f97-b64b-4e04-a516-adada6f2cba0",
@@ -411,11 +481,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
-    "state": "HE",
     "email": "Wilma@Hodkiewicz.biz",
     "password": "PW_WilmaHodkiewicz",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e"
+    "teamId": "31e94f3e-e1d6-4f95-b9a8-17af4992339e",
+    "address": {
+      "state": "Hessen",
+      "country": "Deutschland",
+      "city": "West Edd",
+      "street": "915 Feil Keys",
+      "zip": "01622-1442"
+    }
   },
   {
     "id": "2a33b726-8edf-4d4b-8da8-f97138371b6c",
@@ -443,11 +519,17 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
-    "state": "BW",
     "email": "Adam@Bayer.org",
     "password": "PW_AdamBayer",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce"
+    "teamId": "9c82827b-c393-47f9-91e8-7c8e7c6f8fce",
+    "address": {
+      "state": "Baden-Württemberg",
+      "country": "Deutschland",
+      "city": "Emardbury",
+      "street": "50952 Gillian Glen",
+      "zip": "36395-2409"
+    }
   },
   {
     "id": "9efc1c62-ea6a-4659-b89c-421b57ab73f6",
@@ -475,11 +557,16 @@
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "state": "SR",
     "email": "Melinda@Tremblay.org",
     "password": "PW_MelindaTremblay",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce"
+    "teamId": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
+    "address": {
+      "country": "Deutschland",
+      "city": "North Vergiestad",
+      "street": "8148 Korbin Branch",
+      "zip": "94921-2239"
+    }
   },
   {
     "id": "04bd7ffd-d792-4e90-ba9e-c4356e353135",
@@ -507,10 +594,15 @@
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "state": "SR",
     "email": "Clinton@Hettinger.name",
     "password": "PW_ClintonHettinger",
-    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd"
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "address": {
+      "country": "Deutschland",
+      "city": "Ricestad",
+      "street": "2784 Geovanni Road",
+      "zip": "74132"
+    }
   },
   {
     "id": "388ab9dd-cb42-4c94-aa87-16b7a991b217",
@@ -538,10 +630,16 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": false,
-    "state": "HE",
     "email": "Christie@Schaefer.com",
     "password": "PW_ChristieSchaefer",
-    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd"
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "address": {
+      "state": "Hessen",
+      "country": "Deutschland",
+      "city": "McCulloughhaven",
+      "street": "8423 Lucienne Corner",
+      "zip": "26855-5373"
+    }
   },
   {
     "id": "0032cc89-38bb-4763-a497-e64e5c5ec5f9",
@@ -569,10 +667,16 @@
     "emailInformIfComment": true,
     "emailNewsletter": false,
     "emailTeamSearch": true,
-    "state": "NW",
     "email": "Everett@Gislason.net",
     "password": "PW_EverettGislason",
-    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec"
+    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
+    "address": {
+      "state": "Nordrhein-Westfalen",
+      "country": "Deutschland",
+      "city": "Dale City",
+      "street": "550 Hauck Union",
+      "zip": "39434"
+    }
   },
   {
     "id": "6e8764ec-c4b6-49b1-b804-f0871e390f31",
@@ -601,10 +705,16 @@
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "state": "LUX",
     "email": "Olive@Emmerich.biz",
     "password": "PW_OliveEmmerich",
-    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd"
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "address": {
+      "country": "Luxemburg",
+      "city": "North Torey",
+      "street": "981 Theo Wells",
+      "zip": "96117",
+      "state": ""
+    }
   },
   {
     "id": "1c3c8082-d82a-4c4a-a60c-80d4e089b4f7",
@@ -633,9 +743,15 @@
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "state": "NW",
     "email": "Lois@White.biz",
     "password": "PW_LoisWhite",
-    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "address": {
+      "state": "Nordrhein-Westfalen",
+      "country": "Deutschland",
+      "city": "Priceburgh",
+      "street": "80397 Vito Roads",
+      "zip": "60363"
+    }
   }
 ]

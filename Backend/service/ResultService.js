@@ -10,6 +10,7 @@ const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
+const { TYPE, STATE } = require("../constants/flight-constants");
 
 const FLIGHTS_PER_USER = 3;
 const TEAM_DISMISSES = 3;
@@ -102,9 +103,9 @@ const service = {
   },
 
   getSiteRecords: async () => {
-    const freeRecords = findSiteRecordOfType("FREE");
-    const flatRecords = findSiteRecordOfType("FLAT");
-    const faiRecords = findSiteRecordOfType("FAI");
+    const freeRecords = findSiteRecordOfType(TYPE.FREE);
+    const flatRecords = findSiteRecordOfType(TYPE.FLAT);
+    const faiRecords = findSiteRecordOfType(TYPE.FAI);
 
     return await Promise.all([freeRecords, flatRecords, faiRecords]).then(
       (values) => {
@@ -227,9 +228,7 @@ function createDefaultWhereForFlight(seasonDetail, isSenior) {
     takeoffTime: {
       [Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
     },
-    flightPoints: {
-      [Op.gte]: seasonDetail.pointThresholdForFlight,
-    },
+    flightStatus: STATE.IN_RANKING,
     airspaceViolation: false,
     uncheckedGRecord: false,
   };

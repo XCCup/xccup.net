@@ -30,6 +30,15 @@ app.use(express.urlencoded({ extended: false }));
 //IGC-Files can easily exceed this limit
 app.use(express.json({ limit: "5mb" }));
 
+//Reset all caches when a non GET requests occurs
+app.all("*", (req, res, next) => {
+  if (req.method != "GET") {
+    const cacheManager = require("./service/CacheManager");
+    cacheManager.invalidateCaches();
+  }
+  next();
+});
+
 app.get("/", (request, response) =>
   response.json({ info: "Welcome to the XCCup API" })
 );
@@ -45,6 +54,7 @@ app.use("/home", require("./controller/HomeController"));
 app.use("/news", require("./controller/NewsController"));
 app.use("/sponsors", require("./controller/SponsorController"));
 app.use("/media", require("./controller/MediaController"));
+app.use("/general", require("./controller/GeneralController"));
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 // eslint-disable-next-line no-unused-vars

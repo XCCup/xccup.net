@@ -14,7 +14,7 @@
       ]
     },
     "id": "b45f5791-299b-4c07-97de-dbc1c373df3b",
-    "shortName": "NEEF_START",
+    "shortName": "NEEF",
     "direction": "SW-W"
   },
   {
@@ -67,7 +67,7 @@
       ]
     },
     "id": "cc10ea36-f184-41e0-be61-172dd29cfdbe",
-    "shortName": "GANGELSBERG_START",
+    "shortName": "GANGELSBERG",
     "direction": "O"
   },
   {
@@ -85,7 +85,7 @@
       ]
     },
     "id": "3584522a-e86e-4049-b588-93395e55f9af",
-    "shortName": "DUCHROTH_START",
+    "shortName": "DUCHROTH",
     "direction": "N"
   },
   {
@@ -103,7 +103,7 @@
       ]
     },
     "id": "732fe644-c0f4-4b23-9a13-9cd5b1523294",
-    "shortName": "HUNDHEIM_START",
+    "shortName": "HUNDHEIM",
     "direction": "S"
   },
   {
@@ -121,7 +121,7 @@
       ]
     },
     "id": "07d4335a-52b9-4a2a-be6e-9c348834344a",
-    "shortName": "HALDE_ENSDORF_START",
+    "shortName": "HALDE_ENSDORF",
     "direction": "S"
   },
   {
@@ -139,7 +139,7 @@
       ]
     },
     "id": "a6fdb989-4165-4d98-99f1-f7c9d2b5a9c3",
-    "shortName": "URPHAR_START_NO",
+    "shortName": "URPHAR_NO",
     "direction": "NO"
   },
   {
@@ -157,7 +157,7 @@
       ]
     },
     "id": "ade6170b-313c-47b5-bbf1-01d946de42b2",
-    "shortName": "URPHAR_START_NW",
+    "shortName": "URPHAR_NW",
     "direction": "NW"
   },
   {
@@ -175,7 +175,7 @@
       ]
     },
     "id": "28b733fa-a0a8-4c04-9ad8-cacec864f2e6",
-    "shortName": "SCHODEN_START",
+    "shortName": "SCHODEN",
     "direction": "S-W"
   },
   {
@@ -193,7 +193,7 @@
       ]
     },
     "id": "8e9c0913-486c-470b-b025-3b0702253398",
-    "shortName": "MONTABAUR_SEGELFLUG",
+    "shortName": "MONTABAUR",
     "direction": ""
   },
   {
@@ -229,7 +229,7 @@
       ]
     },
     "id": "e727cae1-4945-4aab-ab94-26bbd5ebdabb",
-    "shortName": "MOLTKEFELSEN_START",
+    "shortName": "MOLTKEFELSEN",
     "direction": "SO"
   },
   {
@@ -246,7 +246,7 @@
       ]
     },
     "id": "b2f94426-5230-46d0-9064-003735519c79",
-    "shortName": "HOLZHEIM_SCHLEPP",
+    "shortName": "HOLZHEIM",
     "direction": "Holzheim Schlepp"
   },
   {
@@ -264,7 +264,7 @@
       ]
     },
     "id": "a72bccde-5700-4321-b727-fb5a430ce71c",
-    "shortName": "ROSENBERG_START",
+    "shortName": "ROSENBERG",
     "direction": "SW-SO"
   },
   {
@@ -282,7 +282,7 @@
       ]
     },
     "id": "106264b9-7c56-4aa9-b4e0-e9bf8a8f5aa2",
-    "shortName": "HOCHSTETTEN_START",
+    "shortName": "HOCHSTETTEN",
     "direction": "NNW-NNO"
   },
   {
@@ -300,7 +300,7 @@
       ]
     },
     "id": "272ac938-c17f-4ad9-b664-30a7e462b5fa",
-    "shortName": "GRINGLAY_START",
+    "shortName": "GRINGLAY",
     "direction": "SW"
   },
   {
@@ -318,7 +318,7 @@
       ]
     },
     "id": "0196cb63-c25d-4e4a-954c-3e52454bb951",
-    "shortName": "SAARBURG_START",
+    "shortName": "SAARBURG",
     "direction": "SO"
   },
   {
@@ -335,7 +335,7 @@
       ]
     },
     "id": "3cd15aa1-8b9c-4b14-b2aa-9e3731cf0846",
-    "shortName": "PFEFFELBACH_START",
+    "shortName": "PFEFFELBACH",
     "direction": "SO"
   },
   {
@@ -353,13 +353,13 @@
     },
     "region": "Mosel",
     "id": "b9a05268-a802-423e-8981-b1c01dafc754",
-    "shortName": "SERRIG_START",
+    "shortName": "SERRIG",
     "direction": "SW-W"
   },
   {
     "name": "Neumagen",
     "heightDifference": "385",
-    "image": "Neumagen_Start01.jpg",
+    "image": "Neumagen01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dfc-trier.com",
     "point": {
@@ -371,7 +371,7 @@
     },
     "region": "Mosel",
     "id": "76386969-edae-4bfc-9461-fcef7c5f2843",
-    "shortName": "NEUMAGEN_START",
+    "shortName": "NEUMAGEN",
     "direction": "NO-SO"
   },
   {
@@ -388,7 +388,7 @@
       ]
     },
     "id": "3f37d5f1-f66f-40b1-adad-c9d189e57fa4",
-    "shortName": "OCKFEN_START",
+    "shortName": "OCKFEN",
     "direction": "SW"
   },
   {
@@ -406,7 +406,7 @@
       ]
     },
     "id": "f9ce9fd7-bc42-480c-96af-eedafba7b126",
-    "shortName": "DILLINGEN_SEGELFLUG",
+    "shortName": "DILLINGEN",
     "direction": ""
   },
   {
@@ -459,7 +459,7 @@
       ]
     },
     "id": "b30950ef-cd2f-43fb-a7d6-71fafc030bf5",
-    "shortName": "KELL_SEGELFLUG",
+    "shortName": "KELL",
     "direction": ""
   },
   {
@@ -511,7 +511,7 @@
       ]
     },
     "id": "440a8d9f-952b-49e8-a4fd-0fd736ac3985",
-    "shortName": "WUSTWEILER_SEGELFLUG",
+    "shortName": "WUSTWEILER",
     "direction": ""
   },
   {
@@ -547,7 +547,7 @@
     },
     "region": "Mosel",
     "id": "4c81a555-fcba-4c79-8127-ece934e5b9b1",
-    "shortName": "ZELTINGEN_START",
+    "shortName": "ZELTINGEN",
     "direction": "O"
   },
   {
@@ -564,13 +564,13 @@
       ]
     },
     "id": "6a2b4405-2dfc-402a-abe3-d4b2b63127b5",
-    "shortName": "DREISERWEIHER_START",
+    "shortName": "DREISERWEIHER",
     "direction": "NW-NNO"
   },
   {
     "name": "Lasserg/Küppchen",
     "heightDifference": "260",
-    "image": "Burgen_Lasserg_Start01.jpg",
+    "image": "Burgen_Lasserg01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.thermik4u.de",
     "point": {
@@ -582,7 +582,7 @@
     },
     "region": "Mosel",
     "id": "9268835e-e375-4c1f-837a-5f0c32206cfe",
-    "shortName": "LASSERG_START",
+    "shortName": "LASSERG",
     "direction": "O-SO"
   },
   {
@@ -600,7 +600,7 @@
     },
     "region": "Mosel",
     "id": "01afbf01-032a-444d-b8bd-8121b6e343ea",
-    "shortName": "BREMM_START",
+    "shortName": "BREMM",
     "direction": "SSO-SSW"
   },
   {
@@ -618,7 +618,7 @@
       ]
     },
     "id": "ca900130-e3bc-443a-8407-d5f391f8a540",
-    "shortName": "SCHOENEBERG_SCHLEPP",
+    "shortName": "SCHOENEBERG",
     "direction": "O,W"
   },
   {
@@ -636,7 +636,7 @@
       ]
     },
     "id": "b57ad153-9489-4e96-b57f-0684d46fb4f9",
-    "shortName": "EICHEN_SCHLEPP",
+    "shortName": "EICHEN",
     "direction": "N,S"
   },
   {
@@ -654,7 +654,7 @@
       ]
     },
     "id": "3ac171d2-ff2e-4719-99d8-070dfa286ebf",
-    "shortName": "GOLLERSHOBEN_SCHLEPP",
+    "shortName": "GOLLERSHOBEN",
     "direction": "O,W"
   },
   {
@@ -672,7 +672,7 @@
       ]
     },
     "id": "72b6b4a9-3838-43bd-b8f4-58db545287fd",
-    "shortName": "SCHNELLMANNSHAUSEN_SCHLEPP",
+    "shortName": "SCHNELLMANNSHAUSEN",
     "direction": "NO,SW"
   },
   {
@@ -690,7 +690,7 @@
       ]
     },
     "id": "eb98406c-7c12-4ba8-886c-56e0c1954072",
-    "shortName": "WANFRIED_AUE_START",
+    "shortName": "WANFRIED_AUE",
     "direction": "NW-N"
   },
   {
@@ -708,7 +708,7 @@
       ]
     },
     "id": "20d43bc4-f1fb-4779-830d-621d91c52e92",
-    "shortName": "KELLA_SCHLEPP",
+    "shortName": "KELLA",
     "direction": "NO,SW"
   },
   {
@@ -726,7 +726,7 @@
       ]
     },
     "id": "65089c2d-a94f-4414-ae1d-430c8e2f602c",
-    "shortName": "KELLA_BERG_START",
+    "shortName": "KELLA",
     "direction": "O-SO"
   },
   {
@@ -744,7 +744,7 @@
       ]
     },
     "id": "2b7a95f5-bd1b-4d70-9fd3-77d5f640eaa3",
-    "shortName": "HAHNBERG_START",
+    "shortName": "HAHNBERG",
     "direction": "NNW"
   },
   {
@@ -762,7 +762,7 @@
       ]
     },
     "id": "7ce1f70f-9508-47e3-b3d8-01aba0a06915",
-    "shortName": "HOHER_MEISSNER_START",
+    "shortName": "HOHER_MEISSNER",
     "direction": "W"
   },
   {
@@ -780,7 +780,7 @@
       ]
     },
     "id": "32c190ff-4408-4bca-b3cc-aaa23c1533fc",
-    "shortName": "WHH_START",
+    "shortName": "WHH",
     "direction": "S-SW"
   },
   {
@@ -798,7 +798,7 @@
       ]
     },
     "id": "32547e9c-dfed-4098-92f0-1f433d995ded",
-    "shortName": "ABTSRODAER_KUPPE_START",
+    "shortName": "ABTSRODAER",
     "direction": "N-NO"
   },
   {
@@ -816,7 +816,7 @@
       ]
     },
     "id": "d6489b22-33f0-46cd-8d9b-83d712a8e133",
-    "shortName": "PFERDSKOPF_START",
+    "shortName": "PFERDSKOPF",
     "direction": "NW"
   },
   {
@@ -834,7 +834,7 @@
       ]
     },
     "id": "e93f109e-392d-4274-bba8-d2cc094b085f",
-    "shortName": "OFENTALER_BERG_START",
+    "shortName": "OFENTALER",
     "direction": "SO"
   },
   {
@@ -852,7 +852,7 @@
       ]
     },
     "id": "8dad4b7c-4844-4002-9dcc-1a89d9d2ca22",
-    "shortName": "WASSERKUPPE_WEST_START",
+    "shortName": "WK_WEST",
     "direction": "W"
   },
   {
@@ -870,7 +870,7 @@
       ]
     },
     "id": "93577549-c2f9-4fdf-920f-78a57b57a8ec",
-    "shortName": "KREUZBERG_NO_START",
+    "shortName": "KREUZBERG_NO",
     "direction": "N-NO"
   },
   {
@@ -888,7 +888,7 @@
       ]
     },
     "id": "5861e576-5a08-41f7-b2c3-9804727c0679",
-    "shortName": "KREUZBERG_SO_START",
+    "shortName": "KREUZBERG_SO",
     "direction": "SO"
   },
   {
@@ -906,7 +906,7 @@
       ]
     },
     "id": "f4e1ab81-ed98-471a-af38-3c7c5e58a0b1",
-    "shortName": "OBERHEOVELS_SCHLEPP",
+    "shortName": "OBERHEOVELS",
     "direction": "N,S"
   },
   {
@@ -924,7 +924,7 @@
       ]
     },
     "id": "8c3326f4-75d5-4f77-a37c-5dc23aabcb31",
-    "shortName": "ASSLAR_SEGELFLUG",
+    "shortName": "ASSLAR",
     "direction": "S,N"
   },
   {
@@ -942,7 +942,7 @@
       ]
     },
     "id": "6d860b6f-38c3-42fa-9045-82079a816f74",
-    "shortName": "BRUCHHAUSER_SUED_START",
+    "shortName": "BRUCHHAUSER_SUED",
     "direction": "S"
   },
   {
@@ -960,7 +960,7 @@
       ]
     },
     "id": "9f281345-45e6-4675-85bd-88146bb7d4cc",
-    "shortName": "BRUCHHAUSER_SW_START",
+    "shortName": "BRUCHHAUSER_SW",
     "direction": "S-W"
   },
   {
@@ -978,7 +978,7 @@
       ]
     },
     "id": "7625b6d0-b837-4a18-ac86-459310621dd1",
-    "shortName": "WERSHOFEN_UL",
+    "shortName": "WERSHOFEN",
     "direction": ""
   },
   {
@@ -996,7 +996,7 @@
       ]
     },
     "id": "026fec57-99bd-47bf-9585-1c563ed54c66",
-    "shortName": "HARSBERG_START",
+    "shortName": "HARSBERG",
     "direction": "SW"
   },
   {
@@ -1014,7 +1014,7 @@
       ]
     },
     "id": "7f031c57-e2de-4d3d-aa05-2adabb324632",
-    "shortName": "HEGENSCHEID_SCHLEPP",
+    "shortName": "HEGENSCHEID",
     "direction": "NO-SW"
   },
   {
@@ -1032,7 +1032,7 @@
       ]
     },
     "id": "7b499782-e8b8-404f-a62f-f4ca45a6ad80",
-    "shortName": "EISENBERG_START",
+    "shortName": "EISENBERG",
     "direction": "W"
   },
   {
@@ -1068,7 +1068,7 @@
       ]
     },
     "id": "e7671837-d78a-4586-9e8a-0d174d8e7758",
-    "shortName": "BAUSENBERG_START",
+    "shortName": "BAUSENBERG",
     "direction": "SO-S"
   },
   {
@@ -1086,7 +1086,7 @@
       ]
     },
     "id": "22564a5b-eca9-49d9-9732-9f7f4634523f",
-    "shortName": "WILLINGEN_START",
+    "shortName": "WILLINGEN",
     "direction": "N"
   },
   {
@@ -1104,13 +1104,13 @@
       ]
     },
     "id": "1ca18e0c-1e32-44c1-9228-30f77e6a96dd",
-    "shortName": "REICHENHAUSEN_START",
+    "shortName": "REICHENHAUSEN",
     "direction": "S"
   },
   {
     "name": "Maring-Noviand",
     "heightDifference": "290",
-    "image": "maring_start_so.jpg",
+    "image": "maring_so.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dfc-trier.com",
     "point": {
@@ -1122,7 +1122,7 @@
     },
     "region": "Mosel",
     "id": "a6606392-22de-4395-86fb-5162c8f37a9b",
-    "shortName": "MARING_START_SO",
+    "shortName": "MARING_SO",
     "direction": "SO"
   },
   {
@@ -1140,7 +1140,7 @@
       ]
     },
     "id": "daa62b09-8e80-43f2-b665-7781e2341b29",
-    "shortName": "MARTINSTHAL_START",
+    "shortName": "MARTINSTHAL",
     "direction": "S"
   },
   {
@@ -1158,7 +1158,7 @@
       ]
     },
     "id": "8ece39f2-fe83-4c77-bd65-758e2c2f2b2e",
-    "shortName": "KAUTENBACH_START",
+    "shortName": "KAUTENBACH",
     "direction": "NW"
   },
   {
@@ -1176,7 +1176,7 @@
       ]
     },
     "id": "96a49b5d-8e24-487a-815e-fd7e121d0b85",
-    "shortName": "MICHAELAU_START",
+    "shortName": "MICHAELAU",
     "direction": "NO"
   },
   {
@@ -1194,7 +1194,7 @@
       ]
     },
     "id": "5e699986-ae27-4e99-ac4f-e97db2529a9c",
-    "shortName": "POHLHEIM_SCHLEPP",
+    "shortName": "POHLHEIM",
     "direction": ""
   },
   {
@@ -1212,7 +1212,7 @@
       ]
     },
     "id": "019485c5-adc2-43bb-b3ab-a73adda37dd8",
-    "shortName": "NASSAUER_BERG_START",
+    "shortName": "NASSAU",
     "direction": "NW-N"
   },
   {
@@ -1230,7 +1230,7 @@
       ]
     },
     "id": "da293e8f-51bc-497c-804e-f51a9db4da76",
-    "shortName": "SCHAUFEL_SCHLEPP",
+    "shortName": "SCHAUFEL",
     "direction": ""
   },
   {
@@ -1248,7 +1248,7 @@
       ]
     },
     "id": "802ab91e-01b3-485d-b50f-8b16f1a11b40",
-    "shortName": "ELPE_START",
+    "shortName": "ELPE",
     "direction": "NO-OSO"
   },
   {
@@ -1266,7 +1266,7 @@
       ]
     },
     "id": "16cb4cb3-e1b2-4dde-bdc3-dabb9621ed5b",
-    "shortName": "SONNENHANG_START",
+    "shortName": "SONNENHANG",
     "direction": "O"
   },
   {
@@ -1284,7 +1284,7 @@
       ]
     },
     "id": "ea1cab1a-a1e7-47e5-a21f-235577e62c3b",
-    "shortName": "HOHE_GEBA_SW_START",
+    "shortName": "GEBA_SW",
     "direction": "SW"
   },
   {
@@ -1302,7 +1302,7 @@
       ]
     },
     "id": "0b9c9c69-d573-429f-833e-174287510982",
-    "shortName": "HOHENSOLMS_SCHLEPP",
+    "shortName": "HOHENSOLMS",
     "direction": ""
   },
   {
@@ -1320,7 +1320,7 @@
       ]
     },
     "id": "f63e1a67-81bb-4af1-87e2-4c0a412853be",
-    "shortName": "KANFEN_START",
+    "shortName": "KANFEN",
     "direction": "O"
   },
   {
@@ -1338,7 +1338,7 @@
       ]
     },
     "id": "a56c560a-1199-4abc-b79d-07aa60b65167",
-    "shortName": "SPIELBERG_START",
+    "shortName": "SPIELBERG",
     "direction": "O"
   },
   {
@@ -1356,7 +1356,7 @@
       ]
     },
     "id": "82d09f76-6adf-4aca-9135-3a02b41f9006",
-    "shortName": "MEHRING_START",
+    "shortName": "MEHRING",
     "direction": "N"
   },
   {
@@ -1373,7 +1373,7 @@
       ]
     },
     "id": "8c7ba6ac-9ee8-490b-b866-b959f3930906",
-    "shortName": "HINTERWEILER_UL",
+    "shortName": "HINTERWEILER",
     "direction": ""
   },
   {
@@ -1390,13 +1390,13 @@
       ]
     },
     "id": "381e6f93-095d-4b08-a8dd-7f0b601b5cb3",
-    "shortName": "OFFENBACH_SCHLEPP",
+    "shortName": "OFFENBACH",
     "direction": ""
   },
   {
     "name": "Ürzig-Erden",
     "heightDifference": "243",
-    "image": "Erden_Start01.jpg",
+    "image": "Erden01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.moselfalken.de",
     "point": {
@@ -1408,13 +1408,13 @@
     },
     "region": "Mosel",
     "id": "e33e251a-960e-4dc3-b898-35131dd18aa2",
-    "shortName": "UERZIG_START",
+    "shortName": "UERZIG",
     "direction": "SO"
   },
   {
     "name": "Klüsserath",
     "heightDifference": "290",
-    "image": "Kluesserath_Start01.jpg",
+    "image": "Kluesserath01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dfc-trier.com",
     "point": {
@@ -1426,7 +1426,7 @@
     },
     "region": "Mosel",
     "id": "aa9b4b1e-24e1-4c31-ba2e-aee945a88941",
-    "shortName": "KLUESSEARTH_START",
+    "shortName": "KLUESSEARTH",
     "direction": "S-W"
   },
   {
@@ -1444,7 +1444,7 @@
       ]
     },
     "id": "728370dc-425e-4074-a96a-622824a786bf",
-    "shortName": "RIVENICH_START",
+    "shortName": "RIVENICH",
     "direction": "W"
   },
   {
@@ -1462,7 +1462,7 @@
       ]
     },
     "id": "559f91bd-2c3b-4d72-bc95-f69a2d41aa0b",
-    "shortName": "KATHARINEN_MERGESFELD_SCHLEPP",
+    "shortName": "KATHARINEN_MERGESFELD",
     "direction": "SO,NW"
   },
   {
@@ -1480,13 +1480,13 @@
       ]
     },
     "id": "3033447d-3017-41de-8f3c-ecb156cabe1f",
-    "shortName": "KATHARINEN_HANG_START",
+    "shortName": "KATHARINEN_HANG",
     "direction": "SSW"
   },
   {
     "name": "Sophienhöhe",
     "heightDifference": "0",
-    "image": "SophienheightDifference_O_Start01.jpg",
+    "image": "SophienheightDifference_O01.jpg",
     "type": "HGPGSTA",
     "club": "NULL",
     "point": {
@@ -1497,7 +1497,7 @@
       ]
     },
     "id": "43a48b6a-8d32-4865-8788-bf0cb1d602eb",
-    "shortName": "SOPHIENheightDifference_START",
+    "shortName": "SOPHIENHOEHE",
     "direction": "NO-SO"
   },
   {
@@ -1515,13 +1515,13 @@
       ]
     },
     "id": "a47011e0-be04-4668-80ff-0311a6eb784f",
-    "shortName": "UERZIG_SW_START",
+    "shortName": "UERZIG_SW",
     "direction": "SW"
   },
   {
     "name": "Burgen",
     "heightDifference": "386",
-    "image": "Burgen_Start01.jpg",
+    "image": "Burgen01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.moselfalken.de",
     "point": {
@@ -1533,7 +1533,7 @@
     },
     "region": "Mosel",
     "id": "a4d07fb6-df15-420c-8e89-6265c8a9c2aa",
-    "shortName": "BURGEN_START",
+    "shortName": "BURGEN",
     "direction": "N-NW"
   },
   {
@@ -1551,7 +1551,7 @@
       ]
     },
     "id": "3e83e194-5479-41af-ad23-450561683b9a",
-    "shortName": "HIMMIGHOFEN_SCHLEPP",
+    "shortName": "HIMMIGHOFEN",
     "direction": ""
   },
   {
@@ -1569,7 +1569,7 @@
       ]
     },
     "id": "5c25d450-eca2-4a0a-9de3-7e0f082f0967",
-    "shortName": "WALLERTHEIM_START",
+    "shortName": "WALLERTHEIM",
     "direction": ""
   },
   {
@@ -1587,7 +1587,7 @@
       ]
     },
     "id": "90e401a6-020e-4d93-83ee-08d2e99e938a",
-    "shortName": "KATHARINEN_MERGESFELD_SUED_SCHLEPP",
+    "shortName": "KATHARINEN_SCHLEPP",
     "direction": "N,S"
   },
   {
@@ -1605,7 +1605,7 @@
       ]
     },
     "id": "e8d6e2ce-b899-4a7d-b09c-ca3a134cb78f",
-    "shortName": "RAUMBACH_HANG_START",
+    "shortName": "RAUMBACH_HANG",
     "direction": "SO-S"
   },
   {
@@ -1622,7 +1622,7 @@
       ]
     },
     "id": "9ba2ed9a-ab38-42fa-80d5-1aed219e4b10",
-    "shortName": "LOSHEIM_SCHEID_SCHLEPP",
+    "shortName": "LOSHEIM_SCHEID",
     "direction": "N,O,S,W"
   },
   {
@@ -1640,13 +1640,13 @@
     },
     "region": "Mosel",
     "id": "3fe092e3-6a38-4cd7-8b4a-5b612f3dd600",
-    "shortName": "MEERFELD_START_SUED",
+    "shortName": "MEERFELD_SUED",
     "direction": "S"
   },
   {
     "name": "Orensberg",
     "heightDifference": "531",
-    "image": "Orensberg_Start01.jpg",
+    "image": "Orensberg01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.duddefliecher.de",
     "point": {
@@ -1657,13 +1657,13 @@
       ]
     },
     "id": "f195bdfd-97db-4e16-bfb9-a82413319395",
-    "shortName": "ORENSBERG_START",
+    "shortName": "ORENSBERG",
     "direction": "SSW-W"
   },
   {
     "name": "Adelberg",
     "heightDifference": "540",
-    "image": "Adelberg_Start01.jpg",
+    "image": "Adelberg01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.duddefliecher.de",
     "point": {
@@ -1674,13 +1674,13 @@
       ]
     },
     "id": "0466eb59-726f-4c98-bb42-a854e21edbe2",
-    "shortName": "ADELBERG_START",
+    "shortName": "ADELBERG",
     "direction": "ONO-SSO"
   },
   {
     "name": "Förlenberg",
     "heightDifference": "477",
-    "image": "Foerlenberg_Start01.jpg",
+    "image": "Foerlenberg01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.duddefliecher.de",
     "point": {
@@ -1691,13 +1691,13 @@
       ]
     },
     "id": "8c011833-f1df-49e8-846a-9fa2f20356bc",
-    "shortName": "FOERLENBERG_START",
+    "shortName": "FOERLENBERG",
     "direction": "NNO-ONO"
   },
   {
     "name": "Höllenberg",
     "heightDifference": "0",
-    "image": "Hoellenberg_Start01.jpg",
+    "image": "Hoellenberg01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.duddefliecher.de",
     "point": {
@@ -1708,13 +1708,13 @@
       ]
     },
     "id": "84d665e8-7881-43cd-9885-37bbf0e05338",
-    "shortName": "HOELLENBERG_START",
+    "shortName": "HOELLENBERG",
     "direction": "SSW-NW"
   },
   {
     "name": "Maring-Noviand",
     "heightDifference": "275",
-    "image": "maring_start_sw.jpg",
+    "image": "maring_sw.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dfc-trier.com",
     "point": {
@@ -1726,13 +1726,13 @@
     },
     "region": "Mosel",
     "id": "790161fe-40b0-4ee8-bebe-a9cebc12d736",
-    "shortName": "MARING_START",
+    "shortName": "MARING",
     "direction": "SW-S"
   },
   {
     "name": "Hohenberg",
     "heightDifference": "530",
-    "image": "Hohenberg_Start_West01.jpg",
+    "image": "Hohenberg_West01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.pdgfc.de/",
     "point": {
@@ -1744,7 +1744,7 @@
     },
     "region": "Pfalz",
     "id": "c24f64b5-5367-491a-9c93-de686121ae57",
-    "shortName": "HOHENBERG_START",
+    "shortName": "HOHENBERG",
     "direction": "S-W"
   },
   {
@@ -1762,7 +1762,7 @@
       ]
     },
     "id": "5991b282-9a45-49e8-b385-2e4a0a843002",
-    "shortName": "BOPPARD_START",
+    "shortName": "BOPPARD",
     "direction": "NO-SO"
   },
   {
@@ -1779,7 +1779,7 @@
       ]
     },
     "id": "908dc4b0-90a7-4f71-bfed-1c6b9e653a8a",
-    "shortName": "LOSHEIM_AM_SEE_SCHLEPP",
+    "shortName": "LOSHEIM_AM_SEE",
     "direction": "NW,SO"
   },
   {
@@ -1797,7 +1797,7 @@
       ]
     },
     "id": "6202d87b-1080-42e6-8db1-1d346815649b",
-    "shortName": "HUNGERBERG_SCHLEPP",
+    "shortName": "HUNGERBERG",
     "direction": "N"
   },
   {
@@ -1815,13 +1815,13 @@
       ]
     },
     "id": "f63852b3-3bd4-4dbc-b042-26b7c6285d59",
-    "shortName": "PETERBERG_START",
+    "shortName": "PETERBERG",
     "direction": "N"
   },
   {
     "name": "Graach",
     "heightDifference": "332",
-    "image": "GraachHerbst_Start01.jpg",
+    "image": "GraachHerbst01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.moselfalken.de",
     "point": {
@@ -1833,7 +1833,7 @@
     },
     "region": "Mosel",
     "id": "5727014e-2909-408b-833c-18125302889e",
-    "shortName": "GRAACH_START",
+    "shortName": "GRAACH",
     "direction": "S-SW"
   },
   {
@@ -1850,7 +1850,7 @@
       ]
     },
     "id": "3b982d09-b68a-4aee-8b5f-f69758373aed",
-    "shortName": "KERZENBERG_SCHLEPP",
+    "shortName": "KERZENBERG",
     "direction": "O-W"
   },
   {
@@ -1867,7 +1867,7 @@
       ]
     },
     "id": "696f129a-ee79-4984-aec2-8054b4c80ea6",
-    "shortName": "GALGENBERG_START",
+    "shortName": "GALGENBERG",
     "direction": "N,S"
   },
   {
@@ -1885,7 +1885,7 @@
     },
     "region": "Mosel",
     "id": "dd469912-75d8-4952-a46c-afe41832a0ff",
-    "shortName": "RIOL_START",
+    "shortName": "RIOL",
     "direction": "NNW-N"
   },
   {
@@ -1903,7 +1903,7 @@
       ]
     },
     "id": "4be067e9-4397-4fb3-a53c-1da62f54dd8f",
-    "shortName": "SASSENROTH_START",
+    "shortName": "SASSENROTH",
     "direction": "NW"
   },
   {
@@ -1921,7 +1921,7 @@
       ]
     },
     "id": "2794ccff-f869-407e-9e63-c1fc4b964661",
-    "shortName": "HASSLOCH_SCHLEPP",
+    "shortName": "HASSLOCH",
     "direction": ""
   },
   {
@@ -1939,7 +1939,7 @@
       ]
     },
     "id": "26971115-7003-462c-85c3-a228cfda1302",
-    "shortName": "ODERNHEIM_START",
+    "shortName": "ODERNHEIM",
     "direction": "SW-NW"
   },
   {
@@ -1957,7 +1957,7 @@
       ]
     },
     "id": "d5d5fbf9-bb7a-42b2-a657-5b2828094932",
-    "shortName": "OBERGAILBACH_SCHLEPP",
+    "shortName": "OBERGAILBACH",
     "direction": "O-W"
   },
   {
@@ -1975,13 +1975,13 @@
       ]
     },
     "id": "003ea8a3-1883-4f3c-a4f5-8ec11482e198",
-    "shortName": "HERBITZHEIM_SCHLEPP",
+    "shortName": "HERBITZHEIM",
     "direction": "NO-SW"
   },
   {
     "name": "Krausberg",
     "heightDifference": "0",
-    "image": "Krausberg_Start01.jpg",
+    "image": "Krausberg01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -1992,13 +1992,13 @@
       ]
     },
     "id": "9dc5f076-2fa3-41f8-9cf8-8b3c7ccb82c8",
-    "shortName": "KRAUSBERG_START",
+    "shortName": "KRAUSBERG",
     "direction": "N"
   },
   {
     "name": "Hönningen",
     "heightDifference": "0",
-    "image": "Hoenningen_Start_Ost01.jpg",
+    "image": "Hoenningen_Ost01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -2009,13 +2009,13 @@
       ]
     },
     "id": "5fc76333-898c-44db-a722-746fcbac426d",
-    "shortName": "HOENNINGEN_START_OST",
+    "shortName": "HOENNINGEN_OST",
     "direction": "O"
   },
   {
     "name": "Hönningen",
     "heightDifference": "0",
-    "image": "Hoenningen_Start_Sued01.jpg",
+    "image": "Hoenningen_Sued01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -2026,7 +2026,7 @@
       ]
     },
     "id": "c588601c-8494-47fb-b099-4ca7a2122452",
-    "shortName": "HOENNINGEN_START_SUED",
+    "shortName": "HOENNINGEN_SUED",
     "direction": "S"
   },
   {
@@ -2043,7 +2043,7 @@
       ]
     },
     "id": "700dd217-5f5c-4323-89e0-9554bbb61c54",
-    "shortName": "SCHRIESHEIM_START",
+    "shortName": "SCHRIESHEIM",
     "direction": "SW-W"
   },
   {
@@ -2067,7 +2067,7 @@
   {
     "name": "Hohen Unkel Schlepp",
     "heightDifference": "0",
-    "image": "Hohenunkel_Schlepp01.jpg",
+    "image": "Hohenunkel01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -2078,13 +2078,13 @@
       ]
     },
     "id": "f4eb8622-c045-4cb3-9dd7-db77b7133d2e",
-    "shortName": "HOHEN_UNKEL_SCHLEPP",
+    "shortName": "UNKEL",
     "direction": "N,O,S,W"
   },
   {
     "name": "Haardskopf",
     "heightDifference": "0",
-    "image": "Haardskopf_Start01.jpg",
+    "image": "Haardskopf01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -2095,13 +2095,13 @@
       ]
     },
     "id": "37c664ad-e98f-4b41-ad3f-2b467210fd33",
-    "shortName": "HAARDSKOPF_START",
+    "shortName": "HAARDSKOPF",
     "direction": "SW-W"
   },
   {
     "name": "Finkenberg",
     "heightDifference": "255",
-    "image": "Finkenberg_Start01.jpg",
+    "image": "Finkenberg01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -2112,13 +2112,13 @@
       ]
     },
     "id": "18b36aaa-a7f9-447c-9c68-6ac0de8c9733",
-    "shortName": "FINKENBERG_START",
+    "shortName": "FINKENBERG",
     "direction": "S-SW"
   },
   {
     "name": "Melibokus",
     "heightDifference": "500",
-    "image": "Melibokus_Start01.jpg",
+    "image": "Melibokus01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.ersterodc.de",
     "point": {
@@ -2129,13 +2129,13 @@
       ]
     },
     "id": "a1c78485-4b52-49f3-9cb2-4826ced63742",
-    "shortName": "MELIBOKUS_START",
+    "shortName": "MELIBOKUS",
     "direction": "W-NW"
   },
   {
     "name": "Hasloch-Heckenkopf",
     "heightDifference": "305",
-    "image": "Hasloch_Heckenkopf_Start01.jpg",
+    "image": "Hasloch_Heckenkopf01.jpg",
     "type": "HGPGSTA",
     "club": "http://www.lilienthal-gleiter.de/suedost.html",
     "point": {
@@ -2146,7 +2146,7 @@
       ]
     },
     "id": "7f33e27a-859e-4251-bb5f-28487ec31b43",
-    "shortName": "HECKENKOPF_START",
+    "shortName": "HECKENKOPF",
     "direction": "O-S"
   },
   {
@@ -2163,7 +2163,7 @@
       ]
     },
     "id": "49ddf684-a4b6-4a06-a9c2-0d9580b30e65",
-    "shortName": "GROSSER_KOPF_START",
+    "shortName": "GROSSER_KOPF",
     "direction": "W-NW"
   },
   {
@@ -2181,7 +2181,7 @@
       ]
     },
     "id": "e62c52e1-2ac4-4180-a90b-5c072cb9d71c",
-    "shortName": "ERLAU_START",
+    "shortName": "ERLAU",
     "direction": "O-SO"
   },
   {
@@ -2199,7 +2199,7 @@
       ]
     },
     "id": "29806e5b-7ef5-4ca3-9d05-87b90122bd4c",
-    "shortName": "BLAETTERSBERG_START",
+    "shortName": "BLAETTERSBERG",
     "direction": "OSO-SSW"
   },
   {
@@ -2216,7 +2216,7 @@
       ]
     },
     "id": "c0d6bf82-4a0b-4734-972f-37688eb3a266",
-    "shortName": "RONNEBURG_START",
+    "shortName": "RONNEBURG",
     "direction": "NW"
   },
   {
@@ -2234,7 +2234,7 @@
     },
     "region": "Pfalz",
     "id": "8ff0d86a-ccdf-495f-950b-8f7d4b5b062c",
-    "shortName": "KOENIGSTUHL_START",
+    "shortName": "KOENIGSTUHL",
     "direction": "W"
   },
   {
@@ -2252,7 +2252,7 @@
       ]
     },
     "id": "e6ad5180-3056-4d19-9723-78b3750c9f27",
-    "shortName": "MORSBACH_START",
+    "shortName": "MORSBACH",
     "direction": ""
   },
   {
@@ -2270,7 +2270,7 @@
       ]
     },
     "id": "ebe0c810-a5bc-4f1e-a5d6-20ea06fe6072",
-    "shortName": "ROXHEIM_SCHLEPP",
+    "shortName": "ROXHEIM",
     "direction": ""
   },
   {
@@ -2288,7 +2288,7 @@
       ]
     },
     "id": "430f9dfe-276b-4f65-8267-aa35265c28f6",
-    "shortName": "MOSBACH_START",
+    "shortName": "MOSBACH",
     "direction": "NO-O"
   },
   {
@@ -2324,7 +2324,7 @@
       ]
     },
     "id": "d043257e-a021-4b23-9cb5-4ced05442ae2",
-    "shortName": "BUSIGBERG_START",
+    "shortName": "BUSIGBERG",
     "direction": "S"
   },
   {
@@ -2342,7 +2342,7 @@
       ]
     },
     "id": "ca314c5a-a2db-4a91-af24-77378a04a892",
-    "shortName": "WEILERKOPF_START",
+    "shortName": "WEILERKOPF",
     "direction": "W"
   },
   {
@@ -2360,7 +2360,7 @@
       ]
     },
     "id": "1db6043e-3fcc-4551-9a6a-37e2ea881c78",
-    "shortName": "LONGUICH_START",
+    "shortName": "LONGUICH",
     "direction": ""
   },
   {
@@ -2378,7 +2378,7 @@
       ]
     },
     "id": "9a2c58e3-ddfb-4cf7-8c5f-1553fa1f2710",
-    "shortName": "STAUDERNHEIM_START",
+    "shortName": "STAUDERNHEIM",
     "direction": "SSW"
   },
   {
@@ -2414,7 +2414,7 @@
     },
     "region": "Pfalz",
     "id": "b3d31a8e-0125-49a2-9609-b0d42da88437",
-    "shortName": "DONNERSBERG_START",
+    "shortName": "DONNERSBERG",
     "direction": "NO-O"
   },
   {
@@ -2431,7 +2431,7 @@
       ]
     },
     "id": "908ff967-192d-4828-a944-93773c856e5c",
-    "shortName": "ROTTBERG_START",
+    "shortName": "ROTTBERG",
     "direction": "S-W"
   },
   {
@@ -2448,7 +2448,7 @@
       ]
     },
     "id": "e02716ba-86bf-4f33-8959-672cb858ddd5",
-    "shortName": "HAHN_FLUGHAFEN",
+    "shortName": "EDFH",
     "direction": ""
   },
   {
@@ -2466,7 +2466,7 @@
       ]
     },
     "id": "b448b5c3-a1de-46e6-b443-5eb97b77417e",
-    "shortName": "NORHEIM_START",
+    "shortName": "NORHEIM",
     "direction": "N"
   },
   {
@@ -2484,7 +2484,7 @@
       ]
     },
     "id": "6a6f3af6-e33e-4af4-bef5-ebde69060c77",
-    "shortName": "SCHRECKHOF_START",
+    "shortName": "SCHRECKHOF",
     "direction": "SW"
   },
   {
@@ -2502,7 +2502,7 @@
       ]
     },
     "id": "97ed11c9-74d3-467b-ac22-e69e2efebb31",
-    "shortName": "WIDDERN_START",
+    "shortName": "WIDDERN",
     "direction": ""
   },
   {
@@ -2520,7 +2520,7 @@
       ]
     },
     "id": "7c3b3f6d-e687-4503-a452-224877e28e0f",
-    "shortName": "NORDHELLE_START",
+    "shortName": "NORDHELLE",
     "direction": ""
   },
   {
@@ -2538,7 +2538,7 @@
       ]
     },
     "id": "59bd6d5b-e7b5-4cdc-ad1e-b6a812e941a1",
-    "shortName": "BOXBERG_START",
+    "shortName": "BOXBERG",
     "direction": ""
   },
   {
@@ -2556,7 +2556,7 @@
       ]
     },
     "id": "2020c949-89bc-438b-8a9b-38cb0a4bb46d",
-    "shortName": "HEINSHEIM_START",
+    "shortName": "HEINSHEIM",
     "direction": "O"
   },
   {
@@ -2574,7 +2574,7 @@
       ]
     },
     "id": "a21a0275-e960-43dd-80fd-f6aebd6b8f33",
-    "shortName": "KESTEN_START",
+    "shortName": "KESTEN",
     "direction": ""
   },
   {
@@ -2592,7 +2592,7 @@
       ]
     },
     "id": "91825d7a-2a1a-4c6c-8dd9-ef9e83777d6b",
-    "shortName": "NECKARGERACH_START",
+    "shortName": "NECKARGERACH",
     "direction": "SW"
   },
   {
@@ -2610,7 +2610,7 @@
       ]
     },
     "id": "b5995b83-393c-48fd-894c-6200406933ad",
-    "shortName": "LAUBENHEIM_START",
+    "shortName": "LAUBENHEIM",
     "direction": "O"
   },
   {
@@ -2628,7 +2628,7 @@
       ]
     },
     "id": "20347e54-0310-4a60-a23c-f9c85c7457e5",
-    "shortName": "ENTENBERG_START",
+    "shortName": "ENTENBERG",
     "direction": "N-O"
   },
   {
@@ -2646,7 +2646,7 @@
       ]
     },
     "id": "1a03ecb0-b2f0-491c-b9a5-e2f5018ff98f",
-    "shortName": "NEUMAGEN_SEGELFLUG",
+    "shortName": "NEUMAGEN",
     "direction": ""
   },
   {
@@ -2664,7 +2664,7 @@
       ]
     },
     "id": "4649ed62-e56f-4bd0-9a10-48596209ddb8",
-    "shortName": "BUERGSTADT_START",
+    "shortName": "BUERGSTADT",
     "direction": "W"
   },
   {
@@ -2682,7 +2682,7 @@
       ]
     },
     "id": "8010c617-a2c8-4260-aad9-2e3f770b0e27",
-    "shortName": "STOLZENBERG_START",
+    "shortName": "STOLZENBERG",
     "direction": "SW"
   },
   {
@@ -2700,7 +2700,7 @@
       ]
     },
     "id": "652f8227-0f1c-42b4-9d46-28f2b158bfbc",
-    "shortName": "STACHELHARDT_START",
+    "shortName": "STACHELHARDT",
     "direction": "S"
   },
   {
@@ -2718,7 +2718,7 @@
       ]
     },
     "id": "aba62a95-365e-4085-88c8-1027a703da27",
-    "shortName": "SCHOENBRUNN_SCHLEPP",
+    "shortName": "SCHOENBRUNN",
     "direction": "SO,NW"
   },
   {
@@ -2736,7 +2736,7 @@
       ]
     },
     "id": "f7f2ba51-134c-4423-9f56-194e23f7533c",
-    "shortName": "MEERFELD_START_OST",
+    "shortName": "MEERFELD_OST",
     "direction": "O"
   },
   {
@@ -2772,7 +2772,7 @@
       ]
     },
     "id": "e0f68961-3544-4ae0-b125-8d333756207f",
-    "shortName": "HOHENOELLEN_START",
+    "shortName": "HOHENOELLEN",
     "direction": "SW"
   },
   {
@@ -2790,7 +2790,7 @@
       ]
     },
     "id": "8a4eaf9d-0520-4d58-a0b0-6ad1917be158",
-    "shortName": "BOPPARD_WEILER_START",
+    "shortName": "BOPPARD_WEILER",
     "direction": "N-O"
   },
   {
@@ -2808,7 +2808,7 @@
       ]
     },
     "id": "00fd6bbd-b7de-4d33-ac7e-f99542c7af9d",
-    "shortName": "ESCHBACH_START",
+    "shortName": "ESCHBACH",
     "direction": "SO"
   },
   {
@@ -2826,7 +2826,7 @@
       ]
     },
     "id": "3ebd513e-050f-4547-9774-e4904b347f52",
-    "shortName": "KAISKORB_SCHLEPP",
+    "shortName": "KAISKORB",
     "direction": "NO,SW"
   },
   {
@@ -2862,7 +2862,7 @@
       ]
     },
     "id": "d9c90336-8f1b-4b88-9e81-5fbaa5ab6607",
-    "shortName": "SEVELEN_SCHLEPP",
+    "shortName": "SEVELEN",
     "direction": "O,W"
   },
   {
@@ -2898,7 +2898,7 @@
       ]
     },
     "id": "d07ba46e-342c-4417-83ef-50fad95e375c",
-    "shortName": "ANSPACH_SCHLEPP",
+    "shortName": "ANSPACH",
     "direction": "SO,NW"
   },
   {
@@ -2916,7 +2916,7 @@
       ]
     },
     "id": "1f0bf6ca-b0cb-4a44-831e-bde2f8928af1",
-    "shortName": "POPPENPERG_START",
+    "shortName": "POPPENPERG",
     "direction": "N"
   },
   {
@@ -2934,7 +2934,7 @@
       ]
     },
     "id": "f631845b-e337-418b-8d66-3760d0453774",
-    "shortName": "NIEDERKLEEN_SCHLEPP",
+    "shortName": "NIEDERKLEEN",
     "direction": ""
   },
   {
@@ -2952,7 +2952,7 @@
       ]
     },
     "id": "8c71800d-eddc-461f-8a96-981552f559a5",
-    "shortName": "WIXBERG_START_W",
+    "shortName": "WIXBERG_W",
     "direction": "W"
   },
   {
@@ -2970,7 +2970,7 @@
       ]
     },
     "id": "d00ca4a8-a294-4e1c-b52b-f392fe02641c",
-    "shortName": "WIXBERG_START_S",
+    "shortName": "WIXBERG_S",
     "direction": "S"
   },
   {
@@ -2988,7 +2988,7 @@
       ]
     },
     "id": "c34265aa-29f6-41ec-91a7-65cbc6318168",
-    "shortName": "KRONENBERG_START",
+    "shortName": "KRONENBERG",
     "direction": "W-WNW"
   },
   {
@@ -3024,7 +3024,7 @@
       ]
     },
     "id": "172f7441-d16e-472e-a8f4-1fec9c83f681",
-    "shortName": "STUEPPEL_START",
+    "shortName": "STUEPPEL",
     "direction": "W-NNW"
   },
   {
@@ -3060,7 +3060,7 @@
       ]
     },
     "id": "134c035d-2f1e-4a32-9023-60c23df26080",
-    "shortName": "WERDOHL_START",
+    "shortName": "WERDOHL",
     "direction": "N"
   }
 ]

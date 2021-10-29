@@ -24,24 +24,25 @@ const cacheManager = require("./CacheManager");
 const { isNoWorkday } = require("../helper/HolidayCalculator");
 const { getCurrentYear } = require("../helper/Utils");
 
+const { COUNTRY } = require("../constants/user-constants");
+const { STATE } = require("../constants/flight-constants");
+
 const flightService = {
-  STATE_IN_RANKING: "In Wertung",
-  STATE_NOT_IN_RANKING: "Nicht in Wertung",
-  STATE_FLIGHTBOOK: "Flugbuch",
-  STATE_IN_PROCESS: "In Bearbeitung",
-
-  FLIGHT_TYPES: ["FREE", "FLAT", "FAI"],
-
   getAll: async (
     year,
     site,
     type,
     rankingClass,
     limit,
+    offset,
     sortByPoints,
     startDate,
     endDate,
-    userId
+    userId,
+    clubId,
+    teamId,
+    gliderClass,
+    status
   ) => {
     let fillCache = false;
     if (
@@ -50,10 +51,15 @@ const flightService = {
         type,
         rankingClass,
         limit,
+        offset,
         sortByPoints,
         startDate,
         endDate,
         userId,
+        clubId,
+        teamId,
+        gliderClass,
+        status,
       ])
     ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
@@ -69,8 +75,8 @@ const flightService = {
       include: [
         createUserInclude(),
         createSiteInclude(site),
-        createTeamInclude(),
-        createClubInclude(),
+        createTeamInclude(teamId),
+        createClubInclude(clubId),
       ],
       where: await createWhereStatement(
         year,
@@ -78,13 +84,19 @@ const flightService = {
         rankingClass,
         startDate,
         endDate,
-        userId
+        userId,
+        gliderClass,
+        status
       ),
       order: [orderStatement],
     };
 
     if (limit) {
       queryObject.limit = limit;
+    }
+
+    if (offset) {
+      queryObject.offset = offset;
     }
 
     const flights = await Flight.findAll(queryObject);
@@ -236,8 +248,19 @@ const flightService = {
     return Math.round(totalDistance);
   },
 
+  getAllBrands: async () => {
+    const query = `SELECT DISTINCT ON (glider->'brand') glider->'brand' AS "brand"
+    FROM "Flights";`;
+
+    const brands = await Flight.sequelize.query(query, {
+      type: Flight.sequelize.QueryTypes.SELECT,
+    });
+
+    // Refactor array of objects to plain array of strings
+    return brands.map((e) => e.brand);
+  },
+
   update: async (flight) => {
-    cacheManager.invalidateCaches();
     return flight.save();
   },
 
@@ -257,8 +280,8 @@ const flightService = {
         columnsToUpdate.flightPoints = result.flightPoints;
         columnsToUpdate.flightStatus = result.flightStatus;
       }
-      cacheManager.invalidateCaches();
     }
+    cacheManager.invalidateCaches();
 
     return Flight.update(columnsToUpdate, {
       where: {
@@ -269,14 +292,12 @@ const flightService = {
   },
 
   delete: async (id) => {
-    cacheManager.invalidateCaches();
     return Flight.destroy({
       where: { id },
     });
   },
 
   addResult: async (result) => {
-    cacheManager.invalidateCaches();
     console.log("ADD RESULT TO FLIGHT");
     const flight = await flightService.getById(result.id);
 
@@ -421,18 +442,15 @@ async function calcFlightPointsAndStatus(flight, glider, status) {
 }
 
 function determineFlightStatus(currentSeason, flightPoints, submittedStatus) {
-  if (!flightPoints) return flightService.STATE_IN_PROCESS;
+  if (!flightPoints) return STATE.IN_PROCESS;
 
-  if (
-    submittedStatus == flightService.STATE_FLIGHTBOOK ||
-    currentSeason.isPaused == true
-  )
-    return flightService.STATE_FLIGHTBOOK;
+  if (submittedStatus == STATE.FLIGHTBOOK || currentSeason.isPaused == true)
+    return STATE.FLIGHTBOOK;
 
   const pointThreshold = currentSeason.pointThresholdForFlight;
   return flightPoints >= pointThreshold
-    ? flightService.STATE_IN_RANKING
-    : flightService.STATE_NOT_IN_RANKING;
+    ? STATE.IN_RANKING
+    : STATE.NOT_IN_RANKING;
 }
 
 async function createGliderObject(columnsToUpdate, glider) {
@@ -564,7 +582,10 @@ async function addUserData(flight) {
   const user = await User.findByPk(flight.userId);
   flight.teamId = user.teamId;
   flight.clubId = user.clubId;
-  flight.homeStateOfUser = user.state;
+  flight.homeStateOfUser =
+    user.address.country == COUNTRY.GER
+      ? user.address.state
+      : user.address.country;
   flight.ageOfUser = user.getAge();
 }
 
@@ -574,14 +595,28 @@ async function createWhereStatement(
   rankingClass,
   startDate,
   endDate,
-  userId
+  userId,
+  gliderClass,
+  flightStatus
 ) {
   let whereStatement;
-  if (flightType || year || rankingClass || startDate || endDate || userId) {
+  if (
+    flightType ||
+    year ||
+    rankingClass ||
+    startDate ||
+    endDate ||
+    userId ||
+    gliderClass ||
+    flightStatus
+  ) {
     whereStatement = {};
   }
   if (flightType) {
     whereStatement.flightType = flightType;
+  }
+  if (flightStatus) {
+    whereStatement.flightStatus = flightStatus;
   }
   if (userId) {
     whereStatement.userId = userId;
@@ -606,44 +641,59 @@ async function createWhereStatement(
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
   }
+  if (gliderClass) {
+    whereStatement.glider = {
+      gliderClass: { key: gliderClass },
+    };
+  }
   return whereStatement;
 }
 
-function createSiteInclude(site) {
-  const siteInclude = {
+function createSiteInclude(shortName) {
+  const include = {
     model: FlyingSite,
     as: "takeoff",
     attributes: ["id", "shortName", "name", "direction"],
   };
-  if (site) {
-    siteInclude.where = {
-      shortName: site,
+  if (shortName) {
+    include.where = {
+      shortName,
     };
   }
-  return siteInclude;
+  return include;
 }
 
 function createUserInclude() {
-  const userInclude = {
+  const include = {
     model: User,
     attributes: ["firstName", "lastName"],
-  };
-  return userInclude;
-}
-
-function createClubInclude() {
-  const include = {
-    model: Club,
-    attributes: ["name"],
   };
   return include;
 }
 
-function createTeamInclude() {
+function createClubInclude(id) {
+  const include = {
+    model: Club,
+    attributes: ["name"],
+  };
+  if (id) {
+    include.where = {
+      id,
+    };
+  }
+  return include;
+}
+
+function createTeamInclude(id) {
   const include = {
     model: Team,
     attributes: ["name"],
   };
+  if (id) {
+    include.where = {
+      id,
+    };
+  }
   return include;
 }
 

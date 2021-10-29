@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/SponsorService");
 const logoService = require("../service/LogoService");
-const { NOT_FOUND, OK } = require("./Constants");
+const { NOT_FOUND, OK } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const {

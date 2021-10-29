@@ -50,6 +50,7 @@ async function prepareHomeData() {
     null,
     null,
     NUMBER_OF_FLIGHTS_OVERALL,
+    0,
     true
   );
   const todaysFlights = flightService.getTodays();

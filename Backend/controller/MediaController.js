@@ -5,7 +5,7 @@ const Logo = require("../config/postgres")["Logo"];
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const path = require("path");
 const _ = require("lodash");
-const { NOT_FOUND } = require("./Constants");
+const { NOT_FOUND } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
 const { checkParamIsUuid, validationHasErrors } = require("./Validation");
 

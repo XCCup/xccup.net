@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { UNAUTHORIZED, FORBIDDEN } = require("./Constants");
+const {
+  UNAUTHORIZED,
+  FORBIDDEN,
+} = require("../constants/http-status-constants");
 const { waitTillDbHasSync } = require("../helper/Utils");
 const userService = require("../service/UserService");
 require("../service/UserService");
