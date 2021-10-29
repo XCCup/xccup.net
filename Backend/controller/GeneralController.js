@@ -2,11 +2,14 @@ const express = require("express");
 const router = express.Router();
 const { getCurrentActive } = require("../service/SeasonService");
 const { getAllBrands } = require("../service/FlightService");
-const { STATE: flightStates, TYPE } = require("../constants/flight-constants");
 const {
-  GENDER,
-  COUNTRY,
-  STATE,
+  STATE: flightStates,
+  TYPE: types,
+} = require("../constants/flight-constants");
+const {
+  GENDER: genders,
+  COUNTRY: conutries,
+  STATE: conutryStates,
   TSHIRT_SIZES,
 } = require("../constants/user-constants");
 
@@ -62,7 +65,7 @@ router.get("/flight/states", async (req, res, next) => {
 
 router.get("/flight/types", async (req, res, next) => {
   try {
-    res.json(TYPE);
+    res.json(types);
   } catch (error) {
     next(error);
   }
@@ -73,7 +76,7 @@ router.get("/flight/types", async (req, res, next) => {
 
 router.get("/user/genders", async (req, res, next) => {
   try {
-    res.json(GENDER);
+    res.json(genders);
   } catch (error) {
     next(error);
   }
@@ -84,7 +87,7 @@ router.get("/user/genders", async (req, res, next) => {
 
 router.get("/user/countries", async (req, res, next) => {
   try {
-    res.json(COUNTRY);
+    res.json(conutries);
   } catch (error) {
     next(error);
   }
@@ -95,7 +98,7 @@ router.get("/user/countries", async (req, res, next) => {
 
 router.get("/user/states", async (req, res, next) => {
   try {
-    res.json(STATE);
+    res.json(conutryStates);
   } catch (error) {
     next(error);
   }
