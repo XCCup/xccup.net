@@ -118,7 +118,7 @@ function createMemberInclude() {
   return {
     model: User,
     as: "members",
-    attributes: ["name", "id"],
+    attributes: ["firstName", "lastName", "id"],
   };
 }
 

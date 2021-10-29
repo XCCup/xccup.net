@@ -29,20 +29,29 @@ router.get(
     query("type").optional().not().isEmpty().trim().escape(),
     query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
+    query("offset").optional().isInt(),
     query("startDate").optional().isDate(), //e.g. 2002-07-15
     query("endDate").optional().isDate(),
-    query("userId").optional().not().isEmpty().trim().escape(),
+    query("clubId").optional().isUUID(),
+    query("teamId").optional().isUUID(),
+    query("userId").optional().isUUID(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const year = req.query.year;
-    const site = req.query.site;
-    const type = req.query.type;
-    const rankingClass = req.query.rankingClass;
-    const limit = req.query.limit;
-    const startDate = req.query.startDate;
-    const endDate = req.query.endDate;
-    const userId = req.query.userId;
+
+    const {
+      year,
+      site,
+      type,
+      rankingClass,
+      limit,
+      offset,
+      startDate,
+      endDate,
+      userId,
+      clubId,
+      teamId,
+    } = req.query;
 
     try {
       const flights = await service.getAll(
@@ -51,10 +60,13 @@ router.get(
         type,
         rankingClass,
         limit,
-        null,
+        offset,
+        false,
         startDate,
         endDate,
-        userId
+        userId,
+        clubId,
+        teamId
       );
       res.json(flights);
     } catch (error) {

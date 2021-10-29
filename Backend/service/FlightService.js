@@ -34,10 +34,13 @@ const flightService = {
     type,
     rankingClass,
     limit,
+    offset,
     sortByPoints,
     startDate,
     endDate,
-    userId
+    userId,
+    clubId,
+    teamId
   ) => {
     let fillCache = false;
     if (
@@ -46,10 +49,13 @@ const flightService = {
         type,
         rankingClass,
         limit,
+        offset,
         sortByPoints,
         startDate,
         endDate,
         userId,
+        clubId,
+        teamId,
       ])
     ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
@@ -65,8 +71,8 @@ const flightService = {
       include: [
         createUserInclude(),
         createSiteInclude(site),
-        createTeamInclude(),
-        createClubInclude(),
+        createTeamInclude(teamId),
+        createClubInclude(clubId),
       ],
       where: await createWhereStatement(
         year,
@@ -81,6 +87,10 @@ const flightService = {
 
     if (limit) {
       queryObject.limit = limit;
+    }
+
+    if (offset) {
+      queryObject.offset = offset;
     }
 
     const flights = await Flight.findAll(queryObject);
@@ -614,41 +624,51 @@ async function createWhereStatement(
   return whereStatement;
 }
 
-function createSiteInclude(site) {
-  const siteInclude = {
+function createSiteInclude(shortName) {
+  const include = {
     model: FlyingSite,
     as: "takeoff",
     attributes: ["id", "shortName", "name", "direction"],
   };
-  if (site) {
-    siteInclude.where = {
-      shortName: site,
+  if (shortName) {
+    include.where = {
+      shortName,
     };
   }
-  return siteInclude;
+  return include;
 }
 
 function createUserInclude() {
-  const userInclude = {
+  const include = {
     model: User,
     attributes: ["firstName", "lastName"],
-  };
-  return userInclude;
-}
-
-function createClubInclude() {
-  const include = {
-    model: Club,
-    attributes: ["name"],
   };
   return include;
 }
 
-function createTeamInclude() {
+function createClubInclude(id) {
+  const include = {
+    model: Club,
+    attributes: ["name"],
+  };
+  if (id) {
+    include.where = {
+      id,
+    };
+  }
+  return include;
+}
+
+function createTeamInclude(id) {
   const include = {
     model: Team,
     attributes: ["name"],
   };
+  if (id) {
+    include.where = {
+      id,
+    };
+  }
   return include;
 }
 

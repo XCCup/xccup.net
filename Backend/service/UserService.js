@@ -126,7 +126,8 @@ async function hasUserFlightsWithinCurrentSeason(user) {
     null,
     null,
     1,
-    undefined,
+    0,
+    false,
     seasonDetails.startDate,
     seasonDetails.endDate,
     user.id
@@ -141,6 +142,7 @@ async function findFlightRecordOfType(id, type) {
     type,
     null,
     1,
+    0,
     true,
     null,
     null,
