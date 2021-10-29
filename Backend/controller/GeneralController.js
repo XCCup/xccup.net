@@ -32,11 +32,9 @@ router.get("/rankingClasses", async (req, res, next) => {
 
 router.get("/brands", async (req, res, next) => {
   try {
-    console.log("TEST");
     const brands = await getAllBrands();
     res.json(brands);
   } catch (error) {
-    console.log("TEST ERR");
     next(error);
   }
 });
