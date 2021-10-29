@@ -6,7 +6,7 @@
         <table class="table table-sm">
           <tbody>
             <tr>
-              <th>Pilot:</th>
+              <th>Pilot</th>
               <td>
                 <a href="#">{{
                   flight.User.firstName + " " + flight.User.lastName
@@ -14,23 +14,23 @@
               </td>
             </tr>
             <tr>
-              <th>Verein:</th>
+              <th>Verein</th>
               <td>
                 <a href="#">{{ flight.Club.name }}</a>
               </td>
             </tr>
             <tr>
-              <th>Team:</th>
+              <th>Team</th>
               <td>
                 <a href="#">{{ flight.Team?.name }}</a>
               </td>
             </tr>
             <tr>
-              <th>Fluggerät:</th>
+              <th>Fluggerät</th>
               <td>{{ flight.glider.brand }} {{ flight.glider.model }}</td>
             </tr>
             <tr>
-              <th>Geräteklasse:</th>
+              <th>Geräteklasse</th>
               <td>
                 <RankingClass :rankingClass="flight.glider.gliderClass" />
               </td>
@@ -42,29 +42,29 @@
         <table class="table table-sm">
           <tbody>
             <tr>
-              <th>Flugzeit:</th>
+              <th>Flugzeit</th>
               <td>
                 {{ calcFlightDuration(flight.airtime) }}
               </td>
             </tr>
             <tr>
-              <th>Strecke:</th>
+              <th>Strecke</th>
               <td>
                 {{ flight.flightDistance.toFixed(2) }} km
                 <FlightTypeIcon :flightType="flight.flightType" />
               </td>
             </tr>
             <tr>
-              <th>Punkte:</th>
+              <th>Punkte</th>
               <td>{{ flight.flightPoints }}</td>
             </tr>
 
             <tr>
-              <th>Startplatz:</th>
+              <th>Startplatz</th>
               <td>{{ flight.takeoff.name }} {{ flight.takeoff.direction }}</td>
             </tr>
             <tr>
-              <th>Uhrzeit:</th>
+              <th>Uhrzeit</th>
               <td v-if="true">
                 <i class="bi bi-arrow-up"></i>
                 <BaseDate :timestamp="flight.takeoffTime" dateFormat="HH:mm" />
@@ -104,26 +104,25 @@
           <table class="table table-sm">
             <tbody>
               <tr>
-                <th>Flugstatus:</th>
+                <th>Flugstatus</th>
                 <td>{{ flight.flightStatus }}</td>
               </tr>
               <tr>
-                <th>Höhe min/max (GPS):</th>
+                <th>Höhe min/max (GPS)</th>
                 <td>
                   {{ flight.flightStats.minHeightGps }}m /
                   {{ flight.flightStats.maxHeightGps }}m
                 </td>
               </tr>
               <tr>
-                <th>Steigen min/max:</th>
+                <th>Max. Steigen</th>
                 <td>
-                  {{ flight.flightStats.maxSink }} m/s /
-                  {{ flight.flightStats.maxClimb }} m/s
+                  {{ flight.flightStats.maxClimb }} m/s 
                 </td>
               </tr>
               <tr>
-                <th>Geschwindigkeit max:</th>
-                <td>{{ flight.flightStats.maxSpeed }} km/h</td>
+                <th>Max. Sinken</th>
+                <td> {{ flight.flightStats.maxSink }} m/s</td>
               </tr>
             </tbody>
           </table>
@@ -132,20 +131,19 @@
           <table class="table table-sm">
             <tbody>
               <tr>
-                <th>Landeplatz:</th>
+                <th>Landeplatz</th>
                 <td>{{ flight.landing }}</td>
               </tr>
               <tr>
-                <th>Ø Geschwindigkeit:</th>
-                <td></td>
-                <!-- 38,0km/h -->
+                <th>Geschwindigkeit max</th>
+                <td>{{ flight.flightStats.maxSpeed }} km/h</td>
               </tr>
               <tr>
-                <th>Aufgaben-Geschwindigkeit:</th>
+                <th>Aufgaben-Geschwindigkeit</th>
                 <td>{{ flight.flightStats.taskSpeed }} km/h</td>
               </tr>
               <tr>
-                <th>Eingereicht am:</th>
+                <th>Eingereicht am</th>
                 <td>
                   <BaseDate
                     :timestamp="flight.createdAt"
