@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getCurrentActive } = require("../service/generalervice");
+const { getCurrentActive } = require("../service/SeasonService");
 const { getAllBrands } = require("../service/FlightService");
 const { STATE: flightStates, TYPE } = require("../constants/flight-constants");
 const {
