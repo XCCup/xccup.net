@@ -62,7 +62,7 @@
     </button>
   </div>
 
-  <div v-if="comment.userId != getUserId" class="text-secondary text-end">
+  <div v-if="getUserId && comment.userId != getUserId" class="text-secondary text-end">
     <a href="#" @click.prevent="openReplyEditor"
       ><i class="bi bi-reply"></i> Antworten</a
     >
