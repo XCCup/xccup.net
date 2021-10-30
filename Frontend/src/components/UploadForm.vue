@@ -28,10 +28,10 @@
         <div class="row d-flex align-items-end">
           <div class="col-md-9">
             <BaseSelect
-              v-model="gliderName"
+              v-model="listOfGliders[0]"
               label="Fluggerät"
               :showLabel="true"
-              :options="[gliderName]"
+              :options="listOfGliders"
               :isDisabled="!flightId"
             />
           </div>
@@ -194,9 +194,11 @@ export default {
     sendButtonIsDisabled() {
       return this.flightId && this.rulesAccepted === true ? false : true;
     },
-    gliderName() {
+    listOfGliders() {
       if (!this.userDetails.gliders) return;
-      return this.userDetails.gliders.map((glider) => glider.model);
+      return this.userDetails.gliders.map(
+        (glider) => glider.brand + " " + glider.model
+      );
     },
   },
   methods: {
@@ -241,13 +243,9 @@ export default {
       try {
         const formData = new FormData();
         formData.append("image", this.userImages[0], this.userImages[0].name);
-        // TODO: Remove hardcoded IDs for development
-        formData.append("flightId", "0d3294d5-0031-4c5d-a6c9-fd173694ba21");
-        formData.append("userId", "cd1583d1-fb7f-4a93-b732-effd59e5c3ae");
-        // formData.append("flightId", this.flightId);
-        // formData.append("userId", this.flightDetails.userId);
+        formData.append("flightId", this.flightId);
+        formData.append("userId", this.userDetails.id);
         const response = await ApiService.uploadImages(formData);
-        console.log(response);
         if (response.status != 200) throw response.statusText;
         this.imageUploadSuccessfull = true;
         this.imageUploadButtonDisabled = true;
