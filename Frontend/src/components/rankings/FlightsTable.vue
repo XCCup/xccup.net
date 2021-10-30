@@ -41,9 +41,9 @@
               <td scope="col" class="d-none d-lg-table-cell">
                 <i
                   class="bi bi-trophy"
-                  :class="flight.glider.gliderClass.key"
+                  :class="flight.glider?.gliderClass?.key ?? ``"
                 ></i>
-                {{ flight.glider.brand + " " + flight.glider.model }}
+                {{ flight.glider?.brand + " " + flight.glider?.model }}
               </td>
 
               <td>{{ Math.floor(flight.flightDistance) }} km</td>
