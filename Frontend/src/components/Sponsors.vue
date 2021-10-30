@@ -9,11 +9,7 @@
       <div class="container">
         <h2>Sponsoren</h2>
         <div class="row mt-3">
-          <div
-            v-for="sponsor in goldSponsors"
-            :key="sponsor.id"
-            class="col-4 col-sm-4 col-md-4 col-lg-3"
-          >
+          <div v-for="sponsor in goldSponsors" :key="sponsor.id" class="col">
             <div class="square-holder">
               <a :href="sponsor.website">
                 <img
