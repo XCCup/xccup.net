@@ -1,8 +1,6 @@
 <template>
   <div id="upload" class="container">
     <h3>Flug hochladen</h3>
-    <!-- TODO: Remove this for production -->
-    Flight ID: {{ flightId }}
     <form @submit.prevent="sendFlightDetails">
       <div class="mb-3">
         <label for="igcUploadForm" class="form-label">
@@ -166,12 +164,9 @@ export default {
   data() {
     // TODO: Clean up orphaned/duplicate variables
     return {
-      flight: {
-        userId: null,
-        igc: {
-          name: "",
-          body: null,
-        },
+      igc: {
+        name: "",
+        body: null,
       },
       // TODO: implement this
       selectedGlider: {
@@ -180,7 +175,7 @@ export default {
         gliderClass: "D_high",
       },
 
-      // TODO: Change to false for production
+      // TODO: Change rules to false for production
       rulesAccepted: true,
       flightId: null,
       externalId: null,
@@ -192,9 +187,6 @@ export default {
       flightReport: "",
     };
   },
-  created() {
-    this.flight.userId = this.getterUserId;
-  },
   computed: {
     ...mapGetters({
       getterUserId: "getUserId",
@@ -203,8 +195,8 @@ export default {
       return this.flightId && this.rulesAccepted === true ? false : true;
     },
     gliderName() {
-      if (!this.selectedGlider) return;
-      return this.selectedGlider.brand + " " + this.selectedGlider.model;
+      if (!this.userDetails.gliders) return;
+      return this.userDetails.gliders.map((glider) => glider.model);
     },
   },
   methods: {
@@ -264,9 +256,9 @@ export default {
       }
     },
     async sendIgc() {
-      if (this.flight.igc.body == null) return;
+      if (this.igc.body == null) return;
       try {
-        return await ApiService.uploadIgc(this.flight);
+        return await ApiService.uploadIgc({ igc: this.igc });
       } catch (error) {
         console.log(error);
       }
@@ -276,8 +268,8 @@ export default {
       try {
         if (!file.target.files[0]) return;
 
-        this.flight.igc.body = await this.readFile(file.target.files[0]);
-        this.flight.igc.name = file.target.files[0].name;
+        this.igc.body = await this.readFile(file.target.files[0]);
+        this.igc.name = file.target.files[0].name;
         const response = await this.sendIgc();
         if (response.status != 200) throw "Server error";
         this.flightId = response.data.flightId;
