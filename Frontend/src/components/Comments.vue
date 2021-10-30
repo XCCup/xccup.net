@@ -97,12 +97,9 @@ export default {
   },
   computed: {
     commentsWithReplies() {
-      let comments = [];
-      this.comments.forEach((comment) => {
-        if (!comment.relatedTo) {
-          comments.push(comment);
-        }
-      });
+      let comments = this.comments.flatMap((comment) =>
+        !comment.relatedTo ? [comment] : []
+      );
       // Add replies
       this.comments.forEach((comment) => {
         if (comment.relatedTo) {
@@ -113,6 +110,7 @@ export default {
           comments[parent].replies.push(comment);
         }
       });
+
       return comments;
     },
   },
