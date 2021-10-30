@@ -96,7 +96,7 @@
     >
 
     <router-link :to="{ name: 'FlightEdit' }">
-      <button v-if="showEditButton" class="btn btn-primary btn-sm ms-2">
+      <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>
