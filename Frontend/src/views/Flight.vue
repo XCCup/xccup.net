@@ -2,7 +2,7 @@
   <div v-if="flight">
     <TheSubnav :flight="flight" />
     <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
-    <Barogramm :datasets="baroData" :key="baroDataUpdated" />
+    <FlightBarogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
       v-if="flight.airbuddies.length > 0"
       :flight="flight"
@@ -15,6 +15,7 @@
       :comments="flight.comments"
       @submit-comment="addComment"
       @delete-comment="deleteComment"
+      @delete-reply="deleteComment"
       @comment-edited="editComment"
     />
   </div>
@@ -22,7 +23,7 @@
 
 <script>
 // TODO: Note to my future self:
-// The connection between Airbuddies, Barogramm and Map needs refactoring.
+// The connection between Airbuddies, FlightBarogramm and Map needs refactoring.
 // It's to ineffective and you can do better now.
 
 import { ref } from "vue";
@@ -30,7 +31,7 @@ import { useRouter, useRoute } from "vue-router";
 import ApiService from "@/services/ApiService.js";
 import MapV2 from "@/components/MapV2";
 import Airbuddies from "@/components/Airbuddies";
-import Barogramm from "@/components/Barogramm.vue";
+import FlightBarogramm from "@/components/FlightBarogramm.vue";
 import trackColors from "@/assets/js/trackColors";
 import FlightDetails from "@/components/FlightDetails";
 import Comments from "@/components/Comments";
@@ -42,7 +43,7 @@ export default {
   components: {
     MapV2,
     Airbuddies,
-    Barogramm,
+    FlightBarogramm,
     FlightDetails,
     Comments,
     FlightReport,
@@ -103,6 +104,9 @@ export default {
 
         if (res.status != 200) throw res.statusText;
         this.$refs.Comments.clearCommentEditorInput();
+        if (comment.relatedTo)
+          this.$refs.Comments.$refs[`${comment.relatedTo}`].closeReplyEditor();
+
         this.updateComments();
       } catch (error) {
         console.log(error);
@@ -122,7 +126,20 @@ export default {
         const res = await ApiService.editComment(comment);
         if (res.status != 200) throw res.statusText;
         await this.updateComments();
-        this.$refs.Comments.$refs[`${comment.id}`].closeMessageEditor();
+        // Check if the edited comment is a reply to a parent comment
+        // and close the comment editor via $ref. Needed because the $refs are nested.
+        if (
+          this.$refs.Comments.$refs[`${comment.relatedTo}`]?.$refs[
+            `${comment.id}`
+          ]
+        ) {
+          this.$refs.Comments.$refs[`${comment.relatedTo}`].$refs[
+            `${comment.id}`
+          ].closeCommentEditor();
+        } else {
+          // Else
+          this.$refs.Comments.$refs[`${comment.id}`].closeCommentEditor();
+        }
       } catch (error) {
         console.log(error);
       }

@@ -38,30 +38,52 @@
                 />
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
+                <BaseInput v-model="userProfile.address.street" label="Strasse" />
+                <div class="row">
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.address.zip" label="PLZ" />
+                  </div>
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.address.city" label="Stadt" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.address.state" label="Bundesland" />
+                  </div>
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.address.country" label="Land" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <BaseSelect
+                      v-model="userProfile.gender"
+                      label="Geschlecht"
+                      :showLabel="true"
+                      :options="['M', 'W', 'D']"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <BaseSelect
+                      v-model="userProfile.tshirtSize"
+                      label="T-Shirt Größe"
+                      :showLabel="true"
+                      :options="['S', 'M', 'L', 'XL', 'XXL']"
+                    />
+                  </div>
+                </div>
 
-                <BaseSelect
-                  v-model="userProfile.gender"
-                  label="Geschlecht"
-                  :showLabel="true"
-                  :options="['M', 'W']"
-                />
-                <div class="mt-3"></div>
-                <BaseSelect
-                  v-model="userProfile.tshirtSize"
-                  label="T-Shirt Größe"
-                  :showLabel="true"
-                  :options="['S', 'M', 'L', 'XL', 'XXL']"
-                />
                 <div class="mt-3"></div>
               </div>
               <div class="col-md-12">
                 <div class="row d-flex align-items-end">
                   <div class="col-md-7">
                     <BaseSelect
-                      v-model="userProfile.gliders[0]"
+                      v-model="defaultGlider"
                       label="Standard Gerät"
                       :showLabel="true"
-                      :options="userDetails.gliders"
+                      :options="readableListOfGliders"
                     />
                   </div>
                   <div class="col-md-5 mt-3">
@@ -114,35 +136,25 @@
                 Newsletter abonnieren <i class="bi bi-info-circle"></i>
               </label>
             </div>
-            <!-- TODO Are those options obsolete? -->
-            <!-- <h5>Sonderwertungen</h5>
 
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="gsRLP"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                GS RLP <i class="bi bi-info-circle"></i>
-              </label>
-            </div> -->
-
-            <!-- <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="luxChampionat"
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                Luxemburg XC-Championat <i class="bi bi-info-circle"></i>
-              </label>
-            </div> -->
             <br />
+            <button
+              class="btn btn-primary"
+              :disabled="!profileDataHasChanged"
+              @click="save"
+            >
+              Speichern
+              <div
+                v-if="showSpinner"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </button>
+
             <!-- Edit -->
-            <div v-if="!edit">
+            <!-- <div v-if="!edit">
               <router-link
                 :to="{ name: 'ProfileEdit' }"
                 class="btn btn-primary"
@@ -151,13 +163,13 @@
               </router-link>
             </div>
             <div v-if="edit">
-              <div>Edit: {{ authUser.name }}</div>
+              <div>Edit: {{ userProfile.firstName }}</div>
 
               <button class="btn btn-primary" @click="save">Speichern</button>
               <button class="btn btn-outline-danger" @click="cancel">
                 Abbrechen
               </button>
-            </div>
+            </div> -->
             <!-- Edit -->
           </div>
         </div>
@@ -195,28 +207,27 @@
           </div>
         </div> -->
       </div>
-      <h5 v-if="userDetails">Raw user details</h5>
-      {{ userDetails }}
     </div>
   </div>
 
   <!-- Modals -->
-  <AddGliderModal />
-  <RemoveGliderModal v-if="userDetails" :glider="userProfile.gliders[0]" />
+  <ModalAddGlider />
+  <ModalRemoveGlider v-if="userDetails" :glider="readableListOfGliders[0]" />
 </template>
 
 <script>
 import ApiService from "@/services/ApiService.js";
 
 import { mapGetters, useStore } from "vuex";
-import { computed, ref } from "vue";
+import { /*computed,*/ ref } from "vue";
 
-import AddGliderModal from "@/components/AddGliderModal";
-import RemoveGliderModal from "@/components/RemoveGliderModal";
+import ModalAddGlider from "@/components/ModalAddGlider";
+import ModalRemoveGlider from "@/components/ModalRemoveGlider";
+import cloneDeep from "lodash/cloneDeep";
 
 export default {
   name: "Profile",
-  components: { AddGliderModal, RemoveGliderModal },
+  components: { ModalAddGlider, ModalRemoveGlider },
   async setup() {
     // TODO: Remove if store will not be used for user details. Maybe leave it here for reference how to do it;)
     // const store = useStore();
@@ -238,24 +249,48 @@ export default {
   data() {
     return {
       userProfile: null,
+      unmodifiedUserProfile: null,
+      defaultGlider: null,
+      showSpinner: false,
     };
   },
   computed: {
-    // ...mapGetters(["authUser"]),
     ...mapGetters({
       getterUserId: "getUserId",
     }),
-    // listOfAircrafts() {
-    //   if (!this.authUser.gliders) return;
-    //   let gliderList = [];
-    //   this.authUser.gliders.forEach((element) => {
-    //     gliderList.push(`${element.brand} ${element.model}`);
-    //   });
-    //   return gliderList;
-    // },
+    readableListOfGliders() {
+      return this.getListOfGliders();
+    },
+    profileDataHasChanged() {
+      return (
+        JSON.stringify(this.userProfile) !=
+        JSON.stringify(this.unmodifiedUserProfile)
+      );
+    },
+  },
+  watch: {
+    defaultGlider() {
+      let indexOfDefaultGlider = this.readableListOfGliders.indexOf(
+        this.defaultGlider
+      );
+      // Move the selected glider to the top of the gliders array
+      this.readableListOfGliders.splice(
+        0,
+        0,
+        this.readableListOfGliders.splice(indexOfDefaultGlider, 1)[0]
+      );
+      // And do the same with the original
+      this.userProfile.gliders.splice(
+        0,
+        0,
+        this.userProfile.gliders.splice(indexOfDefaultGlider, 1)[0]
+      );
+    },
   },
   beforeMount() {
-    this.userProfile = { ...this.userDetails };
+    this.userProfile = cloneDeep(this.userDetails);
+    this.unmodifiedUserProfile = cloneDeep(this.userDetails);
+    this.defaultGlider = this.readableListOfGliders[0];
   },
   props: {
     edit: {
@@ -264,21 +299,39 @@ export default {
     },
   },
   methods: {
-    save() {
-      console.log("Profile saved");
+    async save() {
+      try {
+        this.showSpinner = true;
+        const res = await ApiService.updateUserProfile(this.userProfile);
+        if (res.status != 200) throw res.statusText;
+        this.userProfile = res.data;
+        this.unmodifiedUserProfile = cloneDeep(this.userProfile);
+        this.defaultGlider = this.readableListOfGliders[0];
+        this.showSpinner = false;
+      } catch (error) {
+        console.error(error);
+        this.showSpinner = false;
+      }
     },
-    cancel() {
-      this.$router.push({ name: "Profile" });
+    // cancel() {
+    //   this.$router.push({ name: "Profile" });
+    // },
+    getListOfGliders() {
+      let readableListOfGliders = [];
+      this.userProfile.gliders.forEach((element) => {
+        readableListOfGliders.push(element.brand + " " + element.model);
+      });
+      return readableListOfGliders;
     },
   },
 };
 </script>
 
 <style scoped>
-.add-experience:hover {
+/* .add-experience:hover {
   background: #ba68c8;
   color: #fff;
   cursor: pointer;
   border: solid 1px #ba68c8;
-}
+} */
 </style>

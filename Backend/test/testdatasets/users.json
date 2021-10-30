@@ -1,10 +1,7 @@
 [
   {
     "id": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
-    "names": [
-      "Camille",
-      "Schaden"
-    ],
+    "names": ["Camille", "Schaden"],
     "firstName": "Camille",
     "lastName": "Schaden",
     "birthday": "1979-08-15",
@@ -12,7 +9,7 @@
     "tshirtSize": "XL",
     "gliders": [
       {
-        "brand": "LitteCloud",
+        "brand": "LittleCloud",
         "model": "Spiruline",
         "gliderClass": "D_high"
       },
@@ -39,10 +36,7 @@
   },
   {
     "id": "b7de86e6-4064-484b-aa0b-2235edbe36e9",
-    "names": [
-      "Frank",
-      "Jacobs"
-    ],
+    "names": ["Frank", "Jacobs"],
     "firstName": "Frank",
     "lastName": "Jacobs",
     "birthday": "1975-03-23",
@@ -77,10 +71,7 @@
   },
   {
     "id": "1c3fb13d-e725-4869-a816-87498833bee0",
-    "names": [
-      "Leo",
-      "Altenwerth"
-    ],
+    "names": ["Leo", "Altenwerth"],
     "firstName": "Leo",
     "lastName": "Altenwerth",
     "birthday": "1996-08-22",
@@ -115,10 +106,7 @@
   },
   {
     "id": "25346d86-de5b-48b0-9dee-bffe06e560c8",
-    "names": [
-      "Willis",
-      "Romaguera"
-    ],
+    "names": ["Willis", "Romaguera"],
     "firstName": "Willis",
     "lastName": "Romaguera",
     "birthday": "1979-05-07",
@@ -153,11 +141,7 @@
   },
   {
     "id": "67e5230b-667f-4ff1-8750-17739e7d3ea4",
-    "names": [
-      "Mrs.",
-      "Roman",
-      "Jakubowski"
-    ],
+    "names": ["Mrs.", "Roman", "Jakubowski"],
     "firstName": "Mrs.",
     "lastName": "Roman",
     "birthday": "1985-09-24",
@@ -191,11 +175,7 @@
   },
   {
     "id": "bc8f46c2-fc95-4662-877c-d4a08806f482",
-    "names": [
-      "Ms.",
-      "Laurie",
-      "Leannon"
-    ],
+    "names": ["Ms.", "Laurie", "Leannon"],
     "firstName": "Ms.",
     "lastName": "Laurie",
     "birthday": "1975-03-16",
@@ -230,10 +210,7 @@
   },
   {
     "id": "8131b218-ed76-4095-bd29-0bf3902358c2",
-    "names": [
-      "Ramona",
-      "Gislason"
-    ],
+    "names": ["Ramona", "Gislason"],
     "firstName": "Ramona",
     "lastName": "Gislason",
     "birthday": "1983-01-16",
@@ -268,10 +245,7 @@
   },
   {
     "id": "1fddb1fe-f9fe-48ef-a76e-d70d53e5fb6a",
-    "names": [
-      "Toby",
-      "Gerhold"
-    ],
+    "names": ["Toby", "Gerhold"],
     "firstName": "Toby",
     "lastName": "Gerhold",
     "birthday": "1988-02-01",
@@ -284,7 +258,7 @@
         "gliderClass": "D_high"
       },
       {
-        "brand": "LitteCloud",
+        "brand": "LittleCloud",
         "model": "Spiruline",
         "gliderClass": "D_high"
       }
@@ -306,10 +280,7 @@
   },
   {
     "id": "67172eda-57c7-4bbc-af90-f4c56c30f5ec",
-    "names": [
-      "Sonia",
-      "Harber"
-    ],
+    "names": ["Sonia", "Harber"],
     "firstName": "Sonia",
     "lastName": "Harber",
     "birthday": "1981-10-16",
@@ -344,10 +315,7 @@
   },
   {
     "id": "e071350f-a7c3-4081-9e2f-709625b07a07",
-    "names": [
-      "Ron",
-      "Crooks"
-    ],
+    "names": ["Ron", "Crooks"],
     "firstName": "Ron",
     "lastName": "Crooks",
     "birthday": "1996-05-08",
@@ -360,7 +328,7 @@
         "gliderClass": "AB_low"
       },
       {
-        "brand": "LitteCloud",
+        "brand": "LittleCloud",
         "model": "Spiruline",
         "gliderClass": "D_high"
       }
@@ -382,10 +350,7 @@
   },
   {
     "id": "61895b0e-0e22-480d-87ac-c0040e682c5d",
-    "names": [
-      "Bobby",
-      "Volkman"
-    ],
+    "names": ["Bobby", "Volkman"],
     "firstName": "Bobby",
     "lastName": "Volkman",
     "birthday": "1993-08-18",
@@ -420,10 +385,7 @@
   },
   {
     "id": "45907c75-9c14-42af-bc5a-993f4bec4b0f",
-    "names": [
-      "Tamara",
-      "Ledner"
-    ],
+    "names": ["Tamara", "Ledner"],
     "firstName": "Tamara",
     "lastName": "Ledner",
     "birthday": "1974-09-12",
@@ -457,10 +419,7 @@
   },
   {
     "id": "0f6e6f97-b64b-4e04-a516-adada6f2cba0",
-    "names": [
-      "Wilma",
-      "Hodkiewicz"
-    ],
+    "names": ["Wilma", "Hodkiewicz"],
     "firstName": "Wilma",
     "lastName": "Hodkiewicz",
     "birthday": "1990-06-30",
@@ -495,10 +454,7 @@
   },
   {
     "id": "2a33b726-8edf-4d4b-8da8-f97138371b6c",
-    "names": [
-      "Adam",
-      "Bayer"
-    ],
+    "names": ["Adam", "Bayer"],
     "firstName": "Adam",
     "lastName": "Bayer",
     "birthday": "1983-12-31",
@@ -533,10 +489,7 @@
   },
   {
     "id": "9efc1c62-ea6a-4659-b89c-421b57ab73f6",
-    "names": [
-      "Melinda",
-      "Tremblay"
-    ],
+    "names": ["Melinda", "Tremblay"],
     "firstName": "Melinda",
     "lastName": "Tremblay",
     "birthday": "1955-02-16",
@@ -570,10 +523,7 @@
   },
   {
     "id": "04bd7ffd-d792-4e90-ba9e-c4356e353135",
-    "names": [
-      "Clinton",
-      "Hettinger"
-    ],
+    "names": ["Clinton", "Hettinger"],
     "firstName": "Clinton",
     "lastName": "Hettinger",
     "birthday": "1972-04-02",
@@ -606,10 +556,7 @@
   },
   {
     "id": "388ab9dd-cb42-4c94-aa87-16b7a991b217",
-    "names": [
-      "Christie",
-      "Schaefer"
-    ],
+    "names": ["Christie", "Schaefer"],
     "firstName": "Christie",
     "lastName": "Schaefer",
     "birthday": "1981-07-15",
@@ -643,10 +590,7 @@
   },
   {
     "id": "0032cc89-38bb-4763-a497-e64e5c5ec5f9",
-    "names": [
-      "Everett",
-      "Gislason"
-    ],
+    "names": ["Everett", "Gislason"],
     "firstName": "Everett",
     "lastName": "Gislason",
     "birthday": "1974-11-11",
@@ -659,7 +603,7 @@
         "gliderClass": "D_low"
       },
       {
-        "brand": "LitteCloud",
+        "brand": "LittleCloud",
         "model": "Spiruline",
         "gliderClass": "D_high"
       }
@@ -680,10 +624,7 @@
   },
   {
     "id": "6e8764ec-c4b6-49b1-b804-f0871e390f31",
-    "names": [
-      "Olive",
-      "Emmerich"
-    ],
+    "names": ["Olive", "Emmerich"],
     "firstName": "Olive",
     "lastName": "Emmerich",
     "birthday": "1987-08-03",
@@ -718,10 +659,7 @@
   },
   {
     "id": "1c3c8082-d82a-4c4a-a60c-80d4e089b4f7",
-    "names": [
-      "Lois",
-      "White"
-    ],
+    "names": ["Lois", "White"],
     "firstName": "Lois",
     "lastName": "White",
     "birthday": "1976-01-01",

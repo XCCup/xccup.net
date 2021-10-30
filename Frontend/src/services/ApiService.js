@@ -27,7 +27,7 @@ export default {
     return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
   },
   uploadImages(data) {
-    return jwtInterceptor.post(baseURL + "media/", data);
+    return jwtInterceptor.post(baseURL + "flights/photos/", data);
   },
   getAirbuddies(flightId) {
     return apiClient.get("airbuddies/" + flightId);
@@ -49,5 +49,8 @@ export default {
   },
   getUserDetails(userId) {
     return jwtInterceptor.get(baseURL + "users/" + userId);
+  },
+  updateUserProfile(userProfile) {
+    return jwtInterceptor.put(baseURL + "users/" + userProfile.id, userProfile);
   },
 };

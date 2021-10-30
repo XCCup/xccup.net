@@ -25,7 +25,11 @@
               Ergebnisse
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Eingereichte Flüge</a></li>
+              <li>
+                <router-link :to="{ name: 'AllFlights' }" class="dropdown-item">
+                  Eingereichte Flüge
+                </router-link>
+              </li>
               <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
               <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
               <li>
@@ -54,10 +58,14 @@
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link active" href="#">Kontakt / Impressum</a>
+            <router-link :to="{ name: 'Privacy' }" class="nav-link active">
+              Datenschutz
+            </router-link>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link active" href="#">Datenschutz</a>
+            <router-link :to="{ name: 'Imprint' }" class="nav-link active">
+              Kontakt / Impressum</router-link
+            >
           </li>
         </ul>
         <!-- Login dropdown  -->
@@ -87,7 +95,7 @@
         </div>
         <router-link
           class="btn btn-danger btn-sm m-1"
-          :to="{ name: 'UploadFlight' }"
+          :to="{ name: 'FlightUpload' }"
           >Flug hochladen
         </router-link>
       </div>

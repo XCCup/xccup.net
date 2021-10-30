@@ -36,12 +36,18 @@
 </template>
 <script>
 export default {
-  name: "RemoveGliderModal",
+  name: "ModalRemoveGlider",
   data() {
     return {};
+  },
+  methods: {
+    onGliderRemoved(glider) {
+      this.$emit("remove-glider", glider);
+    },
   },
   props: {
     glider: String,
   },
+  emits: ["remove-glider"],
 };
 </script>

@@ -19,12 +19,13 @@ const routes = [
   },
   {
     path: "/fluege/",
-    name: "Flights",
-    component: () => import(/* webpackChunkName: "" */ "../views/Flights.vue"),
+    name: "AllFlights",
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/AllFlights.vue"),
   },
   {
     path: "/upload",
-    name: "UploadFlight",
+    name: "FlightUpload",
     props: true,
     meta: { requiredAuth: true },
 
@@ -32,15 +33,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "" */ "../views/UploadFlight.vue"),
+      import(/* webpackChunkName: "" */ "../views/FlightUpload.vue"),
   },
   {
     path: "/flug-bearbeiten",
-    name: "EditFlight",
+    name: "FlightEdit",
     // props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () =>
-      import(/* webpackChunkName: "" */ "../views/EditFlight.vue"),
+      import(/* webpackChunkName: "" */ "../views/FlightEdit.vue"),
   },
   {
     path: "/profil",
@@ -55,9 +56,6 @@ const routes = [
     props: { edit: true },
     meta: { requiredAuth: true },
 
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
   },
   {
@@ -70,6 +68,16 @@ const routes = [
     path: "/login/",
     name: "Login",
     component: () => import(/* webpackChunkName: "" */ "../views/Login.vue"),
+  },
+  {
+    path: "/impressum",
+    name: "Imprint",
+    component: () => import(/* webpackChunkName: "" */ "../views/Imprint.vue"),
+  },
+  {
+    path: "/datenschutz",
+    name: "Privacy",
+    component: () => import(/* webpackChunkName: "" */ "../views/Privacy.vue"),
   },
   {
     path: "/:catchAll(.*)",

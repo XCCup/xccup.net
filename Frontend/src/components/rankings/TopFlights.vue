@@ -1,8 +1,5 @@
 <template>
   <table v-if="flights" class="table table-hover">
-    <thead>
-      <tr></tr>
-    </thead>
     <tbody>
       <tr
         v-for="(flight, index) in flights.slice(0, 5)"
@@ -13,12 +10,12 @@
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>
-          <BaseDate :timestamp="flight.dateOfFlight" dateFormat="dd.MM" />
+          <BaseDate :timestamp="flight.takeoffTime" dateFormat="dd.MM" />
         </td>
         <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
         <td>{{ flight.takeoff.name }}</td>
         <td>{{ Math.floor(flight.flightDistance) }} km</td>
-        <td><FlightType :flightType="flight.flightType" /></td>
+        <td><FlightTypeIcon :flightType="flight.flightType" /></td>
         <td>{{ flight.flightPoints }} P</td>
       </tr>
     </tbody>
@@ -26,10 +23,10 @@
 </template>
 
 <script>
-import FlightType from "@/components/FlightType";
+import FlightTypeIcon from "@/components/FlightTypeIcon";
 export default {
   name: "TopFlights",
-  components: { FlightType },
+  components: { FlightTypeIcon },
 
   props: {
     flights: {

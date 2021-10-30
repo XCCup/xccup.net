@@ -42,7 +42,7 @@
 </template>
 <script>
 export default {
-  name: "AddGliderModal",
+  name: "ModalAddGlider",
   data() {
     return {
       brands: ["Ozone", "Flow", "AirG"],
