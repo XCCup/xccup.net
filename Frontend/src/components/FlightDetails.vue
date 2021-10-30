@@ -116,13 +116,11 @@
               </tr>
               <tr>
                 <th>Max. Steigen</th>
-                <td>
-                  {{ flight.flightStats.maxClimb }} m/s 
-                </td>
+                <td>{{ flight.flightStats.maxClimb }} m/s</td>
               </tr>
               <tr>
                 <th>Max. Sinken</th>
-                <td> {{ flight.flightStats.maxSink }} m/s</td>
+                <td>{{ flight.flightStats.maxSink }} m/s</td>
               </tr>
             </tbody>
           </table>
@@ -187,12 +185,12 @@ export default {
       if (!duration) return "";
       const ms = duration * 60 * 1000;
 
-      let seconds = parseInt((ms / 1000) % 60),
-        minutes = parseInt((ms / (1000 * 60)) % 60),
-        hours = parseInt((ms / (1000 * 60 * 60)) % 24);
+      // let seconds = parseInt((ms / 1000) % 60);
+      let minutes = parseInt((ms / (1000 * 60)) % 60);
+      let hours = parseInt((ms / (1000 * 60 * 60)) % 24);
 
       minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
+      // seconds = seconds < 10 ? "0" + seconds : seconds;
 
       return hours + ":" + minutes + "h";
     },
