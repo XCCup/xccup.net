@@ -76,7 +76,8 @@
               class="form-control"
               type="file"
               id="formImageUpload"
-              :disabled="flightId"
+              accept=".jpg, .jpeg"
+              :disabled="!flightId"
               @change="imageSelected"
             />
             <div v-if="userImages[0]?.name" class="row my-4">
@@ -158,12 +159,14 @@ export default {
           body: null,
         },
       },
+      // TODO: implement this
       flightDetails: {
-        glider: null,
+        glider: { brand: "Ozone", model: "Enzo 4", gliderClass: "D_high" },
       },
       // TODO: Change to false for production
       rulesAccepted: true,
       flightId: null,
+      externalId: null,
       takeoff: "",
       landing: "",
       userImages: [],
@@ -175,7 +178,6 @@ export default {
     this.flight.userId = this.getterUserId;
   },
   computed: {
-    // ...mapGetters(["authUser"]),
     ...mapGetters({
       getterUserId: "getUserId",
     }),
@@ -206,9 +208,9 @@ export default {
           this.flightId,
           this.flightDetails
         );
-        console.log(response);
+        console.log(response.data);
         if (response.status != 200) throw response.statusText;
-        this.routeToFlight(this.flightId);
+        this.routeToFlight(this.externalId);
       } catch (error) {
         console.log(error);
       }
@@ -262,20 +264,20 @@ export default {
         this.flight.igc.body = await this.readFile(file.target.files[0]);
         this.flight.igc.name = file.target.files[0].name;
         const response = await this.sendIgc();
-        console.log(response);
         if (response.status != 200) throw "Server error";
         this.flightId = response.data.flightId;
+        this.externalId = response.data.externalId;
         this.takeoff = response.data.takeoff;
         this.landing = response.data.landing;
       } catch (error) {
         console.log(error);
       }
     },
-    routeToFlight(flightId) {
+    routeToFlight(id) {
       this.$router.push({
-        name: "Sandbox",
+        name: "Flight",
         params: {
-          flightId: flightId,
+          flightId: id,
         },
       });
     },
