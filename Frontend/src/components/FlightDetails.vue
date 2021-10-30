@@ -32,7 +32,10 @@
             <tr>
               <th>Geräteklasse</th>
               <td>
-                <RankingClass :rankingClass="flight.glider.gliderClass" />
+                <RankingClass
+                  :rankingClass="flight.glider.gliderClass"
+                  :short="true"
+                />
               </td>
             </tr>
           </tbody>
@@ -50,7 +53,7 @@
             <tr>
               <th>Strecke</th>
               <td>
-                {{ flight.flightDistance.toFixed(2) }} km
+                {{ flight.flightDistance?.toFixed(2) ?? "?" }} km
                 <FlightTypeIcon :flightType="flight.flightType" />
               </td>
             </tr>
@@ -138,7 +141,7 @@
               </tr>
               <tr>
                 <th>Aufgaben-Geschwindigkeit</th>
-                <td>{{ flight.flightStats.taskSpeed }} km/h</td>
+                <td>{{ flight.flightStats.taskSpeed ?? "?" }} km/h</td>
               </tr>
               <tr>
                 <th>Eingereicht am</th>
