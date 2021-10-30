@@ -10,7 +10,6 @@
   <!-- <i class="bi bi-x-circle"></i> -->
   <!-- <i class="bi bi-exclamation-circle"></i> -->
   <!-- <i class="bi bi-exclamation-triangle"></i> -->
-  -->
 </template>
 
 <script>
