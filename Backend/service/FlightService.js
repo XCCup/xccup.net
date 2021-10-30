@@ -22,7 +22,7 @@ const { hasAirspaceViolation } = require("./AirspaceService");
 const cacheManager = require("./CacheManager");
 
 const { isNoWorkday } = require("../helper/HolidayCalculator");
-const { getCurrentYear } = require("../helper/Utils");
+const { getCurrentYear, sleep } = require("../helper/Utils");
 
 const { COUNTRY } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
@@ -146,7 +146,7 @@ const flightService = {
 
     const flightDbObjects = await Flight.findAll(queryObject);
 
-    const flights = filterFlightFixesForTodayRanking(flightDbObjects);
+    const flights = stripFlightFixesForTodayRanking(flightDbObjects);
 
     return flights;
   },
@@ -299,7 +299,7 @@ const flightService = {
 
   addResult: async (result) => {
     console.log("ADD RESULT TO FLIGHT");
-    const flight = await flightService.getById(result.id);
+    const flight = await flightService.getById(result.id, true);
 
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
@@ -318,27 +318,27 @@ const flightService = {
       flight.flightStatus = result.flightStatus;
     }
 
+    const fixes = await retrieveDbObjectOfFlightFixes(flight.id);
+
     ElevationAttacher.execute(
-      FlightFixes.mergeData(flight.toJSON().fixes),
+      FlightFixes.mergeData(fixes),
       async (fixesWithElevation) => {
         //TODO Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
-        let flightFixes = await retrieveDbObjectOfFlightFixes(flight.id);
-        for (let i = 0; i < flightFixes.timeAndHeights.length; i++) {
-          flightFixes.timeAndHeights[i].elevation =
-            fixesWithElevation[i].elevation;
+        for (let i = 0; i < fixes.timeAndHeights.length; i++) {
+          fixes.timeAndHeights[i].elevation = fixesWithElevation[i].elevation;
         }
         /**
          * It is necessary to explicit call "changed", because a call to "save" will only updated data when a value has changed.
          * Unforunatly the addition of elevation data inside the data object doesn't trigger any change event.
          */
-        flightFixes.changed("timeAndHeights", true);
-        await flightFixes.save();
+        fixes.changed("timeAndHeights", true);
+        await fixes.save();
 
         /**
          * Before evaluating airspace violation it's necessary to determine the elevation data.
          * Because some airspace bounderies are defined in relation to the surface (e.g. Floor 1500FT AGL)
          */
-        if (await hasAirspaceViolation(flightFixes)) {
+        if (await hasAirspaceViolation(fixes)) {
           flight.airspaceViolation = true;
           flight.save();
         }
@@ -480,14 +480,25 @@ function calcFlightPoints(flight, seasonDetail, gliderClass) {
 }
 
 async function retrieveDbObjectOfFlightFixes(flightId) {
-  return FlightFixes.findOne({
-    where: {
-      flightId,
-    },
-  });
+  const MAX_ATTEMPTS = 1;
+
+  console.log("Will retrieve fixes for flight: ", flightId);
+
+  for (let index = 0; index < MAX_ATTEMPTS; index++) {
+    const fixes = await FlightFixes.findOne({
+      where: {
+        flightId,
+      },
+    });
+
+    if (fixes.geom?.coordinates.length > 0) return fixes;
+
+    console.log("Fixes geom was empty. Will try again.");
+    sleep(1000);
+  }
 }
 
-function filterFlightFixesForTodayRanking(flightDbObjects) {
+function stripFlightFixesForTodayRanking(flightDbObjects) {
   const FIXES_PER_HOUR = 60;
   const flights = flightDbObjects.map((entry) => entry.toJSON());
   flights.forEach((entry) => {
@@ -627,9 +638,10 @@ async function createWhereStatement(
       year
     );
   }
-  if (startDate && endDate) {
+  if (startDate) {
+    const definedEndDate = endDate ? endDate : new Date();
     whereStatement.takeoffTime = {
-      [sequelize.Op.between]: [startDate, endDate],
+      [sequelize.Op.between]: [startDate, definedEndDate],
     };
   }
   if (rankingClass) {
