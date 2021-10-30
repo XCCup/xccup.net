@@ -53,7 +53,7 @@
 - [x] Delete comment modal (Are you sure?)
 - [x] Connect to API
 
-### Flights
+### AllFlights
 
 - [ ] Sort functionality
 - [x] Connect to API

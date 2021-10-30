@@ -46,7 +46,7 @@ export default {
     ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
 
     sendButtonIsDisabled() {
-      return this.message.length < 5;
+      return this.message.length < 3;
     },
   },
   mounted() {

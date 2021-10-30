@@ -483,7 +483,6 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
   const MAX_ATTEMPTS = 1;
 
   console.log("Will retrieve fixes for flight: ", flightId);
-
   for (let index = 0; index < MAX_ATTEMPTS; index++) {
     const fixes = await FlightFixes.findOne({
       where: {
@@ -492,6 +491,7 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
     });
 
     if (fixes.geom?.coordinates.length > 0) return fixes;
+
 
     console.log("Fixes geom was empty. Will try again.");
     sleep(1000);

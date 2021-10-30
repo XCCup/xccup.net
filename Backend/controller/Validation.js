@@ -17,7 +17,7 @@ function checkStringObjectNotEmpty(field) {
   return check(field)
     .not()
     .isEmpty()
-    .withMessage(`${field} is requiered`)
+    .withMessage(`${field} is required`)
     .trim()
     .escape();
 }
@@ -30,7 +30,7 @@ function checkStrongPassword(field) {
   return check(field)
     .isStrongPassword()
     .withMessage(
-      `${field} is requiered. (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1)`
+      `${field} is required. (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1)`
     );
 }
 /**
@@ -43,7 +43,7 @@ function checkOptionalStrongPassword(field) {
     .optional()
     .isStrongPassword()
     .withMessage(
-      `${field} is requiered. (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1)`
+      `${field} is required. (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1)`
     );
 }
 /**

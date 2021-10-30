@@ -1,8 +1,5 @@
 <template>
   <table v-if="bestTeams" class="table table-hover">
-    <thead>
-      <tr></tr>
-    </thead>
     <tbody>
       <tr
         v-for="(team, index) in bestTeams.slice(0, 5)"

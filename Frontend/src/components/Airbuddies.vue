@@ -40,7 +40,7 @@
                 class="badge"
                 :style="{ backgroundColor: this.trackColors[index + 1] }"
               >
-                {{ pilot.User.firstName }}
+                {{ pilot.User.firstName + " " + pilot.User.lastName }}
               </span>
             </label>
           </h5>

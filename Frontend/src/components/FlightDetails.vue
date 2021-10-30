@@ -4,10 +4,9 @@
     <div class="row">
       <div class="col-md-6 col-12 my-1">
         <table class="table table-sm">
-          <thead></thead>
           <tbody>
             <tr>
-              <th>Pilot:</th>
+              <th>Pilot</th>
               <td>
                 <a href="#">{{
                   flight.User.firstName + " " + flight.User.lastName
@@ -15,25 +14,28 @@
               </td>
             </tr>
             <tr>
-              <th>Verein:</th>
+              <th>Verein</th>
               <td>
                 <a href="#">{{ flight.Club.name }}</a>
               </td>
             </tr>
             <tr>
-              <th>Team:</th>
+              <th>Team</th>
               <td>
                 <a href="#">{{ flight.Team?.name }}</a>
               </td>
             </tr>
             <tr>
-              <th>Fluggerät:</th>
+              <th>Fluggerät</th>
               <td>{{ flight.glider.brand }} {{ flight.glider.model }}</td>
             </tr>
             <tr>
-              <th>Geräteklasse:</th>
+              <th>Geräteklasse</th>
               <td>
-                <RankingClass :rankingClass="flight.glider.gliderClass" />
+                <RankingClass
+                  :rankingClass="flight.glider.gliderClass"
+                  :short="true"
+                />
               </td>
             </tr>
           </tbody>
@@ -41,37 +43,36 @@
       </div>
       <div class="col-md-6 col-12 my-1">
         <table class="table table-sm">
-          <thead></thead>
           <tbody>
             <tr>
-              <th>Flugzeit:</th>
+              <th>Flugzeit</th>
               <td>
-                {{ calcFlightDuration(flight) }}
+                {{ calcFlightDuration(flight.airtime) }}
               </td>
             </tr>
             <tr>
-              <th>Strecke:</th>
+              <th>Strecke</th>
               <td>
-                {{ flight.flightDistance.toFixed(2) }} km
-                <FlightType :flightType="flight.flightType" />
+                {{ flight.flightDistance?.toFixed(2) ?? "?" }} km
+                <FlightTypeIcon :flightType="flight.flightType" />
               </td>
             </tr>
             <tr>
-              <th>Punkte:</th>
+              <th>Punkte</th>
               <td>{{ flight.flightPoints }}</td>
             </tr>
 
             <tr>
-              <th>Startplatz:</th>
+              <th>Startplatz</th>
               <td>{{ flight.takeoff.name }} {{ flight.takeoff.direction }}</td>
             </tr>
             <tr>
-              <th>Uhrzeit:</th>
+              <th>Uhrzeit</th>
               <td v-if="true">
                 <i class="bi bi-arrow-up"></i>
-                {{ getTakeoffTime(flight) }}
+                <BaseDate :timestamp="flight.takeoffTime" dateFormat="HH:mm" />
                 Uhr <i class="bi bi-arrow-down"></i>
-                {{ getlandingTime(flight) }}
+                <BaseDate :timestamp="flight.landingTime" dateFormat="HH:mm" />
                 Uhr
               </td>
             </tr>
@@ -88,68 +89,62 @@
     >
       Details anzeigen
     </button>
-    <a v-bind:href="flight.igcUrl"
+    <a :href="igcDownloadUrl"
       ><button type="button" class="btn btn-sm btn-outline-primary">
         <i class="bi bi-cloud-download"></i> .igc
       </button></a
     >
 
-    <router-link :to="{ name: 'EditFlight' }">
+    <router-link :to="{ name: 'FlightEdit' }">
       <button v-if="showEditButton" class="btn btn-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>
 
-    <div class="collapse" id="collapseExample">
+    <div class="collapse mt-2" id="collapseExample">
       <div class="row">
         <div class="col-md-6 col-12">
           <table class="table table-sm">
-            <thead></thead>
             <tbody>
               <tr>
-                <th>Flugstatus:</th>
+                <th>Flugstatus</th>
                 <td>{{ flight.flightStatus }}</td>
               </tr>
               <tr>
-                <th>Höhe min/max (GPS):</th>
+                <th>Höhe min/max (GPS)</th>
                 <td>
                   {{ flight.flightStats.minHeightGps }}m /
                   {{ flight.flightStats.maxHeightGps }}m
                 </td>
               </tr>
               <tr>
-                <th>Steigen min/max:</th>
-                <td>
-                  {{ flight.flightStats.maxSink }} m/s /
-                  {{ flight.flightStats.maxClimb }} m/s
-                </td>
+                <th>Max. Steigen</th>
+                <td>{{ flight.flightStats.maxClimb }} m/s</td>
               </tr>
               <tr>
-                <th>Geschwindigkeit max:</th>
-                <td>{{ flight.flightStats.maxSpeed }} km/h</td>
+                <th>Max. Sinken</th>
+                <td>{{ flight.flightStats.maxSink }} m/s</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="col-md-6 col-12">
           <table class="table table-sm">
-            <thead></thead>
             <tbody>
               <tr>
-                <th>Landeplatz:</th>
+                <th>Landeplatz</th>
                 <td>{{ flight.landing }}</td>
               </tr>
               <tr>
-                <th>Ø Geschwindigkeit:</th>
-                <td></td>
-                <!-- 38,0km/h -->
+                <th>Geschwindigkeit max</th>
+                <td>{{ flight.flightStats.maxSpeed }} km/h</td>
               </tr>
               <tr>
-                <th>Aufgaben-Geschwindigkeit:</th>
-                <td>{{ flight.flightStats.taskSpeed }} km/h</td>
+                <th>Aufgaben-Geschwindigkeit</th>
+                <td>{{ flight.flightStats.taskSpeed ?? "?" }} km/h</td>
               </tr>
               <tr>
-                <th>Eingereicht am:</th>
+                <th>Eingereicht am</th>
                 <td>
                   <BaseDate
                     :timestamp="flight.createdAt"
@@ -170,12 +165,12 @@ import { mapGetters } from "vuex";
 
 import { format } from "date-fns";
 import RankingClass from "@/components/RankingClass";
-import FlightType from "@/components/FlightType";
+import FlightTypeIcon from "@/components/FlightTypeIcon";
 export default {
   name: "FlightDetails",
   components: {
     RankingClass,
-    FlightType,
+    FlightTypeIcon,
   },
   data() {
     return {
@@ -189,30 +184,16 @@ export default {
     },
   },
   methods: {
-    getlandingTime(flight) {
-      if (!flight.fixes) return "";
+    calcFlightDuration(duration) {
+      if (!duration) return "";
+      const ms = duration * 60 * 1000;
 
-      return format(
-        new Date(flight.fixes[flight.fixes.length - 1].timestamp),
-        "HH:mm"
-      );
-    },
-    getTakeoffTime(flight) {
-      if (!flight.fixes) return "";
-      return format(new Date(flight.fixes[0].timestamp), "HH:mm");
-    },
-    calcFlightDuration(flight) {
-      if (!flight.fixes) return "";
-      let ms =
-        flight.fixes[flight.fixes.length - 1].timestamp -
-        flight.fixes[0].timestamp;
-
-      var seconds = parseInt((ms / 1000) % 60),
-        minutes = parseInt((ms / (1000 * 60)) % 60),
-        hours = parseInt((ms / (1000 * 60 * 60)) % 24);
+      // let seconds = parseInt((ms / 1000) % 60);
+      let minutes = parseInt((ms / (1000 * 60)) % 60);
+      let hours = parseInt((ms / (1000 * 60 * 60)) % 24);
 
       minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
+      // seconds = seconds < 10 ? "0" + seconds : seconds;
 
       return hours + ":" + minutes + "h";
     },
@@ -222,6 +203,10 @@ export default {
 
     showEditButton() {
       return this.flight.userId === this.getUserId;
+    },
+    igcDownloadUrl() {
+      let baseUrl = process.env.VUE_APP_API_URL;
+      return baseUrl + "flights/igc/" + this.flight.id;
     },
   },
 };

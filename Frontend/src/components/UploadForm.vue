@@ -1,8 +1,6 @@
 <template>
   <div id="upload" class="container">
     <h3>Flug hochladen</h3>
-    <!-- TODO: Remove this for production -->
-    Flight ID: {{ flightId }}
     <form @submit.prevent="sendFlightDetails">
       <div class="mb-3">
         <label for="igcUploadForm" class="form-label">
@@ -30,10 +28,10 @@
         <div class="row d-flex align-items-end">
           <div class="col-md-9">
             <BaseSelect
-              v-model="gliderName"
+              v-model="listOfGliders[0]"
               label="Fluggerät"
               :showLabel="true"
-              :options="[gliderName]"
+              :options="listOfGliders"
               :isDisabled="!flightId"
             />
           </div>
@@ -60,7 +58,7 @@
             placeholder="Flugbericht"
             id="floatingTextarea2"
             style="height: 100px"
-            v-model="flightDetails.report"
+            v-model="flightReport"
             :disabled="!flightId"
           ></textarea>
           <label for="floatingTextarea2">Flugbericht</label>
@@ -76,7 +74,8 @@
               class="form-control"
               type="file"
               id="formImageUpload"
-              :disabled="flightId"
+              accept=".jpg, .jpeg"
+              :disabled="!flightId"
               @change="imageSelected"
             />
             <div v-if="userImages[0]?.name" class="row my-4">
@@ -137,55 +136,68 @@
       </div>
     </form>
   </div>
-  <AddGliderModal />
+  <ModalAddGlider />
 </template>
 
 <script>
 import ApiService from "@/services/ApiService";
-import AddGliderModal from "@/components/AddGliderModal";
-import { mapGetters } from "vuex";
+import ModalAddGlider from "@/components/ModalAddGlider";
+
+import { mapGetters, useStore } from "vuex";
+import { ref } from "vue";
 
 export default {
   name: "UploadForm",
-  components: { AddGliderModal },
+  components: { ModalAddGlider },
+  async setup() {
+    try {
+      const store = useStore();
+      const userId = store.getters["getAuthData"].userId;
+      const { data: initialData } = await ApiService.getUserDetails(userId);
+      return {
+        userDetails: ref(initialData),
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   data() {
     // TODO: Clean up orphaned/duplicate variables
     return {
-      flight: {
-        userId: null,
-        igc: {
-          name: "",
-          body: null,
-        },
+      igc: {
+        name: "",
+        body: null,
       },
-      flightDetails: {
-        glider: null,
+      // TODO: implement this
+      selectedGlider: {
+        brand: "Ozone",
+        model: "Enzo 4",
+        gliderClass: "D_high",
       },
-      // TODO: Change to false for production
+
+      // TODO: Change rules to false for production
       rulesAccepted: true,
       flightId: null,
+      externalId: null,
       takeoff: "",
       landing: "",
       userImages: [],
       imageUploadSuccessfull: false,
       imageUploadButtonDisabled: true,
+      flightReport: "",
     };
   },
-  created() {
-    this.flight.userId = this.getterUserId;
-  },
   computed: {
-    // ...mapGetters(["authUser"]),
     ...mapGetters({
       getterUserId: "getUserId",
     }),
     sendButtonIsDisabled() {
       return this.flightId && this.rulesAccepted === true ? false : true;
     },
-    gliderName() {
-      if (!this.flightDetails.glider) return;
-      return (
-        this.flightDetails.glider.brand + " " + this.flightDetails.glider.model
+    listOfGliders() {
+      if (!this.userDetails.gliders) return;
+      return this.userDetails.gliders.map(
+        (glider) => glider.brand + " " + glider.model
       );
     },
   },
@@ -202,13 +214,12 @@ export default {
     },
     async sendFlightDetails() {
       try {
-        const response = await ApiService.uploadFlightDetails(
-          this.flightId,
-          this.flightDetails
-        );
-        console.log(response);
+        const response = await ApiService.uploadFlightDetails(this.flightId, {
+          glider: this.selectedGlider,
+          report: this.flightReport,
+        });
         if (response.status != 200) throw response.statusText;
-        this.routeToFlight(this.flightId);
+        this.routeToFlight(this.externalId);
       } catch (error) {
         console.log(error);
       }
@@ -232,13 +243,9 @@ export default {
       try {
         const formData = new FormData();
         formData.append("image", this.userImages[0], this.userImages[0].name);
-        // TODO: Remove hardcoded IDs for development
-        formData.append("flightId", "0d3294d5-0031-4c5d-a6c9-fd173694ba21");
-        formData.append("userId", "cd1583d1-fb7f-4a93-b732-effd59e5c3ae");
-        // formData.append("flightId", this.flightId);
-        // formData.append("userId", this.flightDetails.userId);
+        formData.append("flightId", this.flightId);
+        formData.append("userId", this.userDetails.id);
         const response = await ApiService.uploadImages(formData);
-        console.log(response);
         if (response.status != 200) throw response.statusText;
         this.imageUploadSuccessfull = true;
         this.imageUploadButtonDisabled = true;
@@ -247,9 +254,9 @@ export default {
       }
     },
     async sendIgc() {
-      if (this.flight.igc.body == null) return;
+      if (this.igc.body == null) return;
       try {
-        return await ApiService.uploadIgc(this.flight);
+        return await ApiService.uploadIgc({ igc: this.igc });
       } catch (error) {
         console.log(error);
       }
@@ -259,23 +266,23 @@ export default {
       try {
         if (!file.target.files[0]) return;
 
-        this.flight.igc.body = await this.readFile(file.target.files[0]);
-        this.flight.igc.name = file.target.files[0].name;
+        this.igc.body = await this.readFile(file.target.files[0]);
+        this.igc.name = file.target.files[0].name;
         const response = await this.sendIgc();
-        console.log(response);
         if (response.status != 200) throw "Server error";
         this.flightId = response.data.flightId;
+        this.externalId = response.data.externalId;
         this.takeoff = response.data.takeoff;
         this.landing = response.data.landing;
       } catch (error) {
         console.log(error);
       }
     },
-    routeToFlight(flightId) {
+    routeToFlight(id) {
       this.$router.push({
-        name: "Sandbox",
+        name: "Flight",
         params: {
-          flightId: flightId,
+          flightId: id,
         },
       });
     },

@@ -7,7 +7,6 @@
       </h6>
       <p class="card-text"></p>
       <table class="table">
-        <thead></thead>
         <tbody>
           <tr v-for="(pilot, index) in ranking.values.slice(0, 3)" :key="index">
             <td>{{ index + 1 }}</td>

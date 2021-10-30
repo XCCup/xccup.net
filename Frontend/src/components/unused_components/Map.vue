@@ -69,7 +69,7 @@ export default {
       tileOptions
     ).addTo(this.map);
 
-    // Event listener for updating marker positions. Input comes from the Barogramm component
+    // Event listener for updating marker positions. Input comes from the FlightBarogramm component
     this.positionUpdateListener = (event) => {
       this.updatePositions(event.detail);
     };

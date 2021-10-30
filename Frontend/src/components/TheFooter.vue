@@ -3,7 +3,8 @@
     <p class="float-end"><a href="#">Nach oben</a></p>
     <p>
       © XCCup 2021 ·
-      <a href="#">Datenschutz</a> · <a href="#">Impressum</a> ·
+      <router-link :to="{ name: 'Privacy' }">Datenschutz </router-link> ·
+      <router-link :to="{ name: 'Imprint' }">Impressum </router-link> ·
       <a href="https://github.com/XCCup/xccup.net"
         ><i class="bi bi-github"></i
       ></a>

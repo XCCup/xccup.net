@@ -5,9 +5,9 @@
         <h3>
           Tageswertung
           <BaseDate
-            v-if="flights[0]?.dateOfFlight"
+            v-if="flights[0]?.takeoffTime"
             class="fs-6"
-            :timestamp="flights[0]?.dateOfFlight"
+            :timestamp="flights[0]?.takeoffTime"
             dateFormat="dd.MM.yyyy"
           />
         </h3>
@@ -30,13 +30,13 @@
                 </td>
                 <td>{{ flight.takeoff.name }}</td>
                 <td>{{ Math.floor(flight.flightDistance) }} km</td>
-                <td><FlightType :flightType="flight.flightType" /></td>
+                <td><FlightTypeIcon :flightType="flight.flightType" /></td>
                 <td>{{ flight.flightPoints }} P</td>
               </tr>
             </tbody>
           </table>
           <router-link
-            :to="{ name: 'Flights' }"
+            :to="{ name: 'AllFlights' }"
             class="btn btn-outline-light btn-sm my-1"
             >Alle Flüge anzeigen</router-link
           >
@@ -59,11 +59,11 @@
 
 <script>
 import DailyFlightsMap from "@/components/DailyFlightsMap";
-import FlightType from "@/components/FlightType";
+import FlightTypeIcon from "@/components/FlightTypeIcon";
 
 export default {
   name: "DailyRanking",
-  components: { DailyFlightsMap, FlightType },
+  components: { DailyFlightsMap, FlightTypeIcon },
   data() {
     return {
       highlightedFlightId: null,

@@ -1,17 +1,32 @@
 <template>
   <!-- Divider -->
-  <div class="bg-primary text-light p-4">
+  <!-- <div class="bg-primary text-light p-4">
     <br />
-  </div>
+  </div> -->
 
   <section>
-    <div class="container mt-2">
-      <h2>Sponsoren</h2>
-      <div class="row">
+    <div class="bg-primary text-light p-4">
+      <div class="container">
+        <h2>Sponsoren</h2>
+        <div class="row mt-3">
+          <div v-for="sponsor in goldSponsors" :key="sponsor.id" class="col">
+            <div class="square-holder">
+              <a :href="sponsor.website">
+                <img
+                  :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-3">
+      <div class="row mt-3">
         <div
-          v-for="sponsor in sponsors"
+          v-for="sponsor in regularSponsors"
           :key="sponsor.id"
-          class="col-4 col-sm-4 col-md-3 col-lg-2"
+          class="col-3 col-sm-3 col-md-3 col-lg-2"
         >
           <div class="square-holder">
             <a :href="sponsor.website">
@@ -27,6 +42,8 @@
 </template>
 
 <script>
+import { shuffle } from "lodash";
+
 export default {
   name: "Sponsors",
   data() {
@@ -40,12 +57,20 @@ export default {
       required: true,
     },
   },
+  computed: {
+    goldSponsors() {
+      return shuffle(this.sponsors.filter((sponsor) => sponsor.isGoldSponsor));
+    },
+    regularSponsors() {
+      return shuffle(this.sponsors.filter((sponsor) => !sponsor.isGoldSponsor));
+    },
+  },
 };
 </script>
 
 <style scoped>
 img {
-  max-height: 55px;
+  max-height: 60px;
 }
 .square-holder {
   padding: 15px;
@@ -67,5 +92,8 @@ img {
 
 .square-holder:hover img {
   filter: none;
+}
+.square-holder:hover {
+  border-color: #08556d;
 }
 </style>

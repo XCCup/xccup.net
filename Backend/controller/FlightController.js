@@ -15,8 +15,8 @@ const {
   validationHasErrors,
 } = require("./Validation");
 
-// All requests to /flights/picture will be rerouted
-router.use("/pictures", require("./FlightPhotoController"));
+// All requests to /flights/photos will be rerouted
+router.use("/photos", require("./FlightPhotoController"));
 
 // @desc Retrieves all flights
 // @route GET /flights/
