@@ -60,7 +60,7 @@
             placeholder="Flugbericht"
             id="floatingTextarea2"
             style="height: 100px"
-            v-model="flightDetails.report"
+            v-model="flightReport"
             :disabled="!flightId"
           ></textarea>
           <label for="floatingTextarea2">Flugbericht</label>
@@ -144,11 +144,25 @@
 <script>
 import ApiService from "@/services/ApiService";
 import ModalAddGlider from "@/components/ModalAddGlider";
-import { mapGetters } from "vuex";
+
+import { mapGetters, useStore } from "vuex";
+import { ref } from "vue";
 
 export default {
   name: "UploadForm",
   components: { ModalAddGlider },
+  async setup() {
+    try {
+      const store = useStore();
+      const userId = store.getters["getAuthData"].userId;
+      const { data: initialData } = await ApiService.getUserDetails(userId);
+      return {
+        userDetails: ref(initialData),
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   data() {
     // TODO: Clean up orphaned/duplicate variables
     return {
@@ -160,9 +174,12 @@ export default {
         },
       },
       // TODO: implement this
-      flightDetails: {
-        glider: { brand: "Ozone", model: "Enzo 4", gliderClass: "D_high" },
+      selectedGlider: {
+        brand: "Ozone",
+        model: "Enzo 4",
+        gliderClass: "D_high",
       },
+
       // TODO: Change to false for production
       rulesAccepted: true,
       flightId: null,
@@ -172,6 +189,7 @@ export default {
       userImages: [],
       imageUploadSuccessfull: false,
       imageUploadButtonDisabled: true,
+      flightReport: "",
     };
   },
   created() {
@@ -185,10 +203,8 @@ export default {
       return this.flightId && this.rulesAccepted === true ? false : true;
     },
     gliderName() {
-      if (!this.flightDetails.glider) return;
-      return (
-        this.flightDetails.glider.brand + " " + this.flightDetails.glider.model
-      );
+      if (!this.selectedGlider) return;
+      return this.selectedGlider.brand + " " + this.selectedGlider.model;
     },
   },
   methods: {
@@ -204,11 +220,10 @@ export default {
     },
     async sendFlightDetails() {
       try {
-        const response = await ApiService.uploadFlightDetails(
-          this.flightId,
-          this.flightDetails
-        );
-        console.log(response.data);
+        const response = await ApiService.uploadFlightDetails(this.flightId, {
+          glider: this.selectedGlider,
+          report: this.flightReport,
+        });
         if (response.status != 200) throw response.statusText;
         this.routeToFlight(this.externalId);
       } catch (error) {
