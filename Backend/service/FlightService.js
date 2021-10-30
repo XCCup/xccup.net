@@ -300,7 +300,7 @@ const flightService = {
   addResult: async (result) => {
     console.log("ADD RESULT TO FLIGHT");
     const flight = await flightService.getById(result.id);
-
+    console.log(flight.fixes[0]);
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
     flight.flightTurnpoints = result.turnpoints;
