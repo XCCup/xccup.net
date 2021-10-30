@@ -63,6 +63,30 @@
           ></textarea>
           <label for="floatingTextarea2">Flugbericht</label>
         </div>
+
+        <div class="form-check mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="hikeAndFly"
+            id="hikeAndFlyCheckbox"
+          />
+          <label class="form-check-label" for="hikeAndFlyCheckbox">
+            Hike & Fly
+          </label>
+        </div>
+        <div class="form-check mb-3">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="onlyLogbook"
+            id="logbookCheckbox"
+          />
+          <label class="form-check-label" for="logbookCheckbox">
+            Nur Flugbuch
+          </label>
+        </div>
+
         <!-- Images -->
         <div class="mb-3">
           <form @submit.prevent="uploadImages">
@@ -175,6 +199,7 @@ export default {
         gliderClass: "D_high",
       },
 
+      hikeAndFly: false,
       // TODO: Change rules to false for production
       rulesAccepted: true,
       flightId: null,
@@ -184,7 +209,8 @@ export default {
       userImages: [],
       imageUploadSuccessfull: false,
       imageUploadButtonDisabled: true,
-      flightReport: "",
+      flightReport: " ",
+      onlyLogbook: false,
     };
   },
   computed: {
