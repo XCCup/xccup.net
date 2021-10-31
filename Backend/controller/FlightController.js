@@ -13,6 +13,7 @@ const {
   checkParamIsInt,
   checkParamIsUuid,
   validationHasErrors,
+  checkOptionalIsBoolean,
 } = require("./Validation");
 
 // All requests to /flights/photos will be rerouted
@@ -206,15 +207,14 @@ router.put(
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
   checkStringObjectNotEmpty("glider.gliderClass"),
+  checkOptionalIsBoolean("hikeAndFly"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     const flight = await service.getById(req.params.id, true);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
-    const report = req.body.report;
-    const status = req.body.status;
-    const glider = req.body.glider;
+    const { report, status, glider, hikeAndFly } = req.body;
 
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
@@ -223,7 +223,8 @@ router.put(
         flight,
         report,
         status,
-        glider
+        glider,
+        hikeAndFly
       );
       res.json({
         flightPoints: result[1][0].flightPoints,
