@@ -96,7 +96,7 @@
     >
 
     <router-link :to="{ name: 'FlightEdit' }">
-      <button v-if="showEditButton" class="btn btn-primary btn-sm ms-2">
+      <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>
@@ -108,7 +108,10 @@
             <tbody>
               <tr>
                 <th>Flugstatus</th>
-                <td>{{ flight.flightStatus }}</td>
+                <td>
+                  {{ flight.flightStatus }}
+                  <FlightState :flightState="flight.flightStatus" />
+                </td>
               </tr>
               <tr>
                 <th>Höhe min/max (GPS)</th>
@@ -166,11 +169,14 @@ import { mapGetters } from "vuex";
 import { format } from "date-fns";
 import RankingClass from "@/components/RankingClass";
 import FlightTypeIcon from "@/components/FlightTypeIcon";
+import FlightState from "@/components/FlightState";
+
 export default {
   name: "FlightDetails",
   components: {
     RankingClass,
     FlightTypeIcon,
+    FlightState,
   },
   data() {
     return {

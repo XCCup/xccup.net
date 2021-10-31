@@ -492,7 +492,6 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
 
     if (fixes.geom?.coordinates.length > 0) return fixes;
 
-
     console.log("Fixes geom was empty. Will try again.");
     sleep(1000);
   }
