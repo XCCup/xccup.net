@@ -18,7 +18,9 @@
       :key="glider.id"
       :selected="glider.id === modelValue"
     >
-      {{ glider.brand + " " + glider.model }}
+      {{
+        glider.brand + " " + glider.model + " (" + glider.shortDescription + ")"
+      }}
     </option>
   </select>
 </template>
