@@ -54,7 +54,7 @@ export default {
     return jwtInterceptor.put(baseURL + "users/" + userProfile.id, userProfile);
   },
   getGliders() {
-    return jwtInterceptor.get(baseURL + "users/gliders/");
+    return jwtInterceptor.get(baseURL + "users/gliders/get");
   },
   setDefaultGlider(gliderId) {
     return jwtInterceptor.put(baseURL + "users/gliders/default" + gliderId);
