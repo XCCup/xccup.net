@@ -75,7 +75,7 @@ router.get(
   }
 );
 
-// @desc Saves a new user to the database
+// @desc Saves a new club to the database
 // @route POST /clubs/
 // @access Only moderator
 

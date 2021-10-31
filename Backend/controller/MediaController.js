@@ -44,7 +44,6 @@ router.get(
 
 // @desc Gets the meta-data to a flight photo
 // @route GET /media/meta/:id
-// TODO Is this endpoint of any interest?
 
 router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
   if (validationHasErrors(req, res)) return;
