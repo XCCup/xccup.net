@@ -10,6 +10,7 @@ const { query } = require("express-validator");
 const {
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
+  checkStringObject,
   checkParamIsInt,
   checkParamIsUuid,
   validationHasErrors,
@@ -202,7 +203,7 @@ router.put(
   "/:id",
   authToken,
   checkParamIsUuid("id"),
-  checkOptionalStringObjectNotEmpty("report"),
+  checkStringObject("report"),
   checkOptionalStringObjectNotEmpty("status"),
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
