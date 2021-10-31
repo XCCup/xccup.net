@@ -15,6 +15,8 @@ const routes = [
     path: "/flug/:flightId",
     name: "Flight",
     props: true,
+    meta: { toTop: true },
+
     component: Flight,
   },
   {
