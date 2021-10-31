@@ -119,12 +119,33 @@ router.get(
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const year = req.query.year;
-    const region = req.query.region;
-    const limit = req.query.limit;
+    const { year, region, limit } = req.query;
 
     try {
       const result = await service.getSenior(year, region, limit);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Gets the result for the newcommer ranking
+// @route GET /results/newcommer/
+
+router.get(
+  "/newcomer",
+  [
+    query("year").optional().isInt(),
+    query("region").optional().not().isEmpty().trim().escape(),
+    query("limit").optional().isInt(),
+  ],
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const { year, region, limit } = req.query;
+
+    try {
+      const result = await service.getNewcomer(year, region, limit);
       res.json(result);
     } catch (error) {
       next(error);

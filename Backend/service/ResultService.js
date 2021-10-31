@@ -11,13 +11,14 @@ const sequelize = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
 const { TYPE, STATE } = require("../constants/flight-constants");
+const {
+  TEAM_DISMISSES,
+  TEAM_SIZE,
+  FLIGHTS_PER_USER,
+  NEWCOMER_MAX_RANKING_CLASS,
+} = require("../config/result-determination-config");
 
-const FLIGHTS_PER_USER = 3;
-const TEAM_DISMISSES = 3;
-const NUMBER_OF_TEAM_MEMBERS = 5;
-//TODO Was passiert mit alten Flügen die gelöscht wurden? Aktuell würde die Wertung für diese Jahre nachträglich angepasst. Das sollte vermieden werden
-
-//TODO Implement newcomer result
+const cacheNonNewcomer = [];
 
 const service = {
   getOverall: async (
@@ -102,6 +103,29 @@ const service = {
     return limit ? result.slice(0, limit) : result;
   },
 
+  getNewcomer: async (year, region, limit) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const where = createDefaultWhereForFlight(seasonDetail);
+    const gliderClasses =
+      seasonDetail.rankingClasses[NEWCOMER_MAX_RANKING_CLASS].gliderClasses ??
+      [];
+    where.glider = {
+      gliderClass: { key: { [Op.in]: gliderClasses } },
+    };
+
+    const resultQuery = await queryDb(where, null, null, null, region);
+
+    const resultAllUsers = aggreateFlightsOverUser(resultQuery);
+    const resultsNewcommer = await removeNonNewcomer(resultAllUsers, year);
+
+    limitFlightsForUserAndCalcTotals(resultsNewcommer, FLIGHTS_PER_USER);
+    calcSeniorBonusForFlightResult(resultsNewcommer);
+    sortDescendingByTotalPoints(resultsNewcommer);
+
+    return limit ? resultsNewcommer.slice(0, limit) : resultsNewcommer;
+  },
+
   getSiteRecords: async () => {
     const freeRecords = findSiteRecordOfType(TYPE.FREE);
     const flatRecords = findSiteRecordOfType(TYPE.FLAT);
@@ -114,6 +138,37 @@ const service = {
     );
   },
 };
+
+async function removeNonNewcomer(resultAllUsers, year) {
+  const searchYear = year ? year : getCurrentYear();
+
+  const resultsNewcomer = [];
+
+  await Promise.all(
+    resultAllUsers.map(async (fligthsOfUser) => {
+      if (cacheNonNewcomer.includes(fligthsOfUser.user.id)) return;
+
+      const numberOfFlightsInPreviosSeasons = await Flight.count({
+        where: {
+          flightStatus: STATE.IN_RANKING,
+          userId: fligthsOfUser.user.id,
+          andOp: sequelize.where(
+            sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
+            {
+              [Op.lt]: searchYear,
+            }
+          ),
+        },
+      });
+
+      numberOfFlightsInPreviosSeasons > 0
+        ? cacheNonNewcomer.push(fligthsOfUser.user.id)
+        : resultsNewcomer.push(fligthsOfUser);
+    })
+  );
+
+  return resultsNewcomer;
+}
 
 async function mergeRecordsByTakeoffs(records) {
   const allSites = await FlyingSite.findAll();
@@ -274,6 +329,8 @@ function createIncludeStatementSite(site, region) {
 }
 
 function limitFlightsForUserAndCalcTotals(resultArray, maxNumberOfFlights) {
+  console.log("CACHE: ", cacheNonNewcomer);
+
   resultArray.forEach((entry) => {
     entry.totalFlights = entry.flights.length;
 
@@ -326,9 +383,7 @@ function dissmissWorstFlights(resultOverTeam) {
       flights = flights.concat(member.flights);
     });
     const numberOfFlightsToDismiss =
-      flights.length -
-      FLIGHTS_PER_USER * NUMBER_OF_TEAM_MEMBERS +
-      TEAM_DISMISSES;
+      flights.length - FLIGHTS_PER_USER * TEAM_SIZE + TEAM_DISMISSES;
     if (numberOfFlightsToDismiss > 0) {
       console.log("DISMISS");
       flights.sort((a, b) => b.flightPoints - a.flightPoints);

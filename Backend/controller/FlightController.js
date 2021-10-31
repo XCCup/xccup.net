@@ -33,7 +33,7 @@ router.get(
     query("limit").optional().isInt(),
     query("offset").optional().isInt(),
     query("startDate").optional().isDate(), //e.g. 2002-07-15
-    query("endDate").optional().isDate(),
+    query("endDate").optional().isDate(), //If not set it will default to todays date
     query("clubId").optional().isUUID(),
     query("teamId").optional().isUUID(),
     query("userId").optional().isUUID(),
