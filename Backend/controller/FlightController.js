@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
+const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
 const {
   checkStringObjectNotEmpty,
@@ -16,6 +17,8 @@ const {
   validationHasErrors,
   checkOptionalIsBoolean,
 } = require("./Validation");
+
+const uploadLimiter = createRateLimiter(10, 4);
 
 // All requests to /flights/photos will be rerouted
 router.use("/photos", require("./FlightPhotoController"));
@@ -33,7 +36,7 @@ router.get(
     query("limit").optional().isInt(),
     query("offset").optional().isInt(),
     query("startDate").optional().isDate(), //e.g. 2002-07-15
-    query("endDate").optional().isDate(),
+    query("endDate").optional().isDate(), //If not set it will default to todays date
     query("clubId").optional().isUUID(),
     query("teamId").optional().isUUID(),
     query("userId").optional().isUUID(),
@@ -149,6 +152,7 @@ router.delete(
 
 router.post(
   "/",
+  uploadLimiter,
   authToken,
   checkStringObjectNotEmpty("igc.name"),
   checkStringObjectNotEmpty("igc.body"),
@@ -201,6 +205,7 @@ router.post(
 
 router.put(
   "/:id",
+  uploadLimiter,
   authToken,
   checkParamIsUuid("id"),
   checkStringObject("report"),
