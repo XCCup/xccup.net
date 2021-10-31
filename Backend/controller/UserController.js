@@ -26,6 +26,7 @@ const {
   checkParamIsUuid,
   checkStrongPassword,
   checkOptionalStrongPassword,
+  checkStringObject,
   validationHasErrors,
   checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
@@ -34,9 +35,9 @@ const {
 router.use("/picture", require("./UserPictureController"));
 
 // @desc Retrieves all usernames
-// @route GET /users/
+// @route GET /users/list
 
-router.get("/", async (req, res, next) => {
+router.get("/list", async (req, res, next) => {
   try {
     const users = await service.getAll();
     res.json(users);
@@ -239,7 +240,7 @@ router.put(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObjectNotEmpty("address.state"),
+  checkStringObject("address.state"),
   checkStringObjectNotEmpty("address.country"),
   checkIsUuidObject("defaultGlider"),
   checkOptionalStrongPassword("password"),
