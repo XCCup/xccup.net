@@ -130,8 +130,8 @@ router.get(
   }
 );
 
-// @desc Gets the result for the newcommer ranking
-// @route GET /results/newcommer/
+// @desc Gets the result for the newcomer ranking
+// @route GET /results/newcomer/
 
 router.get(
   "/newcomer",
