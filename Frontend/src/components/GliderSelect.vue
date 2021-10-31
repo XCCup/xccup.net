@@ -27,14 +27,15 @@
 export default {
   name: "GliderSelect",
   data() {
-    return {
-      label: "Fluggerät",
-    };
+    return {};
   },
   props: {
     isDisabled: {
       type: Boolean,
       default: false,
+    },
+    label: {
+      type: String,
     },
     modelValue: {
       type: String,
