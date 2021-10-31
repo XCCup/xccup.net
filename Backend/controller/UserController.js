@@ -27,6 +27,7 @@ const {
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
+  checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
 
 // All requests to /users/picture will be rerouted
@@ -176,8 +177,8 @@ router.post(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObjectNotEmpty("address.state"),
-  checkStringObjectNotEmpty("address.country"),
+  checkOptionalStringObjectNotEmpty("address.state"),
+  checkOptionalStringObjectNotEmpty("address.country"),
   checkStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
