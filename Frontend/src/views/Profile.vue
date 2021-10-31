@@ -91,15 +91,17 @@
               <div class="col-md-12">
                 <div class="row d-flex align-items-end">
                   <div class="col-md-7">
-                    <GliderSelect
-                      v-model="userProfile.defaultGlider"
-                      :showLabel="true"
-                      label="Standard Gerät"
-                      :gliders="userProfile.gliders"
-                      :isDisabled="false"
-                    />
+                    <div class="">
+                      <GliderSelect
+                        v-model="userProfile.defaultGlider"
+                        :showLabel="true"
+                        label="Standard Gerät"
+                        :gliders="userProfile.gliders"
+                        :isDisabled="false"
+                      />
+                    </div>
                   </div>
-                  <div class="col-md-5 mt-3">
+                  <div class="col-md-5">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                       <button
                         type="button"
