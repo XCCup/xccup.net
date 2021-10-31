@@ -8,7 +8,7 @@ function getCurrentYear() {
 }
 
 function arrayRemove(array, elementToRemove) {
-  array.splice(array.indexOf(elementToRemove));
+  array.splice(array.indexOf(elementToRemove), 1);
 }
 
 async function waitTillDbHasSync() {

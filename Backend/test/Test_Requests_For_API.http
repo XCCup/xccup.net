@@ -49,7 +49,22 @@ content-type: application/json
 }
 
 ###
-PUT http://localhost:3000/users/gliders/cd1583d1-fb7f-4a93-b732-effd59e5c3ae HTTP/1.1
+GET http://localhost:3000/users/gliders/get HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2Nzc0NTUsImV4cCI6MTYzNTY3NzY1NX0.Gd-PlVeWwPGMKnWlQPeWV2AaAj8Vsr5olxpNVLGIhqQ
+
+###
+POST http://localhost:3000/users/gliders/add HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2Nzc0NTUsImV4cCI6MTYzNTY3NzY1NX0.Gd-PlVeWwPGMKnWlQPeWV2AaAj8Vsr5olxpNVLGIhqQ
+content-type: application/json
+
+{
+    "brand":"U-Turn",
+    "model":"Bodyguard",
+    "gliderClass":"AB_low"
+}
+
+###
+POST http://localhost:3000/users/gliders/default HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsInVzZXJuYW1lIjoiQ2FtaWxsZVNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzQ1MDA0NDksImV4cCI6MTYzNDUwMDY0OX0.UFnBDXqutN7c41Jm0W-JPui3Wdj0g_ZNmHMY5zFEPvs
 content-type: application/json
 
@@ -67,6 +82,9 @@ content-type: application/json
         }
     ]
 }
+###
+DELETE http://localhost:3000/users/gliders/remove/558c3347-7589-446a-89b5-d957bdc695c4 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2Nzc0NTUsImV4cCI6MTYzNTY3NzY1NX0.Gd-PlVeWwPGMKnWlQPeWV2AaAj8Vsr5olxpNVLGIhqQ
 
 # Comments
 ###
@@ -112,7 +130,7 @@ content-type: application/json
 
 ###
 POST http://localhost:3000/flights/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzQ5ODAxMDEsImV4cCI6MTYzNDk4MDMwMX0.L7iMHMTIiceJJyjTT4K8A1jbHbgRSWCYSwB_s0iHGgY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU1OTUxNTEsImV4cCI6MTYzNTU5NTM1MX0.N4B0Xrb7750qEpWx-VL7xp0w2faLq5nfTwoivXclTKM
 content-type: application/json
 
 {
