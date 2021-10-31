@@ -29,7 +29,7 @@ content-type: application/json
 
 ###
 GET http://localhost:3000/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMzI2ODM1NiwiZXhwIjoxNjIzMjY4NDU2fQ.eg1xTXDUBb6OqJH103ay8p4FCqNw4NCmuVYuaaEic8c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2Nzc3OTQsImV4cCI6MTYzNTY3Nzk5NH0.Lv-E9fInAJFGBmeHiVeAFAkc5t1v-dCtAfxyM6HEn2A
 
 
 ###
@@ -50,41 +50,26 @@ content-type: application/json
 
 ###
 GET http://localhost:3000/users/gliders/get HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2Nzc0NTUsImV4cCI6MTYzNTY3NzY1NX0.Gd-PlVeWwPGMKnWlQPeWV2AaAj8Vsr5olxpNVLGIhqQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2NzgzMDIsImV4cCI6MTYzNTY3ODUwMn0.kF1K5Touqz6JGMQHuMiNUVq17oHpri1h-N9MfJBNtzM
 
 ###
 POST http://localhost:3000/users/gliders/add HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2Nzc0NTUsImV4cCI6MTYzNTY3NzY1NX0.Gd-PlVeWwPGMKnWlQPeWV2AaAj8Vsr5olxpNVLGIhqQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2NzgzMDIsImV4cCI6MTYzNTY3ODUwMn0.kF1K5Touqz6JGMQHuMiNUVq17oHpri1h-N9MfJBNtzM
 content-type: application/json
 
 {
     "brand":"U-Turn",
-    "model":"Bodyguard",
+    "model":"Bodyguard 2",
     "gliderClass":"AB_low"
 }
 
 ###
-POST http://localhost:3000/users/gliders/default HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsInVzZXJuYW1lIjoiQ2FtaWxsZVNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzQ1MDA0NDksImV4cCI6MTYzNDUwMDY0OX0.UFnBDXqutN7c41Jm0W-JPui3Wdj0g_ZNmHMY5zFEPvs
-content-type: application/json
+PUT http://localhost:3000/users/gliders/default/0a02f9d2-6c9c-4136-8222-d3bf0a08b376 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2NzgzMDIsImV4cCI6MTYzNTY3ODUwMn0.kF1K5Touqz6JGMQHuMiNUVq17oHpri1h-N9MfJBNtzM
 
-{
-    "gliders": [
-        {
-            "brand":"U-Turn",
-            "model":"Bodyguard",
-            "gliderClass":"AB_low"
-        },
-        {
-            "brand":"Ozone",
-            "model":"Enzo 4",
-            "gliderClass":"D_high"
-        }
-    ]
-}
 ###
-DELETE http://localhost:3000/users/gliders/remove/558c3347-7589-446a-89b5-d957bdc695c4 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2Nzc0NTUsImV4cCI6MTYzNTY3NzY1NX0.Gd-PlVeWwPGMKnWlQPeWV2AaAj8Vsr5olxpNVLGIhqQ
+DELETE http://localhost:3000/users/gliders/remove/2da2badc-7f6e-4a91-8f0e-6d967fa72dc3 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2NzgzMDIsImV4cCI6MTYzNTY3ODUwMn0.kF1K5Touqz6JGMQHuMiNUVq17oHpri1h-N9MfJBNtzM
 
 # Comments
 ###
@@ -115,8 +100,8 @@ DELETE http://localhost:3000/flights/912135a6-28c8-4fb1-8054-2c8c4da9f011 HTTP/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMjU3NzQ5OCwiZXhwIjoxNjIyNTc4MDk4fQ.b7enVGmnTtgsS8C4C54ilPOc8pUmVYlDa3URWJNScTc
 
 ###
-PUT  http://localhost:3000/flights/44 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzQ5ODAxMDEsImV4cCI6MTYzNDk4MDMwMX0.L7iMHMTIiceJJyjTT4K8A1jbHbgRSWCYSwB_s0iHGgY
+PUT  http://localhost:3000/flights/0334a24f-f530-4f70-8132-7a406b6449b2 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2ODE3NDAsImV4cCI6MTYzNTY4MTk0MH0.PWUVvoC1PV-ZW8nIDjLzFacSGAdlmsiMFpN4nFK5_jg
 content-type: application/json
 
 {
@@ -125,12 +110,13 @@ content-type: application/json
                 "brand": "Ozone",
                 "model": "Alpina 2",
                 "gliderClass": "C_low"
-            }
+            },
+    "hikeAndFly" : true
 }
 
 ###
 POST http://localhost:3000/flights/ HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU1OTUxNTEsImV4cCI6MTYzNTU5NTM1MX0.N4B0Xrb7750qEpWx-VL7xp0w2faLq5nfTwoivXclTKM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2ODE3NDAsImV4cCI6MTYzNTY4MTk0MH0.PWUVvoC1PV-ZW8nIDjLzFacSGAdlmsiMFpN4nFK5_jg
 content-type: application/json
 
 {

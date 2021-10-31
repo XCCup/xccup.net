@@ -4,23 +4,11 @@ const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
 
 const { TYPE } = require("../constants/flight-constants");
-
-/**
- * The resolution in seconds with which fixes are stored to the db
- */
-const IGC_FIXES_RESOLUTION = 5;
-/**
- * The factor by which the fixes within a igcFile will be parsed for the first iteration of the olc algorithm
- * Starting with:
- * * 1h = RESOLUTION_FACTOR
- * * 2h = 2 x RESOLUTION_FACTOR
- * * nh = n x RESOLUTION_FACTOR
- */
-const RESOLUTION_FACTOR = 4;
-/**
- * The amount of fixes around a turnpoint which will be considered for the second iteration of the olc algorithm
- */
-const FIXES_AROUND_TURNPOINT = 20;
+const {
+  FIXES_AROUND_TURNPOINT,
+  IGC_FIXES_RESOLUTION,
+  RESOLUTION_FACTOR,
+} = require("../config/igc-analyzer-config");
 
 let flightTypeFactors;
 let callback;
