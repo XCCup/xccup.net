@@ -59,10 +59,18 @@ export default {
   setDefaultGlider(gliderId) {
     return jwtInterceptor.put(baseURL + "users/gliders/default" + gliderId);
   },
-  // addGlider(data) {
-  //   return jwtInterceptor.post(baseURL + "users/gliders/", data);
-  // },
+  addGlider(glider) {
+    return jwtInterceptor.post(baseURL + "users/gliders/add", glider);
+  },
   removeGlider(gliderId) {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
+  },
+
+  // General
+  getBrands() {
+    return apiClient.get(baseURL + "general/brands");
+  },
+  getGliderClasses() {
+    return apiClient.get(baseURL + "general/gliderClasses");
   },
 };
