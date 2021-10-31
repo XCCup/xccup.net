@@ -4,7 +4,7 @@ const userService = require("../service/UserService");
 const { query } = require("express-validator");
 const { NOT_FOUND, OK } = require("../constants/http-status-constants");
 const router = express.Router();
-const { authToken, requesterIsNotOwner } = require("./Auth");
+const { authToken } = require("./Auth");
 const { checkParamIsUuid, validationHasErrors } = require("./Validation");
 const multer = require("multer");
 const path = require("path");
@@ -19,24 +19,24 @@ const imageUpload = multer({
 // @route GET /users/picture/:id
 
 router.get(
-  "/:id",
-  checkParamIsUuid("id"),
+  "/:userId",
+  checkParamIsUuid("userId"),
   query("thumb").optional().isBoolean(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const id = req.params.id;
+    const userId = req.params.id;
     const thumb = req.query.thumb;
 
     try {
-      const logo = await service.getById(id);
+      const picture = await service.getByUserId(userId);
 
-      if (!logo) return res.sendStatus(NOT_FOUND);
+      if (!picture) return res.sendStatus(NOT_FOUND);
 
       const fullfilepath = thumb
-        ? path.join(path.resolve(), logo.pathThumb)
-        : path.join(path.resolve(), logo.path);
+        ? path.join(path.resolve(), picture.pathThumb)
+        : path.join(path.resolve(), picture.path);
 
-      return res.type(logo.mimetype).sendFile(fullfilepath);
+      return res.type(picture.mimetype).sendFile(fullfilepath);
     } catch (error) {
       next(error);
     }
@@ -44,31 +44,23 @@ router.get(
 );
 
 // @desc Deletes the profile picture of an user
-// @route DELETE /users/picture/:id
+// @route DELETE /users/picture/
 // @access Only owner
 
-router.delete(
-  "/:id",
-  checkParamIsUuid("id"),
-  authToken,
-  async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-    const id = req.params.id;
+router.delete("/", authToken, async (req, res, next) => {
+  const id = req.user.id;
 
-    try {
-      const picture = await service.getById(id);
+  try {
+    const picture = await service.getByUserId(id);
 
-      if (!picture) return res.sendStatus(NOT_FOUND);
+    if (!picture) return res.sendStatus(NOT_FOUND);
 
-      if (await requesterIsNotOwner(req, res, picture.userId)) return;
-
-      await service.delete(picture);
-      res.sendStatus(OK);
-    } catch (error) {
-      next(error);
-    }
+    await service.delete(picture);
+    res.sendStatus(OK);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // @desc Saves a profile picture to an existing user
 // @route POST /users/picture
