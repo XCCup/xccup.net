@@ -27,12 +27,11 @@
       <div class="col-md-12">
         <div class="row d-flex align-items-end">
           <div class="col-md-9">
-            <BaseSelect
-              v-model="listOfGliders[0]"
-              label="Fluggerät"
+            <GliderSelect
+              v-model="defaultGlider"
               :showLabel="true"
-              :options="listOfGliders"
-              :isDisabled="!flightId"
+              :gliders="listOfGliders"
+              :isDisabled="false"
             />
           </div>
           <div class="col-md-3 mt-3">
@@ -50,7 +49,6 @@
           </div>
         </div>
       </div>
-
       <div class="my-3">
         <div class="form-floating mb-3">
           <textarea
@@ -144,12 +142,13 @@
             Organisator, dem Wettbewerbsleiter sowie deren Helfer wegen
             einfacher Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des
             Häckchens erkenne ich die
+            <!-- TODO: Add links -->
             <a href="#">Ausschreibung</a> und
             <a href="#">Datenschutzbestimmungen</a>
             an.
           </label>
         </div>
-        <!-- Send Button -->
+        <!-- Submit Button -->
         <button
           type="submit"
           class="btn btn-primary me-1"
@@ -166,51 +165,42 @@
 <script>
 import ApiService from "@/services/ApiService";
 import ModalAddGlider from "@/components/ModalAddGlider";
+import GliderSelect from "@/components/GliderSelect";
 
-import { mapGetters, useStore } from "vuex";
+import { mapGetters } from "vuex";
 import { ref } from "vue";
 
 export default {
   name: "UploadForm",
-  components: { ModalAddGlider },
+  components: { ModalAddGlider, GliderSelect },
   async setup() {
     try {
-      const store = useStore();
-      const userId = store.getters["getAuthData"].userId;
-      const { data: initialData } = await ApiService.getUserDetails(userId);
+      const { data: initialData } = await ApiService.getGliders();
       return {
-        userDetails: ref(initialData),
+        listOfGliders: ref(initialData.gliders),
+        defaultGlider: ref(initialData.defaultGlider),
       };
     } catch (error) {
       console.log(error);
     }
   },
   data() {
-    // TODO: Clean up orphaned/duplicate variables
     return {
-      igc: {
-        name: "",
-        body: null,
-      },
-      // TODO: implement this
-      selectedGlider: {
-        brand: "Ozone",
-        model: "Enzo 4",
-        gliderClass: "D_high",
-      },
-
-      hikeAndFly: false,
+      igc: { filename: "", body: null },
       // TODO: Change rules to false for production
       rulesAccepted: true,
+      onlyLogbook: false,
+      hikeAndFly: false,
+
       flightId: null,
       externalId: null,
       takeoff: "",
       landing: "",
+      flightReport: " ",
+
       userImages: [],
       imageUploadSuccessfull: false,
       imageUploadButtonDisabled: true,
-      flightReport: " ",
-      onlyLogbook: false,
     };
   },
   computed: {
@@ -219,12 +209,6 @@ export default {
     }),
     sendButtonIsDisabled() {
       return this.flightId && this.rulesAccepted === true ? false : true;
-    },
-    listOfGliders() {
-      if (!this.userDetails.gliders) return;
-      return this.userDetails.gliders.map(
-        (glider) => glider.brand + " " + glider.model
-      );
     },
   },
   methods: {
@@ -238,6 +222,30 @@ export default {
         reader.readAsText(file);
       });
     },
+    async sendIgc() {
+      if (this.igc.body == null) return;
+      try {
+        return await ApiService.uploadIgc({ igc: this.igc });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async igcSelected(file) {
+      this.flightId = null;
+      try {
+        if (!file.target.files[0]) return;
+        this.igc.body = await this.readFile(file.target.files[0]);
+        this.igc.filename = file.target.files[0].name;
+        const response = await this.sendIgc();
+        if (response.status != 200) throw "Server error";
+        this.flightId = response.data.flightId;
+        this.externalId = response.data.externalId;
+        this.takeoff = response.data.takeoff;
+        this.landing = response.data.landing;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async sendFlightDetails() {
       try {
         const response = await ApiService.uploadFlightDetails(this.flightId, {
@@ -245,7 +253,7 @@ export default {
           report: this.flightReport,
         });
         if (response.status != 200) throw response.statusText;
-        this.routeToFlight(this.externalId);
+        this.redirectToFlight(this.externalId);
       } catch (error) {
         console.log(error);
       }
@@ -279,32 +287,7 @@ export default {
         console.log(error);
       }
     },
-    async sendIgc() {
-      if (this.igc.body == null) return;
-      try {
-        return await ApiService.uploadIgc({ igc: this.igc });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async igcSelected(file) {
-      this.flightId = null;
-      try {
-        if (!file.target.files[0]) return;
-
-        this.igc.body = await this.readFile(file.target.files[0]);
-        this.igc.name = file.target.files[0].name;
-        const response = await this.sendIgc();
-        if (response.status != 200) throw "Server error";
-        this.flightId = response.data.flightId;
-        this.externalId = response.data.externalId;
-        this.takeoff = response.data.takeoff;
-        this.landing = response.data.landing;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    routeToFlight(id) {
+    redirectToFlight(id) {
       this.$router.push({
         name: "Flight",
         params: {

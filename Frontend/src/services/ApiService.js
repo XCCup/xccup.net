@@ -53,4 +53,16 @@ export default {
   updateUserProfile(userProfile) {
     return jwtInterceptor.put(baseURL + "users/" + userProfile.id, userProfile);
   },
+  getGliders() {
+    return jwtInterceptor.get(baseURL + "users/gliders/");
+  },
+  setDefaultGlider(gliderId) {
+    return jwtInterceptor.put(baseURL + "users/gliders/default" + gliderId);
+  },
+  // addGlider(data) {
+  //   return jwtInterceptor.post(baseURL + "users/gliders/", data);
+  // },
+  // deleteGlider(data) {
+  //   return jwtInterceptor.delete(baseURL + "users/gliders/", data);
+  // },
 };
