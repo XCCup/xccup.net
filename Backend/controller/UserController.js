@@ -12,7 +12,6 @@ const router = express.Router();
 const {
   authToken,
   createToken,
-  requesterIsNotOwner,
   createRefreshToken,
   logoutToken,
   refreshToken,
@@ -28,6 +27,7 @@ const {
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
+  checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
 
 // All requests to /users/picture will be rerouted
@@ -96,7 +96,8 @@ router.post("/token", async (req, res, next) => {
 router.post("/logout", async (req, res, next) => {
   const token = req.body.token;
   try {
-    logoutToken(token).then(() => res.sendStatus(OK));
+    await logoutToken(token);
+    res.sendStatus(OK);
   } catch (error) {
     next(error);
   }
@@ -126,55 +127,40 @@ router.get(
   }
 );
 
-// @desc Retrieve user by id
-// @route GET /users/:id
+// @desc Retrieve all user information
+// @route GET /users
 // @access Only owner
 
-router.get(
-  "/:id",
-  checkParamIsUuid("id"),
-  authToken,
-  async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-    const id = req.params.id;
+router.get("/", authToken, async (req, res, next) => {
+  const id = req.user.id;
 
-    try {
-      if (await requesterIsNotOwner(req, res, id)) return;
+  try {
+    const retrievedUser = await service.getById(id);
+    if (!retrievedUser) return res.sendStatus(NOT_FOUND);
 
-      const retrievedUser = await service.getById(id);
-      if (!retrievedUser) return res.sendStatus(NOT_FOUND);
-
-      res.json(retrievedUser);
-    } catch (error) {
-      next(error);
-    }
+    res.json(retrievedUser);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // @desc Deletes user by id
-// @route DELETE /users/:id
+// @route DELETE /users/
 // @access Only owner
 
-router.delete(
-  "/:id",
-  checkParamIsUuid("id"),
-  authToken,
-  async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-    const id = req.params.id;
+router.delete("/", authToken, async (req, res, next) => {
+  const id = req.user.id;
 
-    try {
-      if (await requesterIsNotOwner(req, res, id)) return;
+  try {
+    const user = await service.delete(id);
 
-      const user = await service.delete(req.params.id);
-      if (!user) return res.sendStatus(NOT_FOUND);
+    if (!user) return res.sendStatus(NOT_FOUND);
 
-      res.json(user);
-    } catch (error) {
-      next(error);
-    }
+    res.json(user);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // @desc Saves a new user to the database
 // @route POST /users/
@@ -191,8 +177,8 @@ router.post(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObjectNotEmpty("address.state"),
-  checkStringObjectNotEmpty("address.country"),
+  checkOptionalStringObjectNotEmpty("address.state"),
+  checkOptionalStringObjectNotEmpty("address.country"),
   checkStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -237,13 +223,12 @@ router.post(
 );
 
 // @desc Edits a user
-// @route PUT /users/:id
+// @route PUT /users/
 // @access Only owner
 
 router.put(
-  "/:id",
+  "/",
   authToken,
-  checkParamIsUuid("id"),
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
   checkIsDateObject("birthday"),
@@ -256,11 +241,12 @@ router.put(
   checkIsBoolean("emailTeamSearch"),
   checkStringObjectNotEmpty("address.state"),
   checkStringObjectNotEmpty("address.country"),
+  checkIsUuidObject("defaultGlider"),
   checkOptionalStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const id = req.params.id;
+    const id = req.user.id;
 
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
@@ -274,11 +260,10 @@ router.put(
     const emailTeamSearch = req.body.emailTeamSearch;
     const state = req.body.state;
     const address = req.body.address;
+    const defaultGlider = req.body.defaultGlider;
     const password = req.body.password;
 
     try {
-      if (await requesterIsNotOwner(req, res, id)) return;
-
       const user = await service.getById(id);
       user.lastName = lastName;
       user.firstName = firstName;
@@ -292,6 +277,7 @@ router.put(
       user.emailTeamSearch = emailTeamSearch;
       user.state = state;
       user.address = address;
+      user.defaultGlider = defaultGlider;
       user.password = password;
 
       const result = await service.update(user);

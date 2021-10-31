@@ -264,13 +264,25 @@ const flightService = {
     return flight.save();
   },
 
-  finalizeFlightSubmission: async (flight, report, status, glider) => {
+  finalizeFlightSubmission: async (
+    flight,
+    report,
+    status,
+    glider,
+    hikeAndFly
+  ) => {
     const columnsToUpdate = {};
     if (status) {
       columnsToUpdate.flightStatus = status;
     }
     if (report) {
       columnsToUpdate.report = report;
+    }
+    if (hikeAndFly) {
+      const site = await FlyingSite.findByPk(flight.siteId, {
+        attributes: ["heightDifference"],
+      });
+      columnsToUpdate.hikeAndFly = site.heightDifference;
     }
     if (glider) {
       await createGliderObject(columnsToUpdate, glider);
