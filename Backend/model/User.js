@@ -49,10 +49,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
-      state: {
-        type: DataTypes.STRING,
-        // The state the user lives in (e.g. RLP, NRW, LUX). Needed for possible state championships.
-      },
       address: {
         type: DataTypes.JSON,
         // Needed to send prices (e.g. T-Shirt) to an user.

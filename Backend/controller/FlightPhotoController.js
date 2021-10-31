@@ -4,6 +4,7 @@ const service = require("../service/FlightPhotoService");
 const path = require("path");
 const { NOT_FOUND, OK } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
+const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
 const {
   checkIsUuidObject,
@@ -23,12 +24,15 @@ const imageUpload = multer({
   dest: IMAGE_STORE,
 });
 
+const uploadLimiter = createRateLimiter(60, 10);
+
 // @desc Uploads a flight photo to the server and stores the meta-data to the db
 // @route POST /flights/photos/
 // @access All logged-in users
 
 router.post(
   "/",
+  uploadLimiter,
   authToken,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),

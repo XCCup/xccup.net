@@ -16,6 +16,7 @@ const {
   logoutToken,
   refreshToken,
 } = require("./Auth");
+const { createRateLimiter } = require("./api-protection");
 const {
   checkIsDateObject,
   checkIsEmail,
@@ -29,6 +30,9 @@ const {
   validationHasErrors,
   checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
+
+const userCreateLimiter = createRateLimiter(60, 2);
+const loginLimiter = createRateLimiter(60, 5);
 
 // All requests to /users/picture will be rerouted
 router.use("/picture", require("./UserPictureController"));
@@ -50,6 +54,7 @@ router.get("/", async (req, res, next) => {
 
 router.post(
   "/login",
+  loginLimiter,
   checkIsEmail("email"),
   checkStringObjectNotEmpty("password"),
   async (req, res, next) => {
@@ -167,6 +172,7 @@ router.delete("/", authToken, async (req, res, next) => {
 
 router.post(
   "/",
+  userCreateLimiter,
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
   checkIsDateObject("birthday"),

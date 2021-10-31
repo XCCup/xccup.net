@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
+const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
 const {
   checkStringObjectNotEmpty,
@@ -16,6 +17,8 @@ const {
   validationHasErrors,
   checkOptionalIsBoolean,
 } = require("./Validation");
+
+const uploadLimiter = createRateLimiter(10, 4);
 
 // All requests to /flights/photos will be rerouted
 router.use("/photos", require("./FlightPhotoController"));
@@ -149,6 +152,7 @@ router.delete(
 
 router.post(
   "/",
+  uploadLimiter,
   authToken,
   checkStringObjectNotEmpty("igc.name"),
   checkStringObjectNotEmpty("igc.body"),
@@ -201,6 +205,7 @@ router.post(
 
 router.put(
   "/:id",
+  uploadLimiter,
   authToken,
   checkParamIsUuid("id"),
   checkStringObject("report"),

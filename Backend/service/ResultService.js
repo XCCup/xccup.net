@@ -6,7 +6,6 @@ const Team = require("../config/postgres")["Team"];
 
 const seasonService = require("./SeasonService");
 const userService = require("./UserService");
-const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
@@ -40,7 +39,7 @@ const service = {
       const gliderClasses =
         seasonDetail.rankingClasses[rankingClass].gliderClasses ?? [];
       where.glider = {
-        gliderClass: { key: { [Op.in]: gliderClasses } },
+        gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
       };
     }
     if (isWeekend) {
@@ -111,7 +110,7 @@ const service = {
       seasonDetail.rankingClasses[NEWCOMER_MAX_RANKING_CLASS].gliderClasses ??
       [];
     where.glider = {
-      gliderClass: { key: { [Op.in]: gliderClasses } },
+      gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
 
     const resultQuery = await queryDb(where, null, null, null, region);
@@ -155,7 +154,7 @@ async function removeNonNewcomer(resultAllUsers, year) {
           andOp: sequelize.where(
             sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
             {
-              [Op.lt]: searchYear,
+              [sequelize.Op.lt]: searchYear,
             }
           ),
         },
@@ -281,7 +280,7 @@ async function queryDb(where, gender, limit, site, region, club) {
 function createDefaultWhereForFlight(seasonDetail, isSenior) {
   const where = {
     takeoffTime: {
-      [Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
+      [sequelize.Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
     },
     flightStatus: STATE.IN_RANKING,
     airspaceViolation: false,
@@ -290,7 +289,7 @@ function createDefaultWhereForFlight(seasonDetail, isSenior) {
 
   if (isSenior) {
     where.ageOfUser = {
-      [Op.gte]: seasonDetail.seniorStartAge,
+      [sequelize.Op.gte]: seasonDetail.seniorStartAge,
     };
   }
 
