@@ -16,6 +16,7 @@ const {
   logoutToken,
   refreshToken,
 } = require("./Auth");
+const { createRateLimiter } = require("./api-protection");
 const {
   checkIsDateObject,
   checkIsEmail,
@@ -30,6 +31,9 @@ const {
   validationHasErrors,
   checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
+
+const userCreateLimiter = createRateLimiter(60, 2);
+const loginLimiter = createRateLimiter(60, 5);
 
 // All requests to /users/picture will be rerouted
 router.use("/picture", require("./UserPictureController"));
@@ -51,6 +55,7 @@ router.get("/list", async (req, res, next) => {
 
 router.post(
   "/login",
+  loginLimiter,
   checkIsEmail("email"),
   checkStringObjectNotEmpty("password"),
   async (req, res, next) => {
@@ -168,6 +173,7 @@ router.delete("/", authToken, async (req, res, next) => {
 
 router.post(
   "/",
+  userCreateLimiter,
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
   checkIsDateObject("birthday"),
@@ -311,7 +317,7 @@ router.post(
     };
 
     try {
-      await checkGliderClass(glider);
+      await checkGliderClassAndAddGliderDescription(glider);
 
       const result = await service.addGlider(userId, glider);
 
@@ -377,23 +383,18 @@ router.get("/gliders/get", authToken, async (req, res, next) => {
   }
 });
 
-// async function addGliderClassDescription(gliders) {
-//   const gliderClasses = (await getCurrentActive()).gliderClasses;
-
-//   gliders.forEach((glider) => {
-//     glider.gliderClassShortDescription =
-//       gliderClasses[glider.gliderClass].shortDescription;
-//   });
-// }
-
-async function checkGliderClass(glider) {
+async function checkGliderClassAndAddGliderDescription(glider) {
   const { XccupRestrictionError } = require("../helper/ErrorHandler");
   const gliderClasses = (await getCurrentActive()).gliderClasses;
 
-  if (!gliderClasses[glider.gliderClass])
+  const gliderClass = gliderClasses[glider.gliderClass];
+
+  if (!gliderClass)
     throw new XccupRestrictionError(
-      `The gliderClass: "${glider.gliderClass}" is not valid for the current season`
+      `The gliderClass "${glider.gliderClass}" is not valid for the current season`
     );
+
+  glider.gliderClassShortDescription = gliderClass.shortDescription;
 }
 
 module.exports = router;

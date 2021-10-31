@@ -66,7 +66,7 @@ const dbTestData = {
       console.log("Start adding flights");
       const flights = require("./testdatasets/flights.json");
       adjustYearOfEveryFlight(flights);
-      adjustTakeoffTimeToToday(flights, 5);
+      adjustTimesTimeToToday(flights, 5);
       await Promise.all(
         flights.map(async (flight) => {
           Flight.create(flight).catch((err) => {
@@ -167,41 +167,57 @@ const dbTestData = {
   },
 };
 
-function adjustTakeoffTimeToToday(flights, numberOfEntriesToAdjust) {
+function adjustTimesTimeToToday(flights, numberOfEntriesToAdjust) {
   for (let index = 0; index < numberOfEntriesToAdjust; index++) {
-    const date = new Date(flights[index].takeoffTime);
     const today = new Date();
-    date.setFullYear(today.getFullYear());
-    date.setMonth(today.getMonth());
-    date.setDate(today.getDate());
-    flights[index].takeoffTime = date.toISOString();
+    const takeoffDate = new Date(flights[index].takeoffTime);
+    takeoffDate.setFullYear(today.getFullYear());
+    takeoffDate.setMonth(today.getMonth());
+    takeoffDate.setDate(today.getDate());
+    flights[index].takeoffTime = takeoffDate.toISOString();
+    const landingDate = new Date(flights[index].takeoffTime);
+    landingDate.setFullYear(today.getFullYear());
+    landingDate.setMonth(today.getMonth());
+    landingDate.setDate(today.getDate());
+    flights[index].landingTime = landingDate.toISOString();
   }
   for (
     let index = numberOfEntriesToAdjust;
     index < numberOfEntriesToAdjust * 2;
     index++
   ) {
-    const date = new Date(flights[index].takeoffTime);
+    const takeoffDate = new Date(flights[index].takeoffTime);
     const today = new Date();
-    date.setFullYear(today.getFullYear());
-    date.setMonth(today.getMonth());
-    date.setDate(today.getDate() - 1);
-    flights[index].takeoffTime = date.toISOString();
+    takeoffDate.setFullYear(today.getFullYear());
+    takeoffDate.setMonth(today.getMonth());
+    takeoffDate.setDate(today.getDate() - 1);
+    flights[index].takeoffTime = takeoffDate.toISOString();
+    const landingDate = new Date(flights[index].landingTime);
+    landingDate.setFullYear(today.getFullYear());
+    landingDate.setMonth(today.getMonth());
+    landingDate.setDate(today.getDate() - 1);
+    flights[index].landingTime = landingDate.toISOString();
   }
 }
 
 function adjustYearOfEveryFlight(flights) {
   const today = new Date();
   for (let index = 0; index < flights.length - 1; index++) {
-    const date = new Date(flights[index].takeoffTime);
-    date.setFullYear(today.getFullYear());
-    flights[index].takeoffTime = date.toISOString();
+    const takeoffDate = new Date(flights[index].takeoffTime);
+    takeoffDate.setFullYear(today.getFullYear());
+    flights[index].takeoffTime = takeoffDate.toISOString();
+    const landingDate = new Date(flights[index].landingTime);
+    landingDate.setFullYear(today.getFullYear());
+    flights[index].landingTime = landingDate.toISOString();
   }
   //Ensure that one entry will always be from last year
   const lastEntryIndex = flights.length - 1;
-  const date = new Date(flights[lastEntryIndex].takeoffTime);
-  date.setFullYear(today.getFullYear() - 1);
-  flights[lastEntryIndex].takeoffTime = date.toISOString();
+  const takeoffDate = new Date(flights[lastEntryIndex].takeoffTime);
+  takeoffDate.setFullYear(today.getFullYear() - 1);
+  flights[lastEntryIndex].takeoffTime = takeoffDate.toISOString();
+  const landingDate = new Date(flights[lastEntryIndex].landingTime);
+  landingDate.setFullYear(today.getFullYear() - 1);
+  flights[lastEntryIndex].landingDate = landingDate.toISOString();
 }
 
 module.exports = dbTestData;

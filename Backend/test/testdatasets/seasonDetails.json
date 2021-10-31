@@ -255,7 +255,7 @@
       "AB_low": {
         "value": 2.8,
         "description": "Schirme EN A+B mit einer Streckung <5,2",
-        "short": "GS Sport low"
+        "shortDescription": "GS Sport low"
       },
       "AB_high": {
         "value": 2.7,

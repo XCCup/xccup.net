@@ -3,6 +3,7 @@ const User = require("../config/postgres")["User"];
 const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
+const { TEAM_SIZE } = require("../config/result-determination-config");
 
 const service = {
   getAllActive: async () => {
@@ -77,7 +78,7 @@ const service = {
         teamId,
       },
     });
-    if (numberOfMembers < 5) {
+    if (numberOfMembers < TEAM_SIZE) {
       const user = await User.findByPk(userId);
       user.teamId = teamId;
       user.save();
