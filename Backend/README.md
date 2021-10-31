@@ -68,6 +68,10 @@ npm test -- test/LocationFinder.test.js
 - Add New Server -> Connection -> Hostname: <<name_of_ab_container>> Port: 5432
 - Tables can be via: Databases -> xccup_db -> Schemas -> public -> Tables
 
+#### Set column width in PgAdmin
+
+File -> Preferences -> Query Tool -> Results grid -> "Do as you like"
+
 #### Complie the OLC Binary
 
 ```

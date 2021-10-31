@@ -28,7 +28,6 @@ const {
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
-  checkIsArray,
 } = require("./Validation");
 
 // All requests to /users/picture will be rerouted
@@ -303,30 +302,32 @@ router.put(
   }
 );
 
-// @desc Edits the gliders of an user. Expects an array of glider objects with the props "brand", "model" and "key" (e.g. AB_low).
-// @route PUT /users/gliders/:id
+// @desc Add a glider to the users glider array.
+// @route POST /users/gliders/add
 // @access Only owner
 
-router.put(
-  "/gliders/:id",
-  // authToken,
-  checkIsArray("gliders"), //TODO Create schema validation for gliders
+router.post(
+  "/gliders/add",
+  authToken,
+  checkStringObjectNotEmpty("brand"),
+  checkStringObjectNotEmpty("model"),
+  checkStringObjectNotEmpty("gliderClass"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const id = req.params.id;
-    const currentGliders = req.body.gliders;
+    const userId = req.user.id;
+    const { brand, model, gliderClass } = req.body;
+    const glider = {
+      brand,
+      model,
+      gliderClass,
+    };
 
     try {
-      const gliders = await sanitizeGliders(currentGliders);
-      await addGliderClassDescription(gliders);
+      await checkGliderClass(glider);
 
-      if (await requesterIsNotOwner(req, res, id)) return;
+      const result = await service.addGlider(userId, glider);
 
-      const user = await service.getById(id);
-      user.gliders = gliders;
-
-      const result = await service.update(user);
       res.json(result);
     } catch (error) {
       next(error);
@@ -334,36 +335,78 @@ router.put(
   }
 );
 
-async function addGliderClassDescription(gliders) {
-  const gliderClasses = (await getCurrentActive()).gliderClasses;
+// @desc Removes a glider from the users glider array.
+// @route DELETE /users/gliders/remove/:id
+// @access Only owner
 
-  gliders.forEach((glider) => {
-    glider.gliderClassShortDescription =
-      gliderClasses[glider.gliderClass].shortDescription;
-  });
-}
+router.delete(
+  "/gliders/remove/:id",
+  authToken,
+  checkParamIsUuid("id"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
 
-async function sanitizeGliders(gliders) {
+    const userId = req.user.id;
+    const gliderId = req.params.id;
+
+    try {
+      const result = await service.removeGlider(userId, gliderId);
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Sets the default gliders of user.
+// @route PUT /users/gliders/default/:id
+// Only owner
+
+router.put("/gliders/default/:id", authToken, async (req, res, next) => {
+  const userId = req.user.id;
+  const gliderId = req.params.id;
+
+  try {
+    const result = await service.setDefaultGlider(userId, gliderId);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Retrieves the gliders of an user.
+// @route GET /users/gliders/
+// Only owner
+
+router.get("/gliders/get", authToken, async (req, res, next) => {
+  const userId = req.user.id;
+
+  try {
+    const result = await service.getGlidersById(userId);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// async function addGliderClassDescription(gliders) {
+//   const gliderClasses = (await getCurrentActive()).gliderClasses;
+
+//   gliders.forEach((glider) => {
+//     glider.gliderClassShortDescription =
+//       gliderClasses[glider.gliderClass].shortDescription;
+//   });
+// }
+
+async function checkGliderClass(glider) {
   const { XccupRestrictionError } = require("../helper/ErrorHandler");
   const gliderClasses = (await getCurrentActive()).gliderClasses;
 
-  return gliders.map((glider) => {
-    if (
-      glider.brand &&
-      glider.model &&
-      glider.gliderClass &&
-      gliderClasses[glider.gliderClass]
-    ) {
-      return {
-        brand: glider.brand,
-        model: glider.model,
-        gliderClass: glider.gliderClass,
-      };
-    }
+  if (!gliderClasses[glider.gliderClass])
     throw new XccupRestrictionError(
       `The gliderClass: "${glider.gliderClass}" is not valid for the current season`
     );
-  });
 }
 
 module.exports = router;

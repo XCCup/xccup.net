@@ -30,8 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       tshirtSize: {
         type: DataTypes.STRING,
       },
+      defaultGlider: {
+        type: DataTypes.UUID,
+      },
       gliders: {
         type: DataTypes.ARRAY(DataTypes.JSON),
+        defaultValue: [],
       },
       emailInformIfComment: {
         type: DataTypes.BOOLEAN,
