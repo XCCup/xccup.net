@@ -38,21 +38,33 @@
                 />
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
-                <BaseInput v-model="userProfile.address.street" label="Strasse" />
+                <BaseInput
+                  v-model="userProfile.address.street"
+                  label="Strasse"
+                />
                 <div class="row">
                   <div class="col-md-6">
                     <BaseInput v-model="userProfile.address.zip" label="PLZ" />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.city" label="Stadt" />
+                    <BaseInput
+                      v-model="userProfile.address.city"
+                      label="Stadt"
+                    />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.state" label="Bundesland" />
+                    <BaseInput
+                      v-model="userProfile.address.state"
+                      label="Bundesland"
+                    />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.country" label="Land" />
+                    <BaseInput
+                      v-model="userProfile.address.country"
+                      label="Land"
+                    />
                   </div>
                 </div>
                 <div class="row">
@@ -79,11 +91,12 @@
               <div class="col-md-12">
                 <div class="row d-flex align-items-end">
                   <div class="col-md-7">
-                    <BaseSelect
-                      v-model="defaultGlider"
-                      label="Standard Gerät"
+                    <GliderSelect
+                      v-model="userProfile.defaultGlider"
                       :showLabel="true"
-                      :options="readableListOfGliders"
+                      label="Standard Gerät"
+                      :gliders="userProfile.gliders"
+                      :isDisabled="false"
                     />
                   </div>
                   <div class="col-md-5 mt-3">
@@ -212,14 +225,19 @@
 
   <!-- Modals -->
   <ModalAddGlider />
-  <ModalRemoveGlider v-if="userDetails" :glider="readableListOfGliders[0]" />
+  <ModalRemoveGlider
+    v-if="userDetails"
+    @remove-glider="removeGlider"
+    :glider="userDetails.defaultGlider"
+  />
 </template>
-
 <script>
 import ApiService from "@/services/ApiService.js";
 
 import { mapGetters, useStore } from "vuex";
 import { /*computed,*/ ref } from "vue";
+
+import GliderSelect from "@/components/GliderSelect";
 
 import ModalAddGlider from "@/components/ModalAddGlider";
 import ModalRemoveGlider from "@/components/ModalRemoveGlider";
@@ -227,7 +245,7 @@ import cloneDeep from "lodash/cloneDeep";
 
 export default {
   name: "Profile",
-  components: { ModalAddGlider, ModalRemoveGlider },
+  components: { ModalAddGlider, ModalRemoveGlider, GliderSelect },
   async setup() {
     // TODO: Remove if store will not be used for user details. Maybe leave it here for reference how to do it;)
     // const store = useStore();
@@ -235,10 +253,8 @@ export default {
     // const userDetails = computed(() => store.getters["user/getUserDetails"]);
     try {
       const store = useStore();
-
       const userId = store.getters["getAuthData"].userId;
       const { data: initialData } = await ApiService.getUserDetails(userId);
-
       return {
         userDetails: ref(initialData),
       };
@@ -250,7 +266,6 @@ export default {
     return {
       userProfile: null,
       unmodifiedUserProfile: null,
-      defaultGlider: null,
       showSpinner: false,
     };
   },
@@ -258,9 +273,6 @@ export default {
     ...mapGetters({
       getterUserId: "getUserId",
     }),
-    readableListOfGliders() {
-      return this.getListOfGliders();
-    },
     profileDataHasChanged() {
       return (
         JSON.stringify(this.userProfile) !=
@@ -268,29 +280,9 @@ export default {
       );
     },
   },
-  watch: {
-    defaultGlider() {
-      let indexOfDefaultGlider = this.readableListOfGliders.indexOf(
-        this.defaultGlider
-      );
-      // Move the selected glider to the top of the gliders array
-      this.readableListOfGliders.splice(
-        0,
-        0,
-        this.readableListOfGliders.splice(indexOfDefaultGlider, 1)[0]
-      );
-      // And do the same with the original
-      this.userProfile.gliders.splice(
-        0,
-        0,
-        this.userProfile.gliders.splice(indexOfDefaultGlider, 1)[0]
-      );
-    },
-  },
   beforeMount() {
     this.userProfile = cloneDeep(this.userDetails);
     this.unmodifiedUserProfile = cloneDeep(this.userDetails);
-    this.defaultGlider = this.readableListOfGliders[0];
   },
   props: {
     edit: {
@@ -306,7 +298,19 @@ export default {
         if (res.status != 200) throw res.statusText;
         this.userProfile = res.data;
         this.unmodifiedUserProfile = cloneDeep(this.userProfile);
-        this.defaultGlider = this.readableListOfGliders[0];
+        this.showSpinner = false;
+      } catch (error) {
+        console.error(error);
+        this.showSpinner = false;
+      }
+    },
+    async removeGlider(gliderId) {
+      try {
+        this.showSpinner = true;
+        const res = await ApiService.removeGlider(gliderId);
+        if (res.status != 200) throw res.statusText;
+        // this.userProfile = res.data;
+        // this.unmodifiedUserProfile = cloneDeep(this.userProfile);
         this.showSpinner = false;
       } catch (error) {
         console.error(error);
@@ -316,13 +320,6 @@ export default {
     // cancel() {
     //   this.$router.push({ name: "Profile" });
     // },
-    getListOfGliders() {
-      let readableListOfGliders = [];
-      this.userProfile.gliders.forEach((element) => {
-        readableListOfGliders.push(element.brand + " " + element.model);
-      });
-      return readableListOfGliders;
-    },
   },
 };
 </script>

@@ -28,7 +28,13 @@
           >
             Abbrechen
           </button>
-          <button type="button" class="btn btn-primary">OK</button>
+          <button
+            @click="onGliderRemoved"
+            type="button"
+            class="btn btn-primary"
+          >
+            OK
+          </button>
         </div>
       </div>
     </div>
@@ -41,8 +47,8 @@ export default {
     return {};
   },
   methods: {
-    onGliderRemoved(glider) {
-      this.$emit("remove-glider", glider);
+    onGliderRemoved() {
+      this.$emit("remove-glider", this.glider);
     },
   },
   props: {

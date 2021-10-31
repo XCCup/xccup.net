@@ -62,7 +62,7 @@ export default {
   // addGlider(data) {
   //   return jwtInterceptor.post(baseURL + "users/gliders/", data);
   // },
-  // deleteGlider(data) {
-  //   return jwtInterceptor.delete(baseURL + "users/gliders/", data);
-  // },
+  removeGlider(gliderId) {
+    return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
+  },
 };

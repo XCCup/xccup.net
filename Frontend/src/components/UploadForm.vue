@@ -29,6 +29,7 @@
           <div class="col-md-9">
             <GliderSelect
               v-model="defaultGlider"
+              label="Fluggerät"
               :showLabel="true"
               :gliders="listOfGliders"
               :isDisabled="false"
