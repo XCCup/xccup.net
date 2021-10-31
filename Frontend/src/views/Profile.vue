@@ -252,9 +252,7 @@ export default {
     // store.dispatch("user/getUserDetails", store.getters["getAuthData"].userId);
     // const userDetails = computed(() => store.getters["user/getUserDetails"]);
     try {
-      const store = useStore();
-      const userId = store.getters["getAuthData"].userId;
-      const { data: initialData } = await ApiService.getUserDetails(userId);
+      const { data: initialData } = await ApiService.getUserDetails();
       return {
         userDetails: ref(initialData),
       };

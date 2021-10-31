@@ -47,11 +47,11 @@ export default {
   getCommentsOfFlight(flightId) {
     return apiClient.get("comments/flight/" + flightId);
   },
-  getUserDetails(userId) {
-    return jwtInterceptor.get(baseURL + "users/" + userId);
+  getUserDetails() {
+    return jwtInterceptor.get(baseURL + "users/");
   },
   updateUserProfile(userProfile) {
-    return jwtInterceptor.put(baseURL + "users/" + userProfile.id, userProfile);
+    return jwtInterceptor.put(baseURL + "users/", userProfile);
   },
   getGliders() {
     return jwtInterceptor.get(baseURL + "users/gliders/get");
