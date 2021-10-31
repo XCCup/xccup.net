@@ -2,7 +2,7 @@
   <label v-if="showLabel">{{ label }}</label>
   <select
     class="form-select"
-    :value="gliderId"
+    :value="modelValue"
     :disabled="isDisabled"
     v-bind="{
       ...$attrs,
@@ -16,7 +16,7 @@
       v-for="glider in gliders"
       :value="glider.id"
       :key="glider.id"
-      :selected="glider === modelValue"
+      :selected="glider.id === modelValue"
     >
       {{ glider.brand + " " + glider.model }}
     </option>
@@ -36,9 +36,8 @@ export default {
       type: Boolean,
       default: false,
     },
-    gliderId: {
-      type: [String],
-      default: "",
+    modelValue: {
+      type: String,
     },
     gliders: {
       type: Array,
