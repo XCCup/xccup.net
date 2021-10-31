@@ -40,7 +40,7 @@
       "model": "Bodyguard",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -108,7 +108,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -176,7 +176,7 @@
       "model": "Spiruline",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -244,7 +244,7 @@
       "model": "Apollo",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -312,7 +312,7 @@
       "model": "Alpina 2",
       "gliderClass": {
         "key": "C_low",
-        "description": "GS Intermdediate low"
+        "shortDescription": "GS Intermdediate low"
       }
     },
     "flightStatus": "In Wertung",
@@ -380,7 +380,7 @@
       "model": "Emilie",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -448,7 +448,7 @@
       "model": "BiBeta 6",
       "gliderClass": {
         "key": "Tandem",
-        "description": "GS Tandem"
+        "shortDescription": "GS Tandem"
       }
     },
     "flightStatus": "In Wertung",
@@ -516,7 +516,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -584,7 +584,7 @@
       "model": "XC Racer",
       "gliderClass": {
         "key": "D_low",
-        "description": "GS Performance low"
+        "shortDescription": "GS Performance low"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -652,7 +652,7 @@
       "model": "Emilie",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -720,7 +720,7 @@
       "model": "Apollo",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -788,7 +788,7 @@
       "model": "Bodyguard",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -856,7 +856,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -924,7 +924,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -992,7 +992,7 @@
       "model": "XC Racer",
       "gliderClass": {
         "key": "D_low",
-        "description": "GS Performance low"
+        "shortDescription": "GS Performance low"
       }
     },
     "flightStatus": "In Wertung",
@@ -1060,7 +1060,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -1127,7 +1127,7 @@
       "model": "Emilie",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -1194,7 +1194,7 @@
       "model": "XC Racer",
       "gliderClass": {
         "key": "D_low",
-        "description": "GS Performance low"
+        "shortDescription": "GS Performance low"
       }
     },
     "flightStatus": "In Wertung",
@@ -1261,7 +1261,7 @@
       "model": "Emilie",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -1328,7 +1328,7 @@
       "model": "Bodyguard",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -1395,7 +1395,7 @@
       "model": "Spiruline",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -1463,7 +1463,7 @@
       "model": "Apollo",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -1531,7 +1531,7 @@
       "model": "Apollo",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -1599,7 +1599,7 @@
       "model": "Emilie",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -1667,7 +1667,7 @@
       "model": "Apollo",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -1735,7 +1735,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -1803,7 +1803,7 @@
       "model": "XC Racer",
       "gliderClass": {
         "key": "D_low",
-        "description": "GS Performance low"
+        "shortDescription": "GS Performance low"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -1871,7 +1871,7 @@
       "model": "Emilie",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -1939,7 +1939,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -2007,7 +2007,7 @@
       "model": "Bodyguard",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -2075,7 +2075,7 @@
       "model": "Apollo",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -2143,7 +2143,7 @@
       "model": "Bodyguard",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -2211,7 +2211,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -2279,7 +2279,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -2347,7 +2347,7 @@
       "model": "XC Racer",
       "gliderClass": {
         "key": "D_low",
-        "description": "GS Performance low"
+        "shortDescription": "GS Performance low"
       }
     },
     "flightStatus": "In Wertung",
@@ -2415,7 +2415,7 @@
       "model": "Enzo 3",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -2482,7 +2482,7 @@
       "model": "Emilie",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "Nicht in Wertung",
@@ -2549,7 +2549,7 @@
       "model": "XC Racer",
       "gliderClass": {
         "key": "D_low",
-        "description": "GS Performance low"
+        "shortDescription": "GS Performance low"
       }
     },
     "flightStatus": "In Wertung",
@@ -2616,7 +2616,7 @@
       "model": "Emilie",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -2683,7 +2683,7 @@
       "model": "Bodyguard",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -2750,7 +2750,7 @@
       "model": "Spiruline",
       "gliderClass": {
         "key": "D_high",
-        "description": "GS Competition high"
+        "shortDescription": "GS Competition high"
       }
     },
     "flightStatus": "In Wertung",
@@ -2818,7 +2818,7 @@
       "model": "Apollo",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",
@@ -2886,7 +2886,7 @@
       "model": "Apollo",
       "gliderClass": {
         "key": "AB_low",
-        "description": "GS Sport low"
+        "shortDescription": "GS Sport low"
       }
     },
     "flightStatus": "In Wertung",

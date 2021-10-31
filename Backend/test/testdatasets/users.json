@@ -15,13 +15,15 @@
         "brand": "LittleCloud",
         "model": "Spiruline",
         "gliderClass": "D_high",
-        "id": "35fb4c88-6774-4e74-b8a4-86cf4bf1716b"
+        "id": "35fb4c88-6774-4e74-b8a4-86cf4bf1716b",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "Flow",
         "model": "XCRacer",
         "gliderClass": "D_low",
-        "id": "450244fc-b65a-4685-ad22-d457a5035b86"
+        "id": "450244fc-b65a-4685-ad22-d457a5035b86",
+        "shortDescription": "GS Performance low"
       }
     ],
     "emailInformIfComment": false,
@@ -56,13 +58,15 @@
         "brand": "Sky",
         "model": "Apollo",
         "gliderClass": "AB_low",
-        "id": "8f6f8250-a7ff-4be6-8a70-4dbf57139d24"
+        "id": "8f6f8250-a7ff-4be6-8a70-4dbf57139d24",
+        "shortDescription": "GS Sport low"
       },
       {
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "4797d195-c298-4fef-84c1-26cff4ffe675"
+        "id": "4797d195-c298-4fef-84c1-26cff4ffe675",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": true,
@@ -97,13 +101,15 @@
         "brand": "Sky",
         "model": "Apollo",
         "gliderClass": "AB_low",
-        "id": "c6c187c2-4d07-4c91-a71c-e1327e63a2d4"
+        "id": "c6c187c2-4d07-4c91-a71c-e1327e63a2d4",
+        "shortDescription": "GS Sport low"
       },
       {
         "brand": "Air-G",
         "model": "Emilie",
         "gliderClass": "D_high",
-        "id": "eccda0c2-e26c-4ffe-9015-3b60a649b77f"
+        "id": "eccda0c2-e26c-4ffe-9015-3b60a649b77f",
+        "shortDescription": "GS Competition high"
       }
     ],
     "emailInformIfComment": true,
@@ -138,13 +144,15 @@
         "brand": "Air-G",
         "model": "Emilie",
         "gliderClass": "D_high",
-        "id": "812bcb98-8d8b-4337-895e-22b39c6e37f0"
+        "id": "812bcb98-8d8b-4337-895e-22b39c6e37f0",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "Sky",
         "model": "Apollo",
         "gliderClass": "AB_low",
-        "id": "5f27b81b-ff02-4d76-af76-773d16fe2dfc"
+        "id": "5f27b81b-ff02-4d76-af76-773d16fe2dfc",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": true,
@@ -180,13 +188,15 @@
         "brand": "Sky",
         "model": "Apollo",
         "gliderClass": "AB_low",
-        "id": "60baa97c-ea3c-4d72-bae4-d8b6f4374b3f"
+        "id": "60baa97c-ea3c-4d72-bae4-d8b6f4374b3f",
+        "shortDescription": "GS Sport low"
       },
       {
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "f334d8ad-ac51-4050-8ba9-778021fd13e0"
+        "id": "f334d8ad-ac51-4050-8ba9-778021fd13e0",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": false,
@@ -221,13 +231,15 @@
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "ba4426b7-cb33-4a29-b933-6657fec94b2f"
+        "id": "ba4426b7-cb33-4a29-b933-6657fec94b2f",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "f19139c9-81f6-4bb6-94fb-cdf08493ef5b"
+        "id": "f19139c9-81f6-4bb6-94fb-cdf08493ef5b",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": true,
@@ -262,13 +274,15 @@
         "brand": "Flow",
         "model": "XCRacer",
         "gliderClass": "D_low",
-        "id": "cd25b974-1e30-4969-ba46-34990461990d"
+        "id": "cd25b974-1e30-4969-ba46-34990461990d",
+        "shortDescription": "GS Performance low"
       },
       {
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "8f48aa72-6ea0-477e-ae3c-e76fa99e7fb5"
+        "id": "8f48aa72-6ea0-477e-ae3c-e76fa99e7fb5",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": false,
@@ -303,13 +317,15 @@
         "brand": "Air-G",
         "model": "Emilie",
         "gliderClass": "D_high",
-        "id": "7fafd7be-89a3-4150-b190-1eb8a47bc02f"
+        "id": "7fafd7be-89a3-4150-b190-1eb8a47bc02f",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "LittleCloud",
         "model": "Spiruline",
         "gliderClass": "D_high",
-        "id": "5dc20a7d-fb16-48db-a9ca-74f6eb5c0a28"
+        "id": "5dc20a7d-fb16-48db-a9ca-74f6eb5c0a28",
+        "shortDescription": "GS Competition high"
       }
     ],
     "emailInformIfComment": true,
@@ -344,13 +360,15 @@
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "704a87b4-2053-46f4-b613-19a03c55948d"
+        "id": "704a87b4-2053-46f4-b613-19a03c55948d",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "6f5f4491-87f9-4002-a324-8e4d2a43b8be"
+        "id": "6f5f4491-87f9-4002-a324-8e4d2a43b8be",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": true,
@@ -385,13 +403,15 @@
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "6b7b5a06-c9f4-4499-911a-eb0247f010e8"
+        "id": "6b7b5a06-c9f4-4499-911a-eb0247f010e8",
+        "shortDescription": "GS Sport low"
       },
       {
         "brand": "LittleCloud",
         "model": "Spiruline",
         "gliderClass": "D_high",
-        "id": "40c1cbcf-92d6-4ae3-bb6c-cd7aab49026f"
+        "id": "40c1cbcf-92d6-4ae3-bb6c-cd7aab49026f",
+        "shortDescription": "GS Competition high"
       }
     ],
     "emailInformIfComment": true,
@@ -426,7 +446,8 @@
         "brand": "Sky",
         "model": "Apollo",
         "gliderClass": "AB_low",
-        "id": "729cd7ac-5e91-4c14-b68e-f0da3ac4d736"
+        "id": "729cd7ac-5e91-4c14-b68e-f0da3ac4d736",
+        "shortDescription": "GS Sport low"
       },
       {
         "brand": "Ozone",
@@ -467,13 +488,15 @@
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "2b63195f-9d4c-4ce1-9d86-bb49da8555fb"
+        "id": "2b63195f-9d4c-4ce1-9d86-bb49da8555fb",
+        "shortDescription": "GS Sport low"
       },
       {
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "0ec356d1-13e2-40d6-b6fc-75b0281e1757"
+        "id": "0ec356d1-13e2-40d6-b6fc-75b0281e1757",
+        "shortDescription": "GS Competition high"
       }
     ],
     "emailInformIfComment": false,
@@ -507,13 +530,15 @@
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "bd4cfd17-5b71-4133-b532-b3f916f66c03"
+        "id": "bd4cfd17-5b71-4133-b532-b3f916f66c03",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "e20e89e7-de36-48a1-a7d1-204146444ad3"
+        "id": "e20e89e7-de36-48a1-a7d1-204146444ad3",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": true,
@@ -548,13 +573,15 @@
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "97afeda0-c6cf-483c-b39b-f2cea1dd0b20"
+        "id": "97afeda0-c6cf-483c-b39b-f2cea1dd0b20",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "Air-G",
         "model": "Emilie",
         "gliderClass": "D_high",
-        "id": "b13216fe-2385-4fb2-bbbe-e4c6467b772e"
+        "id": "b13216fe-2385-4fb2-bbbe-e4c6467b772e",
+        "shortDescription": "GS Competition high"
       }
     ],
     "emailInformIfComment": true,
@@ -589,13 +616,15 @@
         "brand": "Flow",
         "model": "XCRacer",
         "gliderClass": "D_low",
-        "id": "a9f572c3-8e53-48ea-be9b-f4d88ed3c983"
+        "id": "a9f572c3-8e53-48ea-be9b-f4d88ed3c983",
+        "shortDescription": "GS Performance low"
       },
       {
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "6d0a0711-68f5-4dd0-b631-a3c34d6bc5f7"
+        "id": "6d0a0711-68f5-4dd0-b631-a3c34d6bc5f7",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": true,
@@ -629,13 +658,15 @@
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "b8e39742-ccc9-4307-92e2-51db9a4179cf"
+        "id": "b8e39742-ccc9-4307-92e2-51db9a4179cf",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "a5bf537a-22d6-479a-b3a5-df6f9f5541e5"
+        "id": "a5bf537a-22d6-479a-b3a5-df6f9f5541e5",
+        "shortDescription": "GS Competition high"
       }
     ],
     "emailInformIfComment": true,
@@ -668,13 +699,15 @@
         "brand": "Air-G",
         "model": "Emilie",
         "gliderClass": "D_high",
-        "id": "d5d8a5d6-50b4-4051-a509-bebd130661c8"
+        "id": "d5d8a5d6-50b4-4051-a509-bebd130661c8",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "Sky",
         "model": "Apollo",
         "gliderClass": "AB_low",
-        "id": "4b3974b4-3676-4661-964c-4c333f39262b"
+        "id": "4b3974b4-3676-4661-964c-4c333f39262b",
+        "shortDescription": "GS Sport low"
       }
     ],
     "emailInformIfComment": true,
@@ -708,13 +741,15 @@
         "brand": "Flow",
         "model": "XCRacer",
         "gliderClass": "D_low",
-        "id": "157cf72c-519f-42aa-b67d-42c60dd311c0"
+        "id": "157cf72c-519f-42aa-b67d-42c60dd311c0",
+        "shortDescription": "GS Performance low"
       },
       {
         "brand": "LittleCloud",
         "model": "Spiruline",
         "gliderClass": "D_high",
-        "id": "37ea51fa-6c84-4e78-ace9-5b30489b9154"
+        "id": "37ea51fa-6c84-4e78-ace9-5b30489b9154",
+        "shortDescription": "GS Competition high"
       }
     ],
     "emailInformIfComment": true,
@@ -748,13 +783,15 @@
         "brand": "Air-G",
         "model": "Emilie",
         "gliderClass": "D_high",
-        "id": "b8626cb9-92de-4957-a7ff-c5c8c6a48664"
+        "id": "b8626cb9-92de-4957-a7ff-c5c8c6a48664",
+        "shortDescription": "GS Competition high"
       },
       {
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "133dd139-59fd-4480-b5c2-1b7ba56e32bc"
+        "id": "133dd139-59fd-4480-b5c2-1b7ba56e32bc",
+        "shortDescription": "GS Competition high"
       }
     ],
     "role": "Moderator",
@@ -789,13 +826,15 @@
         "brand": "U-Turn",
         "model": "Bodyguard",
         "gliderClass": "AB_low",
-        "id": "e0bbb3e4-543b-4451-a374-0435a38cc823"
+        "id": "e0bbb3e4-543b-4451-a374-0435a38cc823",
+        "shortDescription": "GS Sport low"
       },
       {
         "brand": "Ozone",
         "model": "Enzo3",
         "gliderClass": "D_high",
-        "id": "4e8d3098-67d8-4d73-ab93-6fc06bc20dcf"
+        "id": "4e8d3098-67d8-4d73-ab93-6fc06bc20dcf",
+        "shortDescription": "GS Competition high"
       }
     ],
     "role": "Administrator",
