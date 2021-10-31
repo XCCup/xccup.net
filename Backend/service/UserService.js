@@ -3,9 +3,12 @@ const Club = require("../config/postgres")["Club"];
 const flightService = require("../service/FlightService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const { ROLE } = require("../constants/user-constants");
+const { TYPE } = require("../constants/flight-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
 const moment = require("moment");
+const { v4: uuidv4 } = require("uuid");
+const { arrayRemove } = require("../helper/Utils");
 
 const userService = {
   getAll: async () => {
@@ -28,6 +31,11 @@ const userService = {
       ],
     });
   },
+  getGlidersById: async (id) => {
+    return await User.findByPk(id, {
+      attributes: ["gliders", "defaultGlider"],
+    });
+  },
   getByIdPublic: async (id) => {
     const user = User.findOne({
       where: { id },
@@ -39,9 +47,9 @@ const userService = {
         },
       ],
     });
-    const bestFreeFlight = findFlightRecordOfType(id, "FREE");
-    const bestFlatFlight = findFlightRecordOfType(id, "FLAT");
-    const bestFaiFlight = findFlightRecordOfType(id, "FAI");
+    const bestFreeFlight = findFlightRecordOfType(id, TYPE.FREE);
+    const bestFlatFlight = findFlightRecordOfType(id, TYPE.FLAT);
+    const bestFaiFlight = findFlightRecordOfType(id, TYPE.FAI);
     const results = await Promise.all([
       user,
       bestFreeFlight,
@@ -91,6 +99,65 @@ const userService = {
     }
     console.log(`The password is not valid`);
     return null;
+  },
+  addGlider: async (userId, glider) => {
+    glider.id = uuidv4();
+
+    const user = await User.findByPk(userId, {
+      attributes: ["id", "gliders", "defaultGlider"],
+    });
+
+    if (user.gliders.length == 0) user.defaultGlider = glider.id;
+
+    user.gliders.push(glider);
+    user.changed("gliders", true);
+
+    const updatedUser = await user.save();
+
+    return {
+      defaultGlider: updatedUser.defaultGlider,
+      gliders: updatedUser.gliders,
+    };
+  },
+  removeGlider: async (userId, gliderId) => {
+    const user = await User.findByPk(userId, {
+      attributes: ["id", "gliders", "defaultGlider"],
+    });
+
+    const gliderToRemove = user.gliders.find((glider) => glider.id == gliderId);
+
+    arrayRemove(user.gliders, gliderToRemove);
+    user.changed("gliders", true);
+
+    if (gliderId == user.defaultGlider) {
+      user.defaultGlider = user.gliders.length > 0 ? user.gliders[0].id : null;
+    }
+
+    const updatedUser = await user.save();
+
+    return {
+      defaultGlider: updatedUser.defaultGlider,
+      gliders: updatedUser.gliders,
+    };
+  },
+  setDefaultGlider: async (userId, gliderId) => {
+    const user = await User.findByPk(userId, {
+      attributes: ["id", "gliders", "defaultGlider"],
+    });
+
+    const glider = user.gliders.find((glider) => glider.id == gliderId);
+
+    if (!glider)
+      throw new XccupRestrictionError("The glider is not in the glider array");
+
+    user.defaultGlider = glider.id;
+
+    const updatedUser = await user.save();
+
+    return {
+      defaultGlider: updatedUser.defaultGlider,
+      gliders: updatedUser.gliders,
+    };
   },
 };
 
