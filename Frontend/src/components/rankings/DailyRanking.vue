@@ -61,14 +61,13 @@
 import DailyFlightsMap from "@/components/DailyFlightsMap";
 import FlightTypeIcon from "@/components/FlightTypeIcon";
 
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
+
 export default {
   name: "DailyRanking",
   components: { DailyFlightsMap, FlightTypeIcon },
-  data() {
-    return {
-      highlightedFlightId: null,
-    };
-  },
+  //
   props: {
     flights: {
       type: Array,
@@ -76,36 +75,44 @@ export default {
     },
     maxRows: Number,
   },
-  computed: {
-    dailyFlightsMapTracks() {
-      if (!this.flights) return;
+  setup(props) {
+    const highlightedFlightId = ref(null);
+    const router = useRouter();
+
+    const dailyFlightsMapTracks = computed(() => {
+      if (!props.flights) return;
       let tracks = [];
 
-      this.flights.slice(0, this.maxRows).forEach((flight) => {
+      props.flights.slice(0, props.maxRows).forEach((flight) => {
         tracks.push({
           flightId: flight.id,
           turnpoints: flight.fixes,
         });
       });
       return tracks;
-    },
-    currentYear() {
-      return new Date(Date.now()).getFullYear();
-    },
-  },
+    });
 
-  methods: {
-    updateHighlightedFlight(flightId) {
-      this.highlightedFlightId = flightId;
-    },
-    routeToFlight(flightId) {
-      this.$router.push({
+    const currentYear = computed(() => new Date(Date.now()).getFullYear());
+
+    const updateHighlightedFlight = (flightId) =>
+      (highlightedFlightId.value = flightId);
+
+    const routeToFlight = (flightId) => {
+      router.push({
         name: "Flight",
         params: {
           flightId: flightId,
         },
       });
-    },
+    };
+
+    return {
+      highlightedFlightId,
+      dailyFlightsMapTracks,
+      currentYear,
+      updateHighlightedFlight,
+      routeToFlight,
+    };
   },
 };
 </script>
