@@ -72,7 +72,7 @@ export default {
       if (error.response && error.response.status == 404) {
         router.push({
           name: "404Resource",
-          params: { resource: "Flug" },
+          params: { resource: "Dieser Flug existiert nicht." },
         });
       } else {
         router.push({ name: "NetworkError" });

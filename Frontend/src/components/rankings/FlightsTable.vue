@@ -1,7 +1,7 @@
 <template>
   <section class="pb-3">
     <div class="container-fluid">
-      <div v-if="flights.length > 0" class="table-responsive">
+      <div v-if="flights?.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Datum</th>

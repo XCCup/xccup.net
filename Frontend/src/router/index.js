@@ -15,14 +15,15 @@ const routes = [
     path: "/flug/:flightId",
     name: "Flight",
     props: true,
+    beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
-
     component: Flight,
   },
   {
     path: "/:year/fluege/",
     name: "AllFlights",
     props: true,
+    beforeEnter: validateRouteParamYear,
     meta: { toTop: true },
 
     component: () =>
@@ -96,7 +97,7 @@ const routes = [
     component: NotFound,
   },
   {
-    path: "/404/:resource",
+    path: "/404/",
     name: "404Resource",
     component: NotFound,
     props: true,
@@ -107,6 +108,32 @@ const routes = [
     component: NetworkError,
   },
 ];
+
+// function castRouteParamId(route) {
+//   return {
+//     id: Number(route.params.id),
+//   };
+// }
+
+function validateRouteParamYear(to, from, next) {
+  if (isNaN(Number(to.params.year))) {
+    return next({
+      name: "404Resource",
+      params: { resource: "Dies ist kein gültiges Jahr" },
+    });
+  }
+  next();
+}
+
+function validateRouteParamFlightId(to, from, next) {
+  if (isNaN(Number(to.params.flightId))) {
+    return next({
+      name: "404Resource",
+      params: { resource: "Dies ist keine gültige Flugnummer" },
+    });
+  }
+  next();
+}
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
