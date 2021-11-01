@@ -36,7 +36,7 @@
             </tbody>
           </table>
           <router-link
-            :to="{ name: 'AllFlights', params: { year: currentYear } }"
+            :to="{ name: 'FlightsAll', params: { year: currentYear } }"
             class="btn btn-outline-light btn-sm my-1"
             >Alle Flüge anzeigen</router-link
           >

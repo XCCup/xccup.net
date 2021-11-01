@@ -27,7 +27,7 @@
             <ul class="dropdown-menu">
               <li>
                 <router-link
-                  :to="{ name: 'AllFlights', params: { year: currentYear } }"
+                  :to="{ name: 'FlightsAll', params: { year: currentYear } }"
                   class="dropdown-item"
                 >
                   Eingereichte Flüge

@@ -21,13 +21,13 @@ const routes = [
   },
   {
     path: "/:year/fluege/",
-    name: "AllFlights",
+    name: "FlightsAll",
     props: true,
     beforeEnter: validateRouteParamYear,
     meta: { toTop: true },
 
     component: () =>
-      import(/* webpackChunkName: "" */ "../views/AllFlights.vue"),
+      import(/* webpackChunkName: "" */ "../views/FlightsAll.vue"),
   },
   {
     path: "/newcomer/",

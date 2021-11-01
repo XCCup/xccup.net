@@ -12,7 +12,7 @@ import FlightsTable from "@/components/rankings/FlightsTable";
 import { ref } from "vue";
 
 export default {
-  name: "AllFlights",
+  name: "FlightsAll",
   components: { FlightsTable },
 
   async setup(props) {
