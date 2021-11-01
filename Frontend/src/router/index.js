@@ -31,9 +31,9 @@ const routes = [
   },
   {
     path: "/newcomer/",
-    name: "RankingNewcomer",
+    name: "ResultsNewcomer",
     component: () =>
-      import(/* webpackChunkName: "" */ "../views/RankingNewcomer.vue"),
+      import(/* webpackChunkName: "" */ "../views/ResultsNewcomer.vue"),
   },
   {
     path: "/upload",

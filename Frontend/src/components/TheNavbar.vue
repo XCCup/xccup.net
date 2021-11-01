@@ -35,7 +35,7 @@
               </li>
               <li>
                 <router-link
-                  :to="{ name: 'RankingNewcomer' }"
+                  :to="{ name: 'ResultsNewcomer' }"
                   class="dropdown-item"
                 >
                   Newcomer

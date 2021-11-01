@@ -7,7 +7,7 @@ import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 
 export default {
-  name: "RankingNewcomer",
+  name: "ResultsNewcomer",
   components: {},
 
   async setup() {
