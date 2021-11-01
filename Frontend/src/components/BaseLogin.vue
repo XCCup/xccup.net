@@ -31,6 +31,7 @@
     </div> -->
     <button type="submit" class="btn btn-primary">Anmelden</button>
   </form>
+  <!-- TODO: Dynamic classes depending on where this component is used? -->
   <div class="dropdown-divider"></div>
   <a class="dropdown-item" href="#">Registrieren</a>
   <a class="dropdown-item" href="#">Password vergessen?</a>
