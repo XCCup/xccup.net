@@ -8,7 +8,7 @@
 - [x] Rankings
 - [x] Connect to API
 - [x] Map visualizing all flights of the day
-- [ ] Sponsors
+- [x] Sponsors
 - [ ] Dynamic appearance of news
 - [ ] Random image taken from the running season
 - [ ] Make the table link to flight page a real link
@@ -16,7 +16,7 @@
 ### Profile
 
 - [x] Basic layout
-- [ ] Connect to API
+- [x] Connect to API
 - [ ] Aircraft add/delete logic
 - [ ] Change profile picture
 - [ ] Overview of flights
@@ -79,7 +79,6 @@
 - [ ] Admin Panel
 - [ ] Register
 - [ ] Imprint
-- [ ] Imprint
 - [ ] Clubs
 - [ ] Teams
 - [ ] Pilots
@@ -94,3 +93,4 @@
 - [ ] Icons for ranking classes
 - [ ] Authentication
 - [ ] Login error handling
+- [ ] Page names
