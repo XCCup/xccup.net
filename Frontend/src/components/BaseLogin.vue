@@ -20,14 +20,15 @@
         v-model="password"
       />
     </div>
-    <div class="mb-3">
+    <!-- Stay logged in not realy useful with JWT auth -->
+    <!-- <div class="mb-3">
       <div class="form-check">
         <input type="checkbox" class="form-check-input" id="dropdownCheck" />
         <label class="form-check-label" for="dropdownCheck">
           Angemeldet bleiben
         </label>
       </div>
-    </div>
+    </div> -->
     <button type="submit" class="btn btn-primary">Anmelden</button>
   </form>
   <div class="dropdown-divider"></div>
@@ -36,7 +37,6 @@
 </template>
 
 <script>
-// import ApiService from "@/services/ApiService";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -66,8 +66,6 @@ export default {
           this.$router.push({
             name: "Profile",
           });
-        } else {
-          console.log(this.getterLoginStatus);
         }
       } catch (error) {
         // TODO: Display error message
