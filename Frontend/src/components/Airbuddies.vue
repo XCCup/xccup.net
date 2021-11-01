@@ -41,8 +41,6 @@
                 :style="{ backgroundColor: this.trackColors[index + 1] }"
               >
                 {{ airbuddy.User.firstName + " " + airbuddy.User.lastName }}
-                <!-- TODO: This will not fetch the API again. 
-                Fix this when you have a better understanding of the Composition API -->
                 <router-link
                   :to="{
                     name: 'Flight',

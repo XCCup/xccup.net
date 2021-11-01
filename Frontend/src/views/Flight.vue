@@ -49,38 +49,36 @@ export default {
     FlightReport,
     TheSubnav,
   },
-  async setup(props) {
+  async setup() {
     const router = useRouter();
     const route = useRoute();
     const flight = ref(null);
 
-    // To simulate longer loading times
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Is this try/catch smart?
-    try {
-      let flightId = route.params.flightId;
-      // props.flightId
-
-      const response = await ApiService.getFlight(flightId);
-      if (!response.data.fixes) {
-        throw "Invalid response";
+    const fetchData = async () => {
+      try {
+        // To simulate longer loading times
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        const response = await ApiService.getFlight(route.params.flightId);
+        if (!response.data.fixes) {
+          throw "Invalid response";
+        }
+        flight.value = response.data;
+      } catch (error) {
+        console.log(error);
+        if (error.response && error.response.status == 404) {
+          router.push({
+            name: "404Resource",
+            params: { resource: "Dieser Flug existiert nicht." },
+          });
+        } else {
+          router.push({ name: "NetworkError" });
+        }
       }
-      flight.value = response.data;
-    } catch (error) {
-      console.log(error);
-      if (error.response && error.response.status == 404) {
-        router.push({
-          name: "404Resource",
-          params: { resource: "Dieser Flug existiert nicht." },
-        });
-      } else {
-        router.push({ name: "NetworkError" });
-      }
-    }
-    return {
-      flight,
     };
+
+    fetchData();
+
+    return { flight };
   },
   data() {
     return {
