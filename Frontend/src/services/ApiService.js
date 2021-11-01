@@ -14,8 +14,8 @@ const apiClient = axios.create({
 // Note: jwtInterceptor is used when a route needs authorization
 
 export default {
-  getFlights() {
-    return apiClient.get("flights");
+  getFlights(params) {
+    return apiClient.get("flights", { params: { year: params.year } });
   },
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
@@ -65,7 +65,10 @@ export default {
   removeGlider(gliderId) {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
   },
-
+  // Results
+  getNewcomerRanking() {
+    return apiClient.get("results/newcomer/");
+  },
   // General
   getBrands() {
     return apiClient.get(baseURL + "general/brands");

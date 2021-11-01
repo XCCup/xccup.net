@@ -20,10 +20,19 @@ const routes = [
     component: Flight,
   },
   {
-    path: "/fluege/",
+    path: "/:year/fluege/",
     name: "AllFlights",
+    props: true,
+    meta: { toTop: true },
+
     component: () =>
       import(/* webpackChunkName: "" */ "../views/AllFlights.vue"),
+  },
+  {
+    path: "/newcomer/",
+    name: "RankingNewcomer",
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/RankingNewcomer.vue"),
   },
   {
     path: "/upload",

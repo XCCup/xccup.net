@@ -1,8 +1,7 @@
 <template>
-  <section v-if="flights" class="pb-3">
-    <div class="container-fluid pt-1">
-      <h3>Streckenmeldungen 20XX</h3>
-      <div class="table-responsive">
+  <section class="pb-3">
+    <div class="container-fluid">
+      <div v-if="flights.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Datum</th>
@@ -54,6 +53,7 @@
           </tbody>
         </table>
       </div>
+      <div v-else>Keine Flüge gemeldet in diesem Jahr</div>
     </div>
   </section>
 </template>

@@ -1,4 +1,7 @@
 <template>
+  <div class="container-fluid">
+    <h3>Streckenmeldungen {{ year }}</h3>
+  </div>
   <FlightsTable :flights="flights" />
 </template>
 
@@ -12,17 +15,24 @@ export default {
   name: "AllFlights",
   components: { FlightsTable },
 
-  async setup() {
+  async setup(props) {
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 2000));
     try {
-      const { data: initialData } = await ApiService.getFlights();
+      const { data: initialData } = await ApiService.getFlights({
+        year: props.year,
+      });
       return {
         flights: ref(initialData),
       };
     } catch (error) {
       console.log(error);
     }
+  },
+  props: {
+    year: {
+      type: [String, Number],
+    },
   },
 };
 </script>

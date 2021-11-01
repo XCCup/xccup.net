@@ -26,12 +26,21 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <router-link :to="{ name: 'AllFlights' }" class="dropdown-item">
+                <router-link
+                  :to="{ name: 'AllFlights', params: { year: currentYear } }"
+                  class="dropdown-item"
+                >
                   Eingereichte Flüge
                 </router-link>
               </li>
-              <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
-              <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
+              <li>
+                <router-link
+                  :to="{ name: 'RankingNewcomer' }"
+                  class="dropdown-item"
+                >
+                  Newcomer
+                </router-link>
+              </li>
               <li>
                 <hr class="dropdown-divider" />
               </li>
@@ -108,14 +117,15 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "TheNavbar",
   computed: {
-    // TODO: Remove this getter?
-    // ...mapGetters(["authUser"]),
     ...mapGetters({
       gettersAuthData: "getAuthData",
       getterLoginStatus: "getLoginStatus",
     }),
     loggedIn() {
       return this.getterLoginStatus === "success";
+    },
+    currentYear() {
+      return new Date(Date.now()).getFullYear();
     },
   },
   methods: {
