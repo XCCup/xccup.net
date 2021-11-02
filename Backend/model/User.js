@@ -135,11 +135,13 @@ module.exports = (sequelize, DataTypes) => {
       hooks: true,
     });
     User.belongsTo(models.Club, {
+      as: "club",
       foreignKey: {
         name: "clubId",
       },
     });
     User.belongsTo(models.Team, {
+      as: "team",
       foreignKey: {
         name: "teamId",
       },

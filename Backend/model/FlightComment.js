@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 
   FlightComment.associate = (models) => {
     FlightComment.belongsTo(models.User, {
+      as: "user",
       foreignKey: {
         name: "userId",
       },

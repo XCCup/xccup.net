@@ -127,6 +127,7 @@ const flightService = {
       include: [
         {
           model: User,
+          as: "user",
           attributes: ["firstName", "lastName"],
         },
         {
@@ -185,12 +186,14 @@ const flightService = {
           include: [
             {
               model: User,
+              as: "user",
               attributes: ["id", "firstName", "lastName"],
             },
           ],
         },
         {
           model: User,
+          as: "user",
           attributes: ["firstName", "lastName"],
         },
         {
@@ -200,19 +203,22 @@ const flightService = {
         },
         {
           model: Club,
+          as: "club",
           attributes: ["name"],
         },
         {
           model: Team,
+          as: "team",
           attributes: ["name"],
         },
         {
           model: FlightPhoto,
+          as: "photos",
         },
       ],
       order: [
         [{ model: FlightComment, as: "comments" }, "createdAt", "ASC"],
-        [FlightPhoto, "createdAt", "ASC"],
+        [{ model: FlightPhoto, as: "photos" }, "createdAt", "ASC"],
       ],
     });
     if (flightDbObject) {
@@ -227,7 +233,7 @@ const flightService = {
       flight.comments.forEach((comment) => {
         comment.message = _.unescape(comment.message);
       });
-      flight.FlightPhotos.forEach((photo) => {
+      flight.photos.forEach((photo) => {
         photo.description = _.unescape(photo.description);
       });
 
@@ -574,7 +580,8 @@ async function findAirbuddies(flight) {
     },
     include: {
       model: User,
-      attributes: ["firstName", "lastName"],
+      as: "user",
+      attributes: ["id", "firstName", "lastName"],
     },
   });
 }
@@ -689,6 +696,7 @@ function createSiteInclude(shortName) {
 function createUserInclude() {
   const include = {
     model: User,
+    as: "user",
     attributes: ["firstName", "lastName"],
   };
   return include;
@@ -697,6 +705,7 @@ function createUserInclude() {
 function createClubInclude(id) {
   const include = {
     model: Club,
+    as: "club",
     attributes: ["name"],
   };
   if (id) {
@@ -710,6 +719,7 @@ function createClubInclude(id) {
 function createTeamInclude(id) {
   const include = {
     model: Team,
+    as: "team",
     attributes: ["name"],
   };
   if (id) {
