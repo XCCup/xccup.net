@@ -12,5 +12,5 @@ users.forEach((user) => {
 });
 
 fs.writeFile("users2.json", JSON.stringify(users, null, 2), "utf8", () => {
-  console.log();
+  logger.();
 });

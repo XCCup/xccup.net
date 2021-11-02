@@ -31,8 +31,8 @@ test("Attach elevation data to position fixes and check values", (done) => {
 
   try {
     ElevationAttacher.execute(fixes, (fixesWithElevation) => {
-      console.log("First: ", fixesWithElevation[0]);
-      console.log("Last: ", fixesWithElevation[fixesWithElevation.length - 1]);
+      logger.("First: ", fixesWithElevation[0]);
+      logger.("Last: ", fixesWithElevation[fixesWithElevation.length - 1]);
 
       expect(fixesWithElevation[0].elevation).toBeGreaterThanOrEqual(
         firstFix.elevation - ELEVATION_DELTA

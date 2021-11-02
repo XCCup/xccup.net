@@ -1,5 +1,7 @@
+const logger = require("../config/logger");
+
 async function sleep(ms) {
-  console.log(`Will suspend thread for ${ms} ms on purpose`);
+  logger.info(`Will suspend thread for ${ms} ms on purpose`);
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
@@ -14,10 +16,10 @@ function arrayRemove(array, elementToRemove) {
 async function waitTillDbHasSync() {
   const RETRY_TIMEOUT = 3000;
   while (process.env.DB_SYNC_IN_PROGRESS == "true") {
-    console.log("Will wait till DB syncing has finished");
+    logger.info("Will wait till DB syncing has finished");
     await sleep(RETRY_TIMEOUT);
   }
-  console.log("DB syncing finished");
+  logger.info("DB syncing finished");
 }
 
 exports.sleep = sleep;

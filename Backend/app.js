@@ -3,6 +3,8 @@ require("dotenv").config({ path: "./.env.local" });
 
 const express = require("express");
 const app = express();
+const logger = require("./config/logger");
+const morganLogger = require("./config/logger").morganLogger;
 
 //Setup DB
 require("./config/postgres.js");
@@ -10,15 +12,15 @@ require("./config/postgres.js");
 //Init authentication tokens
 require("./controller/Auth").initAuth();
 
+//Logging
+app.use(morganLogger);
+
 //Development Tools
 if (process.env.NODE_ENV === "development") {
   // https://expressjs.com/en/resources/middleware/cors.html
   // https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
   var cors = require("cors");
   app.use(cors());
-  //Logging
-  const morgan = require("morgan");
-  app.use(morgan("dev"));
   //SwaggerUI
   const swaggerUi = require("swagger-ui-express");
   const swaggerDocument = require("./swagger.json");
@@ -65,10 +67,10 @@ app.use(function (err, req, res, next) {
     handleGeneralError,
   } = require("./helper/ErrorHandler");
 
-  if (handleSequelizeUniqueError(err, res)) return;
-  if (handleXccupRestrictionError(err, res)) return;
+  if (handleSequelizeUniqueError(err, req, res)) return;
+  if (handleXccupRestrictionError(err, req, res)) return;
 
-  handleGeneralError(err, res);
+  handleGeneralError(err, req, res);
 });
 
 // Handle calls to non exisiting routes
@@ -86,5 +88,5 @@ app.use("*", (req, res) => {
 const PORT = process.env.SERVER_PORT || 3000;
 app.listen(
   PORT,
-  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );

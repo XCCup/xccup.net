@@ -1,4 +1,5 @@
 const FlyingSite = require("../config/postgres")["FlyingSite"];
+const logger = require("../config/logger");
 
 const MAX_DIST_TO_SEARCH = 5000;
 
@@ -52,15 +53,15 @@ const siteService = {
     });
 
     if (takeoffs.length == 1) {
-      console.log("Found takeoff in DB");
+      logger.debug("Found takeoff in DB");
       return takeoffs[0];
     } else if (takeoffs.length > 1) {
       const errorMsg = `Found more than one takeoff in DB for location ${location} within distance of ${MAX_DIST_TO_SEARCH}m`;
-      console.log(errorMsg);
+      logger.error(errorMsg);
       return errorMsg;
     } else {
-      const errorMsg = `Found no takeoff in DB within distance of ${MAX_DIST_TO_SEARCH}m`;
-      console.log(errorMsg);
+      const errorMsg = `Found no takeoff in DB for location ${location} within distance of ${MAX_DIST_TO_SEARCH}m`;
+      logger.error(errorMsg);
       return errorMsg;
     }
   },

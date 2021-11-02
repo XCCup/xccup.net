@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=production node app",
-    "dev": "cross-env NODE_ENV=development nodemon -L app",
+    "dev": "cross-env NODE_ENV=production nodemon -L app",
     "test": "jest"
   },
   "author": "",
@@ -37,7 +37,8 @@
     "sequelize": "^6.6.2",
     "sharp": "^0.29.1",
     "swagger-ui-express": "^4.1.6",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/jest": "^27.0.2",

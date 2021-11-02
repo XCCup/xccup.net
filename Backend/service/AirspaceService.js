@@ -1,6 +1,7 @@
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 const Airspace = require("../config/postgres")["Airspace"];
 const { Op } = require("sequelize");
+const logger = require("../config/logger");
 
 const service = {
   getById: async (id) => {
@@ -67,7 +68,7 @@ const service = {
               floorInMeter <= fix.pressureAltitude &&
               fix.pressureAltitude <= ceilingInMeter
             ) {
-              console.log(
+              logger.warn(
                 "Found airspace violation at LAT/LONG: " +
                   lat +
                   "/" +
@@ -89,7 +90,7 @@ const service = {
 
     const endTime = new Date();
 
-    console.log(
+    logger.debug(
       "It took " +
         (endTime.getTime() -
           startTime.getTime() +
@@ -176,7 +177,7 @@ function convertToMeterMSL(heightValue, elevation) {
     const matchingResult = heightValue.match(regex);
     return convertFeetToMeter(matchingResult[1] * 100);
   }
-  console.log("No parsable height value found: " + heightValue);
+  logger.warn("No parsable height value found: " + heightValue);
 }
 
 function convertFeetToMeter(feet) {

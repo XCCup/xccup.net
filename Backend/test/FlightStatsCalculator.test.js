@@ -108,7 +108,7 @@ test("Check if stats are correct for a flight with a fixes resolution of 1s and 
     fixesStats,
   } = FlightStatsCalculator.execute(fixes);
 
-  console.log({
+  logger.({
     minHeightBaro,
     maxHeightBaro,
     minHeightGps,
