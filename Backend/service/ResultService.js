@@ -246,6 +246,7 @@ async function queryDb(where, gender, limit, site, region, club) {
   const siteInclude = createIncludeStatementSite(site, region);
   const clubInclude = {
     model: Club,
+    as: "club",
     attributes: ["name", "shortName", "id"],
   };
   if (club) {
@@ -255,6 +256,7 @@ async function queryDb(where, gender, limit, site, region, club) {
   }
   const teamInclude = {
     model: Team,
+    as: "team",
     attributes: ["name", "id"],
   };
 
@@ -299,6 +301,7 @@ function createDefaultWhereForFlight(seasonDetail, isSenior) {
 function createIncludeStatementUser(gender) {
   const userInclude = {
     model: User,
+    as: "user",
     attributes: ["firstName", "lastName", "id", "gender", "birthday"],
   };
   if (gender) {
@@ -328,8 +331,6 @@ function createIncludeStatementSite(site, region) {
 }
 
 function limitFlightsForUserAndCalcTotals(resultArray, maxNumberOfFlights) {
-  console.log("CACHE: ", cacheNonNewcomer);
-
   resultArray.forEach((entry) => {
     entry.totalFlights = entry.flights.length;
 
@@ -351,9 +352,9 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
   resultOverUser.forEach((entry) => {
     const found = result.find((e) => e.clubId == entry.club.id);
     const memberEntry = {
-      id: entry.userId,
-      firstName: entry.userFirstName,
-      lastName: entry.userLastName,
+      id: entry.user.id,
+      firstName: entry.user.firstName,
+      lastName: entry.user.lastName,
       flights: entry.flights,
       totalDistance: entry.totalDistance,
       totalPoints: entry.totalPoints,
@@ -427,7 +428,7 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
 function aggreateFlightsOverUser(resultQuery) {
   const result = [];
   resultQuery.forEach((entry) => {
-    const found = result.find((e) => e.user.id == entry.User.id);
+    const found = result.find((e) => e.user.id == entry.user.id);
     const flightEntry = {
       id: entry.id,
       flightPoints: entry.flightPoints,
@@ -445,18 +446,18 @@ function aggreateFlightsOverUser(resultQuery) {
     } else {
       result.push({
         user: {
-          id: entry.User.id,
-          firstName: entry.User.firstName,
-          lastName: entry.User.lastName,
-          gender: entry.User.gender,
+          id: entry.user.id,
+          firstName: entry.user.firstName,
+          lastName: entry.user.lastName,
+          gender: entry.user.gender,
         },
         club: {
-          name: entry.Club.name, //A user must always belong to a club
-          id: entry.Club.id,
+          name: entry.club.name, //A user must always belong to a club
+          id: entry.club.id,
         },
         team: {
-          name: entry.Team?.name, //It is possible that a user has no team
-          id: entry.Team?.id,
+          name: entry.team?.name, //It is possible that a user has no team
+          id: entry.team?.id,
         },
         flights: [flightEntry],
       });
