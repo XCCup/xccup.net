@@ -66,7 +66,7 @@ const dbTestData = {
       console.log("Start adding flights");
       const flights = require("./testdatasets/flights.json");
       adjustYearOfEveryFlight(flights);
-      adjustTimesTimeToToday(flights, 5);
+      adjustTimesToToday(flights, 5);
       await Promise.all(
         flights.map(async (flight) => {
           Flight.create(flight).catch((err) => {
@@ -167,7 +167,7 @@ const dbTestData = {
   },
 };
 
-function adjustTimesTimeToToday(flights, numberOfEntriesToAdjust) {
+function adjustTimesToToday(flights, numberOfEntriesToAdjust) {
   for (let index = 0; index < numberOfEntriesToAdjust; index++) {
     const today = new Date();
     const takeoffDate = new Date(flights[index].takeoffTime);

@@ -83,6 +83,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Flight.associate = (models) => {
     Flight.belongsTo(models.User, {
+      as: "user",
       foreignKey: {
         name: "userId",
       },
@@ -94,11 +95,13 @@ module.exports = (sequelize, DataTypes) => {
       },
     });
     Flight.belongsTo(models.Club, {
+      as: "club",
       foreignKey: {
         name: "clubId",
       },
     });
     Flight.belongsTo(models.Team, {
+      as: "team",
       foreignKey: {
         name: "teamId",
       },
@@ -114,6 +117,7 @@ module.exports = (sequelize, DataTypes) => {
       hooks: true,
     });
     Flight.hasMany(models.FlightPhoto, {
+      as: "photos",
       foreignKey: {
         name: "flightId",
         //Through this constrain it's realized that every comment, will be delete if the flight will be deleted
