@@ -28,7 +28,6 @@ export default {
       const { data: initialData } = await ApiService.getInitialData();
 
       // const reponse = await ApiService.getInitialData();
-      // const {tageswertung, geraetewertung} = response.data
 
       return {
         dailyRanking: ref(initialData.todaysFlights),

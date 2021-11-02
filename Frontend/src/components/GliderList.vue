@@ -86,12 +86,7 @@ export default {
       }
     };
     const formatGliderName = (glider) =>
-      glider.brand +
-      " " +
-      glider.model +
-      " (" +
-      glider.gliderClassShortDescription +
-      ")";
+      glider.brand + " " + glider.model + " (" + glider.shortDescription + ")";
 
     return { selectedGlider, formatGliderName, onDelete, removeGlider };
   },

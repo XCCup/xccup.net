@@ -9,7 +9,7 @@
       @updateAirbuddies="updateAirbuddies"
     />
     <FlightDetails :flight="flight" />
-    <FlightReport :report="flight.report" :photos="flight.FlightPhotos" />
+    <FlightReport :report="flight.report" :photos="flight.photos" />
     <Comments
       ref="Comments"
       :comments="flight.comments"

@@ -33,7 +33,7 @@
             <div class="row mt-3">
               <div class="col-md-12">
                 <BaseInput
-                  v-model="userProfile.Club.name"
+                  v-model="userProfile.club.name"
                   label="Verein"
                   :isDisabled="true"
                 />

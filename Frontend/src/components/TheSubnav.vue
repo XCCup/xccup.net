@@ -6,7 +6,7 @@
       ></a>
 
       Flug von
-      <a href="#">{{ flight.User.firstName + " " + flight.User.lastName }}</a>
+      <a href="#">{{ flight.user.firstName + " " + flight.user.lastName }}</a>
       am
       <a href="#"><BaseDate :timestamp="flight.takeoffTime" /></a>
     </p>

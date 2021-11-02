@@ -26,7 +26,7 @@
               >
                 <td scope="row">{{ index + 1 }}</td>
                 <td>
-                  {{ flight.User.firstName + " " + flight.User.lastName }}
+                  {{ flight.user.firstName + " " + flight.user.lastName }}
                 </td>
                 <td>{{ flight.takeoff.name }}</td>
                 <td>{{ Math.floor(flight.flightDistance) }} km</td>

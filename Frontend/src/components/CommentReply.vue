@@ -7,7 +7,7 @@
       height="24"
       width="24"
     />
-    <a href="#">{{ reply.User.firstName + " " + reply.User.lastName }}</a>
+    <a href="#">{{ reply.user.firstName + " " + reply.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
       ><BaseDate :timestamp="reply.createdAt" dateFormat="dd.MM.yyyy"
     /></span>

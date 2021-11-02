@@ -40,7 +40,7 @@
                 class="badge"
                 :style="{ backgroundColor: this.trackColors[index + 1] }"
               >
-                {{ airbuddy.User.firstName + " " + airbuddy.User.lastName }}
+                {{ airbuddy.user.firstName + " " + airbuddy.user.lastName }}
                 <router-link
                   :to="{
                     name: 'Flight',
@@ -112,7 +112,7 @@ export default {
       let airbuddyTracks = [];
       this.buddyFlights.forEach((element) => {
         airbuddyTracks.push({
-          buddyName: element.User.firstName,
+          buddyName: element.user.firstName,
           buddyFlightId: element.id,
           isActive: this.checkedFlights.includes(element.id),
           fixes: element.fixes,

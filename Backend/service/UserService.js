@@ -26,6 +26,7 @@ const userService = {
         },
         {
           model: Club,
+          as: "club",
           attributes: ["name"],
         },
       ],

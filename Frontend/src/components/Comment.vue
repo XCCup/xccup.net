@@ -7,7 +7,7 @@
       height="24"
       width="24"
     />
-    <a href="#">{{ comment.User.firstName + " " + comment.User.lastName }}</a>
+    <a href="#">{{ comment.user.firstName + " " + comment.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
       ><BaseDate :timestamp="comment.createdAt" dateFormat="dd.MM.yyyy"
     /></span>
@@ -62,7 +62,10 @@
     </button>
   </div>
 
-  <div v-if="getUserId && comment.userId != getUserId" class="text-secondary text-end">
+  <div
+    v-if="getUserId && comment.userId != getUserId"
+    class="text-secondary text-end"
+  >
     <a href="#" @click.prevent="openReplyEditor"
       ><i class="bi bi-reply"></i> Antworten</a
     >
