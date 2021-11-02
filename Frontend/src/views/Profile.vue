@@ -347,14 +347,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Modals -->
-  <ModalAddGlider />
-  <ModalRemoveGlider
-    v-if="userDetails"
-    @remove-glider="removeGlider"
-    :glider="userDetails.defaultGlider"
-  />
 </template>
 <script>
 import ApiService from "@/services/ApiService.js";
@@ -365,13 +357,11 @@ import { ref } from "vue";
 import GliderSelect from "@/components/GliderSelect";
 import GliderList from "@/components/GliderList";
 
-import ModalAddGlider from "@/components/ModalAddGlider";
-import ModalRemoveGlider from "@/components/ModalRemoveGlider";
 import cloneDeep from "lodash/cloneDeep";
 
 export default {
   name: "Profile",
-  components: { ModalAddGlider, ModalRemoveGlider, GliderSelect, GliderList },
+  components: { GliderSelect, GliderList },
   async setup() {
     // TODO: Remove if store will not be used for user details. Maybe leave it here for reference how to do it;)
     // const store = useStore();
@@ -423,19 +413,6 @@ export default {
         if (res.status != 200) throw res.statusText;
         this.userProfile = res.data;
         this.unmodifiedUserProfile = cloneDeep(this.userProfile);
-        this.showSpinner = false;
-      } catch (error) {
-        console.error(error);
-        this.showSpinner = false;
-      }
-    },
-    async removeGlider(gliderId) {
-      try {
-        this.showSpinner = true;
-        const res = await ApiService.removeGlider(gliderId);
-        if (res.status != 200) throw res.statusText;
-        // this.userProfile = res.data;
-        // this.unmodifiedUserProfile = cloneDeep(this.userProfile);
         this.showSpinner = false;
       } catch (error) {
         console.error(error);

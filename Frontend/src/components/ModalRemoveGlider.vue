@@ -19,7 +19,9 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">{{ glider }} entfernen</div>
+        <div class="modal-body">
+          {{ glider?.brand + " " + glider?.model }} entfernen
+        </div>
         <div class="modal-footer">
           <button
             type="button"
@@ -48,11 +50,11 @@ export default {
   },
   methods: {
     onGliderRemoved() {
-      this.$emit("remove-glider", this.glider);
+      this.$emit("remove-glider", this.glider.id);
     },
   },
   props: {
-    glider: String,
+    glider: Object,
   },
   emits: ["remove-glider"],
 };
