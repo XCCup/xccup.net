@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const basename = path.basename(__filename);
 const Sequelize = require("sequelize");
+const logger = require("../config/logger");
 
 const load = (db, sequelize) => {
   fs.readdirSync(__dirname)
@@ -11,7 +12,7 @@ const load = (db, sequelize) => {
       );
     })
     .forEach((file) => {
-      console.log("Load model of file: " + file);
+      logger.debug("Load model of file: " + file);
       const model = require(path.join(__dirname, file))(
         sequelize,
         Sequelize.DataTypes

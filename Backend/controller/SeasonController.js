@@ -37,7 +37,7 @@ router.get("/current", async (req, res, next) => {
 //     const comment = await service.create(req.body);
 //     res.json(comment);
 //   } catch (error) {
-//     console.log(error);
+//     logger.(error);
 //     res.status(INTERNAL_SERVER_ERROR).send(error.message);
 //   }
 // });

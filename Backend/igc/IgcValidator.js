@@ -1,12 +1,13 @@
 const axios = require("axios");
 const FormData = require("form-data");
+const logger = require("../config/logger");
 
 const igcValidator = {
   G_RECORD_PASSED: "PASSED",
   G_RECORD_FAILED: "FAILED",
   execute: async (igc) => {
     // http://vali.fai-civl.org/webservice.html
-    console.log("Validating igc file with FAI API");
+    logger.info("Validating igc file with FAI API");
 
     try {
       const url = "http://vali.fai-civl.org/api/vali/json";
@@ -28,7 +29,7 @@ const igcValidator = {
       const res = await axios.post(url, formData, config);
       return res.data.result;
     } catch (error) {
-      console.log(error);
+      logger.error(error);
     }
   },
 };

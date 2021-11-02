@@ -1,11 +1,11 @@
-// const { Client } = require("@googlemaps/google-maps-services-js");
 const axios = require("axios");
+const logger = require("../config/logger");
 
 const byLatLong = async (location) => {
   try {
     // const location = "50.20524528622611,7.064103332484184";
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&language=de&result_type=locality&key=${process.env.GOOGLE_MAPS_API_KEY}`;
-    console.log(url);
+    logger.debug("Request location with ", url);
     const result = await axios.get(url);
     // ZipCode TownName, CountryName
     // const nameOfTown = result.data.results[0].formatted_address;
@@ -13,13 +13,13 @@ const byLatLong = async (location) => {
     const nameOfTown = result.data.results[0].address_components[0].long_name;
     return nameOfTown;
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     return "API Error";
   }
 };
 
 const findLanding = async (landingFix) => {
-  console.log("Will retrieve landing name from Google API");
+  logger.info("Will retrieve landing name from Google API");
   return await byLatLong(createRequestString(landingFix));
 };
 

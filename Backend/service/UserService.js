@@ -9,6 +9,7 @@ const { getCurrentActive } = require("./SeasonService");
 const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 const { arrayRemove } = require("../helper/Utils");
+const logger = require("../config/logger");
 
 const userService = {
   getAll: async () => {
@@ -91,14 +92,14 @@ const userService = {
       where: { email },
     });
     if (!user) {
-      console.log(`No user found for ${email}`);
+      logger.warn(`No user found for ${email}`);
       return null;
     }
     if (user.validPassword(password)) {
-      console.log(`The password is valid`);
+      logger.debug(`The password is valid`);
       return user;
     }
-    console.log(`The password is not valid`);
+    logger.warn(`The password is not valid`);
     return null;
   },
   addGlider: async (userId, glider) => {
