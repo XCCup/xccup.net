@@ -1,6 +1,7 @@
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
+const logger = require("../config/logger");
 
 const THUMBNAIL_POSTFIX = "-thumb";
 /**
@@ -16,7 +17,7 @@ function create(path, targetHeight) {
     // eslint-disable-next-line no-unused-vars
     .toFile(pathThumb, (err, resizedImageInfo) => {
       if (err) {
-        console.log(err);
+        logger.error(err);
       }
     });
   return pathThumb;
@@ -48,27 +49,25 @@ function createThumbnailPath(basePath) {
 async function deleteImages(imageObject) {
   const pathBase = imageObject.path;
   const deleteOperations = [];
-  console.log("BASE: ", pathBase);
   if (pathBase) {
-    console.log("Will delete images for path " + pathBase);
+    logger.debug("Will delete images for path " + pathBase);
     const fullfilepath = path.join(path.resolve(), pathBase);
     deleteOperations.push(
       fs.unlink(fullfilepath, (err) => {
         if (err) {
-          console.error(err);
+          logger.error(err);
         }
       })
     );
   }
   const pathThumb = imageObject.pathThumb;
-  console.log("BASE: ", pathThumb);
   if (pathThumb) {
-    console.log("Will delete images for path " + pathThumb);
+    logger.debug("Will delete images for path " + pathThumb);
     const fullfilepathThumb = path.join(path.resolve(), pathThumb);
     deleteOperations.push(
       fs.unlink(fullfilepathThumb, (err) => {
         if (err) {
-          console.error(err);
+          logger.error(err);
         }
       })
     );

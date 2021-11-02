@@ -17,6 +17,8 @@ const {
   NEWCOMER_MAX_RANKING_CLASS,
 } = require("../config/result-determination-config");
 
+const logger = require("../config/logger");
+
 const cacheNonNewcomer = [];
 
 const service = {
@@ -385,11 +387,11 @@ function dissmissWorstFlights(resultOverTeam) {
     const numberOfFlightsToDismiss =
       flights.length - FLIGHTS_PER_USER * TEAM_SIZE + TEAM_DISMISSES;
     if (numberOfFlightsToDismiss > 0) {
-      console.log("DISMISS");
+      logger.warn("DISMISS");
       flights.sort((a, b) => b.flightPoints - a.flightPoints);
-      flights.forEach((e) => console.log(e.flightPoints));
+      flights.forEach((e) => logger.debug(e.flightPoints));
       const worstFlights = flights.splice(numberOfFlightsToDismiss * -1);
-      worstFlights.forEach((e) => console.log(e.flightPoints));
+      worstFlights.forEach((e) => logger.debug(e.flightPoints));
       //TODO Remove finally flights from result object
     }
   });

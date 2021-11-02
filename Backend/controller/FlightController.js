@@ -8,6 +8,7 @@ const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
+const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
@@ -249,7 +250,7 @@ async function persistIgcFile(flightId, igcFile) {
   const pathToFile = path.join(pathToFolder.toString(), igcFile.name);
   const fsPromises = fs.promises;
   fs.mkdirSync(pathToFolder, { recursive: true });
-  console.log(`Will write received IGC File to: ${pathToFile}`);
+  logger.debug(`Will write received IGC File to: ${pathToFile}`);
   await fsPromises.writeFile(pathToFile.toString(), igcFile.body);
   return pathToFile;
 }

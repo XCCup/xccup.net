@@ -1,5 +1,6 @@
 const { Sequelize } = require("sequelize");
 const { loadModels } = require("../model/ModelLoader");
+const logger = require("./logger");
 
 const port = process.env.POSTGRES_PORT;
 const user = process.env.POSTGRES_USER;
@@ -15,28 +16,31 @@ const db = {};
 process.env.DB_SYNC_IN_PROGRESS = true;
 
 const sequelize = new Sequelize(
-  `postgres://${user}:${pw}@${host}:${port}/${postDb}`
+  `postgres://${user}:${pw}@${host}:${port}/${postDb}`,
+  {
+    logging: (msg) => logger.debug(msg),
+  }
 );
 
 loadModels(db, sequelize);
 
 dbConnectionTest().then(async () => {
   if (process.env.DB_SYNC_ALTER == "true") {
-    console.log("Will alter DB Tables");
+    logger.info("Will alter DB Tables");
     await sequelize.sync({ alter: true }).catch((error) => {
-      console.error(error);
+      logger.error(error);
     });
   }
   if (
     process.env.DB_SYNC_FORCE == "true" &&
     process.env.NODE_ENV === "development"
   ) {
-    console.log("Will create DB Tables");
+    logger.info("Will create DB Tables");
     await sequelize
       .sync({ force: true })
       .then(() => addTestData())
       .catch((error) => {
-        console.error(error);
+        logger.error(error);
       });
   }
 });
@@ -46,17 +50,17 @@ process.env.DB_SYNC_IN_PROGRESS = false;
 async function dbConnectionTest(numberOfRetry = 0) {
   try {
     await sequelize.authenticate();
-    console.log(
+    logger.info(
       `Connection has been established successfully to database ${postDb} on ${host}:${port}.`
     );
   } catch (error) {
-    console.error(
+    logger.warn(
       `Unable to connect to the database ${postDb} on ${host}:${port}. Attempt number: ${numberOfRetry}:`,
       error
     );
     if (numberOfRetry == maxNumberOfRetries) {
       if (failProcess == "true") {
-        console.error(
+        logger.error(
           `Unable to connect to the database after ${maxNumberOfRetries} attempts. Will terminate process.`
         );
         process.exit(1);
@@ -74,7 +78,7 @@ async function sleep(ms) {
 
 function addTestData() {
   if (process.env.DB_ADD_TESTDATA == "true") {
-    console.log("Will check for testdata");
+    logger.info("Will check for testdata");
     require("../test/DbTestData").checkForTestDataAndAddIfMissing();
   }
 }

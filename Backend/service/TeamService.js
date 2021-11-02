@@ -4,6 +4,7 @@ const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
 const { TEAM_SIZE } = require("../config/result-determination-config");
+const logger = require("../config/logger");
 
 const service = {
   getAllActive: async () => {
@@ -102,7 +103,7 @@ const service = {
     const availableUserIds = availableUsers.map((user) => user.id);
     let result = memberIds.filter((id) => !availableUserIds.includes(id));
     result.forEach((element) =>
-      console.log(`The user ${element} is already asigned to a team`)
+      logger.warn(`The user ${element} is already asigned to a team`)
     );
     return result.length;
   },

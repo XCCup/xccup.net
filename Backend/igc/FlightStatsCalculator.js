@@ -1,10 +1,12 @@
+const logger = require("../config/logger");
+
 /**
  * The time frame in which speed and climb will be calculated
  */
 const TIME_FRAME = 30;
 
 function execute(fixes) {
-  console.log("Start flight stats calculation");
+  logger.debug("Start flight stats calculation");
 
   const resolution = (fixes[1].timestamp - fixes[0].timestamp) / 1000;
   const step = Math.ceil(TIME_FRAME / resolution);
@@ -58,17 +60,7 @@ function execute(fixes) {
     if (speed > maxSpeed) maxSpeed = speed;
   }
 
-  console.log("Finished flight stats calculation");
-
-  console.log({
-    minHeightBaro,
-    maxHeightBaro,
-    minHeightGps,
-    maxHeightGps,
-    maxSink,
-    maxClimb,
-    maxSpeed,
-  });
+  logger.debug("Finished flight stats calculation");
 
   return {
     minHeightBaro,

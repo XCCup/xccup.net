@@ -8,6 +8,7 @@ const { waitTillDbHasSync } = require("../helper/Utils");
 const userService = require("../service/UserService");
 require("../service/UserService");
 const Token = require("../config/postgres")["Token"];
+const logger = require("../config/logger");
 
 /**
  * Needs to be run on server start up to initialize the encryption tokens.
@@ -16,8 +17,8 @@ const init = async () => {
   process.env.JWT_LOGIN_TOKEN = crypto.randomBytes(64).toString("hex");
   process.env.JWT_REFRESH_TOKEN = crypto.randomBytes(64).toString("hex");
   //TODO Remove after development
-  console.log("L: ", process.env.JWT_LOGIN_TOKEN);
-  console.log("R: ", process.env.JWT_REFRESH_TOKEN);
+  logger.info("L: " + process.env.JWT_LOGIN_TOKEN);
+  logger.info("R: " + process.env.JWT_REFRESH_TOKEN);
   //After restart all stored tokens will become invalid. Therefore all stored tokens will be deleted.
   await waitTillDbHasSync();
   Token.destroy({ truncate: true });
@@ -39,7 +40,10 @@ const auth = (req, res, next) => {
         if (error.toString().includes("jwt expired")) {
           return res.status(FORBIDDEN).send("EXPIRED");
         }
-        console.log("Verify err: ", error);
+        logger.warn(
+          `Verify authentication for user ${user.firstName} ${user.lastName} failed: ` +
+            error
+        );
         return res.sendStatus(FORBIDDEN);
       }
       req.user = user;
@@ -103,7 +107,10 @@ const refresh = async (token) => {
     process.env.JWT_REFRESH_TOKEN,
     (error, user) => {
       if (error) {
-        console.log("Verify err: ", error);
+        logger.warn(
+          `Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,
+          error
+        );
         return;
       }
       return create(user);

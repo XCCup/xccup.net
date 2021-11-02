@@ -27,6 +27,8 @@ const { getCurrentYear, sleep } = require("../helper/Utils");
 const { COUNTRY } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
 
+const logger = require("../config/logger");
+
 const flightService = {
   getAll: async (
     year,
@@ -316,7 +318,7 @@ const flightService = {
   },
 
   addResult: async (result) => {
-    console.log("ADD RESULT TO FLIGHT");
+    logger.info("Will add igc result to flight");
     const flight = await flightService.getById(result.id, true);
 
     flight.flightDistance = result.dist;
@@ -442,7 +444,7 @@ function calcAirtime(fixes) {
 async function calcFlightPointsAndStatus(flight, glider, status) {
   const currentSeason = await getCurrentActive();
   const gliderClass = currentSeason.gliderClasses[glider.gliderClass];
-  console.log(
+  logger.info(
     `Glider class changed to ${gliderClass.shortDescription}. Will recalculate flightPoints`
   );
   const flightPoints = calcFlightPoints(flight, currentSeason, gliderClass);
@@ -453,8 +455,8 @@ async function calcFlightPointsAndStatus(flight, glider, status) {
     status
   );
 
-  console.log(`Flight calculated with ${flightPoints} points`);
-  console.log(`Flight status set to ${flightStatus}`);
+  logger.debug(`Flight calculated with ${flightPoints} points`);
+  logger.debug(`Flight status set to ${flightStatus}`);
 
   return { flightPoints, flightStatus };
 }
@@ -491,7 +493,7 @@ function calcFlightPoints(flight, seasonDetail, gliderClass) {
     const distance = flight.flightDistance;
     return Math.round(typeFactor * gliderFactor * distance);
   }
-  console.log(
+  logger.debug(
     "Flight calculation must be still in process. Will set flightPoints to 0."
   );
   return 0;
@@ -500,7 +502,7 @@ function calcFlightPoints(flight, seasonDetail, gliderClass) {
 async function retrieveDbObjectOfFlightFixes(flightId) {
   const MAX_ATTEMPTS = 1;
 
-  console.log("Will retrieve fixes for flight: ", flightId);
+  logger.debug("Will retrieve fixes for flight: ", flightId);
   for (let index = 0; index < MAX_ATTEMPTS; index++) {
     const fixes = await FlightFixes.findOne({
       where: {
@@ -510,7 +512,7 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
 
     if (fixes.geom?.coordinates.length > 0) return fixes;
 
-    console.log("Fixes geom was empty. Will try again.");
+    logger.warn("Fixes geom was empty. Will try again.");
     sleep(1000);
   }
 }
@@ -596,7 +598,7 @@ async function findAirbuddies(flight) {
  */
 async function addExternalId(flight) {
   flight.externalId = (await Flight.max("externalId")) + 1;
-  console.log("New external ID was created: " + flight.externalId);
+  logger.debug("New external ID was created: " + flight.externalId);
 }
 
 /**

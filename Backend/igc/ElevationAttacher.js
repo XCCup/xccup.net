@@ -1,5 +1,6 @@
 const axios = require("axios");
 const debounce = require("lodash/debounce");
+const logger = require("../config/logger");
 
 const host = process.env.ELEVATION_HOST;
 const dataset = process.env.ELEVATION_DATASET;
@@ -22,7 +23,7 @@ function createPromise() {
 }
 
 function executeRequest(stack) {
-  console.log("Request Elevation Data at lurb.org");
+  logger.debug("Request Elevation Data at lurb.org");
 
   let locations = stack
     .map(({ fix }) => `${fix.latitude},${fix.longitude}`)
@@ -32,7 +33,7 @@ function executeRequest(stack) {
 }
 
 function executeRequestGoogle(stack) {
-  console.log("Request Elevation Data at Google");
+  logger.debug("Request Elevation Data at Google");
 
   let locations = [];
   stack.forEach(({ fix }) =>
@@ -63,7 +64,7 @@ const resolveStack = debounce(async () => {
       resolve(Math.round(GND));
     });
   } catch (error) {
-    console.log("Error while fetching elevation data: " + error);
+    logger.error("Error while fetching elevation data: " + error);
   }
   if (tmpFixes.length) {
     resolveStack();
@@ -84,7 +85,7 @@ const getFixesWithElevation = async (fixes, callback) => {
   const _fixesWithElevation = [];
   const { Client } = require("@googlemaps/google-maps-services-js");
   client = new Client({});
-  console.log(
+  logger.info(
     "Will request elevation data in bunches of " + numberOfFixesPerApiRequest
   );
   await Promise.all(
@@ -93,7 +94,7 @@ const getFixesWithElevation = async (fixes, callback) => {
       _fixesWithElevation.push(fix);
     })
   );
-  console.log("Done!");
+  logger.info("Done!");
   callback(_fixesWithElevation);
 };
 

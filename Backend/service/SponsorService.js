@@ -8,10 +8,7 @@ const service = {
   getById: async (id) => {
     return Sponsor.findOne({
       where: { id },
-      include: {
-        model: Logo,
-        attributes: ["id", "path", "pathThumb"],
-      },
+      include: createLogoInclude(),
     });
   },
 
@@ -29,10 +26,7 @@ const service = {
       attributes: {
         exclude: ["contacts", "sponsorInSeasons", "createdAt", "updatedAt"],
       },
-      include: {
-        model: Logo,
-        attributes: ["id"],
-      },
+      include: createLogoInclude(),
     });
   },
 
@@ -51,5 +45,13 @@ const service = {
     return numberOfDestroyedRows;
   },
 };
+
+function createLogoInclude() {
+  return {
+    model: Logo,
+    as: "logo",
+    attributes: ["id", "path", "pathThumb"],
+  };
+}
 
 module.exports = service;

@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Sponsor.associate = (models) => {
     Sponsor.hasOne(models.Logo, {
+      as: "logo",
       foreignKey: {
         name: "sponsorId",
         //Through this constrain it's realized that every comment, will be delete if the user will be deleted

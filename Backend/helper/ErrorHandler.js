@@ -1,15 +1,25 @@
-function handleSequelizeUniqueError(error, res) {
-  if (error.name?.includes("SequelizeUniqueConstraintError"))
+const logger = require("../config/logger");
+
+function handleSequelizeUniqueError(error, req, res) {
+  if (error.name?.includes("SequelizeUniqueConstraintError")) {
+    logger.warn(error.errors[0].message, createMetaDataFromReq(req));
     return res.status(403).send(error.errors[0].message);
+  }
 }
 
-function handleXccupRestrictionError(error, res) {
-  if (error.name?.includes("XccupRestrictionError"))
+function handleXccupRestrictionError(error, req, res) {
+  if (error.name?.includes("XccupRestrictionError")) {
+    logger.error(error, createMetaDataFromReq(req));
     return res.status(403).send(error.message);
+  }
 }
 
-function handleGeneralError(error, res) {
-  console.error(error.stack);
+function handleGeneralError(error, req, res) {
+  logger.error(error, {
+    meta: {
+      req,
+    },
+  });
   res
     .status(500)
     .send(
@@ -24,6 +34,16 @@ class XccupRestrictionError extends Error {
     this.name = "XccupRestrictionError";
     this.message = message;
   }
+}
+
+function createMetaDataFromReq(req) {
+  return Object.keys(req.body).length > 0
+    ? {
+        meta: {
+          body: req.body,
+        },
+      }
+    : undefined;
 }
 
 exports.handleSequelizeUniqueError = handleSequelizeUniqueError;
