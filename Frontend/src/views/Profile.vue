@@ -90,43 +90,42 @@
                 <div class="mt-3"></div>
                 <hr />
               </div>
-              <!-- Glider select -->
               <div class="col-md-12">
+                <GliderList
+                  :gliders="userProfile.gliders"
+                  :defaultGlider="userProfile.defaultGlider"
+                  @gliders-changed="glidersChanged"
+                />
+              </div>
+
+              <!-- Glider select -->
+              <!-- <div class="col-md-12">
                 <div class="row d-flex align-items-end">
                   <div class="col-md-7">
                     <div class="">
-                      <!-- <GliderSelect
+                      <GliderSelect
                         v-model="userProfile.defaultGlider"
                         :showLabel="true"
                         label="Standard Gerät"
                         :gliders="userProfile.gliders"
                         :isDisabled="false"
-                      /> -->
+                      />
                     </div>
                   </div>
                   <div class="col-md-5">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                       <button
                         type="button"
-                        class="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#addGliderModal"
-                      >
-                        Bearbeiten
-                      </button>
-                      <!-- <button
-                        type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#removeGliderModal"
                       >
                         Entfernen
-                      </button> -->
+                      </button>
                     </div>
                   </div>
                 </div>
-                <GliderList :gliders="userProfile.gliders" />
-              </div>
+              </div> -->
             </div>
             <hr />
             <h5>Benachrichtigungen</h5>
@@ -406,6 +405,9 @@ export default {
     },
   },
   methods: {
+    glidersChanged(gliders) {
+      this.userProfile.gliders = gliders;
+    },
     async save() {
       try {
         this.showSpinner = true;

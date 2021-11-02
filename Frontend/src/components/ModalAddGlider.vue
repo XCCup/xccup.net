@@ -47,7 +47,12 @@
           >
             Abbrechen
           </button>
-          <button type="button" class="btn btn-primary" @click="addGlider">
+          <button
+            type="button"
+            class="btn btn-primary"
+            @click="onAddGlider"
+            :disabled="!saveButtonIsEnabled"
+          >
             Speichern
             <div
               v-if="showSpinner"
@@ -65,47 +70,47 @@
 <script>
 import ApiService from "@/services/ApiService.js";
 
-import { ref } from "vue";
+import { ref, computed, reactive } from "vue";
 
 export default {
   name: "ModalAddGlider",
-  async setup() {
-    try {
-      const { data: initalBrands } = await ApiService.getBrands();
-      const { data: initialGliderClasses } =
-        await ApiService.getGliderClasses();
+  emits: ["add-glider"],
 
-      return {
-        brands: ref(initalBrands),
-        gliderClasses: ref(initialGliderClasses),
-      };
+  async setup(props, { emit }) {
+    const glider = reactive({
+      brand: "",
+      model: "",
+      gliderClass: "",
+    });
+    const showSpinner = ref(false);
+    const brands = ref(null);
+    const gliderClasses = ref(null);
+    const saveButtonIsEnabled = computed(() => {
+      return (
+        (glider.model.length > 2) &
+        (glider.brand != "") &
+        (glider.gliderClass != "")
+      );
+    });
+
+    try {
+      brands.value = (await ApiService.getBrands()).data;
+      gliderClasses.value = (await ApiService.getGliderClasses()).data;
     } catch (error) {
       console.log(error);
     }
-  },
 
-  data() {
-    return {
-      glider: {
-        brand: "",
-        model: "",
-        gliderClass: "",
-      },
-      showSpinner: false,
+    const onAddGlider = () => {
+      emit("add-glider", glider);
     };
-  },
-  methods: {
-    async addGlider() {
-      try {
-        this.showSpinner = true;
-        const res = await ApiService.addGlider(this.glider);
-        if (res.status != 200) throw res.statusText;
-        this.showSpinner = false;
-      } catch (error) {
-        console.error(error);
-        this.showSpinner = false;
-      }
-    },
+    return {
+      brands,
+      gliderClasses,
+      glider,
+      showSpinner,
+      onAddGlider,
+      saveButtonIsEnabled,
+    };
   },
 };
 </script>

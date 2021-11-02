@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="modal fade"
-    id="removeGliderModal"
-    tabindex="-1"
-    aria-labelledby="removeAircraftModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="removeGliderModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -45,9 +39,6 @@
 <script>
 export default {
   name: "ModalRemoveGlider",
-  data() {
-    return {};
-  },
   methods: {
     onGliderRemoved() {
       this.$emit("remove-glider", this.glider.id);
