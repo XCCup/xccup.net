@@ -21,6 +21,9 @@ import Sponsors from "@/components/Sponsors.vue";
 
 export default {
   name: "Home",
+  mounted() {
+    document.title = "XCCup - Home";
+  },
   async setup() {
     // To simulate longer loading times
     // await new Promise((resolve) => setTimeout(resolve, 2000));

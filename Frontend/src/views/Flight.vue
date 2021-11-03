@@ -63,6 +63,9 @@ export default {
           throw "Invalid response";
         }
         flight.value = response.data;
+        document.title = `XCCup - Flug von ${
+          flight.value.user.firstName + " " + flight.value.user.lastName
+        }`;
       } catch (error) {
         console.log(error);
         if (error.response && error.response.status == 404) {
@@ -99,7 +102,6 @@ export default {
 
         // TODO: Maybe use an optimistic aproach like:
         // this.flight.comments = [...this.flight.comments, comment];
-
         if (res.status != 200) throw res.statusText;
         this.$refs.Comments.clearCommentEditorInput();
         if (comment.relatedTo)
