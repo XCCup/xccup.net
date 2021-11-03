@@ -16,6 +16,18 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// @desc Gets the year of all seasons
+// @route GET /seasons/years
+
+router.get("/years", async (req, res, next) => {
+  try {
+    const years = await service.getAll(true);
+    res.json(years);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Get current season detail
 // @route GET /seasons/current
 
