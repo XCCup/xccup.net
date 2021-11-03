@@ -11,7 +11,7 @@
         <div class="row mt-3">
           <div v-for="sponsor in goldSponsors" :key="sponsor.id" class="col">
             <div class="square-holder">
-              <a :href="sponsor.website">
+              <a :href="sponsor.website" target="_blank">
                 <img
                   :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
                 />
@@ -29,7 +29,7 @@
           class="col-3 col-sm-3 col-md-3 col-lg-2"
         >
           <div class="square-holder">
-            <a :href="sponsor.website">
+            <a :href="sponsor.website" target="_blank">
               <img
                 :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
               />
