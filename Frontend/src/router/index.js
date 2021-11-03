@@ -30,10 +30,40 @@ const routes = [
       import(/* webpackChunkName: "" */ "../views/FlightsAll.vue"),
   },
   {
-    path: "/newcomer/",
+    path: "/:year/einzelwertung/",
+    name: "ResultsOverall",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/ResultsOverall.vue"),
+  },
+  {
+    path: "/:year/newcomer/",
     name: "ResultsNewcomer",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
     component: () =>
       import(/* webpackChunkName: "" */ "../views/ResultsNewcomer.vue"),
+  },
+  {
+    path: "/:year/seniorenwertung/",
+    name: "ResultsSeniors",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/ResultsSeniors.vue"),
+  },
+  {
+    path: "/:year/damenwertung/",
+    name: "ResultsLadies",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/ResultsLadies.vue"),
   },
   {
     path: "/upload",

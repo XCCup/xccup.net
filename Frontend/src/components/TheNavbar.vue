@@ -35,10 +35,46 @@
               </li>
               <li>
                 <router-link
-                  :to="{ name: 'ResultsNewcomer' }"
+                  :to="{
+                    name: 'ResultsOverall',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Gesamtwertung
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsNewcomer',
+                    params: { year: currentYear },
+                  }"
                   class="dropdown-item"
                 >
                   Newcomer
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsSeniors',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Seniorenwertung
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsLadies',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Damenwertung
                 </router-link>
               </li>
               <li>

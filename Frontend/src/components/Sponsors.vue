@@ -13,7 +13,7 @@
             <div class="square-holder">
               <a :href="sponsor.website">
                 <img
-                  :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+                  :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
                 />
               </a>
             </div>
@@ -31,7 +31,7 @@
           <div class="square-holder">
             <a :href="sponsor.website">
               <img
-                :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+                :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
               />
             </a>
           </div>

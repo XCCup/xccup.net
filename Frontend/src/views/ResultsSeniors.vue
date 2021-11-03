@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h3>Newcomer Wertung {{ year }}</h3>
+    <h3>Seniorenwertung {{ year }}</h3>
   </div>
   <ResultsTable :results="results" :maxFlights="3" />
 </template>
@@ -12,18 +12,18 @@ import ResultsTable from "@/components/rankings/ResultsTable";
 import { ref } from "vue";
 
 export default {
-  name: "ResultsNewcomer",
+  name: "ResultsSeniors",
   components: { ResultsTable },
   props: {
     year: {
       type: [String, Number],
     },
   },
-
+  // Todo: This is reused very often. Maybe make it shared code
   async setup(props) {
     const results = ref(null);
     try {
-      const res = await ApiService.getNewcomerResults({
+      const res = await ApiService.getSeniorResults({
         year: props.year,
       });
       if (res.status != 200) throw res.status.text;
