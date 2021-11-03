@@ -1,19 +1,19 @@
 <template>
   <div class="container-fluid">
-    <h3 v-if="activeCategory">{{ activeCategory.title }} {{ year }}</h3>
+    <h3>Teamwertung {{ year }}</h3>
   </div>
-  <ResultsTable :results="results" :maxFlights="3" />
+  <ResultsTableTeams :results="results" />
 </template>
 
 <script>
 import ApiService from "@/services/ApiService.js";
-import ResultsTable from "@/components/rankings/ResultsTable";
+import ResultsTableTeams from "@/components/rankings/ResultsTableTeams";
 
 import { ref } from "vue";
 
 export default {
   name: "ResultsTeams",
-  components: { ResultsTable },
+  components: { ResultsTableTeams },
   props: {
     year: {
       type: [String, Number],
@@ -24,7 +24,7 @@ export default {
     const results = ref(null);
 
     try {
-      const res = await ApiService.getResultsTeams({ year: props.year });
+      const res = await ApiService.getResults("teams", { year: props.year });
       if (res.status != 200) throw res.status.text;
       results.value = res.data;
     } catch (error) {

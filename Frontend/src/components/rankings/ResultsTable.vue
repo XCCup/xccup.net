@@ -33,6 +33,11 @@
               </td>
 
               <td v-for="n in maxFlights" :key="n">
+                <i
+                  v-if="result.flights[n - 1]?.flightPoints"
+                  class="bi bi-trophy me-1"
+                  :class="result.flights[n - 1].glider.gliderClass.key"
+                ></i>
                 <router-link
                   v-if="result.flights[n - 1]"
                   :to="{
@@ -40,7 +45,7 @@
                     params: { flightId: result.flights[n - 1].id },
                   }"
                 >
-                  {{ result.flights[n - 1]?.flightPoints ?? "-" }}
+                  {{ result.flights[n - 1]?.flightPoints }}
                 </router-link>
                 <div v-else>-</div>
               </td>
@@ -57,7 +62,9 @@
       </div>
       <!-- TODO: Handle this more elegant -->
       <div v-if="!results">Fehler beim laden 🤯</div>
-      <div v-else>Keine Flüge gemeldet in diesem Jahr</div>
+      <div v-if="results?.length === 0">
+        Keine Flüge gemeldet in diesem Jahr
+      </div>
     </div>
   </section>
 </template>

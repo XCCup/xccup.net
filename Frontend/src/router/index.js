@@ -62,6 +62,15 @@ const routes = [
     component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
   },
   {
+    path: "/:year/teamwertung/",
+    name: "ResultsTeams",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/ResultsTeams.vue"),
+  },
+  {
     path: "/upload",
     name: "FlightUpload",
     props: true,

@@ -28,7 +28,11 @@
                 <BaseDate :timestamp="flight.takeoffTime" dateFormat="dd.MM" />
               </td>
 
-              <td>{{ flight.user.firstName + " " + flight.user.lastName }}</td>
+              <td>
+                <strong>{{
+                  flight.user.firstName + " " + flight.user.lastName
+                }}</strong>
+              </td>
               <td scope="col" class="d-none d-lg-table-cell">
                 {{ flight.club.name }}
               </td>
