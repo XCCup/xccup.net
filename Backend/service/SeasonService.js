@@ -25,8 +25,10 @@ const service = {
     return details;
   },
 
-  getAll: async () => {
-    return SeasonDetail.findAll();
+  getAll: async (retrieveOnlyYears) => {
+    return SeasonDetail.findAll({
+      attributes: retrieveOnlyYears ? ["year"] : undefined,
+    });
   },
 
   getCurrentActive: () => {
