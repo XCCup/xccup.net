@@ -19,9 +19,6 @@
         {{ seasonStats.numberOfTeams }} Teams gemeldet. In dieser Saison wurden
         insgesamt {{ seasonStats.totalFlightDistance }} km erflogen.
       </p>
-      <p>
-        <a href="#" class="btn btn-outline-secondary my-2">Ausschreibung</a>
-      </p>
     </div>
   </section>
 </template>
@@ -35,4 +32,20 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped>
+/* .header-image-gradient {
+  background-image: linear-gradient(
+      to left,
+      rgba(255, 0, 0, 0),
+      rgb(26, 44, 51)
+    ),
+    url("../assets/images/rachtig.jpg");
+} */
+.header-image {
+  background-image: url("../assets/images/rachtig.jpg");
+  height: 22vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+</style>

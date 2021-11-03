@@ -62,16 +62,16 @@ html,
 body {
   height: 100%;
   width: 100%;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  // font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
-// #app {
-//   font-family: Avenir, Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   text-align: center;
-//   color: #2c3e50;
-// }
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // text-align: center;
+  // color: #2c3e50;
+}
 
 h3 {
   margin-bottom: 1rem;
@@ -106,14 +106,6 @@ footer {
 }
 .flight-info {
   background-color: darken($primary, 5%);
-}
-
-.header-image {
-  background-image: url("assets/images/rachtig.jpg");
-  height: 22vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
 }
 
 .error-message {
