@@ -10,6 +10,7 @@ const sequelize = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
 const { TYPE, STATE } = require("../constants/flight-constants");
+const { GENDER } = require("../constants/user-constants");
 const {
   TEAM_DISMISSES,
   TEAM_SIZE,
@@ -307,9 +308,9 @@ function createIncludeStatementUser(gender) {
     attributes: ["firstName", "lastName", "id", "gender", "birthday"],
   };
   if (gender) {
-    userInclude.where.gender = gender
-      ? gender.toUpperCase()
-      : userService.GENDERS;
+    userInclude.where = {
+      gender: gender ? gender.toUpperCase() : Object.values(GENDER),
+    };
   }
   return userInclude;
 }

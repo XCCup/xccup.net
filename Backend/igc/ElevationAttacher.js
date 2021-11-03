@@ -94,7 +94,7 @@ const getFixesWithElevation = async (fixes, callback) => {
       _fixesWithElevation.push(fix);
     })
   );
-  logger.info("Done!");
+  logger.info("Finished retrieving elevation data");
   callback(_fixesWithElevation);
 };
 
