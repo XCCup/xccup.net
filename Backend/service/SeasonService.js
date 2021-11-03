@@ -19,7 +19,7 @@ const service = {
 
     if (!details)
       throw new XccupRestrictionError(
-        `There is no valid configuration for the request year of ${year}`
+        `There is no valid configuration for the requested year of ${year}`
       );
 
     return details;

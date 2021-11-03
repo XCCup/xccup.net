@@ -5,7 +5,6 @@ const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
 
 const seasonService = require("./SeasonService");
-const userService = require("./UserService");
 const sequelize = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
@@ -268,6 +267,7 @@ async function queryDb(where, gender, limit, site, region, club) {
     include: [userInclude, siteInclude, clubInclude, teamInclude],
     attributes: [
       "id",
+      "externalId",
       "flightPoints",
       "flightDistance",
       "glider",
@@ -434,6 +434,7 @@ function aggreateFlightsOverUser(resultQuery) {
     const found = result.find((e) => e.user.id == entry.user.id);
     const flightEntry = {
       id: entry.id,
+      externalId: entry.externalId,
       flightPoints: entry.flightPoints,
       flightDistance: Math.round(entry.flightDistance * 100) / 100,
       glider: entry.glider,
