@@ -38,7 +38,7 @@
                     <router-link
                       :to="{
                         name: 'Flight',
-                        params: { flightId: member.flights[n - 1].id },
+                        params: { flightId: member.flights[n - 1].externalId },
                       }"
                       >{{ member.flights[n - 1].flightPoints }}
                     </router-link>

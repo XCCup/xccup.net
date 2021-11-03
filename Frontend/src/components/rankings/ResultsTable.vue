@@ -42,7 +42,7 @@
                   v-if="result.flights[n - 1]"
                   :to="{
                     name: 'Flight',
-                    params: { flightId: result.flights[n - 1].id },
+                    params: { flightId: result.flights[n - 1].externalId },
                   }"
                 >
                   {{ result.flights[n - 1]?.flightPoints }}
