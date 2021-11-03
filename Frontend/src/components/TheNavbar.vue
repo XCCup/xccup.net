@@ -172,7 +172,7 @@ export default {
       return this.getterLoginStatus === "success";
     },
     currentYear() {
-      return new Date(Date.now()).getFullYear();
+      return new Date().getFullYear();
     },
   },
   methods: {
