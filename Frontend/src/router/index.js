@@ -32,38 +32,34 @@ const routes = [
   {
     path: "/:year/einzelwertung/",
     name: "ResultsOverall",
-    props: true,
+    props: (route) => ({ category: "overall", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/ResultsOverall.vue"),
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
   },
   {
     path: "/:year/newcomer/",
     name: "ResultsNewcomer",
-    props: true,
+    props: (route) => ({ category: "newcomer", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/ResultsNewcomer.vue"),
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
   },
   {
     path: "/:year/seniorenwertung/",
     name: "ResultsSeniors",
-    props: true,
+    props: (route) => ({ category: "seniors", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/ResultsSeniors.vue"),
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
   },
   {
     path: "/:year/damenwertung/",
     name: "ResultsLadies",
-    props: true,
+    props: (route) => ({ category: "ladies", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/ResultsLadies.vue"),
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
   },
   {
     path: "/upload",

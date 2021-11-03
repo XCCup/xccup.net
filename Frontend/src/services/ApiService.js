@@ -66,19 +66,11 @@ export default {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
   },
   // Results
-  getNewcomerResults() {
-    return apiClient.get("results/newcomer/");
+  getResults(category, params) {
+    return apiClient.get("results/" + category, {
+      params: { year: params.year },
+    });
   },
-  getOverallResults() {
-    return apiClient.get("results/");
-  },
-  getSeniorResults() {
-    return apiClient.get("results/seniors");
-  },
-  getLadiesResults() {
-    return apiClient.get("results/ladies");
-  },
-
   // General
   getBrands() {
     return apiClient.get(baseURL + "general/brands");

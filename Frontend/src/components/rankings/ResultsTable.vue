@@ -55,19 +55,16 @@
           </tbody>
         </table>
       </div>
+      <!-- TODO: Handle this more elegant -->
+      <div v-if="!results">Fehler beim laden 🤯</div>
       <div v-else>Keine Flüge gemeldet in diesem Jahr</div>
     </div>
   </section>
 </template>
 
 <script>
-// import FlightTypeIcon from "@/components/FlightTypeIcon";
-// import FlightState from "@/components/FlightState";
-
 export default {
   name: "ResultsTable",
-  components: {},
-
   props: {
     results: {
       type: Array,
@@ -78,26 +75,6 @@ export default {
       required: true,
     },
   },
-
-  methods: {
-    routeToFlight(flightId) {
-      this.$router.push({
-        name: "Flight",
-        params: {
-          flightId: flightId,
-        },
-      });
-    },
-  },
 };
 </script>
-<style scoped>
-/* tr:hover {
-  
-  -moz-box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
-  -webkit-box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
-
-  cursor: pointer;
-} */
-</style>
+<style scoped></style>
