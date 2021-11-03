@@ -20,7 +20,7 @@
     "leaflet": "^1.7.1",
     "leaflet-gesture-handling": "^1.2.2",
     "lodash": "^4.17.21",
-    "vue": "^3.2.20",
+    "vue": "^3.2.21",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
