@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "ResultsTable",
+  name: "ResultsOverviewTable",
   data() {
     return {};
   },

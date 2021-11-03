@@ -5,17 +5,17 @@
       v-for="(rankingClass, index) in rankingByClass"
       :key="index"
     >
-      <ResultsTable :ranking="rankingClass" />
+      <ResultsOverviewTable :ranking="rankingClass" />
     </div>
   </div>
 </template>
 
 <script>
-import ResultsTable from "@/components/rankings/ResultsTable";
+import ResultsOverviewTable from "@/components/rankings/ResultsOverviewTable";
 export default {
   name: "ClassRanking",
   components: {
-    ResultsTable,
+    ResultsOverviewTable,
   },
   props: {
     rankingByClass: {
