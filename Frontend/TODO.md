@@ -12,6 +12,7 @@
 - [ ] Page names
 - [ ] Correct browser history
 - [ ] bworser window naming
+- [ ] add brwoser titles
 
 ### Home
 
@@ -28,7 +29,7 @@
 
 - [x] Basic layout
 - [x] Connect to API
-- [ ] Aircraft add/delete logic
+- [x] Aircraft add/delete logic
 - [ ] Change profile picture
 - [ ] Overview of flights
 - [ ] Form input validation
@@ -69,16 +70,15 @@
 - [ ] Sort functionality
 - [x] Connect to API
 
-### Rankings
+### Results
 
-- [ ] Club
-- [ ] Team
-- [ ] Ladies
-- [ ] Seniors
+- [x] Club
+- [x] Team
+- [x] Ladies
+- [x] Seniors
 - [ ] GS RLP
-- [ ] Seniors
 - [ ] Luxemburg XC-Championat
-- [ ] Newcomer
+- [x] Newcomer
 - [ ] Ranking Class
 - [ ] Takeoff records
 - [ ] Early bird
