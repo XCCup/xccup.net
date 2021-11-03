@@ -140,7 +140,7 @@
               </tr>
               <tr>
                 <th>Geschwindigkeit max</th>
-                <td>{{ flight.flightStats.maxSpeed }} km/h</td>
+                <td>{{ Math.floor(flight.flightStats.maxSpeed) }} km/h</td>
               </tr>
               <tr>
                 <th>Aufgaben-Geschwindigkeit</th>
