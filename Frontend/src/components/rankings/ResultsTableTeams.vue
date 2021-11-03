@@ -14,11 +14,12 @@
           <tbody>
             <tr v-for="(team, index) in results" v-bind:key="team.teamId">
               <td>{{ index + 1 }}</td>
-              <td>{{ team.teamName }}</td>
+
               <td>
-                <strong>{{ team.totalPoints }} P </strong>({{
-                  Math.floor(team.totalDistance)
-                }}
+                <strong>{{ team.teamName }}</strong>
+              </td>
+              <td>
+                {{ team.totalPoints }} P ({{ Math.floor(team.totalDistance) }}
                 km)
               </td>
 

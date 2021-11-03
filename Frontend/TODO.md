@@ -2,6 +2,17 @@
 
 ## Progress
 
+### General functionality
+
+- [ ] Beautify spinner (Paraglider animation?)
+- [ ] Icons for task types (FAI & flat triangle, one way)
+- [ ] Icons for ranking classes
+- [ ] Authentication
+- [ ] Login error handling
+- [ ] Page names
+- [ ] Correct browser history
+- [ ] bworser window naming
+
 ### Home
 
 - [x] Basic layout
@@ -85,12 +96,3 @@
 - [ ] Waypoints?
 - [ ] Early bird
 - [ ] ...
-
-### General functionality
-
-- [ ] Beautify spinner (Paraglider animation?)
-- [ ] Icons for task types (FAI & flat triangle, one way)
-- [ ] Icons for ranking classes
-- [ ] Authentication
-- [ ] Login error handling
-- [ ] Page names
