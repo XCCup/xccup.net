@@ -1,6 +1,7 @@
 const SeasonDetail = require("../config/postgres")["SeasonDetail"];
 const { waitTillDbHasSync, getCurrentYear } = require("../helper/Utils");
 const logger = require("../config/logger");
+const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
 let currentSeasonDetailCache;
 
@@ -10,11 +11,18 @@ const service = {
   },
 
   getByYear: async (year) => {
-    return SeasonDetail.findOne({
+    const details = await SeasonDetail.findOne({
       where: {
         year,
       },
     });
+
+    if (!details)
+      throw new XccupRestrictionError(
+        `There is no valid configuration for the request year of ${year}`
+      );
+
+    return details;
   },
 
   getAll: async () => {
