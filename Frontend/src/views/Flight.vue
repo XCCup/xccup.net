@@ -1,7 +1,7 @@
 <template>
   <div v-if="flight">
     <TheSubnav :flight="flight" />
-    <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
+    <FlightMap :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
     <FlightBarogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
       v-if="flight.airbuddies.length > 0"
@@ -29,26 +29,10 @@
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ApiService from "@/services/ApiService.js";
-import MapV2 from "@/components/MapV2";
-import Airbuddies from "@/components/Airbuddies";
-import FlightBarogramm from "@/components/FlightBarogramm.vue";
-import trackColors from "@/assets/js/trackColors";
-import FlightDetails from "@/components/FlightDetails";
-import Comments from "@/components/Comments";
-import FlightReport from "@/components/FlightReport";
-import TheSubnav from "@/components/TheSubnav";
+import trackColors from "@/assets/js/trackColors.js";
 
 export default {
   name: "FlightView",
-  components: {
-    MapV2,
-    Airbuddies,
-    FlightBarogramm,
-    FlightDetails,
-    Comments,
-    FlightReport,
-    TheSubnav,
-  },
   async setup() {
     const router = useRouter();
     const route = useRoute();

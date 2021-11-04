@@ -7,24 +7,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "RankingClass",
-  data() {
-    return {
-      foo: false,
-    };
+<script setup>
+const props = defineProps({
+  rankingClass: {
+    type: Object,
+    required: true,
   },
-  props: {
-    rankingClass: {
-      type: Object,
-      required: true,
-    },
-    short: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+  short: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-};
+});
 </script>

@@ -69,19 +69,16 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: "ResultsTable",
-  props: {
-    results: {
-      type: Array,
-      required: true,
-    },
-    maxFlights: {
-      type: Number,
-      required: true,
-    },
+<script setup>
+const props = defineProps({
+  results: {
+    type: Array,
+    required: true,
   },
-};
+  maxFlights: {
+    type: Number,
+    required: true,
+  },
+});
 </script>
 <style scoped></style>

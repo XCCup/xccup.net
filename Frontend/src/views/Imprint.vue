@@ -5,10 +5,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Imprint",
-};
-</script>
+<script setup></script>
 
 <style></style>

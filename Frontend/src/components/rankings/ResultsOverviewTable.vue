@@ -22,13 +22,7 @@
 </template>
 
 <script>
-export default {
-  name: "ResultsOverviewTable",
-  data() {
-    return {};
-  },
-  props: {
-    ranking: Object,
-  },
-};
+const props = defineProps({
+  ranking: Object,
+});
 </script>

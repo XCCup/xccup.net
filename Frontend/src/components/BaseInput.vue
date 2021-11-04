@@ -12,21 +12,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    label: {
-      type: String,
-      default: "",
-    },
-    modelValue: {
-      type: [String, Number],
-      default: "",
-    },
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
+<script setup>
+const props = defineProps({
+  label: {
+    type: String,
+    default: "",
   },
-};
+  modelValue: {
+    type: [String, Number],
+    default: "",
+  },
+  isDisabled: {
+    type: Boolean,
+    default: false,
+  },
+});
 </script>

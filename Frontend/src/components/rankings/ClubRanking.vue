@@ -21,14 +21,11 @@
   >
 </template>
 
-<script>
-export default {
-  name: "ClubRanking",
-  props: {
-    bestClubs: {
-      type: Array,
-      required: true,
-    },
+<script setup>
+const props = defineProps({
+  bestClubs: {
+    type: Array,
+    required: true,
   },
-};
+});
 </script>

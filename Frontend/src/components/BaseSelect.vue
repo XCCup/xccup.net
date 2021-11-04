@@ -23,30 +23,27 @@
   </select>
 </template>
 
-<script>
-export default {
-  name: "BaseSelect",
-  props: {
-    label: {
-      type: String,
-      default: "",
-    },
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
-    modelValue: {
-      type: [String, Number],
-      default: "",
-    },
-    options: {
-      type: Array,
-      required: true,
-    },
-    showLabel: {
-      type: Boolean,
-      default: false,
-    },
+<script setup>
+const props = defineProps({
+  label: {
+    type: String,
+    default: "",
   },
-};
+  isDisabled: {
+    type: Boolean,
+    default: false,
+  },
+  modelValue: {
+    type: [String, Number],
+    default: "",
+  },
+  options: {
+    type: Array,
+    required: true,
+  },
+  showLabel: {
+    type: Boolean,
+    default: false,
+  },
+});
 </script>

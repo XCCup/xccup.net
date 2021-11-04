@@ -5,34 +5,23 @@
   <FlightsTable :flights="flights" />
 </template>
 
-<script>
+<script setup async>
 import ApiService from "@/services/ApiService.js";
-import FlightsTable from "@/components/rankings/FlightsTable";
-
 import { ref } from "vue";
 
-export default {
-  name: "FlightsAll",
-  components: { FlightsTable },
-
-  async setup(props) {
-    // To simulate longer loading times
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
-    try {
-      const { data: initialData } = await ApiService.getFlights({
-        year: props.year,
-      });
-      return {
-        flights: ref(initialData),
-      };
-    } catch (error) {
-      console.log(error);
-    }
+const props = defineProps({
+  year: {
+    type: [String, Number],
   },
-  props: {
-    year: {
-      type: [String, Number],
-    },
-  },
-};
+});
+try {
+  const { data: initialData } = await ApiService.getFlights({
+    year: props.year,
+  });
+  return {
+    flights: ref(initialData),
+  };
+} catch (error) {
+  console.log(error);
+}
 </script>

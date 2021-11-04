@@ -49,17 +49,11 @@
 </template>
 
 <script>
-import Comment from "@/components/Comment";
-import CommentEditor from "@/components/CommentEditor";
-
 import { Modal } from "bootstrap";
 
 export default {
   name: "Comments",
-  components: {
-    Comment,
-    CommentEditor,
-  },
+
   props: {
     comments: {
       type: Array,

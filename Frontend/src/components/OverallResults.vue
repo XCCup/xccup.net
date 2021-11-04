@@ -69,32 +69,23 @@
   </div>
 </template>
 
-<script>
-import ClassRanking from "@/components/rankings/ClassRanking.vue";
-import ClubRanking from "@/components/rankings/ClubRanking.vue";
-import TeamRanking from "@/components/rankings/TeamRanking";
-import TopFlights from "@/components/rankings/TopFlights";
-
-export default {
-  components: { ClassRanking, ClubRanking, TeamRanking, TopFlights },
-  name: "OverallResults",
-  props: {
-    rankingByClass: {
-      type: Array,
-      required: true,
-    },
-    topFlights: {
-      type: Object,
-      required: true,
-    },
-    bestClubs: {
-      type: Object,
-      required: true,
-    },
-    bestTeams: {
-      type: Object,
-      required: true,
-    },
+<script setup>
+const props = defineProps({
+  rankingByClass: {
+    type: Array,
+    required: true,
   },
-};
+  topFlights: {
+    type: Object,
+    required: true,
+  },
+  bestClubs: {
+    type: Object,
+    required: true,
+  },
+  bestTeams: {
+    type: Object,
+    required: true,
+  },
+});
 </script>

@@ -5,10 +5,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "FlightEdit",
-};
-</script>
+<script setup></script>
 
 <style></style>

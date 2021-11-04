@@ -62,31 +62,21 @@
   </section>
 </template>
 
-<script>
-import FlightTypeIcon from "@/components/FlightTypeIcon";
-import FlightState from "@/components/FlightState";
-
-export default {
-  name: "DailyRanking",
-  components: { FlightTypeIcon, FlightState },
-
-  props: {
-    flights: {
-      type: Array,
-      required: true,
-    },
-    maxRows: Number,
+<script setup>
+const props = defineProps({
+  flights: {
+    type: Array,
+    required: true,
   },
-  methods: {
-    routeToFlight(flightId) {
-      this.$router.push({
-        name: "Flight",
-        params: {
-          flightId: flightId,
-        },
-      });
+  maxRows: Number,
+});
+const routeToFlight = (flightId) => {
+  router.push({
+    name: "Flight",
+    params: {
+      flightId: flightId,
     },
-  },
+  });
 };
 </script>
 <style scoped>

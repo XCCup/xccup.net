@@ -353,14 +353,10 @@ import ApiService from "@/services/ApiService.js";
 import { mapGetters } from "vuex";
 import { ref } from "vue";
 
-import GliderSelect from "@/components/GliderSelect";
-import GliderList from "@/components/GliderList";
-
 import cloneDeep from "lodash/cloneDeep";
 
 export default {
   name: "Profile",
-  components: { GliderSelect, GliderList },
   async setup() {
     // TODO: Remove if store will not be used for user details. Maybe leave it here for reference how to do it;)
     // const store = useStore();

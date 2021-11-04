@@ -69,7 +69,7 @@ export default {
         // zoomOffset: -1,
         // preferCanvas: true,
         r: "@2x",
-        accessToken: process.env.VUE_APP_MAPBOX_API_KEY,
+        accessToken: import.meta.env.VITE_MAPBOX_API_KEY,
       },
     };
   },

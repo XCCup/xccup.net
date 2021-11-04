@@ -165,15 +165,12 @@
 
 <script>
 import ApiService from "@/services/ApiService";
-import ModalAddGlider from "@/components/ModalAddGlider";
-import GliderSelect from "@/components/GliderSelect";
 
 import { mapGetters } from "vuex";
 import { ref } from "vue";
 
 export default {
   name: "UploadForm",
-  components: { ModalAddGlider, GliderSelect },
   async setup() {
     try {
       const { data: initialData } = await ApiService.getGliders();

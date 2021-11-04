@@ -57,63 +57,46 @@
   </div>
 </template>
 
-<script>
-import DailyFlightsMap from "@/components/DailyFlightsMap";
-import FlightTypeIcon from "@/components/FlightTypeIcon";
-
+<script setup>
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
-export default {
-  name: "DailyRanking",
-  components: { DailyFlightsMap, FlightTypeIcon },
-  //
-  props: {
-    flights: {
-      type: Array,
-      required: true,
-    },
-    maxRows: Number,
+const props = defineProps({
+  flights: {
+    type: Array,
+    required: true,
   },
-  setup(props) {
-    const highlightedFlightId = ref(null);
-    const router = useRouter();
+  maxRows: Number,
+});
 
-    const dailyFlightsMapTracks = computed(() => {
-      if (!props.flights) return;
-      let tracks = [];
+const highlightedFlightId = ref(null);
+const router = useRouter();
 
-      props.flights.slice(0, props.maxRows).forEach((flight) => {
-        tracks.push({
-          flightId: flight.id,
-          turnpoints: flight.fixes,
-        });
-      });
-      return tracks;
+const dailyFlightsMapTracks = computed(() => {
+  if (!props.flights) return;
+  let tracks = [];
+
+  props.flights.slice(0, props.maxRows).forEach((flight) => {
+    tracks.push({
+      flightId: flight.id,
+      turnpoints: flight.fixes,
     });
+  });
+  return tracks;
+});
 
-    const currentYear = computed(() => new Date(Date.now()).getFullYear());
+const currentYear = computed(() => new Date(Date.now()).getFullYear());
 
-    const updateHighlightedFlight = (flightId) =>
-      (highlightedFlightId.value = flightId);
+const updateHighlightedFlight = (flightId) =>
+  (highlightedFlightId.value = flightId);
 
-    const routeToFlight = (flightId) => {
-      router.push({
-        name: "Flight",
-        params: {
-          flightId: flightId,
-        },
-      });
-    };
-
-    return {
-      highlightedFlightId,
-      dailyFlightsMapTracks,
-      currentYear,
-      updateHighlightedFlight,
-      routeToFlight,
-    };
-  },
+const routeToFlight = (flightId) => {
+  router.push({
+    name: "Flight",
+    params: {
+      flightId: flightId,
+    },
+  });
 };
 </script>
 <style scoped>

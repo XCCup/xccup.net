@@ -21,20 +21,13 @@
   >
 </template>
 
-<script>
-export default {
-  name: "TeamRanking",
-  components: {},
-  data() {
-    return {};
+<script setup>
+const props = defineProps({
+  bestTeams: {
+    type: Array,
+    required: true,
   },
-  props: {
-    bestTeams: {
-      type: Array,
-      required: true,
-    },
-  },
-};
+});
 </script>
 
 <style scoped lang="scss"></style>
