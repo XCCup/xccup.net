@@ -71,6 +71,15 @@ const routes = [
       import(/* webpackChunkName: "" */ "../views/ResultsTeams.vue"),
   },
   {
+    path: "/:year/vereinswertung/",
+    name: "ResultsClubs",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/ResultsClubs.vue"),
+  },
+  {
     path: "/upload",
     name: "FlightUpload",
     props: true,

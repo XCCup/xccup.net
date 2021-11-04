@@ -58,6 +58,17 @@
               <li>
                 <router-link
                   :to="{
+                    name: 'ResultsClubs',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Vereinswertung
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
                     name: 'ResultsNewcomer',
                     params: { year: currentYear },
                   }"
