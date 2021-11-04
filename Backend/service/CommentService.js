@@ -14,6 +14,7 @@ const service = {
       include: [
         {
           model: User,
+          as: "user",
           attributes: ["id", "firstName", "lastName"],
         },
       ],
