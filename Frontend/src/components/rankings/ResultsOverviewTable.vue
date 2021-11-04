@@ -21,7 +21,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 const props = defineProps({
   ranking: Object,
 });
