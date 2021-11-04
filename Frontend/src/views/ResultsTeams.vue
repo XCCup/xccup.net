@@ -5,33 +5,24 @@
   <ResultsTableTeams :results="results" />
 </template>
 
-<script>
+<script setup async>
 import ApiService from "@/services/ApiService.js";
-import ResultsTableTeams from "@/components/rankings/ResultsTableTeams";
-
 import { ref } from "vue";
 
-export default {
-  name: "ResultsTeams",
-  components: { ResultsTableTeams },
-  props: {
-    year: {
-      type: [String, Number],
-      required: true,
-    },
+const props = defineProps({
+  year: {
+    type: [String, Number],
+    required: true,
   },
-  async setup(props) {
-    const results = ref(null);
+});
 
-    try {
-      const res = await ApiService.getResults("teams", { year: props.year });
-      if (res.status != 200) throw res.status.text;
-      results.value = res.data;
-    } catch (error) {
-      console.log(error);
-    }
+const results = ref(null);
 
-    return { results };
-  },
-};
+try {
+  const res = await ApiService.getResults("teams", { year: props.year });
+  if (res.status != 200) throw res.status.text;
+  results.value = res.data;
+} catch (error) {
+  console.log(error);
+}
 </script>

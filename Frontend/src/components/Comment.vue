@@ -85,13 +85,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import CommentReply from "@/components/CommentReply";
 
 export default {
   name: "Comment",
-  components: {
-    CommentReply,
-  },
+
   data() {
     return {
       showCommentEditor: false,

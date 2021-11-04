@@ -24,26 +24,14 @@
   <TheFooter />
 </template>
 
-<script>
-import TheNavbar from "@/components/TheNavbar.vue";
-import TheFooter from "@/components/TheFooter";
+<script setup>
 import { ref, onErrorCaptured } from "vue";
 
-export default {
-  name: "App",
-  components: {
-    TheNavbar,
-    TheFooter,
-  },
-  setup() {
-    const error = ref(null);
-    onErrorCaptured((e) => {
-      error.value = e;
-      return true;
-    });
-    return { error };
-  },
-};
+const error = ref(null);
+onErrorCaptured((e) => {
+  error.value = e;
+  return true;
+});
 </script>
 
 <style lang="scss">

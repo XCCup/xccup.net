@@ -58,14 +58,15 @@ export default {
       tileOptions
     ).addTo(this.map);
 
-    // Wepback fix for default marker image paths
-    delete L.Icon.Default.prototype._getIconUrl;
-    L.Icon.Default.imagePath = "/";
-    L.Icon.Default.mergeOptions({
-      iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-      iconUrl: require("leaflet/dist/images/marker-icon.png"),
-      shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-    });
+    // Webpack fix for default marker image paths
+    // Todo: Does vite need this?
+    // delete L.Icon.Default.prototype._getIconUrl;
+    // L.Icon.Default.imagePath = "/";
+    // L.Icon.Default.mergeOptions({
+    //   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    //   iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    //   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+    // });
 
     // Draw tracklogs
     this.drawTracks(this.tracklogs);

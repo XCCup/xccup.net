@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Do not render if no timestamp prop is passed 1`] = `<!--v-if-->`;
-
-exports[`Takes a timestamp and a configuration parameter and renders a date 1`] = `<span>15.05.2021</span>`;
-
-exports[`Use a default date format if none is passed 1`] = `<span>15.05.2021</span>`;

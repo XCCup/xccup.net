@@ -1,7 +1,7 @@
 // TODO: Currently not in use
 import jwtInterceptor from "@/shared/jwtInterceptor";
 
-let baseURL = process.env.VUE_APP_API_URL;
+let baseURL = import.meta.env.VITE_API_URL;
 
 const state = () => ({
   userDetails: {},

@@ -29,17 +29,12 @@
 
 <script>
 import { ref, onMounted } from "vue";
-
-import ModalAddGlider from "@/components/ModalAddGlider";
-import ModalRemoveGlider from "@/components/ModalRemoveGlider";
 import { Modal } from "bootstrap";
 
 import ApiService from "@/services/ApiService.js";
 
 export default {
   name: "GliderSelect",
-  components: { ModalAddGlider, ModalRemoveGlider },
-
   props: {
     gliders: {
       type: Array,

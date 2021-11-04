@@ -1,18 +1,5 @@
 <template>
-  <div>
-    <UploadForm />
-  </div>
+  <UploadForm />
 </template>
 
-<script>
-import UploadForm from "@/components/UploadForm";
-export default {
-  name: "FlightUpload",
-  components: {
-    UploadForm,
-  },
-  data() {
-    return {};
-  },
-};
-</script>
+<script setup></script>

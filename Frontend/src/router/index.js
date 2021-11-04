@@ -171,7 +171,7 @@ function validateRouteParamFlightId(to, from, next) {
 }
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes,
   scrollBehavior(to) {
     const scroll = {};

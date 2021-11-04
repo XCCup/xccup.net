@@ -29,25 +29,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "FlightReport",
-  data() {
-    return {
-      baseURL: process.env.VUE_APP_API_URL,
-    };
+<script setup>
+const props = defineProps({
+  report: {
+    type: String,
+    required: false,
   },
-  props: {
-    report: {
-      type: String,
-      required: false,
-    },
-    photos: {
-      type: Array,
-      required: false,
-    },
+  photos: {
+    type: Array,
+    required: false,
   },
-};
+});
+const baseURL = import.meta.env.VITE_API_URL;
 </script>
 
 <style scoped></style>

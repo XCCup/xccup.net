@@ -4,7 +4,6 @@
       <a href="#" @click="$router.go(-1)"
         ><i class="bi bi-chevron-left mx-2"></i
       ></a>
-
       Flug von
       <a href="#">{{ flight.user.firstName + " " + flight.user.lastName }}</a>
       am
@@ -13,22 +12,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "TheSubnav",
-  components: {},
-  data() {
-    return {};
+<script setup>
+const props = defineProps({
+  flight: {
+    type: Object,
+    required: true,
   },
-  props: {
-    flight: {
-      type: Object,
-      required: true,
-    },
-  },
-  methods: {},
-  computed: {},
-};
+});
 </script>
 
 <style></style>

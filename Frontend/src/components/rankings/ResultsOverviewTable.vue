@@ -21,14 +21,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ResultsOverviewTable",
-  data() {
-    return {};
-  },
-  props: {
-    ranking: Object,
-  },
-};
+<script setup>
+const props = defineProps({
+  ranking: Object,
+});
 </script>

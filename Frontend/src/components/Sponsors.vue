@@ -41,31 +41,26 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { shuffle } from "lodash";
+import { computed } from "vue";
 
-export default {
-  name: "Sponsors",
-  data() {
-    return {
-      baseURL: process.env.VUE_APP_API_URL,
-    };
+const baseURL = import.meta.env.VITE_API_URL;
+
+const props = defineProps({
+  sponsors: {
+    type: Array,
+    required: true,
   },
-  props: {
-    sponsors: {
-      type: Array,
-      required: true,
-    },
-  },
-  computed: {
-    goldSponsors() {
-      return shuffle(this.sponsors.filter((sponsor) => sponsor.isGoldSponsor));
-    },
-    regularSponsors() {
-      return shuffle(this.sponsors.filter((sponsor) => !sponsor.isGoldSponsor));
-    },
-  },
-};
+});
+
+const goldSponsors = computed(() => {
+  return shuffle(props.sponsors.filter((sponsor) => sponsor.isGoldSponsor));
+});
+
+const regularSponsors = computed(() => {
+  return shuffle(props.sponsors.filter((sponsor) => !sponsor.isGoldSponsor));
+});
 </script>
 
 <style scoped>

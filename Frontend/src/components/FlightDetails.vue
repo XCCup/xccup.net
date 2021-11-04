@@ -165,19 +165,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-
 import { format } from "date-fns";
-import RankingClass from "@/components/RankingClass";
-import FlightTypeIcon from "@/components/FlightTypeIcon";
-import FlightState from "@/components/FlightState";
 
 export default {
   name: "FlightDetails",
-  components: {
-    RankingClass,
-    FlightTypeIcon,
-    FlightState,
-  },
+
   data() {
     return {
       format,
@@ -211,7 +203,7 @@ export default {
       return this.flight.userId === this.getUserId;
     },
     igcDownloadUrl() {
-      let baseUrl = process.env.VUE_APP_API_URL;
+      let baseUrl = import.meta.env.VITE_API_URL;
       return baseUrl + "flights/igc/" + this.flight.id;
     },
   },

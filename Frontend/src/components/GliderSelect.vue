@@ -25,31 +25,25 @@
   </select>
 </template>
 
-<script>
-export default {
-  name: "GliderSelect",
-  data() {
-    return {};
+<script setup>
+const props = defineProps({
+  isDisabled: {
+    type: Boolean,
+    default: false,
   },
-  props: {
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
-    label: {
-      type: String,
-    },
-    modelValue: {
-      type: String,
-    },
-    gliders: {
-      type: Array,
-      required: true,
-    },
-    showLabel: {
-      type: Boolean,
-      default: false,
-    },
+  label: {
+    type: String,
   },
-};
+  modelValue: {
+    type: String,
+  },
+  gliders: {
+    type: Array,
+    required: true,
+  },
+  showLabel: {
+    type: Boolean,
+    default: false,
+  },
+});
 </script>

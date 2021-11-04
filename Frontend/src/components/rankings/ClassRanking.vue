@@ -10,18 +10,11 @@
   </div>
 </template>
 
-<script>
-import ResultsOverviewTable from "@/components/rankings/ResultsOverviewTable";
-export default {
-  name: "ClassRanking",
-  components: {
-    ResultsOverviewTable,
+<script setup>
+const props = defineProps({
+  rankingByClass: {
+    type: Array,
+    required: true,
   },
-  props: {
-    rankingByClass: {
-      type: Array,
-      required: true,
-    },
-  },
-};
+});
 </script>
