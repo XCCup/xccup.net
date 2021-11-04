@@ -14,13 +14,13 @@ const props = defineProps({
     type: [String, Number],
   },
 });
+
+const flights = ref(null);
 try {
   const { data: initialData } = await ApiService.getFlights({
     year: props.year,
   });
-  return {
-    flights: ref(initialData),
-  };
+  flights.value = initialData;
 } catch (error) {
   console.log(error);
 }
