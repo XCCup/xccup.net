@@ -13,6 +13,7 @@
 - [ ] Correct browser history
 - [ ] bworser window naming
 - [ ] add brwoser titles
+- [ ] tooltips for icons
 
 ### Home
 

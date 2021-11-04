@@ -85,7 +85,7 @@ const dailyFlightsMapTracks = computed(() => {
   return tracks;
 });
 
-const currentYear = computed(() => new Date(Date.now()).getFullYear());
+const currentYear = computed(() => new Date().getFullYear());
 
 const updateHighlightedFlight = (flightId) =>
   (highlightedFlightId.value = flightId);
