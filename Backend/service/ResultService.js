@@ -119,7 +119,11 @@ const service = {
 
     return addConstantInformationToResult(
       result,
-      { NUMBER_OF_SCORED_FLIGHTS },
+      {
+        NUMBER_OF_SCORED_FLIGHTS,
+        SENIOR_START_AGE: seasonDetail.seniorStartAge,
+        SENIOR_BONUS_PER_AGE: seasonDetail.seniorBonusPerAge,
+      },
       limit
     );
   },
