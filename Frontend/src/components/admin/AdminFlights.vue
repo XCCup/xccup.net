@@ -2,61 +2,69 @@
   <section class="pb-3">
     <div class="container-fluid">
       <div v-if="violationsPresent" class="table-responsive">
-          <h5>Ausstehende Flugprüfungen</h5>
-  <table class="table table-striped table-hover text-sm">
-      <thead>
-        <th>ID</th>
-        <th>Pilot</th>
-        <th>Hochgeladen am</th>
-        <th>Luftraumverletzung</th>
-        <th>Invalider G-Check</th>
-        <th>Akzeptieren</th>
-        <th>Flug löschen</th>
-      </thead>
-      <tbody>
-      <tr v-for="flight in flights" v-bind:item="flight" v-bind:key="flight.id">
-        <td>
-          <router-link :to="{ path: '/fluege/' + flight.externalId }">
-            {{ flight.externalId }}
-          </router-link>
-        </td>
-        <td>
-          <router-link :to="{ path: '/pilot/' + flight.user.id }">
-            {{ flight.user.firstName }} {{ flight.user.lastName }}
-          </router-link>
-        </td>
-        <td>
-          {{ flight.createdAt }}
-        </td>
-        <td v-if="flight.uncheckedGRecord">
-          <i class="bi bi-exclamation-diamond violation-true"></i>
-        </td>
-        <td v-else>
-          <i class="bi bi-slash-circle violation-false"></i>
-        </td>
-        <td v-if="flight.airspaceViolation">
-          <i class="bi bi-exclamation-diamond violation-true"></i>
-        </td>
-        <td v-else>
-          <i class="bi bi-slash-circle violation-false"></i>
-        </td>
-        <td>
-          <button
-            @click="confirmFlight(flight)"
-            class="table-btn bi bi-check2-circle"
-          ></button>
-        </td>
-        <td>
-          <button
-            @click="deleteFlight(flight)"
-            class="table-btn bi bi-trash"
-          ></button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-  </div>
+        <h5>Ausstehende Flugprüfungen</h5>
+        <table class="table table-striped table-hover text-sm">
+          <thead>
+            <th>ID</th>
+            <th>Pilot</th>
+            <th>Hochgeladen am</th>
+            <th>Luftraumverletzung</th>
+            <th>Invalider G-Check</th>
+            <th>Akzeptieren</th>
+            <th>Flug löschen</th>
+          </thead>
+          <tbody>
+            <tr
+              v-for="flight in flights"
+              v-bind:item="flight"
+              v-bind:key="flight.id"
+            >
+              <td>
+                <router-link :to="{ path: '/fluege/' + flight.externalId }">
+                  {{ flight.externalId }}
+                </router-link>
+              </td>
+              <td>
+                <router-link :to="{ path: '/pilot/' + flight.user.id }">
+                  {{ flight.user.firstName }} {{ flight.user.lastName }}
+                </router-link>
+              </td>
+              <td>
+                {{ flight.createdAt }}
+              </td>
+              <td v-if="flight.uncheckedGRecord">
+                <i class="bi bi-exclamation-diamond text-danger"></i>
+              </td>
+              <td v-else>
+                <i class="bi bi-slash-circle text-success"></i>
+              </td>
+              <td v-if="flight.airspaceViolation">
+                <i class="bi bi-exclamation-diamond text-danger"></i>
+              </td>
+              <td v-else>
+                <i class="bi bi-slash-circle text-success"></i>
+              </td>
+              <td>
+                <button
+                  @click="confirmFlight(flight)"
+                  class="btn btn-outline-primary btn-sm"
+                >
+                  <i class="bi bi-check2-circle"></i>
+                </button>
+              </td>
+              <td>
+                <button
+                  @click="deleteFlight(flight)"
+                  class="btn btn-outline-danger btn-sm"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -81,7 +89,7 @@ export default {
     },
     async confirmFlight(flight) {
       if (confirm("Bist du Dir wirklich sicher diesen Flug zu akzeptieren?")) {
-        const res = await ApiService.acceptFlightViolations(flight.id)
+        const res = await ApiService.acceptFlightViolations(flight.id);
         await this.fetchFlightsWithViolations();
       }
     },
@@ -99,11 +107,4 @@ export default {
 };
 </script>
 
-<style>
-.violation-true{
-  color: var(--sad-color)
-}
-.violation-false{
-  color: var(--happy-color);
-}
-</style>
+<style></style>

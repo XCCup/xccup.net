@@ -50,8 +50,6 @@ html,
 body {
   height: 100%;
   width: 100%;
-  --sad-color: red;
-  --happy-color: green;
   // font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
