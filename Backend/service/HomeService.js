@@ -42,8 +42,9 @@ async function prepareHomeData() {
 
   const sponsors = sponsorService.getAllActive();
   const activeNews = newsService.getActive();
-  const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
-  const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
+  const bestTeams = (await resultService.getTeam(null, null, NUMBER_OF_TEAMS))
+    .values;
+  const bestClubs = (await resultService.getClub(null, NUMBER_OF_CLUBS)).values;
   const bestFlightsOverallCurrentYear = flightService.getAll(
     getCurrentYear(),
     null,
@@ -89,10 +90,10 @@ async function prepareHomeData() {
   });
 }
 
-function retrieveRankingClassResults(currentSeason) {
+async function retrieveRankingClassResults(currentSeason) {
   const rankingRequests = {};
   for (const [key] of Object.entries(currentSeason.rankingClasses)) {
-    rankingRequests[key] = resultService.getOverall(null, key);
+    rankingRequests[key] = (await resultService.getOverall(null, key)).values;
   }
   return Promise.all(Object.values(rankingRequests)).then((values) => {
     const keys = Object.keys(rankingRequests);
