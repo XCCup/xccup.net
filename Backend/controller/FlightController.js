@@ -4,8 +4,12 @@ const service = require("../service/FlightService");
 const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const fs = require("fs");
-const { NOT_FOUND } = require("../constants/http-status-constants");
-const { authToken, requesterIsNotOwner } = require("./Auth");
+const { NOT_FOUND, OK } = require("../constants/http-status-constants");
+const {
+  authToken,
+  requesterIsNotOwner,
+  requesterIsNotModerator,
+} = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
 const logger = require("../config/logger");
@@ -41,6 +45,7 @@ router.get(
     query("clubId").optional().isUUID(),
     query("teamId").optional().isUUID(),
     query("userId").optional().isUUID(),
+    query("unchecked").optional().isBoolean(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -59,6 +64,7 @@ router.get(
       teamId,
       gliderClass,
       status,
+      unchecked,
     } = req.query;
 
     try {
@@ -69,14 +75,15 @@ router.get(
         rankingClass,
         limit,
         offset,
-        false,
+        undefined,
         startDate,
         endDate,
         userId,
         clubId,
         teamId,
         gliderClass,
-        status
+        status,
+        unchecked
       );
       res.json(flights);
     } catch (error) {
@@ -137,9 +144,9 @@ router.delete(
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
-      if (await requesterIsNotOwner(req, res, req.flight.userId)) return;
+      if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
-      const numberOfDestroyedRows = await service.delete(flightId);
+      const numberOfDestroyedRows = await service.delete(flight.id);
       res.json(numberOfDestroyedRows);
     } catch (error) {
       next(error);
@@ -237,6 +244,34 @@ router.put(
         flightPoints: result[1][0].flightPoints,
         flightStatus: result[1][0].flightStatus,
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Marks a flight with violations as accepted
+// @route PUT /flights/acceptViolation/:id
+// @access Only moderator
+
+router.put(
+  "/acceptViolation/:id",
+  authToken,
+  checkParamIsUuid("id"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    console.log();
+
+    const flight = await service.getById(req.params.id, true);
+    if (!flight) return res.sendStatus(NOT_FOUND);
+
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      await service.acceptViolation(flight);
+
+      res.sendStatus(OK);
     } catch (error) {
       next(error);
     }

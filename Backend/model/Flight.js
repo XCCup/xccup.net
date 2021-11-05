@@ -59,6 +59,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    violationAccepted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     hikeAndFly: {
       //We will save the climbed height directly, so it's easier to aggreate later
       type: DataTypes.INTEGER,
