@@ -132,11 +132,9 @@ const service = {
     const flatRecords = findSiteRecordOfType(TYPE.FLAT);
     const faiRecords = findSiteRecordOfType(TYPE.FAI);
 
-    return await Promise.all([freeRecords, flatRecords, faiRecords]).then(
-      (values) => {
-        return mergeRecordsByTakeoffs(values);
-      }
-    );
+    const records = await Promise.all([freeRecords, flatRecords, faiRecords]);
+
+    return mergeRecordsByTakeoffs(records);
   },
 };
 
@@ -172,21 +170,20 @@ async function removeNonNewcomer(resultAllUsers, year) {
 }
 
 async function mergeRecordsByTakeoffs(records) {
-  const allSites = await FlyingSite.findAll();
-  return allSites.map((site) => {
-    const freeSite = records[0].find((entry) => site.id == entry.takeoff.id);
-    const flatSite = records[1].find((entry) => site.id == entry.takeoff.id);
-    const faiSite = records[2].find((entry) => site.id == entry.takeoff.id);
+  const results = [];
 
-    const res = { takeoff: {} };
-    res.takeoff.id = site.id;
-    res.takeoff.name = site.name;
-    res.takeoff.shortName = site.shortName;
-    res.free = createEntryOfRecord(freeSite);
-    res.flat = createEntryOfRecord(flatSite);
-    res.fai = createEntryOfRecord(faiSite);
-    return res;
-  });
+  for (let index = 0; index < records[0].length; index++) {
+    const combinedResult = { takeoff: {} };
+    combinedResult.takeoff.id = records[0][index].id;
+    combinedResult.takeoff.name = records[0][index].name;
+    combinedResult.takeoff.shortName = records[0][index].shortName;
+    combinedResult.free = createEntryOfRecord(records[0][index].flights[0]);
+    combinedResult.flat = createEntryOfRecord(records[1][index].flights[0]);
+    combinedResult.fai = createEntryOfRecord(records[2][index].flights[0]);
+    results.push(combinedResult);
+  }
+
+  return results;
 }
 
 function createEntryOfRecord(siteRecord) {
@@ -206,40 +203,35 @@ function createEntryOfRecord(siteRecord) {
 }
 
 async function findSiteRecordOfType(type) {
-  return Flight.findAll({
+  return FlyingSite.findAll({
     include: [
       {
-        model: FlyingSite,
-        as: "takeoff",
-        attributes: ["name", "id", "shortName"],
+        model: Flight,
+        as: "flights",
+        attributes: [
+          "id",
+          "externalId",
+          "flightPoints",
+          "flightDistance",
+          "userId",
+        ],
+        where: {
+          flightType: type,
+          flightPoints: {
+            [sequelize.Op.not]: null,
+          },
+        },
+        order: [["flightPoints", "DESC"]],
+        limit: 1,
+        include: {
+          model: User,
+          as: "user",
+          attributes: ["firstName", "lastName", "id"],
+        },
       },
-      {
-        model: User,
-        attributes: ["firstName", "lastName", "id"],
-      },
     ],
-    where: {
-      flightType: type,
-    },
-    attributes: [
-      "id",
-      "flightPoints",
-      "flightDistance",
-      "flightType",
-      [sequelize.fn("max", sequelize.col("flightPoints")), "maxFlightPoints"],
-    ],
-    group: [
-      "User.id",
-      "User.firstName",
-      "User.lastName",
-      "Flight.id",
-      "Flight.flightPoints",
-      "Flight.flightDistance",
-      "Flight.flightType",
-      "takeoff.name",
-      "takeoff.id",
-      "takeoff.shortName",
-    ],
+    attributes: ["id", "name", "shortName"],
+    order: [["name"]],
   });
 }
 
