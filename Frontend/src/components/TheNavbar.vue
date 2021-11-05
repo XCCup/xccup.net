@@ -134,6 +134,12 @@
               Kontakt / Impressum</router-link
             >
           </li>
+          <!-- TODO show only when user has role of moderator or higher-->
+          <li v-if="true" class="nav-item dropdown admin-option">
+            <router-link :to="{ name: 'AdminDashboard' }" class="nav-link active">
+              Kommandozentrale</router-link
+            >
+          </li>
         </ul>
         <!-- Login dropdown  -->
         <div class="dropdown">
@@ -199,4 +205,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.admin-option {
+  color: red; /*TODO: Does not work*/
+  font-weight: 800;
+}
+</style>

@@ -20,6 +20,9 @@ export default {
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
   },
+  deleteFlight(externalId) {
+    return jwtInterceptor.delete(baseURL +"flights/" + externalId);
+  },
   uploadIgc(data) {
     return jwtInterceptor.post(baseURL + "flights/", data);
   },
@@ -64,6 +67,12 @@ export default {
   },
   removeGlider(gliderId) {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
+  },
+  getFlightViolations(){
+    return jwtInterceptor.get(baseURL + "flights?unchecked=true");
+  },
+  acceptFlightViolations(flightId){
+    return jwtInterceptor.put(baseURL + "flights/acceptViolation/" + flightId);
   },
   // Results
   getResults(category, params) {
