@@ -15,7 +15,7 @@
     </tbody>
   </table>
   <router-link
-    :to="{ name: 'Home' }"
+    :to="{ name: 'ResultsTeams', params: {year: new Date().getFullYear()} }"
     class="btn btn-outline-primary btn-sm my-1"
     >Detailierte Liste anzeigen</router-link
   >
