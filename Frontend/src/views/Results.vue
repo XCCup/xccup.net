@@ -3,7 +3,10 @@
     <h3 v-if="activeCategory">{{ activeCategory.title }} {{ year }}</h3>
     <p v-if="remark">Hinweis: {{ remark }}</p>
   </div>
-  <ResultsTable :results="results" />
+  <ResultsTable
+    :results="results.values"
+    :maxFlights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
+  />
 </template>
 
 <script setup async>
