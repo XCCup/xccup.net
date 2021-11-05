@@ -1,34 +1,84 @@
 <template>
-  <div class="card" v-if="ranking">
-    <div class="card-body">
-      <h6 class="card-title">
-        <i class="bi bi-trophy" :class="ranking.name"></i>
-        {{ ranking.shortReadableName }}
-      </h6>
-      <p class="card-text"></p>
-      <table class="table">
-        <tbody>
-          <tr v-for="(pilot, index) in ranking.values.slice(0, 3)" :key="index">
-            <td>{{ index + 1 }}</td>
-            <td>{{ pilot.user.firstName + " " + pilot.user.lastName }}</td>
-            <td>
-              <p class="fw-lighter">{{ pilot.totalPoints }} P</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <section class="pb-3">
+    <div class="container-fluid">
+      <div v-if="results?.length > 0" class="table-responsive">
+        <table class="table table-striped table-hover text-sm">
+          <thead>
+            <th>Platz</th>
+
+            <th>Name</th>
+            <th scope="col" class="d-none d-lg-table-cell">Verein</th>
+            <th scope="col" class="d-none d-lg-table-cell">Team</th>
+
+            <th v-for="n in maxFlights" :key="n">Flug {{ n }}</th>
+
+            <th>Gesamt</th>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(result, index) in results"
+              v-bind:key="result.user.idex"
+            >
+              <td>{{ index + 1 }}</td>
+              <td>
+                <strong>{{
+                  result.user.firstName + " " + result.user.lastName
+                }}</strong>
+              </td>
+              <td scope="col" class="d-none d-lg-table-cell">
+                {{ result.club?.name }}
+              </td>
+              <td scope="col" class="d-none d-lg-table-cell">
+                {{ result.team?.name }}
+              </td>
+
+              <td v-for="n in maxFlights" :key="n">
+                <i
+                  v-if="result.flights[n - 1]?.flightPoints"
+                  class="bi bi-trophy me-1"
+                  :class="result.flights[n - 1].glider.gliderClass.key"
+                ></i>
+                <router-link
+                  v-if="result.flights[n - 1]"
+                  :to="{
+                    name: 'Flight',
+                    params: { flightId: result.flights[n - 1].externalId },
+                  }"
+                >
+                  {{ result.flights[n - 1]?.flightPoints }}
+                </router-link>
+                <div v-else>-</div>
+              </td>
+
+              <td>
+                <strong>{{ result.totalPoints }} P </strong>({{
+                  Math.floor(result.totalDistance)
+                }}
+                km)
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- TODO: Handle this more elegant -->
+      <div v-if="!results">Fehler beim laden 🤯</div>
+      <div v-if="results?.length === 0">
+        Keine Flüge gemeldet in diesem Jahr
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
-<script>
-export default {
-  name: "ResultsTable",
-  data() {
-    return {};
+<script setup>
+const props = defineProps({
+  results: {
+    type: Array,
+    required: true,
   },
-  props: {
-    ranking: Object,
+  maxFlights: {
+    type: Number,
+    required: true,
   },
-};
+});
 </script>
+<style scoped></style>

@@ -2,24 +2,16 @@
   <span v-if="timestamp">{{ format(new Date(timestamp), dateFormat) }}</span>
 </template>
 
-<script>
+<script setup>
 import { format } from "date-fns";
-export default {
-  name: "BaseDate",
-  data() {
-    return {
-      format,
-    };
+const props = defineProps({
+  timestamp: {
+    type: [String, Number],
+    required: true,
   },
-  props: {
-    timestamp: {
-      type: [String, Number],
-      required: true,
-    },
-    dateFormat: {
-      type: String,
-      default: "dd.MM.yyyy",
-    },
+  dateFormat: {
+    type: String,
+    default: "dd.MM.yyyy",
   },
-};
+});
 </script>

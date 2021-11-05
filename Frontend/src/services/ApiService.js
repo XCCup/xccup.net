@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtInterceptor from "@/shared/jwtInterceptor";
 
-let baseURL = process.env.VUE_APP_API_URL;
+let baseURL = import.meta.env.VITE_API_URL;
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -14,8 +14,8 @@ const apiClient = axios.create({
 // Note: jwtInterceptor is used when a route needs authorization
 
 export default {
-  getFlights() {
-    return apiClient.get("flights");
+  getFlights(params) {
+    return apiClient.get("flights", { params: { year: params.year } });
   },
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
@@ -47,22 +47,35 @@ export default {
   getCommentsOfFlight(flightId) {
     return apiClient.get("comments/flight/" + flightId);
   },
-  getUserDetails(userId) {
-    return jwtInterceptor.get(baseURL + "users/" + userId);
+  getUserDetails() {
+    return jwtInterceptor.get(baseURL + "users/");
   },
   updateUserProfile(userProfile) {
-    return jwtInterceptor.put(baseURL + "users/" + userProfile.id, userProfile);
+    return jwtInterceptor.put(baseURL + "users/", userProfile);
   },
   getGliders() {
-    return jwtInterceptor.get(baseURL + "users/gliders/");
+    return jwtInterceptor.get(baseURL + "users/gliders/get");
   },
   setDefaultGlider(gliderId) {
-    return jwtInterceptor.put(baseURL + "users/gliders/default" + gliderId);
+    return jwtInterceptor.put(baseURL + "users/gliders/default/" + gliderId);
   },
-  // addGlider(data) {
-  //   return jwtInterceptor.post(baseURL + "users/gliders/", data);
-  // },
-  // deleteGlider(data) {
-  //   return jwtInterceptor.delete(baseURL + "users/gliders/", data);
-  // },
+  addGlider(glider) {
+    return jwtInterceptor.post(baseURL + "users/gliders/add", glider);
+  },
+  removeGlider(gliderId) {
+    return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
+  },
+  // Results
+  getResults(category, params) {
+    return apiClient.get("results/" + category, {
+      params: { year: params.year },
+    });
+  },
+  // General
+  getBrands() {
+    return apiClient.get(baseURL + "general/brands");
+  },
+  getGliderClasses() {
+    return apiClient.get(baseURL + "general/gliderClasses");
+  },
 };

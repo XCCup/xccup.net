@@ -2,7 +2,7 @@
   <label v-if="showLabel">{{ label }}</label>
   <select
     class="form-select"
-    :value="gliderId"
+    :value="modelValue"
     :disabled="isDisabled"
     v-bind="{
       ...$attrs,
@@ -16,38 +16,34 @@
       v-for="glider in gliders"
       :value="glider.id"
       :key="glider.id"
-      :selected="glider === modelValue"
+      :selected="glider.id === modelValue"
     >
-      {{ glider.brand + " " + glider.model }}
+      {{
+        glider.brand + " " + glider.model + " (" + glider.shortDescription + ")"
+      }}
     </option>
   </select>
 </template>
 
-<script>
-export default {
-  name: "GliderSelect",
-  data() {
-    return {
-      label: "Fluggerät",
-    };
+<script setup>
+const props = defineProps({
+  isDisabled: {
+    type: Boolean,
+    default: false,
   },
-  props: {
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
-    gliderId: {
-      type: [String],
-      default: "",
-    },
-    gliders: {
-      type: Array,
-      required: true,
-    },
-    showLabel: {
-      type: Boolean,
-      default: false,
-    },
+  label: {
+    type: String,
   },
-};
+  modelValue: {
+    type: String,
+  },
+  gliders: {
+    type: Array,
+    required: true,
+  },
+  showLabel: {
+    type: Boolean,
+    default: false,
+  },
+});
 </script>

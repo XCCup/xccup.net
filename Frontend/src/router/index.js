@@ -15,13 +15,69 @@ const routes = [
     path: "/flug/:flightId",
     name: "Flight",
     props: true,
+    beforeEnter: validateRouteParamFlightId,
+    meta: { toTop: true },
     component: Flight,
   },
   {
-    path: "/fluege/",
-    name: "AllFlights",
+    path: "/:year/fluege/",
+    name: "FlightsAll",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+    meta: { toTop: true },
+
     component: () =>
-      import(/* webpackChunkName: "" */ "../views/AllFlights.vue"),
+      import(/* webpackChunkName: "" */ "../views/FlightsAll.vue"),
+  },
+  {
+    path: "/:year/einzelwertung/",
+    name: "ResultsOverall",
+    props: (route) => ({ category: "overall", year: route.params.year }),
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+  },
+  {
+    path: "/:year/newcomer/",
+    name: "ResultsNewcomer",
+    props: (route) => ({ category: "newcomer", year: route.params.year }),
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+  },
+  {
+    path: "/:year/seniorenwertung/",
+    name: "ResultsSeniors",
+    props: (route) => ({ category: "seniors", year: route.params.year }),
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+  },
+  {
+    path: "/:year/damenwertung/",
+    name: "ResultsLadies",
+    props: (route) => ({ category: "ladies", year: route.params.year }),
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+  },
+  {
+    path: "/:year/teamwertung/",
+    name: "ResultsTeams",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/ResultsTeams.vue"),
+  },
+  {
+    path: "/:year/vereinswertung/",
+    name: "ResultsClubs",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/ResultsClubs.vue"),
   },
   {
     path: "/upload",
@@ -85,7 +141,7 @@ const routes = [
     component: NotFound,
   },
   {
-    path: "/404/:resource",
+    path: "/404/",
     name: "404Resource",
     component: NotFound,
     props: true,
@@ -97,8 +153,34 @@ const routes = [
   },
 ];
 
+// function castRouteParamId(route) {
+//   return {
+//     id: Number(route.params.id),
+//   };
+// }
+
+function validateRouteParamYear(to, from, next) {
+  if (isNaN(Number(to.params.year))) {
+    return next({
+      name: "404Resource",
+      params: { resource: "Dies ist kein gültiges Jahr" },
+    });
+  }
+  next();
+}
+
+function validateRouteParamFlightId(to, from, next) {
+  if (isNaN(Number(to.params.flightId))) {
+    return next({
+      name: "404Resource",
+      params: { resource: "Dies ist keine gültige Flugnummer" },
+    });
+  }
+  next();
+}
+
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes,
   scrollBehavior(to) {
     const scroll = {};

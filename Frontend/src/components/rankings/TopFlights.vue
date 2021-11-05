@@ -12,7 +12,7 @@
         <td>
           <BaseDate :timestamp="flight.takeoffTime" dateFormat="dd.MM" />
         </td>
-        <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
+        <td>{{ flight.user.firstName + " " + flight.user.lastName }}</td>
         <td>{{ flight.takeoff.name }}</td>
         <td>{{ Math.floor(flight.flightDistance) }} km</td>
         <td><FlightTypeIcon :flightType="flight.flightType" /></td>
@@ -22,28 +22,23 @@
   </table>
 </template>
 
-<script>
-import FlightTypeIcon from "@/components/FlightTypeIcon";
-export default {
-  name: "TopFlights",
-  components: { FlightTypeIcon },
+<script setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
 
-  props: {
-    flights: {
-      type: Array,
-      required: true,
-    },
+const props = defineProps({
+  flights: {
+    type: Array,
+    required: true,
   },
-  methods: {
-    routeToFlight(flightId) {
-      this.$router.push({
-        name: "Flight",
-        params: {
-          flightId: flightId,
-        },
-      });
+});
+const routeToFlight = (flightId) => {
+  router.push({
+    name: "Flight",
+    params: {
+      flightId: flightId,
     },
-  },
+  });
 };
 </script>
 

@@ -29,6 +29,7 @@
           <div class="col-md-9">
             <GliderSelect
               v-model="defaultGlider"
+              label="Fluggerät"
               :showLabel="true"
               :gliders="listOfGliders"
               :isDisabled="false"
@@ -164,15 +165,12 @@
 
 <script>
 import ApiService from "@/services/ApiService";
-import ModalAddGlider from "@/components/ModalAddGlider";
-import GliderSelect from "@/components/GliderSelect";
 
 import { mapGetters } from "vuex";
 import { ref } from "vue";
 
 export default {
   name: "UploadForm",
-  components: { ModalAddGlider, GliderSelect },
   async setup() {
     try {
       const { data: initialData } = await ApiService.getGliders();
@@ -235,7 +233,7 @@ export default {
       try {
         if (!file.target.files[0]) return;
         this.igc.body = await this.readFile(file.target.files[0]);
-        this.igc.filename = file.target.files[0].name;
+        this.igc.name = file.target.files[0].name;
         const response = await this.sendIgc();
         if (response.status != 200) throw "Server error";
         this.flightId = response.data.flightId;
@@ -249,7 +247,9 @@ export default {
     async sendFlightDetails() {
       try {
         const response = await ApiService.uploadFlightDetails(this.flightId, {
-          glider: this.selectedGlider,
+          glider: this.listOfGliders.find(
+            (glider) => glider.id === this.defaultGlider
+          ),
           report: this.flightReport,
         });
         if (response.status != 200) throw response.statusText;

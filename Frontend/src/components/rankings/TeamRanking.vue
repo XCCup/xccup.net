@@ -15,26 +15,19 @@
     </tbody>
   </table>
   <router-link
-    :to="{ name: 'Home' }"
+    :to="{ name: 'ResultsTeams', params: {year: new Date().getFullYear()} }"
     class="btn btn-outline-primary btn-sm my-1"
     >Detailierte Liste anzeigen</router-link
   >
 </template>
 
-<script>
-export default {
-  name: "TeamRanking",
-  components: {},
-  data() {
-    return {};
+<script setup>
+const props = defineProps({
+  bestTeams: {
+    type: Array,
+    required: true,
   },
-  props: {
-    bestTeams: {
-      type: Array,
-      required: true,
-    },
-  },
-};
+});
 </script>
 
 <style scoped lang="scss"></style>

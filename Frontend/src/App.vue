@@ -5,8 +5,15 @@
     <template v-if="Component">
       <suspense timeout="500">
         <template #default>
+          <!-- 
+          :key="$route.path" is neccesary to re-render and fetch API when 
+          URL props changed. See https://notestack.io/public/force-reload-of-vue-component-with-dynamic-route-parameters/f62f3c66-e77b-494e-b120-bf0ddefe0522
+          and https://router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes
+          for details.
+          TODO: Is there a better way to do this?
+          -->
           <!-- Main thing to show -->
-          <component :is="Component"></component>
+          <component :is="Component" :key="$route.path"></component>
         </template>
         <template #fallback>
           <BaseSpinner />
@@ -17,26 +24,14 @@
   <TheFooter />
 </template>
 
-<script>
-import TheNavbar from "@/components/TheNavbar.vue";
-import TheFooter from "@/components/TheFooter";
+<script setup>
 import { ref, onErrorCaptured } from "vue";
 
-export default {
-  name: "App",
-  components: {
-    TheNavbar,
-    TheFooter,
-  },
-  setup() {
-    const error = ref(null);
-    onErrorCaptured((e) => {
-      error.value = e;
-      return true;
-    });
-    return { error };
-  },
-};
+const error = ref(null);
+onErrorCaptured((e) => {
+  error.value = e;
+  return true;
+});
 </script>
 
 <style lang="scss">
@@ -55,16 +50,16 @@ html,
 body {
   height: 100%;
   width: 100%;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  // font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
-// #app {
-//   font-family: Avenir, Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   text-align: center;
-//   color: #2c3e50;
-// }
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // text-align: center;
+  // color: #2c3e50;
+}
 
 h3 {
   margin-bottom: 1rem;
@@ -99,14 +94,6 @@ footer {
 }
 .flight-info {
   background-color: darken($primary, 5%);
-}
-
-.header-image {
-  background-image: url("assets/images/rachtig.jpg");
-  height: 22vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
 }
 
 .error-message {

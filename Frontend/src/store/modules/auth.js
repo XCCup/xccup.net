@@ -1,7 +1,7 @@
 import { jwtDecrypt, tokenAlive } from "@/shared/jwtHelper";
 import axios from "axios";
 
-let baseURL = process.env.VUE_APP_API_URL;
+let baseURL = import.meta.env.VITE_API_URL;
 
 const state = () => ({
   authData: {

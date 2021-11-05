@@ -1,7 +1,7 @@
 <template>
   <div v-if="flight">
     <TheSubnav :flight="flight" />
-    <MapV2 :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
+    <FlightMap :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
     <FlightBarogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
       v-if="flight.airbuddies.length > 0"
@@ -9,7 +9,7 @@
       @updateAirbuddies="updateAirbuddies"
     />
     <FlightDetails :flight="flight" />
-    <FlightReport :report="flight.report" :photos="flight.FlightPhotos" />
+    <FlightReport :report="flight.report" :photos="flight.photos" />
     <Comments
       ref="Comments"
       :comments="flight.comments"
@@ -29,58 +29,43 @@
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ApiService from "@/services/ApiService.js";
-import MapV2 from "@/components/MapV2";
-import Airbuddies from "@/components/Airbuddies";
-import FlightBarogramm from "@/components/FlightBarogramm.vue";
-import trackColors from "@/assets/js/trackColors";
-import FlightDetails from "@/components/FlightDetails";
-import Comments from "@/components/Comments";
-import FlightReport from "@/components/FlightReport";
-import TheSubnav from "@/components/TheSubnav";
+import trackColors from "@/assets/js/trackColors.js";
 
 export default {
   name: "FlightView",
-  components: {
-    MapV2,
-    Airbuddies,
-    FlightBarogramm,
-    FlightDetails,
-    Comments,
-    FlightReport,
-    TheSubnav,
-  },
-  async setup(props) {
+  async setup() {
     const router = useRouter();
     const route = useRoute();
     const flight = ref(null);
 
-    // To simulate longer loading times
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Is this try/catch smart?
-    try {
-      let flightId = route.params.flightId;
-      // props.flightId
-
-      const response = await ApiService.getFlight(flightId);
-      if (!response.data.fixes) {
-        throw "Invalid response";
+    const fetchData = async () => {
+      try {
+        // To simulate longer loading times
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        const response = await ApiService.getFlight(route.params.flightId);
+        if (!response.data.fixes) {
+          throw "Invalid response";
+        }
+        flight.value = response.data;
+        document.title = `XCCup - Flug von ${
+          flight.value.user.firstName + " " + flight.value.user.lastName
+        }`;
+      } catch (error) {
+        console.log(error);
+        if (error.response && error.response.status == 404) {
+          router.push({
+            name: "404Resource",
+            params: { resource: "Dieser Flug existiert nicht." },
+          });
+        } else {
+          router.push({ name: "NetworkError" });
+        }
       }
-      flight.value = response.data;
-    } catch (error) {
-      console.log(error);
-      if (error.response && error.response.status == 404) {
-        router.push({
-          name: "404Resource",
-          params: { resource: "Flug" },
-        });
-      } else {
-        router.push({ name: "NetworkError" });
-      }
-    }
-    return {
-      flight,
     };
+
+    fetchData();
+
+    return { flight };
   },
   data() {
     return {
@@ -101,7 +86,6 @@ export default {
 
         // TODO: Maybe use an optimistic aproach like:
         // this.flight.comments = [...this.flight.comments, comment];
-
         if (res.status != 200) throw res.statusText;
         this.$refs.Comments.clearCommentEditorInput();
         if (comment.relatedTo)

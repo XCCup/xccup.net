@@ -24,14 +24,14 @@
         <!-- Checkboxes -->
         <div
           class="form-check form-check-inline"
-          v-for="(pilot, index) in this.buddyFlights"
-          :key="pilot.id"
+          v-for="(airbuddy, index) in this.buddyFlights"
+          :key="airbuddy.id"
         >
           <h5 class="ms-2">
             <input
               class="form-check-input"
               type="checkbox"
-              :value="pilot.id"
+              :value="airbuddy.id"
               :id="index"
               v-model="checkedFlights"
             />
@@ -40,7 +40,15 @@
                 class="badge"
                 :style="{ backgroundColor: this.trackColors[index + 1] }"
               >
-                {{ pilot.User.firstName + " " + pilot.User.lastName }}
+                {{ airbuddy.user.firstName + " " + airbuddy.user.lastName }}
+                <router-link
+                  :to="{
+                    name: 'Flight',
+                    params: { flightId: airbuddy.externalId },
+                  }"
+                >
+                  <i class="bi bi-box-arrow-in-right text-light"></i>
+                </router-link>
               </span>
             </label>
           </h5>
@@ -90,13 +98,21 @@ export default {
         console.log(error);
       }
     },
+    routeToFlight(flightId) {
+      this.$router.push({
+        name: "Flight",
+        params: {
+          flightId: flightId,
+        },
+      });
+    },
   },
   watch: {
     checkedFlights() {
       let airbuddyTracks = [];
       this.buddyFlights.forEach((element) => {
         airbuddyTracks.push({
-          buddyName: element.User.firstName,
+          buddyName: element.user.firstName,
           buddyFlightId: element.id,
           isActive: this.checkedFlights.includes(element.id),
           fixes: element.fixes,
