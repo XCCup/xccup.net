@@ -13,7 +13,7 @@ const { GENDER } = require("../constants/user-constants");
 const {
   TEAM_DISMISSES,
   TEAM_SIZE,
-  FLIGHTS_PER_USER,
+  NUMBER_OF_SCORED_FLIGHTS,
   NEWCOMER_MAX_RANKING_CLASS,
 } = require("../config/result-determination-config");
 
@@ -53,10 +53,14 @@ const service = {
     const resultQuery = await queryDb(where, gender, null, site, region, club);
 
     const result = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(result, FLIGHTS_PER_USER);
+    limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
     sortDescendingByTotalPoints(result);
 
-    return limit ? result.slice(0, limit) : result;
+    return addConstantInformationToResult(
+      result,
+      { NUMBER_OF_SCORED_FLIGHTS },
+      limit
+    );
   },
 
   getClub: async (year, limit) => {
@@ -66,11 +70,15 @@ const service = {
     const resultQuery = await queryDb(where);
 
     const resultOverUser = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(resultOverUser, FLIGHTS_PER_USER);
+    limitFlightsForUserAndCalcTotals(resultOverUser, NUMBER_OF_SCORED_FLIGHTS);
     const resultOverClub = aggreateOverClubAndCalcTotals(resultOverUser);
     sortDescendingByTotalPoints(resultOverClub);
 
-    return limit ? resultOverClub.slice(0, limit) : resultOverClub;
+    return addConstantInformationToResult(
+      resultOverClub,
+      { NUMBER_OF_SCORED_FLIGHTS },
+      limit
+    );
   },
 
   getTeam: async (year, region, limit) => {
@@ -80,14 +88,22 @@ const service = {
     const resultQuery = await queryDb(where, null, null, null, region);
 
     const resultOverUser = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(resultOverUser, FLIGHTS_PER_USER);
+    limitFlightsForUserAndCalcTotals(resultOverUser, NUMBER_OF_SCORED_FLIGHTS);
     const resultOverTeam = aggreateOverTeamAndCalcTotals(resultOverUser);
     dissmissWorstFlights(resultOverTeam);
     sortDescendingByTotalPoints(resultOverTeam);
 
     //TODO Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
 
-    return limit ? resultOverTeam.slice(0, limit) : resultOverTeam;
+    return addConstantInformationToResult(
+      resultOverTeam,
+      {
+        NUMBER_OF_SCORED_FLIGHTS,
+        TEAM_DISMISSES,
+        TEAM_SIZE,
+      },
+      limit
+    );
   },
 
   getSenior: async (year, region, limit) => {
@@ -97,11 +113,15 @@ const service = {
     const resultQuery = await queryDb(where, null, null, null, region);
 
     const result = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(result, FLIGHTS_PER_USER);
+    limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
     calcSeniorBonusForFlightResult(result);
     sortDescendingByTotalPoints(result);
 
-    return limit ? result.slice(0, limit) : result;
+    return addConstantInformationToResult(
+      result,
+      { NUMBER_OF_SCORED_FLIGHTS },
+      limit
+    );
   },
 
   getNewcomer: async (year, region, limit) => {
@@ -120,11 +140,15 @@ const service = {
     const resultAllUsers = aggreateFlightsOverUser(resultQuery);
     const resultsNewcomer = await removeNonNewcomer(resultAllUsers, year);
 
-    limitFlightsForUserAndCalcTotals(resultsNewcomer, FLIGHTS_PER_USER);
+    limitFlightsForUserAndCalcTotals(resultsNewcomer, NUMBER_OF_SCORED_FLIGHTS);
     calcSeniorBonusForFlightResult(resultsNewcomer);
     sortDescendingByTotalPoints(resultsNewcomer);
 
-    return limit ? resultsNewcomer.slice(0, limit) : resultsNewcomer;
+    return addConstantInformationToResult(
+      resultsNewcomer,
+      { NUMBER_OF_SCORED_FLIGHTS, NEWCOMER_MAX_RANKING_CLASS },
+      limit
+    );
   },
 
   getSiteRecords: async () => {
@@ -137,6 +161,13 @@ const service = {
     return mergeRecordsByTakeoffs(records);
   },
 };
+
+function addConstantInformationToResult(result, constants, limit) {
+  return {
+    constants,
+    values: limit ? result.slice(0, limit) : result,
+  };
+}
 
 async function removeNonNewcomer(resultAllUsers, year) {
   const searchYear = year ? year : getCurrentYear();
@@ -378,7 +409,7 @@ function dissmissWorstFlights(resultOverTeam) {
       flights = flights.concat(member.flights);
     });
     const numberOfFlightsToDismiss =
-      flights.length - FLIGHTS_PER_USER * TEAM_SIZE + TEAM_DISMISSES;
+      flights.length - NUMBER_OF_SCORED_FLIGHTS * TEAM_SIZE + TEAM_DISMISSES;
     if (numberOfFlightsToDismiss > 0) {
       logger.warn("DISMISS");
       flights.sort((a, b) => b.flightPoints - a.flightPoints);

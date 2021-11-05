@@ -1,7 +1,7 @@
 /**
  * The number of top flights of one user which will be considered for the rankings.
  */
-module.exports.FLIGHTS_PER_USER = 3;
+module.exports.NUMBER_OF_SCORED_FLIGHTS = 3;
 /**
  * The number of flights which will be removed from the end of the overall flights of a team.
  */
