@@ -1,7 +1,7 @@
 <template>
   <section class="pb-3">
     <div class="container-fluid">
-      <div v-if="results?.length > 0" class="table-responsive">
+      <div v-if="results?.values.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Platz</th>
@@ -10,13 +10,13 @@
             <th scope="col" class="d-none d-lg-table-cell">Verein</th>
             <th scope="col" class="d-none d-lg-table-cell">Team</th>
 
-            <th v-for="n in maxFlights" :key="n">Flug {{ n }}</th>
+            <th v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS" :key="n">Flug {{ n }}</th>
 
             <th>Gesamt</th>
           </thead>
           <tbody>
             <tr
-              v-for="(result, index) in results"
+              v-for="(result, index) in results.values"
               v-bind:key="result.user.idex"
             >
               <td>{{ index + 1 }}</td>
@@ -32,7 +32,7 @@
                 {{ result.team?.name }}
               </td>
 
-              <td v-for="n in maxFlights" :key="n">
+              <td v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS" :key="n">
                 <i
                   v-if="result.flights[n - 1]?.flightPoints"
                   class="bi bi-trophy me-1"
@@ -73,10 +73,6 @@
 const props = defineProps({
   results: {
     type: Array,
-    required: true,
-  },
-  maxFlights: {
-    type: Number,
     required: true,
   },
 });
