@@ -39,6 +39,7 @@ const categories = [
     name: "seniors",
     title: "Seniorenwertung",
     apiString: "seniors",
+    remarks: "Die Wertung beginnt ab einem Alter von $SENIOR_START_AGE$ mit einem Bonus von $SENIOR_BONUS_PER_AGE$% pro Jahr"
   },
   {
     name: "ladies",
@@ -64,6 +65,10 @@ try {
   console.log(error);
 }
 
+/**
+ * Constants which should be replace must be surrounded by "$" in the remarks string. 
+ * The constant name must match with the name in the response object.
+ */
 function replacePossiblePlaceholdersInRemarks(res) {
   if(activeCategory.remarks) {
     const matchingGroups=activeCategory.remarks.match(/\$(\w+)\$/g);
