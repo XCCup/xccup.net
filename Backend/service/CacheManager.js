@@ -22,7 +22,7 @@ const manager = {
     homeCache = data;
   },
   setCurrentYearFlightCache: (data) => {
-    logger.info("Write data tocurrentYearFlightCache");
+    logger.info("Write data to currentYearFlightCache");
     currentYearFlightCache = data;
   },
 };

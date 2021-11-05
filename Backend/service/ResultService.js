@@ -315,8 +315,15 @@ function createDefaultWhereForFlight(seasonDetail, isSenior) {
       [sequelize.Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
     },
     flightStatus: STATE.IN_RANKING,
-    airspaceViolation: false,
-    uncheckedGRecord: false,
+    [sequelize.Op.or]: [
+      { violationAccepted: true },
+      {
+        [sequelize.Op.and]: [
+          { uncheckedGRecord: false },
+          { airspaceViolation: false },
+        ],
+      },
+    ],
   };
 
   if (isSenior) {
