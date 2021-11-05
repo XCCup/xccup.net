@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="modal fade"
-    id="removeGliderModal"
-    tabindex="-1"
-    aria-labelledby="removeAircraftModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="removeGliderModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -19,7 +13,9 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">{{ glider }} entfernen</div>
+        <div class="modal-body">
+          {{ glider?.brand + " " + glider?.model }} entfernen
+        </div>
         <div class="modal-footer">
           <button
             type="button"
@@ -28,7 +24,13 @@
           >
             Abbrechen
           </button>
-          <button type="button" class="btn btn-primary">OK</button>
+          <button
+            @click="onGliderRemoved"
+            type="button"
+            class="btn btn-primary"
+          >
+            OK
+          </button>
         </div>
       </div>
     </div>
@@ -37,16 +39,13 @@
 <script>
 export default {
   name: "ModalRemoveGlider",
-  data() {
-    return {};
-  },
   methods: {
-    onGliderRemoved(glider) {
-      this.$emit("remove-glider", glider);
+    onGliderRemoved() {
+      this.$emit("remove-glider", this.glider.id);
     },
   },
   props: {
-    glider: String,
+    glider: Object,
   },
   emits: ["remove-glider"],
 };

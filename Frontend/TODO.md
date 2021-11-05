@@ -2,13 +2,26 @@
 
 ## Progress
 
+### General functionality
+
+- [ ] Beautify spinner (Paraglider animation?)
+- [ ] Icons for task types (FAI & flat triangle, one way)
+- [ ] Icons for ranking classes
+- [ ] Authentication
+- [ ] Login error handling
+- [ ] Page names
+- [ ] Correct browser history
+- [ ] bworser window naming
+- [ ] add brwoser titles
+- [ ] tooltips for icons
+
 ### Home
 
 - [x] Basic layout
 - [x] Rankings
 - [x] Connect to API
 - [x] Map visualizing all flights of the day
-- [ ] Sponsors
+- [x] Sponsors
 - [ ] Dynamic appearance of news
 - [ ] Random image taken from the running season
 - [ ] Make the table link to flight page a real link
@@ -16,8 +29,8 @@
 ### Profile
 
 - [x] Basic layout
-- [ ] Connect to API
-- [ ] Aircraft add/delete logic
+- [x] Connect to API
+- [x] Aircraft add/delete logic
 - [ ] Change profile picture
 - [ ] Overview of flights
 - [ ] Form input validation
@@ -53,21 +66,20 @@
 - [x] Delete comment modal (Are you sure?)
 - [x] Connect to API
 
-### AllFlights
+### FlightsAll
 
 - [ ] Sort functionality
 - [x] Connect to API
 
-### Rankings
+### Results
 
-- [ ] Club
-- [ ] Team
-- [ ] Ladies
-- [ ] Seniors
+- [x] Club
+- [x] Team
+- [x] Ladies
+- [x] Seniors
 - [ ] GS RLP
-- [ ] Seniors
 - [ ] Luxemburg XC-Championat
-- [ ] Newcomer
+- [x] Newcomer
 - [ ] Ranking Class
 - [ ] Takeoff records
 - [ ] Early bird
@@ -79,18 +91,9 @@
 - [ ] Admin Panel
 - [ ] Register
 - [ ] Imprint
-- [ ] Imprint
 - [ ] Clubs
 - [ ] Teams
 - [ ] Pilots
 - [ ] Waypoints?
 - [ ] Early bird
 - [ ] ...
-
-### General functionality
-
-- [ ] Beautify spinner (Paraglider animation?)
-- [ ] Icons for task types (FAI & flat triangle, one way)
-- [ ] Icons for ranking classes
-- [ ] Authentication
-- [ ] Login error handling

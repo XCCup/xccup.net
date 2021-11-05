@@ -10,44 +10,30 @@
   <Sponsors :sponsors="sponsors" />
 </template>
 
-<script>
+<script setup async>
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 
-import DailyRanking from "@/components/rankings/DailyRanking.vue";
-import Infobox from "@/components/Infobox.vue";
-import OverallResults from "@/components/OverallResults.vue";
-import Sponsors from "@/components/Sponsors.vue";
+const dailyRanking = ref(null);
+const topFlights = ref(null);
+const rankingByClass = ref(null);
+const bestClubs = ref(null);
+const bestTeams = ref(null);
+const seasonStats = ref(null);
+const sponsors = ref(null);
+try {
+  // To simulate longer loading times
+  // await new Promise((resolve) => setTimeout(resolve, 2000));
+  const { data: initialData } = await ApiService.getInitialData();
 
-export default {
-  name: "Home",
-  async setup() {
-    // To simulate longer loading times
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
-    try {
-      const { data: initialData } = await ApiService.getInitialData();
-
-      // const reponse = await ApiService.getInitialData();
-      // const {tageswertung, geraetewertung} = response.data
-
-      return {
-        dailyRanking: ref(initialData.todaysFlights),
-        topFlights: ref(initialData.bestFlightsOverallCurrentYear),
-        rankingByClass: ref(initialData.rankingClasses),
-        bestClubs: ref(initialData.bestClubs),
-        bestTeams: ref(initialData.bestTeams),
-        seasonStats: ref(initialData.seasonStats),
-        sponsors: ref(initialData.sponsors),
-      };
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  components: {
-    DailyRanking,
-    Infobox,
-    OverallResults,
-    Sponsors,
-  },
-};
+  dailyRanking.value = initialData.todaysFlights;
+  topFlights.value = initialData.bestFlightsOverallCurrentYear;
+  rankingByClass.value = initialData.rankingClasses;
+  bestClubs.value = initialData.bestClubs;
+  bestTeams.value = initialData.bestTeams;
+  seasonStats.value = initialData.seasonStats;
+  sponsors.value = initialData.sponsors;
+} catch (error) {
+  console.log(error);
+}
 </script>

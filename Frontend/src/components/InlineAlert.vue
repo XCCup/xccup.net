@@ -6,17 +6,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "InlineAlert",
-
-  props: {
-    text: {
-      type: String,
-      required: true,
-    },
+<script setup>
+const props = defineProps({
+  text: {
+    type: String,
+    required: true,
   },
-};
+});
 </script>
 
 <style scoped></style>

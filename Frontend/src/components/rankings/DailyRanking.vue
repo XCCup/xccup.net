@@ -26,7 +26,7 @@
               >
                 <td scope="row">{{ index + 1 }}</td>
                 <td>
-                  {{ flight.User.firstName + " " + flight.User.lastName }}
+                  {{ flight.user.firstName + " " + flight.user.lastName }}
                 </td>
                 <td>{{ flight.takeoff.name }}</td>
                 <td>{{ Math.floor(flight.flightDistance) }} km</td>
@@ -36,7 +36,7 @@
             </tbody>
           </table>
           <router-link
-            :to="{ name: 'AllFlights' }"
+            :to="{ name: 'FlightsAll', params: { year: currentYear } }"
             class="btn btn-outline-light btn-sm my-1"
             >Alle Flüge anzeigen</router-link
           >
@@ -57,53 +57,46 @@
   </div>
 </template>
 
-<script>
-import DailyFlightsMap from "@/components/DailyFlightsMap";
-import FlightTypeIcon from "@/components/FlightTypeIcon";
+<script setup>
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 
-export default {
-  name: "DailyRanking",
-  components: { DailyFlightsMap, FlightTypeIcon },
-  data() {
-    return {
-      highlightedFlightId: null,
-    };
+const props = defineProps({
+  flights: {
+    type: Array,
+    required: true,
   },
-  props: {
-    flights: {
-      type: Array,
-      required: true,
-    },
-    maxRows: Number,
-  },
-  computed: {
-    dailyFlightsMapTracks() {
-      if (!this.flights) return;
-      let tracks = [];
+  maxRows: Number,
+});
 
-      this.flights.slice(0, this.maxRows).forEach((flight) => {
-        tracks.push({
-          flightId: flight.id,
-          turnpoints: flight.fixes,
-        });
-      });
-      return tracks;
-    },
-  },
+const highlightedFlightId = ref(null);
+const router = useRouter();
 
-  methods: {
-    updateHighlightedFlight(flightId) {
-      this.highlightedFlightId = flightId;
+const dailyFlightsMapTracks = computed(() => {
+  if (!props.flights) return;
+  let tracks = [];
+
+  props.flights.slice(0, props.maxRows).forEach((flight) => {
+    tracks.push({
+      flightId: flight.id,
+      turnpoints: flight.fixes,
+    });
+  });
+  return tracks;
+});
+
+const currentYear = computed(() => new Date().getFullYear());
+
+const updateHighlightedFlight = (flightId) =>
+  (highlightedFlightId.value = flightId);
+
+const routeToFlight = (flightId) => {
+  router.push({
+    name: "Flight",
+    params: {
+      flightId: flightId,
     },
-    routeToFlight(flightId) {
-      this.$router.push({
-        name: "Flight",
-        params: {
-          flightId: flightId,
-        },
-      });
-    },
-  },
+  });
 };
 </script>
 <style scoped>

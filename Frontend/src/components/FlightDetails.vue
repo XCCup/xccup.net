@@ -9,20 +9,20 @@
               <th>Pilot</th>
               <td>
                 <a href="#">{{
-                  flight.User.firstName + " " + flight.User.lastName
+                  flight.user.firstName + " " + flight.user.lastName
                 }}</a>
               </td>
             </tr>
             <tr>
               <th>Verein</th>
               <td>
-                <a href="#">{{ flight.Club.name }}</a>
+                <a href="#">{{ flight.club.name }}</a>
               </td>
             </tr>
             <tr>
               <th>Team</th>
               <td>
-                <a href="#">{{ flight.Team?.name }}</a>
+                <a href="#">{{ flight.team?.name }}</a>
               </td>
             </tr>
             <tr>
@@ -140,7 +140,7 @@
               </tr>
               <tr>
                 <th>Geschwindigkeit max</th>
-                <td>{{ flight.flightStats.maxSpeed }} km/h</td>
+                <td>{{ Math.floor(flight.flightStats.maxSpeed) }} km/h</td>
               </tr>
               <tr>
                 <th>Aufgaben-Geschwindigkeit</th>
@@ -165,19 +165,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-
 import { format } from "date-fns";
-import RankingClass from "@/components/RankingClass";
-import FlightTypeIcon from "@/components/FlightTypeIcon";
-import FlightState from "@/components/FlightState";
 
 export default {
   name: "FlightDetails",
-  components: {
-    RankingClass,
-    FlightTypeIcon,
-    FlightState,
-  },
+
   data() {
     return {
       format,
@@ -211,7 +203,7 @@ export default {
       return this.flight.userId === this.getUserId;
     },
     igcDownloadUrl() {
-      let baseUrl = process.env.VUE_APP_API_URL;
+      let baseUrl = import.meta.env.VITE_API_URL;
       return baseUrl + "flights/igc/" + this.flight.id;
     },
   },

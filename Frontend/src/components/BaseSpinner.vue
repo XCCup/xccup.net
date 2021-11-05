@@ -6,11 +6,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Spinner",
-};
-</script>
+<script setup></script>
 
 <style scoped>
 .spinner-mod {

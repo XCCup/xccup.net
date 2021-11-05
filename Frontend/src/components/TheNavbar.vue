@@ -26,12 +26,79 @@
             </a>
             <ul class="dropdown-menu">
               <li>
-                <router-link :to="{ name: 'AllFlights' }" class="dropdown-item">
+                <router-link
+                  :to="{ name: 'FlightsAll', params: { year: currentYear } }"
+                  class="dropdown-item"
+                >
                   Eingereichte Flüge
                 </router-link>
               </li>
-              <li><a class="dropdown-item" href="#">Gesamtliste</a></li>
-              <li><a class="dropdown-item" href="#">Gerätewertung</a></li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsOverall',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Gesamtwertung
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsTeams',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Teamwertung
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsClubs',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Vereinswertung
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsNewcomer',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Newcomer
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsSeniors',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Seniorenwertung
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsLadies',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  Damenwertung
+                </router-link>
+              </li>
               <li>
                 <hr class="dropdown-divider" />
               </li>
@@ -108,14 +175,15 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "TheNavbar",
   computed: {
-    // TODO: Remove this getter?
-    // ...mapGetters(["authUser"]),
     ...mapGetters({
       gettersAuthData: "getAuthData",
       getterLoginStatus: "getLoginStatus",
     }),
     loggedIn() {
       return this.getterLoginStatus === "success";
+    },
+    currentYear() {
+      return new Date().getFullYear();
     },
   },
   methods: {

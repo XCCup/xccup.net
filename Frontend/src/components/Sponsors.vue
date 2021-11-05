@@ -11,9 +11,9 @@
         <div class="row mt-3">
           <div v-for="sponsor in goldSponsors" :key="sponsor.id" class="col">
             <div class="square-holder">
-              <a :href="sponsor.website">
+              <a :href="sponsor.website" target="_blank">
                 <img
-                  :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+                  :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
                 />
               </a>
             </div>
@@ -29,9 +29,9 @@
           class="col-3 col-sm-3 col-md-3 col-lg-2"
         >
           <div class="square-holder">
-            <a :href="sponsor.website">
+            <a :href="sponsor.website" target="_blank">
               <img
-                :src="baseURL + `media/` + sponsor.Logo.id + `?thumb=true`"
+                :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
               />
             </a>
           </div>
@@ -41,31 +41,26 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { shuffle } from "lodash";
+import { computed } from "vue";
 
-export default {
-  name: "Sponsors",
-  data() {
-    return {
-      baseURL: process.env.VUE_APP_API_URL,
-    };
+const baseURL = import.meta.env.VITE_API_URL;
+
+const props = defineProps({
+  sponsors: {
+    type: Array,
+    required: true,
   },
-  props: {
-    sponsors: {
-      type: Array,
-      required: true,
-    },
-  },
-  computed: {
-    goldSponsors() {
-      return shuffle(this.sponsors.filter((sponsor) => sponsor.isGoldSponsor));
-    },
-    regularSponsors() {
-      return shuffle(this.sponsors.filter((sponsor) => !sponsor.isGoldSponsor));
-    },
-  },
-};
+});
+
+const goldSponsors = computed(() => {
+  return shuffle(props.sponsors.filter((sponsor) => sponsor.isGoldSponsor));
+});
+
+const regularSponsors = computed(() => {
+  return shuffle(props.sponsors.filter((sponsor) => !sponsor.isGoldSponsor));
+});
 </script>
 
 <style scoped>

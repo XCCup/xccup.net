@@ -13,31 +13,31 @@
   >
     <option v-if="!showLabel" disabled value="" selected>{{ label }}</option>
     <option
-      v-for="option in options"
-      :value="option"
-      :key="option"
-      :selected="option === modelValue"
+      v-for="glider in gliders"
+      :value="glider.id"
+      :key="glider.id"
+      :selected="glider.id === modelValue"
     >
-      {{ option }}
+      {{
+        glider.brand + " " + glider.model + " (" + glider.shortDescription + ")"
+      }}
     </option>
   </select>
 </template>
 
 <script setup>
 const props = defineProps({
-  label: {
-    type: String,
-    default: "",
-  },
   isDisabled: {
     type: Boolean,
     default: false,
   },
-  modelValue: {
-    type: [String, Number],
-    default: "",
+  label: {
+    type: String,
   },
-  options: {
+  modelValue: {
+    type: String,
+  },
+  gliders: {
     type: Array,
     required: true,
   },

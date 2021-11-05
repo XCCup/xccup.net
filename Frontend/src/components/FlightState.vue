@@ -12,14 +12,12 @@
   <!-- <i class="bi bi-exclamation-triangle"></i> -->
 </template>
 
-<script>
-export default {
-  props: {
-    flightState: {
-      type: String,
-    },
+<script setup>
+const props = defineProps({
+  flightState: {
+    type: String,
   },
-};
+});
 </script>
 
 <style></style>

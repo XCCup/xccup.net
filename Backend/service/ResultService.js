@@ -118,13 +118,13 @@ const service = {
     const resultQuery = await queryDb(where, null, null, null, region);
 
     const resultAllUsers = aggreateFlightsOverUser(resultQuery);
-    const resultsNewcommer = await removeNonNewcomer(resultAllUsers, year);
+    const resultsNewcomer = await removeNonNewcomer(resultAllUsers, year);
 
-    limitFlightsForUserAndCalcTotals(resultsNewcommer, FLIGHTS_PER_USER);
-    calcSeniorBonusForFlightResult(resultsNewcommer);
-    sortDescendingByTotalPoints(resultsNewcommer);
+    limitFlightsForUserAndCalcTotals(resultsNewcomer, FLIGHTS_PER_USER);
+    calcSeniorBonusForFlightResult(resultsNewcomer);
+    sortDescendingByTotalPoints(resultsNewcomer);
 
-    return limit ? resultsNewcommer.slice(0, limit) : resultsNewcommer;
+    return limit ? resultsNewcomer.slice(0, limit) : resultsNewcomer;
   },
 
   getSiteRecords: async () => {

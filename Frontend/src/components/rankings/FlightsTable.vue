@@ -1,8 +1,7 @@
 <template>
-  <section v-if="flights" class="pb-3">
-    <div class="container-fluid pt-1">
-      <h3>Streckenmeldungen 20XX</h3>
-      <div class="table-responsive">
+  <section class="pb-3">
+    <div class="container-fluid">
+      <div v-if="flights?.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Datum</th>
@@ -29,12 +28,16 @@
                 <BaseDate :timestamp="flight.takeoffTime" dateFormat="dd.MM" />
               </td>
 
-              <td>{{ flight.User.firstName + " " + flight.User.lastName }}</td>
-              <td scope="col" class="d-none d-lg-table-cell">
-                {{ flight.Club.name }}
+              <td>
+                <strong>{{
+                  flight.user.firstName + " " + flight.user.lastName
+                }}</strong>
               </td>
               <td scope="col" class="d-none d-lg-table-cell">
-                {{ flight.Team?.name }}
+                {{ flight.club.name }}
+              </td>
+              <td scope="col" class="d-none d-lg-table-cell">
+                {{ flight.team?.name }}
               </td>
               <td>{{ flight.takeoff.name }}</td>
 
@@ -54,35 +57,29 @@
           </tbody>
         </table>
       </div>
+      <div v-else>Keine Flüge gemeldet in diesem Jahr</div>
     </div>
   </section>
 </template>
 
-<script>
-import FlightTypeIcon from "@/components/FlightTypeIcon";
-import FlightState from "@/components/FlightState";
+<script setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
 
-export default {
-  name: "DailyRanking",
-  components: { FlightTypeIcon, FlightState },
-
-  props: {
-    flights: {
-      type: Array,
-      required: true,
-    },
-    maxRows: Number,
+const props = defineProps({
+  flights: {
+    type: Array,
+    required: true,
   },
-  methods: {
-    routeToFlight(flightId) {
-      this.$router.push({
-        name: "Flight",
-        params: {
-          flightId: flightId,
-        },
-      });
+  maxRows: Number,
+});
+const routeToFlight = (flightId) => {
+  router.push({
+    name: "Flight",
+    params: {
+      flightId: flightId,
     },
-  },
+  });
 };
 </script>
 <style scoped>
