@@ -10,7 +10,12 @@
             <th scope="col" class="d-none d-lg-table-cell">Verein</th>
             <th scope="col" class="d-none d-lg-table-cell">Team</th>
 
-            <th v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS" :key="n">Flug {{ n }}</th>
+            <th
+              v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
+              :key="n"
+            >
+              Flug {{ n }}
+            </th>
 
             <th>Gesamt</th>
           </thead>
@@ -32,7 +37,10 @@
                 {{ result.team?.name }}
               </td>
 
-              <td v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS" :key="n">
+              <td
+                v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
+                :key="n"
+              >
                 <i
                   v-if="result.flights[n - 1]?.flightPoints"
                   class="bi bi-trophy me-1"
@@ -72,7 +80,7 @@
 <script setup>
 const props = defineProps({
   results: {
-    type: Array,
+    type: Object,
     required: true,
   },
 });
