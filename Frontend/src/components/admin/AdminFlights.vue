@@ -10,6 +10,7 @@
             <th>Hochgeladen am</th>
             <th>Luftraumverletzung</th>
             <th>Invalider G-Check</th>
+            <th>Nachricht an Pilot</th>
             <th>Akzeptieren</th>
             <th>Flug löschen</th>
           </thead>
@@ -20,14 +21,12 @@
               v-bind:key="flight.id"
             >
               <td>
-                <router-link :to="{ path: '/fluege/' + flight.externalId }">
+                <router-link :to="{ path: '/flug/' + flight.externalId }">
                   {{ flight.externalId }}
                 </router-link>
               </td>
               <td>
-                <router-link :to="{ path: '/pilot/' + flight.user.id }">
                   {{ flight.user.firstName }} {{ flight.user.lastName }}
-                </router-link>
               </td>
               <td>
                 {{ flight.createdAt }}
@@ -43,6 +42,14 @@
               </td>
               <td v-else>
                 <i class="bi bi-slash-circle text-success"></i>
+              </td>
+              <td>
+                <button
+                  @click="messagePilot(flight)"
+                  class="btn btn-outline-primary btn-sm"
+                >
+                  <i class="bi bi-envelope"></i>
+                </button>
               </td>
               <td>
                 <button
@@ -95,6 +102,10 @@ export default {
         const res = await ApiService.acceptFlightViolations(flight.id);
         await this.fetchFlightsWithViolations();
       }
+    },
+    async messagePilot(flight) {
+      alert("Entschuldigung, aber diese Funktion ist noch nicht implementiert.");
+      //TODO Implement function
     },
     async routeToFlight(externalId) {
       router.push({
