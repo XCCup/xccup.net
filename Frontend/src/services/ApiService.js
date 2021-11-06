@@ -77,6 +77,9 @@ export default {
   getAllNews(){
     return jwtInterceptor.get(baseURL + "news/");
   },
+  addNews(news){
+    return jwtInterceptor.post(baseURL + "news/",news);
+  },
   editNews(news){
     return jwtInterceptor.put(baseURL + "news/"+news.id,news);
   },
