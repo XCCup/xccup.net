@@ -134,6 +134,16 @@
               Kontakt / Impressum</router-link
             >
           </li>
+          <!-- TODO show only when user has role of moderator or higher-->
+          <li v-if="true" class="nav-item dropdown">
+            <router-link
+              :to="{ name: 'AdminDashboard' }"
+              class="nav-link active"
+            >
+              <!-- Hab das mal strong gemacht wie du wolltest aber sehe den Sinn nicht😂 -->
+              <strong>Kommandozentrale</strong></router-link
+            >
+          </li>
         </ul>
         <!-- Login dropdown  -->
         <div class="dropdown">
