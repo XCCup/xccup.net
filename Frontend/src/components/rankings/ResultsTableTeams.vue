@@ -31,10 +31,9 @@
               <td v-for="n in maxFlights" v-bind:key="n">
                 <tr v-for="member in team.members" v-bind:key="member.id">
                   <td v-if="member.flights[n - 1]">
-                    <i
-                      class="bi bi-trophy me-1"
-                      :class="member.flights[n - 1].glider.gliderClass.key"
-                    ></i>
+                    <RankingClass
+                      :rankingClass="member.flights[n - 1].glider.gliderClass"
+                    />
                     <router-link
                       :to="{
                         name: 'Flight',
@@ -69,6 +68,7 @@
   </section>
 </template>
 
+import RankingClass from '../RankingClass.vue';
 <script setup>
 const props = defineProps({
   results: {

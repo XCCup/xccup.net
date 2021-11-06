@@ -2,7 +2,7 @@
   <div class="card" v-if="ranking">
     <div class="card-body">
       <h6 class="card-title">
-        <i class="bi bi-trophy" :class="ranking.name"></i>
+        <RankingClass :rankingClass="{ key: ranking.name }" />
         {{ ranking.shortReadableName }}
       </h6>
       <p class="card-text"></p>
