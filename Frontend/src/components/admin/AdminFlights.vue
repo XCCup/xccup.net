@@ -19,14 +19,13 @@
               v-for="flight in flights"
               v-bind:item="flight"
               v-bind:key="flight.id"
+              @click="routeToFlight(flight.externalId)"
             >
               <td>
-                <router-link :to="{ path: '/flug/' + flight.externalId }">
-                  {{ flight.externalId }}
-                </router-link>
+                {{ flight.externalId }}
               </td>
               <td>
-                  {{ flight.user.firstName }} {{ flight.user.lastName }}
+                {{ flight.user.firstName }} {{ flight.user.lastName }}
               </td>
               <td>
                 {{ flight.createdAt }}
@@ -78,12 +77,12 @@
 <script>
 import ApiService from "@/services/ApiService.js";
 import { useRouter } from "vue-router";
-const router = useRouter();
 
 export default {
   data() {
     return {
       flights: [],
+      router: {},
     };
   },
   methods: {
@@ -108,7 +107,7 @@ export default {
       //TODO Implement function
     },
     async routeToFlight(externalId) {
-      router.push({
+      this.router.push({
         name: "Flight",
         params: {
           flightId: externalId,
@@ -117,6 +116,7 @@ export default {
     },
   },
   async created() {
+    this.router = useRouter();
     await this.fetchFlightsWithViolations();
   },
   computed: {
