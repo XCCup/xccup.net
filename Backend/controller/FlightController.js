@@ -261,8 +261,6 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    console.log();
-
     const flight = await service.getById(req.params.id, true);
     if (!flight) return res.sendStatus(NOT_FOUND);
 

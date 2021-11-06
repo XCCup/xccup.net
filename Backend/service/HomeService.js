@@ -42,9 +42,8 @@ async function prepareHomeData() {
 
   const sponsors = sponsorService.getAllActive();
   const activeNews = newsService.getActive();
-  const bestTeams = (await resultService.getTeam(null, null, NUMBER_OF_TEAMS))
-    .values;
-  const bestClubs = (await resultService.getClub(null, NUMBER_OF_CLUBS)).values;
+  const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
+  const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
   const bestFlightsOverallCurrentYear = flightService.getAll(
     getCurrentYear(),
     null,
@@ -82,7 +81,10 @@ async function prepareHomeData() {
     const res = {};
     res.seasonStats = seasonStats;
     for (let index = 0; index < values.length; index++) {
-      res[keys[index]] = values[index];
+      res[keys[index]] =
+        keys[index] == "bestTeams" || keys[index] == "bestClubs"
+          ? values[index].values
+          : values[index];
     }
     res.rankingClasses = resultRankingClasses;
     res.seasonDetails = currentSeason;
