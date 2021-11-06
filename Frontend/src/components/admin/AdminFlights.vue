@@ -70,6 +70,9 @@
 
 <script>
 import ApiService from "@/services/ApiService.js";
+import { useRouter } from "vue-router";
+const router = useRouter();
+
 export default {
   data() {
     return {
@@ -93,15 +96,21 @@ export default {
         await this.fetchFlightsWithViolations();
       }
     },
+    async routeToFlight(externalId) {
+      router.push({
+        name: "Flight",
+        params: {
+          flightId: externalId,
+        },
+      });
+    },
   },
   async created() {
     await this.fetchFlightsWithViolations();
   },
   computed: {
     violationsPresent: function () {
-      console.log("computed");
-      console.log(this.flights.length !== 0);
-      return this.flights.length !== 0;
+      return this.flights.length > 0;
     },
   },
 };

@@ -74,6 +74,15 @@ export default {
   acceptFlightViolations(flightId){
     return jwtInterceptor.put(baseURL + "flights/acceptViolation/" + flightId);
   },
+  getAllNews(){
+    return jwtInterceptor.get(baseURL + "news/");
+  },
+  editNews(news){
+    return jwtInterceptor.put(baseURL + "news/"+news.id,news);
+  },
+  deleteNews(newsId){
+    return jwtInterceptor.delete(baseURL + "news/"+newsId);
+  },
   // Results
   getResults(category, params) {
     return apiClient.get("results/" + category, {
