@@ -3,7 +3,6 @@ import Home from "@/views/Home.vue";
 import Flight from "@/views/Flight.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
-import store from "@/store/index";
 import useUser from "@/composables/useUser";
 
 const routes = [
@@ -191,11 +190,17 @@ const router = createRouter({
   },
 });
 
-const { getAuthData, saveTokenData, isTokenActive, setLoginStatus, refresh } =
-  useUser();
+const {
+  getAuthData,
+  saveTokenData,
+  isTokenActive,
+  setLoginStatus,
+  refresh,
+  authData,
+} = useUser();
 
 router.beforeEach(async (to, from, next) => {
-  if (!getAuthData.token) {
+  if (!authData.token) {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (accessToken) {

@@ -1,4 +1,5 @@
 <template>
+  <!-- {{ useUser.getLoginStatus }} -->
   <Infobox :seasonStats="seasonStats" />
   <DailyRanking :maxRows="5" :flights="dailyRanking" />
   <OverallResults
@@ -12,7 +13,7 @@
 
 <script setup async>
 import ApiService from "@/services/ApiService.js";
-import { ref, inject } from "vue";
+import { ref } from "vue";
 
 const dailyRanking = ref(null);
 const topFlights = ref(null);

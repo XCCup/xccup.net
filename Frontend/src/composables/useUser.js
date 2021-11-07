@@ -23,7 +23,7 @@ export default () => {
   const getLoginStatus = computed(() => state.loginStatus);
   const getUserId = computed(() => state.authData.userId);
 
-  // const getAuthData = computed(() => toRefs(state.authData));
+  // const getAuthData = computed(() => state.authData);
   const isTokenActive = computed(() => {
     if (!state.authData.tokenExp) {
       return false;
@@ -46,7 +46,7 @@ export default () => {
       lastName: jwtDecodedValue.lastName,
       role: jwtDecodedValue.role,
     };
-    state.authData = { ...newTokenData };
+    state.authData = newTokenData;
   };
 
   const setLoginStatus = (value) => {
@@ -77,13 +77,10 @@ export default () => {
       });
     if (response && response.data) {
       saveTokenData(response.data);
-      // commit("saveTokenData", response.data);
-      // commit("setLoginStatus", "success");
       setLoginStatus("success");
       console.log("login successful");
     } else {
       setLoginStatus("failed");
-      // commit("setLoginStatus", "failed");
       console.log("login failed");
     }
   };
@@ -114,16 +111,10 @@ export default () => {
           accessToken: refreshResponse.data.accessToken,
           refreshToken: authData.refreshToken,
         });
-        // commit("saveTokenData", {
-        //   accessToken: refreshResponse.data.accessToken,
-        //   refreshToken: authData.refreshToken,
-        // });
         setLoginStatus("success");
-        // commit("setLoginStatus", "success");
         return true;
       } catch (error) {
         logout();
-        // dispatch("logout");
         console.log(error);
       }
     }
@@ -131,7 +122,7 @@ export default () => {
 
   return {
     getLoginStatus,
-    getAuthData: readonly(state.authData),
+    ...toRefs(readonly(state)),
     getUserId,
     isTokenActive,
     login,

@@ -1,16 +1,15 @@
 import axios from "axios";
 import useUser from "@/composables/useUser";
-const { getAuthData, refresh } = useUser();
+const { authData, refresh } = useUser();
 
 const jwtInterceptor = axios.create({});
 
 jwtInterceptor.interceptors.request.use((config) => {
-  const authData = getAuthData;
-  if (authData == null) {
+  const authData2 = authData.value;
+  if (authData2 == null) {
     return config;
   }
-  console.log(getAuthData);
-  config.headers.common["Authorization"] = `Bearer ${authData.token}`;
+  config.headers.common["Authorization"] = `Bearer ${authData2.token}`;
   return config;
 });
 
@@ -23,8 +22,8 @@ jwtInterceptor.interceptors.response.use(
     // TODO: Should the server error code be 403?
     if (error.response.status === 401 || error.response.data === "EXPIRED") {
       await refresh();
-      const authData = getAuthData;
-      error.config.headers["Authorization"] = `Bearer ${authData.token}`;
+      const authData2 = authData.value;
+      error.config.headers["Authorization"] = `Bearer ${authData2.token}`;
       console.log("…done");
       return axios(error.config);
     } else {

@@ -144,7 +144,7 @@
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
-            {{ loggedIn ? getAuthData.firstName : "Login" }}
+            {{ loggedIn ? authData.firstName : "Login" }}
           </button>
           <div class="dropdown-menu" style="width: 250px">
             <BaseLogin v-if="!loggedIn" />
@@ -173,7 +173,7 @@
 <script setup>
 import useUser from "@/composables/useUser";
 import { computed } from "vue";
-const { getAuthData, getLoginStatus, logout } = useUser();
+const { authData, getLoginStatus, logout } = useUser();
 
 const loggedIn = computed(() => getLoginStatus.value === "success");
 const currentYear = computed(() => new Date().getFullYear());
