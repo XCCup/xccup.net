@@ -11,6 +11,7 @@ const Airspace = require("../config/postgres")["Airspace"];
 const News = require("../config/postgres")["News"];
 const Sponsor = require("../config/postgres")["Sponsor"];
 const Logo = require("../config/postgres")["Logo"];
+const AirspaceService = require("../service/AirspaceService");
 const logger = require("../config/logger");
 
 const dbTestData = {
@@ -164,6 +165,10 @@ const dbTestData = {
         })
       );
       logger.debug("Finished adding sponsor logos");
+
+      logger.debug("Will fix invalid GeoJSON data of airspaces");
+      await AirspaceService.fixInvalidGeoData();
+      logger.debug("Finished repair of GeoJSON");
     }
   },
 };

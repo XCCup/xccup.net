@@ -16,17 +16,16 @@ router.get(
     .optional()
     .custom((p) => customValidatorPoints(p))
     .withMessage(
-      "The points must be presented in the following format: p=6.66,50.22|7.44,50.07|7.52,49.98|6.70,49.98"
+      'The points must be presented in the following format: p=6.01,51.49|10.39,51.49|10.39,49.98|6.01,49.98.\nThere are only 4 points valid. Points start in the "upper left corner" and continue clockwise.'
     ),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const { p } = req.query;
 
-    let points;
     const matchResult = p?.match(POINTS_FORMAT);
-    if (matchResult) {
-      points = [matchResult[1], matchResult[2], matchResult[3], matchResult[4]];
-    }
+    let points = matchResult
+      ? [matchResult[1], matchResult[2], matchResult[3], matchResult[4]]
+      : undefined;
 
     try {
       const airspaces = points
