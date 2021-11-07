@@ -30,7 +30,7 @@ const { STATE } = require("../constants/flight-constants");
 const logger = require("../config/logger");
 
 const flightService = {
-  getAll: async (
+  getAll: async ({
     year,
     site,
     type,
@@ -44,8 +44,9 @@ const flightService = {
     clubId,
     teamId,
     gliderClass,
-    status
-  ) => {
+    status,
+    unchecked,
+  } = {}) => {
     let fillCache = false;
     if (
       isCacheSufficent(year, [
@@ -62,11 +63,14 @@ const flightService = {
         teamId,
         gliderClass,
         status,
+        unchecked,
       ])
     ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
       if (currentYearCache) return currentYearCache;
-      else fillCache = true;
+      else {
+        fillCache = true;
+      }
     }
 
     const orderStatement = sortByPoints
@@ -88,7 +92,8 @@ const flightService = {
         endDate,
         userId,
         gliderClass,
-        status
+        status,
+        unchecked
       ),
       order: [orderStatement],
     };
@@ -269,6 +274,11 @@ const flightService = {
   },
 
   update: async (flight) => {
+    return flight.save();
+  },
+
+  acceptViolation: async (flight) => {
+    flight.violationAccepted = true;
     return flight.save();
   },
 
@@ -628,19 +638,19 @@ async function createWhereStatement(
   endDate,
   userId,
   gliderClass,
-  flightStatus
+  flightStatus,
+  unchecked
 ) {
   let whereStatement;
-  if (
-    flightType ||
-    year ||
-    rankingClass ||
-    startDate ||
-    endDate ||
-    userId ||
-    gliderClass ||
-    flightStatus
-  ) {
+  if (unchecked) {
+    whereStatement = {
+      [sequelize.Op.or]: [
+        { airspaceViolation: true },
+        { uncheckedGRecord: true },
+      ],
+      violationAccepted: false,
+    };
+  } else {
     whereStatement = {};
   }
   if (flightType) {
@@ -739,7 +749,13 @@ function createTeamInclude(id) {
  * @returns
  */
 function isCacheSufficent(year, values) {
-  return year == getCurrentYear() && values.every((e) => e == undefined);
+  const paras = values.every((e) => {
+    if (e != undefined) {
+      logger.debug(`In cache check one parameter of value ${e} was defined`);
+    }
+    return e == undefined;
+  });
+  return year == getCurrentYear() && paras;
 }
 
 module.exports = flightService;

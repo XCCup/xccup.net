@@ -20,6 +20,9 @@ export default {
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
   },
+  deleteFlight(externalId) {
+    return jwtInterceptor.delete(baseURL +"flights/" + externalId);
+  },
   uploadIgc(data) {
     return jwtInterceptor.post(baseURL + "flights/", data);
   },
@@ -64,6 +67,24 @@ export default {
   },
   removeGlider(gliderId) {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
+  },
+  getFlightViolations(){
+    return jwtInterceptor.get(baseURL + "flights/violations");
+  },
+  acceptFlightViolations(flightId){
+    return jwtInterceptor.put(baseURL + "flights/acceptViolation/" + flightId);
+  },
+  getAllNews(){
+    return jwtInterceptor.get(baseURL + "news/");
+  },
+  addNews(news){
+    return jwtInterceptor.post(baseURL + "news/",news);
+  },
+  editNews(news){
+    return jwtInterceptor.put(baseURL + "news/"+news.id,news);
+  },
+  deleteNews(newsId){
+    return jwtInterceptor.delete(baseURL + "news/"+newsId);
   },
   // Results
   getResults(category, params) {
