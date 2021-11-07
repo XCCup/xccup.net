@@ -100,14 +100,13 @@ export default {
   },
   methods: {
     drawAirspaces(airspaceData) {
-      let leafletAirspaces = [];
-
-      airspaceData.forEach((airspace, index) => {
-        leafletAirspaces[index] = L.geoJSON(airspace.polygon, {
-          opacity: 0.1,
-          fillOpacity: 0.08,
-          color: "red",
-        }).addTo(this.map);
+      const options = {
+        opacity: 0.1,
+        fillOpacity: 0.08,
+        color: "red",
+      };
+      airspaceData.forEach((airspace) => {
+        L.geoJSON(airspace.polygon, options).addTo(this.map);
       });
     },
     drawTracks(tracks) {
