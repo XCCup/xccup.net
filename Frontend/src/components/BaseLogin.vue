@@ -38,7 +38,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+// import { mapActions, mapGetters } from "vuex";
+import useUser from "@/composables/useUser";
+const { login } = useUser();
 
 export default {
   name: "BaseLogin",
@@ -46,19 +48,19 @@ export default {
   data() {
     return { email: "", password: "" };
   },
-  computed: {
-    ...mapGetters({
-      getterLoginStatus: "getLoginStatus",
-    }),
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     getterLoginStatus: "getLoginStatus",
+  //   }),
+  // },
 
   methods: {
-    ...mapActions({
-      actionLogin: "login",
-    }),
+    // ...mapActions({
+    //   actionLogin: "login",
+    // }),
     async handleSubmit() {
       try {
-        const response = await this.actionLogin({
+        const response = await login({
           email: this.email,
           password: this.password,
         });

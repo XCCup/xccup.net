@@ -350,9 +350,11 @@
 <script>
 import ApiService from "@/services/ApiService.js";
 
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 import { ref } from "vue";
 
+// import useUser from "@/composables/useUser";
+// const { getUserId } = useUser();
 import cloneDeep from "lodash/cloneDeep";
 
 export default {
@@ -380,9 +382,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      getterUserId: "getUserId",
-    }),
+    // ...mapGetters({
+    //   getterUserId: "getUserId",
+    // }),
     profileDataHasChanged() {
       return (
         JSON.stringify(this.userProfile) !=

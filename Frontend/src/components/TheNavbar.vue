@@ -144,7 +144,7 @@
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
-            {{ loggedIn ? gettersAuthData.firstName : "Login" }}
+            {{ loggedIn ? getAuthData.firstName : "Login" }}
           </button>
           <div class="dropdown-menu" style="width: 250px">
             <BaseLogin v-if="!loggedIn" />
@@ -153,7 +153,7 @@
                 <router-link :to="{ name: 'Profile' }" class="dropdown-item"
                   >Profil</router-link
                 >
-                <button class="btn btn-danger btn-sm m-1" @click="actionLogout">
+                <button class="btn btn-danger btn-sm m-1" @click="handleLogout">
                   Abmelden
                 </button>
               </div>
@@ -170,32 +170,18 @@
   </nav>
 </template>
 
-<script>
-import { mapGetters, mapActions } from "vuex";
-export default {
-  name: "TheNavbar",
-  computed: {
-    ...mapGetters({
-      gettersAuthData: "getAuthData",
-      getterLoginStatus: "getLoginStatus",
-    }),
-    loggedIn() {
-      return this.getterLoginStatus === "success";
-    },
-    currentYear() {
-      return new Date().getFullYear();
-    },
-  },
-  methods: {
-    ...mapActions({
-      actionLogout: "logout",
-    }),
-    async handleLogout() {
-      await this.actionLogout();
-      // TODO: the redirect is not working right now
-      this.$router.push({ name: "Home" });
-    },
-  },
+<script setup>
+import useUser from "@/composables/useUser";
+import { computed } from "vue";
+const { getAuthData, getLoginStatus, logout } = useUser();
+
+const loggedIn = computed(() => getLoginStatus.value === "success");
+const currentYear = computed(() => new Date().getFullYear());
+
+const handleLogout = async () => {
+  await logout();
+  // TODO: the redirect is not working right now
+  // this.$router.push({ name: "Home" });
 };
 </script>
 

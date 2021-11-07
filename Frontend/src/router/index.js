@@ -4,6 +4,7 @@ import Flight from "@/views/Flight.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 import store from "@/store/index";
+import useUser from "@/composables/useUser";
 
 const routes = [
   {
@@ -190,8 +191,11 @@ const router = createRouter({
   },
 });
 
+const { getAuthData, saveTokenData, isTokenActive, setLoginStatus, refresh } =
+  useUser();
+
 router.beforeEach(async (to, from, next) => {
-  if (!store.getters["getAuthData"].token) {
+  if (!getAuthData.token) {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (accessToken) {
@@ -199,15 +203,15 @@ router.beforeEach(async (to, from, next) => {
         accessToken: accessToken,
         refreshToken: refreshToken,
       };
-      store.commit("saveTokenData", data);
+      saveTokenData(data);
     }
   }
-  let auth = store.getters["isTokenActive"];
+  let auth = isTokenActive;
 
   if (!auth) {
-    auth = await store.dispatch("refresh");
+    auth = await refresh();
   } else {
-    store.commit("setLoginStatus", "success");
+    setLoginStatus("success");
   }
 
   if (to.fullPath == "/") {
