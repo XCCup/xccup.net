@@ -130,10 +130,17 @@ async function findAirspacesWithinPolygon(points) {
   polygonPoints.push(polygonPoints[0]);
   const polygonPointsAsLinestring = polygonPoints.join(",");
 
+  /**
+   * It was encountered that some entries in the DB are not valid by means of OpenGIS specification.
+   * You can list all invalid ones with "SELECT * from "Airspaces" WHERE NOT ST_isvalid(polygon)".
+   *
+   * To compensate these issuese all polygon will be wrap inside the ST_MakeValid function of PostGIS.
+   */
+
   const query = `
   SELECT id FROM(
-    SELECT *, (ST_Dump(ST_Intersection(
-      "Airspaces".polygon,
+    SELECT id, (ST_Dump(ST_Intersection(
+      ST_MakeValid("Airspaces".polygon),
       (SELECT ST_Polygon('LINESTRING(${polygonPointsAsLinestring})'::geometry, 4326))
     ))).geom AS "intersectionPolygon"
     FROM "Airspaces"
