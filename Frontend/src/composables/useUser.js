@@ -20,7 +20,7 @@ const state = reactive({
 export default () => {
   // Getters
 
-  const getLoginStatus = computed(() => state.loginStatus);
+  const loggedIn = computed(() => state.loginStatus === "success");
   const getUserId = computed(() => state.authData.userId);
 
   // const getAuthData = computed(() => state.authData);
@@ -79,6 +79,7 @@ export default () => {
       saveTokenData(response.data);
       setLoginStatus("success");
       console.log("login successful");
+      return response;
     } else {
       setLoginStatus("failed");
       console.log("login failed");
@@ -96,7 +97,7 @@ export default () => {
     console.log("Logged out");
   };
 
-  const refresh = async () => {
+  const refreshToken = async () => {
     const authData = state.authData;
     if (authData.token) {
       const payload = {
@@ -121,7 +122,7 @@ export default () => {
   };
 
   return {
-    getLoginStatus,
+    loggedIn,
     ...toRefs(readonly(state)),
     getUserId,
     isTokenActive,
@@ -129,7 +130,7 @@ export default () => {
     logout,
     saveTokenData,
     setLoginStatus,
-    refresh,
+    refreshToken,
     // state: readonly(state),
   };
 };

@@ -190,7 +190,7 @@ const router = createRouter({
   },
 });
 
-const { saveTokenData, isTokenActive, setLoginStatus, refresh, authData } =
+const { saveTokenData, isTokenActive, setLoginStatus, refreshToken, authData } =
   useUser();
 
 router.beforeEach(async (to, from, next) => {
@@ -208,7 +208,7 @@ router.beforeEach(async (to, from, next) => {
   let auth = isTokenActive.value;
 
   if (!auth) {
-    auth = await refresh();
+    auth = await refreshToken();
   } else {
     setLoginStatus("success");
   }
@@ -216,11 +216,11 @@ router.beforeEach(async (to, from, next) => {
   if (to.fullPath == "/") {
     return next();
   } else if (auth && !to.meta.requiredAuth) {
-    // TODO: Redirect after login?
-    // return next({ path: "/profil" });
+    // This is another place to redirect after login.
+    // Current implemantation redirects in BaseLogin Component
     return next();
   } else if (!auth && to.meta.requiredAuth) {
-    return next({ path: "/login" });
+    return next({ path: "/login", query: { redirect: to.fullPath } });
   }
 
   return next();

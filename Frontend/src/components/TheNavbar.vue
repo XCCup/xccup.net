@@ -172,17 +172,18 @@
 
 <script setup>
 import useUser from "@/composables/useUser";
-import { computed } from "vue";
-const { authData, getLoginStatus, logout } = useUser();
 
-const loggedIn = computed(() => getLoginStatus.value === "success");
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+
+const { authData, loggedIn, logout } = useUser();
+
 const currentYear = computed(() => new Date().getFullYear());
+
+const router = useRouter();
 
 const handleLogout = async () => {
   await logout();
-  // TODO: the redirect is not working right now
-  // this.$router.push({ name: "Home" });
+  router.push({ name: "Home" });
 };
 </script>
-
-<style scoped></style>

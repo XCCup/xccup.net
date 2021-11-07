@@ -64,11 +64,12 @@ export default {
           email: this.email,
           password: this.password,
         });
-        // TODO: If we do want to redirect: Do it here or in router config?
-        if (response === 200 && this.redirectAfterLogin) {
-          this.$router.push({
-            name: "Profile",
-          });
+        // Redirect after login
+        if (response.status === 200) {
+          let searchParams = new URLSearchParams(window.location.search);
+          if (searchParams.has("redirect")) {
+            this.$router.push({ path: `${searchParams.get("redirect")}` });
+          }
         }
       } catch (error) {
         // TODO: Display error message
@@ -80,7 +81,7 @@ export default {
     redirectAfterLogin: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
   },
 };
