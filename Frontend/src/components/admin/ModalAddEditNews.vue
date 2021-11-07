@@ -69,6 +69,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits();
+
 const saveButtonIsEnabled = computed(() => {
   return (
     props.newsObject.title.length > 3 &&
