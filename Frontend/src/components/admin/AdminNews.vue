@@ -12,7 +12,9 @@
             <th>Gültig bis</th>
             <th
               title="Falls der Haken gesetzt wird, wird automatische eine Rundmail mit dem Inhalt der Nachricht an alle Nutzer versendet"
-            >Nachricht versenden</th>
+            >
+              Nachricht versenden
+            </th>
             <th>Geändert am</th>
             <th></th>
           </thead>
@@ -28,10 +30,10 @@
               <td>
                 <BaseDate :timestamp="entry.till" />
               </td>
-              <td v-if="entry.sendByMail && entry.mailAlreadySend">
+              <td v-if="entry.sendByMail && entry.mailalreadySent">
                 <i class="bi bi-check2-all"></i>
               </td>
-              <td v-else-if="entry.sendByMail && !entry.mailAlreadySend">
+              <td v-else-if="entry.sendByMail && !entry.mailalreadySent">
                 <i class="bi bi-check2"></i>
               </td>
               <td v-else>
@@ -57,13 +59,19 @@
           @click="onAddNews"
           type="button"
           class="btn btn-outline-primary btn-sm m-1"
-        >Erstelle eine neue Nachricht</button>
+        >
+          Erstelle eine neue Nachricht
+        </button>
       </div>
     </div>
   </section>
   <!-- Modal -->
   <ModalAddEditNews @save-news="saveNews" :newsObject="selectedNews" />
-  <ModalConfirm @confirm-result="deleteNews" :messageBody="deleteMessage" :modalId="modalId" />
+  <ModalConfirm
+    @confirm-result="deleteNews"
+    :messageBody="deleteMessage"
+    :modalId="modalId"
+  />
 </template>
 
 <script>
@@ -112,7 +120,7 @@ export default {
     },
     onDeleteNews(news) {
       this.selectedNews = news;
-      this.deleteMessage = `Willst du die Nachricht ${news.title} wirklich löschen?`
+      this.deleteMessage = `Willst du die Nachricht ${news.title} wirklich löschen?`;
       this.confirmModal.show();
     },
     async deleteNews(result) {
@@ -127,9 +135,7 @@ export default {
     this.addEditNewsModal = new Modal(
       document.getElementById("addEditNewsModal")
     );
-    this.confirmModal = new Modal(
-      document.getElementById(this.modalId)
-    );
+    this.confirmModal = new Modal(document.getElementById(this.modalId));
   },
 };
 function createEmptyNewsObject() {

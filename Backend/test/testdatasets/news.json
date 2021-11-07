@@ -5,7 +5,7 @@
     "from": "2021-03-01",
     "to": "2021-12-12",
     "sendByMail": true,
-    "mailAlreadySend": true
+    "mailalreadySent": true
   },
   {
     "title": "Ad dolore",
@@ -13,7 +13,7 @@
     "from": "2021-11-01",
     "to": "2021-12-12",
     "sendByMail": true,
-    "mailAlreadySend": false
+    "mailalreadySent": false
   },
   {
     "title": "Tenetur quod quidem",
@@ -21,6 +21,6 @@
     "from": "2021-03-01",
     "to": "2021-12-12",
     "sendByMail": false,
-    "mailAlreadySend": false
+    "mailalreadySent": false
   }
 ]

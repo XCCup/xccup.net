@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    mailAlreadySend: {
+    mailalreadySent: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
