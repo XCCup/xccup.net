@@ -16,7 +16,7 @@ router.get(
     .optional()
     .custom((p) => customValidatorPoints(p))
     .withMessage(
-      "The points must be presented in the following format: p=6.66,50.22|7.44,50.07|7.52,49.98|6.70,49.98|6.66,50.22"
+      "The points must be presented in the following format: p=6.66,50.22|7.44,50.07|7.52,49.98|6.70,49.98"
     ),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
