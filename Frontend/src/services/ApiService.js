@@ -78,4 +78,9 @@ export default {
   getGliderClasses() {
     return apiClient.get(baseURL + "general/gliderClasses");
   },
+  getAirspaces(border) {
+    return apiClient.get(baseURL + "airspaces/relevant", {
+      params: { p: border },
+    });
+  },
 };

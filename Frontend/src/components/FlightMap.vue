@@ -37,15 +37,29 @@ export default {
         return [];
       },
     },
+    airspaces: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   watch: {
     // Check if there are new tracklogs present
     tracklogs(newTracklogs) {
       this.drawTracks(newTracklogs);
     },
+    airspaces(newData) {
+      this.drawAirspaces(newData);
+    },
   },
 
   mounted() {
+    // TODO:
+    // Whenever using anything based on OpenStreetMap, an attribution is obligatory as per the copyright notice.
+    // Most other tile providers (such as Mapbox, Stamen or Thunderforest) require an attribution as well.
+    // Make sure to give credit where credit is due.
+
     // Setup leaflet
     L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
@@ -70,7 +84,6 @@ export default {
 
     // Draw tracklogs
     this.drawTracks(this.tracklogs);
-
     this.drawTurnpoints(this.turnpoints);
   },
   beforeUnmount() {
@@ -86,6 +99,23 @@ export default {
     );
   },
   methods: {
+    drawAirspaces(airspaceData) {
+      let leafletAirspaces = [];
+
+      airspaceData.forEach((airspace, index) => {
+        // if (airspace.!polygon) console.log("circle");
+        const coordinates = [];
+
+        airspace.polygon.coordinates[0].forEach((location) => {
+          coordinates.push([location[1], location[0]]);
+        });
+        leafletAirspaces[index] = L.polygon(coordinates, {
+          opacity: 0.1,
+          fillOpacity: 0.08,
+          color: "red",
+        }).addTo(this.map);
+      });
+    },
     drawTracks(tracks) {
       let lines = [];
       let positionMarkers = [];

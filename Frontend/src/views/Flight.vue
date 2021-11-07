@@ -1,7 +1,11 @@
 <template>
   <div v-if="flight">
     <TheSubnav :flight="flight" />
-    <FlightMap :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
+    <FlightMap
+      :tracklogs="tracklogs"
+      :turnpoints="flight.flightTurnpoints"
+      :airspaces="airspaces"
+    />
     <FlightBarogramm :datasets="baroData" :key="baroDataUpdated" />
     <Airbuddies
       v-if="flight.airbuddies.length > 0"
@@ -37,6 +41,7 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const flight = ref(null);
+    const airspaces = ref(null);
 
     const fetchData = async () => {
       try {
@@ -47,9 +52,12 @@ export default {
           throw "Invalid response";
         }
         flight.value = response.data;
+        // Name the window
         document.title = `XCCup - Flug von ${
           flight.value.user.firstName + " " + flight.value.user.lastName
         }`;
+        const res = await ApiService.getAirspaces();
+        airspaces.value = res.data;
       } catch (error) {
         console.log(error);
         if (error.response && error.response.status == 404) {
@@ -65,7 +73,7 @@ export default {
 
     fetchData();
 
-    return { flight };
+    return { flight, airspaces };
   },
   data() {
     return {
