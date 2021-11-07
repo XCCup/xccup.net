@@ -42,10 +42,7 @@
               <td>{{ flight.takeoff.name }}</td>
 
               <td scope="col" class="d-none d-lg-table-cell">
-                <RankingClass
-                  :rankingClass="flight.glider?.gliderClass"
-                  :tooltip="true"
-                />
+                <RankingClass :rankingClass="flight.glider?.gliderClass" />
                 <!-- TODO: This is used very often. Maybe make it a component. -->
                 {{ flight.glider?.brand + " " + flight.glider?.model }}
               </td>
