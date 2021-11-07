@@ -103,13 +103,7 @@ export default {
       let leafletAirspaces = [];
 
       airspaceData.forEach((airspace, index) => {
-        // if (airspace.!polygon) console.log("circle");
-        const coordinates = [];
-
-        airspace.polygon.coordinates[0].forEach((location) => {
-          coordinates.push([location[1], location[0]]);
-        });
-        leafletAirspaces[index] = L.polygon(coordinates, {
+        leafletAirspaces[index] = L.geoJSON(airspace.polygon, {
           opacity: 0.1,
           fillOpacity: 0.08,
           color: "red",
