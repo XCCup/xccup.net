@@ -69,7 +69,7 @@ export default {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
   },
   getFlightViolations(){
-    return jwtInterceptor.get(baseURL + "flights?unchecked=true");
+    return jwtInterceptor.get(baseURL + "flights/violations");
   },
   acceptFlightViolations(flightId){
     return jwtInterceptor.put(baseURL + "flights/acceptViolation/" + flightId);

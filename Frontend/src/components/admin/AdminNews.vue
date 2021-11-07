@@ -21,21 +21,19 @@
           <tbody>
             <tr v-for="entry in news" v-bind:item="entry" v-bind:key="entry.id">
               <td>
-                <strong> {{ entry.title }} </strong>
+                <strong>{{ entry.title }}</strong>
               </td>
-              <td>
-                {{ entry.message }}
-              </td>
+              <td>{{ entry.message }}</td>
               <td>
                 <BaseDate :timestamp="entry.from" />
               </td>
               <td>
                 <BaseDate :timestamp="entry.till" />
               </td>
-              <td v-if="entry.sendByMail && entry.mailAlreadySend">
+              <td v-if="entry.sendByMail && entry.mailalreadySent">
                 <i class="bi bi-check2-all"></i>
               </td>
-              <td v-else-if="entry.sendByMail && !entry.mailAlreadySend">
+              <td v-else-if="entry.sendByMail && !entry.mailalreadySent">
                 <i class="bi bi-check2"></i>
               </td>
               <td v-else>
@@ -69,6 +67,11 @@
   </section>
   <!-- Modal -->
   <ModalAddEditNews @save-news="saveNews" :newsObject="selectedNews" />
+  <ModalConfirm
+    @confirm-result="deleteNews"
+    :messageBody="deleteMessage"
+    :modalId="modalId"
+  />
 </template>
 
 <script>
@@ -81,6 +84,9 @@ export default {
       news: [],
       selectedNews: createEmptyNewsObject(),
       addEditNewsModal: null,
+      confirmModal: null,
+      deleteMessage: "",
+      modalId: "modalNewsConfirm",
     };
   },
   methods: {
@@ -112,19 +118,24 @@ export default {
         console.error(error);
       }
     },
-    async onDeleteNews(news) {
-      if (confirm("Bist du Dir wirklich sicher diese Nachricht zu löschen?")) {
-        const res = await ApiService.deleteNews(news.id);
+    onDeleteNews(news) {
+      this.selectedNews = news;
+      this.deleteMessage = `Willst du die Nachricht ${news.title} wirklich löschen?`;
+      this.confirmModal.show();
+    },
+    async deleteNews(result) {
+      if (result === true) {
+        const res = await ApiService.deleteNews(this.selectedNews.id);
         await this.fetchNews();
       }
     },
   },
-  mounted() {},
-  async created() {
+  async mounted() {
     await this.fetchNews();
     this.addEditNewsModal = new Modal(
       document.getElementById("addEditNewsModal")
     );
+    this.confirmModal = new Modal(document.getElementById(this.modalId));
   },
 };
 function createEmptyNewsObject() {
