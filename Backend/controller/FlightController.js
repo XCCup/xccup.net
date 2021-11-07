@@ -45,7 +45,6 @@ router.get(
     query("clubId").optional().isUUID(),
     query("teamId").optional().isUUID(),
     query("userId").optional().isUUID(),
-    query("unchecked").optional().isBoolean(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -64,18 +63,16 @@ router.get(
       teamId,
       gliderClass,
       status,
-      unchecked,
     } = req.query;
 
     try {
-      const flights = await service.getAll(
+      const flights = await service.getAll({
         year,
         site,
         type,
         rankingClass,
         limit,
         offset,
-        undefined,
         startDate,
         endDate,
         userId,
@@ -83,14 +80,30 @@ router.get(
         teamId,
         gliderClass,
         status,
-        unchecked
-      );
+      });
       res.json(flights);
     } catch (error) {
       next(error);
     }
   }
 );
+
+// @desc Retrieves all flights with violations
+// @route GET /flights/violations
+// @access Only moderator
+
+router.get("/violations", authToken, async (req, res, next) => {
+  if (await requesterIsNotModerator(req, res)) return;
+
+  try {
+    const flights = await service.getAll({
+      unchecked: true,
+    });
+    res.json(flights);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // @desc Retrieve a flight by id
 // @route GET /flights/:id
