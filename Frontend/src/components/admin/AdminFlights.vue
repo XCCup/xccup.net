@@ -15,20 +15,14 @@
             <th>Flug löschen</th>
           </thead>
           <tbody>
-            <tr
-              v-for="flight in flights"
-              v-bind:item="flight"
-              v-bind:key="flight.id"
-            >
+            <tr v-for="flight in flights" v-bind:item="flight" v-bind:key="flight.id">
               <td>
                 <router-link
                   :to="{
                     name: 'Flight',
                     params: { flightId: flight.externalId },
                   }"
-                >
-                  {{ flight.externalId }}
-                </router-link>
+                >{{ flight.externalId }}</router-link>
               </td>
               <td>{{ flight.user.firstName }} {{ flight.user.lastName }}</td>
               <td>
@@ -47,26 +41,17 @@
                 <i class="bi bi-slash-circle text-success"></i>
               </td>
               <td>
-                <button
-                  @click="messagePilot(flight)"
-                  class="btn btn-outline-primary btn-sm"
-                >
+                <button @click="messagePilot(flight)" class="btn btn-outline-primary btn-sm">
                   <i class="bi bi-envelope"></i>
                 </button>
               </td>
               <td>
-                <button
-                  @click="confirmFlight(flight)"
-                  class="btn btn-outline-primary btn-sm"
-                >
+                <button @click="onAcceptFlight(flight)" class="btn btn-outline-primary btn-sm">
                   <i class="bi bi-check2-circle"></i>
                 </button>
               </td>
               <td>
-                <button
-                  @click="deleteFlight(flight)"
-                  class="btn btn-outline-danger btn-sm"
-                >
+                <button @click="onDeleteFlight(flight)" class="btn btn-outline-danger btn-sm">
                   <i class="bi bi-trash"></i>
                 </button>
               </td>
@@ -76,18 +61,31 @@
       </div>
     </div>
   </section>
+  <ModalConfirm
+    @confirm-result="processConfirmResult"
+    :messageBody="confirmMessage"
+    :modalId="modalId"
+  />
 </template>
 
 <script>
 import ApiService from "@/services/ApiService.js";
 import { useRouter } from "vue-router";
 import BaseDate from "../BaseDate.vue";
+import { Modal } from "bootstrap";
 
+const KEY_DELETE = "DELETE";
+const KEY_ACCEPT = "ACCEPT";
 export default {
   data() {
     return {
       flights: [],
-      router: {},
+      router: null,
+      confirmModal: null,
+      confirmMessage: "",
+      confirmType: "",
+      modalId: "modalFlightConfirm",
+      selectedFlight: null
     };
   },
   methods: {
@@ -95,17 +93,26 @@ export default {
       const res = await ApiService.getFlightViolations();
       this.flights = res.data;
     },
-    async deleteFlight(flight) {
-      if (confirm("Bist du Dir wirklich sicher diesen Flug zu löschen?")) {
-        const res = await ApiService.deleteFlight(flight.externalId);
-        await this.fetchFlightsWithViolations();
+    async processConfirmResult() {
+      if (this.confirmType === KEY_DELETE) {
+        const res = await ApiService.deleteFlight(this.selectedFlight.externalId);
       }
+      if (this.confirmType === KEY_ACCEPT) {
+        const res = await ApiService.acceptFlightViolations(this.selectedFlight.id);
+      }
+      await this.fetchFlightsWithViolations();
     },
-    async confirmFlight(flight) {
-      if (confirm("Bist du Dir wirklich sicher diesen Flug zu akzeptieren?")) {
-        const res = await ApiService.acceptFlightViolations(flight.id);
-        await this.fetchFlightsWithViolations();
-      }
+    onDeleteFlight(flight) {
+      this.confirmMessage = "Willst du diesen Flug wirklich löschen?"
+      this.confirmType = KEY_DELETE
+      this.selectedFlight = flight
+      this.confirmModal.show()
+    },
+    onAcceptFlight(flight) {
+      this.confirmMessage = "Willst du diesen Flug wirklich akzeptieren?"
+      this.confirmType = KEY_ACCEPT
+      this.selectedFlight = flight
+      this.confirmModal.show()
     },
     async messagePilot(flight) {
       alert(
@@ -113,17 +120,12 @@ export default {
       );
       //TODO Implement function
     },
-    async routeToFlight(externalId) {
-      this.router.push({
-        name: "Flight",
-        params: {
-          flightId: externalId,
-        },
-      });
-    },
   },
-  async created() {
+  async mounted() {
     this.router = useRouter();
+    this.confirmModal = new Modal(
+      document.getElementById(this.modalId)
+    );
     await this.fetchFlightsWithViolations();
   },
   computed: {
@@ -135,4 +137,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

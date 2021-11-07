@@ -9,88 +9,73 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addEditNewsModalLabel">
-            Nachricht hinzufügen
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <h5 class="modal-title" id="addEditNewsModalLabel">Nachricht hinzufügen</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <BaseInput v-model="newsObject.title" label="Titel" />
           <BaseTextarea v-model="newsObject.message" label="Nachricht" />
           <BaseInput v-model="newsObject.from" label="Gültig ab" />
           <BaseInput v-model="newsObject.till" label="Gültig bis" />
+          <div
+            class="input-append date"
+            id="dp3"
+            data-date="12-02-2012"
+            data-date-format="dd-mm-yyyy"
+          >
+            <input class="span2" size="16" type="text" value="12-02-2012" />
+            <span class="add-on">
+              <i class="icon-th"></i>
+            </span>
+          </div>
           <div class="form-check">
             <input
               class="form-check-input"
               type="checkbox"
-              value=""
+              value
               id="sendToAll"
               v-model="newsObject.sendByMail"
             />
-            <label class="form-check-label" for="flexCheckDefault">
-              Per E-Mail an Alle senden
-            </label>
+            <label class="form-check-label" for="flexCheckDefault">Per E-Mail an Alle senden</label>
           </div>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            data-bs-dismiss="modal"
-          >
-            Abbrechen
-          </button>
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Abbrechen</button>
           <button
             type="button"
             class="btn btn-primary"
             @click="onSaveNews"
             :disabled="!saveButtonIsEnabled"
             data-bs-dismiss="modal"
-          >
-            Speichern
-          </button>
+          >Speichern</button>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import { computed } from "vue";
 import { isIsoDateWithoutTime } from "@/helper/utils";
 
-export default {
-  name: "ModalAddEditNews",
-  emits: ["save-news"],
-
-  props: {
-    newsObject: {
-      type: Object,
-    },
+const props = defineProps({
+  newsObject: {
+    type: Object,
+    required: true,
   },
+});
 
-  setup(props, { emit }) {
-    const saveButtonIsEnabled = computed(() => {
-      return (
-        props.newsObject.title.length > 3 &&
-        props.newsObject.message.length > 3 &&
-        isIsoDateWithoutTime(props.newsObject.from) &&
-        isIsoDateWithoutTime(props.newsObject.till)
-      );
-    });
+const emit = defineEmits();
 
-    const onSaveNews = () => {
-      emit("save-news", props.newsObject);
-    };
+const saveButtonIsEnabled = computed(() => {
+  return (
+    props.newsObject.title.length > 3 &&
+    props.newsObject.message.length > 3 &&
+    isIsoDateWithoutTime(props.newsObject.from) &&
+    isIsoDateWithoutTime(props.newsObject.till)
+  );
+});
 
-    return {
-      onSaveNews,
-      saveButtonIsEnabled,
-    };
-  },
+const onSaveNews = () => {
+  emit("save-news", props.newsObject);
 };
 </script>
