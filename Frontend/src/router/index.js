@@ -136,6 +136,13 @@ const routes = [
     component: () => import(/* webpackChunkName: "" */ "../views/Privacy.vue"),
   },
   {
+    path: "/admin",
+    name: "AdminDashboard",
+    //TODO Check if logged-in user is an moderator or admin
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
+    component: () => import(/* webpackChunkName: "" */ "../views/AdminDashboard.vue"),
+  },
+  {
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: NotFound,

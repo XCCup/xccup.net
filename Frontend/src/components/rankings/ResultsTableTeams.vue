@@ -1,18 +1,33 @@
 <template>
   <section class="pb-3">
     <div class="container-fluid">
-      <div v-if="results?.length > 0" class="table-responsive">
+      <div v-if="results?.values?.length > 0" class="table-responsive">
+        <div class="remarks">
+          <p>
+            Hinweis: Die schlechtesten
+            {{ results.constants.TEAM_DISMISSES }} Ergebnisse eines Teams werden
+            gelöscht
+          </p>
+        </div>
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Platz</th>
             <th>Team</th>
             <th>Punkte / Strecke</th>
             <th>Pilot</th>
-            <th v-for="n in maxFlights" :key="n">Flug {{ n }}</th>
+            <th
+              v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
+              :key="n"
+            >
+              Flug {{ n }}
+            </th>
             <th>Gesamt</th>
           </thead>
           <tbody>
-            <tr v-for="(team, index) in results" v-bind:key="team.teamId">
+            <tr
+              v-for="(team, index) in results.values"
+              v-bind:key="team.teamId"
+            >
               <td>{{ index + 1 }}</td>
 
               <td>
@@ -28,7 +43,10 @@
                   <td>{{ member.firstName + " " + member.lastName }}</td>
                 </tr>
               </td>
-              <td v-for="n in maxFlights" v-bind:key="n">
+              <td
+                v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
+                v-bind:key="n"
+              >
                 <tr v-for="member in team.members" v-bind:key="member.id">
                   <td v-if="member.flights[n - 1]">
                     <RankingClass
@@ -61,7 +79,7 @@
       </div>
       <!-- TODO: Handle this more elegant -->
       <div v-if="!results">Fehler beim laden 🤯</div>
-      <div v-if="results?.length === 0">
+      <div v-if="results?.values?.length === 0">
         Keine Flüge gemeldet in diesem Jahr
       </div>
     </div>
@@ -72,10 +90,9 @@ import RankingClass from '../RankingClass.vue';
 <script setup>
 const props = defineProps({
   results: {
-    type: Array,
+    type: Object,
     required: true,
   },
 });
-const maxFlights = 3;
 </script>
 <style scoped></style>
