@@ -20,8 +20,8 @@
           ></button>
         </div>
         <div class="modal-body">
-          <BaseInput v-model="newsObject.title" label="Titel" />  
-          <BaseArea v-model="newsObject.message" label="Nachricht" />
+          <BaseInput v-model="newsObject.title" label="Titel" />
+          <BaseTextarea v-model="newsObject.message" label="Nachricht" />
           <BaseInput v-model="newsObject.from" label="Gültig ab" />
           <BaseInput v-model="newsObject.till" label="Gültig bis" />
           <div class="form-check">
@@ -60,7 +60,7 @@
   </div>
 </template>
 <script>
-import { ref, computed, reactive } from "vue";
+import { computed } from "vue";
 import { isIsoDateWithoutTime } from "@/helper/utils";
 
 export default {
@@ -70,14 +70,17 @@ export default {
   props: {
     newsObject: {
       type: Object,
-    }
+    },
   },
 
   setup(props, { emit }) {
-    console.log("NEWS: ",props.newsObject);
-
     const saveButtonIsEnabled = computed(() => {
-      return props.newsObject.title.length > 3 && props.newsObject.message.length > 3 && isIsoDateWithoutTime(props.newsObject.from) && isIsoDateWithoutTime(props.newsObject.till)
+      return (
+        props.newsObject.title.length > 3 &&
+        props.newsObject.message.length > 3 &&
+        isIsoDateWithoutTime(props.newsObject.from) &&
+        isIsoDateWithoutTime(props.newsObject.till)
+      );
     });
 
     const onSaveNews = () => {

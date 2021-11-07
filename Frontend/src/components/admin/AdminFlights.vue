@@ -8,8 +8,8 @@
             <th>ID</th>
             <th>Pilot</th>
             <th>Hochgeladen am</th>
-            <th>Luftraumverletzung</th>
-            <th>Invalider G-Check</th>
+            <th>LR Verletzung</th>
+            <th>G-Check</th>
             <th>Nachricht an Pilot</th>
             <th>Akzeptieren</th>
             <th>Flug löschen</th>
@@ -19,16 +19,20 @@
               v-for="flight in flights"
               v-bind:item="flight"
               v-bind:key="flight.id"
-              @click="routeToFlight(flight.externalId)"
             >
               <td>
-                {{ flight.externalId }}
+                <router-link
+                  :to="{
+                    name: 'Flight',
+                    params: { flightId: flight.externalId },
+                  }"
+                >
+                  {{ flight.externalId }}
+                </router-link>
               </td>
+              <td>{{ flight.user.firstName }} {{ flight.user.lastName }}</td>
               <td>
-                {{ flight.user.firstName }} {{ flight.user.lastName }}
-              </td>
-              <td>
-                {{ flight.createdAt }}
+                <BaseDate :timestamp="flight.createdAt" />
               </td>
               <td v-if="flight.uncheckedGRecord">
                 <i class="bi bi-exclamation-diamond text-danger"></i>
@@ -77,6 +81,7 @@
 <script>
 import ApiService from "@/services/ApiService.js";
 import { useRouter } from "vue-router";
+import BaseDate from "../BaseDate.vue";
 
 export default {
   data() {
@@ -103,7 +108,9 @@ export default {
       }
     },
     async messagePilot(flight) {
-      alert("Entschuldigung, aber diese Funktion ist noch nicht implementiert.");
+      alert(
+        "Entschuldigung, aber diese Funktion ist noch nicht implementiert."
+      );
       //TODO Implement function
     },
     async routeToFlight(externalId) {
@@ -124,6 +131,7 @@ export default {
       return this.flights.length > 0;
     },
   },
+  components: { BaseDate },
 };
 </script>
 
