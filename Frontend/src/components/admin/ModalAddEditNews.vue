@@ -66,6 +66,7 @@ import { isIsoDateWithoutTime } from "@/helper/utils";
 const props = defineProps({
   newsObject: {
     type: Object,
+    required: true,
   },
 });
 
