@@ -30,7 +30,7 @@ const { STATE } = require("../constants/flight-constants");
 const logger = require("../config/logger");
 
 const flightService = {
-  getAll: async (
+  getAll: async ({
     year,
     site,
     type,
@@ -45,8 +45,8 @@ const flightService = {
     teamId,
     gliderClass,
     status,
-    unchecked
-  ) => {
+    unchecked,
+  } = {}) => {
     let fillCache = false;
     if (
       isCacheSufficent(year, [

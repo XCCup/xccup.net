@@ -44,15 +44,11 @@ async function prepareHomeData() {
   const activeNews = newsService.getActive();
   const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
   const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
-  const bestFlightsOverallCurrentYear = flightService.getAll(
-    getCurrentYear(),
-    null,
-    null,
-    null,
-    NUMBER_OF_FLIGHTS_OVERALL,
-    0,
-    true
-  );
+  const bestFlightsOverallCurrentYear = flightService.getAll({
+    year: getCurrentYear(),
+    limit: NUMBER_OF_FLIGHTS_OVERALL,
+    sortByPoints: true,
+  });
   const todaysFlights = flightService.getTodays();
   const dbRequestsOther = {
     sponsors,
