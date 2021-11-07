@@ -59,38 +59,26 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import { computed } from "vue";
 import { isIsoDateWithoutTime } from "@/helper/utils";
 
-export default {
-  name: "ModalAddEditNews",
-  emits: ["save-news"],
-
-  props: {
-    newsObject: {
-      type: Object,
-    },
+const props = defineProps({
+  newsObject: {
+    type: Object,
   },
+});
 
-  setup(props, { emit }) {
-    const saveButtonIsEnabled = computed(() => {
-      return (
-        props.newsObject.title.length > 3 &&
-        props.newsObject.message.length > 3 &&
-        isIsoDateWithoutTime(props.newsObject.from) &&
-        isIsoDateWithoutTime(props.newsObject.till)
-      );
-    });
+const saveButtonIsEnabled = computed(() => {
+  return (
+    props.newsObject.title.length > 3 &&
+    props.newsObject.message.length > 3 &&
+    isIsoDateWithoutTime(props.newsObject.from) &&
+    isIsoDateWithoutTime(props.newsObject.till)
+  );
+});
 
-    const onSaveNews = () => {
-      emit("save-news", props.newsObject);
-    };
-
-    return {
-      onSaveNews,
-      saveButtonIsEnabled,
-    };
-  },
+const onSaveNews = () => {
+  emit("save-news", props.newsObject);
 };
 </script>
