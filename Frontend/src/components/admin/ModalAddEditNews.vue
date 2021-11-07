@@ -17,17 +17,7 @@
           <BaseTextarea v-model="newsObject.message" label="Nachricht" />
           <BaseInput v-model="newsObject.from" label="Gültig ab" />
           <BaseInput v-model="newsObject.till" label="Gültig bis" />
-          <div
-            class="input-append date"
-            id="dp3"
-            data-date="12-02-2012"
-            data-date-format="dd-mm-yyyy"
-          >
-            <input class="span2" size="16" type="text" value="12-02-2012" />
-            <span class="add-on">
-              <i class="icon-th"></i>
-            </span>
-          </div>
+          <!-- <BaseDatePicker v-model="newsObject.from" label="Gültig Picker" /> -->
           <div class="form-check">
             <input
               class="form-check-input"
@@ -54,6 +44,7 @@
   </div>
 </template>
 <script setup>
+
 import { computed } from "vue";
 import { isIsoDateWithoutTime } from "@/helper/utils";
 
@@ -78,4 +69,5 @@ const saveButtonIsEnabled = computed(() => {
 const onSaveNews = () => {
   emit("save-news", props.newsObject);
 };
+
 </script>
