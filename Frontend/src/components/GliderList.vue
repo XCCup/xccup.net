@@ -24,11 +24,11 @@
   </button>
   <!-- Modals -->
   <ModalAddGlider @add-glider="addGlider" />
-  <ModalRemoveGlider @remove-glider="removeGlider" :glider="selectedGlider" />
+  <ModalConfirm @confirm-result="removeGlider" :messageBody="removeMessage" />
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 
 import ApiService from "@/services/ApiService.js";
@@ -49,6 +49,10 @@ export default {
     const selectedGlider = ref(null);
     const showSpinner = ref(false);
 
+    const removeMessage = computed(()=>{
+      return `${selectedGlider.value?.brand} ${selectedGlider.value?.model} entfernen`
+    })
+
     // Remove Glider
     // TODO: Should this be a ref?
     let removeGliderModal = null;
@@ -56,18 +60,20 @@ export default {
       selectedGlider.value = glider;
       removeGliderModal.show();
     };
-    const removeGlider = async (id) => {
-      try {
-        showSpinner.value = true;
-        const res = await ApiService.removeGlider(id);
-        if (res.status != 200) throw res.statusText;
-        showSpinner.value = false;
-        emit("gliders-changed", res.data.gliders);
-        removeGliderModal.hide();
-      } catch (error) {
-        // TODO: Handle error
-        console.error(error);
-        showSpinner.value = false;
+    const removeGlider = async (result) => {
+      if(result){
+        try {
+          showSpinner.value = true;
+          const res = await ApiService.removeGlider(selectedGlider.value.id);
+          if (res.status != 200) throw res.statusText;
+          showSpinner.value = false;
+          emit("gliders-changed", res.data.gliders);
+          removeGliderModal.hide();
+        } catch (error) {
+          // TODO: Handle error
+          console.error(error);
+          showSpinner.value = false;
+        }
       }
     };
     // Add glider
@@ -112,12 +118,13 @@ export default {
 
     onMounted(() => {
       removeGliderModal = new Modal(
-        document.getElementById("removeGliderModal")
+        document.getElementById("confirmModal")
       );
       addGliderModal = new Modal(document.getElementById("addGliderModal"));
     });
     return {
       selectedGlider,
+      removeMessage,
       formatGliderName,
       onDelete,
       removeGlider,

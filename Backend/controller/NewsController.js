@@ -17,10 +17,12 @@ const {
 
 router.get("/", authToken, async (req, res, next) => {
   try {
-    if (requesterIsNotModerator(res, req)) return;
+    if (await requesterIsNotModerator(req, res)) return;
 
-    const airspaces = await service.getAll();
-    res.json(airspaces);
+    console.log("After");
+
+    const news = await service.getAll();
+    res.json(news);
   } catch (error) {
     next(error);
   }
@@ -41,7 +43,7 @@ router.post(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     try {
-      if (requesterIsNotModerator(res, req)) return;
+      if (await requesterIsNotModerator(req, res)) return;
 
       const news = await service.create({
         title: req.body.title,
@@ -80,7 +82,7 @@ router.put(
     const sendByMail = req.body.sendByMail;
 
     try {
-      if (requesterIsNotModerator(res, req)) return;
+      if (await requesterIsNotModerator(req, res)) return;
 
       const news = await service.getById(id);
 
@@ -110,7 +112,7 @@ router.delete(
     const id = req.params.id;
 
     try {
-      if (requesterIsNotModerator(res, req)) return;
+      if (await requesterIsNotModerator(req, res)) return;
       const user = await service.delete(id);
       if (!user) return res.sendStatus(NOT_FOUND);
 
@@ -122,9 +124,9 @@ router.delete(
 );
 
 // @desc Gets all news
-// @route GET /news/active
+// @route GET /news/public
 
-router.get("/active", async (req, res, next) => {
+router.get("/public", async (req, res, next) => {
   try {
     const airspaces = await service.getActive();
     res.json(airspaces);

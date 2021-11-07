@@ -6,7 +6,7 @@
 import { format } from "date-fns";
 const props = defineProps({
   timestamp: {
-    type: [String, Number],
+    type: [String, Number, Date],
     required: true,
   },
   dateFormat: {

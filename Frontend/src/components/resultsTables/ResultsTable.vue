@@ -1,7 +1,7 @@
 <template>
   <section class="pb-3">
     <div class="container-fluid">
-      <div v-if="results?.length > 0" class="table-responsive">
+      <div v-if="results.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Platz</th>
@@ -75,7 +75,7 @@ const props = defineProps({
     required: true,
   },
   maxFlights: {
-    type: Number,
+    type: [Number, String],
     required: true,
   },
 });

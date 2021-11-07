@@ -44,15 +44,11 @@ async function prepareHomeData() {
   const activeNews = newsService.getActive();
   const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
   const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
-  const bestFlightsOverallCurrentYear = flightService.getAll(
-    getCurrentYear(),
-    null,
-    null,
-    null,
-    NUMBER_OF_FLIGHTS_OVERALL,
-    0,
-    true
-  );
+  const bestFlightsOverallCurrentYear = flightService.getAll({
+    year: getCurrentYear(),
+    limit: NUMBER_OF_FLIGHTS_OVERALL,
+    sortByPoints: true,
+  });
   const todaysFlights = flightService.getTodays();
   const dbRequestsOther = {
     sponsors,
@@ -81,7 +77,10 @@ async function prepareHomeData() {
     const res = {};
     res.seasonStats = seasonStats;
     for (let index = 0; index < values.length; index++) {
-      res[keys[index]] = values[index];
+      res[keys[index]] =
+        keys[index] == "bestTeams" || keys[index] == "bestClubs"
+          ? values[index].values
+          : values[index];
     }
     res.rankingClasses = resultRankingClasses;
     res.seasonDetails = currentSeason;
@@ -89,10 +88,10 @@ async function prepareHomeData() {
   });
 }
 
-function retrieveRankingClassResults(currentSeason) {
+async function retrieveRankingClassResults(currentSeason) {
   const rankingRequests = {};
   for (const [key] of Object.entries(currentSeason.rankingClasses)) {
-    rankingRequests[key] = resultService.getOverall(null, key);
+    rankingRequests[key] = (await resultService.getOverall(null, key)).values;
   }
   return Promise.all(Object.values(rankingRequests)).then((values) => {
     const keys = Object.keys(rankingRequests);
