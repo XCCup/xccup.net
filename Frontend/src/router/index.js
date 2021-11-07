@@ -190,17 +190,11 @@ const router = createRouter({
   },
 });
 
-const {
-  getAuthData,
-  saveTokenData,
-  isTokenActive,
-  setLoginStatus,
-  refresh,
-  authData,
-} = useUser();
+const { saveTokenData, isTokenActive, setLoginStatus, refresh, authData } =
+  useUser();
 
 router.beforeEach(async (to, from, next) => {
-  if (!authData.token) {
+  if (!authData.value.token) {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (accessToken) {
@@ -211,7 +205,7 @@ router.beforeEach(async (to, from, next) => {
       saveTokenData(data);
     }
   }
-  let auth = isTokenActive;
+  let auth = isTokenActive.value;
 
   if (!auth) {
     auth = await refresh();

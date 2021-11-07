@@ -349,21 +349,12 @@
 </template>
 <script>
 import ApiService from "@/services/ApiService.js";
-
-// import { mapGetters } from "vuex";
 import { ref } from "vue";
-
-// import useUser from "@/composables/useUser";
-// const { getUserId } = useUser();
 import cloneDeep from "lodash/cloneDeep";
 
 export default {
   name: "Profile",
   async setup() {
-    // TODO: Remove if store will not be used for user details. Maybe leave it here for reference how to do it;)
-    // const store = useStore();
-    // store.dispatch("user/getUserDetails", store.getters["getAuthData"].userId);
-    // const userDetails = computed(() => store.getters["user/getUserDetails"]);
     try {
       const { data: initialData } = await ApiService.getUserDetails();
       return {
@@ -382,9 +373,6 @@ export default {
     };
   },
   computed: {
-    // ...mapGetters({
-    //   getterUserId: "getUserId",
-    // }),
     profileDataHasChanged() {
       return (
         JSON.stringify(this.userProfile) !=

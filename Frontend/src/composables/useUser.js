@@ -12,7 +12,7 @@ const state = reactive({
     userId: "",
     firstName: "",
     lastName: "",
-    role: "foo",
+    role: "",
   },
   loginStatus: "",
 });
