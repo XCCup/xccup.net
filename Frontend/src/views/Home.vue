@@ -1,4 +1,14 @@
 <template>
+  <div>
+    {{ state.counter }}
+  </div>
+  <div>
+    <!-- Increment using a method defined in the composable -->
+    <button @click.prevent="increment()">+ Increment</button>
+
+    <!-- Decrement by mutating the state directly -->
+    <button @click.prevent="state.counter--">- Decrement</button>
+  </div>
   <Infobox :seasonStats="seasonStats" />
   <DailyRanking :maxRows="5" :flights="dailyRanking" />
   <OverallResults
@@ -12,7 +22,11 @@
 
 <script setup async>
 import ApiService from "@/services/ApiService.js";
-import { ref } from "vue";
+
+import useCounter from "@/composables/global";
+const { state, increment } = useCounter();
+
+import { ref, inject } from "vue";
 
 const dailyRanking = ref(null);
 const topFlights = ref(null);
