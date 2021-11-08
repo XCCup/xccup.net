@@ -82,7 +82,9 @@ const drawAirspaces = (airspaceData) => {
     color: "red",
   };
   airspaceData.forEach((airspace) => {
-    L.geoJSON(airspace.polygon, options).addTo(map.value);
+    L.geoJSON(airspace.polygon, options)
+      .bindPopup(createPopupContent(airspace))
+      .addTo(map.value);
   });
 };
 const drawTracks = (trackData) => {
@@ -181,6 +183,10 @@ const updateMarkerPosition = (position) => {
 };
 const centerMapOnClick = () => {
   map.value.setView(positionMarkers[0].getLatLng());
+};
+const createPopupContent = (airspace) => {
+  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}<br>Floor: ${airspace.floor}`;
+  return content;
 };
 </script>
 
