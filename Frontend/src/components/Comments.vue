@@ -7,6 +7,7 @@
       :key="comment.id"
     >
       <Comment
+        v-if="false"
         :ref="comment.id"
         :comment="comment"
         @delete-comment="showCommentDeleteModal"

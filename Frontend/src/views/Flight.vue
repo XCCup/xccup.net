@@ -96,6 +96,8 @@ export default {
         // TODO: Maybe use an optimistic aproach like:
         // this.flight.comments = [...this.flight.comments, comment];
         if (res.status != 200) throw res.statusText;
+        console.log(this.$refs.Comments);
+
         this.$refs.Comments.clearCommentEditorInput();
         if (comment.relatedTo)
           this.$refs.Comments.$refs[`${comment.relatedTo}`].closeReplyEditor();
