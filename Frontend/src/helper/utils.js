@@ -11,6 +11,4 @@ export function convertHeightStringToMetersValue(value){
     if (value.includes("FL")) return undefined;
     // if (value.includes("FL")) return Math.round(parseInt(value.substring(2, value.length)) * FACTOR_FT_TO_M * 100);
     if (value.includes("ft")) return Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
-
-    return 0;
 }
