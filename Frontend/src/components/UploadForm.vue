@@ -32,7 +32,7 @@
               label="Fluggerät"
               :showLabel="true"
               :gliders="listOfGliders"
-              :isDisabled="false"
+              :isDisabled="!flightId"
             />
           </div>
           <div class="col-md-3 mt-3">
