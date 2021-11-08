@@ -41,7 +41,7 @@ const auth = (req, res, next) => {
           return res.status(FORBIDDEN).send("EXPIRED");
         }
         logger.warn(
-          `Verify authentication for user ${user.firstName} ${user.lastName} failed: ` +
+          `Verify authentication for user ${user?.firstName} ${user?.lastName} failed: ` +
             error
         );
         return res.sendStatus(FORBIDDEN);
@@ -127,9 +127,10 @@ const refresh = async (token) => {
  */
 const requesterIsNotOwner = async (req, res, otherId) => {
   if (
-    otherId !== req.user.id &&
-    !(await userService.isModerator(req.user.id))
+    otherId !== req.user?.id &&
+    !(await userService.isModerator(req.user?.id))
   ) {
+    logger.debug("auth: requester is not owner");
     res.sendStatus(FORBIDDEN);
     return true;
   }
@@ -143,7 +144,8 @@ const requesterIsNotOwner = async (req, res, otherId) => {
  * @returns True if requester has role administrator. Otherwise false.
  */
 const requesterIsNotAdmin = async (req, res) => {
-  if (!(await userService.isAdmin(req.user.id))) {
+  if (!(await userService.isAdmin(req.user?.id))) {
+    logger.debug("auth: requester is not admin");
     return res.sendStatus(FORBIDDEN);
   }
 };
@@ -155,7 +157,8 @@ const requesterIsNotAdmin = async (req, res) => {
  * @returns True if requester has role moderator or higher. Otherwise false.
  */
 const requesterIsNotModerator = async (req, res) => {
-  if (!(await userService.isModerator(req.user.id))) {
+  if (!(await userService.isModerator(req.user?.id))) {
+    logger.debug("auth: requester is not moderator");
     return res.sendStatus(FORBIDDEN);
   }
 };

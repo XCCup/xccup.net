@@ -20,6 +20,9 @@ export default {
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
   },
+  deleteFlight(externalId) {
+    return jwtInterceptor.delete(baseURL + "flights/" + externalId);
+  },
   uploadIgc(data) {
     return jwtInterceptor.post(baseURL + "flights/", data);
   },
@@ -35,6 +38,8 @@ export default {
   getInitialData() {
     return apiClient.get("home");
   },
+  // Flight comments
+
   addComment(comment) {
     return jwtInterceptor.post(baseURL + "comments", comment);
   },
@@ -47,6 +52,9 @@ export default {
   getCommentsOfFlight(flightId) {
     return apiClient.get("comments/flight/" + flightId);
   },
+
+  // Profile
+
   getUserDetails() {
     return jwtInterceptor.get(baseURL + "users/");
   },
@@ -65,17 +73,47 @@ export default {
   removeGlider(gliderId) {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
   },
+
+  // Admin
+
+  getFlightViolations() {
+    return jwtInterceptor.get(baseURL + "flights/violations");
+  },
+  acceptFlightViolations(flightId) {
+    return jwtInterceptor.put(baseURL + "flights/acceptViolation/" + flightId);
+  },
+  getAllNews() {
+    return jwtInterceptor.get(baseURL + "news/");
+  },
+  addNews(news) {
+    return jwtInterceptor.post(baseURL + "news/", news);
+  },
+  editNews(news) {
+    return jwtInterceptor.put(baseURL + "news/" + news.id, news);
+  },
+  deleteNews(newsId) {
+    return jwtInterceptor.delete(baseURL + "news/" + newsId);
+  },
+
   // Results
+
   getResults(category, params) {
     return apiClient.get("results/" + category, {
       params: { year: params.year },
     });
   },
+
   // General
+
   getBrands() {
     return apiClient.get(baseURL + "general/brands");
   },
   getGliderClasses() {
     return apiClient.get(baseURL + "general/gliderClasses");
+  },
+  getAirspaces(border) {
+    return apiClient.get(baseURL + "airspaces/relevant", {
+      params: { p: border },
+    });
   },
 };

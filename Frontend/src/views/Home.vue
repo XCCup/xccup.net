@@ -22,6 +22,10 @@ const bestClubs = ref(null);
 const bestTeams = ref(null);
 const seasonStats = ref(null);
 const sponsors = ref(null);
+
+// Name the window
+document.title = "XCCup.net";
+
 try {
   // To simulate longer loading times
   // await new Promise((resolve) => setTimeout(resolve, 2000));

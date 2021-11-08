@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     polygon: {
-      type: DataTypes.GEOMETRY("POLYGON"),
+      type: DataTypes.GEOMETRY(),
       allowNull: false,
     },
   });

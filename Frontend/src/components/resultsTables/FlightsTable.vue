@@ -42,10 +42,7 @@
               <td>{{ flight.takeoff.name }}</td>
 
               <td scope="col" class="d-none d-lg-table-cell">
-                <i
-                  class="bi bi-trophy"
-                  :class="flight.glider?.gliderClass?.key ?? ``"
-                ></i>
+                <RankingClass :rankingClass="flight.glider?.gliderClass" />
                 {{ flight.glider?.brand + " " + flight.glider?.model }}
               </td>
 

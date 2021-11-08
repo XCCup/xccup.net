@@ -25,12 +25,12 @@
                 @mouseleave="updateHighlightedFlight(null)"
               >
                 <td scope="row">{{ index + 1 }}</td>
-                <td>
-                  {{ flight.user.firstName + " " + flight.user.lastName }}
-                </td>
+                <td>{{ flight.user.firstName + " " + flight.user.lastName }}</td>
                 <td>{{ flight.takeoff.name }}</td>
                 <td>{{ Math.floor(flight.flightDistance) }} km</td>
-                <td><FlightTypeIcon :flightType="flight.flightType" /></td>
+                <td>
+                  <FlightTypeIcon :flightType="flight.flightType" />
+                </td>
                 <td>{{ flight.flightPoints }} P</td>
               </tr>
             </tbody>
@@ -38,21 +38,16 @@
           <router-link
             :to="{ name: 'FlightsAll', params: { year: currentYear } }"
             class="btn btn-outline-light btn-sm my-1"
-            >Alle Flüge anzeigen</router-link
-          >
+          >Alle Flüge anzeigen</router-link>
         </div>
         <div v-else class="text-center mt-5">
-          <p class="fs-1">🌧 💨 🤯</p>
-          Heute noch keine eingereichten Flüge vorhanden
+          <p class="fs-1">🌧 💨 🤯</p>Heute noch keine eingereichten Flüge vorhanden
         </div>
       </div>
       <div></div>
     </div>
     <div class="col-xl-7 col-md-6 col-12 p-0 m-0">
-      <DailyFlightsMap
-        :highlightedFlight="highlightedFlightId"
-        :tracks="dailyFlightsMapTracks"
-      />
+      <DailyFlightsMap :highlightedFlight="highlightedFlightId" :tracks="dailyFlightsMapTracks" />
     </div>
   </div>
 </template>
@@ -79,6 +74,7 @@ const dailyFlightsMapTracks = computed(() => {
   props.flights.slice(0, props.maxRows).forEach((flight) => {
     tracks.push({
       flightId: flight.id,
+      externalId: flight.externalId,
       turnpoints: flight.fixes,
     });
   });

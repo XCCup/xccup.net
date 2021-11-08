@@ -1,7 +1,7 @@
 <template>
   <section class="pb-3">
     <div class="container-fluid">
-      <div v-if="results?.length > 0" class="table-responsive">
+      <div v-if="results.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Platz</th>
@@ -33,11 +33,10 @@
               </td>
 
               <td v-for="n in maxFlights" :key="n">
-                <i
+                <RankingClass
                   v-if="result.flights[n - 1]?.flightPoints"
-                  class="bi bi-trophy me-1"
-                  :class="result.flights[n - 1].glider.gliderClass.key"
-                ></i>
+                  :rankingClass="result.flights[n - 1].glider.gliderClass"
+                />
                 <router-link
                   v-if="result.flights[n - 1]"
                   :to="{
@@ -76,7 +75,7 @@ const props = defineProps({
     required: true,
   },
   maxFlights: {
-    type: Number,
+    type: [Number, String],
     required: true,
   },
 });

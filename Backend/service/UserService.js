@@ -41,7 +41,14 @@ const userService = {
   getByIdPublic: async (id) => {
     const user = User.findOne({
       where: { id },
-      attributes: ["id", "firstName", "lastName", "gender", "state", "gliders"],
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "gender",
+        "address",
+        "gliders",
+      ],
       include: [
         {
           model: ProfilePicture,
@@ -189,34 +196,22 @@ async function checkForClubChange(user) {
 
 async function hasUserFlightsWithinCurrentSeason(user) {
   const seasonDetails = await getCurrentActive();
-  const flights = await flightService.getAll(
-    null,
-    null,
-    null,
-    null,
-    1,
-    0,
-    false,
-    seasonDetails.startDate,
-    seasonDetails.endDate,
-    user.id
-  );
+  const flights = await flightService.getAll({
+    limit: 1,
+    startDate: seasonDetails.startDate,
+    endDate: seasonDetails.endDate,
+    userId: user.id,
+  });
   return flights.length > 0;
 }
 
 async function findFlightRecordOfType(id, type) {
-  return await flightService.getAll(
-    null,
-    null,
+  return await flightService.getAll({
     type,
-    null,
-    1,
-    0,
-    true,
-    null,
-    null,
-    id
-  );
+    limit: 1,
+    sortByPoints: true,
+    userId: id,
+  });
 }
 
 module.exports = userService;
