@@ -99,7 +99,7 @@ export default {
 
   getResults(category, params) {
     return apiClient.get("results/" + category, {
-      params: { year: params.year },
+      params: { year: params?.year },
     });
   },
 

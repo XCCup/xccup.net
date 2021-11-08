@@ -13,6 +13,7 @@ import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
+import { convertHeightStringToMetersValue } from "../helper/utils";
 
 export default {
   name: "Map",
@@ -210,8 +211,14 @@ export default {
       this.map.setView(this.positionMarkers[0].getLatLng());
     },
     createPopupContent(airspace) {
-      const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}<br>Floor: ${airspace.floor}`
+      const ceilingInMeters = this.addRepresentationInMeters(airspace.ceiling)
+      const floorInMeters = this.addRepresentationInMeters(airspace.floor)
+      const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`
       return content;
+    },
+    addRepresentationInMeters(value) {
+      const valueInMeters = convertHeightStringToMetersValue(value)
+      return valueInMeters ? ` / ${valueInMeters} m` : "";
     }
   },
 };
