@@ -5,9 +5,18 @@
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Startplatz</th>
-            <th>Freiestrecke</th>
-            <th>Falches Dreieck</th>
-            <th>FAI Dreieck</th>
+            <th>
+              Freiestrecke
+              <FlightTypeIcon :flightType="'FREE'" />
+            </th>
+            <th>
+              Flaches Dreieck
+              <FlightTypeIcon :flightType="'FLAT'" />
+            </th>
+            <th>
+              FAI Dreieck
+              <FlightTypeIcon :flightType="'FAI'" />
+            </th>
           </thead>
           <tbody>
             <tr v-for="(result, index) in results[0]" v-bind:key="result.takeoff.id">
