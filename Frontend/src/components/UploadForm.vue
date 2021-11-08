@@ -32,21 +32,15 @@
               label="Fluggerät"
               :showLabel="true"
               :gliders="listOfGliders"
-              :isDisabled="false"
+              :isDisabled="!flightId"
             />
           </div>
           <div class="col-md-3 mt-3">
-            <div class="d-grid gap-2">
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#addGliderModal"
-                :disabled="!flightId"
-              >
-                Hinzufügen
+            <router-link :to="{ name: 'Profile' }" class="d-grid gap-2">
+              <button type="button" class="btn btn-primary">
+                Liste bearbeiten
               </button>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -160,7 +154,6 @@
       </div>
     </form>
   </div>
-  <ModalAddGlider />
 </template>
 
 <script>

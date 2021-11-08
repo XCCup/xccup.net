@@ -22,6 +22,9 @@ export default () => {
 
   const loggedIn = computed(() => state.loginStatus === "success");
   const getUserId = computed(() => state.authData.userId);
+  const hasElevatedRole = computed(
+    () => state.authData.role === ("Administrator" || "Moderator")
+  );
 
   // const getAuthData = computed(() => state.authData);
   const isTokenActive = computed(() => {
@@ -123,6 +126,7 @@ export default () => {
 
   return {
     loggedIn,
+    hasElevatedRole,
     ...toRefs(readonly(state)),
     getUserId,
     isTokenActive,
