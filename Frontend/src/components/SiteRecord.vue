@@ -17,6 +17,9 @@
 
 <script setup>
 const props = defineProps({
-  record: Object,
+  record: {
+    type: Object,
+    required: true,
+  },
 });
 </script>

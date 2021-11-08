@@ -52,7 +52,7 @@
 - [x] Basic layout
 - [x] Center map view on pilot by clicking on the barogram
 - [x] Pilot markers follow the barogram timeline
-- [x] Add speed and climb label next to height label
+- [ ] Add speed and climb label next to height label
 - [ ] Airspace overlay on map
 - [x] Turnpoint overlay on map
 - [ ] Custom icons for takeoff & landing
