@@ -13,6 +13,9 @@ import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
+
+import { convertHeightStringToMetersValue } from "../helper/utils";
+
 import { ref } from "@vue/reactivity";
 import { watchEffect, onMounted, onBeforeUnmount } from "vue";
 
@@ -165,6 +168,8 @@ const drawTurnpoints = (turnpoints) => {
   }).addTo(map.value);
 };
 
+
+
 const updateMarkerPosition = (position) => {
   props.tracklogs.forEach((_, index) => {
     // Index + 1 because first dataset is GND and we need to skip that one
@@ -174,6 +179,7 @@ const updateMarkerPosition = (position) => {
           props.tracklogs[index][position.dataIndex]
         );
       }
+
     }
   });
   // Center map on pilot - currently too CPU intense. Needs refactoring
@@ -181,12 +187,18 @@ const updateMarkerPosition = (position) => {
   //   map.setView(tracklogs[0][positions.dataIndex]);
   // }
 };
+const createPopupContent = (airspace) => {
+  const ceilingInMeters = addRepresentationInMeters(airspace.ceiling);
+  const floorInMeters = addRepresentationInMeters(airspace.floor);
+  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`;
+  return content;
+};
+const addRepresentationInMeters = (value) => {
+  const valueInMeters = convertHeightStringToMetersValue(value);
+  return valueInMeters ? ` / ${valueInMeters} m` : "";
+};
 const centerMapOnClick = () => {
   map.value.setView(positionMarkers[0].getLatLng());
-};
-const createPopupContent = (airspace) => {
-  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}<br>Floor: ${airspace.floor}`;
-  return content;
 };
 </script>
 

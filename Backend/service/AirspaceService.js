@@ -38,6 +38,16 @@ const service = {
     });
   },
 
+  /**
+   * It was encountered that some entries in the DB are not valid by means of OpenGIS specification.
+   * You will maybe see an error like "lwgeom_intersection_prec: GEOS Error: TopologyException: Input geom 0 is invalid: Self-intersection at or near poin".
+   *
+   * You can list all invalid ones with "SELECT * from "Airspaces" WHERE NOT ST_isvalid(polygon);".
+   *
+   * And you can fix these with "UPDATE "Airspaces" SET polygon = ST_MakeValid(polygon) WHERE NOT ST_IsValid(polygon);""
+   * See also: https://www.sigterritoires.fr/index.php/en/how-to-rectify-the-geometry-of-a-postgis-table/
+   *
+   */
   fixInvalidGeoData: async () => {
     const query = `
     UPDATE "Airspaces" SET polygon = ST_MakeValid(polygon) WHERE NOT ST_IsValid(polygon);
@@ -148,15 +158,6 @@ async function findAirspacesWithinPolygon(points) {
   //Close polygon and add first entry again as last entry
   polygonPoints.push(polygonPoints[0]);
   const polygonPointsAsLinestring = polygonPoints.join(",");
-
-  /**
-   * It was encountered that some entries in the DB are not valid by means of OpenGIS specification.
-   * You can list all invalid ones with "SELECT * from "Airspaces" WHERE NOT ST_isvalid(polygon)".
-   *
-   * To compensate these issuese all polygon will be wrap inside the ST_MakeValid function of PostGIS.
-   *
-   * UPDATE "Airspaces" SET polygon = ST_MakeValid(polygon) WHERE NOT ST_IsValid(polygon);
-   */
 
   const query = `
   SELECT id FROM(
