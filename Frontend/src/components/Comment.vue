@@ -147,4 +147,8 @@ const closeReplyEditor = () => {
   replyMessage.value = "";
 };
 const saveButtonIsDisabled = computed(() => editedComment.value.length < 3);
+
+defineExpose({
+  closeCommentEditor,
+});
 </script>

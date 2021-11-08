@@ -2,7 +2,6 @@
   <div v-if="flight">
     <TheSubnav :flight="flight" />
     <FlightMap
-      v-if="false"
       :tracklogs="tracklogs"
       :turnpoints="flight.flightTurnpoints"
       :airspaces="airspaces"
@@ -18,10 +17,10 @@
     <Comments
       ref="Comments"
       :comments="flight.comments"
-      @submitComment="addComment"
-      @deleteComment="deleteComment"
-      @deleteReply="deleteComment"
-      @commentEdited="editComment"
+      @submit-comment="addComment"
+      @delete-comment="deleteComment"
+      @delete-reply="deleteComment"
+      @comment-edited="editComment"
     />
   </div>
 </template>
@@ -96,8 +95,6 @@ export default {
         // TODO: Maybe use an optimistic aproach like:
         // this.flight.comments = [...this.flight.comments, comment];
         if (res.status != 200) throw res.statusText;
-        console.log(this.$refs.Comments);
-
         this.$refs.Comments.clearCommentEditorInput();
         if (comment.relatedTo)
           this.$refs.Comments.$refs[`${comment.relatedTo}`].closeReplyEditor();

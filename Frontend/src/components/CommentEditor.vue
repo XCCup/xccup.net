@@ -84,4 +84,7 @@ const getMessageFromLocalStorage = () => {
     }
   }
 };
+defineExpose({
+  clearCommentEditorInput,
+});
 </script>
