@@ -102,6 +102,14 @@
                 >Luxemburg Championat</router-link>
               </li>
               <li>
+                <router-link
+                  :to="{
+                    name: 'SiteRecords',
+                  }"
+                  class="dropdown-item"
+                >Flugebietsrekords</router-link>
+              </li>
+              <li>
                 <hr class="dropdown-divider" />
               </li>
               <li>
