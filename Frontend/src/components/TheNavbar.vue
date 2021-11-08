@@ -107,7 +107,7 @@
                     name: 'SiteRecords',
                   }"
                   class="dropdown-item"
-                >Flugebietsrekords</router-link>
+                >Flugebietsrekorde</router-link>
               </li>
               <li>
                 <hr class="dropdown-divider" />
