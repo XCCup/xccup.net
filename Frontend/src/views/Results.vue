@@ -45,6 +45,16 @@ const categories = [
     title: "Damenwertung",
     apiString: "?gender=W",
   },
+  {
+    name: "rlp-state",
+    title: "Landesmeisterschaft RLP",
+    apiString: "?state=RP",
+  },
+  {
+    name: "lux-state",
+    title: "Luxemburg Championat",
+    apiString: "?state=LUX",
+  },
 ];
 const activeCategory = categories.find((e) => e.name === props.category);
 const results = ref(null);

@@ -62,6 +62,22 @@ const routes = [
     component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
   },
   {
+    path: "/:year/lux-championat/",
+    name: "ResultsLux",
+    props: (route) => ({ category: "lux-state", year: route.params.year }),
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+  },
+  {
+    path: "/:year/rlp-meisterschaft/",
+    name: "ResultsRlp",
+    props: (route) => ({ category: "rlp-state", year: route.params.year }),
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+  },
+  {
     path: "/:year/teamwertung/",
     name: "ResultsTeams",
     props: true,
