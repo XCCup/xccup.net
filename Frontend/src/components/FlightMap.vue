@@ -106,7 +106,7 @@ export default {
         color: "red",
       };
       airspaceData.forEach((airspace) => {
-        L.geoJSON(airspace.polygon, options).addTo(this.map);
+        L.geoJSON(airspace.polygon, options).bindPopup(this.createPopupContent(airspace)).addTo(this.map);
       });
     },
     drawTracks(tracks) {
@@ -209,6 +209,10 @@ export default {
     centerMapOnClick() {
       this.map.setView(this.positionMarkers[0].getLatLng());
     },
+    createPopupContent(airspace) {
+      const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}<br>Floor: ${airspace.floor}`
+      return content;
+    }
   },
 };
 </script>
@@ -218,3 +222,4 @@ export default {
   height: 430px;
 }
 </style>
+
