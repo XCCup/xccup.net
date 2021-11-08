@@ -3,6 +3,15 @@ const Airspace = require("../config/postgres")["Airspace"];
 const { Op } = require("sequelize");
 const logger = require("../config/logger");
 
+// const XCCUP_REGION_OUTLINE = {
+//   NW: "6.01,51.49",
+//   NO: "10.39,51.49",
+//   SO: "10.39,49.98",
+//   SW: "6.01,49.98",
+// };
+
+// let cacheAirspacesInRegion;
+
 const service = {
   getById: async (id) => {
     return Airspace.findByPk(id);
@@ -26,6 +35,16 @@ const service = {
           [Op.notIn]: ["RMZ", "Q", "W"],
         },
       },
+    });
+  },
+
+  fixInvalidGeoData: async () => {
+    const query = `
+    UPDATE "Airspaces" SET polygon = ST_MakeValid(polygon) WHERE NOT ST_IsValid(polygon);
+    `;
+
+    return FlightFixes.sequelize.query(query, {
+      type: FlightFixes.sequelize.QueryTypes.UPDATE,
     });
   },
 
@@ -135,12 +154,14 @@ async function findAirspacesWithinPolygon(points) {
    * You can list all invalid ones with "SELECT * from "Airspaces" WHERE NOT ST_isvalid(polygon)".
    *
    * To compensate these issuese all polygon will be wrap inside the ST_MakeValid function of PostGIS.
+   *
+   * UPDATE "Airspaces" SET polygon = ST_MakeValid(polygon) WHERE NOT ST_IsValid(polygon);
    */
 
   const query = `
   SELECT id FROM(
     SELECT id, (ST_Dump(ST_Intersection(
-      ST_MakeValid("Airspaces".polygon),
+      "Airspaces".polygon,
       (SELECT ST_Polygon('LINESTRING(${polygonPointsAsLinestring})'::geometry, 4326))
     ))).geom AS "intersectionPolygon"
     FROM "Airspaces"
