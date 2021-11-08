@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import useUser from "@/composables/useUser";
+const { login } = useUser();
 
 export default {
   name: "BaseLogin",
@@ -46,27 +47,28 @@ export default {
   data() {
     return { email: "", password: "" };
   },
-  computed: {
-    ...mapGetters({
-      getterLoginStatus: "getLoginStatus",
-    }),
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     getterLoginStatus: "getLoginStatus",
+  //   }),
+  // },
 
   methods: {
-    ...mapActions({
-      actionLogin: "login",
-    }),
+    // ...mapActions({
+    //   actionLogin: "login",
+    // }),
     async handleSubmit() {
       try {
-        const response = await this.actionLogin({
+        const response = await login({
           email: this.email,
           password: this.password,
         });
-        // TODO: If we do want to redirect: Do it here or in router config?
-        if (response === 200 && this.redirectAfterLogin) {
-          this.$router.push({
-            name: "Profile",
-          });
+        // Redirect after login
+        if (response.status === 200) {
+          let searchParams = new URLSearchParams(window.location.search);
+          if (searchParams.has("redirect")) {
+            this.$router.push({ path: `${searchParams.get("redirect")}` });
+          }
         }
       } catch (error) {
         // TODO: Display error message
@@ -78,7 +80,7 @@ export default {
     redirectAfterLogin: {
       type: Boolean,
       required: false,
-      default: false,
+      default: true,
     },
   },
 };

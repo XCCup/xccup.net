@@ -3,7 +3,7 @@ import Home from "@/views/Home.vue";
 import Flight from "@/views/Flight.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
-import store from "@/store/index";
+import useUser from "@/composables/useUser";
 
 const routes = [
   {
@@ -197,8 +197,11 @@ const router = createRouter({
   },
 });
 
+const { saveTokenData, isTokenActive, setLoginStatus, refreshToken, authData } =
+  useUser();
+
 router.beforeEach(async (to, from, next) => {
-  if (!store.getters["getAuthData"].token) {
+  if (!authData.value.token) {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (accessToken) {
@@ -206,25 +209,25 @@ router.beforeEach(async (to, from, next) => {
         accessToken: accessToken,
         refreshToken: refreshToken,
       };
-      store.commit("saveTokenData", data);
+      saveTokenData(data);
     }
   }
-  let auth = store.getters["isTokenActive"];
+  let auth = isTokenActive.value;
 
   if (!auth) {
-    auth = await store.dispatch("refresh");
+    auth = await refreshToken();
   } else {
-    store.commit("setLoginStatus", "success");
+    setLoginStatus("success");
   }
 
   if (to.fullPath == "/") {
     return next();
   } else if (auth && !to.meta.requiredAuth) {
-    // TODO: Redirect after login?
-    // return next({ path: "/profil" });
+    // This is another place to redirect after login.
+    // Current implemantation redirects in BaseLogin Component
     return next();
   } else if (!auth && to.meta.requiredAuth) {
-    return next({ path: "/login" });
+    return next({ path: "/login", query: { redirect: to.fullPath } });
   }
 
   return next();
