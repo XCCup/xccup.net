@@ -31,16 +31,13 @@
               <td v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS" v-bind:key="n">
                 <tr v-for="member in club.members" v-bind:key="member.id">
                   <td v-if="member.flights[n - 1]">
-                    <RankingClass
-                      :rankingClass="member.flights[n - 1].glider.gliderClass"
-                    />
+                    <RankingClass :rankingClass="member.flights[n - 1].glider.gliderClass" />
                     <router-link
                       :to="{
                         name: 'Flight',
                         params: { flightId: member.flights[n - 1].externalId },
                       }"
-                      >{{ member.flights[n - 1].flightPoints }}
-                    </router-link>
+                    >{{ member.flights[n - 1].flightPoints }}</router-link>
                   </td>
                   <td v-else>-</td>
                 </tr>
@@ -48,7 +45,8 @@
               <td>
                 <tr v-for="member in club.members" v-bind:key="member.id">
                   <td>
-                    <strong>{{ member.totalPoints }} P </strong>({{
+                    <strong>{{ member.totalPoints }} P</strong>
+                    ({{
                       Math.floor(member.totalDistance)
                     }}
                     km)
@@ -61,9 +59,7 @@
       </div>
       <!-- TODO: Handle this more elegant -->
       <div v-if="!results">Fehler beim laden 🤯</div>
-      <div v-if="results?.values?.length === 0">
-        Keine Flüge gemeldet in diesem Jahr
-      </div>
+      <div v-if="results?.values?.length === 0">Keine Flüge gemeldet in diesem Jahr</div>
     </div>
   </section>
 </template>
@@ -71,9 +67,10 @@
 <script setup>
 const props = defineProps({
   results: {
-    type: Array,
+    type: Object,
     required: true,
   },
 });
 </script>
-<style scoped></style>
+<style scoped>
+</style>

@@ -6,4 +6,10 @@
   <AdminNews />
 </template>
 
-<style></style>
+<script setup>
+// Name the window
+document.title = "XCCup - Admin";
+</script>
+
+<style>
+</style>
