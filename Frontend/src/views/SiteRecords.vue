@@ -7,19 +7,23 @@
             <th>Startplatz</th>
             <th>
               Freiestrecke
-              <FlightTypeIcon :flightType="'FREE'" />
+              <FlightTypeIcon flightType="FREE" />
             </th>
             <th>
+              <!-- TODO: Why is this not rendering -->
               Flaches Dreieck
-              <FlightTypeIcon :flightType="'FLAT'" />
+              <FlightTypeIcon flightType="FLAT" />
             </th>
             <th>
               FAI Dreieck
-              <FlightTypeIcon :flightType="'FAI'" />
+              <FlightTypeIcon flightType="FAI" />
             </th>
           </thead>
           <tbody>
-            <tr v-for="(result, index) in results[0]" v-bind:key="result.takeoff.id">
+            <tr
+              v-for="(result, index) in results[0]"
+              v-bind:key="result.takeoff.id"
+            >
               <td>{{ result.takeoff.name }}</td>
               <td>
                 <SiteRecord :record="result.free" />
@@ -36,19 +40,18 @@
       </div>
       <!-- TODO: Handle this more elegant -->
       <div v-if="!results">Fehler beim laden 🤯</div>
-      <div v-if="results?.length === 0">Keine Flüge gemeldet in diesem Jahr</div>
+      <div v-if="results?.length === 0">
+        Keine Flüge gemeldet in diesem Jahr
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
-
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 
 const responseData = (await ApiService.getResults("siteRecords")).data;
-const results = ref([responseData])
-
+const results = ref([responseData]);
 </script>
-<style scoped>
-</style>
+<style scoped></style>
