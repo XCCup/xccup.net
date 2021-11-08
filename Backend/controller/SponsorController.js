@@ -40,6 +40,18 @@ router.get("/", authToken, async (req, res, next) => {
   }
 });
 
+// @desc Gets all sponsors for the current season
+// @route GET /sponsors/public
+
+router.get("/public", async (req, res, next) => {
+  try {
+    const sponsors = await service.getAllActive();
+    res.json(sponsors);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Gets the logo of an sponsor
 // @route GET /sponsors/logo/:id
 
