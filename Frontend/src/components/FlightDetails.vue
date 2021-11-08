@@ -165,8 +165,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { format } from "date-fns";
+import useUser from "@/composables/useUser";
+const { getUserId } = useUser();
 
 export default {
   name: "FlightDetails",
@@ -198,10 +199,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
-
     showEditButton() {
-      return this.flight.userId === this.getUserId;
+      return this.flight.userId === getUserId;
     },
     igcDownloadUrl() {
       let baseUrl = import.meta.env.VITE_API_URL;
