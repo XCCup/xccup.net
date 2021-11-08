@@ -15,6 +15,9 @@ const props = defineProps({
   },
 });
 
+// Name the window
+document.title = "XCCup - Streckenmeldungen";
+
 const flights = ref(null);
 try {
   const { data: initialData } = await ApiService.getFlights({

@@ -2,39 +2,56 @@
   <section class="pb-3">
     <div class="container-fluid">
       <div v-if="results?.values?.length > 0" class="table-responsive">
+        <div class="remarks">
+          <p>
+            Hinweis: Die schlechtesten
+            {{ results.constants.TEAM_DISMISSES }} Ergebnisse eines Teams werden
+            gelöscht
+          </p>
+        </div>
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Platz</th>
-            <th>Verein</th>
+            <th>Team</th>
             <th>Punkte / Strecke</th>
             <th>Pilot</th>
-            <th v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS" :key="n">Flug {{ n }}</th>
+            <th
+              v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
+              :key="n"
+            >
+              Flug {{ n }}
+            </th>
             <th>Gesamt</th>
           </thead>
           <tbody>
-            <tr v-for="(club, index) in results.values" v-bind:key="club.clubId">
+            <tr
+              v-for="(team, index) in results.values"
+              v-bind:key="team.teamId"
+            >
               <td>{{ index + 1 }}</td>
 
               <td>
-                <strong>{{ club.clubName }}</strong>
+                <strong>{{ team.teamName }}</strong>
               </td>
               <td>
-                {{ club.totalPoints }} P ({{ Math.floor(club.totalDistance) }}
+                {{ team.totalPoints }} P ({{ Math.floor(team.totalDistance) }}
                 km)
               </td>
 
               <td>
-                <tr v-for="member in club.members" v-bind:key="member.id">
+                <tr v-for="member in team.members" v-bind:key="member.id">
                   <td>{{ member.firstName + " " + member.lastName }}</td>
                 </tr>
               </td>
-              <td v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS" v-bind:key="n">
-                <tr v-for="member in club.members" v-bind:key="member.id">
+              <td
+                v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
+                v-bind:key="n"
+              >
+                <tr v-for="member in team.members" v-bind:key="member.id">
                   <td v-if="member.flights[n - 1]">
-                    <i
-                      class="bi bi-trophy me-1"
-                      :class="member.flights[n - 1].glider.gliderClass.key"
-                    ></i>
+                    <RankingClass
+                      :rankingClass="member.flights[n - 1].glider.gliderClass"
+                    />
                     <router-link
                       :to="{
                         name: 'Flight',
@@ -47,7 +64,7 @@
                 </tr>
               </td>
               <td>
-                <tr v-for="member in club.members" v-bind:key="member.id">
+                <tr v-for="member in team.members" v-bind:key="member.id">
                   <td>
                     <strong>{{ member.totalPoints }} P </strong>({{
                       Math.floor(member.totalDistance)
@@ -69,10 +86,11 @@
   </section>
 </template>
 
+import RankingClass from '../RankingClass.vue';
 <script setup>
 const props = defineProps({
   results: {
-    type: Array,
+    type: Object,
     required: true,
   },
 });
