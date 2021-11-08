@@ -127,7 +127,12 @@
             >Listen</a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" href="#">Sponsoren</a>
+                <router-link
+                  :to="{
+                    name: 'Sponsors',
+                  }"
+                  class="dropdown-item"
+                >Sponsors</router-link>
               </li>
               <li>
                 <a class="dropdown-item" href="#">Vereine</a>

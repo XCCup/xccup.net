@@ -1,6 +1,7 @@
 <template>
   <section class="pb-3">
     <div class="container-fluid">
+      <h3>Flugebietsrekorde</h3>
       <div v-if="results.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
@@ -19,7 +20,7 @@
             </th>
           </thead>
           <tbody>
-            <tr v-for="(result, index) in results[0]" v-bind:key="result.takeoff.id">
+            <tr v-for="(result, index) in results" v-bind:key="result.takeoff.id">
               <td>{{ result.takeoff.name }}</td>
               <td>
                 <SiteRecord :record="result.free" />
@@ -47,7 +48,7 @@ import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 
 const responseData = (await ApiService.getResults("siteRecords")).data;
-const results = ref([responseData])
+const results = ref(responseData)
 
 </script>
 <style scoped>
