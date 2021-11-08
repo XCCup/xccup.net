@@ -222,19 +222,18 @@ async function mergeRecordsByTakeoffs(records) {
 }
 
 function createEntryOfRecord(siteRecord) {
-  const res = {};
   if (siteRecord) {
-    res.user = siteRecord.User;
-    res.flightId = siteRecord.id;
-    res.points = siteRecord.flightPoints;
-    res.distance = siteRecord.flightDistance;
-  } else {
-    res.user = null;
-    res.flightId = null;
-    res.points = 0;
-    res.distance = 0;
+    return {
+      user: siteRecord.user,
+      flightId: siteRecord.id,
+      externalId: siteRecord.externalId,
+      takeoffTime: siteRecord.takeoffTime,
+      points: siteRecord.flightPoints,
+      distance: siteRecord.flightDistance,
+      glider: siteRecord.glider,
+    };
   }
-  return res;
+  return null;
 }
 
 async function findSiteRecordOfType(type) {
@@ -249,6 +248,8 @@ async function findSiteRecordOfType(type) {
           "flightPoints",
           "flightDistance",
           "userId",
+          "takeoffTime",
+          "glider",
         ],
         where: {
           flightType: type,
