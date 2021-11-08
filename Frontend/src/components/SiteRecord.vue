@@ -19,8 +19,11 @@
 import { ref } from "vue"
 
 const props = defineProps({
-    record: Object,
-})
+  record: {
+    type: Object,
+    required: true,
+  },
+});
 
 const isEmpty = ref(props.record == null)
 
