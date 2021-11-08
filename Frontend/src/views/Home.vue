@@ -1,5 +1,4 @@
 <template>
-  <!-- {{ useUser.getLoginStatus }} -->
   <Infobox :seasonStats="seasonStats" />
   <DailyRanking :maxRows="5" :flights="dailyRanking" />
   <OverallResults
