@@ -18,7 +18,7 @@
 <script setup>
 const props = defineProps({
   record: {
-    type: Object,
+    type: [Object, null],
     required: true,
   },
 });
