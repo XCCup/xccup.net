@@ -43,25 +43,11 @@
 
 <script setup>
 
-
-// const props = defineProps({
-//   results: {
-//     type: Array,
-//     required: true,
-//   },
-//   maxFlights: {
-//     type: [Number, String],
-//     required: true,
-//   },
-// });
-
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 
 const responseData = (await ApiService.getResults("siteRecords")).data;
 const results = ref([responseData])
-
-
 
 </script>
 <style scoped>
