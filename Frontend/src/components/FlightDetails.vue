@@ -35,6 +35,7 @@
                 <RankingClass
                   :rankingClass="flight.glider.gliderClass"
                   :short="true"
+                  :showDescription="true"
                 />
               </td>
             </tr>

@@ -60,8 +60,8 @@ export default {
     this.drawTracks(this.tracks);
   },
   methods: {
-    popup(flightId) {
-      return `Flight ID: ${flightId} <br/> <a href>Link</a>`;
+    popup(id) {
+      return `Flight ID: ${id} <br/> <a href>Link</a>`;
     },
     highlightTrack(flightId) {
       // Reset color of all tracks to default
@@ -90,7 +90,7 @@ export default {
           L.polyline(tmp, {
             color: "darkred",
           })
-            .bindPopup(this.popup(track.flightId))
+            .bindPopup(this.popup(track.externalId))
             .addTo(trackGroup)
         );
       });

@@ -3,15 +3,12 @@
     <h3 v-if="activeCategory">{{ activeCategory.title }} {{ year }}</h3>
     <p v-if="remark">Hinweis: {{ remark }}</p>
   </div>
-  <ResultsTable
-    :results="results.values"
-    :maxFlights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
-  />
+  <ResultsTable :results="results.values" :maxFlights="results.constants.NUMBER_OF_SCORED_FLIGHTS" />
 </template>
 
 <script setup async>
 import ApiService from "@/services/ApiService.js";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 const props = defineProps({
   year: {
     type: [String, Number],
@@ -48,10 +45,26 @@ const categories = [
     title: "Damenwertung",
     apiString: "?gender=W",
   },
+  {
+    name: "rlp-state",
+    title: "Landesmeisterschaft RLP",
+    apiString: "?state=RP",
+  },
+  {
+    name: "lux-state",
+    title: "Luxemburg Championat",
+    apiString: "?state=LUX",
+  },
 ];
 const activeCategory = categories.find((e) => e.name === props.category);
 const results = ref(null);
 const remark = ref();
+
+// Name the window
+watchEffect(() => {
+  document.title = "XCCup - " + activeCategory.title;
+})
+
 try {
   if (!activeCategory) throw "not a valid category";
   const res = await ApiService.getResults(activeCategory.apiString, {

@@ -37,15 +37,29 @@ export default {
         return [];
       },
     },
+    airspaces: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   watch: {
     // Check if there are new tracklogs present
     tracklogs(newTracklogs) {
       this.drawTracks(newTracklogs);
     },
+    airspaces(newData) {
+      this.drawAirspaces(newData);
+    },
   },
 
   mounted() {
+    // TODO:
+    // Whenever using anything based on OpenStreetMap, an attribution is obligatory as per the copyright notice.
+    // Most other tile providers (such as Mapbox, Stamen or Thunderforest) require an attribution as well.
+    // Make sure to give credit where credit is due.
+
     // Setup leaflet
     L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
@@ -70,7 +84,6 @@ export default {
 
     // Draw tracklogs
     this.drawTracks(this.tracklogs);
-
     this.drawTurnpoints(this.turnpoints);
   },
   beforeUnmount() {
@@ -86,6 +99,16 @@ export default {
     );
   },
   methods: {
+    drawAirspaces(airspaceData) {
+      const options = {
+        opacity: 0.1,
+        fillOpacity: 0.08,
+        color: "red",
+      };
+      airspaceData.forEach((airspace) => {
+        L.geoJSON(airspace.polygon, options).bindPopup(this.createPopupContent(airspace)).addTo(this.map);
+      });
+    },
     drawTracks(tracks) {
       let lines = [];
       let positionMarkers = [];
@@ -186,6 +209,23 @@ export default {
     centerMapOnClick() {
       this.map.setView(this.positionMarkers[0].getLatLng());
     },
+    createPopupContent(airspace) {
+      const ceilingInMeters = this.addRepresentationInMeters(airspace.ceiling)
+      const floorInMeters = this.addRepresentationInMeters(airspace.floor)
+      const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`
+      return content;
+    },
+    addRepresentationInMeters(value) {
+      if (value == "GND") return
+      if (value.includes("ft")) {
+        const valueInMeters = Math.round(parseInt(value.substring(0, 5)) * 0.3048);
+        return ` / ${valueInMeters} m`
+      }
+      if (value.includes("FL")) {
+        const valueInMeters = Math.round(parseInt(value.substring(2, value.length)) * 30.48);
+        return ` / ${valueInMeters} m`
+      }
+    }
   },
 };
 </script>
@@ -195,3 +235,4 @@ export default {
   height: 430px;
 }
 </style>
+
