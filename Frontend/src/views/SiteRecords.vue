@@ -1,0 +1,59 @@
+<template>
+  <section class="pb-3">
+    <div class="container-fluid">
+      <div v-if="results.length > 0" class="table-responsive">
+        <table class="table table-striped table-hover text-sm">
+          <thead>
+            <th>Startplatz</th>
+            <th>Freiestrecke</th>
+            <th>Falches Dreieck</th>
+            <th>FAI Dreieck</th>
+          </thead>
+          <tbody>
+            <tr v-for="(result, index) in results[0]" v-bind:key="result.takeoff.id">
+              <td>{{ result.takeoff.name }}</td>
+              <td>
+                <SiteRecord :record="result.free" />
+              </td>
+              <td>
+                <SiteRecord :record="result.flat" />
+              </td>
+              <td>
+                <SiteRecord :record="result.fai" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- TODO: Handle this more elegant -->
+      <div v-if="!results">Fehler beim laden 🤯</div>
+      <div v-if="results?.length === 0">Keine Flüge gemeldet in diesem Jahr</div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+
+
+// const props = defineProps({
+//   results: {
+//     type: Array,
+//     required: true,
+//   },
+//   maxFlights: {
+//     type: [Number, String],
+//     required: true,
+//   },
+// });
+
+import { ref } from "vue";
+import ApiService from "@/services/ApiService";
+
+const responseData = (await ApiService.getResults("siteRecords")).data;
+const results = ref([responseData])
+
+
+
+</script>
+<style scoped>
+</style>

@@ -4,9 +4,11 @@ export function isIsoDateWithoutTime(string) {
 }
 
 export function convertHeightStringToMetersValue(value){
+    const FACTOR_FT_TO_M = 0.3048
+
     if (value == "GND") return 0;
-    if (value.includes("ft")) return Math.round(parseInt(value.substring(0, 5)) * 0.3048);
-    if (value.includes("FL")) return Math.round(parseInt(value.substring(2, value.length)) * 30.48);
+    if (value.includes("ft")) return Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
+    if (value.includes("FL")) return Math.round(parseInt(value.substring(2, value.length)) * FACTOR_FT_TO_M * 100);
 
     return 0;
 }

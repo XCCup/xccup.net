@@ -96,6 +96,14 @@ const routes = [
       import(/* webpackChunkName: "" */ "../views/ResultsClubs.vue"),
   },
   {
+    path: "/fluggebietsrekorde/",
+    name: "SiteRecords",
+    props: true,
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/SiteRecords.vue"),
+  },
+  {
     path: "/upload",
     name: "FlightUpload",
     props: true,

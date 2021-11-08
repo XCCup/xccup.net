@@ -6,7 +6,7 @@
 
 - [ ] Beautify spinner (Paraglider animation?)
 - [ ] Icons for task types (FAI & flat triangle, one way)
-- [ ] Icons for ranking classes
+- [x] Icons for ranking classes
 - [ ] Authentication
 - [ ] Login error handling
 - [ ] Page names
@@ -42,7 +42,7 @@
 - [x] Basic image upload
 - [ ] Beautiful multi image upload
 - [ ] Airspace comment field
-- [ ] Upload flight metadata (Aircraft, flight report, ...)
+- [x] Upload flight metadata (Aircraft, flight report, ...)
 - [x] Connect to API
 - [ ] Form input validation
 - [ ] Handle .igc filenames containing whitespaces
@@ -52,6 +52,7 @@
 - [x] Basic layout
 - [x] Center map view on pilot by clicking on the barogram
 - [x] Pilot markers follow the barogram timeline
+- [x] Add speed and climb label next to height label
 - [ ] Airspace overlay on map
 - [x] Turnpoint overlay on map
 - [ ] Custom icons for takeoff & landing
@@ -77,11 +78,11 @@
 - [x] Team
 - [x] Ladies
 - [x] Seniors
-- [ ] GS RLP
-- [ ] Luxemburg XC-Championat
+- [x] GS RLP
+- [x] Luxemburg XC-Championat
 - [x] Newcomer
 - [ ] Ranking Class
-- [ ] Takeoff records
+- [x] Takeoff records
 - [ ] Early bird
 - [ ] "Late" bird
 - [ ] Greatest altitude
@@ -94,6 +95,5 @@
 - [ ] Clubs
 - [ ] Teams
 - [ ] Pilots
-- [ ] Waypoints?
 - [ ] Early bird
 - [ ] ...
