@@ -13,6 +13,7 @@ import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
+import { convertHeightStringToMetersValue } from "../helper/utils";
 
 export default {
   name: "Map",
@@ -216,15 +217,8 @@ export default {
       return content;
     },
     addRepresentationInMeters(value) {
-      if (value == "GND") return
-      if (value.includes("ft")) {
-        const valueInMeters = Math.round(parseInt(value.substring(0, 5)) * 0.3048);
-        return ` / ${valueInMeters} m`
-      }
-      if (value.includes("FL")) {
-        const valueInMeters = Math.round(parseInt(value.substring(2, value.length)) * 30.48);
-        return ` / ${valueInMeters} m`
-      }
+      const valueInMeters = convertHeightStringToMetersValue(value)
+      return valueInMeters ? ` / ${valueInMeters} m` : "";
     }
   },
 };
