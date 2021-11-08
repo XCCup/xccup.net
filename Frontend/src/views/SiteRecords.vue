@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="(result, index) in results[0]"
+              v-for="(result, index) in results"
               v-bind:key="result.takeoff.id"
             >
               <td>{{ result.takeoff.name }}</td>
@@ -40,9 +40,6 @@
       </div>
       <!-- TODO: Handle this more elegant -->
       <div v-if="!results">Fehler beim laden 🤯</div>
-      <div v-if="results?.length === 0">
-        Keine Flüge gemeldet in diesem Jahr
-      </div>
     </div>
   </section>
 </template>
@@ -51,7 +48,8 @@
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 
+// TODO: Error handling
 const responseData = (await ApiService.getResults("siteRecords")).data;
-const results = ref([responseData]);
+
+const results = ref(responseData);
 </script>
-<style scoped></style>
