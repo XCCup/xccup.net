@@ -210,8 +210,21 @@ export default {
       this.map.setView(this.positionMarkers[0].getLatLng());
     },
     createPopupContent(airspace) {
-      const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}<br>Floor: ${airspace.floor}`
+      const ceilingInMeters = this.addRepresentationInMeters(airspace.ceiling)
+      const floorInMeters = this.addRepresentationInMeters(airspace.floor)
+      const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`
       return content;
+    },
+    addRepresentationInMeters(value) {
+      if (value == "GND") return
+      if (value.includes("ft")) {
+        const valueInMeters = Math.round(parseInt(value.substring(0, 5)) * 0.3048);
+        return ` / ${valueInMeters} m`
+      }
+      if (value.includes("FL")) {
+        const valueInMeters = Math.round(parseInt(value.substring(2, value.length)) * 30.48);
+        return ` / ${valueInMeters} m`
+      }
     }
   },
 };
