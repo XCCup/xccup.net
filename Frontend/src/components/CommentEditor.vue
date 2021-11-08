@@ -2,7 +2,7 @@
   <div class="shadow p-3 mb-3">
     <div class="d-flex mb-2"></div>
     <div class="mb-3">
-      <div v-if="getLoginStatus === `success`">
+      <div v-if="loggedIn">
         <form @submit.prevent="onSubmit">
           <label for="comment-editor" class="form-label"
             >Kommentar verfassen:</label
@@ -32,66 +32,56 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-export default {
-  name: "CommentEditor",
+<script setup>
+import useUser from "@/composables/useUser";
+import { onMounted, ref, computed } from "vue";
+import { useRoute } from "vue-router";
+const { getUserId, loggedIn } = useUser();
+const emit = defineEmits();
+const route = useRoute();
 
-  data() {
-    return {
-      message: "",
-    };
-  },
-  computed: {
-    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
+const message = ref("");
 
-    sendButtonIsDisabled() {
-      return this.message.length < 3;
-    },
-  },
-  mounted() {
-    this.message = this.getMessageFromLocalStorage();
-  },
-  methods: {
-    onSubmit() {
-      const comment = {
-        message: this.message,
-        userId: this.getUserId,
-      };
-      this.$emit("submit-comment", comment);
-    },
-    clearCommentEditorInput() {
-      this.message = "";
-      this.removeMessageFromLocalStorage();
-    },
-    saveMessageToLocalStorage() {
-      localStorage.setItem(
-        "commentMessage",
-        JSON.stringify({
-          message: this.message,
-          flightId: this.$route.params.flightId,
-        })
-      );
-    },
-    removeMessageFromLocalStorage() {
-      localStorage.removeItem("commentMessage");
-    },
-    getMessageFromLocalStorage() {
-      if (localStorage.getItem("commentMessage") === null) {
-        return "";
-      } else {
-        const { message, flightId } = JSON.parse(
-          localStorage.getItem("commentMessage")
-        );
-        // Check if the comment in local storage belongs to this flight
-        if (flightId === this.$route.params.flightId) {
-          return message;
-        } else {
-          return "";
-        }
-      }
-    },
-  },
-  emits: ["submit-comment"],
+const sendButtonIsDisabled = computed(() => message.value.length < 3);
+
+onMounted(() => (message.value = getMessageFromLocalStorage()));
+
+const onSubmit = () => {
+  const comment = {
+    message: message.value,
+    userId: getUserId,
+  };
+  emit("submitComment", comment);
+};
+const clearCommentEditorInput = () => {
+  message.value = "";
+  removeMessageFromLocalStorage();
+};
+const saveMessageToLocalStorage = () => {
+  localStorage.setItem(
+    "commentMessage",
+    JSON.stringify({
+      message: message.value,
+      flightId: route.params.flightId,
+    })
+  );
+};
+const removeMessageFromLocalStorage = () => {
+  localStorage.removeItem("commentMessage");
+};
+const getMessageFromLocalStorage = () => {
+  if (localStorage.getItem("commentMessage") === null) {
+    return "";
+  } else {
+    const { message, flightId } = JSON.parse(
+      localStorage.getItem("commentMessage")
+    );
+    // Check if the comment in local storage belongs to this flight
+    if (flightId === route.params.flightId) {
+      return message;
+    } else {
+      return "";
+    }
+  }
 };
 </script>

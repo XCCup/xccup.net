@@ -2,6 +2,7 @@
   <div v-if="flight">
     <TheSubnav :flight="flight" />
     <FlightMap
+      v-if="false"
       :tracklogs="tracklogs"
       :turnpoints="flight.flightTurnpoints"
       :airspaces="airspaces"
@@ -17,10 +18,10 @@
     <Comments
       ref="Comments"
       :comments="flight.comments"
-      @submit-comment="addComment"
-      @delete-comment="deleteComment"
-      @delete-reply="deleteComment"
-      @comment-edited="editComment"
+      @submitComment="addComment"
+      @deleteComment="deleteComment"
+      @deleteReply="deleteComment"
+      @commentEdited="editComment"
     />
   </div>
 </template>

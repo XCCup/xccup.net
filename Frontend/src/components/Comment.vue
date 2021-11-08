@@ -83,78 +83,68 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
+<script setup>
+import useUser from "@/composables/useUser";
+import { ref, computed } from "vue";
+const { getUserId } = useUser();
 
-export default {
-  name: "Comment",
+// TODO: This produces a warning. Why?
+const emit = defineEmits(
+  ["deleteComment"],
+  ["deleteReply"],
+  ["commentEdited"],
+  ["saveReplyMessage"]
+);
+const showCommentEditor = ref(false);
+const showReplyEditor = ref(false);
+const replyMessage = ref("");
+const editedComment = ref(props.comment.message);
 
-  data() {
-    return {
-      showCommentEditor: false,
-      showReplyEditor: false,
-      replyMessage: "",
-      editedComment: this.comment.message,
-    };
+const props = defineProps({
+  comment: {
+    type: Object,
+    required: true,
   },
-  props: {
-    comment: {
-      type: Object,
-      required: true,
-    },
-  },
-  methods: {
-    deleteComment() {
-      this.$emit("delete-comment", this.comment.id);
-    },
-    editComment() {
-      this.showCommentEditor = true;
-    },
-    deleteReply(id) {
-      this.$emit("delete-reply", id);
-    },
-    openReplyEditor() {
-      this.showReplyEditor = true;
-    },
-    editReply(reply) {
-      this.$emit("comment-edited", reply);
-    },
-    saveEditedMessage() {
-      const comment = {
-        message: this.editedComment,
-        userId: this.getUserId,
-        id: this.comment.id,
-      };
-      this.$emit("comment-edited", comment);
-    },
-    saveReplyMessage() {
-      const comment = {
-        message: this.replyMessage,
-        userId: this.getUserId,
-        relatedTo: this.comment.id,
-      };
-      this.$emit("save-reply-message", comment);
-    },
-    closeCommentEditor() {
-      this.showCommentEditor = false;
-      this.editedComment = this.comment.message;
-    },
-    closeReplyEditor() {
-      this.showReplyEditor = false;
-      this.replyMessage = "";
-    },
-  },
-  computed: {
-    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
-    saveButtonIsDisabled() {
-      return this.editedComment.length < 3;
-    },
-  },
-  emits: [
-    "delete-comment",
-    "delete-reply",
-    "comment-edited",
-    "save-reply-message",
-  ],
+});
+
+const deleteComment = () => {
+  emit("deleteComment", props.comment.id);
 };
+const editComment = () => {
+  showCommentEditor.value = true;
+};
+const deleteReply = (id) => {
+  emit("deleteReply", id);
+};
+const openReplyEditor = () => {
+  showReplyEditor.value = true;
+};
+const editReply = (reply) => {
+  emit("commentEdited", reply);
+};
+const saveEditedMessage = () => {
+  const comment = {
+    message: editedComment.value,
+    userId: getUserId,
+    id: props.comment.id,
+  };
+  emit("commentEdited", comment);
+};
+const saveReplyMessage = () => {
+  const comment = {
+    message: replyMessage.value,
+    userId: getUserId,
+    relatedTo: props.comment.id,
+  };
+  emit("saveReplyMessage", comment);
+};
+const closeCommentEditor = () => {
+  showCommentEditor.value = false;
+  editedComment.value = props.comment.message;
+};
+const closeReplyEditor = () => {
+  showReplyEditor.value = false;
+  replyMessage.value = "";
+};
+const saveButtonIsDisabled = computed(() => editedComment.value.length < 3);
 </script>

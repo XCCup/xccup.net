@@ -15,7 +15,7 @@
         @save-reply-message="onSubmit"
       />
     </div>
-    <CommentEditor ref="commentEditor" @submit-comment="onSubmit" />
+    <CommentEditor ref="commentEditor" @submitComment="onSubmit" />
   </div>
   <!-- Modal -->
   <!-- TODO Refactor to BaseModal Component? -->
@@ -73,17 +73,17 @@ export default {
   },
   methods: {
     onSubmit(comment) {
-      this.$emit("submit-comment", comment);
+      this.$emit("submitComment", comment);
     },
     onCommentEdited(comment) {
-      this.$emit("comment-edited", comment);
+      this.$emit("commentEdited", comment);
     },
     showCommentDeleteModal(id) {
       this.commentIdToDelete = id;
       this.deleteCommentModal.show();
     },
     deleteComment() {
-      this.$emit("delete-comment", this.commentIdToDelete);
+      this.$emit("deleteComment", this.commentIdToDelete);
     },
     clearCommentEditorInput() {
       this.$refs.commentEditor.clearCommentEditorInput();
@@ -109,7 +109,7 @@ export default {
     },
   },
 
-  emits: ["delete-comment", "delete-reply", "submit-comment", "comment-edited"],
+  emits: ["deleteComment", "deleteReply", "submitComment", "commentEdited"],
 };
 </script>
 

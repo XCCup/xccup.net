@@ -48,7 +48,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import useUser from "@/composables/useUser";
+const { getUserId } = useUser();
 
 export default {
   name: "CommentReply",
@@ -68,7 +69,7 @@ export default {
   },
   methods: {
     deleteReply() {
-      this.$emit("delete-reply", this.reply.id);
+      this.$emit("deleteReply", this.reply.id);
     },
     editComment() {
       this.showReplyEditor = true;
@@ -76,7 +77,7 @@ export default {
     saveEditedMessage() {
       const reply = {
         message: this.editedMessage,
-        userId: this.getUserId,
+        userId: getUserId,
         id: this.reply.id,
         relatedTo: this.reply.relatedTo,
       };
@@ -91,11 +92,10 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getUserId", "getLoginStatus", "isTokenActive"]),
     saveButtonIsDisabled() {
       return this.editedMessage.length < 3;
     },
   },
-  emits: ["delete-reply", "reply-edited"],
+  emits: ["deleteReply", "reply-edited"],
 };
 </script>

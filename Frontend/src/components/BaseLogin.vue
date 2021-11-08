@@ -38,7 +38,6 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from "vuex";
 import useUser from "@/composables/useUser";
 const { login } = useUser();
 
