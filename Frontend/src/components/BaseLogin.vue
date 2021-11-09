@@ -39,8 +39,10 @@
 
 <script setup>
 import useUser from "@/composables/useUser";
+import { useRouter } from "vue-router";
 import { ref } from "vue";
 const { login } = useUser();
+const router = useRouter();
 
 const props = defineProps({
   redirectAfterLogin: {
@@ -55,14 +57,15 @@ const password = ref("");
 const handleSubmit = async () => {
   try {
     const response = await login({
-      email: this.email,
-      password: this.password,
+      email: email.value,
+      password: password.value,
     });
     // Redirect after login
+    // Alternativly redirect in router config
     if (response.status === 200) {
       let searchParams = new URLSearchParams(window.location.search);
       if (searchParams.has("redirect")) {
-        this.$router.push({ path: `${searchParams.get("redirect")}` });
+        router.push({ path: `${searchParams.get("redirect")}` });
       }
     }
   } catch (error) {
