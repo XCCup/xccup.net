@@ -164,7 +164,8 @@ const routes = [
     name: "AdminDashboard",
     //TODO Check if logged-in user is an moderator or admin
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () => import(/* webpackChunkName: "" */ "../views/AdminDashboard.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/AdminDashboard.vue"),
   },
   {
     path: "/:catchAll(.*)",
@@ -216,7 +217,11 @@ const router = createRouter({
   scrollBehavior(to) {
     const scroll = {};
     if (to.meta.toTop) scroll.top = 0;
+    if (to.hash) {
+      return { el: to.hash };
+    }
     if (to.meta.smoothScroll) scroll.behavior = "smooth";
+
     return scroll;
   },
 });

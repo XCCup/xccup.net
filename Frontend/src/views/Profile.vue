@@ -90,7 +90,7 @@
                 <div class="mt-3"></div>
                 <hr />
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12" id="glider-select">
                 <GliderList
                   :gliders="userProfile.gliders"
                   :defaultGlider="userProfile.defaultGlider"

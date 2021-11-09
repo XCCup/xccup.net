@@ -36,7 +36,10 @@
             />
           </div>
           <div class="col-md-3 mt-3">
-            <router-link :to="{ name: 'Profile' }" class="d-grid gap-2">
+            <router-link
+              :to="{ name: 'Profile', hash: '#glider-select' }"
+              class="d-grid gap-2"
+            >
               <button type="button" class="btn btn-primary">
                 Liste bearbeiten
               </button>
