@@ -222,7 +222,7 @@ const router = createRouter({
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve({ el: to.hash });
-        }, 100);
+        }, 300);
       });
     }
 
