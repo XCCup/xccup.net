@@ -48,69 +48,72 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { Modal } from "bootstrap";
+import { ref, computed, onMounted } from "vue";
 
-export default {
-  name: "Comments",
+const emit = defineEmits([
+  "deleteComment",
+  "deleteReply",
+  "submitComment",
+  "commentEdited",
+]);
 
-  props: {
-    comments: {
-      type: Array,
-      required: true,
-    },
+const props = defineProps({
+  comments: {
+    type: Array,
+    required: true,
   },
-  data() {
-    return {
-      deleteCommentModal: null,
-      commentIdToDelete: null,
-    };
-  },
-  mounted() {
-    this.deleteCommentModal = new Modal(
-      document.getElementById("deleteCommentModal")
-    );
-  },
-  methods: {
-    onSubmit(comment) {
-      this.$emit("submitComment", comment);
-    },
-    onCommentEdited(comment) {
-      this.$emit("commentEdited", comment);
-    },
-    showCommentDeleteModal(id) {
-      this.commentIdToDelete = id;
-      this.deleteCommentModal.show();
-    },
-    deleteComment() {
-      this.$emit("deleteComment", this.commentIdToDelete);
-    },
-    clearCommentEditorInput() {
-      this.$refs.commentEditor.clearCommentEditorInput();
-    },
-  },
-  computed: {
-    commentsWithReplies() {
-      let comments = this.comments.flatMap((comment) =>
-        !comment.relatedTo ? [comment] : []
-      );
-      // Add replies
-      this.comments.forEach((comment) => {
-        if (comment.relatedTo) {
-          let parent = comments.findIndex(
-            (element) => element.id === comment.relatedTo
-          );
-          if (!comments[parent]?.replies) comments[parent].replies = [];
-          comments[parent].replies.push(comment);
-        }
-      });
+});
 
-      return comments;
-    },
-  },
+const deleteCommentModal = ref(null);
+const commentIdToDelete = ref(null);
 
-  emits: ["deleteComment", "deleteReply", "submitComment", "commentEdited"],
+onMounted(() => {
+  deleteCommentModal.value = new Modal(
+    document.getElementById("deleteCommentModal")
+  );
+});
+
+const onSubmit = (comment) => {
+  emit("submitComment", comment);
 };
+const onCommentEdited = (comment) => {
+  emit("commentEdited", comment);
+};
+const showCommentDeleteModal = (id) => {
+  commentIdToDelete.value = id;
+  deleteCommentModal.value.show();
+};
+const deleteComment = () => {
+  emit("deleteComment", commentIdToDelete.value);
+};
+
+const commentEditor = ref(null);
+const clearCommentEditorInput = () => {
+  commentEditor.value.clearCommentEditorInput();
+};
+defineExpose({
+  clearCommentEditorInput,
+});
+
+const commentsWithReplies = computed(() => {
+  let comments = props.comments.flatMap((comment) =>
+    !comment.relatedTo ? [comment] : []
+  );
+  // Add replies
+  comments.forEach((comment) => {
+    if (comment.relatedTo) {
+      let parent = comments.findIndex(
+        (element) => element.id === comment.relatedTo
+      );
+      if (!comments[parent]?.replies) comments[parent].replies = [];
+      comments[parent].replies.push(comment);
+    }
+  });
+
+  return comments;
+});
 </script>
 
 <style scoped></style>

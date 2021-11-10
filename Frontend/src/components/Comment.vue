@@ -95,7 +95,6 @@ const props = defineProps({
   },
 });
 
-// TODO: This produces a warning. Why?
 const emit = defineEmits([
   "deleteComment",
   "deleteReply",
