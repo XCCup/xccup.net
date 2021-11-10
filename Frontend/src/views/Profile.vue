@@ -168,6 +168,7 @@
               >
                 <span class="visually-hidden">Loading...</span>
               </div>
+              <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
             </button>
 
             <!-- Edit -->
@@ -370,6 +371,7 @@ export default {
       unmodifiedUserProfile: null,
       showSpinner: false,
       editMode: true,
+      showSuccessInidcator: false,
     };
   },
   computed: {
@@ -396,6 +398,11 @@ export default {
     if (el) el.scrollIntoView();
   },
   methods: {
+    inidcateSuccess() {
+      this.showSuccessInidcator = true;
+      setTimeout(() => (this.showSuccessInidcator = false), 2000);
+    },
+
     glidersChanged(gliders) {
       this.userProfile.gliders = gliders;
     },
@@ -407,6 +414,7 @@ export default {
         this.userProfile = res.data;
         this.unmodifiedUserProfile = cloneDeep(this.userProfile);
         this.showSpinner = false;
+        this.inidcateSuccess();
       } catch (error) {
         console.error(error);
         this.showSpinner = false;
