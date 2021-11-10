@@ -4,10 +4,9 @@ const service = require("../service/ClubService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const {
-  checkOptionalIsBoolean,
-  checkOptionalStringObjectNotEmpty,
   checkStringObjectNotEmpty,
   checkParamIsUuid,
+  checkIsBoolean,
   validationHasErrors,
 } = require("./Validation");
 
@@ -84,28 +83,35 @@ router.post(
   authToken,
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("shortName"),
-  checkOptionalStringObjectNotEmpty("homepage"),
-  checkOptionalStringObjectNotEmpty("urlLogo"),
-  checkOptionalIsBoolean("isActiveParticipant"),
+  checkStringObjectNotEmpty("website"),
+  checkStringObjectNotEmpty("contacts"),
+  checkIsBoolean("isActiveParticipant"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const transferObject = req.body;
+    const {
+      name,
+      shortName,
+      website,
+      contacts,
+      isActiveParticipant
+    } = req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
       const club = {
-        name: transferObject.name,
-        shortName: transferObject.shortName,
-        homepage: transferObject.homepage,
-        urlLogo: transferObject.urlLogo,
-        participantInSeasons: transferObject.isActiveParticipant
+        name,
+        shortName,
+        website,
+        contacts,
+        participantInSeasons: isActiveParticipant
           ? [new Date().getFullYear()]
           : [],
-        contacts: transferObject.contacts,
       };
 
-      service.create(club).then((club) => res.json(club));
+      const newClub = await service.create(club)
+
+      res.json(newClub);
     } catch (error) {
       next(error);
     }
@@ -120,15 +126,21 @@ router.put(
   "/:id",
   authToken,
   checkParamIsUuid("id"),
-  checkOptionalStringObjectNotEmpty("name"),
-  checkOptionalStringObjectNotEmpty("shortName"),
-  checkOptionalStringObjectNotEmpty("homepage"),
-  checkOptionalStringObjectNotEmpty("urlLogo"),
-  checkOptionalIsBoolean("isActiveParticipant"),
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("shortName"),
+  checkStringObjectNotEmpty("website"),
+  checkStringObjectNotEmpty("contacts"),
+  checkIsBoolean("isActiveParticipant"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const clubId = req.params.id;
-    const transferObject = req.body;
+    const {
+      name,
+      shortName,
+      website,
+      contacts,
+      isActiveParticipant
+    } = req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -136,19 +148,20 @@ router.put(
       const club = await service.getById(clubId);
       if (!club) return res.sendStatus(NOT_FOUND);
 
-      club.name = transferObject.name ?? club.name;
-      club.shortName = transferObject.shortName ?? club.shortName;
-      club.homepage = transferObject.homepage ?? club.homepage;
-      club.urlLogo = transferObject.urlLogo ?? club.urlLogo;
-      club.contacts = transferObject.contacts ?? club.contacts;
+      club.name = name;
+      club.shortName = shortName;
+      club.homepage = website;
+      club.contacts = contacts;
       if (
-        transferObject.isActiveParticipant &&
+        isActiveParticipant &&
         !club.participantInSeasons.includes(new Date().getFullYear())
       ) {
-        transferObject.isActiveParticipant.push(new Date().getFullYear());
+        isActiveParticipant.push(new Date().getFullYear());
       }
 
-      service.update(club).then((club) => res.json(club));
+      const updatedClub = await service.update(club)
+
+      res.json(updatedClub);
     } catch (error) {
       next(error);
     }
