@@ -13,6 +13,7 @@ import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
+import ApiService from "@/services/ApiService";
 
 import { convertHeightStringToMetersValue } from "../helper/utils";
 
@@ -69,16 +70,20 @@ onMounted(() => {
   // Draw tracklogs
   drawTracks(props.tracklogs);
   drawTurnpoints(props.turnpoints);
+  drawAirspaces();
 });
 
-onBeforeUnmount(() => {
-  // Remove the map position update listener
-  document.removeEventListener("positionUpdated", positionUpdateListener);
-  // Remove the center map on click listener
-  document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
-});
+// TODO: Is this needed?
+// onBeforeUnmount(() => {
+//   // Remove the map position update listener
+//   document.removeEventListener("positionUpdated", positionUpdateListener);
+//   // Remove the center map on click listener
+//   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
+// });
 
-const drawAirspaces = (airspaceData) => {
+const drawAirspaces = async () => {
+  const res = await ApiService.getAirspaces();
+  const airspaceData = res.data;
   const options = {
     opacity: 0.1,
     fillOpacity: 0.08,
@@ -168,8 +173,6 @@ const drawTurnpoints = (turnpoints) => {
   }).addTo(map.value);
 };
 
-
-
 const updateMarkerPosition = (position) => {
   props.tracklogs.forEach((_, index) => {
     // Index + 1 because first dataset is GND and we need to skip that one
@@ -179,7 +182,6 @@ const updateMarkerPosition = (position) => {
           props.tracklogs[index][position.dataIndex]
         );
       }
-
     }
   });
   // Center map on pilot - currently too CPU intense. Needs refactoring
