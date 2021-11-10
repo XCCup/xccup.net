@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    homepage: {
+    website: {
       type: DataTypes.STRING,
     },
     urlLogo: {

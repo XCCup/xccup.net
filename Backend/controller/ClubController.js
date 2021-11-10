@@ -14,7 +14,7 @@ const {
 // @desc Gets all open information of all active clubs
 // @route GET /clubs
 
-router.get("/", async (req, res, next) => {
+router.get("/public", async (req, res, next) => {
   try {
     const clubs = await service.getAllActive();
     res.json(clubs);
@@ -27,7 +27,7 @@ router.get("/", async (req, res, next) => {
 // @route GET /clubs/all
 // @access Only moderator
 
-router.get("/all", authToken, async (req, res, next) => {
+router.get("/", authToken, async (req, res, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
     const clubs = await service.getAll();
