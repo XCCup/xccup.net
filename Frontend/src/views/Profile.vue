@@ -390,6 +390,11 @@ export default {
       default: false,
     },
   },
+  mounted() {
+    // Scroll to anchor if it exists after mounting
+    const el = document.querySelector(this.$route.hash);
+    if (el) el.scrollIntoView();
+  },
   methods: {
     glidersChanged(gliders) {
       this.userProfile.gliders = gliders;

@@ -215,21 +215,9 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes,
   scrollBehavior(to) {
-    // Detect # anchors
-    // Resolve is needed because otherwise it looks for the id before it is rendered. (Suspense?)
-    // Maybe there is a better way.
-    if (to.hash) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({ el: to.hash });
-        }, 300);
-      });
-    }
-
     const scroll = {};
 
     if (to.meta.toTop) scroll.top = 0;
-
     if (to.meta.smoothScroll) scroll.behavior = "smooth";
 
     return scroll;
