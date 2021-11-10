@@ -453,7 +453,7 @@
     ]
   },
   {
-    "shortName": "GVNAHEGLAN",
+    "shortName": "GVNG",
     "name": "Gleitschirmverein Nahe Glan",
     "website": "http://www.gleitschirmverein-nahe-glan.de",
     "Logo_small": "small/naheglan.png",
@@ -602,7 +602,7 @@
   {
     "shortName": "PGSC",
     "name": "Pfälzer Gleitschirmclub",
-    "website": "http://www.pfaelzergleitschirmclub.info",
+    "website": "https://pfalzer-gleitschirm-club.business.site/",
     "Logo_small": "small/pgsc.png",
     "urlLogo": "large/pgsc.png",
     "createdAt": "2021-01-23 14:00:14.657",
@@ -982,7 +982,7 @@
   {
     "shortName": "PC_WERRATAL",
     "name": "PC Werratal-Eschwege-Eichsfeld e.V.",
-    "website": "",
+    "website": "https://www.eschwege.de/stadt/buergerservice/vereinsverzeichnis/vereine/Paraclub-Werratal-Eschwege-Eichsfeld-e.V.php",
     "Logo_small": "small/pc_werratal.png",
     "urlLogo": "large/pc_werratal.png",
     "createdAt": "2021-02-02 09:19:20.497",

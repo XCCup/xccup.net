@@ -1,5 +1,230 @@
 [
   {
+    "id": "065fa142-3384-4d51-af69-6495674567eb",
+    "path": "test/testdatasets/images/clubs/1636576194567-PDGFC2019.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576194567-PDGFC2019-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268"
+  },
+  {
+    "id": "f55fa142-3384-4d51-af69-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576216211-cumulux.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576216211-cumulux-thumb-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "bd4eca98-d746-4b13-8c9f-14d466336cb3"
+  },
+  {
+    "id": "0660a142-3384-4d51-af69-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576232121-aero_club_altena.gif",
+    "pathThumb": "test/testdatasets/images/clubs/1636576232121-aero_club_altena-thumb.gif",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "ccbdb7c3-d04d-4522-a653-7d254337a992"
+  },
+  {
+    "id": "3c7365a6-e516-441d-b556-3385484e8bc7",
+    "originalname": "kurpfaelzer.png",
+    "mimetype": "image/png",
+    "size": "9692",
+    "path": "test/testdatasets/images/clubs/1636580676689-kurpfaelzer.png",
+    "clubId": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a",
+    "pathThumb": "test/testdatasets/images/clubs/1636580676689-kurpfaelzer-thumb.png",
+    "updatedAt": "2021-11-10T21:44:36.741Z",
+    "createdAt": "2021-11-10T21:44:36.741Z",
+    "sponsorId": null
+  },
+  {
+    "id": "67e5b318-5e61-4090-b45e-5b12027a48db",
+    "originalname": "pc_werratal.png",
+    "mimetype": "image/png",
+    "size": "20888",
+    "path": "test/testdatasets/images/clubs/1636581303945-pc_werratal.png",
+    "clubId": "6ce9a6c0-6056-4930-bdae-c17018626228",
+    "pathThumb": "test/testdatasets/images/clubs/1636581303945-pc_werratal-thumb.png",
+    "updatedAt": "2021-11-10T21:55:03.990Z",
+    "createdAt": "2021-11-10T21:55:03.990Z",
+    "sponsorId": null
+  },
+  {
+    "id": "c01de82e-825e-4327-8cfe-ab98534a92db",
+    "originalname": "topbanner.jpg",
+    "mimetype": "image/jpeg",
+    "size": "51316",
+    "path": "test/testdatasets/images/clubs/1636581351221-topbanner.jpg",
+    "clubId": "4bfa6d77-0792-4e09-87ae-0a04081100a1",
+    "pathThumb": "test/testdatasets/images/clubs/1636581351221-topbanner-thumb.jpg",
+    "updatedAt": "2021-11-10T21:55:51.294Z",
+    "createdAt": "2021-11-10T21:55:51.294Z",
+    "sponsorId": null
+  },
+  {
+    "id": "77b8bc84-89c7-456c-a5f3-d56a6c901e8b",
+    "originalname": "pfaelzergsc.png",
+    "mimetype": "image/png",
+    "size": "15079",
+    "path": "test/testdatasets/images/clubs/1636580999604-pfaelzergsc.png",
+    "clubId": "8ff0c760-0ee8-47e1-a14f-b99c4ac87b82",
+    "pathThumb": "test/testdatasets/images/clubs/1636580999604-pfaelzergsc-thumb.png",
+    "updatedAt": "2021-11-10T21:49:59.637Z",
+    "createdAt": "2021-11-10T21:49:59.637Z",
+    "sponsorId": null
+  },
+  {
+    "id": "a118cd99-4ff7-4550-84b6-76c208f4c25d",
+    "originalname": "GVNG.png",
+    "mimetype": "image/png",
+    "size": "36961",
+    "path": "test/testdatasets/images/clubs/1636581084922-GVNG.png",
+    "clubId": "32d2ee23-27f9-444a-9fc1-44210e51cbe1",
+    "pathThumb": "test/testdatasets/images/clubs/1636581084922-GVNG-thumb.png",
+    "updatedAt": "2021-11-10T21:51:24.995Z",
+    "createdAt": "2021-11-10T21:51:24.995Z",
+    "sponsorId": null
+  },
+  {
+    "id": "b207c4fa-33ad-4ef6-99ea-2f03f5f59f13",
+    "originalname": "asslar-240.png",
+    "mimetype": "image/png",
+    "size": "70400",
+    "path": "test/testdatasets/images/clubs/1636581044463-asslar-240.png",
+    "clubId": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa",
+    "pathThumb": "test/testdatasets/images/clubs/1636581044463-asslar-240-thumb.png",
+    "updatedAt": "2021-11-10T21:50:44.494Z",
+    "createdAt": "2021-11-10T21:50:44.494Z",
+    "sponsorId": null
+  },
+  {
+    "id": "a61fb39e-690a-4420-9b17-c785d37e582b",
+    "originalname": "necker-odenwald.png",
+    "mimetype": "image/png",
+    "size": "32959",
+    "path": "test/testdatasets/images/clubs/1636580846296-necker-odenwald.png",
+    "clubId": "165b1b87-8b03-43a6-b32c-8e147c9218db",
+    "pathThumb": "test/testdatasets/images/clubs/1636580846296-necker-odenwald-thumb.png",
+    "updatedAt": "2021-11-10T21:47:26.323Z",
+    "createdAt": "2021-11-10T21:47:26.323Z",
+    "sponsorId": null
+  },
+  {
+    "id": "7ac88e85-5cdd-41a1-a151-c8b70e2495d0",
+    "originalname": "vulkaneifel.gif",
+    "mimetype": "image/gif",
+    "size": "8689",
+    "path": "test/testdatasets/images/clubs/1636580776948-vulkaneifel.gif",
+    "clubId": "90675c2e-3369-4d3f-afc4-d58e9cf69bf9",
+    "pathThumb": "test/testdatasets/images/clubs/1636580776948-vulkaneifel-thumb.gif",
+    "updatedAt": "2021-11-10T21:46:16.972Z",
+    "createdAt": "2021-11-10T21:46:16.972Z",
+    "sponsorId": null
+  },
+  {
+    "id": "45bad8df-b810-485f-a46b-70630317d37b",
+    "originalname": "ostwind.png",
+    "mimetype": "image/png",
+    "size": "39126",
+    "path": "test/testdatasets/images/clubs/1636580717773-ostwind.png",
+    "clubId": "5d13f721-faf5-40af-9926-cb799294e982",
+    "pathThumb": "test/testdatasets/images/clubs/1636580717773-ostwind-thumb.png",
+    "updatedAt": "2021-11-10T21:45:17.843Z",
+    "createdAt": "2021-11-10T21:45:17.843Z",
+    "sponsorId": null
+  },
+  {
+    "id": "065fa032-3384-4d51-af69-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576262114-ourewälleriwwefliejer.jpg",
+    "pathThumb": "test/testdatasets/images/clubs/1636576262114-ourewälleriwwefliejer-thumb.jpg",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "b8337bb0-c16c-4db4-9915-918bab1fe0bc"
+  },
+  {
+    "id": "065fa143-4384-4d51-af69-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576278370-rml-2019_300.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576278370-rml-2019_300-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "c2026874-9cf0-4793-ad9a-66e22aea86af"
+  },
+  {
+    "id": "065fa142-3373-4d51-af69-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576372417-duddefliecher.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576372417-duddefliecher-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "91af8d69-b162-4d60-8c47-77b3f05e8c20"
+  },
+  {
+    "id": "065fa142-3384-5e51-af69-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576428342-Moselfalken_Logo.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576428342-Moselfalken_Logo-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+  },
+  {
+    "id": "065fa142-3384-4d40-af69-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576444792-sauerlandair.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576444792-sauerlandair-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+  },
+  {
+    "id": "065fa142-3384-4d51-b069-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576458776-RDG_Logo-8ec43f31.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576458776-RDG_Logo-8ec43f31-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "145e7f46-5dce-4269-917a-c78e0629b699"
+  },
+  {
+    "id": "065fa142-3384-4d51-af58-6495674567fc",
+    "path": "test/testdatasets/images/clubs/1636576475328-dglc.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576475328-dglc-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "d1ed2b23-c90f-4d40-bb1f-9d9f44c6fc1c"
+  },
+  {
+    "id": "065fa142-3384-4d51-af69-7595674567fc",
+    "path": "test/testdatasets/images/clubs/1636576578246-LogoDFCs.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576578246-LogoDFCs-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec"
+  },
+  {
+    "id": "065fa142-3384-4d51-af69-6484674567fc",
+    "path": "test/testdatasets/images/clubs/1636576608585-Saar.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576608585-Saar-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd"
+  },
+  {
+    "id": "065fa142-3384-4d51-af69-6495784567fc",
+    "path": "test/testdatasets/images/clubs/1636576665844-hochwald.png",
+    "pathThumb": "test/testdatasets/images/clubs/1636576665844-hochwald-thumb.png",
+    "mimetype": "image/png",
+    "createdAt": "2021-10-08T09:46:14.645Z",
+    "updatedAt": "2021-10-08T09:46:14.645Z",
+    "clubId": "04e89089-7a65-4d3f-ab49-0a518e1d594e"
+  },
+  {
     "id": "065fa142-3384-4d51-af69-6495674567fc",
     "path": "test/testdatasets/images/sponsors/1633686374622-elsenbach_design_large.png",
     "pathThumb": "test/testdatasets/images/sponsors/1633686374622-elsenbach_design_large-thumb.png",

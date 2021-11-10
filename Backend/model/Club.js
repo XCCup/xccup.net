@@ -38,5 +38,17 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  Club.associate = (models) => {
+    Club.hasOne(models.Logo, {
+      as: "logo",
+      foreignKey: {
+        name: "clubId",
+        allowNull: true,
+      },
+      onDelete: "CASCADE",
+      hooks: true,
+    });
+  };
+
   return Club;
 };
