@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     website: {
       type: DataTypes.STRING,
     },
+    tagline: {
+      type: DataTypes.STRING,
+    },
     isGoldSponsor: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
