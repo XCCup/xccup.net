@@ -7,7 +7,7 @@
     :bestClubs="bestClubs"
     :bestTeams="bestTeams"
   />
-  <Sponsors :sponsors="sponsors" />
+  <SponsorsPanel :sponsors="sponsors" />
 </template>
 
 <script setup async>

@@ -103,6 +103,12 @@ export default {
     });
   },
 
+  // Sponsors
+
+  getSponsors(retrieveAll){
+    return retrieveAll ? jwtInterceptor.get("/sponsors") : apiClient.get("/sponsors/public");
+  },
+
   // General
 
   getBrands() {
