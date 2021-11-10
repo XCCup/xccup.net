@@ -362,11 +362,15 @@ export default {
       type: Boolean,
       default: false,
     },
+    scrollToGliderSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   mounted() {
     // Scroll to anchor if it exists after mounting
-    const el = document.querySelector(this.$route.hash);
-    if (el) el.scrollIntoView();
+    const el = document.querySelector("#glider-select");
+    if (el && this.scrollToGliderSelect) el.scrollIntoView();
   },
   methods: {
     inidcateSuccess() {

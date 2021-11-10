@@ -139,6 +139,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
   },
   {
+    path: "/profil/geraete-liste",
+    name: "ProfileGliderList",
+    props: { scrollToGliderSelect: true },
+    meta: { requiredAuth: true },
+
+    component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
+  },
+  {
     path: "/sandbox/:flightId",
     name: "Sandbox",
     props: true,
