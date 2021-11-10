@@ -90,44 +90,7 @@
                 <div class="mt-3"></div>
                 <hr />
               </div>
-              <div class="col-md-12" id="glider-select">
-                <GliderList
-                  :gliders="userProfile.gliders"
-                  :defaultGlider="userProfile.defaultGlider"
-                  @gliders-changed="glidersChanged"
-                />
-              </div>
-
-              <!-- Glider select -->
-              <!-- <div class="col-md-12">
-                <div class="row d-flex align-items-end">
-                  <div class="col-md-7">
-                    <div class="">
-                      <GliderSelect
-                        v-model="userProfile.defaultGlider"
-                        :showLabel="true"
-                        label="Standard Gerät"
-                        :gliders="userProfile.gliders"
-                        :isDisabled="false"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-5">
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button
-                        type="button"
-                        class="btn btn-outline-danger"
-                        data-bs-toggle="modal"
-                        data-bs-target="#removeGliderModal"
-                      >
-                        Entfernen
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
             </div>
-            <hr />
             <h5>Benachrichtigungen</h5>
             <div class="form-check">
               <input
@@ -171,6 +134,14 @@
               <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
             </button>
 
+            <hr />
+            <div class="col-md-12" id="glider-select">
+              <GliderList
+                :gliders="userProfile.gliders"
+                :defaultGlider="userProfile.defaultGlider"
+                @gliders-changed="glidersChanged"
+              />
+            </div>
             <!-- Edit -->
             <!-- <div v-if="!edit">
               <router-link
