@@ -6,7 +6,7 @@
       :turnpoints="flight.flightTurnpoints"
       :airspaces="airspaces"
     />
-    <FlightBarogramm :datasets="baroData" :key="baroDataUpdated" />
+    <FlightBarogramm :key="baroDataUpdated" :datasets="baroData" />
     <Airbuddies
       v-if="flight.airbuddies.length > 0"
       :flight="flight"
@@ -81,6 +81,20 @@ export default {
       baroDataUpdated: 0,
     };
   },
+  computed: {
+    baroData() {
+      return processBaroData(this.flight, this.buddyTracks);
+    },
+
+    tracklogs() {
+      return processTracklogs(this.flight, this.buddyTracks);
+    },
+  },
+  watch: {
+    baroData() {
+      this.baroDataUpdated++;
+    },
+  },
   methods: {
     updateAirbuddies(buddyTracks) {
       this.buddyTracks = buddyTracks;
@@ -141,20 +155,6 @@ export default {
 
       if (res.status != 200) throw res.statusText;
       this.flight.comments = [...res.data];
-    },
-  },
-  watch: {
-    baroData() {
-      this.baroDataUpdated++;
-    },
-  },
-  computed: {
-    baroData() {
-      return processBaroData(this.flight, this.buddyTracks);
-    },
-
-    tracklogs() {
-      return processTracklogs(this.flight, this.buddyTracks);
     },
   },
 };

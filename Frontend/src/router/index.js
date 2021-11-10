@@ -128,7 +128,8 @@ const routes = [
     name: "Profile",
     props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
   },
   {
     path: "/profil/bearbeiten",
@@ -136,7 +137,8 @@ const routes = [
     props: { edit: true },
     meta: { requiredAuth: true },
 
-    component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
   },
   {
     path: "/profil/geraete-liste",
@@ -144,7 +146,8 @@ const routes = [
     props: { scrollToGliderSelect: true },
     meta: { requiredAuth: true },
 
-    component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
   },
   {
     path: "/sandbox/:flightId",

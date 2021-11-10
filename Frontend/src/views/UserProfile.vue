@@ -35,7 +35,7 @@
                 <BaseInput
                   v-model="userProfile.club.name"
                   label="Verein"
-                  :isDisabled="true"
+                  :is-disabled="true"
                 />
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
@@ -73,7 +73,7 @@
                     <BaseSelect
                       v-model="userProfile.gender"
                       label="Geschlecht"
-                      :showLabel="true"
+                      :show-label="true"
                       :options="['M', 'W', 'D']"
                     />
                   </div>
@@ -81,7 +81,7 @@
                     <BaseSelect
                       v-model="userProfile.tshirtSize"
                       label="T-Shirt Größe"
-                      :showLabel="true"
+                      :show-label="true"
                       :options="['S', 'M', 'L', 'XL', 'XXL']"
                     />
                   </div>
@@ -94,11 +94,11 @@
             <h5>Benachrichtigungen</h5>
             <div class="form-check">
               <input
+                id="notifyForComment"
+                v-model="userProfile.emailInformIfComment"
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="notifyForComment"
-                v-model="userProfile.emailInformIfComment"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 Email bei neuem Kommentar <i class="bi bi-info-circle"></i>
@@ -106,11 +106,11 @@
             </div>
             <div class="form-check">
               <input
+                id="optInNewsletter"
+                v-model="userProfile.emailNewsletter"
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="optInNewsletter"
-                v-model="userProfile.emailNewsletter"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 Newsletter abonnieren <i class="bi bi-info-circle"></i>
@@ -135,10 +135,10 @@
             </button>
 
             <hr />
-            <div class="col-md-12" id="glider-select">
+            <div id="glider-select" class="col-md-12">
               <GliderList
                 :gliders="userProfile.gliders"
-                :defaultGlider="userProfile.defaultGlider"
+                :default-glider="userProfile.defaultGlider"
                 @gliders-changed="glidersChanged"
               />
             </div>
@@ -199,7 +199,7 @@
                     <BaseSelect
                       v-model="userProfile.gender"
                       label="Geschlecht"
-                      :showLabel="true"
+                      :show-label="true"
                       :options="['M', 'W', 'D']"
                     />
                   </div>
@@ -207,7 +207,7 @@
                     <BaseSelect
                       v-model="userProfile.tshirtSize"
                       label="T-Shirt Größe"
-                      :showLabel="true"
+                      :show-label="true"
                       :options="['S', 'M', 'L', 'XL', 'XXL']"
                     />
                   </div>
@@ -221,10 +221,10 @@
                     <div class="">
                       <GliderSelect
                         v-model="userProfile.defaultGlider"
-                        :showLabel="true"
+                        :show-label="true"
                         label="Standard Gerät"
                         :gliders="userProfile.gliders"
-                        :isDisabled="false"
+                        :is-disabled="false"
                       />
                     </div>
                   </div>
@@ -256,11 +256,11 @@
             <h5>Benachrichtigungen</h5>
             <div class="form-check">
               <input
+                id="notifyForComment"
+                v-model="userProfile.emailInformIfComment"
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="notifyForComment"
-                v-model="userProfile.emailInformIfComment"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 Email bei neuem Kommentar <i class="bi bi-info-circle"></i>
@@ -268,11 +268,11 @@
             </div>
             <div class="form-check">
               <input
+                id="optInNewsletter"
+                v-model="userProfile.emailNewsletter"
                 class="form-check-input"
                 type="checkbox"
                 value=""
-                id="optInNewsletter"
-                v-model="userProfile.emailNewsletter"
               />
               <label class="form-check-label" for="flexCheckDefault">
                 Newsletter abonnieren <i class="bi bi-info-circle"></i>
@@ -325,7 +325,17 @@ import { ref } from "vue";
 import cloneDeep from "lodash/cloneDeep";
 
 export default {
-  name: "Profile",
+  name: "UserProfile",
+  props: {
+    edit: {
+      type: Boolean,
+      default: false,
+    },
+    scrollToGliderSelect: {
+      type: Boolean,
+      default: false,
+    },
+  },
   async setup() {
     try {
       const { data: initialData } = await ApiService.getUserDetails();
@@ -356,16 +366,6 @@ export default {
   beforeMount() {
     this.userProfile = cloneDeep(this.userDetails);
     this.unmodifiedUserProfile = cloneDeep(this.userDetails);
-  },
-  props: {
-    edit: {
-      type: Boolean,
-      default: false,
-    },
-    scrollToGliderSelect: {
-      type: Boolean,
-      default: false,
-    },
   },
   mounted() {
     // Scroll to anchor if it exists after mounting

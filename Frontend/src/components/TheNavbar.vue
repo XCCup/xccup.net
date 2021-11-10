@@ -12,13 +12,13 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item dropdown">
             <a
+              id="navbarDropdown"
               class="nav-link dropdown-toggle"
               href="#"
-              id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
               >Ergebnisse</a
@@ -130,9 +130,9 @@
           </li>
           <li class="nav-item dropdown">
             <a
+              id="navbarDropdown"
               class="nav-link dropdown-toggle"
               href="#"
-              id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
               >Listen</a
@@ -175,9 +175,9 @@
         <!-- Login dropdown  -->
         <div class="dropdown">
           <button
+            id="dropdownMenuButton1"
             type="button"
             class="btn btn-outline-light btn-sm m-1 dropdown-toggle"
-            id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
