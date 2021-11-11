@@ -1,9 +1,34 @@
 export function convertMapBoundsToQueryString(data) {
-  if (!data) return "";
-  let tmp = [];
-  tmp.push(data.getBounds().getSouthWest());
-  tmp.push(data.getBounds().getNorthEast());
-  tmp.push(data.getBounds().getNorthWest());
-  tmp.push(data.getBounds().getSouthEast());
-  return tmp.map((x) => [x.lng, x.lat]).join("|");
+  if (!data) return null;
+  let bounds = [];
+  bounds.push(data.getBounds().getSouthWest());
+  bounds.push(data.getBounds().getNorthEast());
+  bounds.push(data.getBounds().getNorthWest());
+  bounds.push(data.getBounds().getSouthEast());
+  //   TODO: Enable when API endpoint is fixed
+  //   return bounds.map((x) => [x.lng, x.lat]).join("|");
+  return null;
+}
+
+export function createAirspacePopupContent(airspace) {
+  const ceilingInMeters = addRepresentationInMeters(airspace.ceiling);
+  const floorInMeters = addRepresentationInMeters(airspace.floor);
+  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`;
+  return content;
+}
+
+function addRepresentationInMeters(value) {
+  const valueInMeters = convertHeightStringToMetersValue(value);
+  return valueInMeters ? ` / ${valueInMeters} m` : "";
+}
+
+function convertHeightStringToMetersValue(value) {
+  const FACTOR_FT_TO_M = 0.3048;
+
+  if (value == "GND") return 0;
+  //FL is calculated in relation to a local pressure value we don't know. Therefore we will return undefined.
+  if (value.includes("FL")) return undefined;
+  // if (value.includes("FL")) return Math.round(parseInt(value.substring(2, value.length)) * FACTOR_FT_TO_M * 100);
+  if (value.includes("ft"))
+    return Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
 }

@@ -15,11 +15,13 @@ import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
 import ApiService from "@/services/ApiService";
 
-import { convertHeightStringToMetersValue } from "@/helper/utils";
-import { convertMapBoundsToQueryString } from "@/helper/mapHelpers";
+// import { convertHeightStringToMetersValue } from "@/helper/utils";
+import {
+  convertMapBoundsToQueryString,
+  createAirspacePopupContent,
+} from "@/helper/mapHelpers";
 
-import { ref } from "@vue/reactivity";
-import { watchEffect, onMounted, onBeforeUnmount } from "vue";
+import { watchEffect, onMounted, onBeforeUnmount, ref } from "vue";
 
 let map = ref(null);
 let tracks = ref([]);
@@ -70,7 +72,7 @@ onMounted(() => {
     tileOptions
   ).addTo(map.value);
 
-  // Draw tracklogs
+  // Draw tracklogs and Airspaces
   drawTracks(props.tracklogs);
   drawTurnpoints(props.turnpoints);
   drawAirspaces(airspaceQueryString);
@@ -84,8 +86,8 @@ onMounted(() => {
 //   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
 // });
 
-const drawAirspaces = async (query) => {
-  const res = await ApiService.getAirspaces(query);
+const drawAirspaces = async (bounds) => {
+  const res = await ApiService.getAirspaces(bounds);
   const airspaceData = res.data;
   const options = {
     opacity: 0.1,
@@ -94,7 +96,7 @@ const drawAirspaces = async (query) => {
   };
   airspaceData.forEach((airspace) => {
     L.geoJSON(airspace.polygon, options)
-      .bindPopup(createPopupContent(airspace))
+      .bindPopup(createAirspacePopupContent(airspace))
       .addTo(map.value);
   });
 };
@@ -193,16 +195,7 @@ const updateMarkerPosition = (position) => {
   //   map.setView(tracklogs[0][positions.dataIndex]);
   // }
 };
-const createPopupContent = (airspace) => {
-  const ceilingInMeters = addRepresentationInMeters(airspace.ceiling);
-  const floorInMeters = addRepresentationInMeters(airspace.floor);
-  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`;
-  return content;
-};
-const addRepresentationInMeters = (value) => {
-  const valueInMeters = convertHeightStringToMetersValue(value);
-  return valueInMeters ? ` / ${valueInMeters} m` : "";
-};
+
 const centerMapOnClick = () => {
   map.value.setView(positionMarkers[0].getLatLng());
 };

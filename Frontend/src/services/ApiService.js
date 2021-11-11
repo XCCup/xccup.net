@@ -112,9 +112,8 @@ export default {
     return apiClient.get(baseURL + "general/gliderClasses");
   },
   getAirspaces(query) {
-    console.log(query);
     return apiClient.get(baseURL + "airspaces/relevant", {
-      params: { p: "6.01,51.49|10.39,51.49|10.39,49.98|6.01,49.98" },
+      params: { p: query },
     });
   },
 };
