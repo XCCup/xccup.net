@@ -114,6 +114,7 @@
     "name": "Air Design Gliders",
     "website": "https://www.ad-gliders.com",
     "type": "MANUFACTURER",
+    "tagline" : "Gleitschirme und mehr",
     "sponsorInSeasons": [
       "2019",
       "2020",
@@ -129,6 +130,7 @@
   },
   {
     "name": "Airtouch Jochen Henrichs",
+    "tagline": "We make you fly",
     "website": "https://air-touch.de",
     "type": "SCHOOL",
     "sponsorInSeasons": [
@@ -204,6 +206,7 @@
     "name": "Baumpflege Jochen Stingl",
     "website": "http://www.baumpflege-stingl.de",
     "type": "OTHER",
+    "tagline" :"Die Baumpflege ist unsere Leidenschaft",
     "sponsorInSeasons": [
       "2016",
       "2017",
@@ -312,6 +315,7 @@
     "name": "DANKe Projekt GmbH",
     "isGoldSponsor": true,
     "website": "http://www.dank-e.de",
+    "tagline": "Ökologisch. Nachhaltig. Innovativ.",
     "type": "OTHER",
     "sponsorInSeasons": [
       "2019",
@@ -343,6 +347,7 @@
     "name": "Elsenbach Design",
     "website": "http://www.elsenbach-design.de",
     "type": "OTHER",
+    "tagline": "Gutes Desgin",
     "sponsorInSeasons": [
       "2013",
       "2014",
@@ -380,6 +385,7 @@
     "name": "Flugschule",
     "website": "https://www.fly-a-glider.de/",
     "type": "SCHOOL",
+    "tagline" : "DHV Gleitflugschule",
     "sponsorInSeasons": [
       "2018",
       "2019",
@@ -444,6 +450,7 @@
   {
     "name": "Flugschule Hirondelle",
     "website": "http://www.fs-hirondelle.de",
+    "tagline" : "Erlebe die Freiheit des Fliegens",
     "isGoldSponsor": true,
     "type": "SCHOOL",
     "sponsorInSeasons": [
@@ -498,6 +505,7 @@
     "name": "Holiday Flat Almunecar",
     "website": "http://holiday-flat-almunecar.de",
     "type": "HOLIDAY",
+    "tagline" : "Erste Reihe am Strand der Playa Velilla",
     "sponsorInSeasons": [
       "2016",
       "2018",
@@ -556,6 +564,7 @@
   {
     "name": "Independence",
     "website": "http://www.independence.aero/de/produkte/gleitschirme.html",
+    "tagline": "Für jeden Flugstil das passende Paket",
     "type": "MANUFACTURER",
     "sponsorInSeasons": [
       "2004",
@@ -664,6 +673,7 @@
     "name": "maier components",
     "website": "http://maier-components.de",
     "type": "MANUFACTURER",
+    "tagline": "Händler für Flugsportzubehör",
     "sponsorInSeasons": [
       "2017",
       "2018",
@@ -755,7 +765,7 @@
   },
   {
     "name": "Nova Paragliders",
-    "website": "http://www.nova-wings.com/",
+    "website": "http://www.nova.eu/",
     "type": "MANUFACTURER",
     "sponsorInSeasons": [
       "2008",
@@ -769,7 +779,7 @@
     ],
     "contacts": {
       "address": "NOVA Vertriebsges.m.b.H Bernhard Hoefel Str. 14 6020 INNSBRUCK AUSTRIA",
-      "email": "info@nova-wings.com",
+      "email": "info@nova.eu",
       "phone": "+43 512 361340",
       "phone2": ""
     },
@@ -859,6 +869,7 @@
     "website": "Https://Phi-air.com",
     "type": "MANUFACTURER",
     "isGoldSponsor": true,
+    "tagline": "The new paragliding brand of Hannes Papesh and team",
     "sponsorInSeasons": [
       "2019",
       "2020",
@@ -938,6 +949,7 @@
     "name": "Skyman",
     "website": "http://www.skyman.aero",
     "type": "MANUFACTURER",
+    "tagline": "Neue Wege entdecken",
     "sponsorInSeasons": [
       "2019",
       "2020",
@@ -1044,6 +1056,7 @@
     "name": "Swing",
     "website": "http://www.swing.de",
     "type": "MANUFACTURER",
+    "tagline": "Gleitschirme mit Ram Air Section",
     "sponsorInSeasons": [
       "2004",
       "2006",
@@ -1149,6 +1162,7 @@
     "name": "U-Turn",
     "website": "http://www.u-turn.de",
     "type": "MANUFACTURER",
+    "tagline" : "safe fun paragliding",
     "sponsorInSeasons": [
       "2009",
       "2010",

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    homepage: {
+    website: {
       type: DataTypes.STRING,
     },
     urlLogo: {
@@ -35,6 +35,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         name: "clubId",
       },
+    });
+  };
+
+  Club.associate = (models) => {
+    Club.hasOne(models.Logo, {
+      as: "logo",
+      foreignKey: {
+        name: "clubId",
+        allowNull: true,
+      },
+      onDelete: "CASCADE",
+      hooks: true,
     });
   };
 

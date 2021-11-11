@@ -2,7 +2,7 @@
   {
     "shortName": "DFC_SAAR",
     "name": "Drachenflugclub Saar",
-    "homepage": "http://www.dfc-saar.de",
+    "website": "http://www.dfc-saar.de",
     "Logo_small": "small/dfcsaar.png",
     "urlLogo": "large/dfcsaar.png",
     "createdAt": "2019-01-23 20:08:44.383",
@@ -26,7 +26,7 @@
   {
     "shortName": "DFC_TR",
     "name": "Drachenflieger-Club Trier",
-    "homepage": "http://www.dfc-trier.com",
+    "website": "http://www.dfc-trier.com",
     "Logo_small": "small/dfctrier.png",
     "urlLogo": "large/dfctrier.png",
     "createdAt": "2021-01-19 09:13:16.530",
@@ -58,7 +58,7 @@
   {
     "shortName": "MOSELFALKEN",
     "name": "Die Moselfalken",
-    "homepage": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "Logo_small": "small/moselfalken.png",
     "urlLogo": "large/moselfalken.png",
     "createdAt": "2021-01-15 15:52:21.823",
@@ -100,7 +100,7 @@
   {
     "shortName": "PDGFC",
     "name": "1. Pfälzer DGFC",
-    "homepage": "http://www.pdgfc.de",
+    "website": "http://www.pdgfc.de",
     "Logo_small": "small/ersterpfaelzer.png",
     "urlLogo": "large/ersterpfaelzer.png",
     "createdAt": "2019-02-02 14:44:52.633",
@@ -130,7 +130,7 @@
   {
     "shortName": "GF_HOCHWALD",
     "name": "Gleitschirmfreunde Hochwald",
-    "homepage": "http://www.gleitschirminfo.de",
+    "website": "http://www.gleitschirminfo.de",
     "Logo_small": "small/gfhochwald.gif",
     "urlLogo": "large/gfhochwald.gif",
     "createdAt": "2011-01-18 19:55:07.550",
@@ -161,7 +161,7 @@
   {
     "shortName": "DFC_VULKAN",
     "name": "DFC Vulkaneifel",
-    "homepage": "http://www.dfc-vulkaneifel.de",
+    "website": "http://www.dfc-vulkaneifel.de",
     "Logo_small": "small/vulkaneifel.gif",
     "urlLogo": "large/vulkaneifel.gif",
     "createdAt": "2021-02-07 13:31:26.247",
@@ -191,7 +191,7 @@
   {
     "shortName": "RML",
     "name": "D.G.F. Rhein-Mosel-Lahn",
-    "homepage": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "Logo_small": "small/rheinmosellahn.jpg",
     "urlLogo": "large/rheinmosellahn.jpg",
     "createdAt": "2021-01-19 09:13:46.373",
@@ -221,7 +221,7 @@
   {
     "shortName": "OSTWIND",
     "name": "Ostwindfreunde e.V.",
-    "homepage": "http://www.ostwindfreunde.de",
+    "website": "http://www.ostwindfreunde.de",
     "Logo_small": "small/ostwind.png",
     "urlLogo": "large/ostwind.png",
     "createdAt": "2021-02-11 12:47:04.737",
@@ -261,7 +261,7 @@
   {
     "shortName": "DGCN",
     "name": "DGC Nahetal",
-    "homepage": "http://www.dgcn.de",
+    "website": "http://www.dgcn.de",
     "Logo_small": "small/dgcnahetal.png",
     "urlLogo": "large/dgcnahetal.png",
     "createdAt": "2009-12-09 23:17:12.510",
@@ -283,7 +283,7 @@
   {
     "shortName": "HELLERTAL",
     "name": "DGF Hellertal",
-    "homepage": "http://www.dgfhellertal.de",
+    "website": "http://www.dgfhellertal.de",
     "Logo_small": "small/dgfhellertal.png",
     "urlLogo": "large/dgfhellertal.png",
     "createdAt": "2011-12-15 21:55:54.270",
@@ -305,7 +305,7 @@
   {
     "shortName": "SPGFC",
     "name": "Südpfälzer GFC",
-    "homepage": "http://www.duddefliecher.de",
+    "website": "http://www.duddefliecher.de",
     "Logo_small": "small/duddefliecher.png",
     "urlLogo": "large/duddefliecher.png",
     "createdAt": "2021-02-03 16:10:16.123",
@@ -343,7 +343,7 @@
   {
     "shortName": "PARASAAR",
     "name": "1. Para-Ski-Club Saar e.V.",
-    "homepage": "http://www.paraski.de/",
+    "website": "http://www.paraski.de/",
     "Logo_small": "small/paraskiclubsaar.png",
     "urlLogo": "large/paraskiclubsaar.png",
     "createdAt": "2016-03-12 19:29:56.087",
@@ -368,7 +368,7 @@
   {
     "shortName": "DGCSIEBEN",
     "name": "DGC Siebengebirge",
-    "homepage": "http://www.dgc-siebengebirge.com",
+    "website": "http://www.dgc-siebengebirge.com",
     "Logo_small": "small/dgcsiebengebirge.png",
     "urlLogo": "large/dgcsiebengebirge.png",
     "createdAt": "2009-12-09 23:17:12.510",
@@ -390,7 +390,7 @@
   {
     "shortName": "DGLC",
     "name": "DGLC Frankfurt-Rhein-Main",
-    "homepage": "http://dglc-rhein-main.de/",
+    "website": "http://dglc-rhein-main.de/",
     "Logo_small": "small/DGLC_FrankfurtRheinMain.png",
     "urlLogo": "large/DGLC_FrankfurtRheinMain.png",
     "createdAt": "2021-01-20 10:33:44.617",
@@ -424,7 +424,7 @@
   {
     "shortName": "ODC",
     "name": "1. Odenwälder DGC",
-    "homepage": "http://www.ersterodc.de",
+    "website": "http://www.ersterodc.de",
     "Logo_small": "small/ersterodc.png",
     "urlLogo": "large/ersterodc.png",
     "createdAt": "2012-01-23 22:28:07.230",
@@ -453,9 +453,9 @@
     ]
   },
   {
-    "shortName": "GVNAHEGLAN",
+    "shortName": "GVNG",
     "name": "Gleitschirmverein Nahe Glan",
-    "homepage": "http://www.gleitschirmverein-nahe-glan.de",
+    "website": "http://www.gleitschirmverein-nahe-glan.de",
     "Logo_small": "small/naheglan.png",
     "urlLogo": "large/naheglan.png",
     "createdAt": "2021-01-15 15:50:18.973",
@@ -490,7 +490,7 @@
   {
     "shortName": "KURPFAELZ",
     "name": "Kurpfälzer Gleitschirmflieger",
-    "homepage": "http://www.kurpfaelzer-gleitschirmflieger.de",
+    "website": "http://www.kurpfaelzer-gleitschirmflieger.de",
     "Logo_small": "small/kurpfaelzer.png",
     "urlLogo": "large/kurpfaelzer.png",
     "createdAt": "2021-01-15 15:49:42.550",
@@ -530,7 +530,7 @@
   {
     "shortName": "GCNECKAROD",
     "name": "GSC Neckar-Odenwald",
-    "homepage": "http://www.para-now.de",
+    "website": "http://www.para-now.de",
     "Logo_small": "small/gcneckarodenwald.png",
     "urlLogo": "large/gcneckarodenwald.png",
     "createdAt": "2021-02-03 04:47:42.710",
@@ -565,7 +565,7 @@
   {
     "shortName": "NIEDERRHEIN",
     "name": "Fliegerfreunde Niederrhein",
-    "homepage": "http://www.fliegerfreunde-niederrhein.de",
+    "website": "http://www.fliegerfreunde-niederrhein.de",
     "Logo_small": "small/ffniederrhein.png",
     "urlLogo": "large/ffniederrhein.png",
     "createdAt": "2012-01-29 00:37:10.423",
@@ -591,7 +591,7 @@
   {
     "shortName": "DELTACLUB",
     "name": "Delta-Club Rheinland",
-    "homepage": "http://delta-club.de/",
+    "website": "http://delta-club.de/",
     "Logo_small": "small/deltaclubrheinland.jpg",
     "urlLogo": "large/deltaclubrheinland.jpg",
     "createdAt": "2009-12-09 23:17:12.510",
@@ -602,7 +602,7 @@
   {
     "shortName": "PGSC",
     "name": "Pfälzer Gleitschirmclub",
-    "homepage": "http://www.pfaelzergleitschirmclub.info",
+    "website": "https://pfalzer-gleitschirm-club.business.site/",
     "Logo_small": "small/pgsc.png",
     "urlLogo": "large/pgsc.png",
     "createdAt": "2021-01-23 14:00:14.657",
@@ -637,7 +637,7 @@
   {
     "shortName": "LINDENFELS",
     "name": "Gleitschirmflieger Lindenfels",
-    "homepage": "http://www.gleitschirmflieger-lindenfels.de/",
+    "website": "http://www.gleitschirmflieger-lindenfels.de/",
     "Logo_small": "small/GSFLindenfels_S.png",
     "urlLogo": "large/GSFLindenfels_L.png",
     "createdAt": "2011-01-23 14:38:02.630",
@@ -667,7 +667,7 @@
   {
     "shortName": "GLEITZEIT",
     "name": "Gleitzeit e.V.",
-    "homepage": "http://www.gleitzeit-ev.de",
+    "website": "http://www.gleitzeit-ev.de",
     "Logo_small": "small/Gleitzeit.png",
     "urlLogo": "large/Gleitzeit.png",
     "createdAt": "2021-02-02 09:18:33.743",
@@ -701,7 +701,7 @@
   {
     "shortName": "OUREWALLER",
     "name": "Ourewäller Iwwefliejer",
-    "homepage": "http://www.oif.de",
+    "website": "http://www.oif.de",
     "Logo_small": "small\\ourewälleriwwefliejer_s.jpg",
     "urlLogo": "large\\ourewälleriwwefliejer.jpg",
     "createdAt": "2021-02-10 08:50:52.120",
@@ -736,7 +736,7 @@
   {
     "shortName": "EIFEL_THERMIK",
     "name": "Winden Club Eifelthermik",
-    "homepage": "",
+    "website": "",
     "Logo_small": "",
     "urlLogo": "",
     "createdAt": "2009-12-09 23:17:12.510",
@@ -753,7 +753,7 @@
   {
     "shortName": "SAUERLANDAIR",
     "name": "SauerlandAir e.V.",
-    "homepage": "http://www.sauerlandair.de/",
+    "website": "http://www.sauerlandair.de/",
     "Logo_small": "small/sauerlandair.png",
     "urlLogo": "large/sauerlandair.png",
     "createdAt": "2021-01-26 19:13:48.970",
@@ -780,7 +780,7 @@
   {
     "shortName": "GFSTAUBERT",
     "name": "Gleitschirmfreunde Taubertal e.V.",
-    "homepage": "http://www.gleitschirmfreunde-taubertal.de",
+    "website": "http://www.gleitschirmfreunde-taubertal.de",
     "Logo_small": "small\\gsftaubertal_s.gif",
     "urlLogo": "large\\gsftaubertal_l.gif",
     "createdAt": "2018-01-19 11:43:31.933",
@@ -800,7 +800,7 @@
   {
     "shortName": "ARZBACH",
     "name": "Naturfreunde und Freiflieger Großer Kopf Westerwald e.V",
-    "homepage": "http://www.freiflieger-arzbach.de",
+    "website": "http://www.freiflieger-arzbach.de",
     "Logo_small": "small/ffArzbach.png",
     "urlLogo": "large/ffArzbach.png",
     "createdAt": "2011-05-15 16:58:27.270",
@@ -820,7 +820,7 @@
   {
     "shortName": "SKYTEAM",
     "name": "Skyteam-Neuss",
-    "homepage": "http://www.skyteam-neuss.de/",
+    "website": "http://www.skyteam-neuss.de/",
     "Logo_small": "small/SkyTeamNeuss_small.png",
     "urlLogo": "large/SkyTeamNeuss_large.png",
     "createdAt": "2018-01-19 11:45:42.457",
@@ -852,7 +852,7 @@
   {
     "shortName": "BERGSTRAESSLER",
     "name": "Bergsträßler Drachen und Gleitschirmflieger",
-    "homepage": "http://www.bergstraessler-drachenflieger.de",
+    "website": "http://www.bergstraessler-drachenflieger.de",
     "Logo_small": "small/Bergstraessler.png",
     "urlLogo": "large/Bergstraessler.png",
     "createdAt": "2020-01-27 21:25:37.877",
@@ -899,7 +899,7 @@
   {
     "shortName": "AIRWALKER",
     "name": "Airwalker e.V.",
-    "homepage": "http://www.airwalker-ev.de",
+    "website": "http://www.airwalker-ev.de",
     "Logo_small": "small/airwalker.png",
     "urlLogo": "large/airwalker.png",
     "createdAt": "2017-01-25 18:45:53.603",
@@ -933,7 +933,7 @@
   {
     "shortName": "KREUZBERGFLIEGER",
     "name": "Gleitschirm-Club Kreuzberg Rhön e. V.",
-    "homepage": "http://www.kreuzbergflieger.de",
+    "website": "http://www.kreuzbergflieger.de",
     "Logo_small": "small/kreuzbergflieger.png",
     "urlLogo": "large/kreuzbergflieger.png",
     "createdAt": "2018-01-19 11:43:50.087",
@@ -954,7 +954,7 @@
   {
     "shortName": "FUN_GLIDERS_WW",
     "name": "Fun-Gliders-Westerwald e.V.",
-    "homepage": "http://www.fun-gliders-westerwald.de",
+    "website": "http://www.fun-gliders-westerwald.de",
     "Logo_small": "small/funglidersww.png",
     "urlLogo": "large/funglidersww.png",
     "createdAt": "2017-02-27 19:35:12.047",
@@ -982,7 +982,7 @@
   {
     "shortName": "PC_WERRATAL",
     "name": "PC Werratal-Eschwege-Eichsfeld e.V.",
-    "homepage": "",
+    "website": "https://www.eschwege.de/stadt/buergerservice/vereinsverzeichnis/vereine/Paraclub-Werratal-Eschwege-Eichsfeld-e.V.php",
     "Logo_small": "small/pc_werratal.png",
     "urlLogo": "large/pc_werratal.png",
     "createdAt": "2021-02-02 09:19:20.497",
@@ -1009,7 +1009,7 @@
   {
     "shortName": "RDG_POPPENHAUSEN",
     "name": "RDG Poppenhausen e.V.",
-    "homepage": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "Logo_small": "small/rdg_poppenhausen.png",
     "urlLogo": "large/rdg_poppenhausen.png",
     "createdAt": "2021-02-17 08:39:24.537",
@@ -1035,7 +1035,7 @@
   {
     "shortName": "FLY_MIL",
     "name": "Lilienthalgleiter Unterfranken",
-    "homepage": "http://www.fly-mil.de/",
+    "website": "http://www.fly-mil.de/",
     "Logo_small": "",
     "urlLogo": "",
     "createdAt": "2019-01-23 16:48:40.447",
@@ -1057,7 +1057,7 @@
   {
     "shortName": "HIMMELSSTUERMER_LAHN",
     "name": "Himmelsstürmer Lahn e.V.",
-    "homepage": "http://www.himmelsstuermerlahn.de",
+    "website": "http://www.himmelsstuermerlahn.de",
     "Logo_small": "",
     "urlLogo": "",
     "createdAt": "2017-05-28 22:14:12.620",
@@ -1071,7 +1071,7 @@
   {
     "shortName": "ASSLAR",
     "name": "Asslarer Gleitschirmflieger",
-    "homepage": "http://www.asslarergleitschirmflieger.de",
+    "website": "http://www.asslarergleitschirmflieger.de",
     "Logo_small": "small/asslarer_gs.png",
     "urlLogo": "large/asslarer_gs.png",
     "createdAt": "2021-01-15 17:10:53.773",
@@ -1095,7 +1095,7 @@
   {
     "shortName": "MOSBACH",
     "name": "Delta Club Mosbach e.V.",
-    "homepage": "http://www.deltaclub-mosbach.de",
+    "website": "http://www.deltaclub-mosbach.de",
     "Logo_small": "",
     "urlLogo": "",
     "createdAt": "2017-05-28 22:46:52.793",
@@ -1106,7 +1106,7 @@
   {
     "shortName": "KRAICHTAL",
     "name": "Gleitschirmclub Kraichtal e.V.",
-    "homepage": "https://www.gleitschirmclub-kraichtal.de",
+    "website": "https://www.gleitschirmclub-kraichtal.de",
     "Logo_small": "",
     "urlLogo": "",
     "createdAt": "2018-02-15 08:08:35.660",
@@ -1117,7 +1117,7 @@
   {
     "shortName": "AUFWIND",
     "name": "Aufwind Brettachtal e.V.",
-    "homepage": "http://aufwindbrettachtal.de",
+    "website": "http://aufwindbrettachtal.de",
     "Logo_small": "small/aufwind_brettachtal_small.png",
     "urlLogo": "large/aufwind_brettachtal_large.png",
     "createdAt": "2018-02-17 12:09:56.960",
@@ -1137,7 +1137,7 @@
   {
     "shortName": "AERO_CLUB_ALTENA",
     "name": "Aero-Club Altena",
-    "homepage": "http://www.air-hegenscheid.de",
+    "website": "http://www.air-hegenscheid.de",
     "Logo_small": "small/aero_altena_small.png",
     "urlLogo": "large/aero_altena_large.png",
     "createdAt": "2021-02-17 21:28:27.070",
@@ -1160,7 +1160,7 @@
   {
     "shortName": "CUMULUX",
     "name": "Cumulux Paragliding Club",
-    "homepage": "http://cumulux.lu",
+    "website": "http://cumulux.lu",
     "Logo_small": "small/cumulux.png",
     "urlLogo": "large/cumulux.png",
     "createdAt": "2021-02-14 23:05:25.507",
@@ -1182,7 +1182,7 @@
   {
     "shortName": "ALBATROS",
     "name": "Albatros GSC Aschaffenburg",
-    "homepage": "www.albatros-gsc.de/",
+    "website": "www.albatros-gsc.de/",
     "Logo_small": "small/gsc_albatros_small.png",
     "urlLogo": "large/gsc_albatros_large.png",
     "createdAt": "2018-03-03 09:45:26.597",

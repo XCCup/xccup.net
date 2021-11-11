@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     website: {
       type: DataTypes.STRING,
     },
+    tagline: {
+      type: DataTypes.STRING,
+    },
     isGoldSponsor: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -36,8 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "logo",
       foreignKey: {
         name: "sponsorId",
-        //Through this constrain it's realized that every comment, will be delete if the user will be deleted
-        allowNull: false,
+        allowNull: true,
       },
       onDelete: "CASCADE",
       hooks: true,
