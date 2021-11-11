@@ -15,7 +15,8 @@ import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
 import ApiService from "@/services/ApiService";
 
-import { convertHeightStringToMetersValue } from "../helper/utils";
+import { convertHeightStringToMetersValue } from "@/helper/utils";
+import { convertMapBoundsToQueryString } from "@/helper/mapHelpers";
 
 import { ref } from "@vue/reactivity";
 import { watchEffect, onMounted, onBeforeUnmount } from "vue";
@@ -24,6 +25,8 @@ let map = ref(null);
 let tracks = ref([]);
 let positionMarkers = ref([]);
 let markers = ref([]);
+let mapBoundary = null;
+let airspaceQueryString = "";
 
 const props = defineProps({
   tracklogs: {
@@ -70,7 +73,7 @@ onMounted(() => {
   // Draw tracklogs
   drawTracks(props.tracklogs);
   drawTurnpoints(props.turnpoints);
-  drawAirspaces();
+  drawAirspaces(airspaceQueryString);
 });
 
 // TODO: Is this needed?
@@ -81,8 +84,8 @@ onMounted(() => {
 //   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
 // });
 
-const drawAirspaces = async () => {
-  const res = await ApiService.getAirspaces();
+const drawAirspaces = async (query) => {
+  const res = await ApiService.getAirspaces(query);
   const airspaceData = res.data;
   const options = {
     opacity: 0.1,
@@ -121,6 +124,7 @@ const drawTracks = (trackData) => {
         // Center map view on first track
         map.value.fitBounds(lines[0].getBounds());
 
+        airspaceQueryString = convertMapBoundsToQueryString(lines[0]);
         // Create takeoff & landing markers
         markers.value.push(
           L.marker(track[0], { title: "Start" }).addTo(map.value),
