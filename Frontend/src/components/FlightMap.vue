@@ -15,7 +15,6 @@ import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
 import ApiService from "@/services/ApiService";
 
-// import { convertHeightStringToMetersValue } from "@/helper/utils";
 import {
   convertMapBoundsToQueryString,
   createAirspacePopupContent,
@@ -78,13 +77,15 @@ onMounted(() => {
   drawAirspaces(airspaceQueryString);
 });
 
-// TODO: Is this needed?
-// onBeforeUnmount(() => {
-//   // Remove the map position update listener
-//   document.removeEventListener("positionUpdated", positionUpdateListener);
-//   // Remove the center map on click listener
-//   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
-// });
+onBeforeUnmount(() => {
+  // Remove the map position update listener
+  document.removeEventListener(
+    "markerPositionUpdated",
+    markerPositionUpdateListener
+  );
+  // Remove the center map on click listener
+  document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
+});
 
 const drawAirspaces = async (bounds) => {
   const res = await ApiService.getAirspaces(bounds);
@@ -147,21 +148,6 @@ const drawTracks = (trackData) => {
     }
   });
 
-  // Event listener for updating marker positions. Input comes from the barogramm component
-  let markerPositionUpdateListener = (event) => {
-    updateMarkerPosition(event.detail);
-  };
-  document.addEventListener(
-    "markerPositionUpdated",
-    markerPositionUpdateListener
-  );
-
-  // Center listener
-  const centerMapOnClickListener = () => {
-    centerMapOnClick();
-  };
-  document.addEventListener("centerMapOnClick", centerMapOnClickListener);
-
   // Update data
   tracks = lines;
   markers = tmpMarkers;
@@ -179,6 +165,21 @@ const drawTurnpoints = (turnpoints) => {
   }).addTo(map.value);
 };
 
+// Center map on baro click listener
+const centerMapOnClickListener = () => {
+  map.value.setView(positionMarkers[0].getLatLng());
+};
+document.addEventListener("centerMapOnClick", centerMapOnClickListener);
+
+// Event listener for updating pilot marker positions. Input comes from the barogramm component
+let markerPositionUpdateListener = (event) => {
+  updateMarkerPosition(event.detail);
+};
+document.addEventListener(
+  "markerPositionUpdated",
+  markerPositionUpdateListener
+);
+
 const updateMarkerPosition = (position) => {
   props.tracklogs.forEach((_, index) => {
     // Index + 1 because first dataset is GND and we need to skip that one
@@ -194,10 +195,6 @@ const updateMarkerPosition = (position) => {
   // if (positions.datasetIndex === 1) {
   //   map.setView(tracklogs[0][positions.dataIndex]);
   // }
-};
-
-const centerMapOnClick = () => {
-  map.value.setView(positionMarkers[0].getLatLng());
 };
 </script>
 
