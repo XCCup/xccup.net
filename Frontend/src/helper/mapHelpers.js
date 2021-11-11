@@ -1,13 +1,12 @@
 export function convertMapBoundsToQueryString(data) {
   if (!data) return null;
   let bounds = [];
-  bounds.push(data.getBounds().getSouthWest());
   bounds.push(data.getBounds().getNorthEast());
   bounds.push(data.getBounds().getNorthWest());
+  bounds.push(data.getBounds().getSouthWest());
   bounds.push(data.getBounds().getSouthEast());
-  //   TODO: Enable when API endpoint is fixed
-  //   return bounds.map((x) => [x.lng, x.lat]).join("|");
-  return null;
+  // TODO: Expand the boundary to show nearby airspaces
+  return bounds.map((x) => [x.lng, x.lat]).join("|");
 }
 
 export function createAirspacePopupContent(airspace) {
