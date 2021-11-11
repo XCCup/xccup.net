@@ -26,7 +26,6 @@ let map = ref(null);
 let tracks = ref([]);
 let positionMarkers = ref([]);
 let markers = ref([]);
-let mapBoundary = null;
 let airspaceQueryString = "";
 
 const props = defineProps({
@@ -71,7 +70,7 @@ onMounted(() => {
   // Draw tracklogs and Airspaces
   drawTracks(props.tracklogs);
   drawTurnpoints(props.turnpoints);
-  drawAirspaces(airspaceQueryString);
+  drawAirspaces(convertMapBoundsToQueryString(tracks[0]));
 });
 
 onBeforeUnmount(() => {
@@ -124,7 +123,6 @@ const drawTracks = (trackData) => {
         // Center map view on first track
         map.value.fitBounds(lines[0].getBounds());
 
-        airspaceQueryString = convertMapBoundsToQueryString(lines[0]);
         // Create takeoff & landing markers
         markers.value.push(
           L.marker(track[0], { title: "Start" }).addTo(map.value),
