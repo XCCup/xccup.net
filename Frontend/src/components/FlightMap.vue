@@ -50,9 +50,6 @@ const props = defineProps({
   },
 });
 
-// watchEffect(() => drawTracks(props.tracklogs));
-// watchEffect(() => drawAirspaces(props.airspaces));
-
 onMounted(() => {
   // TODO:
   // Whenever using anything based on OpenStreetMap, an attribution is obligatory as per the copyright notice.
