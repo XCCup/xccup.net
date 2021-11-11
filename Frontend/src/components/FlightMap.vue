@@ -20,7 +20,7 @@ import {
   createAirspacePopupContent,
 } from "@/helper/mapHelpers";
 
-import { watchEffect, onMounted, onBeforeUnmount, ref } from "vue";
+import { watch, onMounted, onBeforeUnmount, ref } from "vue";
 
 let map = ref(null);
 let tracks = ref([]);
@@ -41,14 +41,14 @@ const props = defineProps({
       return [];
     },
   },
-  airspaces: {
-    type: Array,
-    default: () => {
-      return [];
-    },
-  },
 });
 
+watch(
+  () => props.tracklogs,
+  () => {
+    drawTracks(props.tracklogs);
+  }
+);
 onMounted(() => {
   // TODO:
   // Whenever using anything based on OpenStreetMap, an attribution is obligatory as per the copyright notice.
@@ -104,9 +104,9 @@ const drawTracks = (trackData) => {
 
   // Remove all tracks & markers to prevet orphaned ones
   if (positionMarkers.value.length > 0) {
-    positionMarkers.forEach((_, index) => {
-      trackData[index].remove();
-      positionMarkers[index].remove();
+    positionMarkers.value.forEach((_, index) => {
+      tracks.value[index].remove();
+      positionMarkers.value[index].remove();
     });
   }
 
@@ -132,7 +132,7 @@ const drawTracks = (trackData) => {
         );
       }
       // Create position markers for every track
-      positionMarkers[index] = L.circleMarker(track[0], {
+      tmpPositionMarkers[index] = L.circleMarker(track[0], {
         color: "#fff",
         fillColor: trackColors[index],
         fillOpacity: 0.8,
@@ -144,8 +144,8 @@ const drawTracks = (trackData) => {
   });
 
   // Update data
-  tracks = lines;
-  markers = tmpMarkers;
+  tracks.value = lines;
+  markers.value = tmpMarkers;
   positionMarkers.value = tmpPositionMarkers;
 };
 
@@ -179,7 +179,10 @@ const updateMarkerPosition = (position) => {
   props.tracklogs.forEach((_, index) => {
     // Index + 1 because first dataset is GND and we need to skip that one
     if (position.datasetIndex === index + 1) {
-      if (props.tracklogs[index][position.dataIndex]) {
+      if (
+        props.tracklogs[index][position.dataIndex] &&
+        positionMarkers[index]
+      ) {
         positionMarkers[index].setLatLng(
           props.tracklogs[index][position.dataIndex]
         );
