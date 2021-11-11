@@ -4,19 +4,19 @@
         <!-- TODO: Cols should wrap in own row when viewport width shrinks -->
         <div class="col-3">
             <h5 class="card-title">{{ sponsor.name }}</h5>
-            <p class="card-text">Add a fancy tag line for this sponsor.</p>
+            <p class="card-text">{{ sponsor.tagline }}</p>
             <a :href="sponsor.website" target="_blank" class="btn btn-primary">{{ linkMessage }}</a>
         </div>
         <div class="col-3">
-            <div>{{ sponsor.contacts.address }}</div>
-            <div>{{ sponsor.contacts.email }}</div>
-            <div>{{ sponsor.contacts.phone }}</div>
-            <div>{{ sponsor.contacts.phone2 }}</div>
+            <div>{{ sponsor.contacts?.address }}</div>
+            <div>{{ sponsor.contacts?.email }}</div>
+            <div>{{ sponsor.contacts?.phone }}</div>
+            <div>{{ sponsor.contacts?.phone2 }}</div>
         </div>
         <div class="col-3">
             <div class="square-holder">
                 <a :href="sponsor.website" target="_blank">
-                    <img :src="baseURL + `media/` + sponsor.logo.id" />
+                    <img :src="baseURL + `media/` + sponsor.logo?.id" />
                 </a>
             </div>
         </div>

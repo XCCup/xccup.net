@@ -105,9 +105,16 @@ export default {
 
   // Sponsors
 
-  getSponsors(retrieveAll){
+  getSponsors(retrieveAll) {
     return retrieveAll ? jwtInterceptor.get("/sponsors") : apiClient.get("/sponsors/public");
   },
+
+  // Clubs
+
+  getClubs(retrieveAll) {
+    return retrieveAll ? jwtInterceptor.get("/clubs") : apiClient.get("/clubs/public");
+  },
+
 
   // General
 
