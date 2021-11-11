@@ -32,21 +32,15 @@
               label="Fluggerät"
               :showLabel="true"
               :gliders="listOfGliders"
-              :isDisabled="false"
+              :isDisabled="!flightId"
             />
           </div>
           <div class="col-md-3 mt-3">
-            <div class="d-grid gap-2">
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#addGliderModal"
-                :disabled="!flightId"
-              >
-                Hinzufügen
+            <router-link :to="{ name: 'Profile' }" class="d-grid gap-2">
+              <button type="button" class="btn btn-primary">
+                Liste bearbeiten
               </button>
-            </div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -160,13 +154,13 @@
       </div>
     </form>
   </div>
-  <ModalAddGlider />
 </template>
 
 <script>
 import ApiService from "@/services/ApiService";
+import useUser from "@/composables/useUser";
+const { getUserId } = useUser();
 
-import { mapGetters } from "vuex";
 import { ref } from "vue";
 
 export default {
@@ -202,9 +196,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      getterUserId: "getUserId",
-    }),
     sendButtonIsDisabled() {
       return this.flightId && this.rulesAccepted === true ? false : true;
     },
@@ -278,7 +269,7 @@ export default {
         const formData = new FormData();
         formData.append("image", this.userImages[0], this.userImages[0].name);
         formData.append("flightId", this.flightId);
-        formData.append("userId", this.userDetails.id);
+        formData.append("userId", getUserId);
         const response = await ApiService.uploadImages(formData);
         if (response.status != 200) throw response.statusText;
         this.imageUploadSuccessfull = true;

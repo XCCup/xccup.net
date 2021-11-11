@@ -1,5 +1,6 @@
 <template>
-  <div v-if="!record">Sei der Erste 😉</div>
+  <!-- Wird sonst zu unübersichtlich mit den Smilies:D -->
+  <div v-if="!record">-</div>
   <div v-else>
     <router-link
       :to="{
@@ -8,7 +9,6 @@
       }"
     >
       <RankingClass :rankingClass="record.glider.gliderClass" />
-      <BaseDate :timestamp="record.takeoffTime" />
       {{ record.user.firstName }} {{ record.user.lastName }}
       {{ record.points }} P ({{ Math.round(record.distance) }} km)
     </router-link>
@@ -18,7 +18,7 @@
 <script setup>
 const props = defineProps({
   record: {
-    type: Object,
+    type: [Object, null],
     required: true,
   },
 });

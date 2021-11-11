@@ -14,7 +14,6 @@
 
 import Chart from "chart.js/auto";
 import "chartjs-adapter-date-fns";
-import store from "../store";
 
 export default {
   name: "FlightBarogramm",
