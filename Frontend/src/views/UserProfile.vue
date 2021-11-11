@@ -88,7 +88,6 @@
                 </div>
 
                 <div class="mt-3"></div>
-                <hr />
               </div>
             </div>
             <h5>Benachrichtigungen</h5>
@@ -378,8 +377,17 @@ export default {
       setTimeout(() => (this.showSuccessInidcator = false), 2000);
     },
 
-    glidersChanged(gliders) {
-      this.userProfile.gliders = gliders;
+    async glidersChanged(data) {
+      try {
+        // const res = await ApiService.getUserDetails();
+        this.userProfile.gliders = data.gliders;
+        this.userProfile.defaultGlider = data.defaultGlider;
+
+        // this.unmodifiedUserProfile = cloneDeep(this.userProfile);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     },
     async save() {
       try {

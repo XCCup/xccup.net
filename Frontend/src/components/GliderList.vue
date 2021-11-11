@@ -11,14 +11,14 @@
       :checked="glider.id === defaultGlider"
       @change="updateDefaultGlider"
     />
-    <!-- TODO: Make icons appear as link -->
     <label class="form-check-label" :for="glider.id">
       {{ formatGliderName(glider) }}
-      <!-- <i @click="onEdit" class="bi bi-pencil-square mx-1"></i> -->
-
-      <i @click="onDelete(glider)" class="bi bi-trash"></i>
+      <a href="#" @click.prevent="onDelete(glider)">
+        <i class="bi bi-trash"></i>
+      </a>
     </label>
   </div>
+
   <button @click="onAdd" type="button" class="btn btn-outline-primary mt-2">
     <i class="bi bi-plus"></i> Gerät hinzufügen
   </button>
@@ -49,9 +49,9 @@ export default {
     const selectedGlider = ref(null);
     const showSpinner = ref(false);
 
-    const removeMessage = computed(()=>{
-      return `${selectedGlider.value?.brand} ${selectedGlider.value?.model} entfernen`
-    })
+    const removeMessage = computed(() => {
+      return `${selectedGlider.value?.brand} ${selectedGlider.value?.model} entfernen`;
+    });
 
     // Remove Glider
     // TODO: Should this be a ref?
@@ -61,13 +61,13 @@ export default {
       removeGliderModal.show();
     };
     const removeGlider = async (result) => {
-      if(result){
+      if (result) {
         try {
           showSpinner.value = true;
           const res = await ApiService.removeGlider(selectedGlider.value.id);
           if (res.status != 200) throw res.statusText;
           showSpinner.value = false;
-          emit("gliders-changed", res.data.gliders);
+          emit("gliders-changed", res.data);
           removeGliderModal.hide();
         } catch (error) {
           // TODO: Handle error
@@ -87,7 +87,7 @@ export default {
         const res = await ApiService.addGlider(glider);
         if (res.status != 200) throw res.statusText;
         showSpinner.value = false;
-        emit("gliders-changed", res.data.gliders);
+        emit("gliders-changed", res.data);
         addGliderModal.hide();
       } catch (error) {
         // TODO: Handle error
@@ -117,9 +117,7 @@ export default {
       ")";
 
     onMounted(() => {
-      removeGliderModal = new Modal(
-        document.getElementById("confirmModal")
-      );
+      removeGliderModal = new Modal(document.getElementById("confirmModal"));
       addGliderModal = new Modal(document.getElementById("addGliderModal"));
     });
     return {
