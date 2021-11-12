@@ -70,7 +70,7 @@ onMounted(() => {
   // Draw tracklogs and Airspaces
   drawTracks(props.tracklogs);
   drawTurnpoints(props.turnpoints);
-  drawAirspaces(convertMapBoundsToQueryString(tracks[0]));
+  drawAirspaces(convertMapBoundsToQueryString(tracks.value[0]));
 });
 
 onBeforeUnmount(() => {
