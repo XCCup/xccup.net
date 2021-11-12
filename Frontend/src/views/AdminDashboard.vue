@@ -8,7 +8,7 @@
 
 <script setup>
 // Name the window
-document.title = "XCCup - Admin";
+document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Admin`;
 </script>
 
 <style></style>

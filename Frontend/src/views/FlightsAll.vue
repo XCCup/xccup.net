@@ -16,7 +16,7 @@ const props = defineProps({
 });
 
 // Name the window
-document.title = "XCCup - Streckenmeldungen";
+document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Streckenmeldungen`;
 
 const flights = ref(null);
 try {

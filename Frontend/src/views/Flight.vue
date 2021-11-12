@@ -48,7 +48,7 @@ export default {
         }
         flight.value = response.data;
         // Name the window
-        document.title = `XCCup - Flug von ${
+        document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Flug von ${
           flight.value.user.firstName + " " + flight.value.user.lastName
         }`;
       } catch (error) {

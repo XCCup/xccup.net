@@ -65,7 +65,9 @@ const remark = ref();
 
 // Name the window
 watchEffect(() => {
-  document.title = "XCCup - " + activeCategory.title;
+  document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}XCCup - ${
+    activeCategory.title
+  }`;
 });
 
 try {

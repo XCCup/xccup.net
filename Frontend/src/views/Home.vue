@@ -23,7 +23,7 @@ const seasonStats = ref(null);
 const sponsors = ref(null);
 
 // Name the window
-document.title = "XCCup.net";
+document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Home`;
 
 try {
   // To simulate longer loading times
