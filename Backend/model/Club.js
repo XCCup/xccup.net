@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     urlLogo: {
       type: DataTypes.STRING,
     },
+    mapPosition: {
+      type: DataTypes.JSON,
+    },
     participantInSeasons: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
     },
