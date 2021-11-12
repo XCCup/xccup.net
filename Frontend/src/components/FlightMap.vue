@@ -176,7 +176,6 @@ document.addEventListener(
 );
 
 const updateMarkerPosition = (position) => {
-  console.log(position);
   props.tracklogs.forEach((_, index) => {
     // Index + 1 because first dataset is GND and we need to skip that one
     if (position.datasetIndex === index + 1) {
