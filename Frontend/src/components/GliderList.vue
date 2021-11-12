@@ -38,9 +38,11 @@ export default {
   props: {
     gliders: {
       type: Array,
+      default: () => [],
     },
     defaultGlider: {
       type: String,
+      default: "",
     },
   },
   emits: ["gliders-changed"],
