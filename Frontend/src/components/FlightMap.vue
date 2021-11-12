@@ -26,7 +26,6 @@ let map = ref(null);
 let tracks = ref([]);
 let positionMarkers = ref([]);
 let markers = ref([]);
-let airspaceQueryString = "";
 
 const props = defineProps({
   tracklogs: {
