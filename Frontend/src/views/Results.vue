@@ -49,11 +49,15 @@ const categories = [
     name: "rlp-state",
     title: "Landesmeisterschaft RLP",
     apiString: "?state=RP",
+    remarks: () =>
+      `Es zählt die Heimataddress eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war`,
   },
   {
     name: "lux-state",
     title: "Luxemburg Championat",
     apiString: "?state=LUX",
+    remarks: () =>
+      `Es zählt die Heimataddress eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war`,
   },
 ];
 const activeCategory = categories.find((e) => e.name === props.category);
