@@ -19,8 +19,7 @@ const props = defineProps({
 const results = ref(null);
 
 // Name the window
-document.title = "XCCup - Vereinswertung";
-
+document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Vereinswertung`;
 try {
   const res = await ApiService.getResults("clubs", { year: props.year });
   if (res.status != 200) throw res.status.text;
