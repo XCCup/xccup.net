@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 const imageUpload = multer({ storage });
 
 // @desc Gets all open information of all active clubs
-// @route GET /clubs
+// @route GET /clubs/public
 
 router.get("/public", async (req, res, next) => {
   try {
@@ -37,12 +37,12 @@ router.get("/public", async (req, res, next) => {
 });
 
 // @desc Gets all active and non-active clubs
-// @route GET /clubs/all
+// @route GET /clubs/
 // @access Only moderator
 
-router.get("/", async (req, res, next) => {
+router.get("/", authToken, async (req, res, next) => {
   try {
-    // if (await requesterIsNotModerator(req, res)) return;
+    if (await requesterIsNotModerator(req, res)) return;
     const clubs = await service.getAll();
     res.json(clubs);
   } catch (error) {
@@ -133,7 +133,7 @@ router.post(
 );
 
 // @desc Edits a club
-// @route PUT /clubs/
+// @route PUT /clubs/:id
 // @access Only moderator
 
 router.put(
