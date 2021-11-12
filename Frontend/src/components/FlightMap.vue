@@ -162,7 +162,7 @@ const drawTurnpoints = (turnpoints) => {
 
 // Center map on baro click listener
 const centerMapOnClickListener = () => {
-  map.value.setView(positionMarkers[0].getLatLng());
+  map.value.setView(positionMarkers.value[0].getLatLng());
 };
 document.addEventListener("centerMapOnClick", centerMapOnClickListener);
 
@@ -176,14 +176,15 @@ document.addEventListener(
 );
 
 const updateMarkerPosition = (position) => {
+  console.log(position);
   props.tracklogs.forEach((_, index) => {
     // Index + 1 because first dataset is GND and we need to skip that one
     if (position.datasetIndex === index + 1) {
       if (
         props.tracklogs[index][position.dataIndex] &&
-        positionMarkers[index]
+        positionMarkers.value[index]
       ) {
-        positionMarkers[index].setLatLng(
+        positionMarkers.value[index].setLatLng(
           props.tracklogs[index][position.dataIndex]
         );
       }
