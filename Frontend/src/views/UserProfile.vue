@@ -322,7 +322,7 @@
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import cloneDeep from "lodash/cloneDeep";
-
+document.title = "XCCup - Profil";
 export default {
   name: "UserProfile",
   props: {
