@@ -22,6 +22,8 @@ const responseData = shuffle((await ApiService.getSponsors()).data).sort((a, b) 
     return 0
 });
 
+document.title = "XCCup - Sponsoren"
+
 const linkMessages = ref(["Hit it!", "Check it out", "Klick mich", "Show more", "Erfahre mehr", "Besuche uns", "Visit us"])
 const sponsors = ref(responseData)
 
