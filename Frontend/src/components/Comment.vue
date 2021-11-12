@@ -88,24 +88,23 @@ import useUser from "@/composables/useUser";
 import { ref, computed } from "vue";
 const { getUserId } = useUser();
 
-// TODO: This produces a warning. Why?
-const emit = defineEmits(
-  ["deleteComment"],
-  ["deleteReply"],
-  ["commentEdited"],
-  ["saveReplyMessage"]
-);
-const showCommentEditor = ref(false);
-const showReplyEditor = ref(false);
-const replyMessage = ref("");
-const editedComment = ref(props.comment.message);
-
 const props = defineProps({
   comment: {
     type: Object,
     required: true,
   },
 });
+
+const emit = defineEmits([
+  "deleteComment",
+  "deleteReply",
+  "commentEdited",
+  "saveReplyMessage",
+]);
+const showCommentEditor = ref(false);
+const showReplyEditor = ref(false);
+const replyMessage = ref("");
+const editedComment = ref(props.comment.message);
 
 const deleteComment = () => {
   emit("deleteComment", props.comment.id);

@@ -101,7 +101,6 @@
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>
-
     <div class="collapse mt-2" id="collapseExample">
       <div class="row">
         <div class="col-md-6 col-12">
@@ -200,7 +199,7 @@ export default {
   },
   computed: {
     showEditButton() {
-      return this.flight.userId === getUserId;
+      return this.flight.userId === getUserId.value;
     },
     igcDownloadUrl() {
       let baseUrl = import.meta.env.VITE_API_URL;

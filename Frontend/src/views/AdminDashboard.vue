@@ -11,5 +11,4 @@
 document.title = "XCCup - Admin";
 </script>
 
-<style>
-</style>
+<style></style>

@@ -24,6 +24,7 @@
     "vue3-datepicker": "^0.2.5"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.7.5",
     "@vitejs/plugin-vue": "^1.9.3",
     "sass": "^1.43.4",
     "unplugin-vue-components": "^0.17.0",

@@ -128,7 +128,8 @@ const routes = [
     name: "Profile",
     props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
   },
   {
     path: "/profil/bearbeiten",
@@ -136,7 +137,17 @@ const routes = [
     props: { edit: true },
     meta: { requiredAuth: true },
 
-    component: () => import(/* webpackChunkName: "" */ "../views/Profile.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
+  },
+  {
+    path: "/profil/geraete-liste",
+    name: "ProfileGliderList",
+    props: { scrollToGliderSelect: true },
+    meta: { requiredAuth: true },
+
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
   },
   {
     path: "/sandbox/:flightId",
@@ -164,7 +175,8 @@ const routes = [
     name: "AdminDashboard",
     //TODO Check if logged-in user is an moderator or admin
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () => import(/* webpackChunkName: "" */ "../views/AdminDashboard.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/AdminDashboard.vue"),
   },
   {
     path: "/:catchAll(.*)",
@@ -215,8 +227,10 @@ const router = createRouter({
   routes,
   scrollBehavior(to) {
     const scroll = {};
+
     if (to.meta.toTop) scroll.top = 0;
     if (to.meta.smoothScroll) scroll.behavior = "smooth";
+
     return scroll;
   },
 });
