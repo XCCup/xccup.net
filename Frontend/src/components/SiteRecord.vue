@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   record: {
     type: [Object, null],
     required: true,

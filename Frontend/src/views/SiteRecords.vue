@@ -20,10 +20,7 @@
             </th>
           </thead>
           <tbody>
-            <tr
-              v-for="(result, index) in results"
-              :key="result.takeoff.id"
-            >
+            <tr v-for="result in results" :key="result.takeoff.id">
               <td>{{ result.takeoff.name }}</td>
               <td>
                 <SiteRecord :record="result.free" />

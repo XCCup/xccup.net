@@ -6,7 +6,7 @@
     <FlightAirbuddies
       v-if="flight.airbuddies.length > 0"
       :flight="flight"
-      @updateAirbuddies="updateAirbuddies"
+      @update-airbuddies="updateAirbuddies"
     />
     <FlightDetails :flight="flight" />
     <FlightReport :report="flight.report" :photos="flight.photos" />

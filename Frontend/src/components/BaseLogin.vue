@@ -44,7 +44,7 @@ import { ref } from "vue";
 const { login } = useUser();
 const router = useRouter();
 
-const props = defineProps({
+defineProps({
   redirectAfterLogin: {
     type: Boolean,
     required: false,

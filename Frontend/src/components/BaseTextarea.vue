@@ -1,8 +1,8 @@
 <template>
   <div class="form-floating mb-3">
     <textarea
-rows="3"
-      style="height:100%;"
+      rows="3"
+      style="height: 100%"
       v-bind="$attrs"
       :value="modelValue"
       :placeholder="label"
@@ -15,7 +15,9 @@ rows="3"
 </template>
 
 <script setup>
-const props = defineProps({
+defineEmits(["update:modelValue"]);
+
+defineProps({
   label: {
     type: String,
     default: "",

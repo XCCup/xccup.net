@@ -31,16 +31,19 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineEmits(["update:modelValue"]);
+defineProps({
   isDisabled: {
     type: Boolean,
     default: false,
   },
   label: {
     type: String,
+    default: "",
   },
   modelValue: {
     type: String,
+    default: "",
   },
   gliders: {
     type: Array,

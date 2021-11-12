@@ -37,7 +37,7 @@ import useUser from "@/composables/useUser";
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 const { getUserId, loggedIn } = useUser();
-const emit = defineEmits();
+const emit = defineEmits(["submitComment"]);
 const route = useRoute();
 
 const message = ref("");

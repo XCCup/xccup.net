@@ -20,6 +20,7 @@ export default {
     },
     highlightedFlight: {
       type: String,
+      default: "",
     },
   },
   data() {

@@ -30,14 +30,16 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   report: {
     type: String,
     required: false,
+    default: "",
   },
   photos: {
     type: Array,
     required: false,
+    default: () => [],
   },
 });
 const baseURL = import.meta.env.VITE_API_URL;

@@ -13,9 +13,10 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   flightState: {
     type: String,
+    default: "",
   },
 });
 </script>

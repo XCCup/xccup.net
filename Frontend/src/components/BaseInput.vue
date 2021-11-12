@@ -13,7 +13,9 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineEmits(["update:modelValue"]);
+
+defineProps({
   label: {
     type: String,
     default: "",

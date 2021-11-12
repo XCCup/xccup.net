@@ -18,7 +18,7 @@ import "chartjs-adapter-date-fns";
 export default {
   name: "FlightBarogramm",
   props: {
-    labels: Array,
+    labels: { type: Array, default: () => [] },
     datasets: {
       type: Array,
       required: true,
