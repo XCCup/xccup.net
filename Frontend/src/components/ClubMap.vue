@@ -28,8 +28,8 @@ const createPopupContent = (club) => {
   lines.push(`Anzahl Teilnahmen seit 2011: ${club.participantInSeasons.length}`);
   // It was also considered to add the total number of participants. But due to concerns that some clubs will stay absent when there are only a few participants, this idea is for now postponed.
   // lines.push(`Mitglieder im XCCup: 42`);
-  lines.push(`<a>${club.website}</a>`);
-  lines.push(`<img class="icon-logo" style="background: rgba(255,255,255,.5);" src="${baseUrl}clubs/logo/${club.logo.id}?thumb=true" height="50" max-width="150">`);
+  lines.push(`<a href=${club.website} target="_blank" rel="noreferrer noopener">${club.website}</a>`);
+  lines.push(`<a href=${club.website} target="_blank" rel="noreferrer noopener"><img src="${baseUrl}clubs/logo/${club.logo.id}?thumb=true" height="50" max-width="150"></a>`);
 
   return lines.join("<br>")
 }

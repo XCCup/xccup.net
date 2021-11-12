@@ -49,6 +49,8 @@ const clubs = ref(responseData)
 //     window.open(url);
 // }
 
+document.title = "XCCup - Vereine"
+
 </script>
 
 <style scoped>
