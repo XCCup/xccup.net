@@ -2,11 +2,11 @@
   <h5>Standard Gerät wählen</h5>
   <div v-for="glider in gliders" :key="glider.id" class="form-check mt-2">
     <input
+      :id="glider.id"
+      v-model="selectedDefaultGlider"
       class="form-check-input"
       type="radio"
       name="gliderSelectRadios"
-      v-model="selectedDefaultGlider"
-      :id="glider.id"
       :value="glider.id"
       :checked="glider.id === defaultGlider"
       @change="updateDefaultGlider"
@@ -19,12 +19,12 @@
     </label>
   </div>
 
-  <button @click="onAdd" type="button" class="btn btn-outline-primary mt-2">
+  <button type="button" class="btn btn-outline-primary mt-2" @click="onAdd">
     <i class="bi bi-plus"></i> Gerät hinzufügen
   </button>
   <!-- Modals -->
   <ModalAddGlider @add-glider="addGlider" />
-  <ModalConfirm @confirm-result="removeGlider" :messageBody="removeMessage" />
+  <ModalConfirm :message-body="removeMessage" @confirm-result="removeGlider" />
 </template>
 
 <script>
