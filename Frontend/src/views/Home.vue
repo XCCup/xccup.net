@@ -1,11 +1,11 @@
 <template>
-  <Infobox :seasonStats="seasonStats" />
-  <DailyRanking :maxRows="5" :flights="dailyRanking" />
+  <Infobox :season-stats="seasonStats" />
+  <DailyRanking :max-rows="5" :flights="dailyRanking" />
   <OverallResults
-    :rankingByClass="rankingByClass"
-    :topFlights="topFlights"
-    :bestClubs="bestClubs"
-    :bestTeams="bestTeams"
+    :ranking-by-class="rankingByClass"
+    :top-flights="topFlights"
+    :best-clubs="bestClubs"
+    :best-teams="bestTeams"
   />
   <Sponsors :sponsors="sponsors" />
 </template>

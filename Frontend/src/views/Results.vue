@@ -5,7 +5,7 @@
   </div>
   <ResultsTable
     :results="results.values"
-    :maxFlights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
+    :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
   />
 </template>
 

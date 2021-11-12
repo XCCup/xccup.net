@@ -7,22 +7,22 @@
             <th>Startplatz</th>
             <th>
               Freiestrecke
-              <FlightTypeIcon flightType="FREE" />
+              <FlightTypeIcon flight-type="FREE" />
             </th>
             <th>
               <!-- TODO: Why is this not rendering -->
               Flaches Dreieck
-              <FlightTypeIcon flightType="FLAT" />
+              <FlightTypeIcon flight-type="FLAT" />
             </th>
             <th>
               FAI Dreieck
-              <FlightTypeIcon flightType="FAI" />
+              <FlightTypeIcon flight-type="FAI" />
             </th>
           </thead>
           <tbody>
             <tr
               v-for="(result, index) in results"
-              v-bind:key="result.takeoff.id"
+              :key="result.takeoff.id"
             >
               <td>{{ result.takeoff.name }}</td>
               <td>
