@@ -124,7 +124,7 @@ const editReply = (reply) => {
 const saveEditedMessage = () => {
   const comment = {
     message: editedComment.value,
-    userId: getUserId,
+    userId: getUserId.value,
     id: props.comment.id,
   };
   emit("commentEdited", comment);
@@ -132,7 +132,7 @@ const saveEditedMessage = () => {
 const saveReplyMessage = () => {
   const comment = {
     message: replyMessage.value,
-    userId: getUserId,
+    userId: getUserId.value,
     relatedTo: props.comment.id,
   };
   emit("saveReplyMessage", comment);
@@ -149,5 +149,6 @@ const saveButtonIsDisabled = computed(() => editedComment.value.length < 3);
 
 defineExpose({
   closeCommentEditor,
+  closeReplyEditor,
 });
 </script>

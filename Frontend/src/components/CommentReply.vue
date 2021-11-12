@@ -66,6 +66,7 @@ export default {
       showReplyEditor: false,
       editedMessage: this.reply.message,
       replyMessage: "",
+      getUserId: getUserId,
     };
   },
   computed: {

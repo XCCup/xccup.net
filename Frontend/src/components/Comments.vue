@@ -102,7 +102,8 @@ const commentsWithReplies = computed(() => {
     !comment.relatedTo ? [comment] : []
   );
   // Add replies
-  comments.forEach((comment) => {
+
+  props.comments.forEach((comment) => {
     if (comment.relatedTo) {
       let parent = comments.findIndex(
         (element) => element.id === comment.relatedTo
