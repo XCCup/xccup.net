@@ -1,7 +1,7 @@
 <template>
   <div
-    class="modal fade"
     id="addEditNewsModal"
+    class="modal fade"
     tabindex="-1"
     aria-labelledby="addEditNewsModalLabel"
     aria-hidden="true"
@@ -9,7 +9,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addEditNewsModalLabel">Nachricht hinzufügen</h5>
+          <h5 id="addEditNewsModalLabel" class="modal-title">Nachricht hinzufügen</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -20,11 +20,11 @@
           <!-- <BaseDatePicker v-model="newsObject.from" label="Gültig Picker" /> -->
           <div class="form-check">
             <input
+              id="sendToAll"
+              v-model="newsObject.sendByMail"
               class="form-check-input"
               type="checkbox"
               value
-              id="sendToAll"
-              v-model="newsObject.sendByMail"
             />
             <label class="form-check-label" for="flexCheckDefault">Per E-Mail an Alle senden</label>
           </div>
@@ -34,9 +34,9 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click="onSaveNews"
             :disabled="!saveButtonIsEnabled"
             data-bs-dismiss="modal"
+            @click="onSaveNews"
           >Speichern</button>
         </div>
       </div>

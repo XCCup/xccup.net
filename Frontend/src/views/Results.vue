@@ -9,7 +9,7 @@
   />
 </template>
 
-<script setup async>
+<script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref, watchEffect } from "vue";
 const props = defineProps({

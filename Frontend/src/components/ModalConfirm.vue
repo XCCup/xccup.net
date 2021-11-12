@@ -1,24 +1,24 @@
 <template>
-  <div class="modal fade" :id="modalId" tabindex="-1">
+  <div :id="modalId" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" :id="modalId + 'Label'">Bist du sicher?</h5>
+          <h5 :id="modalId + 'Label'" class="modal-title">Bist du sicher?</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">{{ messageBody }}</div>
         <div class="modal-footer">
           <button
-            @click="confirmCancel"
             type="button"
             class="btn btn-outline-danger"
             data-bs-dismiss="modal"
+            @click="confirmCancel"
           >Abbrechen</button>
           <button
             type="button"
             class="btn btn-primary"
-            @click="confirmOk"
             data-bs-dismiss="modal"
+            @click="confirmOk"
           >OK</button>
         </div>
       </div>

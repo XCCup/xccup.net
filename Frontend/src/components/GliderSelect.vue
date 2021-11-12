@@ -14,8 +14,8 @@
     <option v-if="!showLabel" disabled value="" selected>{{ label }}</option>
     <option
       v-for="glider in gliders"
-      :value="glider.id"
       :key="glider.id"
+      :value="glider.id"
       :selected="glider.id === modelValue"
     >
       {{

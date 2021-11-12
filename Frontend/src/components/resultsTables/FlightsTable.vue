@@ -19,13 +19,13 @@
           <tbody>
             <tr
               v-for="(flight, index) in flights.slice(0, maxRows)"
-              v-bind:item="flight"
-              v-bind:index="index"
-              v-bind:key="flight.id"
+              :key="flight.id"
+              :item="flight"
+              :index="index"
               @click="routeToFlight(flight.externalId)"
             >
               <td>
-                <BaseDate :timestamp="flight.takeoffTime" dateFormat="dd.MM" />
+                <BaseDate :timestamp="flight.takeoffTime" date-format="dd.MM" />
               </td>
 
               <td>
@@ -42,14 +42,14 @@
               <td>{{ flight.takeoff.name }}</td>
 
               <td scope="col" class="d-none d-lg-table-cell">
-                <RankingClass :rankingClass="flight.glider?.gliderClass" />
+                <RankingClass :ranking-class="flight.glider?.gliderClass" />
                 {{ flight.glider?.brand + " " + flight.glider?.model }}
               </td>
 
               <td>{{ Math.floor(flight.flightDistance) }} km</td>
-              <td><FlightTypeIcon :flightType="flight.flightType" /></td>
+              <td><FlightTypeIcon :flight-type="flight.flightType" /></td>
               <td>{{ flight.flightPoints }} P</td>
-              <td><FlightState :flightState="flight.flightStatus" /></td>
+              <td><FlightState :flight-state="flight.flightStatus" /></td>
             </tr>
           </tbody>
         </table>

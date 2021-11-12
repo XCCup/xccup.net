@@ -15,7 +15,7 @@
             <th>Flug löschen</th>
           </thead>
           <tbody>
-            <tr v-for="flight in flights" v-bind:item="flight" v-bind:key="flight.id">
+            <tr v-for="flight in flights" :key="flight.id" :item="flight">
               <td>
                 <router-link
                   :to="{
@@ -41,17 +41,17 @@
                 <i class="bi bi-slash-circle text-success"></i>
               </td>
               <td>
-                <button @click="messagePilot(flight)" class="btn btn-outline-primary btn-sm">
+                <button class="btn btn-outline-primary btn-sm" @click="messagePilot(flight)">
                   <i class="bi bi-envelope"></i>
                 </button>
               </td>
               <td>
-                <button @click="onAcceptFlight(flight)" class="btn btn-outline-primary btn-sm">
+                <button class="btn btn-outline-primary btn-sm" @click="onAcceptFlight(flight)">
                   <i class="bi bi-check2-circle"></i>
                 </button>
               </td>
               <td>
-                <button @click="onDeleteFlight(flight)" class="btn btn-outline-danger btn-sm">
+                <button class="btn btn-outline-danger btn-sm" @click="onDeleteFlight(flight)">
                   <i class="bi bi-trash"></i>
                 </button>
               </td>
@@ -62,9 +62,9 @@
     </div>
   </section>
   <ModalConfirm
+    :message-body="confirmMessage"
+    :modal-id="modalId"
     @confirm-result="processConfirmResult"
-    :messageBody="confirmMessage"
-    :modalId="modalId"
   />
 </template>
 
@@ -77,6 +77,7 @@ import { Modal } from "bootstrap";
 const KEY_DELETE = "DELETE";
 const KEY_ACCEPT = "ACCEPT";
 export default {
+  components: { BaseDate },
   data() {
     return {
       flights: [],
@@ -87,6 +88,18 @@ export default {
       modalId: "modalFlightConfirm",
       selectedFlight: null
     };
+  },
+  computed: {
+    violationsPresent: function () {
+      return this.flights.length > 0;
+    },
+  },
+  async mounted() {
+    this.router = useRouter();
+    this.confirmModal = new Modal(
+      document.getElementById(this.modalId)
+    );
+    await this.fetchFlightsWithViolations();
   },
   methods: {
     async fetchFlightsWithViolations() {
@@ -121,19 +134,6 @@ export default {
       //TODO Implement function
     },
   },
-  async mounted() {
-    this.router = useRouter();
-    this.confirmModal = new Modal(
-      document.getElementById(this.modalId)
-    );
-    await this.fetchFlightsWithViolations();
-  },
-  computed: {
-    violationsPresent: function () {
-      return this.flights.length > 0;
-    },
-  },
-  components: { BaseDate },
 };
 </script>
 

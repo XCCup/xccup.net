@@ -9,7 +9,7 @@
     />
     <a href="#">{{ reply.user.firstName + " " + reply.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
-      ><BaseDate :timestamp="reply.createdAt" dateFormat="dd.MM.yyyy"
+      ><BaseDate :timestamp="reply.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
   <p v-if="!showReplyEditor">
@@ -18,14 +18,14 @@
   <!-- TODO: Maybe combine this editor with the one for new replys because parts of the logic are identical  -->
   <div v-if="showReplyEditor">
     <textarea
-      class="form-control mb-2"
       id="reply-editor"
       v-model="editedMessage"
+      class="form-control mb-2"
     ></textarea>
     <button
       class="btn btn-primary me-2"
-      @click.prevent="saveEditedMessage"
       :disabled="saveButtonIsDisabled"
+      @click.prevent="saveEditedMessage"
     >
       Speichern
     </button>
@@ -53,6 +53,13 @@ const { getUserId } = useUser();
 
 export default {
   name: "CommentReply",
+  props: {
+    reply: {
+      type: Object,
+      required: true,
+    },
+  },
+  emits: ["deleteReply", "reply-edited"],
 
   data() {
     return {
@@ -61,10 +68,9 @@ export default {
       replyMessage: "",
     };
   },
-  props: {
-    reply: {
-      type: Object,
-      required: true,
+  computed: {
+    saveButtonIsDisabled() {
+      return this.editedMessage.length < 3;
     },
   },
   methods: {
@@ -91,11 +97,5 @@ export default {
       this.editedMessage = this.reply.message;
     },
   },
-  computed: {
-    saveButtonIsDisabled() {
-      return this.editedMessage.length < 3;
-    },
-  },
-  emits: ["deleteReply", "reply-edited"],
 };
 </script>

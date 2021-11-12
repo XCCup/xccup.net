@@ -9,14 +9,14 @@
     />
     <a href="#">{{ comment.user.firstName + " " + comment.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
-      ><BaseDate :timestamp="comment.createdAt" dateFormat="dd.MM.yyyy"
+      ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
   <p v-if="!showCommentEditor">
     {{ comment.message }}
   </p>
   <!-- Replies -->
-  <div class="shadow p-3 mb-3" v-for="reply in comment.replies" :key="reply.id">
+  <div v-for="reply in comment.replies" :key="reply.id" class="shadow p-3 mb-3">
     <CommentReply
       :ref="reply.id"
       :reply="reply"
@@ -27,14 +27,14 @@
   <!-- TODO: Maybe combine this editor with the one for new comments because parts of the logic are identical  -->
   <div v-if="showCommentEditor">
     <textarea
-      class="form-control mb-2"
       id="comment-editor"
       v-model="editedComment"
+      class="form-control mb-2"
     ></textarea>
     <button
       class="btn btn-primary me-2"
-      @click.prevent="saveEditedMessage"
       :disabled="saveButtonIsDisabled"
+      @click.prevent="saveEditedMessage"
     >
       Speichern
     </button>
@@ -46,14 +46,14 @@
   <!-- Reply comment editor -->
   <div v-if="showReplyEditor">
     <textarea
-      class="form-control mb-2"
       id="reply-comment-editor"
       v-model="replyMessage"
+      class="form-control mb-2"
     ></textarea>
     <button
       class="btn btn-primary me-2"
-      @click.prevent="saveReplyMessage"
       :disabled="saveButtonIsDisabled"
+      @click.prevent="saveReplyMessage"
     >
       Senden
     </button>

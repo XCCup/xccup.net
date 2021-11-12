@@ -4,9 +4,9 @@
       v-bind="$attrs"
       :value="modelValue"
       :placeholder="label"
-      @input="$emit('update:modelValue', $event.target.value)"
       class="form-control"
       :disabled="isDisabled"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
     <label v-if="label">{{ label }}</label>
   </div>

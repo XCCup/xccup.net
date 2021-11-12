@@ -9,9 +9,9 @@
           >
 
           <textarea
-            class="form-control mb-2"
             id="comment-editor"
             v-model="message"
+            class="form-control mb-2"
             :rows="3"
             @input="saveMessageToLocalStorage"
           ></textarea>

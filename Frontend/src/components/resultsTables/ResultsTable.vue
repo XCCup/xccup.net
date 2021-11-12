@@ -17,7 +17,7 @@
           <tbody>
             <tr
               v-for="(result, index) in results"
-              v-bind:key="result.user.idex"
+              :key="result.user.idex"
             >
               <td>{{ index + 1 }}</td>
               <td>
@@ -35,7 +35,7 @@
               <td v-for="n in maxFlights" :key="n">
                 <RankingClass
                   v-if="result.flights[n - 1]?.flightPoints"
-                  :rankingClass="result.flights[n - 1].glider.gliderClass"
+                  :ranking-class="result.flights[n - 1].glider.gliderClass"
                 />
                 <router-link
                   v-if="result.flights[n - 1]"

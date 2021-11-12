@@ -3,19 +3,19 @@
     <tbody>
       <tr
         v-for="(flight, index) in flights.slice(0, 5)"
-        v-bind:item="flight"
-        v-bind:index="index"
-        v-bind:key="flight.id"
+        :key="flight.id"
+        :item="flight"
+        :index="index"
         @click="routeToFlight(flight.externalId)"
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>
-          <BaseDate :timestamp="flight.takeoffTime" dateFormat="dd.MM" />
+          <BaseDate :timestamp="flight.takeoffTime" date-format="dd.MM" />
         </td>
         <td>{{ flight.user.firstName + " " + flight.user.lastName }}</td>
         <td>{{ flight.takeoff.name }}</td>
         <td>{{ Math.floor(flight.flightDistance) }} km</td>
-        <td><FlightTypeIcon :flightType="flight.flightType" /></td>
+        <td><FlightTypeIcon :flight-type="flight.flightType" /></td>
         <td>{{ flight.flightPoints }} P</td>
       </tr>
     </tbody>

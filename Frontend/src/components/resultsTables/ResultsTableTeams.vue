@@ -26,7 +26,7 @@
           <tbody>
             <tr
               v-for="(team, index) in results.values"
-              v-bind:key="team.teamId"
+              :key="team.teamId"
             >
               <td>{{ index + 1 }}</td>
 
@@ -39,18 +39,18 @@
               </td>
 
               <td>
-                <tr v-for="member in team.members" v-bind:key="member.id">
+                <tr v-for="member in team.members" :key="member.id">
                   <td>{{ member.firstName + " " + member.lastName }}</td>
                 </tr>
               </td>
               <td
                 v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
-                v-bind:key="n"
+                :key="n"
               >
-                <tr v-for="member in team.members" v-bind:key="member.id">
+                <tr v-for="member in team.members" :key="member.id">
                   <td v-if="member.flights[n - 1]">
                     <RankingClass
-                      :rankingClass="member.flights[n - 1].glider.gliderClass"
+                      :ranking-class="member.flights[n - 1].glider.gliderClass"
                     />
                     <router-link
                       :to="{
@@ -64,7 +64,7 @@
                 </tr>
               </td>
               <td>
-                <tr v-for="member in team.members" v-bind:key="member.id">
+                <tr v-for="member in team.members" :key="member.id">
                   <td>
                     <strong>{{ member.totalPoints }} P </strong>({{
                       Math.floor(member.totalDistance)

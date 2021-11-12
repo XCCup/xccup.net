@@ -8,7 +8,7 @@
         params: { flightId: record.externalId },
       }"
     >
-      <RankingClass :rankingClass="record.glider.gliderClass" />
+      <RankingClass :ranking-class="record.glider.gliderClass" />
       {{ record.user.firstName }} {{ record.user.lastName }}
       {{ record.points }} P ({{ Math.round(record.distance) }} km)
     </router-link>

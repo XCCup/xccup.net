@@ -14,8 +14,8 @@
     <option v-if="!showLabel" disabled value="" selected>{{ label }}</option>
     <option
       v-for="option in options"
-      :value="option"
       :key="option"
+      :value="option"
       :selected="option === modelValue"
     >
       {{ option }}

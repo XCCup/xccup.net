@@ -46,6 +46,7 @@ import {
 } from "@vue-leaflet/vue-leaflet";
 
 export default {
+  name: "Map",
   components: {
     LMap,
     LTileLayer,
@@ -53,7 +54,14 @@ export default {
     // LTooltip,
     LPolyline,
   },
-  name: "Map",
+  props: {
+    tracklogs: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+  },
   data() {
     return {
       map: null,
@@ -73,14 +81,15 @@ export default {
       },
     };
   },
-  props: {
-    tracklogs: {
-      type: Array,
-      default: () => {
-        return [];
-      },
+  computed: {
+    takeoff() {
+      return this.tracklogs[0][0];
+    },
+    landingField() {
+      return this.tracklogs[0][this.tracklogs[0].length - 1];
     },
   },
+  watch: {},
   async beforeMount() {
     // HERE is where to load Leaflet components!
     // const { getBounds } = await import("leaflet/dist/leaflet-src.esm");
@@ -93,15 +102,6 @@ export default {
       this.map.fitBounds(trackBounds);
     },
   },
-  computed: {
-    takeoff() {
-      return this.tracklogs[0][0];
-    },
-    landingField() {
-      return this.tracklogs[0][this.tracklogs[0].length - 1];
-    },
-  },
-  watch: {},
 };
 </script>
 

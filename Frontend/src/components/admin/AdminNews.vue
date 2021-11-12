@@ -19,7 +19,7 @@
             <th></th>
           </thead>
           <tbody>
-            <tr v-for="entry in news" v-bind:item="entry" v-bind:key="entry.id">
+            <tr v-for="entry in news" :key="entry.id" :item="entry">
               <td>
                 <strong>{{ entry.title }}</strong>
               </td>
@@ -44,21 +44,21 @@
               </td>
               <td>
                 <button
-                  @click="onEditNews(entry)"
                   class="btn btn-outline-primary m-1 btn-sm bi bi-pencil-square"
+                  @click="onEditNews(entry)"
                 ></button>
                 <button
-                  @click="onDeleteNews(entry)"
                   class="btn btn-outline-danger m-1 btn-sm bi bi-trash"
+                  @click="onDeleteNews(entry)"
                 ></button>
               </td>
             </tr>
           </tbody>
         </table>
         <button
-          @click="onAddNews"
           type="button"
           class="btn btn-outline-primary btn-sm m-1"
+          @click="onAddNews"
         >
           Erstelle eine neue Nachricht
         </button>
@@ -66,11 +66,11 @@
     </div>
   </section>
   <!-- Modal -->
-  <ModalAddEditNews @save-news="saveNews" :newsObject="selectedNews" />
+  <ModalAddEditNews :news-object="selectedNews" @save-news="saveNews" />
   <ModalConfirm
+    :message-body="deleteMessage"
+    :modal-id="modalId"
     @confirm-result="deleteNews"
-    :messageBody="deleteMessage"
-    :modalId="modalId"
   />
 </template>
 
@@ -88,6 +88,13 @@ export default {
       deleteMessage: "",
       modalId: "modalNewsConfirm",
     };
+  },
+  async mounted() {
+    await this.fetchNews();
+    this.addEditNewsModal = new Modal(
+      document.getElementById("addEditNewsModal")
+    );
+    this.confirmModal = new Modal(document.getElementById(this.modalId));
   },
   methods: {
     async fetchNews() {
@@ -129,13 +136,6 @@ export default {
         await this.fetchNews();
       }
     },
-  },
-  async mounted() {
-    await this.fetchNews();
-    this.addEditNewsModal = new Modal(
-      document.getElementById("addEditNewsModal")
-    );
-    this.confirmModal = new Modal(document.getElementById(this.modalId));
   },
 };
 function createEmptyNewsObject() {
