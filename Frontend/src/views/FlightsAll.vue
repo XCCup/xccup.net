@@ -5,7 +5,7 @@
   <FlightsTable :flights="flights" />
 </template>
 
-<script setup async>
+<script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 
