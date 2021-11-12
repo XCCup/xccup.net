@@ -11,7 +11,7 @@
               width="150px"
               src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
             />
-            <span class="font-weight-bold"> Foo </span>
+            <span class="font-weight-bold">Foo</span>
             <span class="text-black-50">Bar</span>
           </div>
         </div>
@@ -32,40 +32,24 @@
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
-                <BaseInput
-                  v-model="userProfile.club.name"
-                  label="Verein"
-                  :is-disabled="true"
-                />
+                <BaseInput v-model="userProfile.club.name" label="Verein" :is-disabled="true" />
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
-                <BaseInput
-                  v-model="userProfile.address.street"
-                  label="Strasse"
-                />
+                <BaseInput v-model="userProfile.address.street" label="Strasse" />
                 <div class="row">
                   <div class="col-md-6">
                     <BaseInput v-model="userProfile.address.zip" label="PLZ" />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.city"
-                      label="Stadt"
-                    />
+                    <BaseInput v-model="userProfile.address.city" label="Stadt" />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.state"
-                      label="Bundesland"
-                    />
+                    <BaseInput v-model="userProfile.address.state" label="Bundesland" />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.country"
-                      label="Land"
-                    />
+                    <BaseInput v-model="userProfile.address.country" label="Land" />
                   </div>
                 </div>
                 <div class="row">
@@ -97,10 +81,11 @@
                 v-model="userProfile.emailInformIfComment"
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                value
               />
               <label class="form-check-label" for="flexCheckDefault">
-                Email bei neuem Kommentar <i class="bi bi-info-circle"></i>
+                Email bei neuem Kommentar
+                <i class="bi bi-info-circle"></i>
               </label>
             </div>
             <div class="form-check">
@@ -109,25 +94,18 @@
                 v-model="userProfile.emailNewsletter"
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                value
               />
               <label class="form-check-label" for="flexCheckDefault">
-                Newsletter abonnieren <i class="bi bi-info-circle"></i>
+                Newsletter abonnieren
+                <i class="bi bi-info-circle"></i>
               </label>
             </div>
 
             <br />
-            <button
-              class="btn btn-primary"
-              :disabled="!profileDataHasChanged"
-              @click="save"
-            >
+            <button class="btn btn-primary" :disabled="!profileDataHasChanged" @click="save">
               Speichern
-              <div
-                v-if="showSpinner"
-                class="spinner-border spinner-border-sm"
-                role="status"
-              >
+              <div v-if="showSpinner" class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
               <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
@@ -157,7 +135,7 @@
               <button class="btn btn-outline-danger" @click="cancel">
                 Abbrechen
               </button>
-            </div> -->
+            </div>-->
             <!-- Edit -->
           </div>
           <div v-if="!editMode" class="p-3">
@@ -172,25 +150,15 @@
                 <p>{{ userProfile.address.street }}</p>
 
                 <div class="row">
-                  <div class="col-md-6">
-                    {{ userProfile.address.zip }}
-                  </div>
-                  <div class="col-md-6">
-                    {{ userProfile.address.city }}
-                  </div>
+                  <div class="col-md-6">{{ userProfile.address.zip }}</div>
+                  <div class="col-md-6">{{ userProfile.address.city }}</div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.state"
-                      label="Bundesland"
-                    />
+                    <BaseInput v-model="userProfile.address.state" label="Bundesland" />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.country"
-                      label="Land"
-                    />
+                    <BaseInput v-model="userProfile.address.country" label="Land" />
                   </div>
                 </div>
                 <div class="row">
@@ -217,7 +185,7 @@
               <div class="col-md-12">
                 <div class="row d-flex align-items-end">
                   <div class="col-md-7">
-                    <div class="">
+                    <div class>
                       <GliderSelect
                         v-model="userProfile.defaultGlider"
                         :show-label="true"
@@ -234,18 +202,14 @@
                         class="btn btn-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#addGliderModal"
-                      >
-                        Hinzufügen
-                      </button>
+                      >Hinzufügen</button>
 
                       <button
                         type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmModal"
-                      >
-                        Entfernen
-                      </button>
+                      >Entfernen</button>
                     </div>
                   </div>
                 </div>
@@ -259,10 +223,11 @@
                 v-model="userProfile.emailInformIfComment"
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                value
               />
               <label class="form-check-label" for="flexCheckDefault">
-                Email bei neuem Kommentar <i class="bi bi-info-circle"></i>
+                Email bei neuem Kommentar
+                <i class="bi bi-info-circle"></i>
               </label>
             </div>
             <div class="form-check">
@@ -271,25 +236,18 @@
                 v-model="userProfile.emailNewsletter"
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                value
               />
               <label class="form-check-label" for="flexCheckDefault">
-                Newsletter abonnieren <i class="bi bi-info-circle"></i>
+                Newsletter abonnieren
+                <i class="bi bi-info-circle"></i>
               </label>
             </div>
 
             <br />
-            <button
-              class="btn btn-primary"
-              :disabled="!profileDataHasChanged"
-              @click="save"
-            >
+            <button class="btn btn-primary" :disabled="!profileDataHasChanged" @click="save">
               Speichern
-              <div
-                v-if="showSpinner"
-                class="spinner-border spinner-border-sm"
-                role="status"
-              >
+              <div v-if="showSpinner" class="spinner-border spinner-border-sm" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
             </button>
@@ -310,7 +268,7 @@
               <button class="btn btn-outline-danger" @click="cancel">
                 Abbrechen
               </button>
-            </div> -->
+            </div>-->
             <!-- Edit -->
           </div>
         </div>
@@ -370,6 +328,9 @@ export default {
     // Scroll to anchor if it exists after mounting
     const el = document.querySelector("#glider-select");
     if (el && this.scrollToGliderSelect) el.scrollIntoView();
+
+    // Name the window
+    document.title = "XCCup - Dein Profil";
   },
   methods: {
     inidcateSuccess() {
