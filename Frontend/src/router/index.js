@@ -161,6 +161,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "" */ "../views/Login.vue"),
   },
   {
+    path: "/sponsoren",
+    name: "Sponsors",
+    component: () => import(/* webpackChunkName: "" */ "../views/Sponsors.vue"),
+  },
+  {
+    path: "/vereine",
+    name: "Clubs",
+    component: () => import(/* webpackChunkName: "" */ "../views/Clubs.vue"),
+  },
+  {
     path: "/impressum",
     name: "Imprint",
     component: () => import(/* webpackChunkName: "" */ "../views/Imprint.vue"),

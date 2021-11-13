@@ -15,11 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
     },
-    homepage: {
+    website: {
       type: DataTypes.STRING,
     },
     urlLogo: {
       type: DataTypes.STRING,
+    },
+    mapPosition: {
+      type: DataTypes.JSON,
     },
     participantInSeasons: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
@@ -35,6 +38,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: {
         name: "clubId",
       },
+    });
+  };
+
+  Club.associate = (models) => {
+    Club.hasOne(models.Logo, {
+      as: "logo",
+      foreignKey: {
+        name: "clubId",
+        allowNull: true,
+      },
+      onDelete: "CASCADE",
+      hooks: true,
     });
   };
 

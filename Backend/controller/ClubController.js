@@ -1,20 +1,33 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/ClubService");
+const logoService = require("../service/LogoService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
+const { query } = require("express-validator");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const {
-  checkOptionalIsBoolean,
-  checkOptionalStringObjectNotEmpty,
   checkStringObjectNotEmpty,
   checkParamIsUuid,
+  checkIsBoolean,
+  checkIsUuidObject,
   validationHasErrors,
 } = require("./Validation");
+const multer = require("multer");
+const path = require("path");
+const { defineFileDestination, defineImageFileNameWithCurrentDateAsPrefix } = require("../helper/ImageUtils");
+
+const IMAGE_STORE = "test/testdatasets/images/clubs";
+
+const storage = multer.diskStorage({
+  destination: defineFileDestination(IMAGE_STORE),
+  filename: defineImageFileNameWithCurrentDateAsPrefix(),
+});
+const imageUpload = multer({ storage });
 
 // @desc Gets all open information of all active clubs
-// @route GET /clubs
+// @route GET /clubs/public
 
-router.get("/", async (req, res, next) => {
+router.get("/public", async (req, res, next) => {
   try {
     const clubs = await service.getAllActive();
     res.json(clubs);
@@ -24,10 +37,10 @@ router.get("/", async (req, res, next) => {
 });
 
 // @desc Gets all active and non-active clubs
-// @route GET /clubs/all
+// @route GET /clubs/
 // @access Only moderator
 
-router.get("/all", authToken, async (req, res, next) => {
+router.get("/", authToken, async (req, res, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
     const clubs = await service.getAll();
@@ -84,28 +97,35 @@ router.post(
   authToken,
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("shortName"),
-  checkOptionalStringObjectNotEmpty("homepage"),
-  checkOptionalStringObjectNotEmpty("urlLogo"),
-  checkOptionalIsBoolean("isActiveParticipant"),
+  checkStringObjectNotEmpty("website"),
+  checkStringObjectNotEmpty("contacts"),
+  checkIsBoolean("isActiveParticipant"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const transferObject = req.body;
+    const {
+      name,
+      shortName,
+      website,
+      contacts,
+      isActiveParticipant
+    } = req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
       const club = {
-        name: transferObject.name,
-        shortName: transferObject.shortName,
-        homepage: transferObject.homepage,
-        urlLogo: transferObject.urlLogo,
-        participantInSeasons: transferObject.isActiveParticipant
+        name,
+        shortName,
+        website,
+        contacts,
+        participantInSeasons: isActiveParticipant
           ? [new Date().getFullYear()]
           : [],
-        contacts: transferObject.contacts,
       };
 
-      service.create(club).then((club) => res.json(club));
+      const newClub = await service.create(club)
+
+      res.json(newClub);
     } catch (error) {
       next(error);
     }
@@ -113,22 +133,28 @@ router.post(
 );
 
 // @desc Edits a club
-// @route PUT /clubs/
+// @route PUT /clubs/:id
 // @access Only moderator
 
 router.put(
   "/:id",
   authToken,
   checkParamIsUuid("id"),
-  checkOptionalStringObjectNotEmpty("name"),
-  checkOptionalStringObjectNotEmpty("shortName"),
-  checkOptionalStringObjectNotEmpty("homepage"),
-  checkOptionalStringObjectNotEmpty("urlLogo"),
-  checkOptionalIsBoolean("isActiveParticipant"),
+  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmpty("shortName"),
+  checkStringObjectNotEmpty("website"),
+  checkStringObjectNotEmpty("contacts"),
+  checkIsBoolean("isActiveParticipant"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const clubId = req.params.id;
-    const transferObject = req.body;
+    const {
+      name,
+      shortName,
+      website,
+      contacts,
+      isActiveParticipant
+    } = req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -136,19 +162,87 @@ router.put(
       const club = await service.getById(clubId);
       if (!club) return res.sendStatus(NOT_FOUND);
 
-      club.name = transferObject.name ?? club.name;
-      club.shortName = transferObject.shortName ?? club.shortName;
-      club.homepage = transferObject.homepage ?? club.homepage;
-      club.urlLogo = transferObject.urlLogo ?? club.urlLogo;
-      club.contacts = transferObject.contacts ?? club.contacts;
+      club.name = name;
+      club.shortName = shortName;
+      club.homepage = website;
+      club.contacts = contacts;
       if (
-        transferObject.isActiveParticipant &&
+        isActiveParticipant &&
         !club.participantInSeasons.includes(new Date().getFullYear())
       ) {
-        transferObject.isActiveParticipant.push(new Date().getFullYear());
+        isActiveParticipant.push(new Date().getFullYear());
       }
 
-      service.update(club).then((club) => res.json(club));
+      const updatedClub = await service.update(club)
+
+      res.json(updatedClub);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Gets the logo of an sponsor
+// @route GET /sponsors/logo/:id
+
+router.get(
+  "/logo/:id",
+  checkParamIsUuid("id"),
+  query("thumb").optional().isBoolean(),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params.id;
+    const thumb = req.query.thumb;
+
+    try {
+      const logo = await logoService.getById(id);
+
+      if (!logo) return res.sendStatus(NOT_FOUND);
+
+      const fullfilepath = thumb
+        ? path.join(path.resolve(), logo.pathThumb)
+        : path.join(path.resolve(), logo.path);
+
+      return res.type(logo.mimetype).sendFile(fullfilepath);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Uploads a new logo
+// @route POST /clubs/logo
+// @access Only moderator
+
+router.post(
+  "/logo",
+  authToken,
+  imageUpload.single("image"),
+  checkIsUuidObject("clubId"),
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      const { originalname, mimetype, size, path } = req.file;
+
+      const clubId = req.body.clubId;
+
+      const club = await service.getById(clubId);
+      if (!club) return res.sendStatus(NOT_FOUND);
+
+      if (club.Logo) {
+        logoService.deleteOldLogo(club);
+      }
+
+      const logo = await logoService.create({
+        originalname,
+        mimetype,
+        size,
+        path,
+        clubId,
+      });
+
+      res.json(logo);
     } catch (error) {
       next(error);
     }

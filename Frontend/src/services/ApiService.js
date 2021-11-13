@@ -103,6 +103,27 @@ export default {
     });
   },
 
+  // Sponsors
+
+  /**
+   * @param {Booleab} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
+   * @returns An array with sponsor objects.
+   */
+  getSponsors(retrieveAll) {
+    return retrieveAll ? jwtInterceptor.get("/sponsors") : apiClient.get("/sponsors/public");
+  },
+
+  // Clubs
+
+  /**
+   * @param {Booleab} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
+   * @returns An array with club objects.
+   */
+  getClubs(retrieveAll) {
+    return retrieveAll ? jwtInterceptor.get("/clubs") : apiClient.get("/clubs/public");
+  },
+
+
   // General
 
   getBrands() {
