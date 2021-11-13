@@ -9,8 +9,15 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="addEditNewsModalLabel" class="modal-title">Nachricht hinzufügen</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 id="addEditNewsModalLabel" class="modal-title">
+            Nachricht hinzufügen
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="modal-body">
           <BaseInput v-model="newsObject.title" label="Titel" />
@@ -26,25 +33,34 @@
               type="checkbox"
               value
             />
-            <label class="form-check-label" for="flexCheckDefault">Per E-Mail an Alle senden</label>
+            <label class="form-check-label" for="flexCheckDefault"
+              >Per E-Mail an Alle senden</label
+            >
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Abbrechen</button>
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            data-bs-dismiss="modal"
+          >
+            Abbrechen
+          </button>
           <button
             type="button"
             class="btn btn-primary"
             :disabled="!saveButtonIsEnabled"
             data-bs-dismiss="modal"
             @click="onSaveNews"
-          >Speichern</button>
+          >
+            Speichern
+          </button>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-
 import { computed } from "vue";
 import { isIsoDateWithoutTime } from "@/helper/utils";
 
@@ -55,7 +71,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits();
+const emit = defineEmits(["save-news"]);
 
 const saveButtonIsEnabled = computed(() => {
   return (
@@ -69,5 +85,4 @@ const saveButtonIsEnabled = computed(() => {
 const onSaveNews = () => {
   emit("save-news", props.newsObject);
 };
-
 </script>

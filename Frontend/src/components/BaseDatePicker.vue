@@ -12,29 +12,26 @@
 </template>
 
 <script setup>
-
 /**
- * 
+ *
  * This component is not ready for use
- * 
- * 
+ *
+ *
  */
 
-
-
-import Datepicker from 'vue3-datepicker'
-import { de } from "date-fns/locale"
-import { ref, computed } from 'vue';
-import { parseISO } from 'date-fns';
+import Datepicker from "vue3-datepicker";
+import { de } from "date-fns/locale";
+import { ref, computed } from "vue";
+import { parseISO } from "date-fns";
 
 const props = defineProps({
   label: {
     type: String,
-    default: "",
+    required: true,
   },
   modelValue: {
     type: String,
-    default: "",
+    required: true,
   },
   isDisabled: {
     type: Boolean,
@@ -44,8 +41,6 @@ const props = defineProps({
 
 const compPicked = computed(() => {
   console.log("modelValuePick: ", props.modelValue);
-  return parseISO(props.modelValue)
-})
-
+  return parseISO(props.modelValue);
+});
 </script>
-

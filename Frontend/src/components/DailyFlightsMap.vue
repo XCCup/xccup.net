@@ -14,9 +14,7 @@ export default {
   props: {
     tracks: {
       type: Array,
-      default: () => {
-        return [];
-      },
+      required: true,
     },
     highlightedFlight: {
       type: String,

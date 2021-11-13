@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  ranking: Object,
+defineProps({
+  ranking: { type: Object, required: true },
 });
 </script>

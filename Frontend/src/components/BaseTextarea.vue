@@ -20,11 +20,11 @@ defineEmits(["update:modelValue"]);
 defineProps({
   label: {
     type: String,
-    default: "",
+    required: true,
   },
   modelValue: {
     type: [String, Number],
-    default: "",
+    required: true,
   },
   isDisabled: {
     type: Boolean,

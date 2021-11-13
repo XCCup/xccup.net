@@ -39,11 +39,11 @@ defineProps({
   },
   label: {
     type: String,
-    default: "",
+    required: true,
   },
   modelValue: {
     type: String,
-    default: "",
+    required: true,
   },
   gliders: {
     type: Array,

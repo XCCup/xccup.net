@@ -38,11 +38,11 @@ export default {
   props: {
     gliders: {
       type: Array,
-      default: () => [],
+      required: true,
     },
     defaultGlider: {
       type: String,
-      default: "",
+      required: true,
     },
   },
   emits: ["gliders-changed"],

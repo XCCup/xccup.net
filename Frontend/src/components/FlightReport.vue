@@ -33,13 +33,11 @@
 defineProps({
   report: {
     type: String,
-    required: false,
-    default: "",
+    required: true,
   },
   photos: {
     type: Array,
-    required: false,
-    default: () => [],
+    required: true,
   },
 });
 const baseURL = import.meta.env.VITE_API_URL;

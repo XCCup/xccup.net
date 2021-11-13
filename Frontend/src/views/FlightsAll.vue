@@ -12,7 +12,7 @@ import { ref } from "vue";
 const props = defineProps({
   year: {
     type: [String, Number],
-    default: 2021,
+    required: true,
   },
 });
 

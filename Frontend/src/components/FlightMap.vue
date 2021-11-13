@@ -30,15 +30,11 @@ let markers = ref([]);
 const props = defineProps({
   tracklogs: {
     type: Array,
-    default: () => {
-      return [];
-    },
+    required: true,
   },
   turnpoints: {
     type: Array,
-    default: () => {
-      return [];
-    },
+    required: true,
   },
 });
 

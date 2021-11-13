@@ -47,7 +47,6 @@ const router = useRouter();
 defineProps({
   redirectAfterLogin: {
     type: Boolean,
-    required: false,
     default: true,
   },
 });

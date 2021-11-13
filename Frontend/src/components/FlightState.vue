@@ -16,7 +16,7 @@
 defineProps({
   flightState: {
     type: String,
-    default: "",
+    required: true,
   },
 });
 </script>

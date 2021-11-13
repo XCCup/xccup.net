@@ -57,9 +57,7 @@ export default {
   props: {
     tracklogs: {
       type: Array,
-      default: () => {
-        return [];
-      },
+      required: true,
     },
   },
   data() {

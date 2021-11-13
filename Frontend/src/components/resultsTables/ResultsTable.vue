@@ -15,10 +15,7 @@
             <th>Gesamt</th>
           </thead>
           <tbody>
-            <tr
-              v-for="(result, index) in results"
-              :key="result.user.idex"
-            >
+            <tr v-for="(result, index) in results" :key="result.user.idex">
               <td>{{ index + 1 }}</td>
               <td>
                 <strong>{{
@@ -69,7 +66,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   results: {
     type: Array,
     required: true,

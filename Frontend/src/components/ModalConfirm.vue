@@ -42,7 +42,7 @@ const props = defineProps({
   },
   transferObject: {
     type: Object,
-    default: () => {},
+    required: true,
   },
   messageBody: {
     type: String,

@@ -29,7 +29,7 @@ defineEmits(["update:modelValue"]);
 defineProps({
   label: {
     type: String,
-    default: "",
+    required: true,
   },
   isDisabled: {
     type: Boolean,
@@ -37,7 +37,7 @@ defineProps({
   },
   modelValue: {
     type: [String, Number],
-    default: "",
+    required: true,
   },
   options: {
     type: Array,

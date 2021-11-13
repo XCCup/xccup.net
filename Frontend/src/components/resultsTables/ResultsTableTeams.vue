@@ -24,10 +24,7 @@
             <th>Gesamt</th>
           </thead>
           <tbody>
-            <tr
-              v-for="(team, index) in results.values"
-              :key="team.teamId"
-            >
+            <tr v-for="(team, index) in results.values" :key="team.teamId">
               <td>{{ index + 1 }}</td>
 
               <td>
@@ -86,9 +83,9 @@
   </section>
 </template>
 
-import RankingClass from '../RankingClass.vue';
+import RankingClass from ""../RankingClass.vue";
 <script setup>
-const props = defineProps({
+defineProps({
   results: {
     type: Object,
     required: true,

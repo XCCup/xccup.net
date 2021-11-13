@@ -15,14 +15,14 @@
     </tbody>
   </table>
   <router-link
-    :to="{ name: 'ResultsTeams', params: {year: new Date().getFullYear()} }"
+    :to="{ name: 'ResultsTeams', params: { year: new Date().getFullYear() } }"
     class="btn btn-outline-primary btn-sm my-1"
     >Detailierte Liste anzeigen</router-link
   >
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   bestTeams: {
     type: Array,
     required: true,
