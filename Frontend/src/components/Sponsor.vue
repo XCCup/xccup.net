@@ -5,6 +5,7 @@
         <div class="col-3">
             <h5 class="card-title">{{ sponsor.name }}</h5>
             <p class="card-text">{{ sponsor.tagline }}</p>
+            <!-- TODO: Reevaluate if it's a good decision to use a button. Steph has mentioned that he wants to get a note when a button would leads to an external website. -->
             <a :href="sponsor.website" target="_blank" class="btn btn-primary">{{ linkMessage }}</a>
         </div>
         <div class="col-3">

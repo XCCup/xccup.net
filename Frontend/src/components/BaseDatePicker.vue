@@ -7,6 +7,7 @@
       :placeholder="label"
       class="form-select"
       :disabled="isDisabled"
+      inputFormat="dd.MM.yyyy"
     />
   </div>
 </template>
