@@ -1,5 +1,5 @@
 <template>
-  <Infobox :season-stats="seasonStats" />
+  <InfoBox :season-stats="seasonStats" />
   <DailyRanking :max-rows="5" :flights="dailyRanking" />
   <OverallResults
     :ranking-by-class="rankingByClass"

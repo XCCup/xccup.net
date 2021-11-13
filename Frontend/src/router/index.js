@@ -140,22 +140,22 @@ const routes = [
     path: "/sandbox/:flightId",
     name: "Sandbox",
     props: true,
-    component: () => import("../views/Sandbox.vue"),
+    component: () => import("../views/TheSandbox.vue"),
   },
   {
     path: "/login/",
     name: "Login",
-    component: () => import("../views/Login.vue"),
+    component: () => import("../views/LoginPage.vue"),
   },
   {
     path: "/impressum",
     name: "Imprint",
-    component: () => import("../views/Imprint.vue"),
+    component: () => import("../views/ImprintPage.vue"),
   },
   {
     path: "/datenschutz",
     name: "Privacy",
-    component: () => import("../views/Privacy.vue"),
+    component: () => import("../views/PrivacyPage.vue"),
   },
   {
     path: "/admin",

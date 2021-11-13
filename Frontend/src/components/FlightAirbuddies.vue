@@ -63,7 +63,7 @@ import trackColors from "@/assets/js/trackColors";
 import ApiService from "@/services/ApiService";
 
 export default {
-  name: "Airbuddies",
+  name: "FlightAirbuddies",
   props: {
     flight: {
       type: Object,
