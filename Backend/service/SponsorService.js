@@ -24,7 +24,7 @@ const service = {
         },
       },
       attributes: {
-        exclude: ["contacts", "sponsorInSeasons", "createdAt", "updatedAt"],
+        exclude: ["sponsorInSeasons", "createdAt", "updatedAt"],
       },
       include: createLogoInclude(),
     });

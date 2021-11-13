@@ -14,6 +14,8 @@ const {
   validationHasErrors,
 } = require("./Validation");
 const { getCurrentYear } = require("../helper/Utils");
+const { defineFileDestination, defineImageFileNameWithCurrentDateAsPrefix } = require("../helper/ImageUtils");
+
 const multer = require("multer");
 const path = require("path");
 
@@ -34,6 +36,18 @@ router.get("/", authToken, async (req, res, next) => {
     if (await requesterIsNotModerator(req, res)) return;
 
     const sponsors = await service.getAll();
+    res.json(sponsors);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Gets all sponsors for the current season
+// @route GET /sponsors/public
+
+router.get("/public", async (req, res, next) => {
+  try {
+    const sponsors = await service.getAllActive();
     res.json(sponsors);
   } catch (error) {
     next(error);
@@ -237,22 +251,5 @@ router.delete(
     }
   }
 );
-
-function defineFileDestination(destination) {
-  return function (req, file, cb) {
-    const fs = require("fs"); //
-    if (!fs.existsSync(destination)) {
-      fs.mkdirSync(destination, true);
-    }
-    cb(null, destination);
-  };
-}
-
-function defineImageFileNameWithCurrentDateAsPrefix() {
-  return function (req, file, cb) {
-    const prefix = Date.now();
-    cb(null, prefix + "-" + file.originalname);
-  };
-}
 
 module.exports = router;

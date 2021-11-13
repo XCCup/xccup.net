@@ -1,5 +1,6 @@
 const Club = require("../config/postgres")["Club"];
 const User = require("../config/postgres")["User"];
+const Logo = require("../config/postgres")["Logo"];
 const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
@@ -12,6 +13,7 @@ const clubService = {
           [Op.contains]: [getCurrentYear()],
         },
       },
+      include: createLogoInclude(),
       attributes: { exclude: ["contacts"] },
     });
   },
@@ -20,7 +22,9 @@ const clubService = {
   },
 
   getById: async (id) => {
-    return await Club.findByPk(id);
+    return await Club.findByPk(id, {
+      include: createLogoInclude(),
+    });
   },
 
   getByShortName: async (shortName) => {
@@ -71,5 +75,13 @@ const clubService = {
     return numberOfDestroyedRows;
   },
 };
+
+function createLogoInclude() {
+  return {
+    model: Logo,
+    as: "logo",
+    attributes: ["id", "path", "pathThumb"],
+  };
+}
 
 module.exports = clubService;

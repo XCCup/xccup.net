@@ -22,9 +22,10 @@
         <div class="modal-body">
           <BaseInput v-model="newsObject.title" label="Titel" />
           <BaseTextarea v-model="newsObject.message" label="Nachricht" />
-          <BaseInput v-model="newsObject.from" label="Gültig ab" />
-          <BaseInput v-model="newsObject.till" label="Gültig bis" />
-          <!-- <BaseDatePicker v-model="newsObject.from" label="Gültig Picker" /> -->
+          <!-- <BaseInput v-model="newsObject.from" label="Gültig ab" />
+          <BaseInput v-model="newsObject.till" label="Gültig bis" />-->
+          <BaseDatePicker v-model="newsObject.from" label="Gültig ab" />
+          <BaseDatePicker v-model="newsObject.till" label="Gültig bis" />
           <div class="form-check">
             <input
               id="sendToAll"
