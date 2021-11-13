@@ -8,6 +8,7 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
+import { setWindowName } from "../helper/utils";
 
 const props = defineProps({
   year: {
@@ -16,8 +17,7 @@ const props = defineProps({
   },
 });
 
-// Name the window
-document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Streckenmeldungen`;
+setWindowName("Streckenmeldungen");
 
 const flights = ref(null);
 try {

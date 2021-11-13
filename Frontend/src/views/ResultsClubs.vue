@@ -8,6 +8,7 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
+import { setWindowName } from "../helper/utils";
 
 const props = defineProps({
   year: {
@@ -18,8 +19,8 @@ const props = defineProps({
 
 const results = ref(null);
 
-// Name the window
-document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Vereinswertung`;
+setWindowName("Vereinswertung");
+
 try {
   const res = await ApiService.getResults("clubs", { year: props.year });
   if (res.status != 200) throw res.status.text;

@@ -7,8 +7,8 @@
 </template>
 
 <script setup>
-// Name the window
-document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Admin`;
+import { setWindowName } from "../helper/utils";
+setWindowName("Admin");
 </script>
 
 <style></style>

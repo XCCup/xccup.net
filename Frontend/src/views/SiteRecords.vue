@@ -44,9 +44,12 @@
 <script setup>
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
+import { setWindowName } from "../helper/utils";
 
 // TODO: Error handling
 const responseData = (await ApiService.getResults("siteRecords")).data;
+
+setWindowName("Fluggebietsrekorde");
 
 const results = ref(responseData);
 </script>

@@ -322,8 +322,9 @@
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import cloneDeep from "lodash/cloneDeep";
+import { setWindowName } from "../helper/utils";
 
-document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Profil`;
+setWindowName("Profil");
 export default {
   name: "UserProfile",
   props: {

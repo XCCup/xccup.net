@@ -13,6 +13,7 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
+import { setWindowName } from "../helper/utils";
 
 const dailyRanking = ref(null);
 const topFlights = ref(null);
@@ -22,8 +23,7 @@ const bestTeams = ref(null);
 const seasonStats = ref(null);
 const sponsors = ref(null);
 
-// Name the window
-document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}Home`;
+setWindowName("Home");
 
 try {
   // To simulate longer loading times
