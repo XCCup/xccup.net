@@ -75,7 +75,25 @@ async function deleteImages(imageObject) {
   return await Promise.all(deleteOperations);
 }
 
+function defineFileDestination(destination) {
+  return function (req, file, cb) {
+    if (!fs.existsSync(destination)) {
+      fs.mkdirSync(destination, true);
+    }
+    cb(null, destination);
+  };
+}
+
+function defineImageFileNameWithCurrentDateAsPrefix() {
+  return function (req, file, cb) {
+    const prefix = Date.now();
+    cb(null, prefix + "-" + file.originalname);
+  };
+}
+
 exports.deleteImages = deleteImages;
 exports.createThumbnail = create;
 exports.createThumbnailPath = createThumbnailPath;
+exports.defineFileDestination = defineFileDestination;
+exports.defineImageFileNameWithCurrentDateAsPrefix = defineImageFileNameWithCurrentDateAsPrefix;
 exports.THUMBNAIL_POSTFIX = THUMBNAIL_POSTFIX;

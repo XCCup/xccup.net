@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     originalname: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     mimetype: {
       type: DataTypes.STRING,

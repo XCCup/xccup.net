@@ -21,15 +21,13 @@
               href="#"
               role="button"
               data-bs-toggle="dropdown"
-              >Ergebnisse</a
-            >
+            >Ergebnisse</a>
             <ul class="dropdown-menu">
               <li>
                 <router-link
                   :to="{ name: 'FlightsAll', params: { year: currentYear } }"
                   class="dropdown-item"
-                  >Eingereichte Flüge</router-link
-                >
+                >Eingereichte Flüge</router-link>
               </li>
               <li>
                 <router-link
@@ -38,8 +36,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Gesamtwertung</router-link
-                >
+                >Gesamtwertung</router-link>
               </li>
               <li>
                 <router-link
@@ -48,8 +45,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Teamwertung</router-link
-                >
+                >Teamwertung</router-link>
               </li>
               <li>
                 <router-link
@@ -58,8 +54,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Vereinswertung</router-link
-                >
+                >Vereinswertung</router-link>
               </li>
               <li>
                 <router-link
@@ -68,8 +63,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Newcomer</router-link
-                >
+                >Newcomer</router-link>
               </li>
               <li>
                 <router-link
@@ -78,8 +72,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Seniorenwertung</router-link
-                >
+                >Seniorenwertung</router-link>
               </li>
               <li>
                 <router-link
@@ -88,8 +81,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Damenwertung</router-link
-                >
+                >Damenwertung</router-link>
               </li>
               <li>
                 <router-link
@@ -98,8 +90,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Landesmeisterschaft RLP</router-link
-                >
+                >Landesmeisterschaft RLP</router-link>
               </li>
               <li>
                 <router-link
@@ -108,8 +99,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Luxemburg Championat</router-link
-                >
+                >Luxemburg Championat</router-link>
               </li>
               <li>
                 <router-link
@@ -117,8 +107,7 @@
                     name: 'SiteRecords',
                   }"
                   class="dropdown-item"
-                  >Flugebietsrekorde</router-link
-                >
+                >Flugebietsrekorde</router-link>
               </li>
               <li>
                 <hr class="dropdown-divider" />
@@ -135,14 +124,23 @@
               href="#"
               role="button"
               data-bs-toggle="dropdown"
-              >Listen</a
-            >
+            >Listen</a>
             <ul class="dropdown-menu">
               <li>
-                <a class="dropdown-item" href="#">Sponsoren</a>
+                <router-link
+                  :to="{
+                    name: 'Sponsors',
+                  }"
+                  class="dropdown-item"
+                >Sponsors</router-link>
               </li>
               <li>
-                <a class="dropdown-item" href="#">Vereine</a>
+                <router-link
+                  :to="{
+                    name: 'Clubs',
+                  }"
+                  class="dropdown-item"
+                >Vereine</router-link>
               </li>
               <li>
                 <a class="dropdown-item" href="#">Registrierte Piloten</a>
@@ -153,22 +151,15 @@
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <router-link :to="{ name: 'Privacy' }" class="nav-link active"
-              >Datenschutz</router-link
-            >
+            <router-link :to="{ name: 'Privacy' }" class="nav-link active">Datenschutz</router-link>
           </li>
           <li class="nav-item dropdown">
-            <router-link :to="{ name: 'Imprint' }" class="nav-link active"
-              >Kontakt / Impressum</router-link
-            >
+            <router-link :to="{ name: 'Imprint' }" class="nav-link active">Kontakt / Impressum</router-link>
           </li>
           <!-- TODO show only when user has role of moderator or higher-->
           <li v-if="hasElevatedRole" class="nav-item dropdown">
-            <router-link
-              :to="{ name: 'AdminDashboard' }"
-              class="nav-link active"
-            >
-              <strong> Kommandozentrale </strong>
+            <router-link :to="{ name: 'AdminDashboard' }" class="nav-link active">
+              <strong>Kommandozentrale</strong>
             </router-link>
           </li>
         </ul>
@@ -187,21 +178,13 @@
             <BaseLogin v-if="!loggedIn" />
             <div v-else>
               <div class="mb-3">
-                <router-link :to="{ name: 'Profile' }" class="dropdown-item"
-                  >Profil</router-link
-                >
-                <button class="btn btn-danger btn-sm m-1" @click="handleLogout">
-                  Abmelden
-                </button>
+                <router-link :to="{ name: 'Profile' }" class="dropdown-item">Profil</router-link>
+                <button class="btn btn-danger btn-sm m-1" @click="handleLogout">Abmelden</button>
               </div>
             </div>
           </div>
         </div>
-        <router-link
-          class="btn btn-danger btn-sm m-1"
-          :to="{ name: 'FlightUpload' }"
-          >Flug hochladen</router-link
-        >
+        <router-link class="btn btn-danger btn-sm m-1" :to="{ name: 'FlightUpload' }">Flug hochladen</router-link>
       </div>
     </div>
   </nav>

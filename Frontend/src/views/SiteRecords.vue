@@ -1,6 +1,7 @@
 <template>
   <section class="pb-3">
     <div class="container-fluid">
+      <h3>Flugebietsrekorde</h3>
       <div v-if="results.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
