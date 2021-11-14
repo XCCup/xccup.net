@@ -85,6 +85,9 @@ onMounted(() => {
 <style scoped>
 #mapContainer {
   height: 100%;
-  min-height: 800px;
+  /* 800px was to much for smaller screens
+  TODO: make it 100% of the viewport. (Minus menu & footer)
+   */
+  min-height: 400px;
 }
 </style>
