@@ -29,7 +29,6 @@ describe("check landing page", () => {
     cy.login("Olive@Emmerich.biz", "PW_OliveEmmerich");
 
     cy.get("#dropdownMenuButton1").should("includes.text", "Olive");
-    //TODO: This fails... Button will not be rendered for mods
     cy.get("#navbarAdminDashboard").should("exist");
 
     cy.logoff();
