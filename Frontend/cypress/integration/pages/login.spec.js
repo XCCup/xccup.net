@@ -1,4 +1,4 @@
-describe("check landing page", () => {
+describe("check login options", () => {
   before(() => {
     cy.visit("/");
   });
@@ -6,34 +6,34 @@ describe("check landing page", () => {
   it("login/logout normal user", () => {
     cy.login("Clinton@Hettinger.name", "PW_ClintonHettinger");
 
-    cy.get("#loginMenuButton").should("includes.text", "Clinton");
+    cy.get("#loginDropdownMenuButton").should("includes.text", "Clinton");
     cy.get("#navbarAdminDashboard").should("not.exist");
 
     cy.logout();
 
-    cy.get("#loginMenuButton").should("includes.text", "Login");
+    cy.get("#loginDropdownMenuButton").should("includes.text", "Login");
   });
 
   it("login/logout admin", () => {
     cy.login("Camille@Schaden.name", "PW_CamilleSchaden");
 
-    cy.get("#loginMenuButton").should("includes.text", "Camille");
+    cy.get("#loginDropdownMenuButton").should("includes.text", "Camille");
     cy.get("#navbarAdminDashboard").should("exist");
 
     cy.logout();
 
-    cy.get("#loginMenuButton").should("includes.text", "Login");
+    cy.get("#loginDropdownMenuButton").should("includes.text", "Login");
   });
 
   it("login/logout moderator", () => {
     cy.login("Olive@Emmerich.biz", "PW_OliveEmmerich");
 
-    cy.get("#loginMenuButton").should("includes.text", "Olive");
+    cy.get("#loginDropdownMenuButton").should("includes.text", "Olive");
     cy.get("#navbarAdminDashboard").should("exist");
 
     cy.logout();
 
-    cy.get("#loginMenuButton").should("includes.text", "Login");
+    cy.get("#loginDropdownMenuButton").should("includes.text", "Login");
   });
 
   it("login non exisiting user", () => {

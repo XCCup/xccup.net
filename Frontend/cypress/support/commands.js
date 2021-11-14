@@ -25,7 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("login", (email, password) => {
-  cy.get("#loginMenuButton").click();
+  cy.get("#loginDropdownMenuButton").click();
 
   cy.get("input#email").type(email);
   cy.get("input#password").type(password);
@@ -34,6 +34,6 @@ Cypress.Commands.add("login", (email, password) => {
 });
 
 Cypress.Commands.add("logout", () => {
-  cy.get("#loginMenuButton").click();
+  cy.get("#loginDropdownMenuButton").click();
   cy.get("button").contains("Abmelden").click();
 });
