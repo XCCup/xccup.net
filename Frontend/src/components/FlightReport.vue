@@ -7,7 +7,7 @@
       </p>
     </div>
     <div v-if="photos" class="row mb-4">
-      <div class="col-4" v-for="(photo, index) in photos" :key="index">
+      <div v-for="(photo, index) in photos" :key="index" class="col-4">
         <figure class="figure">
           <a
             :href="baseURL + `media/` + photo.id"
@@ -30,14 +30,14 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   report: {
     type: String,
-    required: false,
+    required: true,
   },
   photos: {
     type: Array,
-    required: false,
+    required: true,
   },
 });
 const baseURL = import.meta.env.VITE_API_URL;

@@ -5,13 +5,14 @@
   </div>
   <ResultsTable
     :results="results.values"
-    :maxFlights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
+    :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
   />
 </template>
 
-<script setup async>
+<script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref, watchEffect } from "vue";
+import { setWindowName } from "../helper/utils";
 const props = defineProps({
   year: {
     type: [String, Number],
@@ -69,7 +70,7 @@ const remark = ref();
 
 // Name the window
 watchEffect(() => {
-  document.title = "XCCup - " + activeCategory.title;
+  setWindowName(activeCategory.title);
 });
 
 try {

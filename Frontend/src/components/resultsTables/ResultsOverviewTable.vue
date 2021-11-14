@@ -1,8 +1,8 @@
 <template>
-  <div class="card" v-if="ranking">
+  <div v-if="ranking" class="card">
     <div class="card-body">
       <h6 class="card-title">
-        <RankingClass :rankingClass="{ key: ranking.name }" />
+        <RankingClass :ranking-class="{ key: ranking.name }" />
         {{ ranking.shortReadableName }}
       </h6>
       <p class="card-text"></p>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  ranking: Object,
+defineProps({
+  ranking: { type: Object, required: true },
 });
 </script>

@@ -3,21 +3,21 @@
     <div class="mb-3">
       <label for="email" class="form-label">E-Mail</label>
       <input
+        id="email"
+        v-model="email"
         type="email"
         class="form-control"
-        id="email"
         placeholder="E-Mail"
-        v-model="email"
       />
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Passwort</label>
       <input
+        id="password"
+        v-model="password"
         type="password"
         class="form-control"
-        id="password"
         placeholder="Passwort"
-        v-model="password"
       />
     </div>
     <!-- Stay logged in not realy useful with JWT auth -->
@@ -44,10 +44,9 @@ import { ref } from "vue";
 const { login } = useUser();
 const router = useRouter();
 
-const props = defineProps({
+defineProps({
   redirectAfterLogin: {
     type: Boolean,
-    required: false,
     default: true,
   },
 });

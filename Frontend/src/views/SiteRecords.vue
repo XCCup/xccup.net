@@ -8,20 +8,20 @@
             <th>Startplatz</th>
             <th>
               Freiestrecke
-              <FlightTypeIcon flightType="FREE" />
+              <FlightTypeIcon flight-type="FREE" />
             </th>
             <th>
               <!-- TODO: Why is this not rendering -->
               Flaches Dreieck
-              <FlightTypeIcon flightType="FLAT" />
+              <FlightTypeIcon flight-type="FLAT" />
             </th>
             <th>
               FAI Dreieck
-              <FlightTypeIcon flightType="FAI" />
+              <FlightTypeIcon flight-type="FAI" />
             </th>
           </thead>
           <tbody>
-            <tr v-for="(result, index) in results" v-bind:key="result.takeoff.id">
+            <tr v-for="result in results" :key="result.takeoff.id">
               <td>{{ result.takeoff.name }}</td>
               <td>
                 <SiteRecord :record="result.free" />
@@ -45,9 +45,12 @@
 <script setup>
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
+import { setWindowName } from "../helper/utils";
 
 // TODO: Error handling
 const responseData = (await ApiService.getResults("siteRecords")).data;
+
+setWindowName("Fluggebietsrekorde");
 
 const results = ref(responseData);
 </script>

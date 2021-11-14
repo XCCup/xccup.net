@@ -3,9 +3,9 @@
     <tbody>
       <tr
         v-for="(team, index) in bestTeams.slice(0, 5)"
-        v-bind:item="team"
-        v-bind:index="index"
-        v-bind:key="team.teamId"
+        :key="team.teamId"
+        :item="team"
+        :index="index"
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>{{ team.teamName }}</td>
@@ -15,14 +15,14 @@
     </tbody>
   </table>
   <router-link
-    :to="{ name: 'ResultsTeams', params: {year: new Date().getFullYear()} }"
+    :to="{ name: 'ResultsTeams', params: { year: new Date().getFullYear() } }"
     class="btn btn-outline-primary btn-sm my-1"
     >Detailierte Liste anzeigen</router-link
   >
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   bestTeams: {
     type: Array,
     required: true,
