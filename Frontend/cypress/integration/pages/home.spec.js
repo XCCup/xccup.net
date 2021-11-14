@@ -1,6 +1,6 @@
 describe("check landing page", () => {
   before(() => {
-    cy.visit("http://localhost:8000/");
+    cy.visit("/");
   });
 
   it("test correct values for infobox", () => {
