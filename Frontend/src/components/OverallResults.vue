@@ -1,6 +1,6 @@
 <template>
   <!-- Tabs -->
-  <div class="container my-2">
+  <div id="overallResultsTabPanel" class="container my-2">
     <h3>Gesamtwertung</h3>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">

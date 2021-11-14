@@ -1,5 +1,5 @@
 <template>
-  <table v-if="bestTeams" class="table table-hover">
+  <table v-if="bestTeams" id="teamRankingTable" class="table table-hover">
     <tbody>
       <tr
         v-for="(team, index) in bestTeams.slice(0, 5)"
@@ -15,7 +15,7 @@
     </tbody>
   </table>
   <router-link
-    :to="{ name: 'ResultsTeams', params: {year: new Date().getFullYear()} }"
+    :to="{ name: 'ResultsTeams', params: { year: new Date().getFullYear() } }"
     class="btn btn-outline-primary btn-sm my-1"
     >Detailierte Liste anzeigen</router-link
   >
