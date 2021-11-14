@@ -25,8 +25,7 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("login", (email, password) => {
-  //TODO: @Steph any reason for this cryptic name of the login button?
-  cy.get("#dropdownMenuButton1").click();
+  cy.get("#loginMenuButton").click();
 
   cy.get("input#email").type(email);
   cy.get("input#password").type(password);
@@ -34,7 +33,7 @@ Cypress.Commands.add("login", (email, password) => {
   cy.get("button").contains("Anmelden").click();
 });
 
-Cypress.Commands.add("logoff", () => {
-  cy.get("#dropdownMenuButton1").click();
+Cypress.Commands.add("logout", () => {
+  cy.get("#loginMenuButton").click();
   cy.get("button").contains("Abmelden").click();
 });

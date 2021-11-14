@@ -191,7 +191,7 @@
         <!-- Login dropdown  -->
         <div class="dropdown">
           <button
-            id="dropdownMenuButton1"
+            id="loginMenuButton"
             type="button"
             class="btn btn-outline-light btn-sm m-1 dropdown-toggle"
             data-bs-toggle="dropdown"
