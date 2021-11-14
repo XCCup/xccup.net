@@ -22,9 +22,12 @@ export default () => {
 
   const loggedIn = computed(() => state.loginStatus === "success");
   const getUserId = computed(() => state.authData.userId);
-  const hasElevatedRole = computed(
-    () => state.authData.role === ("Administrator" || "Moderator")
-  );
+  const hasElevatedRole = computed(() => {
+    const newLocal =
+      state.authData.role === "Administrator" ||
+      state.authData.role === "Moderator";
+    return newLocal;
+  });
 
   // const getAuthData = computed(() => state.authData);
   const isTokenActive = computed(() => {
