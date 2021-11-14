@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/Home.vue";
-import Flight from "@/views/Flight.vue";
+import Home from "@/views/HomeView.vue";
+import Flight from "@/views/FlightView.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 import useUser from "@/composables/useUser";
@@ -145,12 +145,12 @@ const routes = [
   {
     path: "/login/",
     name: "Login",
-    component: () => import("../views/LoginView.vue"),
+    component: () => import("../views/UserLogin.vue"),
   },
   {
     path: "/sponsoren",
     name: "Sponsors",
-    component: () => import("../views/TheSponsors.vue"),
+    component: () => import("../views/SponsorsList.vue"),
   },
   {
     path: "/vereine",
