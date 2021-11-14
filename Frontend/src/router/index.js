@@ -34,7 +34,7 @@ const routes = [
     props: (route) => ({ category: "overall", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
     // Lazy loading components
-    component: () => import("../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/newcomer/",
@@ -42,7 +42,7 @@ const routes = [
     props: (route) => ({ category: "newcomer", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/seniorenwertung/",
@@ -50,7 +50,7 @@ const routes = [
     props: (route) => ({ category: "seniors", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/damenwertung/",
@@ -58,7 +58,7 @@ const routes = [
     props: (route) => ({ category: "ladies", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/lux-championat/",
@@ -66,7 +66,7 @@ const routes = [
     props: (route) => ({ category: "lux-state", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/rlp-meisterschaft/",
@@ -74,7 +74,7 @@ const routes = [
     props: (route) => ({ category: "rlp-state", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/teamwertung/",
@@ -145,27 +145,29 @@ const routes = [
   {
     path: "/login/",
     name: "Login",
-    component: () => import("../views/LoginPage.vue"),
+    component: () => import("../views/LoginView.vue"),
   },
   {
     path: "/sponsoren",
     name: "Sponsors",
-    component: () => import(/* webpackChunkName: "" */ "../views/Sponsors.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/TheSponsors.vue"),
   },
   {
     path: "/vereine",
     name: "Clubs",
-    component: () => import(/* webpackChunkName: "" */ "../views/Clubs.vue"),
+    component: () =>
+      import(/* webpackChunkName: "" */ "../views/ClubsList.vue"),
   },
   {
     path: "/impressum",
     name: "Imprint",
-    component: () => import("../views/ImprintPage.vue"),
+    component: () => import("../views/ImprintView.vue"),
   },
   {
     path: "/datenschutz",
     name: "Privacy",
-    component: () => import("../views/PrivacyPage.vue"),
+    component: () => import("../views/PrivacyView.vue"),
   },
   {
     path: "/admin",
