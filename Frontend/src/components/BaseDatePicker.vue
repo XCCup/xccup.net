@@ -7,17 +7,16 @@
       :placeholder="label"
       class="form-select"
       :disabled="isDisabled"
-      inputFormat="dd.MM.yyyy"
+      input-format="dd.MM.yyyy"
     />
   </div>
 </template>
 
 <script setup>
-
-import Datepicker from 'vue3-datepicker'
-import { de } from "date-fns/locale"
-import { ref, watch } from 'vue';
-import { parseISO } from 'date-fns';
+import Datepicker from "vue3-datepicker";
+import { de } from "date-fns/locale";
+import { ref, watch } from "vue";
+import { parseISO } from "date-fns";
 
 const props = defineProps({
   label: {
@@ -35,31 +34,39 @@ const props = defineProps({
 });
 const emits = defineEmits(["update:modelValue"]);
 
-const pickedDate = ref(null)
+const pickedDate = ref(null);
 
 // Ensure that a inital property change won't cause an unwanted update
 // TODO: Is all this formatting really necessary? Also: possible race condition with "externalChange" in two different watchers?
-let externalChange = false
+let externalChange = false;
 
 // Watch the incoming data property to set the correct inital value in the correct format
-watch(() => props.modelValue, (newVal, oldVal) => {
-  externalChange = true
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    externalChange = true;
 
-  pickedDate.value = parseISO(newVal)
-})
+    pickedDate.value = parseISO(newVal);
+  }
+);
 
 // Watch the internal data property to update the surrounding component with the correct format
-watch(pickedDate, (newVal, oldVal) => {
-  if (externalChange == true) return externalChange = false
+watch((pickedDate) => {
+  if (externalChange == true) return (externalChange = false);
 
-  const dateValue = pickedDate.value
+  const dateValue = pickedDate.value;
   if (dateValue) {
     const year = dateValue.getFullYear();
-    const month = dateValue.getMonth() + 1 < 10 ? "0" + (dateValue.getMonth() + 1) : (dateValue.getMonth() + 1);
-    const day = dateValue.getDate() < 10 ? "0" + dateValue.getDate() : dateValue.getDate();
-    const res = `${year}-${month}-${day}`
-    emits("update:modelValue", res)
+    const month =
+      dateValue.getMonth() + 1 < 10
+        ? "0" + (dateValue.getMonth() + 1)
+        : dateValue.getMonth() + 1;
+    const day =
+      dateValue.getDate() < 10
+        ? "0" + dateValue.getDate()
+        : dateValue.getDate();
+    const res = `${year}-${month}-${day}`;
+    emits("update:modelValue", res);
   }
-})
-
+});
 </script>
