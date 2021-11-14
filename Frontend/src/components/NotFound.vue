@@ -9,10 +9,9 @@
   </div>
 </template>
 <script setup>
-const props = defineProps({
+defineProps({
   resource: {
     type: String,
-    required: false,
     default: "Diese Seite existiert leider nicht",
   },
 });

@@ -20,7 +20,6 @@ const props = defineProps({
   },
   short: {
     type: Boolean,
-    required: false,
     default: false,
   },
   showDescription: {

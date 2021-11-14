@@ -55,6 +55,7 @@ export default {
   props: {
     flightType: {
       type: String,
+      required: true,
     },
   },
 };

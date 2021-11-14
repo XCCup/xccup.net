@@ -25,9 +25,9 @@
 
 <script>
 export default {
-  name: "Infobox",
+  name: "InfoBox",
   props: {
-    seasonStats: Object,
+    seasonStats: { type: Object, required: true },
   },
 };
 </script>

@@ -14,7 +14,6 @@
 
 <script setup>
 
-
 import Datepicker from 'vue3-datepicker'
 import { de } from "date-fns/locale"
 import { ref, watch } from 'vue';
@@ -23,11 +22,11 @@ import { parseISO } from 'date-fns';
 const props = defineProps({
   label: {
     type: String,
-    default: "",
+    required: true,
   },
   modelValue: {
     type: String,
-    default: "",
+    required: true,
   },
   isDisabled: {
     type: Boolean,
@@ -64,4 +63,3 @@ watch(pickedDate, (newVal, oldVal) => {
 })
 
 </script>
-

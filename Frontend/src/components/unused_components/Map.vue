@@ -16,20 +16,18 @@ import tileOptions from "@/config/mapbox";
 
 export default {
   name: "Map",
+  props: {
+    tracklogs: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       map: null,
       tracks: Array,
       markers: Array,
     };
-  },
-  props: {
-    tracklogs: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
   },
   watch: {
     tracklogs(newTrackLogs) {
@@ -75,6 +73,12 @@ export default {
     };
     document.addEventListener("positionUpdated", this.positionUpdateListener);
   },
+  beforeUnmount() {
+    document.removeEventListener(
+      "positionUpdated",
+      this.positionUpdateListener
+    );
+  },
   methods: {
     updatePositions(positions) {
       this.tracklogs.forEach((_, index) => {
@@ -92,12 +96,6 @@ export default {
       //   this.map.setView(this.tracklogs[0][positions.dataIndex]);
       // }
     },
-  },
-  beforeUnmount() {
-    document.removeEventListener(
-      "positionUpdated",
-      this.positionUpdateListener
-    );
   },
 };
 </script>

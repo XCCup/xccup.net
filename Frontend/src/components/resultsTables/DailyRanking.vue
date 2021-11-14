@@ -8,7 +8,7 @@
             v-if="flights[0]?.takeoffTime"
             class="fs-6"
             :timestamp="flights[0]?.takeoffTime"
-            dateFormat="dd.MM.yyyy"
+            date-format="dd.MM.yyyy"
           />
         </h3>
 
@@ -17,9 +17,9 @@
             <tbody>
               <tr
                 v-for="(flight, index) in flights.slice(0, maxRows)"
-                v-bind:item="flight"
-                v-bind:index="index"
-                v-bind:key="flight.id"
+                :key="flight.id"
+                :item="flight"
+                :index="index"
                 @click="routeToFlight(flight.externalId)"
                 @mouseover="updateHighlightedFlight(flight.id)"
                 @mouseleave="updateHighlightedFlight(null)"
@@ -31,7 +31,7 @@
                 <td>{{ flight.takeoff.name }}</td>
                 <td>{{ Math.floor(flight.flightDistance) }} km</td>
                 <td>
-                  <FlightTypeIcon :flightType="flight.flightType" />
+                  <FlightTypeIcon :flight-type="flight.flightType" />
                 </td>
                 <td>{{ flight.flightPoints }} P</td>
               </tr>
@@ -52,7 +52,7 @@
     </div>
     <div class="col-xl-7 col-md-6 col-12 p-0 m-0">
       <DailyFlightsMap
-        :highlightedFlight="highlightedFlightId"
+        :highlighted-flight="highlightedFlightId"
         :tracks="dailyFlightsMapTracks"
       />
     </div>

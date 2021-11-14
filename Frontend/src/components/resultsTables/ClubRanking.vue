@@ -3,9 +3,9 @@
     <tbody>
       <tr
         v-for="(club, index) in bestClubs.slice(0, 5)"
-        v-bind:item="club"
-        v-bind:index="index"
-        v-bind:key="club.clubId"
+        :key="club.clubId"
+        :item="club"
+        :index="index"
       >
         <th scope="row">{{ index + 1 }}</th>
         <td>{{ club.clubName }}</td>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   bestClubs: {
     type: Array,
     required: true,

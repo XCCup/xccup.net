@@ -32,24 +32,40 @@
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
-                <BaseInput v-model="userProfile.club.name" label="Verein" :is-disabled="true" />
+                <BaseInput
+                  v-model="userProfile.club.name"
+                  label="Verein"
+                  :is-disabled="true"
+                />
                 <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
                 <BaseInput v-model="userProfile.email" label="E-Mail" />
-                <BaseInput v-model="userProfile.address.street" label="Strasse" />
+                <BaseInput
+                  v-model="userProfile.address.street"
+                  label="Strasse"
+                />
                 <div class="row">
                   <div class="col-md-6">
                     <BaseInput v-model="userProfile.address.zip" label="PLZ" />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.city" label="Stadt" />
+                    <BaseInput
+                      v-model="userProfile.address.city"
+                      label="Stadt"
+                    />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.state" label="Bundesland" />
+                    <BaseInput
+                      v-model="userProfile.address.state"
+                      label="Bundesland"
+                    />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.country" label="Land" />
+                    <BaseInput
+                      v-model="userProfile.address.country"
+                      label="Land"
+                    />
                   </div>
                 </div>
                 <div class="row">
@@ -103,9 +119,17 @@
             </div>
 
             <br />
-            <button class="btn btn-primary" :disabled="!profileDataHasChanged" @click="save">
+            <button
+              class="btn btn-primary"
+              :disabled="!profileDataHasChanged"
+              @click="save"
+            >
               Speichern
-              <div v-if="showSpinner" class="spinner-border spinner-border-sm" role="status">
+              <div
+                v-if="showSpinner"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
                 <span class="visually-hidden">Loading...</span>
               </div>
               <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
@@ -155,10 +179,16 @@
                 </div>
                 <div class="row">
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.state" label="Bundesland" />
+                    <BaseInput
+                      v-model="userProfile.address.state"
+                      label="Bundesland"
+                    />
                   </div>
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.country" label="Land" />
+                    <BaseInput
+                      v-model="userProfile.address.country"
+                      label="Land"
+                    />
                   </div>
                 </div>
                 <div class="row">
@@ -202,14 +232,18 @@
                         class="btn btn-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#addGliderModal"
-                      >Hinzufügen</button>
+                      >
+                        Hinzufügen
+                      </button>
 
                       <button
                         type="button"
                         class="btn btn-outline-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmModal"
-                      >Entfernen</button>
+                      >
+                        Entfernen
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -245,9 +279,17 @@
             </div>
 
             <br />
-            <button class="btn btn-primary" :disabled="!profileDataHasChanged" @click="save">
+            <button
+              class="btn btn-primary"
+              :disabled="!profileDataHasChanged"
+              @click="save"
+            >
               Speichern
-              <div v-if="showSpinner" class="spinner-border spinner-border-sm" role="status">
+              <div
+                v-if="showSpinner"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
                 <span class="visually-hidden">Loading...</span>
               </div>
             </button>
@@ -280,7 +322,9 @@
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import cloneDeep from "lodash/cloneDeep";
-document.title = "XCCup - Profil";
+import { setWindowName } from "../helper/utils";
+
+setWindowName("Profil");
 export default {
   name: "UserProfile",
   props: {
@@ -328,9 +372,6 @@ export default {
     // Scroll to anchor if it exists after mounting
     const el = document.querySelector("#glider-select");
     if (el && this.scrollToGliderSelect) el.scrollIntoView();
-
-    // Name the window
-    document.title = "XCCup - Dein Profil";
   },
   methods: {
     inidcateSuccess() {

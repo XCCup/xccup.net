@@ -2,9 +2,9 @@
   <div class="container">
     <h3>Kommentare</h3>
     <div
-      class="shadow p-3 mb-3"
       v-for="comment in commentsWithReplies"
       :key="comment.id"
+      class="shadow p-3 mb-3"
     >
       <Comment
         :ref="comment.id"
@@ -15,11 +15,11 @@
         @save-reply-message="onSubmit"
       />
     </div>
-    <CommentEditor ref="commentEditor" @submitComment="onSubmit" />
+    <CommentEditor ref="commentEditor" @submit-comment="onSubmit" />
   </div>
   <!-- Modal -->
   <!-- TODO Refactor to BaseModal Component? -->
-  <div class="modal fade" id="deleteCommentModal" tabindex="-1">
+  <div id="deleteCommentModal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -102,7 +102,8 @@ const commentsWithReplies = computed(() => {
     !comment.relatedTo ? [comment] : []
   );
   // Add replies
-  comments.forEach((comment) => {
+
+  props.comments.forEach((comment) => {
     if (comment.relatedTo) {
       let parent = comments.findIndex(
         (element) => element.id === comment.relatedTo

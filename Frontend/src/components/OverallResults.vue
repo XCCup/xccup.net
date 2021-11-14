@@ -2,11 +2,11 @@
   <!-- Tabs -->
   <div id="overallResultsTabPanel" class="container my-2">
     <h3>Gesamtwertung</h3>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul id="myTab" class="nav nav-tabs" role="tablist">
       <li class="nav-item" role="presentation">
         <button
-          class="nav-link active"
           id="topFlights-tab"
+          class="nav-link active"
           data-bs-toggle="tab"
           data-bs-target="#topFlights"
           type="button"
@@ -17,8 +17,8 @@
       </li>
       <li class="nav-item" role="presentation">
         <button
-          class="nav-link"
           id="class-tab"
+          class="nav-link"
           data-bs-toggle="tab"
           data-bs-target="#class"
           type="button"
@@ -29,8 +29,8 @@
       </li>
       <li class="nav-item" role="presentation">
         <button
-          class="nav-link"
           id="club-tab"
+          class="nav-link"
           data-bs-toggle="tab"
           data-bs-target="#club"
           type="button"
@@ -41,8 +41,8 @@
       </li>
       <li class="nav-item" role="presentation">
         <button
-          class="nav-link"
           id="team-tab"
+          class="nav-link"
           data-bs-toggle="tab"
           data-bs-target="#team"
           type="button"
@@ -52,25 +52,25 @@
         </button>
       </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="topFlights" role="tabpanel">
+    <div id="myTabContent" class="tab-content">
+      <div id="topFlights" class="tab-pane fade show active" role="tabpanel">
         <TopFlights :flights="topFlights" />
       </div>
-      <div class="tab-pane fade" id="class" role="tabpanel">
-        <ClassRanking :rankingByClass="rankingByClass" />
+      <div id="class" class="tab-pane fade" role="tabpanel">
+        <ClassRanking :ranking-by-class="rankingByClass" />
       </div>
-      <div class="tab-pane fade" id="club" role="tabpanel">
-        <ClubRanking :bestClubs="bestClubs" />
+      <div id="club" class="tab-pane fade" role="tabpanel">
+        <ClubRanking :best-clubs="bestClubs" />
       </div>
-      <div class="tab-pane fade" id="team" role="tabpanel">
-        <TeamRanking :bestTeams="bestTeams" />
+      <div id="team" class="tab-pane fade" role="tabpanel">
+        <TeamRanking :best-teams="bestTeams" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   rankingByClass: {
     type: Array,
     required: true,

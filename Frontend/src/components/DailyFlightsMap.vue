@@ -11,22 +11,21 @@ import tileOptions from "@/config/mapbox.js";
 
 export default {
   name: "DailyFlightsMap",
+  props: {
+    tracks: {
+      type: Array,
+      required: true,
+    },
+    highlightedFlight: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       map: null,
       trackLines: [],
     };
-  },
-  props: {
-    tracks: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
-    highlightedFlight: {
-      type: String,
-    },
   },
   watch: {
     highlightedFlight() {

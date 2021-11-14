@@ -7,7 +7,9 @@
     "build": "vite build",
     "serve": "vite preview",
     "cypress-gui": "cypress open",
-    "cypress-headless": "cypress run"
+    "cypress-headless": "cypress run",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "format": "prettier .  --write"
   },
   "dependencies": {
     "@popperjs/core": "^2.10.2",
@@ -29,6 +31,9 @@
     "@types/leaflet": "^1.7.5",
     "@vitejs/plugin-vue": "^1.9.3",
     "cypress": "^9.0.0",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-vue": "^8.0.3",
     "sass": "^1.43.4",
     "unplugin-vue-components": "^0.17.0",
     "vite": "^2.6.4"
