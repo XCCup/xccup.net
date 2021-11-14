@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/Home.vue";
-import Flight from "@/views/Flight.vue";
+import HomeView from "@/views/HomeView.vue";
+import FlightView from "@/views/FlightView.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 import useUser from "@/composables/useUser";
@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: HomeView,
   },
   {
     path: "/flug/:flightId",
@@ -17,7 +17,7 @@ const routes = [
     props: true,
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
-    component: Flight,
+    component: FlightView,
   },
   {
     path: "/:year/fluege/",
@@ -145,12 +145,12 @@ const routes = [
   {
     path: "/login/",
     name: "Login",
-    component: () => import("../views/LoginView.vue"),
+    component: () => import("../views/UserLogin.vue"),
   },
   {
     path: "/sponsoren",
     name: "Sponsors",
-    component: () => import("../views/TheSponsors.vue"),
+    component: () => import("../views/SponsorsList.vue"),
   },
   {
     path: "/vereine",
