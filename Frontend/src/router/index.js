@@ -150,14 +150,12 @@ const routes = [
   {
     path: "/sponsoren",
     name: "Sponsors",
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/TheSponsors.vue"),
+    component: () => import("../views/TheSponsors.vue"),
   },
   {
     path: "/vereine",
     name: "Clubs",
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/ClubsList.vue"),
+    component: () => import("../views/ClubsList.vue"),
   },
   {
     path: "/impressum",
