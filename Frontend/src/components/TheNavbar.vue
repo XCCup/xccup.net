@@ -157,7 +157,9 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="#">Registrierte Piloten</a>
+                <router-link :to="{ name: 'Users' }" class="dropdown-item"
+                  >Registrierte Piloten</router-link
+                >
               </li>
               <li>
                 <a class="dropdown-item" href="#">Teams 2021</a>

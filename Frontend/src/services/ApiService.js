@@ -15,7 +15,7 @@ const apiClient = axios.create({
 
 export default {
   getFlights(params) {
-    return apiClient.get("flights", { params: { year: params.year } });
+    return apiClient.get("flights", { params });
   },
   getFlight(flightId) {
     return apiClient.get("flights/" + flightId);
@@ -103,6 +103,18 @@ export default {
     });
   },
 
+  // Users
+
+  getUsers(params) {
+    let url = "users/public/";
+
+    return apiClient.get(url, { params });
+  },
+
+  getUser(userId) {
+    return jwtInterceptor.get("users/public/" + userId);
+  },
+
   // Sponsors
 
   /**
@@ -110,7 +122,9 @@ export default {
    * @returns An array with sponsor objects.
    */
   getSponsors(retrieveAll) {
-    return retrieveAll ? jwtInterceptor.get("/sponsors") : apiClient.get("/sponsors/public");
+    return retrieveAll
+      ? jwtInterceptor.get("/sponsors")
+      : apiClient.get("/sponsors/public");
   },
 
   // Clubs
@@ -120,9 +134,10 @@ export default {
    * @returns An array with club objects.
    */
   getClubs(retrieveAll) {
-    return retrieveAll ? jwtInterceptor.get("/clubs") : apiClient.get("/clubs/public");
+    return retrieveAll
+      ? jwtInterceptor.get("/clubs")
+      : apiClient.get("/clubs/public");
   },
-
 
   // General
 
