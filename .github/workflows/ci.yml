@@ -49,4 +49,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          project: ./Frontend
+          # start: npm --prefix ./web run dev
+          wait-on: http://localhost:8000
+          working-directory: ./Frontend
