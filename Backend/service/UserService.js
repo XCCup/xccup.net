@@ -1,5 +1,6 @@
 const User = require("../config/postgres")["User"];
 const Club = require("../config/postgres")["Club"];
+const Team = require("../config/postgres")["Team"];
 const flightService = require("../service/FlightService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const { ROLE } = require("../constants/user-constants");
@@ -12,8 +13,50 @@ const { arrayRemove } = require("../helper/Utils");
 const logger = require("../config/logger");
 
 const userService = {
-  getAll: async () => {
-    return await User.findAll({ attributes: ["id", "firstName", "lastName"] });
+  getAll: async ({ records, limit, offset } = {}) => {
+    const users = await User.findAll({
+      attributes: ["id", "firstName", "lastName", "gender", "gliders"],
+      include: [
+        {
+          model: ProfilePicture,
+          as: "picture",
+          attributes: ["id"],
+        },
+        {
+          model: Club,
+          as: "club",
+          attributes: ["id", "name"],
+        },
+        {
+          model: Team,
+          as: "team",
+          attributes: ["id", "name"],
+        },
+      ],
+      limit,
+      offset,
+      order: [["firstName", "ASC"]],
+    });
+
+    if (records) {
+      return await Promise.all(
+        users.map(async (user) => {
+          const userJson = user.toJSON();
+          const bestFreeFlight = findFlightRecordOfType(userJson.id, TYPE.FREE);
+          const bestFlatFlight = findFlightRecordOfType(userJson.id, TYPE.FLAT);
+          const bestFaiFlight = findFlightRecordOfType(userJson.id, TYPE.FAI);
+          const results = await Promise.all([
+            bestFreeFlight,
+            bestFlatFlight,
+            bestFaiFlight,
+          ]);
+          userJson.records = [results[0], results[1], results[2]];
+          return userJson;
+        })
+      );
+    }
+
+    return users;
   },
   getById: async (id) => {
     return await User.findByPk(id, {
@@ -39,20 +82,24 @@ const userService = {
     });
   },
   getByIdPublic: async (id) => {
-    const user = User.findOne({
+    const userQuery = User.findOne({
       where: { id },
-      attributes: [
-        "id",
-        "firstName",
-        "lastName",
-        "gender",
-        "address",
-        "gliders",
-      ],
+      attributes: ["id", "firstName", "lastName", "gender", "gliders"],
       include: [
         {
           model: ProfilePicture,
+          as: "picture",
           attributes: ["id"],
+        },
+        {
+          model: Club,
+          as: "club",
+          attributes: ["name"],
+        },
+        {
+          model: Team,
+          as: "team",
+          attributes: ["name"],
         },
       ],
     });
@@ -60,7 +107,7 @@ const userService = {
     const bestFlatFlight = findFlightRecordOfType(id, TYPE.FLAT);
     const bestFaiFlight = findFlightRecordOfType(id, TYPE.FAI);
     const results = await Promise.all([
-      user,
+      userQuery,
       bestFreeFlight,
       bestFlatFlight,
       bestFaiFlight,
