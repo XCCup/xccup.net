@@ -27,7 +27,7 @@ const dbTestData = {
       await Promise.all(
         clubs.map(async (entry) => {
           await Club.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -38,7 +38,7 @@ const dbTestData = {
       await Promise.all(
         teams.map(async (entry) => {
           await Team.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -49,7 +49,7 @@ const dbTestData = {
       await Promise.all(
         sites.map(async (entry) => {
           await FlyingSite.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0]);
           });
         })
       );
@@ -105,7 +105,7 @@ const dbTestData = {
       await Promise.all(
         seasonDetails.map(async (entry) => {
           await SeasonDetail.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -116,7 +116,7 @@ const dbTestData = {
       await Promise.all(
         airspaces.map(async (entry) => {
           await Airspace.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -127,7 +127,7 @@ const dbTestData = {
       await Promise.all(
         fixes.map(async (entry) => {
           await FlightFixes.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -138,7 +138,7 @@ const dbTestData = {
       await Promise.all(
         news.map(async (entry) => {
           await News.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -149,7 +149,7 @@ const dbTestData = {
       await Promise.all(
         sponsorsArray.map(async (entry) => {
           await Sponsor.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -160,7 +160,7 @@ const dbTestData = {
       await Promise.all(
         logos.map(async (entry) => {
           await Logo.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );

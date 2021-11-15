@@ -1,12 +1,14 @@
 const { expect } = require("@jest/globals");
 const { byLatLong, findLanding } = require("../igc/LocationFinder");
 
-test("Validate an a location name for a specific latLong", (done) => {
+const isApiActive = process.env.USE_GOOGLE_API === true;
+
+test("Validate a location name for a specific latLong", (done) => {
   //50.22134205072505, 7.067118217391005 -> Müllenbacher Dom, Hauptstraße 41, 56761 Müllenbach
   //https://maps.googleapis.com/maps/api/geocode/json?latlng=50.22134205072505,7.067118217391005&result_type=locality&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   const location = "50.22134205072505,7.067118217391";
 
-  const expectedResult = "Müllenbach";
+  const expectedResult = isApiActive ? "Müllenbach" : "API Disabled";
   // const expectedResult = "56761 Müllenbach, Deutschland";
 
   byLatLong(location)
@@ -26,7 +28,7 @@ test("Validate a location name by a flightFix", (done) => {
     longitude: 7.114786188739389,
   };
 
-  const expectedResultLanding = "Bremm";
+  const expectedResultLanding = isApiActive ? "Bremm" : "API Disabled";
 
   findLanding(landingFix)
     .then((nameOfLanding) => {

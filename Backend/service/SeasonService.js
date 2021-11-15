@@ -62,10 +62,10 @@ const service = {
   },
 };
 
-(async function init() {
-  await waitTillDbHasSync();
-  logger.info("Initialize SeasonDetails");
-  service.refreshCurrentSeasonDetails();
-})();
+// (async function init() {
+//   await waitTillDbHasSync();
+//   logger.info("Initialize SeasonDetails");
+//   service.refreshCurrentSeasonDetails();
+// })();
 
 module.exports = service;

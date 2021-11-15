@@ -26,5 +26,6 @@ Backend/igc/demo_igcs/temp/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 node_modules
+XCCup_DB_Schema/
 Frontend/cypress/videos/
 Frontend/cypress/screenshots/
