@@ -38,6 +38,7 @@
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 import { shuffle } from "lodash";
+import { setWindowName } from "../helper/utils";
 
 const clubs = ref([]);
 
@@ -45,7 +46,7 @@ const clubs = ref([]);
 //     window.open(url);
 // }
 
-document.title = "XCCup - Vereine";
+setWindowName("Vereine");
 
 try {
   const res = await ApiService.getClubs();

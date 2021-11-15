@@ -3,7 +3,7 @@
     <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
   </div>
   <div v-for="sponsor in sponsors" :key="sponsor.id" class="card">
-    <Sponsor
+    <SponsorCard
       :sponsor="sponsor"
       :link-message="
         linkMessages[Math.floor(Math.random() * linkMessages.length)]
@@ -16,10 +16,12 @@
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 import { shuffle } from "lodash";
+import { setWindowName } from "../helper/utils";
 
 const sponsors = ref([]);
 
-document.title = "XCCup - Sponsoren";
+setWindowName("Sponsoren");
+
 const linkMessages = ref([
   "Hit it!",
   "Check it out",
