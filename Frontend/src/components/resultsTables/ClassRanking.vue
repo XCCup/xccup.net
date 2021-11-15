@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div id="classRankingPanel" class="row">
     <div
       v-for="(rankingClass, index) in rankingByClass"
       :key="index"

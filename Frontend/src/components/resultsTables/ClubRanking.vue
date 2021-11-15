@@ -1,5 +1,5 @@
 <template>
-  <table v-if="bestClubs" class="table table-hover">
+  <table v-if="bestClubs" id="clubRankingTable" class="table table-hover">
     <tbody>
       <tr
         v-for="(club, index) in bestClubs.slice(0, 5)"

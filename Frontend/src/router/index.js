@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/HomeView.vue";
-import Flight from "@/views/FlightView.vue";
+import HomeView from "@/views/HomeView.vue";
+import FlightView from "@/views/FlightView.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 import useUser from "@/composables/useUser";
@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: HomeView,
   },
   {
     path: "/flug/:flightId",
@@ -17,7 +17,7 @@ const routes = [
     props: true,
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
-    component: Flight,
+    component: FlightView,
   },
   {
     path: "/:year/fluege/",
