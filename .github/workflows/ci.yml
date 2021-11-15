@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: XCCup e2e CI
 
 on:
   push:
@@ -49,6 +49,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          # start: npm --prefix ./web run dev
+          start: yarn dev
           wait-on: http://localhost:8000
           working-directory: ./Frontend
