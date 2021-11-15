@@ -4,7 +4,7 @@
 
 <script setup>
 import { format } from "date-fns";
-const props = defineProps({
+defineProps({
   timestamp: {
     type: [String, Number, Date],
     required: true,

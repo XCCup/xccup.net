@@ -4,23 +4,25 @@
       v-bind="$attrs"
       :value="modelValue"
       :placeholder="label"
-      @input="$emit('update:modelValue', $event.target.value)"
       class="form-control"
       :disabled="isDisabled"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
     <label v-if="label">{{ label }}</label>
   </div>
 </template>
 
 <script setup>
-const props = defineProps({
+defineEmits(["update:modelValue"]);
+
+defineProps({
   label: {
     type: String,
-    default: "",
+    required: true,
   },
   modelValue: {
     type: [String, Number],
-    default: "",
+    required: true,
   },
   isDisabled: {
     type: Boolean,

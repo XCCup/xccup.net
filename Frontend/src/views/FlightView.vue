@@ -6,7 +6,7 @@
     <FlightAirbuddies
       v-if="flight.airbuddies.length > 0"
       :flight="flight"
-      @updateAirbuddies="updateAirbuddies"
+      @update-airbuddies="updateAirbuddies"
     />
     <FlightDetails :flight="flight" />
     <FlightReport :report="flight.report" :photos="flight.photos" />
@@ -30,6 +30,7 @@ import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ApiService from "@/services/ApiService.js";
 import trackColors from "@/assets/js/trackColors.js";
+import { setWindowName } from "../helper/utils";
 
 export default {
   name: "FlightView",
@@ -47,10 +48,13 @@ export default {
           throw "Invalid response";
         }
         flight.value = response.data;
-        // Name the window
-        document.title = `XCCup - Flug von ${
-          flight.value.user.firstName + " " + flight.value.user.lastName
-        }`;
+
+        setWindowName(
+          "Flug von" +
+            flight.value.user.firstName +
+            " " +
+            flight.value.user.lastName
+        );
       } catch (error) {
         console.log(error);
         if (error.response && error.response.status == 404) {

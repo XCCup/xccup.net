@@ -1,18 +1,19 @@
 <template>
-  <Infobox :seasonStats="seasonStats" />
-  <DailyRanking :maxRows="5" :flights="dailyRanking" />
+  <InfoBox :season-stats="seasonStats" />
+  <DailyRanking :max-rows="5" :flights="dailyRanking" />
   <OverallResults
-    :rankingByClass="rankingByClass"
-    :topFlights="topFlights"
-    :bestClubs="bestClubs"
-    :bestTeams="bestTeams"
+    :ranking-by-class="rankingByClass"
+    :top-flights="topFlights"
+    :best-clubs="bestClubs"
+    :best-teams="bestTeams"
   />
   <SponsorsPanel :sponsors="sponsors" />
 </template>
 
-<script setup async>
+<script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
+import { setWindowName } from "../helper/utils";
 
 const dailyRanking = ref(null);
 const topFlights = ref(null);
@@ -22,8 +23,7 @@ const bestTeams = ref(null);
 const seasonStats = ref(null);
 const sponsors = ref(null);
 
-// Name the window
-document.title = "XCCup.net";
+setWindowName("Home");
 
 try {
   // To simulate longer loading times

@@ -12,33 +12,33 @@
         Airbuddies
       </button>
 
-      <div class="collapse mt-1" id="collapseAirbuddies">
+      <div id="collapseAirbuddies" class="collapse mt-1">
         <!-- Spinner -->
         <div
-          class="spinner-border text-primary m-2"
           v-if="!loaded"
+          class="spinner-border text-primary m-2"
           role="status"
         >
           <span class="visually-hidden">Loading...</span>
         </div>
         <!-- Checkboxes -->
         <div
-          class="form-check form-check-inline"
-          v-for="(airbuddy, index) in this.buddyFlights"
+          v-for="(airbuddy, index) in buddyFlights"
           :key="airbuddy.id"
+          class="form-check form-check-inline"
         >
           <h5 class="ms-2">
             <input
+              :id="index"
+              v-model="checkedFlights"
               class="form-check-input"
               type="checkbox"
               :value="airbuddy.id"
-              :id="index"
-              v-model="checkedFlights"
             />
             <label class="form-check-label" :for="index">
               <span
                 class="badge"
-                :style="{ backgroundColor: this.trackColors[index + 1] }"
+                :style="{ backgroundColor: trackColors[index + 1] }"
               >
                 {{ airbuddy.user.firstName + " " + airbuddy.user.lastName }}
                 <router-link
@@ -63,7 +63,14 @@ import trackColors from "@/assets/js/trackColors";
 import ApiService from "@/services/ApiService";
 
 export default {
-  name: "Airbuddies",
+  name: "FlightAirbuddies",
+  props: {
+    flight: {
+      type: Object,
+      required: true,
+    },
+  },
+  emits: ["updateAirbuddies"],
   data() {
     return {
       checkedFlights: [],
@@ -72,10 +79,18 @@ export default {
       loaded: false,
     };
   },
-  props: {
-    flight: {
-      type: Object,
-      required: true,
+  watch: {
+    checkedFlights() {
+      let airbuddyTracks = [];
+      this.buddyFlights.forEach((element) => {
+        airbuddyTracks.push({
+          buddyName: element.user.firstName,
+          buddyFlightId: element.id,
+          isActive: this.checkedFlights.includes(element.id),
+          fixes: element.fixes,
+        });
+      });
+      this.$emit("updateAirbuddies", airbuddyTracks);
     },
   },
   methods: {
@@ -107,20 +122,5 @@ export default {
       });
     },
   },
-  watch: {
-    checkedFlights() {
-      let airbuddyTracks = [];
-      this.buddyFlights.forEach((element) => {
-        airbuddyTracks.push({
-          buddyName: element.user.firstName,
-          buddyFlightId: element.id,
-          isActive: this.checkedFlights.includes(element.id),
-          fixes: element.fixes,
-        });
-      });
-      this.$emit("updateAirbuddies", airbuddyTracks);
-    },
-  },
-  emits: ["updateAirbuddies"],
 };
 </script>

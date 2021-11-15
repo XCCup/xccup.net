@@ -14,8 +14,8 @@
     <option v-if="!showLabel" disabled value="" selected>{{ label }}</option>
     <option
       v-for="glider in gliders"
-      :value="glider.id"
       :key="glider.id"
+      :value="glider.id"
       :selected="glider.id === modelValue"
     >
       {{
@@ -31,16 +31,19 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineEmits(["update:modelValue"]);
+defineProps({
   isDisabled: {
     type: Boolean,
     default: false,
   },
   label: {
     type: String,
+    required: true,
   },
   modelValue: {
     type: String,
+    required: true,
   },
   gliders: {
     type: Array,

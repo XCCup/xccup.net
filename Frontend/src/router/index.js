@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/Home.vue";
-import Flight from "@/views/Flight.vue";
+import HomeView from "@/views/HomeView.vue";
+import FlightView from "@/views/FlightView.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 import useUser from "@/composables/useUser";
@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: HomeView,
   },
   {
     path: "/flug/:flightId",
@@ -17,7 +17,7 @@ const routes = [
     props: true,
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
-    component: Flight,
+    component: FlightView,
   },
   {
     path: "/:year/fluege/",
@@ -26,16 +26,15 @@ const routes = [
     beforeEnter: validateRouteParamYear,
     meta: { toTop: true },
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/FlightsAll.vue"),
+    component: () => import("../views/FlightsAll.vue"),
   },
   {
     path: "/:year/einzelwertung/",
     name: "ResultsOverall",
     props: (route) => ({ category: "overall", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
-
-    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+    // Lazy loading components
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/newcomer/",
@@ -43,7 +42,7 @@ const routes = [
     props: (route) => ({ category: "newcomer", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/seniorenwertung/",
@@ -51,7 +50,7 @@ const routes = [
     props: (route) => ({ category: "seniors", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/damenwertung/",
@@ -59,7 +58,7 @@ const routes = [
     props: (route) => ({ category: "ladies", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/lux-championat/",
@@ -67,7 +66,7 @@ const routes = [
     props: (route) => ({ category: "lux-state", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/rlp-meisterschaft/",
@@ -75,7 +74,7 @@ const routes = [
     props: (route) => ({ category: "rlp-state", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import(/* webpackChunkName: "" */ "../views/Results.vue"),
+    component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/teamwertung/",
@@ -83,8 +82,7 @@ const routes = [
     props: true,
     beforeEnter: validateRouteParamYear,
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/ResultsTeams.vue"),
+    component: () => import("../views/ResultsTeams.vue"),
   },
   {
     path: "/:year/vereinswertung/",
@@ -92,44 +90,35 @@ const routes = [
     props: true,
     beforeEnter: validateRouteParamYear,
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/ResultsClubs.vue"),
+    component: () => import("../views/ResultsClubs.vue"),
   },
   {
     path: "/fluggebietsrekorde/",
     name: "SiteRecords",
     props: true,
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/SiteRecords.vue"),
+    component: () => import("../views/SiteRecords.vue"),
   },
   {
     path: "/upload",
     name: "FlightUpload",
     props: true,
     meta: { requiredAuth: true },
-
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/FlightUpload.vue"),
+    component: () => import("../views/FlightUpload.vue"),
   },
   {
     path: "/flug-bearbeiten",
     name: "FlightEdit",
     // props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/FlightEdit.vue"),
+    component: () => import("../views/FlightEdit.vue"),
   },
   {
     path: "/profil",
     name: "Profile",
     props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
+    component: () => import("../views/UserProfile.vue"),
   },
   {
     path: "/profil/bearbeiten",
@@ -137,8 +126,7 @@ const routes = [
     props: { edit: true },
     meta: { requiredAuth: true },
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
+    component: () => import("../views/UserProfile.vue"),
   },
   {
     path: "/profil/geraete-liste",
@@ -146,47 +134,45 @@ const routes = [
     props: { scrollToGliderSelect: true },
     meta: { requiredAuth: true },
 
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/UserProfile.vue"),
+    component: () => import("../views/UserProfile.vue"),
   },
   {
     path: "/sandbox/:flightId",
     name: "Sandbox",
     props: true,
-    component: () => import(/* webpackChunkName: "" */ "../views/Sandbox.vue"),
+    component: () => import("../views/TheSandbox.vue"),
   },
   {
     path: "/login/",
     name: "Login",
-    component: () => import(/* webpackChunkName: "" */ "../views/Login.vue"),
+    component: () => import("../views/UserLogin.vue"),
   },
   {
     path: "/sponsoren",
     name: "Sponsors",
-    component: () => import(/* webpackChunkName: "" */ "../views/Sponsors.vue"),
+    component: () => import("../views/SponsorsList.vue"),
   },
   {
     path: "/vereine",
     name: "Clubs",
-    component: () => import(/* webpackChunkName: "" */ "../views/Clubs.vue"),
+    component: () => import("../views/ClubsList.vue"),
   },
   {
     path: "/impressum",
     name: "Imprint",
-    component: () => import(/* webpackChunkName: "" */ "../views/Imprint.vue"),
+    component: () => import("../views/ImprintView.vue"),
   },
   {
     path: "/datenschutz",
     name: "Privacy",
-    component: () => import(/* webpackChunkName: "" */ "../views/Privacy.vue"),
+    component: () => import("../views/PrivacyView.vue"),
   },
   {
     path: "/admin",
     name: "AdminDashboard",
-    //TODO Check if logged-in user is an moderator or admin
+    //TODO: Check if logged-in user is an moderator or admin
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () =>
-      import(/* webpackChunkName: "" */ "../views/AdminDashboard.vue"),
+    component: () => import("../views/AdminDashboard.vue"),
   },
   {
     path: "/:catchAll(.*)",

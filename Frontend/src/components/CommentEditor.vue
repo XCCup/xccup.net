@@ -9,9 +9,9 @@
           >
 
           <textarea
-            class="form-control mb-2"
             id="comment-editor"
             v-model="message"
+            class="form-control mb-2"
             :rows="3"
             @input="saveMessageToLocalStorage"
           ></textarea>
@@ -37,7 +37,7 @@ import useUser from "@/composables/useUser";
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 const { getUserId, loggedIn } = useUser();
-const emit = defineEmits();
+const emit = defineEmits(["submitComment"]);
 const route = useRoute();
 
 const message = ref("");

@@ -14,8 +14,8 @@
     <option v-if="!showLabel" disabled value="" selected>{{ label }}</option>
     <option
       v-for="option in options"
-      :value="option"
       :key="option"
+      :value="option"
       :selected="option === modelValue"
     >
       {{ option }}
@@ -24,10 +24,12 @@
 </template>
 
 <script setup>
-const props = defineProps({
+defineEmits(["update:modelValue"]);
+
+defineProps({
   label: {
     type: String,
-    default: "",
+    required: true,
   },
   isDisabled: {
     type: Boolean,
@@ -35,7 +37,7 @@ const props = defineProps({
   },
   modelValue: {
     type: [String, Number],
-    default: "",
+    required: true,
   },
   options: {
     type: Array,

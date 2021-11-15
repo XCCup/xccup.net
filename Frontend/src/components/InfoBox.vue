@@ -10,7 +10,7 @@
   <section class="py-3 text-center container">
     <div class="col-md-8 mx-auto">
       <h1 class="fw-light">XCCup 2021</h1>
-      <p class="lead">
+      <p id="infoboxContent" class="lead">
         Der XCCup soll das Streckenfliegen in unserer Region fördern. Hierzu
         werden nach einem einfachen Prinzip Streckenflüge mit Gleitschirmen,
         Drachen oder Starrflüglern ausgewertet. Derzeit sind
@@ -25,9 +25,9 @@
 
 <script>
 export default {
-  name: "Infobox",
+  name: "InfoBox",
   props: {
-    seasonStats: Object,
+    seasonStats: { type: Object, required: true },
   },
 };
 </script>
