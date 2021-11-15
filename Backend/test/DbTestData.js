@@ -27,7 +27,7 @@ const dbTestData = {
       await Promise.all(
         clubs.map(async (entry) => {
           await Club.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -38,7 +38,7 @@ const dbTestData = {
       await Promise.all(
         teams.map(async (entry) => {
           await Team.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0].message);
           });
         })
       );
@@ -49,126 +49,126 @@ const dbTestData = {
       await Promise.all(
         sites.map(async (entry) => {
           await FlyingSite.create(entry).catch((err) => {
-            logger.error(err);
+            logger.error(err.errors[0]);
           });
         })
       );
       logger.debug("Finished adding sites");
 
-      logger.debug("Start adding users");
-      await Promise.all(
-        users.map(async (user) => {
-          await User.create(user).catch((err) => {
-            logger.debug(err);
-          });
-        })
-      );
-      logger.debug("Finished adding users");
+      // logger.debug("Start adding users");
+      // await Promise.all(
+      //   users.map(async (user) => {
+      //     await User.create(user).catch((err) => {
+      //       logger.debug(err);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding users");
 
-      logger.debug("Start adding flights");
-      const flights = require("./testdatasets/flights.json");
-      adjustYearOfEveryFlight(flights);
-      adjustTimesToToday(flights, 5);
-      await Promise.all(
-        flights.map(async (flight) => {
-          Flight.create(flight).catch((err) => {
-            logger.debug(err);
-          });
-        })
-      );
-      logger.debug("Finished adding flights");
+      // logger.debug("Start adding flights");
+      // const flights = require("./testdatasets/flights.json");
+      // adjustYearOfEveryFlight(flights);
+      // adjustTimesToToday(flights, 5);
+      // await Promise.all(
+      //   flights.map(async (flight) => {
+      //     Flight.create(flight).catch((err) => {
+      //       logger.debug(err);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding flights");
 
-      logger.debug("Start adding flightPhotos");
-      const flightPhotos = require("./testdatasets/flightPhotos.json");
-      await Promise.all(
-        flightPhotos.map(async (photo) => {
-          FlightPhoto.create(photo).catch((err) => {
-            logger.debug(err);
-          });
-        })
-      );
-      logger.debug("Finished adding flightPhotos");
+      // logger.debug("Start adding flightPhotos");
+      // const flightPhotos = require("./testdatasets/flightPhotos.json");
+      // await Promise.all(
+      //   flightPhotos.map(async (photo) => {
+      //     FlightPhoto.create(photo).catch((err) => {
+      //       logger.debug(err);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding flightPhotos");
 
-      logger.debug("Start adding comments");
-      const comments = require("./testdatasets/comments.json");
-      await Promise.all(
-        comments.map(async (comment) => {
-          FlightComment.create(comment).catch((err) => {
-            logger.debug(err);
-          });
-        })
-      );
-      logger.debug("Finished adding comments");
+      // logger.debug("Start adding comments");
+      // const comments = require("./testdatasets/comments.json");
+      // await Promise.all(
+      //   comments.map(async (comment) => {
+      //     FlightComment.create(comment).catch((err) => {
+      //       logger.debug(err);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding comments");
 
-      logger.debug("Start adding seasonDetails");
-      const seasonDetails = require("./testdatasets/seasonDetails.json");
-      await Promise.all(
-        seasonDetails.map(async (entry) => {
-          await SeasonDetail.create(entry).catch((err) => {
-            logger.error(err);
-          });
-        })
-      );
-      logger.debug("Finished adding seasonDetails");
+      // logger.debug("Start adding seasonDetails");
+      // const seasonDetails = require("./testdatasets/seasonDetails.json");
+      // await Promise.all(
+      //   seasonDetails.map(async (entry) => {
+      //     await SeasonDetail.create(entry).catch((err) => {
+      //       logger.error(err.errors[0].message);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding seasonDetails");
 
-      logger.debug("Start adding airspaces");
-      const airspaces = require("./testdatasets/airspaces.json");
-      await Promise.all(
-        airspaces.map(async (entry) => {
-          await Airspace.create(entry).catch((err) => {
-            logger.error(err);
-          });
-        })
-      );
-      logger.debug("Finished adding airspaces");
+      // logger.debug("Start adding airspaces");
+      // const airspaces = require("./testdatasets/airspaces.json");
+      // await Promise.all(
+      //   airspaces.map(async (entry) => {
+      //     await Airspace.create(entry).catch((err) => {
+      //       logger.error(err.errors[0].message);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding airspaces");
 
-      logger.debug("Start adding fixes");
-      const fixes = require("./testdatasets/fixes.json");
-      await Promise.all(
-        fixes.map(async (entry) => {
-          await FlightFixes.create(entry).catch((err) => {
-            logger.error(err);
-          });
-        })
-      );
-      logger.debug("Finished adding fixes");
+      // logger.debug("Start adding fixes");
+      // const fixes = require("./testdatasets/fixes.json");
+      // await Promise.all(
+      //   fixes.map(async (entry) => {
+      //     await FlightFixes.create(entry).catch((err) => {
+      //       logger.error(err.errors[0].message);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding fixes");
 
-      logger.debug("Start adding news");
-      const news = require("./testdatasets/news.json");
-      await Promise.all(
-        news.map(async (entry) => {
-          await News.create(entry).catch((err) => {
-            logger.error(err);
-          });
-        })
-      );
-      logger.debug("Finished adding news");
+      // logger.debug("Start adding news");
+      // const news = require("./testdatasets/news.json");
+      // await Promise.all(
+      //   news.map(async (entry) => {
+      //     await News.create(entry).catch((err) => {
+      //       logger.error(err.errors[0].message);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding news");
 
-      logger.debug("Start adding sponsors");
-      const sponsorsArray = require("./testdatasets/sponsors.json");
-      await Promise.all(
-        sponsorsArray.map(async (entry) => {
-          await Sponsor.create(entry).catch((err) => {
-            logger.error(err);
-          });
-        })
-      );
-      logger.debug("Finished adding sponsors");
+      // logger.debug("Start adding sponsors");
+      // const sponsorsArray = require("./testdatasets/sponsors.json");
+      // await Promise.all(
+      //   sponsorsArray.map(async (entry) => {
+      //     await Sponsor.create(entry).catch((err) => {
+      //       logger.error(err.errors[0].message);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding sponsors");
 
-      logger.debug("Start adding sponsor logos");
-      const logos = require("./testdatasets/logos.json");
-      await Promise.all(
-        logos.map(async (entry) => {
-          await Logo.create(entry).catch((err) => {
-            logger.error(err);
-          });
-        })
-      );
-      logger.debug("Finished adding sponsor logos");
+      // logger.debug("Start adding sponsor logos");
+      // const logos = require("./testdatasets/logos.json");
+      // await Promise.all(
+      //   logos.map(async (entry) => {
+      //     await Logo.create(entry).catch((err) => {
+      //       logger.error(err.errors[0].message);
+      //     });
+      //   })
+      // );
+      // logger.debug("Finished adding sponsor logos");
 
-      logger.debug("Will fix invalid GeoJSON data of airspaces");
-      await AirspaceService.fixInvalidGeoData();
-      logger.debug("Finished repair of GeoJSON");
+      // logger.debug("Will fix invalid GeoJSON data of airspaces");
+      // await AirspaceService.fixInvalidGeoData();
+      // logger.debug("Finished repair of GeoJSON");
     }
   },
 };

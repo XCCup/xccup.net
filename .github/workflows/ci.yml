@@ -51,9 +51,10 @@ jobs:
           start: yarn dev
           wait-on: http://localhost:8000
           working-directory: ./Frontend
+          record: false #Don't make a video of the testing
       - name: Store artefacts of test failures
         uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: cypress-screenshots
-          path: cypress/screenshots
+          path: ./Frontend/cypress/screenshots
