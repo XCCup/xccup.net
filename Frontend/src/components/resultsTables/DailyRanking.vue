@@ -1,5 +1,5 @@
 <template>
-  <div class="row bg-primary">
+  <div id="dailyRankingPanel" class="row bg-primary">
     <div class="col-xl-5 col-md-6 col-12">
       <div class="text-light p-4 pb-4">
         <h3>
@@ -25,7 +25,9 @@
                 @mouseleave="updateHighlightedFlight(null)"
               >
                 <td scope="row">{{ index + 1 }}</td>
-                <td>{{ flight.user.firstName + " " + flight.user.lastName }}</td>
+                <td>
+                  {{ flight.user.firstName + " " + flight.user.lastName }}
+                </td>
                 <td>{{ flight.takeoff.name }}</td>
                 <td>{{ Math.floor(flight.flightDistance) }} km</td>
                 <td>
@@ -38,16 +40,21 @@
           <router-link
             :to="{ name: 'FlightsAll', params: { year: currentYear } }"
             class="btn btn-outline-light btn-sm my-1"
-          >Alle Flüge anzeigen</router-link>
+            >Alle Flüge anzeigen</router-link
+          >
         </div>
         <div v-else class="text-center mt-5">
-          <p class="fs-1">🌧 💨 🤯</p>Heute noch keine eingereichten Flüge vorhanden
+          <p class="fs-1">🌧 💨 🤯</p>
+          Heute noch keine eingereichten Flüge vorhanden
         </div>
       </div>
       <div></div>
     </div>
     <div class="col-xl-7 col-md-6 col-12 p-0 m-0">
-      <DailyFlightsMap :highlighted-flight="highlightedFlightId" :tracks="dailyFlightsMapTracks" />
+      <DailyFlightsMap
+        :highlighted-flight="highlightedFlightId"
+        :tracks="dailyFlightsMapTracks"
+      />
     </div>
   </div>
 </template>
