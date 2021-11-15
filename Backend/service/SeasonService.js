@@ -1,5 +1,5 @@
 const SeasonDetail = require("../config/postgres")["SeasonDetail"];
-const { waitTillDbHasSync, getCurrentYear } = require("../helper/Utils");
+const { getCurrentYear } = require("../helper/Utils");
 const logger = require("../config/logger");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
@@ -61,11 +61,5 @@ const service = {
     });
   },
 };
-
-// (async function init() {
-//   await waitTillDbHasSync();
-//   logger.info("Initialize SeasonDetails");
-//   service.refreshCurrentSeasonDetails();
-// })();
 
 module.exports = service;
