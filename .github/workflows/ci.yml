@@ -47,7 +47,7 @@ jobs:
       #   run: yarn cypress-headless
       #   working-directory: ./Frontend
       - name: test if backend is running
-        run: sleep(60) && docker logs server
+        run: sleep 60 && docker logs server
       # - name: Cypress run
       #   uses: cypress-io/github-action@v2
       #   with:
