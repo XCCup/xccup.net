@@ -3,21 +3,21 @@
     <div class="mb-3">
       <label for="email" class="form-label">E-Mail</label>
       <input
+        id="email"
+        v-model="email"
         type="email"
         class="form-control"
-        id="email"
         placeholder="E-Mail"
-        v-model="email"
       />
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Passwort</label>
       <input
+        id="password"
+        v-model="password"
         type="password"
         class="form-control"
-        id="password"
         placeholder="Passwort"
-        v-model="password"
       />
     </div>
     <!-- Stay logged in not realy useful with JWT auth -->
@@ -37,52 +37,40 @@
   <a class="dropdown-item" href="#">Password vergessen?</a>
 </template>
 
-<script>
+<script setup>
 import useUser from "@/composables/useUser";
+import { useRouter } from "vue-router";
+import { ref } from "vue";
 const { login } = useUser();
+const router = useRouter();
 
-export default {
-  name: "BaseLogin",
-
-  data() {
-    return { email: "", password: "" };
+defineProps({
+  redirectAfterLogin: {
+    type: Boolean,
+    default: true,
   },
-  // computed: {
-  //   ...mapGetters({
-  //     getterLoginStatus: "getLoginStatus",
-  //   }),
-  // },
+});
+const email = ref("");
+const password = ref("");
 
-  methods: {
-    // ...mapActions({
-    //   actionLogin: "login",
-    // }),
-    async handleSubmit() {
-      try {
-        const response = await login({
-          email: this.email,
-          password: this.password,
-        });
-        // Redirect after login
-        if (response.status === 200) {
-          let searchParams = new URLSearchParams(window.location.search);
-          if (searchParams.has("redirect")) {
-            this.$router.push({ path: `${searchParams.get("redirect")}` });
-          }
-        }
-      } catch (error) {
-        // TODO: Display error message
-        console.log(error);
+const handleSubmit = async () => {
+  try {
+    const response = await login({
+      email: email.value,
+      password: password.value,
+    });
+    // Redirect after login
+    // Alternativly redirect in router config
+    if (response.status === 200) {
+      let searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.has("redirect")) {
+        router.push({ path: `${searchParams.get("redirect")}` });
       }
-    },
-  },
-  props: {
-    redirectAfterLogin: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
-  },
+    }
+  } catch (error) {
+    // TODO: Display error message
+    console.log(error);
+  }
 };
 </script>
 

@@ -7,20 +7,20 @@
           Flug auswählen (.igc)
         </label>
         <input
+          id="igcUploadForm"
           class="form-control"
           type="file"
           accept=".igc"
-          id="igcUploadForm"
           @change="igcSelected"
         />
       </div>
 
       <div class="row">
         <div class="col">
-          <BaseInput v-model="takeoff" label="Startplatz" :isDisabled="true" />
+          <BaseInput v-model="takeoff" label="Startplatz" :is-disabled="true" />
         </div>
         <div class="col">
-          <BaseInput v-model="landing" label="Landeplatz" :isDisabled="true" />
+          <BaseInput v-model="landing" label="Landeplatz" :is-disabled="true" />
         </div>
       </div>
 
@@ -30,13 +30,16 @@
             <GliderSelect
               v-model="defaultGlider"
               label="Fluggerät"
-              :showLabel="true"
+              :show-label="true"
               :gliders="listOfGliders"
-              :isDisabled="!flightId"
+              :is-disabled="!flightId"
             />
           </div>
           <div class="col-md-3 mt-3">
-            <router-link :to="{ name: 'Profile' }" class="d-grid gap-2">
+            <router-link
+              :to="{ name: 'ProfileGliderList' }"
+              class="d-grid gap-2"
+            >
               <button type="button" class="btn btn-primary">
                 Liste bearbeiten
               </button>
@@ -47,11 +50,11 @@
       <div class="my-3">
         <div class="form-floating mb-3">
           <textarea
+            id="floatingTextarea2"
+            v-model="flightReport"
             class="form-control"
             placeholder="Flugbericht"
-            id="floatingTextarea2"
             style="height: 100px"
-            v-model="flightReport"
             :disabled="!flightId"
           ></textarea>
           <label for="floatingTextarea2">Flugbericht</label>
@@ -59,10 +62,10 @@
 
         <div class="form-check mb-3">
           <input
+            id="hikeAndFlyCheckbox"
+            v-model="hikeAndFly"
             class="form-check-input"
             type="checkbox"
-            v-model="hikeAndFly"
-            id="hikeAndFlyCheckbox"
           />
           <label class="form-check-label" for="hikeAndFlyCheckbox">
             Hike & Fly
@@ -70,10 +73,10 @@
         </div>
         <div class="form-check mb-3">
           <input
+            id="logbookCheckbox"
+            v-model="onlyLogbook"
             class="form-check-input"
             type="checkbox"
-            v-model="onlyLogbook"
-            id="logbookCheckbox"
           />
           <label class="form-check-label" for="logbookCheckbox">
             Nur Flugbuch
@@ -88,9 +91,9 @@
             >
 
             <input
+              id="formImageUpload"
               class="form-control"
               type="file"
-              id="formImageUpload"
               accept=".jpg, .jpeg"
               :disabled="!flightId"
               @change="imageSelected"
@@ -123,10 +126,10 @@
 
         <div class="form-check mb-3">
           <input
+            id="flexCheckDefault"
+            v-model="rulesAccepted"
             class="form-check-input"
             type="checkbox"
-            v-model="rulesAccepted"
-            id="flexCheckDefault"
             :disabled="!flightId"
           />
           <label class="form-check-label" for="flexCheckDefault">

@@ -7,9 +7,8 @@
 </template>
 
 <script setup>
-// Name the window
-document.title = "XCCup - Admin";
+import { setWindowName } from "../helper/utils";
+setWindowName("Admin");
 </script>
 
-<style>
-</style>
+<style></style>

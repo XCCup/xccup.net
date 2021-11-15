@@ -6,9 +6,9 @@
 
   <section>
     <div class="bg-primary text-light p-4">
-      <div class="container">
+      <div id="sponsorsPanel" class="container">
         <h2>Sponsoren</h2>
-        <div class="row mt-3">
+        <div id="goldSponsors" class="row mt-3">
           <div v-for="sponsor in goldSponsors" :key="sponsor.id" class="col">
             <div class="square-holder">
               <a :href="sponsor.website" target="_blank">
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="container mt-3">
-      <div class="row mt-3">
+      <div id="otherSponsors" class="row mt-3">
         <div
           v-for="sponsor in regularSponsors"
           :key="sponsor.id"

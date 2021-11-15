@@ -13,11 +13,14 @@ import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
+import ApiService from "@/services/ApiService";
 
-import { convertHeightStringToMetersValue } from "../helper/utils";
+import {
+  convertMapBoundsToQueryString,
+  createAirspacePopupContent,
+} from "@/helper/mapHelpers";
 
-import { ref } from "@vue/reactivity";
-import { watchEffect, onMounted, onBeforeUnmount } from "vue";
+import { watch, onMounted, onBeforeUnmount, ref } from "vue";
 
 let map = ref(null);
 let tracks = ref([]);
@@ -27,27 +30,20 @@ let markers = ref([]);
 const props = defineProps({
   tracklogs: {
     type: Array,
-    default: () => {
-      return [];
-    },
+    required: true,
   },
   turnpoints: {
     type: Array,
-    default: () => {
-      return [];
-    },
-  },
-  airspaces: {
-    type: Array,
-    default: () => {
-      return [];
-    },
+    required: true,
   },
 });
 
-// watchEffect(() => drawTracks(props.tracklogs));
-// watchEffect(() => drawAirspaces(props.airspaces));
-
+watch(
+  () => props.tracklogs,
+  () => {
+    drawTracks(props.tracklogs);
+  }
+);
 onMounted(() => {
   // TODO:
   // Whenever using anything based on OpenStreetMap, an attribution is obligatory as per the copyright notice.
@@ -66,19 +62,25 @@ onMounted(() => {
     tileOptions
   ).addTo(map.value);
 
-  // Draw tracklogs
+  // Draw tracklogs and Airspaces
   drawTracks(props.tracklogs);
   drawTurnpoints(props.turnpoints);
+  drawAirspaces(convertMapBoundsToQueryString(tracks.value[0]));
 });
 
 onBeforeUnmount(() => {
   // Remove the map position update listener
-  document.removeEventListener("positionUpdated", positionUpdateListener);
+  document.removeEventListener(
+    "markerPositionUpdated",
+    markerPositionUpdateListener
+  );
   // Remove the center map on click listener
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
 });
 
-const drawAirspaces = (airspaceData) => {
+const drawAirspaces = async (bounds) => {
+  const res = await ApiService.getAirspaces(bounds);
+  const airspaceData = res.data;
   const options = {
     opacity: 0.1,
     fillOpacity: 0.08,
@@ -86,7 +88,7 @@ const drawAirspaces = (airspaceData) => {
   };
   airspaceData.forEach((airspace) => {
     L.geoJSON(airspace.polygon, options)
-      .bindPopup(createPopupContent(airspace))
+      .bindPopup(createAirspacePopupContent(airspace))
       .addTo(map.value);
   });
 };
@@ -97,9 +99,9 @@ const drawTracks = (trackData) => {
 
   // Remove all tracks & markers to prevet orphaned ones
   if (positionMarkers.value.length > 0) {
-    positionMarkers.forEach((_, index) => {
-      trackData[index].remove();
-      positionMarkers[index].remove();
+    positionMarkers.value.forEach((_, index) => {
+      tracks.value[index].remove();
+      positionMarkers.value[index].remove();
     });
   }
 
@@ -125,7 +127,7 @@ const drawTracks = (trackData) => {
         );
       }
       // Create position markers for every track
-      positionMarkers[index] = L.circleMarker(track[0], {
+      tmpPositionMarkers[index] = L.circleMarker(track[0], {
         color: "#fff",
         fillColor: trackColors[index],
         fillOpacity: 0.8,
@@ -136,24 +138,9 @@ const drawTracks = (trackData) => {
     }
   });
 
-  // Event listener for updating marker positions. Input comes from the barogramm component
-  let markerPositionUpdateListener = (event) => {
-    updateMarkerPosition(event.detail);
-  };
-  document.addEventListener(
-    "markerPositionUpdated",
-    markerPositionUpdateListener
-  );
-
-  // Center listener
-  const centerMapOnClickListener = () => {
-    centerMapOnClick();
-  };
-  document.addEventListener("centerMapOnClick", centerMapOnClickListener);
-
   // Update data
-  tracks = lines;
-  markers = tmpMarkers;
+  tracks.value = lines;
+  markers.value = tmpMarkers;
   positionMarkers.value = tmpPositionMarkers;
 };
 
@@ -168,37 +155,39 @@ const drawTurnpoints = (turnpoints) => {
   }).addTo(map.value);
 };
 
+// Center map on baro click listener
+const centerMapOnClickListener = () => {
+  map.value.setView(positionMarkers.value[0].getLatLng());
+};
+document.addEventListener("centerMapOnClick", centerMapOnClickListener);
 
+// Event listener for updating pilot marker positions. Input comes from the barogramm component
+let markerPositionUpdateListener = (event) => {
+  updateMarkerPosition(event.detail);
+};
+document.addEventListener(
+  "markerPositionUpdated",
+  markerPositionUpdateListener
+);
 
 const updateMarkerPosition = (position) => {
   props.tracklogs.forEach((_, index) => {
     // Index + 1 because first dataset is GND and we need to skip that one
     if (position.datasetIndex === index + 1) {
-      if (props.tracklogs[index][position.dataIndex]) {
-        positionMarkers[index].setLatLng(
+      if (
+        props.tracklogs[index][position.dataIndex] &&
+        positionMarkers.value[index]
+      ) {
+        positionMarkers.value[index].setLatLng(
           props.tracklogs[index][position.dataIndex]
         );
       }
-
     }
   });
   // Center map on pilot - currently too CPU intense. Needs refactoring
   // if (positions.datasetIndex === 1) {
   //   map.setView(tracklogs[0][positions.dataIndex]);
   // }
-};
-const createPopupContent = (airspace) => {
-  const ceilingInMeters = addRepresentationInMeters(airspace.ceiling);
-  const floorInMeters = addRepresentationInMeters(airspace.floor);
-  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`;
-  return content;
-};
-const addRepresentationInMeters = (value) => {
-  const valueInMeters = convertHeightStringToMetersValue(value);
-  return valueInMeters ? ` / ${valueInMeters} m` : "";
-};
-const centerMapOnClick = () => {
-  map.value.setView(positionMarkers[0].getLatLng());
 };
 </script>
 

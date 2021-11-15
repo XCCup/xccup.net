@@ -5,18 +5,19 @@
   <FlightsTable :flights="flights" />
 </template>
 
-<script setup async>
+<script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
+import { setWindowName } from "../helper/utils";
 
 const props = defineProps({
   year: {
     type: [String, Number],
+    required: true,
   },
 });
 
-// Name the window
-document.title = "XCCup - Streckenmeldungen";
+setWindowName("Streckenmeldungen");
 
 const flights = ref(null);
 try {

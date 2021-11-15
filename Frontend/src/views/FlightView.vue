@@ -1,16 +1,12 @@
 <template>
   <div v-if="flight">
     <TheSubnav :flight="flight" />
-    <FlightMap
-      :tracklogs="tracklogs"
-      :turnpoints="flight.flightTurnpoints"
-      :airspaces="airspaces"
-    />
-    <FlightBarogramm :datasets="baroData" :key="baroDataUpdated" />
-    <Airbuddies
+    <FlightMap :tracklogs="tracklogs" :turnpoints="flight.flightTurnpoints" />
+    <FlightBarogramm :key="baroDataUpdated" :datasets="baroData" />
+    <FlightAirbuddies
       v-if="flight.airbuddies.length > 0"
       :flight="flight"
-      @updateAirbuddies="updateAirbuddies"
+      @update-airbuddies="updateAirbuddies"
     />
     <FlightDetails :flight="flight" />
     <FlightReport :report="flight.report" :photos="flight.photos" />
@@ -34,6 +30,7 @@ import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import ApiService from "@/services/ApiService.js";
 import trackColors from "@/assets/js/trackColors.js";
+import { setWindowName } from "../helper/utils";
 
 export default {
   name: "FlightView",
@@ -41,23 +38,23 @@ export default {
     const router = useRouter();
     const route = useRoute();
     const flight = ref(null);
-    const airspaces = ref(null);
 
     const fetchData = async () => {
       try {
         // To simulate longer loading times
-        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const response = await ApiService.getFlight(route.params.flightId);
         if (!response.data.fixes) {
           throw "Invalid response";
         }
         flight.value = response.data;
-        // Name the window
-        document.title = `XCCup - Flug von ${
-          flight.value.user.firstName + " " + flight.value.user.lastName
-        }`;
-        const res = await ApiService.getAirspaces();
-        airspaces.value = res.data;
+
+        setWindowName(
+          "Flug von" +
+            flight.value.user.firstName +
+            " " +
+            flight.value.user.lastName
+        );
       } catch (error) {
         console.log(error);
         if (error.response && error.response.status == 404) {
@@ -73,13 +70,27 @@ export default {
 
     fetchData();
 
-    return { flight, airspaces };
+    return { flight };
   },
   data() {
     return {
       buddyTracks: null,
       baroDataUpdated: 0,
     };
+  },
+  computed: {
+    baroData() {
+      return processBaroData(this.flight, this.buddyTracks);
+    },
+
+    tracklogs() {
+      return processTracklogs(this.flight, this.buddyTracks);
+    },
+  },
+  watch: {
+    baroData() {
+      this.baroDataUpdated++;
+    },
   },
   methods: {
     updateAirbuddies(buddyTracks) {
@@ -141,20 +152,6 @@ export default {
 
       if (res.status != 200) throw res.statusText;
       this.flight.comments = [...res.data];
-    },
-  },
-  watch: {
-    baroData() {
-      this.baroDataUpdated++;
-    },
-  },
-  computed: {
-    baroData() {
-      return processBaroData(this.flight, this.buddyTracks);
-    },
-
-    tracklogs() {
-      return processTracklogs(this.flight, this.buddyTracks);
     },
   },
 };

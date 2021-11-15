@@ -33,9 +33,9 @@
               <th>Geräteklasse</th>
               <td>
                 <RankingClass
-                  :rankingClass="flight.glider.gliderClass"
+                  :ranking-class="flight.glider.gliderClass"
                   :short="true"
-                  :showDescription="true"
+                  :show-description="true"
                 />
               </td>
             </tr>
@@ -55,7 +55,7 @@
               <th>Strecke</th>
               <td>
                 {{ flight.flightDistance?.toFixed(2) ?? "?" }} km
-                <FlightTypeIcon :flightType="flight.flightType" />
+                <FlightTypeIcon :flight-type="flight.flightType" />
               </td>
             </tr>
             <tr>
@@ -71,9 +71,9 @@
               <th>Uhrzeit</th>
               <td v-if="true">
                 <i class="bi bi-arrow-up"></i>
-                <BaseDate :timestamp="flight.takeoffTime" dateFormat="HH:mm" />
+                <BaseDate :timestamp="flight.takeoffTime" date-format="HH:mm" />
                 Uhr <i class="bi bi-arrow-down"></i>
-                <BaseDate :timestamp="flight.landingTime" dateFormat="HH:mm" />
+                <BaseDate :timestamp="flight.landingTime" date-format="HH:mm" />
                 Uhr
               </td>
             </tr>
@@ -101,8 +101,7 @@
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>
-
-    <div class="collapse mt-2" id="collapseExample">
+    <div id="collapseExample" class="collapse mt-2">
       <div class="row">
         <div class="col-md-6 col-12">
           <table class="table table-sm">
@@ -111,7 +110,7 @@
                 <th>Flugstatus</th>
                 <td>
                   {{ flight.flightStatus }}
-                  <FlightState :flightState="flight.flightStatus" />
+                  <FlightState :flight-state="flight.flightStatus" />
                 </td>
               </tr>
               <tr>
@@ -152,7 +151,7 @@
                 <td>
                   <BaseDate
                     :timestamp="flight.createdAt"
-                    dateFormat="dd.MM.yyyy HH:mm"
+                    date-format="dd.MM.yyyy HH:mm"
                   />
                 </td>
               </tr>
@@ -171,16 +170,25 @@ const { getUserId } = useUser();
 
 export default {
   name: "FlightDetails",
+  props: {
+    flight: {
+      type: Object,
+      required: true,
+    },
+  },
 
   data() {
     return {
       format,
     };
   },
-  props: {
-    flight: {
-      type: Object,
-      required: true,
+  computed: {
+    showEditButton() {
+      return this.flight.userId === getUserId.value;
+    },
+    igcDownloadUrl() {
+      let baseUrl = import.meta.env.VITE_API_URL;
+      return baseUrl + "flights/igc/" + this.flight.id;
     },
   },
   methods: {
@@ -196,15 +204,6 @@ export default {
       // seconds = seconds < 10 ? "0" + seconds : seconds;
 
       return hours + ":" + minutes + "h";
-    },
-  },
-  computed: {
-    showEditButton() {
-      return this.flight.userId === getUserId;
-    },
-    igcDownloadUrl() {
-      let baseUrl = import.meta.env.VITE_API_URL;
-      return baseUrl + "flights/igc/" + this.flight.id;
     },
   },
 };

@@ -5,9 +5,10 @@
   <ResultsTableTeams :results="results" />
 </template>
 
-<script setup async>
+<script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
+import { setWindowName } from "../helper/utils";
 
 const props = defineProps({
   year: {
@@ -18,8 +19,7 @@ const props = defineProps({
 
 const results = ref(null);
 
-// Name the window
-document.title = "XCCup - Teamwertung";
+setWindowName("Teamwertung");
 
 try {
   const res = await ApiService.getResults("teams", { year: props.year });
