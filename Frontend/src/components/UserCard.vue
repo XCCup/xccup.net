@@ -83,61 +83,13 @@
     <div class="col-2">
       <div><strong>Rekorde</strong> <br /></div>
       <div class="row">
-        <div class="col"><FlightTypeIcon flight-type="FREE" /></div>
-        <div class="col">
-          <div v-if="user.records[0][0]">
-            <router-link
-              :to="{
-                name: 'Flight',
-                params: { flightId: user.records[0][0].externalId },
-              }"
-            >
-              {{ Math.round(user.records[0][0].flightDistance) }} km ({{
-                Math.round(user.records[0][0].flightPoints)
-              }}
-              P)
-            </router-link>
-          </div>
-          <div v-else>-</div>
-        </div>
+        <FlightShortSummary flight-type="FREE" :flight="user.records[0][0]" />
       </div>
       <div class="row">
-        <div class="col"><FlightTypeIcon flight-type="FLAT" /></div>
-        <div class="col">
-          <div v-if="user.records[1][0]">
-            <router-link
-              :to="{
-                name: 'Flight',
-                params: { flightId: user.records[1][0].externalId },
-              }"
-            >
-              {{ Math.round(user.records[1][0].flightDistance) }} km ({{
-                Math.round(user.records[1][0].flightPoints)
-              }}
-              P)
-            </router-link>
-          </div>
-          <div v-else>-</div>
-        </div>
+        <FlightShortSummary flight-type="FLAT" :flight="user.records[1][0]" />
       </div>
       <div class="row">
-        <div class="col"><FlightTypeIcon flight-type="FAI" /></div>
-        <div class="col">
-          <div v-if="user.records[2][0]">
-            <router-link
-              :to="{
-                name: 'Flight',
-                params: { flightId: user.records[2][0].externalId },
-              }"
-            >
-              {{ Math.round(user.records[2][0].flightDistance) }} km ({{
-                Math.round(user.records[2][0].flightPoints)
-              }}
-              P)
-            </router-link>
-          </div>
-          <div v-else>-</div>
-        </div>
+        <FlightShortSummary flight-type="FAI" :flight="user.records[2][0]" />
       </div>
     </div>
   </div>
@@ -146,7 +98,6 @@
 <script setup>
 import { ref } from "vue";
 import RankingClass from "./RankingClass.vue";
-import FlightTypeIcon from "./FlightTypeIcon.vue";
 // const baseURL = import.meta.env.VITE_API_URL;
 
 const props = defineProps({
@@ -171,6 +122,9 @@ const createRankingClass = (glider) => {
 <style scoped>
 img {
   max-height: 100px;
+}
+button {
+  max-width: 100px;
 }
 ul {
   list-style: none;
