@@ -30,9 +30,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           # cache: "npm"
-      - name: Install Backend
+      - name: Install backend
         run: npm ci
         working-directory: ./Backend
       # - run: npm run build --if-present
-      - run: npm test
+      - name: Run backend tests
+        run: npm test
+        working-directory: ./Backend
+      - name: Start Docker Backend Environment
+        run: docker-compose up -d
         working-directory: ./Backend
