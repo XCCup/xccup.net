@@ -31,4 +31,4 @@ jobs:
         run: npm ci
         working-directory: ./Backend
       # - run: npm run build --if-present
-      # - run: npm test
+      - run: npm test
