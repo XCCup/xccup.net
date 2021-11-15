@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FRONTEND: ./Frontend
+      BACKEND: ./Backend
 
     strategy:
       matrix:
@@ -29,7 +32,7 @@ jobs:
           # cache: "npm"
       - name: Install Backend
         run: npm ci
-        working-directory: ./Backend
+        working-directory: env.BACKEND
       # - run: npm run build --if-present
       - run: npm test
-        working-directory: ./Backend
+        working-directory: env.BACKEND
