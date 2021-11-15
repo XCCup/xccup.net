@@ -2,14 +2,10 @@
   <div class="container-fluid">
     <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
   </div>
-  <div
-    class="card"
-    v-for="(sponsor, index) in sponsors"
-    v-bind:key="sponsor.id"
-  >
+  <div v-for="sponsor in sponsors" :key="sponsor.id" class="card">
     <Sponsor
       :sponsor="sponsor"
-      :linkMessage="
+      :link-message="
         linkMessages[Math.floor(Math.random() * linkMessages.length)]
       "
     />
