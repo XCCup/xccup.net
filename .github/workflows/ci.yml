@@ -29,7 +29,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          # cache: "npm"
+          # cache: "npm" Does't work when project is not in default directory
+          # working-directory doesn't work in conjunction with "uses"
       - name: Install backend
         run: npm ci
         working-directory: ./Backend
@@ -40,6 +41,8 @@ jobs:
       - name: Start Docker Backend Environment
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml up -d #TODO: Leaving pgadmin out saves around 5s... Is it worth it?
         working-directory: ./Backend
+      - name: List all databases
+        run: docker exec db psql -U xccup_user -l
       - name: Setup DB (enable PostGIS and set correct timezone)
         run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
         working-directory: ./Backend
