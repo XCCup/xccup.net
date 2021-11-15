@@ -13,7 +13,7 @@ describe("check landing page", () => {
   });
 
   it("test daily ranking", () => {
-    cy.get("#dailyRankingPanel").within(($dailyRankingPanel) => {
+    cy.get("#dailyRankingPanel").within(() => {
       //Consider evaluating the date within the h3 (depends on the time; till 12oclock it's the day before to today)
       cy.get("h3").should("include.text", "Tageswertung");
 
@@ -36,7 +36,7 @@ describe("check landing page", () => {
   });
 
   it("test club ranking", () => {
-    cy.get("#overallResultsTabPanel").within(($overallResultsTabPanel) => {
+    cy.get("#overallResultsTabPanel").within(() => {
       cy.get(".nav-item").contains("Vereinswertung").click();
     });
 
@@ -48,7 +48,7 @@ describe("check landing page", () => {
   });
 
   it("test team ranking", () => {
-    cy.get("#overallResultsTabPanel").within(($overallResultsTabPanel) => {
+    cy.get("#overallResultsTabPanel").within(() => {
       cy.get(".nav-item").contains("Teamwertung").click();
     });
 
@@ -60,21 +60,21 @@ describe("check landing page", () => {
   });
 
   it("test overall ranking", () => {
-    cy.get("#overallResultsTabPanel").within(($overallResultsTabPanel) => {
+    cy.get("#overallResultsTabPanel").within(() => {
       cy.get(".nav-item").contains("Top Flüge").click();
     });
 
-    cy.get("#topFlights").within(($topFlights) => {
+    cy.get("#topFlights").within(() => {
       cy.get("table").find("tr").its("length").should("eq", 5);
       cy.get("table")
         .find("tr")
         .last()
-        .should("have.text", "514.11Leo AltenwerthStüppel74 km212 P");
+        .should("have.text", "515.11Leo AltenwerthStüppel74 km212 P");
     });
   });
 
   it("test sponsors", () => {
-    cy.get("#sponsorsPanel").within(($sponsorsPanel) => {
+    cy.get("#sponsorsPanel").within(() => {
       cy.get("h2").contains("Sponsoren");
     });
 
