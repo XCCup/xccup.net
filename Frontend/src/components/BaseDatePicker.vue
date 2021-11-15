@@ -24,7 +24,7 @@ const props = defineProps({
     required: true,
   },
   modelValue: {
-    type: String,
+    type: [String,null],
     required: true,
   },
   isDisabled: {
@@ -51,7 +51,7 @@ watch(
 );
 
 // Watch the internal data property to update the surrounding component with the correct format
-watch((pickedDate) => {
+watch(pickedDate, () => {
   if (externalChange == true) return (externalChange = false);
 
   const dateValue = pickedDate.value;
