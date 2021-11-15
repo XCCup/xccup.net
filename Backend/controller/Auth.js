@@ -21,7 +21,7 @@ const init = async () => {
   logger.info("R: " + process.env.JWT_REFRESH_TOKEN);
   //After restart all stored tokens will become invalid. Therefore all stored tokens will be deleted.
   await waitTillDbHasSync();
-  Token.destroy({ truncate: true });
+  // Token.destroy({ truncate: true });
 };
 
 /**
