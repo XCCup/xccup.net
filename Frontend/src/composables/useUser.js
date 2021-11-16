@@ -50,6 +50,7 @@ export default () => {
     state.authData = newTokenData;
   };
 
+  // TODO: Is this needed?
   const setLoginStatus = (value) => {
     state.loginStatus = value;
   };
@@ -70,21 +71,11 @@ export default () => {
   };
 
   // Actions
-  const login = async (payload) => {
-    const response = await axios
-      .post(baseURL + "users/login", payload)
-      .catch((err) => {
-        console.log(err);
-      });
-    if (response && response.data) {
-      saveTokenData(response.data);
-      setLoginStatus("success");
-      console.log("login successful");
-      return response;
-    } else {
-      setLoginStatus("failed");
-      console.log("login failed");
-    }
+  const login = async (credentials) => {
+    const response = await axios.post(baseURL + "users/login", credentials);
+    saveTokenData(response.data);
+    setLoginStatus("success");
+    return response;
   };
 
   const logout = async () => {
@@ -95,7 +86,6 @@ export default () => {
         console.log(err);
       });
     logoutUser();
-    console.log("Logged out");
   };
 
   const refreshToken = async () => {
