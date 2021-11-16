@@ -16,7 +16,7 @@ fixes.forEach((e) => {
   } = FlightStatsCalculator.executeOnFlightFixes(e);
 
   const flight = flights.find((f) => f.id == e.flightId);
-  logger.("F: ", flight.externalId);
+  console.log("F: ", flight.externalId);
 
   flight.airtime = Math.round(
     (e.timeAndHeights[e.timeAndHeights.length - 1].timestamp -
@@ -38,9 +38,14 @@ fixes.forEach((e) => {
   e.stats = fixesStats;
 });
 
-fs.writeFile("flights2.json", JSON.stringify(flights, null, 2), "utf8", () => {
-  logger.();
-});
-fs.writeFile("fixes2.json", JSON.stringify(fixes, null, 2), "utf8", () => {
-  logger.();
+fs.writeFile(
+  "flights2.json",
+  JSON.stringify(flights, null, 2),
+  "utf8",
+  (err) => {
+    console.log(err);
+  }
+);
+fs.writeFile("fixes2.json", JSON.stringify(fixes, null, 2), "utf8", (err) => {
+  console.log(err);
 });

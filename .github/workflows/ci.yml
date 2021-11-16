@@ -1,31 +1,55 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
+name: XCCup E2E CI
 
 on:
   push:
-    branches: [ ci ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          # cache: "npm" Does't work when project is not in default directory
+          # working-directory doesn't work in conjunction with "uses"
+      - name: Install backend
+        run: npm install --arch=x64 --platform=linuxmusl
+        working-directory: ./Backend
+      - name: Test backend
+        run: npm test
+        working-directory: ./Backend
+      - name: Start Docker Backend Environment
+        run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml up -d #TODO: Leaving pgadmin out saves around 5s... Is it worth it?
+        working-directory: ./Backend
+      - name: List all databases (just for debugging)
+        run: docker exec db psql -U xccup_user -l
+      - name: Setup DB (enable PostGIS and set correct timezone)
+        run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
+        working-directory: ./Backend
+      - name: Install frontend
+        run: yarn install
+        working-directory: ./Frontend
+      - name: Print current server log before testing (just for debugging)
+        run: docker logs server
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn dev
+          wait-on: http://localhost:8000
+          working-directory: ./Frontend
+      - name: Store artefacts of test failures
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: ./Frontend/cypress/screenshots

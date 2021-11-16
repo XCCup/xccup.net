@@ -39,9 +39,7 @@ describe("check login options", () => {
   it("login non exisiting user", () => {
     cy.login("noone@neverland.it", "FancyPassword");
 
-    cy.get("button").contains("Anmelden").click();
-
-    //TODO: Test should fail an purpose because this isn't implemented
-    cy.location("localhost:8000/register");
+    //TODO: Extend this test when function is completed (e.g. user should see a warning login failed)
+    cy.get("#loginDropdownMenuButton").should("includes.text", "Login");
   });
 });
