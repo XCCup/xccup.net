@@ -39,6 +39,7 @@ describe("check login options", () => {
   it("login with wrong user/pw combination", () => {
     cy.login("noone@neverland.it", "FancyPassword");
 
+
     cy.get("button").contains("Anmelden").click();
     cy.get("#loginErrorMessage").should(
       "includes.text",

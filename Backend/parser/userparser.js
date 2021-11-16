@@ -11,6 +11,6 @@ users.forEach((user) => {
   user.defaultGlider = tempGliders[0]?.id;
 });
 
-fs.writeFile("users2.json", JSON.stringify(users, null, 2), "utf8", () => {
-  logger.();
+fs.writeFile("users2.json", JSON.stringify(users, null, 2), "utf8", (err) => {
+  console.log(err);
 });
