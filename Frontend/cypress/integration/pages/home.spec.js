@@ -66,10 +66,7 @@ describe("check landing page", () => {
 
     cy.get("#topFlights").within(() => {
       cy.get("table").find("tr").its("length").should("eq", 5);
-      cy.get("table")
-        .find("tr")
-        .last()
-        .should("have.text", "515.11Leo AltenwerthStüppel74 km212 P");
+      cy.get("table").find("tr").last().should("include.text", "Leo AltenwerthStüppel74 km212 P");
     });
   });
 

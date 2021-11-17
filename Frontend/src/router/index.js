@@ -3,6 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import FlightView from "@/views/FlightView.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
+import UserLogin from "@/views/UserLogin.vue";
 import useUser from "@/composables/useUser";
 
 const routes = [
@@ -145,7 +146,7 @@ const routes = [
   {
     path: "/login/",
     name: "Login",
-    component: () => import("../views/UserLogin.vue"),
+    component: UserLogin,
   },
   {
     path: "/sponsoren",
@@ -170,7 +171,7 @@ const routes = [
   {
     path: "/admin",
     name: "AdminDashboard",
-    //TODO: Check if logged-in user is an moderator or admin
+    //TODO: Check if logged-in user is a moderator or admin
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import("../views/AdminDashboard.vue"),
   },
