@@ -14,7 +14,7 @@
         <router-link
           :to="{
             name: 'FlightsAll',
-            params: { userId: user.id, year: 2021 },
+            params: { userId: user.id },
           }"
         >
           <h5 disabled="true" class="row card-title">
