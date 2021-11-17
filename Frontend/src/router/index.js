@@ -171,13 +171,6 @@ const routes = [
     component: () => import("../views/UserList.vue"),
   },
   {
-    path: "/pilot/:userId",
-    name: "User",
-    props: true,
-    meta: { toTop: true },
-    component: () => import("../views/UserView.vue"),
-  },
-  {
     path: "/impressum",
     name: "Imprint",
     component: () => import("../views/ImprintView.vue"),

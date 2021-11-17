@@ -22,23 +22,10 @@
           </h5>
         </router-link>
       </div>
-      <!-- <router-link
-        class="btn btn-primary"
-        :to="{
-          name: 'User',
-          params: { userId: user.id },
-        }"
-        >Rekorde</router-link
-      > -->
       <div class="row justify-content-start">
         <button class="col me-5 btn btn-primary" @click="messagePilot(flight)">
           <i class="bi bi-envelope"></i>
         </button>
-        <!-- <button class="col me-3 btn btn-primary" @click="messagePilot(flight)">
-          <img
-            src="https://img.icons8.com/ios/30/000000/airplane-take-off.png"
-          />
-        </button> -->
       </div>
     </div>
     <div class="col-2">
@@ -47,7 +34,7 @@
         <router-link
           :to="{
             name: 'FlightsAll',
-            params: { clubId: user.club.id, year: 2021 },
+            params: { clubId: user.club.id },
           }"
         >
           <div>{{ user.club.name }}</div>
@@ -59,7 +46,7 @@
           <router-link
             :to="{
               name: 'FlightsAll',
-              params: { teamId: user.team.id, year: 2021 },
+              params: { teamId: user.team.id },
             }"
           >
             {{ user.team?.name }}</router-link
@@ -98,7 +85,6 @@
 <script setup>
 import { ref } from "vue";
 import RankingClass from "./RankingClass.vue";
-// const baseURL = import.meta.env.VITE_API_URL;
 
 const props = defineProps({
   user: {
