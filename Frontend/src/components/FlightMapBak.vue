@@ -14,34 +14,36 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import trackColors from "@/assets/js/trackColors";
 import ApiService from "@/services/ApiService";
-import useFlight from "@/composables/useFlight";
-import useAirbuddies from "@/composables/useAirbuddies";
 
 import {
   convertMapBoundsToQueryString,
   createAirspacePopupContent,
-  processTracklogs,
 } from "@/helper/mapHelpers";
 
-import { watch, onMounted, onBeforeUnmount, ref, computed } from "vue";
+import { watch, onMounted, onBeforeUnmount, ref } from "vue";
 
-const { flight } = useFlight();
-const { activeAirbuddyFlights } = useAirbuddies();
-
-// Leaflet objects
 let map = ref(null);
-let trackLines = ref();
+let tracks = ref([]);
 let positionMarkers = ref([]);
-let takeoffAndLandingMarkers = ref([]);
+let markers = ref([]);
 
-// All tracklogs that shall be drawn on map
-const tracklogs = computed(() =>
-  processTracklogs(flight.value, activeAirbuddyFlights.value)
+const props = defineProps({
+  tracklogs: {
+    type: Array,
+    required: true,
+  },
+  turnpoints: {
+    type: Array,
+    required: true,
+  },
+});
+
+watch(
+  () => props.tracklogs,
+  () => {
+    drawTracks(props.tracklogs);
+  }
 );
-
-// Watch the tracklogs for updated content like airbuddy flights
-watch(tracklogs, () => drawTracks(tracklogs.value));
-
 onMounted(() => {
   // TODO:
   // Whenever using anything based on OpenStreetMap, an attribution is obligatory as per the copyright notice.
@@ -61,9 +63,9 @@ onMounted(() => {
   ).addTo(map.value);
 
   // Draw tracklogs and Airspaces
-  drawTracks(tracklogs.value);
-  drawTurnpoints(flight.value.flightTurnpoints);
-  drawAirspaces(convertMapBoundsToQueryString(trackLines.value[0]));
+  drawTracks(props.tracklogs);
+  drawTurnpoints(props.turnpoints);
+  drawAirspaces(convertMapBoundsToQueryString(tracks.value[0]));
 });
 
 onBeforeUnmount(() => {
@@ -76,7 +78,6 @@ onBeforeUnmount(() => {
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
 });
 
-// Airspaces
 const drawAirspaces = async (bounds) => {
   const res = await ApiService.getAirspaces(bounds);
   const airspaceData = res.data;
@@ -91,21 +92,20 @@ const drawAirspaces = async (bounds) => {
       .addTo(map.value);
   });
 };
-
-// Update map
-const drawTracks = (tracklogs) => {
+const drawTracks = (trackData) => {
   let lines = [];
   let tmpPositionMarkers = [];
+  let tmpMarkers = [];
 
-  // Remove all trackLines & position markers to prevet orphaned ones
+  // Remove all tracks & markers to prevet orphaned ones
   if (positionMarkers.value.length > 0) {
     positionMarkers.value.forEach((_, index) => {
-      trackLines.value[index].remove();
+      tracks.value[index].remove();
       positionMarkers.value[index].remove();
     });
   }
 
-  tracklogs.forEach((track, index) => {
+  trackData.forEach((track, index) => {
     // Check if a previously drawn track is removed
     if (track.length > 0) {
       // Create a line for every track
@@ -119,7 +119,7 @@ const drawTracks = (tracklogs) => {
         map.value.fitBounds(lines[0].getBounds());
 
         // Create takeoff & landing markers
-        takeoffAndLandingMarkers.value.push(
+        markers.value.push(
           L.marker(track[0], { title: "Start" }).addTo(map.value),
           L.marker(track[track.length - 1], { title: "Landeplatz" }).addTo(
             map.value
@@ -139,17 +139,18 @@ const drawTracks = (tracklogs) => {
   });
 
   // Update data
-  trackLines.value = lines;
+  tracks.value = lines;
+  markers.value = tmpMarkers;
   positionMarkers.value = tmpPositionMarkers;
 };
-// Turnpoints of the scored flight
-const drawTurnpoints = (turnpointData) => {
-  if (!turnpointData) return;
-  let turnpoints = [];
-  turnpointData.forEach((tp) => {
-    turnpoints.push([tp.lat, tp.long]);
+
+const drawTurnpoints = (turnpoints) => {
+  if (!turnpoints) return;
+  let tmp = [];
+  turnpoints.forEach((tp) => {
+    tmp.push([tp.lat, tp.long]);
   });
-  L.polyline(turnpoints, {
+  L.polyline(tmp, {
     color: "grey",
   }).addTo(map.value);
 };
@@ -170,15 +171,15 @@ document.addEventListener(
 );
 
 const updateMarkerPosition = (position) => {
-  tracklogs.value.forEach((_, index) => {
+  props.tracklogs.forEach((_, index) => {
     // Index + 1 because first dataset is GND and we need to skip that one
     if (position.datasetIndex === index + 1) {
       if (
-        tracklogs.value[index][position.dataIndex] &&
+        props.tracklogs[index][position.dataIndex] &&
         positionMarkers.value[index]
       ) {
         positionMarkers.value[index].setLatLng(
-          tracklogs.value[index][position.dataIndex]
+          props.tracklogs[index][position.dataIndex]
         );
       }
     }

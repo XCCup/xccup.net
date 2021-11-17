@@ -163,49 +163,30 @@
   </section>
 </template>
 
-<script>
-import { format } from "date-fns";
+<script setup>
+import { computed } from "vue";
 import useUser from "@/composables/useUser";
+import useFlight from "@/composables/useFlight";
+
 const { getUserId } = useUser();
+const { flight } = useFlight();
 
-export default {
-  name: "FlightDetails",
-  props: {
-    flight: {
-      type: Object,
-      required: true,
-    },
-  },
+const showEditButton = computed(() => flight.value.userId === getUserId.value);
 
-  data() {
-    return {
-      format,
-    };
-  },
-  computed: {
-    showEditButton() {
-      return this.flight.userId === getUserId.value;
-    },
-    igcDownloadUrl() {
-      let baseUrl = import.meta.env.VITE_API_URL;
-      return baseUrl + "flights/igc/" + this.flight.id;
-    },
-  },
-  methods: {
-    calcFlightDuration(duration) {
-      if (!duration) return "";
-      const ms = duration * 60 * 1000;
+const igcDownloadUrl = computed(() => {
+  let baseUrl = import.meta.env.VITE_API_URL;
+  return baseUrl + "flights/igc/" + flight.value.id;
+});
 
-      // let seconds = parseInt((ms / 1000) % 60);
-      let minutes = parseInt((ms / (1000 * 60)) % 60);
-      let hours = parseInt((ms / (1000 * 60 * 60)) % 24);
-
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      // seconds = seconds < 10 ? "0" + seconds : seconds;
-
-      return hours + ":" + minutes + "h";
-    },
-  },
+const calcFlightDuration = (duration) => {
+  if (!duration) return "";
+  const ms = duration * 60 * 1000;
+  // let seconds = parseInt((ms / 1000) % 60);
+  let minutes = parseInt((ms / (1000 * 60)) % 60);
+  let hours = parseInt((ms / (1000 * 60 * 60)) % 24);
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  // seconds = seconds < 10 ? "0" + seconds : seconds;
+  return hours + ":" + minutes + "h";
 };
 </script>
 

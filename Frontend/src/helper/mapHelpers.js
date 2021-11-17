@@ -31,3 +31,26 @@ function convertHeightStringToMetersValue(value) {
   if (value.includes("ft"))
     return Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
 }
+
+export function processTracklogs(flight, buddyTracks) {
+  const tracklogs = [];
+  const tracklog = [];
+  for (var i = 0; i < flight.fixes.length; i++) {
+    tracklog.push([flight.fixes[i].latitude, flight.fixes[i].longitude]);
+  }
+  tracklogs.push(tracklog);
+
+  if (buddyTracks) {
+    buddyTracks.forEach((element) => {
+      const track = [];
+      // Check if this track is activated
+      if (element.isActive) {
+        for (var i = 0; i < element.fixes.length; i++) {
+          track.push([element.fixes[i].latitude, element.fixes[i].longitude]);
+        }
+      }
+      tracklogs.push(track);
+    });
+  }
+  return tracklogs;
+}
