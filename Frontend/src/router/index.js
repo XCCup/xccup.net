@@ -3,7 +3,7 @@ import HomeView from "@/views/HomeView.vue";
 import FlightView from "@/views/FlightView.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
-import UserLogin from "@/views/UserLogin";
+import UserLogin from "@/views/UserLogin.vue";
 import useUser from "@/composables/useUser";
 
 const routes = [
