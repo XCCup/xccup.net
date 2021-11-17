@@ -12,5 +12,12 @@ export default () => {
   const fetchOne = async (flightId) => {
     flight.value = (await apiService.getFlight(flightId)).data;
   };
-  return { fetchOne, flight };
+
+  const updateComments = async () => {
+    const res = await apiService.getCommentsOfFlight(flight.value.id);
+    if (res.status != 200) throw res.statusText;
+    flight.value.comments = [...res.data];
+  };
+
+  return { fetchOne, flight, updateComments };
 };

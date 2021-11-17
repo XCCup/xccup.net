@@ -6,14 +6,7 @@
     <FlightAirbuddies v-if="flight.airbuddies.length > 0" />
     <FlightDetails />
     <FlightReport />
-    <!-- <Comments
-      ref="Comments"
-      :comments="flight.comments"
-      @submit-comment="addComment"
-      @delete-comment="deleteComment"
-      @delete-reply="deleteComment"
-      @comment-edited="editComment"
-    /> -->
+    <Comments />
   </div>
 </template>
 
