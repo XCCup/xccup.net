@@ -106,9 +106,7 @@ export default {
   // Users
 
   getUsers(params) {
-    let url = "users/public/";
-
-    return apiClient.get(url, { params });
+    return apiClient.get("users/public/", { params });
   },
 
   getUser(userId) {
