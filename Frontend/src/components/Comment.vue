@@ -40,21 +40,11 @@
 
   <!-- Reply comment editor -->
   <div v-if="showReplyEditor">
-    <textarea
-      id="reply-comment-editor"
-      v-model="replyMessage"
-      class="form-control mb-2"
-    ></textarea>
-    <button
-      class="btn btn-primary me-2"
-      :disabled="replySaveButtonIsDisabled"
-      @click.prevent="onSubmitReplyMessage"
-    >
-      Senden
-    </button>
-    <button class="btn btn-outline-danger" @click.prevent="closeReplyEditor">
-      Abbrechen
-    </button>
+    <CommentReplyEditor
+      :textarea-content="replyMessage"
+      @save-message="onSubmitReplyMessage"
+      @close-editor="closeReplyEditor"
+    />
   </div>
 
   <div
@@ -147,13 +137,12 @@ const saveButtonIsDisabled = computed(() => editedComment.value.length < 3);
 // Submit new reply
 const replyMessage = ref("");
 const showReplyEditor = ref(false);
-const replySaveButtonIsDisabled = computed(() => replyMessage.value.length < 3);
 
 const openReplyEditor = () => (showReplyEditor.value = true);
 
-const onSubmitReplyMessage = async () => {
+const onSubmitReplyMessage = async (message) => {
   const comment = {
-    message: replyMessage.value,
+    message: message,
     userId: getUserId.value,
     relatedTo: props.comment.id,
   };

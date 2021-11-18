@@ -1,3 +1,4 @@
+<!-- TODO: It may be possible to replace this modal with BaseModal and slots -->
 <template>
   <div
     id="addGliderModal"

@@ -15,26 +15,12 @@
   <p v-if="!showReplyEditor">
     {{ reply.message }}
   </p>
-  <!-- TODO: Maybe combine this editor with the one for new replys because parts of the logic are identical  -->
   <div v-if="showReplyEditor">
-    <textarea
-      id="reply-editor"
-      v-model="editedMessage"
-      class="form-control mb-2"
-    ></textarea>
-    <button
-      class="btn btn-primary me-2"
-      :disabled="saveButtonIsDisabled"
-      @click.prevent="onSaveEditedMessage"
-    >
-      Speichern
-    </button>
-    <button
-      class="btn btn-outline-danger"
-      @click.prevent="onCloseCommentEditor"
-    >
-      Abbrechen
-    </button>
+    <CommentReplyEditor
+      :textarea-content="editedMessage"
+      @save-message="onSaveEditedMessage"
+      @close-editor="onCloseCommentEditor"
+    />
   </div>
 
   <div
@@ -58,7 +44,7 @@
 
 <script setup>
 import { Modal } from "bootstrap";
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 
@@ -91,14 +77,13 @@ const onDeleteComment = async () => {
 // Edit
 const editedMessage = ref(props.reply.message);
 const showReplyEditor = ref(false);
-const saveButtonIsDisabled = computed(() => editedMessage.value.length < 3);
 
 const onEditComment = () => {
   showReplyEditor.value = true;
 };
-const onSaveEditedMessage = async () => {
+const onSaveEditedMessage = async (message) => {
   const comment = {
-    message: editedMessage.value,
+    message: message,
     userId: getUserId.value,
     id: props.reply.id,
   };
