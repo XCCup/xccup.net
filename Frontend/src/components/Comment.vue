@@ -76,35 +76,12 @@
       <i class="bi bi-trash mx-1"></i>Löschen
     </a>
   </div>
-  <!-- Modal -->
-  <!-- TODO Refactor to BaseModal Component? -->
-  <div :id="comment.id" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Kommentar löschen?</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-          ></button>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-outline-danger"
-            data-bs-dismiss="modal"
-            @click="onDeleteComment"
-          >
-            Löschen
-          </button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-            Abbrechen
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <BaseModal
+    modal-title="Kommentar löschen?"
+    confirm-button-text="Löschen"
+    :modal-id="comment.id"
+    :confirm-action="onDeleteComment"
+  />
 </template>
 
 <script setup>
