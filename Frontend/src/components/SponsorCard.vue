@@ -1,13 +1,10 @@
 <template>
   <div class="card mb-2">
     <div class="card-body row">
-      <div class="col-md-6 col-12 mb-2">
+      <div class="col-md-8 col-sm-6 col-12 mb-2">
         <h5 class="mt-0">{{ sponsor.name }}</h5>
         <p>{{ sponsor.tagline }}</p>
-        <a
-          :href="sponsor.website"
-          target="_blank"
-          class="btn btn-outline-primary"
+        <a :href="sponsor.website" target="_blank" class="btn btn-primary"
           >Zur Webseite</a
         >
       </div>
@@ -19,7 +16,7 @@
         {{ sponsor.contacts?.phone }}<br />
         {{ sponsor.contacts?.phone2 }}<br />
       </div>
-      <div class="col-md-4 col-12">
+      <div class="col-md-4 col-sm-6 col-12 text-end">
         <a :href="sponsor.website" target="_blank" class="square-holder">
           <img :src="baseURL + `media/` + sponsor.logo?.id" />
         </a>

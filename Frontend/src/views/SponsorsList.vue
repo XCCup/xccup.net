@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container col-md-10 col-lg-8 col-12 mx-automx-auto">
     <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
     <SponsorCard
       v-for="sponsor in sponsors"
