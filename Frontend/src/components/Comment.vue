@@ -1,12 +1,6 @@
 <template>
   <div class="d-flex mb-2">
-    <img
-      src="@/assets/images/avatar2.png"
-      class="rounded-circle"
-      style="margin-right: 6px"
-      height="24"
-      width="24"
-    />
+    <img src="@/assets/images/avatar2.png" class="rounded-circle" />
     <a href="#">{{ comment.user.firstName + " " + comment.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
       ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
@@ -149,3 +143,10 @@ const closeReplyEditor = () => {
   replyMessage.value = "";
 };
 </script>
+<style>
+.rounded-circle {
+  margin-right: 6px;
+  height: 24px;
+  width: 24px;
+}
+</style>
