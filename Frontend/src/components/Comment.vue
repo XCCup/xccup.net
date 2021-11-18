@@ -19,23 +19,8 @@
   <div v-for="reply in comment.replies" :key="reply.id" class="shadow p-3 mb-3">
     <CommentReply :reply="reply" />
   </div>
-  <!-- TODO: Maybe combine this editor with the one for new comments because parts of the logic are identical  -->
+  <!-- Comment Editor -->
   <div v-if="showCommentEditor">
-    <!-- <textarea
-      id="comment-editor"
-      v-model="editedComment"
-      class="form-control mb-2"
-    ></textarea>
-    <button
-      class="btn btn-primary me-2"
-      :disabled="saveButtonIsDisabled"
-      @click.prevent="onSaveEditedMessage"
-    >
-      Speichern
-    </button>
-    <button class="btn btn-outline-danger" @click.prevent="closeCommentEditor">
-      Abbrechen
-    </button> -->
     <CommentInlineEditor
       :textarea-content="editedComment"
       @save-message="onSaveEditedMessage"
