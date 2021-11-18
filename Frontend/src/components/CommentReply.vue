@@ -16,7 +16,7 @@
     {{ reply.message }}
   </p>
   <div v-if="showReplyEditor">
-    <CommentReplyEditor
+    <CommentInlineEditor
       :textarea-content="editedMessage"
       @save-message="onSaveEditedMessage"
       @close-editor="onCloseCommentEditor"

@@ -21,7 +21,7 @@
   </div>
   <!-- TODO: Maybe combine this editor with the one for new comments because parts of the logic are identical  -->
   <div v-if="showCommentEditor">
-    <textarea
+    <!-- <textarea
       id="comment-editor"
       v-model="editedComment"
       class="form-control mb-2"
@@ -35,12 +35,17 @@
     </button>
     <button class="btn btn-outline-danger" @click.prevent="closeCommentEditor">
       Abbrechen
-    </button>
+    </button> -->
+    <CommentInlineEditor
+      :textarea-content="editedComment"
+      @save-message="onSaveEditedMessage"
+      @close-editor="closeCommentEditor"
+    />
   </div>
 
   <!-- Reply comment editor -->
   <div v-if="showReplyEditor">
-    <CommentReplyEditor
+    <CommentInlineEditor
       :textarea-content="replyMessage"
       @save-message="onSubmitReplyMessage"
       @close-editor="closeReplyEditor"
@@ -77,7 +82,7 @@
 <script setup>
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { Modal } from "bootstrap";
 
 const { getUserId } = useUser();
@@ -113,9 +118,9 @@ const showCommentEditor = ref(false);
 const editedComment = ref(props.comment.message);
 
 const onEditComment = () => (showCommentEditor.value = true);
-const onSaveEditedMessage = async () => {
+const onSaveEditedMessage = async (message) => {
   const comment = {
-    message: editedComment.value,
+    message: message,
     userId: getUserId.value,
     id: props.comment.id,
   };
@@ -132,7 +137,6 @@ const closeCommentEditor = () => {
   showCommentEditor.value = false;
   editedComment.value = props.comment.message;
 };
-const saveButtonIsDisabled = computed(() => editedComment.value.length < 3);
 
 // Submit new reply
 const replyMessage = ref("");
