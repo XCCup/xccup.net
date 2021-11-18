@@ -1,7 +1,13 @@
 const axios = require("axios");
 const logger = require("../config/logger");
 
+const isApiDisabled = process.env.USE_GOOGLE_API === "false";
+
 const byLatLong = async (location) => {
+  if (isApiDisabled) {
+    logger.warn("Usage of Google API is disabled");
+    return "API Disabled";
+  }
   try {
     // const location = "50.20524528622611,7.064103332484184";
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&language=de&result_type=locality&key=${process.env.GOOGLE_MAPS_API_KEY}`;

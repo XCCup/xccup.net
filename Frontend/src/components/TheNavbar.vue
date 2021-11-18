@@ -179,7 +179,6 @@
               >Kontakt / Impressum</router-link
             >
           </li>
-          <!-- TODO show only when user has role of moderator or higher-->
           <li
             v-if="hasElevatedRole"
             id="navbarAdminDashboard"
@@ -193,36 +192,48 @@
             </router-link>
           </li>
         </ul>
-        <!-- Login dropdown  -->
-        <div class="dropdown">
+        <!-- Login button -->
+
+        <router-link v-if="!loggedIn" :to="{ name: 'Login' }">
           <button
-            id="loginDropdownMenuButton"
+            id="loginNavButton"
+            type="button"
+            class="btn btn-outline-light btn-sm m-1"
+          >
+            <i class="bi bi-person"></i>
+            {{ "Login" }}
+          </button>
+        </router-link>
+
+        <!-- User menu -->
+        <div v-if="loggedIn" class="dropdown">
+          <button
+            id="userNavDropdownMenu"
             type="button"
             class="btn btn-outline-light btn-sm m-1 dropdown-toggle"
             data-bs-toggle="dropdown"
           >
             <i class="bi bi-person"></i>
-            {{ loggedIn ? authData.firstName : "Login" }}
+            {{ authData.firstName }}
           </button>
+
           <div class="dropdown-menu" style="width: 250px">
-            <BaseLogin v-if="!loggedIn" />
-            <div v-else>
-              <div class="mb-3">
-                <router-link :to="{ name: 'Profile' }" class="dropdown-item"
-                  >Profil</router-link
-                >
-                <button class="btn btn-danger btn-sm m-1" @click="handleLogout">
-                  Abmelden
-                </button>
-              </div>
+            <div class="mb-3">
+              <router-link :to="{ name: 'Profile' }" class="dropdown-item"
+                >Profil
+              </router-link>
+              <button class="btn btn-danger btn-sm m-1" @click="handleLogout">
+                Abmelden
+              </button>
             </div>
           </div>
         </div>
         <router-link
           class="btn btn-danger btn-sm m-1"
           :to="{ name: 'FlightUpload' }"
-          >Flug hochladen</router-link
         >
+          Flug hochladen
+        </router-link>
       </div>
     </div>
   </nav>

@@ -23,7 +23,7 @@
     "leaflet": "^1.7.1",
     "leaflet-gesture-handling": "^1.2.2",
     "lodash": "^4.17.21",
-    "vue": "^3.2.21",
+    "vue": "^3.2.22",
     "vue-router": "^4.0.12",
     "vue3-datepicker": "^0.2.5"
   },
@@ -33,6 +33,7 @@
     "cypress": "^9.0.0",
     "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-vue": "^8.0.3",
     "prettier": "2.4.1",
     "sass": "^1.43.4",
