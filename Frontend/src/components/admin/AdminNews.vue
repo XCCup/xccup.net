@@ -67,10 +67,12 @@
   </section>
   <!-- Modal -->
   <ModalAddEditNews :news-object="selectedNews" @save-news="saveNews" />
-  <ModalConfirm
-    :message-body="deleteMessage"
+  <BaseModal
+    modal-title="News löschen?"
+    :modal-body="deleteMessage"
+    confirm-button-text="Löschen"
     :modal-id="modalId"
-    @confirm-result="deleteNews"
+    :confirm-action="deleteNews"
   />
 </template>
 

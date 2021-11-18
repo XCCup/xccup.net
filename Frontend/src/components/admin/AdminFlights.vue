@@ -22,7 +22,8 @@
                     name: 'Flight',
                     params: { flightId: flight.externalId },
                   }"
-                >{{ flight.externalId }}</router-link>
+                  >{{ flight.externalId }}</router-link
+                >
               </td>
               <td>{{ flight.user.firstName }} {{ flight.user.lastName }}</td>
               <td>
@@ -41,17 +42,26 @@
                 <i class="bi bi-slash-circle text-success"></i>
               </td>
               <td>
-                <button class="btn btn-outline-primary btn-sm" @click="messagePilot(flight)">
+                <button
+                  class="btn btn-outline-primary btn-sm"
+                  @click="messagePilot(flight)"
+                >
                   <i class="bi bi-envelope"></i>
                 </button>
               </td>
               <td>
-                <button class="btn btn-outline-primary btn-sm" @click="onAcceptFlight(flight)">
+                <button
+                  class="btn btn-outline-primary btn-sm"
+                  @click="onAcceptFlight(flight)"
+                >
                   <i class="bi bi-check2-circle"></i>
                 </button>
               </td>
               <td>
-                <button class="btn btn-outline-danger btn-sm" @click="onDeleteFlight(flight)">
+                <button
+                  class="btn btn-outline-danger btn-sm"
+                  @click="onDeleteFlight(flight)"
+                >
                   <i class="bi bi-trash"></i>
                 </button>
               </td>
@@ -61,10 +71,12 @@
       </div>
     </div>
   </section>
-  <ModalConfirm
-    :message-body="confirmMessage"
+  <BaseModal
+    modal-title="Flug löschen?"
+    :modal-body="confirmMessage"
+    confirm-button-text="Löschen"
     :modal-id="modalId"
-    @confirm-result="processConfirmResult"
+    :confirm-action="processConfirmResult"
   />
 </template>
 
@@ -86,7 +98,7 @@ export default {
       confirmMessage: "",
       confirmType: "",
       modalId: "modalFlightConfirm",
-      selectedFlight: null
+      selectedFlight: null,
     };
   },
   computed: {
@@ -96,9 +108,7 @@ export default {
   },
   async mounted() {
     this.router = useRouter();
-    this.confirmModal = new Modal(
-      document.getElementById(this.modalId)
-    );
+    this.confirmModal = new Modal(document.getElementById(this.modalId));
     await this.fetchFlightsWithViolations();
   },
   methods: {
@@ -108,24 +118,28 @@ export default {
     },
     async processConfirmResult() {
       if (this.confirmType === KEY_DELETE) {
-        const res = await ApiService.deleteFlight(this.selectedFlight.externalId);
+        const res = await ApiService.deleteFlight(
+          this.selectedFlight.externalId
+        );
       }
       if (this.confirmType === KEY_ACCEPT) {
-        const res = await ApiService.acceptFlightViolations(this.selectedFlight.id);
+        const res = await ApiService.acceptFlightViolations(
+          this.selectedFlight.id
+        );
       }
       await this.fetchFlightsWithViolations();
     },
     onDeleteFlight(flight) {
-      this.confirmMessage = "Willst du diesen Flug wirklich löschen?"
-      this.confirmType = KEY_DELETE
-      this.selectedFlight = flight
-      this.confirmModal.show()
+      this.confirmMessage = "Willst du diesen Flug wirklich löschen?";
+      this.confirmType = KEY_DELETE;
+      this.selectedFlight = flight;
+      this.confirmModal.show();
     },
     onAcceptFlight(flight) {
-      this.confirmMessage = "Willst du diesen Flug wirklich akzeptieren?"
-      this.confirmType = KEY_ACCEPT
-      this.selectedFlight = flight
-      this.confirmModal.show()
+      this.confirmMessage = "Willst du diesen Flug wirklich akzeptieren?";
+      this.confirmType = KEY_ACCEPT;
+      this.selectedFlight = flight;
+      this.confirmModal.show();
     },
     async messagePilot(flight) {
       alert(
@@ -137,5 +151,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
