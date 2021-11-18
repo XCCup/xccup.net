@@ -18,7 +18,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="(flight, index) in flights.slice(0, maxRows)"
+              v-for="(flight, index) in flights"
               :key="flight.id"
               :item="flight"
               :index="index"
@@ -68,7 +68,6 @@ defineProps({
     type: Array,
     required: true,
   },
-  maxRows: { type: Number, required: true },
 });
 const routeToFlight = (flightId) => {
   router.push({

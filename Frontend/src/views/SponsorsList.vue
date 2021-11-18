@@ -1,13 +1,10 @@
 <template>
-  <div class="container-fluid">
+  <div class="container">
     <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
-  </div>
-  <div v-for="sponsor in sponsors" :key="sponsor.id" class="card">
     <SponsorCard
+      v-for="sponsor in sponsors"
+      :key="sponsor.id"
       :sponsor="sponsor"
-      :link-message="
-        linkMessages[Math.floor(Math.random() * linkMessages.length)]
-      "
     />
   </div>
 </template>
@@ -21,16 +18,6 @@ import { setWindowName } from "../helper/utils";
 const sponsors = ref([]);
 
 setWindowName("Sponsoren");
-
-const linkMessages = ref([
-  "Hit it!",
-  "Check it out",
-  "Klick mich",
-  "Show more",
-  "Erfahre mehr",
-  "Besuche uns",
-  "Visit us",
-]);
 
 try {
   const res = await ApiService.getSponsors();
