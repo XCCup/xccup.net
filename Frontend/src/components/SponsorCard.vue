@@ -26,10 +26,6 @@ defineProps({
     type: Object,
     required: true,
   },
-  linkMessage: {
-    type: String,
-    default: "Erfahre mehr",
-  },
 });
 </script>
 
