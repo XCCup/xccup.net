@@ -3,7 +3,8 @@ describe("check admin page", () => {
     cy.seedFlightDb();
     cy.visit("/");
     cy.loginAdmin();
-    cy.get("#navbarAdminDashboard").click();
+    cy.visit("/admin");
+    // cy.get("#navbarAdminDashboard").click();
   });
 
   it("test general page loading", () => {
