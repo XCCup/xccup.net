@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="flight-comments" class="container">
     <h3>Kommentare</h3>
     <div
       v-for="comment in commentsWithReplies"

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex mb-2">
+  <div :id="comment.id" class="d-flex mb-2">
     <img src="@/assets/images/avatar2.png" class="rounded-circle" />
     <a href="#">{{ comment.user.firstName + " " + comment.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"

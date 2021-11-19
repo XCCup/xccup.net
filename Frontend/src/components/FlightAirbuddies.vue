@@ -1,6 +1,6 @@
 <template>
   <!-- Airbuddy Checkboxes -->
-  <div class="container">
+  <div id="flight-airbuddies" class="container">
     <div class="airbuddies mt-2">
       <button
         class="btn btn-primary btn-sm dropdown-toggle"

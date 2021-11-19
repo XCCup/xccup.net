@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section id="flight-details" class="container">
     <h3>Flugeigenschaften</h3>
     <div class="row">
       <div class="col-md-6 col-12 my-1">
