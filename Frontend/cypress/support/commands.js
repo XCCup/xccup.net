@@ -51,6 +51,8 @@ Cypress.Commands.add("loginAdmin", () => {
   cy.get("input#password").type("PW_CamilleSchaden");
 
   cy.get("button").contains("Anmelden").click();
+  // Wait till button was updated
+  cy.get("#userNavDropdownMenu").should("includes.text", "Camille");
 });
 
 Cypress.Commands.add("login", (email, password) => {
