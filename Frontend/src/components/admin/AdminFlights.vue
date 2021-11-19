@@ -1,6 +1,6 @@
 <template>
   <section class="pb-3">
-    <div class="container-fluid">
+    <div id="adminFlightsPanel" class="container-fluid">
       <div v-if="violationsPresent" class="table-responsive">
         <h5>Ausstehende Flugprüfungen</h5>
         <table class="table table-striped table-hover text-sm">

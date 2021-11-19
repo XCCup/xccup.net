@@ -24,6 +24,37 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+Cypress.Commands.add("seedDb", () => {
+  cy.request("http://localhost:3000/testdata/seed");
+});
+
+Cypress.Commands.add("seedFlightDb", () => {
+  cy.request("http://localhost:3000/testdata/seed?Flight=true");
+});
+
+Cypress.Commands.add("clearDb", () => {
+  cy.request("http://localhost:3000/testdata/clear");
+});
+
+Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
+  // TODO: Find a better solution without a hard coded wait.
+  // Unfornually the bootstrap modal takes some time to load all its functionality. Without the wait the modal will not dispose after clicking.
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500);
+  cy.get(modalSelector).find("button").contains(buttonText).click();
+});
+
+Cypress.Commands.add("loginAdmin", () => {
+  cy.get("#loginNavButton").click();
+
+  cy.get("input#email").type("Camille@Schaden.name");
+  cy.get("input#password").type("PW_CamilleSchaden");
+
+  cy.get("button").contains("Anmelden").click();
+  // Wait till button was updated
+  cy.get("#userNavDropdownMenu").should("includes.text", "Camille");
+});
+
 Cypress.Commands.add("login", (email, password) => {
   cy.get("#loginNavButton").click();
 

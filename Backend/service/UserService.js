@@ -66,6 +66,7 @@ const userService = {
       include: [
         {
           model: ProfilePicture,
+          as: "picture",
           attributes: ["id", "path", "pathThumb"],
         },
         {

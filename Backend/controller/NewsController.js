@@ -19,8 +19,6 @@ router.get("/", authToken, async (req, res, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
 
-    console.log("After");
-
     const news = await service.getAll();
     res.json(news);
   } catch (error) {
