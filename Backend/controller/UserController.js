@@ -16,6 +16,7 @@ const {
   logoutToken,
   refreshToken,
 } = require("./Auth");
+const { query } = require("express-validator");
 const { createRateLimiter } = require("./api-protection");
 const {
   checkIsDateObject,
@@ -38,17 +39,25 @@ const loginLimiter = createRateLimiter(60, 5);
 // All requests to /users/picture will be rerouted
 router.use("/picture", require("./UserPictureController"));
 
-// @desc Retrieves all usernames
-// @route GET /users/list
+// @desc Retrieves all user
+// @route GET /users/public
 
-router.get("/list", async (req, res, next) => {
-  try {
-    const users = await service.getAll();
-    res.json(users);
-  } catch (error) {
-    next(error);
+router.get(
+  "/public",
+  query("records").optional().isBoolean(),
+  query("limit").optional().isInt(),
+  query("offset").optional().isInt(),
+  async (req, res, next) => {
+    const { records, limit, offset } = req.query;
+
+    try {
+      const users = await service.getAll({ records, limit, offset });
+      res.json(users);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Logs a user in by his credentials
 // @route GET /users/login

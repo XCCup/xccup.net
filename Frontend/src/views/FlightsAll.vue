@@ -1,28 +1,33 @@
 <template>
   <div class="container-fluid">
-    <h3>Streckenmeldungen {{ year }}</h3>
+    <h3>Streckenmeldungen {{ computedYear }}</h3>
   </div>
   <FlightsTable :flights="flights" />
 </template>
 
 <script setup>
 import ApiService from "@/services/ApiService.js";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
 import { setWindowName } from "../helper/utils";
+
+const route = useRoute();
 
 const props = defineProps({
   year: {
     type: [String, Number],
-    required: true,
+    default: "",
   },
 });
+
+const computedYear = computed(() => (props.year.length ? props.year : ""));
 
 setWindowName("Streckenmeldungen");
 
 const flights = ref(null);
 try {
   const { data: initialData } = await ApiService.getFlights({
-    year: props.year,
+    ...route.params,
   });
   flights.value = initialData;
 } catch (error) {

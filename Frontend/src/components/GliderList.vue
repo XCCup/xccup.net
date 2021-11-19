@@ -24,7 +24,13 @@
   </button>
   <!-- Modals -->
   <ModalAddGlider @add-glider="addGlider" />
-  <ModalConfirm :message-body="removeMessage" @confirm-result="removeGlider" />
+  <BaseModal
+    modal-title="Kommentar löschen?"
+    :modal-body="removeMessage"
+    confirm-button-text="Löschen"
+    modal-id="removeGliderModal"
+    :confirm-action="removeGlider"
+  />
 </template>
 
 <script>
@@ -119,7 +125,9 @@ export default {
       ")";
 
     onMounted(() => {
-      removeGliderModal = new Modal(document.getElementById("confirmModal"));
+      removeGliderModal = new Modal(
+        document.getElementById("removeGliderModal")
+      );
       addGliderModal = new Modal(document.getElementById("addGliderModal"));
     });
     return {

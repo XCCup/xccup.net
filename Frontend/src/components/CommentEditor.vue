@@ -3,7 +3,7 @@
     <div class="d-flex mb-2"></div>
     <div class="mb-3">
       <div v-if="loggedIn">
-        <form @submit.prevent="onSubmit">
+        <form @submit.prevent="onSubmitComment">
           <label for="comment-editor" class="form-label"
             >Kommentar verfassen:</label
           >
@@ -34,29 +34,42 @@
 
 <script setup>
 import useUser from "@/composables/useUser";
+import useComments from "@/composables/useComments";
+
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
+
 const { getUserId, loggedIn } = useUser();
-const emit = defineEmits(["submitComment"]);
+const { submitComment } = useComments();
+
 const route = useRoute();
 
+// Sumbit comment
 const message = ref("");
-
 const sendButtonIsDisabled = computed(() => message.value.length < 3);
 
-onMounted(() => (message.value = getMessageFromLocalStorage()));
-
-const onSubmit = () => {
+const onSubmitComment = async () => {
   const comment = {
     message: message.value,
-    userId: getUserId,
+    userId: getUserId.value,
   };
-  emit("submitComment", comment);
+  try {
+    const res = await submitComment(comment);
+    if (res.status != 200) throw res.statusText;
+    clearCommentEditorInput();
+  } catch (error) {
+    console.log(error);
+  }
 };
+
+// Local Storage
+onMounted(() => (message.value = getMessageFromLocalStorage()));
+
 const clearCommentEditorInput = () => {
   message.value = "";
   removeMessageFromLocalStorage();
 };
+
 const saveMessageToLocalStorage = () => {
   localStorage.setItem(
     "commentMessage",
@@ -84,7 +97,4 @@ const getMessageFromLocalStorage = () => {
     }
   }
 };
-defineExpose({
-  clearCommentEditorInput,
-});
 </script>

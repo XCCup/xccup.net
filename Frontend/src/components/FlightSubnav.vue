@@ -13,12 +13,8 @@
 </template>
 
 <script setup>
-defineProps({
-  flight: {
-    type: Object,
-    required: true,
-  },
-});
+import useFlight from "@/composables/useFlight";
+const { flight } = useFlight();
 </script>
 
 <style></style>

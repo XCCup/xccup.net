@@ -1,12 +1,6 @@
 <template>
   <div class="d-flex mb-2">
-    <img
-      src="@/assets/images/avatar2.png"
-      class="rounded-circle"
-      style="margin-right: 6px"
-      height="24"
-      width="24"
-    />
+    <img src="@/assets/images/avatar2.png" class="rounded-circle" />
     <a href="#">{{ comment.user.firstName + " " + comment.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
       ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
@@ -17,49 +11,24 @@
   </p>
   <!-- Replies -->
   <div v-for="reply in comment.replies" :key="reply.id" class="shadow p-3 mb-3">
-    <CommentReply
-      :ref="reply.id"
-      :reply="reply"
-      @delete-reply="deleteReply"
-      @reply-edited="editReply"
-    />
+    <CommentReply :reply="reply" />
   </div>
-  <!-- TODO: Maybe combine this editor with the one for new comments because parts of the logic are identical  -->
+  <!-- Comment Editor -->
   <div v-if="showCommentEditor">
-    <textarea
-      id="comment-editor"
-      v-model="editedComment"
-      class="form-control mb-2"
-    ></textarea>
-    <button
-      class="btn btn-primary me-2"
-      :disabled="saveButtonIsDisabled"
-      @click.prevent="saveEditedMessage"
-    >
-      Speichern
-    </button>
-    <button class="btn btn-outline-danger" @click.prevent="closeCommentEditor">
-      Abbrechen
-    </button>
+    <CommentInlineEditor
+      :textarea-content="editedComment"
+      @save-message="onSaveEditedMessage"
+      @close-editor="closeCommentEditor"
+    />
   </div>
 
   <!-- Reply comment editor -->
   <div v-if="showReplyEditor">
-    <textarea
-      id="reply-comment-editor"
-      v-model="replyMessage"
-      class="form-control mb-2"
-    ></textarea>
-    <button
-      class="btn btn-primary me-2"
-      :disabled="saveButtonIsDisabled"
-      @click.prevent="saveReplyMessage"
-    >
-      Senden
-    </button>
-    <button class="btn btn-outline-danger" @click.prevent="closeReplyEditor">
-      Abbrechen
-    </button>
+    <CommentInlineEditor
+      :textarea-content="replyMessage"
+      @save-message="onSubmitReplyMessage"
+      @close-editor="closeReplyEditor"
+    />
   </div>
 
   <div
@@ -74,19 +43,29 @@
     v-if="comment.userId === getUserId && !showCommentEditor"
     class="text-secondary text-end"
   >
-    <a href="#" @click.prevent="editComment"
+    <a href="#" @click.prevent="onEditComment"
       ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a
     >
-    <a href="#" @click.prevent="deleteComment">
+    <a href="#" @click.prevent="deleteCommentModal.show()">
       <i class="bi bi-trash mx-1"></i>Löschen
     </a>
   </div>
+  <BaseModal
+    modal-title="Kommentar löschen?"
+    confirm-button-text="Löschen"
+    :modal-id="comment.id"
+    :confirm-action="onDeleteComment"
+  />
 </template>
 
 <script setup>
 import useUser from "@/composables/useUser";
-import { ref, computed } from "vue";
+import useComments from "@/composables/useComments";
+import { ref, onMounted } from "vue";
+import { Modal } from "bootstrap";
+
 const { getUserId } = useUser();
+const { deleteComment, editComment, submitComment } = useComments();
 
 const props = defineProps({
   comment: {
@@ -95,60 +74,79 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits([
-  "deleteComment",
-  "deleteReply",
-  "commentEdited",
-  "saveReplyMessage",
-]);
+// Modal
+const deleteCommentModal = ref(null);
+onMounted(() => {
+  deleteCommentModal.value = new Modal(
+    document.getElementById(props.comment.id)
+  );
+});
+
+// Delete comment
+const onDeleteComment = async () => {
+  try {
+    const res = await deleteComment(props.comment.id);
+    if (res.status != 200) throw res.statusText;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Edit Comment
 const showCommentEditor = ref(false);
-const showReplyEditor = ref(false);
-const replyMessage = ref("");
 const editedComment = ref(props.comment.message);
 
-const deleteComment = () => {
-  emit("deleteComment", props.comment.id);
-};
-const editComment = () => {
-  showCommentEditor.value = true;
-};
-const deleteReply = (id) => {
-  emit("deleteReply", id);
-};
-const openReplyEditor = () => {
-  showReplyEditor.value = true;
-};
-const editReply = (reply) => {
-  emit("commentEdited", reply);
-};
-const saveEditedMessage = () => {
+const onEditComment = () => (showCommentEditor.value = true);
+const onSaveEditedMessage = async (message) => {
   const comment = {
-    message: editedComment.value,
+    message: message,
     userId: getUserId.value,
     id: props.comment.id,
   };
-  emit("commentEdited", comment);
+  try {
+    const res = await editComment(comment);
+    if (res.status != 200) throw res.statusText;
+    closeCommentEditor();
+  } catch (error) {
+    console.log(error);
+  }
 };
-const saveReplyMessage = () => {
-  const comment = {
-    message: replyMessage.value,
-    userId: getUserId.value,
-    relatedTo: props.comment.id,
-  };
-  emit("saveReplyMessage", comment);
-};
+
 const closeCommentEditor = () => {
   showCommentEditor.value = false;
   editedComment.value = props.comment.message;
 };
+
+// Submit new reply
+const replyMessage = ref("");
+const showReplyEditor = ref(false);
+
+const openReplyEditor = () => (showReplyEditor.value = true);
+
+const onSubmitReplyMessage = async (message) => {
+  const comment = {
+    message: message,
+    userId: getUserId.value,
+    relatedTo: props.comment.id,
+  };
+  try {
+    const res = await submitComment(comment);
+    if (res.status != 200) throw res.statusText;
+    closeReplyEditor();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const closeReplyEditor = () => {
   showReplyEditor.value = false;
   replyMessage.value = "";
 };
-const saveButtonIsDisabled = computed(() => editedComment.value.length < 3);
-
-defineExpose({
-  closeCommentEditor,
-  closeReplyEditor,
-});
 </script>
+<style>
+.rounded-circle {
+  margin-right: 6px;
+  height: 24px;
+  width: 24px;
+}
+</style>

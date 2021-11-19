@@ -15,16 +15,24 @@ const routes = [
   {
     path: "/flug/:flightId",
     name: "Flight",
-    props: true,
+    // props: true,
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
     component: FlightView,
   },
   {
     path: "/:year/fluege/",
-    name: "FlightsAll",
+    name: "FlightsAllYear",
     props: true,
     beforeEnter: validateRouteParamYear,
+    meta: { toTop: true },
+
+    component: () => import("../views/FlightsAll.vue"),
+  },
+  {
+    path: "/fluege/",
+    name: "FlightsAll",
+    props: true,
     meta: { toTop: true },
 
     component: () => import("../views/FlightsAll.vue"),
@@ -157,6 +165,11 @@ const routes = [
     path: "/vereine",
     name: "Clubs",
     component: () => import("../views/ClubsList.vue"),
+  },
+  {
+    path: "/piloten",
+    name: "Users",
+    component: () => import("../views/UserList.vue"),
   },
   {
     path: "/impressum",

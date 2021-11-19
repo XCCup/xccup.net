@@ -8,12 +8,12 @@
 - [ ] Icons for task types (FAI & flat triangle, one way)
 - [x] Icons for ranking classes
 - [ ] Authentication
-- [ ] Login error handling
+- [x] Login error handling
 - [ ] Page names
 - [ ] Correct browser history
-- [ ] bworser window naming
-- [ ] add brwoser titles
-- [ ] tooltips for icons
+- [x] browser window titles
+- [x] tooltips for icons
+- [ ] dark mode
 
 ### Home
 
@@ -53,7 +53,7 @@
 - [x] Center map view on pilot by clicking on the barogram
 - [x] Pilot markers follow the barogram timeline
 - [ ] Add speed and climb label next to height label
-- [ ] Airspace overlay on map
+- [x] Airspace overlay on map
 - [x] Turnpoint overlay on map
 - [ ] Custom icons for takeoff & landing
 - [ ] Display alitude for pilot and airbuddies

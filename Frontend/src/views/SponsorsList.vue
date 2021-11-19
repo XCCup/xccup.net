@@ -1,14 +1,15 @@
 <template>
-  <div class="container-fluid">
+  <div class="container">
     <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
-  </div>
-  <div v-for="sponsor in sponsors" :key="sponsor.id" class="card">
-    <Sponsor
-      :sponsor="sponsor"
-      :link-message="
-        linkMessages[Math.floor(Math.random() * linkMessages.length)]
-      "
-    />
+    <div class="row gy-5 gx-5">
+      <div
+        v-for="sponsor in sponsors"
+        :key="sponsor.id"
+        class="col-xl-6 col-md-12"
+      >
+        <SponsorCard :sponsor="sponsor" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,19 +17,11 @@
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 import { shuffle } from "lodash";
+import { setWindowName } from "../helper/utils";
 
 const sponsors = ref([]);
 
-document.title = "XCCup - Sponsoren";
-const linkMessages = ref([
-  "Hit it!",
-  "Check it out",
-  "Klick mich",
-  "Show more",
-  "Erfahre mehr",
-  "Besuche uns",
-  "Visit us",
-]);
+setWindowName("Sponsoren");
 
 try {
   const res = await ApiService.getSponsors();

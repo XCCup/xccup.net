@@ -67,10 +67,12 @@
   </section>
   <!-- Modal -->
   <ModalAddEditNews :news-object="selectedNews" @save-news="saveNews" />
-  <ModalConfirm
-    :message-body="deleteMessage"
+  <BaseModal
+    modal-title="News löschen?"
+    :modal-body="deleteMessage"
+    confirm-button-text="Löschen"
     :modal-id="modalId"
-    @confirm-result="deleteNews"
+    :confirm-action="deleteNews"
   />
 </template>
 
@@ -130,11 +132,9 @@ export default {
       this.deleteMessage = `Willst du die Nachricht ${news.title} wirklich löschen?`;
       this.confirmModal.show();
     },
-    async deleteNews(result) {
-      if (result === true) {
-        const res = await ApiService.deleteNews(this.selectedNews.id);
-        await this.fetchNews();
-      }
+    async deleteNews() {
+      await ApiService.deleteNews(this.selectedNews.id);
+      await this.fetchNews();
     },
   },
 };

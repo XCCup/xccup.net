@@ -1,5 +1,5 @@
 <template>
-  <div class="col-6 mx-auto mt-2">
+  <div class="mt-2">
     <form @submit.prevent="handleSubmit">
       <div class="mb-3">
         <label for="email" class="form-label">E-Mail</label>
