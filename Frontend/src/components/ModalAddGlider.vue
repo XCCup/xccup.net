@@ -43,13 +43,6 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-outline-danger"
-            data-bs-dismiss="modal"
-          >
-            Abbrechen
-          </button>
-          <button
-            type="button"
             class="btn btn-primary"
             :disabled="!saveButtonIsEnabled"
             @click="onAddGlider"
@@ -62,6 +55,13 @@
             >
               <span class="visually-hidden">Loading...</span>
             </div>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            data-bs-dismiss="modal"
+          >
+            Abbrechen
           </button>
         </div>
       </div>

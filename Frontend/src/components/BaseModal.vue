@@ -16,13 +16,17 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-outline-danger"
+            class="btn btn-primary"
             data-bs-dismiss="modal"
             @click="confirmAction"
           >
             {{ confirmButtonText }}
           </button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            data-bs-dismiss="modal"
+          >
             Abbrechen
           </button>
         </div>
