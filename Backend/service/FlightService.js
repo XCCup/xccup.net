@@ -132,11 +132,7 @@ const flightService = {
 
     const queryObject = {
       include: [
-        {
-          model: User,
-          as: "user",
-          attributes: ["firstName", "lastName"],
-        },
+        createUserInclude,
         {
           model: FlightFixes,
           as: "fixes",
@@ -190,34 +186,16 @@ const flightService = {
         {
           model: FlightComment,
           as: "comments",
-          include: [
-            {
-              model: User,
-              as: "user",
-              attributes: ["id", "firstName", "lastName"],
-            },
-          ],
+          include: [createUserInclude()],
         },
-        {
-          model: User,
-          as: "user",
-          attributes: ["firstName", "lastName"],
-        },
+        createUserInclude(),
         {
           model: FlyingSite,
           as: "takeoff",
           attributes: ["id", "name", "direction"],
         },
-        {
-          model: Club,
-          as: "club",
-          attributes: ["name"],
-        },
-        {
-          model: Team,
-          as: "team",
-          attributes: ["name"],
-        },
+        createClubInclude,
+        createTeamInclude,
         {
           model: FlightPhoto,
           as: "photos",
@@ -709,7 +687,7 @@ function createUserInclude() {
   const include = {
     model: User,
     as: "user",
-    attributes: ["firstName", "lastName"],
+    attributes: ["id", "firstName", "lastName"],
   };
   return include;
 }
