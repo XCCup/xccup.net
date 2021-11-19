@@ -18,6 +18,7 @@
   <div v-if="showReplyEditor">
     <CommentInlineEditor
       :textarea-content="editedMessage"
+      :use-edit-labels="true"
       @save-message="onSaveEditedMessage"
       @close-editor="onCloseCommentEditor"
     />
