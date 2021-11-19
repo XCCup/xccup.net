@@ -72,9 +72,9 @@
     </div>
   </section>
   <BaseModal
-    modal-title="Flug löschen?"
+    :modal-title="modalTitle"
     :modal-body="confirmMessage"
-    confirm-button-text="Löschen"
+    :confirm-button-text="modalButtonText"
     :modal-id="modalId"
     :confirm-action="processConfirmResult"
   />
@@ -98,6 +98,8 @@ export default {
       confirmMessage: "",
       confirmType: "",
       modalId: "modalFlightConfirm",
+      modalTitle: "",
+      modalButtonText: "",
       selectedFlight: null,
     };
   },
@@ -118,29 +120,30 @@ export default {
     },
     async processConfirmResult() {
       if (this.confirmType === KEY_DELETE) {
-        const res = await ApiService.deleteFlight(
-          this.selectedFlight.externalId
-        );
+        await ApiService.deleteFlight(this.selectedFlight.externalId);
       }
       if (this.confirmType === KEY_ACCEPT) {
-        const res = await ApiService.acceptFlightViolations(
-          this.selectedFlight.id
-        );
+        await ApiService.acceptFlightViolations(this.selectedFlight.id);
       }
       await this.fetchFlightsWithViolations();
     },
     onDeleteFlight(flight) {
-      this.confirmMessage = "Willst du diesen Flug wirklich löschen?";
       this.confirmType = KEY_DELETE;
+      this.modalTitle = "Flug löschen?";
+      this.confirmMessage = "Willst du diesen Flug wirklich löschen?";
+      this.modalButtonText = "Löschen";
       this.selectedFlight = flight;
       this.confirmModal.show();
     },
     onAcceptFlight(flight) {
-      this.confirmMessage = "Willst du diesen Flug wirklich akzeptieren?";
       this.confirmType = KEY_ACCEPT;
+      this.modalTitle = "Flug akzeptieren?";
+      this.confirmMessage = "Willst du diesen Flug wirklich akzeptieren?";
+      this.modalButtonText = "Akzeptieren";
       this.selectedFlight = flight;
       this.confirmModal.show();
     },
+    /* eslint-disable no-unused-vars */
     async messagePilot(flight) {
       alert(
         "Entschuldigung, aber diese Funktion ist noch nicht implementiert."

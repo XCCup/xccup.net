@@ -132,11 +132,9 @@ export default {
       this.deleteMessage = `Willst du die Nachricht ${news.title} wirklich löschen?`;
       this.confirmModal.show();
     },
-    async deleteNews(result) {
-      if (result === true) {
-        const res = await ApiService.deleteNews(this.selectedNews.id);
-        await this.fetchNews();
-      }
+    async deleteNews() {
+      await ApiService.deleteNews(this.selectedNews.id);
+      await this.fetchNews();
     },
   },
 };
