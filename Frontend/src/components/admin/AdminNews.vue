@@ -1,6 +1,6 @@
 <template>
   <section class="pb-3">
-    <div class="container-fluid">
+    <div id="adminNewsPanel" class="container-fluid">
       <div class="table-responsive">
         <h5>Nachrichten Redaktion</h5>
         <p>Hier dargestellte Nachrichten werden auf der Startseite angezeigt</p>
