@@ -14,7 +14,7 @@
       </button>
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li id="navbarResults" class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a
               id="navbarDropdown"
               class="nav-link dropdown-toggle"
@@ -131,7 +131,7 @@
               </li>
             </ul>
           </li>
-          <li id="navbarLists" class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a
               id="navbarDropdown"
               class="nav-link dropdown-toggle"
@@ -169,12 +169,12 @@
               </li>
             </ul>
           </li>
-          <li id="navbarPrivacy" class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <router-link :to="{ name: 'Privacy' }" class="nav-link active"
               >Datenschutz</router-link
             >
           </li>
-          <li id="navbarImprint" class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <router-link :to="{ name: 'Imprint' }" class="nav-link active"
               >Kontakt / Impressum</router-link
             >
@@ -243,16 +243,16 @@
 import useUser from "@/composables/useUser";
 
 import { computed } from "vue";
-// import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const { authData, loggedIn, logout, hasElevatedRole } = useUser();
 
 const currentYear = computed(() => new Date().getFullYear());
 
-// const router = useRouter();
+const router = useRouter();
 
 const handleLogout = async () => {
   await logout();
-  // router.push({ name: "Home" });
+  router.push({ name: "Home" });
 };
 </script>
