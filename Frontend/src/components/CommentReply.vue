@@ -39,6 +39,7 @@
     confirm-button-text="Löschen"
     :modal-id="reply.id"
     :confirm-action="onDeleteComment"
+    :is-dangerous-action="true"
   />
 </template>
 

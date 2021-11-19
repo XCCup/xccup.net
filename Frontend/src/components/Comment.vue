@@ -55,6 +55,7 @@
     confirm-button-text="Löschen"
     :modal-id="comment.id"
     :confirm-action="onDeleteComment"
+    :is-dangerous-action="true"
   />
 </template>
 
