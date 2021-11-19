@@ -21,10 +21,6 @@ if (process.env.NODE_ENV === "development") {
   // https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
   var cors = require("cors");
   app.use(cors());
-  //SwaggerUI
-  const swaggerUi = require("swagger-ui-express");
-  const swaggerDocument = require("./swagger.json");
-  app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 app.use(express.urlencoded({ extended: false }));
