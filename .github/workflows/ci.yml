@@ -32,9 +32,9 @@ jobs:
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml up -d #TODO: Leaving pgadmin out saves around 5s... Is it worth it?
         working-directory: ./Backend
       - name: List all databases (just for debugging)
-        run: docker exec db psql -U xccup_user -l
+        run: sleep 30 && docker exec db psql -U xccup_user -l
       - name: Setup DB (enable PostGIS and set correct timezone)
-        run: sleep 30 && docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
+        run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
         working-directory: ./Backend
       - name: Install frontend
         run: yarn install
