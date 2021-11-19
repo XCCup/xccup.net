@@ -26,7 +26,7 @@
       </div>
       <div v-else>
         Du musst angemeldet sein um einen Kommentar zu verfassen.
-        <BaseLogin />
+        <BaseLogin :prevent-redirect="true" />
       </div>
     </div>
   </div>

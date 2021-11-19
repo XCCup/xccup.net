@@ -243,16 +243,16 @@
 import useUser from "@/composables/useUser";
 
 import { computed } from "vue";
-import { useRouter } from "vue-router";
+// import { useRouter } from "vue-router";
 
 const { authData, loggedIn, logout, hasElevatedRole } = useUser();
 
 const currentYear = computed(() => new Date().getFullYear());
 
-const router = useRouter();
+// const router = useRouter();
 
 const handleLogout = async () => {
   await logout();
-  router.push({ name: "Home" });
+  // router.push({ name: "Home" });
 };
 </script>
