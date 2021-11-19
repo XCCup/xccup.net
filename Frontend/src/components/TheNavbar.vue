@@ -14,7 +14,7 @@
       </button>
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
+          <li id="navbarResults" class="nav-item dropdown">
             <a
               id="navbarDropdown"
               class="nav-link dropdown-toggle"
@@ -131,7 +131,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          <li id="navbarLists" class="nav-item dropdown">
             <a
               id="navbarDropdown"
               class="nav-link dropdown-toggle"
@@ -169,12 +169,12 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item dropdown">
+          <li id="navbarPrivacy" class="nav-item dropdown">
             <router-link :to="{ name: 'Privacy' }" class="nav-link active"
               >Datenschutz</router-link
             >
           </li>
-          <li class="nav-item dropdown">
+          <li id="navbarImprint" class="nav-item dropdown">
             <router-link :to="{ name: 'Imprint' }" class="nav-link active"
               >Kontakt / Impressum</router-link
             >
