@@ -1,13 +1,13 @@
 <template>
-  <div v-if="report" class="container">
+  <div v-if="flight.report" class="container">
     <div class="row mt-4">
       <h3>Flugbericht</h3>
       <p>
-        {{ report }}
+        {{ flight.report }}
       </p>
     </div>
-    <div v-if="photos" class="row mb-4">
-      <div v-for="(photo, index) in photos" :key="index" class="col-4">
+    <div v-if="flight.photos" class="row mb-4">
+      <div v-for="(photo, index) in flight.photos" :key="index" class="col-4">
         <figure class="figure">
           <a
             :href="baseURL + `media/` + photo.id"
@@ -30,16 +30,9 @@
 </template>
 
 <script setup>
-defineProps({
-  report: {
-    type: String,
-    required: true,
-  },
-  photos: {
-    type: Array,
-    required: true,
-  },
-});
+import useFlight from "@/composables/useFlight";
+const { flight } = useFlight();
+
 const baseURL = import.meta.env.VITE_API_URL;
 </script>
 

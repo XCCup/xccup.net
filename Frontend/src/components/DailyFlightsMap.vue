@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     popup(id) {
-      return `Flight ID: ${id} <br/> <a href>Link</a>`;
+      return `Flug ID: ${id} <br/> <a href="/flug/${id}" target="_blank">Öffne Flug</a>`;
     },
     highlightTrack(flightId) {
       // Reset color of all tracks to default

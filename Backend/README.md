@@ -79,3 +79,5 @@ gcc olc2002.c -o olc_lnx -lm
 ```
 
 ## Todo
+
+- [ ] email service integration

@@ -15,7 +15,7 @@ const routes = [
   {
     path: "/flug/:flightId",
     name: "Flight",
-    props: true,
+    // props: true,
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
     component: FlightView,
