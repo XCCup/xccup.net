@@ -144,7 +144,7 @@ const closeReplyEditor = () => {
   replyMessage.value = "";
 };
 </script>
-<style>
+<style scoped>
 .rounded-circle {
   margin-right: 6px;
   height: 24px;
