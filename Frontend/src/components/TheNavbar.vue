@@ -26,7 +26,10 @@
             <ul class="dropdown-menu">
               <li>
                 <router-link
-                  :to="{ name: 'FlightsAll', params: { year: currentYear } }"
+                  :to="{
+                    name: 'FlightsAllYear',
+                    params: { year: currentYear },
+                  }"
                   class="dropdown-item"
                   >Eingereichte Flüge</router-link
                 >
@@ -157,7 +160,9 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="#">Registrierte Piloten</a>
+                <router-link :to="{ name: 'Users' }" class="dropdown-item"
+                  >Registrierte Piloten</router-link
+                >
               </li>
               <li>
                 <a class="dropdown-item" href="#">Teams 2021</a>
