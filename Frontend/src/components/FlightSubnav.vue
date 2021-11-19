@@ -38,4 +38,4 @@ import { retrieveDateOnly, dayAfter } from "../helper/utils";
 const { flight } = useFlight();
 </script>
 
-<style></style>
+<style scoped></style>
