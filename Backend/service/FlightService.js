@@ -132,7 +132,7 @@ const flightService = {
 
     const queryObject = {
       include: [
-        createUserInclude,
+        createUserInclude(),
         {
           model: FlightFixes,
           as: "fixes",
@@ -194,8 +194,8 @@ const flightService = {
           as: "takeoff",
           attributes: ["id", "name", "direction"],
         },
-        createClubInclude,
-        createTeamInclude,
+        createClubInclude(),
+        createTeamInclude(),
         {
           model: FlightPhoto,
           as: "photos",
