@@ -1,4 +1,5 @@
 const express = require("express");
+const logger = require("../config/logger");
 const router = express.Router();
 
 // @desc Seeds the DB with the testdatasets
@@ -10,9 +11,13 @@ router.get("/seed", async (req, res, next) => {
 
     if (Flight) {
       const model = require("../config/postgres")["Flight"];
-      await model.destroy({
-        truncate: { cascade: true },
-      });
+      try {
+        await model.destroy({
+          truncate: { cascade: true },
+        });
+      } catch (error) {
+        logger.error(error);
+      }
       await require("../test/DbTestDataLoader").addFlights();
     } else {
       const { sequelize } = require("../config/postgres");
