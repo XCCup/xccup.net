@@ -6,3 +6,13 @@ export function isIsoDateWithoutTime(string) {
 export function setWindowName(namePostfix) {
   document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}${namePostfix}`;
 }
+
+export function retrieveDateOnly(isoDate) {
+  return isoDate.substring(0, 10);
+}
+
+export function dayAfter(date) {
+  const dateObject = new Date(date);
+  dateObject.setDate(dateObject.getDate() + 1);
+  return retrieveDateOnly(dateObject.toISOString());
+}

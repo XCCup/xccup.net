@@ -5,15 +5,33 @@
         ><i class="bi bi-chevron-left mx-2"></i
       ></a>
       Flug von
-      <a href="#">{{ flight.user.firstName + " " + flight.user.lastName }}</a>
+      <router-link
+        :to="{
+          name: 'FlightsAll',
+          params: { userId: flight.user.id },
+        }"
+      >
+        {{ flight.user.firstName + " " + flight.user.lastName }}
+      </router-link>
       am
-      <a href="#"><BaseDate :timestamp="flight.takeoffTime" /></a>
+      <router-link
+        :to="{
+          name: 'FlightsAll',
+          params: {
+            startDate: retrieveDateOnly(flight.takeoffTime),
+            endDate: dayAfter(flight.takeoffTime),
+          },
+        }"
+      >
+        <BaseDate :timestamp="flight.takeoffTime" />
+      </router-link>
     </p>
   </div>
 </template>
 
 <script setup>
 import useFlight from "@/composables/useFlight";
+import { retrieveDateOnly, dayAfter } from "../helper/utils";
 const { flight } = useFlight();
 </script>
 
