@@ -15,6 +15,20 @@ const AirspaceService = require("../service/AirspaceService");
 const logger = require("../config/logger");
 
 const dbTestData = {
+  addFlights: async () => {
+    const flights = require("./testdatasets/flights.json");
+    adjustYearOfEveryFlight(flights);
+    adjustTimesToToday(flights, 5);
+
+    const relations = [
+      [Flight, flights],
+      [FlightPhoto, require("./testdatasets/flightPhotos.json")],
+      [FlightComment, require("./testdatasets/comments.json")],
+      [FlightFixes, require("./testdatasets/fixes.json")],
+    ];
+
+    await addToDb(relations);
+  },
   addTestData: async () => {
     const flights = require("./testdatasets/flights.json");
     adjustYearOfEveryFlight(flights);
@@ -36,19 +50,23 @@ const dbTestData = {
       [Logo, require("./testdatasets/logos.json")],
     ];
 
-    for (let index = 0; index < relations.length; index++) {
-      const model = relations[index][0];
-      const dataset = relations[index][1];
-      logger.debug("Start adding " + model.name);
-      await addDataset(model, dataset);
-      logger.debug("Finished adding " + model.name);
-    }
+    await addToDb(relations);
 
     logger.debug("Will fix invalid GeoJSON data of airspaces");
     await AirspaceService.fixInvalidGeoData();
     logger.debug("Finished repair of GeoJSON");
   },
 };
+
+async function addToDb(relations) {
+  for (let index = 0; index < relations.length; index++) {
+    const model = relations[index][0];
+    const dataset = relations[index][1];
+    logger.debug("Start adding " + model.name);
+    await addDataset(model, dataset);
+    logger.debug("Finished adding " + model.name);
+  }
+}
 
 async function addDataset(model, dataset) {
   await Promise.all(

@@ -6,19 +6,20 @@ const router = express.Router();
 
 router.get("/seed", async (req, res, next) => {
   try {
-    require("../test/DbTestDataLoader").addTestData();
-    res.sendStatus(200);
-  } catch (error) {
-    next(error);
-  }
-});
+    const { Flight } = req.query;
 
-// @desc Seeds the DB with the testdatasets
-// @route GET /testdata/seed
+    if (Flight) {
+      const model = require("../config/postgres")["Flight"];
+      await model.destroy({
+        truncate: { cascade: true },
+      });
+      await require("../test/DbTestDataLoader").addFlights();
+    } else {
+      const { sequelize } = require("../config/postgres");
+      await sequelize.sync({ force: true });
+      await require("../test/DbTestDataLoader").addTestData();
+    }
 
-router.get("/seed", async (req, res, next) => {
-  try {
-    require("../test/DbTestDataLoader").addTestData();
     res.sendStatus(200);
   } catch (error) {
     next(error);
@@ -33,15 +34,16 @@ router.get("/clear", async (req, res, next) => {
     const queryParams = Object.keys(req.query);
 
     if (queryParams.length > 0) {
-      queryParams.forEach((e) => {
-        const model = require("../config/postgres")[e];
-        model.destroy({
+      for (let index = 0; index < queryParams.length; index++) {
+        const element = queryParams[index];
+        const model = require("../config/postgres")[element];
+        await model.destroy({
           truncate: { cascade: true },
         });
-      });
+      }
     } else {
       const { sequelize } = require("../config/postgres");
-      sequelize.sync({ force: true });
+      await sequelize.sync({ force: true });
     }
 
     res.sendStatus(200);
