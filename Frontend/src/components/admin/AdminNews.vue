@@ -73,6 +73,7 @@
     confirm-button-text="Löschen"
     :modal-id="modalId"
     :confirm-action="deleteNews"
+    :is-dangerous-action="true"
   />
 </template>
 

@@ -16,7 +16,8 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-primary"
+            class="btn"
+            :class="isDangerousAction ? 'btn-danger' : 'btn-primary'"
             data-bs-dismiss="modal"
             @click="confirmAction"
           >
@@ -24,7 +25,10 @@
           </button>
           <button
             type="button"
-            class="btn btn-outline-danger"
+            class="btn"
+            :class="
+              isDangerousAction ? 'btn-outline-primary' : 'btn-outline-danger'
+            "
             data-bs-dismiss="modal"
           >
             Abbrechen
@@ -57,6 +61,10 @@ defineProps({
   confirmAction: {
     type: Function,
     required: true,
+  },
+  isDangerousAction: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>

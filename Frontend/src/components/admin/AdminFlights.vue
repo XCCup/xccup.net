@@ -77,6 +77,7 @@
     :confirm-button-text="modalButtonText"
     :modal-id="modalId"
     :confirm-action="processConfirmResult"
+    :is-dangerous-action="true"
   />
 </template>
 
