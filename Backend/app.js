@@ -44,6 +44,9 @@ app.use("/news", require("./controller/NewsController"));
 app.use("/sponsors", require("./controller/SponsorController"));
 app.use("/media", require("./controller/MediaController"));
 app.use("/general", require("./controller/GeneralController"));
+if (process.env.NODE_ENV === "development") {
+  app.use("/testdata", require("./controller/TestDataController"));
+}
 
 //Reset all caches when a non GET requests occurs
 app.all("*", (req, res, next) => {

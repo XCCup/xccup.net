@@ -79,7 +79,7 @@ async function sleep(ms) {
 function addTestData() {
   if (process.env.DB_ADD_TESTDATA == "true") {
     logger.info("Will check for testdata");
-    require("../test/DbTestData").checkForTestDataAndAddIfMissing();
+    require("../test/DbTestDataLoader").addTestData();
   }
 }
 
