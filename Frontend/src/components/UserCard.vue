@@ -1,73 +1,77 @@
 <template>
   <div class="card-header"></div>
-  <div class="card-body row justify-content-start align-items-center">
+  <div class="card-body row align-items-center gx-5">
     <!-- TODO: Cols should wrap in own row when viewport width shrinks -->
-    <div class="col-1">
-      <div class="profile-image">
-        <a href="" target="_blank">
-          <img :src="avatarUrl" />
-        </a>
+    <div class="col-xl-4 row align-items-center">
+      <div class="col-6">
+        <div class="profile-image">
+          <a href="" target="_blank">
+            <img :src="avatarUrl" />
+          </a>
+        </div>
       </div>
-    </div>
-    <div class="col-2">
-      <div>
-        <router-link
-          :to="{
-            name: 'FlightsAll',
-            params: { userId: user.id },
-          }"
-        >
-          <h5 disabled="true" class="row card-title">
-            {{ user.firstName }} {{ user.lastName }}
-          </h5>
-        </router-link>
-      </div>
-      <div class="row justify-content-start">
-        <button class="col me-5 btn btn-primary" @click="messagePilot(flight)">
-          <i class="bi bi-envelope"></i>
-        </button>
-      </div>
-    </div>
-    <div class="col-2">
-      <div>
-        <strong>Club</strong>
-        <router-link
-          :to="{
-            name: 'FlightsAll',
-            params: { clubId: user.club.id },
-          }"
-        >
-          <div>{{ user.club.name }}</div>
-        </router-link>
-      </div>
-      <div>
-        <strong>Team</strong>
-        <div v-if="user.team">
+      <div class="col-6">
+        <div>
           <router-link
             :to="{
               name: 'FlightsAll',
-              params: { teamId: user.team.id },
+              params: { userId: user.id },
             }"
           >
-            {{ user.team?.name }}</router-link
-          >
+            <h5 class="row card-title">
+              {{ user.firstName }} {{ user.lastName }}
+            </h5>
+          </router-link>
         </div>
-        <div v-else>🤷</div>
+        <div class="row">
+          <button class="col btn btn-primary" @click="messagePilot(flight)">
+            <i class="bi bi-envelope"></i>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-2">
-      <div><strong>Hangar</strong> <br /></div>
-      <ul v-if="user.gliders.length" class="list-group list-group-flush">
-        <li v-for="glider in user.gliders" :key="glider.id">
-          <RankingClass :ranking-class="createRankingClass(glider)" />{{
-            glider.brand
-          }}
-          {{ glider.model }}
-        </li>
-      </ul>
-      <div v-else>🕵️</div>
+    <div class="col-xl-4 row align-items-center">
+      <div class="col-6">
+        <div>
+          <strong>Club</strong>
+          <router-link
+            :to="{
+              name: 'FlightsAll',
+              params: { clubId: user.club.id },
+            }"
+          >
+            <div>{{ user.club.name }}</div>
+          </router-link>
+        </div>
+        <div>
+          <strong>Team</strong>
+          <div v-if="user.team">
+            <router-link
+              :to="{
+                name: 'FlightsAll',
+                params: { teamId: user.team.id },
+              }"
+            >
+              {{ user.team?.name }}</router-link
+            >
+          </div>
+          <div v-else>🤷</div>
+        </div>
+      </div>
+      <div class="col-6 align-items-center">
+        <div><strong>Hangar</strong> <br /></div>
+        <ul v-if="user.gliders.length" class="list-group list-group-flush">
+          <li v-for="glider in user.gliders" :key="glider.id">
+            <RankingClass :ranking-class="createRankingClass(glider)" />{{
+              glider.brand
+            }}
+            {{ glider.model }}
+          </li>
+        </ul>
+        <div v-else>🕵️</div>
+      </div>
     </div>
-    <div class="col-2">
+    <div class="col-xl-4">
       <div><strong>Rekorde</strong> <br /></div>
       <div class="row">
         <FlightShortSummary flight-type="FREE" :flight="user.records[0][0]" />
