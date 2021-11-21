@@ -10,7 +10,16 @@ const mailClient = nodemailer.createTransport({
   },
 });
 
+/**
+ *
+ * @param {*} mailAddresses A single email address of type string oder multiple addresses as an array of strings.
+ * @param {*} content A object containing a "title" and a "text" property of type string.
+ * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
+ */
 const sendMail = async (mailAddresses, content) => {
+  if (!(content.title?.length == 0) || !(content.text?.length != 0))
+    throw "content.title and content.text are not allowed to be empty";
+
   const message = createMessage(
     process.env.MAIL_SERVICE_USER,
     mailAddresses,
