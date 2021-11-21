@@ -42,12 +42,12 @@ import { ref } from "vue";
 const { login } = useUser();
 const router = useRouter();
 
-// defineProps({
-//   redirectAfterLogin: {
-//     type: Boolean,
-//     default: true,
-//   },
-// });
+const props = defineProps({
+  preventRedirect: {
+    type: Boolean,
+    default: false,
+  },
+});
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
@@ -60,7 +60,7 @@ const handleSubmit = async () => {
     });
     // Redirect after login
     // Alternativly redirect in router config
-    if (response.status === 200) {
+    if (response.status === 200 && !props.preventRedirect) {
       let searchParams = new URLSearchParams(window.location.search);
       if (searchParams.has("redirect")) {
         router.push({ path: `${searchParams.get("redirect")}` });

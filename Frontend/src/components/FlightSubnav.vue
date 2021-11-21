@@ -1,5 +1,8 @@
 <template>
-  <div class="container-fluid flight-info text-light mb-0 p-1">
+  <div
+    id="flight-subnav"
+    class="container-fluid flight-info text-light mb-0 p-1"
+  >
     <p class="m-0">
       <a href="#" @click="$router.go(-1)"
         ><i class="bi bi-chevron-left mx-2"></i
@@ -35,4 +38,4 @@ import { retrieveDateOnly, dayAfter } from "../helper/utils";
 const { flight } = useFlight();
 </script>
 
-<style></style>
+<style scoped></style>

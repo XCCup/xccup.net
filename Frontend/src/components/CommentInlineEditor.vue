@@ -9,7 +9,7 @@
     :disabled="saveButtonIsDisabled"
     @click.prevent="onSaveMessage"
   >
-    Speichern
+    {{ useEditLabels ? "Speichern" : "Senden" }}
   </button>
   <button class="btn btn-outline-danger" @click.prevent="onCancel">
     Abbrechen
@@ -23,6 +23,10 @@ const props = defineProps({
   textareaContent: {
     type: String,
     required: true,
+  },
+  useEditLabels: {
+    type: Boolean,
+    default: false,
   },
 });
 const message = ref(props.textareaContent);

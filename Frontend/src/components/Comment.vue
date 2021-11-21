@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex mb-2">
+  <div :id="`comment-${comment.id}`" class="d-flex mb-2">
     <img src="@/assets/images/avatar2.png" class="rounded-circle" />
     <a href="#">{{ comment.user.firstName + " " + comment.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
@@ -17,6 +17,7 @@
   <div v-if="showCommentEditor">
     <CommentInlineEditor
       :textarea-content="editedComment"
+      :use-edit-labels="true"
       @save-message="onSaveEditedMessage"
       @close-editor="closeCommentEditor"
     />
@@ -144,7 +145,7 @@ const closeReplyEditor = () => {
   replyMessage.value = "";
 };
 </script>
-<style>
+<style scoped>
 .rounded-circle {
   margin-right: 6px;
   height: 24px;

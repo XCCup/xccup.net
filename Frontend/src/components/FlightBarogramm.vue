@@ -3,7 +3,7 @@
     <span class="badge bg-primary">Höhe: {{ altitudeLabels[1] }}</span>
   </div>
   <div class="container">
-    <canvas ref="myChart"></canvas>
+    <canvas id="flight-barogramm" ref="myChart"></canvas>
   </div>
 </template>
 
