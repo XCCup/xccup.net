@@ -48,7 +48,7 @@ const sendMail = async (mailAddresses, content) => {
 function createMessage(from, to, content) {
   return {
     from,
-    to,
+    bcc: to,
     subject: content.title,
     text: content.text,
   };
