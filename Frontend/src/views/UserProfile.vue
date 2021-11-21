@@ -1,10 +1,10 @@
 <template>
   <div class="container mt-3">
     <!-- Editor -->
-    <div v-if="userDetails" class="rounded bg-white">
+    <div v-if="userDetails">
       <div class="row">
         <!-- Left -->
-        <div class="col-md-3 border-end">
+        <div class="col-md-3">
           <div class="d-flex flex-column align-items-center text-center p-3">
             <img
               class="rounded-circle"
@@ -412,11 +412,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .add-experience:hover {
-  background: #ba68c8;
-  color: #fff;
-  cursor: pointer;
-  border: solid 1px #ba68c8;
-} */
-</style>
+<style scoped></style>
