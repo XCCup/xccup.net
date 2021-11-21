@@ -17,7 +17,14 @@ const mailClient = nodemailer.createTransport({
  * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
  */
 const sendMail = async (mailAddresses, content) => {
-  if (!(content.title?.length == 0) || !(content.text?.length != 0))
+  console.log("CONTENT: ", content);
+
+  if (
+    !content.title ||
+    !content.text ||
+    content.title.length == 0 ||
+    content.text.length == 0
+  )
     throw "content.title and content.text are not allowed to be empty";
 
   const message = createMessage(
