@@ -34,6 +34,6 @@ module.exports.TSHIRT_SIZES = ["XS", "S", "M", "L", "XL"];
 module.exports.ROLE = {
   ADMIN: "Administrator",
   MODERATOR: "Moderator",
-  CLUB_DELEGATE: "Clubdeligierter",
   NONE: "Keine",
+  INACTIVE: "Inaktiv",
 };

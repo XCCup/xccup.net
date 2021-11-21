@@ -1,5 +1,6 @@
 const express = require("express");
 const service = require("../service/UserService");
+const mailService = require("../service/MailService");
 const { getCurrentActive } = require("../service/SeasonService");
 const {
   OK,
@@ -30,7 +31,6 @@ const {
   checkOptionalStrongPassword,
   checkStringObject,
   validationHasErrors,
-  checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
 
 const userCreateLimiter = createRateLimiter(60, 2);
@@ -142,6 +142,22 @@ router.get(
   }
 );
 
+// @desc Activates a previously created user
+// @route GET /users/activate/:id
+
+router.get("/activate/:id", checkParamIsUuid("id"), async (req, res, next) => {
+  if (validationHasErrors(req, res)) return;
+  const id = req.params.id;
+
+  try {
+    await service.activateUser(id);
+
+    res.redirect("http://localhost:8000/login");
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Retrieve all user information
 // @route GET /users
 // @access Only owner
@@ -193,25 +209,27 @@ router.post(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkOptionalStringObjectNotEmpty("address.state"),
-  checkOptionalStringObjectNotEmpty("address.country"),
+  checkStringObject("address.state"),
+  checkStringObjectNotEmpty("address.country"),
   checkStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const lastName = req.body.lastName;
-    const firstName = req.body.firstName;
-    const birthday = req.body.birthday;
-    const email = req.body.email;
-    const clubId = req.body.clubId;
-    const gender = req.body.gender;
-    const tshirtSize = req.body.tshirtSize;
-    const emailInformIfComment = req.body.emailInformIfComment;
-    const emailNewsletter = req.body.emailNewsletter;
-    const emailTeamSearch = req.body.emailTeamSearch;
-    const state = req.body.state;
-    const address = req.body.address;
-    const password = req.body.password;
+    const {
+      lastName,
+      firstName,
+      birthday,
+      email,
+      clubId,
+      gender,
+      tshirtSize,
+      emailInformIfComment,
+      emailNewsletter,
+      emailTeamSearch,
+      state,
+      address,
+      password,
+    } = req.body;
 
     const newUser = {
       lastName,
@@ -231,6 +249,8 @@ router.post(
 
     try {
       const user = await service.save(newUser);
+      mailService.sendActivationMail(user);
+
       res.json(user);
     } catch (error) {
       next(error);

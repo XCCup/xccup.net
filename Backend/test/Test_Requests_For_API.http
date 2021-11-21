@@ -23,8 +23,8 @@ POST http://localhost:3000/users/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "Olive@Emmerich.biz",
-    "password": "PW_OliveEmmerich"
+    "email": "Leo@Altenwerth.net",
+    "password": "PW_LeoAltenwerth"
 }
 
 ###

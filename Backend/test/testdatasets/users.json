@@ -48,6 +48,7 @@
     "birthday": "1975-03-23",
     "gender": "W",
     "tshirtSize": "S",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Sky",
@@ -88,6 +89,7 @@
     "birthday": "1996-08-22",
     "gender": "D",
     "tshirtSize": "L",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Sky",
@@ -128,6 +130,7 @@
     "birthday": "1979-05-07",
     "gender": "D",
     "tshirtSize": "M",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Air-G",
@@ -168,6 +171,7 @@
     "birthday": "1985-09-24",
     "gender": "M",
     "tshirtSize": "XXL",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Sky",
@@ -207,6 +211,7 @@
     "birthday": "1975-03-16",
     "gender": "W",
     "tshirtSize": "XXL",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Ozone",
@@ -247,6 +252,7 @@
     "birthday": "1983-01-16",
     "gender": "W",
     "tshirtSize": "M",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Flow",
@@ -287,6 +293,7 @@
     "birthday": "1988-02-01",
     "gender": "M",
     "tshirtSize": "XXL",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Air-G",
@@ -327,6 +334,7 @@
     "birthday": "1981-10-16",
     "gender": "W",
     "tshirtSize": "XL",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Ozone",
@@ -367,6 +375,7 @@
     "birthday": "1996-05-08",
     "gender": "W",
     "tshirtSize": "L",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "U-Turn",
@@ -407,6 +416,7 @@
     "birthday": "1993-08-18",
     "gender": "W",
     "tshirtSize": "M",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Sky",
@@ -446,6 +456,7 @@
     "birthday": "1974-09-12",
     "gender": "W",
     "tshirtSize": "M",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "U-Turn",
@@ -485,6 +496,7 @@
     "birthday": "1990-06-30",
     "gender": "M",
     "tshirtSize": "XXL",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Ozone",
@@ -525,6 +537,7 @@
     "birthday": "1983-12-31",
     "gender": "M",
     "tshirtSize": "XXL",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Ozone",
@@ -565,6 +578,7 @@
     "birthday": "1955-02-16",
     "gender": "W",
     "tshirtSize": "L",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Flow",
@@ -604,6 +618,7 @@
     "birthday": "1972-04-02",
     "gender": "D",
     "tshirtSize": "S",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Ozone",
@@ -642,6 +657,7 @@
     "birthday": "1981-07-15",
     "gender": "M",
     "tshirtSize": "XXL",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Air-G",
@@ -681,6 +697,7 @@
     "birthday": "1974-11-11",
     "gender": "W",
     "tshirtSize": "XXL",
+    "role": "Keine",
     "gliders": [
       {
         "brand": "Flow",
@@ -720,6 +737,7 @@
     "birthday": "1987-08-03",
     "gender": "M",
     "tshirtSize": "XXL",
+    "role": "Moderator",
     "gliders": [
       {
         "brand": "Air-G",
@@ -736,7 +754,6 @@
         "gliderClassShortDescription": "GS Competition high"
       }
     ],
-    "role": "Moderator",
     "emailInformIfComment": false,
     "emailNewsletter": true,
     "emailTeamSearch": true,
@@ -760,6 +777,7 @@
     "birthday": "1976-01-01",
     "gender": "W",
     "tshirtSize": "M",
+    "role": "Administrator",
     "gliders": [
       {
         "brand": "U-Turn",
@@ -776,7 +794,6 @@
         "gliderClassShortDescription": "GS Competition high"
       }
     ],
-    "role": "Administrator",
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
@@ -791,5 +808,28 @@
       "zip": "60363"
     },
     "defaultGlider": "e0bbb3e4-543b-4451-a374-0435a38cc823"
+  },
+  {
+    "id": "343c8082-daba-124a-a60c-33d4e0eab4f7",
+    "names": ["Hubbert", "Eder"],
+    "firstName": "Hubbert",
+    "lastName": "Eder",
+    "birthday": "1976-01-01",
+    "gender": "M",
+    "tshirtSize": "M",
+    "role": "Inaktiv",
+    "emailInformIfComment": true,
+    "emailNewsletter": true,
+    "emailTeamSearch": true,
+    "email": "Hubbert@Eder.biz",
+    "password": "PW_HubbertEder",
+    "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "address": {
+      "state": "Rheinland-Pfalz",
+      "country": "Deutschland",
+      "city": "Mainz",
+      "street": "Hauptstr. 42",
+      "zip": "54321"
+    }
   }
 ]

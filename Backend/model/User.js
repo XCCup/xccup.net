@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       role: {
         type: DataTypes.STRING,
-        defaultValue: ROLE.NONE,
+        defaultValue: ROLE.INACTIVE,
       },
       gender: {
         type: DataTypes.STRING,
@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       emailNewsletter: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
       },
       emailTeamSearch: {
         type: DataTypes.BOOLEAN,
@@ -84,7 +84,9 @@ module.exports = (sequelize, DataTypes) => {
 
   //Define instance level methods for user
   User.prototype.validPassword = function (password) {
-    return bcrypt.compareSync(password, this.password);
+    return (
+      bcrypt.compareSync(password, this.password) && this.role != ROLE.INACTIVE
+    );
   };
   User.prototype.getAge = function () {
     const birthYear = new Date(Date.parse(this.birthday)).getFullYear();
