@@ -23,8 +23,13 @@ router.post(
     const { toUserId, content } = req.body;
 
     try {
-      const news = await service.sendMailSingle(req.user.id, toUserId, content);
-      res.json(news);
+      const result = await service.sendMailSingle(
+        req.user.id,
+        toUserId,
+        content
+      );
+
+      result ? res.sendStatus(200) : res.sendStatus(500);
     } catch (error) {
       next(error);
     }
@@ -48,8 +53,9 @@ router.post(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const news = await service.sendMailAll(req.user.id, content);
-      res.json(news);
+      const result = await service.sendMailAll(req.user.id, content);
+
+      result ? res.sendStatus(200) : res.sendStatus(500);
     } catch (error) {
       next(error);
     }
