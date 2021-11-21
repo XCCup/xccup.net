@@ -4,9 +4,10 @@ describe("check flight page", () => {
   });
 
   it("test correct values for subnav", () => {
+    const today = new Date().toLocaleDateString("de-DE");
     cy.get("#flight-subnav").should(
       "include.text",
-      `Flug von Ron Crooks am 19.11.2021`
+      `Flug von Ron Crooks am ${today}`
     );
   });
 
