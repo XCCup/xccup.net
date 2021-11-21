@@ -1,5 +1,5 @@
 <template>
-  <div :id="reply.id" class="d-flex mb-2">
+  <div :id="`comment-${reply.id}`" class="d-flex mb-2">
     <img
       src="@/assets/images/avatar2.png"
       class="rounded-circle"

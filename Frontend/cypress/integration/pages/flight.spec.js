@@ -34,8 +34,12 @@ describe("check flight page", () => {
 
   it("check flight comments", () => {
     cy.get("#flight-comments");
-    cy.get("#5edc5c1c-3421-41f4-8d39-cb8f2f8ada44").contains("Lois White");
-    cy.get("#5edc5c1c-3421-41f4-8d39-cb8f2f8ada46").contains("Olive Emmerich");
+    cy.get("#comment-5edc5c1c-3421-41f4-8d39-cb8f2f8ada44").contains(
+      "Lois White"
+    );
+    cy.get("#comment-5edc5c1c-3421-41f4-8d39-cb8f2f8ada46").contains(
+      "Olive Emmerich"
+    );
 
     // Todo: Test more details
   });
