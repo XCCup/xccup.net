@@ -43,7 +43,7 @@ $form-check-input-width: 1.1em;
 $table-striped-bg-factor: 0.05;
 $table-striped-bg: rgba($primary, $table-striped-bg-factor);
 
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap-dark-5/scss/bootstrap-dark";
 @import "scss/rankingClasses";
 html,
 body {
@@ -91,6 +91,7 @@ footer {
     color: $secondary;
   }
 }
+// Flight SUbnav
 .flight-info {
   background-color: darken($primary, 5%);
 }
