@@ -1,31 +1,13 @@
-const mailClient = require("../config/email");
+const sendMail = require("../config/email");
 const logger = require("../config/logger");
 const {
   MAIL_MESSAGE_PREFIX,
   REGISTRATION_TEXT,
+  REGISTRATION_TITLE,
 } = require("../constants/email-message-constants");
 const userService = require("./UserService");
 
 const service = {
-  sendMail: async (mailAddresses, content) => {
-    const message = createMessage(
-      process.env.MAIL_SERVICE_USER,
-      mailAddresses,
-      content
-    );
-
-    try {
-      const info = await mailClient.sendMail(message);
-      logger.debug("Message sent: ", info.messageId);
-    } catch (error) {
-      // Message failed: 451 4.3.0 pymilter: untrapped exception in pythonfilter
-      // This error indicates that the netcup mailservice doesn't allow to send mails from a different domain then the domain of the mail user account.
-      logger.error(error);
-    }
-
-    return true;
-  },
-
   sendMailSingle: async (fromUserId, toUserId, content) => {
     logger.debug(`${fromUserId} requested to send an email`);
 
@@ -44,7 +26,7 @@ const service = {
       content.text = MAIL_MESSAGE_PREFIX(fromName, fromMail) + content.text;
     }
 
-    return await service.sendMail(toMail, content);
+    return await sendMail(toMail, content);
   },
 
   sendActivationMail: async (user) => {
@@ -53,11 +35,11 @@ const service = {
     const activationLink = `http://localhost:3000/users/activate/${user.id}`;
 
     const content = {
-      title: "Deine Anmeldung",
+      title: REGISTRATION_TITLE,
       text: REGISTRATION_TEXT(user.firstName, activationLink),
     };
 
-    return await service.sendMail(user.email, content);
+    return await sendMail(user.email, content);
   },
 
   sendMailAll: async (fromUserId, isNewsletter, content) => {
@@ -65,17 +47,8 @@ const service = {
 
     const mailAddresses = await userService.getAllEmail(isNewsletter);
 
-    return await service.sendMail(mailAddresses, content);
+    return await sendMail(mailAddresses, content);
   },
 };
-
-function createMessage(from, to, content) {
-  return {
-    from,
-    to,
-    subject: content.title,
-    text: content.text,
-  };
-}
 
 module.exports = service;

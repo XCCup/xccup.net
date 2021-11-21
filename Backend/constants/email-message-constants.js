@@ -7,9 +7,11 @@ Bitte antworte nicht direkt auf diese E-Mail, sondern nehme doch bitte über ${f
   
 `;
 
+module.exports.REGISTRATION_TITLE = "Deine Anmeldung bei XCCup.net";
+
 module.exports.REGISTRATION_TEXT = (firstName, activateLink) =>
   `Liebe/r ${firstName}! Willkommen beim XCCup.
-  
+
 Um dein Konto final zu aktivieren klicke bitte auf den folgenden Link:
 ${activateLink}
 
