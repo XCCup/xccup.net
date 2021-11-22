@@ -45,7 +45,7 @@ $table-striped-bg-factor: 0.05;
 $table-striped-bg: rgba($primary, $table-striped-bg-factor);
 
 @import "../node_modules/bootstrap/scss/bootstrap";
-@import "../node_modules/bootstrap-dark-5/scss/bootstrap-dark-plugin";
+@import "scss/bootstrapCustom";
 @import "scss/rankingClasses";
 
 html,
