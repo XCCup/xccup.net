@@ -3,18 +3,32 @@
     <h3>Registrierte Piloten</h3>
   </div>
   <div v-for="user in users" :key="user.id" class="card">
-    <UserCard :user="user" />
+    <UserCard :user="user" @open-message-dialog="messageUser" />
   </div>
+  <ModalSendMail :modal-id="mailModalId" :user="selectedUser" />
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
+import { Modal } from "bootstrap";
 
 const users = ref([]);
+const mailModalId = ref("userMailModal");
+const selectedUser = ref(null);
+let mailModal;
 
 setWindowName("Registrierte Piloten");
+
+onMounted(() => {
+  mailModal = new Modal(document.getElementById(mailModalId.value));
+});
+
+const messageUser = (user) => {
+  selectedUser.value = user;
+  mailModal.show();
+};
 
 try {
   const res = await ApiService.getUsers({

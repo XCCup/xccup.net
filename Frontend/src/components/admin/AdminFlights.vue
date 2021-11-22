@@ -44,7 +44,7 @@
               <td>
                 <button
                   class="btn btn-outline-primary btn-sm"
-                  @click="messagePilot(flight)"
+                  @click="onMessagePilot(flight)"
                 >
                   <i class="bi bi-envelope"></i>
                 </button>
@@ -72,13 +72,14 @@
     </div>
   </section>
   <BaseModal
-    :modal-title="modalTitle"
+    :modal-title="confirmModalTitle"
     :modal-body="confirmMessage"
-    :confirm-button-text="modalButtonText"
-    :modal-id="modalId"
+    :confirm-button-text="confirmModalButtonText"
+    :modal-id="confirmModalId"
     :confirm-action="processConfirmResult"
     :is-dangerous-action="true"
   />
+  <ModalSendMail :modal-id="mailModalId" :user="selectedUser" />
 </template>
 
 <script>
@@ -98,10 +99,13 @@ export default {
       confirmModal: null,
       confirmMessage: "",
       confirmType: "",
-      modalId: "modalFlightConfirm",
-      modalTitle: "",
-      modalButtonText: "",
+      confirmModalId: "modalFlightConfirm",
+      confirmModalTitle: "",
+      confirmModalButtonText: "",
+      mailModal: null,
+      mailModalId: "adminFlightsMailModal",
       selectedFlight: null,
+      selectedUser: null,
     };
   },
   computed: {
@@ -111,7 +115,8 @@ export default {
   },
   async mounted() {
     this.router = useRouter();
-    this.confirmModal = new Modal(document.getElementById(this.modalId));
+    this.confirmModal = new Modal(document.getElementById(this.confirmModalId));
+    this.mailModal = new Modal(document.getElementById(this.mailModalId));
     await this.fetchFlightsWithViolations();
   },
   methods: {
@@ -144,12 +149,9 @@ export default {
       this.selectedFlight = flight;
       this.confirmModal.show();
     },
-    /* eslint-disable no-unused-vars */
-    async messagePilot(flight) {
-      alert(
-        "Entschuldigung, aber diese Funktion ist noch nicht implementiert."
-      );
-      //TODO Implement function
+    onMessagePilot(flight) {
+      this.selectedUser = flight.user;
+      this.mailModal.show();
     },
   },
 };

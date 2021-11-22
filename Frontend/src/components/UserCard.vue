@@ -5,9 +5,14 @@
     <div class="col-xl-4 row align-items-center">
       <div class="col-6">
         <div class="profile-image">
-          <a href="" target="_blank">
+          <router-link
+            :to="{
+              name: 'FlightsAll',
+              params: { userId: user.id },
+            }"
+          >
             <img :src="avatarUrl" />
-          </a>
+          </router-link>
         </div>
       </div>
       <div class="col-6">
@@ -24,7 +29,7 @@
           </router-link>
         </div>
         <div class="row">
-          <button class="col btn btn-primary" @click="messagePilot(flight)">
+          <button class="col btn btn-primary" @click="onMessagePilot">
             <i class="bi bi-envelope"></i>
           </button>
         </div>
@@ -97,6 +102,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["open-message-dialog"]);
+
 const avatarUrl = ref(
   `https://avatars.dicebear.com/api/avataaars/${props.user.id}.svg`
 );
@@ -106,6 +113,10 @@ const createRankingClass = (glider) => {
     key: glider.gliderClass,
     description: glider.gliderClassShortDescription,
   };
+};
+
+const onMessagePilot = () => {
+  emit("open-message-dialog", props.user);
 };
 </script>
 
