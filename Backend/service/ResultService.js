@@ -313,7 +313,7 @@ async function queryDb(where, gender, limit, site, region, club) {
 function createDefaultWhereForFlight(seasonDetail, isSenior) {
   const where = {
     takeoffTime: {
-      [sequelize.Op.between]: [seasonDetail.startDate, seasonDetail.endDate],
+      [sequelize.Op.between]: [seasonDetail?.startDate, seasonDetail?.endDate],
     },
     flightStatus: STATE.IN_RANKING,
     [sequelize.Op.or]: [

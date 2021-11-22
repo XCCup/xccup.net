@@ -1,13 +1,18 @@
 <template>
   <div class="card-header"></div>
-  <div class="card-body row align-items-center gx-5">
+  <div class="card-body row align-items-center">
     <!-- TODO: Cols should wrap in own row when viewport width shrinks -->
     <div class="col-xl-4 row align-items-center">
       <div class="col-6">
         <div class="profile-image">
-          <a href="" target="_blank">
+          <router-link
+            :to="{
+              name: 'FlightsAll',
+              params: { userId: user.id },
+            }"
+          >
             <img :src="avatarUrl" />
-          </a>
+          </router-link>
         </div>
       </div>
       <div class="col-6">
@@ -18,13 +23,16 @@
               params: { userId: user.id },
             }"
           >
-            <h5 class="row card-title">
+            <h5 class="row card-title cy-user-name-label">
               {{ user.firstName }} {{ user.lastName }}
             </h5>
           </router-link>
         </div>
         <div class="row">
-          <button class="col btn btn-primary" @click="messagePilot(flight)">
+          <button
+            class="col btn btn-primary cy-mail-button"
+            @click="onMessagePilot"
+          >
             <i class="bi bi-envelope"></i>
           </button>
         </div>
@@ -58,9 +66,9 @@
           <div v-else>🤷</div>
         </div>
       </div>
-      <div class="col-6 align-items-center">
-        <div><strong>Hangar</strong> <br /></div>
-        <ul v-if="user.gliders.length" class="list-group list-group-flush">
+      <div class="col-6">
+        <div><strong>Hangar</strong></div>
+        <ul v-if="user.gliders.length" class="list-group">
           <li v-for="glider in user.gliders" :key="glider.id">
             <RankingClass :ranking-class="createRankingClass(glider)" />{{
               glider.brand
@@ -72,7 +80,7 @@
       </div>
     </div>
     <div class="col-xl-4">
-      <div><strong>Rekorde</strong> <br /></div>
+      <div><strong>Rekorde</strong></div>
       <div class="row">
         <FlightShortSummary flight-type="FREE" :flight="user.records[0][0]" />
       </div>
@@ -97,6 +105,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["open-message-dialog"]);
+
 const avatarUrl = ref(
   `https://avatars.dicebear.com/api/avataaars/${props.user.id}.svg`
 );
@@ -106,6 +116,10 @@ const createRankingClass = (glider) => {
     key: glider.gliderClass,
     description: glider.gliderClassShortDescription,
   };
+};
+
+const onMessagePilot = () => {
+  emit("open-message-dialog", props.user);
 };
 </script>
 

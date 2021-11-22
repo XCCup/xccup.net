@@ -89,6 +89,8 @@ async function prepareHomeData() {
 }
 
 async function retrieveRankingClassResults(currentSeason) {
+  if (!currentSeason) return;
+
   const rankingRequests = {};
   for (const [key] of Object.entries(currentSeason.rankingClasses)) {
     rankingRequests[key] = (await resultService.getOverall(null, key)).values;
