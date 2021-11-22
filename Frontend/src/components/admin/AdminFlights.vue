@@ -135,17 +135,17 @@ export default {
     },
     onDeleteFlight(flight) {
       this.confirmType = KEY_DELETE;
-      this.modalTitle = "Flug löschen?";
+      this.confirmModalTitle = "Flug löschen?";
       this.confirmMessage = "Willst du diesen Flug wirklich löschen?";
-      this.modalButtonText = "Löschen";
+      this.confirmModalButtonText = "Löschen";
       this.selectedFlight = flight;
       this.confirmModal.show();
     },
     onAcceptFlight(flight) {
       this.confirmType = KEY_ACCEPT;
-      this.modalTitle = "Flug akzeptieren?";
+      this.confirmModalTitle = "Flug akzeptieren?";
       this.confirmMessage = "Willst du diesen Flug wirklich akzeptieren?";
-      this.modalButtonText = "Akzeptieren";
+      this.confirmModalButtonText = "Akzeptieren";
       this.selectedFlight = flight;
       this.confirmModal.show();
     },

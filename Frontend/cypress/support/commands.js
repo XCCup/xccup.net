@@ -44,7 +44,7 @@ Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
   cy.get(modalSelector).find("button").contains(buttonText).click();
 });
 
-Cypress.Commands.add("loginAdmin", () => {
+Cypress.Commands.add("loginAdminUser", () => {
   cy.get("#loginNavButton").click();
 
   cy.get("input#email").type("Camille@Schaden.name");
@@ -53,6 +53,17 @@ Cypress.Commands.add("loginAdmin", () => {
   cy.get("button").contains("Anmelden").click();
   // Wait till button was updated
   cy.get("#userNavDropdownMenu").should("includes.text", "Camille");
+});
+
+Cypress.Commands.add("loginNormalUser", () => {
+  cy.get("#loginNavButton").click();
+
+  cy.get("input#email").type("Ramona@Gislason.name");
+  cy.get("input#password").type("PW_RamonaGislason");
+
+  cy.get("button").contains("Anmelden").click();
+  // Wait till button was updated
+  cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
 });
 
 Cypress.Commands.add("login", (email, password) => {

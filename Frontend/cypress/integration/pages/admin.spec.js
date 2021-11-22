@@ -2,7 +2,7 @@ describe("check admin page", () => {
   before(() => {
     cy.seedFlightDb();
     cy.visit("/");
-    cy.loginAdmin();
+    cy.loginAdminUser();
     cy.visit("/admin");
     // cy.get("#navbarAdminDashboard").click();
   });

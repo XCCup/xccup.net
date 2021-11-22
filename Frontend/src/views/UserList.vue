@@ -1,9 +1,9 @@
 <template>
-  <div class="container-fluid">
+  <div id="userListView" class="container">
     <h3>Registrierte Piloten</h3>
-  </div>
-  <div v-for="user in users" :key="user.id" class="card">
-    <UserCard :user="user" @open-message-dialog="messageUser" />
+    <div v-for="user in users" :key="user.id" class="card mb-3">
+      <UserCard :user="user" @open-message-dialog="messageUser" />
+    </div>
   </div>
   <ModalSendMail :modal-id="mailModalId" :user="selectedUser" />
 </template>
