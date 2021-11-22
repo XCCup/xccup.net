@@ -17,7 +17,7 @@ describe("check users page", () => {
     cy.get("#navbarLists").click();
     cy.get("#navbarLists").find("li").contains("Registrierte Piloten").click();
 
-    cy.get("#userListView").find(".mail-button").first().click();
+    cy.get("#userListView").find(".cy-mail-button").first().click();
 
     cy.get("#userMailModal").within(() => {
       cy.get("#sendMailModalLabel").should("include.text", "Adam Bayer");
@@ -48,12 +48,12 @@ describe("check users page", () => {
     const activeUsers = users.filter((user) => user.role != "Inaktiv");
 
     cy.get("#userListView")
-      .find(".user-name-label")
+      .find(".cy-user-name-label")
       .should("have.length", activeUsers.length);
 
     activeUsers.forEach((user) => {
       cy.get("#userListView")
-        .find(".user-name-label")
+        .find(".cy-user-name-label")
         .filter(`:contains("${user.firstName} ${user.lastName}")`);
     });
   });
@@ -70,7 +70,7 @@ describe("check users page", () => {
 
     inactiveUsers.forEach((user) => {
       cy.get("#userListView")
-        .find(".user-name-label")
+        .find(".cy-user-name-label")
         .not(`:contains("${user.firstName} ${user.lastName}")`);
     });
   });

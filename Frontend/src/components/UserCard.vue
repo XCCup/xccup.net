@@ -23,14 +23,14 @@
               params: { userId: user.id },
             }"
           >
-            <h5 class="row card-title user-name-label">
+            <h5 class="row card-title cy-user-name-label">
               {{ user.firstName }} {{ user.lastName }}
             </h5>
           </router-link>
         </div>
         <div class="row">
           <button
-            class="col btn btn-primary mail-button"
+            class="col btn btn-primary cy-mail-button"
             @click="onMessagePilot"
           >
             <i class="bi bi-envelope"></i>

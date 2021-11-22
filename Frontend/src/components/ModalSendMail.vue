@@ -35,6 +35,7 @@
           </div>
           <div v-else>
             {{ afterMessage }}
+            <!-- TODO Replace with BaseSpinner; Problem: Current BaseSpinner causes that modal-body will grow dramastically in heigth. -->
             <div
               v-if="showSpinner"
               class="spinner-border spinner-border-sm"
