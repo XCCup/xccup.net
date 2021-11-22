@@ -1,5 +1,5 @@
 <template>
-  <i v-if="flightType === `FAI`" class="bi bi-triangle"></i>
+  <i v-if="flightType === `FAI`" class="bi bi-triangle me-1"></i>
   <svg
     v-if="flightType === `FLAT`"
     xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +8,7 @@
     fill="currentColor"
     viewBox="0 0 487.047 487.047"
     style="enable-background: new 0 0 487.047 487.047"
-    class="bi bi-alt"
+    class="bi bi-alt me-1"
   >
     <!-- <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@
     viewBox="0 0 63.067 63.067"
     style="enable-background: new 0 0 63.067 63.067"
     xml:space="preserve"
-    class="bi bi-alt"
+    class="bi bi-alt me-1"
   >
     <path
       d="M5.097,38.991H0l14.984-18.486l7.748,20.148l13.82-27.646l6.035,18.976l14.668-17.222L54.5,12.008h8.567v8.555

@@ -6,15 +6,14 @@
           <thead>
             <th>Datum</th>
             <th>Name</th>
-            <th scope="col" class="d-none d-lg-table-cell">Verein</th>
-            <th scope="col" class="d-none d-lg-table-cell">Team</th>
+            <th scope="col" :class="hideOnMobile">Verein</th>
+            <th scope="col" :class="hideOnMobile">Team</th>
 
-            <th>Startplatz</th>
-            <th scope="col" class="d-none d-lg-table-cell">Gerät</th>
+            <th :class="hideOnMobile">Startplatz</th>
+            <th scope="col" :class="hideOnMobile">Gerät</th>
             <th>Strecke</th>
-            <th></th>
             <th>Punkte</th>
-            <th>Status</th>
+            <th :class="hideOnMobile">Status</th>
           </thead>
           <tbody>
             <tr
@@ -33,23 +32,29 @@
                   flight.user.firstName + " " + flight.user.lastName
                 }}</strong>
               </td>
-              <td scope="col" class="d-none d-lg-table-cell">
+              <td scope="col" :class="hideOnMobile">
                 {{ flight.club.name }}
               </td>
-              <td scope="col" class="d-none d-lg-table-cell">
+              <td scope="col" :class="hideOnMobile">
                 {{ flight.team?.name }}
               </td>
-              <td>{{ flight.takeoff.name }}</td>
+              <td :class="hideOnMobile">{{ flight.takeoff.name }}</td>
 
-              <td scope="col" class="d-none d-lg-table-cell">
+              <td scope="col" :class="hideOnMobile">
                 <RankingClass :ranking-class="flight.glider?.gliderClass" />
                 {{ flight.glider?.brand + " " + flight.glider?.model }}
               </td>
 
-              <td>{{ Math.floor(flight.flightDistance) }} km</td>
-              <td><FlightTypeIcon :flight-type="flight.flightType" /></td>
-              <td>{{ flight.flightPoints }} P</td>
-              <td><FlightState :flight-state="flight.flightStatus" /></td>
+              <td class="no-line-break">
+                {{ Math.floor(flight.flightDistance) }} km
+              </td>
+              <td class="no-line-break">
+                <FlightTypeIcon :flight-type="flight.flightType" />
+                {{ flight.flightPoints }} P
+              </td>
+              <td :class="hideOnMobile">
+                <FlightState :flight-state="flight.flightStatus" />
+              </td>
             </tr>
           </tbody>
         </table>
@@ -77,6 +82,8 @@ const routeToFlight = (flightId) => {
     },
   });
 };
+
+const hideOnMobile = "d-none d-lg-table-cell";
 </script>
 <style scoped>
 tr:hover {

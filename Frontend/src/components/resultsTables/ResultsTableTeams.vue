@@ -13,15 +13,16 @@
           <thead>
             <th>Platz</th>
             <th>Team</th>
-            <th>Punkte / Strecke</th>
+            <th class="no-line-break">Punkte</th>
             <th>Pilot</th>
             <th
               v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
               :key="n"
+              class="no-line-break"
             >
               Flug {{ n }}
             </th>
-            <th>Gesamt</th>
+            <th :class="hideOnMobile">Gesamt</th>
           </thead>
           <tbody>
             <tr v-for="(team, index) in results.values" :key="team.teamId">
@@ -31,13 +32,25 @@
                 <strong>{{ team.teamName }}</strong>
               </td>
               <td>
-                {{ team.totalPoints }} P ({{ Math.floor(team.totalDistance) }}
-                km)
+                <tr class="no-line-break">
+                  {{
+                    team.totalPoints
+                  }}
+                  P
+                </tr>
+                <tr class="no-line-break">
+                  ({{
+                    Math.floor(team.totalDistance)
+                  }}
+                  km)
+                </tr>
               </td>
 
               <td>
                 <tr v-for="member in team.members" :key="member.id">
-                  <td>{{ member.firstName + " " + member.lastName }}</td>
+                  <td class="no-line-break">
+                    {{ member.firstName + " " + member.lastName }}
+                  </td>
                 </tr>
               </td>
               <td
@@ -45,7 +58,7 @@
                 :key="n"
               >
                 <tr v-for="member in team.members" :key="member.id">
-                  <td v-if="member.flights[n - 1]">
+                  <td v-if="member.flights[n - 1]" class="no-line-break">
                     <RankingClass
                       :ranking-class="member.flights[n - 1].glider.gliderClass"
                     />
@@ -60,13 +73,15 @@
                   <td v-else>-</td>
                 </tr>
               </td>
-              <td>
+              <td :class="hideOnMobile">
                 <tr v-for="member in team.members" :key="member.id">
                   <td>
-                    <strong>{{ member.totalPoints }} P </strong>({{
-                      Math.floor(member.totalDistance)
-                    }}
-                    km)
+                    <strong class="no-line-break">
+                      {{ member.totalPoints }} P
+                    </strong>
+                    <span class="no-line-break">
+                      ({{ Math.floor(member.totalDistance) }} km)
+                    </span>
                   </td>
                 </tr>
               </td>
@@ -91,5 +106,6 @@ defineProps({
     required: true,
   },
 });
+const hideOnMobile = "d-none d-lg-table-cell";
 </script>
 <style scoped></style>

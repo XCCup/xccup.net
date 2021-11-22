@@ -94,13 +94,18 @@ footer {
     color: $secondary;
   }
 }
-// Flight SUbnav
+// Flight Subnav
 .flight-info {
   background-color: darken($primary, 5%);
 }
 
 .error-message {
   height: 60vh;
+}
+
+// Used in various results tables
+.no-line-break {
+  white-space: nowrap;
 }
 
 // TODO: Is this obsolete?

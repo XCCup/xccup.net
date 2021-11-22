@@ -4,17 +4,18 @@
       <div v-if="results?.values?.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
-            <th>Platz</th>
+            <th></th>
             <th>Verein</th>
-            <th>Punkte / Strecke</th>
+            <th>Punkte</th>
             <th>Pilot</th>
             <th
               v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
               :key="n"
+              class="no-line-break"
             >
               Flug {{ n }}
             </th>
-            <th>Gesamt</th>
+            <th :class="hideOnMobile">Gesamt</th>
           </thead>
           <tbody>
             <tr v-for="(club, index) in results.values" :key="club.clubId">
@@ -24,13 +25,25 @@
                 <strong>{{ club.clubName }}</strong>
               </td>
               <td>
-                {{ club.totalPoints }} P ({{ Math.floor(club.totalDistance) }}
-                km)
+                <tr class="no-line-break">
+                  {{
+                    club.totalPoints
+                  }}
+                  P
+                </tr>
+                <tr class="no-line-break">
+                  ({{
+                    Math.floor(club.totalDistance)
+                  }}
+                  km)
+                </tr>
               </td>
 
               <td>
                 <tr v-for="member in club.members" :key="member.id">
-                  <td>{{ member.firstName + " " + member.lastName }}</td>
+                  <td class="no-line-break">
+                    {{ member.firstName + " " + member.lastName }}
+                  </td>
                 </tr>
               </td>
               <td
@@ -38,27 +51,34 @@
                 :key="n"
               >
                 <tr v-for="member in club.members" :key="member.id">
-                  <td v-if="member.flights[n - 1]">
+                  <td v-if="member.flights[n - 1]" class="no-line-break">
                     <RankingClass
                       :ranking-class="member.flights[n - 1].glider.gliderClass"
                     />
                     <router-link
                       :to="{
                         name: 'Flight',
-                        params: { flightId: member.flights[n - 1].externalId },
+                        params: {
+                          flightId: member.flights[n - 1].externalId,
+                        },
                       }"
-                      >{{ member.flights[n - 1].flightPoints }}</router-link
                     >
+                      {{ member.flights[n - 1].flightPoints }}
+                    </router-link>
                   </td>
                   <td v-else>-</td>
                 </tr>
               </td>
-              <td>
+              <td :class="hideOnMobile">
                 <tr v-for="member in club.members" :key="member.id">
                   <td>
-                    <strong>{{ member.totalPoints }} P</strong>
-                    ({{ Math.floor(member.totalDistance) }}
-                    km)
+                    <strong class="no-line-break">
+                      {{ member.totalPoints }} P
+                    </strong>
+                    <span class="no-line-break">
+                      ({{ Math.floor(member.totalDistance) }}
+                      km)
+                    </span>
                   </td>
                 </tr>
               </td>
@@ -82,5 +102,6 @@ defineProps({
     required: true,
   },
 });
+const hideOnMobile = "d-none d-lg-table-cell";
 </script>
 <style scoped></style>
