@@ -14,9 +14,13 @@
         </td>
         <td>{{ flight.user.firstName + " " + flight.user.lastName }}</td>
         <td>{{ flight.takeoff.name }}</td>
-        <td>{{ Math.floor(flight.flightDistance) }} km</td>
-        <td><FlightTypeIcon :flight-type="flight.flightType" /></td>
-        <td>{{ flight.flightPoints }} P</td>
+        <td class="no-line-break">
+          {{ Math.floor(flight.flightDistance) }} km
+        </td>
+        <td class="no-line-break">
+          <FlightTypeIcon :flight-type="flight.flightType" />
+          {{ flight.flightPoints }} P
+        </td>
       </tr>
     </tbody>
   </table>

@@ -10,9 +10,12 @@
         <tbody>
           <tr v-for="(pilot, index) in ranking.values.slice(0, 3)" :key="index">
             <td>{{ index + 1 }}</td>
+            <!-- Todo: Add link to pilot -->
             <td>{{ pilot.user.firstName + " " + pilot.user.lastName }}</td>
             <td>
-              <p class="fw-lighter">{{ pilot.totalPoints }} P</p>
+              <span class="fw-lighter no-line-break"
+                >{{ pilot.totalPoints }} P</span
+              >
             </td>
           </tr>
         </tbody>
