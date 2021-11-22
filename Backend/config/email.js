@@ -16,9 +16,7 @@ const mailClient = nodemailer.createTransport({
  * @param {*} content A object containing a "title" and a "text" property of type string.
  * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
  */
-const sendMail = async (mailAddresses, content) => {
-  console.log("CONTENT: ", content);
-
+const sendMail = async (mailAddresses, content, replyTo) => {
   if (
     !content.title ||
     !content.text ||
@@ -30,12 +28,13 @@ const sendMail = async (mailAddresses, content) => {
   const message = createMessage(
     process.env.MAIL_SERVICE_USER,
     mailAddresses,
-    content
+    content,
+    replyTo
   );
 
   try {
     const info = await mailClient.sendMail(message);
-    logger.debug("Message sent: ", info);
+    logger.debug("Message sent: " + info.messageId);
   } catch (error) {
     // Message failed: 451 4.3.0 pymilter: untrapped exception in pythonfilter
     // This error indicates that the netcup mailservice doesn't allow to send mails from a different domain then the domain of the mail user account.
@@ -45,12 +44,13 @@ const sendMail = async (mailAddresses, content) => {
   return true;
 };
 
-function createMessage(from, to, content) {
+function createMessage(from, to, content, replyTo) {
   return {
     from,
     bcc: to,
     subject: content.title,
     text: content.text,
+    replyTo,
   };
 }
 

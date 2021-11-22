@@ -1,7 +1,7 @@
-module.exports.MAIL_MESSAGE_PREFIX = (fromName, fromMail) =>
+module.exports.MAIL_MESSAGE_PREFIX = (fromName) =>
   `Diese Mail wurde Dir über den XCCup von ${fromName} gesendet. 
   
-Bitte antworte nicht direkt auf diese E-Mail, sondern nehme doch bitte über ${fromMail} Kontakt mit ${fromName} auf.
+Du kannst direkt auf diese E-Mail antworten.
 
 ------
   

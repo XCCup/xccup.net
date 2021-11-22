@@ -18,15 +18,15 @@ const service = {
 
     const isXccupOffical = usersData[0].role != "Keine";
 
-    const fromMail = usersData[0].email;
-    const fromName = `${usersData[0].firstName} ${usersData[0].lastName}`;
-    const toMail = usersData[1].email;
+    const toMail = usersData[0].email;
+    const fromMail = usersData[1].email;
+    const fromName = `${usersData[1].firstName} ${usersData[1].lastName}`;
 
     if (!isXccupOffical) {
-      content.text = MAIL_MESSAGE_PREFIX(fromName, fromMail) + content.text;
+      content.text = MAIL_MESSAGE_PREFIX(fromName) + content.text;
     }
 
-    return await sendMail(toMail, content);
+    return await sendMail(toMail, content, fromMail);
   },
 
   sendActivationMail: async (user) => {

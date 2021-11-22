@@ -152,7 +152,7 @@ router.get("/activate/:id", checkParamIsUuid("id"), async (req, res, next) => {
   try {
     await service.activateUser(id);
 
-    res.redirect("http://localhost:8000/login");
+    res.redirect(process.env.MAIL_AUTH_REDIRECT);
   } catch (error) {
     next(error);
   }
