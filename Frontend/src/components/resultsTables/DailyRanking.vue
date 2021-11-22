@@ -1,5 +1,5 @@
 <template>
-  <div id="dailyRankingPanel" class="row bg-primary">
+  <div id="cy-daily-ranking-panel" class="row bg-primary">
     <div class="col-xl-5 col-md-6 col-12">
       <div class="text-light p-4 pb-4">
         <h3>

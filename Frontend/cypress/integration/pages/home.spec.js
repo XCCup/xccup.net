@@ -13,7 +13,7 @@ describe("check landing page", () => {
   });
 
   it("test daily ranking", () => {
-    cy.get("#dailyRankingPanel").within(() => {
+    cy.get("#cy-daily-ranking-panel").within(() => {
       //Consider evaluating the date within the h3 (depends on the time; till 12oclock it's the day before to today)
       cy.get("h3").should("include.text", "Tageswertung");
 
@@ -66,7 +66,10 @@ describe("check landing page", () => {
 
     cy.get("#topFlights").within(() => {
       cy.get("table").find("tr").its("length").should("eq", 5);
-      cy.get("table").find("tr").last().should("include.text", "Leo AltenwerthStüppel74 km212 P");
+      cy.get("table")
+        .find("tr")
+        .last()
+        .should("include.text", "Leo AltenwerthStüppel74 km212 P");
     });
   });
 
