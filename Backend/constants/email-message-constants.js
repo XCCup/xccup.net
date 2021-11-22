@@ -20,3 +20,17 @@ Wir wünschen Dir allzeit gute Flüge und viel Spaß.
 Dein XCCup Team
     
 `;
+
+module.exports.NEW_PASSWORD_TITLE = "Zugangsdaten XCCup.net";
+
+module.exports.NEW_PASSWORD_TEXT = (firstName, password) =>
+  `Hallo ${firstName}!
+
+Dein Passwort wurde zurückgesetzt. 
+Dein neues Passwort lautet: ${password}
+
+Wir empfehlen Dir das Passwort bei der nächsten Anmeldung zu ändern.
+
+Dein XCCup Team
+    
+`;

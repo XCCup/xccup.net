@@ -13,6 +13,13 @@ function arrayRemove(array, elementToRemove) {
   array.splice(array.indexOf(elementToRemove), 1);
 }
 
+function generateRandomString() {
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
+}
+
 async function waitTillDbHasSync() {
   const RETRY_TIMEOUT = 3000;
   while (process.env.DB_SYNC_IN_PROGRESS == "true") {
@@ -26,3 +33,4 @@ exports.sleep = sleep;
 exports.getCurrentYear = getCurrentYear;
 exports.arrayRemove = arrayRemove;
 exports.waitTillDbHasSync = waitTillDbHasSync;
+exports.generateRandomString = generateRandomString;
