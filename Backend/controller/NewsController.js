@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/NewsService");
+const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const {
@@ -50,6 +51,14 @@ router.post(
         till: req.body.till,
         sendByMail: req.body.sendByMail,
       });
+
+      if (news.sendByMail) {
+        mailService.sendMailAll(req.user.id, true, {
+          title: news.title,
+          text: news.message,
+        });
+      }
+
       res.json(news);
     } catch (error) {
       next(error);
