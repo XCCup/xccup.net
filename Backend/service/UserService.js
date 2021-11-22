@@ -7,6 +7,7 @@ const { ROLE } = require("../constants/user-constants");
 const { TYPE } = require("../constants/flight-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
+const { Op } = require("sequelize");
 const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 const { arrayRemove } = require("../helper/Utils");
@@ -15,6 +16,11 @@ const logger = require("../config/logger");
 const userService = {
   getAll: async ({ records, limit, offset } = {}) => {
     const users = await User.findAll({
+      where: {
+        role: {
+          [Op.not]: ROLE.INACTIVE,
+        },
+      },
       attributes: ["id", "firstName", "lastName", "gender", "gliders"],
       include: [
         {
@@ -77,6 +83,19 @@ const userService = {
       ],
     });
   },
+  getAllEmail: async (isNewsletter) => {
+    const query = {
+      attributes: ["email"],
+    };
+
+    if (isNewsletter) {
+      query.where = {
+        emailNewsletter: true,
+      };
+    }
+
+    return await User.findAll(query);
+  },
   getGlidersById: async (id) => {
     return await User.findByPk(id, {
       attributes: ["gliders", "defaultGlider"],
@@ -117,8 +136,25 @@ const userService = {
     userJson.records = [results[1], results[2], results[3]];
     return userJson;
   },
+
+  activateUser: async (id) => {
+    return User.update(
+      {
+        role: ROLE.NONE,
+      },
+      {
+        where: { id },
+      }
+    );
+  },
   count: async () => {
-    return User.count();
+    return User.count({
+      where: {
+        role: {
+          [Op.not]: ROLE.INACTIVE,
+        },
+      },
+    });
   },
   isAdmin: async (id) => {
     const user = await userService.getById(id);
