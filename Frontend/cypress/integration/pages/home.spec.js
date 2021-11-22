@@ -24,7 +24,7 @@ describe("check landing page", () => {
 
       const isAfter12OClock = new Date().getHours() > 12;
       const firstRow = isAfter12OClock
-        ? "1Leo AltenwerthStüppel74 km212 P"
+        ? "1Leo AltenwerthStüppel74 km 212 P"
         : "1Ms. LaurieBurgen12 km75 P";
       const lastRow = isAfter12OClock
         ? "5Camille SchadenKönigstuhl19 km55 P"
@@ -69,7 +69,12 @@ describe("check landing page", () => {
       cy.get("table")
         .find("tr")
         .last()
-        .should("include.text", "Leo AltenwerthStüppel74 km212 P");
+        .should("include.text", "5")
+        .and("include.text", "22.11")
+        .and("include.text", "Leo Altenwerth")
+        .and("include.text", "Stüppel")
+        .and("include.text", "74 km")
+        .and("include.text", "212 P");
     });
   });
 
