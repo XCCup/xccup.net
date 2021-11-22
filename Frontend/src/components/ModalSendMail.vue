@@ -23,7 +23,7 @@
         </div>
         <div class="modal-body">
           <div class="mb-3"></div>
-          <div v-if="!mailSend">
+          <div v-if="!mailSent">
             <p>
               Deine Nachricht wird über uns per Mail direkt an
               {{ user?.firstName }} gesendet. {{ user?.firstName }} erhält zur
@@ -46,7 +46,7 @@
         </div>
         <div class="modal-footer">
           <button
-            v-if="!mailSend"
+            v-if="!mailSent"
             type="button"
             class="btn btn-primary"
             :disabled="!saveButtonIsEnabled"
@@ -60,7 +60,7 @@
             data-bs-dismiss="modal"
             @click="onClose"
           >
-            <div v-if="!mailSend">Abbrechen</div>
+            <div v-if="!mailSent">Abbrechen</div>
             <div v-else>Schließen</div>
           </button>
         </div>
@@ -73,7 +73,7 @@ import ApiService from "@/services/ApiService.js";
 
 import { computed, ref, reactive, toRefs } from "vue";
 
-const mailSend = ref(false);
+const mailSent = ref(false);
 const showSpinner = ref(false);
 const afterMessage = ref("");
 
@@ -98,7 +98,7 @@ const saveButtonIsEnabled = computed(() => {
 });
 
 const onClose = () => {
-  mailSend.value = false;
+  mailSent.value = false;
   afterMessage.value = "";
   const { title, text } = toRefs(content);
   title.value = "";
@@ -106,7 +106,7 @@ const onClose = () => {
 };
 
 const onSendMail = async () => {
-  mailSend.value = true;
+  mailSent.value = true;
   showSpinner.value = true;
 
   const mail = {
