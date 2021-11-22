@@ -37,6 +37,7 @@ onErrorCaptured((e) => {
 <style lang="scss">
 // Include custom variable default overrides here
 $primary: #08556d;
+$primary-alt: #08556d;
 $table-bg-scale: 0;
 $form-check-input-width: 1.1em;
 
@@ -44,7 +45,9 @@ $table-striped-bg-factor: 0.05;
 $table-striped-bg: rgba($primary, $table-striped-bg-factor);
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+@import "scss/bootstrapCustom";
 @import "scss/rankingClasses";
+
 html,
 body {
   height: 100%;
@@ -91,12 +94,29 @@ footer {
     color: $secondary;
   }
 }
+// Flight Subnav
 .flight-info {
   background-color: darken($primary, 5%);
 }
 
 .error-message {
   height: 60vh;
+}
+
+// Used in various results tables
+.no-line-break {
+  white-space: nowrap;
+}
+
+// Hide table cells depending on class
+.hide-on-md {
+  @extend .d-none;
+  @extend .d-lg-table-cell;
+}
+
+.hide-on-sm {
+  @extend .d-none;
+  @extend .d-md-table-cell;
 }
 
 // TODO: Is this obsolete?

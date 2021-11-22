@@ -8,9 +8,10 @@
         :index="index"
       >
         <th scope="row">{{ index + 1 }}</th>
+        <!-- TODO: Add link to club -->
         <td>{{ club.clubName }}</td>
-        <td>{{ club.totalPoints }} P</td>
-        <td>{{ Math.floor(club.totalDistance) }} km</td>
+        <td class="no-line-break">{{ club.totalPoints }} P</td>
+        <td class="no-line-break">{{ Math.floor(club.totalDistance) }} km</td>
       </tr>
     </tbody>
   </table>

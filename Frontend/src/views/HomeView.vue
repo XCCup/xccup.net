@@ -1,4 +1,8 @@
 <template>
+  <span class="d-none d-dark-inline container"
+    >Dark mode ist noch nicht schön, funktioniert aber…
+  </span>
+
   <InfoBox :season-stats="seasonStats" />
   <DailyRanking :max-rows="5" :flights="dailyRanking" />
   <OverallResults

@@ -9,10 +9,10 @@
             <img
               class="rounded-circle"
               width="150px"
-              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+              src="https://avatars.dicebear.com/api/big-ears/your-custom-seed.svg?b=%23d9eb37"
             />
             <span class="font-weight-bold">Foo</span>
-            <span class="text-black-50">Bar</span>
+            <span class="text-light">Bar</span>
           </div>
         </div>
 

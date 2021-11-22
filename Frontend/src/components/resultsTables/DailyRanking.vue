@@ -1,6 +1,6 @@
 <template>
-  <div id="dailyRankingPanel" class="row bg-primary">
-    <div class="col-xl-5 col-md-6 col-12">
+  <div id="cy-daily-ranking-panel" class="row bg-primary">
+    <div class="col-xl-5 col-lg-6 col-12">
       <div class="text-light p-4 pb-4">
         <h3>
           Tageswertung
@@ -13,7 +13,7 @@
         </h3>
 
         <div v-if="flights.length > 0">
-          <table class="table table-primary text-light table-hover">
+          <table class="table text-light table-hover">
             <tbody>
               <tr
                 v-for="(flight, index) in flights.slice(0, maxRows)"
@@ -29,11 +29,13 @@
                   {{ flight.user.firstName + " " + flight.user.lastName }}
                 </td>
                 <td>{{ flight.takeoff.name }}</td>
-                <td>{{ Math.floor(flight.flightDistance) }} km</td>
-                <td>
-                  <FlightTypeIcon :flight-type="flight.flightType" />
+                <td class="no-line-break">
+                  {{ Math.floor(flight.flightDistance) }} km
                 </td>
-                <td>{{ flight.flightPoints }} P</td>
+                <td class="no-line-break">
+                  <FlightTypeIcon :flight-type="flight.flightType" />
+                  {{ flight.flightPoints }} P
+                </td>
               </tr>
             </tbody>
           </table>
@@ -48,9 +50,8 @@
           Heute noch keine eingereichten Flüge vorhanden
         </div>
       </div>
-      <div></div>
     </div>
-    <div class="col-xl-7 col-md-6 col-12 p-0 m-0">
+    <div class="col-xl-7 col-lg-6 col-12 p-0 m-0">
       <DailyFlightsMap
         :highlighted-flight="highlightedFlightId"
         :tracks="dailyFlightsMapTracks"
@@ -68,7 +69,7 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  maxRows: Number,
+  maxRows: { type: Number, required: true },
 });
 
 const highlightedFlightId = ref(null);

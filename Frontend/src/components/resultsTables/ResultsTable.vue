@@ -7,10 +7,12 @@
             <th>Platz</th>
 
             <th>Name</th>
-            <th scope="col" class="d-none d-lg-table-cell">Verein</th>
-            <th scope="col" class="d-none d-lg-table-cell">Team</th>
+            <th scope="col" class="hide-on-sm">Verein</th>
+            <th scope="col" class="hide-on-sm">Team</th>
 
-            <th v-for="n in maxFlights" :key="n">Flug {{ n }}</th>
+            <th v-for="n in maxFlights" :key="n" class="no-line-break">
+              Flug {{ n }}
+            </th>
 
             <th>Gesamt</th>
           </thead>
@@ -22,14 +24,14 @@
                   result.user.firstName + " " + result.user.lastName
                 }}</strong>
               </td>
-              <td scope="col" class="d-none d-lg-table-cell">
+              <td scope="col" class="hide-on-sm">
                 {{ result.club?.name }}
               </td>
-              <td scope="col" class="d-none d-lg-table-cell">
+              <td scope="col" class="hide-on-sm">
                 {{ result.team?.name }}
               </td>
 
-              <td v-for="n in maxFlights" :key="n">
+              <td v-for="n in maxFlights" :key="n" class="no-line-break">
                 <RankingClass
                   v-if="result.flights[n - 1]?.flightPoints"
                   :ranking-class="result.flights[n - 1].glider.gliderClass"

@@ -13,7 +13,7 @@ describe("check landing page", () => {
   });
 
   it("test daily ranking", () => {
-    cy.get("#dailyRankingPanel").within(() => {
+    cy.get("#cy-daily-ranking-panel").within(() => {
       //Consider evaluating the date within the h3 (depends on the time; till 12oclock it's the day before to today)
       cy.get("h3").should("include.text", "Tageswertung");
 
@@ -24,14 +24,26 @@ describe("check landing page", () => {
 
       const isAfter12OClock = new Date().getHours() > 12;
       const firstRow = isAfter12OClock
-        ? "1Leo AltenwerthStüppel74 km212 P"
-        : "1Ms. LaurieBurgen12 km75 P";
+        ? ["1", "Leo AltenwerthStüppel", "74 km", "212 P"]
+        : ["1", "Ms. LaurieBurgen", "12 km", "75 P"];
       const lastRow = isAfter12OClock
-        ? "5Camille SchadenKönigstuhl19 km55 P"
-        : "5Ramona GislasonSchriesheim-Ölberg9 km53 P";
+        ? ["5", "Camille Schaden", "Königstuhl", "19 km", "55 P"]
+        : ["5", "Ramona Gislason", "Schriesheim-Ölberg", "9 km", "53 P"];
 
-      cy.get("table").find("tr").first().should("have.text", firstRow);
-      cy.get("table").find("tr").last().should("have.text", lastRow);
+      cy.get("table")
+        .find("tr")
+        .first()
+        .should("include.text", firstRow[0])
+        .and("include.text", firstRow[1])
+        .and("include.text", firstRow[2])
+        .and("include.text", firstRow[3]);
+      cy.get("table")
+        .find("tr")
+        .last()
+        .should("include.text", lastRow[0])
+        .and("include.text", lastRow[1])
+        .and("include.text", lastRow[2])
+        .and("include.text", lastRow[3]);
     });
   });
 
@@ -66,7 +78,15 @@ describe("check landing page", () => {
 
     cy.get("#topFlights").within(() => {
       cy.get("table").find("tr").its("length").should("eq", 5);
-      cy.get("table").find("tr").last().should("include.text", "Leo AltenwerthStüppel74 km212 P");
+      cy.get("table")
+        .find("tr")
+        .last()
+        .should("include.text", "5")
+        .and("include.text", "22.11")
+        .and("include.text", "Leo Altenwerth")
+        .and("include.text", "Stüppel")
+        .and("include.text", "74 km")
+        .and("include.text", "212 P");
     });
   });
 
