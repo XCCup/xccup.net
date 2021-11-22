@@ -169,6 +169,7 @@ const routes = [
   {
     path: "/piloten",
     name: "Users",
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import("../views/UserList.vue"),
   },
   {
