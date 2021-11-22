@@ -37,6 +37,7 @@ onErrorCaptured((e) => {
 <style lang="scss">
 // Include custom variable default overrides here
 $primary: #08556d;
+$primary-alt: #08556d;
 $table-bg-scale: 0;
 $form-check-input-width: 1.1em;
 
