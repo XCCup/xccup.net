@@ -37,6 +37,7 @@ onErrorCaptured((e) => {
 <style lang="scss">
 // Include custom variable default overrides here
 $primary: #08556d;
+$primary-alt: #08556d;
 $table-bg-scale: 0;
 $form-check-input-width: 1.1em;
 
@@ -44,7 +45,9 @@ $table-striped-bg-factor: 0.05;
 $table-striped-bg: rgba($primary, $table-striped-bg-factor);
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap-dark-5/scss/bootstrap-dark-plugin";
 @import "scss/rankingClasses";
+
 html,
 body {
   height: 100%;
@@ -91,6 +94,7 @@ footer {
     color: $secondary;
   }
 }
+// Flight SUbnav
 .flight-info {
   background-color: darken($primary, 5%);
 }
