@@ -22,7 +22,7 @@
             >
               Flug {{ n }}
             </th>
-            <th :class="hideOnMobile">Gesamt</th>
+            <th class="hide-on-sm">Gesamt</th>
           </thead>
           <tbody>
             <tr v-for="(team, index) in results.values" :key="team.teamId">
@@ -73,7 +73,7 @@
                   <td v-else>-</td>
                 </tr>
               </td>
-              <td :class="hideOnMobile">
+              <td class="hide-on-sm">
                 <tr v-for="member in team.members" :key="member.id">
                   <td>
                     <strong class="no-line-break">
@@ -106,6 +106,5 @@ defineProps({
     required: true,
   },
 });
-const hideOnMobile = "d-none d-lg-table-cell";
 </script>
 <style scoped></style>

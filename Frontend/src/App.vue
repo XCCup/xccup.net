@@ -108,6 +108,17 @@ footer {
   white-space: nowrap;
 }
 
+// Hide table cells depending on class
+.hide-on-md {
+  @extend .d-none;
+  @extend .d-lg-table-cell;
+}
+
+.hide-on-sm {
+  @extend .d-none;
+  @extend .d-md-table-cell;
+}
+
 // TODO: Is this obsolete?
 // Fix for responsive scaling of barogramm
 // .barogramm-container {

@@ -7,8 +7,8 @@
             <th>Platz</th>
 
             <th>Name</th>
-            <th scope="col" :class="hideOnMobile">Verein</th>
-            <th scope="col" :class="hideOnMobile">Team</th>
+            <th scope="col" class="hide-on-sm">Verein</th>
+            <th scope="col" class="hide-on-sm">Team</th>
 
             <th v-for="n in maxFlights" :key="n" class="no-line-break">
               Flug {{ n }}
@@ -24,10 +24,10 @@
                   result.user.firstName + " " + result.user.lastName
                 }}</strong>
               </td>
-              <td scope="col" :class="hideOnMobile">
+              <td scope="col" class="hide-on-sm">
                 {{ result.club?.name }}
               </td>
-              <td scope="col" :class="hideOnMobile">
+              <td scope="col" class="hide-on-sm">
                 {{ result.team?.name }}
               </td>
 
@@ -78,6 +78,5 @@ defineProps({
     required: true,
   },
 });
-const hideOnMobile = "d-none d-lg-table-cell";
 </script>
 <style scoped></style>

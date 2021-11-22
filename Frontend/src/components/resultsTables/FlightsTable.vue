@@ -6,14 +6,14 @@
           <thead>
             <th>Datum</th>
             <th>Name</th>
-            <th scope="col" :class="hideOnMobile">Verein</th>
-            <th scope="col" :class="hideOnMobile">Team</th>
+            <th scope="col" class="hide-on-md">Verein</th>
+            <th scope="col" class="hide-on-sm">Team</th>
 
-            <th :class="hideOnMobile">Startplatz</th>
-            <th scope="col" :class="hideOnMobile">Gerät</th>
+            <th class="hide-on-sm">Startplatz</th>
+            <th scope="col" class="hide-on-sm">Gerät</th>
             <th>Strecke</th>
             <th>Punkte</th>
-            <th :class="hideOnMobile">Status</th>
+            <th class="hide-on-sm">Status</th>
           </thead>
           <tbody>
             <tr
@@ -32,15 +32,15 @@
                   flight.user.firstName + " " + flight.user.lastName
                 }}</strong>
               </td>
-              <td scope="col" :class="hideOnMobile">
+              <td scope="col" class="hide-on-md">
                 {{ flight.club.name }}
               </td>
-              <td scope="col" :class="hideOnMobile">
+              <td scope="col" class="hide-on-sm">
                 {{ flight.team?.name }}
               </td>
-              <td :class="hideOnMobile">{{ flight.takeoff.name }}</td>
+              <td class="hide-on-sm">{{ flight.takeoff.name }}</td>
 
-              <td scope="col" :class="hideOnMobile">
+              <td scope="col" class="hide-on-sm">
                 <RankingClass :ranking-class="flight.glider?.gliderClass" />
                 {{ flight.glider?.brand + " " + flight.glider?.model }}
               </td>
@@ -52,7 +52,7 @@
                 <FlightTypeIcon :flight-type="flight.flightType" />
                 {{ flight.flightPoints }} P
               </td>
-              <td :class="hideOnMobile">
+              <td class="hide-on-sm">
                 <FlightState :flight-state="flight.flightStatus" />
               </td>
             </tr>
@@ -82,8 +82,6 @@ const routeToFlight = (flightId) => {
     },
   });
 };
-
-const hideOnMobile = "d-none d-lg-table-cell";
 </script>
 <style scoped>
 tr:hover {
