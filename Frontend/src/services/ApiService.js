@@ -71,6 +71,15 @@ export default {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
   },
 
+  // Mail
+
+  sendMailToAll(mail) {
+    return jwtInterceptor.post(baseURL + "mail/all", mail);
+  },
+  sendMailToSingleUser(mail) {
+    return jwtInterceptor.post(baseURL + "mail/single", mail);
+  },
+
   // Admin
 
   getFlightViolations() {
