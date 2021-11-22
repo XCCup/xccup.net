@@ -24,14 +24,26 @@ describe("check landing page", () => {
 
       const isAfter12OClock = new Date().getHours() > 12;
       const firstRow = isAfter12OClock
-        ? "1Leo AltenwerthStüppel74 km 212 P"
-        : "1Ms. LaurieBurgen12 km75 P";
+        ? ["1", "Leo AltenwerthStüppel", "74 km", "212 P"]
+        : ["1", "Ms. LaurieBurgen", "12 km", "75 P"];
       const lastRow = isAfter12OClock
-        ? "5Camille SchadenKönigstuhl19 km55 P"
-        : "5Ramona GislasonSchriesheim-Ölberg9 km53 P";
+        ? ["5", "Camille Schaden", "Königstuhl", "19 km", "55 P"]
+        : ["5", "Ramona Gislason", "Schriesheim-Ölberg", "9 km", "53 P"];
 
-      cy.get("table").find("tr").first().should("have.text", firstRow);
-      cy.get("table").find("tr").last().should("have.text", lastRow);
+      cy.get("table")
+        .find("tr")
+        .first()
+        .should("include.text", firstRow[0])
+        .and("include.text", firstRow[1])
+        .and("include.text", firstRow[2])
+        .and("include.text", firstRow[3]);
+      cy.get("table")
+        .find("tr")
+        .last()
+        .should("include.text", lastRow[0])
+        .and("include.text", lastRow[1])
+        .and("include.text", lastRow[2])
+        .and("include.text", lastRow[3]);
     });
   });
 
