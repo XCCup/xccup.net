@@ -1,6 +1,6 @@
 <template>
   <div class="card-header"></div>
-  <div class="card-body row align-items-center gx-5">
+  <div class="card-body row align-items-center">
     <!-- TODO: Cols should wrap in own row when viewport width shrinks -->
     <div class="col-xl-4 row align-items-center">
       <div class="col-6">
@@ -66,9 +66,9 @@
           <div v-else>🤷</div>
         </div>
       </div>
-      <div class="col-6 align-items-center">
-        <div><strong>Hangar</strong> <br /></div>
-        <ul v-if="user.gliders.length" class="list-group list-group-flush">
+      <div class="col-6">
+        <div><strong>Hangar</strong></div>
+        <ul v-if="user.gliders.length" class="list-group">
           <li v-for="glider in user.gliders" :key="glider.id">
             <RankingClass :ranking-class="createRankingClass(glider)" />{{
               glider.brand
@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="col-xl-4">
-      <div><strong>Rekorde</strong> <br /></div>
+      <div><strong>Rekorde</strong></div>
       <div class="row">
         <FlightShortSummary flight-type="FREE" :flight="user.records[0][0]" />
       </div>
