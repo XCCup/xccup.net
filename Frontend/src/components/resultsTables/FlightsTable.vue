@@ -108,7 +108,7 @@ const handleSortChange = (value) => {
   currentSortColumnKey.value = value.key;
   console.log("Handle: ", value);
   emit("table-sort-changed", {
-    sortCol: value.order ? currentSortColumnKey.value : undefined,
+    sortCol: currentSortColumnKey.value,
     sortOrder: value.order,
   });
 };
