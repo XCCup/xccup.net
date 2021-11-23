@@ -21,6 +21,7 @@ const {
   checkParamIsUuid,
   validationHasErrors,
   checkOptionalIsBoolean,
+  queryOptionalColumnExistsInModel,
 } = require("./Validation");
 
 const uploadLimiter = createRateLimiter(10, 4);
@@ -45,6 +46,8 @@ router.get(
     query("clubId").optional().isUUID(),
     query("teamId").optional().isUUID(),
     query("userId").optional().isUUID(),
+    query("sortOrder").optional().isIn(["desc", "DESC", "asc", "ASC"]),
+    queryOptionalColumnExistsInModel("sortCol", "Flight"),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -63,6 +66,8 @@ router.get(
       teamId,
       gliderClass,
       status,
+      sortCol,
+      sortOrder,
     } = req.query;
 
     try {
@@ -80,6 +85,7 @@ router.get(
         teamId,
         gliderClass,
         status,
+        sort: [sortCol, sortOrder],
       });
       res.json(flights);
     } catch (error) {

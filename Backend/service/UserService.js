@@ -306,7 +306,7 @@ async function findFlightRecordOfType(id, type) {
   return await flightService.getAll({
     type,
     limit: 1,
-    sortByPoints: true,
+    sort: ["flightPoints", "DESC"],
     userId: id,
   });
 }

@@ -37,7 +37,6 @@ const flightService = {
     rankingClass,
     limit,
     offset,
-    sortByPoints,
     startDate,
     endDate,
     userId,
@@ -46,6 +45,7 @@ const flightService = {
     gliderClass,
     status,
     unchecked,
+    sort,
   } = {}) => {
     let fillCache = false;
     if (
@@ -55,7 +55,6 @@ const flightService = {
         rankingClass,
         limit,
         offset,
-        sortByPoints,
         startDate,
         endDate,
         userId,
@@ -64,6 +63,7 @@ const flightService = {
         gliderClass,
         status,
         unchecked,
+        sort,
       ])
     ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
@@ -73,9 +73,7 @@ const flightService = {
       }
     }
 
-    const orderStatement = sortByPoints
-      ? ["flightPoints", "DESC"]
-      : ["takeoffTime", "DESC"];
+    const orderStatement = createOrderStatement(sort);
 
     const queryObject = {
       include: [
@@ -416,6 +414,14 @@ const flightService = {
     return flyingSite.name;
   },
 };
+
+function createOrderStatement(sort) {
+  if (!(sort && sort[0])) return ["takeoffTime", "DESC"];
+
+  if (!sort[1]) return [sort[0], "DESC"];
+
+  return sort;
+}
 
 function calculateTaskSpeed(result, flight) {
   flight.flightStats.taskSpeed =
