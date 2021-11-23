@@ -78,9 +78,9 @@ th:hover {
 }
 
 th.sort-desc::after {
-  content: "<";
+  content: "\25BC";
 }
 th.sort-asc::after {
-  content: ">";
+  content: "\25B2";
 }
 </style>

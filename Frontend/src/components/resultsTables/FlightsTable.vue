@@ -108,7 +108,7 @@ const handleSortChange = (value) => {
   currentSortColumnKey.value = value.key;
   console.log("Handle: ", value);
   emit("table-sort-changed", {
-    sortCol: currentSortColumnKey.value,
+    sortCol: value.order ? currentSortColumnKey.value : undefined,
     sortOrder: value.order,
   });
 };
@@ -121,18 +121,5 @@ tr:hover {
   box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1); */
 
   cursor: pointer;
-}
-
-th.sort-desc {
-  background: blue;
-}
-th.sort-desc::after {
-  content: "<";
-}
-th.sort-asc::after {
-  content: ">";
-}
-th.sort-asc {
-  background: red;
 }
 </style>
