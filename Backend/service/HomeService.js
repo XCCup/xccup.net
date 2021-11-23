@@ -47,7 +47,7 @@ async function prepareHomeData() {
   const bestFlightsOverallCurrentYear = flightService.getAll({
     year: getCurrentYear(),
     limit: NUMBER_OF_FLIGHTS_OVERALL,
-    sortByPoints: true,
+    sort: ["flightPoints", "DESC"],
   });
   const todaysFlights = flightService.getTodays();
   const dbRequestsOther = {
