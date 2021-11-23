@@ -4,15 +4,30 @@
       <div v-if="flights?.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
-            <th>Datum</th>
+            <SortingTableHead
+              content="Datum"
+              column-object-key="takeoffTime"
+              :current-sort-column-key="currentSortColumnKey"
+              @head-sort-changed="handleSortChange"
+            />
             <th>Name</th>
             <th scope="col" class="hide-on-md">Verein</th>
             <th scope="col" class="hide-on-sm">Team</th>
 
             <th class="hide-on-sm">Startplatz</th>
             <th scope="col" class="hide-on-sm">Gerät</th>
-            <th>Strecke</th>
-            <th>Punkte</th>
+            <SortingTableHead
+              content="Strecke"
+              column-object-key="flightDistance"
+              :current-sort-column-key="currentSortColumnKey"
+              @head-sort-changed="handleSortChange"
+            />
+            <SortingTableHead
+              content="Punkte"
+              column-object-key="flightPoints"
+              :current-sort-column-key="currentSortColumnKey"
+              @head-sort-changed="handleSortChange"
+            />
             <th class="hide-on-sm">Status</th>
           </thead>
           <tbody>
@@ -65,8 +80,11 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
+
+const currentSortColumnKey = ref(null);
 
 defineProps({
   flights: {
@@ -74,12 +92,24 @@ defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits(["table-sort-changed"]);
+
 const routeToFlight = (flightId) => {
   router.push({
     name: "Flight",
     params: {
       flightId: flightId,
     },
+  });
+};
+
+const handleSortChange = (value) => {
+  currentSortColumnKey.value = value.key;
+  console.log("Handle: ", value);
+  emit("table-sort-changed", {
+    sortCol: currentSortColumnKey.value,
+    sortOrder: value.order,
   });
 };
 </script>
@@ -91,5 +121,18 @@ tr:hover {
   box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1); */
 
   cursor: pointer;
+}
+
+th.sort-desc {
+  background: blue;
+}
+th.sort-desc::after {
+  content: "<";
+}
+th.sort-asc::after {
+  content: ">";
+}
+th.sort-asc {
+  background: red;
 }
 </style>
