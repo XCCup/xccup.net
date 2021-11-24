@@ -59,6 +59,18 @@ router.get(
   }
 );
 
+// @desc Retrieves all user names
+// @route GET /users/names
+
+router.get("/names", async (req, res, next) => {
+  try {
+    const users = await service.getAllNames();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Logs a user in by his credentials
 // @route GET /users/login
 

@@ -64,6 +64,20 @@ const userService = {
 
     return users;
   },
+  getAllNames: async () => {
+    const users = await User.findAll({
+      where: {
+        role: {
+          [Op.not]: ROLE.INACTIVE,
+        },
+      },
+      order: [["firstName", "asc"]],
+      attributes: ["id", "firstName", "lastName"],
+    });
+
+    return users;
+    // return users.map((user) => user.fullName);
+  },
   getById: async (id) => {
     return await User.findByPk(id, {
       attributes: {

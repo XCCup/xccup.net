@@ -14,7 +14,10 @@ const {
 } = require("./Validation");
 const multer = require("multer");
 const path = require("path");
-const { defineFileDestination, defineImageFileNameWithCurrentDateAsPrefix } = require("../helper/ImageUtils");
+const {
+  defineFileDestination,
+  defineImageFileNameWithCurrentDateAsPrefix,
+} = require("../helper/ImageUtils");
 
 const IMAGE_STORE = "test/testdatasets/images/clubs";
 
@@ -30,6 +33,18 @@ const imageUpload = multer({ storage });
 router.get("/public", async (req, res, next) => {
   try {
     const clubs = await service.getAllActive();
+    res.json(clubs);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Gets all club names
+// @route GET /clubs/names
+
+router.get("/names", async (req, res, next) => {
+  try {
+    const clubs = await service.getAllNames();
     res.json(clubs);
   } catch (error) {
     next(error);
@@ -102,13 +117,8 @@ router.post(
   checkIsBoolean("isActiveParticipant"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const {
-      name,
-      shortName,
-      website,
-      contacts,
-      isActiveParticipant
-    } = req.body;
+    const { name, shortName, website, contacts, isActiveParticipant } =
+      req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -123,7 +133,7 @@ router.post(
           : [],
       };
 
-      const newClub = await service.create(club)
+      const newClub = await service.create(club);
 
       res.json(newClub);
     } catch (error) {
@@ -148,13 +158,8 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const clubId = req.params.id;
-    const {
-      name,
-      shortName,
-      website,
-      contacts,
-      isActiveParticipant
-    } = req.body;
+    const { name, shortName, website, contacts, isActiveParticipant } =
+      req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -173,7 +178,7 @@ router.put(
         isActiveParticipant.push(new Date().getFullYear());
       }
 
-      const updatedClub = await service.update(club)
+      const updatedClub = await service.update(club);
 
       res.json(updatedClub);
     } catch (error) {

@@ -45,6 +45,7 @@ app.use("/sponsors", require("./controller/SponsorController"));
 app.use("/media", require("./controller/MediaController"));
 app.use("/general", require("./controller/GeneralController"));
 app.use("/mail", require("./controller/MailController"));
+app.use("/sites", require("./controller/SiteController"));
 if (process.env.NODE_ENV === "development") {
   app.use("/testdata", require("./controller/TestDataController"));
 }

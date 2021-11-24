@@ -16,6 +16,14 @@ const siteService = {
     });
   },
 
+  getAllNames: async () => {
+    const sites = await FlyingSite.findAll({
+      attributes: ["id", "name"],
+      order: [["name", "asc"]],
+    });
+    return sites;
+  },
+
   create: async (site) => {
     return FlyingSite.create(site);
   },
