@@ -13,6 +13,12 @@
 </template>
 
 <script setup>
+// Todo: Reactivity does not seem to always work
+
+// Todo:
+// Add the possibility to define a year where the picker should start.
+// No one born in 2021 will enter the comp
+
 import Datepicker from "vue3-datepicker";
 import { de } from "date-fns/locale";
 import { ref, watch } from "vue";
