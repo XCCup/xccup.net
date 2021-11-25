@@ -32,8 +32,8 @@ dbConnectionTest().then(async () => {
     });
   }
   if (
-    process.env.DB_SYNC_FORCE == "true" &&
-    process.env.NODE_ENV === "development"
+    process.env.DB_SYNC_FORCE == "true"
+    // && process.env.NODE_ENV === "development"
   ) {
     logger.info("Will create DB Tables");
     await sequelize
