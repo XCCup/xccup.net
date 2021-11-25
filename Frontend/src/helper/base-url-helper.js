@@ -10,7 +10,8 @@ export function getbaseURL() {
       window.location.protocol.toString() +
       "//" +
       window.location.hostname.toString() +
-      ":3000/";
+      ":3000/" +
+      "/api/";
   }
   return URL;
 }
