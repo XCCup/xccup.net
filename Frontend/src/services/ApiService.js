@@ -1,8 +1,8 @@
 import axios from "axios";
 import jwtInterceptor from "@/shared/jwtInterceptor";
+import { getBaseUrl } from "@/shared/base-url-helper";
 
-let baseURL = import.meta.env.VITE_API_URL;
-console.log(baseURL);
+let baseURL = getBaseUrl();
 
 const apiClient = axios.create({
   baseURL: baseURL,
