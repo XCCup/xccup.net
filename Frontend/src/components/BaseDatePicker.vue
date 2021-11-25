@@ -1,6 +1,6 @@
 <template>
   <div class="form mb-3">
-    <label class="form-check-label">{{ label }}</label>
+    <label>{{ label }}</label>
     <datepicker
       v-model="pickedDate"
       :locale="de"
