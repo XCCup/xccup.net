@@ -1,14 +1,11 @@
 <template>
-  <section class="bg-secondary">
+  <section class="bg-light">
     <div class="container py-5 h-100">
       <div class="row justify-content-center align-items-center h-100">
         <div class="col-12 col-lg-9 col-xl-7">
-          <div
-            class="card shadow-2-strong card-registration"
-            style="border-radius: 15px"
-          >
+          <div class="card shadow-2-strong" style="border-radius: 15px">
             <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Anmelden</h3>
+              <h3 class="mb-4 pb-2">Anmelden</h3>
               <form>
                 <div class="row">
                   <div class="col-md-6 mb-4">
@@ -44,6 +41,40 @@
                       :show-label="true"
                       :options="['M', 'W', 'D']"
                     />
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <BaseSelect
+                      v-model="userData.clubId"
+                      label="Verein"
+                      :show-label="true"
+                      :options="listOfClubs"
+                    />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <label>Land</label>
+                    <select
+                      v-model="userData.address.country"
+                      class="form-select"
+                    >
+                      <option
+                        v-for="option in listOfCountries"
+                        :key="option.countryCode"
+                        :value="option.countryCode"
+                        :selected="option.key === userData.address.country"
+                      >
+                        {{ option.countryName }}
+                      </option>
+                    </select>
+
+                    <!-- <BaseSelect
+                      v-model="userData.address.country"
+                      label="Land"
+                      :show-label="true"
+                      :options="listOfCountries"
+                    /> -->
                   </div>
                   <div class="col-md-6 mb-4">
                     <BaseSelect
@@ -95,6 +126,9 @@
                   >
                     Anmelden
                   </button>
+                  <p v-if="errorMessage" class="text-danger mt-4">
+                    {{ errorMessage }}
+                  </p>
                 </div>
               </form>
             </div>
@@ -120,6 +154,7 @@ const userData = reactive({
   password: "foo2!Bar",
   clubId: "",
   email: "sschoepe@gmail.com",
+  address: { country: "" },
 
   // Todo: Add inputs
 
@@ -127,10 +162,12 @@ const userData = reactive({
   emailInformIfComment: "true",
   emailNewsletter: "true",
   emailTeamSearch: "false",
-  address: { country: "GER" },
 });
 
+const errorMessage = ref(null);
+
 const listOfClubs = ref([]);
+const listOfCountries = ref([]);
 
 const passwordConfirm = ref("");
 
@@ -140,10 +177,19 @@ const rulesAccepted = ref(true);
 const registerButtonIsDisabled = computed(() => !rulesAccepted.value);
 
 try {
-  const res = await apiService.getClubs();
+  // Get clubs
+  let res = await apiService.getClubs();
   if (res.status != 200) throw res.statusText;
   listOfClubs.value = res.data;
-  console.log(listOfClubs.value[0].id);
+
+  // Get countries
+  res = await apiService.getCountries();
+  if (res.status != 200) throw res.statusText;
+  listOfCountries.value = Object.keys(res.data).map(function (i) {
+    return { countryCode: i, countryName: res.data[i] };
+  });
+
+  // Todo: remove this
   userData.clubId = listOfClubs.value[0].id;
 } catch (error) {
   console.log(error);
@@ -153,39 +199,13 @@ const onSubmit = async () => {
   try {
     const res = await apiService.register(userData);
     if (res.status != 200) throw res.statusText;
+    errorMessage.value = null;
   } catch (error) {
+    if (error.response?.data === "email must be unique")
+      return (errorMessage.value = "Diese Email existiert bereits");
     console.log(error);
   }
 };
 </script>
 
-<style scoped>
-.gradient-custom {
-  /* fallback for old browsers */
-  background: #f093fb;
-
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(
-    to bottom right,
-    rgba(240, 147, 251, 1),
-    rgba(245, 87, 108, 1)
-  );
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(
-    to bottom right,
-    rgba(240, 147, 251, 1),
-    rgba(245, 87, 108, 1)
-  );
-}
-
-.card-registration .select-input.form-control[readonly]:not([disabled]) {
-  font-size: 1rem;
-  line-height: 2.15;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-}
-.card-registration .select-arrow {
-  top: 13px;
-}
-</style>
+<style scoped></style>

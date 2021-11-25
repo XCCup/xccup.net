@@ -160,4 +160,7 @@ export default {
       params: { p: query },
     });
   },
+  getCountries() {
+    return apiClient.get(baseURL + "general/user/countries");
+  },
 };
