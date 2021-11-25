@@ -8,7 +8,7 @@ const {
 } = require("../constants/flight-constants");
 const {
   GENDER: genders,
-  COUNTRY: conutries,
+  COUNTRY: countries,
   STATE: conutryStates,
   TSHIRT_SIZES,
 } = require("../constants/user-constants");
@@ -87,7 +87,7 @@ router.get("/user/genders", async (req, res, next) => {
 
 router.get("/user/countries", async (req, res, next) => {
   try {
-    res.json(conutries);
+    res.json(countries);
   } catch (error) {
     next(error);
   }
