@@ -1,5 +1,5 @@
 import { readonly, ref, computed } from "vue";
-import apiService from "@/services/ApiService";
+import ApiService from "@/services/ApiService";
 
 const airbuddiesFlightData = ref([]);
 const checkedAirbuddFlightIds = ref([]);
@@ -30,7 +30,7 @@ export default () => {
     if (airbuddiesFlightData.value.length > 0) return;
     airbuddies.forEach(async (buddy) => {
       airbuddiesFlightData.value.push(
-        (await apiService.getFlight(buddy.externalId)).data
+        (await ApiService.getFlight(buddy.externalId)).data
       );
     });
   };

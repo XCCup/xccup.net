@@ -28,9 +28,9 @@
     </form>
 
     <!-- TODO: -->
-    <div class="mt-3">
+    <div class="my-3">
       <p><a href="#">Password vergessen?</a></p>
-      <p><a href="#">Registrieren</a></p>
+      <router-link :to="{ name: 'Register' }">Registrieren</router-link>
     </div>
   </div>
 </template>
