@@ -366,7 +366,7 @@ const flightService = {
     const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
     IgcAnalyzer.startCalculation(flight, flightTypeFactors, (result) => {
       flightService.addResult(result);
-    });
+    }).catch((error) => logger.error(error));
   },
 
   extractFixesAndAddFurtherInformationToFlight: async (flight) => {
