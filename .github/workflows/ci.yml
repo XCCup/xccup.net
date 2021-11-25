@@ -31,6 +31,8 @@ jobs:
       - name: Start Docker Backend Environment
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml up -d #TODO: Leaving pgadmin out saves around 5s... Is it worth it?
         working-directory: ./Backend
+      - name: Print db log
+        run: docker logs db
       - name: List all databases (just for debugging)
         run: sleep 30 && docker exec db psql -U xccup_user -l
       - name: Setup DB (enable PostGIS and set correct timezone)
