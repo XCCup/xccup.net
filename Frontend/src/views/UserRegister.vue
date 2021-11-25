@@ -185,7 +185,7 @@ setWindowName("Anmelden");
 // User input
 
 const passwordConfirm = ref("");
-const rulesAccepted = ref(true);
+const rulesAccepted = ref(false);
 const errorMessage = ref(null);
 
 // Todo: Form input validation with vue
