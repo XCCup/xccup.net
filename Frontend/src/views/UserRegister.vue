@@ -41,6 +41,7 @@
                     <BaseDatePicker
                       v-model="userData.birthday"
                       label="Geburstag"
+                      starting-view="year"
                     />
                   </div>
                 </div>
