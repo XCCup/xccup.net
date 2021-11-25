@@ -5,8 +5,6 @@ services:
       build:
         context: ./Frontend
         dockerfile: Dockerfile
-        args:
-          API_URL: ${API_URL}
       image: xccup-client
       container_name: xccup-client
       env_file: .env
