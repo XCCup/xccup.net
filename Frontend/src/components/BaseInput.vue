@@ -4,12 +4,17 @@
       v-bind="$attrs"
       :value="modelValue"
       :placeholder="label"
-      class="form-control"
+      :class="formClass"
+      invalid="true"
       :type="type"
       :disabled="isDisabled"
+      data-bs-toggle="tooltip"
+      data-bs-placement="top"
+      :title="tooltipValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
     <label v-if="label">{{ label }}</label>
+    <!-- <p v-if="isInvalid">{{ validationText }}</p> -->
   </div>
 </template>
 
@@ -38,6 +43,18 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  externalValidationResult: {
+    type: Boolean,
+    default: false,
+  },
+  isRequired: {
+    type: Boolean,
+    default: true,
+  },
+  validationText: {
+    type: String,
+    default: "Das Feld darf nicht leer sein",
+  },
 });
 
 const type = computed(() => {
@@ -45,4 +62,23 @@ const type = computed(() => {
   if (props.isEmail) return "email";
   return "text";
 });
+
+const isInvalid = computed(() => {
+  return (
+    props.externalValidationResult ||
+    (props.isRequired && props.modelValue.length == 0)
+  );
+});
+
+const formClass = computed(() => {
+  let classValue = "form-control";
+
+  if (isInvalid.value) classValue += " is-invalid";
+
+  return classValue;
+});
+
+const tooltipValue = computed(() =>
+  isInvalid.value ? props.validationText : ""
+);
 </script>

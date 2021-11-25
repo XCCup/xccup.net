@@ -107,6 +107,7 @@
                       v-model="passwordConfirm"
                       label="Passwort wiederholen"
                       :is-password="true"
+                      :external-validation-result="!passwordMatches"
                     />
                   </div>
                 </div>
@@ -212,10 +213,16 @@ const userData = reactive({
 // Helpers
 const showSpinner = ref(false);
 
+// Validation
+
+const passwordMatches = computed(() => {
+  return passwordConfirm.value === userData.password;
+});
+
 const registerButtonIsEnabled = computed(() => {
   return (
     rulesAccepted.value &&
-    passwordConfirm.value === userData.password &&
+    passwordMatches.value &&
     userData.firstName.length > 3 &&
     userData.lastName.length > 3 &&
     userData.birthday &&
