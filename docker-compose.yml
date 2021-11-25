@@ -42,6 +42,7 @@ services:
       traefik.enable: true
       traefik.http.routers.xccup-api.rule: "Host(`xccup.stephanschoepe.de`) && PathPrefix(`/api`)"
       traefik.http.routers.xccup-api.entrypoints: websecure
+      traefik.http.routers.xccup-api.priority: 200
       traefik.http.routers.xccup-api.tls.certresolver: myresolver
       traefik.port: 65090
       traefik.docker.network: traefik
