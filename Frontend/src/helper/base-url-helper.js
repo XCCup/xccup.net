@@ -11,7 +11,7 @@ export function getbaseURL() {
       "//" +
       window.location.hostname.toString() +
       ":3000/" +
-      "/api/";
+      "api/";
   }
   return URL;
 }
