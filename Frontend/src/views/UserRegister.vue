@@ -175,7 +175,7 @@
 
 <script setup>
 import { ref, reactive, computed } from "vue";
-import apiService from "@/services/apiService";
+import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -233,24 +233,24 @@ const tshirtSizes = ref([]);
 
 try {
   // Get clubs
-  let res = await apiService.getClubs();
+  let res = await ApiService.getClubs();
   if (res.status != 200) throw res.statusText;
   listOfClubs.value = res.data;
 
   // Get countries
-  res = await apiService.getCountries();
+  res = await ApiService.getCountries();
   if (res.status != 200) throw res.statusText;
   listOfCountries.value = Object.keys(res.data).map(function (i) {
     return { countryCode: i, countryName: res.data[i] };
   });
 
   // Get Shirt sizes
-  res = await apiService.getShirtSizes();
+  res = await ApiService.getShirtSizes();
   if (res.status != 200) throw res.statusText;
   tshirtSizes.value = res.data;
 
   // Get genders
-  res = await apiService.getGenders();
+  res = await ApiService.getGenders();
   if (res.status != 200) throw res.statusText;
   listOfGenders.value = Object.keys(res.data).map(function (i) {
     return res.data[i];
@@ -263,7 +263,7 @@ try {
 const onSubmit = async () => {
   showSpinner.value = true;
   try {
-    const res = await apiService.register(userData);
+    const res = await ApiService.register(userData);
     if (res.status != 200) throw res.statusText;
     errorMessage.value = null;
     showSpinner.value = false;

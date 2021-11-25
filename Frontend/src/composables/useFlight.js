@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import apiService from "@/services/ApiService";
+import ApiService from "@/services/ApiService";
 
 const flight = ref(null);
 
@@ -10,11 +10,11 @@ export default () => {
 
   // Actions
   const fetchOne = async (flightId) => {
-    flight.value = (await apiService.getFlight(flightId)).data;
+    flight.value = (await ApiService.getFlight(flightId)).data;
   };
 
   const updateComments = async () => {
-    const res = await apiService.getCommentsOfFlight(flight.value.id);
+    const res = await ApiService.getCommentsOfFlight(flight.value.id);
     if (res.status != 200) throw res.statusText;
     flight.value.comments = [...res.data];
   };
