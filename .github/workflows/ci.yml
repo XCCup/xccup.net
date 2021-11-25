@@ -25,11 +25,11 @@ jobs:
       - name: Install backend
         run: npm install --arch=x64 --platform=linuxmusl
         working-directory: ./Backend
-      - name: Test backend
-        run: npm test
-        working-directory: ./Backend
+      # - name: Test backend
+      #   run: npm test
+      #   working-directory: ./Backend
       - name: Start Docker Backend Environment
-        run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml up -d #TODO: Leaving pgadmin out saves around 5s... Is it worth it?
+        run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d #TODO: Leaving pgadmin out saves around 5s... Is it worth it?
         working-directory: ./Backend
       - name: Print db log
         run: docker logs db
