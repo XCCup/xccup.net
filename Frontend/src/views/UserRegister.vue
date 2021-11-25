@@ -223,8 +223,8 @@ const registerButtonIsEnabled = computed(() => {
   return (
     rulesAccepted.value &&
     passwordMatches.value &&
-    userData.firstName.length > 3 &&
-    userData.lastName.length > 3 &&
+    userData.firstName.length > 0 &&
+    userData.lastName.length > 0 &&
     userData.birthday &&
     userData.gender &&
     userData.clubId &&
