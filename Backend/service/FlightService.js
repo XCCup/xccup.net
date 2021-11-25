@@ -33,6 +33,7 @@ const flightService = {
   getAll: async ({
     year,
     site,
+    siteId,
     type,
     rankingClass,
     limit,
@@ -51,6 +52,7 @@ const flightService = {
     if (
       isCacheSufficent(year, [
         site,
+        siteId,
         type,
         rankingClass,
         limit,
@@ -78,7 +80,7 @@ const flightService = {
     const queryObject = {
       include: [
         createUserInclude(),
-        createSiteInclude(site),
+        createSiteInclude(site, siteId),
         createTeamInclude(teamId),
         createClubInclude(clubId),
       ],
@@ -675,7 +677,7 @@ async function createWhereStatement(
   return whereStatement;
 }
 
-function createSiteInclude(shortName) {
+function createSiteInclude(shortName, id) {
   const include = {
     model: FlyingSite,
     as: "takeoff",
@@ -684,6 +686,11 @@ function createSiteInclude(shortName) {
   if (shortName) {
     include.where = {
       shortName,
+    };
+  }
+  if (id) {
+    include.where = {
+      id,
     };
   }
   return include;

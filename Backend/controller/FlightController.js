@@ -55,6 +55,7 @@ router.get(
     const {
       year,
       site,
+      siteId,
       type,
       rankingClass,
       limit,
@@ -74,6 +75,7 @@ router.get(
       const flights = await service.getAll({
         year,
         site,
+        siteId,
         type,
         rankingClass,
         limit,
