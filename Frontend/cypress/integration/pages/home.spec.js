@@ -82,7 +82,6 @@ describe("check landing page", () => {
         .find("tr")
         .last()
         .should("include.text", "5")
-        .and("include.text", "22.11")
         .and("include.text", "Leo Altenwerth")
         .and("include.text", "Stüppel")
         .and("include.text", "74 km")
