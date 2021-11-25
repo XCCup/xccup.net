@@ -5,7 +5,7 @@
   "main": "app.js",
   "jest": {
     "setupFiles": [
-      "dotenv/config"
+      "<rootDir>/test/setup-tests.js"
     ]
   },
   "scripts": {
