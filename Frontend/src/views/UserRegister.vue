@@ -18,19 +18,14 @@
 
                 <div class="row">
                   <div class="col-md-6 mb-4">
-                    <BaseDatePicker
-                      v-model="userData.birthday"
-                      label="Geburstag"
-                    />
-                  </div>
-
-                  <div class="col-md-6 mb-4">
                     <BaseInput
                       v-model="userData.email"
                       label="Email"
                       :is-email="true"
                     />
                   </div>
+
+                  <div class="col-md-6 mb-4"></div>
                 </div>
 
                 <div class="row">
@@ -39,20 +34,19 @@
                       v-model="userData.gender"
                       label="Geschlecht"
                       :show-label="true"
-                      :options="['M', 'W', 'D']"
+                      :options="listOfGenders"
                     />
                   </div>
                   <div class="col-md-6 mb-4">
-                    <BaseSelect
-                      v-model="userData.clubId"
-                      label="Verein"
-                      :show-label="true"
-                      :options="listOfClubs"
+                    <BaseDatePicker
+                      v-model="userData.birthday"
+                      label="Geburstag"
                     />
                   </div>
                 </div>
 
                 <div class="row">
+                  <!-- Country -->
                   <div class="col-md-6 mb-4">
                     <label>Land</label>
                     <select
@@ -68,22 +62,33 @@
                         {{ option.countryName }}
                       </option>
                     </select>
-
-                    <!-- <BaseSelect
-                      v-model="userData.address.country"
-                      label="Land"
-                      :show-label="true"
-                      :options="listOfCountries"
-                    /> -->
                   </div>
+                  <!-- Club -->
+                  <div class="col-md-6 mb-4">
+                    <label>Verein</label>
+                    <select v-model="userData.clubId" class="form-select">
+                      <option
+                        v-for="option in listOfClubs"
+                        :key="option.id"
+                        :value="option.id"
+                        :selected="option.key === userData.clubId"
+                      >
+                        {{ option.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
                   <div class="col-md-6 mb-4">
                     <BaseSelect
-                      v-model="userData.clubId"
-                      label="Verein"
+                      v-model="userData.tshirtSize"
+                      label="T-Shirt Größe"
                       :show-label="true"
-                      :options="listOfClubs"
+                      :options="tshirtSizes"
                     />
                   </div>
+                  <div class="col-md-6 mb-4"></div>
                 </div>
 
                 <div class="row">
@@ -104,27 +109,52 @@
                 </div>
                 <div class="form-check mb-3">
                   <input
-                    id="flexCheckDefault"
+                    id="flexCheckNewsletter"
+                    v-model="userData.emailNewsletter"
+                    class="form-check-input"
+                    type="checkbox"
+                  />
+                  <label class="form-check-label" for="flexCheckNewsletter">
+                    Newsletter abonieren
+                  </label>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input
+                    id="flexCheckRules"
                     v-model="rulesAccepted"
                     class="form-check-input"
                     type="checkbox"
                   />
-                  <label class="form-check-label" for="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckRules">
                     Ich erkenne ich die
-                    <!-- TODO: Add links -->
-                    <a href="#">Ausschreibung</a> und
-                    <a href="#">Datenschutzbestimmungen</a>
+                    <!-- TODO: Add link to Rules -->
+                    <router-link :to="{ name: 'Home' }"
+                      >Ausschreibung
+                    </router-link>
+                    und
+                    <router-link :to="{ name: 'Privacy' }"
+                      >Datenschutzbestimmungen
+                    </router-link>
                     an.
                   </label>
                 </div>
+
                 <div class="mt-4 pt-2">
                   <button
                     class="btn btn-primary btn-lg"
                     type="submit"
-                    :disabled="registerButtonIsDisabled"
+                    :disabled="!registerButtonIsEnabled"
                     @click.prevent="onSubmit"
                   >
                     Anmelden
+                    <div
+                      v-if="showSpinner"
+                      class="spinner-border spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
                   </button>
                   <p v-if="errorMessage" class="text-danger mt-4">
                     {{ errorMessage }}
@@ -143,38 +173,55 @@
 import { ref, reactive, computed } from "vue";
 import apiService from "@/services/apiService";
 import { setWindowName } from "../helper/utils";
+import { useRouter } from "vue-router";
 
 setWindowName("Anmelden");
 
+// Todo: Form input validation with vue
 const userData = reactive({
-  firstName: "Foo",
-  lastName: "Bar",
-  birthday: "1986-02-02",
-  gender: "M",
-  password: "foo2!Bar",
+  firstName: "",
+  lastName: "",
+  birthday: "",
+  gender: "",
+  password: "",
   clubId: "",
-  email: "sschoepe@gmail.com",
-  address: { country: "" },
+  email: "",
+  address: { country: "GER" },
+  emailNewsletter: true,
+  tshirtSize: "",
 
-  // Todo: Add inputs
+  // Set this options as defaults
+  // Todo: Maybe do this in backend?
 
-  tshirtSize: "S",
-  emailInformIfComment: "true",
-  emailNewsletter: "true",
-  emailTeamSearch: "false",
+  emailInformIfComment: true,
+  emailTeamSearch: false,
 });
 
 const errorMessage = ref(null);
 
 const listOfClubs = ref([]);
 const listOfCountries = ref([]);
+const listOfGenders = ref([]);
+const tshirtSizes = ref([]);
 
-const passwordConfirm = ref("");
-
-// TODO: Change to false
+const passwordConfirm = ref("foo2Bar!");
 const rulesAccepted = ref(true);
+const router = useRouter();
+const showSpinner = ref(false);
 
-const registerButtonIsDisabled = computed(() => !rulesAccepted.value);
+const registerButtonIsEnabled = computed(() => {
+  return (
+    rulesAccepted.value &&
+    passwordConfirm.value === userData.password &&
+    userData.firstName.length > 3 &&
+    userData.lastName.length > 3 &&
+    userData.birthday &&
+    userData.gender &&
+    userData.clubId &&
+    userData.address.country &&
+    userData.tshirtSize
+  );
+});
 
 try {
   // Get clubs
@@ -189,21 +236,42 @@ try {
     return { countryCode: i, countryName: res.data[i] };
   });
 
-  // Todo: remove this
-  userData.clubId = listOfClubs.value[0].id;
+  // Get Shirt sizes
+  res = await apiService.getShirtSizes();
+  if (res.status != 200) throw res.statusText;
+  tshirtSizes.value = res.data;
+
+  // Get genders
+  res = await apiService.getGenders();
+  if (res.status != 200) throw res.statusText;
+  listOfGenders.value = Object.keys(res.data).map(function (i) {
+    return res.data[i];
+  });
 } catch (error) {
   console.log(error);
 }
 
 const onSubmit = async () => {
+  showSpinner.value = true;
   try {
     const res = await apiService.register(userData);
     if (res.status != 200) throw res.statusText;
     errorMessage.value = null;
+    showSpinner.value = false;
+
+    // Todo: Auto login
+    router.push({ name: "Login" });
   } catch (error) {
+    showSpinner.value = false;
+
+    // Todo: Where does this come from? Is it safe to use?
     if (error.response?.data === "email must be unique")
       return (errorMessage.value = "Diese Email existiert bereits");
-    console.log(error);
+    if (error.response?.data.errors[0].param === "password")
+      return (errorMessage.value = "Das Password ist nicht stark genug");
+    if (error.response?.data.errors[0].param === "email")
+      return (errorMessage.value = "Dies ist keine gültige Email Adresse");
+    console.log(error.response);
   }
 };
 </script>

@@ -163,4 +163,10 @@ export default {
   getCountries() {
     return apiClient.get(baseURL + "general/user/countries");
   },
+  getShirtSizes() {
+    return apiClient.get(baseURL + "general/user/tshirtSizes");
+  },
+  getGenders() {
+    return apiClient.get(baseURL + "general/user/genders");
+  },
 };
