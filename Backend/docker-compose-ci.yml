@@ -21,7 +21,7 @@ services:
     container_name: server
     environment:
       - SERVER_PORT=$SERVER_PORT
-      - NODE_ENV=development
+      - NODE_ENV=CI
     ports:
       - "3000:65090"
     volumes:

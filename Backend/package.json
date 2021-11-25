@@ -9,8 +9,8 @@
     ]
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=production node app",
-    "dev": "cross-env NODE_ENV=development nodemon -L --polling-interval 3000 app",
+    "start": "node app",
+    "dev": "nodemon -L --polling-interval 3000 app",
     "test": "jest"
   },
   "author": "",
