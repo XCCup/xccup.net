@@ -62,11 +62,10 @@
                     />
                   </div>
                   <div class="col-md-6">
-                    <v-select :options="listOfCountries[0]"></v-select>
-                    <!-- <BaseInput
+                    <BaseInput
                       v-model="userProfile.address.country"
                       label="Land"
-                    /> -->
+                    />
                   </div>
                 </div>
                 <div class="row">
