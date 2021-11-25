@@ -80,6 +80,7 @@
                 </div>
 
                 <div class="row">
+                  <!-- T-Shirt Size -->
                   <div class="col-md-6 mb-4">
                     <BaseSelect
                       v-model="userData.tshirtSize"
@@ -91,6 +92,7 @@
                   <div class="col-md-6 mb-4"></div>
                 </div>
 
+                <!-- Password -->
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <BaseInput
@@ -107,6 +109,7 @@
                     />
                   </div>
                 </div>
+                <!-- Checkboxes -->
                 <div class="form-check mb-3">
                   <input
                     id="flexCheckNewsletter"
@@ -139,7 +142,7 @@
                     an.
                   </label>
                 </div>
-
+                <!-- Submit button -->
                 <div class="mt-4 pt-2">
                   <button
                     class="btn btn-primary btn-lg"
@@ -156,6 +159,7 @@
                       <span class="visually-hidden">Loading...</span>
                     </div>
                   </button>
+                  <!-- Error message -->
                   <p v-if="errorMessage" class="text-danger mt-4">
                     {{ errorMessage }}
                   </p>
@@ -174,8 +178,15 @@ import { ref, reactive, computed } from "vue";
 import apiService from "@/services/apiService";
 import { setWindowName } from "../helper/utils";
 import { useRouter } from "vue-router";
+const router = useRouter();
 
 setWindowName("Anmelden");
+
+// User input
+
+const passwordConfirm = ref("");
+const rulesAccepted = ref(true);
+const errorMessage = ref(null);
 
 // Todo: Form input validation with vue
 const userData = reactive({
@@ -197,16 +208,7 @@ const userData = reactive({
   emailTeamSearch: false,
 });
 
-const errorMessage = ref(null);
-
-const listOfClubs = ref([]);
-const listOfCountries = ref([]);
-const listOfGenders = ref([]);
-const tshirtSizes = ref([]);
-
-const passwordConfirm = ref("foo2Bar!");
-const rulesAccepted = ref(true);
-const router = useRouter();
+// Helpers
 const showSpinner = ref(false);
 
 const registerButtonIsEnabled = computed(() => {
@@ -222,6 +224,12 @@ const registerButtonIsEnabled = computed(() => {
     userData.tshirtSize
   );
 });
+
+// Queries
+const listOfClubs = ref([]);
+const listOfCountries = ref([]);
+const listOfGenders = ref([]);
+const tshirtSizes = ref([]);
 
 try {
   // Get clubs
@@ -251,6 +259,7 @@ try {
   console.log(error);
 }
 
+// Submit
 const onSubmit = async () => {
   showSpinner.value = true;
   try {
