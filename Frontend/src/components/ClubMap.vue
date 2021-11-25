@@ -9,6 +9,7 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import tileOptions from "@/config/mapbox.js";
 import { ref, onMounted } from "vue";
+import { getbaseURL } from "@/helper/base-url-helper";
 
 const map = ref(null);
 const logos = ref([]);
@@ -21,8 +22,7 @@ const props = defineProps({
 });
 
 const createPopupContent = (club) => {
-  const baseUrl = import.meta.env.VITE_API_URL;
-
+  const baseURL = getbaseURL();
   const lines = [];
   lines.push(`<strong>${club.name}</strong>`);
   lines.push(
@@ -34,7 +34,7 @@ const createPopupContent = (club) => {
     `<a href=${club.website} target="_blank" rel="noreferrer noopener">${club.website}</a>`
   );
   lines.push(
-    `<a href=${club.website} target="_blank" rel="noreferrer noopener"><img src="${baseUrl}clubs/logo/${club.logo.id}?thumb=true" height="50" max-width="150"></a>`
+    `<a href=${club.website} target="_blank" rel="noreferrer noopener"><img src="${baseURL}clubs/logo/${club.logo.id}?thumb=true" height="50" max-width="150"></a>`
   );
 
   return lines.join("<br>");

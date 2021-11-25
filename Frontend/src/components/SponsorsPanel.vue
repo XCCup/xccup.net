@@ -45,8 +45,9 @@
 import { shuffle } from "lodash";
 import { computed } from "vue";
 
-const baseURL = import.meta.env.VITE_API_URL;
+import { getbaseURL } from "@/helper/base-url-helper";
 
+const baseURL = getbaseURL();
 const props = defineProps({
   sponsors: {
     type: Array,

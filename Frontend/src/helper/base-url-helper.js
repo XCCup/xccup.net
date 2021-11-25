@@ -1,16 +1,16 @@
-export function getBaseUrl() {
+export function getbaseURL() {
   let URL =
     window.location.protocol.toString() +
     "//" +
     window.location.hostname.toString() +
-    "/api";
+    "/api/";
   if (process.env.NODE_ENV == "development") {
-    console.log(process.env.NODE_ENV);
+    // Todo: use .env?
     URL =
       window.location.protocol.toString() +
       "//" +
       window.location.hostname.toString() +
-      ":3031";
+      ":3000/";
   }
   return URL;
 }

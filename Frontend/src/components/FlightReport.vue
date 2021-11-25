@@ -33,7 +33,9 @@
 import useFlight from "@/composables/useFlight";
 const { flight } = useFlight();
 
-const baseURL = import.meta.env.VITE_API_URL;
+import { getbaseURL } from "@/helper/base-url-helper";
+
+const baseURL = getbaseURL();
 </script>
 
 <style scoped></style>
