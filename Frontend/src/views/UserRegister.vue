@@ -273,13 +273,18 @@ const onSubmit = async () => {
   } catch (error) {
     showSpinner.value = false;
 
-    // Todo: Where does this come from? Is it safe to use?
+    // Todo: Where do this error messages come from? Is this safe?
+
+    // Email errors
     if (error.response?.data === "email must be unique")
       return (errorMessage.value = "Diese Email existiert bereits");
-    if (error.response?.data.errors[0].param === "password")
-      return (errorMessage.value = "Das Password ist nicht stark genug");
     if (error.response?.data.errors[0].param === "email")
       return (errorMessage.value = "Dies ist keine gültige Email Adresse");
+
+    // Password errors
+    if (error.response?.data.errors[0].param === "password")
+      return (errorMessage.value = "Das Password ist nicht stark genug");
+
     console.log(error.response);
   }
 };
