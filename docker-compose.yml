@@ -44,7 +44,9 @@ services:
       traefik.http.routers.xccup-api.entrypoints: websecure
       traefik.http.routers.xccup-api.tls.certresolver: myresolver
       traefik.http.routers.xccup-api.priority: 200
-      traefik.port: 65090
+      #traefik.port: 65090
+      traefik.http.services.xccup-api.loadbalancer.server.port: 65090
+
       traefik.docker.network: traefik
     command: ./docker-entrypoint.sh
 
