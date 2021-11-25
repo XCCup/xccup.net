@@ -1,4 +1,3 @@
-//Development Tools
 if (process.env.NODE_ENV === "CI") {
   require("dotenv").config({ path: "./.env.ci" });
 }
@@ -18,7 +17,7 @@ require("./controller/Auth").initAuth();
 app.use(morganLogger);
 
 //Development Tools
-if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "CI") {
+if (process.env.NODE_ENV !== "production") {
   // https://expressjs.com/en/resources/middleware/cors.html
   // https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
   var cors = require("cors");
@@ -47,7 +46,7 @@ app.use("/sponsors", require("./controller/SponsorController"));
 app.use("/media", require("./controller/MediaController"));
 app.use("/general", require("./controller/GeneralController"));
 app.use("/mail", require("./controller/MailController"));
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV !== "production") {
   app.use("/testdata", require("./controller/TestDataController"));
 }
 
