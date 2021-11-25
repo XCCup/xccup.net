@@ -14,13 +14,12 @@
 </template>
 
 <script setup>
-import ApiService from "@/services/ApiService.js";
-import { computed, onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { computed, onMounted } from "vue";
 import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
+import useFlights from "@/composables/useFlights";
 
-const route = useRoute();
+const { flights, updateFlights, filterActive } = useFlights();
 
 const props = defineProps({
   year: {
@@ -29,21 +28,13 @@ const props = defineProps({
   },
 });
 
-const flights = ref(null);
-
 let filterModal;
-
-let sortOptions;
-let filterOptions;
-
-const filterActive = ref(false);
 
 const computedYear = computed(() => (props.year.length ? props.year : ""));
 
 onMounted(() => {
   filterModal = new Modal(document.getElementById("flightFilterModal"));
 });
-await retrieveFlights();
 
 setWindowName("Streckenmeldungen");
 
@@ -52,33 +43,11 @@ const onFilter = () => {
 };
 
 const handleSortChange = (value) => {
-  sortOptions = value;
-  retrieveFlights();
+  updateFlights({ sortOptions: value });
 };
 
 const handleFilterChange = (filterIds) => {
-  filterOptions = filterIds;
+  updateFlights({ filterOptions: filterIds });
   filterModal.hide();
-  calcFilterActive();
-  retrieveFlights();
 };
-
-function calcFilterActive() {
-  filterActive.value =
-    filterOptions && Object.values(filterOptions).find((v) => !!v);
-}
-
-async function retrieveFlights() {
-  try {
-    const { data: initialData } = await ApiService.getFlights({
-      ...route.params,
-      sortCol: sortOptions?.sortCol,
-      sortOrder: sortOptions?.sortOrder,
-      ...filterOptions,
-    });
-    flights.value = initialData;
-  } catch (error) {
-    console.log(error);
-  }
-}
 </script>
