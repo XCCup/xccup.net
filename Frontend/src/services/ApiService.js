@@ -113,8 +113,8 @@ export default {
 
   getUserNames() {
     return apiClient.get("users/names/");
-  }
-  
+  },
+
   register(userData) {
     return apiClient.post(baseURL + "users/", userData);
   },
