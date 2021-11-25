@@ -111,6 +111,10 @@ export default {
 
   // Users
 
+  register(userData) {
+    return apiClient.post(baseURL + "users/", userData);
+  },
+
   getUsers(params) {
     return apiClient.get("users/public/", { params });
   },

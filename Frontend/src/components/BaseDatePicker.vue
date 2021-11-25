@@ -24,7 +24,7 @@ const props = defineProps({
     required: true,
   },
   modelValue: {
-    type: [String,null],
+    type: [String, null],
     required: true,
   },
   isDisabled: {

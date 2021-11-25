@@ -146,15 +146,14 @@ const routes = [
     component: () => import("../views/UserProfile.vue"),
   },
   {
-    path: "/sandbox/:flightId",
-    name: "Sandbox",
-    props: true,
-    component: () => import("../views/TheSandbox.vue"),
-  },
-  {
     path: "/login/",
     name: "Login",
     component: UserLogin,
+  },
+  {
+    path: "/anmelden/",
+    name: "Register",
+    component: () => import("../views/UserRegister.vue"),
   },
   {
     path: "/sponsoren",

@@ -5,6 +5,7 @@
       :value="modelValue"
       :placeholder="label"
       class="form-control"
+      :type="type"
       :disabled="isDisabled"
       @input="$emit('update:modelValue', $event.target.value)"
     />
@@ -13,9 +14,10 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 defineEmits(["update:modelValue"]);
 
-defineProps({
+const props = defineProps({
   label: {
     type: String,
     required: true,
@@ -28,5 +30,19 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  isPassword: {
+    type: Boolean,
+    default: false,
+  },
+  isEmail: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const type = computed(() => {
+  if (props.isPassword) return "password";
+  if (props.isEmail) return "email";
+  return "text";
 });
 </script>
