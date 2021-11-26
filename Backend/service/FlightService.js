@@ -33,11 +33,11 @@ const flightService = {
   getAll: async ({
     year,
     site,
+    siteId,
     type,
     rankingClass,
     limit,
     offset,
-    sortByPoints,
     startDate,
     endDate,
     userId,
@@ -46,16 +46,17 @@ const flightService = {
     gliderClass,
     status,
     unchecked,
+    sort,
   } = {}) => {
     let fillCache = false;
     if (
       isCacheSufficent(year, [
         site,
+        siteId,
         type,
         rankingClass,
         limit,
         offset,
-        sortByPoints,
         startDate,
         endDate,
         userId,
@@ -64,6 +65,7 @@ const flightService = {
         gliderClass,
         status,
         unchecked,
+        sort,
       ])
     ) {
       const currentYearCache = cacheManager.getCurrentYearFlightCache();
@@ -73,14 +75,12 @@ const flightService = {
       }
     }
 
-    const orderStatement = sortByPoints
-      ? ["flightPoints", "DESC"]
-      : ["takeoffTime", "DESC"];
+    const orderStatement = createOrderStatement(sort);
 
     const queryObject = {
       include: [
         createUserInclude(),
-        createSiteInclude(site),
+        createSiteInclude(site, siteId),
         createTeamInclude(teamId),
         createClubInclude(clubId),
       ],
@@ -366,7 +366,7 @@ const flightService = {
     const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
     IgcAnalyzer.startCalculation(flight, flightTypeFactors, (result) => {
       flightService.addResult(result);
-    });
+    }).catch((error) => logger.error(error));
   },
 
   extractFixesAndAddFurtherInformationToFlight: async (flight) => {
@@ -383,8 +383,9 @@ const flightService = {
     }
     const results = await Promise.all(requests);
     const flyingSite = results[0];
+
     flight.siteId = flyingSite.id;
-    flight.landing = results.length > 1 ? results[1] : undefined;
+    flight.landing = results.length > 1 ? results[1] : "API Disabled";
 
     const {
       minHeightBaro,
@@ -416,6 +417,14 @@ const flightService = {
     return flyingSite.name;
   },
 };
+
+function createOrderStatement(sort) {
+  if (!(sort && sort[0])) return ["takeoffTime", "DESC"];
+
+  if (!sort[1]) return [sort[0], "DESC"];
+
+  return sort;
+}
 
 function calculateTaskSpeed(result, flight) {
   flight.flightStats.taskSpeed =
@@ -670,7 +679,7 @@ async function createWhereStatement(
   return whereStatement;
 }
 
-function createSiteInclude(shortName) {
+function createSiteInclude(shortName, id) {
   const include = {
     model: FlyingSite,
     as: "takeoff",
@@ -679,6 +688,11 @@ function createSiteInclude(shortName) {
   if (shortName) {
     include.where = {
       shortName,
+    };
+  }
+  if (id) {
+    include.where = {
+      id,
     };
   }
   return include;

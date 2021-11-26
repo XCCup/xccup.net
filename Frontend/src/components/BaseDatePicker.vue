@@ -1,10 +1,11 @@
 <template>
   <div class="form mb-3">
-    <label class="form-check-label">{{ label }}</label>
+    <label>{{ label }}</label>
     <datepicker
       v-model="pickedDate"
       :locale="de"
       :placeholder="label"
+      :starting-view="startingView"
       class="form-select"
       :disabled="isDisabled"
       input-format="dd.MM.yyyy"
@@ -13,6 +14,12 @@
 </template>
 
 <script setup>
+// Todo: Reactivity does not seem to always work
+
+// Todo:
+// Add the possibility to define a year where the picker should start.
+// No one born in 2021 will enter the comp
+
 import Datepicker from "vue3-datepicker";
 import { de } from "date-fns/locale";
 import { ref, watch } from "vue";
@@ -24,12 +31,16 @@ const props = defineProps({
     required: true,
   },
   modelValue: {
-    type: [String,null],
+    type: [String, null],
     required: true,
   },
   isDisabled: {
     type: Boolean,
     default: false,
+  },
+  startingView: {
+    type: String,
+    default: "day", //day, month,year
   },
 });
 const emits = defineEmits(["update:modelValue"]);

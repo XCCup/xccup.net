@@ -64,6 +64,20 @@ const userService = {
 
     return users;
   },
+  getAllNames: async () => {
+    const users = await User.findAll({
+      where: {
+        role: {
+          [Op.not]: ROLE.INACTIVE,
+        },
+      },
+      order: [["firstName", "asc"]],
+      attributes: ["id", "firstName", "lastName"],
+    });
+
+    return users;
+    // return users.map((user) => user.fullName);
+  },
   getById: async (id) => {
     return await User.findByPk(id, {
       attributes: {
@@ -306,7 +320,7 @@ async function findFlightRecordOfType(id, type) {
   return await flightService.getAll({
     type,
     limit: 1,
-    sortByPoints: true,
+    sort: ["flightPoints", "DESC"],
     userId: id,
   });
 }

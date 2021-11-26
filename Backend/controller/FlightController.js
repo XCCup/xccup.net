@@ -21,6 +21,7 @@ const {
   checkParamIsUuid,
   validationHasErrors,
   checkOptionalIsBoolean,
+  queryOptionalColumnExistsInModel,
 } = require("./Validation");
 
 const uploadLimiter = createRateLimiter(10, 4);
@@ -45,6 +46,8 @@ router.get(
     query("clubId").optional().isUUID(),
     query("teamId").optional().isUUID(),
     query("userId").optional().isUUID(),
+    query("sortOrder").optional().isIn(["desc", "DESC", "asc", "ASC"]),
+    queryOptionalColumnExistsInModel("sortCol", "Flight"),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -52,6 +55,7 @@ router.get(
     const {
       year,
       site,
+      siteId,
       type,
       rankingClass,
       limit,
@@ -63,12 +67,15 @@ router.get(
       teamId,
       gliderClass,
       status,
+      sortCol,
+      sortOrder,
     } = req.query;
 
     try {
       const flights = await service.getAll({
         year,
         site,
+        siteId,
         type,
         rankingClass,
         limit,
@@ -80,6 +87,7 @@ router.get(
         teamId,
         gliderClass,
         status,
+        sort: [sortCol, sortOrder],
       });
       res.json(flights);
     } catch (error) {
@@ -199,12 +207,12 @@ router.post(
 
       flightDbObject.igcPath = await persistIgcFile(flightDbObject.id, igc);
 
-      service.startResultCalculation(flightDbObject);
-
       const takeoffName =
         await service.extractFixesAndAddFurtherInformationToFlight(
           flightDbObject
         );
+
+      service.startResultCalculation(flightDbObject);
 
       const result = await service.update(flightDbObject);
 

@@ -1,5 +1,6 @@
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const logger = require("../config/logger");
+const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
 const MAX_DIST_TO_SEARCH = 5000;
 
@@ -14,6 +15,14 @@ const siteService = {
         name: shortName,
       },
     });
+  },
+
+  getAllNames: async () => {
+    const sites = await FlyingSite.findAll({
+      attributes: ["id", "name"],
+      order: [["name", "asc"]],
+    });
+    return sites;
   },
 
   create: async (site) => {
@@ -37,7 +46,9 @@ const siteService = {
     FROM
     "FlyingSites"
     WHERE
-    ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") < :maxDistance
+    ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") < ${
+      MAX_DIST_TO_SEARCH / 95_0000
+    }
     ORDER BY 
     distance
     LIMIT 1
@@ -56,13 +67,13 @@ const siteService = {
       logger.debug("Found takeoff in DB");
       return takeoffs[0];
     } else if (takeoffs.length > 1) {
-      const errorMsg = `Found more than one takeoff in DB for location ${location} within distance of ${MAX_DIST_TO_SEARCH}m`;
+      const errorMsg = `Found more than one takeoff in DB for lat: ${location.latitude} long: ${location.latitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
       logger.error(errorMsg);
-      return errorMsg;
+      throw new XccupRestrictionError(errorMsg);
     } else {
-      const errorMsg = `Found no takeoff in DB for location ${location} within distance of ${MAX_DIST_TO_SEARCH}m`;
+      const errorMsg = `Found no takeoff in DB for lat: ${location.latitude} long: ${location.latitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
       logger.error(errorMsg);
-      return errorMsg;
+      throw new XccupRestrictionError(errorMsg);
     }
   },
 };

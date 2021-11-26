@@ -17,10 +17,20 @@
 
       <div class="row">
         <div class="col">
-          <BaseInput v-model="takeoff" label="Startplatz" :is-disabled="true" />
+          <BaseInput
+            v-model="takeoff"
+            label="Startplatz"
+            :is-disabled="true"
+            :is-required="false"
+          />
         </div>
         <div class="col">
-          <BaseInput v-model="landing" label="Landeplatz" :is-disabled="true" />
+          <BaseInput
+            v-model="landing"
+            label="Landeplatz"
+            :is-disabled="true"
+            :is-required="false"
+          />
         </div>
       </div>
 

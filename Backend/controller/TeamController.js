@@ -25,6 +25,18 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// @desc Gets all active teams names
+// @route GET /teams/names
+
+router.get("/names", async (req, res, next) => {
+  try {
+    const teams = await service.getAllNames();
+    res.json(teams);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Gets all active and non-active teams
 // @route GET /teams/all
 // @access Only moderator

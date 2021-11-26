@@ -17,6 +17,18 @@ const clubService = {
       attributes: { exclude: ["contacts"] },
     });
   },
+  getAllNames: async () => {
+    const clubs = await Club.findAll({
+      where: {
+        participantInSeasons: {
+          [Op.contains]: [getCurrentYear()],
+        },
+      },
+      attributes: ["id", "name"],
+      order: [["name", "asc"]],
+    });
+    return clubs;
+  },
   getAll: async () => {
     return await Club.findAll();
   },

@@ -111,6 +111,14 @@ export default {
 
   // Users
 
+  getUserNames() {
+    return apiClient.get("users/names/");
+  },
+
+  register(userData) {
+    return apiClient.post(baseURL + "users/", userData);
+  },
+
   getUsers(params) {
     return apiClient.get("users/public/", { params });
   },
@@ -122,7 +130,7 @@ export default {
   // Sponsors
 
   /**
-   * @param {Booleab} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
+   * @param {Boolean} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
    * @returns An array with sponsor objects.
    */
   getSponsors(retrieveAll) {
@@ -133,14 +141,30 @@ export default {
 
   // Clubs
 
+  getClubNames() {
+    return apiClient.get("clubs/names/");
+  },
+
   /**
-   * @param {Booleab} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
+   * @param {Boolean} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
    * @returns An array with club objects.
    */
   getClubs(retrieveAll) {
     return retrieveAll
       ? jwtInterceptor.get("/clubs")
       : apiClient.get("/clubs/public");
+  },
+
+  // Teams
+
+  getTeamNames() {
+    return apiClient.get("teams/names/");
+  },
+
+  // FlyingSites
+
+  getSiteNames() {
+    return apiClient.get("sites/names/");
   },
 
   // General
@@ -151,9 +175,21 @@ export default {
   getGliderClasses() {
     return apiClient.get(baseURL + "general/gliderClasses");
   },
+  getRankingClasses() {
+    return apiClient.get(baseURL + "general/rankingClasses");
+  },
   getAirspaces(query) {
     return apiClient.get(baseURL + "airspaces/relevant", {
       params: { p: query },
     });
+  },
+  getCountries() {
+    return apiClient.get(baseURL + "general/user/countries");
+  },
+  getShirtSizes() {
+    return apiClient.get(baseURL + "general/user/tshirtSizes");
+  },
+  getGenders() {
+    return apiClient.get(baseURL + "general/user/genders");
   },
 };

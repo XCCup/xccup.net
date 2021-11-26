@@ -1,17 +1,34 @@
 <template>
-  <div class="container-fluid">
-    <h3>Streckenmeldungen {{ computedYear }}</h3>
+  <div class="container-fluid mb-3">
+    <h3>Streckenmeldungen {{ props.year }}</h3>
+    <button
+      type="button"
+      class="btn btn-outline-primary btn-sm me-1"
+      @click="onFilter"
+    >
+      Filter <i class="bi bi-funnel"></i>
+    </button>
+    <button
+      v-if="filterActive"
+      type="button"
+      class="btn btn-outline-danger btn-sm"
+      @click="clearFilter"
+    >
+      <i class="bi bi-x"></i>
+    </button>
   </div>
-  <FlightsTable :flights="flights" />
+  <FlightsTable />
+  <ModalFilterFlights />
 </template>
 
 <script setup>
-import ApiService from "@/services/ApiService.js";
-import { computed, ref } from "vue";
-import { useRoute } from "vue-router";
+import { onMounted } from "vue";
 import { setWindowName } from "../helper/utils";
+import { Modal } from "bootstrap";
+import useFlights from "@/composables/useFlights";
+import { useRoute } from "vue-router";
 
-const route = useRoute();
+setWindowName("Streckenmeldungen");
 
 const props = defineProps({
   year: {
@@ -19,18 +36,18 @@ const props = defineProps({
     default: "",
   },
 });
+const route = useRoute();
 
-const computedYear = computed(() => (props.year.length ? props.year : ""));
+const { fetchFlights, filterActive, clearFilter } = useFlights();
+await fetchFlights(route.params);
 
-setWindowName("Streckenmeldungen");
+let filterModal;
 
-const flights = ref(null);
-try {
-  const { data: initialData } = await ApiService.getFlights({
-    ...route.params,
-  });
-  flights.value = initialData;
-} catch (error) {
-  console.log(error);
-}
+onMounted(() => {
+  filterModal = new Modal(document.getElementById("flightFilterModal"));
+});
+
+const onFilter = () => {
+  filterModal.show();
+};
 </script>
