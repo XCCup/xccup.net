@@ -85,26 +85,23 @@ import { useRouter } from "vue-router";
 
 import useFlights from "@/composables/useFlights";
 
-const { flights } = useFlights();
+const { flights, sortFlightsBy } = useFlights();
 const router = useRouter();
 
 const currentSortColumnKey = ref(null);
-
-const emit = defineEmits(["table-sort-changed"]);
 
 const routeToFlight = (flightId) => {
   router.push({
     name: "Flight",
     params: {
-      flightId: flightId,
+      flightId,
     },
   });
 };
 
 const handleSortChange = (value) => {
   currentSortColumnKey.value = value.key;
-  console.log("Handle: ", value);
-  emit("table-sort-changed", {
+  sortFlightsBy({
     sortCol: currentSortColumnKey.value,
     sortOrder: value.order,
   });

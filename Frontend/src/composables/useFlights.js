@@ -3,17 +3,14 @@ import ApiService from "@/services/ApiService";
 
 // State
 const flights = ref([]);
+const sortOptionsCache = ref(null);
+const filterOptionsCache = ref(null);
+const paramsCache = ref(null);
 
 export default () => {
-  const sortOptionsCache = ref(null);
-  const filterOptionsCache = ref(null);
-  const paramsCache = ref(null);
-
   // Getters
 
   const filterActive = computed(() => {
-    // if (filterOptionsCache.value) return true;
-    // return false;
     return (
       filterOptionsCache.value &&
       Object.values(filterOptionsCache.value).find((v) => !!v)

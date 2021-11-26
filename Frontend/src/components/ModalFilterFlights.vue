@@ -60,7 +60,12 @@
           >
             Löschen
           </button>
-          <button type="button" class="btn btn-primary" @click="onActivate">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            @click="onActivate"
+          >
             Anwenden
           </button>
           <button
@@ -79,7 +84,10 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 
-import { ref, reactive } from "vue";
+import { ref, reactive, watch } from "vue";
+import useFlights from "@/composables/useFlights";
+
+const { filterFlightsBy, filterActive } = useFlights();
 
 const selects = reactive({
   user: "",
@@ -99,8 +107,6 @@ const clubs = ref(clubData.map((e) => e.name));
 const teams = ref(teamData.map((e) => e.name));
 const rankings = ref(Object.values(rankingData).map((e) => e.shortDescription));
 
-const emit = defineEmits(["filter-changed"]);
-
 const onClose = () => {
   //Needed?
 };
@@ -113,8 +119,13 @@ const onActivate = async () => {
   const teamId = findIdByName(selects.team, teamData);
   const rankingClass = findKeyOfRankingClass(selects.team, teamData);
 
-  emit("filter-changed", { userId, siteId, clubId, teamId, rankingClass });
+  filterFlightsBy({ userId, siteId, clubId, teamId, rankingClass });
 };
+
+watch(filterActive, (newVal, oldVal) => {
+  // Clear all fields if an external source caused an reset
+  if (!oldVal && newVal) onClear();
+});
 
 const onClear = async () => {
   //Should the modal close after clear?

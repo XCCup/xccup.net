@@ -17,8 +17,8 @@
       <i class="bi bi-x"></i>
     </button>
   </div>
-  <FlightsTable @table-sort-changed="handleSortChange" />
-  <ModalFilterFlights @filter-changed="handleFilterChange" />
+  <FlightsTable />
+  <ModalFilterFlights />
 </template>
 
 <script setup>
@@ -38,13 +38,7 @@ const props = defineProps({
 });
 const route = useRoute();
 
-const {
-  fetchFlights,
-  sortFlightsBy,
-  filterFlightsBy,
-  filterActive,
-  clearFilter,
-} = useFlights();
+const { fetchFlights, filterActive, clearFilter } = useFlights();
 await fetchFlights(route.params);
 
 let filterModal;
@@ -55,14 +49,5 @@ onMounted(() => {
 
 const onFilter = () => {
   filterModal.show();
-};
-
-const handleSortChange = (sortOptions) => {
-  sortFlightsBy(sortOptions);
-};
-
-const handleFilterChange = (filterOptions) => {
-  filterFlightsBy(filterOptions);
-  filterModal.hide();
 };
 </script>
