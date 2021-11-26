@@ -5,6 +5,7 @@
       v-model="pickedDate"
       :locale="de"
       :placeholder="label"
+      :starting-view="startingView"
       class="form-select"
       :disabled="isDisabled"
       input-format="dd.MM.yyyy"
@@ -36,6 +37,10 @@ const props = defineProps({
   isDisabled: {
     type: Boolean,
     default: false,
+  },
+  startingView: {
+    type: String,
+    default: "day", //day, month,year
   },
 });
 const emits = defineEmits(["update:modelValue"]);

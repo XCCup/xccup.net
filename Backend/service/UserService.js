@@ -10,7 +10,7 @@ const { getCurrentActive } = require("./SeasonService");
 const { Op } = require("sequelize");
 const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
-const { arrayRemove } = require("../helper/Utils");
+const { arrayRemove, generateRandomString } = require("../helper/Utils");
 const logger = require("../config/logger");
 
 const userService = {
@@ -63,6 +63,20 @@ const userService = {
     }
 
     return users;
+  },
+  getAllNames: async () => {
+    const users = await User.findAll({
+      where: {
+        role: {
+          [Op.not]: ROLE.INACTIVE,
+        },
+      },
+      order: [["firstName", "asc"]],
+      attributes: ["id", "firstName", "lastName"],
+    });
+
+    return users;
+    // return users.map((user) => user.fullName);
   },
   getById: async (id) => {
     return await User.findByPk(id, {
@@ -136,7 +150,6 @@ const userService = {
     userJson.records = [results[1], results[2], results[3]];
     return userJson;
   },
-
   activateUser: async (id) => {
     return User.update(
       {
@@ -146,6 +159,20 @@ const userService = {
         where: { id },
       }
     );
+  },
+  renewPassword: async (email, birthday) => {
+    const user = await User.findOne({
+      where: { email, birthday },
+    });
+
+    if (!user) return false;
+
+    logger.info("Will create a new password for " + email);
+    const newPassword = generateRandomString();
+    user.password = newPassword;
+    const updatedUser = await user.save();
+
+    return { updatedUser, newPassword };
   },
   count: async () => {
     return User.count({
@@ -293,7 +320,7 @@ async function findFlightRecordOfType(id, type) {
   return await flightService.getAll({
     type,
     limit: 1,
-    sortByPoints: true,
+    sort: ["flightPoints", "DESC"],
     userId: id,
   });
 }

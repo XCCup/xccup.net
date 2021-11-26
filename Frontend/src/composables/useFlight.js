@@ -19,5 +19,6 @@ export default () => {
     flight.value.comments = [...res.data];
   };
 
+  //TODO: Make flight readOnly. Currently useComments manipulates the comment structur of flight. Therefore readOnly ist not possible
   return { fetchOne, flight, updateComments };
 };

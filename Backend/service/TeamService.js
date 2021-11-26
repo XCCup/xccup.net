@@ -17,6 +17,18 @@ const service = {
       include: createMemberInclude(),
     });
   },
+  getAllNames: async () => {
+    const teams = await Team.findAll({
+      where: {
+        participantInSeasons: {
+          [Op.contains]: [getCurrentYear()],
+        },
+      },
+      attributes: ["id", "name"],
+      order: [["name", "asc"]],
+    });
+    return teams;
+  },
   getAll: async () => {
     return await Team.findAll({
       include: createMemberInclude(),

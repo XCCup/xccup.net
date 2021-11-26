@@ -4,6 +4,8 @@ const {
   MAIL_MESSAGE_PREFIX,
   REGISTRATION_TEXT,
   REGISTRATION_TITLE,
+  NEW_PASSWORD_TITLE,
+  NEW_PASSWORD_TEXT,
 } = require("../constants/email-message-constants");
 const userService = require("./UserService");
 
@@ -37,6 +39,17 @@ const service = {
     const content = {
       title: REGISTRATION_TITLE,
       text: REGISTRATION_TEXT(user.firstName, activationLink),
+    };
+
+    return await sendMail(user.email, content);
+  },
+
+  sendNewPasswordMail: async (user, password) => {
+    logger.info(`Send new password to ${user.email}`);
+
+    const content = {
+      title: NEW_PASSWORD_TITLE,
+      text: NEW_PASSWORD_TEXT(user.firstName, password),
     };
 
     return await sendMail(user.email, content);

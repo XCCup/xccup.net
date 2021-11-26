@@ -59,6 +59,18 @@ router.get(
   }
 );
 
+// @desc Retrieves all user names
+// @route GET /users/names
+
+router.get("/names", async (req, res, next) => {
+  try {
+    const users = await service.getAllNames();
+    res.json(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Logs a user in by his credentials
 // @route GET /users/login
 
@@ -157,6 +169,35 @@ router.get("/activate/:id", checkParamIsUuid("id"), async (req, res, next) => {
     next(error);
   }
 });
+
+// @desc Generates a new password for an user and mails it to the related e-mail address.
+// @route POST /users/renew-password/
+
+router.post(
+  "/renew-password",
+  checkIsEmail("email"),
+  checkIsDateObject("birthday"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const { email, birthday } = req.body;
+
+    try {
+      const { updatedUser, newPassword } = await service.renewPassword(
+        email,
+        birthday
+      );
+
+      if (newPassword) {
+        await mailService.sendNewPasswordMail(updatedUser, newPassword);
+        return res.sendStatus(OK);
+      }
+      res.sendStatus(NOT_FOUND);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 // @desc Retrieve all user information
 // @route GET /users

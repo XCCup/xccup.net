@@ -41,6 +41,7 @@
                     <BaseDatePicker
                       v-model="userData.birthday"
                       label="Geburstag"
+                      starting-view="year"
                     />
                   </div>
                 </div>
@@ -106,6 +107,7 @@
                       v-model="passwordConfirm"
                       label="Passwort wiederholen"
                       :is-password="true"
+                      :external-validation-result="!passwordMatches"
                     />
                   </div>
                 </div>
@@ -211,12 +213,18 @@ const userData = reactive({
 // Helpers
 const showSpinner = ref(false);
 
+// Validation
+
+const passwordMatches = computed(() => {
+  return passwordConfirm.value === userData.password;
+});
+
 const registerButtonIsEnabled = computed(() => {
   return (
     rulesAccepted.value &&
-    passwordConfirm.value === userData.password &&
-    userData.firstName.length > 3 &&
-    userData.lastName.length > 3 &&
+    passwordMatches.value &&
+    userData.firstName.length > 0 &&
+    userData.lastName.length > 0 &&
     userData.birthday &&
     userData.gender &&
     userData.clubId &&
