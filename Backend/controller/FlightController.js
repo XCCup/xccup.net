@@ -207,12 +207,12 @@ router.post(
 
       flightDbObject.igcPath = await persistIgcFile(flightDbObject.id, igc);
 
-      service.startResultCalculation(flightDbObject);
-
       const takeoffName =
         await service.extractFixesAndAddFurtherInformationToFlight(
           flightDbObject
         );
+
+      service.startResultCalculation(flightDbObject);
 
       const result = await service.update(flightDbObject);
 
