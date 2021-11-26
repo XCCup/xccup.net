@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 const { loadModels } = require("../model/ModelLoader");
 const logger = require("./logger");
+const { sleep } = require("../helper/Utils");
 
 const port = process.env.POSTGRES_PORT;
 const user = process.env.POSTGRES_USER;
@@ -25,12 +26,6 @@ const sequelize = new Sequelize(
 loadModels(db, sequelize);
 
 dbConnectionTest().then(async () => {
-  if (process.env.DB_SYNC_ALTER == "true") {
-    logger.info("Will alter DB Tables");
-    await sequelize.sync({ alter: true }).catch((error) => {
-      logger.error(error);
-    });
-  }
   if (
     process.env.DB_SYNC_FORCE == "true" &&
     process.env.NODE_ENV !== "production"
@@ -70,10 +65,6 @@ async function dbConnectionTest(numberOfRetry = 0) {
     await sleep(reconnectTimeout);
     dbConnectionTest(numberOfRetry + 1);
   }
-}
-
-async function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function addTestData() {

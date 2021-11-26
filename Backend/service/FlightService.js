@@ -383,8 +383,9 @@ const flightService = {
     }
     const results = await Promise.all(requests);
     const flyingSite = results[0];
+
     flight.siteId = flyingSite.id;
-    flight.landing = results.length > 1 ? results[1] : undefined;
+    flight.landing = results.length > 1 ? results[1] : "API Disabled";
 
     const {
       minHeightBaro,

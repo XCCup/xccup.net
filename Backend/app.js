@@ -10,9 +10,6 @@ const morganLogger = require("./config/logger").morganLogger;
 //Setup DB
 require("./config/postgres.js");
 
-//Init authentication tokens
-require("./controller/Auth").initAuth();
-
 //Logging
 app.use(morganLogger);
 
