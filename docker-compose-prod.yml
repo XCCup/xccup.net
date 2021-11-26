@@ -55,9 +55,6 @@ services:
     container_name: xccup-db-admin
     restart: always
     env_file: ./Backend/.env
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=$PGADMIN_EMAIL
-      - PGADMIN_DEFAULT_PASSWORD=$PGADMIN_PASSWORD
     labels:
       traefik.enable: true
       traefik.http.routers.xccup-pg-admin.rule: "Host(`xccup.stephanschoepe.de`)"
