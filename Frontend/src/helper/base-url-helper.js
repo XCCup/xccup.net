@@ -4,14 +4,9 @@ export function getbaseURL() {
     "//" +
     window.location.hostname.toString() +
     "/api/";
-  if (process.env.NODE_ENV == "development") {
+  if (process.env.NODE_ENV == "production") {
     // Todo: use .env?
-    URL =
-      window.location.protocol.toString() +
-      "//" +
-      window.location.hostname.toString() +
-      ":3000/" +
-      "api/";
+    import.meta.env.VITE_API_URL;
   }
   return URL;
 }
