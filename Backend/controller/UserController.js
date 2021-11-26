@@ -171,7 +171,10 @@ router.get(
     try {
       const result = await service.activateUser(userId, token);
 
-      if (result) return res.redirect(process.env.MAIL_AUTH_REDIRECT);
+      if (result)
+        return res.redirect(
+          process.env.CLIENT_URL + process.env.MAIL_AUTH_REDIRECT
+        );
 
       res.sendStatus(NOT_FOUND);
     } catch (error) {
@@ -202,7 +205,9 @@ router.get(
 
       if (newPassword) {
         await mailService.sendNewPasswordMail(updatedUser, newPassword);
-        return res.redirect(process.env.MAIL_AUTH_REDIRECT);
+        return res.redirect(
+          process.env.CLIENT_URL + process.env.MAIL_AUTH_REDIRECT
+        );
       }
       res.sendStatus(NOT_FOUND);
     } catch (error) {

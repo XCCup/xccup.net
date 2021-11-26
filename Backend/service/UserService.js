@@ -154,6 +154,7 @@ const userService = {
     const result = await User.update(
       {
         role: ROLE.NONE,
+        token: "",
       },
       {
         where: { id, token },
@@ -171,6 +172,7 @@ const userService = {
     logger.info("Will create a new password for " + user.email);
     const newPassword = generateRandomString();
     user.password = newPassword;
+    user.token = "";
     const updatedUser = await user.save();
 
     return { updatedUser, newPassword };
