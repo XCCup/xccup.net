@@ -3,7 +3,7 @@ export function getbaseURL() {
     window.location.protocol.toString() +
     "//" +
     window.location.hostname.toString() +
-    "/api/";
+    ":3000/api/";
   if (process.env.NODE_ENV == "production") {
     import.meta.env.VITE_API_URL;
   }
