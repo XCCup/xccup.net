@@ -25,15 +25,15 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("seedDb", () => {
-  cy.request("http://localhost:3000/testdata/seed");
+  cy.request("http://localhost:3000/api/testdata/seed");
 });
 
 Cypress.Commands.add("seedFlightDb", () => {
-  cy.request("http://localhost:3000/testdata/seed?Flight=true");
+  cy.request("http://localhost:3000/api/testdata/seed?Flight=true");
 });
 
 Cypress.Commands.add("clearDb", () => {
-  cy.request("http://localhost:3000/testdata/clear");
+  cy.request("http://localhost:3000/api/testdata/clear");
 });
 
 Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
