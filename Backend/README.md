@@ -36,6 +36,12 @@ docker-compose up
 docker-compose -f docker-compose-live-dev.yml up -d
 ```
 
+## Before first StartUp
+
+#### Define ENV Vars
+
+You need to create a .env File in the root folder. There is a .env-sample which you can copy and rename for this purpose. To create proper JWT Tokens you can run `./helper/create-jwt-token.js` and copy the output into your .env-File.
+
 ## After first StartUp
 
 #### Config DB
@@ -77,7 +83,3 @@ File -> Preferences -> Query Tool -> Results grid -> "Do as you like"
 ```
 gcc olc2002.c -o olc_lnx -lm
 ```
-
-## Todo
-
-- [ ] email service integration

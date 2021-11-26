@@ -1,28 +1,12 @@
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 const {
   UNAUTHORIZED,
   FORBIDDEN,
 } = require("../constants/http-status-constants");
-const { waitTillDbHasSync } = require("../helper/Utils");
 const userService = require("../service/UserService");
 require("../service/UserService");
 const Token = require("../config/postgres")["Token"];
 const logger = require("../config/logger");
-
-/**
- * Needs to be run on server start up to initialize the encryption tokens.
- */
-const init = async () => {
-  process.env.JWT_LOGIN_TOKEN = crypto.randomBytes(64).toString("hex");
-  process.env.JWT_REFRESH_TOKEN = crypto.randomBytes(64).toString("hex");
-  //TODO Remove after development
-  logger.info("L: " + process.env.JWT_LOGIN_TOKEN);
-  logger.info("R: " + process.env.JWT_REFRESH_TOKEN);
-  //After restart all stored tokens will become invalid. Therefore all stored tokens will be deleted.
-  await waitTillDbHasSync();
-  // Token.destroy({ truncate: true });
-};
 
 /**
  * The authentication middleware for the request. If any error within authentication happens the request will be terminated here.
@@ -163,7 +147,6 @@ const requesterIsNotModerator = async (req, res) => {
   }
 };
 
-exports.initAuth = init;
 exports.createToken = create;
 exports.createRefreshToken = createRefresh;
 exports.authToken = auth;
