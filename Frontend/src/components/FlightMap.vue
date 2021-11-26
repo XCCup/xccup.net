@@ -25,6 +25,11 @@ import {
 
 import { watch, onMounted, onBeforeUnmount, ref, computed } from "vue";
 
+// Fix for default marker image paths
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
+import iconUrl from "leaflet/dist/images/marker-icon.png?url";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
+
 const { flight } = useFlight();
 const { activeAirbuddyFlights } = useAirbuddies();
 
@@ -60,14 +65,14 @@ onMounted(() => {
     tileOptions
   ).addTo(map.value);
 
-  // Webpack fix for default marker image paths
-  // delete L.Icon.Default.prototype._getIconUrl;
-  // L.Icon.Default.imagePath = "/";
-  // L.Icon.Default.mergeOptions({
-  //   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  //   iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  //   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-  // });
+  // Fix for default marker image paths
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.imagePath = "/";
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: iconRetinaUrl,
+    iconUrl: iconUrl,
+    shadowUrl: shadowUrl,
+  });
 
   // Draw tracklogs and Airspaces
   drawTracks(tracklogs.value);

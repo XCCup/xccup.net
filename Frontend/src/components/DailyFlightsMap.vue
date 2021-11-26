@@ -9,6 +9,11 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import tileOptions from "@/config/mapbox.js";
 
+// Fix for default marker image paths
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
+import iconUrl from "leaflet/dist/images/marker-icon.png?url";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
+
 export default {
   name: "DailyFlightsMap",
   props: {
@@ -45,14 +50,14 @@ export default {
       tileOptions
     ).addTo(this.map);
 
-    // Webpack fix for default marker image paths
-    // delete L.Icon.Default.prototype._getIconUrl;
-    // L.Icon.Default.imagePath = "/";
-    // L.Icon.Default.mergeOptions({
-    //   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-    //   iconUrl: require("leaflet/dist/images/marker-icon.png"),
-    //   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-    // });
+    // Fix for default marker image paths
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.imagePath = "/";
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: iconRetinaUrl,
+      iconUrl: iconUrl,
+      shadowUrl: shadowUrl,
+    });
 
     // Draw tracklogs
     this.drawTracks(this.tracks);
