@@ -10,9 +10,6 @@ const morganLogger = require("./config/logger").morganLogger;
 //Setup DB
 require("./config/postgres.js");
 
-//Init authentication tokens
-require("./controller/Auth").initAuth();
-
 //Logging
 app.use(morganLogger);
 
@@ -46,6 +43,7 @@ app.use("/sponsors", require("./controller/SponsorController"));
 app.use("/media", require("./controller/MediaController"));
 app.use("/general", require("./controller/GeneralController"));
 app.use("/mail", require("./controller/MailController"));
+app.use("/sites", require("./controller/SiteController"));
 if (process.env.NODE_ENV !== "production") {
   app.use("/testdata", require("./controller/TestDataController"));
 }

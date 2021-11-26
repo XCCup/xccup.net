@@ -148,7 +148,13 @@ function runOlc(filePath, flightDataObject, isTurnpointIteration) {
 
   exec(command + filePath, function (err, data) {
     if (err) logger.error(err);
-    parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
+    try {
+      parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
+    } catch (error) {
+      logger.error(
+        "An error occured while parsing the olc data of " + filePath
+      );
+    }
   });
 }
 
@@ -224,14 +230,14 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
 function extractTurnpointData(turnpoint) {
   let result = {};
   const IGC_FIX_REGEX =
-    /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE] (\d*:\d*.\d*).*/;
+    /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE]\s?(\d*:\d*.\d*).*/;
   const matchingResult = turnpoint.match(IGC_FIX_REGEX);
   if (matchingResult != null) {
     result.time = matchingResult[1];
     result.lat = parseDMS(matchingResult[2]);
     result.long = parseDMS(matchingResult[3]);
   } else {
-    logger.error("Could not extract turnpoint");
+    logger.error("Could not extract turnpoint from " + turnpoint);
   }
   return result;
 }
