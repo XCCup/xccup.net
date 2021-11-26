@@ -43,6 +43,7 @@ app.use("/api/sponsors", require("./controller/SponsorController"));
 app.use("/api/media", require("./controller/MediaController"));
 app.use("/api/general", require("./controller/GeneralController"));
 app.use("/api/mail", require("./controller/MailController"));
+app.use("/api/sites", require("./controller/SiteController"));
 if (process.env.NODE_ENV !== "production") {
   app.use("/api/testdata", require("./controller/TestDataController"));
 }
