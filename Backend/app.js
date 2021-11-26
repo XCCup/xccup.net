@@ -1,5 +1,6 @@
-// DIRTY Is it really dirty?
-require("dotenv").config({ path: "./.env.local" });
+if (process.env.NODE_ENV === "CI") {
+  require("dotenv").config({ path: "./.env.ci" });
+}
 
 const express = require("express");
 const app = express();
@@ -16,7 +17,7 @@ require("./controller/Auth").initAuth();
 app.use(morganLogger);
 
 //Development Tools
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV !== "production") {
   // https://expressjs.com/en/resources/middleware/cors.html
   // https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
   var cors = require("cors");
@@ -46,7 +47,7 @@ app.use("/media", require("./controller/MediaController"));
 app.use("/general", require("./controller/GeneralController"));
 app.use("/mail", require("./controller/MailController"));
 app.use("/sites", require("./controller/SiteController"));
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV !== "production") {
   app.use("/testdata", require("./controller/TestDataController"));
 }
 

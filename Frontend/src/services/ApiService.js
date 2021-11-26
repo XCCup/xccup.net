@@ -115,6 +115,10 @@ export default {
     return apiClient.get("users/names/");
   },
 
+  register(userData) {
+    return apiClient.post(baseURL + "users/", userData);
+  },
+
   getUsers(params) {
     return apiClient.get("users/public/", { params });
   },
@@ -178,5 +182,14 @@ export default {
     return apiClient.get(baseURL + "airspaces/relevant", {
       params: { p: query },
     });
+  },
+  getCountries() {
+    return apiClient.get(baseURL + "general/user/countries");
+  },
+  getShirtSizes() {
+    return apiClient.get(baseURL + "general/user/tshirtSizes");
+  },
+  getGenders() {
+    return apiClient.get(baseURL + "general/user/genders");
   },
 };
