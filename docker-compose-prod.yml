@@ -7,7 +7,7 @@ services:
         dockerfile: Dockerfile
       image: xccup-client
       container_name: xccup-client
-      env_file: .env
+      env_file: ./Frontend/.env
 
       restart: always
       depends_on:
@@ -28,9 +28,8 @@ services:
     image: xccup-server
     container_name: xccup-server
     restart: always
-    env_file: .env
+    env_file: ./Backend/.env
     environment:
-      - SERVER_PORT=$SERVER_PORT
       - NODE_ENV=production
     expose:
       - 65090
@@ -75,6 +74,5 @@ volumes:
 
 networks:
   default:
-    external:
-      name: traefik
+    name: traefik
 
