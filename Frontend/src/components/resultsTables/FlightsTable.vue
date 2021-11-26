@@ -40,7 +40,7 @@
               </td>
               <td class="hide-on-sm">{{ flight.takeoff.name }}</td>
 
-              <td scope="col" class="hide-on-sm">
+              <td scope="col" class="hide-on-sm no-line-break">
                 <RankingClass :ranking-class="flight.glider?.gliderClass" />
                 {{ flight.glider?.brand + " " + flight.glider?.model }}
               </td>
