@@ -1,8 +1,6 @@
 # Build Stage
 FROM node:14.17.0-alpine3.13 AS build-stage
 WORKDIR /app
-#ARG API_RATE_LIMIT
-#ENV VUE_APP_API_RATE_LIMIT=$API_RATE_LIMIT
 COPY package*.json ./
 RUN yarn install
 COPY . .
