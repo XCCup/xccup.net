@@ -18,6 +18,8 @@
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const dailyRanking = ref(null);
 const topFlights = ref(null);
@@ -43,5 +45,8 @@ try {
   sponsors.value = initialData.sponsors;
 } catch (error) {
   console.log(error);
+  router.push({
+    name: "NetworkError",
+  });
 }
 </script>

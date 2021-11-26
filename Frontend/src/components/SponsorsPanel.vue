@@ -4,7 +4,7 @@
     <br />
   </div> -->
 
-  <section>
+  <section v-if="sponsors">
     <div class="bg-primary text-light p-4">
       <div id="sponsorsPanel" class="container">
         <h2>Sponsoren</h2>
