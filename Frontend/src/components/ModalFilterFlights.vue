@@ -80,7 +80,6 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive } from "vue";
-import BaseSelect from "./BaseSelect.vue";
 
 const selects = reactive({
   user: "",
