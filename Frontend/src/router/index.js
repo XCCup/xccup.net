@@ -116,9 +116,9 @@ const routes = [
     component: () => import("../views/FlightUpload.vue"),
   },
   {
-    path: "/flug-bearbeiten",
+    path: "/flug/:id/bearbeiten",
     name: "FlightEdit",
-    // props: true,
+    props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import("../views/FlightEdit.vue"),
   },

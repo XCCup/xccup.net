@@ -1,9 +1,10 @@
 import { reactive, readonly, toRefs, computed } from "@vue/reactivity";
-import { jwtDecrypt, tokenAlive } from "@/shared/jwtHelper";
+import { jwtDecrypt, tokenAlive } from "@/helper/jwtHelper";
 import axios from "axios";
 
-let baseURL = import.meta.env.VITE_API_URL;
+import { getbaseURL } from "@/helper/base-url-helper";
 
+const baseURL = getbaseURL();
 const state = reactive({
   authData: {
     token: "",

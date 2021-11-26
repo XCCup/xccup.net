@@ -7,7 +7,7 @@
   <!-- Alert -->
 
   <section class="container-fluid header-image"></section>
-  <section class="py-3 text-center container">
+  <section v-if="seasonStats" class="py-3 text-center container">
     <div class="col-md-8 mx-auto">
       <h1 class="fw-light">XCCup 2021</h1>
       <p id="infoboxContent" class="lead">

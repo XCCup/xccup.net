@@ -9,7 +9,7 @@
       <table class="table">
         <tbody>
           <tr v-for="n in maxRows" :key="n">
-            <td>{{ n + 1 }}</td>
+            <td>{{ n }}</td>
             <!-- Todo: Add link to pilot -->
             <td v-if="ranking.values[n]">
               {{

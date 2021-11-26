@@ -60,7 +60,7 @@ const handleSubmit = async () => {
     });
     // Redirect after login
     // Alternativly redirect in router config
-    if (response.status === 200 && !props.preventRedirect) {
+    if (response?.status === 200 && !props.preventRedirect) {
       let searchParams = new URLSearchParams(window.location.search);
       if (searchParams.has("redirect")) {
         router.push({ path: `${searchParams.get("redirect")}` });
