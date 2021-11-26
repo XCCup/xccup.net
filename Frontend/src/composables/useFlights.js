@@ -1,46 +1,66 @@
-import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { ref, readonly, computed } from "vue";
 import ApiService from "@/services/ApiService";
 
-export default () => {
-  let sortOptionsCache;
-  let filterOptionsCache;
+// State
+const flights = ref([]);
 
-  const route = useRoute();
+export default () => {
+  const sortOptionsCache = ref(null);
+  const filterOptionsCache = ref(null);
+  const paramsCache = ref(null);
 
   // Getters
-  const flights = ref([]);
-  const filterActive = ref(false);
+
+  const filterActive = computed(() => {
+    // if (filterOptionsCache.value) return true;
+    // return false;
+    return (
+      filterOptionsCache.value &&
+      Object.values(filterOptionsCache.value).find((v) => !!v)
+    );
+  });
 
   // Mutations
-  const updateFlights = async ({ sortOptions, filterOptions } = {}) => {
-    sortOptionsCache = sortOptions;
-    filterOptionsCache = filterOptions;
-    retrieveFlights();
-    calcFilterActive();
-  };
 
   // Actions
-  const retrieveFlights = async () => {
+
+  const fetchFlights = async (params) => {
+    if (params) paramsCache.value = params;
     try {
-      const { data: initialData } = await ApiService.getFlights({
-        ...route.params,
-        sortCol: sortOptionsCache?.sortCol,
-        sortOrder: sortOptionsCache?.sortOrder,
-        ...filterOptionsCache,
+      const res = await ApiService.getFlights({
+        ...paramsCache.value,
+        sortCol: sortOptionsCache.value?.sortCol,
+        sortOrder: sortOptionsCache.value?.sortOrder,
+        ...filterOptionsCache.value,
       });
-      flights.value = initialData;
+      if (res.status != 200) throw res.statusText;
+      flights.value = res.data;
     } catch (error) {
       console.log(error);
     }
   };
 
-  retrieveFlights();
+  const sortFlightsBy = async (sortOptions) => {
+    sortOptionsCache.value = sortOptions;
+    await fetchFlights();
+  };
 
-  function calcFilterActive() {
-    filterActive.value =
-      filterOptionsCache && Object.values(filterOptionsCache).find((v) => !!v);
-  }
+  const filterFlightsBy = async (filterOptions) => {
+    filterOptionsCache.value = filterOptions;
+    await fetchFlights();
+  };
 
-  return { flights, updateFlights, filterActive };
+  const clearFilter = async () => {
+    filterOptionsCache.value = null;
+    await fetchFlights();
+  };
+
+  return {
+    fetchFlights,
+    filterFlightsBy,
+    sortFlightsBy,
+    flights: readonly(flights),
+    filterActive,
+    clearFilter,
+  };
 };

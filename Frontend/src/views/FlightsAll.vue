@@ -1,25 +1,34 @@
 <template>
   <div class="container-fluid mb-3">
-    <h3>Streckenmeldungen {{ computedYear }}</h3>
+    <h3>Streckenmeldungen {{ props.year }}</h3>
     <button
       type="button"
-      class="btn btn-outline-primary btn-sm m-1 col-4 col-sm-2 col-lg-1"
+      class="btn btn-outline-primary btn-sm me-1"
       @click="onFilter"
     >
-      Filter <i v-if="filterActive" class="bi bi-funnel"></i>
+      Filter <i class="bi bi-funnel"></i>
+    </button>
+    <button
+      v-if="filterActive"
+      type="button"
+      class="btn btn-outline-danger btn-sm"
+      @click="clearFilter"
+    >
+      <i class="bi bi-x"></i>
     </button>
   </div>
-  <FlightsTable :flights="flights" @table-sort-changed="handleSortChange" />
+  <FlightsTable @table-sort-changed="handleSortChange" />
   <ModalFilterFlights @filter-changed="handleFilterChange" />
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
 import useFlights from "@/composables/useFlights";
+import { useRoute } from "vue-router";
 
-const { flights, updateFlights, filterActive } = useFlights();
+setWindowName("Streckenmeldungen");
 
 const props = defineProps({
   year: {
@@ -27,27 +36,33 @@ const props = defineProps({
     default: "",
   },
 });
+const route = useRoute();
+
+const {
+  fetchFlights,
+  sortFlightsBy,
+  filterFlightsBy,
+  filterActive,
+  clearFilter,
+} = useFlights();
+await fetchFlights(route.params);
 
 let filterModal;
-
-const computedYear = computed(() => (props.year.length ? props.year : ""));
 
 onMounted(() => {
   filterModal = new Modal(document.getElementById("flightFilterModal"));
 });
 
-setWindowName("Streckenmeldungen");
-
 const onFilter = () => {
   filterModal.show();
 };
 
-const handleSortChange = (value) => {
-  updateFlights({ sortOptions: value });
+const handleSortChange = (sortOptions) => {
+  sortFlightsBy(sortOptions);
 };
 
-const handleFilterChange = (filterIds) => {
-  updateFlights({ filterOptions: filterIds });
+const handleFilterChange = (filterOptions) => {
+  filterFlightsBy(filterOptions);
   filterModal.hide();
 };
 </script>

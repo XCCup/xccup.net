@@ -82,16 +82,13 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+
+import useFlights from "@/composables/useFlights";
+
+const { flights } = useFlights();
 const router = useRouter();
 
 const currentSortColumnKey = ref(null);
-
-defineProps({
-  flights: {
-    type: Array,
-    required: true,
-  },
-});
 
 const emit = defineEmits(["table-sort-changed"]);
 

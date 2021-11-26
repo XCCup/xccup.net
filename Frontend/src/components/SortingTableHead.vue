@@ -1,5 +1,7 @@
 <template>
-  <th :class="headClass" @click="onSort">{{ content }}</th>
+  <th class="no-line-break" @click="onSort">
+    {{ content }} <i :class="chevronClass"></i>
+  </th>
 </template>
 
 <script setup>
@@ -22,7 +24,7 @@ const props = defineProps({
 
 const emit = defineEmits(["head-sort-changed"]);
 
-const headClass = ref(undefined);
+const chevronClass = ref("bi bi-chevron-expand");
 
 let sortOrder = undefined;
 
@@ -31,7 +33,7 @@ watch(
   () => props.currentSortColumnKey,
   () => {
     if (props.currentSortColumnKey != props.columnObjectKey) {
-      headClass.value = undefined;
+      chevronClass.value = "bi bi-chevron-expand";
       sortOrder = undefined;
     }
   }
@@ -43,17 +45,17 @@ const onSort = () => {
   switch (sortOrder) {
     case undefined:
       sortOrder = "DESC";
-      headClass.value = "sort-desc";
+      chevronClass.value = "bi bi-chevron-down";
       emitSortChange();
       break;
     case "DESC":
       sortOrder = "ASC";
-      headClass.value = "sort-asc";
+      chevronClass.value = "bi bi-chevron-up";
       emitSortChange();
       break;
     case "ASC":
       sortOrder = undefined;
-      headClass.value = undefined;
+      chevronClass.value = "bi bi-chevron-expand";
       emitSortChange();
       break;
 
@@ -75,12 +77,5 @@ function emitSortChange() {
 <style scoped>
 th:hover {
   cursor: pointer;
-}
-
-th.sort-desc::after {
-  content: "\25BC";
-}
-th.sort-asc::after {
-  content: "\25B2";
 }
 </style>
