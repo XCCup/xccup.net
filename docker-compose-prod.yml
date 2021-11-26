@@ -61,7 +61,6 @@ services:
       traefik.http.routers.xccup-pg-admin.entrypoints: websecure
       traefik.http.routers.xccup-pg-admin.tls.certresolver: myresolver
       traefik.port: 65080
-      #traefik.http.services.xccup-pg-admin.loadbalancer.server.port: 65080
       traefik.http.routers.xccup-pg-admin.priority: 100
       traefik.docker.network: traefik
 
