@@ -53,7 +53,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: db-admin
+    container_name: xccup-db-admin
     restart: always
     env_file: ./Backend/.env
     environment:
