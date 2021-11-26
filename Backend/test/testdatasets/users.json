@@ -10,7 +10,7 @@
     "tshirtSize": "XL",
     "gliders": [
       {
-        "brand": "LittleCloud",
+        "brand": "Little Cloud",
         "model": "Spiruline",
         "gliderClass": "D_high",
         "id": "35fb4c88-6774-4e74-b8a4-86cf4bf1716b",
@@ -18,7 +18,7 @@
       },
       {
         "brand": "Flow",
-        "model": "XCRacer",
+        "model": "XC Racer",
         "gliderClass": "D_low",
         "id": "450244fc-b65a-4685-ad22-d457a5035b86",
         "gliderClassShortDescription": "GS Performance low"
@@ -215,7 +215,7 @@
     "gliders": [
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "ba4426b7-cb33-4a29-b933-6657fec94b2f",
         "gliderClassShortDescription": "GS Competition high"
@@ -256,7 +256,7 @@
     "gliders": [
       {
         "brand": "Flow",
-        "model": "XCRacer",
+        "model": "XC Racer",
         "gliderClass": "D_low",
         "id": "cd25b974-1e30-4969-ba46-34990461990d",
         "gliderClassShortDescription": "GS Performance low"
@@ -303,7 +303,7 @@
         "gliderClassShortDescription": "GS Competition high"
       },
       {
-        "brand": "LittleCloud",
+        "brand": "Little Cloud",
         "model": "Spiruline",
         "gliderClass": "D_high",
         "id": "5dc20a7d-fb16-48db-a9ca-74f6eb5c0a28",
@@ -338,7 +338,7 @@
     "gliders": [
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "704a87b4-2053-46f4-b613-19a03c55948d",
         "gliderClassShortDescription": "GS Competition high"
@@ -385,7 +385,7 @@
         "gliderClassShortDescription": "GS Sport low"
       },
       {
-        "brand": "LittleCloud",
+        "brand": "Little Cloud",
         "model": "Spiruline",
         "gliderClass": "D_high",
         "id": "40c1cbcf-92d6-4ae3-bb6c-cd7aab49026f",
@@ -427,8 +427,8 @@
       },
       {
         "brand": "Ozone",
-        "model": "Alpina",
-        "gliderClass": "2",
+        "model": "Alpina 2",
+        "gliderClass": "C_low",
         "id": "df48129a-9c52-4e4b-9c0d-e1f1c3b23aeb"
       }
     ],
@@ -467,7 +467,7 @@
       },
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "0ec356d1-13e2-40d6-b6fc-75b0281e1757",
         "gliderClassShortDescription": "GS Competition high"
@@ -500,7 +500,7 @@
     "gliders": [
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "bd4cfd17-5b71-4133-b532-b3f916f66c03",
         "gliderClassShortDescription": "GS Competition high"
@@ -541,7 +541,7 @@
     "gliders": [
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "97afeda0-c6cf-483c-b39b-f2cea1dd0b20",
         "gliderClassShortDescription": "GS Competition high"
@@ -582,7 +582,7 @@
     "gliders": [
       {
         "brand": "Flow",
-        "model": "XCRacer",
+        "model": "XC Racer",
         "gliderClass": "D_low",
         "id": "a9f572c3-8e53-48ea-be9b-f4d88ed3c983",
         "gliderClassShortDescription": "GS Performance low"
@@ -622,14 +622,14 @@
     "gliders": [
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "b8e39742-ccc9-4307-92e2-51db9a4179cf",
         "gliderClassShortDescription": "GS Competition high"
       },
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "a5bf537a-22d6-479a-b3a5-df6f9f5541e5",
         "gliderClassShortDescription": "GS Competition high"
@@ -701,13 +701,13 @@
     "gliders": [
       {
         "brand": "Flow",
-        "model": "XCRacer",
+        "model": "XC Racer",
         "gliderClass": "D_low",
         "id": "157cf72c-519f-42aa-b67d-42c60dd311c0",
         "gliderClassShortDescription": "GS Performance low"
       },
       {
-        "brand": "LittleCloud",
+        "brand": "Little Cloud",
         "model": "Spiruline",
         "gliderClass": "D_high",
         "id": "37ea51fa-6c84-4e78-ace9-5b30489b9154",
@@ -748,7 +748,7 @@
       },
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "133dd139-59fd-4480-b5c2-1b7ba56e32bc",
         "gliderClassShortDescription": "GS Competition high"
@@ -788,7 +788,7 @@
       },
       {
         "brand": "Ozone",
-        "model": "Enzo3",
+        "model": "Enzo 3",
         "gliderClass": "D_high",
         "id": "4e8d3098-67d8-4d73-ab93-6fc06bc20dcf",
         "gliderClassShortDescription": "GS Competition high"

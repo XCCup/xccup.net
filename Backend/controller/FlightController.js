@@ -239,6 +239,7 @@ router.put(
   checkParamIsUuid("id"),
   checkStringObject("report"),
   checkOptionalStringObjectNotEmpty("status"),
+  checkParamIsUuid("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
   checkStringObjectNotEmpty("glider.gliderClass"),

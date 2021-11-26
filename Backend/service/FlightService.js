@@ -474,6 +474,7 @@ async function createGliderObject(columnsToUpdate, glider) {
   const currentSeason = await getCurrentActive();
   const gliderClass = currentSeason.gliderClasses[glider.gliderClass];
   columnsToUpdate.glider = {};
+  columnsToUpdate.glider.id = glider.id;
   columnsToUpdate.glider.brand = glider.brand;
   columnsToUpdate.glider.model = glider.model;
   columnsToUpdate.glider.gliderClass = {};
