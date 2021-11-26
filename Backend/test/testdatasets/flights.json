@@ -41,7 +41,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "6b7b5a06-c9f4-4499-911a-eb0247f010e8"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -109,7 +110,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "704a87b4-2053-46f4-b613-19a03c55948d"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -172,12 +174,13 @@
     "externalId": 1,
     "report": "neque ipsa incidunt et magni et at veniam omnis quod non libero aut autem illum ullam culpa quasi non exercitationem non ut maiores velit non dolores natus et soluta non et vero nam totam delectus et nostrum earum suscipit accusantium fugit et itaque enim labore cum inventore impedit quo dolor facere amet et est repellendus voluptatum laudantium quis id placeat ut accusantium dolores nesciunt ea architecto tempora est vel vero quo earum iusto aperiam saepe non eos voluptatem assumenda quo aspernatur pariatur quia nemo est architecto et officiis molestiae est dolores facere sit rerum debitis quis amet labore eaque enim sapiente autem vero tempore amet dolores corrupti pariatur quia dolor a",
     "glider": {
-      "brand": "Litte Cloud",
+      "brand": "Little Cloud",
       "model": "Spiruline",
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "35fb4c88-6774-4e74-b8a4-86cf4bf1716b"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -245,7 +248,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "8f6f8250-a7ff-4be6-8a70-4dbf57139d24"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -381,7 +385,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "812bcb98-8d8b-4337-895e-22b39c6e37f0"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -517,7 +522,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "ba4426b7-cb33-4a29-b933-6657fec94b2f"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -585,7 +591,8 @@
       "gliderClass": {
         "key": "D_low",
         "shortDescription": "GS Performance low"
-      }
+      },
+      "id": "cd25b974-1e30-4969-ba46-34990461990d"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -653,7 +660,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "7fafd7be-89a3-4150-b190-1eb8a47bc02f"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -721,7 +729,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "729cd7ac-5e91-4c14-b68e-f0da3ac4d736"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -789,7 +798,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "2b63195f-9d4c-4ce1-9d86-bb49da8555fb"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -857,7 +867,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "bd4cfd17-5b71-4133-b532-b3f916f66c03"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -925,7 +936,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "97afeda0-c6cf-483c-b39b-f2cea1dd0b20"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -993,7 +1005,8 @@
       "gliderClass": {
         "key": "D_low",
         "shortDescription": "GS Performance low"
-      }
+      },
+      "id": "a9f572c3-8e53-48ea-be9b-f4d88ed3c983"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1061,7 +1074,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "b8e39742-ccc9-4307-92e2-51db9a4179cf"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1128,7 +1142,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "d5d8a5d6-50b4-4051-a509-bebd130661c8"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1195,7 +1210,8 @@
       "gliderClass": {
         "key": "D_low",
         "shortDescription": "GS Performance low"
-      }
+      },
+      "id": "157cf72c-519f-42aa-b67d-42c60dd311c0"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1262,7 +1278,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "b8626cb9-92de-4957-a7ff-c5c8c6a48664"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": true,
@@ -1329,7 +1346,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "e0bbb3e4-543b-4451-a374-0435a38cc823"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1391,12 +1409,13 @@
     "externalId": 20,
     "report": "quo commodi quaerat minima molestias nihil consectetur ut fugiat vel voluptatem numquam sunt animi iure earum nobis nesciunt officiis aut inventore facilis laborum natus quaerat aspernatur ut commodi in ut cupiditate fugit saepe veritatis quibusdam id quo quis iusto temporibus esse ut amet vitae esse maiores occaecati amet",
     "glider": {
-      "brand": "Litte Cloud",
+      "brand": "Little Cloud",
       "model": "Spiruline",
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "35fb4c88-6774-4e74-b8a4-86cf4bf1716b"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": true,
@@ -1465,7 +1484,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "8f6f8250-a7ff-4be6-8a70-4dbf57139d24"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1533,7 +1553,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "c6c187c2-4d07-4c91-a71c-e1327e63a2d4"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1601,7 +1622,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "812bcb98-8d8b-4337-895e-22b39c6e37f0"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1669,7 +1691,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "60baa97c-ea3c-4d72-bae4-d8b6f4374b3f"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1737,7 +1760,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "ba4426b7-cb33-4a29-b933-6657fec94b2f"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1805,7 +1829,8 @@
       "gliderClass": {
         "key": "D_low",
         "shortDescription": "GS Performance low"
-      }
+      },
+      "id": "cd25b974-1e30-4969-ba46-34990461990d"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -1873,7 +1898,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "7fafd7be-89a3-4150-b190-1eb8a47bc02f"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -1941,7 +1967,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "704a87b4-2053-46f4-b613-19a03c55948d"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2009,7 +2036,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "6b7b5a06-c9f4-4499-911a-eb0247f010e8"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -2077,7 +2105,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "729cd7ac-5e91-4c14-b68e-f0da3ac4d736"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2145,7 +2174,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "2b63195f-9d4c-4ce1-9d86-bb49da8555fb"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -2213,7 +2243,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "bd4cfd17-5b71-4133-b532-b3f916f66c03"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -2281,7 +2312,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "97afeda0-c6cf-483c-b39b-f2cea1dd0b20"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -2349,7 +2381,8 @@
       "gliderClass": {
         "key": "D_low",
         "shortDescription": "GS Performance low"
-      }
+      },
+      "id": "a9f572c3-8e53-48ea-be9b-f4d88ed3c983"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2417,7 +2450,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "b8e39742-ccc9-4307-92e2-51db9a4179cf"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -2484,7 +2518,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "d5d8a5d6-50b4-4051-a509-bebd130661c8"
     },
     "flightStatus": "Nicht in Wertung",
     "airspaceViolation": false,
@@ -2551,7 +2586,8 @@
       "gliderClass": {
         "key": "D_low",
         "shortDescription": "GS Performance low"
-      }
+      },
+      "id": "157cf72c-519f-42aa-b67d-42c60dd311c0"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2618,7 +2654,8 @@
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "b8626cb9-92de-4957-a7ff-c5c8c6a48664"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2685,7 +2722,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "e0bbb3e4-543b-4451-a374-0435a38cc823"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2747,12 +2785,13 @@
     "externalId": 40,
     "report": "voluptatem ut labore omnis ea qui quam voluptatem in similique illum vel ut fugiat qui nihil officia fuga deserunt ratione dolores blanditiis quam voluptatem recusandae aut ipsam qui magni illo aut voluptas magni asperiores omnis quo quasi qui voluptate pariatur sunt perspiciatis minima ut nesciunt et alias voluptates quia quidem cupiditate minima molestias modi atque ut labore similique sapiente dolores esse maxime possimus velit deleniti laboriosam blanditiis deleniti rem quasi est sit perferendis eum vero et ex et veritatis magni et qui corrupti deserunt quisquam distinctio ipsa et ad velit repellat est labore et corporis et fugit magnam ea error quos culpa officia hic consequatur dignissimos necessitatibus accusamus qui itaque dolorum officiis cupiditate praesentium dignissimos id temporibus voluptate blanditiis et et praesentium corporis ipsam harum velit fugit voluptatem qui architecto quia consectetur eum est dolorum officia voluptatem omnis voluptates eveniet facilis aut qui porro nam autem et ut est repudiandae deleniti quod quaerat quas amet ea quaerat accusamus aut est repudiandae nam sapiente non error et vel consequuntur modi voluptatem voluptatem perspiciatis sed non nam voluptatem corporis repellat quibusdam consequatur autem ipsa voluptas odio quasi rerum expedita laudantium ut porro explicabo facilis ut qui quia doloremque",
     "glider": {
-      "brand": "Litte Cloud",
+      "brand": "Little Cloud",
       "model": "Spiruline",
       "gliderClass": {
         "key": "D_high",
         "shortDescription": "GS Competition high"
-      }
+      },
+      "id": "35fb4c88-6774-4e74-b8a4-86cf4bf1716b"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2820,7 +2859,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "8f6f8250-a7ff-4be6-8a70-4dbf57139d24"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -2888,7 +2928,8 @@
       "gliderClass": {
         "key": "AB_low",
         "shortDescription": "GS Sport low"
-      }
+      },
+      "id": "c6c187c2-4d07-4c91-a71c-e1327e63a2d4"
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
