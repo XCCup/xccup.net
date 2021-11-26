@@ -96,7 +96,9 @@
       </button></a
     >
 
-    <router-link :to="{ name: 'FlightEdit' }">
+    <router-link
+      :to="{ name: 'FlightEdit', params: { id: flight.externalId } }"
+    >
       <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>

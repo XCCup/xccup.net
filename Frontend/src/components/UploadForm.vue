@@ -33,7 +33,7 @@
           />
         </div>
       </div>
-
+      <!-- Glider select -->
       <div class="col-md-12">
         <div class="row d-flex align-items-end">
           <div class="col-md-9">
