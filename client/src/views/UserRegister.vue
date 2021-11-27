@@ -42,6 +42,7 @@
                       v-model="userData.birthday"
                       label="Geburstag"
                       starting-view="year"
+                      :upper-limit="upperLimitBirthday"
                     />
                   </div>
                 </div>
@@ -178,7 +179,7 @@
 <script setup>
 import { ref, reactive, computed } from "vue";
 import ApiService from "@/services/ApiService";
-import { setWindowName } from "../helper/utils";
+import { retrieveDateOnly, setWindowName } from "../helper/utils";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
@@ -209,6 +210,11 @@ const userData = reactive({
   emailInformIfComment: true,
   emailTeamSearch: false,
 });
+
+// Set upper boundary of date picker
+const limitDate = new Date();
+limitDate.setYear(limitDate.getFullYear() - 16);
+const upperLimitBirthday = ref(limitDate);
 
 // Helpers
 const showSpinner = ref(false);
