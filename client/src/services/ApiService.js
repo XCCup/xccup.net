@@ -127,6 +127,10 @@ export default {
     return jwtInterceptor.get("users/public/" + userId);
   },
 
+  activate(userId, token) {
+    return apiClient.get(`users/activate?userId=${userId}&token=${token}`);
+  },
+
   // Sponsors
 
   /**
