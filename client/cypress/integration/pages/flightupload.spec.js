@@ -10,6 +10,11 @@ describe("check admin page", () => {
     cy.location("pathname").should("eq", "/login");
   });
 
+  // TODO: Implement testcase
+  //   it("test upload of flight outside of xccup region is not allowed", () => {
+  //     cy.get("button").contains("Flug hochladen").click();
+  //   });
+
   it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const reportText = "This is a flight report.";
