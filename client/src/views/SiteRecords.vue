@@ -6,19 +6,9 @@
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Startplatz</th>
-            <th>
-              Freiestrecke
-              <FlightTypeIcon flight-type="FREE" />
-            </th>
-            <th>
-              <!-- TODO: Why is this not rendering -->
-              Flaches Dreieck
-              <FlightTypeIcon flight-type="FLAT" />
-            </th>
-            <th>
-              FAI Dreieck
-              <FlightTypeIcon flight-type="FAI" />
-            </th>
+            <th>Freie Strecke</th>
+            <th>Flaches Dreieck</th>
+            <th>FAI Dreieck</th>
           </thead>
           <tbody>
             <tr v-for="result in results" :key="result.takeoff.id">
