@@ -10,9 +10,6 @@ const morganLogger = require("./config/logger").morganLogger;
 //Setup DB
 require("./config/postgres.js");
 
-//Init authentication tokens
-require("./controller/Auth").initAuth();
-
 //Logging
 app.use(morganLogger);
 
@@ -29,25 +26,26 @@ app.use(express.urlencoded({ extended: false }));
 //IGC-Files can easily exceed this limit
 app.use(express.json({ limit: "5mb" }));
 
-app.get("/", (request, response) =>
+app.get("/api", (request, response) =>
   response.json({ info: "Welcome to the XCCup API" })
 );
-app.use("/users", require("./controller/UserController.js"));
-app.use("/flights", require("./controller/FlightController.js"));
-app.use("/comments", require("./controller/CommentController.js"));
-app.use("/seasons", require("./controller/SeasonController"));
-app.use("/clubs", require("./controller/ClubController"));
-app.use("/teams", require("./controller/TeamController"));
-app.use("/airspaces", require("./controller/AirspaceController"));
-app.use("/results", require("./controller/ResultController"));
-app.use("/home", require("./controller/HomeController"));
-app.use("/news", require("./controller/NewsController"));
-app.use("/sponsors", require("./controller/SponsorController"));
-app.use("/media", require("./controller/MediaController"));
-app.use("/general", require("./controller/GeneralController"));
-app.use("/mail", require("./controller/MailController"));
+app.use("/api/users", require("./controller/UserController.js"));
+app.use("/api/flights", require("./controller/FlightController.js"));
+app.use("/api/comments", require("./controller/CommentController.js"));
+app.use("/api/seasons", require("./controller/SeasonController"));
+app.use("/api/clubs", require("./controller/ClubController"));
+app.use("/api/teams", require("./controller/TeamController"));
+app.use("/api/airspaces", require("./controller/AirspaceController"));
+app.use("/api/results", require("./controller/ResultController"));
+app.use("/api/home", require("./controller/HomeController"));
+app.use("/api/news", require("./controller/NewsController"));
+app.use("/api/sponsors", require("./controller/SponsorController"));
+app.use("/api/media", require("./controller/MediaController"));
+app.use("/api/general", require("./controller/GeneralController"));
+app.use("/api/mail", require("./controller/MailController"));
+app.use("/api/sites", require("./controller/SiteController"));
 if (process.env.NODE_ENV !== "production") {
-  app.use("/testdata", require("./controller/TestDataController"));
+  app.use("/api/testdata", require("./controller/TestDataController"));
 }
 
 //Reset all caches when a non GET requests occurs

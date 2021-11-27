@@ -1,6 +1,6 @@
 <template>
   <!-- Tabs -->
-  <div id="overallResultsTabPanel" class="container my-2">
+  <div v-if="rankingByClass" id="overallResultsTabPanel" class="container my-2">
     <h3>Gesamtwertung</h3>
     <ul id="myTab" class="nav nav-tabs" role="tablist">
       <li class="nav-item" role="presentation">

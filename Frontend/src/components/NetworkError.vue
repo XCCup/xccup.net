@@ -4,9 +4,9 @@
       <h1>Uh-Oh!</h1>
 
       <h3>
-        It looks like you're experiencing some network issues, please take a
-        breath and
-        <a href="#" @click="$router.go(-1)">click here</a> to try again.
+        Da ist was schief gelaufen :( <br />
+        <a href="#" @click="$router.go(-1)">Hier klicken</a> um es noch mal zu
+        probieren
       </h3>
     </div>
   </div>

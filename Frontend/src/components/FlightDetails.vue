@@ -96,7 +96,9 @@
       </button></a
     >
 
-    <router-link :to="{ name: 'FlightEdit' }">
+    <router-link
+      :to="{ name: 'FlightEdit', params: { id: flight.externalId } }"
+    >
       <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
@@ -167,6 +169,7 @@
 import { computed } from "vue";
 import useUser from "@/composables/useUser";
 import useFlight from "@/composables/useFlight";
+import { getbaseURL } from "@/helper/base-url-helper";
 
 const { getUserId } = useUser();
 const { flight } = useFlight();
@@ -174,8 +177,8 @@ const { flight } = useFlight();
 const showEditButton = computed(() => flight.value.userId === getUserId.value);
 
 const igcDownloadUrl = computed(() => {
-  let baseUrl = import.meta.env.VITE_API_URL;
-  return baseUrl + "flights/igc/" + flight.value.id;
+  const baseURL = getbaseURL();
+  return baseURL + "flights/igc/" + flight.value.id;
 });
 
 const calcFlightDuration = (duration) => {

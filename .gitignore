@@ -14,9 +14,7 @@ Backend/igc/demo_igcs/temp/
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-
-.env 
-
+.env
 
 # Package Files #
 *.jar

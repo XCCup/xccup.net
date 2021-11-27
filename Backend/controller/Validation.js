@@ -1,4 +1,4 @@
-const { check, param, validationResult } = require("express-validator");
+const { check, param, query, validationResult } = require("express-validator");
 
 /**
  * Checks if the field is a string. Addionally escapes all special charcters (e.g. ">","<").
@@ -195,6 +195,21 @@ function checkOptionalStringObjectNotEmpty(field) {
     .escape();
 }
 /**
+ * Checks in a query string, when the parameter is present, if the parameter value matches a columnname of the provided modelname.
+ * @param {*} field The field in the Request-Body to check.
+ * @param {*} modelName The name of the Model to check against.
+ * @returns A ValidationChain object for the checked parameter.
+ */
+function queryOptionalColumnExistsInModel(field, modelName) {
+  return query(field)
+    .optional()
+    .custom((value) => {
+      const Model = require("../config/postgres")[modelName];
+      const columnExists = Object.keys(Model.rawAttributes).includes(value);
+      return columnExists;
+    });
+}
+/**
  * Validates if one or more of the previous checks on fields failed. If at least one check failed, the response status of that call will be set to 400 and the addionally error information will be send to the response.
  * @param {*} req The Request object of the call to API.
  * @param {*} res The Response object of the call to API.
@@ -216,6 +231,7 @@ exports.checkOptionalUuidObject = checkOptionalUuidObject;
 exports.checkIsBoolean = checkIsBoolean;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
+exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
 
 exports.checkIsOnlyOfValue = checkIsOnlyOfValue;
 exports.checkOptionalIsISO8601 = checkOptionalIsISO8601;
