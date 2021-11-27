@@ -151,16 +151,15 @@ const userService = {
     return userJson;
   },
   activateUser: async (id, token) => {
-    const result = await User.update(
-      {
-        role: ROLE.NONE,
-        token: "",
-      },
-      {
-        where: { id, token },
-      }
-    );
-    return result[0] > 0;
+    const user = await User.findOne({
+      where: { id, token },
+    });
+
+    if (!user) return;
+
+    user.role = ROLE.NONE;
+    user.token = "";
+    return await user.save();
   },
   renewPassword: async (id, token) => {
     const user = await User.findOne({

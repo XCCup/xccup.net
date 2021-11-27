@@ -162,21 +162,25 @@ router.get(
 router.get(
   "/activate/",
   query("userId").isUUID(),
-  query("token").trim(),
+  query("token").trim().escape(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     const { userId, token } = req.query;
 
     try {
-      const result = await service.activateUser(userId, token);
+      const user = await service.activateUser(userId, token);
 
-      if (result)
-        return res.redirect(
-          process.env.CLIENT_URL + process.env.MAIL_AUTH_REDIRECT
-        );
+      if (!user) return res.sendStatus(NOT_FOUND);
 
-      res.sendStatus(NOT_FOUND);
+      const accessToken = createToken(user);
+      const refreshToken = createRefreshToken(user);
+
+      res.json({
+        firstName: user.firstName,
+        accessToken,
+        refreshToken,
+      });
     } catch (error) {
       next(error);
     }
@@ -191,7 +195,7 @@ router.get(
 router.get(
   "/renew-password",
   query("userId").isUUID(),
-  query("token").trim(),
+  query("token").trim().escape(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
