@@ -189,6 +189,12 @@ const routes = [
     component: () => import("../views/AdminDashboard.vue"),
   },
   {
+    path: "/user/activate",
+    name: "UserActivate",
+    //TODO: Check if logged-in user is a moderator or admin
+    component: () => import("../views/UserActivate.vue"),
+  },
+  {
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: NotFound,
