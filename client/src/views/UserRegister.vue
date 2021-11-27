@@ -95,6 +95,11 @@
 
                 <!-- Password -->
                 <div class="row">
+                  <p>
+                    Das Passwort muss aus mindestens 8 Zeichen bestehen und
+                    mindestens eine Zahl, Sonderzeichen und Großbuchstaben
+                    enthalten.
+                  </p>
                   <div class="col-md-6 mb-4">
                     <BaseInput
                       v-model="userData.password"
