@@ -1,6 +1,7 @@
 import { computed } from "vue";
 import ApiService from "@/services/ApiService";
 import useFlight from "@/composables/useFlight";
+import { cloneDeep } from "lodash";
 
 const { flight, updateComments } = useFlight();
 export default () => {
@@ -9,7 +10,7 @@ export default () => {
   // Create a structured comments array with replies
   const commentsWithReplies = computed(() => {
     let comments = flight.value.comments.flatMap((comment) =>
-      !comment.relatedTo ? [comment] : []
+      !comment.relatedTo ? [cloneDeep(comment)] : []
     );
 
     // Add replies
