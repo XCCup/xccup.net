@@ -34,3 +34,19 @@ Wir empfehlen Dir das Passwort bei der nächsten Anmeldung zu ändern.
 Dein XCCup Team
     
 `;
+
+module.exports.REQUEST_NEW_PASSWORD_TITLE = "Passwort zurücksetzen XCCup.net";
+
+module.exports.REQUEST_NEW_PASSWORD_TEXT = (firstName, resetLink) =>
+  `Hallo ${firstName}!
+
+Es wurde angefordert Dein Passwort zurückzusetzen.
+
+Um den Vorgang abzuschließen klicke bitte auf folgenden Link:
+${resetLink}
+
+Du wirst darauf eine Mail mit Deinem neuen Passwort erhalten.
+
+Dein XCCup Team
+    
+`;
