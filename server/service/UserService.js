@@ -166,7 +166,8 @@ const userService = {
       where: { id, token },
     });
 
-    if (!user) return;
+    // Return empty object, otherwise destructering doesn't work
+    if (!user) return {};
 
     logger.info("Will create a new password for " + user.email);
     const newPassword = generateRandomString();
@@ -181,7 +182,8 @@ const userService = {
       where: { email },
     });
 
-    if (!user) return;
+    // Return empty object, otherwise destructering doesn't work
+    if (!user) return {};
 
     logger.debug("Will create a resetPassword for " + email);
     const token = generateRandomString();

@@ -209,9 +209,7 @@ router.get(
 
       if (newPassword) {
         await mailService.sendNewPasswordMail(updatedUser, newPassword);
-        return res.redirect(
-          process.env.CLIENT_URL + process.env.MAIL_AUTH_REDIRECT
-        );
+        return res.sendStatus(OK);
       }
       res.sendStatus(NOT_FOUND);
     } catch (error) {
