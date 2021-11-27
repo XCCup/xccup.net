@@ -35,7 +35,7 @@ if (!(userId && token)) {
 } else {
   try {
     const res = await ApiService.activate(userId, token);
-    if (res.status != 200 || res.status != 404) throw res.statusText;
+    if (res.status != 200 && res.status != 404) throw res.statusText;
 
     if (res.status == 200) {
       state.value = "success";
