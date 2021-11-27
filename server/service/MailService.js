@@ -34,7 +34,7 @@ const service = {
   sendActivationMail: async (user) => {
     logger.info(`Send activation mail for ${user.id}`);
 
-    const activationLink = `http://localhost:3000/users/activate/${user.id}`;
+    const activationLink = `http://localhost:3000/api/users/activate/${user.id}`;
 
     const content = {
       title: REGISTRATION_TITLE,
