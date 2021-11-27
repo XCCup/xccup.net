@@ -1,5 +1,7 @@
 <template>
+  <!-- FAI -->
   <i v-if="flightType === `FAI`" class="bi bi-triangle me-1"></i>
+  <!-- Flat -->
   <svg
     v-if="flightType === `FLAT`"
     xmlns="http://www.w3.org/2000/svg"
@@ -8,16 +10,8 @@
     fill="currentColor"
     viewBox="0 0 487.047 487.047"
     style="enable-background: new 0 0 487.047 487.047"
-    class="bi bi-alt me-1"
+    class="me-1"
   >
-    <!-- <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="16"
-    height="16"
-    fill="currentColor"
-    class="bi bi-alt"
-    viewBox="0 0 16 16"
-  > -->
     <path
       d="M468.616,93.218c-3.098-0.208-6.241,0.759-9.151,2.838c-62.956,45.13-142.625,86.988-219.655,127.465
 			c-80.443,42.267-163.62,85.962-228.852,133.843c-1.444,1.056-2.676,2.311-3.732,3.813c-5.675,3.447-8.475,10.841-6.693,17.869
@@ -29,7 +23,7 @@
 			c-27.975-0.335-59.768-0.772-93.45-1.239c-93.521-1.29-199.524-2.747-280.335-2.747C69.327,358.72,65.641,358.725,62.012,358.73z"
     />
   </svg>
-
+  <!-- Free -->
   <svg
     v-if="flightType === `FREE`"
     xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +35,7 @@
     viewBox="0 0 63.067 63.067"
     style="enable-background: new 0 0 63.067 63.067"
     xml:space="preserve"
-    class="bi bi-alt me-1"
+    class=""
   >
     <path
       d="M5.097,38.991H0l14.984-18.486l7.748,20.148l13.82-27.646l6.035,18.976l14.668-17.222L54.5,12.008h8.567v8.555
