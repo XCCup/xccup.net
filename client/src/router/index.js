@@ -191,8 +191,13 @@ const routes = [
   {
     path: "/user/activate",
     name: "UserActivate",
-    //TODO: Check if logged-in user is a moderator or admin
     component: () => import("../views/UserActivate.vue"),
+  },
+  {
+    path: "/password-lost/",
+    name: "PasswordLost",
+    props: (route) => ({ confirm: route.query.confirm }),
+    component: () => import("../views/PasswordLost.vue"),
   },
   {
     path: "/:catchAll(.*)",
