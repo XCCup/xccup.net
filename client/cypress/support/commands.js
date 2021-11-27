@@ -23,6 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import "cypress-file-upload";
 
 Cypress.Commands.add("seedDb", () => {
   cy.request("http://localhost:3000/api/testdata/seed");
