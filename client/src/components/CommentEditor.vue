@@ -24,7 +24,7 @@
           </button>
         </form>
       </div>
-      <div v-else>
+      <div v-else class="col-6">
         Du musst angemeldet sein um einen Kommentar zu verfassen.
         <BaseLogin :prevent-redirect="true" />
       </div>
