@@ -11,7 +11,7 @@
       <router-link
         :to="{
           name: 'FlightsAll',
-          params: { userId: flight.user.id },
+          query: { userId: flight.user.id },
         }"
       >
         {{ flight.user.firstName + " " + flight.user.lastName }}
@@ -20,7 +20,7 @@
       <router-link
         :to="{
           name: 'FlightsAll',
-          params: {
+          query: {
             startDate: retrieveDateOnly(flight.takeoffTime),
             endDate: dayAfter(flight.takeoffTime),
           },
