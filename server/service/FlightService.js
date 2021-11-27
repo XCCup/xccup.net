@@ -639,13 +639,22 @@ async function createWhereStatement(
       violationAccepted: false,
     };
   } else {
-    whereStatement = {};
+    whereStatement = {
+      [sequelize.Op.not]: [
+        { airspaceViolation: true },
+        { uncheckedGRecord: true },
+      ],
+    };
   }
   if (flightType) {
     whereStatement.flightType = flightType;
   }
   if (flightStatus) {
     whereStatement.flightStatus = flightStatus;
+  } else {
+    whereStatement.flightStatus = {
+      [sequelize.Op.not]: STATE.IN_PROCESS,
+    };
   }
   if (userId) {
     whereStatement.userId = userId;
