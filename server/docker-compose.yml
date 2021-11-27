@@ -1,0 +1,52 @@
+version: "3.3"
+
+services:
+  db:
+    image: postgis/postgis #odidev/postgis:13-3.1-alpine
+    container_name: db
+    restart: always
+    env_file: .env
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - xccup-network
+
+  pgadmin:
+    image: dpage/pgadmin4:6.1
+    container_name: db-admin
+    restart: always
+    env_file: .env
+    ports:
+      - 65080:80
+    networks:
+      - xccup-network
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: xccup/server
+    container_name: server
+    restart: always
+    env_file: .env
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:65090"
+    volumes:
+      - .:/home/node/app
+    networks:
+      - xccup-network
+    depends_on:
+      - db
+    command: ./docker-entrypoint.sh
+
+volumes:
+  db:
+  pgadmin-data:
+
+networks:
+  xccup-network:
+    driver: bridge
