@@ -244,7 +244,7 @@ router.put(
   checkIsUuidObject("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
-  checkStringObjectNotEmpty("glider.gliderClass"),
+  checkStringObjectNotEmpty("glider.gliderClass.key"),
   checkOptionalIsBoolean("hikeAndFly"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
