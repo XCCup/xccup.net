@@ -109,7 +109,7 @@
                   </div>
                   <div class="col-md-6 mb-4">
                     <BaseInput
-                      v-model="passwordConfirm"
+                      v-model="userData.passwordConfirm"
                       label="Passwort wiederholen"
                       :is-password="true"
                       :external-validation-result="!passwordMatches"
@@ -181,39 +181,21 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, computed } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import { useRouter } from "vue-router";
+import useUserData from "@/composables/useUserSignup";
+
+const { userData } = useUserData();
 const router = useRouter();
 
 setWindowName("Anmelden");
 
 // User input
 
-const passwordConfirm = ref("");
 const rulesAccepted = ref(false);
 const errorMessage = ref(null);
-
-// Todo: Form input validation with vue
-const userData = reactive({
-  firstName: "",
-  lastName: "",
-  birthday: "",
-  gender: "",
-  password: "",
-  clubId: "",
-  email: "",
-  address: { country: "GER" },
-  emailNewsletter: true,
-  tshirtSize: "",
-
-  // Set this options as defaults
-  // Todo: Maybe do this in backend?
-
-  emailInformIfComment: true,
-  emailTeamSearch: false,
-});
 
 // Helpers
 const showSpinner = ref(false);
@@ -221,7 +203,7 @@ const showSpinner = ref(false);
 // Validation
 
 const passwordMatches = computed(() => {
-  return passwordConfirm.value === userData.password;
+  return userData.passwordConfirm === userData.password;
 });
 
 const registerButtonIsEnabled = computed(() => {
