@@ -639,13 +639,22 @@ async function createWhereStatement(
       violationAccepted: false,
     };
   } else {
-    whereStatement = {};
+    whereStatement = {
+      [sequelize.Op.not]: [
+        { airspaceViolation: true },
+        { uncheckedGRecord: true },
+      ],
+    };
   }
   if (flightType) {
     whereStatement.flightType = flightType;
   }
   if (flightStatus) {
     whereStatement.flightStatus = flightStatus;
+  } else {
+    whereStatement.flightStatus = {
+      [sequelize.Op.not]: STATE.IN_PROCESS,
+    };
   }
   if (userId) {
     whereStatement.userId = userId;
@@ -711,7 +720,7 @@ function createClubInclude(id) {
   const include = {
     model: Club,
     as: "club",
-    attributes: ["name"],
+    attributes: ["id", "name"],
   };
   if (id) {
     include.where = {
@@ -725,7 +734,7 @@ function createTeamInclude(id) {
   const include = {
     model: Team,
     as: "team",
-    attributes: ["name"],
+    attributes: ["id", "name"],
   };
   if (id) {
     include.where = {
