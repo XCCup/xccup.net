@@ -8,21 +8,46 @@
             <tr>
               <th>Pilot</th>
               <td>
-                <a href="#">{{
-                  flight.user.firstName + " " + flight.user.lastName
-                }}</a>
+                <router-link
+                  :to="{
+                    name: 'FlightsAll',
+                    query: { userId: flight.user.id },
+                  }"
+                >
+                  <div>
+                    {{ flight.user.firstName + " " + flight.user.lastName }}
+                  </div>
+                </router-link>
               </td>
             </tr>
             <tr>
               <th>Verein</th>
               <td>
-                <a href="#">{{ flight.club.name }}</a>
+                <router-link
+                  :to="{
+                    name: 'FlightsAll',
+                    query: { clubId: flight.club.id },
+                  }"
+                >
+                  <div>
+                    {{ flight.club.name }}
+                  </div>
+                </router-link>
               </td>
             </tr>
             <tr>
               <th>Team</th>
               <td>
-                <a href="#">{{ flight.team?.name }}</a>
+                <router-link
+                  :to="{
+                    name: 'FlightsAll',
+                    query: { teamId: flight.team?.id },
+                  }"
+                >
+                  <div>
+                    {{ flight.team?.name }}
+                  </div>
+                </router-link>
               </td>
             </tr>
             <tr>
