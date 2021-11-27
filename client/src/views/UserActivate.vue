@@ -2,18 +2,18 @@
   <div class="container mb-3">
     <h3>Nutzerprofilaktivierung</h3>
     <div v-if="state == 'incompleted'">
-      Es wurde kein Konto zur Aktivierung gefunden.
+      Es wurde kein Konto zur Aktivierung gefunden 🤨
     </div>
     <div v-if="state == 'success'">
       <h5>Hallo {{ firstName }}!</h5>
-      <div>Deine Aktivierung war erfolgreich.</div>
-      <div>Du solltest nun automatisch eingeloggt sein.</div>
+      <div>Deine Aktivierung war erfolgreich 🥳</div>
+      <div>Du solltest nun automatisch eingeloggt sein</div>
     </div>
     <div v-if="state == 'fail'">
-      <div>Es gab leider ein Problem mit der Aktivierung.</div>
+      <div>Es gab leider ein Problem mit der Aktivierung 😥</div>
       <div>
         Probiere es erneut oder wende Dich bitte an einen
-        <router-link to="Imprint">Administrator</router-link>.
+        <router-link to="Imprint">Administrator</router-link>
       </div>
     </div>
   </div>

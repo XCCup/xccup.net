@@ -179,7 +179,7 @@
 <script setup>
 import { ref, reactive, computed } from "vue";
 import ApiService from "@/services/ApiService";
-import { retrieveDateOnly, setWindowName } from "../helper/utils";
+import { setWindowName } from "../helper/utils";
 import { useRouter } from "vue-router";
 const router = useRouter();
 

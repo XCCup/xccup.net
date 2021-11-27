@@ -131,6 +131,16 @@ export default {
     return apiClient.get(`users/activate?userId=${userId}&token=${token}`);
   },
 
+  requestNewPassword(email) {
+    return apiClient.post(`users/request-new-password`, email);
+  },
+
+  confirmNewPassword(userId, token) {
+    return apiClient.get(
+      `users/renew-password?userId=${userId}&token=${token}`
+    );
+  },
+
   // Sponsors
 
   /**

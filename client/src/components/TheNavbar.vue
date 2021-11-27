@@ -147,7 +147,7 @@
                     name: 'Sponsors',
                   }"
                   class="dropdown-item"
-                  >Sponsors</router-link
+                  >Sponsoren</router-link
                 >
               </li>
               <li>
