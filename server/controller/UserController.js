@@ -508,7 +508,10 @@ async function checkGliderClassAndAddGliderDescription(glider) {
       `The gliderClass "${glider.gliderClass}" is not valid for the current season`
     );
 
-  glider.gliderClassShortDescription = gliderClass.shortDescription;
+  glider.gliderClass = {
+    key: glider.gliderClass,
+    shortDescription: gliderClass.shortDescription,
+  };
 }
 
 module.exports = router;
