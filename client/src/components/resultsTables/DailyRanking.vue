@@ -30,10 +30,10 @@
                 </td>
                 <td>{{ flight.takeoff.name }}</td>
                 <td class="no-line-break">
+                  <FlightTypeIcon :flight-type="flight.flightType" />
                   {{ Math.floor(flight.flightDistance) }} km
                 </td>
-                <td class="no-line-break">
-                  <FlightTypeIcon :flight-type="flight.flightType" />
+                <td class="no-line-break hide-on-xs">
                   {{ flight.flightPoints }} P
                 </td>
               </tr>
