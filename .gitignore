@@ -14,8 +14,6 @@ server/igc/demo_igcs/temp/
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-.env
-
 # Package Files #
 *.jar
 *.war
