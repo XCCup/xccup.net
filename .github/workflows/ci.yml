@@ -24,21 +24,21 @@ jobs:
           # working-directory doesn't work in conjunction with "uses"
       - name: Install backend
         run: npm install --arch=x64 --platform=linuxmusl
-        working-directory: ./Backend
+        working-directory: ./server
       - name: Test backend
         run: npm test
-        working-directory: ./Backend
+        working-directory: ./server
       - name: Start Docker Backend Environment
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
-        working-directory: ./Backend
+        working-directory: ./server
       - name: List all databases (just for debugging)
         run: sleep 30 && docker exec db psql -U xccup_user -l
       - name: Setup DB (enable PostGIS and set correct timezone)
         run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
-        working-directory: ./Backend
+        working-directory: ./server
       - name: Install frontend
         run: yarn install
-        working-directory: ./Frontend
+        working-directory: ./client
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
       - name: Cypress run
@@ -46,10 +46,10 @@ jobs:
         with:
           start: yarn dev
           wait-on: http://localhost:8000
-          working-directory: ./Frontend
+          working-directory: ./client
       - name: Store artefacts of test failures
         uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: cypress-screenshots
-          path: ./Frontend/cypress/screenshots
+          path: ./client/cypress/screenshots

@@ -1,0 +1,1270 @@
+[
+  {
+    "name": "Advance",
+    "website": "http://www.advance.ch",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "ADVANCE Thun AG Seestrasse 14 CH-3602 Thun",
+      "email": "info@advance.ch",
+      "phone": "+41 33 225 70 10",
+      "phone2": ""
+    },
+    "id": "28bbee36-26fc-4a2c-805d-c33eb2815527"
+  },
+  {
+    "name": "Aeros",
+    "website": "http://www.aeros.com.ua",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "c91387f0-77dd-49d7-8469-f3a74cfbbe8a"
+  },
+  {
+    "name": "A-I-R",
+    "website": "http://www.a-i-r.de",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "Firma A-I-R Aeronautic Innovation Rühle & Co GmbH Sesselbahnstr. 887642 Halblech/Buching",
+      "email": "info@a-i-r.de",
+      "phone": "+49 8368 914 88 48",
+      "phone2": ""
+    },
+    "id": "69aa9105-8608-440b-b6b2-64dedaa12cbe"
+  },
+  {
+    "name": "Airborne",
+    "website": "http://www.airborne.com.au",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "0bcf197e-49b6-4f55-8fd0-84248e78a8eb"
+  },
+  {
+    "name": "Aircotec flight intruments",
+    "website": "http://www.aircotec.com/",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2009",
+      "2010",
+      "2011",
+      "2013"
+    ],
+    "contacts": {
+      "address": "Alteggerstraße 8 A-8083 St. Stefan i.R. Austria",
+      "email": "office@aircotec.com",
+      "phone": "+43 3116 81018-11",
+      "phone2": ""
+    },
+    "id": "2379c87a-2467-46b5-b642-90ff8270f95f"
+  },
+  {
+    "name": "Aircross",
+    "website": "http://www.aircross.eu",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2011",
+      "2012",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020"
+    ],
+    "contacts": {
+      "address": "Aircross Gut Grauhof 1 38644 Goslar",
+      "email": "info@aircross.eu, info@kontest.eu",
+      "phone": "+49 5321 3175239",
+      "phone2": "+49 179 5406769"
+    },
+    "id": "ba660243-c367-445c-a02e-8bdd8ad7590b"
+  },
+  {
+    "name": "Air Design Gliders",
+    "website": "https://www.ad-gliders.com",
+    "type": "MANUFACTURER",
+    "tagline" : "Gleitschirme und mehr",
+    "sponsorInSeasons": [
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "AIRDESIGN GmbH Rhombergstraße 9, 4. Stock 6067 Absam Innsbruck Austria",
+      "email": "info@ad-gliders.com, martin@ad-gliders.com",
+      "phone": "+43 (0) 5223 22480",
+      "phone2": ""
+    },
+    "id": "c9528f0e-631c-4942-bc35-50f21a33dbf4"
+  },
+  {
+    "name": "Airtouch Jochen Henrichs",
+    "tagline": "We make you fly",
+    "website": "https://air-touch.de",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "AiR-touch DHV Flugschule Jochen Henrichs Hans-Böckler-Straße 3 D-56070 KOBLENZ",
+      "email": "fly@air-touch.de",
+      "phone": "",
+      "phone2": "0176 18899666"
+    },
+    "id": "8552dbdf-a9c1-449e-9801-b0afb3567808"
+  },
+  {
+    "name": "Airwave",
+    "website": "http://www.airwave-gliders.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2005",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012"
+    ],
+    "contacts": {
+      "address": "Firma Airwave, Villinger GmbH Gewerbepark 6 A-6142 Mieders",
+      "email": "sales@airwave-gliders.com",
+      "phone": "+43 5225 64455",
+      "phone2": ""
+    },
+    "id": "268d4bc4-bd6b-46ac-bca0-00d061499749"
+  },
+  {
+    "name": "Apco",
+    "website": "http://www.fly-apco.de/",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2007",
+      "2008"
+    ],
+    "contacts": {
+      "address": "APCO Deutschland + Österreich Stefan Stautner Prälat-Wellenhofer-Str. 31 81377 München",
+      "email": "stefan.stautner@web.de",
+      "phone": "089-12013673",
+      "phone2": ""
+    },
+    "id": "541409ea-afea-4318-8d1b-bed71e8c3529"
+  },
+  {
+    "name": "Baumer & Schilling Industrieservice GmbH",
+    "website": "http://www.baumer-industrieservice.de",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2008",
+      "2009",
+      "2010",
+      "2011"
+    ],
+    "contacts": {
+      "address": "Baumer & Schilling Industrieservice GmbH Geschäftsführer: Karl-Heinz Baumer Franzstr. 1 50226 Frechen",
+      "email": "info@baumer-industrieservice.de",
+      "phone": "02234 95422-0",
+      "phone2": ""
+    },
+    "id": "4b1e698f-3540-4544-bc71-f6009a70e033"
+  },
+  {
+    "name": "Baumpflege Jochen Stingl",
+    "website": "http://www.baumpflege-stingl.de",
+    "type": "OTHER",
+    "tagline" :"Die Baumpflege ist unsere Leidenschaft",
+    "sponsorInSeasons": [
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Baumpflege Jochen Stingl Am Forsthaus 10 65719 Hofheim/Ts.",
+      "email": "stingl@baumpflege-stingl.de",
+      "phone": "06192 23288",
+      "phone2": ""
+    },
+    "id": "c6311b5a-4c09-4b09-929f-4cc8053148d9"
+  },
+  {
+    "name": "Bautek",
+    "website": "http://www.bautek.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016"
+    ],
+    "contacts": {
+      "address": "bautek Fluggeräte GmbH Im Gewerbegebiet D-54344 Kenn",
+      "email": "info@bautek.com",
+      "phone": "+49 (0) 6502-3060",
+      "phone2": ""
+    },
+    "id": "6fb40df6-af04-49cb-8fb5-ebd9ed8a9ae0"
+  },
+  {
+    "name": "Bruce Goldsmith Design",
+    "website": "http://www.flybgd.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2020"
+    ],
+    "contacts": {
+      "address": "Hügelweg 12 9400 Wolfsberg Austria",
+      "email": "sales@flybgd.com",
+      "phone": "+43 4352 35676",
+      "phone2": ""
+    },
+    "id": "5c871926-924b-4e44-bc38-2f451c82ecc2"
+  },
+  {
+    "name": "Flytec Germany GmbH",
+    "website": "http://www.flytec.ch",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019"
+    ],
+    "contacts": {
+      "address": "Flytec Germany GmbH Dr.-Karl-Slevogt-Straße 5 82362 Weilheim",
+      "email": "info@flytec.de",
+      "phone": "+49 881 64 750",
+      "phone2": ""
+    },
+    "id": "bed5cc28-1db7-48de-a84b-21771e31e7a1"
+  },
+  {
+    "name": "Finsterwalder & Charly",
+    "website": "http://www.charly-produkte.de/",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2013",
+      "2016"
+    ],
+    "contacts": {
+      "address": "Finsterwalder GmbH Pagodenburgstr. 8 D-81247 München",
+      "email": "info@charly-produkte.de",
+      "phone": "+49 (0)89 / 811 65 28 0",
+      "phone2": ""
+    },
+    "id": "579b782c-fefd-484f-b95e-e6764eade064"
+  },
+  {
+    "name": "DANKe Projekt GmbH",
+    "isGoldSponsor": true,
+    "website": "http://www.dank-e.de",
+    "tagline": "Ökologisch. Nachhaltig. Innovativ.",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "DANKe Projekt GmbH Am Wiesengrund 23 65510 Hünstetten",
+      "email": "mboerner@dank-e.de",
+      "phone": "+49 (6126) 9593666",
+      "phone2": "+49 (6126) 9589379"
+    },
+    "id": "e370ee96-2943-4039-9934-e61e8041172d"
+  },
+  {
+    "name": "Dudek Paragliders",
+    "website": "http://dudek-paragliders.de",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "Dudek Paragliders Sasse Paragliding GmbH Zum Waldwinkel 2 31737 Rinteln",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "16171085-e2ee-424c-bece-8edf6354e5c5"
+  },
+  {
+    "name": "Elsenbach Design",
+    "website": "http://www.elsenbach-design.de",
+    "type": "OTHER",
+    "tagline": "Gutes Desgin",
+    "sponsorInSeasons": [
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Elsenbach Design Dipl. Des. Nicole Elsenbach Südstraße 12 42499 Hückeswagen",
+      "email": "mail@elsenbach-design.de",
+      "phone": "02192/9367948",
+      "phone2": ""
+    },
+    "id": "8812deda-aeb6-40a4-91e1-0acce5c4a177"
+  },
+  {
+    "name": "Flow Paragliders",
+    "website": "https://www.flowparagliders.de",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2020"
+    ],
+    "contacts": {
+      "address": "Dirk Weiss Höhe Roth 64 57234 Wilnsdorf",
+      "email": "info@flowparagliders.de",
+      "phone": "+491714947917",
+      "phone2": ""
+    },
+    "id": "711c4afe-c779-4ebd-bd14-deede7ba2397"
+  },
+  {
+    "name": "Flugschule",
+    "website": "https://www.fly-a-glider.de/",
+    "type": "SCHOOL",
+    "tagline" : "DHV Gleitflugschule",
+    "sponsorInSeasons": [
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Robert Ruland Milostr. 12 54293 Trier",
+      "email": "rob@fly-a-glider.de, rob.ruland@web.de",
+      "phone": "+49 (0) 162 - 420 3000",
+      "phone2": ""
+    },
+    "id": "f01cde63-d396-4bc6-8b34-4c13a6a68b04"
+  },
+  {
+    "name": "freeX",
+    "website": "http://www.freex.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2006"
+    ],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "d5831e35-44b4-49f7-a37f-d0ed616484ac"
+  },
+  {
+    "name": "Fahrrad Freund OHG",
+    "website": "http://www.fahrrad-freund.com",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2018",
+      "2019",
+      "2020"
+    ],
+    "contacts": {
+      "address": "Niederhofheimer Str. 49 65719 Hofheim",
+      "email": "wfreund@fahrradfreund.com",
+      "phone": "06192 21482",
+      "phone2": ""
+    },
+    "id": "0e7e22b1-9ea8-46fe-a7ef-a9a40c6e0930"
+  },
+  {
+    "name": "Freiflieger",
+    "website": "http://www.freiflieger.eu",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2017"
+    ],
+    "contacts": {
+      "address": "Freiflieger Hermsdorfer Str. 12 56112 Lahnstein",
+      "email": "info@freiflieger.eu",
+      "phone": "+49 (0)2621-6968018",
+      "phone2": "+49 (0)171-6252331"
+    },
+    "id": "3813be98-c8df-4076-83f1-1ee62f307cc3"
+  },
+  {
+    "name": "Flugschule Hirondelle",
+    "website": "http://www.fs-hirondelle.de",
+    "tagline" : "Erlebe die Freiheit des Fliegens",
+    "isGoldSponsor": true,
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Flugschule Hierondelle Untergasse 27 D-69469 Weinheim",
+      "email": "info@fs-hirondelle.de",
+      "phone": "+49 (0)6341 / 1419165",
+      "phone2": ""
+    },
+    "id": "6e5d33d3-f5a3-420f-a21e-2627b8532458"
+  },
+  {
+    "name": "Flugschule Mittelrhein",
+    "website": "http://www.flugschule-mittelrhein.de",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2010",
+      "2011"
+    ],
+    "contacts": {
+      "address": "Klaus Killian 56170 Bendorf Schloßstraße 28",
+      "email": "info@skys-shop.de",
+      "phone": "+49 (0)2622-887006",
+      "phone2": "+49 171-9447830"
+    },
+    "id": "9a188f01-1d7a-4925-a52a-532ca9a918a9"
+  },
+  {
+    "name": "GIN Paragliders",
+    "website": "https://www.gingliders.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2020"
+    ],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "7eeec276-6529-4a5f-913c-025e8ad8b0ea"
+  },
+  {
+    "name": "Holiday Flat Almunecar",
+    "website": "http://holiday-flat-almunecar.de",
+    "type": "HOLIDAY",
+    "tagline" : "Erste Reihe am Strand der Playa Velilla",
+    "sponsorInSeasons": [
+      "2016",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Bärbel Schüller und Martin Droste Mirker Höhe 52 42109 Wuppertal Deutschland",
+      "email": "info@holiday-flat-almunecar.de",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "e70e2ea3-4a93-44e6-bf41-89d245cb641b"
+  },
+  {
+    "name": "ICARO Fly & more",
+    "website": "http://www.icaro-wings.de",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019"
+    ],
+    "contacts": {
+      "address": "ICARO Fly & more Handels GmbH Hochriesstraße 1 D-83126 Flintsbach",
+      "email": "office@fly-more.com",
+      "phone": "+49(0)8034 - 909 700",
+      "phone2": ""
+    },
+    "id": "cf50d4fc-1715-4f87-b89f-e61a99f47c98"
+  },
+  {
+    "name": "IMO Car Wash Group",
+    "website": "http://www.imo-carwash.com",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2008"
+    ],
+    "contacts": {
+      "address": "IMO Car Wash Group 35-37 Amersham Hill High Wycombe Bucks, HP13 6NU",
+      "email": "info@imocarwash.com",
+      "phone": "+44 1494 835 350",
+      "phone2": ""
+    },
+    "id": "9bb01684-491e-4971-800f-a79e0bdcd6fa"
+  },
+  {
+    "name": "Independence",
+    "website": "http://www.independence.aero/de/produkte/gleitschirme.html",
+    "tagline": "Für jeden Flugstil das passende Paket",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "FlyMarket Flugsport-Zubehör D-87637 Eisenberg Pröbstenerstr. 15",
+      "email": "info@independence.aero",
+      "phone": "+49 8364 9833-0",
+      "phone2": ""
+    },
+    "id": "a44d29df-72c6-4a1a-a063-14eb22a4f846"
+  },
+  {
+    "name": "KiM GmbH",
+    "website": "http://www.kimweb.de",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007"
+    ],
+    "contacts": {
+      "address": "KiM GmbH Konstruktion & Internet im Maschinenbau Kapellenweg 31 D- 66606 St. Wendel",
+      "email": "info@kimweb.de",
+      "phone": "+49 (0)6851 / 80006-0",
+      "phone2": ""
+    },
+    "id": "cf3ac1b5-874c-478e-8d17-5d9327e05c48"
+  },
+  {
+    "name": "Martin Laible",
+    "website": "",
+    "type": "OTHER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "In den Hainbuchen 8 76833 Böchingen",
+      "email": "thermik777@yahoo.de",
+      "phone": "06341/60858",
+      "phone2": "0172/6230195"
+    },
+    "id": "862bce7b-d6f8-4af2-956f-40af22af224f"
+  },
+  {
+    "name": "LinkingWings",
+    "website": "http://www.linkingwings.de",
+    "type": "SCHOOL",
+    "sponsorInSeasons": [
+      "2013"
+    ],
+    "contacts": {
+      "address": "Dirk Soboll Drachenflugschule Airborne Europa Winnertzhof 20, 47799 Krefeld",
+      "email": "dirk@linkingwings.de",
+      "phone": "02151 6444456",
+      "phone2": "0151 12147505"
+    },
+    "id": "c5212a92-9299-482a-bfe3-8f93b7ebfe3b"
+  },
+  {
+    "name": "LittleCloud",
+    "website": "",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "1a153335-8b62-4e6a-a215-fe0d607d4e3a"
+  },
+  {
+    "name": "Macpara",
+    "website": "http://www.macpara.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2013",
+      "2014",
+      "2015"
+    ],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "966e726f-efad-446c-ad27-c78d2a533420"
+  },
+  {
+    "name": "maier components",
+    "website": "http://maier-components.de",
+    "type": "MANUFACTURER",
+    "tagline": "Händler für Flugsportzubehör",
+    "sponsorInSeasons": [
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Mozartstraße 1A D-35392 Gießen phone: +49 641/5599957 (AB) action@maier-components.de",
+      "email": "action@maier-components.de",
+      "phone": "+49 641/5599957",
+      "phone2": ""
+    },
+    "id": "20258e0b-3932-4a0f-a765-b916cd4b8d41"
+  },
+  {
+    "name": "Moselglider",
+    "website": "http://www.moselglider.de",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015"
+    ],
+    "contacts": {
+      "address": "Moselglider Michael Müller Kapellenweg 25 D-54338 Schweich Issel",
+      "email": "mmueller@moselglider.de",
+      "phone": "",
+      "phone2": "0179-7842871"
+    },
+    "id": "ea47da1b-ce0a-4bf4-92e5-a4b0d5fc3712"
+  },
+  {
+    "name": "Moyes",
+    "website": "http://www.moyes.com.au",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "",
+      "email": "info@skyline-flightgear.de",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "a0f77684-4871-43b3-9e6e-82f44a5eb2d2"
+  },
+  {
+    "name": "Naviter SeeYou",
+    "website": "http://www.naviter.com",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2019"
+    ],
+    "contacts": {
+      "address": "Naviter d.o.o. Gradnikova 89 4240 Radovljica Slowenien",
+      "email": "info@naviter.com",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "ab484d68-346d-453e-8e07-6aca7a840212"
+  },
+  {
+    "name": "Niviuk",
+    "website": "http://www.niviuk.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2009"
+    ],
+    "contacts": {
+      "address": "NIVIUK Gliders C. Doctor Codina, 29 17165 La Callera de Ter - Girona Spanien",
+      "email": "",
+      "phone": "+34 972 42 28 78",
+      "phone2": ""
+    },
+    "id": "37d88434-197f-4129-a5ca-e01662683a75"
+  },
+  {
+    "name": "Nova Paragliders",
+    "website": "http://www.nova.eu/",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2013",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "NOVA Vertriebsges.m.b.H Bernhard Hoefel Str. 14 6020 INNSBRUCK AUSTRIA",
+      "email": "info@nova.eu",
+      "phone": "+43 512 361340",
+      "phone2": ""
+    },
+    "id": "d1850c5a-6992-449f-ab82-68e63882bc8f"
+  },
+  {
+    "name": "Ozone",
+    "website": "http://www.flyozone.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Konny Karlheinz KONRAD Samerberg",
+      "email": "kk@flyozone.com",
+      "phone": "+49(0)8032 982931",
+      "phone2": "+49(0)171 4691968"
+    },
+    "id": "d7aa1df6-fbbb-4ef3-a640-2bf8215a2bd3"
+  },
+  {
+    "name": "Papillon Paragliders",
+    "website": "https://papillon-paragliders.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "PAPILLON PARAGLIDERS GLEITSCHIRM DIREKT GmbH Am Sandfeld 29 36163 Poppenhausen (Wasserkuppe)",
+      "email": "",
+      "phone": "+49 6654 91 90 55",
+      "phone2": ""
+    },
+    "id": "d8b33ba7-2a13-48ce-891b-66dc41783a17"
+  },
+  {
+    "name": "Parashop at",
+    "website": "http://www.parashop.at",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2009",
+      "2010",
+      "2011",
+      "2012"
+    ],
+    "contacts": {
+      "address": "Parashop Kössen Hütte 30 A-6345 Kössen",
+      "email": "pier@parashop.at",
+      "phone": "0043 5375 2425",
+      "phone2": "0043 664 2054321"
+    },
+    "id": "96606d79-3ee3-453b-a016-9d5ce4f4070d"
+  },
+  {
+    "name": "Paratech",
+    "website": "http://www.paratech.ch",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011"
+    ],
+    "contacts": {
+      "address": "Paratech AG Schwendetalstrasse 85 CH-9057 Wasserauen",
+      "email": "info@paratech.ch",
+      "phone": "+41 (0)71 787 30 31",
+      "phone2": ""
+    },
+    "id": "4b339d41-fdb2-46eb-948d-bca98869f79c"
+  },
+  {
+    "name": "PHI",
+    "website": "Https://Phi-air.com",
+    "type": "MANUFACTURER",
+    "isGoldSponsor": true,
+    "tagline": "The new paragliding brand of Hannes Papesh and team",
+    "sponsorInSeasons": [
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Achenseestraße 12 6212 Maurach, Austria - behind the Rofan cabel car -",
+      "email": "info@phi-air.com",
+      "phone": "+43 5243 93561",
+      "phone2": ""
+    },
+    "id": "5171b8c7-d99e-47cb-ae63-6343007679ec"
+  },
+  {
+    "name": "PowerTrike GmbH",
+    "website": "http://www.powertrike.de",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008"
+    ],
+    "contacts": {
+      "address": "PowerTrike GmbH Siedlung 17 D-67686 Mackenbach",
+      "email": "info@powertrike.de",
+      "phone": "+49(0)6374-4403",
+      "phone2": ""
+    },
+    "id": "2e8ab261-b177-4285-a501-faf2dc77c4b7"
+  },
+  {
+    "name": "Pro-Design",
+    "website": "http://www.pro-design.at",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2009"
+    ],
+    "contacts": {
+      "address": "Zimmeterweg 4 6020 Innsbruck Austria / Europe",
+      "email": "office@pro-design.at",
+      "phone": "+43 512 546444",
+      "phone2": "+43 664 5403660"
+    },
+    "id": "43cef79f-d7c9-49db-a60b-3f833693e0b1"
+  },
+  {
+    "name": "Sky",
+    "website": "http://www.sky-cz.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "05d500f2-0ab1-48c9-809a-e75f7f62074a"
+  },
+  {
+    "name": "SKYclimber",
+    "website": "http://www.skyclimber.de",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2008"
+    ],
+    "contacts": {
+      "address": "SKYclimber Jens Wiesner Stuttgarter Straße 100 70771 Leinfelden-Echterdingen",
+      "email": "jens@skyclimber.de",
+      "phone": "",
+      "phone2": "0170 2144908"
+    },
+    "id": "d1edeb12-6881-41b9-963d-bd23cef3c8db"
+  },
+  {
+    "name": "Skyman",
+    "website": "http://www.skyman.aero",
+    "type": "MANUFACTURER",
+    "tagline": "Neue Wege entdecken",
+    "sponsorInSeasons": [
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Fly-market Flugsport-Zubehör GmbH & Co. KG Am Schönebach 3 87637 Eisenberg",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "df08684c-16d0-4e9b-b51b-265351b38e2a"
+  },
+  {
+    "name": "Skys-Shop Sportartikel",
+    "website": "http://www.skys-shop.de",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2008",
+      "2009",
+      "2010"
+    ],
+    "contacts": {
+      "address": "Skys-Shop K.M. Killian Schloßstraße 28 56170 Bendorf",
+      "email": "info@skys-shop.de",
+      "phone": "02622-887006",
+      "phone2": ""
+    },
+    "id": "e2674c6f-6e8c-457d-9853-ba76d0d65f20"
+  },
+  {
+    "name": "Skytraxx",
+    "website": "https://www.skytraxx.eu/",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2018",
+      "2019"
+    ],
+    "contacts": {
+      "address": "Skytraxx GmbH Im Bildstöckle 5 79822 Titisee-Neustadt",
+      "email": "info@skytraxx.eu",
+      "phone": "+49 (0) 7651 - 3732",
+      "phone2": ""
+    },
+    "id": "c7676ab2-cf24-45b7-8b51-5c1f688bf2af"
+  },
+  {
+    "name": "Skywalk",
+    "website": "http://www.skywalk.info",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "skywalk GmbH & Co. KG Bahnhofstraße 110 83224 GRASSAU",
+      "email": "info@skywalk.org",
+      "phone": "+49 (0) 8641 - 69 48 40",
+      "phone2": ""
+    },
+    "id": "f3faabcf-f31e-4ce7-b598-dd69298e93b5"
+  },
+  {
+    "name": "SOL Paragliders",
+    "website": "http://www.solparagliders.com.br",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "SOL SPORTS Indústria e Comércio Ltda Cep 89259-565 Jaraguá do Sul/SC - Brasil",
+      "email": "",
+      "phone": "+55 (47) 3275-7753",
+      "phone2": ""
+    },
+    "id": "943b04cb-a5ea-4704-9fc4-769cc61428c5"
+  },
+  {
+    "name": "SupAir",
+    "website": "",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "01324569-7707-47bd-aee3-275639ffe0c3"
+  },
+  {
+    "name": "Swing",
+    "website": "http://www.swing.de",
+    "type": "MANUFACTURER",
+    "tagline": "Gleitschirme mit Ram Air Section",
+    "sponsorInSeasons": [
+      "2004",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Swing Flugsportgeräte GmbH An der Leiten 4 82290 Landsberied Germany",
+      "email": "info@swing.de",
+      "phone": "+49 8141 32 77 888",
+      "phone2": ""
+    },
+    "id": "423149a9-d482-4471-a728-eae9555a9dd8"
+  },
+  {
+    "name": "Thermik",
+    "website": "http://www.thermik.at/",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2019"
+    ],
+    "contacts": {
+      "address": "Thermik Verlag e. U. Stelzhamerstraße 18 A-4600 Wels",
+      "email": "herausgeber@thermik.at",
+      "phone": "+43 (0)7242/45 224-0",
+      "phone2": ""
+    },
+    "id": "e671eb7d-ebc4-4fb0-b995-66423724e94b"
+  },
+  {
+    "name": "Triple Seven",
+    "website": "http://www.living-sky.de",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2016",
+      "2017",
+      "2018",
+      "2019"
+    ],
+    "contacts": {
+      "address": "Triple Seven Ulica IV. prekomorske 61 5270 Ajdovščina, Slowenien +386-40-777313",
+      "email": "tim@living-sky.de",
+      "phone": "+49 (0) 0175-7691521",
+      "phone2": ""
+    },
+    "id": "bd14cdab-7162-4f02-8d56-c3ef6124a3cd"
+  },
+  {
+    "name": "TURNPOINT fastline",
+    "website": "http://www.turnpoint.de",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2009"
+    ],
+    "contacts": {
+      "address": "Edlingerstraße 68 D-83071 Stephanskirchen/Baierbach",
+      "email": "Info@turnpoint.de",
+      "phone": "08036 / 908 82 61",
+      "phone2": ""
+    },
+    "id": "ac003610-9d3d-4b97-8206-405a78603b4f"
+  },
+  {
+    "name": "UP",
+    "website": "http://www.up-europe.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [
+      "2004",
+      "2005",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "UP International GmbH Kreuzeckbahnstrasse 7 D-82467 Garmisch-Partenkirchen",
+      "email": "info@up-paragliders.com",
+      "phone": "+49 (0) 8821/73099-0",
+      "phone2": ""
+    },
+    "id": "707d17cb-1844-411c-8d36-2a2fdc138c63"
+  },
+  {
+    "name": "U-Turn",
+    "website": "http://www.u-turn.de",
+    "type": "MANUFACTURER",
+    "tagline" : "safe fun paragliding",
+    "sponsorInSeasons": [
+      "2009",
+      "2010",
+      "2011",
+      "2012",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "U-Turn GmbH Esslinger Straße 23 D-78054 Villingen-Schwenningen",
+      "email": "info@u-turn.de",
+      "phone": "+49 (0) 7720 - 807 111",
+      "phone2": ""
+    },
+    "id": "b1e9e897-0837-4b2f-96f6-ef99e82d501a"
+  },
+  {
+    "name": "Wills Wing",
+    "website": "http://www.willswing.com",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "b3c72efb-21e5-4cc4-ad98-7b5273c7e8a0"
+  },
+  {
+    "name": "Windtech",
+    "website": "http://www.windtech.es",
+    "type": "MANUFACTURER",
+    "sponsorInSeasons": [],
+    "contacts": {
+      "address": "",
+      "email": "windtech-toni@t-online.de",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "3b311571-4911-4e1a-984e-2ba94086ea92"
+  },
+  {
+    "name": "Gleitschirmreisen Süd Afrika",
+    "website": "http://www.wolke9.info",
+    "type": "HOLIDAY",
+    "sponsorInSeasons": [
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021"
+    ],
+    "contacts": {
+      "address": "Wolf Loehr Hauptstr.27 D-54538 Kinderbeuern 93 Vorster Ave Johannesburg/Glenanda South Africa +27764222244",
+      "email": "info@Wolke9.info",
+      "phone": "065329557706",
+      "phone2": "01733034107"
+    },
+    "id": "065e2806-e121-484a-aa2f-8cd9f130f68f"
+  },
+  {
+    "name": "Sponsor des XCCup 2020 werden?",
+    "website": "http://www.xccup.net/Static/sponsorensuche.htm",
+    "type": "OTHER",
+    "sponsorInSeasons": [
+      "2013",
+      "2016",
+      "2017",
+      "2018",
+      "2020"
+    ],
+    "contacts": {
+      "address": "Wie werde ich Sponsor des XCCup 2020?",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "aa8ee88e-c53b-4783-b420-79fb3491a2b1"
+  },
+  {
+    "name": "XIX Paragliders",
+    "type": "MANUFACTURER",
+    "website": "http://www.xix.ch",
+    "sponsorInSeasons": [
+      "2005"
+    ],
+    "contacts": {
+      "address": "",
+      "email": "",
+      "phone": "",
+      "phone2": ""
+    },
+    "id": "2e764f5b-9cc8-4aa1-b334-ada02d401830"
+  }
+]
