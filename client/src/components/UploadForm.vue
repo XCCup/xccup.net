@@ -62,7 +62,7 @@
           <textarea
             id="floatingTextarea2"
             v-model="flightReport"
-            class="form-control"
+            class="form-control cy-flight-report"
             placeholder="Flugbericht"
             style="height: 100px"
             :disabled="!flightId"
@@ -76,6 +76,7 @@
             v-model="hikeAndFly"
             class="form-check-input"
             type="checkbox"
+            :disabled="!flightId"
           />
           <label class="form-check-label" for="hikeAndFlyCheckbox">
             Hike & Fly
@@ -87,6 +88,7 @@
             v-model="onlyLogbook"
             class="form-check-input"
             type="checkbox"
+            :disabled="!flightId"
           />
           <label class="form-check-label" for="logbookCheckbox">
             Nur Flugbuch
@@ -136,7 +138,7 @@
 
         <div class="form-check mb-3">
           <input
-            id="flexCheckDefault"
+            id="acceptTermsCheckbox"
             v-model="rulesAccepted"
             class="form-check-input"
             type="checkbox"

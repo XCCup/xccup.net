@@ -3,7 +3,7 @@
     <h3>Flugeigenschaften</h3>
     <div class="row">
       <div class="col-md-6 col-12 my-1">
-        <table class="table table-sm">
+        <table id="cyFlightDetailsTable1" class="table table-sm">
           <tbody>
             <tr>
               <th>Pilot</th>
@@ -68,7 +68,7 @@
         </table>
       </div>
       <div class="col-md-6 col-12 my-1">
-        <table class="table table-sm">
+        <table id="cyFlightDetailsTable2" class="table table-sm">
           <tbody>
             <tr>
               <th>Flugzeit</th>
