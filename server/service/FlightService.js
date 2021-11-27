@@ -720,7 +720,7 @@ function createClubInclude(id) {
   const include = {
     model: Club,
     as: "club",
-    attributes: ["name"],
+    attributes: ["id", "name"],
   };
   if (id) {
     include.where = {
@@ -734,7 +734,7 @@ function createTeamInclude(id) {
   const include = {
     model: Team,
     as: "team",
-    attributes: ["name"],
+    attributes: ["id", "name"],
   };
   if (id) {
     include.where = {
