@@ -13,7 +13,7 @@ const userService = require("./UserService");
 
 const clientUrl = process.env.CLIENT_URL;
 const userActivate = process.env.CLIENT_USER_ACTIVATE;
-const userRenewPassword = process.env.CLIENT_USER_RENEW_PASSWORD;
+const userPasswordLost = process.env.CLIENT_USER_PASSWORD_LOST;
 
 const service = {
   sendMailSingle: async (fromUserId, toUserId, content) => {
@@ -62,9 +62,9 @@ const service = {
   },
 
   sendRequestNewPasswordMail: async (user) => {
-    logger.info(`Send new password to ${user.email}`);
+    logger.info(`Send new password request to ${user.email}`);
 
-    const resetLink = `${clientUrl}${userRenewPassword}?userId=${user.id}&token=${user.token}`;
+    const resetLink = `${clientUrl}${userPasswordLost}?confirm=true&userId=${user.id}&token=${user.token}`;
 
     const content = {
       title: REQUEST_NEW_PASSWORD_TITLE,
