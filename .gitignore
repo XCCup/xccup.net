@@ -8,13 +8,11 @@
 *.ctxt
 
 # Temp IGC Files
-Backend/igc/temp/
-Backend/igc/demo_igcs/temp/
+server/igc/temp/
+server/igc/demo_igcs/temp/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
-
-.env
 
 # Package Files #
 *.jar
@@ -29,5 +27,5 @@ Backend/igc/demo_igcs/temp/
 hs_err_pid*
 node_modules
 XCCup_DB_Schema/
-Frontend/cypress/videos/
-Frontend/cypress/screenshots/
+client/cypress/videos/
+client/cypress/screenshots/

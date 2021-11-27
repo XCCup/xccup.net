@@ -1,8 +1,0 @@
-﻿Kategorie;Beschreibung;MarkerIcon;MarkerIconSmall;IsPublic
-AND;Anderer;marker_Other.png;marker_Other_small.png;1
-FLP;Verkehrsflugplatz;marker_Airport.png;marker_Airport_small.png;1
-HGPGLAN;HG/PG-Landeplatz;marker_HGPG_Land.png;marker_HGPG_Land_small.png;1
-HGPGSTA;HG/PG-Startplatz;marker_HGPG_Start.png;marker_HGPG_Start_small.png;1
-OUTLAND;Aussenlandeplatz;marker_Outland.png;marker_Outland_small.png;0
-SFP;Segelflugplatz;marker_Glider.png;marker_Glider_small.png;1
-UL;UL-Flugplatz;marker_UL.png;marker_UL_small.png;1

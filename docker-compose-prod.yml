@@ -3,11 +3,11 @@ version: "3.8"
 services:
   client:
       build:
-        context: ./Frontend
+        context: ./client
         dockerfile: Dockerfile
       image: xccup-client
       container_name: xccup-client
-      env_file: ./Frontend/.env
+      env_file: ./client/.env
       restart: always
       depends_on:
         - server
@@ -22,12 +22,12 @@ services:
 
   server:
     build:
-      context: ./Backend
+      context: ./server
       dockerfile: Dockerfile
     image: xccup-server
     container_name: xccup-server
     restart: always
-    env_file: ./Backend/.env
+    env_file: ./server/.env
     environment:
       - NODE_ENV=production
     depends_on:
@@ -46,7 +46,7 @@ services:
     image: postgis/postgis
     container_name: xccup-db
     restart: always
-    env_file: ./Backend/.env
+    env_file: ./server/.env
     volumes:
       - xccup-db:/var/lib/postgresql/data
 
@@ -54,7 +54,7 @@ services:
     image: dpage/pgadmin4
     container_name: xccup-db-admin
     restart: always
-    env_file: ./Backend/.env
+    env_file: ./server/.env
     labels:
       traefik.enable: true
       traefik.http.routers.xccup-pg-admin.rule: "Host(`xccup.stephanschoepe.de`)"

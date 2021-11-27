@@ -1,0 +1,1058 @@
+[
+  {
+    "shortName": "DFC_SAAR",
+    "name": "Drachenflugclub Saar",
+    "website": "http://www.dfc-saar.de",
+    "Logo_small": "small/dfcsaar.png",
+    "urlLogo": "large/dfcsaar.png",
+    "createdAt": "2019-01-23 20:08:44.383",
+    "updatedAt": "2019-01-23 20:08:44.383",
+    "mapPosition": {
+      "lat": "49.624119",
+      "lon": "6.584203"
+    },
+    "contacts": [
+      {
+        "name": "DFC-Saar Vorstand",
+        "email": "vorstand@drachenflugclub-saar.de",
+        "createdAt": "2019-01-23 20:08:44.407"
+      }
+    ],
+    "id": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
+    "participantInSeasons": [2020, 2021, 2011, 2012, 2019]
+  },
+  {
+    "shortName": "DFC_TR",
+    "name": "Drachenflieger-Club Trier",
+    "website": "http://www.dfc-trier.com",
+    "Logo_small": "small/dfctrier.png",
+    "urlLogo": "large/dfctrier.png",
+    "createdAt": "2021-01-19 09:13:16.530",
+    "updatedAt": "2021-01-19 09:13:16.530",
+    "mapPosition": {
+      "lat": "49.853495",
+      "lon": "6.895651"
+    },
+    "contacts": [
+      {
+        "name": "DFC-Trier Vorstand",
+        "email": "vorstand@dfc-trier.com",
+        "createdAt": "2021-01-19 09:13:16.623"
+      }
+    ],
+    "id": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
+    "participantInSeasons": [
+      2020, 2021, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020,
+      2021
+    ]
+  },
+  {
+    "shortName": "MOSELFALKEN",
+    "name": "Die Moselfalken",
+    "website": "http://www.moselfalken.de",
+    "Logo_small": "small/moselfalken.png",
+    "urlLogo": "large/moselfalken.png",
+    "createdAt": "2021-01-15 15:52:21.823",
+    "updatedAt": "2021-01-15 15:52:21.823",
+    "mapPosition": {
+      "lat": "49.955488",
+      "lon": "7.008226"
+    },
+    "contacts": [
+      {
+        "name": "Axel Kalenborn",
+        "email": "kalenborn@t-online.de",
+        "createdAt": "2021-01-15 15:52:21.857"
+      },
+      {
+        "name": "Klaus Hagen",
+        "email": "Klaus_Hagen@freenet.de",
+        "createdAt": "2021-01-15 15:52:21.887"
+      },
+      {
+        "name": "Wolf Löhr",
+        "email": "moselfalken@online.de",
+        "createdAt": "2021-01-15 15:52:21.903"
+      }
+    ],
+    "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
+    "participantInSeasons": [
+      2020, 2021, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020,
+      2021
+    ]
+  },
+  {
+    "shortName": "PDGFC",
+    "name": "1. Pfälzer DGFC",
+    "website": "http://www.pdgfc.de",
+    "Logo_small": "small/ersterpfaelzer.png",
+    "urlLogo": "large/ersterpfaelzer.png",
+    "createdAt": "2019-02-02 14:44:52.633",
+    "updatedAt": "2019-02-02 14:44:52.633",
+    "mapPosition": {
+      "lat": "49.625278",
+      "lon": "7.914722"
+    },
+    "contacts": [
+      {
+        "name": "Holger Tupath",
+        "email": "Holger@tupath.de",
+        "createdAt": "2019-02-02 14:44:52.730"
+      },
+      {
+        "name": "Peter W. Körner",
+        "email": "pwk.koerner@t-online.de",
+        "createdAt": "2019-02-02 14:44:52.753"
+      }
+    ],
+    "id": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
+    "participantInSeasons": [2021, 2013, 2014, 2017, 2018, 2019]
+  },
+  {
+    "shortName": "GF_HOCHWALD",
+    "name": "Gleitschirmfreunde Hochwald",
+    "website": "http://www.gleitschirminfo.de",
+    "Logo_small": "small/gfhochwald.gif",
+    "urlLogo": "large/gfhochwald.gif",
+    "createdAt": "2011-01-18 19:55:07.550",
+    "updatedAt": "2011-01-18 19:55:07.550",
+    "mapPosition": {
+      "lat": "49.508253",
+      "lon": "6.744705"
+    },
+    "contacts": [
+      {
+        "name": "Ernst Heuser",
+        "email": "ernst.heuser@t-online.de",
+        "createdAt": "2011-01-18 19:55:07.600"
+      },
+      {
+        "name": "Jörg Diemann",
+        "email": "joerg.diemann@t-online.de",
+        "createdAt": "2011-01-18 19:55:07.613"
+      },
+      {
+        "name": "Winfried Noll",
+        "email": "winfriednoll@gmx.de",
+        "createdAt": "2011-01-18 19:55:07.630"
+      }
+    ],
+    "id": "04e89089-7a65-4d3f-ab49-0a518e1d594e",
+    "participantInSeasons": [2021, 2011]
+  },
+  {
+    "shortName": "DFC_VULKAN",
+    "name": "DFC Vulkaneifel",
+    "website": "http://www.dfc-vulkaneifel.de",
+    "Logo_small": "small/vulkaneifel.gif",
+    "urlLogo": "large/vulkaneifel.gif",
+    "createdAt": "2021-02-07 13:31:26.247",
+    "updatedAt": "2021-02-07 13:31:26.247",
+    "mapPosition": {
+      "lat": "50.234397",
+      "lon": "6.763414"
+    },
+    "contacts": [
+      {
+        "name": "Thomas Gerlach",
+        "email": "it-leitung@web.de",
+        "createdAt": "2021-02-07 13:31:26.293"
+      }
+    ],
+    "id": "90675c2e-3369-4d3f-afc4-d58e9cf69bf9",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "RML",
+    "name": "D.G.F. Rhein-Mosel-Lahn",
+    "website": "http://www.thermik4u.de",
+    "Logo_small": "small/rheinmosellahn.jpg",
+    "urlLogo": "large/rheinmosellahn.jpg",
+    "createdAt": "2021-01-19 09:13:46.373",
+    "updatedAt": "2021-01-19 09:13:46.373",
+    "mapPosition": {
+      "lat": "50.2312",
+      "lon": "7.58853"
+    },
+    "contacts": [
+      {
+        "name": "Horst Gresch",
+        "email": "horst.gresch@thermik4u.de",
+        "createdAt": "2021-01-19 09:13:46.420"
+      }
+    ],
+    "id": "c2026874-9cf0-4793-ad9a-66e22aea86af",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "OSTWIND",
+    "name": "Ostwindfreunde e.V.",
+    "website": "http://www.ostwindfreunde.de",
+    "Logo_small": "small/ostwind.png",
+    "urlLogo": "large/ostwind.png",
+    "createdAt": "2021-02-11 12:47:04.737",
+    "updatedAt": "2021-02-11 12:47:04.737",
+    "mapPosition": {
+      "lat": "50.717521",
+      "lon": "6.440808"
+    },
+    "contacts": [
+      {
+        "name": "Georg Becker",
+        "email": "georg.becker@ostwindfreunde.de",
+        "createdAt": "2021-02-11 12:47:04.847"
+      },
+      {
+        "name": "H P Opitz",
+        "email": "hans-peter.opitz@ostwindfreunde.de",
+        "createdAt": "2021-02-11 12:47:04.863"
+      },
+      {
+        "name": "Jürgen Bienhüls",
+        "email": "juergen@ostwindfreunde.de",
+        "createdAt": "2021-02-11 12:47:04.877"
+      }
+    ],
+    "id": "5d13f721-faf5-40af-9926-cb799294e982",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "DGCN",
+    "name": "DGC Nahetal",
+    "website": "http://www.dgcn.de",
+    "Logo_small": "small/dgcnahetal.png",
+    "urlLogo": "large/dgcnahetal.png",
+    "createdAt": "2009-12-09 23:17:12.510",
+    "updatedAt": "2009-12-09 23:17:12.510",
+    "contacts": [
+      {
+        "name": "Friedhelm Merz",
+        "email": "vorstand1@dgcn.de",
+        "createdAt": "2009-11-14 18:03:41.777"
+      },
+      {
+        "name": "Manfred Mielke",
+        "email": "vorstand2@dgcn.de",
+        "createdAt": "2009-11-14 18:03:41.793"
+      }
+    ],
+    "id": "88cc9931-b205-4b3e-9383-df3a5226c8de"
+  },
+  {
+    "shortName": "HELLERTAL",
+    "name": "DGF Hellertal",
+    "website": "http://www.dgfhellertal.de",
+    "Logo_small": "small/dgfhellertal.png",
+    "urlLogo": "large/dgfhellertal.png",
+    "createdAt": "2011-12-15 21:55:54.270",
+    "updatedAt": "2011-12-15 21:55:54.270",
+    "contacts": [
+      {
+        "name": "Jan Ginsberg",
+        "email": "b.ginsberg@gmx.de",
+        "createdAt": "2011-12-15 21:55:54.540"
+      },
+      {
+        "name": "Tobias Gross",
+        "email": "tobgros@aol.com",
+        "createdAt": "2011-12-15 21:55:54.560"
+      }
+    ],
+    "id": "af10cbc4-3087-41db-88f3-63d021789004"
+  },
+  {
+    "shortName": "SPGFC",
+    "name": "Südpfälzer GFC",
+    "website": "http://www.duddefliecher.de",
+    "Logo_small": "small/duddefliecher.png",
+    "urlLogo": "large/duddefliecher.png",
+    "createdAt": "2021-02-03 16:10:16.123",
+    "updatedAt": "2021-02-03 16:10:16.123",
+    "mapPosition": {
+      "lat": "49.244021",
+      "lon": "8.027494"
+    },
+    "contacts": [
+      {
+        "name": "Südpfälzer",
+        "email": "juergen.weckenmann@aquaconcept.de",
+        "createdAt": "2021-02-03 16:10:16.200"
+      },
+      {
+        "name": "Verein",
+        "email": "kontakt@duddefliecher.de",
+        "createdAt": "2021-02-03 16:10:16.217"
+      },
+      {
+        "name": "Wolfgang Reuter",
+        "email": "Wolfgang-Reuter@t-online.de",
+        "createdAt": "2021-02-03 16:10:16.233"
+      }
+    ],
+    "id": "91af8d69-b162-4d60-8c47-77b3f05e8c20",
+    "participantInSeasons": [
+      2011, 2012, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "PARASAAR",
+    "name": "1. Para-Ski-Club Saar e.V.",
+    "website": "http://www.paraski.de/",
+    "Logo_small": "small/paraskiclubsaar.png",
+    "urlLogo": "large/paraskiclubsaar.png",
+    "createdAt": "2016-03-12 19:29:56.087",
+    "updatedAt": "2016-03-12 19:29:56.087",
+    "contacts": [
+      {
+        "name": "Paraski Vorstand",
+        "email": "vorstand@paraski.de",
+        "createdAt": "2016-03-12 19:29:56.210"
+      }
+    ],
+    "id": "af809952-b6ce-4c1e-998a-388f1dbb4923",
+    "participantInSeasons": [2011, 2012, 2013, 2014, 2015, 2016]
+  },
+  {
+    "shortName": "DGCSIEBEN",
+    "name": "DGC Siebengebirge",
+    "website": "http://www.dgc-siebengebirge.com",
+    "Logo_small": "small/dgcsiebengebirge.png",
+    "urlLogo": "large/dgcsiebengebirge.png",
+    "createdAt": "2009-12-09 23:17:12.510",
+    "updatedAt": "2009-12-09 23:17:12.510",
+    "contacts": [
+      {
+        "name": "Markus Scheid",
+        "email": "markus@dgc-siebengebirge.de",
+        "createdAt": "2009-11-14 17:58:24.167"
+      },
+      {
+        "name": "Lucian Haas",
+        "email": "lucian@dgc-siebengebirge.de",
+        "createdAt": "2009-11-14 17:58:24.177"
+      }
+    ],
+    "id": "44038d90-7ef0-48e6-bcf7-5e194d80a004"
+  },
+  {
+    "shortName": "DGLC",
+    "name": "DGLC Frankfurt-Rhein-Main",
+    "website": "http://dglc-rhein-main.de/",
+    "Logo_small": "small/DGLC_FrankfurtRheinMain.png",
+    "urlLogo": "large/DGLC_FrankfurtRheinMain.png",
+    "createdAt": "2021-01-20 10:33:44.617",
+    "updatedAt": "2021-01-20 10:33:44.617",
+    "mapPosition": {
+      "lat": "50.335312",
+      "lon": "8.532006"
+    },
+    "contacts": [
+      {
+        "name": "R.Stemminger",
+        "email": "r.stemminger@gmx.de",
+        "createdAt": "2021-01-20 10:33:44.680"
+      },
+      {
+        "name": "Thorsten Braun",
+        "email": "tb@thorstenbraun.de",
+        "createdAt": "2021-01-20 10:33:44.727"
+      }
+    ],
+    "id": "d1ed2b23-c90f-4d40-bb1f-9d9f44c6fc1c",
+    "participantInSeasons": [
+      2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "ODC",
+    "name": "1. Odenwälder DGC",
+    "website": "http://www.ersterodc.de",
+    "Logo_small": "small/ersterodc.png",
+    "urlLogo": "large/ersterodc.png",
+    "createdAt": "2012-01-23 22:28:07.230",
+    "updatedAt": "2012-01-23 22:28:07.230",
+    "contacts": [
+      {
+        "name": "Carlo Balser",
+        "email": "2.vorsitzender@ersterodc.de",
+        "createdAt": "2012-01-23 22:28:07.553"
+      },
+      {
+        "name": "Patrick Jung",
+        "email": "sport-referent@ersterodc.de",
+        "createdAt": "2012-01-23 22:28:07.617"
+      },
+      {
+        "name": "Rene Gensert",
+        "email": "1.vorsitzender@ersterodc.de",
+        "createdAt": "2012-01-23 22:28:07.647"
+      }
+    ],
+    "id": "ed57c0d2-b141-404f-ae4a-d99ad17cf93d",
+    "participantInSeasons": [2011, 2012]
+  },
+  {
+    "shortName": "GVNG",
+    "name": "Gleitschirmverein Nahe Glan",
+    "website": "http://www.gleitschirmverein-nahe-glan.de",
+    "Logo_small": "small/naheglan.png",
+    "urlLogo": "large/naheglan.png",
+    "createdAt": "2021-01-15 15:50:18.973",
+    "updatedAt": "2021-01-15 15:50:18.973",
+    "mapPosition": {
+      "lat": "49.783271",
+      "lon": "8.194753"
+    },
+    "contacts": [
+      {
+        "name": "Fritz Altrichter",
+        "email": "frialtrichter@freenet.de",
+        "createdAt": "2021-01-15 15:50:19.007"
+      },
+      {
+        "name": "Martin Langen",
+        "email": "martinlangen@web.de",
+        "createdAt": "2021-01-15 15:50:19.020"
+      }
+    ],
+    "id": "32d2ee23-27f9-444a-9fc1-44210e51cbe1",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "KURPFAELZ",
+    "name": "Kurpfälzer Gleitschirmflieger",
+    "website": "http://www.kurpfaelzer-gleitschirmflieger.de",
+    "Logo_small": "small/kurpfaelzer.png",
+    "urlLogo": "large/kurpfaelzer.png",
+    "createdAt": "2021-01-15 15:49:42.550",
+    "updatedAt": "2021-01-15 15:49:42.550",
+    "mapPosition": {
+      "lat": "49.398752",
+      "lon": "8.672434"
+    },
+    "contacts": [
+      {
+        "name": "Friedbert Kaiser",
+        "email": "info@kurpfaelzer-gleitschirmflieger.de",
+        "createdAt": "2021-01-15 15:49:42.677"
+      },
+      {
+        "name": "Uwe Hein\t",
+        "email": "uwe.hein@t-online.de",
+        "createdAt": "2021-01-15 15:49:42.690"
+      },
+      {
+        "name": "Volker Watzel",
+        "email": "duplexair@freenet.de",
+        "createdAt": "2021-01-15 15:49:42.723"
+      }
+    ],
+    "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "GCNECKAROD",
+    "name": "GSC Neckar-Odenwald",
+    "website": "http://www.para-now.de",
+    "Logo_small": "small/gcneckarodenwald.png",
+    "urlLogo": "large/gcneckarodenwald.png",
+    "createdAt": "2021-02-03 04:47:42.710",
+    "updatedAt": "2021-02-03 04:47:42.710",
+    "mapPosition": {
+      "lat": "49.316878",
+      "lon": "9.420082"
+    },
+    "contacts": [
+      {
+        "name": "Ralf Stecher",
+        "email": "Ralf.Stecher@o2online.de",
+        "createdAt": "2021-02-03 04:47:42.807"
+      },
+      {
+        "name": "Verein",
+        "email": "info@para-now.de",
+        "createdAt": "2021-02-03 04:47:42.820"
+      }
+    ],
+    "id": "165b1b87-8b03-43a6-b32c-8e147c9218db",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "NIEDERRHEIN",
+    "name": "Fliegerfreunde Niederrhein",
+    "website": "http://www.fliegerfreunde-niederrhein.de",
+    "Logo_small": "small/ffniederrhein.png",
+    "urlLogo": "large/ffniederrhein.png",
+    "createdAt": "2012-01-29 00:37:10.423",
+    "updatedAt": "2012-01-29 00:37:10.423",
+    "contacts": [
+      {
+        "name": "Christian Ida",
+        "email": "christian.ida@cityweb.de",
+        "createdAt": "2012-01-29 00:37:10.550"
+      },
+      {
+        "name": "Dr. Theo Schürholz",
+        "email": "dr.theo@web.de",
+        "createdAt": "2012-01-29 00:37:10.593"
+      }
+    ],
+    "id": "f94c7e46-d3c2-4a4e-b2b6-49cae39cb73a",
+    "participantInSeasons": [2011, 2012]
+  },
+  {
+    "shortName": "DELTACLUB",
+    "name": "Delta-Club Rheinland",
+    "website": "http://delta-club.de/",
+    "Logo_small": "small/deltaclubrheinland.jpg",
+    "urlLogo": "large/deltaclubrheinland.jpg",
+    "createdAt": "2009-12-09 23:17:12.510",
+    "updatedAt": "2009-12-09 23:17:12.510",
+    "contacts": [],
+    "id": "534f4129-be83-4f80-8292-567b3c5a7de3"
+  },
+  {
+    "shortName": "PGSC",
+    "name": "Pfälzer Gleitschirmclub",
+    "website": "https://pfalzer-gleitschirm-club.business.site/",
+    "Logo_small": "small/pgsc.png",
+    "urlLogo": "large/pgsc.png",
+    "createdAt": "2021-01-23 14:00:14.657",
+    "updatedAt": "2021-01-23 14:00:14.657",
+    "mapPosition": {
+      "lat": "49.917286",
+      "lon": "7.896455"
+    },
+    "contacts": [
+      {
+        "name": "Eike Mittelbach",
+        "email": "vorsitz1@pfaelzergleitschirmclub.info",
+        "createdAt": "2021-01-23 14:00:14.750"
+      },
+      {
+        "name": "Volkart Meier",
+        "email": "vorsitz2@pfaelzergleitschirmclub.info",
+        "createdAt": "2021-01-23 14:00:14.767"
+      }
+    ],
+    "id": "8ff0c760-0ee8-47e1-a14f-b99c4ac87b82",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "LINDENFELS",
+    "name": "Gleitschirmflieger Lindenfels",
+    "website": "http://www.gleitschirmflieger-lindenfels.de/",
+    "Logo_small": "small/GSFLindenfels_S.png",
+    "urlLogo": "large/GSFLindenfels_L.png",
+    "createdAt": "2011-01-23 14:38:02.630",
+    "updatedAt": "2011-01-23 14:38:02.630",
+    "contacts": [
+      {
+        "name": "Reinhard Arnold",
+        "email": "arnold.r@ar-architekten.de",
+        "createdAt": "2011-01-23 14:38:02.647"
+      },
+      {
+        "name": "Rene Gensert",
+        "email": "rene@gleitsegel-fliegen.de",
+        "createdAt": "2011-01-23 14:38:02.663"
+      },
+      {
+        "name": "Verein",
+        "email": "verein@gleitschirmflieger-lindenfels.de",
+        "createdAt": "2011-01-23 14:38:02.680"
+      }
+    ],
+    "id": "e0f14a79-1b0f-4f6d-a4cd-68a7fe6d9fb7",
+    "participantInSeasons": [2011]
+  },
+  {
+    "shortName": "GLEITZEIT",
+    "name": "Gleitzeit e.V.",
+    "website": "http://www.gleitzeit-ev.de",
+    "Logo_small": "small/Gleitzeit.png",
+    "urlLogo": "large/Gleitzeit.png",
+    "createdAt": "2021-02-02 09:18:33.743",
+    "updatedAt": "2021-02-02 09:18:33.743",
+    "mapPosition": {
+      "lat": "51.441374",
+      "lon": "6.546764"
+    },
+    "contacts": [
+      {
+        "name": "Dieter Dwideit",
+        "email": "d.dowideit@gmx.de",
+        "createdAt": "2021-02-02 09:18:33.823"
+      },
+      {
+        "name": "Peter Jasulke",
+        "email": "p.jesulke@googlemail.com",
+        "createdAt": "2021-02-02 09:18:33.853"
+      }
+    ],
+    "id": "4bfa6d77-0792-4e09-87ae-0a04081100a1",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "OUREWALLER",
+    "name": "Ourewäller Iwwefliejer",
+    "website": "http://www.oif.de",
+    "Logo_small": "small\\ourewälleriwwefliejer_s.jpg",
+    "urlLogo": "large\\ourewälleriwwefliejer.jpg",
+    "createdAt": "2021-02-10 08:50:52.120",
+    "updatedAt": "2021-02-10 08:50:52.120",
+    "mapPosition": {
+      "lat": "49.611006",
+      "lon": "9.051039"
+    },
+    "contacts": [
+      {
+        "name": "Bernhard Kempe",
+        "email": "bernhard.kempe@edi-son-et.de",
+        "createdAt": "2021-02-10 08:50:52.180"
+      },
+      {
+        "name": "Georg Schumacher",
+        "email": "gs@ib-schumacher.de",
+        "createdAt": "2021-02-10 08:50:52.213"
+      }
+    ],
+    "id": "b8337bb0-c16c-4db4-9915-918bab1fe0bc",
+    "participantInSeasons": [
+      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
+  },
+  {
+    "shortName": "EIFEL_THERMIK",
+    "name": "Winden Club Eifelthermik",
+    "website": "",
+    "Logo_small": "",
+    "urlLogo": "",
+    "createdAt": "2009-12-09 23:17:12.510",
+    "updatedAt": "2009-12-09 23:17:12.510",
+    "contacts": [
+      {
+        "name": "Verein",
+        "email": "paragliding@esmnet.de",
+        "createdAt": "2009-11-16 13:55:00.983"
+      }
+    ],
+    "id": "4e67b70c-61ff-4c7d-9e1b-988a5d016f05"
+  },
+  {
+    "shortName": "SAUERLANDAIR",
+    "name": "SauerlandAir e.V.",
+    "website": "http://www.sauerlandair.de/",
+    "Logo_small": "small/sauerlandair.png",
+    "urlLogo": "large/sauerlandair.png",
+    "createdAt": "2021-01-26 19:13:48.970",
+    "updatedAt": "2021-01-26 19:13:48.970",
+    "mapPosition": {
+      "lat": "51.289153",
+      "lon": "8.176466"
+    },
+    "contacts": [
+      {
+        "name": "Burkhard Schulte",
+        "email": "burkhard@sauerlandair.de",
+        "createdAt": "2021-01-26 19:13:49.063"
+      },
+      {
+        "name": "Markus Hanses",
+        "email": "Macke@sauerlandair.de",
+        "createdAt": "2021-01-26 19:13:49.080"
+      }
+    ],
+    "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863",
+    "participantInSeasons": [2013, 2020, 2021]
+  },
+  {
+    "shortName": "GFSTAUBERT",
+    "name": "Gleitschirmfreunde Taubertal e.V.",
+    "website": "http://www.gleitschirmfreunde-taubertal.de",
+    "Logo_small": "small\\gsftaubertal_s.gif",
+    "urlLogo": "large\\gsftaubertal_l.gif",
+    "createdAt": "2018-01-19 11:43:31.933",
+    "updatedAt": "2018-01-19 11:43:31.933",
+    "contacts": [
+      {
+        "name": "Jens Jurgan",
+        "email": "Jens@gleitschirmfreunde-taubertal.de",
+        "createdAt": "2018-01-19 11:43:31.957"
+      }
+    ],
+    "id": "8ae84040-d496-4b8c-af1d-8211aade88cd",
+    "participantInSeasons": [2018]
+  },
+  {
+    "shortName": "ARZBACH",
+    "name": "Naturfreunde und Freiflieger Großer Kopf Westerwald e.V",
+    "website": "http://www.freiflieger-arzbach.de",
+    "Logo_small": "small/ffArzbach.png",
+    "urlLogo": "large/ffArzbach.png",
+    "createdAt": "2011-05-15 16:58:27.270",
+    "updatedAt": "2011-05-15 16:58:27.270",
+    "contacts": [
+      {
+        "name": "Mario Schaeffer",
+        "email": "minigalopper@gmx.de",
+        "createdAt": "2011-05-15 16:58:27.293"
+      }
+    ],
+    "id": "4e8354a6-d77e-45e7-8728-3b9949522edf",
+    "participantInSeasons": [2011]
+  },
+  {
+    "shortName": "SKYTEAM",
+    "name": "Skyteam-Neuss",
+    "website": "http://www.skyteam-neuss.de/",
+    "Logo_small": "small/SkyTeamNeuss_small.png",
+    "urlLogo": "large/SkyTeamNeuss_large.png",
+    "createdAt": "2018-01-19 11:45:42.457",
+    "updatedAt": "2018-01-19 11:45:42.457",
+    "contacts": [
+      {
+        "name": "Andreas Damek",
+        "email": "Andreas.Damek@skyteam-neuss.de",
+        "createdAt": "2018-01-19 11:45:42.520"
+      },
+      {
+        "name": "Michael Lichi",
+        "email": "Michael.Lichi@skyteam-neuss.de",
+        "createdAt": "2018-01-19 11:45:42.583"
+      }
+    ],
+    "id": "e2a5f355-4027-4725-a7fe-cee70413f8ce",
+    "participantInSeasons": [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+  },
+  {
+    "shortName": "BERGSTRAESSLER",
+    "name": "Bergsträßler Drachen und Gleitschirmflieger",
+    "website": "http://www.bergstraessler-drachenflieger.de",
+    "Logo_small": "small/Bergstraessler.png",
+    "urlLogo": "large/Bergstraessler.png",
+    "createdAt": "2020-01-27 21:25:37.877",
+    "updatedAt": "2020-01-27 21:25:37.877",
+    "contacts": [
+      {
+        "name": "Florian Sies",
+        "email": "f.sies@gmx.de",
+        "createdAt": "2020-01-27 21:25:37.890"
+      },
+      {
+        "name": "Georg Rombach",
+        "email": "georg.rombach@gkm.de",
+        "createdAt": "2020-01-27 21:25:37.940"
+      },
+      {
+        "name": "Peter Wahl",
+        "email": "mini@peterwahl.info",
+        "createdAt": "2020-01-27 21:25:37.953"
+      },
+      {
+        "name": "Peter Winter",
+        "email": "p.winter42@gmx.de",
+        "createdAt": "2020-01-27 21:25:37.970"
+      },
+      {
+        "name": "Zdzislaw (Toni) Stankiewicz",
+        "email": "z.stankiewicz@hs-mannheim.de",
+        "createdAt": "2020-01-27 21:25:37.987"
+      }
+    ],
+    "id": "13726a2e-068e-4291-8e35-d3bf77ad1e67",
+    "participantInSeasons": [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+  },
+  {
+    "shortName": "AIRWALKER",
+    "name": "Airwalker e.V.",
+    "website": "http://www.airwalker-ev.de",
+    "Logo_small": "small/airwalker.png",
+    "urlLogo": "large/airwalker.png",
+    "createdAt": "2017-01-25 18:45:53.603",
+    "updatedAt": "2017-01-25 18:45:53.603",
+    "contacts": [
+      {
+        "name": "Frank Velten",
+        "email": "frank.velten@airwalker-ev.de",
+        "createdAt": "2017-01-25 18:45:53.623"
+      },
+      {
+        "name": "Reinhold Schöttler",
+        "email": "reinhold.schoettler@airwalker-ev.de",
+        "createdAt": "2017-01-25 18:45:53.670"
+      },
+      {
+        "name": "Uwe Strauch",
+        "email": "uwe.strauch@airwalker-ev.de",
+        "createdAt": "2017-01-25 18:45:53.703"
+      }
+    ],
+    "id": "9379c8e0-47bb-4548-a773-e824ab670db0",
+    "participantInSeasons": [2013, 2014, 2015, 2016, 2017]
+  },
+  {
+    "shortName": "KREUZBERGFLIEGER",
+    "name": "Gleitschirm-Club Kreuzberg Rhön e. V.",
+    "website": "http://www.kreuzbergflieger.de",
+    "Logo_small": "small/kreuzbergflieger.png",
+    "urlLogo": "large/kreuzbergflieger.png",
+    "createdAt": "2018-01-19 11:43:50.087",
+    "updatedAt": "2018-01-19 11:43:50.087",
+    "contacts": [
+      {
+        "name": "Kreuzbergflieger",
+        "email": "info@kreuzbergflieger.de",
+        "createdAt": "2018-01-19 11:43:50.100"
+      }
+    ],
+    "id": "625d62a6-9d83-4ef2-8a59-7034905868bc",
+    "participantInSeasons": [2017, 2018]
+  },
+  {
+    "shortName": "FUN_GLIDERS_WW",
+    "name": "Fun-Gliders-Westerwald e.V.",
+    "website": "http://www.fun-gliders-westerwald.de",
+    "Logo_small": "small/funglidersww.png",
+    "urlLogo": "large/funglidersww.png",
+    "createdAt": "2017-02-27 19:35:12.047",
+    "updatedAt": "2017-02-27 19:35:12.047",
+    "contacts": [
+      {
+        "name": "Klaus-Wilhelm Hassel",
+        "email": "FGWmail@gmx.de",
+        "createdAt": "2017-02-27 19:35:12.150"
+      },
+      {
+        "name": "Wolfgang Jahn",
+        "email": "jahn.wo@freenet.de",
+        "createdAt": "2017-02-27 19:35:12.183"
+      }
+    ],
+    "id": "16dd3dd1-a562-4022-9147-94ff2e23bd35",
+    "participantInSeasons": [2014, 2015, 2016, 2017]
+  },
+  {
+    "shortName": "PC_WERRATAL",
+    "name": "PC Werratal-Eschwege-Eichsfeld e.V.",
+    "website": "https://www.eschwege.de/stadt/buergerservice/vereinsverzeichnis/vereine/Paraclub-Werratal-Eschwege-Eichsfeld-e.V.php",
+    "Logo_small": "small/pc_werratal.png",
+    "urlLogo": "large/pc_werratal.png",
+    "createdAt": "2021-02-02 09:19:20.497",
+    "updatedAt": "2021-02-02 09:19:20.497",
+    "mapPosition": {
+      "lat": "51.186867",
+      "lon": "10.057506"
+    },
+    "contacts": [
+      {
+        "name": "Andi",
+        "email": "ikarus.ae@arcor.de",
+        "createdAt": "2021-02-02 09:19:20.513"
+      }
+    ],
+    "id": "6ce9a6c0-6056-4930-bdae-c17018626228",
+    "participantInSeasons": [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021]
+  },
+  {
+    "shortName": "RDG_POPPENHAUSEN",
+    "name": "RDG Poppenhausen e.V.",
+    "website": "http://www.rdg-ev.de",
+    "Logo_small": "small/rdg_poppenhausen.png",
+    "urlLogo": "large/rdg_poppenhausen.png",
+    "createdAt": "2021-02-17 08:39:24.537",
+    "updatedAt": "2021-02-17 08:39:24.537",
+    "mapPosition": {
+      "lat": "50.497647",
+      "lon": "9.936289"
+    },
+    "contacts": [
+      {
+        "name": "Remy Ochmann",
+        "email": "nukimoto@yahoo.de",
+        "createdAt": "2021-02-17 08:39:24.570"
+      }
+    ],
+    "id": "145e7f46-5dce-4269-917a-c78e0629b699",
+    "participantInSeasons": [2015, 2016, 2017, 2018, 2019, 2020, 2021]
+  },
+  {
+    "shortName": "FLY_MIL",
+    "name": "Lilienthalgleiter Unterfranken",
+    "website": "http://www.fly-mil.de/",
+    "Logo_small": "",
+    "urlLogo": "",
+    "createdAt": "2019-01-23 16:48:40.447",
+    "updatedAt": "2019-01-23 16:48:40.447",
+    "contacts": [
+      {
+        "name": "\"Bürgstadter Str. 17, 63897 Miltenberg",
+        "email": "\"",
+        "createdAt": "rudolf.heissig@online.de"
+      },
+      {
+        "name": "Rudolf Heissig",
+        "email": "rudolf.heissig@online.de",
+        "createdAt": "2019-01-23 16:48:40.497"
+      }
+    ],
+    "id": "1e9b85c1-ed0c-48fb-bfa9-fe69556a5110"
+  },
+  {
+    "shortName": "HIMMELSSTUERMER_LAHN",
+    "name": "Himmelsstürmer Lahn e.V.",
+    "website": "http://www.himmelsstuermerlahn.de",
+    "Logo_small": "",
+    "urlLogo": "",
+    "createdAt": "2017-05-28 22:14:12.620",
+    "updatedAt": "2017-05-28 22:14:12.620",
+    "contacts": [],
+    "id": "fd2b8a48-2615-46b4-b5b9-b040165120f7",
+    "participantInSeasons": [2017]
+  },
+  {
+    "shortName": "ASSLAR",
+    "name": "Asslarer Gleitschirmflieger",
+    "website": "http://www.asslarergleitschirmflieger.de",
+    "Logo_small": "small/asslarer_gs.png",
+    "urlLogo": "large/asslarer_gs.png",
+    "createdAt": "2021-01-15 17:10:53.773",
+    "updatedAt": "2021-01-15 17:10:53.773",
+    "mapPosition": {
+      "lat": "50.592795",
+      "lon": "8.464908"
+    },
+    "contacts": [
+      {
+        "name": "Dirk Weiss",
+        "email": "dirk-weiss@gmx.de",
+        "createdAt": "2021-01-15 17:10:53.803"
+      }
+    ],
+    "id": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa",
+    "participantInSeasons": [2017, 2018, 2019, 2020, 2021]
+  },
+  {
+    "shortName": "MOSBACH",
+    "name": "Delta Club Mosbach e.V.",
+    "website": "http://www.deltaclub-mosbach.de",
+    "Logo_small": "",
+    "urlLogo": "",
+    "createdAt": "2017-05-28 22:46:52.793",
+    "updatedAt": "2017-05-28 22:46:52.793",
+    "contacts": [],
+    "id": "9ca955ee-b0f2-4468-b6b6-e2638401398b"
+  },
+  {
+    "shortName": "KRAICHTAL",
+    "name": "Gleitschirmclub Kraichtal e.V.",
+    "website": "https://www.gleitschirmclub-kraichtal.de",
+    "Logo_small": "",
+    "urlLogo": "",
+    "createdAt": "2018-02-15 08:08:35.660",
+    "updatedAt": "2018-02-15 08:08:35.660",
+    "contacts": [],
+    "id": "216211a4-8fb0-4985-a2dd-d9d438599b3e"
+  },
+  {
+    "shortName": "AUFWIND",
+    "name": "Aufwind Brettachtal e.V.",
+    "website": "http://aufwindbrettachtal.de",
+    "Logo_small": "small/aufwind_brettachtal_small.png",
+    "urlLogo": "large/aufwind_brettachtal_large.png",
+    "createdAt": "2018-02-17 12:09:56.960",
+    "updatedAt": "2018-02-17 12:09:56.960",
+    "contacts": [
+      {
+        "name": "Christian Rokos",
+        "email": "christian@aufwindbrettachtal.de",
+        "createdAt": "2018-02-17 12:09:56.970"
+      }
+    ],
+    "id": "c2098d88-c76f-449d-85d6-0335f12eec03",
+    "participantInSeasons": [2018]
+  },
+  {
+    "shortName": "AERO_CLUB_ALTENA",
+    "name": "Aero-Club Altena",
+    "website": "http://www.air-hegenscheid.de",
+    "Logo_small": "small/aero_altena_small.png",
+    "urlLogo": "large/aero_altena_large.png",
+    "createdAt": "2021-02-17 21:28:27.070",
+    "updatedAt": "2021-02-17 21:28:27.070",
+    "mapPosition": {
+      "lat": "51.299026",
+      "lon": "7.673484"
+    },
+    "contacts": [
+      {
+        "name": "Martin Hohoff",
+        "email": "mhohoff@web.de",
+        "createdAt": "2021-08-26 10:37:00"
+      }
+    ],
+    "id": "ccbdb7c3-d04d-4522-a653-7d254337a992",
+    "participantInSeasons": [2018, 2019, 2020, 2021]
+  },
+  {
+    "shortName": "CUMULUX",
+    "name": "Cumulux Paragliding Club",
+    "website": "http://cumulux.lu",
+    "Logo_small": "small/cumulux.png",
+    "urlLogo": "large/cumulux.png",
+    "createdAt": "2021-02-14 23:05:25.507",
+    "updatedAt": "2021-02-14 23:05:25.507",
+    "mapPosition": {
+      "lat": "49.915633",
+      "lon": "6.091731"
+    },
+    "contacts": [
+      {
+        "name": "Nick",
+        "email": "hnick@pt.lu",
+        "createdAt": "2021-02-14 23:05:25.570"
+      }
+    ],
+    "id": "bd4eca98-d746-4b13-8c9f-14d466336cb3",
+    "participantInSeasons": [2019, 2020, 2021]
+  },
+  {
+    "shortName": "ALBATROS",
+    "name": "Albatros GSC Aschaffenburg",
+    "website": "www.albatros-gsc.de/",
+    "Logo_small": "small/gsc_albatros_small.png",
+    "urlLogo": "large/gsc_albatros_large.png",
+    "createdAt": "2018-03-03 09:45:26.597",
+    "updatedAt": "2018-03-03 09:45:26.597",
+    "contacts": [
+      {
+        "name": "Heinz Droste",
+        "email": "heinz.droste@t-online.de",
+        "createdAt": "2018-03-03 09:45:26.667"
+      },
+      {
+        "name": "Stefan Flick",
+        "email": "flick.luzius@gmx.net",
+        "createdAt": "2018-03-03 09:45:26.690"
+      }
+    ],
+    "id": "ad944971-869b-4c9a-9c33-4d290f8c8471",
+    "participantInSeasons": [2018]
+  }
+]
