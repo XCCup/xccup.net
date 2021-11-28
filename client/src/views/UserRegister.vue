@@ -6,7 +6,7 @@
         <div v-if="!signupSuccessfull" class="col-12 col-lg-9 col-xl-7">
           <div class="card shadow-2-strong" style="border-radius: 15px">
             <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2">Registrieren</h3>
+              <h3 class="mb-4">Registrieren</h3>
               <form>
                 <div class="row">
                   <div class="col-md-6 mb-4">
@@ -21,7 +21,7 @@
                   <div class="col-md-6 mb-4">
                     <BaseInput
                       v-model="userData.email"
-                      label="Email"
+                      label="E-Mail"
                       :is-email="true"
                     />
                   </div>
@@ -43,6 +43,7 @@
                       v-model="userData.birthday"
                       label="Geburstag"
                       starting-view="year"
+                      :upper-limit="upperLimitBirthday"
                     />
                   </div>
                 </div>
@@ -153,7 +154,7 @@
                 <!-- Submit button -->
                 <div class="mt-4 pt-2">
                   <button
-                    class="btn btn-primary btn-lg"
+                    class="btn btn-primary btn"
                     type="submit"
                     :disabled="!registerButtonIsEnabled"
                     @click.prevent="onSubmit"
@@ -214,6 +215,32 @@ const signupSuccessfull = ref(false);
 // User input
 const rulesAccepted = ref(false);
 const errorMessage = ref(null);
+
+// Todo: Form input validation with vue
+const userData = reactive({
+  firstName: "",
+  lastName: "",
+  birthday: "",
+  gender: "",
+  password: "",
+  clubId: "",
+  email: "",
+  address: { country: "GER" },
+  emailNewsletter: true,
+  tshirtSize: "",
+
+  // Set this options as defaults
+  // Todo: Maybe do this in backend?
+
+  emailInformIfComment: true,
+  emailTeamSearch: false,
+});
+
+// Set upper boundary of date picker
+const limitDate = new Date();
+limitDate.setYear(limitDate.getFullYear() - 16);
+const upperLimitBirthday = ref(limitDate);
+
 
 // Helpers
 const showSpinner = ref(false);
@@ -285,11 +312,11 @@ const onSubmit = async () => {
 
     // Todo: Where do this error messages come from? Is this safe?
 
-    // Email errors
+    // E-Mail errors
     if (error.response?.data === "email must be unique")
-      return (errorMessage.value = "Diese Email existiert bereits");
+      return (errorMessage.value = "Diese E-Mail existiert bereits");
     if (error.response?.data.errors[0].param === "email")
-      return (errorMessage.value = "Dies ist keine gültige Email Adresse");
+      return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
 
     // Password errors
     if (error.response?.data.errors[0].param === "password")

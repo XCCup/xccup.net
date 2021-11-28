@@ -6,8 +6,14 @@ const {
   REGISTRATION_TITLE,
   NEW_PASSWORD_TITLE,
   NEW_PASSWORD_TEXT,
+  REQUEST_NEW_PASSWORD_TITLE,
+  REQUEST_NEW_PASSWORD_TEXT,
 } = require("../constants/email-message-constants");
 const userService = require("./UserService");
+
+const clientUrl = process.env.CLIENT_URL;
+const userActivateLink = process.env.CLIENT_USER_ACTIVATE;
+const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST;
 
 const service = {
   sendMailSingle: async (fromUserId, toUserId, content) => {
@@ -32,9 +38,10 @@ const service = {
   },
 
   sendActivationMail: async (user) => {
-    logger.info(`Send activation mail for ${user.id}`);
+    logger.info(`Send activation mail to ${user.email}`);
 
-    const activationLink = `http://localhost:3000/api/users/activate/${user.id}`;
+    const activationLink = `${clientUrl}${userActivateLink}?userId=${user.id}&token=${user.token}`;
+
 
     const content = {
       title: REGISTRATION_TITLE,
@@ -50,6 +57,19 @@ const service = {
     const content = {
       title: NEW_PASSWORD_TITLE,
       text: NEW_PASSWORD_TEXT(user.firstName, password),
+    };
+
+    return await sendMail(user.email, content);
+  },
+
+  sendRequestNewPasswordMail: async (user) => {
+    logger.info(`Send new password request to ${user.email}`);
+
+    const resetLink = `${clientUrl}${userPasswordLostLink}?confirm=true&userId=${user.id}&token=${user.token}`;
+
+    const content = {
+      title: REQUEST_NEW_PASSWORD_TITLE,
+      text: REQUEST_NEW_PASSWORD_TEXT(user.firstName, resetLink),
     };
 
     return await sendMail(user.email, content);

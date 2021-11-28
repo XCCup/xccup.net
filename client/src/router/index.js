@@ -189,6 +189,17 @@ const routes = [
     component: () => import("../views/AdminDashboard.vue"),
   },
   {
+    path: "/profil/aktivieren",
+    name: "UserActivate",
+    component: () => import("../views/UserActivate.vue"),
+  },
+  {
+    path: "/passwort-vergessen/",
+    name: "PasswordLost",
+    props: (route) => ({ confirm: route.query.confirm }),
+    component: () => import("../views/UserPasswordLost.vue"),
+  },
+  {
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: NotFound,

@@ -282,8 +282,8 @@ const flightService = {
     }
     if (glider) {
       await createGliderObject(columnsToUpdate, glider);
-      const newGliderClass = columnsToUpdate.glider.gliderClass.key;
-      if (newGliderClass != flight?.glider?.gliderClass?.key) {
+      const newGliderClassKey = columnsToUpdate.glider.gliderClass.key;
+      if (newGliderClassKey != flight?.glider?.gliderClass?.key) {
         const result = await calcFlightPointsAndStatus(flight, glider, status);
         columnsToUpdate.flightPoints = result.flightPoints;
         columnsToUpdate.flightStatus = result.flightStatus;
@@ -440,11 +440,12 @@ function calcAirtime(fixes) {
 
 async function calcFlightPointsAndStatus(flight, glider, status) {
   const currentSeason = await getCurrentActive();
-  const gliderClass = currentSeason.gliderClasses[glider.gliderClass];
+  const gliderClassDB = currentSeason.gliderClasses[glider.gliderClass.key];
+
   logger.info(
-    `Glider class changed to ${gliderClass.shortDescription}. Will recalculate flightPoints`
+    `Glider class changed to ${gliderClassDB.shortDescription}. Will recalculate flightPoints`
   );
-  const flightPoints = calcFlightPoints(flight, currentSeason, gliderClass);
+  const flightPoints = calcFlightPoints(flight, currentSeason, gliderClassDB);
 
   const flightStatus = determineFlightStatus(
     currentSeason,
@@ -472,16 +473,16 @@ function determineFlightStatus(currentSeason, flightPoints, submittedStatus) {
 
 async function createGliderObject(columnsToUpdate, glider) {
   const currentSeason = await getCurrentActive();
-  const gliderClass = currentSeason.gliderClasses[glider.gliderClass];
-  columnsToUpdate.glider = {};
-  columnsToUpdate.glider.id = glider.id;
-  columnsToUpdate.glider.brand = glider.brand;
-  columnsToUpdate.glider.model = glider.model;
-  columnsToUpdate.glider.gliderClass = {};
-  columnsToUpdate.glider.gliderClass.key = glider.gliderClass;
-  columnsToUpdate.glider.gliderClass.description = gliderClass.description;
-  columnsToUpdate.glider.gliderClass.shortDescription =
-    gliderClass.shortDescription;
+  const gliderClassDB = currentSeason.gliderClasses[glider.gliderClass.key];
+
+  columnsToUpdate.glider = {
+    ...glider,
+    gliderClass: {
+      key: glider.gliderClass.key,
+      description: gliderClassDB.description,
+      shortDescription: gliderClassDB.shortDescription,
+    },
+  };
 }
 
 function calcFlightPoints(flight, seasonDetail, gliderClass) {
@@ -646,6 +647,10 @@ async function createWhereStatement(
   }
   if (flightStatus) {
     whereStatement.flightStatus = flightStatus;
+  } else {
+    whereStatement.flightStatus = {
+      [sequelize.Op.not]: STATE.IN_PROCESS,
+    };
   }
   if (userId) {
     whereStatement.userId = userId;
@@ -711,7 +716,7 @@ function createClubInclude(id) {
   const include = {
     model: Club,
     as: "club",
-    attributes: ["name"],
+    attributes: ["id", "name"],
   };
   if (id) {
     include.where = {
@@ -725,7 +730,7 @@ function createTeamInclude(id) {
   const include = {
     model: Team,
     as: "team",
-    attributes: ["name"],
+    attributes: ["id", "name"],
   };
   if (id) {
     include.where = {

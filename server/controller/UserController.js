@@ -48,6 +48,8 @@ router.get(
   query("limit").optional().isInt(),
   query("offset").optional().isInt(),
   async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
     const { records, limit, offset } = req.query;
 
     try {
@@ -155,41 +157,81 @@ router.get(
 );
 
 // @desc Activates a previously created user
-// @route GET /users/activate/:id
+// @route GET /users/activate/
 
-router.get("/activate/:id", checkParamIsUuid("id"), async (req, res, next) => {
-  if (validationHasErrors(req, res)) return;
-  const id = req.params.id;
-
-  try {
-    await service.activateUser(id);
-
-    res.redirect(process.env.MAIL_AUTH_REDIRECT);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// @desc Generates a new password for an user and mails it to the related e-mail address.
-// @route POST /users/renew-password/
-
-router.post(
-  "/renew-password",
-  checkIsEmail("email"),
-  checkIsDateObject("birthday"),
+router.get(
+  "/activate/",
+  query("userId").isUUID(),
+  query("token").trim().escape(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const { email, birthday } = req.body;
+    const { userId, token } = req.query;
+
+    try {
+      const user = await service.activateUser(userId, token);
+
+      if (!user) return res.sendStatus(NOT_FOUND);
+
+      const accessToken = createToken(user);
+      const refreshToken = createRefreshToken(user);
+
+      res.json({
+        firstName: user.firstName,
+        accessToken,
+        refreshToken,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Generates a new password for an user
+// @route GET /users/renew-password/
+
+router.get(
+  "/renew-password",
+  query("userId").isUUID(),
+  query("token").trim().escape(),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const { userId, token } = req.query;
 
     try {
       const { updatedUser, newPassword } = await service.renewPassword(
-        email,
-        birthday
+        userId,
+        token
       );
 
       if (newPassword) {
         await mailService.sendNewPasswordMail(updatedUser, newPassword);
+        return res.sendStatus(OK);
+      }
+      res.sendStatus(NOT_FOUND);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// @desc Sends a confirmation mail for a passwort reset
+// @route POST /users/request-new-password/
+
+router.post(
+  "/request-new-password",
+  checkIsEmail("email"),
+  // checkIsDateObject("birthday"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const { email } = req.body;
+
+    try {
+      const { updatedUser, token } = await service.requestNewPassword(email);
+
+      if (token) {
+        await mailService.sendRequestNewPasswordMail(updatedUser, token);
         return res.sendStatus(OK);
       }
       res.sendStatus(NOT_FOUND);
@@ -464,7 +506,10 @@ async function checkGliderClassAndAddGliderDescription(glider) {
       `The gliderClass "${glider.gliderClass}" is not valid for the current season`
     );
 
-  glider.gliderClassShortDescription = gliderClass.shortDescription;
+  glider.gliderClass = {
+    key: glider.gliderClass,
+    shortDescription: gliderClass.shortDescription,
+  };
 }
 
 module.exports = router;

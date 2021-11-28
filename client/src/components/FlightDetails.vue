@@ -3,26 +3,49 @@
     <h3>Flugeigenschaften</h3>
     <div class="row">
       <div class="col-md-6 col-12 my-1">
-        <table class="table table-sm">
+        <table id="cyFlightDetailsTable1" class="table table-sm">
           <tbody>
             <tr>
               <th>Pilot</th>
               <td>
-                <a href="#">{{
-                  flight.user.firstName + " " + flight.user.lastName
-                }}</a>
+                <router-link
+                  :to="{
+                    name: 'FlightsAll',
+                    query: { userId: flight.user.id },
+                  }"
+                >
+                  {{ flight.user.firstName + " " + flight.user.lastName }}
+                </router-link>
               </td>
             </tr>
             <tr>
               <th>Verein</th>
               <td>
-                <a href="#">{{ flight.club.name }}</a>
+                <router-link
+                  :to="{
+                    name: 'FlightsAll',
+                    query: { clubId: flight.club.id },
+                  }"
+                >
+                  <div>
+                    {{ flight.club.name }}
+                  </div>
+                </router-link>
               </td>
             </tr>
             <tr>
               <th>Team</th>
               <td>
-                <a href="#">{{ flight.team?.name }}</a>
+                <router-link
+                  :to="{
+                    name: 'FlightsAll',
+                    query: { teamId: flight.team?.id },
+                  }"
+                >
+                  <div>
+                    {{ flight.team?.name }}
+                  </div>
+                </router-link>
               </td>
             </tr>
             <tr>
@@ -43,7 +66,7 @@
         </table>
       </div>
       <div class="col-md-6 col-12 my-1">
-        <table class="table table-sm">
+        <table id="cyFlightDetailsTable2" class="table table-sm">
           <tbody>
             <tr>
               <th>Flugzeit</th>

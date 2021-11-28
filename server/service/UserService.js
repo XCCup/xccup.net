@@ -150,29 +150,47 @@ const userService = {
     userJson.records = [results[1], results[2], results[3]];
     return userJson;
   },
-  activateUser: async (id) => {
-    return User.update(
-      {
-        role: ROLE.NONE,
-      },
-      {
-        where: { id },
-      }
-    );
-  },
-  renewPassword: async (email, birthday) => {
+  activateUser: async (id, token) => {
     const user = await User.findOne({
-      where: { email, birthday },
+      where: { id, token },
     });
 
-    if (!user) return false;
+    if (!user) return;
 
-    logger.info("Will create a new password for " + email);
+    user.role = ROLE.NONE;
+    user.token = "";
+    return await user.save();
+  },
+  renewPassword: async (id, token) => {
+    const user = await User.findOne({
+      where: { id, token },
+    });
+
+    // Return empty object, otherwise destructering doesn't work
+    if (!user) return {};
+
+    logger.info("Will create a new password for " + user.email);
     const newPassword = generateRandomString();
     user.password = newPassword;
+    user.token = "";
     const updatedUser = await user.save();
 
     return { updatedUser, newPassword };
+  },
+  requestNewPassword: async (email) => {
+    const user = await User.findOne({
+      where: { email },
+    });
+
+    // Return empty object, otherwise destructering doesn't work
+    if (!user) return {};
+
+    logger.debug("Will create a resetPassword for " + email);
+    const token = generateRandomString();
+    user.token = token;
+    const updatedUser = await user.save();
+
+    return { updatedUser, token };
   },
   count: async () => {
     return User.count({
@@ -198,6 +216,7 @@ const userService = {
     });
   },
   save: async (user) => {
+    user.token = generateRandomString();
     return User.create(user);
   },
   update: async (user) => {
