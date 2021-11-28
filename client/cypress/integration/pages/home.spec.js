@@ -1,5 +1,6 @@
 describe("check landing page", () => {
   before(() => {
+    cy.seedDb();
     cy.visit("/");
   });
 
@@ -22,7 +23,7 @@ describe("check landing page", () => {
 
       cy.get("table").find("tr").its("length").should("eq", 5);
 
-      const isAfter12OClock = new Date().getHours() > 12;
+      const isAfter12OClock = new Date().getHours() >= 12;
       const firstRow = isAfter12OClock
         ? ["1", "Leo AltenwerthStüppel", "74 km", "212 P"]
         : ["1", "Ms. LaurieBurgen", "12 km", "75 P"];

@@ -5,6 +5,7 @@ const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const fs = require("fs");
 const { NOT_FOUND, OK } = require("../constants/http-status-constants");
+const { STATE } = require("../constants/flight-constants");
 const {
   authToken,
   requesterIsNotOwner,
@@ -19,6 +20,7 @@ const {
   checkStringObject,
   checkParamIsInt,
   checkParamIsUuid,
+  checkIsUuidObject,
   validationHasErrors,
   checkOptionalIsBoolean,
   queryOptionalColumnExistsInModel,
@@ -202,7 +204,7 @@ router.post(
       const flightDbObject = await service.create({
         userId,
         uncheckedGRecord: validationResult == undefined ? true : false,
-        flightStatus: service.STATE_IN_PROCESS,
+        flightStatus: STATE.IN_PROCESS,
       });
 
       flightDbObject.igcPath = await persistIgcFile(flightDbObject.id, igc);
@@ -239,10 +241,10 @@ router.put(
   checkParamIsUuid("id"),
   checkStringObject("report"),
   checkOptionalStringObjectNotEmpty("status"),
-  checkParamIsUuid("glider.id"),
+  checkIsUuidObject("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
-  checkStringObjectNotEmpty("glider.gliderClass"),
+  checkStringObjectNotEmpty("glider.gliderClass.key"),
   checkOptionalIsBoolean("hikeAndFly"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;

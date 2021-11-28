@@ -8,7 +8,7 @@
           <router-link
             :to="{
               name: 'FlightsAll',
-              params: { userId: user.id },
+              query: { userId: user.id },
             }"
           >
             <img :src="avatarUrl" />
@@ -20,7 +20,7 @@
           <router-link
             :to="{
               name: 'FlightsAll',
-              params: { userId: user.id },
+              query: { userId: user.id },
             }"
           >
             <h5 class="row card-title cy-user-name-label">
@@ -45,7 +45,7 @@
           <router-link
             :to="{
               name: 'FlightsAll',
-              params: { clubId: user.club.id },
+              query: { clubId: user.club.id },
             }"
           >
             <div>{{ user.club.name }}</div>
@@ -57,7 +57,7 @@
             <router-link
               :to="{
                 name: 'FlightsAll',
-                params: { teamId: user.team.id },
+                query: { teamId: user.team.id },
               }"
             >
               {{ user.team?.name }}</router-link

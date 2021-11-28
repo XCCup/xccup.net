@@ -27,10 +27,15 @@
       <button type="submit" class="btn btn-primary">Anmelden</button>
     </form>
 
-    <!-- TODO: -->
     <div class="my-3">
-      <p><a href="#">Password vergessen?</a></p>
-      <router-link :to="{ name: 'Register' }">Registrieren</router-link>
+      <div>
+        <router-link :to="{ name: 'PasswordLost' }"
+          >Password vergessen?</router-link
+        >
+      </div>
+      <div>
+        <router-link :to="{ name: 'Register' }">Registrieren</router-link>
+      </div>
     </div>
   </div>
 </template>

@@ -39,7 +39,7 @@ const props = defineProps({
 const route = useRoute();
 
 const { fetchFlights, filterActive, clearFilter } = useFlights();
-await fetchFlights(route.params);
+await fetchFlights(route.params, route.query);
 
 let filterModal;
 

@@ -16,3 +16,7 @@ export function dayAfter(date) {
   dateObject.setDate(dateObject.getDate() + 1);
   return retrieveDateOnly(dateObject.toISOString());
 }
+
+export function isEmail(value) {
+  return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+}

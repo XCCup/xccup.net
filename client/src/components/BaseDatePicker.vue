@@ -9,6 +9,7 @@
       class="form-select"
       :disabled="isDisabled"
       input-format="dd.MM.yyyy"
+      :upper-limit="upperLimit"
     />
   </div>
 </template>
@@ -41,6 +42,10 @@ const props = defineProps({
   startingView: {
     type: String,
     default: "day", //day, month,year
+  },
+  upperLimit: {
+    type: Date,
+    default: new Date(new Date().getFullYear() + 1, 11, 30),
   },
 });
 const emits = defineEmits(["update:modelValue"]);

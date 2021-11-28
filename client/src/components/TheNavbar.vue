@@ -147,7 +147,7 @@
                     name: 'Sponsors',
                   }"
                   class="dropdown-item"
-                  >Sponsors</router-link
+                  >Sponsoren</router-link
                 >
               </li>
               <li>
@@ -228,11 +228,14 @@
             </div>
           </div>
         </div>
-        <router-link
-          class="btn btn-danger btn-sm m-1"
-          :to="{ name: 'FlightUpload' }"
-        >
-          Flug hochladen
+        <router-link :to="{ name: 'FlightUpload' }">
+          <button
+            id="loginNavButton"
+            type="button"
+            class="btn btn-danger btn-sm m-1"
+          >
+            Flug hochladen
+          </button>
         </router-link>
       </div>
     </div>

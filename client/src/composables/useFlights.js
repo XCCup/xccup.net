@@ -21,8 +21,9 @@ export default () => {
 
   // Actions
 
-  const fetchFlights = async (params) => {
+  const fetchFlights = async (params, queries) => {
     if (params) paramsCache.value = params;
+    if (queries) filterOptionsCache.value = queries;
     try {
       const res = await ApiService.getFlights({
         ...paramsCache.value,
