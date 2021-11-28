@@ -182,7 +182,7 @@
           <div v-if="signupSuccessfull" class="col-12 col-lg-9 col-xl-7">
             <div class="card shadow-2-strong" style="border-radius: 15px">
               <div class="card-body p-4 p-md-5">
-                <div class="text-center">
+                <div class="text-center mb-4">
                   <h1><i class="bi bi-check-circle text-success"></i></h1>
                 </div>
                 <p>
