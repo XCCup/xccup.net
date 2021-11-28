@@ -1,6 +1,6 @@
 <template>
   <th class="no-line-break" @click="onSort">
-    {{ content }} <i :class="chevronClass"></i>
+    {{ content }} <i :class="chevronClass" class="ps-0"></i>
   </th>
 </template>
 

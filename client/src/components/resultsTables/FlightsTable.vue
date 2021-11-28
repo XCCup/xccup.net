@@ -26,6 +26,7 @@
               content="Punkte"
               column-object-key="flightPoints"
               :current-sort-column-key="currentSortColumnKey"
+              class="hide-on-sm"
               @head-sort-changed="handleSortChange"
             />
             <th class="hide-on-sm">Status</th>
@@ -62,9 +63,9 @@
 
               <td class="no-line-break">
                 {{ Math.floor(flight.flightDistance) }} km
-              </td>
-              <td class="no-line-break">
                 <FlightTypeIcon :flight-type="flight.flightType" />
+              </td>
+              <td class="no-line-break hide-on-sm">
                 {{ flight.flightPoints }} P
               </td>
               <td class="hide-on-sm">
