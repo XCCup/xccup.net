@@ -62,8 +62,6 @@ const onSort = () => {
     default:
       break;
   }
-
-  console.log("Sort: ", sortOrder);
 };
 
 function emitSortChange() {
