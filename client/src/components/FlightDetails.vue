@@ -225,8 +225,7 @@ const calcFlightDuration = (duration) => {
   // seconds = seconds < 10 ? "0" + seconds : seconds;
   return hours + ":" + minutes + "h";
 };
-
-const isHikeAndFly = computed(() => flight.hikeAndFly != 0);
+const isHikeAndFly = computed(() => flight.value.hikeAndFly > 0);
 </script>
 
 <style scoped></style>
