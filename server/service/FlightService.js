@@ -613,7 +613,7 @@ async function addUserData(flight) {
   flight.teamId = user.teamId;
   flight.clubId = user.clubId;
   flight.homeStateOfUser =
-    user.address.country == COUNTRY.GER
+    user.address.country == COUNTRY.DEU
       ? user.address.state
       : user.address.country;
   flight.ageOfUser = user.getAge();

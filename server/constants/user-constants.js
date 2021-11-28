@@ -1,5 +1,5 @@
 module.exports.COUNTRY = {
-  GER: "Deutschland",
+  DEU: "Deutschland",
   LUX: "Luxemburg",
   BEL: "Belgien",
 };
@@ -21,6 +21,7 @@ module.exports.STATE = {
   ST: "Sachsen-Anhalt",
   SH: "Schleswig-Holstein",
   TH: "Thüringen",
+  NONE: "",
 };
 
 module.exports.GENDER = {

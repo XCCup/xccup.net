@@ -8,7 +8,12 @@ const {
   FORBIDDEN,
   UNAUTHORIZED,
 } = require("../constants/http-status-constants");
-const { TSHIRT_SIZES, GENDER } = require("../constants/user-constants");
+const {
+  TSHIRT_SIZES,
+  GENDER,
+  COUNTRY,
+  STATE,
+} = require("../constants/user-constants");
 const router = express.Router();
 const {
   authToken,
@@ -29,7 +34,6 @@ const {
   checkParamIsUuid,
   checkStrongPassword,
   checkOptionalStrongPassword,
-  checkStringObject,
   validationHasErrors,
 } = require("./Validation");
 
@@ -291,8 +295,8 @@ router.post(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObject("address.state"),
-  checkStringObjectNotEmpty("address.country"),
+  checkIsOnlyOfValue("address.state", Object.values(STATE)),
+  checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
   checkStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -357,8 +361,8 @@ router.put(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObject("address.state"),
-  checkStringObjectNotEmpty("address.country"),
+  checkIsOnlyOfValue("address.state", Object.values(STATE)),
+  checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
   checkIsUuidObject("defaultGlider"),
   checkOptionalStrongPassword("password"),
   async (req, res, next) => {
