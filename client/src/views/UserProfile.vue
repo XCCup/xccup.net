@@ -18,176 +18,225 @@
 
         <!-- Center -->
         <div class="col-md-9 col-lg-8">
-          <div v-if="editMode" class="p-3">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="text-right">Profil</h4>
-            </div>
-            <div class="row mt-2">
-              <div class="col-md-6">
-                <BaseInput v-model="userProfile.firstName" label="Name" />
-              </div>
-              <div class="col-md-6">
-                <BaseInput v-model="userProfile.lastName" label="Nachname" />
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-12">
-                <BaseInput
-                  v-model="userProfile.club.name"
-                  label="Verein"
-                  :is-disabled="true"
-                />
-
-                <BaseInput v-model="userProfile.email" label="E-Mail" />
-                <BaseInput
-                  v-model="userProfile.address.street"
-                  label="Strasse"
-                />
-                <div class="row">
-                  <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.zip"
-                      :is-required="false"
-                      label="PLZ"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.city"
-                      :is-required="false"
-                      label="Stadt"
-                    />
-                  </div>
-                </div>
-                <div class="row mb-4">
-                  <!-- State -->
-                  <div class="col-md-6">
-                    <label>Bundesland</label>
-                    <select
-                      v-model="userProfile.address.state"
-                      class="form-select"
-                      :disabled="!stateListIsEnabled"
-                    >
-                      <option
-                        v-for="option in listOfStates"
-                        :key="option.StateCode"
-                        :value="option.StateName"
-                        :selected="option.value === userProfile.address.state"
-                      >
-                        {{ option.countryName }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-md-6">
-                    <!-- Country -->
-                    <!-- TODO: This is reused in UserRegister - maybe make it a component -->
-                    <label>Land</label>
-                    <select
-                      v-model="userProfile.address.country"
-                      class="form-select"
-                    >
-                      <option
-                        v-for="option in listOfCountries"
-                        :key="option.countryCode"
-                        :value="option.countryName"
-                        :selected="option.value === userProfile.address.country"
-                      >
-                        {{ option.countryName }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <BaseSelect
-                      v-model="userProfile.gender"
-                      label="Geschlecht"
-                      :show-label="true"
-                      :options="listOfGenders"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <!-- TODO: This does not show the current value -->
-                    <BaseDatePicker
-                      v-model="userProfile.birthday"
-                      label="Geburstag"
-                      starting-view="year"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <BaseSelect
-                      v-model="userProfile.tshirtSize"
-                      label="T-Shirt Größe"
-                      :show-label="true"
-                      :options="listOfTshirtSizes"
-                    />
-                  </div>
-                </div>
-
-                <div class="mt-3"></div>
-              </div>
-            </div>
-            <h5>Benachrichtigungen</h5>
-            <div class="form-check">
-              <input
-                id="notifyForComment"
-                v-model="userProfile.emailInformIfComment"
-                class="form-check-input"
-                type="checkbox"
-                value
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                E-Mail bei neuem Kommentar
-                <!-- TODO: Add popup description -->
-
-                <i class="bi bi-info-circle"></i>
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                id="optInNewsletter"
-                v-model="userProfile.emailNewsletter"
-                class="form-check-input"
-                type="checkbox"
-                value
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                Newsletter abonnieren
-                <!-- TODO: Add popup description -->
-                <i class="bi bi-info-circle"></i>
-              </label>
-            </div>
-
-            <br />
-            <button
-              class="btn btn-primary"
-              :disabled="!profileDataHasChanged"
-              @click="onSave"
-            >
-              Speichern
-              <div
-                v-if="showSpinner"
-                class="spinner-border spinner-border-sm"
-                role="status"
+          <nav>
+            <div id="nav-tab" class="nav nav-tabs" role="tablist">
+              <button
+                id="nav-profile-tab"
+                class="nav-link active"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-profile"
+                type="button"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="true"
               >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
-            </button>
-            <!-- Error Message -->
-            <p v-if="errorMessage" class="text-danger mt-3">
-              {{ errorMessage }}
-            </p>
-            <hr />
-            <div id="glider-select" class="col-md-12">
-              <GliderList
-                :gliders="userProfile.gliders"
-                :default-glider="userProfile.defaultGlider"
-                @gliders-changed="onGlidersChanged"
-              />
+                Profil
+              </button>
+              <button
+                id="nav-hangar-tab"
+                class="nav-link"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-hangar"
+                type="button"
+                role="tab"
+                aria-controls="nav-hangar"
+                aria-selected="false"
+              >
+                Hangar
+              </button>
+              <button
+                id="nav-my-flights-tab"
+                class="nav-link"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-my-flights"
+                type="button"
+                role="tab"
+                aria-controls="nav-my-flights"
+                aria-selected="false"
+              >
+                Meine Flüge
+              </button>
             </div>
-            <!-- Edit -->
-            <!-- <div v-if="!edit">
+          </nav>
+          <div id="nav-tabContent" class="tab-content">
+            <div
+              id="nav-profile"
+              class="tab-pane fade show active"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+            >
+              <div v-if="editMode" class="p-3">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h4 class="text-right">Profil</h4>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.firstName" label="Name" />
+                  </div>
+                  <div class="col-md-6">
+                    <BaseInput
+                      v-model="userProfile.lastName"
+                      label="Nachname"
+                    />
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <BaseInput
+                      v-model="userProfile.club.name"
+                      label="Verein"
+                      :is-disabled="true"
+                    />
+
+                    <BaseInput v-model="userProfile.email" label="E-Mail" />
+                    <BaseInput
+                      v-model="userProfile.address.street"
+                      label="Strasse"
+                    />
+                    <div class="row">
+                      <div class="col-md-6">
+                        <BaseInput
+                          v-model="userProfile.address.zip"
+                          :is-required="false"
+                          label="PLZ"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <BaseInput
+                          v-model="userProfile.address.city"
+                          :is-required="false"
+                          label="Stadt"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-4">
+                      <!-- State -->
+                      <div class="col-md-6">
+                        <label>Bundesland</label>
+                        <select
+                          v-model="userProfile.address.state"
+                          class="form-select"
+                          :disabled="!stateListIsEnabled"
+                        >
+                          <option
+                            v-for="option in listOfStates"
+                            :key="option.StateCode"
+                            :value="option.StateName"
+                            :selected="
+                              option.value === userProfile.address.state
+                            "
+                          >
+                            {{ option.countryName }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <!-- Country -->
+                        <!-- TODO: This is reused in UserRegister - maybe make it a component -->
+                        <label>Land</label>
+                        <select
+                          v-model="userProfile.address.country"
+                          class="form-select"
+                        >
+                          <option
+                            v-for="option in listOfCountries"
+                            :key="option.countryCode"
+                            :value="option.countryName"
+                            :selected="
+                              option.value === userProfile.address.country
+                            "
+                          >
+                            {{ option.countryName }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <BaseSelect
+                          v-model="userProfile.gender"
+                          label="Geschlecht"
+                          :show-label="true"
+                          :options="listOfGenders"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <!-- TODO: This does not show the current value -->
+                        <BaseDatePicker
+                          v-model="userProfile.birthday"
+                          label="Geburstag"
+                          starting-view="year"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <BaseSelect
+                          v-model="userProfile.tshirtSize"
+                          label="T-Shirt Größe"
+                          :show-label="true"
+                          :options="listOfTshirtSizes"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="mt-3"></div>
+                  </div>
+                </div>
+                <h5>Benachrichtigungen</h5>
+                <div class="form-check">
+                  <input
+                    id="notifyForComment"
+                    v-model="userProfile.emailInformIfComment"
+                    class="form-check-input"
+                    type="checkbox"
+                    value
+                  />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    E-Mail bei neuem Kommentar
+                    <!-- TODO: Add popup description -->
+
+                    <i class="bi bi-info-circle"></i>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    id="optInNewsletter"
+                    v-model="userProfile.emailNewsletter"
+                    class="form-check-input"
+                    type="checkbox"
+                    value
+                  />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Newsletter abonnieren
+                    <!-- TODO: Add popup description -->
+                    <i class="bi bi-info-circle"></i>
+                  </label>
+                </div>
+
+                <br />
+                <button
+                  class="btn btn-primary"
+                  :disabled="!profileDataHasChanged"
+                  @click="onSave"
+                >
+                  Speichern
+                  <div
+                    v-if="showSpinner"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
+                </button>
+                <!-- Error Message -->
+                <p v-if="errorMessage" class="text-danger mt-3">
+                  {{ errorMessage }}
+                </p>
+
+                <!-- Edit -->
+                <!-- <div v-if="!edit">
               <router-link
                 :to="{ name: 'ProfileEdit' }"
                 class="btn btn-primary"
@@ -203,6 +252,30 @@
                 Abbrechen
               </button>
             </div>-->
+              </div>
+            </div>
+            <div
+              id="nav-hangar"
+              class="tab-pane fade"
+              role="tabpanel"
+              aria-labelledby="nav-hangar-tab"
+            >
+              <div id="glider-select" class="col-md-12">
+                <GliderList
+                  :gliders="userProfile.gliders"
+                  :default-glider="userProfile.defaultGlider"
+                  @gliders-changed="onGlidersChanged"
+                />
+              </div>
+            </div>
+            <div
+              id="nav-my-flights"
+              class="tab-pane fade"
+              role="tabpanel"
+              aria-labelledby="nav-my-flights-tab"
+            >
+              ...
+            </div>
           </div>
         </div>
       </div>
