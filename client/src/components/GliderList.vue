@@ -121,7 +121,7 @@ export default {
       " " +
       glider.model +
       " (" +
-      glider.gliderClassShortDescription +
+      glider.gliderClass.shortDescription +
       ")";
 
     onMounted(() => {
