@@ -102,7 +102,7 @@ await fetchOne(route.params.id);
 modifiedFlightData.value.glider = flight.value.glider;
 modifiedFlightData.value.report = flight.value.report;
 modifiedFlightData.value.hikeAndFly = flight.value.hikeAndFly > 0;
-modifiedFlightData.value.onlyLogbook = flight.value.onlyLogbook === "Flugbuch";
+modifiedFlightData.value.onlyLogbook = flight.value.flightStatus === "Flugbuch";
 
 // Fetch users glider
 try {
