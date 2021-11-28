@@ -45,11 +45,16 @@
                 />
                 <div class="row">
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.address.zip" label="PLZ" />
+                    <BaseInput
+                      v-model="userProfile.address.zip"
+                      :is-required="false"
+                      label="PLZ"
+                    />
                   </div>
                   <div class="col-md-6">
                     <BaseInput
                       v-model="userProfile.address.city"
+                      :is-required="false"
                       label="Stadt"
                     />
                   </div>
@@ -58,12 +63,14 @@
                   <div class="col-md-6">
                     <BaseInput
                       v-model="userProfile.address.state"
+                      :is-required="false"
                       label="Bundesland"
                     />
                   </div>
                   <div class="col-md-6">
                     <BaseInput
                       v-model="userProfile.address.country"
+                      :is-required="false"
                       label="Land"
                     />
                   </div>

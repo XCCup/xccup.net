@@ -1,5 +1,6 @@
 describe("check landing page", () => {
   before(() => {
+    cy.seedDb();
     cy.visit("/");
   });
 
