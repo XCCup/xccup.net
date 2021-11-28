@@ -1,9 +1,9 @@
 <template>
-  <div class="mb-4 pb-2">
-    Bitte gebe Deine E-Mail Adresse ein und wir senden Dir eine Bestätigungsmail
-    zu
-  </div>
   <form v-if="!mailSent">
+    <p>
+      Bitte gebe Deine E-Mail Adresse ein und wir senden Dir eine
+      Bestätigungsmail zu
+    </p>
     <div class="row">
       <div class="col-md-6 mb-4">
         <BaseInput v-model="email" label="E-Mail" :is-email="true" />
@@ -11,12 +11,12 @@
     </div>
     <div class="mb-4">
       <button
-        class="btn btn-primary btn-lg"
+        class="btn btn-primary btn"
         type="submit"
         :disabled="!buttonIsEnabled"
         @click.prevent="onSubmit"
       >
-        Neues Passwort anforderen
+        Neues Passwort anfordern
         <div
           v-if="showSpinner"
           class="spinner-border spinner-border-sm"
@@ -33,6 +33,10 @@
   </form>
   <div v-else>
     <p>Die E-Mail wurde versendet 📯</p>
+    <p>
+      Falls Du keine Mail erhältst wende Dich bitte an einen
+      <router-link :to="{ name: 'Imprint' }">Administrator</router-link>
+    </p>
   </div>
 </template>
 
