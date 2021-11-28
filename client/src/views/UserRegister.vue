@@ -177,13 +177,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import { useRouter } from "vue-router";
-import useUserData from "@/composables/useUserSignup";
-
-const { userData } = useUserData();
 const router = useRouter();
 
 setWindowName("Anmelden");
@@ -218,7 +215,6 @@ const userData = reactive({
 const limitDate = new Date();
 limitDate.setYear(limitDate.getFullYear() - 16);
 const upperLimitBirthday = ref(limitDate);
-
 
 // Helpers
 const showSpinner = ref(false);
