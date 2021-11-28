@@ -111,7 +111,6 @@ footer {
 }
 
 // Hide table cells depending on class
-
 .hide-on-md {
   @extend .d-none;
   @extend .d-lg-table-cell;
@@ -120,11 +119,6 @@ footer {
 .hide-on-sm {
   @extend .d-none;
   @extend .d-md-table-cell;
-}
-
-.hide-on-xs {
-  @extend .d-none;
-  @extend .d-sm-table-cell;
 }
 
 // TODO: Is this obsolete?

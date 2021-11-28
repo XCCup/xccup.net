@@ -21,8 +21,7 @@ if (!userId || !token) {
 } else {
   try {
     const res = await ApiService.confirmNewPassword(userId, token);
-    // TODO: Anscheinend fliegt der Fehler schon vorher und die nachfolgende Zeile wird garnicht erreicht
-    if (res.status != 200 && res.status != 404) throw res.statusText;
+    if (res.status != 200) throw res.statusText;
   } catch (error) {
     errorMessage.value = `Dein Bestätigungslink ist ungültig 🤨`;
   }
