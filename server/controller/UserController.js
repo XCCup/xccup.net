@@ -221,7 +221,6 @@ router.get(
 router.post(
   "/request-new-password",
   checkIsEmail("email"),
-  // checkIsDateObject("birthday"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 

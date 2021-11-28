@@ -1,4 +1,4 @@
-import { ref, readonly } from "vue";
+import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 
 const flight = ref(null);
@@ -19,5 +19,6 @@ export default () => {
     flight.value.comments = [...res.data];
   };
 
-  return { fetchOne, flight: readonly(flight), updateComments };
+  //TODO: Make flight readOnly. Currently useComments manipulates the comment structur of flight. Therefore readOnly ist not possible
+  return { fetchOne, flight, updateComments };
 };
