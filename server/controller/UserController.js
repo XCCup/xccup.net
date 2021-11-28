@@ -35,6 +35,7 @@ const {
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
+  checkIsUuidObjectOrEmptry,
 } = require("./Validation");
 
 const userCreateLimiter = createRateLimiter(60, 2);
@@ -363,7 +364,7 @@ router.put(
   checkIsBoolean("emailTeamSearch"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
   checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
-  checkIsUuidObject("defaultGlider"),
+  checkIsUuidObjectOrEmptry("defaultGlider"),
   checkOptionalStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
