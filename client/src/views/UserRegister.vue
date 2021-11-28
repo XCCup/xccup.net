@@ -148,7 +148,7 @@
                 <!-- Submit button -->
                 <div class="mt-4 pt-2">
                   <button
-                    class="btn btn-primary btn-lg"
+                    class="btn btn-primary btn"
                     type="submit"
                     :disabled="!registerButtonIsEnabled"
                     @click.prevent="onSubmit"
