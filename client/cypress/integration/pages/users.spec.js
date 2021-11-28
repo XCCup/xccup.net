@@ -1,5 +1,3 @@
-const { cy } = require("date-fns/locale");
-
 describe("check users page", () => {
   beforeEach(() => {
     cy.visit("/");
