@@ -214,7 +214,7 @@ const signupSuccessfull = ref(false);
 const rulesAccepted = ref(false);
 const errorMessage = ref(null);
 
-// Todo: Form input validation with vue
+// TODO: Form input validation with vue
 
 // Set upper boundary of date picker
 const limitDate = new Date();
@@ -289,7 +289,7 @@ const onSubmit = async () => {
   } catch (error) {
     showSpinner.value = false;
 
-    // Todo: Where do this error messages come from? Is this safe?
+    // TODO: Where do this error messages come from? Is this safe?
 
     // E-Mail errors
     if (error.response?.data === "email must be unique")

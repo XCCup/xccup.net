@@ -16,7 +16,7 @@ const state = reactive({
   tshirtSize: "",
 
   // Set this options as defaults
-  // Todo: Maybe do this in backend?
+  // TODO: Maybe do this in backend?
 
   emailInformIfComment: true,
   emailTeamSearch: false,

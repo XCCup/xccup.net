@@ -10,7 +10,7 @@
         <tbody>
           <tr v-for="n in maxRows" :key="n">
             <td>{{ n }}</td>
-            <!-- Todo: Add link to pilot -->
+            <!-- TODO: Add link to pilot -->
             <td v-if="ranking.values[n]">
               {{
                 ranking.values[n]?.user.firstName +

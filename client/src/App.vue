@@ -57,7 +57,7 @@ body {
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  // Todo: This creates warnings on windows machines
+  // TODO: This creates warnings on windows machines
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;

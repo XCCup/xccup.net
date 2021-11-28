@@ -1,6 +1,6 @@
 <template>
   <section class="bg-light">
-    <!-- Todo this is reused a few times. Maybe but it in a component with slots -->
+    <!-- TODO: this is reused a few times. Maybe but it in a component with slots -->
     <div class="container py-5 h-100">
       <div class="row justify-content-center align-items-center h-100">
         <div class="col-12 col-lg-9 col-xl-7">

@@ -15,9 +15,9 @@
 </template>
 
 <script setup>
-// Todo: Reactivity does not seem to always work
+// TODO: Reactivity does not seem to always work
 
-// Todo:
+// TODO:
 // Add the possibility to define a year where the picker should start.
 // No one born in 2021 will enter the comp
 

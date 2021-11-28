@@ -8,7 +8,7 @@
         :index="index"
       >
         <th scope="row">{{ index + 1 }}</th>
-        <!-- Todo: Add link to team -->
+        <!-- TODO: Add link to team -->
         <td>{{ team.teamName }}</td>
         <td class="no-line-break">{{ team.totalPoints }} P</td>
         <td class="no-line-break">{{ Math.floor(team.totalDistance) }} km</td>
