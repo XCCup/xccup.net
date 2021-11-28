@@ -14,9 +14,7 @@
                     query: { userId: flight.user.id },
                   }"
                 >
-                  <div>
-                    {{ flight.user.firstName + " " + flight.user.lastName }}
-                  </div>
+                  {{ flight.user.firstName + " " + flight.user.lastName }}
                 </router-link>
               </td>
             </tr>
