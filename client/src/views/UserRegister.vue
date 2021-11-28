@@ -1,173 +1,198 @@
 <template>
-  <section class="bg-light">
-    <div class="container py-5 h-100">
-      <div class="row justify-content-center align-items-center h-100">
-        <div class="col-12 col-lg-9 col-xl-7">
-          <div class="card shadow-2-strong" style="border-radius: 15px">
-            <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4">Registrieren</h3>
-              <form>
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <BaseInput v-model="userData.firstName" label="Vorname" />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <BaseInput v-model="userData.lastName" label="Nachname" />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <BaseInput
-                      v-model="userData.email"
-                      label="E-Mail"
-                      :is-email="true"
-                    />
-                  </div>
-
-                  <div class="col-md-6 mb-4"></div>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <BaseSelect
-                      v-model="userData.gender"
-                      label="Geschlecht"
-                      :show-label="true"
-                      :options="listOfGenders"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <BaseDatePicker
-                      v-model="userData.birthday"
-                      label="Geburstag"
-                      starting-view="year"
-                      :upper-limit="upperLimitBirthday"
-                    />
-                  </div>
-                </div>
-
-                <div class="row">
-                  <!-- Country -->
-                  <div class="col-md-6 mb-4">
-                    <label>Land</label>
-                    <select
-                      v-model="userData.address.country"
-                      class="form-select"
-                    >
-                      <option
-                        v-for="option in listOfCountries"
-                        :key="option.countryCode"
-                        :value="option.countryCode"
-                        :selected="option.key === userData.address.country"
-                      >
-                        {{ option.countryName }}
-                      </option>
-                    </select>
-                  </div>
-                  <!-- Club -->
-                  <div class="col-md-6 mb-4">
-                    <label>Verein</label>
-                    <select v-model="userData.clubId" class="form-select">
-                      <option
-                        v-for="option in listOfClubs"
-                        :key="option.id"
-                        :value="option.id"
-                        :selected="option.key === userData.clubId"
-                      >
-                        {{ option.name }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <!-- T-Shirt Size -->
-                  <div class="col-md-6 mb-4">
-                    <BaseSelect
-                      v-model="userData.tshirtSize"
-                      label="T-Shirt Größe"
-                      :show-label="true"
-                      :options="tshirtSizes"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4"></div>
-                </div>
-
-                <!-- Password -->
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    <BaseInput
-                      v-model="userData.password"
-                      label="Passwort"
-                      :is-password="true"
-                    />
-                  </div>
-                  <div class="col-md-6 mb-4">
-                    <BaseInput
-                      v-model="passwordConfirm"
-                      label="Passwort wiederholen"
-                      :is-password="true"
-                      :external-validation-result="!passwordMatches"
-                    />
-                  </div>
-                </div>
-                <!-- Checkboxes -->
-                <div class="form-check mb-3">
-                  <input
-                    id="flexCheckNewsletter"
-                    v-model="userData.emailNewsletter"
-                    class="form-check-input"
-                    type="checkbox"
-                  />
-                  <label class="form-check-label" for="flexCheckNewsletter">
-                    Newsletter abonieren
-                  </label>
-                </div>
-
-                <div class="form-check mb-3">
-                  <input
-                    id="flexCheckRules"
-                    v-model="rulesAccepted"
-                    class="form-check-input"
-                    type="checkbox"
-                  />
-                  <label class="form-check-label" for="flexCheckRules">
-                    Ich erkenne ich die
-                    <!-- TODO: Add link to Rules -->
-                    <router-link :to="{ name: 'Home' }"
-                      >Ausschreibung
-                    </router-link>
-                    und
-                    <router-link :to="{ name: 'Privacy' }"
-                      >Datenschutzbestimmungen
-                    </router-link>
-                    an.
-                  </label>
-                </div>
-                <!-- Submit button -->
-                <div class="mt-4 pt-2">
-                  <button
-                    class="btn btn-primary btn"
-                    type="submit"
-                    :disabled="!registerButtonIsEnabled"
-                    @click.prevent="onSubmit"
-                  >
-                    Anmelden
-                    <div
-                      v-if="showSpinner"
-                      class="spinner-border spinner-border-sm"
-                      role="status"
-                    >
-                      <span class="visually-hidden">Loading...</span>
+  <section class="bg-light dialog-bg-image">
+    <div class="bg-gradient-1">
+      <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+          <!-- Form -->
+          <div v-if="!signupSuccessfull" class="col-12 col-lg-9 col-xl-7">
+            <div class="card shadow-2-strong" style="border-radius: 15px">
+              <div class="card-body p-4 p-md-5">
+                <h3 class="mb-4">Registrieren</h3>
+                <form>
+                  <div class="row">
+                    <div class="col-md-6 mb-4">
+                      <BaseInput v-model="userData.firstName" label="Vorname" />
                     </div>
-                  </button>
-                  <!-- Error message -->
-                  <p v-if="errorMessage" class="text-danger mt-4">
-                    {{ errorMessage }}
-                  </p>
+                    <div class="col-md-6 mb-4">
+                      <BaseInput v-model="userData.lastName" label="Nachname" />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-4">
+                      <BaseInput
+                        v-model="userData.email"
+                        label="E-Mail"
+                        :is-email="true"
+                      />
+                    </div>
+
+                    <div class="col-md-6 mb-4"></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-4">
+                      <BaseSelect
+                        v-model="userData.gender"
+                        label="Geschlecht"
+                        :show-label="true"
+                        :options="listOfGenders"
+                      />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <BaseDatePicker
+                        v-model="userData.birthday"
+                        label="Geburstag"
+                        starting-view="year"
+                        :upper-limit="upperLimitBirthday"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <!-- Country -->
+                    <div class="col-md-6 mb-4">
+                      <label>Land</label>
+                      <select
+                        v-model="userData.address.country"
+                        class="form-select"
+                      >
+                        <option
+                          v-for="option in listOfCountries"
+                          :key="option.countryCode"
+                          :value="option.countryCode"
+                          :selected="option.key === userData.address.country"
+                        >
+                          {{ option.countryName }}
+                        </option>
+                      </select>
+                    </div>
+                    <!-- Club -->
+                    <div class="col-md-6 mb-4">
+                      <label>Verein</label>
+                      <select v-model="userData.clubId" class="form-select">
+                        <option
+                          v-for="option in listOfClubs"
+                          :key="option.id"
+                          :value="option.id"
+                          :selected="option.key === userData.clubId"
+                        >
+                          {{ option.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <!-- T-Shirt Size -->
+                    <div class="col-md-6 mb-4">
+                      <BaseSelect
+                        v-model="userData.tshirtSize"
+                        label="T-Shirt Größe"
+                        :show-label="true"
+                        :options="tshirtSizes"
+                      />
+                    </div>
+                    <div class="col-md-6 mb-4"></div>
+                  </div>
+
+                  <!-- Password -->
+                  <div class="row">
+                    <p>
+                      Das Passwort muss aus mindestens 8 Zeichen bestehen und
+                      mindestens eine Zahl, Sonderzeichen und Großbuchstaben
+                      enthalten.
+                    </p>
+                    <div class="col-md-6 mb-4">
+                      <BaseInput
+                        v-model="userData.password"
+                        label="Passwort"
+                        :is-password="true"
+                      />
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <BaseInput
+                        v-model="userData.passwordConfirm"
+                        label="Passwort wiederholen"
+                        :is-password="true"
+                        :external-validation-result="!passwordMatches"
+                      />
+                    </div>
+                  </div>
+                  <!-- Checkboxes -->
+                  <div class="form-check mb-3">
+                    <input
+                      id="flexCheckNewsletter"
+                      v-model="userData.emailNewsletter"
+                      class="form-check-input"
+                      type="checkbox"
+                    />
+                    <label class="form-check-label" for="flexCheckNewsletter">
+                      Newsletter abonieren
+                    </label>
+                  </div>
+
+                  <div class="form-check mb-3">
+                    <input
+                      id="flexCheckRules"
+                      v-model="rulesAccepted"
+                      class="form-check-input"
+                      type="checkbox"
+                    />
+                    <label class="form-check-label" for="flexCheckRules">
+                      Ich erkenne ich die
+                      <!-- TODO: Add link to Rules -->
+                      <router-link :to="{ name: 'Home' }"
+                        >Ausschreibung
+                      </router-link>
+                      und
+                      <router-link :to="{ name: 'Privacy' }"
+                        >Datenschutzbestimmungen
+                      </router-link>
+                      an.
+                    </label>
+                  </div>
+                  <!-- Submit button -->
+                  <div class="mt-4 pt-2">
+                    <button
+                      class="btn btn-primary btn"
+                      type="submit"
+                      :disabled="!registerButtonIsEnabled"
+                      @click.prevent="onSubmit"
+                    >
+                      Anmelden
+                      <div
+                        v-if="showSpinner"
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                      >
+                        <span class="visually-hidden">Loading...</span>
+                      </div>
+                    </button>
+                    <!-- Error message -->
+                    <p v-if="errorMessage" class="text-danger mt-4">
+                      {{ errorMessage }}
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- Confirmation -->
+          <div v-if="signupSuccessfull" class="col-12 col-lg-9 col-xl-7">
+            <div class="card shadow-2-strong" style="border-radius: 15px">
+              <div class="card-body p-4 p-md-5">
+                <div class="text-center mb-4">
+                  <h1><i class="bi bi-check-circle text-success"></i></h1>
                 </div>
-              </form>
+                <p>
+                  Um deinen Account zu aktivieren öffne bitte den Link den wir
+                  dir gerade per Email geschickt haben.
+                </p>
+                <router-link :to="{ name: 'Home' }">
+                  Zurück zur Startseite
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -177,39 +202,21 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, computed } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
-import { useRouter } from "vue-router";
-const router = useRouter();
+import useUserSignup from "@/composables/useUserSignup";
+
+const { userData } = useUserSignup();
 
 setWindowName("Anmelden");
+const signupSuccessfull = ref(false);
 
 // User input
-
-const passwordConfirm = ref("");
 const rulesAccepted = ref(false);
 const errorMessage = ref(null);
 
-// Todo: Form input validation with vue
-const userData = reactive({
-  firstName: "",
-  lastName: "",
-  birthday: "",
-  gender: "",
-  password: "",
-  clubId: "",
-  email: "",
-  address: { country: "GER" },
-  emailNewsletter: true,
-  tshirtSize: "",
-
-  // Set this options as defaults
-  // Todo: Maybe do this in backend?
-
-  emailInformIfComment: true,
-  emailTeamSearch: false,
-});
+// TODO: Form input validation with vue
 
 // Set upper boundary of date picker
 const limitDate = new Date();
@@ -220,9 +227,8 @@ const upperLimitBirthday = ref(limitDate);
 const showSpinner = ref(false);
 
 // Validation
-
 const passwordMatches = computed(() => {
-  return passwordConfirm.value === userData.password;
+  return userData.passwordConfirm === userData.password;
 });
 
 const registerButtonIsEnabled = computed(() => {
@@ -281,13 +287,11 @@ const onSubmit = async () => {
     if (res.status != 200) throw res.statusText;
     errorMessage.value = null;
     showSpinner.value = false;
-
-    // Todo: Auto login
-    router.push({ name: "Login" });
+    signupSuccessfull.value = true;
   } catch (error) {
     showSpinner.value = false;
 
-    // Todo: Where do this error messages come from? Is this safe?
+    // TODO: Where do this error messages come from? Is this safe?
 
     // E-Mail errors
     if (error.response?.data === "email must be unique")
@@ -304,4 +308,4 @@ const onSubmit = async () => {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>
