@@ -5,11 +5,6 @@
     <div v-if="state == 'incompleted'">
       Es wurde kein Konto zur Aktivierung gefunden 🤨
     </div>
-    <div v-if="state == 'success'">
-      <h5>Hallo {{ firstName }}!</h5>
-      <div>Deine Aktivierung war erfolgreich 🥳</div>
-      <div>Du solltest nun automatisch eingeloggt sein</div>
-    </div>
     <div v-if="state == 'fail'">
       <div>Es gab leider ein Problem mit der Aktivierung 😥</div>
       <div>
@@ -22,14 +17,17 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import ApiService from "../services/ApiService";
+import useUser from "@/composables/useUser";
+const { saveTokenData } = useUser();
 
-const router = useRoute();
-const { userId, token } = router.query;
+const route = useRoute();
+const router = useRouter();
+
+const { userId, token } = route.query;
 
 const state = ref("");
-const firstName = ref("");
 
 if (!(userId && token)) {
   state.value = "incompleted";
@@ -39,15 +37,13 @@ if (!(userId && token)) {
     if (res.status != 200 && res.status != 404) throw res.statusText;
 
     if (res.status == 200) {
-      state.value = "success";
-      firstName.value = res.data.firstName;
+      saveTokenData(res.data);
+      router.push({ name: "Home" });
     }
 
     if (res.status == 404) {
       state.value = "fail";
     }
-
-    //TODO: Handle token
   } catch (error) {
     state.value = "fail";
     console.error(error);

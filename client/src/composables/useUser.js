@@ -27,7 +27,6 @@ export default () => {
     return loggedIn.value && state.authData.role !== "Keine";
   });
 
-  // const getAuthData = computed(() => state.authData);
   const isTokenActive = computed(() => {
     if (!state.authData.tokenExp) {
       return false;
@@ -51,6 +50,7 @@ export default () => {
       role: jwtDecodedValue.role,
     };
     state.authData = newTokenData;
+    setLoginStatus("success");
   };
 
   // TODO: Is this needed?
@@ -77,7 +77,6 @@ export default () => {
   const login = async (credentials) => {
     const response = await axios.post(baseURL + "users/login", credentials);
     saveTokenData(response.data);
-    setLoginStatus("success");
     return response;
   };
 
@@ -126,6 +125,5 @@ export default () => {
     saveTokenData,
     setLoginStatus,
     refreshToken,
-    // state: readonly(state),
   };
 };
