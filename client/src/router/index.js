@@ -106,7 +106,7 @@ const routes = [
     name: "SiteRecords",
     props: true,
 
-    component: () => import("../views/SiteRecords.vue"),
+    component: () => import("../views/ResultsSiteRecords.vue"),
   },
   {
     path: "/upload",
