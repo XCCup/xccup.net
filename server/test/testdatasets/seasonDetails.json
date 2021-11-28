@@ -3,7 +3,7 @@
     "year": 2019,
     "startDate": "2019-03-01T00:00:00",
     "endDate": "2019-10-01T00:00:00",
-    "isPaused" : false,
+    "isPaused": false,
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 2,
     "seniorBonusPerAge": 2,
@@ -67,62 +67,43 @@
     },
     "rankingClasses": {
       "gsTandem": {
-        "gliderClasses": [
-          "Tandem"
-        ],
+        "gliderClasses": ["Tandem"],
         "description": "Gleitschirm Tandem",
         "shortDescription": "GS Tandem"
       },
       "gsSport": {
-        "gliderClasses": [
-          "AB_low",
-          "AB_high"
-        ],
+        "gliderClasses": ["AB_low", "AB_high"],
         "description": "Sportklasse (EN A+EN B)",
         "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
-        "gliderClasses": [
-          "C_low",
-          "C_high"
-        ],
+        "gliderClasses": ["C_low", "C_high"],
         "description": "Intermediate-Klasse (EN C)",
         "shortDescription": "GS Intermediate"
       },
       "gsPerformance": {
-        "gliderClasses": [
-          "D_low",
-          "D_high"
-        ],
+        "gliderClasses": ["D_low", "D_high"],
         "description": "Performance-Klasse (EN D+CCC)",
         "shortDescription": "GS Performance"
       },
       "hgFlex": {
-        "gliderClasses": [
-          "HG_1_Turm",
-          "HG_1_Turmlos"
-        ],
+        "gliderClasses": ["HG_1_Turm", "HG_1_Turmlos"],
         "description": "Flexdrachen",
         "shortDescription": "HG Flex"
       },
       "hgFixed": {
-        "gliderClasses": [
-          "HG_5_starr"
-        ],
+        "gliderClasses": ["HG_5_starr"],
         "description": "Starrflügler",
         "shortDescription": "HG Starr"
       }
     },
-    "stateChampionChips": [
-      "LUX",
-      "RP"
-    ]
+    "stateChampionChips": ["LUX", "RP"]
   },
   {
     "year": 2020,
     "startDate": "2020-03-01T00:00:00",
     "endDate": "2020-10-01T00:00:00",
-    "isPaused" : false,
+    "isPaused": false,
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 5,
     "seniorBonusPerAge": 2,
@@ -186,62 +167,43 @@
     },
     "rankingClasses": {
       "gsTandem": {
-        "gliderClasses": [
-          "Tandem"
-        ],
+        "gliderClasses": ["Tandem"],
         "description": "Gleitschirm Tandem",
         "shortDescription": "GS Tandem"
       },
       "gsSport": {
-        "gliderClasses": [
-          "AB_low",
-          "AB_high"
-        ],
+        "gliderClasses": ["AB_low", "AB_high"],
         "description": "Sportklasse (EN A+EN B)",
         "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
-        "gliderClasses": [
-          "C_low",
-          "C_high"
-        ],
+        "gliderClasses": ["C_low", "C_high"],
         "description": "Intermediate-Klasse (EN C)",
         "shortDescription": "GS Intermediate"
       },
       "gsPerformance": {
-        "gliderClasses": [
-          "D_low",
-          "D_high"
-        ],
+        "gliderClasses": ["D_low", "D_high"],
         "description": "Performance-Klasse (EN D+CCC)",
         "shortDescription": "GS Performance"
       },
       "hgFlex": {
-        "gliderClasses": [
-          "HG_1_Turm",
-          "HG_1_Turmlos"
-        ],
+        "gliderClasses": ["HG_1_Turm", "HG_1_Turmlos"],
         "description": "Flexdrachen",
         "shortDescription": "HG Flex"
       },
       "hgFixed": {
-        "gliderClasses": [
-          "HG_5_starr"
-        ],
+        "gliderClasses": ["HG_5_starr"],
         "description": "Starrflügler",
         "shortDescription": "HG Starr"
       }
     },
-    "stateChampionChips": [
-      "LUX",
-      "RP"
-    ]
+    "stateChampionChips": ["LUX", "RP"]
   },
   {
     "year": 2021,
     "startDate": "2021-03-01T00:00:00",
-    "endDate": "2021-10-01T00:00:00",
-    "isPaused" : true,
+    "endDate": "2021-12-31T00:00:00",
+    "isPaused": false,
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 3,
     "seniorBonusPerAge": 2,
@@ -305,62 +267,43 @@
     },
     "rankingClasses": {
       "gsTandem": {
-        "gliderClasses": [
-          "Tandem"
-        ],
+        "gliderClasses": ["Tandem"],
         "description": "Gleitschirm Tandem",
         "shortDescription": "GS Tandem"
       },
       "gsSport": {
-        "gliderClasses": [
-          "AB_low",
-          "AB_high"
-        ],
+        "gliderClasses": ["AB_low", "AB_high"],
         "description": "Sportklasse (EN A+EN B)",
         "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
-        "gliderClasses": [
-          "C_low",
-          "C_high"
-        ],
+        "gliderClasses": ["C_low", "C_high"],
         "description": "Intermediate-Klasse (EN C)",
         "shortDescription": "GS Intermediate"
       },
       "gsPerformance": {
-        "gliderClasses": [
-          "D_low",
-          "D_high"
-        ],
+        "gliderClasses": ["D_low", "D_high"],
         "description": "Performance-Klasse (EN D+CCC)",
         "shortDescription": "GS Performance"
       },
       "hgFlex": {
-        "gliderClasses": [
-          "HG_1_Turm",
-          "HG_1_Turmlos"
-        ],
+        "gliderClasses": ["HG_1_Turm", "HG_1_Turmlos"],
         "description": "Flexdrachen",
         "shortDescription": "HG Flex"
       },
       "hgFixed": {
-        "gliderClasses": [
-          "HG_5_starr"
-        ],
+        "gliderClasses": ["HG_5_starr"],
         "description": "Starrflügler",
         "shortDescription": "HG Starr"
       }
     },
-    "stateChampionChips": [
-      "LUX",
-      "RP"
-    ]
+    "stateChampionChips": ["LUX", "RP"]
   },
   {
     "year": 2022,
     "startDate": "2022-03-01T00:00:00",
     "endDate": "2022-10-01T00:00:00",
-    "isPaused" : false,
+    "isPaused": false,
     "pointThresholdForFlight": 60,
     "numberOfFlightsForShirt": 2,
     "seniorBonusPerAge": 2,
@@ -424,55 +367,36 @@
     },
     "rankingClasses": {
       "gsTandem": {
-        "gliderClasses": [
-          "Tandem"
-        ],
+        "gliderClasses": ["Tandem"],
         "description": "Gleitschirm Tandem",
         "shortDescription": "GS Tandem"
       },
       "gsSport": {
-        "gliderClasses": [
-          "AB_low",
-          "AB_high"
-        ],
+        "gliderClasses": ["AB_low", "AB_high"],
         "description": "Sportklasse (EN A+EN B)",
         "shortDescription": "GS Sport"
       },
       "gsIntermediate": {
-        "gliderClasses": [
-          "C_low",
-          "C_high"
-        ],
+        "gliderClasses": ["C_low", "C_high"],
         "description": "Intermediate-Klasse (EN C)",
         "shortDescription": "GS Intermediate"
       },
       "gsPerformance": {
-        "gliderClasses": [
-          "D_low",
-          "D_high"
-        ],
+        "gliderClasses": ["D_low", "D_high"],
         "description": "Performance-Klasse (EN D+CCC)",
         "shortDescription": "GS Performance"
       },
       "hgFlex": {
-        "gliderClasses": [
-          "HG_1_Turm",
-          "HG_1_Turmlos"
-        ],
+        "gliderClasses": ["HG_1_Turm", "HG_1_Turmlos"],
         "description": "Flexdrachen",
         "shortDescription": "HG Flex"
       },
       "hgFixed": {
-        "gliderClasses": [
-          "HG_5_starr"
-        ],
+        "gliderClasses": ["HG_5_starr"],
         "description": "Starrflügler",
         "shortDescription": "HG Starr"
       }
     },
-    "stateChampionChips": [
-      "LUX",
-      "RP"
-    ]
+    "stateChampionChips": ["LUX", "RP"]
   }
 ]
