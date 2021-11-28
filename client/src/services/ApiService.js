@@ -207,6 +207,9 @@ export default {
   getCountries() {
     return apiClient.get(baseURL + "general/user/countries");
   },
+  getStates() {
+    return apiClient.get(baseURL + "general/user/states");
+  },
   getShirtSizes() {
     return apiClient.get(baseURL + "general/user/tshirtSizes");
   },
