@@ -16,7 +16,7 @@
         :disabled="!buttonIsEnabled"
         @click.prevent="onSubmit"
       >
-        Neues Passwort anforderen
+        Neues Passwort anfordern
         <div
           v-if="showSpinner"
           class="spinner-border spinner-border-sm"
