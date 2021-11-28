@@ -44,7 +44,7 @@ defineProps({
     required: true,
   },
   defaultGlider: {
-    type: String,
+    type: [String, null],
     required: true,
   },
 });
