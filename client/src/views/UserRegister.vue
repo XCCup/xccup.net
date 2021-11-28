@@ -2,7 +2,8 @@
   <section class="bg-light">
     <div class="container py-5 h-100">
       <div class="row justify-content-center align-items-center h-100">
-        <div class="col-12 col-lg-9 col-xl-7">
+        <!-- Form -->
+        <div v-if="!signupSuccessfull" class="col-12 col-lg-9 col-xl-7">
           <div class="card shadow-2-strong" style="border-radius: 15px">
             <div class="card-body p-4 p-md-5">
               <h3 class="mb-4">Registrieren</h3>
@@ -96,6 +97,11 @@
 
                 <!-- Password -->
                 <div class="row">
+                  <p>
+                    Das Passwort muss aus mindestens 8 Zeichen bestehen und
+                    mindestens eine Zahl, Sonderzeichen und Großbuchstaben
+                    enthalten.
+                  </p>
                   <div class="col-md-6 mb-4">
                     <BaseInput
                       v-model="userData.password"
@@ -105,7 +111,7 @@
                   </div>
                   <div class="col-md-6 mb-4">
                     <BaseInput
-                      v-model="passwordConfirm"
+                      v-model="userData.passwordConfirm"
                       label="Passwort wiederholen"
                       :is-password="true"
                       :external-validation-result="!passwordMatches"
@@ -171,23 +177,42 @@
             </div>
           </div>
         </div>
+        <!-- Confirmation -->
+        <div v-if="signupSuccessfull" class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong" style="border-radius: 15px">
+            <div class="card-body p-4 p-md-5">
+              <div class="text-center">
+                <h1><i class="bi bi-check-circle text-success"></i></h1>
+              </div>
+              <p>
+                Um deinen Account zu aktivieren öffne bitte den Link den wir dir
+                gerade per Email geschickt haben.
+              </p>
+              <router-link :to="{ name: 'Home' }">
+                Zurück zur Startseite
+              </router-link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, computed } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import { useRouter } from "vue-router";
+import useUserData from "@/composables/useUserSignup";
+
+const { userData } = useUserData();
 const router = useRouter();
 
 setWindowName("Anmelden");
+const signupSuccessfull = ref(false);
 
 // User input
-
-const passwordConfirm = ref("");
 const rulesAccepted = ref(false);
 const errorMessage = ref(null);
 
@@ -216,13 +241,13 @@ const limitDate = new Date();
 limitDate.setYear(limitDate.getFullYear() - 16);
 const upperLimitBirthday = ref(limitDate);
 
+
 // Helpers
 const showSpinner = ref(false);
 
 // Validation
-
 const passwordMatches = computed(() => {
-  return passwordConfirm.value === userData.password;
+  return userData.passwordConfirm === userData.password;
 });
 
 const registerButtonIsEnabled = computed(() => {
@@ -281,9 +306,7 @@ const onSubmit = async () => {
     if (res.status != 200) throw res.statusText;
     errorMessage.value = null;
     showSpinner.value = false;
-
-    // Todo: Auto login
-    router.push({ name: "Login" });
+    signupSuccessfull.value = true;
   } catch (error) {
     showSpinner.value = false;
 

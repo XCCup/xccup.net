@@ -42,6 +42,7 @@ const service = {
 
     const activationLink = `${clientUrl}${userActivateLink}?userId=${user.id}&token=${user.token}`;
 
+
     const content = {
       title: REGISTRATION_TITLE,
       text: REGISTRATION_TEXT(user.firstName, activationLink),

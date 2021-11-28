@@ -252,6 +252,12 @@ export default {
     },
     async sendFlightDetails() {
       try {
+        console.log({
+          glider: this.listOfGliders.find(
+            (glider) => glider.id === this.defaultGlider
+          ),
+          report: this.flightReport,
+        });
         const response = await ApiService.uploadFlightDetails(this.flightId, {
           glider: this.listOfGliders.find(
             (glider) => glider.id === this.defaultGlider

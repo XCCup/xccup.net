@@ -14,6 +14,12 @@ const apiClient = axios.create({
 // Note: jwtInterceptor is used when a route needs authorization
 
 export default {
+  // Home
+  getInitialData() {
+    return apiClient.get("home");
+  },
+
+  // FLights
   getFlights(params) {
     return apiClient.get("flights", { params });
   },
@@ -29,12 +35,13 @@ export default {
   uploadFlightDetails(flightId, data) {
     return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
   },
+  editFlightDetails(flightId, data) {
+    return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
+  },
   uploadImages(data) {
     return jwtInterceptor.post(baseURL + "flights/photos/", data);
   },
-  getInitialData() {
-    return apiClient.get("home");
-  },
+
   // Flight comments
 
   addComment(comment) {

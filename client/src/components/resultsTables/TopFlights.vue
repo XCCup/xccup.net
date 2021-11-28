@@ -9,18 +9,16 @@
         @click="routeToFlight(flight.externalId)"
       >
         <th scope="row">{{ index + 1 }}</th>
-        <td>
+        <td class="hide-on-xs">
           <BaseDate :timestamp="flight.takeoffTime" date-format="dd.MM" />
         </td>
         <td>{{ flight.user.firstName + " " + flight.user.lastName }}</td>
         <td>{{ flight.takeoff.name }}</td>
         <td class="no-line-break">
+          <FlightTypeIcon :flight-type="flight.flightType" />
           {{ Math.floor(flight.flightDistance) }} km
         </td>
-        <td class="no-line-break">
-          <FlightTypeIcon :flight-type="flight.flightType" />
-          {{ flight.flightPoints }} P
-        </td>
+        <td class="no-line-break hide-on-xs">{{ flight.flightPoints }} P</td>
       </tr>
     </tbody>
   </table>

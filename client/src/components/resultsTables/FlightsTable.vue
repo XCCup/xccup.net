@@ -12,9 +12,9 @@
             />
             <th>Name</th>
             <th scope="col" class="hide-on-md">Verein</th>
-            <th scope="col" class="hide-on-sm">Team</th>
+            <th scope="col" class="hide-on-md">Team</th>
 
-            <th class="hide-on-sm">Startplatz</th>
+            <th class="hide-on-xs">Startplatz</th>
             <th scope="col" class="hide-on-sm">Gerät</th>
             <SortingTableHead
               content="Strecke"
@@ -28,7 +28,7 @@
               :current-sort-column-key="currentSortColumnKey"
               @head-sort-changed="handleSortChange"
             />
-            <th class="hide-on-sm">Status</th>
+            <th class="hide-on-md">Status</th>
           </thead>
           <tbody>
             <tr
@@ -50,10 +50,10 @@
               <td scope="col" class="hide-on-md">
                 {{ flight.club.name }}
               </td>
-              <td scope="col" class="hide-on-sm">
+              <td scope="col" class="hide-on-md">
                 {{ flight.team?.name }}
               </td>
-              <td class="hide-on-sm">{{ flight.takeoff.name }}</td>
+              <td class="hide-on-xs">{{ flight.takeoff.name }}</td>
 
               <td scope="col" class="hide-on-sm no-line-break">
                 <RankingClass :ranking-class="flight.glider?.gliderClass" />
@@ -67,7 +67,7 @@
                 <FlightTypeIcon :flight-type="flight.flightType" />
                 {{ flight.flightPoints }} P
               </td>
-              <td class="hide-on-sm">
+              <td class="hide-on-md">
                 <FlightState :flight-state="flight.flightStatus" />
               </td>
             </tr>
