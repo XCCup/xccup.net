@@ -47,6 +47,7 @@ $table-striped-bg: rgba($primary, $table-striped-bg-factor);
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "scss/bootstrapCustom";
 @import "scss/rankingClasses";
+@import "scss/dialogBackground";
 
 html,
 body {

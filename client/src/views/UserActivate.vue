@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: Put this in a dialog as well -->
   <div class="container mb-3">
     <h3>Nutzerprofilaktivierung</h3>
     <div v-if="state == 'incompleted'">
