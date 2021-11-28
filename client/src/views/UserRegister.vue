@@ -5,7 +5,7 @@
         <div class="col-12 col-lg-9 col-xl-7">
           <div class="card shadow-2-strong" style="border-radius: 15px">
             <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2">Registrieren</h3>
+              <h3 class="mb-4">Registrieren</h3>
               <form>
                 <div class="row">
                   <div class="col-md-6 mb-4">

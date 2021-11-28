@@ -1,9 +1,9 @@
 <template>
-  <div v-if="!errorMessage" class="mb-4 pb-2">
+  <div v-if="!errorMessage" class="mb-4">
     Das Rücksetzen Deines Passwortes wurde bestätigt. Wird senden Dir in kürze
     ein neues Passwort zu 📯
   </div>
-  <div v-else class="mb-4 pb-2">{{ errorMessage }}</div>
+  <div v-else class="mb-4">{{ errorMessage }}</div>
 </template>
 
 <script setup>
