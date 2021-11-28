@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwtInterceptor from "@/helper/jwtInterceptor";
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 const apiClient = axios.create({

@@ -45,7 +45,7 @@
 import { shuffle } from "lodash";
 import { computed } from "vue";
 
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 const props = defineProps({

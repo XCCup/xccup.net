@@ -2,7 +2,7 @@ import { reactive, readonly, toRefs, computed } from "@vue/reactivity";
 import { jwtDecrypt, tokenAlive } from "@/helper/jwtHelper";
 import axios from "axios";
 
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 const state = reactive({

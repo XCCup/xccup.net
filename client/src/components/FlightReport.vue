@@ -33,7 +33,7 @@
 import useFlight from "@/composables/useFlight";
 const { flight } = useFlight();
 
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 </script>

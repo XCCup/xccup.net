@@ -192,7 +192,7 @@
 import { computed } from "vue";
 import useUser from "@/composables/useUser";
 import useFlight from "@/composables/useFlight";
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const { getUserId } = useUser();
 const { flight } = useFlight();

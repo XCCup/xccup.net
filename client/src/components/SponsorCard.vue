@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 defineProps({
