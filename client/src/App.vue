@@ -121,6 +121,11 @@ footer {
   @extend .d-md-table-cell;
 }
 
+.hide-on-xs {
+  @extend .d-none;
+  @extend .d-sm-table-cell;
+}
+
 // TODO: Is this obsolete?
 // Fix for responsive scaling of barogramm
 // .barogramm-container {
