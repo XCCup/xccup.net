@@ -23,7 +23,7 @@
         " " +
         glider.model +
         " (" +
-        glider.gliderClassShortDescription +
+        glider.gliderClass.shortDescription +
         ")"
       }}
     </option>
