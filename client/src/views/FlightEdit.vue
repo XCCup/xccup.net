@@ -78,13 +78,12 @@
 </template>
 
 <script setup>
-import { computed, ref, reactive } from "vue";
-import useUser from "@/composables/useUser";
+import { computed, ref } from "vue";
 import useFlight from "@/composables/useFlight";
-import { getbaseURL } from "@/helper/baseUrlHelper";
 import ApiService from "@/services/ApiService";
 import { useRoute } from "vue-router";
 import { cloneDeep } from "lodash";
+import router from "../router";
 
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
@@ -118,16 +117,18 @@ const showSpinner = ref(false);
 
 const onSubmit = async () => {
   showSpinner.value = true;
-  console.log(modifiedFlightData.value);
   try {
     const res = await ApiService.editFlightDetails(
       flight.value.id,
       modifiedFlightData.value
     );
     if (res.status != 200) throw res.statusText;
-    showSpinner.value = false;
-    errorMessage.value = res.statusText;
-    showSpinner.value = false;
+    router.push({
+      name: "Flight",
+      params: {
+        flightId: route.params.id,
+      },
+    });
   } catch (error) {
     errorMessage.value = error.response;
     showSpinner.value = false;
