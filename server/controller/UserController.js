@@ -190,8 +190,6 @@ router.get(
 // @desc Generates a new password for an user
 // @route GET /users/renew-password/
 
-// users/renew-password?userId=${user.id}&token=${user.resetPassword}
-
 router.get(
   "/renew-password",
   query("userId").isUUID(),

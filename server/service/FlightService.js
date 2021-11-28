@@ -640,12 +640,7 @@ async function createWhereStatement(
       violationAccepted: false,
     };
   } else {
-    whereStatement = {
-      [sequelize.Op.not]: [
-        { airspaceViolation: true },
-        { uncheckedGRecord: true },
-      ],
-    };
+    whereStatement = {};
   }
   if (flightType) {
     whereStatement.flightType = flightType;

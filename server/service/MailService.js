@@ -12,8 +12,8 @@ const {
 const userService = require("./UserService");
 
 const clientUrl = process.env.CLIENT_URL;
-const userActivate = process.env.CLIENT_USER_ACTIVATE;
-const userPasswordLost = process.env.CLIENT_USER_PASSWORD_LOST;
+const userActivateLink = process.env.CLIENT_USER_ACTIVATE;
+const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST;
 
 const service = {
   sendMailSingle: async (fromUserId, toUserId, content) => {
@@ -40,7 +40,7 @@ const service = {
   sendActivationMail: async (user) => {
     logger.info(`Send activation mail to ${user.email}`);
 
-    const activationLink = `${clientUrl}${userActivate}?userId=${user.id}&token=${user.token}`;
+    const activationLink = `${clientUrl}${userActivateLink}?userId=${user.id}&token=${user.token}`;
 
     const content = {
       title: REGISTRATION_TITLE,
@@ -64,7 +64,7 @@ const service = {
   sendRequestNewPasswordMail: async (user) => {
     logger.info(`Send new password request to ${user.email}`);
 
-    const resetLink = `${clientUrl}${userPasswordLost}?confirm=true&userId=${user.id}&token=${user.token}`;
+    const resetLink = `${clientUrl}${userPasswordLostLink}?confirm=true&userId=${user.id}&token=${user.token}`;
 
     const content = {
       title: REQUEST_NEW_PASSWORD_TITLE,
