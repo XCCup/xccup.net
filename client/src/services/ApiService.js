@@ -26,7 +26,7 @@ export default {
   uploadIgc(data) {
     return jwtInterceptor.post(baseURL + "flights/", data);
   },
-  uploadFlightDetails(flightId, data) {
+  editFlightDetails(flightId, data) {
     return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
   },
   uploadImages(data) {
