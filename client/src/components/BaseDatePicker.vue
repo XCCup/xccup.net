@@ -1,7 +1,7 @@
 <template>
   <div class="form mb-3">
     <label>{{ label }}</label>
-    <datepicker
+    <Datepicker
       v-model="pickedDate"
       :locale="de"
       :placeholder="label"
@@ -15,15 +15,13 @@
 </template>
 
 <script setup>
-// TODO: Reactivity does not seem to always work
-
 // TODO:
 // Add the possibility to define a year where the picker should start.
 // No one born in 2021 will enter the comp
 
 import Datepicker from "vue3-datepicker";
 import { de } from "date-fns/locale";
-import { ref, watch } from "vue";
+import { ref, watch, watchEffect } from "vue";
 import { parseISO } from "date-fns";
 
 const props = defineProps({
@@ -54,21 +52,18 @@ const pickedDate = ref(null);
 
 // Ensure that a inital property change won't cause an unwanted update
 // TODO: Is all this formatting really necessary? Also: possible race condition with "externalChange" in two different watchers?
-let externalChange = false;
+const externalChange = ref(false);
 
 // Watch the incoming data property to set the correct inital value in the correct format
-watch(
-  () => props.modelValue,
-  (newVal) => {
-    externalChange = true;
 
-    pickedDate.value = parseISO(newVal);
-  }
-);
+watchEffect(() => {
+  externalChange.value = true;
+  pickedDate.value = parseISO(props.modelValue);
+});
 
 // Watch the internal data property to update the surrounding component with the correct format
 watch(pickedDate, () => {
-  if (externalChange == true) return (externalChange = false);
+  if (externalChange.value == true) return (externalChange.value = false);
 
   const dateValue = pickedDate.value;
   if (dateValue) {
