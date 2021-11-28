@@ -20,7 +20,7 @@
                   <div class="col-md-6 mb-4">
                     <BaseInput
                       v-model="userData.email"
-                      label="Email"
+                      label="E-Mail"
                       :is-email="true"
                     />
                   </div>
@@ -289,11 +289,11 @@ const onSubmit = async () => {
 
     // Todo: Where do this error messages come from? Is this safe?
 
-    // Email errors
+    // E-Mail errors
     if (error.response?.data === "email must be unique")
-      return (errorMessage.value = "Diese Email existiert bereits");
+      return (errorMessage.value = "Diese E-Mail existiert bereits");
     if (error.response?.data.errors[0].param === "email")
-      return (errorMessage.value = "Dies ist keine gültige Email Adresse");
+      return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
 
     // Password errors
     if (error.response?.data.errors[0].param === "password")

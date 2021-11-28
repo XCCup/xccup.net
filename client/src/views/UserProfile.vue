@@ -107,7 +107,7 @@
                 value
               />
               <label class="form-check-label" for="flexCheckDefault">
-                Email bei neuem Kommentar
+                E-Mail bei neuem Kommentar
                 <i class="bi bi-info-circle"></i>
               </label>
             </div>
@@ -267,7 +267,7 @@
                 value
               />
               <label class="form-check-label" for="flexCheckDefault">
-                Email bei neuem Kommentar
+                E-Mail bei neuem Kommentar
                 <i class="bi bi-info-circle"></i>
               </label>
             </div>
