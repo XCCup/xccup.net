@@ -197,7 +197,7 @@ const routes = [
     path: "/passwort-vergessen/",
     name: "PasswordLost",
     props: (route) => ({ confirm: route.query.confirm }),
-    component: () => import("../views/PasswordLost.vue"),
+    component: () => import("../views/UserPasswordLost.vue"),
   },
   {
     path: "/:catchAll(.*)",
