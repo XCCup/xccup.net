@@ -203,11 +203,9 @@
 import { ref, computed } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
-import { useRouter } from "vue-router";
-import useUserData from "@/composables/useUserSignup";
+import useUserSignup from "@/composables/useUserSignup";
 
-const { userData } = useUserData();
-const router = useRouter();
+const { userData } = useUserSignup();
 
 setWindowName("Anmelden");
 const signupSuccessfull = ref(false);
@@ -217,30 +215,11 @@ const rulesAccepted = ref(false);
 const errorMessage = ref(null);
 
 // Todo: Form input validation with vue
-const userData = reactive({
-  firstName: "",
-  lastName: "",
-  birthday: "",
-  gender: "",
-  password: "",
-  clubId: "",
-  email: "",
-  address: { country: "GER" },
-  emailNewsletter: true,
-  tshirtSize: "",
-
-  // Set this options as defaults
-  // Todo: Maybe do this in backend?
-
-  emailInformIfComment: true,
-  emailTeamSearch: false,
-});
 
 // Set upper boundary of date picker
 const limitDate = new Date();
 limitDate.setYear(limitDate.getFullYear() - 16);
 const upperLimitBirthday = ref(limitDate);
-
 
 // Helpers
 const showSpinner = ref(false);
