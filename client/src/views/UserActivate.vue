@@ -35,16 +35,10 @@ if (!(userId && token)) {
 } else {
   try {
     const res = await ApiService.activate(userId, token);
-    if (res.status != 200 && res.status != 404) throw res.statusText;
+    if (res.status != 200) throw res.statusText;
 
-    if (res.status == 200) {
-      state.value = "success";
-      firstName.value = res.data.firstName;
-    }
-
-    if (res.status == 404) {
-      state.value = "fail";
-    }
+    state.value = "success";
+    firstName.value = res.data.firstName;
 
     //TODO: Handle token
   } catch (error) {
