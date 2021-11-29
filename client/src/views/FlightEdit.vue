@@ -117,6 +117,9 @@ const showSpinner = ref(false);
 
 const onSubmit = async () => {
   showSpinner.value = true;
+
+  updateModifiedGlider();
+
   try {
     const res = await ApiService.editFlightDetails(
       flight.value.id,
@@ -144,6 +147,12 @@ const submitButtonIsEnabled = computed(
     JSON.stringify(unmodifiedFlightData) !=
     JSON.stringify(modifiedFlightData.value)
 );
+
+function updateModifiedGlider() {
+  modifiedFlightData.value.glider = listOfGliders.value.find(
+    (g) => g.id == modifiedFlightData.value.glider.id
+  );
+}
 </script>
 
 <style scoped></style>
