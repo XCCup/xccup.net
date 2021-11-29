@@ -2,6 +2,7 @@ const User = require("../config/postgres")["User"];
 const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
 const flightService = require("../service/FlightService");
+const mailService = require("../service/MailService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const { ROLE } = require("../constants/user-constants");
 const { TYPE } = require("../constants/flight-constants");
@@ -161,6 +162,17 @@ const userService = {
     user.token = "";
     return await user.save();
   },
+  confirmMailChange: async (id, token, email) => {
+    const user = await User.findOne({
+      where: { id, token },
+    });
+
+    if (!user) return;
+
+    user.email = email;
+    user.token = "";
+    return await user.save();
+  },
   renewPassword: async (id, token) => {
     const user = await User.findOne({
       where: { id, token },
@@ -221,6 +233,7 @@ const userService = {
   },
   update: async (user) => {
     await checkForClubChange(user);
+    checkForMailChange(user);
 
     return user.save();
   },
@@ -321,6 +334,18 @@ async function checkForClubChange(user) {
         "It is not possible to change more then once a club within a season"
       );
     }
+  }
+}
+function checkForMailChange(user) {
+  if (Array.isArray(user.changed()) && user.changed().includes("email")) {
+    const token = generateRandomString();
+    user.token = token;
+    const newEmail = user.email;
+    const oldEmail = user._previousDataValues.email;
+
+    user.email = oldEmail;
+
+    mailService.sendConfirmNewMailAddressMail(user, newEmail);
   }
 }
 

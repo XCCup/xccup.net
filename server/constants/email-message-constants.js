@@ -50,3 +50,17 @@ Du wirst darauf eine Mail mit Deinem neuen Passwort erhalten.
 Dein XCCup Team
     
 `;
+
+module.exports.CONFIRM_NEW_ADDRESS_TITLE = "E-Mail bestätigen XCCup.net";
+
+module.exports.CONFIRM_NEW_ADDRESS_TEXT = (firstName, confirmLink) =>
+  `Hallo ${firstName}!
+
+Du möchtest Deine hinterlegte E-Mail-Adresse ändern.
+
+Um die Änderung abzuschließen klicke bitte auf folgenden Link:
+${confirmLink}
+
+Dein XCCup Team
+    
+`;

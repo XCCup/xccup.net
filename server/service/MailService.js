@@ -8,12 +8,15 @@ const {
   NEW_PASSWORD_TEXT,
   REQUEST_NEW_PASSWORD_TITLE,
   REQUEST_NEW_PASSWORD_TEXT,
+  CONFIRM_NEW_ADDRESS_TITLE,
+  CONFIRM_NEW_ADDRESS_TEXT,
 } = require("../constants/email-message-constants");
 const userService = require("./UserService");
 
 const clientUrl = process.env.CLIENT_URL;
 const userActivateLink = process.env.CLIENT_USER_ACTIVATE;
 const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST;
+const confirmMailChangeLink = process.env.CLIENT_USER_MAIL_CHANGE;
 
 const service = {
   sendMailSingle: async (fromUserId, toUserId, content) => {
@@ -72,6 +75,21 @@ const service = {
     };
 
     return await sendMail(user.email, content);
+  },
+
+  sendConfirmNewMailAddressMail: async (user, newEmail) => {
+    logger.info(
+      `Send confirm new mail for user ${user.firstName} ${user.lastName} to ${newEmail}`
+    );
+
+    const confirmMailLink = `${clientUrl}${confirmMailChangeLink}?userId=${user.id}&token=${user.token}&email=${newEmail}`;
+
+    const content = {
+      title: CONFIRM_NEW_ADDRESS_TITLE,
+      text: CONFIRM_NEW_ADDRESS_TEXT(user.firstName, confirmMailLink),
+    };
+
+    return await sendMail(newEmail, content);
   },
 
   sendMailAll: async (fromUserId, isNewsletter, content) => {

@@ -27,6 +27,16 @@ module.exports = (sequelize, DataTypes) => {
     flightDistance: {
       type: DataTypes.DOUBLE,
     },
+    // Seperate flightDistances are not used at the moment but should prepare the DB for upcoming changes
+    flightDistanceFree: {
+      type: DataTypes.DOUBLE,
+    },
+    flightDistanceFlat: {
+      type: DataTypes.DOUBLE,
+    },
+    flightDistanceFAI: {
+      type: DataTypes.DOUBLE,
+    },
     flightType: {
       type: DataTypes.STRING,
       // values: ["FREE", "FLAT", "FAI"],
