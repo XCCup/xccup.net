@@ -77,7 +77,6 @@ function checkIsArray(field, length) {
  */
 function checkIsUuidObject(field) {
   return check(field)
-    .optional({ checkFalsy: true })
     .isUUID()
     .withMessage(`${field} must be a valid uuid format`);
 }
