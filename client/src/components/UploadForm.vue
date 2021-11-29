@@ -16,7 +16,7 @@
       </div>
 
       <div class="row">
-        <div class="col">
+        <div class="col-md-6 col-12">
           <BaseInput
             v-model="takeoff"
             label="Startplatz"
@@ -24,7 +24,7 @@
             :is-required="false"
           />
         </div>
-        <div class="col">
+        <div class="col-md-6 col-12">
           <BaseInput
             v-model="landing"
             label="Landeplatz"
@@ -36,7 +36,7 @@
       <!-- Glider select -->
       <div class="col-md-12">
         <div class="row d-flex align-items-end">
-          <div class="col-md-9">
+          <div class="col-md-8">
             <GliderSelect
               v-model="defaultGlider"
               label="Fluggerät"
@@ -45,12 +45,12 @@
               :is-disabled="!flightId"
             />
           </div>
-          <div class="col-md-3 mt-3">
+          <div class="col-md-4">
             <router-link
               :to="{ name: 'ProfileGliderList' }"
               class="d-grid gap-2"
             >
-              <button type="button" class="btn btn-primary">
+              <button type="button" class="btn btn-primary mt-3">
                 <!-- TODO: Save inputs in state -->
                 Liste bearbeiten
               </button>
