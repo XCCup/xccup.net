@@ -16,7 +16,7 @@
           <component :is="Component" :key="$route.path"></component>
         </template>
         <template #fallback>
-          <BaseSpinner />
+          <BaseSpinner custom-class="height: 80vh" />
         </template>
       </suspense>
     </template>
