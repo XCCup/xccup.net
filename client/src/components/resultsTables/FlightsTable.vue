@@ -4,7 +4,7 @@
       <div v-if="flights?.length > 0" class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
-            <SortingTableHead
+            <TableSortHead
               content="Datum"
               column-object-key="takeoffTime"
               :current-sort-column-key="currentSortColumnKey"
@@ -16,13 +16,13 @@
 
             <th class="hide-on-sm">Startplatz</th>
             <th scope="col" class="hide-on-sm">Gerät</th>
-            <SortingTableHead
+            <TableSortHead
               content="Strecke"
               column-object-key="flightDistance"
               :current-sort-column-key="currentSortColumnKey"
               @head-sort-changed="handleSortChange"
             />
-            <SortingTableHead
+            <TableSortHead
               content="Punkte"
               column-object-key="flightPoints"
               :current-sort-column-key="currentSortColumnKey"
