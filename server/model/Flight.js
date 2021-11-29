@@ -18,6 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(5000),
       //Default is VARCHAR(255)
     },
+    airspaceReport: {
+      type: DataTypes.STRING(),
+    },
     flightPoints: {
       type: DataTypes.INTEGER,
     },

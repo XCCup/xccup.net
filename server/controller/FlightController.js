@@ -239,6 +239,7 @@ router.put(
   authToken,
   checkParamIsUuid("id"),
   checkStringObject("report"),
+  checkStringObject("airspaceReport"),
   checkOptionalIsBoolean("onlyLogbook"),
   checkIsUuidObject("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),
@@ -252,7 +253,8 @@ router.put(
 
     if (!flight) return res.sendStatus(NOT_FOUND);
 
-    const { report, onlyLogbook, glider, hikeAndFly } = req.body;
+    const { report, airspaceReport, onlyLogbook, glider, hikeAndFly } =
+      req.body;
 
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
@@ -260,6 +262,7 @@ router.put(
       const result = await service.finalizeFlightSubmission(
         flight,
         report,
+        airspaceReport,
         onlyLogbook,
         glider,
         hikeAndFly

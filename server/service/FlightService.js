@@ -263,6 +263,7 @@ const flightService = {
   finalizeFlightSubmission: async (
     flight,
     report,
+    airspaceReport,
     onlyLogbook,
     glider,
     hikeAndFly
@@ -272,6 +273,9 @@ const flightService = {
     // Set report when value is defined or emptry
     if (report || report == "") {
       columnsToUpdate.report = report;
+    }
+    if (airspaceReport || airspaceReport == "") {
+      columnsToUpdate.airspaceReport = airspaceReport;
     }
 
     if (hikeAndFly) {
