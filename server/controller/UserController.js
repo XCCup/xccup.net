@@ -436,10 +436,6 @@ router.put(
       user.defaultGlider = defaultGlider;
       user.password = password;
 
-      // if (user.email != email) {
-      //   service.confirmMailChange(user, email);
-      // }
-
       const result = await service.update(user);
       res.json(result);
     } catch (error) {
