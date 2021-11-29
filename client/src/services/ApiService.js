@@ -29,8 +29,13 @@ export default {
   editFlightDetails(flightId, data) {
     return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
   },
-  uploadImages(data) {
+
+  // Photos
+  uploadPhotos(data) {
     return jwtInterceptor.post(baseURL + "flights/photos/", data);
+  },
+  editPhoto(id, data) {
+    return jwtInterceptor.put(baseURL + "flights/photos/" + id, data);
   },
   getInitialData() {
     return apiClient.get("home");

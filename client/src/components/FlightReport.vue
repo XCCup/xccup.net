@@ -1,5 +1,5 @@
 <template>
-  <div v-if="flight.report" class="container">
+  <div v-if="flight.report || flight.photos" class="container">
     <div class="row mt-4">
       <h3>Flugbericht</h3>
       <p>
