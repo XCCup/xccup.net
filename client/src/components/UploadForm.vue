@@ -1,20 +1,19 @@
 <template>
-  <div class="container row col-lg-9 col-md-10 col-12 mx-auto mt-4">
-    <h3>Flug hochladen</h3>
-    <form @submit.prevent="sendFlightDetails">
-      <div class="mb-3">
-        <label for="igcUploadForm" class="form-label">
-          Flug auswählen (.igc)
-        </label>
-        <input
-          id="igcUploadForm"
-          class="form-control"
-          type="file"
-          accept=".igc"
-          @change="igcSelected"
-        />
-      </div>
-
+  <h3>Flug hochladen</h3>
+  <form @submit.prevent="sendFlightDetails">
+    <div class="mb-3">
+      <label for="igcUploadForm" class="form-label">
+        Flug auswählen (.igc)
+      </label>
+      <input
+        id="igcUploadForm"
+        class="form-control"
+        type="file"
+        accept=".igc"
+        @change="igcSelected"
+      />
+    </div>
+    <div v-show="flightId">
       <div class="row">
         <div class="col-md-6 col-12">
           <BaseInput
@@ -175,7 +174,6 @@
             v-model="rulesAccepted"
             class="form-check-input"
             type="checkbox"
-            :disabled="!flightId"
           />
           <label class="form-check-label" for="flexCheckDefault">
             Die Ausschreibung ist mir bekannt, flugrechtliche Auflagen wurden
@@ -200,8 +198,8 @@
           Streckenmeldung absenden
         </button>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </template>
 
 <script setup>
@@ -227,8 +225,7 @@ try {
   console.log(error);
 }
 
-// TODO: Change rules to false for production
-const rulesAccepted = ref(true);
+const rulesAccepted = ref(false);
 const onlyLogbook = ref(false);
 const hikeAndFly = ref(false);
 
@@ -239,7 +236,7 @@ const landing = ref("");
 const flightReport = ref(" ");
 
 const sendButtonIsDisabled = computed(() => {
-  return flightId.value && rulesAccepted.value === true ? false : true;
+  return !rulesAccepted.value;
 });
 
 const igc = ref({ filename: "", body: null });
@@ -256,11 +253,7 @@ const readFile = (file) => {
 };
 const sendIgc = async () => {
   if (igc.value.body == null) return;
-  try {
-    return await ApiService.uploadIgc({ igc: igc.value });
-  } catch (error) {
-    console.log(error);
-  }
+  return await ApiService.uploadIgc({ igc: igc.value });
 };
 const igcSelected = async (file) => {
   flightId.value = null;
@@ -301,9 +294,7 @@ const sendFlightDetails = async () => {
 const addPhotoButtonIsEnabled = computed(() => flightId.value != null);
 
 const photoInput = ref(null);
-onMounted(() => {
-  photoInput.value = document.getElementById("photo-input");
-});
+onMounted(() => (photoInput.value = document.getElementById("photo-input")));
 
 const selectedPhotos = ref([]);
 const uploadedPhotos = ref([]);
