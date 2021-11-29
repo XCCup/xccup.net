@@ -169,7 +169,7 @@
             </div>
           </button>
           <!-- Error message -->
-          <p v-if="errorMessage" class="text-danger mt-4">
+          <p v-if="errorMessage" id="errorMessageText" class="text-danger mt-4">
             {{ errorMessage }}
           </p>
         </div>
@@ -177,8 +177,8 @@
     </div>
 
     <!-- Confirmation -->
-    <div v-if="signupSuccessfull">
-      <div id="registerConfirmation" class="text-center mb-4">
+    <div v-if="signupSuccessfull" id="registerConfirmation">
+      <div id="registerConfirmationHeader" class="text-center mb-4">
         <h1><i class="bi bi-check-circle text-success"></i></h1>
       </div>
       <p>
@@ -193,7 +193,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import ApiService from "@/services/ApiService";
-import { setWindowName } from "../helper/utils";
+import { isStrongPassword, setWindowName } from "../helper/utils";
 import useUserSignup from "@/composables/useUserSignup";
 
 const { userData } = useUserSignup();
@@ -224,6 +224,7 @@ const registerButtonIsEnabled = computed(() => {
   return (
     rulesAccepted.value &&
     passwordMatches.value &&
+    isStrongPassword(userData.password) &&
     userData.firstName.length > 0 &&
     userData.lastName.length > 0 &&
     userData.birthday &&

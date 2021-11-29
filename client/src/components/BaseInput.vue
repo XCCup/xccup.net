@@ -21,7 +21,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { isEmail } from "../helper/utils";
+import { isEmail, isStrongPassword } from "../helper/utils";
 defineEmits(["update:modelValue"]);
 
 const props = defineProps({
@@ -73,7 +73,8 @@ const isInvalid = computed(() => {
   return (
     props.externalValidationResult ||
     (props.isRequired && props.modelValue.length == 0) ||
-    (props.isEmail && !isEmail(props.modelValue))
+    (props.isEmail && !isEmail(props.modelValue)) ||
+    (props.isPassword && !isStrongPassword(props.modelValue))
   );
 });
 
