@@ -32,5 +32,13 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  Logo.associate = (models) => {
+    Logo.belongsTo(models.Sponsor, {
+      foreignKey: {
+        name: "brandId",
+      },
+    });
+  };
+
   return Logo;
 };

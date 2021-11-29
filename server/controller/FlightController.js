@@ -16,7 +16,6 @@ const { query } = require("express-validator");
 const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
-  checkOptionalStringObjectNotEmpty,
   checkStringObject,
   checkParamIsInt,
   checkParamIsUuid,
@@ -240,7 +239,8 @@ router.put(
   authToken,
   checkParamIsUuid("id"),
   checkStringObject("report"),
-  checkOptionalStringObjectNotEmpty("status"),
+  checkStringObject("airspaceReport"),
+  checkOptionalIsBoolean("onlyLogbook"),
   checkIsUuidObject("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),
   checkStringObjectNotEmpty("glider.model"),
@@ -250,9 +250,11 @@ router.put(
     if (validationHasErrors(req, res)) return;
 
     const flight = await service.getById(req.params.id, true);
+
     if (!flight) return res.sendStatus(NOT_FOUND);
 
-    const { report, status, glider, hikeAndFly } = req.body;
+    const { report, airspaceReport, onlyLogbook, glider, hikeAndFly } =
+      req.body;
 
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
@@ -260,7 +262,8 @@ router.put(
       const result = await service.finalizeFlightSubmission(
         flight,
         report,
-        status,
+        airspaceReport,
+        onlyLogbook,
         glider,
         hikeAndFly
       );
