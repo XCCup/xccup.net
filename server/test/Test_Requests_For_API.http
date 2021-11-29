@@ -1,17 +1,17 @@
 #Initial Home Data
 ###
-GET http://localhost:3000/home HTTP/1.1
+GET http://localhost:3000/api/home HTTP/1.1
 content-type: application/json
 
 ###
 
 #Users
 ###
-DELETE http://localhost:3000/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e HTTP/1.1
+DELETE http://localhost:3000/api/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e HTTP/1.1
 content-type: application/json
 
 ###
-POST http://localhost:3000/users/token HTTP/1.1
+POST http://localhost:3000/api/users/token HTTP/1.1
 content-type: application/json
 
 {
@@ -19,7 +19,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3000/users/login HTTP/1.1
+POST http://localhost:3000/api/users/login HTTP/1.1
 content-type: application/json
 
 {
@@ -28,12 +28,12 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3000/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e
+GET http://localhost:3000/api/users/1332b2d1-2f47-4c09-c1d8-1a8f3d5e9a8e
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2Nzc3OTQsImV4cCI6MTYzNTY3Nzk5NH0.Lv-E9fInAJFGBmeHiVeAFAkc5t1v-dCtAfxyM6HEn2A
 
 
 ###
-POST http://localhost:3000/users/ HTTP/1.1
+POST http://localhost:3000/api/users/ HTTP/1.1
 content-type: application/json
 
 {
@@ -49,11 +49,11 @@ content-type: application/json
 }
 
 ###
-GET http://localhost:3000/users/gliders/get HTTP/1.1
+GET http://localhost:3000/api/users/gliders/get HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2NzgzMDIsImV4cCI6MTYzNTY3ODUwMn0.kF1K5Touqz6JGMQHuMiNUVq17oHpri1h-N9MfJBNtzM
 
 ###
-POST http://localhost:3000/users/gliders/add HTTP/1.1
+POST http://localhost:3000/api/users/gliders/add HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2NzgzMDIsImV4cCI6MTYzNTY3ODUwMn0.kF1K5Touqz6JGMQHuMiNUVq17oHpri1h-N9MfJBNtzM
 content-type: application/json
 
@@ -64,16 +64,16 @@ content-type: application/json
 }
 
 ###
-PUT http://localhost:3000/users/gliders/default/0a02f9d2-6c9c-4136-8222-d3bf0a08b376 HTTP/1.1
+PUT http://localhost:3000/api/users/gliders/default/0a02f9d2-6c9c-4136-8222-d3bf0a08b376 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2NzgzMDIsImV4cCI6MTYzNTY3ODUwMn0.kF1K5Touqz6JGMQHuMiNUVq17oHpri1h-N9MfJBNtzM
 
 ###
-DELETE http://localhost:3000/users/gliders/remove/2da2badc-7f6e-4a91-8f0e-6d967fa72dc3 HTTP/1.1
+DELETE http://localhost:3000/api/users/gliders/remove/2da2badc-7f6e-4a91-8f0e-6d967fa72dc3 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2NzgzMDIsImV4cCI6MTYzNTY3ODUwMn0.kF1K5Touqz6JGMQHuMiNUVq17oHpri1h-N9MfJBNtzM
 
 # Comments
 ###
-POST http://localhost:3000/comments/ HTTP/1.1
+POST http://localhost:3000/api/comments/ HTTP/1.1
 content-type: application/json
 
 {
@@ -83,11 +83,11 @@ content-type: application/json
 }
 
 ###
-DELETE http://localhost:3000/comments/c2f8da7d-1731-4c73-9c05-f0a3396040b4 HTTP/1.1
+DELETE http://localhost:3000/api/comments/c2f8da7d-1731-4c73-9c05-f0a3396040b4 HTTP/1.1
 content-type: application/json
 
 ###
-PUT http://localhost:3000/comments/a39d930e-9e57-4018-a5cd-0d98fb728bfe HTTP/1.1
+PUT http://localhost:3000/api/comments/a39d930e-9e57-4018-a5cd-0d98fb728bfe HTTP/1.1
 content-type: application/json
 
 {
@@ -96,11 +96,11 @@ content-type: application/json
 
 # Flights
 ###
-DELETE http://localhost:3000/flights/912135a6-28c8-4fb1-8054-2c8c4da9f011 HTTP/1.1
+DELETE http://localhost:3000/api/flights/912135a6-28c8-4fb1-8054-2c8c4da9f011 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzMzJiMmQxLTJmNDctNGMwOS1jMWQ4LTFhOGYzZDVlOWE4ZSIsImlhdCI6MTYyMjU3NzQ5OCwiZXhwIjoxNjIyNTc4MDk4fQ.b7enVGmnTtgsS8C4C54ilPOc8pUmVYlDa3URWJNScTc
 
 ###
-PUT  http://localhost:3000/flights/0334a24f-f530-4f70-8132-7a406b6449b2 HTTP/1.1
+PUT  http://localhost:3000/api/flights/0334a24f-f530-4f70-8132-7a406b6449b2 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2ODE3NDAsImV4cCI6MTYzNTY4MTk0MH0.PWUVvoC1PV-ZW8nIDjLzFacSGAdlmsiMFpN4nFK5_jg
 content-type: application/json
 
@@ -115,7 +115,7 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3000/flights/ HTTP/1.1
+POST http://localhost:3000/api/flights/ HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNkMTU4M2QxLWZiN2YtNGE5My1iNzMyLWVmZmQ1OWU1YzNhZSIsImZpcnN0TmFtZSI6IkNhbWlsbGUiLCJsYXN0TmFtZSI6IlNjaGFkZW4iLCJyb2xlIjoiS2VpbmUiLCJpYXQiOjE2MzU2ODE3NDAsImV4cCI6MTYzNTY4MTk0MH0.PWUVvoC1PV-ZW8nIDjLzFacSGAdlmsiMFpN4nFK5_jg
 content-type: application/json
 
