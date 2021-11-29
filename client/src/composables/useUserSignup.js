@@ -11,7 +11,7 @@ const state = reactive({
   passwordConfirm: "",
   clubId: "",
   email: "",
-  address: { country: "GER" },
+  address: { country: "Deutschland" },
   emailNewsletter: true,
   tshirtSize: "",
 

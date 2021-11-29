@@ -59,11 +59,11 @@
                       >
                         <option
                           v-for="option in listOfCountries"
-                          :key="option.countryCode"
-                          :value="option.countryCode"
-                          :selected="option.key === userData.address.country"
+                          :key="option"
+                          :value="option"
+                          :selected="option === userData.address.country"
                         >
-                          {{ option.countryName }}
+                          {{ option }}
                         </option>
                       </select>
                     </div>
@@ -261,7 +261,7 @@ try {
   res = await ApiService.getCountries();
   if (res.status != 200) throw res.statusText;
   listOfCountries.value = Object.keys(res.data).map(function (i) {
-    return { countryCode: i, countryName: res.data[i] };
+    return res.data[i];
   });
 
   // Get Shirt sizes
