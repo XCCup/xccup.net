@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 defineProps({
@@ -38,6 +38,7 @@ img {
 .square-holder {
   padding: 5px;
   border: 1px solid #cecece;
+  background-color: #f1f1f1;
   align-items: center;
   display: flex;
   align-items: center;

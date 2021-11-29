@@ -11,7 +11,7 @@
             date-format="dd.MM.yyyy"
           />
         </h3>
-
+        <!-- TODO: Beautify the hover -->
         <div v-if="flights.length > 0">
           <table class="table text-light table-hover">
             <tbody>

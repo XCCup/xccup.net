@@ -2,7 +2,7 @@ import { reactive, readonly, toRefs, computed } from "@vue/reactivity";
 import { jwtDecrypt, tokenAlive } from "@/helper/jwtHelper";
 import axios from "axios";
 
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 const state = reactive({
@@ -27,7 +27,6 @@ export default () => {
     return loggedIn.value && state.authData.role !== "Keine";
   });
 
-  // const getAuthData = computed(() => state.authData);
   const isTokenActive = computed(() => {
     if (!state.authData.tokenExp) {
       return false;
@@ -51,6 +50,7 @@ export default () => {
       role: jwtDecodedValue.role,
     };
     state.authData = newTokenData;
+    setLoginStatus("success");
   };
 
   // TODO: Is this needed?
@@ -77,7 +77,6 @@ export default () => {
   const login = async (credentials) => {
     const response = await axios.post(baseURL + "users/login", credentials);
     saveTokenData(response.data);
-    setLoginStatus("success");
     return response;
   };
 
@@ -126,6 +125,5 @@ export default () => {
     saveTokenData,
     setLoginStatus,
     refreshToken,
-    // state: readonly(state),
   };
 };

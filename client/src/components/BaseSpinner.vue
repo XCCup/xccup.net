@@ -1,15 +1,18 @@
 <template>
-  <div class="d-flex justify-content-center spinner-mod">
-    <div class="spinner-border text-primary m-5" role="status">
+  <div class="d-flex justify-content-center spinner-mod" :class="customClass">
+    <div class="spinner-border text-primary m-2" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+defineProps({
+  customClass: {
+    type: String,
+    default: "",
+  },
+});
+</script>
 
-<style scoped>
-.spinner-mod {
-  height: 80vh;
-}
-</style>
+<style scoped></style>

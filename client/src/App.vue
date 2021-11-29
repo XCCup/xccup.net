@@ -16,7 +16,7 @@
           <component :is="Component" :key="$route.path"></component>
         </template>
         <template #fallback>
-          <BaseSpinner />
+          <BaseSpinner custom-class="height: 80vh" />
         </template>
       </suspense>
     </template>
@@ -47,6 +47,7 @@ $table-striped-bg: rgba($primary, $table-striped-bg-factor);
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "scss/bootstrapCustom";
 @import "scss/rankingClasses";
+@import "scss/dialogBackground";
 
 html,
 body {
@@ -57,11 +58,16 @@ body {
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  // Todo: This creates warnings on windows machines
+  // TODO: This creates warnings on windows machines
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
   // color: #2c3e50;
+
+  // Needed to make footer sticky
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 h3 {
@@ -118,6 +124,11 @@ footer {
 .hide-on-sm {
   @extend .d-none;
   @extend .d-md-table-cell;
+}
+
+.hide-on-xs {
+  @extend .d-none;
+  @extend .d-sm-table-cell;
 }
 
 // TODO: Is this obsolete?

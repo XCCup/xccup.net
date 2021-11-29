@@ -2,6 +2,7 @@
   <div class="form-floating mb-3">
     <input
       v-bind="$attrs"
+      :id="id"
       :value="modelValue"
       :placeholder="label"
       :class="formClass"
@@ -20,7 +21,7 @@
 
 <script setup>
 import { computed } from "vue";
-import { isEmail } from "../helper/utils";
+import { isEmail, isStrongPassword } from "../helper/utils";
 defineEmits(["update:modelValue"]);
 
 const props = defineProps({
@@ -56,6 +57,10 @@ const props = defineProps({
     type: String,
     default: "Das Feld darf nicht leer sein",
   },
+  id: {
+    type: String,
+    default: "",
+  },
 });
 
 const type = computed(() => {
@@ -68,7 +73,8 @@ const isInvalid = computed(() => {
   return (
     props.externalValidationResult ||
     (props.isRequired && props.modelValue.length == 0) ||
-    (props.isEmail && !isEmail(props.modelValue))
+    (props.isEmail && !isEmail(props.modelValue)) ||
+    (props.isPassword && !isStrongPassword(props.modelValue))
   );
 });
 

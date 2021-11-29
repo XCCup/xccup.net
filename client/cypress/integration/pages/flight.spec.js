@@ -30,7 +30,7 @@ describe("check flight page", () => {
     cy.get("#flight-details");
     cy.get("h3").contains("Flugeigenschaften");
 
-    // Todo: Test more details
+    // TODO: Test more details
   });
 
   it("check flight comments", () => {
@@ -42,12 +42,12 @@ describe("check flight page", () => {
       "Olive Emmerich"
     );
 
-    // Todo: Test more details
+    // TODO: Test more details
   });
 
   it("check comment editor", () => {
     cy.get("#comment-editor");
 
-    // Todo: Test more details
+    // TODO: Test more details
   });
 });

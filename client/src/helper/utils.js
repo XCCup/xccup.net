@@ -6,7 +6,6 @@ export function isIsoDateWithoutTime(string) {
 export function setWindowName(namePostfix) {
   document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}${namePostfix}`;
 }
-
 export function retrieveDateOnly(isoDate) {
   return isoDate.substring(0, 10);
 }
@@ -19,4 +18,10 @@ export function dayAfter(date) {
 
 export function isEmail(value) {
   return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+}
+
+export function isStrongPassword(value) {
+  const regex =
+    /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
+  return value.match(regex);
 }

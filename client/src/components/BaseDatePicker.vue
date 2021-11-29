@@ -1,7 +1,7 @@
 <template>
   <div class="form mb-3">
     <label>{{ label }}</label>
-    <datepicker
+    <Datepicker
       v-model="pickedDate"
       :locale="de"
       :placeholder="label"
@@ -15,17 +15,12 @@
 </template>
 
 <script setup>
-// Todo: Reactivity does not seem to always work
-
-// Todo:
 // Add the possibility to define a year where the picker should start.
 // No one born in 2021 will enter the comp
-
 import Datepicker from "vue3-datepicker";
 import { de } from "date-fns/locale";
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { parseISO } from "date-fns";
-
 const props = defineProps({
   label: {
     type: String,
@@ -34,6 +29,10 @@ const props = defineProps({
   modelValue: {
     type: [String, null],
     required: true,
+  },
+  initialDate: {
+    type: [String, null],
+    default: null,
   },
   isDisabled: {
     type: Boolean,
@@ -49,27 +48,28 @@ const props = defineProps({
   },
 });
 const emits = defineEmits(["update:modelValue"]);
-
 const pickedDate = ref(null);
-
 // Ensure that a inital property change won't cause an unwanted update
 // TODO: Is all this formatting really necessary? Also: possible race condition with "externalChange" in two different watchers?
 let externalChange = false;
-
 // Watch the incoming data property to set the correct inital value in the correct format
 watch(
   () => props.modelValue,
   (newVal) => {
     externalChange = true;
-
     pickedDate.value = parseISO(newVal);
   }
 );
 
+// Todo: This is a workaround to show the initial date.
+// It will be unnecessary as soon as the compnnet ist set up "correctly"
+onMounted(() => {
+  pickedDate.value = parseISO(props.initialDate);
+});
+
 // Watch the internal data property to update the surrounding component with the correct format
 watch(pickedDate, () => {
   if (externalChange == true) return (externalChange = false);
-
   const dateValue = pickedDate.value;
   if (dateValue) {
     const year = dateValue.getFullYear();

@@ -106,7 +106,7 @@ const routes = [
     name: "SiteRecords",
     props: true,
 
-    component: () => import("../views/SiteRecords.vue"),
+    component: () => import("../views/ResultsSiteRecords.vue"),
   },
   {
     path: "/upload",
@@ -158,18 +158,18 @@ const routes = [
   {
     path: "/sponsoren",
     name: "Sponsors",
-    component: () => import("../views/SponsorsList.vue"),
+    component: () => import("../views/ListSponsors.vue"),
   },
   {
     path: "/vereine",
     name: "Clubs",
-    component: () => import("../views/ClubsList.vue"),
+    component: () => import("../views/ListClubs.vue"),
   },
   {
     path: "/piloten",
     name: "Users",
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () => import("../views/UserList.vue"),
+    component: () => import("../views/ListUsers.vue"),
   },
   {
     path: "/impressum",

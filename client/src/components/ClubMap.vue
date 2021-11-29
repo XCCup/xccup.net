@@ -9,7 +9,7 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import tileOptions from "@/config/mapbox.js";
 import { ref, onMounted } from "vue";
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const map = ref(null);
 const logos = ref([]);

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="flight.report" class="container">
+  <div v-if="flight.report || flight.photos" class="container">
     <div class="row mt-4">
       <h3>Flugbericht</h3>
       <p>
@@ -33,7 +33,7 @@
 import useFlight from "@/composables/useFlight";
 const { flight } = useFlight();
 
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 </script>

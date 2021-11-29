@@ -1,7 +1,7 @@
 <template>
-  <div class="col-6 mx-auto">
+  <slot-dialog>
     <BaseLogin />
-  </div>
+  </slot-dialog>
 </template>
 
 <script setup></script>

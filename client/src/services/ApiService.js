@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwtInterceptor from "@/helper/jwtInterceptor";
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const baseURL = getbaseURL();
 const apiClient = axios.create({
@@ -26,11 +26,16 @@ export default {
   uploadIgc(data) {
     return jwtInterceptor.post(baseURL + "flights/", data);
   },
-  uploadFlightDetails(flightId, data) {
+  editFlightDetails(flightId, data) {
     return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
   },
-  uploadImages(data) {
+
+  // Photos
+  uploadPhotos(data) {
     return jwtInterceptor.post(baseURL + "flights/photos/", data);
+  },
+  editPhoto(id, data) {
+    return jwtInterceptor.put(baseURL + "flights/photos/" + id, data);
   },
   getInitialData() {
     return apiClient.get("home");
@@ -205,6 +210,9 @@ export default {
   },
   getCountries() {
     return apiClient.get(baseURL + "general/user/countries");
+  },
+  getStates() {
+    return apiClient.get(baseURL + "general/user/states");
   },
   getShirtSizes() {
     return apiClient.get(baseURL + "general/user/tshirtSizes");

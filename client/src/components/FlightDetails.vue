@@ -62,9 +62,20 @@
                 />
               </td>
             </tr>
+            <tr>
+              <th>Hike & Fly</th>
+              <td>
+                <div v-if="isHikeAndFly">
+                  <i class="bi bi-signpost-2 me-1"></i>{{ flight.hikeAndFly }}m
+                  Höhenunterschied
+                </div>
+                <div v-else>-</div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
+
       <div class="col-md-6 col-12 my-1">
         <table id="cyFlightDetailsTable2" class="table table-sm">
           <tbody>
@@ -192,7 +203,7 @@
 import { computed } from "vue";
 import useUser from "@/composables/useUser";
 import useFlight from "@/composables/useFlight";
-import { getbaseURL } from "@/helper/base-url-helper";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const { getUserId } = useUser();
 const { flight } = useFlight();
@@ -214,6 +225,7 @@ const calcFlightDuration = (duration) => {
   // seconds = seconds < 10 ? "0" + seconds : seconds;
   return hours + ":" + minutes + "h";
 };
+const isHikeAndFly = computed(() => flight.value.hikeAndFly > 0);
 </script>
 
 <style scoped></style>

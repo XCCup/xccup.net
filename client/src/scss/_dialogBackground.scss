@@ -1,0 +1,24 @@
+// TODO: Colors and image are not final but you get the impression
+.dialog-bg-image {
+  background-image: url("@/assets/images/rachtig.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+$gradient-color-1: rgba(132, 250, 176, 0.7);
+$gradient-color-2: rgba(143, 211, 244, 0.7);
+.bg-gradient-1 {
+  /* fallback for old browsers */
+  background: $gradient-color-1;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(
+    to right,
+    $gradient-color-1,
+    $gradient-color-2
+  );
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, $gradient-color-1, $gradient-color-2);
+}

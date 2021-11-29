@@ -1,5 +1,5 @@
 <template>
-  <footer class="p-3 text-light bg-primary m-0">
+  <footer class="p-3 text-light bg-primary mt-auto">
     <p class="float-end"><a href="#">Nach oben</a></p>
     <p>
       © XCCup 2021 ·

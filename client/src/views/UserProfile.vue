@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <!-- Editor -->
-    <div v-if="userDetails">
+    <div v-if="userProfile">
       <div class="row">
         <!-- Left -->
         <div class="col-md-3">
@@ -12,146 +12,212 @@
               src="https://avatars.dicebear.com/api/big-ears/your-custom-seed.svg?b=%23d9eb37"
             />
             <span class="font-weight-bold">Foo</span>
-            <span class="text-light">Bar</span>
+            <span class="text-secondary">Bar</span>
           </div>
         </div>
 
         <!-- Center -->
-        <div class="col-md-9">
-          <div v-if="editMode" class="p-3">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="text-right">Profil</h4>
-            </div>
-            <div class="row mt-2">
-              <div class="col-md-6">
-                <BaseInput v-model="userProfile.firstName" label="Name" />
-              </div>
-              <div class="col-md-6">
-                <BaseInput v-model="userProfile.lastName" label="Nachname" />
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-12">
-                <BaseInput
-                  v-model="userProfile.club.name"
-                  label="Verein"
-                  :is-disabled="true"
-                />
-                <BaseInput v-model="userProfile.birthday" label="Geburtstag" />
-                <BaseInput v-model="userProfile.email" label="E-Mail" />
-                <BaseInput
-                  v-model="userProfile.address.street"
-                  label="Strasse"
-                />
-                <div class="row">
-                  <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.zip"
-                      :is-required="false"
-                      label="PLZ"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.city"
-                      :is-required="false"
-                      label="Stadt"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.state"
-                      :is-required="false"
-                      label="Bundesland"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.country"
-                      :is-required="false"
-                      label="Land"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <BaseSelect
-                      v-model="userProfile.gender"
-                      label="Geschlecht"
-                      :show-label="true"
-                      :options="['M', 'W', 'D']"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <BaseSelect
-                      v-model="userProfile.tshirtSize"
-                      label="T-Shirt Größe"
-                      :show-label="true"
-                      :options="['S', 'M', 'L', 'XL', 'XXL']"
-                    />
-                  </div>
-                </div>
-
-                <div class="mt-3"></div>
-              </div>
-            </div>
-            <h5>Benachrichtigungen</h5>
-            <div class="form-check">
-              <input
-                id="notifyForComment"
-                v-model="userProfile.emailInformIfComment"
-                class="form-check-input"
-                type="checkbox"
-                value
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                E-Mail bei neuem Kommentar
-                <i class="bi bi-info-circle"></i>
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                id="optInNewsletter"
-                v-model="userProfile.emailNewsletter"
-                class="form-check-input"
-                type="checkbox"
-                value
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                Newsletter abonnieren
-                <i class="bi bi-info-circle"></i>
-              </label>
-            </div>
-
-            <br />
-            <button
-              class="btn btn-primary"
-              :disabled="!profileDataHasChanged"
-              @click="save"
-            >
-              Speichern
-              <div
-                v-if="showSpinner"
-                class="spinner-border spinner-border-sm"
-                role="status"
+        <div class="col-md-9 col-lg-8">
+          <nav>
+            <div id="nav-tab" class="nav nav-tabs" role="tablist">
+              <button
+                id="nav-profile-tab"
+                class="nav-link active"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-profile"
+                type="button"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="true"
               >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
-            </button>
-
-            <hr />
-            <div id="glider-select" class="col-md-12">
-              <GliderList
-                :gliders="userProfile.gliders"
-                :default-glider="userProfile.defaultGlider"
-                @gliders-changed="glidersChanged"
-              />
+                Profil
+              </button>
+              <button
+                id="nav-hangar-tab"
+                class="nav-link"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-hangar"
+                type="button"
+                role="tab"
+                aria-controls="nav-hangar"
+                aria-selected="false"
+              >
+                Hangar
+              </button>
+              <button
+                id="nav-my-flights-tab"
+                class="nav-link"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-my-flights"
+                type="button"
+                role="tab"
+                aria-controls="nav-my-flights"
+                aria-selected="false"
+              >
+                Meine Flüge
+              </button>
             </div>
-            <!-- Edit -->
-            <!-- <div v-if="!edit">
+          </nav>
+          <div id="nav-tabContent" class="tab-content">
+            <div
+              id="nav-profile"
+              class="tab-pane fade show active"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+            >
+              <div v-if="editMode" class="p-3">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <h4 class="text-right">Profil</h4>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-6">
+                    <BaseInput v-model="userProfile.firstName" label="Name" />
+                  </div>
+                  <div class="col-md-6">
+                    <BaseInput
+                      v-model="userProfile.lastName"
+                      label="Nachname"
+                    />
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <BaseInput
+                      v-model="userProfile.club.name"
+                      label="Verein"
+                      :is-disabled="true"
+                    />
+
+                    <BaseInput v-model="userProfile.email" label="E-Mail" />
+                    <BaseInput
+                      v-model="userProfile.address.street"
+                      label="Strasse"
+                    />
+                    <div class="row">
+                      <div class="col-md-6">
+                        <BaseInput
+                          v-model="userProfile.address.zip"
+                          :is-required="false"
+                          label="PLZ"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <BaseInput
+                          v-model="userProfile.address.city"
+                          :is-required="false"
+                          label="Stadt"
+                        />
+                      </div>
+                    </div>
+                    <div class="row mb-4">
+                      <!-- State -->
+                      <div class="col-md-6">
+                        <BaseSelect
+                          v-model="userProfile.address.state"
+                          label="Bundesland"
+                          :show-label="true"
+                          :options="listOfStates"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <!-- Country -->
+                        <BaseSelect
+                          v-model="userProfile.address.country"
+                          label="Land"
+                          :show-label="true"
+                          :options="listOfCountries"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <BaseSelect
+                          v-model="userProfile.gender"
+                          label="Geschlecht"
+                          :show-label="true"
+                          :options="listOfGenders"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <!--  -->
+                        <!-- TODO: This does not show the current value -->
+
+                        <BaseDatePicker
+                          v-model="userProfile.birthday"
+                          label="Geburstag"
+                          starting-view="year"
+                          :initial-date="userProfile.birthday"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <BaseSelect
+                          v-model="userProfile.tshirtSize"
+                          label="T-Shirt Größe"
+                          :show-label="true"
+                          :options="listOfTshirtSizes"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="mt-3"></div>
+                  </div>
+                </div>
+                <h5>Benachrichtigungen</h5>
+                <div class="form-check">
+                  <input
+                    id="notifyForComment"
+                    v-model="userProfile.emailInformIfComment"
+                    class="form-check-input"
+                    type="checkbox"
+                    value
+                  />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    E-Mail bei neuem Kommentar
+                    <!-- TODO: Add popup description -->
+
+                    <i class="bi bi-info-circle"></i>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    id="optInNewsletter"
+                    v-model="userProfile.emailNewsletter"
+                    class="form-check-input"
+                    type="checkbox"
+                    value
+                  />
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Newsletter abonnieren
+                    <!-- TODO: Add popup description -->
+                    <i class="bi bi-info-circle"></i>
+                  </label>
+                </div>
+
+                <br />
+                <button
+                  class="btn btn-primary"
+                  :disabled="!profileDataHasChanged"
+                  @click="onSave"
+                >
+                  Speichern
+                  <div
+                    v-if="showSpinner"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
+                </button>
+                <!-- Error Message -->
+                <p v-if="errorMessage" class="text-danger mt-3">
+                  {{ errorMessage }}
+                </p>
+
+                <!-- Edit -->
+                <!-- <div v-if="!edit">
               <router-link
                 :to="{ name: 'ProfileEdit' }"
                 class="btn btn-primary"
@@ -167,255 +233,161 @@
                 Abbrechen
               </button>
             </div>-->
-            <!-- Edit -->
-          </div>
-          <div v-if="!editMode" class="p-3">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="text-right">Profil</h4>
-            </div>
-
-            <div class="row mt-3">
-              <div class="col-md-12">
-                <p>{{ userProfile.birthday }}</p>
-                <p>{{ userProfile.email }}</p>
-                <p>{{ userProfile.address.street }}</p>
-
-                <div class="row">
-                  <div class="col-md-6">{{ userProfile.address.zip }}</div>
-                  <div class="col-md-6">{{ userProfile.address.city }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.state"
-                      label="Bundesland"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <BaseInput
-                      v-model="userProfile.address.country"
-                      label="Land"
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <BaseSelect
-                      v-model="userProfile.gender"
-                      label="Geschlecht"
-                      :show-label="true"
-                      :options="['M', 'W', 'D']"
-                    />
-                  </div>
-                  <div class="col-md-6">
-                    <BaseSelect
-                      v-model="userProfile.tshirtSize"
-                      label="T-Shirt Größe"
-                      :show-label="true"
-                      :options="['S', 'M', 'L', 'XL', 'XXL']"
-                    />
-                  </div>
-                </div>
-
-                <div class="mt-3"></div>
-              </div>
-              <div class="col-md-12">
-                <div class="row d-flex align-items-end">
-                  <div class="col-md-7">
-                    <div class>
-                      <GliderSelect
-                        v-model="userProfile.defaultGlider"
-                        :show-label="true"
-                        label="Standard Gerät"
-                        :gliders="userProfile.gliders"
-                        :is-disabled="false"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-5">
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#addGliderModal"
-                      >
-                        Hinzufügen
-                      </button>
-
-                      <button
-                        type="button"
-                        class="btn btn-outline-danger"
-                        data-bs-toggle="modal"
-                        data-bs-target="#confirmModal"
-                      >
-                        Entfernen
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
-            <hr />
-            <h5>Benachrichtigungen</h5>
-            <div class="form-check">
-              <input
-                id="notifyForComment"
-                v-model="userProfile.emailInformIfComment"
-                class="form-check-input"
-                type="checkbox"
-                value
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                E-Mail bei neuem Kommentar
-                <i class="bi bi-info-circle"></i>
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                id="optInNewsletter"
-                v-model="userProfile.emailNewsletter"
-                class="form-check-input"
-                type="checkbox"
-                value
-              />
-              <label class="form-check-label" for="flexCheckDefault">
-                Newsletter abonnieren
-                <i class="bi bi-info-circle"></i>
-              </label>
-            </div>
-
-            <br />
-            <button
-              class="btn btn-primary"
-              :disabled="!profileDataHasChanged"
-              @click="save"
+            <div
+              id="nav-hangar"
+              class="tab-pane fade"
+              role="tabpanel"
+              aria-labelledby="nav-hangar-tab"
             >
-              Speichern
-              <div
-                v-if="showSpinner"
-                class="spinner-border spinner-border-sm"
-                role="status"
-              >
-                <span class="visually-hidden">Loading...</span>
+              <div id="glider-select" class="col-md-12">
+                <GliderList
+                  :gliders="userProfile.gliders"
+                  :default-glider="userProfile.defaultGlider"
+                  @gliders-changed="onGlidersChanged"
+                />
               </div>
-            </button>
-
-            <!-- Edit -->
-            <!-- <div v-if="!edit">
-              <router-link
-                :to="{ name: 'ProfileEdit' }"
-                class="btn btn-primary"
-              >
-                Edit
-              </router-link>
             </div>
-            <div v-if="edit">
-              <div>Edit: {{ userProfile.firstName }}</div>
-
-              <button class="btn btn-primary" @click="save">Speichern</button>
-              <button class="btn btn-outline-danger" @click="cancel">
-                Abbrechen
-              </button>
-            </div>-->
-            <!-- Edit -->
+            <div
+              id="nav-my-flights"
+              class="tab-pane fade"
+              role="tabpanel"
+              aria-labelledby="nav-my-flights-tab"
+            >
+              ...
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import ApiService from "@/services/ApiService.js";
-import { ref } from "vue";
+import { ref, computed, onMounted, watchEffect } from "vue";
 import cloneDeep from "lodash/cloneDeep";
 import { setWindowName } from "../helper/utils";
 
 setWindowName("Profil");
-export default {
-  name: "UserProfile",
-  props: {
-    edit: {
-      type: Boolean,
-      default: false,
-    },
-    scrollToGliderSelect: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  edit: {
+    type: Boolean,
+    default: false,
   },
-  async setup() {
-    try {
-      const { data: initialData } = await ApiService.getUserDetails();
-      return {
-        userDetails: ref(initialData),
-      };
-    } catch (error) {
-      console.log(error);
-    }
+  scrollToGliderSelect: {
+    type: Boolean,
+    default: false,
   },
-  data() {
-    return {
-      userProfile: null,
-      unmodifiedUserProfile: null,
-      showSpinner: false,
-      editMode: true,
-      showSuccessInidcator: false,
-    };
-  },
-  computed: {
-    profileDataHasChanged() {
-      return (
-        JSON.stringify(this.userProfile) !=
-        JSON.stringify(this.unmodifiedUserProfile)
-      );
-    },
-  },
-  beforeMount() {
-    this.userProfile = cloneDeep(this.userDetails);
-    this.unmodifiedUserProfile = cloneDeep(this.userDetails);
-  },
-  mounted() {
-    // Scroll to anchor if it exists after mounting
-    const el = document.querySelector("#glider-select");
-    if (el && this.scrollToGliderSelect) el.scrollIntoView();
-  },
-  methods: {
-    inidcateSuccess() {
-      this.showSuccessInidcator = true;
-      setTimeout(() => (this.showSuccessInidcator = false), 2000);
-    },
+});
 
-    async glidersChanged(data) {
-      try {
-        // const res = await ApiService.getUserDetails();
-        this.userProfile.gliders = data.gliders;
-        this.userProfile.defaultGlider = data.defaultGlider;
+// TODO: Warn user if there are unsave changes or save them in app state
 
-        // this.unmodifiedUserProfile = cloneDeep(this.userProfile);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async save() {
-      try {
-        this.showSpinner = true;
-        const res = await ApiService.updateUserProfile(this.userProfile);
-        if (res.status != 200) throw res.statusText;
-        this.userProfile = res.data;
-        this.unmodifiedUserProfile = cloneDeep(this.userProfile);
-        this.showSpinner = false;
-        this.inidcateSuccess();
-      } catch (error) {
-        console.error(error);
-        this.showSpinner = false;
-      }
-    },
-    // cancel() {
-    //   this.$router.push({ name: "Profile" });
-    // },
-  },
+// Data
+const userProfile = ref(null);
+const unmodifiedUserProfile = ref(null);
+
+const listOfCountries = ref(null);
+const listOfStates = ref(null);
+const listOfGenders = ref(null);
+const listOfTshirtSizes = ref([]);
+
+// Page State
+const showSpinner = ref(false);
+const editMode = ref(true);
+const showSuccessInidcator = ref(false);
+const errorMessage = ref(null);
+
+try {
+  // Get user details
+  let res = await ApiService.getUserDetails();
+  userProfile.value = cloneDeep(res.data);
+  unmodifiedUserProfile.value = cloneDeep(res.data);
+
+  // Get countries
+  res = await ApiService.getCountries();
+  if (res.status != 200) throw res.statusText;
+  listOfCountries.value = Object.keys(res.data).map(function (i) {
+    return res.data[i];
+  });
+
+  // Get states
+  res = await ApiService.getStates();
+  if (res.status != 200) throw res.statusText;
+  listOfStates.value = Object.keys(res.data).map(function (i) {
+    return res.data[i];
+  });
+
+  // Get genders
+  res = await ApiService.getGenders();
+  if (res.status != 200) throw res.statusText;
+  listOfGenders.value = Object.keys(res.data).map(function (i) {
+    return res.data[i];
+  });
+
+  // Get Shirt sizes
+  res = await ApiService.getShirtSizes();
+  if (res.status != 200) throw res.statusText;
+  listOfTshirtSizes.value = res.data;
+} catch (error) {
+  console.log(error);
+}
+
+onMounted(() => {
+  // Scroll to anchor if it exists after mounting
+  const el = document.querySelector("#glider-select");
+  if (el && props.scrollToGliderSelect) el.scrollIntoView();
+});
+
+const profileDataHasChanged = computed(
+  () =>
+    JSON.stringify(userProfile.value) !=
+    JSON.stringify(unmodifiedUserProfile.value)
+);
+
+// Delete users state if country is not germany
+watchEffect(() => {
+  if (userProfile.value.address.country != "Deutschland") {
+    userProfile.value.address.state = "";
+  }
+});
+
+const stateListIsEnabled = computed(
+  () => userProfile.value.address.country === "Deutschland"
+);
+
+const inidcateSuccess = () => {
+  showSpinner.value = false;
+  showSuccessInidcator.value = true;
+  errorMessage.value = null;
+  setTimeout(() => (showSuccessInidcator.value = false), 2000);
+};
+
+const onGlidersChanged = async (data) => {
+  try {
+    userProfile.value.gliders = data.gliders;
+    userProfile.value.defaultGlider = data.defaultGlider;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const onSave = async () => {
+  try {
+    showSpinner.value = true;
+    const res = await ApiService.updateUserProfile(userProfile.value);
+    if (res.status != 200) throw res.statusText;
+    userProfile.value = res.data;
+    unmodifiedUserProfile.value = cloneDeep(userProfile.value);
+    inidcateSuccess();
+  } catch (error) {
+    showSpinner.value = false;
+    console.error(error);
+
+    if (error.response?.data.errors[0].param === "email")
+      return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
+
+    errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";
+  }
 };
 </script>
 
