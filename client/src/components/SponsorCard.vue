@@ -38,6 +38,7 @@ img {
 .square-holder {
   padding: 5px;
   border: 1px solid #cecece;
+  background-color: #f1f1f1;
   align-items: center;
   display: flex;
   align-items: center;
