@@ -30,7 +30,7 @@ const props = defineProps({
     type: [String, null],
     required: true,
   },
-  initialValue: {
+  initialDate: {
     type: [String, null],
     default: null,
   },
@@ -64,7 +64,7 @@ watch(
 // Todo: This is a workaround to show the initial date.
 // It will be unnecessary as soon as the compnnet ist set up "correctly"
 onMounted(() => {
-  pickedDate.value = parseISO(props.initialValue);
+  pickedDate.value = parseISO(props.initialDate);
 });
 
 // Watch the internal data property to update the surrounding component with the correct format
