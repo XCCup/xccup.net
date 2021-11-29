@@ -10,6 +10,7 @@ const SeasonDetail = require("../config/postgres")["SeasonDetail"];
 const Airspace = require("../config/postgres")["Airspace"];
 const News = require("../config/postgres")["News"];
 const Sponsor = require("../config/postgres")["Sponsor"];
+const Brand = require("../config/postgres")["Brand"];
 const Logo = require("../config/postgres")["Logo"];
 const AirspaceService = require("../service/AirspaceService");
 const logger = require("../config/logger");
@@ -47,6 +48,7 @@ const dbTestData = {
       [FlightFixes, require("./testdatasets/fixes.json")],
       [News, require("./testdatasets/news.json")],
       [Sponsor, require("./testdatasets/sponsors.json")],
+      [Brand, require("./testdatasets/brands.json")],
       [Logo, require("./testdatasets/logos.json")],
     ];
 

@@ -4,6 +4,7 @@ const Flight = require("../config/postgres")["Flight"];
 const User = require("../config/postgres")["User"];
 const Team = require("../config/postgres")["Team"];
 const Club = require("../config/postgres")["Club"];
+const Brand = require("../config/postgres")["Brand"];
 const FlightPhoto = require("../config/postgres")["FlightPhoto"];
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
@@ -240,15 +241,16 @@ const flightService = {
   },
 
   getAllBrands: async () => {
-    const query = `SELECT DISTINCT ON (glider->'brand') glider->'brand' AS "brand"
-    FROM "Flights";`;
+    // const query = `SELECT DISTINCT ON (glider->'brand') glider->'brand' AS "brand"
+    // FROM "Flights";`;
 
-    const brands = await Flight.sequelize.query(query, {
-      type: Flight.sequelize.QueryTypes.SELECT,
-    });
+    // const brands = await Flight.sequelize.query(query, {
+    //   type: Flight.sequelize.QueryTypes.SELECT,
+    // });
 
-    // Refactor array of objects to plain array of strings
-    return brands.map((e) => e.brand);
+    // // Refactor array of objects to plain array of strings
+    const brands = await Brand.findAll();
+    return brands.map((e) => e.name);
   },
 
   update: async (flight) => {
