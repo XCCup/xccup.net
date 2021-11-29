@@ -114,43 +114,21 @@
                     <div class="row mb-4">
                       <!-- State -->
                       <div class="col-md-6">
-                        <label>Bundesland</label>
-                        <select
+                        <BaseSelect
                           v-model="userProfile.address.state"
-                          class="form-select"
-                          :disabled="!stateListIsEnabled"
-                        >
-                          <option
-                            v-for="option in listOfStates"
-                            :key="option.StateCode"
-                            :value="option.StateName"
-                            :selected="
-                              option.value === userProfile.address.state
-                            "
-                          >
-                            {{ option.countryName }}
-                          </option>
-                        </select>
+                          label="Bundesland"
+                          :show-label="true"
+                          :options="listOfStates"
+                        />
                       </div>
                       <div class="col-md-6">
                         <!-- Country -->
-                        <!-- TODO: This is reused in UserRegister - maybe make it a component -->
-                        <label>Land</label>
-                        <select
+                        <BaseSelect
                           v-model="userProfile.address.country"
-                          class="form-select"
-                        >
-                          <option
-                            v-for="option in listOfCountries"
-                            :key="option.countryCode"
-                            :value="option.countryName"
-                            :selected="
-                              option.value === userProfile.address.country
-                            "
-                          >
-                            {{ option.countryName }}
-                          </option>
-                        </select>
+                          label="Land"
+                          :show-label="true"
+                          :options="listOfCountries"
+                        />
                       </div>
                     </div>
                     <div class="row">
@@ -290,7 +268,6 @@ import ApiService from "@/services/ApiService.js";
 import { ref, computed, onMounted, watchEffect } from "vue";
 import cloneDeep from "lodash/cloneDeep";
 import { setWindowName } from "../helper/utils";
-import Datepicker from "vue3-datepicker";
 
 setWindowName("Profil");
 const props = defineProps({
@@ -331,14 +308,14 @@ try {
   res = await ApiService.getCountries();
   if (res.status != 200) throw res.statusText;
   listOfCountries.value = Object.keys(res.data).map(function (i) {
-    return { countryCode: i, countryName: res.data[i] };
+    return res.data[i];
   });
 
   // Get states
   res = await ApiService.getStates();
   if (res.status != 200) throw res.statusText;
   listOfStates.value = Object.keys(res.data).map(function (i) {
-    return { countryCode: i, countryName: res.data[i] };
+    return res.data[i];
   });
 
   // Get genders

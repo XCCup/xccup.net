@@ -52,20 +52,12 @@
                   <div class="row">
                     <!-- Country -->
                     <div class="col-md-6 mb-4">
-                      <label>Land</label>
-                      <select
+                      <BaseSelect
                         v-model="userData.address.country"
-                        class="form-select"
-                      >
-                        <option
-                          v-for="option in listOfCountries"
-                          :key="option"
-                          :value="option"
-                          :selected="option === userData.address.country"
-                        >
-                          {{ option }}
-                        </option>
-                      </select>
+                        label="Land"
+                        :show-label="true"
+                        :options="listOfCountries"
+                      />
                     </div>
                     <!-- Club -->
                     <div class="col-md-6 mb-4">
