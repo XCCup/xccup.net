@@ -51,6 +51,7 @@
               class="d-grid gap-2"
             >
               <button type="button" class="btn btn-primary">
+                <!-- TODO: Save inputs in state -->
                 Liste bearbeiten
               </button>
             </router-link>
@@ -158,6 +159,7 @@
             <figure class="figure">
               <button
                 class="btn btn-outline-primary mt-2"
+                :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >
                 <i class="bi bi-plus-square"></i>
@@ -229,7 +231,7 @@ const rulesAccepted = ref(true);
 const onlyLogbook = ref(false);
 const hikeAndFly = ref(false);
 
-const flightId = ref("");
+const flightId = ref(null);
 const externalId = ref(null);
 const takeoff = ref("");
 const landing = ref("");
@@ -294,6 +296,8 @@ const sendFlightDetails = async () => {
 };
 
 // Photos
+
+const addPhotoButtonIsEnabled = computed(() => flightId.value != null);
 
 const photoInput = ref(null);
 onMounted(() => {
