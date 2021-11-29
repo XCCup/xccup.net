@@ -144,6 +144,7 @@
                   alt=""
               /></a>
               <div class="p-1">
+                <!-- TODO: Add tab index -->
                 <input
                   v-model="photo.description"
                   class="form-control form-control-sm"
