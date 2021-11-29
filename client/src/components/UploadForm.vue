@@ -328,7 +328,7 @@ const uploadPhoto = async (photo) => {
 
   try {
     const formData = new FormData();
-    formData.append("photo", photo, photo.name);
+    formData.append("image", photo, photo.name);
     formData.append("flightId", flightId.value);
     formData.append("userId", getUserId);
     console.log(photo.name, flightId.value);
