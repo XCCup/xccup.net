@@ -392,6 +392,7 @@ const flightService = {
     const flyingSite = results[0];
 
     flight.siteId = flyingSite.id;
+    flight.region = flyingSite.region;
     flight.landing = results.length > 1 ? results[1] : "API Disabled";
 
     const {
