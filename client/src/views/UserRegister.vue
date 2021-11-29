@@ -6,16 +6,25 @@
       <form>
         <div class="row">
           <div class="col-md-6 mb-4">
-            <BaseInput v-model="userData.firstName" label="Vorname" />
+            <BaseInput
+              id="firstName"
+              v-model="userData.firstName"
+              label="Vorname"
+            />
           </div>
           <div class="col-md-6 mb-4">
-            <BaseInput v-model="userData.lastName" label="Nachname" />
+            <BaseInput
+              id="lastName"
+              v-model="userData.lastName"
+              label="Nachname"
+            />
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-6 mb-4">
             <BaseInput
+              id="email"
               v-model="userData.email"
               label="E-Mail"
               :is-email="true"
@@ -28,6 +37,7 @@
         <div class="row">
           <div class="col-md-6 mb-4">
             <BaseSelect
+              id="gender"
               v-model="userData.gender"
               label="Geschlecht"
               :show-label="true"
@@ -36,6 +46,7 @@
           </div>
           <div class="col-md-6 mb-4">
             <BaseDatePicker
+              id="birthday"
               v-model="userData.birthday"
               label="Geburstag"
               starting-view="year"
@@ -48,6 +59,7 @@
           <!-- Country -->
           <div class="col-md-6 mb-4">
             <BaseSelect
+              id="country"
               v-model="userData.address.country"
               label="Land"
               :show-label="true"
@@ -57,7 +69,7 @@
           <!-- Club -->
           <div class="col-md-6 mb-4">
             <label>Verein</label>
-            <select v-model="userData.clubId" class="form-select">
+            <select id="club" v-model="userData.clubId" class="form-select">
               <option
                 v-for="option in listOfClubs"
                 :key="option.id"
@@ -74,6 +86,7 @@
           <!-- T-Shirt Size -->
           <div class="col-md-6 mb-4">
             <BaseSelect
+              id="shirtSize"
               v-model="userData.tshirtSize"
               label="T-Shirt Größe"
               :show-label="true"
@@ -91,6 +104,7 @@
           </p>
           <div class="col-md-6 mb-4">
             <BaseInput
+              id="password"
               v-model="userData.password"
               label="Passwort"
               :is-password="true"
@@ -98,6 +112,7 @@
           </div>
           <div class="col-md-6 mb-4">
             <BaseInput
+              id="passwordConfirm"
               v-model="userData.passwordConfirm"
               label="Passwort wiederholen"
               :is-password="true"
@@ -120,12 +135,12 @@
 
         <div class="form-check mb-3">
           <input
-            id="flexCheckRules"
+            id="acceptRulesCheckbox"
             v-model="rulesAccepted"
             class="form-check-input"
             type="checkbox"
           />
-          <label class="form-check-label" for="flexCheckRules">
+          <label class="form-check-label" for="acceptRulesCheckbox">
             Ich erkenne ich die
             <!-- TODO: Add link to Rules -->
             <router-link :to="{ name: 'Home' }">Ausschreibung </router-link>
@@ -163,7 +178,7 @@
 
     <!-- Confirmation -->
     <div v-if="signupSuccessfull">
-      <div class="text-center mb-4">
+      <div id="registerConfirmation" class="text-center mb-4">
         <h1><i class="bi bi-check-circle text-success"></i></h1>
       </div>
       <p>
@@ -194,7 +209,7 @@ const errorMessage = ref(null);
 
 // Set upper boundary of date picker
 const limitDate = new Date();
-limitDate.setYear(limitDate.getFullYear() - 16);
+limitDate.setYear(limitDate.getFullYear() - 20);
 const upperLimitBirthday = ref(limitDate);
 
 // Helpers

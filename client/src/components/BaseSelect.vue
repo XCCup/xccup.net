@@ -1,6 +1,7 @@
 <template>
   <label v-if="showLabel">{{ label }}</label>
   <select
+    :id="id"
     class="form-select"
     :value="modelValue"
     :disabled="isDisabled"
@@ -42,6 +43,10 @@ defineProps({
   options: {
     type: Array,
     required: true,
+  },
+  id: {
+    type: String,
+    default: "",
   },
   showLabel: {
     type: Boolean,

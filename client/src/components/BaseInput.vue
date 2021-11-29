@@ -2,6 +2,7 @@
   <div class="form-floating mb-3">
     <input
       v-bind="$attrs"
+      :id="id"
       :value="modelValue"
       :placeholder="label"
       :class="formClass"
@@ -55,6 +56,10 @@ const props = defineProps({
   validationText: {
     type: String,
     default: "Das Feld darf nicht leer sein",
+  },
+  id: {
+    type: String,
+    default: "",
   },
 });
 
