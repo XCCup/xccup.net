@@ -163,11 +163,14 @@
                         />
                       </div>
                       <div class="col-md-6">
+                        <!--  -->
                         <!-- TODO: This does not show the current value -->
+
                         <BaseDatePicker
                           v-model="userProfile.birthday"
                           label="Geburstag"
                           starting-view="year"
+                          :initial-date="userProfile.birthday"
                         />
                       </div>
                       <div class="col-md-6">
@@ -287,6 +290,7 @@ import ApiService from "@/services/ApiService.js";
 import { ref, computed, onMounted, watchEffect } from "vue";
 import cloneDeep from "lodash/cloneDeep";
 import { setWindowName } from "../helper/utils";
+import Datepicker from "vue3-datepicker";
 
 setWindowName("Profil");
 const props = defineProps({
