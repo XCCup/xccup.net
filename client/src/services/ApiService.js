@@ -141,6 +141,12 @@ export default {
     );
   },
 
+  confirmMailChange(userId, token, email) {
+    return apiClient.get(
+      `users/confirm-mail-change?userId=${userId}&token=${token}&email=${email}`
+    );
+  },
+
   // Sponsors
 
   /**
