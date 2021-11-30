@@ -4,15 +4,16 @@
     <div>
       <h3 class="mb-4">Registrieren</h3>
       <form>
+        <!-- Name -->
         <div class="row">
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="firstName"
               v-model="userData.firstName"
               label="Vorname"
             />
           </div>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="lastName"
               v-model="userData.lastName"
@@ -20,9 +21,9 @@
             />
           </div>
         </div>
-
+        <!-- E-Mail -->
         <div class="row">
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="email"
               v-model="userData.email"
@@ -30,12 +31,30 @@
               :is-email="true"
             />
           </div>
-
-          <div class="col-md-6 mb-4"></div>
         </div>
 
+        <!-- Info collapse -->
+        <div class="mb-3">
+          <a
+            data-bs-toggle="collapse"
+            href="#collapseInfo"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="bi bi-info-circle"> Warum so viele weitere Angaben?</i>
+          </a>
+          <div id="collapseInfo" class="collapse">
+            <div class="card card-body mt-3">
+              Im XCCup gibt es verschiedene Wertungen die auf diesen
+              Informationen basieren. Zum Beispiel die Seniorenwertung oder die
+              Landesmeisterschaft Rheinland-Pfalz.
+            </div>
+          </div>
+        </div>
+        <!-- Gender / Birthday -->
         <div class="row">
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseSelect
               id="gender"
               v-model="userData.gender"
@@ -44,7 +63,7 @@
               :options="listOfGenders"
             />
           </div>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseDatePicker
               id="birthday"
               v-model="userData.birthday"
@@ -54,10 +73,9 @@
             />
           </div>
         </div>
-
+        <!-- Country / Club -->
         <div class="row">
-          <!-- Country -->
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseSelect
               id="country"
               v-model="userData.address.country"
@@ -66,8 +84,7 @@
               :options="listOfCountries"
             />
           </div>
-          <!-- Club -->
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <label>Verein</label>
             <select id="club" v-model="userData.clubId" class="form-select">
               <option
@@ -81,10 +98,18 @@
             </select>
           </div>
         </div>
-
+        <!-- State / Shirt -->
         <div class="row">
-          <!-- T-Shirt Size -->
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
+            <BaseSelect
+              id="country"
+              v-model="userData.address.state"
+              label="Bundesland"
+              :show-label="true"
+              :options="listOfStates"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
             <BaseSelect
               id="shirtSize"
               v-model="userData.tshirtSize"
@@ -93,16 +118,15 @@
               :options="tshirtSizes"
             />
           </div>
-          <div class="col-md-6 mb-4"></div>
+          <div class="col-md-6 mb-3"></div>
         </div>
-
         <!-- Password -->
         <div class="row">
           <p>
             Das Passwort muss aus mindestens 8 Zeichen bestehen und mindestens
             eine Zahl, Sonderzeichen und Großbuchstaben enthalten.
           </p>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="password"
               v-model="userData.password"
@@ -110,7 +134,7 @@
               :is-password="true"
             />
           </div>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="passwordConfirm"
               v-model="userData.passwordConfirm"
@@ -159,7 +183,7 @@
             :disabled="!registerButtonIsEnabled"
             @click.prevent="onSubmit"
           >
-            Anmelden
+            Registrieren
             <div
               v-if="showSpinner"
               class="spinner-border spinner-border-sm"
@@ -180,7 +204,7 @@
   <!-- Confirmation -->
   <slot-dialog v-if="signupSuccessfull">
     <div v-if="signupSuccessfull" id="registerConfirmation">
-      <div id="registerConfirmationHeader" class="text-center mb-4">
+      <div id="registerConfirmationHeader" class="text-center mb-3">
         <h1><i class="bi bi-check-circle text-success"></i></h1>
       </div>
       <p>
@@ -200,7 +224,7 @@ import useUserSignup from "@/composables/useUserSignup";
 
 const { userData } = useUserSignup();
 
-setWindowName("Anmelden");
+setWindowName("Registrieren");
 const signupSuccessfull = ref(false);
 
 // User input
@@ -242,6 +266,7 @@ const registerButtonIsEnabled = computed(() => {
 // Queries
 const listOfClubs = ref([]);
 const listOfCountries = ref([]);
+const listOfStates = ref([]);
 const listOfGenders = ref([]);
 const tshirtSizes = ref([]);
 
@@ -255,6 +280,13 @@ try {
   res = await ApiService.getCountries();
   if (res.status != 200) throw res.statusText;
   listOfCountries.value = Object.keys(res.data).map(function (i) {
+    return res.data[i];
+  });
+
+  // Get states
+  res = await ApiService.getStates();
+  if (res.status != 200) throw res.statusText;
+  listOfStates.value = Object.keys(res.data).map(function (i) {
     return res.data[i];
   });
 
