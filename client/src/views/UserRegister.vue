@@ -1,7 +1,7 @@
 <template>
-  <slot-dialog>
-    <!-- Form -->
-    <div v-if="!signupSuccessfull">
+  <!-- Form -->
+  <slot-dialog v-if="!signupSuccessfull" :prevent-overflow="true">
+    <div>
       <h3 class="mb-4">Registrieren</h3>
       <form>
         <div class="row">
@@ -175,8 +175,10 @@
         </div>
       </form>
     </div>
+  </slot-dialog>
 
-    <!-- Confirmation -->
+  <!-- Confirmation -->
+  <slot-dialog v-if="signupSuccessfull">
     <div v-if="signupSuccessfull" id="registerConfirmation">
       <div id="registerConfirmationHeader" class="text-center mb-4">
         <h1><i class="bi bi-check-circle text-success"></i></h1>
@@ -228,6 +230,8 @@ const registerButtonIsEnabled = computed(() => {
     userData.firstName.length > 0 &&
     userData.lastName.length > 0 &&
     userData.birthday &&
+    // Why does this happen anyway?
+    userData.birthday != "NaN-NaN-NaN" &&
     userData.gender &&
     userData.clubId &&
     userData.address.country &&
