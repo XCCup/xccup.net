@@ -35,6 +35,7 @@ img {
   max-height: 8em;
   max-width: 10em;
 }
+/* TODO: Replace colors with bootstrap $colors to preserve dark mode */
 .square-holder {
   padding: 5px;
   border: 1px solid #cecece;
