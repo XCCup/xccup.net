@@ -50,14 +50,6 @@ async function prepareHomeData() {
     sort: ["flightPoints", "DESC"],
   });
   const todaysFlights = flightService.getTodays();
-  const dbRequestsOther = {
-    sponsors,
-    activeNews,
-    bestTeams,
-    bestClubs,
-    bestFlightsOverallCurrentYear,
-    todaysFlights,
-  };
 
   const seasonStats = await Promise.all(Object.values(dbRequestsStats)).then(
     (values) => {
@@ -70,22 +62,30 @@ async function prepareHomeData() {
     }
   );
 
-  const resultRankingClasses = await retrieveRankingClassResults(currentSeason);
+  const dbRequestsOther = {
+    resultRankingClasses: await retrieveRankingClassResults(currentSeason),
+    sponsors,
+    activeNews,
+    bestTeams,
+    bestClubs,
+    bestFlightsOverallCurrentYear,
+    todaysFlights,
+  };
+  const values = await Promise.all(Object.values(dbRequestsOther));
 
-  return Promise.all(Object.values(dbRequestsOther)).then((values) => {
-    const keys = Object.keys(dbRequestsOther);
-    const res = {};
-    res.seasonStats = seasonStats;
-    for (let index = 0; index < values.length; index++) {
-      res[keys[index]] =
-        keys[index] == "bestTeams" || keys[index] == "bestClubs"
-          ? values[index].values
-          : values[index];
-    }
-    res.rankingClasses = resultRankingClasses;
-    res.seasonDetails = currentSeason;
-    return res;
-  });
+  const res = {
+    seasonStats,
+    seasonDetails: currentSeason,
+    rankingClasses: values[0],
+    sponsors: values[1],
+    activeNews: values[2],
+    bestTeams: values[3].values,
+    bestClubs: values[4].values,
+    bestFlightsOverallCurrentYear: values[5].rows,
+    todaysFlights: values[6],
+  };
+
+  return res;
 }
 
 async function retrieveRankingClassResults(currentSeason) {
