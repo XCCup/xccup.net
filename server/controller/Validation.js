@@ -93,7 +93,7 @@ function checkIsInt(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsUuidObjectOrEmptry(field) {
+function checkIsUuidObjectOrEmpty(field) {
   return check(field)
     .optional({ checkFalsy: true })
     .isUUID()
@@ -239,7 +239,7 @@ exports.checkIsArray = checkIsArray;
 exports.checkIsInt = checkIsInt;
 exports.checkIsUuidObject = checkIsUuidObject;
 exports.checkOptionalUuidObject = checkOptionalUuidObject;
-exports.checkIsUuidObjectOrEmptry = checkIsUuidObjectOrEmptry;
+exports.checkIsUuidObjectOrEmpty = checkIsUuidObjectOrEmpty;
 exports.checkIsBoolean = checkIsBoolean;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
