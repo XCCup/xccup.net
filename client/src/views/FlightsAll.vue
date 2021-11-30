@@ -11,11 +11,12 @@
     <button
       v-if="filterActive"
       type="button"
-      class="btn btn-outline-danger btn-sm"
+      class="btn btn-outline-danger btn-sm me-1"
       @click="clearFilter"
     >
       <i class="bi bi-x"></i>
     </button>
+    <PaginationPanel />
   </div>
   <FlightsTable />
   <ModalFilterFlights />
@@ -42,7 +43,6 @@ const { fetchFlights, filterActive, clearFilter } = useFlights();
 await fetchFlights(route.params, route.query);
 
 let filterModal;
-
 onMounted(() => {
   filterModal = new Modal(document.getElementById("flightFilterModal"));
 });
