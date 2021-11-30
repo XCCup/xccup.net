@@ -242,7 +242,7 @@
               </router-link>
             </div>
             <div v-if="edit">
-              <div>Edit: {{ modifiedUserData.firstName }}</div>
+              <div>Edit: {{ modifiedUserData.value.firstName }}</div>
 
               <button class="btn btn-primary" @click="save">Speichern</button>
               <button class="btn btn-outline-danger" @click="cancel">
@@ -257,10 +257,10 @@
               role="tabpanel"
               aria-labelledby="nav-hangar-tab"
             >
-              <div id="glider-select" class="col-md-12">
+              <div id="glider-select" class="col-md-12 mb-4">
                 <GliderList
-                  :gliders="userData.value.gliders"
-                  :default-glider="userData.value.defaultGlider"
+                  :gliders="userData.gliders"
+                  :default-glider="userData.defaultGlider"
                   @gliders-changed="onGlidersChanged"
                 />
               </div>
@@ -362,13 +362,13 @@ onMounted(() => {
 
 // Delete users state if country is not germany
 watchEffect(() => {
-  if (modifiedUserData.address.country != "Deutschland") {
-    modifiedUserData.address.state = "";
+  if (modifiedUserData.value.address.country != "Deutschland") {
+    modifiedUserData.value.address.state = "";
   }
 });
 
 const stateListIsEnabled = computed(
-  () => modifiedUserData.address.country === "Deutschland"
+  () => modifiedUserData.value.address.country === "Deutschland"
 );
 
 const inidcateSuccess = () => {
