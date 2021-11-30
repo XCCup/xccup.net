@@ -44,7 +44,6 @@ export const Routes = [
     props: true,
     beforeEnter: validateRouteParamYear,
     meta: { toTop: true },
-
     component: () => import("../views/FlightsAll.vue"),
   },
   {
@@ -52,7 +51,6 @@ export const Routes = [
     name: "FlightsAll",
     props: true,
     meta: { toTop: true },
-
     component: () => import("../views/FlightsAll.vue"),
   },
   {
@@ -60,7 +58,6 @@ export const Routes = [
     name: "ResultsOverall",
     props: (route) => ({ category: "overall", year: route.params.year }),
     beforeEnter: validateRouteParamYear,
-    // Lazy loading components
     component: () => import("../views/ResultsView.vue"),
   },
   {
