@@ -107,7 +107,7 @@ const flightService = {
       queryObject.offset = offset;
     }
 
-    const flights = await Flight.findAll(queryObject);
+    const flights = await Flight.findAndCountAll(queryObject);
 
     if (fillCache) cacheManager.setCurrentYearFlightCache(flights);
 
