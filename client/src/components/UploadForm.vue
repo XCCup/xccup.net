@@ -13,6 +13,7 @@
         @change="igcSelected"
       />
     </div>
+    <BaseSpinner v-if="showSpinner && !flightId" />
     <div v-show="flightId">
       <div class="row">
         <div class="col-md-6 col-12">
@@ -196,6 +197,13 @@
           :disabled="sendButtonIsDisabled"
         >
           Streckenmeldung absenden
+          <div
+            v-if="showSpinner"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </button>
       </div>
     </div>
@@ -208,6 +216,7 @@ import useUser from "@/composables/useUser";
 import { useRouter } from "vue-router";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { ref, computed, onMounted } from "vue";
+import BaseSpinner from "./BaseSpinner.vue";
 
 const baseURL = getbaseURL();
 const router = useRouter();
@@ -234,6 +243,7 @@ const externalId = ref(null);
 const takeoff = ref("");
 const landing = ref("");
 const flightReport = ref(" ");
+const showSpinner = ref(false);
 
 const sendButtonIsDisabled = computed(() => {
   return !rulesAccepted.value;
@@ -257,6 +267,7 @@ const sendIgc = async () => {
 };
 const igcSelected = async (file) => {
   flightId.value = null;
+  showSpinner.value = true;
   try {
     if (!file.target.files[0]) return;
     igc.value.body = await readFile(file.target.files[0]);
@@ -269,9 +280,12 @@ const igcSelected = async (file) => {
     landing.value = response.data.landing;
   } catch (error) {
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
 const sendFlightDetails = async () => {
+  showSpinner.value = true;
   try {
     const response = await ApiService.editFlightDetails(flightId.value, {
       glider: listOfGliders.value.find(
@@ -286,6 +300,8 @@ const sendFlightDetails = async () => {
     redirectToFlight(externalId.value);
   } catch (error) {
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
 
