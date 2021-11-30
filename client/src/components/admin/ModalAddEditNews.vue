@@ -20,6 +20,7 @@
           ></button>
         </div>
         <div class="modal-body">
+          <!-- TODO: Fix modification of props -->
           <BaseInput v-model="newsObject.title" label="Titel" />
           <BaseTextarea v-model="newsObject.message" label="Nachricht" />
           <!-- <BaseInput v-model="newsObject.from" label="Gültig ab" />
