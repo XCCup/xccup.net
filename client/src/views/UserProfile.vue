@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-3">
     <!-- Editor -->
-    <div v-if="userProfile">
+    <div v-if="modifiedUserData">
       <div class="row">
         <!-- Left -->
         <div class="col-md-3">
@@ -73,11 +73,16 @@
                 </div>
                 <div class="row mt-2">
                   <div class="col-md-6">
-                    <BaseInput v-model="userProfile.firstName" label="Name" />
+                    <BaseInput
+                      id="firstName"
+                      v-model="modifiedUserData.firstName"
+                      label="Name"
+                    />
                   </div>
                   <div class="col-md-6">
                     <BaseInput
-                      v-model="userProfile.lastName"
+                      id="lastName"
+                      v-model="modifiedUserData.lastName"
                       label="Nachname"
                     />
                   </div>
@@ -85,27 +90,35 @@
                 <div class="row mt-3">
                   <div class="col-md-12">
                     <BaseInput
-                      v-model="userProfile.club.name"
+                      id="club"
+                      v-model="modifiedUserData.club.name"
                       label="Verein"
                       :is-disabled="true"
                     />
 
-                    <BaseInput v-model="userProfile.email" label="E-Mail" />
                     <BaseInput
-                      v-model="userProfile.address.street"
+                      id="email"
+                      v-model="modifiedUserData.email"
+                      label="E-Mail"
+                    />
+                    <BaseInput
+                      id="street"
+                      v-model="modifiedUserData.address.street"
                       label="Strasse"
                     />
                     <div class="row">
                       <div class="col-md-6">
                         <BaseInput
-                          v-model="userProfile.address.zip"
+                          id="zip"
+                          v-model="modifiedUserData.address.zip"
                           :is-required="false"
                           label="PLZ"
                         />
                       </div>
                       <div class="col-md-6">
                         <BaseInput
-                          v-model="userProfile.address.city"
+                          id="city"
+                          v-model="modifiedUserData.address.city"
                           :is-required="false"
                           label="Stadt"
                         />
@@ -115,7 +128,8 @@
                       <!-- State -->
                       <div class="col-md-6">
                         <BaseSelect
-                          v-model="userProfile.address.state"
+                          id="state"
+                          v-model="modifiedUserData.address.state"
                           label="Bundesland"
                           :show-label="true"
                           :options="listOfStates"
@@ -125,7 +139,8 @@
                       <div class="col-md-6">
                         <!-- Country -->
                         <BaseSelect
-                          v-model="userProfile.address.country"
+                          id="country"
+                          v-model="modifiedUserData.address.country"
                           label="Land"
                           :show-label="true"
                           :options="listOfCountries"
@@ -135,26 +150,26 @@
                     <div class="row">
                       <div class="col-md-6">
                         <BaseSelect
-                          v-model="userProfile.gender"
+                          id="gender"
+                          v-model="modifiedUserData.gender"
                           label="Geschlecht"
                           :show-label="true"
                           :options="listOfGenders"
                         />
                       </div>
                       <div class="col-md-6">
-                        <!--  -->
-                        <!-- TODO: This does not show the current value -->
-
                         <BaseDatePicker
-                          v-model="userProfile.birthday"
+                          id="birthday"
+                          v-model="modifiedUserData.birthday"
                           label="Geburstag"
                           starting-view="year"
-                          :initial-date="userProfile.birthday"
+                          :initial-date="modifiedUserData.birthday"
                         />
                       </div>
                       <div class="col-md-6">
                         <BaseSelect
-                          v-model="userProfile.tshirtSize"
+                          id="shirtSize"
+                          v-model="modifiedUserData.tshirtSize"
                           label="T-Shirt Größe"
                           :show-label="true"
                           :options="listOfTshirtSizes"
@@ -169,7 +184,7 @@
                 <div class="form-check">
                   <input
                     id="notifyForComment"
-                    v-model="userProfile.emailInformIfComment"
+                    v-model="modifiedUserData.emailInformIfComment"
                     class="form-check-input"
                     type="checkbox"
                     value
@@ -184,7 +199,7 @@
                 <div class="form-check">
                   <input
                     id="optInNewsletter"
-                    v-model="userProfile.emailNewsletter"
+                    v-model="modifiedUserData.emailNewsletter"
                     class="form-check-input"
                     type="checkbox"
                     value
@@ -227,7 +242,7 @@
               </router-link>
             </div>
             <div v-if="edit">
-              <div>Edit: {{ userProfile.firstName }}</div>
+              <div>Edit: {{ modifiedUserData.firstName }}</div>
 
               <button class="btn btn-primary" @click="save">Speichern</button>
               <button class="btn btn-outline-danger" @click="cancel">
@@ -244,8 +259,8 @@
             >
               <div id="glider-select" class="col-md-12">
                 <GliderList
-                  :gliders="userProfile.gliders"
-                  :default-glider="userProfile.defaultGlider"
+                  :gliders="userData.value.gliders"
+                  :default-glider="userData.value.defaultGlider"
                   @gliders-changed="onGlidersChanged"
                 />
               </div>
@@ -267,8 +282,8 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref, computed, onMounted, watchEffect } from "vue";
-import cloneDeep from "lodash/cloneDeep";
 import { setWindowName } from "../helper/utils";
+import useUserProfile from "@/composables/useUserProfile";
 
 setWindowName("Profil");
 const props = defineProps({
@@ -282,11 +297,18 @@ const props = defineProps({
   },
 });
 
-// TODO: Warn user if there are unsaved changes or save them in app state
+// TODO: Warn user if there are unsaved changes
+
+const {
+  modifiedUserData,
+  fetchProfile,
+  updateProfile,
+  userData,
+  profileDataHasChanged,
+} = useUserProfile();
 
 // Data
-const userProfile = ref(null);
-const unmodifiedUserProfile = ref(null);
+// const unmodifiedUserProfile = ref(null);
 
 const listOfCountries = ref(null);
 const listOfStates = ref(null);
@@ -301,12 +323,10 @@ const errorMessage = ref(null);
 
 try {
   // Get user details
-  let res = await ApiService.getUserDetails();
-  userProfile.value = cloneDeep(res.data);
-  unmodifiedUserProfile.value = cloneDeep(res.data);
+  fetchProfile();
 
   // Get countries
-  res = await ApiService.getCountries();
+  let res = await ApiService.getCountries();
   if (res.status != 200) throw res.statusText;
   listOfCountries.value = Object.keys(res.data).map(function (i) {
     return res.data[i];
@@ -340,21 +360,15 @@ onMounted(() => {
   if (el && props.scrollToGliderSelect) el.scrollIntoView();
 });
 
-const profileDataHasChanged = computed(
-  () =>
-    JSON.stringify(userProfile.value) !=
-    JSON.stringify(unmodifiedUserProfile.value)
-);
-
 // Delete users state if country is not germany
 watchEffect(() => {
-  if (userProfile.value.address.country != "Deutschland") {
-    userProfile.value.address.state = "";
+  if (modifiedUserData.address.country != "Deutschland") {
+    modifiedUserData.address.state = "";
   }
 });
 
 const stateListIsEnabled = computed(
-  () => userProfile.value.address.country === "Deutschland"
+  () => modifiedUserData.address.country === "Deutschland"
 );
 
 const inidcateSuccess = () => {
@@ -364,10 +378,9 @@ const inidcateSuccess = () => {
   setTimeout(() => (showSuccessInidcator.value = false), 2000);
 };
 
-const onGlidersChanged = async (data) => {
+const onGlidersChanged = async () => {
   try {
-    userProfile.value.gliders = data.gliders;
-    userProfile.value.defaultGlider = data.defaultGlider;
+    fetchProfile();
   } catch (error) {
     console.log(error);
   }
@@ -375,10 +388,7 @@ const onGlidersChanged = async (data) => {
 const onSave = async () => {
   try {
     showSpinner.value = true;
-    const res = await ApiService.updateUserProfile(userProfile.value);
-    if (res.status != 200) throw res.statusText;
-    userProfile.value = res.data;
-    unmodifiedUserProfile.value = cloneDeep(userProfile.value);
+    await updateProfile();
     inidcateSuccess();
   } catch (error) {
     showSpinner.value = false;

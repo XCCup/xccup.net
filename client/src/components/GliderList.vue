@@ -114,6 +114,7 @@ const updateDefaultGlider = async () => {
   try {
     const res = await ApiService.setDefaultGlider(selectedDefaultGlider.value);
     if (res.status != 200) throw res.statusText;
+    // TODO: Show success indicator
   } catch (error) {
     // TODO: Handle error
     console.error(error);
