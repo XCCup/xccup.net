@@ -1,6 +1,7 @@
 <template>
   <div class="container-fluid mb-3">
     <h3>Streckenmeldungen {{ props.year }}</h3>
+    <!-- TODO: Add filter spinner when loading -->
     <button
       type="button"
       class="btn btn-outline-primary btn-sm me-1"
