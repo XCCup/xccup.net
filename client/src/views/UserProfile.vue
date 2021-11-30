@@ -119,6 +119,7 @@
                           label="Bundesland"
                           :show-label="true"
                           :options="listOfStates"
+                          :disabled="!stateListIsEnabled"
                         />
                       </div>
                       <div class="col-md-6">
@@ -281,7 +282,7 @@ const props = defineProps({
   },
 });
 
-// TODO: Warn user if there are unsave changes or save them in app state
+// TODO: Warn user if there are unsaved changes or save them in app state
 
 // Data
 const userProfile = ref(null);

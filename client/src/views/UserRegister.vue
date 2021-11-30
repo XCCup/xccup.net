@@ -107,6 +107,7 @@
               label="Bundesland"
               :show-label="true"
               :options="listOfStates"
+              :disabled="!stateListIsEnabled"
             />
           </div>
           <div class="col-md-6 mb-3">
@@ -217,7 +218,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import ApiService from "@/services/ApiService";
 import { isStrongPassword, setWindowName } from "../helper/utils";
 import useUserSignup from "@/composables/useUserSignup";
@@ -304,6 +305,17 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+// Delete users state if country is not germany
+watchEffect(() => {
+  if (userData.address.country != "Deutschland") {
+    userData.address.state = "";
+  }
+});
+
+const stateListIsEnabled = computed(
+  () => userData.address.country === "Deutschland"
+);
 
 // Submit
 const onSubmit = async () => {
