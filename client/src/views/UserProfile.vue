@@ -2,7 +2,7 @@
   <div class="container mt-3">
     <!-- Editor -->
     <div class="row">
-      <!-- Left -->
+      <!-- Profile Picture -->
       <div class="col-md-3">
         <div class="d-flex flex-column align-items-center text-center p-3">
           <img
@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <!-- Center -->
+      <!-- Tab Bar -->
       <div class="col-md-9 col-lg-8">
         <nav>
           <div id="nav-tab" class="nav nav-tabs" role="tablist">
@@ -57,6 +57,7 @@
             </button>
           </div>
         </nav>
+        <!-- Tab content -->
         <div id="nav-tabContent" class="tab-content">
           <div
             id="nav-profile"
@@ -73,7 +74,7 @@
             aria-labelledby="nav-hangar-tab"
           >
             <div id="glider-select" class="col-md-12 mb-4">
-              <GliderList />
+              <UserProfileGliderlist />
             </div>
           </div>
           <div
@@ -93,6 +94,7 @@
 import { setWindowName } from "../helper/utils";
 import useUserProfile from "@/composables/useUserProfile";
 import { onMounted } from "vue";
+import { Tab } from "bootstrap";
 
 setWindowName("Profil");
 const props = defineProps({
@@ -100,7 +102,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  scrollToGliderSelect: {
+  showHangar: {
     type: Boolean,
     default: false,
   },
@@ -118,9 +120,9 @@ try {
 }
 
 onMounted(() => {
-  // Scroll to anchor if it exists after mounting
-  const el = document.querySelector("#glider-select");
-  if (el && props.scrollToGliderSelect) el.scrollIntoView();
+  // Navigate to hangar tab via props
+  let hangarTab = new Tab(document.querySelector("#nav-hangar-tab"));
+  if (props.showHangar) hangarTab.show();
 });
 </script>
 

@@ -46,10 +46,7 @@
             />
           </div>
           <div class="col-md-4">
-            <router-link
-              :to="{ name: 'ProfileGliderList' }"
-              class="d-grid gap-2"
-            >
+            <router-link :to="{ name: 'ProfileHangar' }" class="d-grid gap-2">
               <button type="button" class="btn btn-primary mt-3">
                 <!-- TODO: Save inputs in state -->
                 Liste bearbeiten

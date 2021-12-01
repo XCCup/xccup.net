@@ -153,9 +153,9 @@ export const Routes = [
     component: () => import("../views/UserProfile.vue"),
   },
   {
-    path: "/profil/geraete-liste",
-    name: "ProfileGliderList",
-    props: { scrollToGliderSelect: true },
+    path: "/profil/hangar",
+    name: "ProfileHangar",
+    props: { showHangar: true },
     meta: { requiredAuth: true },
 
     component: () => import("../views/UserProfile.vue"),

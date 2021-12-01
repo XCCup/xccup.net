@@ -13,7 +13,7 @@
           />
         </div>
         <div class="col-md-3 mt-3">
-          <router-link :to="{ name: 'ProfileGliderList' }" class="d-grid gap-2">
+          <router-link :to="{ name: 'ProfileHangar' }" class="d-grid gap-2">
             <button type="button" class="btn btn-primary">
               Liste bearbeiten
             </button>
