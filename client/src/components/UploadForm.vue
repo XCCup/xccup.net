@@ -213,7 +213,6 @@ import useUser from "@/composables/useUser";
 import { useRouter } from "vue-router";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { ref, computed, onMounted } from "vue";
-import BaseSpinner from "./BaseSpinner.vue";
 
 const baseURL = getbaseURL();
 const router = useRouter();
