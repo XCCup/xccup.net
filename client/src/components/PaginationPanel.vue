@@ -7,13 +7,7 @@
           class="form-select form-select-sm"
         >
           <option disabled value="" selected>Anzahl Flüge pro Seite</option>
-          <option
-            v-for="option in LIMIT_OPTIONS"
-            :key="option"
-            :value="option"
-            :selected="option === DEFAULT_LIMIT"
-          >
-            <!-- :selected does not work; Anzahl Flüge should be default value -->
+          <option v-for="option in LIMIT_OPTIONS" :key="option" :value="option">
             {{ option }}
           </option>
         </select>
@@ -66,8 +60,6 @@
 import useFlights from "@/composables/useFlights";
 import { ref, watch, computed } from "vue";
 
-const numberFlightsPerPage = ref();
-
 const {
   fetchFlights,
   numberOfTotalFlights,
@@ -75,6 +67,8 @@ const {
   LIMIT_OPTIONS,
   currentRange,
 } = useFlights();
+
+const numberFlightsPerPage = ref(DEFAULT_LIMIT);
 
 watch(numberFlightsPerPage, () => {
   //Don't use watchEffect because this will always run once on setup and cause a second unneccessary request
