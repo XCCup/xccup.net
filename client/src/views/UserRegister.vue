@@ -324,6 +324,10 @@ const onSubmit = async () => {
     showSpinner.value = false;
 
     // TODO: Where do this error messages come from? Is this safe?
+    // KW: Backend
+    // email must be unique: ErrorHandler.js -> handleSequelizeUniqueError
+    // email, password: Validaton.js middleware in endpoint
+    // I would say it's safe
 
     // E-Mail errors
     if (error.response?.data === "email must be unique")
