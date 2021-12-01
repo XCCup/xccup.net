@@ -27,6 +27,8 @@ const {
 
 const uploadLimiter = createRateLimiter(10, 4);
 
+const { cache } = require("./CacheManager");
+
 // All requests to /flights/photos will be rerouted
 router.use("/photos", require("./FlightPhotoController"));
 
@@ -50,7 +52,10 @@ router.get(
     query("sortOrder").optional().isIn(["desc", "DESC", "asc", "ASC"]),
     queryOptionalColumnExistsInModel("sortCol", "Flight"),
   ],
+  cache("5 minutes"),
   async (req, res, next) => {
+    req.apicacheGroup = "flights";
+
     if (validationHasErrors(req, res)) return;
 
     const {

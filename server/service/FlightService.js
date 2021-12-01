@@ -20,10 +20,8 @@ const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
 
-const cacheManager = require("./CacheManager");
-
 const { isNoWorkday } = require("../helper/HolidayCalculator");
-const { getCurrentYear, sleep } = require("../helper/Utils");
+const { sleep } = require("../helper/Utils");
 
 const { COUNTRY } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
@@ -49,33 +47,6 @@ const flightService = {
     unchecked,
     sort,
   } = {}) => {
-    let fillCache = false;
-    if (
-      isCacheSufficent(year, [
-        site,
-        siteId,
-        type,
-        rankingClass,
-        limit,
-        offset,
-        startDate,
-        endDate,
-        userId,
-        clubId,
-        teamId,
-        gliderClass,
-        status,
-        unchecked,
-        sort,
-      ])
-    ) {
-      const currentYearCache = cacheManager.getCurrentYearFlightCache();
-      if (currentYearCache) return currentYearCache;
-      else {
-        fillCache = true;
-      }
-    }
-
     const orderStatement = createOrderStatement(sort);
 
     const queryObject = {
@@ -108,8 +79,6 @@ const flightService = {
     }
 
     const flights = await Flight.findAndCountAll(queryObject);
-
-    if (fillCache) cacheManager.setCurrentYearFlightCache(flights);
 
     return flights;
   },
@@ -299,8 +268,6 @@ const flightService = {
       const flightStatus = await calcFlightStatus(flightPoints, onlyLogbook);
       columnsToUpdate.flightStatus = flightStatus;
     }
-
-    cacheManager.invalidateCaches();
 
     return Flight.update(columnsToUpdate, {
       where: {
@@ -752,22 +719,6 @@ function createTeamInclude(id) {
     };
   }
   return include;
-}
-
-/**
- * The most often request is to display the flights of the current year. Therefore a cache for this request is introduced.
- * It is possible to use the cache, if only flights of the current year with no filter parameters are requested.
- *
- * @returns
- */
-function isCacheSufficent(year, values) {
-  const paras = values.every((e) => {
-    if (e != undefined) {
-      logger.debug(`In cache check one parameter of value ${e} was defined`);
-    }
-    return e == undefined;
-  });
-  return year == getCurrentYear() && paras;
 }
 
 module.exports = flightService;
