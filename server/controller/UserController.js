@@ -359,7 +359,6 @@ router.put(
   checkIsBoolean("emailTeamSearch"),
   checkStringObject("address.state"),
   checkStringObjectNotEmpty("address.country"),
-  checkIsUuidObject("defaultGlider"),
   checkOptionalStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -378,7 +377,6 @@ router.put(
     const emailTeamSearch = req.body.emailTeamSearch;
     const state = req.body.state;
     const address = req.body.address;
-    const defaultGlider = req.body.defaultGlider;
     const password = req.body.password;
 
     try {
@@ -395,7 +393,6 @@ router.put(
       user.emailTeamSearch = emailTeamSearch;
       user.state = state;
       user.address = address;
-      user.defaultGlider = defaultGlider;
       user.password = password;
 
       const result = await service.update(user);
