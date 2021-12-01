@@ -71,7 +71,7 @@ const { fetchProfile } = useUserProfile();
 const updateGliderData = async (data) => {
   selectedGlider.value = data.defaultGlider;
   listOfGliders.value = data.gliders;
-  // This is only necessary if the userprofile API call needs flider information
+  // This is only necessary if the userprofile API call needs glider information
   await fetchProfile();
 };
 

@@ -215,6 +215,12 @@ export const Routes = [
     component: () => import("../views/UserPasswordLost.vue"),
   },
   {
+    path: "/email-bestaetigen/",
+    name: "ConfirmMail",
+    props: (route) => ({ confirm: route.query.confirm }),
+    component: () => import("../views/UserConfirmMail.vue"),
+  },
+  {
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: NotFound,
