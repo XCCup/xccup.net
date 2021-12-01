@@ -15,8 +15,6 @@ const userData = ref({
   address: { street: "", country: "", state: "", zip: "", city: "" },
   emailNewsletter: true,
   tshirtSize: "",
-  defaultGlider: "",
-  gliders: [],
   emailInformIfComment: false,
   emailTeamSearch: false,
 });
