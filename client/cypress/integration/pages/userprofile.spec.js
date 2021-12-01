@@ -1,4 +1,10 @@
 describe("Check user profile", () => {
+  before(() => {
+    // TODO: Are both needed?
+    cy.clearDb();
+    cy.seedDb();
+  });
+
   beforeEach(() => {
     cy.visit("/profil");
   });
@@ -45,7 +51,7 @@ describe("Check user profile", () => {
     const expectedState = "Niedersachsen";
     const expectedCountry = "Deutschland";
     const expectedGender = "M";
-    const expectedBirthday = "01.01.2000";
+    // const expectedBirthday = "01.01.2000";
     const expectedShirtSize = "XL";
 
     cy.loginNormalUser();
