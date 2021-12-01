@@ -7,8 +7,6 @@ const seasonService = require("./SeasonService");
 const sponsorService = require("./SponsorService");
 const newsService = require("./NewsService");
 
-const cacheManager = require("./CacheManager");
-
 const { getCurrentYear } = require("../helper/Utils");
 
 const NUMBER_OF_TEAMS = 3;
@@ -17,76 +15,67 @@ const NUMBER_OF_FLIGHTS_OVERALL = 5;
 
 const service = {
   get: async () => {
-    const cache = cacheManager.getHomeCache();
-    if (cache) return cache;
+    const currentSeason = await seasonService.getCurrentActive();
 
-    const homeData = await prepareHomeData();
-    cacheManager.setHomeCache(homeData);
-    return homeData;
+    const numberOfTeams = teamService.countActive();
+    const numberOfClubs = clubService.count();
+    const numberOfUsers = userService.count();
+    const totalFlightDistance = flightService.sumDistance(getCurrentYear());
+    const dbRequestsStats = {
+      numberOfClubs,
+      numberOfTeams,
+      numberOfUsers,
+      totalFlightDistance,
+    };
+
+    const sponsors = sponsorService.getAllActive();
+    const activeNews = newsService.getActive();
+    const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
+    const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
+    const bestFlightsOverallCurrentYear = flightService.getAll({
+      year: getCurrentYear(),
+      limit: NUMBER_OF_FLIGHTS_OVERALL,
+      sort: ["flightPoints", "DESC"],
+    });
+    const todaysFlights = flightService.getTodays();
+
+    const seasonStats = await Promise.all(Object.values(dbRequestsStats)).then(
+      (values) => {
+        const keys = Object.keys(dbRequestsStats);
+        const res = {};
+        for (let index = 0; index < values.length; index++) {
+          res[keys[index]] = values[index];
+        }
+        return res;
+      }
+    );
+
+    const dbRequestsOther = {
+      resultRankingClasses: await retrieveRankingClassResults(currentSeason),
+      sponsors,
+      activeNews,
+      bestTeams,
+      bestClubs,
+      bestFlightsOverallCurrentYear,
+      todaysFlights,
+    };
+    const values = await Promise.all(Object.values(dbRequestsOther));
+
+    const res = {
+      seasonStats,
+      seasonDetails: currentSeason,
+      rankingClasses: values[0],
+      sponsors: values[1],
+      activeNews: values[2],
+      bestTeams: values[3].values,
+      bestClubs: values[4].values,
+      bestFlightsOverallCurrentYear: values[5].rows,
+      todaysFlights: values[6],
+    };
+
+    return res;
   },
 };
-
-async function prepareHomeData() {
-  const currentSeason = await seasonService.getCurrentActive();
-
-  const numberOfTeams = teamService.countActive();
-  const numberOfClubs = clubService.count();
-  const numberOfUsers = userService.count();
-  const totalFlightDistance = flightService.sumDistance(getCurrentYear());
-  const dbRequestsStats = {
-    numberOfClubs,
-    numberOfTeams,
-    numberOfUsers,
-    totalFlightDistance,
-  };
-
-  const sponsors = sponsorService.getAllActive();
-  const activeNews = newsService.getActive();
-  const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
-  const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
-  const bestFlightsOverallCurrentYear = flightService.getAll({
-    year: getCurrentYear(),
-    limit: NUMBER_OF_FLIGHTS_OVERALL,
-    sort: ["flightPoints", "DESC"],
-  });
-  const todaysFlights = flightService.getTodays();
-
-  const seasonStats = await Promise.all(Object.values(dbRequestsStats)).then(
-    (values) => {
-      const keys = Object.keys(dbRequestsStats);
-      const res = {};
-      for (let index = 0; index < values.length; index++) {
-        res[keys[index]] = values[index];
-      }
-      return res;
-    }
-  );
-
-  const dbRequestsOther = {
-    resultRankingClasses: await retrieveRankingClassResults(currentSeason),
-    sponsors,
-    activeNews,
-    bestTeams,
-    bestClubs,
-    bestFlightsOverallCurrentYear,
-    todaysFlights,
-  };
-  const values = await Promise.all(Object.values(dbRequestsOther));
-
-  const res = {
-    seasonStats,
-    seasonDetails: currentSeason,
-    rankingClasses: values[0],
-    sponsors: values[1],
-    activeNews: values[2],
-    bestTeams: values[3].values,
-    bestClubs: values[4].values,
-    bestFlightsOverallCurrentYear: values[5].rows,
-    todaysFlights: values[6],
-  };
-
-  return res;
-}
 
 async function retrieveRankingClassResults(currentSeason) {
   if (!currentSeason) return;

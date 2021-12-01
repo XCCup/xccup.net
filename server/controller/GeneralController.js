@@ -13,10 +13,9 @@ const {
   TSHIRT_SIZES,
 } = require("../constants/user-constants");
 
-// Cache all general routes for 1 day
-const apicache = require("apicache");
-let cache = apicache.middleware;
-router.use(cache("1 day"));
+// Cache all general routes for 1 week
+const { cache } = require("./CacheManager");
+router.use(cache("1 week"));
 
 // @desc Gets all gliderClasses of the current season
 // @route GET /general/gliderClasses
