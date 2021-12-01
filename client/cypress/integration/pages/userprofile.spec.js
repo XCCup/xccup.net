@@ -103,9 +103,5 @@ describe("Check user profile", () => {
     cy.get("#optInNewsletter").should("be.checked");
 
     cy.get("Button").contains("Speichern").should("be.disabled");
-
-    // Clean up
-    cy.clearDb();
-    cy.seedDb();
   });
 });
