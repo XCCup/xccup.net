@@ -195,32 +195,26 @@ const showSuccessInidcator = ref(false);
 const errorMessage = ref(null);
 
 try {
-  // Get countries
-  let res = await ApiService.getCountries();
+  // Get constants
+  let res = await ApiService.getUserProfileConstants();
   if (res.status != 200) throw res.statusText;
-  listOfCountries.value = Object.keys(res.data).map(function (i) {
-    return res.data[i];
-  });
+  // Countries
 
-  // Get states
-  res = await ApiService.getStates();
-  if (res.status != 200) throw res.statusText;
-  listOfStates.value = Object.keys(res.data).map(function (i) {
-    return res.data[i];
+  listOfCountries.value = Object.keys(res.data.countries).map(function (i) {
+    return res.data.countries[i];
   });
-
-  // Get genders
-  res = await ApiService.getGenders();
-  if (res.status != 200) throw res.statusText;
-  listOfGenders.value = Object.keys(res.data).map(function (i) {
-    return res.data[i];
+  // States
+  listOfStates.value = Object.keys(res.data.states).map(function (i) {
+    return res.data.states[i];
   });
-
-  // Get Shirt sizes
-  res = await ApiService.getShirtSizes();
-  if (res.status != 200) throw res.statusText;
-  listOfTshirtSizes.value = res.data;
+  // Genders
+  listOfGenders.value = Object.keys(res.data.genders).map(function (i) {
+    return res.data.genders[i];
+  });
+  // T-Shirt sizes
+  listOfTshirtSizes.value = res.data.tShirtSizes;
 } catch (error) {
+  // TODO: Handle error
   console.log(error);
 }
 

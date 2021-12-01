@@ -71,6 +71,23 @@ router.get("/flight/types", async (req, res, next) => {
   }
 });
 
+// @desc Gets user profile constants
+// @route GET /general/user/constants
+
+router.get("/user/constants", async (req, res, next) => {
+  try {
+    const userConstants = {
+      genders: genders,
+      countries: countries,
+      states: conutryStates,
+      tShirtSizes: TSHIRT_SIZES,
+    };
+    res.json(userConstants);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Gets all possiblites of genders
 // @route GET /general/user/genders
 
