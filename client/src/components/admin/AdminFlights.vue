@@ -122,7 +122,7 @@ export default {
   methods: {
     async fetchFlightsWithViolations() {
       const res = await ApiService.getFlightViolations();
-      this.flights = res.data;
+      this.flights = res.data.rows;
     },
     async processConfirmResult() {
       if (this.confirmType === KEY_DELETE) {
