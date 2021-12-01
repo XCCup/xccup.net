@@ -1,5 +1,5 @@
 <template>
-  <div class="form mb-3">
+  <div class="form">
     <label>{{ label }}</label>
     <Datepicker
       v-model="pickedDate"

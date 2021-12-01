@@ -71,45 +71,18 @@ router.get("/flight/types", async (req, res, next) => {
   }
 });
 
-// @desc Gets all possiblites of genders
-// @route GET /general/user/genders
+// @desc Gets user profile constants
+// @route GET /general/user/constants
 
-router.get("/user/genders", async (req, res, next) => {
+router.get("/user/constants", async (req, res, next) => {
   try {
-    res.json(genders);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// @desc Gets all by the xccup regconized countries
-// @route GET /general/user/countries
-
-router.get("/user/countries", async (req, res, next) => {
-  try {
-    res.json(countries);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// @desc Gets all by the xccup regconized states of countries
-// @route GET /general/user/states
-
-router.get("/user/states", async (req, res, next) => {
-  try {
-    res.json(conutryStates);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// @desc Gets all possible tshirt sizes
-// @route GET /general/user/tshirtSizes
-
-router.get("/user/tshirtSizes", async (req, res, next) => {
-  try {
-    res.json(TSHIRT_SIZES);
+    const userConstants = {
+      genders: genders,
+      countries: countries,
+      states: conutryStates,
+      tShirtSizes: TSHIRT_SIZES,
+    };
+    res.json(userConstants);
   } catch (error) {
     next(error);
   }

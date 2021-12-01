@@ -1,26 +1,37 @@
 <template>
   <TheNavbar />
-  <div v-if="error" class="error-message">Uh oh .. {{ error }}</div>
-  <router-view v-else v-slot="{ Component }">
-    <template v-if="Component">
-      <suspense timeout="500">
-        <template #default>
-          <!-- 
+  <main class="flex-shrink-0">
+    <div v-if="error" class="error-message">Uh oh .. {{ error }}</div>
+    <router-view v-else v-slot="{ Component }">
+      <template v-if="Component">
+        <suspense timeout="500">
+          <template #default>
+            <!-- 
           :key="$route.path" is neccesary to re-render and fetch API when 
           URL props changed. See https://notestack.io/public/force-reload-of-vue-component-with-dynamic-route-parameters/f62f3c66-e77b-494e-b120-bf0ddefe0522
           and https://router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes
           for details.
           TODO: Is there a better way to do this?
           -->
-          <!-- Main thing to show -->
-          <component :is="Component" :key="$route.path"></component>
-        </template>
-        <template #fallback>
-          <BaseSpinner custom-class="height: 80vh" />
-        </template>
-      </suspense>
-    </template>
-  </router-view>
+            <!-- Main thing to show -->
+            <component :is="Component" :key="$route.path"></component>
+          </template>
+          <template #fallback>
+            <!-- TODO: Beautify the spinner -->
+            <div class="d-flex justify-content-center my-4">
+              <div
+                class="spinner-border text-primary"
+                style="width: 3rem; height: 3rem"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          </template>
+        </suspense>
+      </template>
+    </router-view>
+  </main>
   <TheFooter />
 </template>
 
@@ -49,13 +60,6 @@ $table-striped-bg: rgba($primary, $table-striped-bg-factor);
 @import "scss/rankingClasses";
 @import "scss/dialogBackground";
 
-html,
-body {
-  height: 100%;
-  width: 100%;
-  // font-family: Avenir, Helvetica, Arial, sans-serif;
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   // TODO: This creates warnings on windows machines
@@ -63,11 +67,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;
   // color: #2c3e50;
-
-  // Needed to make footer sticky
-  display: flex;
-  flex-direction: column;
-  height: 100%;
 }
 
 h3 {

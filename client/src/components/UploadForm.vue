@@ -13,6 +13,7 @@
         @change="igcSelected"
       />
     </div>
+    <BaseSpinner v-if="showSpinner && !flightId" />
     <div v-show="flightId">
       <div class="row">
         <div class="col-md-6 col-12">
@@ -45,10 +46,7 @@
             />
           </div>
           <div class="col-md-4">
-            <router-link
-              :to="{ name: 'ProfileGliderList' }"
-              class="d-grid gap-2"
-            >
+            <router-link :to="{ name: 'ProfileHangar' }" class="d-grid gap-2">
               <button type="button" class="btn btn-primary mt-3">
                 <!-- TODO: Save inputs in state -->
                 Liste bearbeiten
@@ -196,6 +194,13 @@
           :disabled="sendButtonIsDisabled"
         >
           Streckenmeldung absenden
+          <div
+            v-if="showSpinner"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </button>
       </div>
     </div>
@@ -234,6 +239,7 @@ const externalId = ref(null);
 const takeoff = ref("");
 const landing = ref("");
 const flightReport = ref(" ");
+const showSpinner = ref(false);
 
 const sendButtonIsDisabled = computed(() => {
   return !rulesAccepted.value;
@@ -257,6 +263,7 @@ const sendIgc = async () => {
 };
 const igcSelected = async (file) => {
   flightId.value = null;
+  showSpinner.value = true;
   try {
     if (!file.target.files[0]) return;
     igc.value.body = await readFile(file.target.files[0]);
@@ -269,9 +276,12 @@ const igcSelected = async (file) => {
     landing.value = response.data.landing;
   } catch (error) {
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
 const sendFlightDetails = async () => {
+  showSpinner.value = true;
   try {
     const response = await ApiService.editFlightDetails(flightId.value, {
       glider: listOfGliders.value.find(
@@ -286,6 +296,8 @@ const sendFlightDetails = async () => {
     redirectToFlight(externalId.value);
   } catch (error) {
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
 

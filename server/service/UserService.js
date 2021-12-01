@@ -82,7 +82,7 @@ const userService = {
   getById: async (id) => {
     return await User.findByPk(id, {
       attributes: {
-        exclude: ["password"],
+        exclude: ["password", "defaultGlider", "gliders", "updatedAt"],
       },
       include: [
         {

@@ -1,5 +1,5 @@
 <template>
-  <slot-dialog>
+  <slot-dialog :narrow="true">
     <h3 class="mb-4">Passwortwiederherstellung</h3>
     <NewPasswordConfirm v-if="confirm" />
     <NewPasswordRequest v-else />

@@ -5,11 +5,11 @@
       Bestätigungsmail zu
     </p>
     <div class="row">
-      <div class="col-md-6 mb-4">
+      <div>
         <BaseInput v-model="email" label="E-Mail" :is-email="true" />
       </div>
     </div>
-    <div class="mb-4">
+    <div>
       <button
         class="btn btn-primary btn"
         type="submit"

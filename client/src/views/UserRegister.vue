@@ -1,18 +1,19 @@
 <template>
-  <slot-dialog>
-    <!-- Form -->
-    <div v-if="!signupSuccessfull">
+  <!-- Form -->
+  <slot-dialog v-if="!signupSuccessfull" :prevent-overflow="true">
+    <div>
       <h3 class="mb-4">Registrieren</h3>
       <form>
+        <!-- Name -->
         <div class="row">
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="firstName"
               v-model="userData.firstName"
               label="Vorname"
             />
           </div>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="lastName"
               v-model="userData.lastName"
@@ -20,9 +21,9 @@
             />
           </div>
         </div>
-
+        <!-- E-Mail -->
         <div class="row">
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="email"
               v-model="userData.email"
@@ -30,12 +31,30 @@
               :is-email="true"
             />
           </div>
-
-          <div class="col-md-6 mb-4"></div>
         </div>
 
+        <!-- Info collapse -->
+        <div class="mb-3">
+          <a
+            data-bs-toggle="collapse"
+            href="#collapseInfo"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            <i class="bi bi-info-circle"> Warum so viele weitere Angaben?</i>
+          </a>
+          <div id="collapseInfo" class="collapse">
+            <div class="card card-body mt-3">
+              Im XCCup gibt es verschiedene Wertungen die auf diesen
+              Informationen basieren. Zum Beispiel die Seniorenwertung oder die
+              Landesmeisterschaft Rheinland-Pfalz.
+            </div>
+          </div>
+        </div>
+        <!-- Gender / Birthday -->
         <div class="row">
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseSelect
               id="gender"
               v-model="userData.gender"
@@ -44,7 +63,7 @@
               :options="listOfGenders"
             />
           </div>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseDatePicker
               id="birthday"
               v-model="userData.birthday"
@@ -54,10 +73,9 @@
             />
           </div>
         </div>
-
+        <!-- Country / Club -->
         <div class="row">
-          <!-- Country -->
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseSelect
               id="country"
               v-model="userData.address.country"
@@ -66,8 +84,7 @@
               :options="listOfCountries"
             />
           </div>
-          <!-- Club -->
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <label>Verein</label>
             <select id="club" v-model="userData.clubId" class="form-select">
               <option
@@ -81,10 +98,19 @@
             </select>
           </div>
         </div>
-
+        <!-- State / Shirt -->
         <div class="row">
-          <!-- T-Shirt Size -->
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
+            <BaseSelect
+              id="state"
+              v-model="userData.address.state"
+              label="Bundesland"
+              :show-label="true"
+              :options="listOfStates"
+              :disabled="!stateListIsEnabled"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
             <BaseSelect
               id="shirtSize"
               v-model="userData.tshirtSize"
@@ -93,16 +119,15 @@
               :options="tshirtSizes"
             />
           </div>
-          <div class="col-md-6 mb-4"></div>
+          <div class="col-md-6 mb-3"></div>
         </div>
-
         <!-- Password -->
         <div class="row">
           <p>
             Das Passwort muss aus mindestens 8 Zeichen bestehen und mindestens
             eine Zahl, Sonderzeichen und Großbuchstaben enthalten.
           </p>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="password"
               v-model="userData.password"
@@ -110,7 +135,7 @@
               :is-password="true"
             />
           </div>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-3">
             <BaseInput
               id="passwordConfirm"
               v-model="userData.passwordConfirm"
@@ -159,7 +184,7 @@
             :disabled="!registerButtonIsEnabled"
             @click.prevent="onSubmit"
           >
-            Anmelden
+            Registrieren
             <div
               v-if="showSpinner"
               class="spinner-border spinner-border-sm"
@@ -175,10 +200,12 @@
         </div>
       </form>
     </div>
+  </slot-dialog>
 
-    <!-- Confirmation -->
+  <!-- Confirmation -->
+  <slot-dialog v-if="signupSuccessfull">
     <div v-if="signupSuccessfull" id="registerConfirmation">
-      <div id="registerConfirmationHeader" class="text-center mb-4">
+      <div id="registerConfirmationHeader" class="text-center mb-3">
         <h1><i class="bi bi-check-circle text-success"></i></h1>
       </div>
       <p>
@@ -191,14 +218,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import ApiService from "@/services/ApiService";
 import { isStrongPassword, setWindowName } from "../helper/utils";
 import useUserSignup from "@/composables/useUserSignup";
 
 const { userData } = useUserSignup();
 
-setWindowName("Anmelden");
+setWindowName("Registrieren");
 const signupSuccessfull = ref(false);
 
 // User input
@@ -228,6 +255,8 @@ const registerButtonIsEnabled = computed(() => {
     userData.firstName.length > 0 &&
     userData.lastName.length > 0 &&
     userData.birthday &&
+    // Why does this happen anyway?
+    userData.birthday != "NaN-NaN-NaN" &&
     userData.gender &&
     userData.clubId &&
     userData.address.country &&
@@ -238,36 +267,49 @@ const registerButtonIsEnabled = computed(() => {
 // Queries
 const listOfClubs = ref([]);
 const listOfCountries = ref([]);
+const listOfStates = ref([]);
 const listOfGenders = ref([]);
 const tshirtSizes = ref([]);
 
 try {
+  // Get constants
+  let res = await ApiService.getUserProfileConstants();
+  if (res.status != 200) throw res.statusText;
+  // Countries
+
+  listOfCountries.value = Object.keys(res.data.countries).map(function (i) {
+    return res.data.countries[i];
+  });
+  // States
+  listOfStates.value = Object.keys(res.data.states).map(function (i) {
+    return res.data.states[i];
+  });
+  // Genders
+  listOfGenders.value = Object.keys(res.data.genders).map(function (i) {
+    return res.data.genders[i];
+  });
+  // T-Shirt sizes
+  tshirtSizes.value = res.data.tShirtSizes;
+
   // Get clubs
-  let res = await ApiService.getClubs();
+  res = await ApiService.getClubs();
   if (res.status != 200) throw res.statusText;
   listOfClubs.value = res.data;
-
-  // Get countries
-  res = await ApiService.getCountries();
-  if (res.status != 200) throw res.statusText;
-  listOfCountries.value = Object.keys(res.data).map(function (i) {
-    return res.data[i];
-  });
-
-  // Get Shirt sizes
-  res = await ApiService.getShirtSizes();
-  if (res.status != 200) throw res.statusText;
-  tshirtSizes.value = res.data;
-
-  // Get genders
-  res = await ApiService.getGenders();
-  if (res.status != 200) throw res.statusText;
-  listOfGenders.value = Object.keys(res.data).map(function (i) {
-    return res.data[i];
-  });
 } catch (error) {
+  // TODO: Handle error
   console.log(error);
 }
+
+// Delete users state if country is not germany
+watchEffect(() => {
+  if (userData.address.country != "Deutschland") {
+    userData.address.state = "";
+  }
+});
+
+const stateListIsEnabled = computed(
+  () => userData.address.country === "Deutschland"
+);
 
 // Submit
 const onSubmit = async () => {
@@ -282,6 +324,10 @@ const onSubmit = async () => {
     showSpinner.value = false;
 
     // TODO: Where do this error messages come from? Is this safe?
+    // KW: Backend
+    // email must be unique: ErrorHandler.js -> handleSequelizeUniqueError
+    // email, password: Validaton.js middleware in endpoint
+    // I would say it's safe
 
     // E-Mail errors
     if (error.response?.data === "email must be unique")
