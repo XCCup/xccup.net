@@ -1,5 +1,5 @@
 <template>
-  <slot-dialog>
+  <slot-dialog :narrow="true">
     <BaseLogin />
   </slot-dialog>
 </template>
