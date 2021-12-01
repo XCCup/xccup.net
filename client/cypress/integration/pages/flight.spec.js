@@ -4,6 +4,9 @@ describe("check flight page", () => {
   });
 
   it("test correct values for subnav", () => {
+    // Why does this test now fail?
+    // 'Flug von Ron Crooks am 1.12.2021', but the text was ' Flug von Ron Crooks am 01.12.2021'
+    // What changed the date?
     const today = new Date().toLocaleDateString("de-DE");
     cy.get("#flight-subnav").should(
       "include.text",
