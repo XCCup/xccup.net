@@ -1,5 +1,5 @@
 module.exports.COUNTRY = {
-  GER: "Deutschland",
+  DEU: "Deutschland",
   LUX: "Luxemburg",
   BEL: "Belgien",
 };
@@ -21,6 +21,7 @@ module.exports.STATE = {
   ST: "Sachsen-Anhalt",
   SH: "Schleswig-Holstein",
   TH: "Thüringen",
+  NONE: "",
 };
 
 module.exports.GENDER = {
@@ -29,7 +30,7 @@ module.exports.GENDER = {
   DIVERS: "D",
 };
 
-module.exports.TSHIRT_SIZES = ["XS", "S", "M", "L", "XL"];
+module.exports.TSHIRT_SIZES = ["S", "M", "L", "XL", "XXL"];
 
 module.exports.ROLE = {
   ADMIN: "Administrator",

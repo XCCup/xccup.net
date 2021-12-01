@@ -8,7 +8,12 @@ const {
   FORBIDDEN,
   UNAUTHORIZED,
 } = require("../constants/http-status-constants");
-const { TSHIRT_SIZES, GENDER } = require("../constants/user-constants");
+const {
+  TSHIRT_SIZES,
+  GENDER,
+  COUNTRY,
+  STATE,
+} = require("../constants/user-constants");
 const router = express.Router();
 const {
   authToken,
@@ -29,8 +34,8 @@ const {
   checkParamIsUuid,
   checkStrongPassword,
   checkOptionalStrongPassword,
-  checkStringObject,
   validationHasErrors,
+  checkIsUuidObjectOrEmpty,
 } = require("./Validation");
 
 const userCreateLimiter = createRateLimiter(60, 2);
@@ -187,6 +192,34 @@ router.get(
   }
 );
 
+// @desc Confirms a change of a email address
+// @route GET /users/confirm-mail-change/
+
+router.get(
+  "/confirm-mail-change/",
+  query("userId").isUUID(),
+  query("token").trim().escape(),
+  query("email").trim().escape(),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const { userId, token, email } = req.query;
+
+    try {
+      const user = await service.confirmMailChange(userId, token, email);
+
+      if (!user) return res.sendStatus(NOT_FOUND);
+
+      res.json({
+        firstName: user.firstName,
+        email,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // @desc Generates a new password for an user
 // @route GET /users/renew-password/
 
@@ -291,8 +324,8 @@ router.post(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObject("address.state"),
-  checkStringObjectNotEmpty("address.country"),
+  checkIsOnlyOfValue("address.state", Object.values(STATE)),
+  checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
   checkStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -357,30 +390,35 @@ router.put(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
-  checkStringObject("address.state"),
-  checkStringObjectNotEmpty("address.country"),
+  checkIsOnlyOfValue("address.state", Object.values(STATE)),
+  checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
   checkOptionalStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     const id = req.user.id;
-
-    const lastName = req.body.lastName;
-    const firstName = req.body.firstName;
-    const birthday = req.body.birthday;
-    const email = req.body.email;
-    const clubId = req.body.clubId;
-    const gender = req.body.gender;
-    const tshirtSize = req.body.tshirtSize;
-    const emailInformIfComment = req.body.emailInformIfComment;
-    const emailNewsletter = req.body.emailNewsletter;
-    const emailTeamSearch = req.body.emailTeamSearch;
-    const state = req.body.state;
-    const address = req.body.address;
-    const password = req.body.password;
+    
+    const {
+      lastName,
+      firstName,
+      birthday,
+      email,
+      clubId,
+      gender,
+      tshirtSize,
+      emailInformIfComment,
+      emailNewsletter,
+      emailTeamSearch,
+      state,
+      address,
+      password,
+    } = req.body;
 
     try {
       const user = await service.getById(id);
+
+      if (!user) return res.sendStatus(NOT_FOUND);
+
       user.lastName = lastName;
       user.firstName = firstName;
       user.birthday = birthday;

@@ -12,16 +12,29 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     },
     landing: {
-      type: DataTypes.STRING(),
+      type: DataTypes.STRING,
     },
     report: {
       type: DataTypes.STRING(5000),
       //Default is VARCHAR(255)
     },
+    airspaceReport: {
+      type: DataTypes.STRING,
+    },
     flightPoints: {
       type: DataTypes.INTEGER,
     },
     flightDistance: {
+      type: DataTypes.DOUBLE,
+    },
+    // Seperate flightDistances are not used at the moment but should prepare the DB for upcoming changes
+    flightDistanceFree: {
+      type: DataTypes.DOUBLE,
+    },
+    flightDistanceFlat: {
+      type: DataTypes.DOUBLE,
+    },
+    flightDistanceFAI: {
       type: DataTypes.DOUBLE,
     },
     flightType: {
@@ -71,6 +84,9 @@ module.exports = (sequelize, DataTypes) => {
     isWeekend: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    region: {
+      type: DataTypes.STRING,
     },
     ageOfUser: {
       type: DataTypes.INTEGER,
