@@ -1,14 +1,14 @@
 <template>
   <h5>Standard Gerät wählen</h5>
-  <div v-for="glider in gliders" :key="glider.id" class="form-check mt-2">
+  <div v-for="glider in listOfGliders" :key="glider.id" class="form-check mt-2">
     <input
       :id="glider.id"
-      v-model="selectedDefaultGlider"
+      v-model="selectedGlider"
       class="form-check-input"
       type="radio"
       name="gliderSelectRadios"
       :value="glider.id"
-      :checked="glider.id === defaultGlider"
+      :checked="glider.id === selectedGlider"
       @change="updateDefaultGlider"
     />
     <label class="form-check-label" :for="glider.id">
@@ -37,22 +37,14 @@
 import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import ApiService from "@/services/ApiService.js";
-
-defineProps({
-  gliders: {
-    type: Array,
-    required: true,
-  },
-  defaultGlider: {
-    type: [String, null],
-    required: true,
-  },
-});
-
-const emit = defineEmits(["gliders-changed"]);
+import useUserProfile from "@/composables/useUserProfile";
 
 const selectedGlider = ref(null);
+const listOfGliders = ref(null);
+
 const showSpinner = ref(false);
+
+// Modal
 const removeGliderModal = ref(null);
 
 onMounted(() => {
@@ -66,6 +58,26 @@ const removeMessage = computed(() => {
   return `${selectedGlider.value?.brand} ${selectedGlider.value?.model} aus der Liste entfernen`;
 });
 
+// Update local copy of glider data
+const { fetchProfile } = useUserProfile();
+
+const updateGliderData = async (data) => {
+  selectedGlider.value = data.defaultGlider;
+  listOfGliders.value = data.gliders;
+  // This is only necessary if the userprofile API call needs flider information
+  await fetchProfile();
+};
+
+// Fetch users gliders
+try {
+  const res = await ApiService.getGliders();
+  if (res.status != 200) throw res.statusText;
+  await updateGliderData(res.data);
+} catch (error) {
+  // TODO: Hanlde error
+  console.log(error);
+}
+
 // Remove Glider
 const onDelete = (glider) => {
   selectedGlider.value = glider;
@@ -77,8 +89,9 @@ const removeGlider = async (result) => {
       showSpinner.value = true;
       const res = await ApiService.removeGlider(selectedGlider.value.id);
       if (res.status != 200) throw res.statusText;
+      await updateGliderData(res.data);
+
       showSpinner.value = false;
-      emit("gliders-changed", res.data);
       removeGliderModal.value.hide();
     } catch (error) {
       // TODO: Handle error
@@ -98,8 +111,8 @@ const addGlider = async (glider) => {
     showSpinner.value = true;
     const res = await ApiService.addGlider(glider);
     if (res.status != 200) throw res.statusText;
+    await updateGliderData(res.data);
     showSpinner.value = false;
-    emit("gliders-changed", res.data);
     addGliderModal.hide();
   } catch (error) {
     // TODO: Handle error
@@ -109,11 +122,12 @@ const addGlider = async (glider) => {
 };
 
 // Update default glider
-const selectedDefaultGlider = ref(null);
 const updateDefaultGlider = async () => {
   try {
-    const res = await ApiService.setDefaultGlider(selectedDefaultGlider.value);
+    const res = await ApiService.setDefaultGlider(selectedGlider.value);
     if (res.status != 200) throw res.statusText;
+    await fetchProfile();
+
     // TODO: Show success indicator
   } catch (error) {
     // TODO: Handle error

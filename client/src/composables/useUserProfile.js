@@ -1,9 +1,10 @@
-import { ref, computed, readonly } from "vue";
+import { ref, computed, readonly, watchEffect } from "vue";
 import ApiService from "@/services/ApiService";
-import { cloneDeep } from "lodash";
-const fetchedData = ref(null);
 
-const state = ref({
+// Create a "prototype" of the user data expected by bindings in UserProfile.vue
+// This prevents null cases if the corresponding properties are none existent in API response
+
+const userData = ref({
   firstName: "",
   lastName: "",
   birthday: "",
@@ -15,30 +16,31 @@ const state = ref({
   emailNewsletter: true,
   tshirtSize: "",
   defaultGlider: "",
+  gliders: [],
   emailInformIfComment: false,
   emailTeamSearch: false,
 });
 
-const modifiedUserData = ref(null);
+// Make an editable copy of the userData state
+const modifiedUserData = ref({ ...userData.value });
 
 export default () => {
   // Getters
-  // const userData = computed(() => fetchedData);
 
   const profileDataHasChanged = computed(
-    () => JSON.stringify(modifiedUserData.value) != JSON.stringify(state.value)
+    () =>
+      JSON.stringify(modifiedUserData.value) != JSON.stringify(userData.value)
   );
   // Mutations
   const updateState = (data) => {
-    state.value = { ...data };
-    modifiedUserData.value = cloneDeep(state.value);
+    userData.value = { ...data };
+    modifiedUserData.value = { ...userData.value };
   };
   // Actions
   const fetchProfile = async () => {
     const res = await ApiService.getUserDetails();
     if (res.status != 200) throw res.statusText;
     updateState(res.data);
-    fetchedData.value = res.data;
   };
 
   const updateProfile = async () => {
@@ -47,12 +49,18 @@ export default () => {
     await fetchProfile();
   };
 
+  // Clear users state if country is not germany
+  watchEffect(() => {
+    if (modifiedUserData.value.address.country != "Deutschland") {
+      modifiedUserData.value.address.state = "";
+    }
+  });
+
   return {
-    userData: readonly(state),
+    userData: readonly(userData),
     fetchProfile,
     updateProfile,
     modifiedUserData,
     profileDataHasChanged,
-    state,
   };
 };
