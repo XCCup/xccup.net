@@ -23,7 +23,11 @@
     <i class="bi bi-plus"></i> Gerät hinzufügen
   </button>
   <!-- Modals -->
-  <ModalAddGlider @add-glider="addGlider" />
+  <ModalAddGlider
+    :show-spinner="showAddGliderSpinner"
+    :error-message="addGliderErrorMessage"
+    @add-glider="addGlider"
+  />
   <BaseModal
     modal-title="Bist du sicher?"
     :modal-body="removeMessage"
@@ -43,6 +47,9 @@ const selectedGlider = ref(null);
 const listOfGliders = ref(null);
 
 const showSpinner = ref(false);
+
+const showAddGliderSpinner = ref(false);
+const addGliderErrorMessage = ref(null);
 
 // Modal
 const removeGliderModal = ref(null);
@@ -108,16 +115,17 @@ const onAdd = () => {
 };
 const addGlider = async (glider) => {
   try {
-    showSpinner.value = true;
+    showAddGliderSpinner.value = true;
     const res = await ApiService.addGlider(glider);
     if (res.status != 200) throw res.statusText;
     await updateGliderData(res.data);
-    showSpinner.value = false;
+    addGliderErrorMessage.value = null;
     addGliderModal.hide();
   } catch (error) {
-    // TODO: Handle error
+    addGliderErrorMessage.value = error;
     console.error(error);
-    showSpinner.value = false;
+  } finally {
+    showAddGliderSpinner.value = false;
   }
 };
 

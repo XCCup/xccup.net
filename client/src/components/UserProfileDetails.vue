@@ -146,13 +146,7 @@
       @click="onSave"
     >
       Speichern
-      <div
-        v-if="showSpinner"
-        class="spinner-border spinner-border-sm"
-        role="status"
-      >
-        <span class="visually-hidden">Loading...</span>
-      </div>
+      <BaseSpinner v-if="showSpinner" />
       <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
     </button>
     <!-- Error Message -->
@@ -183,6 +177,7 @@
 import ApiService from "@/services/ApiService.js";
 import { ref, computed } from "vue";
 import useUserProfile from "@/composables/useUserProfile";
+import BaseSpinner from "./BaseSpinner.vue";
 
 const { modifiedUserData, updateProfile, profileDataHasChanged } =
   useUserProfile();
