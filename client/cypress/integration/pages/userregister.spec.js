@@ -35,23 +35,23 @@ describe("check users register page", () => {
     cy.get("#acceptRulesCheckbox").check();
 
     // All fields are valid. Submit button should be enabled
-    cy.get("Button").contains("Anmelden").should("be.enabled");
+    cy.get("Button").contains("Registrieren").should("be.enabled");
 
     // Change accept rules checkbox
     cy.get("#acceptRulesCheckbox").uncheck();
-    cy.get("Button").contains("Anmelden").should("be.disabled");
+    cy.get("Button").contains("Registrieren").should("be.disabled");
     cy.get("#acceptRulesCheckbox").check();
 
     // Add weak password
     cy.get("#password").clear().type(expectedPasswortWeak);
     cy.get("#passwordConfirm").clear().type(expectedPasswortWeak);
-    cy.get("Button").contains("Anmelden").should("be.disabled");
+    cy.get("Button").contains("Registrieren").should("be.disabled");
 
     // Readd correct password
     cy.get("#password").clear().type(expectedPasswort);
     cy.get("#passwordConfirm").clear().type(expectedPasswort);
 
-    cy.get("Button").contains("Anmelden").click();
+    cy.get("Button").contains("Registrieren").click();
 
     cy.get("#registerConfirmation")
       .find("p")
@@ -91,7 +91,7 @@ describe("check users register page", () => {
     cy.get("#passwordConfirm").type(expectedPasswort);
     cy.get("#acceptRulesCheckbox").check();
 
-    cy.get("Button").contains("Anmelden").click();
+    cy.get("Button").contains("Registrieren").click();
 
     cy.get("#errorMessageText").contains("Diese E-Mail existiert bereits");
   });
