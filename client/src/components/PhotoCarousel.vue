@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="carouselExampleInterval"
-    class="carousel slide"
-    data-bs-ride="carousel"
-  >
+  <div id="photo-carousel" class="carousel slide mt-4" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div
         v-for="(photo, index) in photos"
@@ -12,12 +8,17 @@
         :class="index === 0 ? 'active' : ''"
       >
         <img :src="photo" class="d-block w-100" alt="..." />
+        <div class="carousel-caption d-none d-md-block">
+          <span class="badge bg-light p-2" style="--bs-bg-opacity: 0.5">
+            Caption: {{ photo }}
+          </span>
+        </div>
       </div>
     </div>
     <button
       class="carousel-control-prev"
       type="button"
-      data-bs-target="#carouselExampleInterval"
+      data-bs-target="#photo-carousel"
       data-bs-slide="prev"
     >
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -26,7 +27,7 @@
     <button
       class="carousel-control-next"
       type="button"
-      data-bs-target="#carouselExampleInterval"
+      data-bs-target="#photo-carousel"
       data-bs-slide="next"
     >
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -36,12 +37,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
-import useFlight from "@/composables/useFlight";
-import ApiService from "@/services/ApiService";
-import { useRoute } from "vue-router";
-import { cloneDeep } from "lodash";
-import router from "../router";
+import { ref } from "vue";
 
 const photos = ref([
   "/src/assets/images/bremm.jpg",
@@ -49,4 +45,9 @@ const photos = ref([
 ]);
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  height: 80vh;
+  object-fit: cover;
+}
+</style>
