@@ -8,9 +8,9 @@
         :class="index === 0 ? 'active' : ''"
       >
         <img :src="photo" class="d-block w-100" alt="..." />
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption">
           <span class="badge bg-light p-2" style="--bs-bg-opacity: 0.5">
-            Caption: {{ photo }}
+            {{ photo }}
           </span>
         </div>
       </div>
