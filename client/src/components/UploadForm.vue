@@ -13,8 +13,12 @@
         @change="igcSelected"
       />
     </div>
-    <BaseSpinner v-if="showSpinner && !flightId" />
-    <div v-show="flightId">
+    <div class="text-primary text-center lh-lg">
+      <!-- TODO: Put the spinner somewhere else -->
+      <BaseSpinner v-if="showSpinner && !flightId" />
+    </div>
+    <!-- TODO: The overflow… -->
+    <div id="details-collapse" class="collapse">
       <div class="row">
         <div class="col-md-6 col-12">
           <BaseInput
@@ -213,6 +217,7 @@ import useUser from "@/composables/useUser";
 import { useRouter } from "vue-router";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { ref, computed, onMounted } from "vue";
+import { Collapse } from "bootstrap";
 
 const baseURL = getbaseURL();
 const router = useRouter();
@@ -240,6 +245,8 @@ const takeoff = ref("");
 const landing = ref("");
 const flightReport = ref(" ");
 const showSpinner = ref(false);
+
+let detailsCollapse = null;
 
 const sendButtonIsDisabled = computed(() => {
   return !rulesAccepted.value;
@@ -274,6 +281,7 @@ const igcSelected = async (file) => {
     externalId.value = response.data.externalId;
     takeoff.value = response.data.takeoff;
     landing.value = response.data.landing;
+    detailsCollapse.show();
   } catch (error) {
     console.log(error);
   } finally {
@@ -306,7 +314,13 @@ const sendFlightDetails = async () => {
 const addPhotoButtonIsEnabled = computed(() => flightId.value != null);
 
 const photoInput = ref(null);
-onMounted(() => (photoInput.value = document.getElementById("photo-input")));
+onMounted(() => {
+  photoInput.value = document.getElementById("photo-input");
+  let myCollapse = document.getElementById("details-collapse");
+  detailsCollapse = new Collapse(myCollapse, {
+    toggle: false,
+  });
+});
 
 const selectedPhotos = ref([]);
 const uploadedPhotos = ref([]);
