@@ -36,6 +36,7 @@ img {
   max-width: 10em;
 }
 /* TODO: Replace colors with bootstrap $colors to preserve dark mode */
+/* TODO: Style fixes for small devices */
 .square-holder {
   padding: 5px;
   border: 1px solid #cecece;

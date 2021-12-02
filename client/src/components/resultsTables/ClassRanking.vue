@@ -3,7 +3,7 @@
     <div
       v-for="(rankingClass, index) in rankingByClass"
       :key="index"
-      class="col-xxl-2 col-md-4 col-6 my-1"
+      class="col-xxl-2 col-md-4 col-12 my-1"
     >
       <ResultsOverviewTable :ranking="rankingClass" />
     </div>

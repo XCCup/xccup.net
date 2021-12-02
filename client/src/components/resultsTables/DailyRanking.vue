@@ -1,61 +1,67 @@
 <template>
-  <div v-if="flights" id="cy-daily-ranking-panel" class="row bg-primary">
-    <div class="col-xl-5 col-lg-6 col-12">
-      <div class="text-light p-4 pb-4">
-        <h3>
-          Tageswertung
-          <BaseDate
-            v-if="flights[0]?.takeoffTime"
-            class="fs-6"
-            :timestamp="flights[0]?.takeoffTime"
-            date-format="dd.MM.yyyy"
-          />
-        </h3>
-        <!-- TODO: Beautify the hover -->
-        <div v-if="flights.length > 0">
-          <table class="table text-light table-hover">
-            <tbody>
-              <tr
-                v-for="(flight, index) in flights.slice(0, maxRows)"
-                :key="flight.id"
-                :item="flight"
-                :index="index"
-                @click="routeToFlight(flight.externalId)"
-                @mouseover="updateHighlightedFlight(flight.id)"
-                @mouseleave="updateHighlightedFlight(null)"
+  <div class="bg-primary">
+    <!-- This prevents long components on big screens but leaves a nasty background "blitzer" -->
+    <div class="container-xl">
+      <div v-if="flights" id="cy-daily-ranking-panel" class="row">
+        <div class="col-xl-5 col-lg-6 col-12 ps-">
+          <div class="container pb-3">
+            <h3>
+              Tageswertung
+              <BaseDate
+                v-if="flights[0]?.takeoffTime"
+                class="fs-6"
+                :timestamp="flights[0]?.takeoffTime"
+                date-format="dd.MM.yyyy"
+              />
+            </h3>
+            <!-- TODO: Beautify the hover -->
+            <div v-if="flights.length > 0">
+              <table class="table table-hover">
+                <tbody>
+                  <tr
+                    v-for="(flight, index) in flights.slice(0, maxRows)"
+                    :key="flight.id"
+                    :item="flight"
+                    :index="index"
+                    @click="routeToFlight(flight.externalId)"
+                    @mouseover="updateHighlightedFlight(flight.id)"
+                    @mouseleave="updateHighlightedFlight(null)"
+                  >
+                    <td scope="row" class="hide-on-sm">{{ index + 1 }}</td>
+                    <td>
+                      {{ flight.user.firstName + " " + flight.user.lastName }}
+                    </td>
+                    <td>{{ flight.takeoff.name }}</td>
+                    <td class="no-line-break">
+                      {{ Math.floor(flight.flightDistance) }} km
+                      <FlightTypeIcon :flight-type="flight.flightType" />
+                    </td>
+                    <td class="no-line-break hide-on-sm">
+                      {{ flight.flightPoints }} P
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <router-link
+                :to="{ name: 'FlightsAll', params: { year: currentYear } }"
+                class="btn btn-outline-light btn-sm"
+                >Alle Flüge anzeigen</router-link
               >
-                <td scope="row">{{ index + 1 }}</td>
-                <td>
-                  {{ flight.user.firstName + " " + flight.user.lastName }}
-                </td>
-                <td>{{ flight.takeoff.name }}</td>
-                <td class="no-line-break">
-                  {{ Math.floor(flight.flightDistance) }} km
-                </td>
-                <td class="no-line-break">
-                  <FlightTypeIcon :flight-type="flight.flightType" />
-                  {{ flight.flightPoints }} P
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <router-link
-            :to="{ name: 'FlightsAll', params: { year: currentYear } }"
-            class="btn btn-outline-light btn-sm my-1"
-            >Alle Flüge anzeigen</router-link
-          >
+            </div>
+            <div v-else class="text-center mt-5">
+              <p class="fs-1">🌧 💨 🤯</p>
+              Heute noch keine eingereichten Flüge vorhanden
+            </div>
+          </div>
         </div>
-        <div v-else class="text-center mt-5">
-          <p class="fs-1">🌧 💨 🤯</p>
-          Heute noch keine eingereichten Flüge vorhanden
+
+        <div class="col-xl-7 col-lg-6 col-12 p-0 m-0">
+          <DailyFlightsMap
+            :highlighted-flight="highlightedFlightId"
+            :tracks="dailyFlightsMapTracks"
+          />
         </div>
       </div>
-    </div>
-    <div class="col-xl-7 col-lg-6 col-12 p-0 m-0">
-      <DailyFlightsMap
-        :highlighted-flight="highlightedFlightId"
-        :tracks="dailyFlightsMapTracks"
-      />
     </div>
   </div>
 </template>
