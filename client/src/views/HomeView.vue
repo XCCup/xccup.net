@@ -11,6 +11,7 @@
     :best-clubs="bestClubs"
     :best-teams="bestTeams"
   />
+  <ImageCarousel />
   <SponsorsPanel :sponsors="sponsors" />
 </template>
 
