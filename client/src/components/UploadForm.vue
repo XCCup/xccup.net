@@ -125,25 +125,19 @@
               <i class="bi bi-arrow-clockwise"></i>
             </figure>
 
-            <figure v-else class="figure">
-              <!-- TODO: Position the delete icon on photo border -->
-              <div class="text-end">
-                <i
-                  class="bi bi-x-square text-danger clickable"
-                  @click="onDeletePhoto(photo.id)"
-                ></i>
-              </div>
-
+            <figure v-else class="figure position-relative">
               <a
                 :href="baseURL + `media/` + photo.id"
                 data-lightbox="photos"
                 :data-title="photo.description ? photo.description : ``"
+                class="position-relative"
               >
                 <img
                   :src="baseURL + `media/` + photo.id"
                   class="figure-img img-fluid img-thumbnail"
                   alt=""
-              /></a>
+                />
+              </a>
               <div class="p-1">
                 <!-- TODO: Add tab index -->
                 <input
@@ -153,6 +147,10 @@
                   placeholder="Beschreibung"
                 />
               </div>
+              <i
+                class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
+                @click="onDeletePhoto(photo.id)"
+              ></i>
             </figure>
           </div>
           <!-- Add photo button -->
