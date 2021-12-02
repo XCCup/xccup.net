@@ -467,7 +467,7 @@ async function calcFlightPoints(flight, glider) {
   let flightPoints;
   if (flight.flightType && flight.flightDistance) {
     const typeFactor = currentSeason.flightTypeFactors[flight.flightType];
-    const gliderFactor = gliderClassDB.value;
+    const gliderFactor = gliderClassDB.scoringMultiplicator;
     const distance = flight.flightDistance;
     flightPoints = Math.round(typeFactor * gliderFactor * distance);
   } else {
