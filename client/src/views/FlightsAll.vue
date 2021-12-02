@@ -40,7 +40,7 @@ const props = defineProps({
 const route = useRoute();
 
 const { fetchFlights, filterActive, clearFilter } = useFlights();
-await fetchFlights(route.params, route.query);
+await fetchFlights({ params: route.params, queries: route.query });
 
 let filterModal;
 onMounted(() => {

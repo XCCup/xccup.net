@@ -26,12 +26,12 @@ export default () => {
 
   // Actions
 
-  const fetchFlights = async (
+  const fetchFlights = async ({
     params,
     queries,
     limit = DEFAULT_LIMIT,
-    offset = 0
-  ) => {
+    offset = 0,
+  }) => {
     if (params) paramsCache.value = params;
     if (queries) filterOptionsCache.value = queries;
     if (offset < 0) offset = 0;

@@ -73,12 +73,10 @@ const numberFlightsPerPage = ref(DEFAULT_LIMIT);
 watch(numberFlightsPerPage, () => {
   //Don't use watchEffect because this will always run once on setup and cause a second unneccessary request
   console.log(numberFlightsPerPage.value);
-  fetchFlights(
-    null,
-    null,
-    numberFlightsPerPage.value,
-    currentRange.value.start - 1
-  );
+  fetchFlights({
+    limit: numberFlightsPerPage.value,
+    offset: currentRange.value.start - 1,
+  });
 });
 
 const disableIfNoPreviousEntriesAvailable = computed(() =>
@@ -91,25 +89,24 @@ const disableIfNoNextEntriesAvailable = computed(() => {
 
 const onFirst = () => {
   console.log("Clicked first ", numberFlightsPerPage.value);
-  fetchFlights(null, null, numberFlightsPerPage.value, 0);
+  fetchFlights({ limit: numberFlightsPerPage.value, offset: 0 });
 };
 const onPrevious = () => {
-  fetchFlights(
-    null,
-    null,
-    numberFlightsPerPage.value,
-    currentRange.value.start - numberFlightsPerPage.value - 1
-  );
+  fetchFlights({
+    limit: numberFlightsPerPage.value,
+    offset: currentRange.value.start - numberFlightsPerPage.value - 1,
+  });
 };
 const onNext = () => {
-  fetchFlights(null, null, numberFlightsPerPage.value, currentRange.value.end);
+  fetchFlights({
+    limit: numberFlightsPerPage.value,
+    offset: currentRange.value.end,
+  });
 };
 const onLast = () => {
-  fetchFlights(
-    null,
-    null,
-    numberFlightsPerPage.value,
-    numberOfTotalFlights.value - numberFlightsPerPage.value
-  );
+  fetchFlights({
+    limit: numberFlightsPerPage.value,
+    offset: numberOfTotalFlights.value - numberFlightsPerPage.value,
+  });
 };
 </script>
