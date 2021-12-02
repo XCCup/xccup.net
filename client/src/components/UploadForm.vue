@@ -99,7 +99,7 @@
       <br />
       <!-- Photos -->
       <h4>Bilder hinzufügen</h4>
-      <div class="mb-3">
+      <div class="my-4">
         <input
           id="photo-input"
           type="file"
@@ -156,13 +156,20 @@
           <!-- Add photo button -->
           <!-- TODO: Position button in center -->
           <div class="col-4">
-            <figure class="figure">
+            <figure class="figure position-relative">
+              <img
+                src="@/assets/images/empty.png"
+                class="figure-img img-fluid img-thumbnail"
+                alt=""
+              />
               <button
-                class="btn btn-outline-primary mt-2"
+                class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
                 :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >
-                <i class="bi bi-plus-square"></i>
+                <span class="align-middle">
+                  <i class="bi bi-plus-square"></i>
+                </span>
               </button>
             </figure>
           </div>
