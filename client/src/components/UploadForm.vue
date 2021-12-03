@@ -241,7 +241,7 @@ import { useRouter } from "vue-router";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { ref, computed, onMounted } from "vue";
 import { Collapse } from "bootstrap";
-import Constants from "@/plugins/constants";
+import Constants from "@/common/constants";
 
 const baseURL = getbaseURL();
 const router = useRouter();
