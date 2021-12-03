@@ -1,6 +1,6 @@
 <template>
   <!-- Tabs -->
-  <div v-if="rankingByClass" id="overallResultsTabPanel" class="container my-2">
+  <div v-if="resultsByClass" id="overallResultsTabPanel" class="container my-2">
     <h3>Gesamtwertung</h3>
     <ul id="myTab" class="nav nav-tabs" role="tablist">
       <li class="nav-item" role="presentation">
@@ -57,7 +57,7 @@
         <TopFlights :flights="topFlights" />
       </div>
       <div id="class" class="tab-pane fade" role="tabpanel">
-        <ClassRanking :ranking-by-class="rankingByClass" />
+        <ClassRanking :results-by-class="resultsByClass" />
       </div>
       <div id="club" class="tab-pane fade" role="tabpanel">
         <ClubRanking :best-clubs="bestClubs" />
@@ -71,7 +71,7 @@
 
 <script setup>
 defineProps({
-  rankingByClass: {
+  resultsByClass: {
     type: Array,
     required: true,
   },

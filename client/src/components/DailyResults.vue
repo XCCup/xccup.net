@@ -56,7 +56,7 @@
         </div>
 
         <div class="col-xl-7 col-lg-6 col-12 p-0 m-0">
-          <DailyFlightsMap
+          <DailyResultsMap
             :highlighted-flight="highlightedFlightId"
             :tracks="dailyFlightsMapTracks"
           />
