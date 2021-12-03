@@ -1,8 +1,16 @@
 const FlightPhoto = require("../config/postgres")["FlightPhoto"];
+const { Sequelize } = require("../config/postgres");
 
 const service = {
   getById: (id) => {
     return FlightPhoto.findByPk(id);
+  },
+
+  getRandom: (count) => {
+    return FlightPhoto.findAll({
+      order: Sequelize.literal("random()"),
+      limit: count,
+    });
   },
 
   create: async (media) => {

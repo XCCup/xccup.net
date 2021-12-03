@@ -6,6 +6,7 @@ const flightService = require("./FlightService");
 const seasonService = require("./SeasonService");
 const sponsorService = require("./SponsorService");
 const newsService = require("./NewsService");
+const flightPhotoService = require("./FlightPhotoService");
 
 const cacheManager = require("./CacheManager");
 
@@ -50,6 +51,8 @@ async function prepareHomeData() {
     sort: ["flightPoints", "DESC"],
   });
   const todaysFlights = flightService.getTodays();
+  const randomPhotos = flightPhotoService.getRandom(20);
+
   const dbRequestsOther = {
     sponsors,
     activeNews,
@@ -57,6 +60,7 @@ async function prepareHomeData() {
     bestClubs,
     bestFlightsOverallCurrentYear,
     todaysFlights,
+    randomPhotos,
   };
 
   const seasonStats = await Promise.all(Object.values(dbRequestsStats)).then(
