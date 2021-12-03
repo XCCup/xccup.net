@@ -13,7 +13,7 @@
         @change="igcSelected"
       />
     </div>
-    <BaseError :error-message="errorMessage" />
+    <BaseError id="upload-error" :error-message="errorMessage" />
 
     <div class="text-primary text-center lh-lg">
       <!-- TODO: Put the spinner somewhere else -->
@@ -113,7 +113,8 @@
 
         <div v-if="uploadedPhotos" class="row">
           <div
-            v-for="photo in uploadedPhotos"
+            v-for="(photo, index) in uploadedPhotos"
+            :id="`photo-${index}`"
             :key="photo"
             class="col-sm-4 col-6"
           >
@@ -143,6 +144,7 @@
               <div class="p-1">
                 <!-- TODO: Add tab index -->
                 <input
+                  :id="`add-description-photo-${index}`"
                   v-model="photo.description"
                   class="form-control form-control-sm"
                   type="text"
@@ -157,7 +159,7 @@
           </div>
           <!-- Add photo button -->
           <!-- TODO: Position button in center -->
-          <div class="col-4">
+          <div id="add-photo" class="col-4">
             <figure class="figure position-relative">
               <img
                 src="@/assets/images/empty.png"
