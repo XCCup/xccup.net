@@ -3,14 +3,25 @@
     <div class="carousel-inner">
       <div
         v-for="(photo, index) in photos"
-        :key="photo"
+        :key="photo.id"
         class="carousel-item"
         :class="index === 0 ? 'active' : ''"
       >
-        <img :src="photo" class="d-block w-100 carousel" alt="..." />
+        <img
+          :src="baseURL + `media/` + photo.id"
+          class="d-block w-100 carousel"
+          alt="..."
+        />
         <div class="carousel-caption">
-          <span class="badge bg-light p-2" style="--bs-bg-opacity: 0.5">
-            {{ photo }}
+          <span class="badge bg-light p-2" style="--bs-bg-opacity: 0.7">
+            <router-link
+              :to="{
+                name: 'Flight',
+                params: { flightId: photo.id },
+              }"
+            >
+              {{ photo.description }}
+            </router-link>
           </span>
         </div>
       </div>
@@ -37,12 +48,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
-const photos = ref([
-  "/src/assets/images/bremm.jpg",
-  "/src/assets/images/rachtig.jpg",
-]);
+const baseURL = getbaseURL();
+defineProps({
+  photos: {
+    type: Array,
+    required: true,
+  },
+});
 </script>
 
 <style scoped>

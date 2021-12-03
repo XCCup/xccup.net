@@ -11,7 +11,7 @@
     :best-clubs="bestClubs"
     :best-teams="bestTeams"
   />
-  <PhotoCarousel />
+  <PhotoCarousel :photos="randomPhotos" />
   <SponsorsPanel :sponsors="sponsors" />
 </template>
 
@@ -29,6 +29,7 @@ const bestClubs = ref(null);
 const bestTeams = ref(null);
 const seasonStats = ref(null);
 const sponsors = ref(null);
+const randomPhotos = ref(null);
 
 setWindowName("Home");
 
@@ -44,6 +45,7 @@ try {
   bestTeams.value = initialData.bestTeams;
   seasonStats.value = initialData.seasonStats;
   sponsors.value = initialData.sponsors;
+  randomPhotos.value = initialData.randomPhotos;
 } catch (error) {
   console.log(error);
   router.push({

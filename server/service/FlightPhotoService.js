@@ -10,6 +10,8 @@ const service = {
     return FlightPhoto.findAll({
       order: Sequelize.literal("random()"),
       limit: count,
+      // TODO: Is there a way to include user name and external flight id?
+      attributes: ["id", "description"],
     });
   },
 
