@@ -1,9 +1,9 @@
 <template>
-  <div id="classRankingPanel" class="row">
+  <div class="row">
     <div
-      v-for="(result, index) in resultsByClass"
+      v-for="(result, index) in results"
       :key="index"
-      class="col-xxl-2 col-md-4 col-12 my-1"
+      class="col-lg-4 col-md-6 col-12 my-1"
     >
       <div class="card-body">
         <h6 class="card-title">
@@ -39,7 +39,7 @@
 
 <script setup>
 defineProps({
-  resultsByClass: {
+  results: {
     type: Array,
     required: true,
   },

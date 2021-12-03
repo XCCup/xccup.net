@@ -54,16 +54,16 @@
     </ul>
     <div id="myTabContent" class="tab-content">
       <div id="topFlights" class="tab-pane fade show active" role="tabpanel">
-        <TopFlights :flights="topFlights" />
+        <ResultsOverviewTopFlights :flights="topFlights" />
       </div>
       <div id="class" class="tab-pane fade" role="tabpanel">
-        <ClassRanking :results-by-class="resultsByClass" />
+        <ResultsOverviewClass :results="resultsByClass" />
       </div>
       <div id="club" class="tab-pane fade" role="tabpanel">
-        <ClubRanking :best-clubs="bestClubs" />
+        <ResultsOverviewClubs :best-clubs="bestClubs" />
       </div>
       <div id="team" class="tab-pane fade" role="tabpanel">
-        <TeamRanking :best-teams="bestTeams" />
+        <ResultsOverviewTeams :best-teams="bestTeams" />
       </div>
     </div>
   </div>

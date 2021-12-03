@@ -5,7 +5,7 @@
 
   <InfoBox :season-stats="seasonStats" />
   <DailyResults :max-rows="5" :flights="dailyResults" />
-  <OverallResults
+  <ResultsOverview
     :results-by-class="resultsByClass"
     :top-flights="topFlights"
     :best-clubs="bestClubs"
