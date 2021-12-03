@@ -151,7 +151,16 @@
                 />
               </div>
               <i
-                class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
+                class="
+                  bi bi-x-circle
+                  text-danger
+                  fs-3
+                  clickable
+                  position-absolute
+                  top-0
+                  start-100
+                  translate-middle
+                "
                 @click="onDeletePhoto(photo.id)"
               ></i>
             </figure>
@@ -166,7 +175,13 @@
                 alt=""
               />
               <button
-                class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
+                class="
+                  btn btn-lg btn-outline-primary
+                  position-absolute
+                  top-50
+                  start-50
+                  translate-middle
+                "
                 :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >
@@ -226,6 +241,7 @@ import { useRouter } from "vue-router";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { ref, computed, onMounted } from "vue";
 import { Collapse } from "bootstrap";
+import Constants from "@/plugins/constants";
 
 const baseURL = getbaseURL();
 const router = useRouter();
@@ -291,15 +307,17 @@ const igcSelected = async (file) => {
     igc.value.name = file.target.files[0].name;
     const response = await sendIgc();
     if (response.status != 200) throw response.statusText;
+    errorMessage.value = null;
     flightId.value = response.data.flightId;
     externalId.value = response.data.externalId;
     takeoff.value = response.data.takeoff;
     landing.value = response.data.landing;
     detailsCollapse.show();
   } catch (error) {
+    detailsCollapse.hide();
     if (error.response.status === 403)
-      return (errorMessage.value =
-        "Dieser Flug liegt ausserhalb des XCCup Gebiets");
+      // TODO: Find a way to make the email clickable without using v-html
+      return (errorMessage.value = `Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
     errorMessage.value = "Da ist leider was schief gelaufen";
     console.log(error);
   } finally {
