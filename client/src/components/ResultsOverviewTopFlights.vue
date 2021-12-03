@@ -16,6 +16,8 @@
         <td>{{ flight.takeoff.name }}</td>
         <td class="no-line-break">
           {{ Math.floor(flight.flightDistance) }} km
+        </td>
+        <td>
           <FlightTypeIcon :flight-type="flight.flightType" />
         </td>
         <td class="no-line-break hide-on-sm">{{ flight.flightPoints }} P</td>

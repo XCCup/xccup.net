@@ -3,8 +3,8 @@
     <!-- This prevents long components on big screens but leaves a nasty background "blitzer" -->
     <div class="container-xl">
       <div v-if="flights" id="cy-daily-ranking-panel" class="row">
-        <div class="col-xl-5 col-lg-6 col-12 ps-">
-          <div class="container pb-3 text-light">
+        <div class="col-xl-5 col-lg-6 col-12">
+          <div class="pb-3 text-light">
             <h3>
               Tageswertung
               <BaseDate
@@ -34,6 +34,8 @@
                     <td>{{ flight.takeoff.name }}</td>
                     <td class="no-line-break">
                       {{ Math.floor(flight.flightDistance) }} km
+                    </td>
+                    <td>
                       <FlightTypeIcon :flight-type="flight.flightType" />
                     </td>
                     <td class="no-line-break hide-on-sm">
