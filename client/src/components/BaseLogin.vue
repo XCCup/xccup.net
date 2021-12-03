@@ -22,8 +22,12 @@
         placeholder="Passwort"
       />
     </div>
-    <div v-if="errorMessage" id="loginErrorMessage" class="my-2 text-danger">
-      {{ errorMessage }}
+    <div>
+      <BaseError
+        id="loginErrorMessage"
+        :error-message="errorMessage"
+        class="my-2"
+      />
     </div>
     <button type="submit" class="btn btn-primary">Anmelden</button>
   </form>

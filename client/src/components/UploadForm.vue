@@ -13,9 +13,8 @@
         @change="igcSelected"
       />
     </div>
-    <div class="text-danger">
-      {{ errorMessage }}
-    </div>
+    <BaseError :error-message="errorMessage" />
+
     <div class="text-primary text-center lh-lg">
       <!-- TODO: Put the spinner somewhere else -->
       <BaseSpinner v-if="showSpinner && !flightId" />
@@ -151,16 +150,7 @@
                 />
               </div>
               <i
-                class="
-                  bi bi-x-circle
-                  text-danger
-                  fs-3
-                  clickable
-                  position-absolute
-                  top-0
-                  start-100
-                  translate-middle
-                "
+                class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
                 @click="onDeletePhoto(photo.id)"
               ></i>
             </figure>
@@ -175,13 +165,7 @@
                 alt=""
               />
               <button
-                class="
-                  btn btn-lg btn-outline-primary
-                  position-absolute
-                  top-50
-                  start-50
-                  translate-middle
-                "
+                class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
                 :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >

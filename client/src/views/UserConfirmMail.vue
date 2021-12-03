@@ -12,7 +12,8 @@
                 Die Änderung deiner E-Mail-Adresse auf {{ resEmail }} wurde
                 erfolgreich durchgeführt 🥳
               </div>
-              <div v-else class="mb-4">{{ errorMessage }}</div>
+              <BaseError v-else :error-message="errorMessage" class="mb-4" />
+
               <p>
                 Falls Du Probleme feststellst wende Dich bitte an einen
                 <router-link :to="{ name: 'Imprint' }"

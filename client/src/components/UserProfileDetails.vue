@@ -150,9 +150,7 @@
       <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
     </button>
     <!-- Error Message -->
-    <p v-if="errorMessage" class="text-danger mt-3">
-      {{ errorMessage }}
-    </p>
+    <BaseError :error-message="errorMessage" class="mt-3" />
 
     <!-- Edit -->
     <!-- <div v-if="!edit">
