@@ -51,7 +51,7 @@ async function prepareHomeData() {
     sort: ["flightPoints", "DESC"],
   });
   const todaysFlights = flightService.getTodays();
-  const randomPhotos = flightPhotoService.getRandom(20);
+  const randomPhotos = flightPhotoService.getRandomCurrentYear(20);
 
   const dbRequestsOther = {
     sponsors,

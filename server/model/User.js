@@ -132,6 +132,7 @@ module.exports = (sequelize, DataTypes) => {
       hooks: true,
     });
     User.hasMany(models.FlightPhoto, {
+      as: "photos",
       foreignKey: {
         name: "userId",
         //Through this constrain it's realized that every comment, will be delete if the user will be deleted
