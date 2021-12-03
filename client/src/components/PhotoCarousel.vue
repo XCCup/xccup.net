@@ -32,6 +32,7 @@
       data-bs-target="#photo-carousel"
       data-bs-slide="prev"
     >
+      <!-- TODO: Hover not working -->
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
