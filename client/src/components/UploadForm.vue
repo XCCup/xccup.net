@@ -150,7 +150,16 @@
                 />
               </div>
               <i
-                class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
+                class="
+                  bi bi-x-circle
+                  text-danger
+                  fs-3
+                  clickable
+                  position-absolute
+                  top-0
+                  start-100
+                  translate-middle
+                "
                 @click="onDeletePhoto(photo.id)"
               ></i>
             </figure>
@@ -165,7 +174,13 @@
                 alt=""
               />
               <button
-                class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
+                class="
+                  btn btn-lg btn-outline-primary
+                  position-absolute
+                  top-50
+                  start-50
+                  translate-middle
+                "
                 :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >
@@ -225,7 +240,7 @@ import { useRouter } from "vue-router";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { ref, computed, onMounted } from "vue";
 import { Collapse } from "bootstrap";
-import Constants from "@/common/constants";
+import Constants from "@/common/Constants";
 
 const baseURL = getbaseURL();
 const router = useRouter();
