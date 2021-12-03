@@ -13,6 +13,9 @@
         @change="igcSelected"
       />
     </div>
+    <div class="text-danger">
+      {{ errorMessage }}
+    </div>
     <div class="text-primary text-center lh-lg">
       <!-- TODO: Put the spinner somewhere else -->
       <BaseSpinner v-if="showSpinner && !flightId" />
@@ -148,16 +151,7 @@
                 />
               </div>
               <i
-                class="
-                  bi bi-x-circle
-                  text-danger
-                  fs-3
-                  clickable
-                  position-absolute
-                  top-0
-                  start-100
-                  translate-middle
-                "
+                class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
                 @click="onDeletePhoto(photo.id)"
               ></i>
             </figure>
@@ -172,13 +166,7 @@
                 alt=""
               />
               <button
-                class="
-                  btn btn-lg btn-outline-primary
-                  position-absolute
-                  top-50
-                  start-50
-                  translate-middle
-                "
+                class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
                 :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >
@@ -266,11 +254,15 @@ const landing = ref("");
 const flightReport = ref(" ");
 const showSpinner = ref(false);
 
+const errorMessage = ref(null);
+
 let detailsCollapse = null;
 
 const sendButtonIsDisabled = computed(() => {
   return !rulesAccepted.value;
 });
+
+// IGC
 
 const igc = ref({ filename: "", body: null });
 
@@ -284,10 +276,12 @@ const readFile = (file) => {
     reader.readAsText(file);
   });
 };
+
 const sendIgc = async () => {
   if (igc.value.body == null) return;
   return await ApiService.uploadIgc({ igc: igc.value });
 };
+
 const igcSelected = async (file) => {
   flightId.value = null;
   showSpinner.value = true;
@@ -296,18 +290,23 @@ const igcSelected = async (file) => {
     igc.value.body = await readFile(file.target.files[0]);
     igc.value.name = file.target.files[0].name;
     const response = await sendIgc();
-    if (response.status != 200) throw "Server error";
+    if (response.status != 200) throw response.statusText;
     flightId.value = response.data.flightId;
     externalId.value = response.data.externalId;
     takeoff.value = response.data.takeoff;
     landing.value = response.data.landing;
     detailsCollapse.show();
   } catch (error) {
+    if (error.response.status === 403)
+      return (errorMessage.value =
+        "Dieser Flug liegt ausserhalb des XCCup Gebiets");
+    errorMessage.value = "Da ist leider was schief gelaufen";
     console.log(error);
   } finally {
     showSpinner.value = false;
   }
 };
+
 const sendFlightDetails = async () => {
   showSpinner.value = true;
   try {
