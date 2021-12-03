@@ -148,7 +148,16 @@
                 />
               </div>
               <i
-                class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
+                class="
+                  bi bi-x-circle
+                  text-danger
+                  fs-3
+                  clickable
+                  position-absolute
+                  top-0
+                  start-100
+                  translate-middle
+                "
                 @click="onDeletePhoto(photo.id)"
               ></i>
             </figure>
@@ -163,7 +172,13 @@
                 alt=""
               />
               <button
-                class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
+                class="
+                  btn btn-lg btn-outline-primary
+                  position-absolute
+                  top-50
+                  start-50
+                  translate-middle
+                "
                 :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >
@@ -301,6 +316,8 @@ const sendFlightDetails = async () => {
         (glider) => glider.id === defaultGlider.value
       ),
       report: flightReport.value,
+      hikeAndFly: hikeAndFly.value,
+      onlyLogbook: onlyLogbook.value,
     });
     if (response.status != 200) throw response.statusText;
 
