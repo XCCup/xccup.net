@@ -22,10 +22,12 @@
               <router-link
                 :to="{
                   name: 'Flight',
-                  params: { flightId: photo.id },
+                  params: { flightId: photo.flight.externalId },
                 }"
               >
-                {{ photo.description }}
+                {{ photo.description }} <br /><br />
+                {{ photo.user.firstName }}
+                {{ photo.user.lastName }}
               </router-link>
             </span>
           </div>
