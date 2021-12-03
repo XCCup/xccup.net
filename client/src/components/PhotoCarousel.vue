@@ -7,7 +7,7 @@
         class="carousel-item"
         :class="index === 0 ? 'active' : ''"
       >
-        <img :src="photo" class="d-block w-100" alt="..." />
+        <img :src="photo" class="d-block w-100 carousel" alt="..." />
         <div class="carousel-caption">
           <span class="badge bg-light p-2" style="--bs-bg-opacity: 0.5">
             {{ photo }}
@@ -46,8 +46,5 @@ const photos = ref([
 </script>
 
 <style scoped>
-img {
-  height: 80vh;
-  object-fit: cover;
-}
+/* Styling is in App.vue */
 </style>
