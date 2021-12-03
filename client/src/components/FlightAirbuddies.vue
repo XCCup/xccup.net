@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import Constants from "@/common/constants";
+import Constants from "@/common/Constants";
 import useFlight from "@/composables/useFlight";
 import useAirbuddy from "@/composables/useAirbuddies";
 
