@@ -12,7 +12,7 @@ import L from "leaflet";
 import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import trackColors from "@/assets/js/trackColors";
+import Constants from "@/common/Constants";
 import ApiService from "@/services/ApiService";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
@@ -32,6 +32,8 @@ import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights } = useAirbuddies();
+
+const trackColors = Constants.TRACK_COLORS;
 
 // Leaflet objects
 let map = ref(null);
