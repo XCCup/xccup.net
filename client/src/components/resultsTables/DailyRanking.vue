@@ -4,7 +4,7 @@
     <div class="container-xl">
       <div v-if="flights" id="cy-daily-ranking-panel" class="row">
         <div class="col-xl-5 col-lg-6 col-12 ps-">
-          <div class="container pb-3">
+          <div class="container pb-3 text-light">
             <h3>
               Tageswertung
               <BaseDate
@@ -16,7 +16,7 @@
             </h3>
             <!-- TODO: Beautify the hover -->
             <div v-if="flights.length > 0">
-              <table class="table table-hover">
+              <table class="table table-hover text-light bg-primary">
                 <tbody>
                   <tr
                     v-for="(flight, index) in flights.slice(0, maxRows)"
