@@ -14,6 +14,10 @@ const {
 } = require("../constants/user-constants");
 
 const { getCache, setCache } = require("./CacheManager");
+const userService = require("../service/UserService");
+const siteService = require("../service/FlyingSiteService");
+const clubService = require("../service/ClubService");
+const teamService = require("../service/TeamService");
 
 // @desc Gets all gliderClasses of the current season
 // @route GET /general/gliderClasses
@@ -64,6 +68,39 @@ router.get("/brands", async (req, res, next) => {
     setCache(req, brands);
 
     res.json(brands);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Gets all filter options for flights and results
+// @route GET /general/filterOptions
+
+router.get("/filterOptions", async (req, res, next) => {
+  try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const userNames = userService.getAllNames();
+    const siteNames = siteService.getAllNames();
+    const clubNames = clubService.getAllNames();
+    const teamNames = teamService.getAllNames();
+
+    const values = await Promise.all([
+      userNames,
+      siteNames,
+      clubNames,
+      teamNames,
+    ]);
+
+    setCache(req, values);
+
+    res.json({
+      userNames: values[0],
+      siteNames: values[1],
+      clubNames: values[2],
+      teamNames: values[3],
+    });
   } catch (error) {
     next(error);
   }

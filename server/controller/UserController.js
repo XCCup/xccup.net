@@ -194,7 +194,7 @@ router.get(
       const accessToken = createToken(user);
       const refreshToken = createRefreshToken(user);
 
-      deleteCache(["users", "home", "clubs"]);
+      deleteCache(["users", "home", "clubs", "filterOptions"]);
 
       res.json({
         firstName: user.firstName,
@@ -317,7 +317,7 @@ router.delete("/", authToken, async (req, res, next) => {
 
     if (!user) return res.sendStatus(NOT_FOUND);
 
-    deleteCache(["users", "home", "clubs"]);
+    deleteCache(["users", "home", "clubs", "filterOptions"]);
 
     res.json(user);
   } catch (error) {
@@ -455,7 +455,7 @@ router.put(
 
       const result = await service.update(user);
 
-      deleteCache(["users", "clubs"], true);
+      deleteCache(["users", "clubs", "filterOptions"], true);
 
       res.json(result);
     } catch (error) {

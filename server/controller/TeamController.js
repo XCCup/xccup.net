@@ -109,7 +109,7 @@ router.post(
 
       const team = await service.create(teamName, memberIds);
 
-      deleteCache(["teams"]);
+      deleteCache(["teams", "filterOptions"]);
 
       res.json(team);
     } catch (error) {
@@ -134,7 +134,7 @@ router.delete(
 
       const numberOfDestroyedRows = await service.delete(req.team.id);
 
-      deleteCache(["teams"]);
+      deleteCache(["teams", "filterOptions"]);
 
       res.json(numberOfDestroyedRows);
     } catch (error) {
