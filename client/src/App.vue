@@ -101,26 +101,6 @@ a {
   @extend .d-sm-table-cell;
 }
 
-// Carousel styling
-.carousel {
-  height: 80vh;
-  object-fit: cover;
-}
-
-@include media-breakpoint-down(lg) {
-  .carousel {
-    height: 60vh;
-    // object-fit: cover;
-  }
-}
-
-@include media-breakpoint-down(md) {
-  .carousel {
-    height: 45vh;
-    // object-fit: cover;
-  }
-}
-
 // TODO: Is this obsolete?
 // Fix for responsive scaling of barogramm
 // .barogramm-container {
