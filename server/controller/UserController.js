@@ -35,9 +35,16 @@ const {
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
-  checkIsUuidObjectOrEmpty,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
+const CACHE_RELEVANT_KEYS = [
+  "users",
+  "clubs",
+  "filterOptions",
+  "flights",
+  "result",
+  "home",
+];
 
 const userCreateLimiter = createRateLimiter(60, 2);
 const loginLimiter = createRateLimiter(60, 5);
@@ -194,7 +201,7 @@ router.get(
       const accessToken = createToken(user);
       const refreshToken = createRefreshToken(user);
 
-      deleteCache(["users", "home", "clubs", "filterOptions"]);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json({
         firstName: user.firstName,
@@ -317,7 +324,7 @@ router.delete("/", authToken, async (req, res, next) => {
 
     if (!user) return res.sendStatus(NOT_FOUND);
 
-    deleteCache(["users", "home", "clubs", "filterOptions"]);
+    deleteCache(CACHE_RELEVANT_KEYS);
 
     res.json(user);
   } catch (error) {
@@ -414,7 +421,7 @@ router.put(
     if (validationHasErrors(req, res)) return;
 
     const id = req.user.id;
-    
+
     const {
       lastName,
       firstName,
@@ -452,7 +459,7 @@ router.put(
 
       const result = await service.update(user);
 
-      deleteCache(["users", "clubs", "filterOptions"], true);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(result);
     } catch (error) {

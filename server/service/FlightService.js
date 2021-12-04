@@ -312,7 +312,7 @@ const flightService = {
 
     const fixes = await retrieveDbObjectOfFlightFixes(flight.id);
 
-    deleteCache([], true);
+    deleteCache(["home", "flights", "results"]);
 
     ElevationAttacher.execute(
       FlightFixes.mergeData(fixes),

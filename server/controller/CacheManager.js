@@ -1,8 +1,6 @@
 const NodeCache = require("node-cache");
 const logger = require("../config/logger");
 
-const FLIGHT_RELATED_KEYS = ["home", "results", "flights"];
-
 // All cache elements will be deleted after one week
 const cache = new NodeCache({
   stdTTL: 60 * 60 * 24 * 7,
@@ -21,13 +19,9 @@ const setCache = (req, value) => {
   cache.set(req.originalUrl, value);
 };
 
-const deleteCache = (keysArrayToDelete, deleteAlsoFlightRelatedKeys) => {
+const deleteCache = (keysArrayToDelete) => {
   const cachedKeys = cache.keys();
   const keysToDelete = [];
-
-  if (deleteAlsoFlightRelatedKeys) {
-    keysArrayToDelete = [...keysArrayToDelete, ...FLIGHT_RELATED_KEYS];
-  }
 
   cachedKeys.forEach((cacheKey) => {
     keysArrayToDelete.forEach((includeKey) => {

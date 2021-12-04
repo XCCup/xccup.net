@@ -13,6 +13,7 @@ const {
   validationHasErrors,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
+const CACHE_RELEVANT_KEYS = ["teams", "filterOptions"];
 
 // @desc Gets information of all active teams
 // @route GET /teams
@@ -109,7 +110,7 @@ router.post(
 
       const team = await service.create(teamName, memberIds);
 
-      deleteCache(["teams", "filterOptions"]);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(team);
     } catch (error) {
@@ -134,7 +135,7 @@ router.delete(
 
       const numberOfDestroyedRows = await service.delete(req.team.id);
 
-      deleteCache(["teams", "filterOptions"]);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(numberOfDestroyedRows);
     } catch (error) {
