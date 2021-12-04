@@ -22,14 +22,14 @@
         </div>
         <div class="modal-body">
           <BaseSelect
-            v-model="glider.brand"
+            v-model="newGlider.brand"
             :options="brands"
             label="Hersteller"
           />
           <div class="mb-3"></div>
-          <BaseInput v-model="glider.model" label="Fluggerät" />
+          <BaseInput v-model="newGlider.model" label="Fluggerät" />
 
-          <select v-model="glider.gliderClass" class="form-select">
+          <select v-model="newGlider.gliderClass" class="form-select">
             <option disabled value="" selected>Geräteklasse</option>
             <option
               v-for="(gliderClass, classKey) in gliderClasses"
@@ -41,6 +41,8 @@
           </select>
         </div>
         <div class="modal-footer">
+          <BaseError id="loginErrorMessage" :error-message="errorMessage" />
+
           <button
             type="button"
             class="btn btn-primary"
@@ -48,13 +50,7 @@
             @click="onAddGlider"
           >
             Speichern
-            <div
-              v-if="showSpinner"
-              class="spinner-border spinner-border-sm"
-              role="status"
-            >
-              <span class="visually-hidden">Loading...</span>
-            </div>
+            <BaseSpinner v-if="showSpinner" />
           </button>
           <button
             type="button"
@@ -68,50 +64,50 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import ApiService from "@/services/ApiService.js";
-
 import { ref, computed, reactive } from "vue";
 
-export default {
-  name: "ModalAddGlider",
-  emits: ["add-glider"],
+const emit = defineEmits(["add-glider"]);
 
-  async setup(props, { emit }) {
-    const glider = reactive({
-      brand: "",
-      model: "",
-      gliderClass: "",
-    });
-    const showSpinner = ref(false);
-    const brands = ref(null);
-    const gliderClasses = ref(null);
-    const saveButtonIsEnabled = computed(() => {
-      return (
-        (glider.model.length > 2) &
-        (glider.brand != "") &
-        (glider.gliderClass != "")
-      );
-    });
-
-    try {
-      brands.value = (await ApiService.getBrands()).data;
-      gliderClasses.value = (await ApiService.getGliderClasses()).data;
-    } catch (error) {
-      console.log(error);
-    }
-
-    const onAddGlider = () => {
-      emit("add-glider", glider);
-    };
-    return {
-      brands,
-      gliderClasses,
-      glider,
-      showSpinner,
-      onAddGlider,
-      saveButtonIsEnabled,
-    };
+defineProps({
+  showSpinner: {
+    type: Boolean,
+    default: false,
   },
+  errorMessage: {
+    type: [String, null],
+    default: null,
+  },
+});
+
+const newGlider = reactive({
+  brand: "",
+  model: "",
+  gliderClass: "",
+});
+
+// Fetch data
+
+const brands = ref(null);
+const gliderClasses = ref(null);
+
+try {
+  brands.value = (await ApiService.getBrands()).data;
+  gliderClasses.value = (await ApiService.getGliderClasses()).data;
+} catch (error) {
+  console.log(error);
+}
+
+const saveButtonIsEnabled = computed(() => {
+  return (
+    (newGlider.model.length > 2) &
+    (newGlider.brand != "") &
+    (newGlider.gliderClass != "")
+  );
+});
+
+const onAddGlider = () => {
+  emit("add-glider", newGlider);
 };
 </script>

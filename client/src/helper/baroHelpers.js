@@ -1,4 +1,6 @@
-import trackColors from "@/assets/js/trackColors.js";
+import Constants from "@/common/Constants";
+
+const trackColors = Constants.TRACK_COLORS;
 
 // Process tracklog data for barogramm
 export function processBaroData(flight, buddyTracks) {

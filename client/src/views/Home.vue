@@ -4,13 +4,14 @@
   </span>
 
   <InfoBox :season-stats="seasonStats" />
-  <DailyRanking :max-rows="5" :flights="dailyRanking" />
-  <OverallResults
-    :ranking-by-class="rankingByClass"
+  <DailyResults :max-rows="5" :flights="dailyResults" />
+  <ResultsOverview
+    :results-by-class="resultsByClass"
     :top-flights="topFlights"
     :best-clubs="bestClubs"
     :best-teams="bestTeams"
   />
+  <PhotoCarousel :photos="randomPhotos" />
   <SponsorsPanel :sponsors="sponsors" />
 </template>
 
@@ -21,13 +22,14 @@ import { setWindowName } from "../helper/utils";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-const dailyRanking = ref(null);
+const dailyResults = ref(null);
 const topFlights = ref(null);
-const rankingByClass = ref(null);
+const resultsByClass = ref(null);
 const bestClubs = ref(null);
 const bestTeams = ref(null);
 const seasonStats = ref(null);
 const sponsors = ref(null);
+const randomPhotos = ref(null);
 
 setWindowName("Home");
 
@@ -36,13 +38,14 @@ try {
   // await new Promise((resolve) => setTimeout(resolve, 2000));
   const { data: initialData } = await ApiService.getInitialData();
 
-  dailyRanking.value = initialData.todaysFlights;
+  dailyResults.value = initialData.todaysFlights;
   topFlights.value = initialData.bestFlightsOverallCurrentYear;
-  rankingByClass.value = initialData.rankingClasses;
+  resultsByClass.value = initialData.rankingClasses;
   bestClubs.value = initialData.bestClubs;
   bestTeams.value = initialData.bestTeams;
   seasonStats.value = initialData.seasonStats;
   sponsors.value = initialData.sponsors;
+  randomPhotos.value = initialData.randomPhotos;
 } catch (error) {
   console.log(error);
   router.push({

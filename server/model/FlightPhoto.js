@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
 
   FlightPhoto.associate = (models) => {
     FlightPhoto.belongsTo(models.User, {
-      as: "photos",
+      as: "user",
       foreignKey: {
         name: "userId",
       },
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   FlightPhoto.associate = (models) => {
     FlightPhoto.belongsTo(models.Flight, {
-      as: "photos",
+      as: "flight",
       foreignKey: {
         name: "flightId",
       },

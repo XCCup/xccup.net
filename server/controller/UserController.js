@@ -409,13 +409,12 @@ router.put(
   checkIsBoolean("emailTeamSearch"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
   checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
-  checkIsUuidObjectOrEmpty("defaultGlider"),
   checkOptionalStrongPassword("password"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     const id = req.user.id;
-
+    
     const {
       lastName,
       firstName,
@@ -429,7 +428,6 @@ router.put(
       emailTeamSearch,
       state,
       address,
-      defaultGlider,
       password,
     } = req.body;
 
@@ -450,7 +448,6 @@ router.put(
       user.emailTeamSearch = emailTeamSearch;
       user.state = state;
       user.address = address;
-      user.defaultGlider = defaultGlider;
       user.password = password;
 
       const result = await service.update(user);

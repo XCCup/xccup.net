@@ -1,4 +1,7 @@
 describe("check users page", () => {
+  before(() => {
+    cy.seedDb();
+  });
   beforeEach(() => {
     cy.visit("/");
   });

@@ -3,7 +3,12 @@
     Das Rücksetzen Deines Passwortes wurde bestätigt. Wird senden Dir in kürze
     ein neues Passwort zu 📯
   </div>
-  <div v-else class="mb-4">{{ errorMessage }}</div>
+  <BaseError
+    v-else
+    id="loginErrorMessage"
+    :error-message="errorMessage"
+    class="mb-4"
+  />
 </template>
 
 <script setup>

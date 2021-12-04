@@ -5,11 +5,11 @@
       Bestätigungsmail zu
     </p>
     <div class="row">
-      <div class="col-md-6 mb-4">
+      <div>
         <BaseInput v-model="email" label="E-Mail" :is-email="true" />
       </div>
     </div>
-    <div class="mb-4">
+    <div>
       <button
         class="btn btn-primary btn"
         type="submit"
@@ -26,9 +26,7 @@
         </div>
       </button>
       <!-- Error message -->
-      <p v-if="errorMessage" class="text-danger mt-4">
-        {{ errorMessage }}
-      </p>
+      <BaseError :error-message="errorMessage" class="mt-4" />
     </div>
   </form>
   <div v-else>
@@ -47,7 +45,7 @@ import ApiService from "../services/ApiService";
 
 const email = ref("");
 const showSpinner = ref(false);
-const errorMessage = ref(false);
+const errorMessage = ref(null);
 const mailSent = ref(false);
 
 const buttonIsEnabled = computed(() => isEmail(email.value));

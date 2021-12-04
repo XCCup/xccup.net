@@ -13,7 +13,14 @@
         @change="igcSelected"
       />
     </div>
-    <div v-show="flightId">
+    <BaseError id="upload-error" :error-message="errorMessage" />
+
+    <div class="text-primary text-center lh-lg">
+      <!-- TODO: Put the spinner somewhere else -->
+      <BaseSpinner v-if="showSpinner && !flightId" />
+    </div>
+    <!-- TODO: The overflow… -->
+    <div id="details-collapse" class="collapse">
       <div class="row">
         <div class="col-md-6 col-12">
           <BaseInput
@@ -45,10 +52,7 @@
             />
           </div>
           <div class="col-md-4">
-            <router-link
-              :to="{ name: 'ProfileGliderList' }"
-              class="d-grid gap-2"
-            >
+            <router-link :to="{ name: 'ProfileHangar' }" class="d-grid gap-2">
               <button type="button" class="btn btn-primary mt-3">
                 <!-- TODO: Save inputs in state -->
                 Liste bearbeiten
@@ -97,7 +101,7 @@
       <br />
       <!-- Photos -->
       <h4>Bilder hinzufügen</h4>
-      <div class="mb-3">
+      <div class="my-4">
         <input
           id="photo-input"
           type="file"
@@ -109,7 +113,8 @@
 
         <div v-if="uploadedPhotos" class="row">
           <div
-            v-for="photo in uploadedPhotos"
+            v-for="(photo, index) in uploadedPhotos"
+            :id="`photo-${index}`"
             :key="photo"
             class="col-sm-4 col-6"
           >
@@ -123,46 +128,67 @@
               <i class="bi bi-arrow-clockwise"></i>
             </figure>
 
-            <figure v-else class="figure">
-              <!-- TODO: Position the delete icon on photo border -->
-              <div class="text-end">
-                <i
-                  class="bi bi-x-square text-danger clickable"
-                  @click="onDeletePhoto(photo.id)"
-                ></i>
-              </div>
-
+            <figure v-else class="figure position-relative">
               <a
                 :href="baseURL + `media/` + photo.id"
                 data-lightbox="photos"
                 :data-title="photo.description ? photo.description : ``"
+                class="position-relative"
               >
                 <img
                   :src="baseURL + `media/` + photo.id"
                   class="figure-img img-fluid img-thumbnail"
                   alt=""
-              /></a>
+                />
+              </a>
               <div class="p-1">
                 <!-- TODO: Add tab index -->
                 <input
+                  :id="`add-description-photo-${index}`"
                   v-model="photo.description"
                   class="form-control form-control-sm"
                   type="text"
                   placeholder="Beschreibung"
                 />
               </div>
+              <i
+                class="
+                  bi bi-x-circle
+                  text-danger
+                  fs-3
+                  clickable
+                  position-absolute
+                  top-0
+                  start-100
+                  translate-middle
+                "
+                @click="onDeletePhoto(photo.id)"
+              ></i>
             </figure>
           </div>
           <!-- Add photo button -->
           <!-- TODO: Position button in center -->
-          <div class="col-4">
-            <figure class="figure">
+          <div id="add-photo" class="col-4">
+            <figure class="figure position-relative">
+              <img
+                src="@/assets/images/empty.png"
+                class="figure-img img-fluid img-thumbnail"
+                alt=""
+              />
               <button
-                class="btn btn-outline-primary mt-2"
+                class="
+                  btn btn-lg btn-outline-primary
+                  position-absolute
+                  top-50
+                  start-50
+                  translate-middle
+                "
                 :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >
-                <i class="bi bi-plus-square"></i>
+                <span class="align-middle">
+                  <i class="bi bi-plus-square"></i>
+                </span>
               </button>
             </figure>
           </div>
@@ -196,6 +222,13 @@
           :disabled="sendButtonIsDisabled"
         >
           Streckenmeldung absenden
+          <div
+            v-if="showSpinner"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </button>
       </div>
     </div>
@@ -208,6 +241,8 @@ import useUser from "@/composables/useUser";
 import { useRouter } from "vue-router";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { ref, computed, onMounted } from "vue";
+import { Collapse } from "bootstrap";
+import Constants from "@/common/Constants";
 
 const baseURL = getbaseURL();
 const router = useRouter();
@@ -234,10 +269,17 @@ const externalId = ref(null);
 const takeoff = ref("");
 const landing = ref("");
 const flightReport = ref(" ");
+const showSpinner = ref(false);
+
+const errorMessage = ref(null);
+
+let detailsCollapse = null;
 
 const sendButtonIsDisabled = computed(() => {
   return !rulesAccepted.value;
 });
+
+// IGC
 
 const igc = ref({ filename: "", body: null });
 
@@ -251,33 +293,55 @@ const readFile = (file) => {
     reader.readAsText(file);
   });
 };
+
 const sendIgc = async () => {
   if (igc.value.body == null) return;
   return await ApiService.uploadIgc({ igc: igc.value });
 };
+
 const igcSelected = async (file) => {
   flightId.value = null;
+  showSpinner.value = true;
   try {
     if (!file.target.files[0]) return;
     igc.value.body = await readFile(file.target.files[0]);
     igc.value.name = file.target.files[0].name;
     const response = await sendIgc();
-    if (response.status != 200) throw "Server error";
+    if (response.status != 200) throw response.statusText;
+    errorMessage.value = null;
     flightId.value = response.data.flightId;
     externalId.value = response.data.externalId;
     takeoff.value = response.data.takeoff;
     landing.value = response.data.landing;
+    detailsCollapse.show();
   } catch (error) {
+    detailsCollapse.hide();
+    console.log(error.response);
+    if (
+      error.response.status === 400 &&
+      error.response.data == "Invalid G-Record"
+    )
+      return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html). Bitte prüfe ob die Datei unverändert ist. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+    if (error.response.status === 403)
+      // TODO: Find a way to make the email clickable without using v-html
+      return (errorMessage.value = `Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+    errorMessage.value = "Da ist leider was schief gelaufen";
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
+
 const sendFlightDetails = async () => {
+  showSpinner.value = true;
   try {
     const response = await ApiService.editFlightDetails(flightId.value, {
       glider: listOfGliders.value.find(
         (glider) => glider.id === defaultGlider.value
       ),
       report: flightReport.value,
+      hikeAndFly: hikeAndFly.value,
+      onlyLogbook: onlyLogbook.value,
     });
     if (response.status != 200) throw response.statusText;
 
@@ -286,6 +350,8 @@ const sendFlightDetails = async () => {
     redirectToFlight(externalId.value);
   } catch (error) {
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
 
@@ -294,7 +360,13 @@ const sendFlightDetails = async () => {
 const addPhotoButtonIsEnabled = computed(() => flightId.value != null);
 
 const photoInput = ref(null);
-onMounted(() => (photoInput.value = document.getElementById("photo-input")));
+onMounted(() => {
+  photoInput.value = document.getElementById("photo-input");
+  let myCollapse = document.getElementById("details-collapse");
+  detailsCollapse = new Collapse(myCollapse, {
+    toggle: false,
+  });
+});
 
 const selectedPhotos = ref([]);
 const uploadedPhotos = ref([]);

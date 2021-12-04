@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import trackColors from "@/assets/js/trackColors";
+import Constants from "@/common/Constants";
 import useFlight from "@/composables/useFlight";
 import useAirbuddy from "@/composables/useAirbuddies";
 
@@ -71,6 +71,8 @@ const { fetchAll, airbuddiesFlightData, updateCheckedAirbuddies } =
 
 const checkedFlights = ref([]);
 const loaded = ref(false);
+
+const trackColors = Constants.TRACK_COLORS;
 
 watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
 

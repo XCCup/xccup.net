@@ -208,16 +208,7 @@ export default {
       params: { p: query },
     });
   },
-  getCountries() {
-    return apiClient.get(baseURL + "general/user/countries");
-  },
-  getStates() {
-    return apiClient.get(baseURL + "general/user/states");
-  },
-  getShirtSizes() {
-    return apiClient.get(baseURL + "general/user/tshirtSizes");
-  },
-  getGenders() {
-    return apiClient.get(baseURL + "general/user/genders");
+  getUserProfileConstants() {
+    return apiClient.get(baseURL + "general/user/constants");
   },
 };

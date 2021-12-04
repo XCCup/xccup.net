@@ -6,6 +6,7 @@ const flightService = require("./FlightService");
 const seasonService = require("./SeasonService");
 const sponsorService = require("./SponsorService");
 const newsService = require("./NewsService");
+const flightPhotoService = require("./FlightPhotoService");
 
 const { getCurrentYear } = require("../helper/Utils");
 
@@ -38,6 +39,7 @@ const service = {
       sort: ["flightPoints", "DESC"],
     });
     const todaysFlights = flightService.getTodays();
+    const randomPhotos = flightPhotoService.getRandomCurrentYear(20);
 
     const seasonStats = await Promise.all(Object.values(dbRequestsStats)).then(
       (values) => {
@@ -58,6 +60,7 @@ const service = {
       bestClubs,
       bestFlightsOverallCurrentYear,
       todaysFlights,
+      randomPhotos,
     };
     const values = await Promise.all(Object.values(dbRequestsOther));
 
@@ -76,6 +79,7 @@ const service = {
       bestClubs: values[4].values,
       bestFlightsOverallCurrentYear: values[5].rows,
       todaysFlights: values[6],
+      randomPhotos: values[7],
     };
 
     return res;
