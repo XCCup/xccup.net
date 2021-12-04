@@ -26,9 +26,7 @@
         </div>
       </button>
       <!-- Error message -->
-      <p v-if="errorMessage" class="text-danger mt-4">
-        {{ errorMessage }}
-      </p>
+      <BaseError :error-message="errorMessage" class="mt-4" />
     </div>
   </form>
   <div v-else>
@@ -47,7 +45,7 @@ import ApiService from "../services/ApiService";
 
 const email = ref("");
 const showSpinner = ref(false);
-const errorMessage = ref(false);
+const errorMessage = ref(null);
 const mailSent = ref(false);
 
 const buttonIsEnabled = computed(() => isEmail(email.value));

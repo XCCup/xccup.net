@@ -54,6 +54,7 @@
             Nur Flugbuch
           </label>
         </div>
+        <!-- Add photo edit -->
         <button
           class="btn btn-primary btn"
           type="submit"

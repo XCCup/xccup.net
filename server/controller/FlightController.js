@@ -4,7 +4,11 @@ const service = require("../service/FlightService");
 const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
 const fs = require("fs");
-const { NOT_FOUND, OK } = require("../constants/http-status-constants");
+const {
+  NOT_FOUND,
+  OK,
+  BAD_REQUEST,
+} = require("../constants/http-status-constants");
 const { STATE } = require("../constants/flight-constants");
 const {
   authToken,
@@ -194,11 +198,12 @@ router.post(
       if (await requesterIsNotOwner(req, res, userId)) return;
 
       const validationResult = await igcValidator.execute(igc);
-      // if (validationResult == igcValidator.G_RECORD_FAILED) {
-      //   // res.status(BAD_REQUEST).send("Invalid G-Record");
-      //   // return;
-      //   // TODO Current example is invalid! Repair it!
-      // }
+      if (validationResult != igcValidator.G_RECORD_PASSED) {
+        logger.info(
+          "Invalid G-Record found. Validation result: " + validationResult
+        );
+        return res.status(BAD_REQUEST).send("Invalid G-Record");
+      }
 
       const flightDbObject = await service.create({
         userId,

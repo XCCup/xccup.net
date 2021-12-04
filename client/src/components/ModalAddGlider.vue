@@ -41,7 +41,7 @@
           </select>
         </div>
         <div class="modal-footer">
-          <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
+          <BaseError id="loginErrorMessage" :error-message="errorMessage" />
 
           <button
             type="button"

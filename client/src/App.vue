@@ -17,11 +17,10 @@
             <component :is="Component" :key="$route.path"></component>
           </template>
           <template #fallback>
-            <!-- TODO: Beautify the spinner -->
-            <div class="d-flex justify-content-center my-4">
+            <div class="position-absolute top-50 start-50 translate-middle">
               <div
                 class="spinner-border text-primary"
-                style="width: 3rem; height: 3rem"
+                style="width: 5rem; height: 5rem"
                 role="status"
               >
                 <span class="visually-hidden">Loading...</span>
@@ -128,6 +127,26 @@ footer {
 .hide-on-xs {
   @extend .d-none;
   @extend .d-sm-table-cell;
+}
+
+// Carousel styling
+.carousel {
+  height: 80vh;
+  object-fit: cover;
+}
+
+@include media-breakpoint-down(lg) {
+  .carousel {
+    height: 60vh;
+    // object-fit: cover;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .carousel {
+    height: 45vh;
+    // object-fit: cover;
+  }
 }
 
 // TODO: Is this obsolete?

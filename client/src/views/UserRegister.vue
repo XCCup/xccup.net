@@ -194,9 +194,11 @@
             </div>
           </button>
           <!-- Error message -->
-          <p v-if="errorMessage" id="errorMessageText" class="text-danger mt-4">
-            {{ errorMessage }}
-          </p>
+          <BaseError
+            id="errorMessageText"
+            :error-message="errorMessage"
+            class="mt-4"
+          />
         </div>
       </form>
     </div>

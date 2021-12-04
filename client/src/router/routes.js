@@ -1,4 +1,4 @@
-import HomeView from "@/views/HomeView.vue";
+import Home from "@/views/Home.vue";
 import FlightView from "@/views/FlightView.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
@@ -28,7 +28,7 @@ export const Routes = [
   {
     path: "/",
     name: "Home",
-    component: HomeView,
+    component: Home,
   },
   {
     path: "/flug/:flightId",

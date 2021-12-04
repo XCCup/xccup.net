@@ -18,7 +18,7 @@
       <i class="bi bi-x"></i>
     </button>
   </div>
-  <FlightsTable />
+  <ResultsTableOverall />
   <ModalFilterFlights />
 </template>
 
