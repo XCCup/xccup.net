@@ -1,10 +1,7 @@
 <template>
-  <div
-    id="flight-subnav"
-    class="container-fluid flight-info text-light mb-0 p-1"
-  >
+  <div id="flight-subnav" class="container-fluid custom text-light mb-0 p-1">
     <p class="m-0">
-      <a href="#" @click="$router.go(-1)"
+      <a href="#" class="link-light" @click="$router.go(-1)"
         ><i class="bi bi-chevron-left mx-2"></i
       ></a>
       Flug von
@@ -13,6 +10,7 @@
           name: 'FlightsAll',
           query: { userId: flight.user.id },
         }"
+        class="link-light"
       >
         {{ flight.user.firstName + " " + flight.user.lastName }}
       </router-link>
@@ -25,6 +23,7 @@
             endDate: dayAfter(flight.takeoffTime),
           },
         }"
+        class="link-light"
       >
         <BaseDate :timestamp="flight.takeoffTime" />
       </router-link>
@@ -38,4 +37,8 @@ import { retrieveDateOnly, dayAfter } from "../helper/utils";
 const { flight } = useFlight();
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.custom {
+  background-color: darken($primary, 5%);
+}
+</style>
