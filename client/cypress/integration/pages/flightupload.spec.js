@@ -72,7 +72,7 @@ describe("check admin page", () => {
   });
 
   it("Test upload flight out of xccup area", () => {
-    const igcFileName = "out-of-area.igc";
+    const igcFileName = "out_of_area_2.igc";
     const expectedError =
       "Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst dass dies ein Fehler ist wende dich bitte an xccup-beta@stephanschoepe.de";
 
