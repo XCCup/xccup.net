@@ -1,0 +1,10 @@
+// Custom variables are imported in vite config
+
+// Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Workaround for dark mode
+@import "@/styles/bootstrapCustom";
+
+@import "@/styles/rankingClasses";
+@import "@/styles/dialogBackground";

@@ -45,19 +45,7 @@ onErrorCaptured((e) => {
 </script>
 
 <style lang="scss">
-// Include custom variable default overrides here
-$primary: #08556d;
-$primary-alt: #08556d;
-$table-bg-scale: 0;
-$form-check-input-width: 1.1em;
-
-$table-striped-bg-factor: 0.05;
-$table-striped-bg: rgba($primary, $table-striped-bg-factor);
-
-@import "../node_modules/bootstrap/scss/bootstrap";
-@import "scss/bootstrapCustom";
-@import "scss/rankingClasses";
-@import "scss/dialogBackground";
+@import "@/styles/style";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -79,29 +67,13 @@ h5 {
 a {
   text-decoration: none;
 }
-footer {
-  a {
-    color: $light;
-  }
+.footer {
   a:hover {
-    color: $secondary;
+    color: darken($light, 20%);
   }
 }
 .alert {
   border-radius: 0 !important;
-}
-
-.text-light {
-  a {
-    color: $light;
-  }
-  a:hover {
-    color: $secondary;
-  }
-}
-// Flight Subnav
-.flight-info {
-  background-color: darken($primary, 5%);
 }
 
 .error-message {
