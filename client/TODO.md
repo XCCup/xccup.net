@@ -2,6 +2,12 @@
 
 ## Progress
 
+#### Known bugs
+
+##### CSS
+
+- text-light produces a too dark font in dark mode
+
 ### General functionality
 
 - [ ] Beautify spinner (Paraglider animation?)
