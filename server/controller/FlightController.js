@@ -199,7 +199,9 @@ router.post(
 
       const validationResult = await igcValidator.execute(igc);
       if (validationResult != igcValidator.G_RECORD_PASSED) {
-        logger.info("Invalid G-Record found");
+        logger.info(
+          "Invalid G-Record found. Validation result: " + validationResult
+        );
         return res.status(BAD_REQUEST).send("Invalid G-Record");
       }
 

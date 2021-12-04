@@ -27,7 +27,10 @@ const igcValidator = {
         },
       };
       const res = await axios.post(url, formData, config);
-      return res.data.result;
+
+      const result = res.data.result;
+      logger.debug("Validation result: " + result);
+      return result;
     } catch (error) {
       logger.error(error);
     }
