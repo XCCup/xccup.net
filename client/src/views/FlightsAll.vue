@@ -5,6 +5,7 @@
     <div class="row">
       <div class="col-12 col-md-6">
         <button
+          id="flightsFilterButton"
           type="button"
           class="btn btn-outline-primary btn-sm me-1"
           @click="onFilter"
@@ -13,6 +14,7 @@
         </button>
         <button
           v-if="filterActive"
+          id="flightsFilterRemoveButton"
           type="button"
           class="btn btn-outline-danger btn-sm me-1"
           @click="clearFilter"

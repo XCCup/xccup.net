@@ -21,30 +21,35 @@
         <div class="modal-body">
           <div class="mb-3">
             <BaseSelect
+              id="filterSelectName"
               v-model="selects.user"
               label="Name"
               :show-label="true"
               :options="users"
             />
             <BaseSelect
+              id="filterSelectSite"
               v-model="selects.site"
               label="Startplatz"
               :show-label="true"
               :options="sites"
             />
             <BaseSelect
+              id="filterSelectClub"
               v-model="selects.club"
               label="Verein"
               :show-label="true"
               :options="clubs"
             />
             <BaseSelect
+              id="filterSelectTeam"
               v-model="selects.team"
               label="Team"
               :show-label="true"
               :options="teams"
             />
             <BaseSelect
+              id="filterSelectRanking"
               v-model="selects.ranking"
               label="Wertungsklasse"
               :show-label="true"

@@ -3,6 +3,7 @@
     <ul class="pagination pagination-sm justify-content-end align-items-center">
       <li class="page-item me-2">
         <select
+          id="cyPaginationAmountSelect"
           v-model="numberFlightsPerPage"
           class="form-select form-select-sm hide-on-xs border-primary"
         >
@@ -13,16 +14,23 @@
         </select>
       </li>
       <li class="page-item me-2">
-        {{ currentRange.start }}-{{ currentRange.end }}
-        von
-        {{ numberOfTotalFlights }}
+        <div id="cyPaginationInfo">
+          {{ currentRange.start }}-{{ currentRange.end }}
+          von
+          {{ numberOfTotalFlights }}
+        </div>
       </li>
       <li
         class="page-item"
         :class="disableIfNoPreviousEntriesAvailable"
         @click="onFirst"
       >
-        <a class="page-link border-primary" href="#" aria-label="First">
+        <a
+          id="cyPaginationFirst"
+          class="page-link border-primary"
+          href="#"
+          aria-label="First"
+        >
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
@@ -31,7 +39,12 @@
         :class="disableIfNoPreviousEntriesAvailable"
         @click="onPrevious"
       >
-        <a class="page-link border-primary" href="#" aria-label="Previous">
+        <a
+          id="cyPaginationPrevious"
+          class="page-link border-primary"
+          href="#"
+          aria-label="Previous"
+        >
           <span aria-hidden="true">&lsaquo;</span>
         </a>
       </li>
@@ -41,6 +54,7 @@
         @click="onNext"
       >
         <a
+          id="cyPaginationNext"
           class="page-link border-primary"
           :disabled="true"
           href="#"
@@ -54,7 +68,12 @@
         :class="disableIfNoNextEntriesAvailable"
         @click="onLast"
       >
-        <a class="page-link border-primary" href="#" aria-label="Last">
+        <a
+          id="cyPaginationLast"
+          class="page-link border-primary"
+          href="#"
+          aria-label="Last"
+        >
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
