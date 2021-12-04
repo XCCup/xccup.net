@@ -85,22 +85,29 @@ router.get("/filterOptions", async (req, res, next) => {
     const siteNames = siteService.getAllNames();
     const clubNames = clubService.getAllNames();
     const teamNames = teamService.getAllNames();
+    const brandNames = getAllBrands();
 
     const values = await Promise.all([
       userNames,
       siteNames,
       clubNames,
       teamNames,
+      brandNames,
+      getCurrentActive(),
     ]);
 
-    setCache(req, values);
-
-    res.json({
+    const resultObject = {
       userNames: values[0],
       siteNames: values[1],
       clubNames: values[2],
       teamNames: values[3],
-    });
+      brandNames: values[4],
+      rankingClasses: values[5].rankingClasses,
+    };
+
+    setCache(req, resultObject);
+
+    res.json(resultObject);
   } catch (error) {
     next(error);
   }
