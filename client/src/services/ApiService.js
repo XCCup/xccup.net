@@ -211,4 +211,7 @@ export default {
   getUserProfileConstants() {
     return apiClient.get(baseURL + "general/user/constants");
   },
+  getFilterOptions() {
+    return apiClient.get(baseURL + "general/filterOptions");
+  },
 };

@@ -31,7 +31,7 @@ export default () => {
     queries,
     limit = DEFAULT_LIMIT,
     offset = 0,
-  }) => {
+  } = {}) => {
     if (params) paramsCache.value = params;
     if (queries) filterOptionsCache.value = queries;
     if (offset < 0) offset = 0;

@@ -2,22 +2,28 @@
   <div class="container-fluid mb-3">
     <h3>Streckenmeldungen {{ props.year }}</h3>
     <!-- TODO: Add filter spinner when loading -->
-    <button
-      type="button"
-      class="btn btn-outline-primary btn-sm me-1"
-      @click="onFilter"
-    >
-      Filter <i class="bi bi-funnel"></i>
-    </button>
-    <button
-      v-if="filterActive"
-      type="button"
-      class="btn btn-outline-danger btn-sm me-1"
-      @click="clearFilter"
-    >
-      <i class="bi bi-x"></i>
-    </button>
-    <PaginationPanel />
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <button
+          id="flightsFilterButton"
+          type="button"
+          class="btn btn-outline-primary btn-sm me-1"
+          @click="onFilter"
+        >
+          Filter <i class="bi bi-funnel"></i>
+        </button>
+        <button
+          v-if="filterActive"
+          id="flightsFilterRemoveButton"
+          type="button"
+          class="btn btn-outline-danger btn-sm me-1"
+          @click="clearFilter"
+        >
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+      <PaginationPanel class="col-12 col-md-6" />
+    </div>
   </div>
   <ResultsTableOverall />
   <ModalFilterFlights />
