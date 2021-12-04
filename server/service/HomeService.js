@@ -65,7 +65,12 @@ const service = {
       seasonStats,
       seasonDetails: currentSeason,
       rankingClasses: values[0],
-      sponsors: values[1],
+      /**
+       * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
+       * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
+       * See also: https://github.com/pvorb/clone/issues/106
+       */
+      sponsors: values[1].map((v) => v.toJSON()),
       activeNews: values[2],
       bestTeams: values[3].values,
       bestClubs: values[4].values,

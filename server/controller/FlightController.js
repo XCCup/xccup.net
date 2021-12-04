@@ -24,10 +24,9 @@ const {
   checkOptionalIsBoolean,
   queryOptionalColumnExistsInModel,
 } = require("./Validation");
+const { getCache, setCache, deleteCache } = require("./CacheManager");
 
 const uploadLimiter = createRateLimiter(10, 4);
-
-const { cache } = require("./CacheManager");
 
 // All requests to /flights/photos will be rerouted
 router.use("/photos", require("./FlightPhotoController"));
@@ -52,10 +51,7 @@ router.get(
     query("sortOrder").optional().isIn(["desc", "DESC", "asc", "ASC"]),
     queryOptionalColumnExistsInModel("sortCol", "Flight"),
   ],
-  cache("5 minutes"),
   async (req, res, next) => {
-    req.apicacheGroup = "flights";
-
     if (validationHasErrors(req, res)) return;
 
     const {
@@ -78,6 +74,9 @@ router.get(
     } = req.query;
 
     try {
+      const value = getCache(req);
+      if (value) return res.json(value);
+
       const flights = await service.getAll({
         year,
         site,
@@ -95,6 +94,9 @@ router.get(
         status,
         sort: [sortCol, sortOrder],
       });
+
+      setCache(req, flights);
+
       res.json(flights);
     } catch (error) {
       next(error);
@@ -113,6 +115,7 @@ router.get("/violations", authToken, async (req, res, next) => {
     const flights = await service.getAll({
       unchecked: true,
     });
+
     res.json(flights);
   } catch (error) {
     next(error);
@@ -174,6 +177,9 @@ router.delete(
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
       const numberOfDestroyedRows = await service.delete(flight.id);
+
+      deleteCache([], true);
+
       res.json(numberOfDestroyedRows);
     } catch (error) {
       next(error);
@@ -221,6 +227,8 @@ router.post(
       service.startResultCalculation(flightDbObject);
 
       const result = await service.update(flightDbObject);
+
+      deleteCache([], true);
 
       res.json({
         flightId: result.id,
@@ -272,6 +280,9 @@ router.put(
         glider,
         hikeAndFly
       );
+
+      deleteCache([], true);
+
       res.json({
         flightPoints: result[1][0].flightPoints,
         flightStatus: result[1][0].flightStatus,
@@ -300,6 +311,8 @@ router.put(
       if (await requesterIsNotModerator(req, res)) return;
 
       await service.acceptViolation(flight);
+
+      deleteCache([], true);
 
       res.sendStatus(OK);
     } catch (error) {

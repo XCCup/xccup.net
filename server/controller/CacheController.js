@@ -1,29 +1,18 @@
 const express = require("express");
 const router = express.Router();
 
-const { apicache, cache } = require("./CacheManager");
+const { deleteCache, listCache, getCacheStats } = require("./CacheManager");
 
-// add route to display cache index
-router.get("/index", (req, res) => {
-  res.json(apicache.getIndex());
+router.get("/clear/:key", (req, res) => {
+  res.json(deleteCache([req.params.key]));
 });
 
-// add route to manually clear target/group
-router.get("/clear/:target?", (req, res) => {
-  res.json(apicache.clear(req.params.target));
+router.get("/list", (req, res) => {
+  res.json(listCache());
 });
 
-router.get("/collection/:id?", cache("1 hour"), function (req, res) {
-  req.apicacheGroup = "abc";
-  // do some work
-  res.send({ foo: "bar" });
-});
-
-// POST collection/id
-router.post("/collection/:id?", function (req, res) {
-  // update model
-  apicache.clear("abc");
-  res.send("added a new item, so the cache has been cleared");
+router.get("/stats", (req, res) => {
+  res.json(getCacheStats());
 });
 
 module.exports = router;

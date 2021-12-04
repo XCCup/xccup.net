@@ -13,16 +13,20 @@ const {
   TSHIRT_SIZES,
 } = require("../constants/user-constants");
 
-// Cache all general routes for 1 week
-const { cache } = require("./CacheManager");
-router.use(cache("1 week"));
+const { getCache, setCache } = require("./CacheManager");
 
 // @desc Gets all gliderClasses of the current season
 // @route GET /general/gliderClasses
 
 router.get("/gliderClasses", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const gliderClasses = (await getCurrentActive()).gliderClasses;
+
+    setCache(req, gliderClasses);
+
     res.json(gliderClasses);
   } catch (error) {
     next(error);
@@ -34,7 +38,13 @@ router.get("/gliderClasses", async (req, res, next) => {
 
 router.get("/rankingClasses", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const rankingClasses = (await getCurrentActive()).rankingClasses;
+
+    setCache(req, rankingClasses);
+
     res.json(rankingClasses);
   } catch (error) {
     next(error);
@@ -46,7 +56,13 @@ router.get("/rankingClasses", async (req, res, next) => {
 
 router.get("/brands", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const brands = await getAllBrands();
+
+    setCache(req, brands);
+
     res.json(brands);
   } catch (error) {
     next(error);

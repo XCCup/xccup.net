@@ -27,6 +27,7 @@ const { COUNTRY } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
 
 const logger = require("../config/logger");
+const { deleteCache } = require("../controller/CacheManager");
 
 const flightService = {
   getAll: async ({
@@ -79,6 +80,13 @@ const flightService = {
     }
 
     const flights = await Flight.findAndCountAll(queryObject);
+
+    /**
+     * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
+     * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
+     * See also: https://github.com/pvorb/clone/issues/106
+     */
+    flights.rows = flights.rows.map((v) => v.toJSON());
 
     return flights;
   },
@@ -303,6 +311,8 @@ const flightService = {
     }
 
     const fixes = await retrieveDbObjectOfFlightFixes(flight.id);
+
+    deleteCache([], true);
 
     ElevationAttacher.execute(
       FlightFixes.mergeData(fixes),

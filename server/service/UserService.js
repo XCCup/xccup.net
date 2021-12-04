@@ -63,7 +63,12 @@ const userService = {
       );
     }
 
-    return users;
+    /**
+     * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
+     * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
+     * See also: https://github.com/pvorb/clone/issues/106
+     */
+    return users.map((v) => v.toJSON());
   },
   getAllNames: async () => {
     const users = await User.findAll({
@@ -361,12 +366,14 @@ async function hasUserFlightsWithinCurrentSeason(user) {
 }
 
 async function findFlightRecordOfType(id, type) {
-  return await flightService.getAll({
-    type,
-    limit: 1,
-    sort: ["flightPoints", "DESC"],
-    userId: id,
-  });
+  return (
+    await flightService.getAll({
+      type,
+      limit: 1,
+      sort: ["flightPoints", "DESC"],
+      userId: id,
+    })
+  ).rows;
 }
 
 module.exports = userService;

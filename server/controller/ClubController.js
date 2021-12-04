@@ -18,6 +18,7 @@ const {
   defineFileDestination,
   defineImageFileNameWithCurrentDateAsPrefix,
 } = require("../helper/ImageUtils");
+const { getCache, setCache, deleteCache } = require("./CacheManager");
 
 const IMAGE_STORE = "test/testdatasets/images/clubs";
 
@@ -32,7 +33,16 @@ const imageUpload = multer({ storage });
 
 router.get("/public", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const clubs = await service.getAllActive();
+
+    setCache(
+      req,
+      clubs.map((c) => c.toJSON())
+    );
+
     res.json(clubs);
   } catch (error) {
     next(error);
@@ -44,7 +54,16 @@ router.get("/public", async (req, res, next) => {
 
 router.get("/names", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const clubs = await service.getAllNames();
+
+    setCache(
+      req,
+      clubs.map((c) => c.toJSON())
+    );
+
     res.json(clubs);
   } catch (error) {
     next(error);
@@ -135,6 +154,8 @@ router.post(
 
       const newClub = await service.create(club);
 
+      deleteCache(["home", "clubs"]);
+
       res.json(newClub);
     } catch (error) {
       next(error);
@@ -179,6 +200,8 @@ router.put(
       }
 
       const updatedClub = await service.update(club);
+
+      deleteCache(["home", "clubs"]);
 
       res.json(updatedClub);
     } catch (error) {
@@ -273,6 +296,9 @@ router.delete(
       if (!club) return res.sendStatus(NOT_FOUND);
 
       const numberOfDestroyedRows = await service.delete(clubId);
+
+      deleteCache(["home", "clubs"]);
+
       res.json(numberOfDestroyedRows);
     } catch (error) {
       next();

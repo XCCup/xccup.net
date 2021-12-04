@@ -37,6 +37,7 @@ const {
   validationHasErrors,
   checkIsUuidObjectOrEmpty,
 } = require("./Validation");
+const { getCache, setCache, deleteCache } = require("./CacheManager");
 
 const userCreateLimiter = createRateLimiter(60, 2);
 const loginLimiter = createRateLimiter(60, 5);
@@ -55,10 +56,16 @@ router.get(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const { records, limit, offset } = req.query;
 
     try {
       const users = await service.getAll({ records, limit, offset });
+
+      setCache(req, users);
+
       res.json(users);
     } catch (error) {
       next(error);
@@ -71,7 +78,13 @@ router.get(
 
 router.get("/names", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const users = await service.getAllNames();
+
+    setCache(req, users);
+
     res.json(users);
   } catch (error) {
     next(error);
@@ -180,6 +193,8 @@ router.get(
 
       const accessToken = createToken(user);
       const refreshToken = createRefreshToken(user);
+
+      deleteCache(["users", "home", "clubs"]);
 
       res.json({
         firstName: user.firstName,
@@ -301,6 +316,8 @@ router.delete("/", authToken, async (req, res, next) => {
     const user = await service.delete(id);
 
     if (!user) return res.sendStatus(NOT_FOUND);
+
+    deleteCache(["users", "home", "clubs"]);
 
     res.json(user);
   } catch (error) {
@@ -437,6 +454,9 @@ router.put(
       user.password = password;
 
       const result = await service.update(user);
+
+      deleteCache(["users", "clubs"], true);
+
       res.json(result);
     } catch (error) {
       next(error);
