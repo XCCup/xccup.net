@@ -96,11 +96,12 @@ const selects = reactive({
   team: "",
   ranking: "",
 });
-const userData = (await ApiService.getUserNames()).data;
-const siteData = (await ApiService.getSiteNames()).data;
-const clubData = (await ApiService.getClubNames()).data;
-const teamData = (await ApiService.getTeamNames()).data;
-const rankingData = (await ApiService.getRankingClasses()).data;
+const filterOptions = (await ApiService.getFilterOptions()).data;
+const userData = filterOptions.userNames;
+const siteData = filterOptions.siteNames;
+const clubData = filterOptions.clubNames;
+const teamData = filterOptions.teamNames;
+const rankingData = filterOptions.rankingClasses;
 const users = ref(userData.map((e) => `${e.firstName} ${e.lastName}`));
 const sites = ref(siteData.map((e) => e.name));
 const clubs = ref(clubData.map((e) => e.name));
