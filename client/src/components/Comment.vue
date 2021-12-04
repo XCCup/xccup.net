@@ -1,6 +1,7 @@
 <template>
   <div :id="`comment-${comment.id}`" class="d-flex mb-2">
     <img src="@/assets/images/avatar2.png" class="rounded-circle" />
+    <!-- TODO: Insert link -->
     <a href="#">{{ comment.user.firstName + " " + comment.user.lastName }}</a>
     <span class="ms-auto fw-light text-secondary"
       ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
@@ -10,7 +11,11 @@
     {{ comment.message }}
   </p>
   <!-- Replies -->
-  <div v-for="reply in comment.replies" :key="reply.id" class="shadow p-3 mb-3">
+  <div
+    v-for="reply in comment.replies"
+    :key="reply.id"
+    class="shadow-sm rounded p-3 mb-3"
+  >
     <CommentReply :reply="reply" />
   </div>
   <!-- Comment Editor -->

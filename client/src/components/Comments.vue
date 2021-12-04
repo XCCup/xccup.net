@@ -4,7 +4,7 @@
     <div
       v-for="comment in commentsWithReplies"
       :key="comment.id"
-      class="shadow p-3 mb-3"
+      class="shadow p-3 mb-3 border rounded"
     >
       <Comment :comment="comment" />
     </div>
