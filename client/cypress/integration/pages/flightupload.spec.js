@@ -94,9 +94,10 @@ describe("check admin page", () => {
     }).should("have.text", expectedError);
   });
 
-  it("Test upload invalid igc file", () => {
+  it("Test upload invalid igc file (FAI error response)", () => {
     const igcFileName = "invalid.igc";
-    const expectedError = "Da ist leider was schief gelaufen";
+    const expectedError =
+      "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
 
     cy.get("button").contains("Flug hochladen").click();
 
@@ -113,6 +114,29 @@ describe("check admin page", () => {
     // Increase timeout because processing takes some time
     cy.get("#upload-error", {
       timeout: 10000,
-    }).should("have.text", expectedError);
+    }).should("include.text", expectedError);
+  });
+
+  it("Test upload manipulated igc file (FAI failed response)", () => {
+    const igcFileName = "removed_line_20to22.igc";
+    const expectedError =
+      "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.get("h3").should("have.text", `Flug hochladen`);
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because processing takes some time
+    cy.get("#upload-error", {
+      timeout: 10000,
+    }).should("include.text", expectedError);
   });
 });
