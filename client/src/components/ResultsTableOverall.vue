@@ -2,8 +2,7 @@
   <section class="pb-3">
     <div class="container-fluid">
       <div v-if="flights?.length > 0" class="table-responsive">
-        <BaseSpinner v-if="isLoading" :fullsize="true" />
-        <table v-else class="table table-striped table-hover text-sm">
+        <table class="table table-striped table-hover text-sm">
           <thead>
             <TableSortHead
               content="Datum"
@@ -87,7 +86,7 @@ import { useRouter } from "vue-router";
 
 import useFlights from "@/composables/useFlights";
 
-const { flights, sortFlightsBy, isLoading } = useFlights();
+const { flights, sortFlightsBy } = useFlights();
 const router = useRouter();
 
 const currentSortColumnKey = ref(null);

@@ -7,16 +7,25 @@
         <button
           id="flightsFilterButton"
           type="button"
-          class="btn btn-outline-primary btn-sm me-1"
+          class="col btn btn-outline-primary btn-sm me-1"
           @click="onFilter"
         >
-          Filter <i class="bi bi-funnel"></i>
+          Filter
+          <div
+            v-if="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <i v-else class="bi bi-funnel"></i>
         </button>
         <button
           v-if="filterActive"
           id="flightsFilterRemoveButton"
           type="button"
-          class="btn btn-outline-danger btn-sm me-1"
+          class="col btn btn-outline-danger btn-sm me-1"
           @click="clearFilter"
         >
           <i class="bi bi-x"></i>
@@ -46,7 +55,7 @@ const props = defineProps({
 });
 const route = useRoute();
 
-const { fetchFlights, filterActive, clearFilter } = useFlights();
+const { fetchFlights, filterActive, clearFilter, isLoading } = useFlights();
 await fetchFlights({ params: route.params, queries: route.query });
 
 let filterModal;
