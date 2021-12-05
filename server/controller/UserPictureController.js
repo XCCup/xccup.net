@@ -24,7 +24,7 @@ router.get(
   query("thumb").optional().isBoolean(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const userId = req.params.id;
+    const userId = req.params.userId;
     const thumb = req.query.thumb;
 
     try {
@@ -82,8 +82,8 @@ router.post(
       const user = await userService.getById(userId);
       if (!user) return res.sendStatus(NOT_FOUND);
 
-      if (user.ProfilePicture) {
-        service.delete(user);
+      if (user.picture) {
+        service.delete(user.picture);
       }
 
       const picture = await service.create({

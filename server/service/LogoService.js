@@ -14,7 +14,7 @@ const service = {
   },
 
   create: async (logo) => {
-    const pathThumb = createThumbnail(logo.path, THUMBNAIL_IMAGE_HEIGHT);
+    const pathThumb = await createThumbnail(logo.path, THUMBNAIL_IMAGE_HEIGHT);
     return Logo.create({ ...logo, pathThumb });
   },
 
