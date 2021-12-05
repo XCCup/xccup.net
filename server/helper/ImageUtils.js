@@ -10,16 +10,20 @@ const THUMBNAIL_POSTFIX = "-thumb";
  * The filename of the thumbnail is based on the given image but extended by "-thumb".
  * @param {*} path The path of the image to which a thumbnail should be created.
  */
-function create(path, targetHeight) {
-  const pathThumb = createThumbnailPath(path);
-  sharp(path)
-    .resize(null, targetHeight)
-    // eslint-disable-next-line no-unused-vars
-    .toFile(pathThumb, (err, resizedImageInfo) => {
-      if (err) {
-        logger.error(err);
-      }
-    });
+async function create(path, targetHeight) {
+  const pathThumb = await new Promise(function (resolve, reject) {
+    const pathThumb = createThumbnailPath(path);
+    sharp(path)
+      .resize(null, targetHeight)
+      // eslint-disable-next-line no-unused-vars
+      .toFile(pathThumb, (err, resizedImageInfo) => {
+        if (err) {
+          logger.error(err);
+          reject(err);
+        }
+        resolve(pathThumb);
+      });
+  });
   return pathThumb;
 }
 
@@ -95,5 +99,6 @@ exports.deleteImages = deleteImages;
 exports.createThumbnail = create;
 exports.createThumbnailPath = createThumbnailPath;
 exports.defineFileDestination = defineFileDestination;
-exports.defineImageFileNameWithCurrentDateAsPrefix = defineImageFileNameWithCurrentDateAsPrefix;
+exports.defineImageFileNameWithCurrentDateAsPrefix =
+  defineImageFileNameWithCurrentDateAsPrefix;
 exports.THUMBNAIL_POSTFIX = THUMBNAIL_POSTFIX;
