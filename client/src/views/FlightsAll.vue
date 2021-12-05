@@ -3,7 +3,7 @@
     <h3>Streckenmeldungen {{ props.year }}</h3>
     <!-- TODO: Add filter spinner when loading -->
     <div class="row">
-      <div class="col-12 col-md-6">
+      <div class="col-6">
         <button
           id="flightsFilterButton"
           type="button"
@@ -22,7 +22,7 @@
           <i class="bi bi-x"></i>
         </button>
       </div>
-      <PaginationPanel class="col-12 col-md-6" />
+      <div class="col-6"><PaginationPanel /></div>
     </div>
   </div>
   <ResultsTableOverall />
