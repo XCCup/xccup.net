@@ -21,7 +21,9 @@
           <!-- Caption -->
           <div class="carousel-caption">
             <span class="badge bg-light text-dark p-2">
-              <div class="mb-2">{{ photo.description }}</div>
+              <div class="mb-2 d-none d-md-block">
+                {{ photo.description }}
+              </div>
 
               <router-link
                 :to="{
