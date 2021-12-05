@@ -23,4 +23,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Import custom bootstrap variable overrides in every component
+        additionalData: `@import "./src/styles/variables";`,
+      },
+    },
+  },
 });

@@ -2,6 +2,14 @@
 
 ## Progress
 
+#### Known bugs
+
+##### CSS
+
+- text-light produces a too dark font in dark mode
+- daily results table hover color is ugly
+- possible overflow on slot dialog (the one with rachtig as bg-picture)
+
 ### General functionality
 
 - [ ] Beautify spinner (Paraglider animation?)
@@ -10,10 +18,10 @@
 - [ ] Authentication
 - [x] Login error handling
 - [ ] Page names
-- [ ] Correct browser history
+- [x] Correct browser history
 - [x] browser window titles
 - [x] tooltips for icons
-- [ ] dark mode
+- [x] dark mode
 
 ### Home
 
@@ -23,7 +31,7 @@
 - [x] Map visualizing all flights of the day
 - [x] Sponsors
 - [ ] Dynamic appearance of news
-- [ ] Random image taken from the running season
+- [x] Random image taken from the running season
 - [ ] Make the table link to flight page a real link
 
 ### Profile
@@ -57,7 +65,6 @@
 - [x] Turnpoint overlay on map
 - [ ] Custom icons for takeoff & landing
 - [ ] Display alitude for pilot and airbuddies
-- [ ] Fix spinner if no airbuddy is existent
 - [ ] Delete flight button
 - [ ] Edit flight view
 - [ ] Mark picture point in map
@@ -85,7 +92,7 @@
 - [x] Takeoff records
 - [ ] Early bird
 - [ ] "Late" bird
-- [ ] Greatest altitude
+- [ ] Greatest altitude (will always be FL100 so ditch this?)
 
 ### Pages
 

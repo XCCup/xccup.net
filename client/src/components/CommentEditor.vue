@@ -1,5 +1,5 @@
 <template>
-  <div id="comment-editor" class="shadow p-3 mb-3">
+  <div id="comment-editor" class="border rounded shadow p-3 mb-3">
     <div class="d-flex mb-2"></div>
     <div class="mb-3">
       <div v-if="loggedIn">

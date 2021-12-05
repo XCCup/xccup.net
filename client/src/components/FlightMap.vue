@@ -30,6 +30,20 @@ import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
 import iconUrl from "leaflet/dist/images/marker-icon.png?url";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
 
+// Landing marker
+import landingIconRetinaUrl from "@/assets/images/landing-marker-2x.png?url";
+import landingIconUrl from "@/assets/images/landing-marker.png?url";
+
+let landingMarker = L.icon({
+  iconRetinaUrl: landingIconRetinaUrl,
+  iconUrl: landingIconUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  shadowUrl: shadowUrl,
+  shadowSize: [41, 41],
+  shadowAnchor: [12, 41],
+});
+
 const { flight } = useFlight();
 const { activeAirbuddyFlights } = useAirbuddies();
 
@@ -137,9 +151,10 @@ const drawTracks = (tracklogs) => {
         // Create takeoff & landing markers
         takeoffAndLandingMarkers.value.push(
           L.marker(track[0], { title: "Start" }).addTo(map.value),
-          L.marker(track[track.length - 1], { title: "Landeplatz" }).addTo(
-            map.value
-          )
+          L.marker(track[track.length - 1], {
+            title: "Landeplatz",
+            icon: landingMarker,
+          }).addTo(map.value)
         );
       }
       // Create position markers for every track

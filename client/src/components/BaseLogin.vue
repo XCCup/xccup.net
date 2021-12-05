@@ -1,8 +1,6 @@
 <template>
-  <h3>Login</h3>
-
   <form @submit.prevent="handleSubmit">
-    <div class="mb-3">
+    <div class="my-3">
       <label for="email" class="form-label">E-Mail</label>
       <input
         id="email"

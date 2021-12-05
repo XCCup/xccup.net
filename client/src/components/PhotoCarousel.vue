@@ -2,10 +2,11 @@
   <div class="container-lg">
     <div
       id="photo-carousel"
-      class="carousel slide mt-4"
+      class="carousel slide my-4"
       data-bs-ride="carousel"
     >
-      <div class="carousel-inner">
+      <!-- Photo -->
+      <div class="carousel-inner overflow-hidden ratio ratio-16x9">
         <div
           v-for="(photo, index) in photos"
           :key="photo.id"
@@ -15,19 +16,23 @@
           <img
             :src="baseURL + `media/` + photo.id"
             class="d-block w-100 carousel"
-            alt="..."
+            :alt="photo.description"
           />
-          <div class="carousel-caption">
-            <span class="badge bg-light p-2" style="--bs-bg-opacity: 0.7">
+          <!-- Caption -->
+          <div class="carousel-caption mb-0">
+            <span class="badge bg-light text-dark p-2">
+              <div class="mb-2 d-none d-md-block">
+                {{ photo.description }}
+              </div>
+
               <router-link
                 :to="{
                   name: 'Flight',
                   params: { flightId: photo.flight.externalId },
                 }"
               >
-                {{ photo.description }} <br /><br />
-                {{ photo.user.firstName }}
-                {{ photo.user.lastName }}
+                <i class="bi bi-person-fill"></i>
+                {{ photo.user.firstName + " " + photo.user.lastName }}
               </router-link>
             </span>
           </div>
@@ -39,7 +44,6 @@
         data-bs-target="#photo-carousel"
         data-bs-slide="prev"
       >
-        <!-- TODO: Hover not working -->
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
@@ -68,6 +72,12 @@ defineProps({
 });
 </script>
 
-<style scoped>
-/* Styling is in App.vue */
+<style lang="scss" scoped>
+$carousel-caption-padding-y: 0.5rem;
+@import "@/styles/style";
+
+img {
+  height: 100%;
+  object-fit: cover;
+}
 </style>

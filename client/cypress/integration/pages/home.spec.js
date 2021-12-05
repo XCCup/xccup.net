@@ -95,13 +95,7 @@ describe("check landing page", () => {
       cy.get("h2").contains("Sponsoren");
     });
 
-    cy.get("#goldSponsors")
-      .find(".square-holder")
-      .its("length")
-      .should("eq", 3);
-    cy.get("#otherSponsors")
-      .find(".square-holder")
-      .its("length")
-      .should("eq", 17);
+    cy.get("#goldSponsors").find(".cy-sponsor").its("length").should("eq", 3);
+    cy.get("#otherSponsors").find(".cy-sponsor").its("length").should("eq", 17);
   });
 });

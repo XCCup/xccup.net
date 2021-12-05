@@ -1,44 +1,47 @@
 <template>
-  <!-- Divider -->
-  <!-- <div class="bg-primary text-light p-4">
-    <br />
-  </div> -->
+  <div v-if="sponsors" class="bg-primary text-light py-4">
+    <div id="sponsorsPanel" class="container">
+      <h2>Sponsoren</h2>
 
-  <section v-if="sponsors">
-    <div class="bg-primary text-light p-4">
-      <div id="sponsorsPanel" class="container">
-        <h2>Sponsoren</h2>
-        <div id="goldSponsors" class="row mt-3">
-          <div v-for="sponsor in goldSponsors" :key="sponsor.id" class="col">
-            <div class="square-holder">
-              <a :href="sponsor.website" target="_blank">
-                <img
-                  :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container mt-3">
-      <div id="otherSponsors" class="row mt-3">
-        <div
-          v-for="sponsor in regularSponsors"
+      <div id="goldSponsors" class="d-flex justify-content-between my-4">
+        <a
+          v-for="sponsor in goldSponsors"
           :key="sponsor.id"
-          class="col-3 col-sm-3 col-md-3 col-lg-2"
+          :href="sponsor.website"
+          target="_blank"
+          class="filter"
         >
-          <div class="square-holder">
-            <a :href="sponsor.website" target="_blank">
-              <img
-                :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
-              />
-            </a>
+          <div class="bg-light" style="height: 120px; width: 140px">
+            <img
+              class="cy-sponsor mw-100 mh-100 position-relative top-50 start-50 translate-middle"
+              :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
+            />
           </div>
-        </div>
+        </a>
       </div>
     </div>
-  </section>
+  </div>
+  <div class="container mt-3">
+    <div
+      id="otherSponsors"
+      class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6"
+    >
+      <div
+        v-for="sponsor in regularSponsors"
+        :key="sponsor.id"
+        class="col cy-sponsor"
+      >
+        <a :href="sponsor.website" target="_blank">
+          <div class="p-2 bg-light mb-4 p-4 box filter">
+            <img
+              class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
+              :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
+            />
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -64,32 +67,24 @@ const regularSponsors = computed(() => {
 });
 </script>
 
-<style scoped>
-img {
-  max-height: 60px;
+<style lang="scss" scoped>
+// This import is needed to use variables
+@import "@/styles/style";
+
+.box {
+  border: 1px solid $gray-400;
+  height: 120px;
 }
-.square-holder {
-  padding: 15px;
-  border: 1px solid #cecece;
-  align-items: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  background-color: #f1f1f1;
-  min-height: 120px;
+.box:hover {
+  border: 1px solid $primary;
 }
 
-.square-holder img {
-  max-width: 100%;
+.filter {
   filter: grayscale(100%);
   transition: all 0.3s;
 }
 
-.square-holder:hover img {
+.filter:hover {
   filter: none;
-}
-.square-holder:hover {
-  border-color: #08556d;
 }
 </style>

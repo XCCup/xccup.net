@@ -118,53 +118,48 @@
             :key="photo"
             class="col-sm-4 col-6"
           >
-            <!-- Uploading -->
-            <figure v-if="photo.id === null" class="figure">
-              <BaseSpinner />
-            </figure>
             <!-- Upload failed -->
             <figure v-if="photo.id === 'failed'" class="figure">
               <!-- TODO: implement retry upload -->
               <i class="bi bi-arrow-clockwise"></i>
             </figure>
-
-            <figure v-else class="figure position-relative">
-              <a
-                :href="baseURL + `media/` + photo.id"
-                data-lightbox="photos"
-                :data-title="photo.description ? photo.description : ``"
-                class="position-relative"
+            <!-- Uploading -->
+            <div>
+              <div
+                v-if="photo.id === null"
+                class="d-flex justify-content-center mt-4"
               >
-                <img
-                  :src="baseURL + `media/` + photo.id"
-                  class="figure-img img-fluid img-thumbnail"
-                  alt=""
-                />
-              </a>
-              <div class="p-1">
-                <!-- TODO: Add tab index -->
-                <input
-                  :id="`add-description-photo-${index}`"
-                  v-model="photo.description"
-                  class="form-control form-control-sm"
-                  type="text"
-                  placeholder="Beschreibung"
-                />
+                <BaseSpinner />
               </div>
-              <i
-                class="
-                  bi bi-x-circle
-                  text-danger
-                  fs-3
-                  clickable
-                  position-absolute
-                  top-0
-                  start-100
-                  translate-middle
-                "
-                @click="onDeletePhoto(photo.id)"
-              ></i>
-            </figure>
+              <figure v-else class="figure position-relative">
+                <a
+                  :href="baseURL + `media/` + photo.id"
+                  data-lightbox="photos"
+                  :data-title="photo.description ? photo.description : ``"
+                  class="position-relative"
+                >
+                  <img
+                    :src="baseURL + `media/` + photo.id + `?thumb=true`"
+                    class="figure-img img-fluid img-thumbnail"
+                    alt=""
+                  />
+                </a>
+                <div class="p-1">
+                  <!-- TODO: Add tab index -->
+                  <input
+                    :id="`add-description-photo-${index}`"
+                    v-model="photo.description"
+                    class="form-control form-control-sm"
+                    type="text"
+                    placeholder="Beschreibung"
+                  />
+                </div>
+                <i
+                  class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
+                  @click="onDeletePhoto(photo.id)"
+                ></i>
+              </figure>
+            </div>
           </div>
           <!-- Add photo button -->
           <!-- TODO: Position button in center -->
@@ -176,13 +171,7 @@
                 alt=""
               />
               <button
-                class="
-                  btn btn-lg btn-outline-primary
-                  position-absolute
-                  top-50
-                  start-50
-                  translate-middle
-                "
+                class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
                 :disabled="!addPhotoButtonIsEnabled"
                 @click.prevent="onAddPhoto"
               >
