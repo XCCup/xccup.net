@@ -7,7 +7,8 @@
 ##### CSS
 
 - text-light produces a too dark font in dark mode
-- daily results table hiver color
+- daily results table hover color is ugly
+- possible overflow on slot dialog (the one with rachtig as bg-picture)
 
 ### General functionality
 
