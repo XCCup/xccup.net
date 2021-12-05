@@ -1,4 +1,5 @@
 <template>
+  <h3>Login</h3>
   <slot-dialog :narrow="true">
     <BaseLogin />
   </slot-dialog>
