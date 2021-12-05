@@ -5,7 +5,6 @@ import ApiService from "@/services/ApiService";
 // This prevents null cases if the corresponding properties are none existent in API response
 
 const userData = ref({
-  id: "",
   firstName: "",
   lastName: "",
   birthday: "",
@@ -18,7 +17,6 @@ const userData = ref({
   tshirtSize: "",
   emailInformIfComment: false,
   emailTeamSearch: false,
-  picture: null,
 });
 
 // Make an editable copy of the userData state
