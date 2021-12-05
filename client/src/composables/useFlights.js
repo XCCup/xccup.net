@@ -1,7 +1,7 @@
 import { ref, readonly, computed } from "vue";
 import ApiService from "@/services/ApiService";
 
-const DEFAULT_LIMIT = 25;
+const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 // State
