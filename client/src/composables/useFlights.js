@@ -12,6 +12,7 @@ const paramsCache = ref(null);
 const limitCache = ref(DEFAULT_LIMIT);
 const numberOfTotalFlights = ref(0);
 const currentRange = ref({ start: 0, end: 0 });
+const isLoading = ref(false);
 
 export default () => {
   // Getters
@@ -34,6 +35,7 @@ export default () => {
     if (limit) limitCache.value = limit;
 
     try {
+      isLoading.value = true;
       const res = await ApiService.getFlights({
         ...paramsCache.value,
         sortCol: sortOptionsCache.value?.sortCol,
@@ -49,6 +51,8 @@ export default () => {
       calcRanges(offset);
     } catch (error) {
       console.log(error);
+    } finally {
+      isLoading.value = false;
     }
   };
 
@@ -83,6 +87,7 @@ export default () => {
     flights: readonly(flights),
     currentRange: readonly(currentRange),
     numberOfTotalFlights: readonly(numberOfTotalFlights),
+    isLoading: readonly(isLoading),
     filterActive,
     clearFilter,
     DEFAULT_LIMIT,
