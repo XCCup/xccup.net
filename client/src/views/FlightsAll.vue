@@ -11,14 +11,7 @@
           @click="onFilter"
         >
           Filter
-          <div
-            v-if="isLoading"
-            class="spinner-border spinner-border-sm"
-            role="status"
-            aria-hidden="true"
-          >
-            <span class="visually-hidden">Loading...</span>
-          </div>
+          <BaseSpinner v-if="isLoading" />
           <i v-else class="bi bi-funnel"></i>
         </button>
         <button
