@@ -29,6 +29,7 @@ const {
   queryOptionalColumnExistsInModel,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
+const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
 const uploadLimiter = createRateLimiter(10, 4);
 
@@ -182,7 +183,7 @@ router.delete(
 
       const numberOfDestroyedRows = await service.delete(flight.id);
 
-      deleteCache([], true);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(numberOfDestroyedRows);
     } catch (error) {
@@ -233,7 +234,7 @@ router.post(
 
       const result = await service.update(flightDbObject);
 
-      deleteCache([], true);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json({
         flightId: result.id,
@@ -286,7 +287,7 @@ router.put(
         hikeAndFly
       );
 
-      deleteCache([], true);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json({
         flightPoints: result[1][0].flightPoints,
@@ -317,7 +318,7 @@ router.put(
 
       await service.acceptViolation(flight);
 
-      deleteCache([], true);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.sendStatus(OK);
     } catch (error) {

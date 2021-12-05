@@ -19,6 +19,7 @@ const {
   defineImageFileNameWithCurrentDateAsPrefix,
 } = require("../helper/ImageUtils");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
+const CACHE_RELEVANT_KEYS = ["home", "clubs", "filterOptions"];
 
 const IMAGE_STORE = "test/testdatasets/images/clubs";
 
@@ -154,7 +155,7 @@ router.post(
 
       const newClub = await service.create(club);
 
-      deleteCache(["home", "clubs", "filterOptions"]);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(newClub);
     } catch (error) {
@@ -201,7 +202,7 @@ router.put(
 
       const updatedClub = await service.update(club);
 
-      deleteCache(["home", "clubs", "filterOptions"]);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(updatedClub);
     } catch (error) {
@@ -297,7 +298,7 @@ router.delete(
 
       const numberOfDestroyedRows = await service.delete(clubId);
 
-      deleteCache(["home", "clubs", "filterOptions"]);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(numberOfDestroyedRows);
     } catch (error) {
