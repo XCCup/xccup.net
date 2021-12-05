@@ -50,7 +50,7 @@ router.post(
 
       const userId = req.user.id;
 
-      const pathThumb = createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
+      const pathThumb = await createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
 
       const media = await service.create({
         originalname,
