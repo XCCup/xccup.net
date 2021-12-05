@@ -19,7 +19,7 @@
             :alt="photo.description"
           />
           <!-- Caption -->
-          <div class="carousel-caption">
+          <div class="carousel-caption mb-0">
             <span class="badge bg-light text-dark p-2">
               <div class="mb-2 d-none d-md-block">
                 {{ photo.description }}
@@ -73,6 +73,8 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/style";
+
 img {
   height: 100%;
   object-fit: cover;

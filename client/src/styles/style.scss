@@ -8,3 +8,94 @@
 
 @import "@/styles/rankingClasses";
 @import "@/styles/dialogBackground";
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  // TODO: This creates warnings on windows machines
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // text-align: center;
+  // color: #2c3e50;
+}
+
+h3 {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+h5 {
+  margin-top: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+.footer {
+  a:hover {
+    color: darken($light, 20%);
+  }
+}
+.alert {
+  border-radius: 0 !important;
+}
+
+.error-message {
+  height: 60vh;
+}
+
+// Used in various results tables
+.no-line-break {
+  white-space: nowrap;
+}
+
+// Hide table cells depending on class
+.hide-on-md {
+  @extend .d-none;
+  @extend .d-lg-table-cell;
+}
+
+.hide-on-sm {
+  @extend .d-none;
+  @extend .d-md-table-cell;
+}
+
+.hide-on-xs {
+  @extend .d-none;
+  @extend .d-sm-table-cell;
+}
+
+// TODO: Is this obsolete?
+// Fix for responsive scaling of barogramm
+// .barogramm-container {
+//   position: relative;
+//   margin: auto;
+//   height: 20vh;
+//   width: 100%;
+// }
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 786px) {
+}
+
+@media (max-width: 576px) {
+}
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
