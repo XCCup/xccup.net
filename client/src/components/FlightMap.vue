@@ -32,7 +32,7 @@ import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
 
 // Landing marker
 import landingIconRetinaUrl from "@/assets/images/landing-marker-2x.png?url";
-import landingIconUrl from "@/assets/images/landing-marker?url";
+import landingIconUrl from "@/assets/images/landing-marker.png?url";
 
 let landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,

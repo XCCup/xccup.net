@@ -7,6 +7,7 @@
 ##### CSS
 
 - text-light produces a too dark font in dark mode
+- daily results table hiver color
 
 ### General functionality
 
