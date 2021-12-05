@@ -9,6 +9,7 @@ const flights = ref([]);
 const sortOptionsCache = ref(null);
 const filterOptionsCache = ref(null);
 const paramsCache = ref(null);
+const limitCache = ref(DEFAULT_LIMIT);
 const numberOfTotalFlights = ref(0);
 const currentRange = ref({ start: 0, end: 0 });
 
@@ -26,15 +27,11 @@ export default () => {
 
   // Actions
 
-  const fetchFlights = async ({
-    params,
-    queries,
-    limit = DEFAULT_LIMIT,
-    offset = 0,
-  } = {}) => {
+  const fetchFlights = async ({ params, queries, limit, offset = 0 } = {}) => {
     if (params) paramsCache.value = params;
     if (queries) filterOptionsCache.value = queries;
     if (offset < 0) offset = 0;
+    if (limit) limitCache.value = limit;
 
     try {
       const res = await ApiService.getFlights({
@@ -42,14 +39,14 @@ export default () => {
         sortCol: sortOptionsCache.value?.sortCol,
         sortOrder: sortOptionsCache.value?.sortOrder,
         ...filterOptionsCache.value,
-        limit,
+        limit: limitCache.value,
         offset,
       });
       if (res.status != 200) throw res.statusText;
       flights.value = res.data.rows;
 
       numberOfTotalFlights.value = res.data.count;
-      calcRanges(limit, offset);
+      calcRanges(offset);
     } catch (error) {
       console.log(error);
     }
@@ -70,12 +67,13 @@ export default () => {
     await fetchFlights();
   };
 
-  function calcRanges(limit, offset) {
+  function calcRanges(offset) {
     currentRange.value.start = offset + 1;
     currentRange.value.end =
-      currentRange.value.start + limit - 1 >= numberOfTotalFlights.value
+      currentRange.value.start + limitCache.value - 1 >=
+      numberOfTotalFlights.value
         ? numberOfTotalFlights.value
-        : currentRange.value.start + limit - 1;
+        : currentRange.value.start + limitCache.value - 1;
   }
 
   return {

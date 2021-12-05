@@ -1,7 +1,7 @@
 <template>
   <nav aria-label="Flights pagination">
     <ul class="pagination pagination-sm justify-content-end align-items-center">
-      <li class="page-item me-2">
+      <li class="me-2">
         <select
           id="cyPaginationAmountSelect"
           v-model="numberFlightsPerPage"
@@ -13,7 +13,7 @@
           </option>
         </select>
       </li>
-      <li class="page-item me-2">
+      <li class="me-2">
         <div id="cyPaginationInfo">
           {{ currentRange.start }}-{{ currentRange.end }}
           von
@@ -137,3 +137,13 @@ const onLast = () => {
   });
 };
 </script>
+
+<style scoped>
+#cyPaginationInfo {
+  font-size: small;
+}
+#cyPaginationFirst {
+  border-top-left-radius: 10%;
+  border-bottom-left-radius: 10%;
+}
+</style>
