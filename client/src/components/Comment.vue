@@ -2,8 +2,12 @@
   <div :id="`comment-${comment.id}`" class="d-flex mb-2">
     <img src="@/assets/images/avatar2.png" class="rounded-circle" />
     <!-- TODO: Insert link -->
-    <a href="#">{{ comment.user.firstName + " " + comment.user.lastName }}</a>
-    <span class="ms-auto fw-light text-secondary"
+    <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
+      comment.user.firstName + " " + comment.user.lastName
+    }}</a>
+    <span
+      class="ms-auto fw-light"
+      :class="userPrefersDark ? 'text-light' : 'text-secondary'"
       ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
@@ -15,6 +19,7 @@
     v-for="reply in comment.replies"
     :key="reply.id"
     class="shadow-sm rounded p-3 mb-3"
+    :class="userPrefersDark ? 'dark-reply' : ''"
   >
     <CommentReply :reply="reply" />
   </div>
@@ -80,6 +85,11 @@ const props = defineProps({
     required: true,
   },
 });
+
+// Find a way to make this reactive
+const userPrefersDark = ref(
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+);
 
 // Modal
 const deleteCommentModal = ref(null);
@@ -150,7 +160,12 @@ const closeReplyEditor = () => {
   replyMessage.value = "";
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+@import "@/styles/style";
+
+.dark-reply {
+  background-color: tint-color($primary, 5);
+}
 .rounded-circle {
   margin-right: 6px;
   height: 24px;

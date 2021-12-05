@@ -7,8 +7,12 @@
       height="24"
       width="24"
     />
-    <a href="#">{{ reply.user.firstName + " " + reply.user.lastName }}</a>
-    <span class="ms-auto fw-light text-secondary"
+    <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
+      reply.user.firstName + " " + reply.user.lastName
+    }}</a>
+    <span
+      class="ms-auto fw-light"
+      :class="userPrefersDark ? 'text-light' : 'text-secondary'"
       ><BaseDate :timestamp="reply.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
@@ -59,6 +63,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+const userPrefersDark = ref(
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+);
 
 // Modal
 const deleteCommentModal = ref(null);
