@@ -14,7 +14,7 @@
         </select>
       </li>
       <li class="me-2">
-        <div id="cyPaginationInfo">
+        <div id="cyPaginationInfo" class="no-line-break">
           {{ currentRange.start }}-{{ currentRange.end }}
           von
           {{ numberOfTotalFlights }}
