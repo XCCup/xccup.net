@@ -13,7 +13,7 @@
         >
           <div class="bg-light" style="height: 120px; width: 140px">
             <img
-              class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
+              class="cy-sponsor mw-100 mh-100 position-relative top-50 start-50 translate-middle"
               :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
             />
           </div>
@@ -26,7 +26,11 @@
       id="otherSponsors"
       class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6"
     >
-      <div v-for="sponsor in regularSponsors" :key="sponsor.id" class="col">
+      <div
+        v-for="sponsor in regularSponsors"
+        :key="sponsor.id"
+        class="col cy-sponsor"
+      >
         <a :href="sponsor.website" target="_blank">
           <div class="p-2 bg-light mb-4 p-4 box filter">
             <img
