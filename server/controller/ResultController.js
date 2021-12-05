@@ -3,6 +3,7 @@ const router = express.Router();
 const service = require("../service/ResultService");
 const { query } = require("express-validator");
 const { validationHasErrors } = require("./Validation");
+const { getCache, setCache } = require("./CacheManager");
 
 // @desc Gets the overall result
 // @route GET /results
@@ -23,18 +24,23 @@ router.get(
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const year = req.query.year;
-    const rankingClass = req.query.rankingClass;
-    const gender = req.query.gender;
-    const isWeekend = req.query.isWeekend;
-    const isSenior = req.query.isSenior;
-    const limit = req.query.limit;
-    const site = req.query.site;
-    const region = req.query.region;
-    const state = req.query.state;
-    const club = req.query.club;
+    const {
+      year,
+      rankingClass,
+      gender,
+      isWeekend,
+      isSenior,
+      limit,
+      site,
+      region,
+      state,
+      club,
+    } = req.query;
 
     try {
+      const value = getCache(req);
+      if (value) return res.json(value);
+
       const result = await service.getOverall(
         year,
         rankingClass,
@@ -47,6 +53,9 @@ router.get(
         state,
         club
       );
+
+      setCache(req, result);
+
       res.json(result);
     } catch (error) {
       next(error);
@@ -70,11 +79,17 @@ router.get(
   [query("year").optional().isInt(), query("limit").optional().isInt()],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const year = req.query.year;
-    const limit = req.query.limit;
+
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const { year, limit } = req.query;
 
     try {
       const result = await service.getClub(year, limit);
+
+      setCache(req, result);
+
       res.json(result);
     } catch (error) {
       next(error);
@@ -94,12 +109,17 @@ router.get(
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const year = req.query.year;
-    const region = req.query.region;
-    const limit = req.query.limit;
+
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const { year, region, limit } = req.query;
 
     try {
       const result = await service.getTeam(year, region, limit);
+
+      setCache(req, result);
+
       res.json(result);
     } catch (error) {
       next(error);
@@ -119,10 +139,17 @@ router.get(
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const { year, region, limit } = req.query;
 
     try {
       const result = await service.getSenior(year, region, limit);
+
+      setCache(req, result);
+
       res.json(result);
     } catch (error) {
       next(error);
@@ -142,10 +169,17 @@ router.get(
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
+
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const { year, region, limit } = req.query;
 
     try {
       const result = await service.getNewcomer(year, region, limit);
+
+      setCache(req, result);
+
       res.json(result);
     } catch (error) {
       next(error);
@@ -158,7 +192,13 @@ router.get(
 
 router.get("/siteRecords", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const result = await service.getSiteRecords();
+
+    setCache(req, result);
+
     res.json(result);
   } catch (error) {
     next(error);

@@ -13,12 +13,24 @@ const {
   TSHIRT_SIZES,
 } = require("../constants/user-constants");
 
+const { getCache, setCache } = require("./CacheManager");
+const userService = require("../service/UserService");
+const siteService = require("../service/FlyingSiteService");
+const clubService = require("../service/ClubService");
+const teamService = require("../service/TeamService");
+
 // @desc Gets all gliderClasses of the current season
 // @route GET /general/gliderClasses
 
 router.get("/gliderClasses", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const gliderClasses = (await getCurrentActive()).gliderClasses;
+
+    setCache(req, gliderClasses);
+
     res.json(gliderClasses);
   } catch (error) {
     next(error);
@@ -30,7 +42,13 @@ router.get("/gliderClasses", async (req, res, next) => {
 
 router.get("/rankingClasses", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const rankingClasses = (await getCurrentActive()).rankingClasses;
+
+    setCache(req, rankingClasses);
+
     res.json(rankingClasses);
   } catch (error) {
     next(error);
@@ -42,8 +60,54 @@ router.get("/rankingClasses", async (req, res, next) => {
 
 router.get("/brands", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const brands = await getAllBrands();
+
+    setCache(req, brands);
+
     res.json(brands);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Gets all filter options for flights and results
+// @route GET /general/filterOptions
+
+router.get("/filterOptions", async (req, res, next) => {
+  try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const userNames = userService.getAllNames();
+    const siteNames = siteService.getAllNames();
+    const clubNames = clubService.getAllNames();
+    const teamNames = teamService.getAllNames();
+    const brandNames = getAllBrands();
+
+    const values = await Promise.all([
+      userNames,
+      siteNames,
+      clubNames,
+      teamNames,
+      brandNames,
+      getCurrentActive(),
+    ]);
+
+    const resultObject = {
+      userNames: values[0],
+      siteNames: values[1],
+      clubNames: values[2],
+      teamNames: values[3],
+      brandNames: values[4],
+      rankingClasses: values[5].rankingClasses,
+    };
+
+    setCache(req, resultObject);
+
+    res.json(resultObject);
   } catch (error) {
     next(error);
   }
