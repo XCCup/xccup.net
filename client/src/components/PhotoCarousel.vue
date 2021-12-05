@@ -73,6 +73,7 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+$carousel-caption-padding-y: 0.5rem;
 @import "@/styles/style";
 
 img {
