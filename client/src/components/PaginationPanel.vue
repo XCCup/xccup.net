@@ -2,25 +2,30 @@
   <nav aria-label="Flights pagination">
     <ul class="pagination pagination-sm justify-content-end align-items-center">
       <li class="me-2">
+        <div class="no-line-break pagination-text hide-on-xs">
+          Anzahl Flüge pro Seite
+        </div>
+      </li>
+      <li class="me-2">
         <select
           id="cyPaginationAmountSelect"
           v-model="numberFlightsPerPage"
           class="form-select form-select-sm hide-on-xs border-primary"
         >
-          <option disabled value="" selected>Anzahl Flüge pro Seite</option>
           <option v-for="option in LIMIT_OPTIONS" :key="option" :value="option">
             {{ option }}
           </option>
         </select>
       </li>
-      <li class="me-2">
-        <div id="cyPaginationInfo" class="no-line-break">
+      <li v-show="multiplePagesExists" class="me-2">
+        <div id="cyPaginationInfo" class="no-line-break pagination-text">
           {{ currentRange.start }}-{{ currentRange.end }}
           von
           {{ numberOfTotalFlights }}
         </div>
       </li>
       <li
+        v-show="multiplePagesExists"
         class="page-item"
         :class="disableIfNoPreviousEntriesAvailable"
         @click="onFirst"
@@ -35,6 +40,7 @@
         </a>
       </li>
       <li
+        v-show="multiplePagesExists"
         class="page-item"
         :class="disableIfNoPreviousEntriesAvailable"
         @click="onPrevious"
@@ -49,6 +55,7 @@
         </a>
       </li>
       <li
+        v-show="multiplePagesExists"
         class="page-item"
         :class="disableIfNoNextEntriesAvailable"
         @click="onNext"
@@ -64,6 +71,7 @@
         </a>
       </li>
       <li
+        v-show="multiplePagesExists"
         class="page-item"
         :class="disableIfNoNextEntriesAvailable"
         @click="onLast"
@@ -103,6 +111,10 @@ watch(numberFlightsPerPage, () => {
   });
 });
 
+const multiplePagesExists = computed(
+  () => numberFlightsPerPage.value < numberOfTotalFlights.value
+);
+
 const disableIfNoPreviousEntriesAvailable = computed(() =>
   currentRange.value.start > 1 ? "" : "disabled"
 );
@@ -139,7 +151,7 @@ const onLast = () => {
 </script>
 
 <style scoped>
-#cyPaginationInfo {
+.pagination-text {
   font-size: small;
 }
 #cyPaginationFirst {
