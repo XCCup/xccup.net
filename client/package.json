@@ -34,6 +34,7 @@
     "@types/leaflet": "^1.7.5",
     "@vitejs/plugin-vue": "^1.10.1",
     "autoprefixer": "^10.4.0",
+    "cypress": "9.1.1",
     "cypress-file-upload": "^5.0.8",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "^8.3.0",
