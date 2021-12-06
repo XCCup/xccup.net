@@ -1353,6 +1353,13 @@ vite@^2.6.14:
   optionalDependencies:
     fsevents "~2.3.2"
 
+vue-avatar-editor-improved@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/vue-avatar-editor-improved/-/vue-avatar-editor-improved-1.0.7.tgz#781e336fdfc8974229317cc3f08dfe145acd7bce"
+  integrity sha512-zmHkXbyZtW51MdID8V6lO4hf4fFQrqLasTNZvlSfAmIfLVC4wAwsVsjt7y7m8BqwuE6nrEFYNlt4IA1VAJ3x9A==
+  dependencies:
+    vue "^2.4.1"
+
 vue-eslint-parser@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-8.0.1.tgz#25e08b20a414551531f3e19f999902e1ecf45f13"
@@ -1379,6 +1386,11 @@ vue3-datepicker@^0.2.5:
   integrity sha512-knZCjq8320UjP1qPyJ62B08EUdRhMWbZOAR0gBWF+FRQTtkLv6SwgQdOdS1h0Xj7N8ov9thK1mD47gReXgQGkA==
   dependencies:
     date-fns "^2.22.1"
+
+vue@^2.4.1:
+  version "2.6.14"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
+  integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
 vue@^3.2.23:
   version "3.2.23"

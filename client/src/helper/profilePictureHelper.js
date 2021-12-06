@@ -1,6 +1,4 @@
 export function createDicebearUrl(user) {
-  console.log("Helper user: ", user);
-
   const seedChars = "<>!&()-:'|";
 
   const initals =
