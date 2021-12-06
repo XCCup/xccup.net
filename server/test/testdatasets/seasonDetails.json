@@ -66,11 +66,6 @@
       }
     },
     "rankingClasses": {
-      "gsTandem": {
-        "gliderClasses": ["Tandem"],
-        "description": "Gleitschirm Tandem",
-        "shortDescription": "GS Tandem"
-      },
       "gsSport": {
         "gliderClasses": ["AB_low", "AB_high"],
         "description": "Sportklasse (EN A+EN B)",
@@ -85,6 +80,11 @@
         "gliderClasses": ["D_low", "D_high"],
         "description": "Performance-Klasse (EN D+CCC)",
         "shortDescription": "GS Performance"
+      },
+      "gsTandem": {
+        "gliderClasses": ["Tandem"],
+        "description": "Gleitschirm Tandem",
+        "shortDescription": "GS Tandem"
       },
       "hgFlex": {
         "gliderClasses": ["HG_1_Turm", "HG_1_Turmlos"],
@@ -166,11 +166,6 @@
       }
     },
     "rankingClasses": {
-      "gsTandem": {
-        "gliderClasses": ["Tandem"],
-        "description": "Gleitschirm Tandem",
-        "shortDescription": "GS Tandem"
-      },
       "gsSport": {
         "gliderClasses": ["AB_low", "AB_high"],
         "description": "Sportklasse (EN A+EN B)",
@@ -185,6 +180,11 @@
         "gliderClasses": ["D_low", "D_high"],
         "description": "Performance-Klasse (EN D+CCC)",
         "shortDescription": "GS Performance"
+      },
+      "gsTandem": {
+        "gliderClasses": ["Tandem"],
+        "description": "Gleitschirm Tandem",
+        "shortDescription": "GS Tandem"
       },
       "hgFlex": {
         "gliderClasses": ["HG_1_Turm", "HG_1_Turmlos"],
@@ -266,11 +266,6 @@
       }
     },
     "rankingClasses": {
-      "gsTandem": {
-        "gliderClasses": ["Tandem"],
-        "description": "Gleitschirm Tandem",
-        "shortDescription": "GS Tandem"
-      },
       "gsSport": {
         "gliderClasses": ["AB_low", "AB_high"],
         "description": "Sportklasse (EN A+EN B)",
@@ -285,6 +280,11 @@
         "gliderClasses": ["D_low", "D_high"],
         "description": "Performance-Klasse (EN D+CCC)",
         "shortDescription": "GS Performance"
+      },
+      "gsTandem": {
+        "gliderClasses": ["Tandem"],
+        "description": "Gleitschirm Tandem",
+        "shortDescription": "GS Tandem"
       },
       "hgFlex": {
         "gliderClasses": ["HG_1_Turm", "HG_1_Turmlos"],

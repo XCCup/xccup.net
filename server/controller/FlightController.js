@@ -28,6 +28,8 @@ const {
   checkOptionalIsBoolean,
   queryOptionalColumnExistsInModel,
 } = require("./Validation");
+const { getCache, setCache, deleteCache } = require("./CacheManager");
+const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
 const uploadLimiter = createRateLimiter(10, 4);
 
@@ -77,6 +79,9 @@ router.get(
     } = req.query;
 
     try {
+      const value = getCache(req);
+      if (value) return res.json(value);
+
       const flights = await service.getAll({
         year,
         site,
@@ -94,6 +99,9 @@ router.get(
         status,
         sort: [sortCol, sortOrder],
       });
+
+      setCache(req, flights);
+
       res.json(flights);
     } catch (error) {
       next(error);
@@ -112,6 +120,7 @@ router.get("/violations", authToken, async (req, res, next) => {
     const flights = await service.getAll({
       unchecked: true,
     });
+
     res.json(flights);
   } catch (error) {
     next(error);
@@ -173,6 +182,9 @@ router.delete(
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
       const numberOfDestroyedRows = await service.delete(flight.id);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+
       res.json(numberOfDestroyedRows);
     } catch (error) {
       next(error);
@@ -221,6 +233,8 @@ router.post(
       service.startResultCalculation(flightDbObject);
 
       const result = await service.update(flightDbObject);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json({
         flightId: result.id,
@@ -272,6 +286,9 @@ router.put(
         glider,
         hikeAndFly
       );
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+
       res.json({
         flightPoints: result[1][0].flightPoints,
         flightStatus: result[1][0].flightStatus,
@@ -300,6 +317,8 @@ router.put(
       if (await requesterIsNotModerator(req, res)) return;
 
       await service.acceptViolation(flight);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.sendStatus(OK);
     } catch (error) {

@@ -21,30 +21,35 @@
         <div class="modal-body">
           <div class="mb-3">
             <BaseSelect
+              id="filterSelectName"
               v-model="selects.user"
               label="Name"
               :show-label="true"
               :options="users"
             />
             <BaseSelect
+              id="filterSelectSite"
               v-model="selects.site"
               label="Startplatz"
               :show-label="true"
               :options="sites"
             />
             <BaseSelect
+              id="filterSelectClub"
               v-model="selects.club"
               label="Verein"
               :show-label="true"
               :options="clubs"
             />
             <BaseSelect
+              id="filterSelectTeam"
               v-model="selects.team"
               label="Team"
               :show-label="true"
               :options="teams"
             />
             <BaseSelect
+              id="filterSelectRanking"
               v-model="selects.ranking"
               label="Wertungsklasse"
               :show-label="true"
@@ -96,11 +101,12 @@ const selects = reactive({
   team: "",
   ranking: "",
 });
-const userData = (await ApiService.getUserNames()).data;
-const siteData = (await ApiService.getSiteNames()).data;
-const clubData = (await ApiService.getClubNames()).data;
-const teamData = (await ApiService.getTeamNames()).data;
-const rankingData = (await ApiService.getRankingClasses()).data;
+const filterOptions = (await ApiService.getFilterOptions()).data;
+const userData = filterOptions.userNames;
+const siteData = filterOptions.siteNames;
+const clubData = filterOptions.clubNames;
+const teamData = filterOptions.teamNames;
+const rankingData = filterOptions.rankingClasses;
 const users = ref(userData.map((e) => `${e.firstName} ${e.lastName}`));
 const sites = ref(siteData.map((e) => e.name));
 const clubs = ref(clubData.map((e) => e.name));
