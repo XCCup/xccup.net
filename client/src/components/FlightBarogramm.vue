@@ -1,6 +1,66 @@
 <template>
   <div class="container">
-    <span class="badge bg-primary">Höhe: {{ altitudeLabels[1] }}</span>
+    <table id="cyFlightDetailsTable1" class="table table-sm">
+      <tbody>
+        <tr>
+          <td class="col-4 col-md-2">
+            <i class="bi bi-cloud-upload"></i>
+            {{
+              labelData[1]?.altitude ? Math.floor(labelData[1]?.altitude) : "0"
+            }}
+            m
+          </td>
+          <td class="col-4 col-md-2">
+            <i class="bi bi-speedometer2"></i>
+            {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
+            km/h
+          </td>
+          <td class="col-4 col-md-2">
+            <i class="bi bi-arrows-expand"></i>
+            {{
+              labelData[1]?.speed
+                ? Math.round(labelData[1]?.climb * 10) / 10
+                : "0"
+            }}
+            m/s
+          </td>
+          <td class=""></td>
+        </tr>
+        <!-- <tr v-for="(_, index) in statsTableData" :key="index">
+          <td class="col-3">
+            Name:
+            {{ labelData[index]?.name ?? "" }}
+          </td>
+          <td class="col-3">
+            <i class="bi bi-arrow-bar-up"></i>
+            {{
+              labelData[index]?.altitude
+                ? Math.floor(labelData[index]?.altitude)
+                : "0"
+            }}
+            m
+          </td>
+          <td class="">
+            <i class="bi bi-speedometer2"></i>
+            {{
+              labelData[index]?.speed
+                ? Math.floor(labelData[index]?.speed)
+                : "0"
+            }}
+            km/h
+          </td>
+          <td class="col-3">
+            <i class="bi bi-arrows-expand"></i>
+            {{
+              labelData[index]?.speed
+                ? Math.floor(labelData[index]?.climb)
+                : "0"
+            }}
+            m/s
+          </td>
+        </tr> -->
+      </tbody>
+    </table>
   </div>
   <div class="container">
     <canvas id="flight-barogramm" ref="myChart"></canvas>
@@ -23,13 +83,24 @@ const { flight } = useFlight();
 const { activeAirbuddyFlights } = useAirbuddies();
 
 const chart = shallowRef(null);
-const altitudeLabels = ref([]);
+const labelData = ref([{}]);
 const myChart = ref(null);
 
 const baroDatasets = computed(() =>
   processBaroData(flight.value, activeAirbuddyFlights.value)
 );
 
+// const statsTableData = computed(() => baroDatasets.value.slice());
+
+const updateLabels = (context) => {
+  console.log(context);
+  labelData.value[context.datasetIndex] = {
+    speed: context.raw.speed,
+    altitude: context.raw.y,
+    climb: context.raw.climb,
+    name: context.dataset.label,
+  };
+};
 onMounted(() => {
   // Create a new chart
   chart.value = new Chart(myChart.value, {
@@ -74,17 +145,7 @@ onMounted(() => {
                 },
               });
               document.dispatchEvent(event);
-              updateAltitudeLabels(context);
-
-              // updateAltitudeLabels(context);
-
-              // Alternative via state:
-              // Update pilot marker positions in state via delegate function
-              // const markerPosition = {
-              //   datasetIndex: context.datasetIndex,
-              //   dataIndex: context.dataIndex,
-              // };
-              // updateMarkerMapPosition(markerPosition);
+              updateLabels(context);
             },
           },
         },
@@ -123,10 +184,6 @@ onMounted(() => {
     },
   });
 });
-
-const updateAltitudeLabels = (context) => {
-  altitudeLabels.value[context.datasetIndex] = `${context.raw.y}m`;
-};
 
 // Chart options
 

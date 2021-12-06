@@ -2,7 +2,7 @@ import { readonly, ref, computed } from "vue";
 import ApiService from "@/services/ApiService";
 
 const airbuddiesFlightData = ref([]);
-const checkedAirbuddFlightIds = ref([]);
+const checkedAirbuddyFlightIds = ref([]);
 
 export default () => {
   // Getters
@@ -13,7 +13,7 @@ export default () => {
       tmp.push({
         buddyName: element.user.firstName,
         buddyFlightId: element.id,
-        isActive: checkedAirbuddFlightIds.value.includes(element.id),
+        isActive: checkedAirbuddyFlightIds.value.includes(element.id),
         fixes: element.fixes,
       });
     });
@@ -22,7 +22,7 @@ export default () => {
 
   // Mutations
   const updateCheckedAirbuddies = (data) => {
-    checkedAirbuddFlightIds.value = data;
+    checkedAirbuddyFlightIds.value = data;
   };
 
   // Actions
@@ -39,7 +39,7 @@ export default () => {
     fetchAll,
     updateCheckedAirbuddies,
     airbuddiesFlightData: readonly(airbuddiesFlightData),
-    checkedAirbuddFlightIds: readonly(checkedAirbuddFlightIds),
+    checkedAirbuddyFlightIds: readonly(checkedAirbuddyFlightIds),
 
     activeAirbuddyFlights,
   };
