@@ -93,7 +93,6 @@ const baroDatasets = computed(() =>
 // const statsTableData = computed(() => baroDatasets.value.slice());
 
 const updateLabels = (context) => {
-  console.log(context);
   labelData.value[context.datasetIndex] = {
     speed: context.raw.speed,
     altitude: context.raw.y,
