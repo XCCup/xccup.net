@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid mt-0">
     <div class="row">
-      <div id="mapContainer" :class="userPrefersDark ? 'filter' : ''"></div>
+      <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''"></div>
     </div>
   </div>
 </template>
@@ -229,9 +229,5 @@ const updateMarkerPosition = (position) => {
 <style scoped>
 #mapContainer {
   height: 430px;
-}
-
-.filter {
-  filter: brightness(85%);
 }
 </style>
