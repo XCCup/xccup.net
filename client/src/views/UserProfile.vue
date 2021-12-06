@@ -5,13 +5,33 @@
       <!-- Profile Picture -->
       <div class="col-md-3">
         <div class="d-flex flex-column align-items-center text-center p-3">
-          <img
-            class="rounded-circle"
-            width="150px"
-            src="https://avatars.dicebear.com/api/big-ears/your-custom-seed.svg?b=%23d9eb37"
+          <img class="rounded-circle" :src="profileImageUrl" />
+          <span class="font-weight-bold">{{ userData.firstName }}</span>
+          <span class="text-secondary">{{ userData.lastName }}</span>
+          <div class="row gap-3">
+            <button
+              class="col btn btn-outline-primary"
+              @click.prevent="onEditProfilePhoto"
+            >
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button
+              v-show="pictureStored"
+              id="profilePictureDeleteButton"
+              type="button"
+              class="col btn btn-outline-danger btn"
+              @click="onDeleteProfilePicture"
+            >
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <input
+            id="photo-input"
+            type="file"
+            accept=".jpg, .jpeg, .png, .webp"
+            style="display: none"
+            @change="onPhotoSelected"
           />
-          <span class="font-weight-bold">Foo</span>
-          <span class="text-secondary">Bar</span>
         </div>
       </div>
 
@@ -89,14 +109,20 @@
       </div>
     </div>
   </div>
+  <ModalUserAvatar @image-saved="updateAvatar" />
 </template>
 <script setup>
 import { setWindowName } from "../helper/utils";
 import useUserProfile from "@/composables/useUserProfile";
-import { onMounted } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { Tab } from "bootstrap";
+import { getUserPicture } from "../helper/profilePictureHelper";
+import ApiService from "../services/ApiService";
+import ModalUserAvatar from "../components/ModalUserAvatar.vue";
+import { Modal } from "bootstrap";
 
 setWindowName("Profil");
+
 const props = defineProps({
   edit: {
     type: Boolean,
@@ -109,21 +135,45 @@ const props = defineProps({
 });
 
 // TODO: Warn user if there are unsaved changes
-const { fetchProfile } = useUserProfile();
+const { fetchProfile, userData } = useUserProfile();
 
-try {
-  // Get user details
-  await fetchProfile();
-} catch (error) {
-  // TODO: Handle error
-  console.log(error);
-}
-
+const profilePicutreModal = ref(null);
+const photoInput = ref(null);
 onMounted(() => {
+  photoInput.value = document.getElementById("photo-input");
+  profilePicutreModal.value = new Modal(
+    document.getElementById("userAvatarModal")
+  );
   // Navigate to hangar tab via props
   let hangarTab = new Tab(document.querySelector("#nav-hangar-tab"));
   if (props.showHangar) hangarTab.show();
 });
+
+const pictureStored = computed(() => userData.value.picture);
+const profileImageUrl = computed(() => getUserPicture(userData.value, true));
+
+const onEditProfilePhoto = () => {
+  profilePicutreModal.value.show();
+};
+
+const onDeleteProfilePicture = async () => {
+  try {
+    const res = await ApiService.deleteUserPicture();
+    if (res.status != 200) throw res.statusText;
+    fetchProfile();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateAvatar = () => {
+  profilePicutreModal.value.hide();
+  fetchProfile();
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  width: 150px;
+}
+</style>
