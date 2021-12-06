@@ -12,13 +12,24 @@ const {
   checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
+const { getCache, setCache, deleteCache } = require("./CacheManager");
+const CACHE_RELEVANT_KEYS = ["teams", "filterOptions"];
 
 // @desc Gets information of all active teams
 // @route GET /teams
 
 router.get("/", async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     const teams = await service.getAllActive();
+
+    setCache(
+      req,
+      teams.map((t) => t.toJSON())
+    );
+
     res.json(teams);
   } catch (error) {
     next(error);
@@ -97,7 +108,11 @@ router.post(
           .status(BAD_REQUEST)
           .send("User already asigned to different team");
 
-      service.create(teamName, memberIds).then((team) => res.json(team));
+      const team = await service.create(teamName, memberIds);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+
+      res.json(team);
     } catch (error) {
       next(error);
     }
@@ -119,6 +134,9 @@ router.delete(
       if (await requesterIsNotModerator(req, res)) return;
 
       const numberOfDestroyedRows = await service.delete(req.team.id);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+
       res.json(numberOfDestroyedRows);
     } catch (error) {
       next(error);

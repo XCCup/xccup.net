@@ -20,15 +20,14 @@ const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
 
-const cacheManager = require("./CacheManager");
-
 const { isNoWorkday } = require("../helper/HolidayCalculator");
-const { getCurrentYear, sleep } = require("../helper/Utils");
+const { sleep } = require("../helper/Utils");
 
 const { COUNTRY } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
 
 const logger = require("../config/logger");
+const { deleteCache } = require("../controller/CacheManager");
 
 const flightService = {
   getAll: async ({
@@ -49,33 +48,6 @@ const flightService = {
     unchecked,
     sort,
   } = {}) => {
-    let fillCache = false;
-    if (
-      isCacheSufficent(year, [
-        site,
-        siteId,
-        type,
-        rankingClass,
-        limit,
-        offset,
-        startDate,
-        endDate,
-        userId,
-        clubId,
-        teamId,
-        gliderClass,
-        status,
-        unchecked,
-        sort,
-      ])
-    ) {
-      const currentYearCache = cacheManager.getCurrentYearFlightCache();
-      if (currentYearCache) return currentYearCache;
-      else {
-        fillCache = true;
-      }
-    }
-
     const orderStatement = createOrderStatement(sort);
 
     const queryObject = {
@@ -107,9 +79,14 @@ const flightService = {
       queryObject.offset = offset;
     }
 
-    const flights = await Flight.findAll(queryObject);
+    const flights = await Flight.findAndCountAll(queryObject);
 
-    if (fillCache) cacheManager.setCurrentYearFlightCache(flights);
+    /**
+     * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
+     * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
+     * See also: https://github.com/pvorb/clone/issues/106
+     */
+    flights.rows = flights.rows.map((v) => v.toJSON());
 
     return flights;
   },
@@ -300,8 +277,6 @@ const flightService = {
       columnsToUpdate.flightStatus = flightStatus;
     }
 
-    cacheManager.invalidateCaches();
-
     return Flight.update(columnsToUpdate, {
       where: {
         id: flight.id,
@@ -336,6 +311,8 @@ const flightService = {
     }
 
     const fixes = await retrieveDbObjectOfFlightFixes(flight.id);
+
+    deleteCache(["home", "flights", "results"]);
 
     ElevationAttacher.execute(
       FlightFixes.mergeData(fixes),
@@ -752,22 +729,6 @@ function createTeamInclude(id) {
     };
   }
   return include;
-}
-
-/**
- * The most often request is to display the flights of the current year. Therefore a cache for this request is introduced.
- * It is possible to use the cache, if only flights of the current year with no filter parameters are requested.
- *
- * @returns
- */
-function isCacheSufficent(year, values) {
-  const paras = values.every((e) => {
-    if (e != undefined) {
-      logger.debug(`In cache check one parameter of value ${e} was defined`);
-    }
-    return e == undefined;
-  });
-  return year == getCurrentYear() && paras;
 }
 
 module.exports = flightService;
