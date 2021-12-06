@@ -1,3 +1,5 @@
+import { getbaseURL } from "./baseUrlHelper";
+
 export function createDicebearUrl(user) {
   const seedChars = "<>!&()-:'|";
 
@@ -16,7 +18,7 @@ export function createDicebearUrl(user) {
 
 export function createUserPictureUrl(user, thumb) {
   const thumbExtension = thumb ? "?thumb=true" : "";
-  return `http://localhost:3000/api/users/picture/${user.id}${thumbExtension}`;
+  return `${getbaseURL()}users/picture/${user.id}${thumbExtension}`;
 }
 
 export function getUserPicture(user, thumb) {
