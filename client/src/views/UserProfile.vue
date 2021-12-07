@@ -5,33 +5,33 @@
       <!-- Profile Picture -->
       <div class="col-md-3">
         <div class="d-flex flex-column align-items-center text-center p-3">
-          <img class="rounded-circle" :src="profileImageUrl" />
-          <span class="font-weight-bold">{{ userData.firstName }}</span>
-          <span class="text-secondary">{{ userData.lastName }}</span>
-          <div class="row gap-3">
-            <button
-              class="col btn btn-outline-primary"
+          <img class="rounded-circle" :src="avatarUrl" />
+          <div class="row">
+            <!-- <button
+              class="col btn btn-outline-primary btn-sm"
               @click.prevent="onEditProfilePhoto"
-            >
-              <i class="bi bi-pencil"></i>
-            </button>
-            <button
+            > -->
+            <i
+              class="col bi bi-pencil text-primary avatar-editor-button"
+              @click.prevent="onEditAvatar"
+            ></i>
+            <!-- </button> -->
+            <!-- <button
               v-show="pictureStored"
               id="profilePictureDeleteButton"
               type="button"
-              class="col btn btn-outline-danger btn"
+              class="col btn btn-outline-danger btn-sm"
               @click="onDeleteProfilePicture"
-            >
-              <i class="bi bi-x"></i>
-            </button>
+            > -->
+            <!-- <i
+              v-if="avatarStored"
+              class="col bi bi-x text-danger avatar-editor-button"
+              @click="onDeleteAvatar"
+            ></i> -->
+            <!-- </button> -->
           </div>
-          <input
-            id="photo-input"
-            type="file"
-            accept=".jpg, .jpeg, .png, .webp"
-            style="display: none"
-            @change="onPhotoSelected"
-          />
+          <span class="font-weight-bold">{{ userData.firstName }}</span>
+          <span class="text-secondary">{{ userData.lastName }}</span>
         </div>
       </div>
 
@@ -109,15 +109,14 @@
       </div>
     </div>
   </div>
-  <ModalUserAvatar @image-saved="updateAvatar" />
+  <ModalUserAvatar :avatar-url="avatarUrl" @avatar-changed="updateAvatar" />
 </template>
 <script setup>
 import { setWindowName } from "../helper/utils";
 import useUserProfile from "@/composables/useUserProfile";
 import { onMounted, ref, computed } from "vue";
 import { Tab } from "bootstrap";
-import { getUserPicture } from "../helper/profilePictureHelper";
-import ApiService from "../services/ApiService";
+import { getUserAvatar } from "../helper/profilePictureHelper";
 import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
 
@@ -137,37 +136,22 @@ const props = defineProps({
 // TODO: Warn user if there are unsaved changes
 const { fetchProfile, userData } = useUserProfile();
 
-const profilePictureModal = ref(null);
-const photoInput = ref(null);
+const editAvatarModal = ref(null);
 onMounted(() => {
-  photoInput.value = document.getElementById("photo-input");
-  profilePictureModal.value = new Modal(
-    document.getElementById("userAvatarModal")
-  );
+  editAvatarModal.value = new Modal(document.getElementById("userAvatarModal"));
   // Navigate to hangar tab via props
   let hangarTab = new Tab(document.querySelector("#nav-hangar-tab"));
   if (props.showHangar) hangarTab.show();
 });
 
-const pictureStored = computed(() => userData.value.picture);
-const profileImageUrl = computed(() => getUserPicture(userData.value, true));
+const avatarUrl = computed(() => getUserAvatar(userData.value, true));
 
-const onEditProfilePhoto = () => {
-  profilePictureModal.value.show();
-};
-
-const onDeleteProfilePicture = async () => {
-  try {
-    const res = await ApiService.deleteUserPicture();
-    if (res.status != 200) throw res.statusText;
-    fetchProfile();
-  } catch (error) {
-    console.log(error);
-  }
+const onEditAvatar = () => {
+  editAvatarModal.value.show();
 };
 
 const updateAvatar = () => {
-  profilePictureModal.value.hide();
+  editAvatarModal.value.hide();
   fetchProfile();
 };
 </script>
@@ -175,5 +159,8 @@ const updateAvatar = () => {
 <style scoped>
 img {
   width: 150px;
+}
+.avatar-editor-button {
+  cursor: pointer;
 }
 </style>
