@@ -8,6 +8,7 @@ const _ = require("lodash");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
 const { checkParamIsUuid, validationHasErrors } = require("./Validation");
+const { getCache, setCache } = require("./CacheManager");
 
 // @desc Gets the flight photo
 // @route GET /media/:id
@@ -22,6 +23,9 @@ router.get(
     const thumb = req.query.thumb;
 
     try {
+      const value = getCache(req);
+      if (value) return res.type(value.mimetype).sendFile(value.fullfilepath);
+
       const results = await Promise.all([
         FlightPhoto.findByPk(id),
         Logo.findByPk(id),
@@ -34,6 +38,8 @@ router.get(
       const fullfilepath = thumb
         ? path.join(path.resolve(), media.pathThumb)
         : path.join(path.resolve(), media.path);
+
+      setCache(req, { mimetype: media.mimetype, fullfilepath });
 
       return res.type(media.mimetype).sendFile(fullfilepath);
     } catch (error) {
