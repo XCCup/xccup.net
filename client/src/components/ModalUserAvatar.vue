@@ -153,7 +153,6 @@ const deleteButtonIsEnabled = computed(() => {
 });
 
 const onImageReady = () => {
-  console.log("ready");
   saveButtonIsEnabled.value = true;
 };
 
