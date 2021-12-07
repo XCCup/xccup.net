@@ -10,11 +10,7 @@
             }}
             m
           </td>
-          <td class="col-4 col-md-2">
-            <i class="bi bi-speedometer2"></i>
-            {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
-            km/h
-          </td>
+
           <td class="col-4 col-md-2">
             <i class="bi bi-arrows-expand"></i>
             {{
@@ -23,6 +19,11 @@
                 : "0"
             }}
             m/s
+          </td>
+          <td class="col-4 col-md-2">
+            <i class="bi bi-speedometer2"></i>
+            {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
+            km/h
           </td>
           <td class=""></td>
         </tr>
