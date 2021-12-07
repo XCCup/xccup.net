@@ -10,3 +10,12 @@ module.exports.TYPE = {
   FLAT: "FLAT",
   FAI: "FAI",
 };
+
+module.exports.REGIONS = [
+  "Luxemburg",
+  "Mosel",
+  "Nahe",
+  "Pfalz",
+  "Rhön",
+  "Sauerland",
+];
