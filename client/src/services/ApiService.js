@@ -40,6 +40,9 @@ export default {
   getInitialData() {
     return apiClient.get("home");
   },
+  deletePhoto(id) {
+    return jwtInterceptor.delete(baseURL + "flights/photos/" + id);
+  },
   // Flight comments
 
   addComment(comment) {
