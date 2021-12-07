@@ -137,11 +137,11 @@ const props = defineProps({
 // TODO: Warn user if there are unsaved changes
 const { fetchProfile, userData } = useUserProfile();
 
-const profilePicutreModal = ref(null);
+const profilePictureModal = ref(null);
 const photoInput = ref(null);
 onMounted(() => {
   photoInput.value = document.getElementById("photo-input");
-  profilePicutreModal.value = new Modal(
+  profilePictureModal.value = new Modal(
     document.getElementById("userAvatarModal")
   );
   // Navigate to hangar tab via props
@@ -153,7 +153,7 @@ const pictureStored = computed(() => userData.value.picture);
 const profileImageUrl = computed(() => getUserPicture(userData.value, true));
 
 const onEditProfilePhoto = () => {
-  profilePicutreModal.value.show();
+  profilePictureModal.value.show();
 };
 
 const onDeleteProfilePicture = async () => {
@@ -167,7 +167,7 @@ const onDeleteProfilePicture = async () => {
 };
 
 const updateAvatar = () => {
-  profilePicutreModal.value.hide();
+  profilePictureModal.value.hide();
   fetchProfile();
 };
 </script>
