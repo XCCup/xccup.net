@@ -1,5 +1,7 @@
 describe("check admin page", () => {
   before(() => {
+    cy.seedDb();
+
     cy.visit("/");
     cy.get("button").contains("Flug hochladen").click();
   });
@@ -25,7 +27,7 @@ describe("check admin page", () => {
 
     cy.get("button").contains("Flug hochladen").click();
 
-    cy.get("h3").should("have.text", `Flug hochladen`);
+    cy.get("h3").contains("Flug hochladen");
 
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
@@ -78,7 +80,7 @@ describe("check admin page", () => {
 
     cy.get("button").contains("Flug hochladen").click();
 
-    cy.get("h3").should("have.text", `Flug hochladen`);
+    cy.get("h3").contains("Flug hochladen");
 
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
@@ -101,7 +103,7 @@ describe("check admin page", () => {
 
     cy.get("button").contains("Flug hochladen").click();
 
-    cy.get("h3").should("have.text", `Flug hochladen`);
+    cy.get("h3").contains("Flug hochladen");
 
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
@@ -124,7 +126,7 @@ describe("check admin page", () => {
 
     cy.get("button").contains("Flug hochladen").click();
 
-    cy.get("h3").should("have.text", `Flug hochladen`);
+    cy.get("h3").contains("Flug hochladen");
 
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
