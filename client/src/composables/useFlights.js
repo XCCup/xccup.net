@@ -18,10 +18,10 @@ export default () => {
   // Getters
 
   const filterActive = computed(() => {
-    return (
-      filterOptionsCache.value &&
+    return filterOptionsCache.value &&
       Object.values(filterOptionsCache.value).find((v) => !!v)
-    );
+      ? true
+      : false;
   });
 
   // Mutations

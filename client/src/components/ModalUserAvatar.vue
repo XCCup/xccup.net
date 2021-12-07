@@ -23,9 +23,10 @@
         </div>
         <div class="modal-body">
           <div class="mb-3"></div>
-          <div v-if="!errorMessage">
+          <div v-if="!errorMessage && !deleteRequest">
             <VueAvatar
               ref="vueavatar"
+              :image="presetImage"
               :width="400"
               :height="400"
               :rotation="parseInt(rotation)"
@@ -65,13 +66,32 @@
           <div v-else>
             <p>{{ errorMessage }}</p>
           </div>
+          <div v-if="deleteRequest">
+            <p>Möchtest du dein aktuelles Profilbild wirklich löschen?</p>
+          </div>
         </div>
         <div class="modal-footer">
+          <button
+            v-if="!deleteRequest && deleteButtonIsEnabled"
+            type="button"
+            class="btn btn-outline-danger me-auto"
+            @click="onDelete"
+          >
+            Löschen
+          </button>
+          <button
+            v-if="deleteRequest"
+            type="button"
+            class="btn btn-outline-primary me-auto"
+            @click="onDelete"
+          >
+            Ändern
+          </button>
           <button
             type="button"
             class="btn btn-primary"
             :disabled="!saveButtonIsEnabled"
-            @click="onSaveClicked"
+            @click="onSave"
           >
             Speichern <BaseSpinner v-if="showSpinner" />
           </button>
@@ -79,7 +99,6 @@
             type="button"
             class="btn btn-outline-danger"
             data-bs-dismiss="modal"
-            @click="onClose"
           >
             <div>Abbrechen</div>
           </button>
@@ -91,10 +110,18 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { VueAvatar } from "vue-avatar-editor-improved";
+import { convertRemoteImageToDataUrl } from "../helper/utils";
 
-const emit = defineEmits(["image-saved"]);
+const props = defineProps({
+  avatarUrl: {
+    type: String,
+    default: "",
+  },
+});
+
+const emit = defineEmits(["avatar-changed"]);
 
 const image = ref(null);
 const vueavatar = ref(null);
@@ -105,28 +132,70 @@ const borderRadius = ref(200);
 const showSpinner = ref(false);
 const saveButtonIsEnabled = ref(false);
 const errorMessage = ref(null);
+const presetImage = ref("");
+const deleteRequest = ref(false);
+
+watch(
+  () => props.avatarUrl,
+  () => {
+    // SVG is not supported by this editor
+    if (props.avatarUrl && !props.avatarUrl.includes(".svg")) {
+      convertRemoteImageToDataUrl(
+        props.avatarUrl.replace("?thumb=true", ""),
+        (dataUrl) => (presetImage.value = dataUrl)
+      );
+    }
+  }
+);
+
+const deleteButtonIsEnabled = computed(() => {
+  return props.avatarUrl && !props.avatarUrl.includes(".svg");
+});
 
 const onImageReady = () => {
   saveButtonIsEnabled.value = true;
 };
 
-const onSaveClicked = async () => {
+const onDelete = () => {
+  deleteRequest.value = !deleteRequest.value;
+};
+
+const onSave = async () => {
   showSpinner.value = true;
+  deleteRequest.value ? deleteAvatar() : uploadAvatar();
+};
+
+function uploadAvatar() {
   const img = vueavatar.value.getImageScaled();
-  try {
-    img.toBlob(async function (blob) {
+  img.toBlob(async function (blob) {
+    try {
       const formData = new FormData();
       formData.append("image", blob);
       const res = await ApiService.uploadUserPicture(formData);
       if (res.status != 200) throw res.statusText;
-      emit("image-saved");
-    });
+      emit("avatar-changed");
+    } catch (error) {
+      errorMessage.value =
+        "Es ist ein Fehler beim Senden deines Bildes aufgetreten. Versuche es erneut. Wenn der Fehler weiterhin besteht, wende dich bitte an einen Administrator.";
+      console.log(error);
+    } finally {
+      showSpinner.value = false;
+      deleteRequest.value = false;
+    }
+  });
+}
+async function deleteAvatar() {
+  try {
+    const res = await ApiService.deleteUserPicture();
+    if (res.status != 200) throw res.statusText;
+    emit("avatar-changed");
   } catch (error) {
     errorMessage.value =
-      "Es ist ein Fehler beim Senden deines Bildes aufgetreten. Versuche es erneut. Wenn der Fehler weiterhin besteht, wende dich bitte an einen Administrator.";
+      "Es ist ein Fehler beim Löschen deines Bildes aufgetreten. Versuche es erneut. Wenn der Fehler weiterhin besteht, wende dich bitte an einen Administrator.";
     console.log(error);
   } finally {
     showSpinner.value = false;
+    deleteRequest.value = false;
   }
-};
+}
 </script>

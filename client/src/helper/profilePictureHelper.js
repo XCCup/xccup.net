@@ -21,7 +21,7 @@ export function createUserPictureUrl(user, thumb) {
   return `${getbaseURL()}users/picture/${user.id}${thumbExtension}`;
 }
 
-export function getUserPicture(user, thumb) {
+export function getUserAvatar(user, thumb) {
   return user.picture
     ? createUserPictureUrl(user, thumb)
     : createDicebearUrl(user);

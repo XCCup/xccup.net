@@ -1,18 +1,37 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid mb-3">
     <h3 v-if="activeCategory">{{ activeCategory.title }} {{ year }}</h3>
     <p v-if="remark">Hinweis: {{ remark }}</p>
+    <div v-if="category == 'overall'" class="row">
+      <div class="col-6">
+        <FlightsFilterPanel
+          :is-loading="isLoading"
+          :filter-active="filterActive"
+          @clear-filter="clearFilter"
+          @show-filter="showFilter"
+        />
+      </div>
+    </div>
   </div>
   <ResultsTableGeneric
     :results="results.values"
     :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
   />
+  <ModalFilterResults
+    :filter-active="filterActive"
+    @filter-results="filterResults"
+  />
 </template>
 
 <script setup>
 import ApiService from "@/services/ApiService.js";
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, onMounted, computed } from "vue";
 import { setWindowName } from "../helper/utils";
+import { Modal } from "bootstrap";
+import { useRoute } from "vue-router";
+
+const router = useRoute();
+
 const props = defineProps({
   year: {
     type: [String, Number],
@@ -24,6 +43,8 @@ const props = defineProps({
   },
 });
 
+const remark = ref();
+const results = ref(null);
 const categories = [
   {
     name: "overall",
@@ -65,24 +86,59 @@ const categories = [
   },
 ];
 const activeCategory = categories.find((e) => e.name === props.category);
-const results = ref(null);
-const remark = ref();
-
 // Name the window
 watchEffect(() => {
   setWindowName(activeCategory.title);
 });
 
-try {
-  if (!activeCategory) throw "not a valid category";
-  const res = await ApiService.getResults(activeCategory.apiString, {
-    year: props.year,
-  });
-  if (res.status != 200) throw res.status.text;
+const filterOptionsCache = ref(router.query);
+const paramsCache = ref({ year: props.year });
+const isLoading = ref(false);
 
-  results.value = res.data;
-  if (activeCategory.remarks) remark.value = activeCategory.remarks();
-} catch (error) {
-  console.log(error);
-}
+const fetchResults = async () => {
+  try {
+    isLoading.value = true;
+    if (!activeCategory) throw "not a valid category";
+    const res = await ApiService.getResults(activeCategory.apiString, {
+      ...paramsCache.value,
+      ...filterOptionsCache.value,
+    });
+    if (res.status != 200) throw res.status.text;
+
+    results.value = res.data;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+await fetchResults();
+// Remark has an internal reference to results. Therefore the fetchResults function has to be run at least once before setting the remark value.
+if (activeCategory.remarks) remark.value = activeCategory.remarks();
+
+let filterModal;
+onMounted(() => {
+  filterModal = new Modal(document.getElementById("resultFilterModal"));
+});
+
+const filterActive = computed(() => {
+  return filterOptionsCache.value &&
+    Object.values(filterOptionsCache.value).find((v) => !!v)
+    ? true
+    : false;
+});
+
+const showFilter = () => {
+  filterModal.show();
+};
+const clearFilter = () => {
+  filterOptionsCache.value = null;
+  fetchResults();
+};
+const filterResults = (filterOptions) => {
+  //Check if any filter value was set
+  if (!Object.values(filterOptions).find((v) => !!v)) return;
+  filterOptionsCache.value = filterOptions;
+  fetchResults();
+};
 </script>
