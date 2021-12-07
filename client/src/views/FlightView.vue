@@ -6,6 +6,7 @@
     <FlightAirbuddies v-if="flight.airbuddies.length > 0" />
     <FlightDetails />
     <FlightReport />
+    <FlightPhotos :photos="flight.photos" />
     <Comments />
   </div>
 </template>

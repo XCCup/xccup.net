@@ -100,142 +100,62 @@
       </div>
       <br />
       <!-- Photos -->
-      <h4>Bilder hinzufügen</h4>
-      <div class="my-4">
+      <h3>Bilder</h3>
+      <FlightPhotos
+        :edit-mode="true"
+        :flight-id="flightId"
+        @photos-updated="onPhotosUpdated"
+      />
+      <!-- Rules & Submit -->
+      <div class="form-check mb-3">
         <input
-          id="photo-input"
-          type="file"
-          accept=".jpg, .jpeg"
-          style="display: none"
-          multiple
-          @change="onPhotoSelected"
+          id="acceptTermsCheckbox"
+          v-model="rulesAccepted"
+          class="form-check-input"
+          type="checkbox"
         />
-
-        <div v-if="uploadedPhotos" class="row">
-          <div
-            v-for="(photo, index) in uploadedPhotos"
-            :id="`photo-${index}`"
-            :key="photo"
-            class="col-sm-4 col-6"
-          >
-            <!-- Upload failed -->
-            <figure v-if="photo.id === 'failed'" class="figure">
-              <!-- TODO: implement retry upload -->
-              <i class="bi bi-arrow-clockwise"></i>
-            </figure>
-            <!-- Uploading -->
-            <div>
-              <div
-                v-if="photo.id === null"
-                class="d-flex justify-content-center mt-4"
-              >
-                <BaseSpinner />
-              </div>
-              <figure v-else class="figure position-relative">
-                <a
-                  :href="baseURL + `media/` + photo.id"
-                  data-lightbox="photos"
-                  :data-title="photo.description ? photo.description : ``"
-                  class="position-relative"
-                >
-                  <img
-                    :src="baseURL + `media/` + photo.id + `?thumb=true`"
-                    class="figure-img img-fluid img-thumbnail"
-                    alt=""
-                  />
-                </a>
-                <div class="p-1">
-                  <!-- TODO: Add tab index -->
-                  <input
-                    :id="`add-description-photo-${index}`"
-                    v-model="photo.description"
-                    class="form-control form-control-sm"
-                    type="text"
-                    placeholder="Beschreibung"
-                  />
-                </div>
-                <i
-                  class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
-                  @click="onDeletePhoto(photo.id)"
-                ></i>
-              </figure>
-            </div>
-          </div>
-          <!-- Add photo button -->
-          <!-- TODO: Position button in center -->
-          <div id="add-photo" class="col-4">
-            <figure class="figure position-relative">
-              <img
-                src="@/assets/images/empty.png"
-                class="figure-img img-fluid img-thumbnail"
-                alt=""
-              />
-              <button
-                class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
-                :disabled="!addPhotoButtonIsEnabled"
-                @click.prevent="onAddPhoto"
-              >
-                <span class="align-middle">
-                  <i class="bi bi-plus-square"></i>
-                </span>
-              </button>
-            </figure>
-          </div>
-        </div>
-        <!-- Rules & Submit -->
-        <div class="form-check mb-3">
-          <input
-            id="acceptTermsCheckbox"
-            v-model="rulesAccepted"
-            class="form-check-input"
-            type="checkbox"
-          />
-          <label class="form-check-label" for="flexCheckDefault">
-            Die Ausschreibung ist mir bekannt, flugrechtliche Auflagen wurden
-            eingehalten.<br />
-            Jeder Teilnehmer nimmt auf eigene Gefahr an diesem Wettbewerb teil.
-            Ansprüche gegenüber dem Veranstalter, dem Ausrichter, dem
-            Organisator, dem Wettbewerbsleiter sowie deren Helfer wegen
-            einfacher Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des
-            Häckchens erkenne ich die
-            <!-- TODO: Add links -->
-            <a href="#">Ausschreibung</a> und
-            <a href="#">Datenschutzbestimmungen</a>
-            an.
-          </label>
-        </div>
-        <!-- Submit Button -->
-        <button
-          type="submit"
-          class="btn btn-primary me-1"
-          :disabled="sendButtonIsDisabled"
-        >
-          Streckenmeldung absenden
-          <div
-            v-if="showSpinner"
-            class="spinner-border spinner-border-sm"
-            role="status"
-          >
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </button>
+        <label class="form-check-label" for="flexCheckDefault">
+          Die Ausschreibung ist mir bekannt, flugrechtliche Auflagen wurden
+          eingehalten.<br />
+          Jeder Teilnehmer nimmt auf eigene Gefahr an diesem Wettbewerb teil.
+          Ansprüche gegenüber dem Veranstalter, dem Ausrichter, dem Organisator,
+          dem Wettbewerbsleiter sowie deren Helfer wegen einfacher
+          Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des Häckchens
+          erkenne ich die
+          <!-- TODO: Add links -->
+          <a href="#">Ausschreibung</a> und
+          <a href="#">Datenschutzbestimmungen</a>
+          an.
+        </label>
       </div>
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary me-1"
+        :disabled="sendButtonIsDisabled"
+      >
+        Streckenmeldung absenden
+        <div
+          v-if="showSpinner"
+          class="spinner-border spinner-border-sm"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </button>
     </div>
   </form>
 </template>
 
 <script setup>
 import ApiService from "@/services/ApiService";
-import useUser from "@/composables/useUser";
 import { useRouter } from "vue-router";
-import { getbaseURL } from "@/helper/baseUrlHelper";
 import { ref, computed, onMounted } from "vue";
 import { Collapse } from "bootstrap";
 import Constants from "@/common/Constants";
+import { asyncForEach } from "../helper/utils";
 
-const baseURL = getbaseURL();
 const router = useRouter();
-const { getUserId } = useUser();
 
 // Fetch users gliders
 const listOfGliders = ref(null);
@@ -269,7 +189,6 @@ const sendButtonIsDisabled = computed(() => {
 });
 
 // IGC
-
 const igc = ref({ filename: "", body: null });
 
 const readFile = (file) => {
@@ -334,7 +253,14 @@ const sendFlightDetails = async () => {
     });
     if (response.status != 200) throw response.statusText;
 
-    uploadedPhotos.value.forEach((e) => addPhotoDescription(e.id, e));
+    await asyncForEach(uploadedPhotos.value, async (e) => {
+      await ApiService.editPhoto(e.id, e);
+    });
+
+    // Delete all photos that the user removed in the photos component
+    await asyncForEach(photosToDelete.value, async (e) => {
+      await ApiService.deletePhoto(e);
+    });
 
     redirectToFlight(externalId.value);
   } catch (error) {
@@ -345,8 +271,14 @@ const sendFlightDetails = async () => {
 };
 
 // Photos
+const uploadedPhotos = ref([]);
+const photosToDelete = ref([]);
 
-const addPhotoButtonIsEnabled = computed(() => flightId.value != null);
+const onPhotosUpdated = (photos) => {
+  console.log(photos);
+  uploadedPhotos.value = photos.all;
+  photosToDelete.value = photos.removed;
+};
 
 const photoInput = ref(null);
 onMounted(() => {
@@ -357,46 +289,6 @@ onMounted(() => {
   });
 });
 
-const selectedPhotos = ref([]);
-const uploadedPhotos = ref([]);
-
-const onAddPhoto = () => photoInput.value.click();
-
-const onDeletePhoto = (id) => {
-  const index = uploadedPhotos.value.findIndex((e) => e.id === id);
-  if (index > -1) uploadedPhotos.value.splice(index, 1);
-};
-
-const onPhotoSelected = (event) => {
-  [...event.target.files].forEach((element) => {
-    selectedPhotos.value.push(element);
-    uploadPhoto(element);
-  });
-};
-
-const addPhotoDescription = async (id, description) => {
-  await ApiService.editPhoto(id, description);
-};
-
-const uploadPhoto = async (photo) => {
-  const index = uploadedPhotos.value.length;
-  const _phototmp = { id: null, description: "" };
-  uploadedPhotos.value[index] = _phototmp;
-
-  try {
-    const formData = new FormData();
-    formData.append("image", photo, photo.name);
-    formData.append("flightId", flightId.value);
-    formData.append("userId", getUserId);
-    console.log(photo.name, flightId.value);
-    const res = await ApiService.uploadPhotos(formData);
-    if (res.status != 200) throw res.statusText;
-    uploadedPhotos.value[index].id = res.data.id;
-  } catch (error) {
-    console.log(error);
-    uploadedPhotos.value[index].id = "failed";
-  }
-};
 const redirectToFlight = (id) => {
   router.push({
     name: "Flight",

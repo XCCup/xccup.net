@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: Add warning when leaving without saving -->
   <div id="upload" class="container">
     <h3>Flug bearbeiten</h3>
     <!-- Glider select -->
@@ -10,6 +11,7 @@
             label="Fluggerät"
             :show-label="true"
             :gliders="listOfGliders"
+            @update:model-value="updateSelectedGlider()"
           />
         </div>
         <div class="col-md-3 mt-3">
@@ -54,9 +56,15 @@
             Nur Flugbuch
           </label>
         </div>
-        <!-- Add photo edit -->
+        <!-- Bulder -->
+        <h3>Bilder</h3>
+        <FlightPhotos
+          :photos="flight.photos"
+          :flight-id="flight.id"
+          @photos-updated="onPhotosUpdated"
+        />
         <button
-          class="btn btn-primary btn"
+          class="btn btn-primary me-2"
           type="submit"
           :disabled="!submitButtonIsEnabled"
           @click.prevent="onSubmit"
@@ -69,6 +77,9 @@
           >
             <span class="visually-hidden">Loading...</span>
           </div>
+        </button>
+        <button class="btn btn-outline-danger" @click.prevent="onCancel">
+          Abbrechen
         </button>
         <p v-if="errorMessage" class="text-danger mt-2">
           Da ist leider was schief gelaufen…
@@ -85,18 +96,23 @@ import ApiService from "@/services/ApiService";
 import { useRoute } from "vue-router";
 import { cloneDeep } from "lodash";
 import router from "../router";
+import { asyncForEach } from "../helper/utils";
 
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
-let listOfGliders = ref(null);
 
+const showSpinner = ref(false);
+const listOfGliders = ref(null);
 const errorMessage = ref("");
 const modifiedFlightData = ref({
   glider: {},
   report: "",
   hikeAndFly: false,
   onlyLogbook: false,
+  photos: [],
 });
+const photosToDelete = ref([]);
+const photosAdded = ref([]);
 
 // Fetch flight data
 await fetchOne(route.params.id);
@@ -104,6 +120,7 @@ modifiedFlightData.value.glider = flight.value.glider;
 modifiedFlightData.value.report = flight.value.report;
 modifiedFlightData.value.hikeAndFly = flight.value.hikeAndFly > 0;
 modifiedFlightData.value.onlyLogbook = flight.value.flightStatus === "Flugbuch";
+modifiedFlightData.value.photos = flight.value.photos;
 
 // Fetch users glider
 try {
@@ -113,20 +130,53 @@ try {
 } catch (error) {
   console.log(error);
 }
-// Submit changed flight data
-const showSpinner = ref(false);
 
+// Submit changed flight data
 const onSubmit = async () => {
   showSpinner.value = true;
-
-  updateModifiedGlider();
-
   try {
+    // Update flight details
     const res = await ApiService.editFlightDetails(
       flight.value.id,
       modifiedFlightData.value
     );
     if (res.status != 200) throw res.statusText;
+    // Update photo descriptions
+    await asyncForEach(modifiedFlightData.value.photos, async (e) => {
+      await ApiService.editPhoto(e.id, e);
+    });
+    // Delete all photos that the user removed in the photos component
+    await asyncForEach(photosToDelete.value, async (e) => {
+      await ApiService.deletePhoto(e);
+    });
+
+    router.push({
+      name: "Flight",
+      params: {
+        flightId: route.params.id,
+      },
+    });
+  } catch (error) {
+    errorMessage.value = error.response;
+    showSpinner.value = false;
+    console.log({ error });
+  }
+};
+
+// Fired when user changes something in photos component
+const onPhotosUpdated = (photos) => {
+  modifiedFlightData.value.photos = photos.all; // Contains all photo data
+  photosToDelete.value = photos.removed; // Only photos that were removed
+  photosAdded.value = photos.added; // Only photos that were added
+};
+
+const onCancel = async () => {
+  try {
+    // Remove all photos the user added
+    await asyncForEach(photosAdded.value, async (e) => {
+      await ApiService.deletePhoto(e);
+    });
+
     router.push({
       name: "Flight",
       params: {
@@ -141,7 +191,6 @@ const onSubmit = async () => {
 };
 
 // Check if data has been edited
-
 const unmodifiedFlightData = cloneDeep(modifiedFlightData.value);
 const submitButtonIsEnabled = computed(
   () =>
@@ -149,11 +198,12 @@ const submitButtonIsEnabled = computed(
     JSON.stringify(modifiedFlightData.value)
 );
 
-function updateModifiedGlider() {
-  modifiedFlightData.value.glider = listOfGliders.value.find(
-    (g) => g.id == modifiedFlightData.value.glider.id
+const updateSelectedGlider = () => {
+  const newSelection = listOfGliders.value.find(
+    (g) => g.id === modifiedFlightData.value.glider.id
   );
-}
+  modifiedFlightData.value.glider = { ...newSelection };
+};
 </script>
 
 <style scoped></style>
