@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient">
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary bg-gradient">
     <div class="container-fluid">
       <router-link :to="{ name: 'Home' }" class="navbar-brand" href="/">
         <img src="../assets/images/xccup_white.svg" alt="XCCup" height="50" />
@@ -13,7 +13,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto">
           <li id="navbarResults" class="nav-item dropdown">
             <a
               id="navbarDropdown"
@@ -179,18 +179,6 @@
               >Impressum</router-link
             >
           </li>
-          <li
-            v-if="hasElevatedRole"
-            id="navbarAdminDashboard"
-            class="nav-item dropdown"
-          >
-            <router-link
-              :to="{ name: 'AdminDashboard' }"
-              class="nav-link active"
-            >
-              <strong>Kommandozentrale</strong>
-            </router-link>
-          </li>
         </ul>
         <!-- Login button -->
 
@@ -198,10 +186,10 @@
           <button
             id="loginNavButton"
             type="button"
-            class="btn btn-outline-light btn-sm m-1"
+            class="btn btn-outline-light btn-sm mx-1"
           >
             <i class="bi bi-person"></i>
-            {{ "Login" }}
+            "Login"
           </button>
         </router-link>
 
@@ -216,17 +204,37 @@
             <i class="bi bi-person"></i>
             {{ authData.firstName }}
           </button>
-
-          <div class="dropdown-menu" style="width: 250px">
-            <div class="mb-3">
-              <router-link :to="{ name: 'Profile' }" class="dropdown-item"
-                >Profil
+          <ul
+            class="dropdown-menu dropdown-menu-macos mx-0 shadow"
+            style="width: 220px"
+          >
+            <li>
+              <router-link :to="{ name: 'Profile' }" class="dropdown-item">
+                <i class="bi bi-gear"></i> Profil
               </router-link>
-              <button class="btn btn-danger btn-sm m-1" @click="handleLogout">
-                Abmelden
-              </button>
-            </div>
-          </div>
+            </li>
+
+            <li v-if="hasElevatedRole">
+              <router-link
+                id="navbarAdminDashboard"
+                :to="{ name: 'AdminDashboard' }"
+                class="dropdown-item"
+              >
+                <i class="bi bi-speedometer2"></i> Admin
+              </router-link>
+            </li>
+
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                href="#"
+                @click="handleLogout"
+              >
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+            </li>
+          </ul>
         </div>
         <router-link :to="{ name: 'FlightUpload' }">
           <button
