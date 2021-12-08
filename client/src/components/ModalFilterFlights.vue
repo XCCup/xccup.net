@@ -97,7 +97,7 @@ import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
 import useFlights from "@/composables/useFlights";
-import { checkAnyValueOfObjectDefined } from "../helper/utils";
+import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const { filterFlightsBy, filterActive } = useFlights();
 
@@ -136,7 +136,7 @@ const onActivate = async () => {
 };
 
 const anyFilterOptionSet = computed(() =>
-  checkAnyValueOfObjectDefined(selects)
+  checkIfAnyValueOfObjectIsDefined(selects)
 );
 
 watch(filterActive, (newVal, oldVal) => {

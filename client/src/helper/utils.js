@@ -40,6 +40,6 @@ export function convertRemoteImageToDataUrl(url, callback) {
   xhr.send();
 }
 
-export function checkAnyValueOfObjectDefined(object) {
+export function checkIfAnyValueOfObjectIsDefined(object) {
   return object && Object.values(object).find((v) => !!v) ? true : false;
 }

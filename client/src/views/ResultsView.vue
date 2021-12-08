@@ -26,7 +26,10 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref, watchEffect, onMounted, computed } from "vue";
-import { checkAnyValueOfObjectDefined, setWindowName } from "../helper/utils";
+import {
+  checkIfAnyValueOfObjectIsDefined,
+  setWindowName,
+} from "../helper/utils";
 import { Modal } from "bootstrap";
 import { useRoute } from "vue-router";
 
@@ -122,7 +125,7 @@ onMounted(() => {
 });
 
 const filterActive = computed(() =>
-  checkAnyValueOfObjectDefined(filterOptionsCache.value)
+  checkIfAnyValueOfObjectIsDefined(filterOptionsCache.value)
 );
 
 const showFilter = () => {

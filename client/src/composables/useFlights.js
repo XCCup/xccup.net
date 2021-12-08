@@ -1,6 +1,6 @@
 import { ref, readonly, computed } from "vue";
 import ApiService from "@/services/ApiService";
-import { checkAnyValueOfObjectDefined } from "../helper/utils";
+import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
@@ -19,7 +19,7 @@ export default () => {
   // Getters
 
   const filterActive = computed(() =>
-    checkAnyValueOfObjectDefined(filterOptionsCache.value)
+    checkIfAnyValueOfObjectIsDefined(filterOptionsCache.value)
   );
 
   // Mutations
