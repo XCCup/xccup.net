@@ -28,6 +28,7 @@
               label="Startplatz"
               :show-label="true"
               :options="sites"
+              :add-empty-option="true"
             />
             <BaseSelect
               id="filterSelectClub"
@@ -35,6 +36,7 @@
               label="Verein"
               :show-label="true"
               :options="clubs"
+              :add-empty-option="true"
             />
             <BaseSelect
               id="filterSelectRanking"
@@ -42,6 +44,7 @@
               label="Wertungsklasse"
               :show-label="true"
               :options="rankings"
+              :add-empty-option="true"
             />
             <BaseSelect
               id="filterSelectRegion"
@@ -49,6 +52,7 @@
               label="Region*"
               :show-label="true"
               :options="regions"
+              :add-empty-option="true"
             />
             <BaseSelect
               id="filterSelectGender"
@@ -56,6 +60,7 @@
               label="Geschlecht"
               :show-label="true"
               :options="genders"
+              :add-empty-option="true"
             />
             <div class="form-check mt-3 mb-3">
               <input
@@ -84,6 +89,7 @@
         </div>
         <div class="modal-footer">
           <button
+            v-if="anyFilterOptionSet"
             type="button"
             class="btn btn-outline-primary me-auto"
             @click="onClear"
@@ -114,7 +120,8 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, computed } from "vue";
+import { checkAnyValueOfObjectDefined } from "../helper/utils";
 
 const emit = defineEmits(["filter-results"]);
 
@@ -173,6 +180,10 @@ watch(
     // Clear all fields if an external source caused an reset
     if (!oldVal && newVal) onClear();
   }
+);
+
+const anyFilterOptionSet = computed(() =>
+  checkAnyValueOfObjectDefined(selects)
 );
 
 const onClear = () => {

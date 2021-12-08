@@ -39,3 +39,7 @@ export function convertRemoteImageToDataUrl(url, callback) {
   xhr.responseType = "blob";
   xhr.send();
 }
+
+export function checkAnyValueOfObjectDefined(object) {
+  return object && Object.values(object).find((v) => !!v) ? true : false;
+}

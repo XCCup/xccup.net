@@ -10,7 +10,7 @@
         <select
           id="cyPaginationAmountSelect"
           v-model="numberFlightsPerPage"
-          class="form-select form-select-sm hide-on-xs border-primary"
+          class="form-select form-select-sm hide-on-xs border-primary w-auto"
         >
           <option v-for="option in LIMIT_OPTIONS" :key="option" :value="option">
             {{ option }}

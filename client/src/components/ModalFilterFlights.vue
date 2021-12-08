@@ -26,6 +26,7 @@
               label="Name"
               :show-label="true"
               :options="users"
+              :add-empty-option="true"
             />
             <BaseSelect
               id="filterSelectSite"
@@ -33,6 +34,7 @@
               label="Startplatz"
               :show-label="true"
               :options="sites"
+              :add-empty-option="true"
             />
             <BaseSelect
               id="filterSelectClub"
@@ -40,6 +42,7 @@
               label="Verein"
               :show-label="true"
               :options="clubs"
+              :add-empty-option="true"
             />
             <BaseSelect
               id="filterSelectTeam"
@@ -47,6 +50,7 @@
               label="Team"
               :show-label="true"
               :options="teams"
+              :add-empty-option="true"
             />
             <BaseSelect
               id="filterSelectRanking"
@@ -54,11 +58,13 @@
               label="Wertungsklasse"
               :show-label="true"
               :options="rankings"
+              :add-empty-option="true"
             />
           </div>
         </div>
         <div class="modal-footer">
           <button
+            v-if="anyFilterOptionSet"
             type="button"
             class="btn btn-outline-primary me-auto"
             @click="onClear"
@@ -89,8 +95,9 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, computed } from "vue";
 import useFlights from "@/composables/useFlights";
+import { checkAnyValueOfObjectDefined } from "../helper/utils";
 
 const { filterFlightsBy, filterActive } = useFlights();
 
@@ -127,6 +134,10 @@ const onActivate = async () => {
 
   filterFlightsBy({ userId, siteId, clubId, teamId, rankingClass });
 };
+
+const anyFilterOptionSet = computed(() =>
+  checkAnyValueOfObjectDefined(selects)
+);
 
 watch(filterActive, (newVal, oldVal) => {
   // Clear all fields if an external source caused an reset
