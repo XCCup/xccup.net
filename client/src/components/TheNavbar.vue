@@ -242,7 +242,7 @@
                 href="#"
                 @click="handleLogout"
               >
-                <i class="bi bi-box-arrow-right me-1"></i>Logout
+                <i class="bi bi-box-arrow-right me-1"></i>Abmelden
               </a>
             </li>
           </ul>

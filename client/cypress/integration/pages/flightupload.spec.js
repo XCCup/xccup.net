@@ -1,4 +1,4 @@
-describe("check admin page", () => {
+describe("check flight upload page", () => {
   before(() => {
     cy.seedDb();
 
@@ -15,8 +15,8 @@ describe("check admin page", () => {
   it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const reportText = "This is a flight report.";
-    const photo1 = "rachtig.jpg";
-    const photo2 = "bremm.jpg";
+    // const photo1 = "rachtig.jpg";
+    // const photo2 = "bremm.jpg";
 
     const expectedTakeoff = "Laubenheim";
     const expectedUserName = "Ramona Gislason";

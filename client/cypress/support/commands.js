@@ -78,5 +78,5 @@ Cypress.Commands.add("login", (email, password) => {
 
 Cypress.Commands.add("logout", () => {
   cy.get("#userNavDropdownMenu").click();
-  cy.get("button").contains("Abmelden").click();
+  cy.get("li").contains("Abmelden").click();
 });
