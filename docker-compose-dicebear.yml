@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  dicebear:
+      build:
+        context: ./api
+        dockerfile: Dockerfile
+      image: xccup-dicebear
+      container_name: xccup-dicebear
+      restart: always
+
+      abels:
+        traefik.enable: true
+        traefik.http.routers.xccup-dicebear.rule: "Host(`next.xccup.net`) && PathPrefix(`/dicebear`)"
+        traefik.http.middlewares.dicebearpathstrip.stripprefix.prefixes: "/dicebear"
+        traefik.http.routers.xccup-dicebear.middlewares: dicebearpathstrip@docker
+        traefik.http.middlewares.dicebearpathstrip.stripprefix.forceslash: true
+        traefik.http.routers.xccup-dicebear.entrypoints: websecure
+        traefik.http.routers.xccup-dicebear.tls.certresolver: myresolver
+        traefik.port: 3000
+        traefik.http.routers.xccup-dicebear.priority: 200
+        traefik.docker.network: traefik
+        
+networks:
+  default:
+    name: traefik
+
