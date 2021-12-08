@@ -71,6 +71,7 @@
           </div>
         </div>
         <div class="modal-footer">
+          <!-- First Button (Toggle) -->
           <button
             v-if="!deleteRequest && deleteButtonIsEnabled"
             type="button"
@@ -87,7 +88,18 @@
           >
             Ändern
           </button>
+          <!-- Second Button (Execute)-->
           <button
+            v-if="deleteRequest"
+            type="button"
+            class="btn btn-danger"
+            :disabled="!saveButtonIsEnabled"
+            @click="onSave"
+          >
+            Löschen <BaseSpinner v-if="showSpinner" />
+          </button>
+          <button
+            v-else
             type="button"
             class="btn btn-primary"
             :disabled="!saveButtonIsEnabled"
@@ -95,6 +107,7 @@
           >
             Speichern <BaseSpinner v-if="showSpinner" />
           </button>
+          <!-- Thrid Button (Cancel) -->
           <button
             type="button"
             class="btn btn-outline-danger"
