@@ -191,7 +191,7 @@ const onSubmit = async () => {
       },
     });
   } catch (error) {
-    errorMessage.value = error.response;
+    errorMessage.value = "Da ist leider was schief gelaufen";
     showSpinner.value = false;
     console.log({ error });
   }
