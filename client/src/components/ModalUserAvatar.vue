@@ -62,7 +62,7 @@
             <img ref="image" />
           </div>
           <div v-else>
-            <p>{{ errorMessage }}</p>
+            <BaseError :error-message="errorMessage" />
           </div>
           <div v-if="deleteRequest">
             <p>Möchtest du dein aktuelles Profilbild wirklich löschen?</p>
