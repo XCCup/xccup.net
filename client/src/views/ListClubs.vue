@@ -1,8 +1,8 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-lg">
     <h3>Teilnehmende Vereine des Jahres {{ new Date().getFullYear() }}</h3>
+    <ClubMap :clubs="clubs" />
   </div>
-  <ClubMap :clubs="clubs" />
 </template>
 
 <script setup>

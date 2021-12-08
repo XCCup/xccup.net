@@ -1,12 +1,12 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-lg">
     <h3 v-if="activeCategory">{{ activeCategory.title }} {{ year }}</h3>
     <p v-if="remark">Hinweis: {{ remark }}</p>
+    <ResultsTableGeneric
+      :results="results.values"
+      :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
+    />
   </div>
-  <ResultsTableGeneric
-    :results="results.values"
-    :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
-  />
 </template>
 
 <script setup>
@@ -30,6 +30,7 @@ const categories = [
     title: "Gesamtwertung",
     apiString: "",
   },
+  // TODO: Soll wirklich "gsSport" angezeigt werden?
   {
     name: "newcomer",
     title: "Newcomerwertung",

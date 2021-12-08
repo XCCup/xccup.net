@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid mb-3">
+  <div class="container-lg mb-3">
     <h3>Streckenmeldungen {{ props.year }}</h3>
     <!-- TODO: Add filter spinner when loading -->
     <div class="row">
@@ -26,9 +26,9 @@
       </div>
       <div class="col-6"><PaginationPanel /></div>
     </div>
+    <ResultsTableOverall />
+    <ModalFilterFlights />
   </div>
-  <ResultsTableOverall />
-  <ModalFilterFlights />
 </template>
 
 <script setup>
