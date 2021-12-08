@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <table id="cyFlightDetailsTable1" class="table table-sm">
+    <table id="baroStatsTable" class="table table-sm">
       <tbody>
         <tr>
           <td class="col-4 col-md-2">
