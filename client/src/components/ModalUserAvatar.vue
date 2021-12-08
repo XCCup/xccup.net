@@ -21,14 +21,12 @@
             @click="onClose"
           ></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body d-flex justify-content-center">
           <div class="mb-3"></div>
           <div v-if="!errorMessage && !deleteRequest">
             <VueAvatar
               ref="vueavatar"
               :image="presetImage"
-              :width="400"
-              :height="400"
               :rotation="parseInt(rotation)"
               :border-radius="borderRadius"
               :scale="parseFloat(scale)"

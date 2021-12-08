@@ -7,31 +7,14 @@
         <div class="d-flex flex-column align-items-center text-center p-3">
           <img class="rounded-circle" :src="avatarUrl" />
           <div class="row">
-            <!-- <button
-              class="col btn btn-outline-primary btn-sm"
-              @click.prevent="onEditProfilePhoto"
-            > -->
             <i
               class="col bi bi-pencil text-primary avatar-editor-button"
               @click.prevent="onEditAvatar"
             ></i>
-            <!-- </button> -->
-            <!-- <button
-              v-show="pictureStored"
-              id="profilePictureDeleteButton"
-              type="button"
-              class="col btn btn-outline-danger btn-sm"
-              @click="onDeleteProfilePicture"
-            > -->
-            <!-- <i
-              v-if="avatarStored"
-              class="col bi bi-x text-danger avatar-editor-button"
-              @click="onDeleteAvatar"
-            ></i> -->
-            <!-- </button> -->
           </div>
-          <span class="font-weight-bold">{{ userData.firstName }}</span>
-          <span class="text-secondary">{{ userData.lastName }}</span>
+          <!-- TODO: Maybe use these elements to show some addtional data above the profil -->
+          <!-- <span class="font-weight-bold">A nice fact</span>
+          <span class="text-secondary">or two about the user</span> -->
         </div>
       </div>
 
