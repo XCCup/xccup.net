@@ -50,7 +50,7 @@
                 >Alle Flüge anzeigen</router-link
               >
             </div>
-            <div class="text-center mt-5">
+            <div v-else class="text-center mt-5">
               <p class="fs-1">
                 <i class="bi bi-cloud-lightning-rain mx-2"></i>
                 <i class="bi bi-emoji-angry mx-2"></i>
