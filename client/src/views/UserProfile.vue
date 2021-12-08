@@ -119,6 +119,8 @@ const props = defineProps({
 // TODO: Warn user if there are unsaved changes
 const { fetchProfile, userData } = useUserProfile();
 
+fetchProfile();
+
 const editAvatarModal = ref(null);
 onMounted(() => {
   editAvatarModal.value = new Modal(document.getElementById("userAvatarModal"));
