@@ -61,42 +61,68 @@
         <FlightPhotos
           :photos="flight.photos"
           :flight-id="flight.id"
+          class="mb-4"
           @photos-updated="onPhotosUpdated"
         />
-        <button
-          class="btn btn-primary me-2"
-          type="submit"
-          :disabled="!submitButtonIsEnabled"
-          @click.prevent="onSubmit"
-        >
-          Speichern
-          <div
-            v-if="showSpinner"
-            class="spinner-border spinner-border-sm"
-            role="status"
-          >
-            <span class="visually-hidden">Loading...</span>
+        <div class="d-flex flex-wrap">
+          <div>
+            <button
+              class="btn btn-primary me-2"
+              type="submit"
+              :disabled="!submitButtonIsEnabled"
+              @click.prevent="onSubmit"
+            >
+              Speichern
+              <div
+                v-if="showSpinner"
+                class="spinner-border spinner-border-sm"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </button>
+            <button
+              class="btn btn-outline-danger me-2"
+              @click.prevent="onCancel"
+            >
+              Abbrechen
+            </button>
           </div>
-        </button>
-        <button class="btn btn-outline-danger" @click.prevent="onCancel">
-          Abbrechen
-        </button>
-        <p v-if="errorMessage" class="text-danger mt-2">
-          Da ist leider was schief gelaufen…
-        </p>
+
+          <button
+            class="btn btn-outline-danger ms-auto"
+            @click.prevent="deleteFlightModal.show()"
+          >
+            <i class="bi bi-trash d-inline me-1"></i>
+          </button>
+        </div>
+
+        <BaseError
+          id="saveProfileError"
+          :error-message="errorMessage"
+          class="mt-3"
+        />
       </div>
     </div>
   </div>
+  <BaseModal
+    modal-title="Flug löschen?"
+    confirm-button-text="Löschen"
+    modal-id="deleteFlightModal"
+    :confirm-action="onDeleteFlight"
+    :is-dangerous-action="true"
+  />
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import useFlight from "@/composables/useFlight";
 import ApiService from "@/services/ApiService";
 import { useRoute } from "vue-router";
 import { cloneDeep } from "lodash";
 import router from "../router";
 import { asyncForEach } from "../helper/utils";
+import { Modal } from "bootstrap";
 
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
@@ -113,6 +139,14 @@ const modifiedFlightData = ref({
 });
 const photosToDelete = ref([]);
 const photosAdded = ref([]);
+
+// Modal
+const deleteFlightModal = ref(null);
+onMounted(() => {
+  deleteFlightModal.value = new Modal(
+    document.getElementById("deleteFlightModal")
+  );
+});
 
 // Fetch flight data
 await fetchOne(route.params.id);
@@ -203,6 +237,19 @@ const updateSelectedGlider = () => {
     (g) => g.id === modifiedFlightData.value.glider.id
   );
   modifiedFlightData.value.glider = { ...newSelection };
+};
+
+// TODO: Should ther be a confirm message?
+const onDeleteFlight = async () => {
+  showSpinner.value = true;
+  try {
+    await ApiService.deleteFlight(flight.value.externalId);
+    router.push({ name: "Home" });
+  } catch (error) {
+    errorMessage.value = "Da ist leider was schief gelaufen";
+    showSpinner.value = false;
+    console.log({ error });
+  }
 };
 </script>
 
