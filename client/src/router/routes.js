@@ -33,10 +33,15 @@ export const Routes = [
   {
     path: "/flug/:flightId",
     name: "Flight",
-    // props: true,
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
     component: FlightView,
+  },
+  {
+    path: "/flug/:id/bearbeiten",
+    name: "FlightEdit",
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
+    component: () => import("../views/FlightEdit.vue"),
   },
   {
     path: "/:year/fluege/",
@@ -130,13 +135,7 @@ export const Routes = [
     meta: { requiredAuth: true },
     component: () => import("../views/FlightUpload.vue"),
   },
-  {
-    path: "/flug/:id/bearbeiten",
-    name: "FlightEdit",
-    props: true,
-    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () => import("../views/FlightEdit.vue"),
-  },
+
   {
     path: "/profil",
     name: "Profile",
