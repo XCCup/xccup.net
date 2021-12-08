@@ -123,12 +123,6 @@
                   >Flugebietsrekorde</router-link
                 >
               </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">…</a>
-              </li>
             </ul>
           </li>
           <li id="navbarLists" class="nav-item dropdown">
@@ -165,7 +159,9 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="#">Teams 2021</a>
+                <a class="dropdown-item text-decoration-line-through" href="#"
+                  >Teams 2021</a
+                >
               </li>
             </ul>
           </li>
@@ -188,8 +184,7 @@
             type="button"
             class="btn btn-outline-light btn-sm mx-1"
           >
-            <i class="bi bi-person"></i>
-            "Login"
+            <i class="bi bi-person"></i> Login
           </button>
         </router-link>
 
@@ -258,6 +253,7 @@ import { useRouter } from "vue-router";
 
 const { authData, loggedIn, logout, hasElevatedRole } = useUser();
 
+// TODO: Current year should actually be current season
 const currentYear = computed(() => new Date().getFullYear());
 
 const router = useRouter();
