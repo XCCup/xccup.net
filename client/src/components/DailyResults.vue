@@ -51,7 +51,10 @@
               >
             </div>
             <div v-else class="text-center mt-5">
-              <p class="fs-1">🌧 💨 🤯</p>
+              <p class="fs-1">
+                <i class="bi bi-cloud-lightning-rain"></i>
+                <i class="bi bi-emoji-angry"></i>
+              </p>
               Heute noch keine eingereichten Flüge vorhanden
             </div>
           </div>

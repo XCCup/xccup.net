@@ -31,7 +31,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Eingereichte Flüge</router-link
+                  ><i class="bi bi-send"></i> Eingereichte Flüge</router-link
                 >
               </li>
               <li>
@@ -41,9 +41,12 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Gesamtwertung</router-link
+                >
+                  <i class="bi bi-trophy"></i> Gesamtwertung</router-link
                 >
               </li>
+              <li><hr class="dropdown-divider" /></li>
+
               <li>
                 <router-link
                   :to="{
@@ -51,7 +54,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Teamwertung</router-link
+                  ><i class="bi bi-people"></i> Teamwertung</router-link
                 >
               </li>
               <li>
@@ -61,7 +64,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Vereinswertung</router-link
+                  ><i class="bi bi-award"></i> Vereinswertung</router-link
                 >
               </li>
               <li>
@@ -71,7 +74,8 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Newcomer</router-link
+                >
+                  <i class="bi bi-star"></i> Newcomer</router-link
                 >
               </li>
               <li>
@@ -81,7 +85,9 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Seniorenwertung</router-link
+                >
+                  <i class="bi bi-hourglass-split"></i>
+                  Seniorenwertung</router-link
                 >
               </li>
               <li>
@@ -91,9 +97,12 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Damenwertung</router-link
+                >
+                  <i class="bi bi-gender-female"></i> Damenwertung</router-link
                 >
               </li>
+              <li><hr class="dropdown-divider" /></li>
+
               <li>
                 <router-link
                   :to="{
@@ -101,7 +110,8 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Landesmeisterschaft RLP</router-link
+                  ><i class="bi bi-flag-fill"></i> Landesmeisterschaft
+                  RLP</router-link
                 >
               </li>
               <li>
@@ -111,16 +121,20 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Luxemburg Championat</router-link
+                >
+                  <i class="bi bi-flag"></i> Luxemburg Championat</router-link
                 >
               </li>
+              <li><hr class="dropdown-divider" /></li>
+
               <li>
                 <router-link
                   :to="{
                     name: 'SiteRecords',
                   }"
                   class="dropdown-item"
-                  >Flugebietsrekorde</router-link
+                  ><i class="bi bi-bookmark-star"></i>
+                  Flugebietsrekorde</router-link
                 >
               </li>
             </ul>
