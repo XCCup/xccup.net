@@ -30,13 +30,12 @@ const categories = [
     title: "Gesamtwertung",
     apiString: "",
   },
-  // TODO: Soll wirklich "gsSport" angezeigt werden?
   {
     name: "newcomer",
     title: "Newcomerwertung",
     apiString: "newcomer",
     remarks: () =>
-      `Es werden nur Flüge mit Geräten bis zur Klasse ${results.value.constants.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
+      `Es werden nur Flüge mit Geräten bis zur ${results.value.constants.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
   },
   {
     name: "seniors",
