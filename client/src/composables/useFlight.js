@@ -1,5 +1,7 @@
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
+import useAirbuddy from "@/composables/useAirbuddies";
+const { resetAirbuddyData } = useAirbuddy();
 
 const flight = ref(null);
 
@@ -10,6 +12,7 @@ export default () => {
 
   // Actions
   const fetchOne = async (flightId) => {
+    resetAirbuddyData();
     flight.value = (await ApiService.getFlight(flightId)).data;
   };
 
