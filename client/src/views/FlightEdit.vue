@@ -1,110 +1,106 @@
 <template>
   <!-- TODO: Add warning when leaving without saving -->
-  <div id="upload" class="container">
-    <h3>Flug bearbeiten</h3>
-    <!-- Glider select -->
-    <div class="col-md-12">
-      <div class="row d-flex align-items-end">
-        <div class="col-md-9">
-          <GliderSelect
-            v-model="modifiedFlightData.glider.id"
-            label="Fluggerät"
-            :show-label="true"
-            :gliders="listOfGliders"
-            @update:model-value="updateSelectedGlider()"
-          />
-        </div>
-        <div class="col-md-3 mt-3">
-          <router-link :to="{ name: 'ProfileHangar' }" class="d-grid gap-2">
-            <button type="button" class="btn btn-primary">
-              Liste bearbeiten
-            </button>
-          </router-link>
-        </div>
+  <div id="flightEdit" class="container-md">
+    <div class="d-flex flex-wrap">
+      <h3>Flug bearbeiten</h3>
+      <div class="ms-auto mt-3">
+        <button
+          class="btn btn-outline-danger"
+          @click.prevent="deleteFlightModal.show()"
+        >
+          <i class="bi bi-trash d-inline me-1"></i>
+        </button>
       </div>
-      <div class="my-3">
-        <div class="form-floating mb-3">
-          <textarea
-            id="flightReport"
-            v-model="modifiedFlightData.report"
-            class="form-control"
-            placeholder="Flugbericht"
-            style="height: 10em"
-          ></textarea>
-          <label for="flightReport">Flugbericht</label>
-        </div>
+    </div>
+    <div class="col-sm-8">
+      <GliderSelect
+        v-model="modifiedFlightData.glider.id"
+        :show-label="true"
+        :gliders="listOfGliders"
+        @update:model-value="updateSelectedGlider()"
+      />
+    </div>
 
-        <div class="form-check mb-3">
-          <input
-            id="hikeAndFlyCheckbox"
-            v-model="modifiedFlightData.hikeAndFly"
-            class="form-check-input"
-            type="checkbox"
-          />
-          <label class="form-check-label" for="hikeAndFlyCheckbox">
-            Hike & Fly
-          </label>
-        </div>
-        <div class="form-check mb-3">
-          <input
-            id="logbookCheckbox"
-            v-model="modifiedFlightData.onlyLogbook"
-            class="form-check-input"
-            type="checkbox"
-          />
-          <label class="form-check-label" for="logbookCheckbox">
-            Nur Flugbuch
-          </label>
-        </div>
-        <!-- Bulder -->
-        <h3>Bilder</h3>
-        <FlightPhotos
-          :photos="flight.photos"
-          :flight-id="flight.id"
-          class="mb-4"
-          @photos-updated="onPhotosUpdated"
+    <div class="my-3">
+      <div class="form-floating mb-3">
+        <textarea
+          id="flightReport"
+          v-model="modifiedFlightData.report"
+          class="form-control"
+          placeholder="Flugbericht"
+          style="height: 12em"
+        ></textarea>
+        <label for="flightReport">Flugbericht</label>
+      </div>
+
+      <div class="form-check mb-3">
+        <input
+          id="hikeAndFlyCheckbox"
+          v-model="modifiedFlightData.hikeAndFly"
+          class="form-check-input"
+          type="checkbox"
         />
-        <div class="d-flex flex-wrap">
-          <div>
-            <button
-              class="btn btn-primary me-2"
-              type="submit"
-              :disabled="!submitButtonIsEnabled"
-              @click.prevent="onSubmit"
-            >
-              Speichern
-              <div
-                v-if="showSpinner"
-                class="spinner-border spinner-border-sm"
-                role="status"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </button>
-            <button
-              class="btn btn-outline-danger me-2"
-              @click.prevent="onCancel"
-            >
-              Abbrechen
-            </button>
-          </div>
-
+        <label class="form-check-label" for="hikeAndFlyCheckbox">
+          Hike & Fly
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input
+          id="logbookCheckbox"
+          v-model="modifiedFlightData.onlyLogbook"
+          class="form-check-input"
+          type="checkbox"
+        />
+        <label class="form-check-label" for="logbookCheckbox">
+          Nur Flugbuch
+        </label>
+      </div>
+      <!-- Bulder -->
+      <h3>Bilder</h3>
+      <FlightPhotos
+        :photos="flight.photos"
+        :flight-id="flight.id"
+        class="mb-4"
+        @photos-updated="onPhotosUpdated"
+      />
+      <div class="d-flex flex-wrap">
+        <div>
           <button
-            class="btn btn-outline-danger ms-auto"
-            @click.prevent="deleteFlightModal.show()"
+            class="btn btn-primary me-2"
+            type="submit"
+            :disabled="!submitButtonIsEnabled"
+            @click.prevent="onSubmit"
           >
-            <i class="bi bi-trash d-inline me-1"></i>
+            Speichern
+            <div
+              v-if="showSpinner"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </button>
+          <button class="btn btn-outline-danger me-2" @click.prevent="onCancel">
+            Abbrechen
           </button>
         </div>
 
-        <BaseError
-          id="saveProfileError"
-          :error-message="errorMessage"
-          class="mt-3"
-        />
+        <button
+          class="btn btn-outline-danger ms-auto"
+          @click.prevent="deleteFlightModal.show()"
+        >
+          <i class="bi bi-trash d-inline me-1"></i>
+        </button>
       </div>
+
+      <BaseError
+        id="saveProfileError"
+        :error-message="errorMessage"
+        class="mt-3"
+      />
     </div>
   </div>
+
   <BaseModal
     modal-title="Flug löschen?"
     confirm-button-text="Löschen"
