@@ -68,7 +68,6 @@ describe("check flight upload page", () => {
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
-    cy.get("#baroStatsTable").find("td").contains("0 m");
     cy.get("#cyFlightDetailsTable1").find("td").contains(expectedUserName);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);

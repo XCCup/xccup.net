@@ -25,13 +25,13 @@
       <div class="my-3">
         <div class="form-floating mb-3">
           <textarea
-            id="floatingTextarea2"
+            id="flightReport"
             v-model="modifiedFlightData.report"
             class="form-control"
             placeholder="Flugbericht"
             style="height: 10em"
           ></textarea>
-          <label for="floatingTextarea2">Flugbericht</label>
+          <label for="flightReport">Flugbericht</label>
         </div>
 
         <div class="form-check mb-3">

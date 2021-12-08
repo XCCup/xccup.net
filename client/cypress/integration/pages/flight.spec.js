@@ -19,8 +19,8 @@ describe("check flight page", () => {
     cy.get("#mapContainer");
   });
 
-  it("check presence of barogramm", () => {
-    cy.get("#flight-barogramm");
+  it("check presence of position flight stats", () => {
+    cy.get("#positionStatsTable").find("td");
   });
 
   it("check airbuddies", () => {

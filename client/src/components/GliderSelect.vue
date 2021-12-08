@@ -1,6 +1,7 @@
 <template>
   <label v-if="showLabel" class="form-label">{{ label }}</label>
   <select
+    id="glider-select"
     class="form-select"
     :value="modelValue"
     :disabled="isDisabled"
