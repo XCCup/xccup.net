@@ -25,7 +25,6 @@ describe("check flight page", () => {
     cy.get("#glider-select")
       .select(newGliderId)
       .should("have.value", newGliderId);
-    cy.get("button").contains("Liste bearbeiten");
 
     // TODO: How to check for a fragment of text?
     // cy.get("#flightReport").contains(oldFlightReport);

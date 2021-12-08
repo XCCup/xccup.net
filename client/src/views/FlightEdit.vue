@@ -1,102 +1,124 @@
 <template>
   <!-- TODO: Add warning when leaving without saving -->
-  <div id="upload" class="container">
-    <h3>Flug bearbeiten</h3>
-    <!-- Glider select -->
-    <div class="col-md-12">
-      <div class="row d-flex align-items-end">
-        <div class="col-md-9">
-          <GliderSelect
-            v-model="modifiedFlightData.glider.id"
-            label="Fluggerät"
-            :show-label="true"
-            :gliders="listOfGliders"
-            @update:model-value="updateSelectedGlider()"
-          />
-        </div>
-        <div class="col-md-3 mt-3">
-          <router-link :to="{ name: 'ProfileHangar' }" class="d-grid gap-2">
-            <button type="button" class="btn btn-primary">
-              Liste bearbeiten
-            </button>
-          </router-link>
-        </div>
-      </div>
-      <div class="my-3">
-        <div class="form-floating mb-3">
-          <textarea
-            id="flightReport"
-            v-model="modifiedFlightData.report"
-            class="form-control"
-            placeholder="Flugbericht"
-            style="height: 10em"
-          ></textarea>
-          <label for="flightReport">Flugbericht</label>
-        </div>
-
-        <div class="form-check mb-3">
-          <input
-            id="hikeAndFlyCheckbox"
-            v-model="modifiedFlightData.hikeAndFly"
-            class="form-check-input"
-            type="checkbox"
-          />
-          <label class="form-check-label" for="hikeAndFlyCheckbox">
-            Hike & Fly
-          </label>
-        </div>
-        <div class="form-check mb-3">
-          <input
-            id="logbookCheckbox"
-            v-model="modifiedFlightData.onlyLogbook"
-            class="form-check-input"
-            type="checkbox"
-          />
-          <label class="form-check-label" for="logbookCheckbox">
-            Nur Flugbuch
-          </label>
-        </div>
-        <!-- Bulder -->
-        <h3>Bilder</h3>
-        <FlightPhotos
-          :photos="flight.photos"
-          :flight-id="flight.id"
-          @photos-updated="onPhotosUpdated"
-        />
+  <div id="flightEdit" class="container-md">
+    <div class="d-flex flex-wrap">
+      <h3>Flug bearbeiten</h3>
+      <div class="ms-auto mt-3">
         <button
-          class="btn btn-primary me-2"
-          type="submit"
-          :disabled="!submitButtonIsEnabled"
-          @click.prevent="onSubmit"
+          class="btn btn-outline-danger"
+          @click.prevent="deleteFlightModal.show()"
         >
-          Speichern
-          <div
-            v-if="showSpinner"
-            class="spinner-border spinner-border-sm"
-            role="status"
-          >
-            <span class="visually-hidden">Loading...</span>
-          </div>
+          <i class="bi bi-trash d-inline me-1"></i>
         </button>
-        <button class="btn btn-outline-danger" @click.prevent="onCancel">
-          Abbrechen
-        </button>
-        <p v-if="errorMessage" class="text-danger mt-2">
-          Da ist leider was schief gelaufen…
-        </p>
       </div>
     </div>
+    <div class="col-sm-8">
+      <GliderSelect
+        v-model="modifiedFlightData.glider.id"
+        :show-label="true"
+        :gliders="listOfGliders"
+        @update:model-value="updateSelectedGlider()"
+      />
+    </div>
+
+    <div class="my-3">
+      <div class="form-floating mb-3">
+        <textarea
+          id="flightReport"
+          v-model="modifiedFlightData.report"
+          class="form-control"
+          placeholder="Flugbericht"
+          style="height: 12em"
+        ></textarea>
+        <label for="flightReport">Flugbericht</label>
+      </div>
+
+      <div class="form-check mb-3">
+        <input
+          id="hikeAndFlyCheckbox"
+          v-model="modifiedFlightData.hikeAndFly"
+          class="form-check-input"
+          type="checkbox"
+        />
+        <label class="form-check-label" for="hikeAndFlyCheckbox">
+          Hike & Fly
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input
+          id="logbookCheckbox"
+          v-model="modifiedFlightData.onlyLogbook"
+          class="form-check-input"
+          type="checkbox"
+        />
+        <label class="form-check-label" for="logbookCheckbox">
+          Nur Flugbuch
+        </label>
+      </div>
+      <!-- Bulder -->
+      <h3>Bilder</h3>
+      <FlightPhotos
+        :photos="flight.photos"
+        :flight-id="flight.id"
+        class="mb-4"
+        @photos-updated="onPhotosUpdated"
+      />
+      <div class="d-flex flex-wrap">
+        <div>
+          <button
+            class="btn btn-primary me-2"
+            type="submit"
+            :disabled="!submitButtonIsEnabled"
+            @click.prevent="onSubmit"
+          >
+            Speichern
+            <div
+              v-if="showSpinner"
+              class="spinner-border spinner-border-sm"
+              role="status"
+            >
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </button>
+          <button class="btn btn-outline-danger me-2" @click.prevent="onCancel">
+            Abbrechen
+          </button>
+        </div>
+
+        <button
+          class="btn btn-outline-danger ms-auto"
+          @click.prevent="deleteFlightModal.show()"
+        >
+          <i class="bi bi-trash d-inline me-1"></i>
+        </button>
+      </div>
+
+      <BaseError
+        id="saveProfileError"
+        :error-message="errorMessage"
+        class="mt-3"
+      />
+    </div>
   </div>
+
+  <BaseModal
+    modal-title="Flug löschen?"
+    confirm-button-text="Löschen"
+    modal-id="deleteFlightModal"
+    :confirm-action="onDeleteFlight"
+    :is-dangerous-action="true"
+  />
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import useFlight from "@/composables/useFlight";
 import ApiService from "@/services/ApiService";
 import { useRoute } from "vue-router";
 import { cloneDeep } from "lodash";
 import router from "../router";
 import { asyncForEach } from "../helper/utils";
+import { Modal } from "bootstrap";
 
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
@@ -113,6 +135,14 @@ const modifiedFlightData = ref({
 });
 const photosToDelete = ref([]);
 const photosAdded = ref([]);
+
+// Modal
+const deleteFlightModal = ref(null);
+onMounted(() => {
+  deleteFlightModal.value = new Modal(
+    document.getElementById("deleteFlightModal")
+  );
+});
 
 // Fetch flight data
 await fetchOne(route.params.id);
@@ -157,7 +187,7 @@ const onSubmit = async () => {
       },
     });
   } catch (error) {
-    errorMessage.value = error.response;
+    errorMessage.value = "Da ist leider was schief gelaufen";
     showSpinner.value = false;
     console.log({ error });
   }
@@ -203,6 +233,19 @@ const updateSelectedGlider = () => {
     (g) => g.id === modifiedFlightData.value.glider.id
   );
   modifiedFlightData.value.glider = { ...newSelection };
+};
+
+// TODO: Should ther be a confirm message?
+const onDeleteFlight = async () => {
+  showSpinner.value = true;
+  try {
+    await ApiService.deleteFlight(flight.value.externalId);
+    router.push({ name: "Home" });
+  } catch (error) {
+    errorMessage.value = "Da ist leider was schief gelaufen";
+    showSpinner.value = false;
+    console.log({ error });
+  }
 };
 </script>
 

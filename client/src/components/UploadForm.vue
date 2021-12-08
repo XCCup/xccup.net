@@ -40,27 +40,15 @@
         </div>
       </div>
       <!-- Glider select -->
-      <div class="col-md-12">
-        <div class="row d-flex align-items-end">
-          <div class="col-md-8">
-            <GliderSelect
-              v-model="defaultGlider"
-              label="Fluggerät"
-              :show-label="true"
-              :gliders="listOfGliders"
-              :is-disabled="!flightId"
-            />
-          </div>
-          <div class="col-md-4">
-            <router-link :to="{ name: 'ProfileHangar' }" class="d-grid gap-2">
-              <button type="button" class="btn btn-primary mt-3">
-                <!-- TODO: Save inputs in state -->
-                Liste bearbeiten
-              </button>
-            </router-link>
-          </div>
-        </div>
-      </div>
+
+      <GliderSelect
+        v-model="defaultGlider"
+        label="Fluggerät"
+        :show-label="true"
+        :gliders="listOfGliders"
+        :is-disabled="!flightId"
+      />
+
       <!-- Report -->
       <div class="form-floating my-3">
         <textarea
