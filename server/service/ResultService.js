@@ -132,9 +132,9 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
-    const gliderClasses =
-      seasonDetail.rankingClasses[NEWCOMER_MAX_RANKING_CLASS].gliderClasses ??
-      [];
+    const rankingClass =
+      seasonDetail.rankingClasses[NEWCOMER_MAX_RANKING_CLASS];
+    const gliderClasses = rankingClass.gliderClasses ?? [];
     where.glider = {
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
@@ -150,7 +150,10 @@ const service = {
 
     return addConstantInformationToResult(
       resultsNewcomer,
-      { NUMBER_OF_SCORED_FLIGHTS, NEWCOMER_MAX_RANKING_CLASS },
+      {
+        NUMBER_OF_SCORED_FLIGHTS,
+        NEWCOMER_MAX_RANKING_CLASS: rankingClass.description,
+      },
       limit
     );
   },
