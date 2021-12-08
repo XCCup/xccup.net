@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 id="userAvatarModalLabel" class="modal-title">
-            Avatar bearbeiten
+            Profilbild bearbeiten
           </h5>
           <button
             type="button"
