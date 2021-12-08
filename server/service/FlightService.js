@@ -100,7 +100,7 @@ const flightService = {
 
     if (
       today.getHours() + today.getTimezoneOffset() / 2 >=
-      SWITCHOVER_HOUR_TODAY_RANKING
+      SWITCHOVER_HOUR_TODAY_RANKING - 1 // Was off by one
     ) {
       fromDay++;
       tillDay++;
