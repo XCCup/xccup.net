@@ -82,11 +82,5 @@ Cypress.Commands.add("logout", () => {
 });
 
 Cypress.Commands.add("textareaIncludes", function (selector, text) {
-  cy.get(selector)
-    .invoke("val")
-    .then((textOfVal) => {
-      console.log("TX: ", textOfVal);
-      return textOfVal;
-    })
-    .should("contains", text);
+  cy.get(selector).invoke("val").should("contains", text);
 });
