@@ -1,15 +1,17 @@
 <template>
   <div
-    id="flightFilterModal"
+    id="resultFilterModal"
     class="modal fade"
     tabindex="-1"
-    aria-labelledby="flightFilterModalLabel"
+    aria-labelledby="resultFilterModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="flightFilterModalLabel" class="modal-title">Flugfilter</h5>
+          <h5 id="resultFilterModalLabel" class="modal-title">
+            Wertungsfilter
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -20,14 +22,6 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <BaseSelect
-              id="filterSelectName"
-              v-model="selects.user"
-              label="Name"
-              :show-label="true"
-              :options="users"
-              :add-empty-option="true"
-            />
             <BaseSelect
               id="filterSelectSite"
               v-model="selects.site"
@@ -45,14 +39,6 @@
               :add-empty-option="true"
             />
             <BaseSelect
-              id="filterSelectTeam"
-              v-model="selects.team"
-              label="Team"
-              :show-label="true"
-              :options="teams"
-              :add-empty-option="true"
-            />
-            <BaseSelect
               id="filterSelectRanking"
               v-model="selects.ranking"
               label="Wertungsklasse"
@@ -60,6 +46,45 @@
               :options="rankings"
               :add-empty-option="true"
             />
+            <BaseSelect
+              id="filterSelectRegion"
+              v-model="selects.region"
+              label="Region*"
+              :show-label="true"
+              :options="regions"
+              :add-empty-option="true"
+            />
+            <BaseSelect
+              id="filterSelectGender"
+              v-model="selects.gender"
+              label="Geschlecht"
+              :show-label="true"
+              :options="genders"
+              :add-empty-option="true"
+            />
+            <div class="form-check mt-3 mb-3">
+              <input
+                id="filterCheckWeekend"
+                v-model="weekend"
+                class="form-check-input"
+                type="checkbox"
+              />
+              <label class="form-check-label" for="flexCheckNewsletter">
+                Wochenende und Feiertage*
+              </label>
+            </div>
+            <div class="form-check mb-3">
+              <input
+                id="filterCheckHikeAndFly"
+                v-model="hikeAndFly"
+                class="form-check-input"
+                type="checkbox"
+              />
+              <label class="form-check-label" for="flexCheckNewsletter">
+                Hike & Fly*
+              </label>
+            </div>
+            <p>* Hierbei handelt es sich um experimentelle Optionen</p>
           </div>
         </div>
         <div class="modal-footer">
@@ -96,67 +121,80 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
-import useFlights from "@/composables/useFlights";
-import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
+import { checkAnyValueOfObjectDefined } from "../helper/utils";
 
-const { filterFlightsBy, filterActive } = useFlights();
+const emit = defineEmits(["filter-results"]);
 
+const props = defineProps({
+  filterActive: {
+    type: Boolean,
+    required: true,
+  },
+});
 const selects = reactive({
-  user: "",
   site: "",
   club: "",
   team: "",
   ranking: "",
+  region: "",
+  gender: "",
 });
 const filterOptions = (await ApiService.getFilterOptions()).data;
-const userData = filterOptions.userNames;
 const siteData = filterOptions.siteNames;
 const clubData = filterOptions.clubNames;
 const teamData = filterOptions.teamNames;
 const rankingData = filterOptions.rankingClasses;
-const users = ref(userData.map((e) => `${e.firstName} ${e.lastName}`));
+const regions = filterOptions.regions;
+const genderData = filterOptions.genders;
 const sites = ref(siteData.map((e) => e.name));
 const clubs = ref(clubData.map((e) => e.name));
-const teams = ref(teamData.map((e) => e.name));
 const rankings = ref(Object.values(rankingData).map((e) => e.shortDescription));
-
-const onClose = () => {
-  //Needed?
-};
+const genders = ref(Object.values(genderData).map((e) => e));
+const weekend = ref(false);
+const hikeAndFly = ref(false);
 
 const onActivate = async () => {
-  // The variable name must match the appropriate query parameter in /flights
-  const userId = findIdByUserName();
+  // The variable name must match the appropriate query parameter in /results
   const siteId = findIdByName(selects.site, siteData);
   const clubId = findIdByName(selects.club, clubData);
-  const teamId = findIdByName(selects.team, teamData);
   const rankingClass = findKeyOfRankingClass(selects.team, teamData);
+  const gender = selects.gender ? selects.gender : undefined;
+  const region = selects.region ? selects.region : undefined;
+  const isWeekend = weekend.value ? true : undefined;
+  const isHikeAndFly = hikeAndFly.value ? true : undefined;
 
-  filterFlightsBy({ userId, siteId, clubId, teamId, rankingClass });
+  emit("filter-results", {
+    siteId,
+    clubId,
+    rankingClass,
+    region,
+    isWeekend,
+    isHikeAndFly,
+    gender,
+  });
 };
 
-const anyFilterOptionSet = computed(() =>
-  checkIfAnyValueOfObjectIsDefined(selects)
+watch(
+  () => props.filterActive,
+  (newVal, oldVal) => {
+    // Clear all fields if an external source caused an reset
+    if (!oldVal && newVal) onClear();
+  }
 );
 
-watch(filterActive, (newVal, oldVal) => {
-  // Clear all fields if an external source caused an reset
-  if (!oldVal && newVal) onClear();
-});
+const anyFilterOptionSet = computed(() =>
+  checkAnyValueOfObjectDefined(selects)
+);
 
-const onClear = async () => {
-  //Should the modal close after clear?
+const onClear = () => {
   Object.keys(selects).forEach((key) => (selects[key] = ""));
+  weekend.value = false;
+  hikeAndFly.value = false;
 };
 
 function findIdByName(selectObject, initalData) {
   return selectObject
     ? initalData.find((e) => e.name == selectObject).id
-    : undefined;
-}
-function findIdByUserName() {
-  return selects.user
-    ? userData.find((e) => `${e.firstName} ${e.lastName}` == selects.user).id
     : undefined;
 }
 function findKeyOfRankingClass() {

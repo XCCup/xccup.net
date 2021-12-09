@@ -14,13 +14,16 @@ router.get(
     query("year").optional().isInt(),
     query("limit").optional().isInt(),
     query("isWeekend").optional().isBoolean(),
+    query("isHikeAndFly").optional().isBoolean(),
     query("isSenior").optional().isBoolean(),
     query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("gender").optional().not().isEmpty().trim().escape(),
     query("site").optional().not().isEmpty().trim().escape(),
+    query("siteId").optional().isUUID(),
     query("region").optional().not().isEmpty().trim().escape(),
     query("state").optional().not().isEmpty().trim().escape(),
     query("club").optional().not().isEmpty().trim().escape(),
+    query("clubId").optional().isUUID(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -29,30 +32,36 @@ router.get(
       rankingClass,
       gender,
       isWeekend,
+      isHikeAndFly,
       isSenior,
       limit,
       site,
+      siteId,
       region,
       state,
       club,
+      clubId,
     } = req.query;
 
     try {
       const value = getCache(req);
       if (value) return res.json(value);
 
-      const result = await service.getOverall(
+      const result = await service.getOverall({
         year,
         rankingClass,
         gender,
         isWeekend,
+        isHikeAndFly,
         isSenior,
         limit,
         site,
+        siteId,
         region,
         state,
-        club
-      );
+        club,
+        clubId,
+      });
 
       setCache(req, result);
 

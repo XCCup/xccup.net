@@ -5,12 +5,14 @@ const { getAllBrands } = require("../service/FlightService");
 const {
   STATE: flightStates,
   TYPE: types,
+  REGIONS,
 } = require("../constants/flight-constants");
 const {
   GENDER: genders,
   COUNTRY: countries,
   STATE: conutryStates,
   TSHIRT_SIZES,
+  GENDER,
 } = require("../constants/user-constants");
 
 const { getCache, setCache } = require("./CacheManager");
@@ -103,6 +105,8 @@ router.get("/filterOptions", async (req, res, next) => {
       teamNames: values[3],
       brandNames: values[4],
       rankingClasses: values[5].rankingClasses,
+      regions: REGIONS,
+      genders: GENDER,
     };
 
     setCache(req, resultObject);

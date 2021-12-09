@@ -13,6 +13,7 @@
     }"
   >
     <option v-if="!showLabel" disabled value="" selected>{{ label }}</option>
+    <option v-if="showLabel && addEmptyOption" value="" selected></option>
     <option
       v-for="option in options"
       :key="option"
@@ -49,6 +50,10 @@ defineProps({
     default: "",
   },
   showLabel: {
+    type: Boolean,
+    default: false,
+  },
+  addEmptyOption: {
     type: Boolean,
     default: false,
   },

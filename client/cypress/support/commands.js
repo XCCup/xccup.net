@@ -80,3 +80,7 @@ Cypress.Commands.add("logout", () => {
   cy.get("#userNavDropdownMenu").click();
   cy.get("li").contains("Abmelden").click();
 });
+
+Cypress.Commands.add("textareaIncludes", function (selector, text) {
+  cy.get(selector).invoke("val").should("contains", text);
+});

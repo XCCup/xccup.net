@@ -2,7 +2,7 @@ const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 
 const { deleteImages, createThumbnail } = require("../helper/ImageUtils");
 
-const THUMBNAIL_IMAGE_HEIGHT = 100;
+const THUMBNAIL_IMAGE_HEIGHT = 150;
 
 const service = {
   getByUserId: async (userId) => {
@@ -12,7 +12,10 @@ const service = {
   },
 
   create: async (picture) => {
-    const pathThumb = createThumbnail(picture.path, THUMBNAIL_IMAGE_HEIGHT);
+    const pathThumb = await createThumbnail(
+      picture.path,
+      THUMBNAIL_IMAGE_HEIGHT
+    );
     return ProfilePicture.create({ ...picture, pathThumb });
   },
 
