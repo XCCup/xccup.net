@@ -27,7 +27,7 @@ describe("check flight page", () => {
     cy.get("button").contains("Airbuddies").click({ force: true });
     cy.get("h5").should("include.text", "Sonia Harber");
 
-    // Test check box
+    // TODO: Test check box and visit buddy flight
   });
 
   it("check flight details", () => {

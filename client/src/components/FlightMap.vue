@@ -65,9 +65,6 @@ const tracklogs = computed(() =>
   processTracklogs(flight.value, activeAirbuddyFlights.value)
 );
 
-// Watch the tracklogs for updated content like airbuddy flights
-watch(tracklogs, () => drawTracks(tracklogs.value));
-
 onMounted(() => {
   // TODO:
   // Whenever using anything based on OpenStreetMap, an attribution is obligatory as per the copyright notice.
@@ -99,6 +96,9 @@ onMounted(() => {
   drawTracks(tracklogs.value);
   drawTurnpoints(flight.value.flightTurnpoints);
   drawAirspaces(convertMapBoundsToQueryString(trackLines.value[0]));
+
+  // Watch the tracklogs for updated content like airbuddy flights
+  watch(tracklogs, () => drawTracks(tracklogs.value));
 });
 
 onBeforeUnmount(() => {

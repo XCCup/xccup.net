@@ -35,12 +35,17 @@ export default () => {
     });
   };
 
+  const resetAirbuddyData = () => {
+    airbuddiesFlightData.value = [];
+    checkedAirbuddyFlightIds.value = [];
+  };
+
   return {
     fetchAll,
     updateCheckedAirbuddies,
+    resetAirbuddyData,
     airbuddiesFlightData: readonly(airbuddiesFlightData),
     checkedAirbuddyFlightIds: readonly(checkedAirbuddyFlightIds),
-
     activeAirbuddyFlights,
   };
 };
