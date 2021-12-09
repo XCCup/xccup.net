@@ -1,9 +1,6 @@
 describe("check flight upload page", () => {
   before(() => {
-    cy.seedDb();
-
     cy.visit("/");
-    cy.get("button").contains("Flug hochladen").click();
   });
 
   it("test upload only possible for logged-in user", () => {
@@ -15,19 +12,16 @@ describe("check flight upload page", () => {
   it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const reportText = "This is a flight report.";
-    // const photo1 = "rachtig.jpg";
-    // const photo2 = "bremm.jpg";
+    const photo1 = "rachtig.jpg";
+    const photo2 = "bremm.jpg";
 
     const expectedTakeoff = "Laubenheim";
     const expectedUserName = "Ramona Gislason";
     const expectedAirtime = "1:23h";
-    // const expectedLanding = "API Disabled";
 
     cy.loginNormalUser();
 
     cy.get("button").contains("Flug hochladen").click();
-    // TODO: This fails…
-    // cy.get("h3").should("have.text", "Flug hochladen");
 
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
@@ -39,25 +33,40 @@ describe("check flight upload page", () => {
 
     // Increase timeout because calclation takes some time
     cy.get('input[type="text"]', {
-      timeout: 10000,
+      timeout: 20000,
     }).should("have.value", expectedTakeoff);
 
-    // TODO:
-
     // Add photos
-    // cy.fixture(photo1).then((fileContent) => {
-    //   cy.get('input[type="file"]#photo-input').attachFile({
-    //     fileContent,
-    //     fileName: photo1,
-    //     mimeType: "image/jpg",
-    //   });
-    // });
+    cy.fixture(photo1)
+      .then(Cypress.Blob.base64StringToBlob)
+      .then((fileContent) => {
+        cy.get('input[type="file"]#photo-input').attachFile({
+          fileContent,
+          fileName: photo1,
+          mimeType: "image/jpg",
+        });
+      });
+    cy.fixture(photo2)
+      .then(Cypress.Blob.base64StringToBlob)
+      .then((fileContent) => {
+        cy.get('input[type="file"]#photo-input').attachFile({
+          fileContent,
+          fileName: photo2,
+          mimeType: "image/jpg",
+        });
+      });
 
-    // cy.get("photo-1", {
-    //   timeout: 10000,
-    // }); // How to test this?
+    cy.get("#photo-0", {
+      timeout: 10000,
+    }).should("exist");
+    cy.get("#photo-1", {
+      timeout: 10000,
+    }).should("exist");
+    cy.get("#add-photo", {
+      timeout: 10000,
+    }).should("exist");
 
-    // After igc upload these fields should be enabled
+    // Add data to differnt inputs
     cy.get(".cy-flight-report").type(reportText);
     cy.get("#hikeAndFlyCheckbox").click();
     cy.get("#logbookCheckbox").click();
@@ -80,8 +89,6 @@ describe("check flight upload page", () => {
 
     cy.get("button").contains("Flug hochladen").click();
 
-    // cy.get("h3").contains("Flug hochladen");
-
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
         fileContent: fileContent.toString(),
@@ -103,9 +110,6 @@ describe("check flight upload page", () => {
 
     cy.get("button").contains("Flug hochladen").click();
 
-    // TODO: This fails…
-    // cy.get("h3").contains("Flug hochladen");
-
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
         fileContent: fileContent.toString(),
@@ -126,8 +130,6 @@ describe("check flight upload page", () => {
       "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
 
     cy.get("button").contains("Flug hochladen").click();
-
-    // cy.get("h3").contains("Flug hochladen");
 
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
