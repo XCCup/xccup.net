@@ -88,7 +88,7 @@
       </div>
       <!-- Add photo button -->
       <!-- TODO: Position button in center -->
-      <div v-if="flightId" id="add-photo" class="col-4">
+      <div v-if="flightId && !uploadsExceeded" id="add-photo" class="col-4">
         <figure class="figure position-relative">
           <img
             src="@/assets/images/placeholder.png"
@@ -105,6 +105,11 @@
           </button>
         </figure>
       </div>
+      <BaseError
+        v-if="uploadsExceeded"
+        class="mb-3"
+        error-message="Dein Kontingent an Uploads ist vorerst aufgebraucht. Komme bitte zu einem späteren Zeitpunkt wieder. Deinen Flug kannst du trotzdem absenden."
+      />
     </div>
   </div>
 </template>
@@ -116,6 +121,7 @@ import useUser from "@/composables/useUser";
 import ApiService from "@/services/ApiService";
 import { v4 as uuidv4 } from "uuid";
 import { remove, last } from "lodash";
+import BaseError from "./BaseError.vue";
 
 const { getUserId } = useUser();
 const baseURL = getbaseURL();
@@ -137,6 +143,8 @@ const emit = defineEmits(["photos-updated"]);
 const _photos = ref([]);
 const photosRemoved = ref([]);
 const photosAdded = ref([]);
+
+const uploadsExceeded = ref(false);
 
 // Copy all photos from props to the local array with only mandatory properties
 props.photos.forEach((e) =>
@@ -229,6 +237,8 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     // Inform the parent about edits
     photosChanged();
   } catch (error) {
+    if (error.response.status == 429) uploadsExceeded.value = true;
+
     console.log(error);
     // Trigger the retry button
     _photos.value[index].id = "failed";
