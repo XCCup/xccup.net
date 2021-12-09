@@ -41,12 +41,9 @@ router.post(
     if (validationHasErrors(req, res)) return;
 
     try {
-      const originalname = req.file.originalname;
-      const mimetype = req.file.mimetype;
-      const size = req.file.size;
-      const path = req.file.path;
-      const flightId = req.body.flightId;
-      const timestamp = req.body.timestamp; //TODO Will be done in backend or frontend???
+      const { originalname, mimetype, size, path } = req.file;
+      const { flightId, timestamp } = req.body;
+      //TODO: Timestamp will be done in backend or frontend???
 
       const userId = req.user.id;
 
