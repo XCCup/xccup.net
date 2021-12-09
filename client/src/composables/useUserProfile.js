@@ -21,6 +21,7 @@ const userData = ref({
 });
 
 // Make an editable copy of the userData state
+// TODO: Should this be a cloneDeep?
 const modifiedUserData = ref({ ...userData.value });
 
 export default () => {
