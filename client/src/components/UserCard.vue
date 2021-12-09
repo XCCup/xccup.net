@@ -96,6 +96,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { getUserAvatar } from "../helper/profilePictureHelper";
 import RankingClass from "./RankingClass.vue";
 
 const props = defineProps({
@@ -107,9 +108,7 @@ const props = defineProps({
 
 const emit = defineEmits(["open-message-dialog"]);
 
-const avatarUrl = ref(
-  `https://avatars.dicebear.com/api/avataaars/${props.user.id}.svg`
-);
+const avatarUrl = ref(getUserAvatar(props.user), true);
 
 const createRankingClass = (glider) => {
   return {
@@ -126,6 +125,7 @@ const onMessagePilot = () => {
 <style scoped>
 img {
   max-height: 100px;
+  max-width: 150px;
 }
 button {
   max-width: 100px;

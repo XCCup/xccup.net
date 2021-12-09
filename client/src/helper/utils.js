@@ -25,3 +25,21 @@ export function isStrongPassword(value) {
     /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
   return value.match(regex);
 }
+
+export function convertRemoteImageToDataUrl(url, callback) {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open("GET", url);
+  xhr.responseType = "blob";
+  xhr.send();
+}
+
+export function checkIfAnyValueOfObjectIsDefined(object) {
+  return object && Object.values(object).find((v) => !!v) ? true : false;
+}

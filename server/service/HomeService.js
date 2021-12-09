@@ -91,7 +91,9 @@ async function retrieveRankingClassResults(currentSeason) {
 
   const rankingRequests = {};
   for (const [key] of Object.entries(currentSeason.rankingClasses)) {
-    rankingRequests[key] = (await resultService.getOverall(null, key)).values;
+    rankingRequests[key] = (
+      await resultService.getOverall({ rankingClass: key })
+    ).values;
   }
   return Promise.all(Object.values(rankingRequests)).then((values) => {
     const keys = Object.keys(rankingRequests);

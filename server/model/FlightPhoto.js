@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     size: {
       type: DataTypes.BIGINT,
     },
-    isYoutubeLink: {
+    isExternalLink: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },

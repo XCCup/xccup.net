@@ -44,6 +44,7 @@ router.get(
   [
     query("year").optional().isInt(),
     query("site").optional().not().isEmpty().trim().escape(),
+    query("siteId").optional().isUUID(),
     query("type").optional().not().isEmpty().trim().escape(),
     query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
