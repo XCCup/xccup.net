@@ -38,7 +38,6 @@ describe("check flight page", () => {
     cy.get("button").contains("Speichern").click();
     cy.url().should("include", `/flug/${flightId}`);
 
-    // TODO: How to chain this?
     cy.get("#cyFlightDetailsTable1").contains("td", "U-Turn Bodyguard");
     cy.get("#cyFlightDetailsTable1").contains("td", "400m Höhenunterschied");
 
