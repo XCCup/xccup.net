@@ -38,7 +38,7 @@ if (!(userId && token)) {
 
     if (res.status == 200) {
       saveTokenData(res.data);
-      router.push({ name: "Home" });
+      router.push({ name: "Profile" });
     }
 
     if (res.status == 404) {

@@ -5,13 +5,16 @@
       <!-- Profile Picture -->
       <div class="col-md-3">
         <div class="d-flex flex-column align-items-center text-center p-3">
-          <img
-            class="rounded-circle"
-            width="150px"
-            src="https://avatars.dicebear.com/api/big-ears/your-custom-seed.svg?b=%23d9eb37"
-          />
-          <span class="font-weight-bold">Foo</span>
-          <span class="text-secondary">Bar</span>
+          <img class="rounded-circle" :src="avatarUrl" />
+          <div class="row">
+            <i
+              class="col bi bi-pencil text-primary avatar-editor-button"
+              @click.prevent="onEditAvatar"
+            ></i>
+          </div>
+          <!-- TODO: Maybe use these elements to show some addtional data above the profil -->
+          <!-- <span class="font-weight-bold">A nice fact</span>
+          <span class="text-secondary">or two about the user</span> -->
         </div>
       </div>
 
@@ -89,14 +92,19 @@
       </div>
     </div>
   </div>
+  <ModalUserAvatar :avatar-url="avatarUrl" @avatar-changed="updateAvatar" />
 </template>
 <script setup>
 import { setWindowName } from "../helper/utils";
 import useUserProfile from "@/composables/useUserProfile";
-import { onMounted } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { Tab } from "bootstrap";
+import { getUserAvatar } from "../helper/profilePictureHelper";
+import ModalUserAvatar from "../components/ModalUserAvatar.vue";
+import { Modal } from "bootstrap";
 
 setWindowName("Profil");
+
 const props = defineProps({
   edit: {
     type: Boolean,
@@ -109,21 +117,35 @@ const props = defineProps({
 });
 
 // TODO: Warn user if there are unsaved changes
-const { fetchProfile } = useUserProfile();
+const { fetchProfile, userData } = useUserProfile();
 
-try {
-  // Get user details
-  await fetchProfile();
-} catch (error) {
-  // TODO: Handle error
-  console.log(error);
-}
+fetchProfile();
 
+const editAvatarModal = ref(null);
 onMounted(() => {
+  editAvatarModal.value = new Modal(document.getElementById("userAvatarModal"));
   // Navigate to hangar tab via props
   let hangarTab = new Tab(document.querySelector("#nav-hangar-tab"));
   if (props.showHangar) hangarTab.show();
 });
+
+const avatarUrl = computed(() => getUserAvatar(userData.value, true));
+
+const onEditAvatar = () => {
+  editAvatarModal.value.show();
+};
+
+const updateAvatar = () => {
+  editAvatarModal.value.hide();
+  fetchProfile();
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  width: 150px;
+}
+.avatar-editor-button {
+  cursor: pointer;
+}
+</style>

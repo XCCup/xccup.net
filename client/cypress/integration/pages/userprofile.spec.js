@@ -34,6 +34,8 @@ describe("Check user profile", () => {
     cy.get("#shirtSize").should("have.value", "M");
 
     // Checkboxes
+    cy.get("#notifyForComment").uncheck();
+    cy.get("#optInNewsletter").uncheck();
     cy.get("#notifyForComment").should("not.be.checked");
     cy.get("#optInNewsletter").should("not.be.checked");
 

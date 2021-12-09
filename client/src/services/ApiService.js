@@ -78,6 +78,12 @@ export default {
   removeGlider(gliderId) {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
   },
+  uploadUserPicture(data) {
+    return jwtInterceptor.post(baseURL + "users/picture/", data);
+  },
+  deleteUserPicture() {
+    return jwtInterceptor.delete(baseURL + "users/picture/");
+  },
 
   // Mail
 
@@ -113,7 +119,7 @@ export default {
 
   getResults(category, params) {
     return apiClient.get("results/" + category, {
-      params: { year: params?.year },
+      params,
     });
   },
 
