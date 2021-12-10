@@ -1,5 +1,22 @@
 # Testskript für den Alpha-Test
 
+## Generelles
+
+Im Design gibt es an vielen Stellen noch "Unperfektheiten" und uneinheitlich gestaltete Dinge, gerade im Dark Mode. Von vielen Dingen wissen wir und unter client/TODO.md ist auch eine Liste mit aktuell bekannten Bugs. Auch die meisten Icons sind aktuell nur Platzhalter und die Darstellung der Hauptsponsoren noch sehr "2000er".
+
+Wenn euch Dinge am Design/ Platzierung von Elementen nicht logisch erscheinen oder Ihr einfach überlegen musstest, was ein Button, o.ä. tut so listet dies bitte auf.
+
+Probiert bitte auch mal alles am Smartphone aus. Schließlich war unser Hauptaugenmerk die Seite für die mobile Nutzung zu optimieren.
+
+## Reporting
+
+Gerne könnt Ihr uns die Probleme in die Telegrammgruppe reporten oder Ihr nutzt die Issue Funktion im GitHub Repo. Bei den Issues könnt ihr diese dann gerne mit Lablen wie Bug, Usability versehen. 
+
+Falls Euch zusätzliche Features einfallen, die noch unbedingt nötig oder auch "nice-to-have" wären, könnt ihr dazu auch ein Issue aufmachen.
+
+
+## Aufgaben
+
 - Versuche für Dich ein Konto zu erstellen. Du musst dazu bitte eine gültige E-Mail-Adresse verwenden.
 
 - Du hattest einen tollen Flug (suche Dir ein IGC-File aus dem aktuellen XCCup aus). Stelle diesen Flug auf der Plattform online. Vergleiche die Werte.
@@ -13,6 +30,8 @@
 - Haben deine beiden Freunde (Sascha, Thomas, Jürgen) bereits ein Konto eingerichtet oder sogar schon Flüge hochgeladen? Sende einem eine Nachricht und begrüße ihn auf der Plattform.
 
 - Gestern gab es recht viel zu Essen und du glaubst du benötigst ein größeres T-Shirt. Ändere es.
+
+- Der Flug den du letztens hochgeladen hast, hatte keine 500 Punkte. Das ist Dir sehr peinlich und du möchtest ihn deshalb löschen.
 
 - Diese vielen neuen Dinge hier haben dich wohl etwas verwirrt und du hast dein Passwort vergessen. Was nun?
 
