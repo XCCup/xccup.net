@@ -84,8 +84,6 @@ const flightService = {
       queryObject.attributes = [
         "id",
         "externalId",
-        "userId",
-        "takeoff.name",
         "takeoffTime",
         "flightPoints",
         "flightDistance",
