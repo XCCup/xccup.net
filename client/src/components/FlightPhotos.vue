@@ -88,7 +88,11 @@
       </div>
       <!-- Add photo button -->
       <!-- TODO: Position button in center -->
-      <div v-if="flightId" id="add-photo" class="col-4">
+      <div
+        v-if="flightId && !uploadsExceeded && _photos.length < MAX_PHOTOS"
+        id="add-photo"
+        class="col-4"
+      >
         <figure class="figure position-relative">
           <img
             src="@/assets/images/placeholder.png"
@@ -105,6 +109,11 @@
           </button>
         </figure>
       </div>
+      <BaseError
+        v-if="uploadsExceeded"
+        class="mb-3"
+        error-message="Dein Kontingent an Uploads ist vorerst aufgebraucht. Komme bitte zu einem späteren Zeitpunkt wieder. Deinen Flug kannst du trotzdem absenden."
+      />
     </div>
   </div>
 </template>
@@ -116,6 +125,9 @@ import useUser from "@/composables/useUser";
 import ApiService from "@/services/ApiService";
 import { v4 as uuidv4 } from "uuid";
 import { remove, last } from "lodash";
+import BaseError from "./BaseError.vue";
+
+const MAX_PHOTOS = 8;
 
 const { getUserId } = useUser();
 const baseURL = getbaseURL();
@@ -137,6 +149,8 @@ const emit = defineEmits(["photos-updated"]);
 const _photos = ref([]);
 const photosRemoved = ref([]);
 const photosAdded = ref([]);
+
+const uploadsExceeded = ref(false);
 
 // Copy all photos from props to the local array with only mandatory properties
 props.photos.forEach((e) =>
@@ -163,7 +177,7 @@ const onDeletePhoto = (id) => {
   photosChanged();
 };
 const onCancelUpload = (photo) => {
-  remove(photoUploadCue.value, (e) => e.id === photo.uploadCue);
+  remove(photoUploadQueue.value, (e) => e.id === photo.uploadCue);
   // Remove photo from local list for preview
   const index = _photos.value.findIndex((e) => e.id === photo.id);
   if (index > -1) _photos.value.splice(index, 1);
@@ -181,15 +195,15 @@ const photosChanged = () =>
 const onAddPhoto = () => photoInput.value.click();
 
 // Put selected photos in an upload cue and upload them
-const photoUploadCue = ref([]);
+const photoUploadQueue = ref([]);
 const onPhotoSelected = (event) => {
-  [...event.target.files].forEach((photo) => {
-    photoUploadCue.value.push({
+  [...event.target.files].slice(0, MAX_PHOTOS).forEach((photo) => {
+    photoUploadQueue.value.push({
       id: uuidv4(),
       photo: photo,
       status: "pending",
     });
-    uploadPhoto(last(photoUploadCue.value));
+    uploadPhoto(last(photoUploadQueue.value));
   });
 };
 
@@ -218,7 +232,7 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     const res = await ApiService.uploadPhotos(formData);
 
     // Remove photo from upload cue
-    remove(photoUploadCue.value, (e) => e.id === item.id);
+    remove(photoUploadQueue.value, (e) => e.id === item.id);
 
     // Update local list with id to indicate success
     _photos.value[index].id = res.data.id;
@@ -229,6 +243,8 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     // Inform the parent about edits
     photosChanged();
   } catch (error) {
+    if (error.response.status == 429) uploadsExceeded.value = true;
+
     console.log(error);
     // Trigger the retry button
     _photos.value[index].id = "failed";
@@ -237,7 +253,7 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
 
 const onRetry = (options) => {
   // Item from upload cue
-  const retryItem = photoUploadCue.value.find((e) => e.id === options.cueId);
+  const retryItem = photoUploadQueue.value.find((e) => e.id === options.cueId);
   // Upload again and mark as retry attempt by passing the index
   uploadPhoto(retryItem, { retryIndex: options.index });
 };

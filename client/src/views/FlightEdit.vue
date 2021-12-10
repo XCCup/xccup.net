@@ -2,24 +2,21 @@
   <!-- TODO: Add warning when leaving without saving -->
   <div id="flightEdit" class="container-md">
     <div class="d-flex flex-wrap">
-      <h3>Flug bearbeiten</h3>
-      <div class="ms-auto mt-3">
-        <button
-          class="btn btn-outline-danger"
-          @click.prevent="deleteFlightModal.show()"
-        >
-          <i class="bi bi-trash d-inline me-1"></i>
-        </button>
+      <!-- TODO: Align this nicely -->
+      <h3 class="mt-3">Flug bearbeiten</h3>
+      <div
+        class="ms-auto mt-3 text-danger clickable"
+        @click.prevent="deleteFlightModal.show()"
+      >
+        <i class="bi bi-trash d-inline me-1"></i> Flug löschen
       </div>
     </div>
-    <div class="col-sm-8">
-      <GliderSelect
-        v-model="modifiedFlightData.glider.id"
-        :show-label="true"
-        :gliders="listOfGliders"
-        @update:model-value="updateSelectedGlider()"
-      />
-    </div>
+    <GliderSelect
+      v-model="modifiedFlightData.glider.id"
+      :show-label="true"
+      :gliders="listOfGliders"
+      @update:model-value="updateSelectedGlider()"
+    />
 
     <div class="my-3">
       <div class="form-floating mb-3">
@@ -57,39 +54,31 @@
       </div>
       <!-- Bulder -->
       <h3>Bilder</h3>
+      <!-- TODO: Include photos in state? -->
       <FlightPhotos
         :photos="flight.photos"
         :flight-id="flight.id"
         class="mb-4"
         @photos-updated="onPhotosUpdated"
       />
-      <div class="d-flex flex-wrap">
-        <div>
-          <button
-            class="btn btn-primary me-2"
-            type="submit"
-            :disabled="!submitButtonIsEnabled"
-            @click.prevent="onSubmit"
-          >
-            Speichern
-            <div
-              v-if="showSpinner"
-              class="spinner-border spinner-border-sm"
-              role="status"
-            >
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </button>
-          <button class="btn btn-outline-danger me-2" @click.prevent="onCancel">
-            Abbrechen
-          </button>
-        </div>
-
+      <div>
         <button
-          class="btn btn-outline-danger ms-auto"
-          @click.prevent="deleteFlightModal.show()"
+          class="btn btn-primary me-2"
+          type="submit"
+          :disabled="!submitButtonIsEnabled"
+          @click.prevent="onSubmit"
         >
-          <i class="bi bi-trash d-inline me-1"></i>
+          Speichern
+          <div
+            v-if="showSpinner"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </button>
+        <button class="btn btn-outline-danger me-2" @click.prevent="onCancel">
+          Abbrechen
         </button>
       </div>
 
@@ -113,6 +102,7 @@
 <script setup>
 import { computed, ref, onMounted } from "vue";
 import useFlight from "@/composables/useFlight";
+import useFlightEdit from "@/composables/useFlightEdit";
 import ApiService from "@/services/ApiService";
 import { useRoute } from "vue-router";
 import { cloneDeep } from "lodash";
@@ -122,17 +112,19 @@ import { Modal } from "bootstrap";
 
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
+const { modifiedFlightData, unmodifiedFlightData, resetState } =
+  useFlightEdit();
 
 const showSpinner = ref(false);
 const listOfGliders = ref(null);
 const errorMessage = ref("");
-const modifiedFlightData = ref({
-  glider: {},
-  report: "",
-  hikeAndFly: false,
-  onlyLogbook: false,
-  photos: [],
-});
+// const modifiedFlightData = ref({
+//   glider: {},
+//   report: "",
+//   hikeAndFly: false,
+//   onlyLogbook: false,
+//   photos: [],
+// });
 const photosToDelete = ref([]);
 const photosAdded = ref([]);
 
@@ -145,12 +137,17 @@ onMounted(() => {
 });
 
 // Fetch flight data
-await fetchOne(route.params.id);
-modifiedFlightData.value.glider = flight.value.glider;
-modifiedFlightData.value.report = flight.value.report;
-modifiedFlightData.value.hikeAndFly = flight.value.hikeAndFly > 0;
-modifiedFlightData.value.onlyLogbook = flight.value.flightStatus === "Flugbuch";
-modifiedFlightData.value.photos = flight.value.photos;
+if (modifiedFlightData.value.externalId != route.params.id) {
+  await fetchOne(route.params.id);
+  modifiedFlightData.value.externalId = route.params.id;
+  modifiedFlightData.value.glider = flight.value.glider;
+  modifiedFlightData.value.report = flight.value.report;
+  modifiedFlightData.value.hikeAndFly = flight.value.hikeAndFly > 0;
+  modifiedFlightData.value.onlyLogbook =
+    flight.value.flightStatus === "Flugbuch";
+  modifiedFlightData.value.photos = flight.value.photos;
+  unmodifiedFlightData.value = cloneDeep(modifiedFlightData.value);
+}
 
 // Fetch users glider
 try {
@@ -179,7 +176,7 @@ const onSubmit = async () => {
     await asyncForEach(photosToDelete.value, async (e) => {
       await ApiService.deletePhoto(e);
     });
-
+    resetState();
     router.push({
       name: "Flight",
       params: {
@@ -206,6 +203,7 @@ const onCancel = async () => {
     await asyncForEach(photosAdded.value, async (e) => {
       await ApiService.deletePhoto(e);
     });
+    resetState();
 
     router.push({
       name: "Flight",
@@ -221,10 +219,9 @@ const onCancel = async () => {
 };
 
 // Check if data has been edited
-const unmodifiedFlightData = cloneDeep(modifiedFlightData.value);
 const submitButtonIsEnabled = computed(
   () =>
-    JSON.stringify(unmodifiedFlightData) !=
+    JSON.stringify(unmodifiedFlightData.value) !=
     JSON.stringify(modifiedFlightData.value)
 );
 
@@ -249,4 +246,8 @@ const onDeleteFlight = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.clickable {
+  cursor: pointer;
+}
+</style>

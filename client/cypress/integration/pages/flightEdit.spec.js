@@ -2,13 +2,13 @@ describe("check flight page", () => {
   const flightId = 6;
 
   before(() => {
+    cy.seedFlightDb();
     cy.visit("/");
     cy.loginNormalUser();
     cy.visit(`/flug/${flightId}`);
   });
 
   it("Check presence and function of edit button", () => {
-    cy.seedDb();
     cy.get("#flight-details");
     cy.get("button").contains("Flug bearbeiten").click();
     cy.url().should("include", `/flug/${flightId}/bearbeiten`);
@@ -38,7 +38,6 @@ describe("check flight page", () => {
     cy.get("button").contains("Speichern").click();
     cy.url().should("include", `/flug/${flightId}`);
 
-    // TODO: How to chain this?
     cy.get("#cyFlightDetailsTable1").contains("td", "U-Turn Bodyguard");
     cy.get("#cyFlightDetailsTable1").contains("td", "400m Höhenunterschied");
 
