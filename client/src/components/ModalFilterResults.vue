@@ -121,7 +121,7 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
-import { checkAnyValueOfObjectDefined } from "../helper/utils";
+import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const emit = defineEmits(["filter-results"]);
 
@@ -183,7 +183,7 @@ watch(
 );
 
 const anyFilterOptionSet = computed(() =>
-  checkAnyValueOfObjectDefined(selects)
+  checkIfAnyValueOfObjectIsDefined(selects)
 );
 
 const onClear = () => {
