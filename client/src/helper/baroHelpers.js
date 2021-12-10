@@ -16,6 +16,8 @@ export function processBaroData(flight, buddyTracks) {
     baroData.push({
       x: flight.fixes[i].timestamp,
       y: flight.fixes[i].gpsAltitude,
+      speed: flight.fixes[i].speed,
+      climb: flight.fixes[i].climb,
     });
   }
   let hideGND = false;
@@ -51,10 +53,12 @@ export function processBaroData(flight, buddyTracks) {
       // Check if this track is activated
       if (element.isActive) {
         for (var i = 0; i < element.fixes.length; i++) {
-          buddyBaro.push([
-            element.fixes[i].timestamp,
-            element.fixes[i].gpsAltitude,
-          ]);
+          buddyBaro.push({
+            x: element.fixes[i].timestamp,
+            y: element.fixes[i].gpsAltitude,
+            speed: element.fixes[i].speed,
+            climb: element.fixes[i].climb,
+          });
         }
       }
       // Create the buddy dataset

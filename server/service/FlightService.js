@@ -98,10 +98,7 @@ const flightService = {
     let fromDay = today.getDate() - 1;
     let tillDay = today.getDate();
 
-    if (
-      today.getHours() + today.getTimezoneOffset() / 2 >=
-      SWITCHOVER_HOUR_TODAY_RANKING
-    ) {
+    if (today.getHours() >= SWITCHOVER_HOUR_TODAY_RANKING) {
       fromDay++;
       tillDay++;
     }

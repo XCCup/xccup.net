@@ -6,6 +6,7 @@
     <FlightAirbuddies v-if="flight.airbuddies.length > 0" />
     <FlightDetails />
     <FlightReport />
+    <FlightPhotos :photos="flight.photos" />
     <Comments />
   </div>
 </template>
@@ -43,7 +44,7 @@ try {
 // TODO: This is a workaround to trigger a re-render of the barogramm.
 // One day i will find out how to do this from the baro component itself…
 import useAirbuddies from "@/composables/useAirbuddies";
-const { checkedAirbuddFlightIds } = useAirbuddies();
+const { checkedAirbuddyFlightIds } = useAirbuddies();
 const baroDataUpdated = ref(0);
-watch(checkedAirbuddFlightIds, () => baroDataUpdated.value++);
+watch(checkedAirbuddyFlightIds, () => baroDataUpdated.value++);
 </script>

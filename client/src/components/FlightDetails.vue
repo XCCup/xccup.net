@@ -117,10 +117,11 @@
     </div>
     <!-- Details -->
     <button
+      id="flightDetailsButton"
       class="btn btn-primary btn-sm me-2 dropdown-toggle"
       type="button"
       data-bs-toggle="collapse"
-      data-bs-target="#collapseExample"
+      data-bs-target="#flightDetailsCollapse"
     >
       Details anzeigen
     </button>
@@ -137,10 +138,10 @@
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>
-    <div id="collapseExample" class="collapse mt-2">
+    <div id="flightDetailsCollapse" class="collapse mt-2">
       <div class="row">
         <div class="col-md-6 col-12">
-          <table class="table table-sm">
+          <table id="moreFlightDetailsTable" class="table table-sm">
             <tbody>
               <tr>
                 <th>Flugstatus</th>

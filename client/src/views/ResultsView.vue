@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid mb-3">
+  <div class="container-lg">
     <h3 v-if="activeCategory">{{ activeCategory.title }} {{ year }}</h3>
     <p v-if="remark">Hinweis: {{ remark }}</p>
     <div v-if="category == 'overall'" class="row">
@@ -59,7 +59,7 @@ const categories = [
     title: "Newcomerwertung",
     apiString: "newcomer",
     remarks: () =>
-      `Es werden nur Flüge mit Geräten bis zur Klasse ${results.value.constants.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
+      `Es werden nur Flüge mit Geräten bis zur ${results.value.constants.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
   },
   {
     name: "seniors",

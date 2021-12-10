@@ -86,7 +86,7 @@
             role="tabpanel"
             aria-labelledby="nav-my-flights-tab"
           >
-            ...
+            Such empty 😞
           </div>
         </div>
       </div>

@@ -1,4 +1,8 @@
 describe("Check user profile", () => {
+  before(() => {
+    cy.seedDb();
+  });
+
   beforeEach(() => {
     cy.visit("/profil");
   });
@@ -55,12 +59,14 @@ describe("Check user profile", () => {
 
     cy.get("h4").should("have.text", `Profil`);
 
+    cy.get("#city").clear().type(expectedCity);
+    cy.get("Button").contains("Speichern").should("not.be.disabled");
+
     cy.get("#firstName").clear().type(expectedFirstName);
     cy.get("#lastName").clear().type(expectedLastName);
     cy.get("#lastName").clear().type(expectedLastName);
     cy.get("#street").clear().type(expectedStreet);
     cy.get("#zip").clear().type(expectedZip);
-    cy.get("#city").clear().type(expectedCity);
 
     cy.get("#state").select(expectedState).should("have.value", expectedState);
     // TODO: Birthday

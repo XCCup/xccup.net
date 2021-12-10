@@ -19,15 +19,15 @@ describe("check flight page", () => {
     cy.get("#mapContainer");
   });
 
-  it("check presence of barogramm", () => {
-    cy.get("#flight-barogramm");
+  it("check presence of position flight stats", () => {
+    cy.get("#positionStatsTable").should("exist");
   });
 
   it("check airbuddies", () => {
     cy.get("button").contains("Airbuddies").click({ force: true });
     cy.get("h5").should("include.text", "Sonia Harber");
 
-    // Test check box
+    // TODO: Test check box and visit buddy flight
   });
 
   it("check flight details", () => {

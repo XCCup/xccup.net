@@ -76,21 +76,6 @@ const trackColors = Constants.TRACK_COLORS;
 
 watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
 
-// watch: {
-//   checkedFlights() {
-//     let airbuddyTracks = [];
-//     this.buddyFlights.forEach((element) => {
-//       airbuddyTracks.push({
-//         buddyName: element.user.firstName,
-//         buddyFlightId: element.id,
-//         isActive: this.checkedFlights.includes(element.id),
-//         fixes: element.fixes,
-//       });
-//     });
-//     this.$emit("updateAirbuddies", airbuddyTracks);
-//   },
-// },
-// methods: {
 const onShowAirbuddies = async () => {
   try {
     await fetchAll(flight.value.airbuddies);
@@ -99,14 +84,4 @@ const onShowAirbuddies = async () => {
     console.log(error);
   }
 };
-//   },
-//   routeToFlight(flightId) {
-//     this.$router.push({
-//       name: "Flight",
-//       params: {
-//         flightId: flightId,
-//       },
-//     });
-//   },
-// },
 </script>

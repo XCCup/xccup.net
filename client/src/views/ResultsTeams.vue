@@ -1,8 +1,8 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-lg">
     <h3>Teamwertung {{ year }}</h3>
+    <ResultsTableTeams :results="results" />
   </div>
-  <ResultsTableTeams :results="results" />
 </template>
 
 <script setup>

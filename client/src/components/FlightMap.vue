@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid mt-0">
     <div class="row">
-      <div id="mapContainer"></div>
+      <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''"></div>
     </div>
   </div>
 </template>
@@ -49,6 +49,11 @@ const { activeAirbuddyFlights } = useAirbuddies();
 
 const trackColors = Constants.TRACK_COLORS;
 
+// Find a way to make this reactive
+const userPrefersDark = ref(
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+);
+
 // Leaflet objects
 let map = ref(null);
 let trackLines = ref();
@@ -59,9 +64,6 @@ let takeoffAndLandingMarkers = ref([]);
 const tracklogs = computed(() =>
   processTracklogs(flight.value, activeAirbuddyFlights.value)
 );
-
-// Watch the tracklogs for updated content like airbuddy flights
-watch(tracklogs, () => drawTracks(tracklogs.value));
 
 onMounted(() => {
   // TODO:
@@ -94,6 +96,9 @@ onMounted(() => {
   drawTracks(tracklogs.value);
   drawTurnpoints(flight.value.flightTurnpoints);
   drawAirspaces(convertMapBoundsToQueryString(trackLines.value[0]));
+
+  // Watch the tracklogs for updated content like airbuddy flights
+  watch(tracklogs, () => drawTracks(tracklogs.value));
 });
 
 onBeforeUnmount(() => {

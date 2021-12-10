@@ -63,6 +63,12 @@ a {
   @extend .d-sm-table-cell;
 }
 
+// Darken map on dark mode
+
+.darken-map {
+  filter: brightness(85%);
+}
+
 // TODO: Is this obsolete?
 // Fix for responsive scaling of barogramm
 // .barogramm-container {

@@ -24,24 +24,7 @@
     />
   </svg>
   <!-- Free -->
-  <svg
-    v-if="flightType === `FREE`"
-    xmlns="http://www.w3.org/2000/svg"
-    x="0px"
-    y="0px"
-    width="25"
-    height="25"
-    fill="currentColor"
-    viewBox="0 0 63.067 63.067"
-    style="enable-background: new 0 0 63.067 63.067"
-    xml:space="preserve"
-    class=""
-  >
-    <path
-      d="M5.097,38.991H0l14.984-18.486l7.748,20.148l13.82-27.646l6.035,18.976l14.668-17.222L54.5,12.008h8.567v8.555
-		l-2.819-2.819L40.886,40.48l-5.201-16.331l-13.453,26.91l-8.306-22.444L5.097,38.991z"
-    />
-  </svg>
+  <i v-if="flightType === `FREE`" class="bi bi-arrow-up-right"></i>
 </template>
 
 <script>

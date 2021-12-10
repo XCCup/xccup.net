@@ -1,8 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/FlightPhotoService");
-const path = require("path");
-const { NOT_FOUND, OK } = require("../constants/http-status-constants");
+const pathLib = require("path");
+const fs = require("fs");
+const {
+  NOT_FOUND,
+  OK,
+  TOO_MANY_REQUESTS,
+} = require("../constants/http-status-constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
@@ -16,15 +21,17 @@ const {
 const multer = require("multer");
 
 const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
+const logger = require("../config/logger");
 
 const IMAGE_STORE = "data/images/flights";
 const THUMBNAIL_IMAGE_HEIGHT = 200;
+const MAX_PHOTOS = 8;
 
 const imageUpload = multer({
   dest: IMAGE_STORE,
 });
 
-const uploadLimiter = createRateLimiter(60, 10);
+const uploadLimiter = createRateLimiter(60, 30);
 
 // @desc Uploads a flight photo to the server and stores the meta-data to the db
 // @route POST /flights/photos/
@@ -32,8 +39,8 @@ const uploadLimiter = createRateLimiter(60, 10);
 
 router.post(
   "/",
-  uploadLimiter,
   authToken,
+  uploadLimiter,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
   checkOptionalIsISO8601("timestamp"),
@@ -41,12 +48,25 @@ router.post(
     if (validationHasErrors(req, res)) return;
 
     try {
-      const originalname = req.file.originalname;
-      const mimetype = req.file.mimetype;
-      const size = req.file.size;
-      const path = req.file.path;
-      const flightId = req.body.flightId;
-      const timestamp = req.body.timestamp; //TODO Will be done in backend or frontend???
+      const { originalname, mimetype, size, path } = req.file;
+      const { flightId, timestamp } = req.body;
+      //TODO: Timestamp will be done in backend or frontend???
+
+      const numberOfPhotos = await service.countPhotosOfFlight(flightId);
+      logger.debug(
+        `FPC: Flight ${flightId} has currently ${numberOfPhotos} photos attached to id`
+      );
+      if (numberOfPhotos >= MAX_PHOTOS) {
+        logger.info("FPC: Flight photos limit reached");
+        logger.debug("FPC: Will delete images for path " + path);
+        const fullfilepath = pathLib.join(pathLib.resolve(), path);
+        fs.unlink(fullfilepath, (err) => {
+          if (err) {
+            logger.error(err);
+          }
+        });
+        return res.sendStatus(TOO_MANY_REQUESTS);
+      }
 
       const userId = req.user.id;
 

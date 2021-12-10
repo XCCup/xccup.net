@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-gradient">
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary bg-gradient">
     <div class="container-fluid">
       <router-link :to="{ name: 'Home' }" class="navbar-brand" href="/">
         <img src="../assets/images/xccup_white.svg" alt="XCCup" height="50" />
@@ -13,7 +13,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div id="navbarSupportedContent" class="collapse navbar-collapse">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto">
           <li id="navbarResults" class="nav-item dropdown">
             <a
               id="navbarDropdown"
@@ -31,7 +31,8 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Eingereichte Flüge</router-link
+                  ><i class="bi bi-send me-1"></i>Eingereichte
+                  Flüge</router-link
                 >
               </li>
               <li>
@@ -41,9 +42,12 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Gesamtwertung</router-link
+                >
+                  <i class="bi bi-trophy me-1"></i>Gesamtwertung</router-link
                 >
               </li>
+              <li><hr class="dropdown-divider" /></li>
+
               <li>
                 <router-link
                   :to="{
@@ -51,7 +55,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Teamwertung</router-link
+                  ><i class="bi bi-people me-1"></i>Teamwertung</router-link
                 >
               </li>
               <li>
@@ -61,7 +65,7 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Vereinswertung</router-link
+                  ><i class="bi bi-award me-1"></i>Vereinswertung</router-link
                 >
               </li>
               <li>
@@ -71,7 +75,8 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Newcomer</router-link
+                >
+                  <i class="bi bi-star me-1"></i>Newcomer</router-link
                 >
               </li>
               <li>
@@ -81,6 +86,8 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
+                >
+                  <i class="bi bi-hourglass-split me-1"></i
                   >Seniorenwertung</router-link
                 >
               </li>
@@ -91,9 +98,13 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
+                >
+                  <i class="bi bi-gender-female me-1"></i
                   >Damenwertung</router-link
                 >
               </li>
+              <li><hr class="dropdown-divider" /></li>
+
               <li>
                 <router-link
                   :to="{
@@ -101,7 +112,8 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Landesmeisterschaft RLP</router-link
+                  ><i class="bi bi-flag-fill me-1"></i>Landesmeisterschaft
+                  RLP</router-link
                 >
               </li>
               <li>
@@ -111,23 +123,22 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  >Luxemburg Championat</router-link
+                >
+                  <i class="bi bi-flag me-1"></i>Luxemburg
+                  Championat</router-link
                 >
               </li>
+              <li><hr class="dropdown-divider" /></li>
+
               <li>
                 <router-link
                   :to="{
                     name: 'SiteRecords',
                   }"
                   class="dropdown-item"
-                  >Flugebietsrekorde</router-link
+                  ><i class="bi bi-bookmark-star me-1"></i>
+                  Flugebietsrekorde</router-link
                 >
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">…</a>
               </li>
             </ul>
           </li>
@@ -165,7 +176,9 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item" href="#">Teams 2021</a>
+                <a class="dropdown-item text-decoration-line-through" href="#"
+                  >Teams 2021</a
+                >
               </li>
             </ul>
           </li>
@@ -179,18 +192,6 @@
               >Impressum</router-link
             >
           </li>
-          <li
-            v-if="hasElevatedRole"
-            id="navbarAdminDashboard"
-            class="nav-item dropdown"
-          >
-            <router-link
-              :to="{ name: 'AdminDashboard' }"
-              class="nav-link active"
-            >
-              <strong>Kommandozentrale</strong>
-            </router-link>
-          </li>
         </ul>
         <!-- Login button -->
 
@@ -198,10 +199,9 @@
           <button
             id="loginNavButton"
             type="button"
-            class="btn btn-outline-light btn-sm m-1"
+            class="btn btn-outline-light btn-sm mx-1"
           >
-            <i class="bi bi-person"></i>
-            {{ "Login" }}
+            <i class="bi bi-person me-1"></i>Login
           </button>
         </router-link>
 
@@ -213,24 +213,43 @@
             class="btn btn-outline-light btn-sm m-1 dropdown-toggle"
             data-bs-toggle="dropdown"
           >
-            <i class="bi bi-person"></i>
-            {{ authData.firstName }}
+            <i class="bi bi-person me-1"></i>{{ authData.firstName }}
           </button>
-
-          <div class="dropdown-menu" style="width: 250px">
-            <div class="mb-3">
-              <router-link :to="{ name: 'Profile' }" class="dropdown-item"
-                >Profil
+          <ul
+            class="dropdown-menu dropdown-menu-macos mx-0 shadow"
+            style="width: 220px"
+          >
+            <li>
+              <router-link :to="{ name: 'Profile' }" class="dropdown-item">
+                <i class="bi bi-gear me-1"></i>Profil
               </router-link>
-              <button class="btn btn-danger btn-sm m-1" @click="handleLogout">
-                Abmelden
-              </button>
-            </div>
-          </div>
+            </li>
+
+            <li v-if="hasElevatedRole">
+              <router-link
+                id="navbarAdminDashboard"
+                :to="{ name: 'AdminDashboard' }"
+                class="dropdown-item"
+              >
+                <i class="bi bi-speedometer2 me-1"></i>Admin
+              </router-link>
+            </li>
+
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a
+                class="dropdown-item text-danger"
+                href="#"
+                @click="handleLogout"
+              >
+                <i class="bi bi-box-arrow-right me-1"></i>Abmelden
+              </a>
+            </li>
+          </ul>
         </div>
         <router-link :to="{ name: 'FlightUpload' }">
           <button
-            id="loginNavButton"
+            id="flightUploadNavButton"
             type="button"
             class="btn btn-danger btn-sm m-1"
           >
@@ -250,6 +269,7 @@ import { useRouter } from "vue-router";
 
 const { authData, loggedIn, logout, hasElevatedRole } = useUser();
 
+// TODO: Current year should actually be current season
 const currentYear = computed(() => new Date().getFullYear());
 
 const router = useRouter();
