@@ -1,7 +1,7 @@
 <template>
   <div class="card-header"></div>
-  <div class="card-body row align-items-center">
-    <div class="col-xl-4 row align-items-center mb-3">
+  <div class="card-body row">
+    <div class="col-xl-4 row mb-3">
       <div class="col-6">
         <div class="profile-image">
           <router-link
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-4 row align-items-center mb-3">
+    <div class="col-xl-4 row mb-3">
       <div class="col-6">
         <div>
           <strong>Club</strong>
@@ -50,9 +50,9 @@
             <div>{{ user.club.name }}</div>
           </router-link>
         </div>
-        <div>
+        <div v-if="user.team">
           <strong>Team</strong>
-          <div v-if="user.team">
+          <div>
             <router-link
               :to="{
                 name: 'FlightsAll',
@@ -62,7 +62,6 @@
               {{ user.team?.name }}</router-link
             >
           </div>
-          <div v-else>🤷</div>
         </div>
       </div>
       <div class="col-6">
@@ -78,7 +77,7 @@
         <div v-else>🕵️</div>
       </div>
     </div>
-    <div class="col-xl-4 row align-items-center mb-3">
+    <div class="col-xl-4 row mb-3">
       <div class="col-6">
         <strong>Rekorde</strong>
         <div>
