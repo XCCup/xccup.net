@@ -47,6 +47,7 @@ const flightService = {
     status,
     unchecked,
     sort,
+    minimumData,
   } = {}) => {
     const orderStatement = createOrderStatement(sort);
 
@@ -77,6 +78,19 @@ const flightService = {
 
     if (offset) {
       queryObject.offset = offset;
+    }
+
+    if (minimumData) {
+      queryObject.attributes = [
+        "id",
+        "externalId",
+        "userId",
+        "takeoff.name",
+        "takeoffTime",
+        "flightPoints",
+        "flightDistance",
+        "flightType",
+      ];
     }
 
     const flights = await Flight.findAndCountAll(queryObject);
@@ -212,6 +226,23 @@ const flightService = {
       },
     });
     return Math.round(totalDistance);
+  },
+
+  sumFlightColumnByUser: async (columnName, userId) => {
+    const sum = await Flight.sum(columnName, {
+      where: {
+        userId,
+      },
+    });
+    return Math.round(sum);
+  },
+
+  countFlightsByUser: async (userId) => {
+    return Flight.count({
+      where: {
+        userId,
+      },
+    });
   },
 
   getAllBrands: async () => {

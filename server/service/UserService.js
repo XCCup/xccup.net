@@ -52,12 +52,33 @@ const userService = {
           const bestFreeFlight = findFlightRecordOfType(userJson.id, TYPE.FREE);
           const bestFlatFlight = findFlightRecordOfType(userJson.id, TYPE.FLAT);
           const bestFaiFlight = findFlightRecordOfType(userJson.id, TYPE.FAI);
+          const sumDistance = flightService.sumFlightColumnByUser(
+            "flightDistance",
+            userJson.id
+          );
+          const sumPoints = flightService.sumFlightColumnByUser(
+            "flightPoints",
+            userJson.id
+          );
+          const sumFlights = flightService.countFlightsByUser(userJson.id);
           const results = await Promise.all([
             bestFreeFlight,
             bestFlatFlight,
             bestFaiFlight,
+            sumDistance,
+            sumPoints,
+            sumFlights,
           ]);
-          userJson.records = [results[0], results[1], results[2]];
+          userJson.records = {
+            free: results[0],
+            flat: results[1],
+            fai: results[2],
+          };
+          userJson.stats = {
+            distance: results[3],
+            points: results[4],
+            flights: results[5],
+          };
           return userJson;
         })
       );
@@ -372,6 +393,7 @@ async function findFlightRecordOfType(id, type) {
       limit: 1,
       sort: ["flightPoints", "DESC"],
       userId: id,
+      minimumData: true,
     })
   ).rows;
 }
