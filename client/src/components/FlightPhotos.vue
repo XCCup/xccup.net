@@ -89,7 +89,7 @@
       <!-- Add photo button -->
       <!-- TODO: Position button in center -->
       <div
-        v-if="flightId && !uploadsExceeded && _photos.length < MAX_PHOTOS"
+        v-if="flightId && _photos.length < MAX_PHOTOS"
         id="add-photo"
         class="col-4"
       >
@@ -109,11 +109,7 @@
           </button>
         </figure>
       </div>
-      <BaseError
-        v-if="uploadsExceeded"
-        class="mb-3"
-        error-message="Dein Kontingent an Uploads ist vorerst aufgebraucht. Komme bitte zu einem späteren Zeitpunkt wieder. Deinen Flug kannst du trotzdem absenden."
-      />
+      <BaseError class="mb-3" :error-message="errorMessage" />
     </div>
   </div>
 </template>
@@ -128,6 +124,7 @@ import { remove, last } from "lodash";
 import BaseError from "./BaseError.vue";
 import Constants from "@/common/Constants";
 
+// TODO: Backend allows to upload more and sometimes less in rare cases
 const MAX_PHOTOS = Constants.MAX_PHOTOS;
 
 const { getUserId } = useUser();
@@ -150,8 +147,7 @@ const emit = defineEmits(["photos-updated"]);
 const _photos = ref([]);
 const photosRemoved = ref([]);
 const photosAdded = ref([]);
-
-const uploadsExceeded = ref(false);
+const errorMessage = ref(null);
 
 // Copy all photos from props to the local array with only mandatory properties
 props.photos.forEach((e) =>
@@ -198,6 +194,13 @@ const onAddPhoto = () => photoInput.value.click();
 // Put selected photos in an upload cue and upload them
 const photoUploadQueue = ref([]);
 const onPhotoSelected = (event) => {
+  // Check files count
+  // TODO: Detect how many photos are already attached subtract them from allowed constant
+  if (event.target.files.length > 8) {
+    errorMessage.value = "Du kannst maximal acht Photos hochladen";
+    return;
+  }
+  errorMessage.value = null;
   [...event.target.files].slice(0, MAX_PHOTOS).forEach((photo) => {
     photoUploadQueue.value.push({
       id: uuidv4(),
@@ -244,7 +247,8 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     // Inform the parent about edits
     photosChanged();
   } catch (error) {
-    if (error.response.status == 429) uploadsExceeded.value = true;
+    if (error.response.status == 429)
+      errorMessage.value = "Du kannst maximal acht Photos hochladen";
 
     console.log(error);
     // Trigger the retry button

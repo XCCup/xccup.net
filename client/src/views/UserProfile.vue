@@ -47,6 +47,18 @@
               Hangar
             </button>
             <button
+              id="nav-change-pw-tab"
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-change-pw"
+              type="button"
+              role="tab"
+              aria-controls="nav-change-pw"
+              aria-selected="false"
+            >
+              Passwort ändern
+            </button>
+            <button
               id="nav-my-flights-tab"
               class="nav-link"
               data-bs-toggle="tab"
@@ -79,6 +91,14 @@
             <div id="glider-select" class="col-md-12 mb-4">
               <UserProfileGliderlist />
             </div>
+          </div>
+          <div
+            id="nav-change-pw"
+            class="tab-pane fade"
+            role="tabpanel"
+            aria-labelledby="nav-change-pw"
+          >
+            Such empty 😞
           </div>
           <div
             id="nav-my-flights"
