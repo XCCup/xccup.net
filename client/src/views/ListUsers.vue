@@ -1,6 +1,12 @@
 <template>
   <div id="userListView" class="container">
     <h3>Registrierte Piloten</h3>
+    <div class="row">
+      <div class="col-6">
+        <FilterPanel :is-loading="false" :filter-active="false" />
+      </div>
+      <div class="col-6"><PaginationPanel /></div>
+    </div>
     <div v-for="user in users" :key="user.id" class="card mb-3">
       <UserCard :user="user" @open-message-dialog="messageUser" />
     </div>
