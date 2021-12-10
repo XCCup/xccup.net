@@ -2,7 +2,7 @@
 
 ## Generelles
 
-Im Design gibt es an vielen Stellen noch "Unperfektheiten" und uneinheitlich gestaltete Dinge, gerade im Dark Mode. Von vielen Dingen wissen wir und unter client/TODO.md ist auch eine Liste mit aktuell bekannten Bugs. Auch die meisten Icons sind aktuell nur Platzhalter und die Darstellung der Hauptsponsoren noch sehr "2000er".
+Im Design gibt es an vielen Stellen noch "Unperfektheiten" und uneinheitlich gestaltete Dinge, gerade im Dark Mode. Von vielen Dingen wissen wir und unter https://github.com/XCCup/xccup.net/blob/main/client/TODO.md ist auch eine Liste mit aktuell bekannten Bugs. Auch die meisten Icons sind aktuell nur Platzhalter und die Darstellung der Hauptsponsoren noch sehr "2000er".
 
 Wenn euch Dinge am Design/ Platzierung von Elementen nicht logisch erscheinen oder Ihr einfach überlegen musstest, was ein Button, o.ä. tut so listet dies bitte auf.
 
