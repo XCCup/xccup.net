@@ -31,7 +31,7 @@ const {
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
-const uploadLimiter = createRateLimiter(10, 4);
+const uploadLimiter = createRateLimiter(60, 10);
 
 // All requests to /flights/photos will be rerouted
 router.use("/photos", require("./FlightPhotoController"));
@@ -211,7 +211,9 @@ router.post(
       if (await requesterIsNotOwner(req, res, userId)) return;
 
       const validationResult = await igcValidator.execute(igc);
-      if (validationResult != igcValidator.G_RECORD_PASSED) {
+      if (!validationResult) {
+        logger.warn("G-Record Validation returned undefined");
+      } else if (validationResult != igcValidator.G_RECORD_PASSED) {
         logger.info(
           "Invalid G-Record found. Validation result: " + validationResult
         );

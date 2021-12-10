@@ -56,6 +56,14 @@ const service = {
     return FlightPhoto.create(media);
   },
 
+  countPhotosOfFlight: async (flightId) => {
+    return FlightPhoto.count({
+      where: {
+        flightId,
+      },
+    });
+  },
+
   update: async (media) => {
     return await media.save();
   },
