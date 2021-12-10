@@ -126,8 +126,9 @@ import ApiService from "@/services/ApiService";
 import { v4 as uuidv4 } from "uuid";
 import { remove, last } from "lodash";
 import BaseError from "./BaseError.vue";
+import Constants from "@/common/Constants";
 
-const MAX_PHOTOS = 8;
+const MAX_PHOTOS = Constants.MAX_PHOTOS;
 
 const { getUserId } = useUser();
 const baseURL = getbaseURL();

@@ -1,6 +1,5 @@
 let Constants = {
   ADMIN_EMAIL: "xccup-beta@stephanschoepe.de",
-  // TODO: Add more colors
   TRACK_COLORS: [
     "DarkSlateBlue",
     "DarkRed",
@@ -14,5 +13,6 @@ let Constants = {
     "sienna",
     "mediumvioletred",
   ],
+  MAX_PHOTOS: 8,
 };
 export default Constants;
