@@ -98,7 +98,7 @@
             role="tabpanel"
             aria-labelledby="nav-change-pw"
           >
-            Such empty 😞
+            <UserProfileChangePassword />
           </div>
           <div
             id="nav-my-flights"
@@ -122,6 +122,7 @@ import { Tab } from "bootstrap";
 import { getUserAvatar } from "../helper/profilePictureHelper";
 import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
+import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
 
 setWindowName("Profil");
 
