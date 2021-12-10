@@ -4,6 +4,7 @@
     <div class="row">
       <div class="col-6">
         <FilterPanel :is-loading="false" :filter-active="false" />
+        <span class="text-danger">Funktion kommt bald 😉</span>
       </div>
       <div class="col-6"><PaginationPanel /></div>
     </div>
