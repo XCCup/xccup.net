@@ -27,7 +27,7 @@ describe("check flights all page", () => {
     const expectedName = "Bobby Volkman";
     const expectedLength = 2;
 
-    cy.get("#flightsFilterButton").click();
+    cy.get("#filterButton").click();
 
     cy.get("#filterSelectName").select(expectedName);
     cy.get("button").contains("Anwenden").click();

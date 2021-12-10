@@ -108,8 +108,8 @@ router.get(
       if (!media) return res.sendStatus(NOT_FOUND);
 
       const fullfilepath = thumb
-        ? path.join(path.resolve(), media.pathThumb)
-        : path.join(path.resolve(), media.path);
+        ? pathLib.join(pathLib.resolve(), media.pathThumb)
+        : pathLib.join(pathLib.resolve(), media.path);
 
       return res.type(media.mimetype).sendFile(fullfilepath);
     } catch (error) {
