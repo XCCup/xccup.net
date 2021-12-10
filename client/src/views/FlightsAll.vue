@@ -4,7 +4,7 @@
     <!-- TODO: Add filter spinner when loading -->
     <div class="row">
       <div class="col-6">
-        <FlightsFilterPanel
+        <FilterPanel
           :is-loading="isLoading"
           :filter-active="filterActive"
           @clear-filter="clearFilter"
@@ -24,7 +24,6 @@ import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
 import useFlights from "@/composables/useFlights";
 import { useRoute } from "vue-router";
-import FlightsFilterPanel from "../components/FlightsFilterPanel.vue";
 
 setWindowName("Streckenmeldungen");
 

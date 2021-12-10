@@ -10,10 +10,11 @@ Probiert bitte auch mal alles am Smartphone aus. Schließlich war unser Hauptaug
 
 ## Reporting
 
-Gerne könnt Ihr uns die Probleme in die Telegrammgruppe reporten oder Ihr nutzt die Issue Funktion (https://github.com/XCCup/xccup.net/issues) im GitHub Repo. Bei den Issues könnt ihr diese dann gerne mit Lablen wie Bug, Usability versehen. 
+Gerne könnt Ihr uns die Probleme in die Telegrammgruppe reporten oder Ihr nutzt die Issue Funktion (https://github.com/XCCup/xccup.net/issues) im GitHub Repo. Bei den Issues könnt ihr diese dann gerne mit Lablen wie Bug, Usability versehen.
+
+Screenshots und Stacktraces sind natürlich immer gerne gesehen.
 
 Falls Euch zusätzliche Features einfallen, die noch unbedingt nötig oder auch "nice-to-have" wären, könnt ihr dazu auch ein Issue aufmachen.
-
 
 ## Aufgaben
 

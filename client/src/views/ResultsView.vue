@@ -4,7 +4,7 @@
     <p v-if="remark">Hinweis: {{ remark }}</p>
     <div v-if="category == 'overall'" class="row">
       <div class="col-6">
-        <FlightsFilterPanel
+        <FilterPanel
           :is-loading="isLoading"
           :filter-active="filterActive"
           @clear-filter="clearFilter"
