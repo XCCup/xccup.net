@@ -47,6 +47,18 @@
               Hangar
             </button>
             <button
+              id="nav-change-pw-tab"
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-change-pw"
+              type="button"
+              role="tab"
+              aria-controls="nav-change-pw"
+              aria-selected="false"
+            >
+              Passwort ändern
+            </button>
+            <button
               id="nav-my-flights-tab"
               class="nav-link"
               data-bs-toggle="tab"
@@ -81,6 +93,14 @@
             </div>
           </div>
           <div
+            id="nav-change-pw"
+            class="tab-pane fade"
+            role="tabpanel"
+            aria-labelledby="nav-change-pw"
+          >
+            <UserProfileChangePassword />
+          </div>
+          <div
             id="nav-my-flights"
             class="tab-pane fade"
             role="tabpanel"
@@ -102,6 +122,7 @@ import { Tab } from "bootstrap";
 import { getUserAvatar } from "../helper/profilePictureHelper";
 import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
+import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
 
 setWindowName("Profil");
 

@@ -1,8 +1,7 @@
 <template>
   <div class="card-header"></div>
-  <div class="card-body row align-items-center">
-    <!-- TODO: Cols should wrap in own row when viewport width shrinks -->
-    <div class="col-xl-4 row align-items-center">
+  <div class="card-body row">
+    <div class="col-xl-4 row mb-3">
       <div class="col-6">
         <div class="profile-image">
           <router-link
@@ -11,7 +10,7 @@
               query: { userId: user.id },
             }"
           >
-            <img :src="avatarUrl" />
+            <img class="rounded-circle" :src="avatarUrl" />
           </router-link>
         </div>
       </div>
@@ -23,14 +22,14 @@
               query: { userId: user.id },
             }"
           >
-            <h5 class="row card-title cy-user-name-label">
+            <h5 class="card-title cy-user-name-label">
               {{ user.firstName }} {{ user.lastName }}
             </h5>
           </router-link>
         </div>
-        <div class="row">
+        <div>
           <button
-            class="col btn btn-primary cy-mail-button"
+            class="col btn btn-primary cy-mail-button w-50"
             @click="onMessagePilot"
           >
             <i class="bi bi-envelope"></i>
@@ -38,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-4 row align-items-center">
+    <div class="col-xl-4 row mb-3">
       <div class="col-6">
         <div>
           <strong>Club</strong>
@@ -51,9 +50,9 @@
             <div>{{ user.club.name }}</div>
           </router-link>
         </div>
-        <div>
+        <div v-if="user.team">
           <strong>Team</strong>
-          <div v-if="user.team">
+          <div>
             <router-link
               :to="{
                 name: 'FlightsAll',
@@ -63,7 +62,6 @@
               {{ user.team?.name }}</router-link
             >
           </div>
-          <div v-else>🤷</div>
         </div>
       </div>
       <div class="col-6">
@@ -79,16 +77,30 @@
         <div v-else>🕵️</div>
       </div>
     </div>
-    <div class="col-xl-4">
-      <div><strong>Rekorde</strong></div>
-      <div class="row">
-        <FlightShortSummary flight-type="FREE" :flight="user.records[0][0]" />
+    <div class="col-xl-4 row mb-3">
+      <div class="col-6">
+        <strong>Rekorde</strong>
+        <div>
+          <FlightShortSummary
+            flight-type="FREE"
+            :flight="user.records.free[0]"
+          />
+        </div>
+        <div>
+          <FlightShortSummary
+            flight-type="FLAT"
+            :flight="user.records.flat[0]"
+          />
+        </div>
+        <div>
+          <FlightShortSummary flight-type="FAI" :flight="user.records.fai[0]" />
+        </div>
       </div>
-      <div class="row">
-        <FlightShortSummary flight-type="FLAT" :flight="user.records[1][0]" />
-      </div>
-      <div class="row">
-        <FlightShortSummary flight-type="FAI" :flight="user.records[2][0]" />
+      <div class="col-6">
+        <strong>Statistiken</strong>
+        <div>{{ user.stats.flights }} Flüge</div>
+        <div>{{ user.stats.distance }} Kilometer</div>
+        <div>{{ user.stats.points }} Punkte</div>
       </div>
     </div>
   </div>
@@ -112,8 +124,8 @@ const avatarUrl = ref(getUserAvatar(props.user), true);
 
 const createRankingClass = (glider) => {
   return {
-    key: glider.gliderClass,
-    description: glider.gliderClassShortDescription,
+    key: glider.gliderClass.key,
+    description: glider.gliderClass.shortDescription,
   };
 };
 

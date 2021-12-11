@@ -3,7 +3,7 @@
     <ul class="pagination pagination-sm justify-content-end align-items-center">
       <li class="me-2">
         <div class="no-line-break pagination-text hide-on-xs">
-          Anzahl Flüge pro Seite
+          Anzahl Einträge pro Seite
         </div>
       </li>
       <li class="me-2">
