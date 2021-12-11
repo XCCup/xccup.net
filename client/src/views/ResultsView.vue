@@ -12,15 +12,15 @@
         />
       </div>
     </div>
+    <ResultsTableGeneric
+      :results="results.values"
+      :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
+    />
+    <ModalFilterResults
+      :filter-active="filterActive"
+      @filter-results="filterResults"
+    />
   </div>
-  <ResultsTableGeneric
-    :results="results.values"
-    :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
-  />
-  <ModalFilterResults
-    :filter-active="filterActive"
-    @filter-results="filterResults"
-  />
 </template>
 
 <script setup>
