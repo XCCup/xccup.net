@@ -44,7 +44,10 @@ app.use("/api/media", require("./controller/MediaController"));
 app.use("/api/general", require("./controller/GeneralController"));
 app.use("/api/mail", require("./controller/MailController"));
 app.use("/api/sites", require("./controller/SiteController"));
-if (process.env.NODE_ENV !== "production") {
+if (
+  process.env.NODE_ENV !== "production" ||
+  process.env.OVERRULE_ACTIVE === "true"
+) {
   app.use("/api/testdata", require("./controller/TestDataController"));
   app.use("/api/cache", require("./controller/CacheController"));
 }
