@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg my-3">
+  <div class="container-md my-3">
     <h3>Bilder der aktuellen Saison</h3>
     <div
       id="photo-carousel"

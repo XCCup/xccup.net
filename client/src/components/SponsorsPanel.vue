@@ -1,27 +1,30 @@
-<template>
-  <div v-if="sponsors" class="bg-primary text-light py-4">
-    <div id="sponsorsPanel" class="container">
+<template v-if="sponsors">
+  <div class="bg-primary text-light py-4">
+    <div id="sponsorsPanel" class="container-md">
       <h2>Sponsoren</h2>
-
-      <div id="goldSponsors" class="d-flex justify-content-between my-4">
-        <a
+      <div
+        id="goldSponsors"
+        class="row row-cols-3 row-cols-md-3 row-cols-lg-3 row-cols-xl-3"
+      >
+        <div
           v-for="sponsor in goldSponsors"
           :key="sponsor.id"
-          :href="sponsor.website"
-          target="_blank"
-          class="filter"
+          class="col cy-sponsor"
         >
-          <div class="bg-light" style="height: 120px; width: 140px">
-            <img
-              class="cy-sponsor mw-100 mh-100 position-relative top-50 start-50 translate-middle"
-              :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
-            />
-          </div>
-        </a>
+          <a :href="sponsor.website" target="_blank">
+            <div class="p-2 bg-light mb-4 p-4 box filter">
+              <img
+                class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
+                :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
+              />
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-  <div class="container mt-3">
+
+  <div class="container-md mt-3">
     <div
       id="otherSponsors"
       class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6"
