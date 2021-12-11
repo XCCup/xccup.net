@@ -36,17 +36,18 @@ jobs:
       - name: Setup DB (enable PostGIS and set correct timezone)
         run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
         working-directory: ./server
-      - name: Install frontend
-        run: yarn install
+      - name: Install and build frontend
+        run: yarn install && yarn build-local
         working-directory: ./client
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          start: yarn dev
-          wait-on: http://localhost:8000
+          start: yarn serve
+          wait-on: http://localhost:5000
           working-directory: ./client
+          config: baseUrl=http://localhost:5000
       - name: Store artefacts of test failures
         uses: actions/upload-artifact@v1
         if: failure()
