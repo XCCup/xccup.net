@@ -72,7 +72,7 @@ const type = computed(() => {
 const isInvalid = computed(() => {
   return (
     props.externalValidationResult ||
-    (props.isRequired && props.modelValue.length == 0) ||
+    (props.isRequired && props.modelValue?.length == 0) ||
     (props.isEmail && !isEmail(props.modelValue)) ||
     (props.isPassword && !isStrongPassword(props.modelValue))
   );
