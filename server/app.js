@@ -44,10 +44,10 @@ app.use("/api/media", require("./controller/MediaController"));
 app.use("/api/general", require("./controller/GeneralController"));
 app.use("/api/mail", require("./controller/MailController"));
 app.use("/api/sites", require("./controller/SiteController"));
-if (process.env.NODE_ENV !== "production") {
-  app.use("/api/testdata", require("./controller/TestDataController"));
-  app.use("/api/cache", require("./controller/CacheController"));
-}
+// if (process.env.NODE_ENV !== "production") {
+app.use("/api/testdata", require("./controller/TestDataController"));
+app.use("/api/cache", require("./controller/CacheController"));
+// }
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 // eslint-disable-next-line no-unused-vars
