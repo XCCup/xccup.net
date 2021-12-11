@@ -37,7 +37,7 @@ jobs:
         run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
         working-directory: ./server
       - name: Install and build frontend
-        run: yarn install && yarn build
+        run: yarn install && yarn build-local
         working-directory: ./client
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
