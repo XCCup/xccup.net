@@ -5,6 +5,7 @@ const DEFAULT_LIMIT = 50;
 
 export default () => {
   let apiEndpoint;
+  let apiExtension;
 
   const filterOptionsCache = ref({});
   const isLoading = ref(false);
@@ -13,7 +14,9 @@ export default () => {
   const limitCache = ref(DEFAULT_LIMIT);
 
   // Setters
-  const setApiEndpoint = (endpoint) => (apiEndpoint = endpoint);
+  const setApiEndpoint = (endpoint, extension) => {
+    (apiEndpoint = endpoint), (apiExtension = extension);
+  };
 
   // Getters
   const filterActive = computed(() =>
@@ -40,12 +43,15 @@ export default () => {
     if (limit) limitCache.value = limit;
     try {
       isLoading.value = true;
-      const res = await apiEndpoint({
-        ...paramsCache.value,
-        limit,
-        offset,
-        ...filterOptionsCache.value,
-      });
+      const res = await apiEndpoint(
+        {
+          ...paramsCache.value,
+          limit,
+          offset,
+          ...filterOptionsCache.value,
+        },
+        apiExtension
+      );
       if (res.status != 200) throw res.status.text;
 
       data.value = res.data;

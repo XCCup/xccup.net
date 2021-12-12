@@ -18,22 +18,29 @@
     />
     <ModalFilterResults
       :filter-active="filterActive"
-      @filter-results="filterResults"
+      @filter-results="filterFlightsBy"
     />
   </div>
 </template>
 
 <script setup>
 import ApiService from "@/services/ApiService.js";
-import { ref, watchEffect, onMounted, computed } from "vue";
-import {
-  checkIfAnyValueOfObjectIsDefined,
-  setWindowName,
-} from "../helper/utils";
+import { ref, watchEffect, onMounted } from "vue";
+import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
 import { useRoute } from "vue-router";
+import useFilter from "../composables/useFilter";
 
 const router = useRoute();
+const {
+  fetchResults,
+  isLoading,
+  filterActive,
+  filterFlightsBy,
+  clearFilter,
+  data: results,
+  setApiEndpoint,
+} = useFilter();
 
 const props = defineProps({
   year: {
@@ -47,7 +54,6 @@ const props = defineProps({
 });
 
 const remark = ref();
-const results = ref(null);
 const categories = [
   {
     name: "overall",
@@ -94,28 +100,11 @@ watchEffect(() => {
   setWindowName(activeCategory.title);
 });
 
-const filterOptionsCache = ref(router.query);
-const paramsCache = ref({ year: props.year });
-const isLoading = ref(false);
-
-const fetchResults = async () => {
-  try {
-    isLoading.value = true;
-    if (!activeCategory) throw "not a valid category";
-    const res = await ApiService.getResults(activeCategory.apiString, {
-      ...paramsCache.value,
-      ...filterOptionsCache.value,
-    });
-    if (res.status != 200) throw res.status.text;
-
-    results.value = res.data;
-  } catch (error) {
-    console.log(error);
-  } finally {
-    isLoading.value = false;
-  }
-};
-await fetchResults();
+setApiEndpoint(ApiService.getResults, activeCategory.apiString);
+await fetchResults({
+  params: { year: props.year },
+  queries: router.query,
+});
 // Remark has an internal reference to results. Therefore the fetchResults function has to be run at least once before setting the remark value.
 if (activeCategory.remarks) remark.value = activeCategory.remarks();
 
@@ -124,21 +113,7 @@ onMounted(() => {
   filterModal = new Modal(document.getElementById("resultFilterModal"));
 });
 
-const filterActive = computed(() =>
-  checkIfAnyValueOfObjectIsDefined(filterOptionsCache.value)
-);
-
 const showFilter = () => {
   filterModal.show();
-};
-const clearFilter = () => {
-  filterOptionsCache.value = null;
-  fetchResults();
-};
-const filterResults = (filterOptions) => {
-  //Check if any filter value was set
-  if (!Object.values(filterOptions).find((v) => !!v)) return;
-  filterOptionsCache.value = filterOptions;
-  fetchResults();
 };
 </script>

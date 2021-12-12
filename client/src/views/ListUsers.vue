@@ -32,7 +32,6 @@ import useFilter from "../composables/useFilter";
 import { useRoute } from "vue-router";
 
 const router = useRoute();
-
 const {
   fetchResults,
   isLoading,
