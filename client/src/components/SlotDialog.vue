@@ -1,14 +1,15 @@
 <template>
-  <div class="bg-light dialog-bg-image" :class="heightClass">
-    <div class="bg-gradient-1" :class="heightClass">
-      <div class="container py-5">
-        <div class="row justify-content-center align-items-center">
-          <div :class="widthClass">
-            <div class="card shadow-2-strong" style="border-radius: 15px">
-              <div class="card-body p-3 p-md-4">
-                <slot></slot>
-              </div>
-            </div>
+  <div
+    class="bg-light dialog-bg-image position-absolute top-0 end-0 start-0 bottom-0"
+  >
+    <div class="bg-gradient-1 h-100"></div>
+  </div>
+  <div class="container py-5">
+    <div class="row justify-content-center align-items-center">
+      <div :class="widthClass">
+        <div class="card shadow-2-strong" style="border-radius: 15px">
+          <div class="card-body p-3 p-md-4">
+            <slot></slot>
           </div>
         </div>
       </div>

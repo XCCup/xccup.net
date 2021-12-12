@@ -33,7 +33,7 @@ function convertHeightStringToMetersValue(value) {
 }
 
 function createTrackLog(flight) {
-  return flight.fixes.map(({latitude, longitude}) => [latitude, longitude]);
+  return flight.fixes.map(({ latitude, longitude }) => [latitude, longitude]);
 }
 
 export function processTracklogs(flight, buddyTracks) {

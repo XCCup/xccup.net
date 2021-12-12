@@ -30,7 +30,7 @@
           <BaseInput v-model="newGlider.model" label="Fluggerät" />
 
           <select v-model="newGlider.gliderClass" class="form-select">
-            <option disabled value="" selected>Geräteklasse</option>
+            <option disabled value selected>Geräteklasse</option>
             <option
               v-for="(gliderClass, classKey) in gliderClasses"
               :key="classKey"
@@ -93,8 +93,9 @@ const brands = ref(null);
 const gliderClasses = ref(null);
 
 try {
-  brands.value = (await ApiService.getBrands()).data;
-  gliderClasses.value = (await ApiService.getGliderClasses()).data;
+  [brands.value, gliderClasses.value] = (
+    await Promise.all([ApiService.getBrands(), ApiService.getGliderClasses()])
+  ).map(({ data }) => data);
 } catch (error) {
   console.log(error);
 }

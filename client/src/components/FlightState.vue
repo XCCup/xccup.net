@@ -53,7 +53,6 @@ onUnmounted(() => {
     tooltip = null;
   }
 });
-
 </script>
 
 <style scoped></style>
