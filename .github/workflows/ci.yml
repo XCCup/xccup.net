@@ -35,7 +35,7 @@ jobs:
         run: npm test
         working-directory: ./server
       - name: Start Docker Backend Environment
-        run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
+        run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
         working-directory: ./server
       - name: List all databases (just for debugging)
         run: sleep 30 && docker exec db psql -U xccup_user -l
