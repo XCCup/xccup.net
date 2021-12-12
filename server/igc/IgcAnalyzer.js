@@ -142,11 +142,12 @@ function determineOlcBinary() {
 function runOlc(filePath, flightDataObject, isTurnpointIteration) {
   const { exec } = require("child_process");
   logger.info("Start OLC analysis");
+  logger.info(`cwd: ${process.cwd()}`);
 
   //TODO: Replace compiled app through usage of Node’s N-API
-  const command = determineOlcBinary();
+  const binary = determineOlcBinary();
 
-  exec(command + filePath, {cwd: __dirname}, function (err, data) {
+  exec(path.resolve(__dirname, '..', 'igc', binary) + filePath, {cwd: path.resolve(__dirname, '..')}, function (err, data) {
     if (err) logger.error(err);
     try {
       parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
