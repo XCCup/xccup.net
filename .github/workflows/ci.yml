@@ -25,6 +25,12 @@ jobs:
       - name: Install backend
         run: docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
+      - name: List backend
+        run: docker-compose -f docker-compose-ci.yml run --rm ls -l
+        working-directory: ./server
+      - name: Tree backend
+        run: docker-compose -f docker-compose-ci.yml run --rm tree
+        working-directory: ./server
       - name: Test backend
         run: docker-compose -f docker-compose-ci.yml run --rm yarn test
         working-directory: ./server
