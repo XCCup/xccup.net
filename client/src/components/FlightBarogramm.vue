@@ -64,7 +64,7 @@
     </table>
   </div>
   <div class="container">
-    <canvas id="flight-barogramm" ref="myChart"></canvas>
+    <canvas id="flight-barogramm"></canvas>
   </div>
 </template>
 
@@ -75,7 +75,14 @@
 
 import Chart from "chart.js/auto";
 import "chartjs-adapter-date-fns";
-import { ref, onMounted, computed, shallowRef } from "vue";
+import {
+  ref,
+  onMounted,
+  computed,
+  onBeforeUnmount,
+  watchEffect,
+  shallowRef,
+} from "vue";
 import { processBaroData } from "../helper/baroHelpers";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
@@ -85,13 +92,10 @@ const { activeAirbuddyFlights } = useAirbuddies();
 
 const chart = shallowRef(null);
 const labelData = ref([{}]);
-const myChart = ref(null);
 
 const baroDatasets = computed(() =>
   processBaroData(flight.value, activeAirbuddyFlights.value)
 );
-
-// const statsTableData = computed(() => baroDatasets.value.slice());
 
 const updateLabels = (context) => {
   labelData.value[context.datasetIndex] = {
@@ -101,9 +105,25 @@ const updateLabels = (context) => {
     name: context.dataset.label,
   };
 };
+
+watchEffect(() => {
+  if (chart.value) {
+    chart.value.data.datasets = baroDatasets.value;
+    chart.value.update();
+  }
+});
+
+onBeforeUnmount(() => {
+  if (chart.value) {
+    chart.value.destroy();
+  }
+});
+
 onMounted(() => {
   // Create a new chart
-  chart.value = new Chart(myChart.value, {
+  const ctx = document.getElementById("flight-barogramm");
+
+  chart.value = new Chart(ctx, {
     type: "line",
     data: {
       // labels: this.labels,

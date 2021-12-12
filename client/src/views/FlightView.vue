@@ -2,7 +2,7 @@
   <div v-if="flight">
     <FlightSubnav />
     <FlightMap />
-    <FlightBarogramm :key="baroDataUpdated" />
+    <FlightBarogramm />
     <FlightAirbuddies v-if="flight.airbuddies.length > 0" />
     <FlightDetails />
     <FlightReport />
