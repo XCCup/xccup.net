@@ -26,11 +26,11 @@ jobs:
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
       - name: List backend
-        run: ls -l
+        run: ls -l igc
         working-directory: ./server
-      - name: Tree backend
-        run: tree
-        working-directory: ./server
+      # - name: Tree backend
+      #   run: tree
+      #   working-directory: ./server
       - name: Test backend
         run: docker-compose -f docker-compose-ci.yml run --rm yarn test
         working-directory: ./server
