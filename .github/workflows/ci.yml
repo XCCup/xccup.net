@@ -23,7 +23,7 @@ jobs:
           # cache: "npm" Does't work when project is not in default directory
           # working-directory doesn't work in conjunction with "uses"
       - name: Install backend
-        run: docker-compose -f docker-compose-ci.yml run --rm yarn install
+        run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
       - name: List backend
         run: docker-compose -f docker-compose-ci.yml run --rm server ls -l
