@@ -3,7 +3,20 @@ import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const DEFAULT_LIMIT = 50;
 
-export default () => {
+const instances = {};
+
+//TODO: Merge with useFlights
+//TODO: Use composable also in ModalFilterResults and ModalFilterUsers
+
+export default (filterLabel) => {
+  if (!instances[filterLabel]) instances[filterLabel] = createInstance();
+
+  if (!filterLabel) return createInstance();
+
+  return instances[filterLabel];
+};
+
+function createInstance() {
   let apiEndpoint;
   let apiExtension;
 
@@ -71,4 +84,4 @@ export default () => {
     setApiEndpoint,
     fetchResults,
   };
-};
+}

@@ -40,7 +40,7 @@ const {
   clearFilter,
   data: users,
   setApiEndpoint,
-} = useFilter();
+} = useFilter("users");
 
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);

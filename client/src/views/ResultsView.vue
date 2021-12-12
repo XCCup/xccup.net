@@ -31,7 +31,7 @@ import { Modal } from "bootstrap";
 import { useRoute } from "vue-router";
 import useFilter from "../composables/useFilter";
 
-const router = useRoute();
+const router = useRoute("results");
 const {
   fetchResults,
   isLoading,
