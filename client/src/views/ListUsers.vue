@@ -3,8 +3,12 @@
     <h3>Registrierte Piloten</h3>
     <div class="row">
       <div class="col-6">
-        <FilterPanel :is-loading="false" :filter-active="false" />
-        <span class="text-danger">Funktion kommt bald 😉</span>
+        <FilterPanel
+          :is-loading="isLoading"
+          :filter-active="filterActive"
+          @clear-filter="clearFilter"
+          @show-filter="showFilter"
+        />
       </div>
       <div class="col-6"><PaginationPanel /></div>
     </div>
@@ -13,6 +17,10 @@
     </div>
   </div>
   <ModalSendMail :modal-id="mailModalId" :user="selectedUser" />
+  <ModalFilterUsers
+    :filter-active="filterActive"
+    @filter-results="filterFlightsBy"
+  />
 </template>
 
 <script setup>
@@ -20,16 +28,31 @@ import { onMounted, ref } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
+import useFilter from "../composables/useFilter";
+import { useRoute } from "vue-router";
 
-const users = ref([]);
+const router = useRoute();
+
+const {
+  fetchResults,
+  isLoading,
+  filterActive,
+  filterFlightsBy,
+  clearFilter,
+  data: users,
+  setApiEndpoint,
+} = useFilter();
+
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);
-let mailModal;
 
 setWindowName("Registrierte Piloten");
 
+let filterModal;
+let mailModal;
 onMounted(() => {
   mailModal = new Modal(document.getElementById(mailModalId.value));
+  filterModal = new Modal(document.getElementById("userFilterModal"));
 });
 
 const messageUser = (user) => {
@@ -37,16 +60,10 @@ const messageUser = (user) => {
   mailModal.show();
 };
 
-try {
-  const res = await ApiService.getUsers({
-    records: true,
-    limit: 20,
-    offset: 0,
-  });
-  if (res.status != 200) throw res.status.text;
+setApiEndpoint(ApiService.getUsers);
+fetchResults({ params: { records: true }, queries: router.query });
 
-  users.value = res.data;
-} catch (error) {
-  console.error(error);
-}
+const showFilter = () => {
+  filterModal.show();
+};
 </script>
