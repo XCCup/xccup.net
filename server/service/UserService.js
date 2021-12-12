@@ -15,13 +15,17 @@ const { arrayRemove, generateRandomString } = require("../helper/Utils");
 const logger = require("../config/logger");
 
 const userService = {
-  getAll: async ({ records, limit, offset } = {}) => {
+  getAll: async ({
+    records,
+    limit,
+    offset,
+    firstNameStartsWith,
+    lastNameStartsWith,
+    clubId,
+    teamId,
+  } = {}) => {
     const users = await User.findAll({
-      where: {
-        role: {
-          [Op.not]: ROLE.INACTIVE,
-        },
-      },
+      where: createUserWhereStatement(firstNameStartsWith, lastNameStartsWith),
       attributes: ["id", "firstName", "lastName", "gender", "gliders"],
       include: [
         {
@@ -29,16 +33,8 @@ const userService = {
           as: "picture",
           attributes: ["id"],
         },
-        {
-          model: Club,
-          as: "club",
-          attributes: ["id", "name"],
-        },
-        {
-          model: Team,
-          as: "team",
-          attributes: ["id", "name"],
-        },
+        createBasicInclude(Team, "team", teamId),
+        createBasicInclude(Club, "club", clubId),
       ],
       limit,
       offset,
@@ -116,11 +112,7 @@ const userService = {
           as: "picture",
           attributes: ["id", "path", "pathThumb"],
         },
-        {
-          model: Club,
-          as: "club",
-          attributes: ["name"],
-        },
+        createBasicInclude(Club, "club"),
       ],
     });
   },
@@ -152,16 +144,8 @@ const userService = {
           as: "picture",
           attributes: ["id"],
         },
-        {
-          model: Club,
-          as: "club",
-          attributes: ["name"],
-        },
-        {
-          model: Team,
-          as: "team",
-          attributes: ["name"],
-        },
+        createBasicInclude(Club, "club"),
+        createBasicInclude(Team, "team"),
       ],
     });
     const bestFreeFlight = findFlightRecordOfType(id, TYPE.FREE);
@@ -207,7 +191,7 @@ const userService = {
     // Return empty object, otherwise destructering doesn't work
     if (!user) return {};
 
-    logger.info("Will create a new password for " + user.email);
+    logger.info("US: Will create a new password for " + user.email);
     const newPassword = generateRandomString();
     user.password = newPassword;
     user.token = "";
@@ -223,7 +207,7 @@ const userService = {
     // Return empty object, otherwise destructering doesn't work
     if (!user) return {};
 
-    logger.debug("Will create a resetPassword for " + email);
+    logger.debug("US: Will create a resetPassword for " + email);
     const token = generateRandomString();
     user.token = token;
     const updatedUser = await user.save();
@@ -255,11 +239,13 @@ const userService = {
   },
   save: async (user) => {
     user.token = generateRandomString();
+    user.hashPassword = true;
     return User.create(user);
   },
   update: async (user) => {
     await checkForClubChange(user);
     checkForMailChange(user);
+    if (user.password) user.hashPassword = true;
 
     return user.save();
   },
@@ -268,14 +254,14 @@ const userService = {
       where: { email },
     });
     if (!user) {
-      logger.warn(`No user found for ${email}`);
+      logger.warn(`US: No user found for ${email}`);
       return null;
     }
     if (user.validPassword(password)) {
-      logger.debug(`The password is valid`);
+      logger.debug(`US: The password is valid`);
       return user;
     }
-    logger.warn(`The password is not valid`);
+    logger.warn(`US: The password is not valid`);
     return null;
   },
   addGlider: async (userId, glider) => {
@@ -338,6 +324,38 @@ const userService = {
     };
   },
 };
+
+function createBasicInclude(model, as, id) {
+  const include = {
+    model,
+    as,
+    attributes: ["id", "name"],
+  };
+  if (id)
+    include.where = {
+      id,
+    };
+  return include;
+}
+
+function createUserWhereStatement(firstNameStartsWith, lastNameStartsWith) {
+  const where = {
+    role: {
+      [Op.not]: ROLE.INACTIVE,
+    },
+  };
+
+  if (firstNameStartsWith)
+    where.firstName = {
+      [Op.iRegexp]: `^${firstNameStartsWith}`,
+    };
+  if (lastNameStartsWith)
+    where.lastName = {
+      [Op.iRegexp]: `^${lastNameStartsWith}`,
+    };
+
+  return where;
+}
 
 /**
  * A user is allowed to change a club in the off-season as often as he wishes.

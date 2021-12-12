@@ -60,16 +60,36 @@ router.get(
   query("records").optional().isBoolean(),
   query("limit").optional().isInt(),
   query("offset").optional().isInt(),
+  query("firstNameStartsWith").optional().trim().escape(),
+  query("lastNameStartsWith").optional().trim().escape(),
+  query("clubId").optional().isUUID(),
+  query("teamId").optional().isUUID(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { records, limit, offset } = req.query;
+    const {
+      records,
+      limit,
+      offset,
+      firstNameStartsWith,
+      lastNameStartsWith,
+      clubId,
+      teamId,
+    } = req.query;
 
     try {
-      const users = await service.getAll({ records, limit, offset });
+      const users = await service.getAll({
+        records,
+        limit,
+        offset,
+        firstNameStartsWith,
+        lastNameStartsWith,
+        clubId,
+        teamId,
+      });
 
       setCache(req, users);
 
@@ -105,7 +125,7 @@ router.post(
   "/login",
   loginLimiter,
   checkIsEmail("email"),
-  checkStringObjectNotEmpty("password"),
+  checkStrongPassword("password"),
   async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -187,7 +207,7 @@ router.get(
 router.get(
   "/activate/",
   query("userId").isUUID(),
-  query("token").trim().escape(),
+  query("token").trim(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
@@ -220,8 +240,8 @@ router.get(
 router.get(
   "/confirm-mail-change/",
   query("userId").isUUID(),
-  query("token").trim().escape(),
-  query("email").trim().escape(),
+  query("token").trim(),
+  query("email").trim(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
@@ -248,7 +268,7 @@ router.get(
 router.get(
   "/renew-password",
   query("userId").isUUID(),
-  query("token").trim().escape(),
+  query("token").trim(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
