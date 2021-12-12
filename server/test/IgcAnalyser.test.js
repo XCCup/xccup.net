@@ -8,16 +8,16 @@ const flightTypeFactors = {
 };
 
 test("Validate an igc-File which should result to a FAI triangle", (done) => {
-  process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_fai/fai_60km42_3h53m.igc";
 
   const flightToAnaylze = {
-    id: "kai_fai",
+    externalId: "kai_fai",
     igcPath: path.join(__dirname, "../igc", filePath),
   };
 
   const expectedFlight = {
-    id: "kai_fai",
+    externalId: "kai_fai",
     type: "FAI",
     dist: "60.428",
     turnpoints: {
@@ -47,16 +47,16 @@ test("Validate an igc-File which should result to a FAI triangle", (done) => {
 });
 
 test("Validate an igc-File which should result to a FLAT triangle", (done) => {
-  process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_flat/drei_97km16_6h15m.igc";
 
   const flightToAnaylze = {
-    id: "kai_flat",
+    externalId: "kai_flat",
     igcPath: path.join(__dirname, "../igc", filePath),
   };
 
   const expectedFlight = {
-    id: "kai_flat",
+    externalId: "kai_flat",
     type: "FLAT",
     dist: "97.107",
     turnpoints: {
@@ -86,16 +86,16 @@ test("Validate an igc-File which should result to a FLAT triangle", (done) => {
 });
 
 test("Validate an igc-File which should result to a free flight", (done) => {
-  process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_free/free_79km35_4h8m.igc";
 
   const flightToAnaylze = {
-    id: "kai_free",
+    externalId: "kai_free",
     igcPath: path.join(__dirname, "../igc", filePath),
   };
 
   const expectedFlight = {
-    id: "kai_free",
+    externalId: "kai_free",
     type: "FREE",
     dist: "79.353",
     turnpoints: {
@@ -125,11 +125,11 @@ test("Validate an igc-File which should result to a free flight", (done) => {
 });
 
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s => Reducion by factor 5)", () => {
-  process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_free/free_79km35_4h8m.igc";
 
   const expectedFlight = {
-    id: "kai_free",
+    externalId: "kai_free",
     igcPath: path.join(__dirname, "../igc", filePath),
   };
   const numberOfFixes = 2979;
@@ -149,11 +149,11 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s =>
 });
 
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s => Reducion by factor 3 -> ceil(5/2))", () => {
-  process.env.FLIGHT_STORE = "./igc/demo_igcs";
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_flat_res2/kai_flat_res2.igc";
 
   const expectedFlight = {
-    id: "kai_flat_res2",
+    externalId: "kai_flat_res2",
     igcPath: path.join(__dirname, "../igc", filePath),
   };
 
@@ -174,12 +174,10 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s =>
 });
 
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s => No Reducion)", () => {
-  process.env.FLIGHT_STORE = "./igc/demo_igcs";
-
   const filePath = "demo_igcs/kai_free_res10/kai_free_res10.igc";
 
   const expectedFlight = {
-    id: "kai_free_res10",
+    externalId: "kai_free_res10",
     igcPath: path.join(__dirname, "../igc", filePath),
   };
 
