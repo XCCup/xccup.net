@@ -9,7 +9,7 @@ const { checkParamIsUuid, validationHasErrors } = require("./Validation");
 const multer = require("multer");
 const path = require("path");
 
-const IMAGE_STORE = "data/images/users";
+const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/users";
 
 const imageUpload = multer({
   dest: IMAGE_STORE,
