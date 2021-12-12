@@ -332,8 +332,9 @@ const onSubmit = async () => {
     // I would say it's safe
 
     // E-Mail errors
-    if (error.response?.data === "email must be unique")
+    if (error.response?.data.conflict === "emailExists")
       return (errorMessage.value = "Diese E-Mail existiert bereits");
+
     if (error.response?.data.errors[0].param === "email")
       return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
 

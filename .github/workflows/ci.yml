@@ -23,10 +23,10 @@ jobs:
           # cache: "npm" Does't work when project is not in default directory
           # working-directory doesn't work in conjunction with "uses"
       - name: Install backend
-        run: npm install --arch=x64 --platform=linuxmusl
+        run: docker-compose run --rm yarn install
         working-directory: ./server
       - name: Test backend
-        run: npm test
+        run: docker-compose run --rm yarn test
         working-directory: ./server
       - name: Start Docker Backend Environment
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
@@ -37,14 +37,14 @@ jobs:
         run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
         working-directory: ./server
       - name: Install and build frontend
-        run: yarn install && yarn build-local
+        run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          start: yarn serve
+          start: docker-compose run --service-ports --rm yarn client serve
           wait-on: http://localhost:5000
           working-directory: ./client
           config: baseUrl=http://localhost:5000

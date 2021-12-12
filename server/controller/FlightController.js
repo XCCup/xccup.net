@@ -60,45 +60,13 @@ router.get(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const {
-      year,
-      site,
-      siteId,
-      type,
-      rankingClass,
-      limit,
-      offset,
-      startDate,
-      endDate,
-      userId,
-      clubId,
-      teamId,
-      gliderClass,
-      status,
-      sortCol,
-      sortOrder,
-    } = req.query;
-
     try {
       const value = getCache(req);
       if (value) return res.json(value);
 
       const flights = await service.getAll({
-        year,
-        site,
-        siteId,
-        type,
-        rankingClass,
-        limit,
-        offset,
-        startDate,
-        endDate,
-        userId,
-        clubId,
-        teamId,
-        gliderClass,
-        status,
-        sort: [sortCol, sortOrder],
+        ...req.query,
+        sort: [req.query.sortCol, req.query.sortOrder],
       });
 
       setCache(req, flights);

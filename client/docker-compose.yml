@@ -1,17 +1,23 @@
 version: "3.3"
 services:
   client:
-    image: node:14.17.0-alpine3.13
+    image: node:16.13.1-alpine3.14
     working_dir: /home/node/app
     volumes:
       - .:/home/node/app
     entrypoint: ["yarn"]
     ports:
       - "8000:8000"
-    command: ["dev", "--host"]
+      - "5000:5000"
+    command: ["dev"]
+
   yarn:
-    image: node:14.17.0-alpine3.13
+    image: node:16.13.1-alpine3.14
     working_dir: /home/node/app
+    profiles: ['cli']
     volumes:
+      - ../.yarn-cache:/yarn-cache:rw
       - .:/home/node/app
     entrypoint: ["yarn"]
+    environment:
+      YARN_CACHE_FOLDER: "/yarn-cache"

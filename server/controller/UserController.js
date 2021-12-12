@@ -392,7 +392,11 @@ router.post(
 
       res.json(user);
     } catch (error) {
-      next(error);
+      if (error.name?.includes("SequelizeUniqueConstraintError") && error.original?.constraint === 'Users_email_key') {
+        res.status(409).json({conflict: 'emailExists'});
+      } else {
+        next(error);
+      }
     }
   }
 );

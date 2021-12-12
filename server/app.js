@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const logger = require("./config/logger");
 const morganLogger = require("./config/logger").morganLogger;
+const { handleError } = require("./helper/ErrorHandler");
 
 //Setup DB
 require("./config/postgres.js");
@@ -54,18 +55,7 @@ if (
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 // eslint-disable-next-line no-unused-vars
-app.use(function (err, req, res, next) {
-  const {
-    handleSequelizeUniqueError,
-    handleXccupRestrictionError,
-    handleGeneralError,
-  } = require("./helper/ErrorHandler");
-
-  if (handleSequelizeUniqueError(err, req, res)) return;
-  if (handleXccupRestrictionError(err, req, res)) return;
-
-  handleGeneralError(err, req, res);
-});
+app.use(handleError);
 
 // Handle calls to non exisiting routes
 app.use("*", (req, res) => {
@@ -80,7 +70,18 @@ app.use("*", (req, res) => {
 });
 
 const PORT = process.env.SERVER_PORT || 3000;
-app.listen(
+const server = app.listen(
   PORT,
   logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );
+
+function shutdown() {
+  logger.info('Shutting down ...');
+  server.close(() => {
+    logger.info('Exiting ...');
+    process.exit(0);
+  });
+}
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
