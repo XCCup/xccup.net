@@ -69,15 +69,6 @@ export default () => {
     await fetchFlights();
   };
 
-  function calcRanges(offset) {
-    currentRange.value.start = offset + 1;
-    currentRange.value.end =
-      currentRange.value.start + limitCache.value - 1 >=
-      numberOfTotalFlights.value
-        ? numberOfTotalFlights.value
-        : currentRange.value.start + limitCache.value - 1;
-  }
-
   return {
     fetchFlights,
     filterFlightsBy,
@@ -92,3 +83,12 @@ export default () => {
     LIMIT_OPTIONS,
   };
 };
+
+function calcRanges(offset) {
+  currentRange.value.start = offset + 1;
+  currentRange.value.end =
+    currentRange.value.start + limitCache.value - 1 >=
+    numberOfTotalFlights.value
+      ? numberOfTotalFlights.value
+      : currentRange.value.start + limitCache.value - 1;
+}
