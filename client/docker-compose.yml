@@ -1,5 +1,14 @@
 version: "3.3"
 services:
+  client:
+    image: node:14.17.0-alpine3.13
+    working_dir: /home/node/app
+    volumes:
+      - .:/home/node/app
+    entrypoint: ['yarn']
+    ports:
+      - "8000:8000"
+    command: ['dev', '--host']
   yarn:
     image: node:14.17.0-alpine3.13
     working_dir: /home/node/app
