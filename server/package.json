@@ -11,7 +11,8 @@
   "scripts": {
     "start": "node app",
     "dev": "nodemon -L --polling-interval 3000 app",
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier .  --write"
   },
   "author": "",
   "license": "ISC",
@@ -46,6 +47,8 @@
     "cross-env": "^7.0.3",
     "eslint": "^7.27.0",
     "jest": "^26.6.3",
-    "nodemon": "^2.0.7"
+    "prettier": "^2.5.0",
+    "nodemon": "^2.0.7",
+    "format": "prettier .  --write"
   }
 }

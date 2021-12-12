@@ -14,7 +14,10 @@ const {
   validationHasErrors,
 } = require("./Validation");
 const { getCurrentYear } = require("../helper/Utils");
-const { defineFileDestination, defineImageFileNameWithCurrentDateAsPrefix } = require("../helper/ImageUtils");
+const {
+  defineFileDestination,
+  defineImageFileNameWithCurrentDateAsPrefix,
+} = require("../helper/ImageUtils");
 
 const multer = require("multer");
 const path = require("path");

@@ -1278,26 +1278,31 @@
         "aircraft": {
           "$ref": "#/definitions/Aircraft"
         },
-        "result" : {
-          "type" : "object",
-          "properties" : {
-            "status" : {
-              "type" : "string",
-              "enum" : [ "Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung" ]
+        "result": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "Nicht in Wertung",
+                "In Wertung",
+                "Flugbuch",
+                "In Bearbeitung"
+              ]
             },
-            "points" : {
-              "type" : "number"
+            "points": {
+              "type": "number"
             },
-            "distance" : {
-              "type" : "number"
+            "distance": {
+              "type": "number"
             },
-            "type" : {
-              "type" : "string"
+            "type": {
+              "type": "string"
             },
-            "turnpoints" : {
-              "type" : "array",
-              "items" : {
-                "type" : "string"
+            "turnpoints": {
+              "type": "array",
+              "items": {
+                "type": "string"
               }
             }
           }
