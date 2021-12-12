@@ -130,12 +130,12 @@ function determineOlcBinary() {
   logger.debug(`Running on OS: ${platform} (${os.arch()})`);
   //TODO: This is not failsafe, but good for now;)
   if (platform.includes("win")) {
-    return "igc\\olc.exe < ";
+    return "olc.exe < ";
   }
   if (os.arch() === "arm64") {
-    return "igc/olc_lnx_arm < ";
+    return "olc_lnx_arm < ";
   } else {
-    return "igc/olc_lnx < ";
+    return "olc_lnx < ";
   }
 }
 
@@ -146,7 +146,7 @@ function runOlc(filePath, flightDataObject, isTurnpointIteration) {
   //TODO: Replace compiled app through usage of Node’s N-API
   const command = determineOlcBinary();
 
-  exec(command + filePath, function (err, data) {
+  exec(command + filePath, {cwd: __dirname}, function (err, data) {
     if (err) logger.error(err);
     try {
       parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
