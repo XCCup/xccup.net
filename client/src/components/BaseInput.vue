@@ -1,10 +1,11 @@
 <template>
-  <div class="form-floating mb-3">
+  <div :class="showLabelOnTop ? 'form mb-3' : 'form-floating mb-3'">
+    <label v-if="label && showLabelOnTop">{{ label }}</label>
     <input
       v-bind="$attrs"
       :id="id"
       :value="modelValue"
-      :placeholder="label"
+      :placeholder="showLabelOnTop ? '' : label"
       :class="formClass"
       invalid="true"
       :type="type"
@@ -14,7 +15,7 @@
       :title="tooltipValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
-    <label v-if="label">{{ label }}</label>
+    <label v-if="label && !showLabelOnTop">{{ label }}</label>
     <!-- <p v-if="isInvalid">{{ validationText }}</p> -->
   </div>
 </template>
@@ -25,6 +26,10 @@ import { isEmail, isStrongPassword } from "../helper/utils";
 defineEmits(["update:modelValue"]);
 
 const props = defineProps({
+  showLabelOnTop: {
+    type: Boolean,
+    default: false,
+  },
   label: {
     type: String,
     required: true,
