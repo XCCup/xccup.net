@@ -32,6 +32,14 @@ services:
       - db
     command: ./docker-entrypoint.sh
 
+  yarn:
+    image: node:16.13.1-alpine3.14
+    working_dir: /home/node/app
+    profiles: ['cli']
+    volumes:
+      - .:/home/node/app
+    entrypoint: ["yarn"]
+
 volumes:
   db:
   pgadmin-data:
