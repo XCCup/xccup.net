@@ -43,6 +43,14 @@ services:
       - db
     command: ./docker-entrypoint.sh
 
+  npm:
+    image: node:16-alpine
+    user: "root:root"
+    working_dir: /home/node/app
+    volumes:
+      - .:/home/node/app
+    entrypoint: ['npm']
+
 volumes:
   db:
   pgadmin-data:
