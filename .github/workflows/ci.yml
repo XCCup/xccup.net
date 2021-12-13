@@ -32,7 +32,7 @@ jobs:
       #   run: tree
       #   working-directory: ./server
       - name: Test backend
-        run: npm test
+        run: docker-compose -f docker-compose-ci.yml run --rm yarn test
         working-directory: ./server
       - name: Start Docker Backend Environment
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d

@@ -11,7 +11,7 @@
   "scripts": {
     "start": "node app",
     "dev": "nodemon -L --polling-interval 3000 app",
-    "test": "jest"
+    "test": "ls -l igc && pwd && jest"
   },
   "author": "",
   "license": "ISC",
