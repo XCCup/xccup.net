@@ -16,10 +16,7 @@
       :results="results.values"
       :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
     />
-    <ModalFilterResults
-      :filter-active="filterActive"
-      @filter-results="filterFlightsBy"
-    />
+    <ModalFilterResults />
   </div>
 </template>
 
@@ -31,16 +28,15 @@ import { Modal } from "bootstrap";
 import { useRoute } from "vue-router";
 import useFilter from "../composables/useFilter";
 
-const router = useRoute("results");
+const router = useRoute();
 const {
   fetchResults,
   isLoading,
   filterActive,
-  filterFlightsBy,
   clearFilter,
   data: results,
   setApiEndpoint,
-} = useFilter();
+} = useFilter("results");
 
 const props = defineProps({
   year: {

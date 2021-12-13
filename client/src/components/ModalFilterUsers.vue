@@ -86,16 +86,10 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
+import useFilter from "../composables/useFilter";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
-const props = defineProps({
-  filterActive: {
-    type: Boolean,
-    required: true,
-  },
-});
-
-const emit = defineEmits(["filter-results"]);
+const { filterActive, filterDataBy } = useFilter("users");
 
 const selects = reactive({
   firstName: "",
@@ -106,7 +100,6 @@ const selects = reactive({
 const filterOptions = (await ApiService.getFilterOptions()).data;
 const clubData = filterOptions.clubNames;
 const teamData = filterOptions.teamNames;
-// const users = ref(userData.map((e) => `${e.firstName} ${e.lastName}`));
 const clubs = ref(clubData.map((e) => e.name));
 const teams = ref(teamData.map((e) => e.name));
 
@@ -117,7 +110,7 @@ const onActivate = async () => {
   const firstNameStartsWith = selects.firstName;
   const lastNameStartsWith = selects.lastName;
 
-  emit("filter-results", {
+  filterDataBy({
     clubId,
     teamId,
     firstNameStartsWith,
@@ -129,13 +122,10 @@ const anyFilterOptionSet = computed(() =>
   checkIfAnyValueOfObjectIsDefined(selects)
 );
 
-watch(
-  () => props.filterActive,
-  (newVal, oldVal) => {
-    // Clear all fields if an external source caused an reset
-    if (!oldVal && newVal) onClear();
-  }
-);
+watch(filterActive, (newVal, oldVal) => {
+  // Clear all fields if an external source caused an reset
+  if (!oldVal && newVal) onClear();
+});
 
 const onClear = async () => {
   Object.keys(selects).forEach((key) => (selects[key] = ""));
