@@ -45,7 +45,7 @@ jobs:
         run: docker logs server
       - name: Install cypress
         run: npx cypress install
-        # TODO: Fix cypress caching issuse and remove the addional install
+        # TODO: Fix cypress caching issue and remove the addional install
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
