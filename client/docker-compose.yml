@@ -20,5 +20,8 @@ services:
       - ../.cache:/home/node/.cache/Cypress:rw
       - .:/home/node/app
     entrypoint: ["yarn"]
+    ports:
+      - "8000:8000"
+      - "5000:5000"
     environment:
       YARN_CACHE_FOLDER: "/yarn-cache"
