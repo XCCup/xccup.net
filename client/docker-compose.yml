@@ -17,7 +17,7 @@ services:
     profiles: ['cli']
     volumes:
       - ../.yarn-cache:/yarn-cache:rw
-      - ../.cache:~/.cache/Cypress:rw
+      - ../.cache:/home/node/.cache/Cypress:rw
       - .:/home/node/app
     entrypoint: ["yarn"]
     environment:
