@@ -40,7 +40,7 @@ jobs:
         run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
       - name: Tree client
-        run: /bin/sh tree -a
+        run: tree -a
         working-directory: ./client
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
