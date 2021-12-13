@@ -16,7 +16,7 @@ services:
     working_dir: /home/node/app
     profiles: ['cli']
     volumes:
-      - ../.yarn-cache:/yarn-cache:rw
+      - ../.cache:/yarn-cache:rw
       - .:/home/node/app
     entrypoint: ["yarn"]
     environment:
