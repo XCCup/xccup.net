@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const logger = require("../config/logger");
 const { ROLE } = require("../constants/user-constants");
 
 module.exports = (sequelize, DataTypes) => {
@@ -77,9 +78,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeSave: (user) => {
+          const BCRYPT_ALGO_IDENTIFIER = "$2a$10$";
+
           const salt = bcrypt.genSaltSync();
-          if (user.password)
+          // Prevention to hash a password again if it was saved again
+          if (
+            user.password &&
+            !user.password.startsWith(BCRYPT_ALGO_IDENTIFIER)
+          ) {
             user.password = bcrypt.hashSync(user.password, salt);
+            logger.info("U: Password of user " + user.id + " will be hashed");
+          }
         },
       },
     }
