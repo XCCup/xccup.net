@@ -39,6 +39,8 @@ jobs:
       - name: Install and build frontend
         run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
+      - name: Tree client
+        run: docker exec client /bin/sh tree -a
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
       - name: Cypress run
