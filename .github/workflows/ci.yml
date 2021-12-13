@@ -35,7 +35,7 @@ jobs:
         run: sleep 10 && docker exec db psql -U xccup_user -l
       - name: Setup DB (enable PostGIS and set correct timezone)
         run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
-        # It looks like that it's no longer necessary to active the postgis extension
+        # It looks like that it's no longer necessary to activate the postgis extension
         # run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
         working-directory: ./server
       - name: Install and build frontend
