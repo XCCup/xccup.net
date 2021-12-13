@@ -45,7 +45,6 @@ jobs:
       #   run: docker exec yarn /bin/sh tree -a
       - name: Tree client
         run: tree -a
-        working-directory: ./client
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
       - name: Cypress run
