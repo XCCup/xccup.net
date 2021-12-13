@@ -5,7 +5,7 @@ const DEFAULT_LIMIT = 50;
 
 const instances = {};
 
-//TODO: Merge with useFlights
+//TODO: Merge with useFlights -> Afterwards use composable also in FilterPanel
 
 export default (filterLabel) => {
   if (!instances[filterLabel]) instances[filterLabel] = createInstance();
