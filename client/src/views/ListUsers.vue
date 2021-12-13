@@ -17,10 +17,7 @@
     </div>
   </div>
   <ModalSendMail :modal-id="mailModalId" :user="selectedUser" />
-  <ModalFilterUsers
-    :filter-active="filterActive"
-    @filter-results="filterFlightsBy"
-  />
+  <ModalFilterUsers />
 </template>
 
 <script setup>
@@ -36,7 +33,6 @@ const {
   fetchResults,
   isLoading,
   filterActive,
-  filterFlightsBy,
   clearFilter,
   data: users,
   setApiEndpoint,

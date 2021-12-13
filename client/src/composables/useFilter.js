@@ -5,8 +5,7 @@ const DEFAULT_LIMIT = 50;
 
 const instances = {};
 
-//TODO: Merge with useFlights
-//TODO: Use composable also in ModalFilterResults and ModalFilterUsers
+//TODO: Merge with useFlights -> Afterwards use composable also in FilterPanel
 
 export default (filterLabel) => {
   if (!instances[filterLabel]) instances[filterLabel] = createInstance();
@@ -41,7 +40,7 @@ function createInstance() {
     filterOptionsCache.value = null;
     fetchResults();
   };
-  const filterFlightsBy = (filterOptions) => {
+  const filterDataBy = (filterOptions) => {
     //Check if any filter value was set
     if (!Object.values(filterOptions).find((v) => !!v)) return;
     filterOptionsCache.value = filterOptions;
@@ -80,7 +79,7 @@ function createInstance() {
     filterActive: readonly(filterActive),
     data: readonly(data),
     clearFilter,
-    filterFlightsBy,
+    filterDataBy,
     setApiEndpoint,
     fetchResults,
   };
