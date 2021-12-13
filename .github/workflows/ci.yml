@@ -25,12 +25,15 @@ jobs:
       - name: Install backend
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
+<<<<<<< HEAD
       - name: List backend
         run: pwd && ls -l igc
         working-directory: ./server
       # - name: Tree backend
       #   run: tree
       #   working-directory: ./server
+=======
+>>>>>>> parent of 4ec2f72 (Print tree structure)
       - name: Test backend
         run: docker-compose -f docker-compose-ci.yml run --rm yarn test
         working-directory: ./server

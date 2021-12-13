@@ -38,6 +38,7 @@ services:
     profiles: ['cli']
     volumes:
       - .:/home/node/app
+    command: "apk add --no-cache && libc6-compat && libstdc++"
     entrypoint: ["yarn"]
 
 volumes:
