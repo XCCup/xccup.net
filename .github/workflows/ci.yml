@@ -39,10 +39,10 @@ jobs:
       - name: Install and build frontend
         run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
-      - name: Tree yarn
-        run: docker exec yarn /bin/sh tree -a
       - name: docker ps
         run: docker ps -a
+      # - name: Tree yarn
+      #   run: docker exec yarn /bin/sh tree -a
       - name: Tree client
         run: tree -a
         working-directory: ./client

@@ -49,7 +49,6 @@ services:
     volumes:
       - ../.yarn-cache:/yarn-cache:rw
       - .:/home/node/app
-      - .:/home/runner/.cache/Cypress/
     entrypoint: ["yarn"]
     environment:
       YARN_CACHE_FOLDER: "/yarn-cache"
