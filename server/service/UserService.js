@@ -24,7 +24,7 @@ const userService = {
     clubId,
     teamId,
   } = {}) => {
-    const users = await User.findAll({
+    const users = await User.findAndCountAll({
       where: createUserWhereStatement(firstNameStartsWith, lastNameStartsWith),
       attributes: ["id", "firstName", "lastName", "gender", "gliders"],
       include: [
@@ -42,8 +42,8 @@ const userService = {
     });
 
     if (records) {
-      return await Promise.all(
-        users.map(async (user) => {
+      const usersWithRecords = await Promise.all(
+        users.rows.map(async (user) => {
           const userJson = user.toJSON();
           const bestFreeFlight = findFlightRecordOfType(userJson.id, TYPE.FREE);
           const bestFlatFlight = findFlightRecordOfType(userJson.id, TYPE.FLAT);
@@ -78,6 +78,8 @@ const userService = {
           return userJson;
         })
       );
+
+      return { count: users.count, rows: usersWithRecords };
     }
 
     /**
@@ -85,7 +87,7 @@ const userService = {
      * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
      * See also: https://github.com/pvorb/clone/issues/106
      */
-    return users.map((v) => v.toJSON());
+    return users.rows.map((v) => v.toJSON());
   },
   getAllNames: async () => {
     const users = await User.findAll({
