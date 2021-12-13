@@ -60,7 +60,7 @@ function createInstance() {
   };
 
   // Actions
-  async function fetchData({ params, queries, limit, offset = 0 } = {}) {
+  const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
     if (params) paramsCache.value = params;
     if (queries) filterOptionsCache.value = queries;
     if (offset < 0) offset = 0;
@@ -93,16 +93,16 @@ function createInstance() {
     } finally {
       isLoading.value = false;
     }
-  }
+  };
 
-  function calcRanges(offset) {
+  const calcRanges = (offset) => {
     currentRange.value.start = offset + 1;
     currentRange.value.end =
       currentRange.value.start + limitCache.value - 1 >=
       numberOfTotalEntries.value
         ? numberOfTotalEntries.value
         : currentRange.value.start + limitCache.value - 1;
-  }
+  };
 
   return {
     setApiEndpoint,
