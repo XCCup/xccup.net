@@ -40,7 +40,6 @@ services:
     profiles: ['cli']
     volumes:
       - .:/home/node/app
-      - .:/home/node/.cache/Cypress/
     entrypoint: ["yarn"]
 
 volumes:

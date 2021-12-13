@@ -25,9 +25,9 @@ jobs:
       - name: Install backend
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
-      # - name: Test backend
-      #   run: yarn test
-      #   working-directory: ./server
+      - name: Test backend
+        run: yarn test
+        working-directory: ./server
       - name: Start Docker Backend Environment
         run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
         working-directory: ./server
@@ -35,18 +35,19 @@ jobs:
         run: sleep 10 && docker exec db psql -U xccup_user -l
       - name: Setup DB (enable PostGIS and set correct timezone)
         run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
+        # It looks like that it's no longer necessary to active the postgis extension
+        # run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
         working-directory: ./server
       - name: Install and build frontend
-        run: docker-compose run --rm yarn CYPRESS_CACHE_FOLDER=./tmp/Cypress install && docker-compose run --rm yarn build-local
+        run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
-      # - name: Install cypress
-      #   run: npx cypress install
+      - name: Install cypress
+        run: npx cypress install
+        # TODO: Fix cypress caching issuse and remove the addional install
       - name: Cypress run
         uses: cypress-io/github-action@v2
-        env:
-          - CYPRESS_CACHE_FOLDER=./tmp/Cypress
         with:
           start: docker-compose run --service-ports --rm yarn serve
           wait-on: http://localhost:5000
