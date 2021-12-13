@@ -121,10 +121,10 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
-import useFilter from "../composables/useFilter";
+import useData from "../composables/useData";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
-const { filterActive, filterDataBy } = useFilter("results");
+const { filterActive, filterDataBy } = useData("results");
 
 const selects = reactive({
   site: "",

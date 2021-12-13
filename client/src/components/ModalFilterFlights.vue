@@ -96,10 +96,10 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
-import useFlights from "@/composables/useFlights";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
+import useData from "../composables/useData";
 
-const { filterFlightsBy, filterActive } = useFlights();
+const { filterDataBy, filterActive } = useData("flights");
 
 const selects = reactive({
   user: "",
@@ -120,10 +120,6 @@ const clubs = ref(clubData.map((e) => e.name));
 const teams = ref(teamData.map((e) => e.name));
 const rankings = ref(Object.values(rankingData).map((e) => e.shortDescription));
 
-const onClose = () => {
-  //Needed?
-};
-
 const onActivate = async () => {
   // The variable name must match the appropriate query parameter in /flights
   const userId = findIdByUserName();
@@ -132,7 +128,7 @@ const onActivate = async () => {
   const teamId = findIdByName(selects.team, teamData);
   const rankingClass = findKeyOfRankingClass(selects.team, teamData);
 
-  filterFlightsBy({ userId, siteId, clubId, teamId, rankingClass });
+  filterDataBy({ userId, siteId, clubId, teamId, rankingClass });
 };
 
 const anyFilterOptionSet = computed(() =>
@@ -145,7 +141,6 @@ watch(filterActive, (newVal, oldVal) => {
 });
 
 const onClear = async () => {
-  //Should the modal close after clear?
   Object.keys(selects).forEach((key) => (selects[key] = ""));
 };
 

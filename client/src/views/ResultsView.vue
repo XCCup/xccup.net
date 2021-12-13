@@ -4,12 +4,7 @@
     <p v-if="remark">Hinweis: {{ remark }}</p>
     <div v-if="category == 'overall'" class="row">
       <div class="col-6">
-        <FilterPanel
-          :is-loading="isLoading"
-          :filter-active="filterActive"
-          @clear-filter="clearFilter"
-          @show-filter="showFilter"
-        />
+        <FilterPanel data-label="results" @show-filter="showFilter" />
       </div>
     </div>
     <ResultsTableGeneric
@@ -26,17 +21,10 @@ import { ref, watchEffect, onMounted } from "vue";
 import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
 import { useRoute } from "vue-router";
-import useFilter from "../composables/useFilter";
+import useData from "../composables/useData";
 
 const router = useRoute();
-const {
-  fetchResults,
-  isLoading,
-  filterActive,
-  clearFilter,
-  data: results,
-  setApiEndpoint,
-} = useFilter("results");
+const { fetchData, data: results, setApiEndpoint } = useData("results");
 
 const props = defineProps({
   year: {
@@ -97,11 +85,11 @@ watchEffect(() => {
 });
 
 setApiEndpoint(ApiService.getResults, activeCategory.apiString);
-await fetchResults({
+await fetchData({
   params: { year: props.year },
   queries: router.query,
 });
-// Remark has an internal reference to results. Therefore the fetchResults function has to be run at least once before setting the remark value.
+// Remark has an internal reference to results. Therefore the fetchData function has to be run at least once before setting the remark value.
 if (activeCategory.remarks) remark.value = activeCategory.remarks();
 
 let filterModal;

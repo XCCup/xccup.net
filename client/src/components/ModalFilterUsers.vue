@@ -23,14 +23,14 @@
             <BaseInput
               id="filterSelectFirstName"
               v-model="selects.firstName"
-              label="Vorname"
+              label="Vorname (Anfangsbuchstaben reichen)"
               :is-required="false"
               :show-label-on-top="true"
             />
             <BaseInput
               id="filterSelectLastName"
               v-model="selects.lastName"
-              label="Vorname"
+              label="Nachname (Anfangsbuchstaben reichen)"
               :is-required="false"
               :show-label-on-top="true"
             />
@@ -86,10 +86,10 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
-import useFilter from "../composables/useFilter";
+import useData from "../composables/useData";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
-const { filterActive, filterDataBy } = useFilter("users");
+const { filterActive, filterDataBy } = useData("users");
 
 const selects = reactive({
   firstName: "",
