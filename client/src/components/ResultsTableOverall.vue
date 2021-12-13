@@ -82,10 +82,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-// import useFlights from "@/composables/useFlights";
 import useData from "../composables/useData";
 
-// const { flights, sortFlightsBy } = useFlights();
 const { data: flights, sortDataBy } = useData("flights");
 const router = useRouter();
 
