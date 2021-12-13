@@ -33,8 +33,10 @@ services:
     command: ./docker-entrypoint.sh
 
   yarn:
-    image: node:16.13.1-alpine3.14
-    working_dir: /home/node/app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: xccup/yarn
     profiles: ['cli']
     volumes:
       - .:/home/node/app
