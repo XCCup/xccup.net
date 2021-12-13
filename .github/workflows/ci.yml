@@ -25,20 +25,22 @@ jobs:
       - name: Install backend
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
-      - name: Test backend
-        run: yarn test
-        working-directory: ./server
+      # - name: Test backend
+      #   run: yarn test
+      #   working-directory: ./server
       - name: Start Docker Backend Environment
         run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
         working-directory: ./server
       - name: List all databases (just for debugging)
-        run: sleep 30 && docker exec db psql -U xccup_user -l
+        run: sleep 10 && docker exec db psql -U xccup_user -l
       - name: Setup DB (enable PostGIS and set correct timezone)
-        run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
+        run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
         working-directory: ./server
       - name: Install and build frontend
         run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
+      - name: Tree yarn
+        run: docker exec yarn /bin/sh tree -a
       - name: Tree client
         run: tree -a
         working-directory: ./client
