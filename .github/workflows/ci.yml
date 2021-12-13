@@ -45,7 +45,8 @@ jobs:
       #   run: npx cypress install
       - name: Cypress run
         uses: cypress-io/github-action@v2
-        env: CYPRESS_CACHE_FOLDER=./tmp/Cypress
+        env:
+          - CYPRESS_CACHE_FOLDER=./tmp/Cypress
         with:
           start: docker-compose run --service-ports --rm yarn serve
           wait-on: http://localhost:5000
