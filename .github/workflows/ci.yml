@@ -47,6 +47,8 @@ jobs:
         run: tree -a
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
+      - name: Install cypress
+        run: npx cypress install
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
