@@ -52,7 +52,6 @@ services:
     entrypoint: ["yarn"]
     environment:
       YARN_CACHE_FOLDER: "/yarn-cache"
-    command: [apk add --no-cache libc6-compat libstdc++ node]
 
 volumes:
   db:
