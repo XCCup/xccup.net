@@ -37,20 +37,15 @@ jobs:
         run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
         working-directory: ./server
       - name: Install and build frontend
-        run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
+        run: docker-compose run --rm yarn CYPRESS_CACHE_FOLDER=./tmp/Cypress install && docker-compose run --rm yarn build-local
         working-directory: ./client
-      - name: docker ps
-        run: docker ps -a
-      # - name: Tree yarn
-      #   run: docker exec yarn /bin/sh tree -a
-      - name: Tree client
-        run: tree -a
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
-      - name: Install cypress
-        run: npx cypress install
+      # - name: Install cypress
+      #   run: npx cypress install
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env: CYPRESS_CACHE_FOLDER=./tmp/Cypress
         with:
           start: docker-compose run --service-ports --rm yarn serve
           wait-on: http://localhost:5000
