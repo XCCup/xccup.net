@@ -25,14 +25,8 @@ jobs:
       - name: Install backend
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
-      - name: List backend
-        run: pwd && ls -l igc
-        working-directory: ./server
-      # - name: Tree backend
-      #   run: tree
-      #   working-directory: ./server
       - name: Test backend
-        run: npm test
+        run: yarn test
         working-directory: ./server
       - name: Start Docker Backend Environment
         run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
