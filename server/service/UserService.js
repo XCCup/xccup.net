@@ -15,17 +15,9 @@ const { arrayRemove, generateRandomString } = require("../helper/Utils");
 const logger = require("../config/logger");
 
 const userService = {
-  getAll: async ({
-    records,
-    limit,
-    offset,
-    firstNameStartsWith,
-    lastNameStartsWith,
-    clubId,
-    teamId,
-  } = {}) => {
+  getAll: async ({ records, limit, offset, userIds, clubId, teamId } = {}) => {
     const users = await User.findAndCountAll({
-      where: createUserWhereStatement(firstNameStartsWith, lastNameStartsWith),
+      where: createUserWhereStatement(userIds),
       attributes: ["id", "firstName", "lastName", "gender", "gliders"],
       include: [
         {
@@ -340,21 +332,26 @@ function createBasicInclude(model, as, id) {
   return include;
 }
 
-function createUserWhereStatement(firstNameStartsWith, lastNameStartsWith) {
+function createUserWhereStatement(userIds) {
   const where = {
     role: {
       [Op.not]: ROLE.INACTIVE,
     },
   };
 
-  if (firstNameStartsWith)
-    where.firstName = {
-      [Op.iRegexp]: `^${firstNameStartsWith}`,
+  if (userIds)
+    where.id = {
+      [Op.in]: userIds,
     };
-  if (lastNameStartsWith)
-    where.lastName = {
-      [Op.iRegexp]: `^${lastNameStartsWith}`,
-    };
+
+  // if (firstNameStartsWith)
+  //   where.firstName = {
+  //     [Op.iRegexp]: `^${firstNameStartsWith}`,
+  //   };
+  // if (lastNameStartsWith)
+  //   where.lastName = {
+  //     [Op.iRegexp]: `^${lastNameStartsWith}`,
+  //   };
 
   return where;
 }
