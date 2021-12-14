@@ -26,12 +26,6 @@ https://sharp.pixelplumbing.com/install
 docker-compose up
 ```
 
-#### Live Dev Server:
-
-```
-docker-compose -f docker-compose-live-dev.yml up -d
-```
-
 ## Before first StartUp
 
 #### Define ENV Vars
