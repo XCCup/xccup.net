@@ -49,7 +49,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          start: docker-compose run --service-ports --rm yarn serve
+          start: docker-compose run --service-ports --rm client serve
           wait-on: http://localhost:5000
           working-directory: ./client
           config: baseUrl=http://localhost:5000
