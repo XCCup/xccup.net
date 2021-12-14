@@ -24,13 +24,13 @@
 import useData from "../composables/useData";
 
 const props = defineProps({
-  dataLabel: {
-    type: String,
+  apiEndpoint: {
+    type: Function,
     required: true,
   },
 });
 
-const { clearFilter, filterActive, isLoading } = useData(props.dataLabel);
+const { clearFilter, filterActive, isLoading } = useData(props.apiEndpoint);
 
 const emit = defineEmits(["show-filter"]);
 

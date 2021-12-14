@@ -3,10 +3,16 @@
     <h3>Registrierte Piloten</h3>
     <div class="row">
       <div class="col-6">
-        <FilterPanel data-label="users" @show-filter="showFilter" />
+        <FilterPanel
+          :api-endpoint="ApiService.getUsers"
+          @show-filter="showFilter"
+        />
       </div>
       <div class="col-6">
-        <PaginationPanel data-label="users" entry-name="Piloten" />
+        <PaginationPanel
+          :api-endpoint="ApiService.getUsers"
+          entry-name="Piloten"
+        />
       </div>
     </div>
     <div v-for="user in users" :key="user.id" class="card mb-3">
@@ -26,7 +32,7 @@ import useData from "../composables/useData";
 import { useRoute } from "vue-router";
 
 const router = useRoute();
-const { fetchData, data: users, setApiEndpoint } = useData("users");
+const { fetchData, data: users } = useData(ApiService.getUsers);
 
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);
@@ -45,7 +51,6 @@ const messageUser = (user) => {
   mailModal.show();
 };
 
-setApiEndpoint(ApiService.getUsers);
 fetchData({ params: { records: true }, queries: router.query });
 
 const showFilter = () => {

@@ -6,18 +6,16 @@ const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 const instances = {};
 
-export default (dataLabel) => {
-  if (!dataLabel) return createInstance();
+export default (apiEndpoint, apiExtension) => {
+  if (!apiEndpoint) throw "No endpoint defined for useData";
 
-  if (!instances[dataLabel]) instances[dataLabel] = createInstance();
+  if (!instances[apiEndpoint])
+    instances[apiEndpoint] = createInstance(apiEndpoint, apiExtension);
 
-  return instances[dataLabel];
+  return instances[apiEndpoint];
 };
 
-function createInstance() {
-  let apiEndpoint;
-  let apiExtension;
-
+function createInstance(apiEndpoint, apiExtension) {
   const data = ref([]);
   const sortOptionsCache = ref(null);
   const filterOptionsCache = ref(null);
@@ -26,11 +24,6 @@ function createInstance() {
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
   const currentRange = ref({ start: 0, end: 0 });
-
-  // Setters
-  const setApiEndpoint = (endpoint, extension) => {
-    (apiEndpoint = endpoint), (apiExtension = extension);
-  };
 
   // Getters
   const filterActive = computed(() =>
@@ -102,7 +95,6 @@ function createInstance() {
   };
 
   return {
-    setApiEndpoint,
     fetchData,
     filterDataBy,
     sortDataBy,

@@ -3,10 +3,16 @@
     <h3>Streckenmeldungen {{ props.year }}</h3>
     <div class="row">
       <div class="col-6">
-        <FilterPanel data-label="flights" @show-filter="showFilter" />
+        <FilterPanel
+          :api-endpoint="ApiService.getFlights"
+          @show-filter="showFilter"
+        />
       </div>
       <div class="col-6">
-        <PaginationPanel data-label="flights" entry-name="Flüge" />
+        <PaginationPanel
+          :api-endpoint="ApiService.getFlights"
+          entry-name="Flüge"
+        />
       </div>
     </div>
     <ResultsTableOverall />
@@ -32,9 +38,7 @@ const props = defineProps({
 });
 const route = useRoute();
 
-const { fetchData, setApiEndpoint } = useData("flights");
-
-setApiEndpoint(ApiService.getFlights);
+const { fetchData } = useData(ApiService.getFlights);
 
 await fetchData({ params: route.params, queries: route.query });
 

@@ -20,20 +20,20 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <BaseInput
-              id="filterSelectFirstName"
-              v-model="selects.firstName"
-              label="Vorname (Anfangsbuchstaben reichen)"
-              :is-required="false"
-              :show-label-on-top="true"
+            <label for="exampleDataList" class="form-label">Name</label>
+            <input
+              id="exampleDataList"
+              v-model="selects.name"
+              class="form-control mb-3"
+              list="datalistOptions"
+              placeholder="Suchen..."
             />
-            <BaseInput
-              id="filterSelectLastName"
-              v-model="selects.lastName"
-              label="Nachname (Anfangsbuchstaben reichen)"
-              :is-required="false"
-              :show-label-on-top="true"
-            />
+            <datalist id="datalistOptions">
+              <option v-for="user in users" :key="user" :value="user">
+                {{ user }}
+              </option>
+            </datalist>
+
             <BaseSelect
               id="filterSelectClub"
               v-model="selects.club"
@@ -89,17 +89,18 @@ import { ref, reactive, watch, computed } from "vue";
 import useData from "../composables/useData";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
-const { filterActive, filterDataBy } = useData("users");
+const { filterActive, filterDataBy } = useData(ApiService.getUsers);
 
 const selects = reactive({
-  firstName: "",
-  lastName: "",
+  name: "",
   club: "",
   team: "",
 });
 const filterOptions = (await ApiService.getFilterOptions()).data;
+const userData = filterOptions.userNames;
 const clubData = filterOptions.clubNames;
 const teamData = filterOptions.teamNames;
+const users = ref(userData.map((e) => `${e.firstName} ${e.lastName}`));
 const clubs = ref(clubData.map((e) => e.name));
 const teams = ref(teamData.map((e) => e.name));
 
@@ -107,14 +108,12 @@ const onActivate = async () => {
   // The variable name must match the appropriate query parameter in /flights
   const clubId = findIdByName(selects.club, clubData);
   const teamId = findIdByName(selects.team, teamData);
-  const firstNameStartsWith = selects.firstName;
-  const lastNameStartsWith = selects.lastName;
+  const userIds = findIdsByNameParts();
 
   filterDataBy({
     clubId,
     teamId,
-    firstNameStartsWith,
-    lastNameStartsWith,
+    userIds,
   });
 };
 
@@ -135,5 +134,17 @@ function findIdByName(selectObject, initalData) {
   return selectObject
     ? initalData.find((e) => e.name == selectObject).id
     : undefined;
+}
+function findIdsByNameParts() {
+  // Return undefined if no value was present
+  if (!selects.name.length) return;
+
+  const possibleUsers = userData.filter(
+    (u) =>
+      u.firstName.toLowerCase().includes(selects.name.toLowerCase()) ||
+      u.lastName.toLowerCase().includes(selects.name.toLowerCase())
+  );
+
+  return possibleUsers.map((u) => u.id);
 }
 </script>

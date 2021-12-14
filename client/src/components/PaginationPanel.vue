@@ -94,8 +94,8 @@ import useData from "../composables/useData";
 import { ref, watch, computed } from "vue";
 
 const props = defineProps({
-  dataLabel: {
-    type: String,
+  apiEndpoint: {
+    type: Function,
     required: true,
   },
   entryName: {
@@ -110,7 +110,7 @@ const {
   DEFAULT_LIMIT,
   LIMIT_OPTIONS,
   currentRange,
-} = useData(props.dataLabel);
+} = useData(props.apiEndpoint);
 
 const numberEntriesPerPage = ref(DEFAULT_LIMIT);
 

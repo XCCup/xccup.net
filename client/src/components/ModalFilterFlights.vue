@@ -99,7 +99,7 @@ import { ref, reactive, watch, computed } from "vue";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 import useData from "../composables/useData";
 
-const { filterDataBy, filterActive } = useData("flights");
+const { filterDataBy, filterActive } = useData(ApiService.getFlights);
 
 const selects = reactive({
   user: "",

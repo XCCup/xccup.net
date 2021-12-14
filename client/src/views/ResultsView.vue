@@ -4,7 +4,10 @@
     <p v-if="remark">Hinweis: {{ remark }}</p>
     <div v-if="category == 'overall'" class="row">
       <div class="col-6">
-        <FilterPanel data-label="results" @show-filter="showFilter" />
+        <FilterPanel
+          :api-endpoint="ApiService.getResults"
+          @show-filter="showFilter"
+        />
       </div>
     </div>
     <ResultsTableGeneric
@@ -24,7 +27,6 @@ import { useRoute } from "vue-router";
 import useData from "../composables/useData";
 
 const router = useRoute();
-const { fetchData, data: results, setApiEndpoint } = useData("results");
 
 const props = defineProps({
   year: {
@@ -42,49 +44,54 @@ const categories = [
   {
     name: "overall",
     title: "Gesamtwertung",
-    apiString: "",
+    apiExtensionString: "",
   },
   {
     name: "newcomer",
     title: "Newcomerwertung",
-    apiString: "newcomer",
+    apiExtensionString: "newcomer",
     remarks: () =>
       `Es werden nur Flüge mit Geräten bis zur ${results.value.constants.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
   },
   {
     name: "seniors",
     title: "Seniorenwertung",
-    apiString: "seniors",
+    apiExtensionString: "seniors",
     remarks: () =>
       `Die Wertung beginnt ab einem Alter von ${results.value.constants.SENIOR_START_AGE} mit einem Bonus von ${results.value.constants.SENIOR_BONUS_PER_AGE}% pro Jahr`,
   },
   {
     name: "ladies",
     title: "Damenwertung",
-    apiString: "?gender=W",
+    apiExtensionString: "?gender=W",
   },
   {
     name: "rlp-state",
     title: "Landesmeisterschaft RLP",
-    apiString: "?state=RP",
+    apiExtensionString: "?state=RP",
     remarks: () =>
       `Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war`,
   },
   {
     name: "lux-state",
     title: "Luxemburg Championat",
-    apiString: "?state=LUX",
+    apiExtensionString: "?state=LUX",
     remarks: () =>
       `Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war`,
   },
 ];
 const activeCategory = categories.find((e) => e.name === props.category);
+
+const { fetchData, data: results } = useData(
+  ApiService.getResults,
+  activeCategory.apiExtensionString
+);
+
 // Name the window
 watchEffect(() => {
   setWindowName(activeCategory.title);
 });
 
-setApiEndpoint(ApiService.getResults, activeCategory.apiString);
 await fetchData({
   params: { year: props.year },
   queries: router.query,
