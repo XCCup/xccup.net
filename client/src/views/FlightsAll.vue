@@ -32,11 +32,9 @@ const props = defineProps({
 });
 const route = useRoute();
 
-const { fetchData, setApiEndpoint, setPaginationSupported } =
-  useData("flights");
+const { fetchData, setApiEndpoint } = useData("flights");
 
 setApiEndpoint(ApiService.getFlights);
-setPaginationSupported(true);
 
 await fetchData({ params: route.params, queries: route.query });
 

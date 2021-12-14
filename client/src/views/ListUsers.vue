@@ -26,12 +26,7 @@ import useData from "../composables/useData";
 import { useRoute } from "vue-router";
 
 const router = useRoute();
-const {
-  fetchData,
-  data: users,
-  setApiEndpoint,
-  setPaginationSupported,
-} = useData("users");
+const { fetchData, data: users, setApiEndpoint } = useData("users");
 
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);
@@ -51,7 +46,6 @@ const messageUser = (user) => {
 };
 
 setApiEndpoint(ApiService.getUsers);
-setPaginationSupported(true);
 fetchData({ params: { records: true }, queries: router.query });
 
 const showFilter = () => {

@@ -17,7 +17,6 @@ export default (dataLabel) => {
 function createInstance() {
   let apiEndpoint;
   let apiExtension;
-  let paginationSupported;
 
   const data = ref([]);
   const sortOptionsCache = ref(null);
@@ -32,9 +31,6 @@ function createInstance() {
   const setApiEndpoint = (endpoint, extension) => {
     (apiEndpoint = endpoint), (apiExtension = extension);
   };
-
-  const setPaginationSupported = (isSupported) =>
-    (paginationSupported = isSupported);
 
   // Getters
   const filterActive = computed(() =>
@@ -80,7 +76,8 @@ function createInstance() {
       );
       if (res.status != 200) throw res.status.text;
 
-      if (paginationSupported) {
+      //Check if data supports pagination (data split in rows and count)
+      if (res.data.rows) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
         calcRanges(offset);
@@ -106,7 +103,6 @@ function createInstance() {
 
   return {
     setApiEndpoint,
-    setPaginationSupported,
     fetchData,
     filterDataBy,
     sortDataBy,
