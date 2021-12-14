@@ -26,6 +26,7 @@
               v-model="selects.name"
               class="form-control mb-3"
               list="datalistOptions"
+              placeholder="Suchen..."
             />
             <datalist id="datalistOptions">
               <option v-for="user in users" :key="user" :value="user">
