@@ -54,7 +54,6 @@ if (
 }
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
-// eslint-disable-next-line no-unused-vars
 app.use(handleError);
 
 // Handle calls to non exisiting routes
@@ -76,12 +75,12 @@ const server = app.listen(
 );
 
 function shutdown() {
-  logger.info('Shutting down ...');
+  logger.info("Shutting down ...");
   server.close(() => {
-    logger.info('Exiting ...');
+    logger.info("Exiting ...");
     process.exit(0);
   });
 }
 
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);

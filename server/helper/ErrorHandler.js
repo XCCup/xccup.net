@@ -3,7 +3,7 @@ const logger = require("../config/logger");
 function handleSequelizeUniqueError(error, req, res) {
   if (error.name?.includes("SequelizeUniqueConstraintError")) {
     logger.warn(error.errors[0].message, createMetaDataFromReq(req));
-    return res.status(500).send('Internal Server Error'); //Do not return internal errors to the client
+    return res.status(500).send("Internal Server Error"); //Do not return internal errors to the client
   }
 }
 
@@ -15,7 +15,7 @@ function handleXccupRestrictionError(error, req, res) {
 }
 
 function handleXccupHttpError(error, req, res) {
-  if (error.name === 'XccupHttpError') {
+  if (error.name === "XccupHttpError") {
     logger.error(error, createMetaDataFromReq(req));
     return res.status(error.statusCode).send(error.clientMessage); //do not expose error messages in general to the client!
   }
@@ -31,7 +31,7 @@ function handleGeneralError(error, req, res) {
     .status(500)
     .send(
       "There was an internal error! Please forward this message to an administrator. Time: " +
-      new Date()
+        new Date()
     );
 }
 
@@ -56,18 +56,21 @@ class XccupHttpError extends Error {
 function createMetaDataFromReq(req) {
   return Object.keys(req.body).length > 0
     ? {
-      meta: {
-        body: req.body,
-      },
-    }
+        meta: {
+          body: req.body,
+        },
+      }
     : undefined;
 }
 
-function handleError(err, req, res) {
-  handleSequelizeUniqueError(err, req, res)
-    || handleXccupRestrictionError(err, req, res)
-    || handleXccupHttpError(err, req, res)
-    || handleGeneralError(err, req, res);
+// Don't change the signatur of this function. Even when "next" is not used, if "next" is missing, express won't use this middleware.
+// TODO: Find a more elegant solution for the "next" problem
+// eslint-disable-next-line no-unused-vars
+function handleError(err, req, res, next) {
+  handleSequelizeUniqueError(err, req, res) ||
+    handleXccupRestrictionError(err, req, res) ||
+    handleXccupHttpError(err, req, res) ||
+    handleGeneralError(err, req, res);
 }
 
 exports.handleError = handleError;
