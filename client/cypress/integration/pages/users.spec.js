@@ -113,34 +113,35 @@ describe("check users page", () => {
   //     .find(".cy-user-name-label")
   //     .filter(`:contains("${expectedNames[0]}")`);
   // });
-  // it("test filter type full name", () => {
-  //   const expectedName = "Camille Schaden";
-  //   const expectedLength = 1;
 
-  //   cy.loginNormalUser();
+  it("test filter type full name", () => {
+    const expectedName = "Camille Schaden";
+    const expectedLength = 1;
 
-  //   cy.get("#navbarLists").click();
-  //   cy.get("#navbarLists").find("li").contains("Registrierte Piloten").click();
+    cy.loginNormalUser();
 
-  //   cy.get("#filterButton").click();
+    cy.get("#navbarLists").click();
+    cy.get("#navbarLists").find("li").contains("Registrierte Piloten").click();
 
-  //   /*eslint-disable */
-  //   // TODO: Find better solution
-  //   // Wait will modal was fully rendered, otherwise the typing may not be successful
-  //   cy.wait(1000);
-  //   cy.get("#filterSelectName").type(expectedName);
-  //   cy.get("button").contains("Anwenden").click();
+    cy.get("#filterButton").click();
 
-  //   // Wait till table is updated otherwise its() will always resolve to 25
-  //   cy.wait(1000);
-  //   /*eslint-enable */
+    /*eslint-disable */
+    // TODO: Find better solution
+    // Wait will modal was fully rendered, otherwise the typing may not be successful
+    cy.wait(1000);
+    cy.get("#filterSelectName").type(expectedName);
+    cy.get("button").contains("Anwenden").click();
 
-  //   cy.get("#userListView")
-  //     .find(".cy-user-name-label")
-  //     .should("have.length", expectedLength);
+    // Wait till table is updated otherwise its() will always resolve to 25
+    cy.wait(1000);
+    /*eslint-enable */
 
-  //   cy.get("#userListView")
-  //     .find(".cy-user-name-label")
-  //     .filter(`:contains("${expectedName}")`);
-  // });
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .should("have.length", expectedLength);
+
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .filter(`:contains("${expectedName}")`);
+  });
 });
