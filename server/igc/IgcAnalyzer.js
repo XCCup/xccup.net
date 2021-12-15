@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
 
