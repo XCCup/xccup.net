@@ -1,50 +1,40 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import "cypress-file-upload";
 
+/**
+ * Clears and reseeds the whole Database.
+ */
 Cypress.Commands.add("seedDb", () => {
   cy.request("http://localhost:3000/api/testdata/seed");
 });
 
+/**
+ * Clears and reseeds only flight depending data in the database (Tables: Flight, FlightFixes, FlightComments, FlightPhoto).
+ */
 Cypress.Commands.add("seedFlightDb", () => {
   cy.request("http://localhost:3000/api/testdata/seed?Flight=true");
 });
 
+/**
+ * Clears the whole database. No app releated data will be left.
+ */
 Cypress.Commands.add("clearDb", () => {
   cy.request("http://localhost:3000/api/testdata/clear");
 });
 
+/**
+ * Unfornually the bootstrap modal takes some time to load all its functionality. Without the wait it could be possible that the modal will not dispose after clicking.
+ * Use this command to a add a wait() before clicking.
+ */
 Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
   // TODO: Find a better solution without a hard coded wait.
-  // Unfornually the bootstrap modal takes some time to load all its functionality. Without the wait the modal will not dispose after clicking.
   // eslint-disable-next-line cypress/no-unnecessary-waiting
   cy.wait(500);
   cy.get(modalSelector).find("button").contains(buttonText).click();
 });
 
+/**
+ * Logs in a user with a role of "Administrator" (Camille Schaden).
+ */
 Cypress.Commands.add("loginAdminUser", () => {
   cy.get("#loginNavButton").click();
 
@@ -56,6 +46,9 @@ Cypress.Commands.add("loginAdminUser", () => {
   cy.get("#userNavDropdownMenu").should("includes.text", "Camille");
 });
 
+/**
+ * Logs in a user with no role (Ramona Gislason).
+ */
 Cypress.Commands.add("loginNormalUser", () => {
   cy.get("#loginNavButton").click();
 
@@ -67,6 +60,9 @@ Cypress.Commands.add("loginNormalUser", () => {
   cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
 });
 
+/**
+ * Logs a user with the provided email and password in to the website.
+ */
 Cypress.Commands.add("login", (email, password) => {
   cy.get("#loginNavButton").click();
 
@@ -76,11 +72,17 @@ Cypress.Commands.add("login", (email, password) => {
   cy.get("button").contains("Anmelden").click();
 });
 
+/**
+ * Logs the current user user out of the website.
+ */
 Cypress.Commands.add("logout", () => {
   cy.get("#userNavDropdownMenu").click();
   cy.get("li").contains("Abmelden").click();
 });
 
+/**
+ * A command to verify if a textarea includes a provided text.
+ */
 Cypress.Commands.add("textareaIncludes", function (selector, text) {
   cy.get(selector).invoke("val").should("contains", text);
 });

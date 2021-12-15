@@ -198,17 +198,11 @@ try {
   if (res.status != 200) throw res.statusText;
   // Countries
 
-  listOfCountries.value = Object.keys(res.data.countries).map(function (i) {
-    return res.data.countries[i];
-  });
+  listOfCountries.value = Object.values(res.data.countries);
   // States
-  listOfStates.value = Object.keys(res.data.states).map(function (i) {
-    return res.data.states[i];
-  });
+  listOfStates.value = Object.values(res.data.states);
   // Genders
-  listOfGenders.value = Object.keys(res.data.genders).map(function (i) {
-    return res.data.genders[i];
-  });
+  listOfGenders.value = Object.values(res.data.genders);
   // T-Shirt sizes
   listOfTshirtSizes.value = res.data.tShirtSizes;
 } catch (error) {
@@ -233,13 +227,14 @@ const onSave = async () => {
     await updateProfile();
     inidcateSuccess();
   } catch (error) {
-    showSpinner.value = false;
     console.error(error);
 
     if (error.response?.data.errors[0].param === "email")
       return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
 
     errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";
+  } finally {
+    showSpinner.value = false;
   }
 };
 </script>

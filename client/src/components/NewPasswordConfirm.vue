@@ -1,5 +1,6 @@
 <template>
   <div v-if="!errorMessage" class="mb-4">
+    <!-- TODO: Change this text as it sounds a little stiff -->
     Das Rücksetzen Deines Passwortes wurde bestätigt. Wird senden Dir in kürze
     ein neues Passwort zu 📯
   </div>

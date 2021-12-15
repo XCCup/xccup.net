@@ -11,8 +11,8 @@
       </div>
     </div>
     <ResultsTableGeneric
-      :results="results.values"
-      :max-flights="results.constants.NUMBER_OF_SCORED_FLIGHTS"
+      :results="results?.values || []"
+      :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS || 0"
     />
     <ModalFilterResults />
   </div>

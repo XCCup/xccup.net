@@ -1,7 +1,7 @@
 const SeasonDetail = require("../config/postgres")["SeasonDetail"];
 const { getCurrentYear } = require("../helper/Utils");
 const logger = require("../config/logger");
-const { XccupRestrictionError } = require("../helper/ErrorHandler");
+const { XccupHttpError } = require("../helper/ErrorHandler");
 
 let currentSeasonDetailCache;
 
@@ -18,9 +18,7 @@ const service = {
     });
 
     if (!details)
-      throw new XccupRestrictionError(
-        `There is no valid configuration for the requested year of ${year}`
-      );
+      throw new XccupHttpError(404, `There is no valid configuration for the requested year of ${year}`);
 
     return details;
   },

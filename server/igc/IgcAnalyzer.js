@@ -129,35 +129,40 @@ function determineOlcBinary() {
   logger.debug(`IA: Running on OS: ${platform} (${os.arch()})`);
   //TODO: This is not failsafe, but good for now;)
   if (platform.includes("win")) {
-    return "igc\\olc.exe < ";
+    return "olc.exe < ";
   }
   if (os.arch() === "arm64") {
-    return "igc/olc_lnx_arm < ";
+    return "olc_lnx_arm < ";
   } else {
-    return "igc/olc_lnx < ";
+    return "olc_lnx < ";
   }
 }
 
 function runOlc(filePath, flightDataObject, isTurnpointIteration) {
   const { exec } = require("child_process");
   logger.info("IA: Start OLC analysis");
+  logger.debug(`IA: CWD of proccess: ${process.cwd()}`);
 
   //TODO: Replace compiled app through usage of Node’s N-API
-  const command = determineOlcBinary();
+  const binary = determineOlcBinary();
 
-  exec(command + filePath, function (err, data) {
-    if (err) logger.error(err);
-    try {
-      parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
-    } catch (error) {
-      logger.error(
-        "IA: An error occured while parsing the olc data of " +
-          filePath +
-          ": " +
-          error
-      );
+  exec(
+    path.resolve(__dirname, "..", "igc", binary) + filePath,
+    { cwd: path.resolve(__dirname, "..") },
+    function (err, data) {
+      if (err) logger.error(err);
+      try {
+        parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
+      } catch (error) {
+        logger.error(
+          "IA: An error occured while parsing the olc data of " +
+            filePath +
+            ": " +
+            error
+        );
+      }
     }
-  });
+  );
 }
 
 function parseOlcData(data, flightDataObject, isTurnpointsIteration) {

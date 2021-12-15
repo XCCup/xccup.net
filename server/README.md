@@ -2,14 +2,10 @@
 
 ## Project setup
 
-Delete the node_modules folder and package-lock.json
+Delete the node_modules folder
 
 ```
-npm install --arch=x64 --platform=linuxmusl
-
-or on ARM:
-
-npm install --arch=arm64 --platform=linuxmusl
+docker-compose run --rm yarn install
 ```
 
 ### Why to set arch/platform parameters (Sharp dependency)
@@ -28,12 +24,6 @@ https://sharp.pixelplumbing.com/install
 
 ```
 docker-compose up
-```
-
-#### Live Dev Server:
-
-```
-docker-compose -f docker-compose-live-dev.yml up -d
 ```
 
 ## Before first StartUp
@@ -59,13 +49,13 @@ docker exec -it db psql -U xccup_user xccup_db -c "create extension postgis;" -c
 ##### All tests
 
 ```
-npm run test
+docker-compose run --rm yarn test
 ```
 
 ##### A single tests
 
 ```
-npm test -- test/LocationFinder.test.js
+docker-compose run --rm yarn test -- test/LocationFinder.test.js
 ```
 
 #### Connect PgAdmin to Postgres:

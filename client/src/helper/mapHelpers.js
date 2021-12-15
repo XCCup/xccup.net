@@ -32,24 +32,18 @@ function convertHeightStringToMetersValue(value) {
     return Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
 }
 
+function createTrackLog(flight) {
+  return flight.fixes.map(({ latitude, longitude }) => [latitude, longitude]);
+}
+
 export function processTracklogs(flight, buddyTracks) {
   const tracklogs = [];
-  const tracklog = [];
-  for (var i = 0; i < flight.fixes.length; i++) {
-    tracklog.push([flight.fixes[i].latitude, flight.fixes[i].longitude]);
-  }
-  tracklogs.push(tracklog);
+  tracklogs.push(createTrackLog(flight));
 
   if (buddyTracks) {
-    buddyTracks.forEach((element) => {
-      const track = [];
+    buddyTracks.forEach((buddyTrack) => {
       // Check if this track is activated
-      if (element.isActive) {
-        for (var i = 0; i < element.fixes.length; i++) {
-          track.push([element.fixes[i].latitude, element.fixes[i].longitude]);
-        }
-      }
-      tracklogs.push(track);
+      tracklogs.push(buddyTrack.isActive ? createTrackLog(buddyTrack) : []);
     });
   }
   return tracklogs;

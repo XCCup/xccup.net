@@ -7,3 +7,5 @@ docs
 npm-debug.log
 .gitignore
 .env
+
+igc/flights

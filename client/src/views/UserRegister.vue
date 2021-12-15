@@ -168,11 +168,11 @@
           <label class="form-check-label" for="acceptRulesCheckbox">
             Ich erkenne ich die
             <!-- TODO: Add link to Rules -->
-            <router-link :to="{ name: 'Home' }">Ausschreibung </router-link>
-            und
-            <router-link :to="{ name: 'Privacy' }"
-              >Datenschutzbestimmungen
-            </router-link>
+            Ausschreibung und
+
+            <a href="#" @click.prevent="privacyPolicyModal.show()"
+              >Datenschutzbestimmungen</a
+            >
             an.
           </label>
         </div>
@@ -202,6 +202,9 @@
         </div>
       </form>
     </div>
+    <BaseSlotModal modal-id="privacy-policy-modal" :scrollable="true">
+      <PrivacyPolicy />
+    </BaseSlotModal>
   </slot-dialog>
 
   <!-- Confirmation -->
@@ -220,10 +223,13 @@
 </template>
 
 <script setup>
-import { ref, computed, watchEffect } from "vue";
+import { ref, computed, watchEffect, onMounted } from "vue";
 import ApiService from "@/services/ApiService";
 import { isStrongPassword, setWindowName } from "../helper/utils";
 import useUserSignup from "@/composables/useUserSignup";
+import { Modal } from "bootstrap";
+import BaseSlotModal from "../components/BaseSlotModal.vue";
+import PrivacyPolicy from "../components/PrivacyPolicy.vue";
 
 const { userData } = useUserSignup();
 
@@ -243,6 +249,14 @@ const upperLimitBirthday = ref(limitDate);
 
 // Helpers
 const showSpinner = ref(false);
+
+// Modal
+const privacyPolicyModal = ref(null);
+onMounted(() => {
+  privacyPolicyModal.value = new Modal(
+    document.getElementById("privacy-policy-modal")
+  );
+});
 
 // Validation
 const passwordMatches = computed(() => {
@@ -332,8 +346,9 @@ const onSubmit = async () => {
     // I would say it's safe
 
     // E-Mail errors
-    if (error.response?.data === "email must be unique")
+    if (error.response?.data.conflict === "emailExists")
       return (errorMessage.value = "Diese E-Mail existiert bereits");
+
     if (error.response?.data.errors[0].param === "email")
       return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
 

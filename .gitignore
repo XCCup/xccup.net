@@ -26,6 +26,10 @@ XCCup_DB_Schema/
 
 client/cypress/videos/
 client/cypress/screenshots/
+<<<<<<< HEAD
 server/data/
 server/igc/
 
+=======
+.yarn-cache
+>>>>>>> main
