@@ -30,9 +30,14 @@
     </div>
   </form>
   <div v-else>
-    <p>Die E-Mail wurde versendet 📯</p>
     <p>
-      Falls Du keine Mail erhältst wende Dich bitte an einen
+      Wir haben dir eine E-Mail mit einem Link zum Zurücksetzen deines
+      Passwortes geschickt.
+    </p>
+    <p>
+      Falls Du diese nicht erhältst schaue bitte im Spam Ordner nach oder wende
+      Dich an einen
+      <!-- TODO: Add mailto link for better UX -->
       <router-link :to="{ name: 'Imprint' }">Administrator</router-link>
     </p>
   </div>
