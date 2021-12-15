@@ -344,15 +344,6 @@ function createUserWhereStatement(userIds) {
       [Op.in]: userIds,
     };
 
-  // if (firstNameStartsWith)
-  //   where.firstName = {
-  //     [Op.iRegexp]: `^${firstNameStartsWith}`,
-  //   };
-  // if (lastNameStartsWith)
-  //   where.lastName = {
-  //     [Op.iRegexp]: `^${lastNameStartsWith}`,
-  //   };
-
   return where;
 }
 
