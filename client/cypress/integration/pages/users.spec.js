@@ -129,19 +129,19 @@ describe("check users page", () => {
     // TODO: Find better solution
     // Wait will modal was fully rendered, otherwise the typing may not be successful
     cy.wait(1000);
-    // cy.get("#filterSelectName").type(expectedName);
-    // cy.get("button").contains("Anwenden").click();
+    cy.get("#filterSelectName").type(expectedName);
+    cy.get("button").contains("Anwenden").click();
 
-    // // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
-    // /*eslint-enable */
+    // Wait till table is updated otherwise its() will always resolve to 25
+    cy.wait(1000);
+    /*eslint-enable */
 
-    // cy.get("#userListView")
-    //   .find(".cy-user-name-label")
-    //   .should("have.length", expectedLength);
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .should("have.length", expectedLength);
 
-    // cy.get("#userListView")
-    //   .find(".cy-user-name-label")
-    //   .filter(`:contains("${expectedName}")`);
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .filter(`:contains("${expectedName}")`);
   });
 });
