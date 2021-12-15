@@ -3,7 +3,7 @@ const logger = require("./logger");
 
 const mailClient = nodemailer.createTransport({
   host: process.env.MAIL_SERVICE,
-  port: process.env.MAIL_SERVICE_PORT,
+  secure: true,
   auth: {
     user: process.env.MAIL_SERVICE_USER,
     pass: process.env.MAIL_SERVICE_PASSWORD,
