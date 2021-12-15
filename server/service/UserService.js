@@ -245,7 +245,11 @@ const userService = {
   },
   validate: async (email, password) => {
     const user = await User.findOne({
-      where: { email },
+      where: {
+        email: {
+          [Op.iLike]: email,
+        },
+      },
     });
     if (!user) {
       logger.warn(`US: No user found for ${email}`);
