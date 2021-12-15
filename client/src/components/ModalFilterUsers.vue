@@ -22,7 +22,7 @@
           <div class="mb-3">
             <label for="userDataList" class="form-label">Name</label>
             <input
-              id="userDataList"
+              id="filterSelectName"
               v-model="selects.name"
               class="form-control mb-3"
               list="datalistOptions"
@@ -141,8 +141,10 @@ function findIdsByNameParts() {
 
   const possibleUsers = userData.filter(
     (u) =>
-      selects.name.toLowerCase().includes(u.firstName.toLowerCase()) ||
-      selects.name.toLowerCase().includes(u.lastName.toLowerCase())
+      u.firstName.toLowerCase().includes(selects.name.toLowerCase()) ||
+      u.lastName.toLowerCase().includes(selects.name.toLowerCase()) ||
+      (selects.name.toLowerCase().includes(u.firstName.toLowerCase()) &&
+        selects.name.toLowerCase().includes(u.lastName.toLowerCase()))
   );
   return possibleUsers.map((u) => u.id);
 }
