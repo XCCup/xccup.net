@@ -27,6 +27,7 @@
         class="my-2"
       />
     </div>
+    <!-- TODO: Enter key should submit -->
     <button type="submit" class="btn btn-primary">Anmelden</button>
   </form>
 
