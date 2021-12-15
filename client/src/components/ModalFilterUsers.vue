@@ -20,9 +20,9 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="exampleDataList" class="form-label">Name</label>
+            <label for="userDataList" class="form-label">Name</label>
             <input
-              id="exampleDataList"
+              id="userDataList"
               v-model="selects.name"
               class="form-control mb-3"
               list="datalistOptions"
