@@ -10,6 +10,7 @@
         />
       </div>
     </div>
+    <BaseError :error-message="errorMessage" />
     <ResultsTableGeneric
       :results="results?.values || []"
       :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS || 0"
@@ -82,10 +83,11 @@ const categories = [
 ];
 const activeCategory = categories.find((e) => e.name === props.category);
 
-const { fetchData, data: results } = useData(
-  ApiService.getResults,
-  activeCategory.apiExtensionString
-);
+const {
+  fetchData,
+  data: results,
+  errorMessage,
+} = useData(ApiService.getResults, activeCategory.apiExtensionString);
 
 // Name the window
 watchEffect(() => {

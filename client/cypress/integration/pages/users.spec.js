@@ -128,7 +128,7 @@ describe("check users page", () => {
     /*eslint-disable */
     // TODO: Find better solution
     // Wait will modal was fully rendered, otherwise the typing may not be successful
-    cy.wait(1000);
+    // cy.wait(1000);
     cy.get("#filterSelectName").type(expectedName);
     cy.get("button").contains("Anwenden").click();
 

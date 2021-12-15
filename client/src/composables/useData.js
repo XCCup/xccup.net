@@ -24,6 +24,7 @@ function createInstance(apiEndpoint, apiExtension) {
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
   const currentRange = ref({ start: 0, end: 0 });
+  const errorMessage = ref("");
 
   // Getters
   const filterActive = computed(() =>
@@ -80,6 +81,8 @@ function createInstance(apiEndpoint, apiExtension) {
       data.value = res.data;
     } catch (error) {
       console.error(error);
+      errorMessage.value =
+        "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
     } finally {
       isLoading.value = false;
     }
@@ -99,6 +102,7 @@ function createInstance(apiEndpoint, apiExtension) {
     filterDataBy,
     sortDataBy,
     data: readonly(data),
+    errorMessage,
     currentRange: readonly(currentRange),
     numberOfTotalEntries: readonly(numberOfTotalEntries),
     isLoading: readonly(isLoading),
