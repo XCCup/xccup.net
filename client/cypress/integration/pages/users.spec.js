@@ -125,12 +125,12 @@ describe("check users page", () => {
 
     cy.get("#filterButton").click();
 
-    // /*eslint-disable */
-    // // TODO: Find better solution
-    // // Wait will modal was fully rendered, otherwise the typing may not be successful
-    // cy.wait(1000);
-    // cy.get("#filterSelectName").type(expectedName);
-    // cy.get("button").contains("Anwenden").click();
+    /*eslint-disable */
+    // TODO: Find better solution
+    // Wait will modal was fully rendered, otherwise the typing may not be successful
+    cy.wait(1000);
+    cy.get("#filterSelectName").type(expectedName);
+    cy.get("button").contains("Anwenden").click();
 
     // // Wait till table is updated otherwise its() will always resolve to 25
     // cy.wait(1000);
