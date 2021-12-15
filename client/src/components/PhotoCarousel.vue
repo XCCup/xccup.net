@@ -14,6 +14,7 @@
           class="carousel-item"
           :class="index === 0 ? 'active' : ''"
         >
+          <!-- TODO: Serve viewport dependent image size to save data on mobiles -->
           <img
             :src="baseURL + `media/` + photo.id"
             class="d-block w-100 carousel"

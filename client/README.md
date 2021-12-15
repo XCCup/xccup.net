@@ -5,19 +5,19 @@ Preview: https://xccup.onrender.com (not running main branch and way behind…)
 ## Project setup
 
 ```
-yarn install
+docker-compose run --rm yarn install
 ```
 
 ### Compiles and hot-reloads for development
 
 ```
-yarn dev
+docker-compose up
 ```
 
 ### Compiles and minifies for production
 
 ```
-yarn build
+docker-compose run --rm yarn build
 ```
 
 # Vue 3 + Vite

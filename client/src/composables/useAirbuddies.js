@@ -28,11 +28,12 @@ export default () => {
   // Actions
   const fetchAll = async (airbuddies) => {
     if (airbuddiesFlightData.value.length > 0) return;
-    airbuddies.forEach(async (buddy) => {
-      airbuddiesFlightData.value.push(
-        (await ApiService.getFlight(buddy.externalId)).data
-      );
-    });
+
+    airbuddiesFlightData.value = (
+      await Promise.all(
+        airbuddies.map((buddy) => ApiService.getFlight(buddy.externalId))
+      )
+    ).map(({ data }) => data);
   };
 
   const resetAirbuddyData = () => {

@@ -14,72 +14,56 @@ const NUMBER_OF_TEAMS = 3;
 const NUMBER_OF_CLUBS = 3;
 const NUMBER_OF_FLIGHTS_OVERALL = 5;
 
+async function promiseAllObject(promises) {
+  const results = await Promise.all(Object.values(promises));
+  return Object.keys(promises).reduce((acc, key, index) => {
+    acc[key] = results[index];
+    return acc;
+  }, {});
+}
+
 const service = {
   get: async () => {
     const currentSeason = await seasonService.getCurrentActive();
 
-    const numberOfTeams = teamService.countActive();
-    const numberOfClubs = clubService.count();
-    const numberOfUsers = userService.count();
-    const totalFlightDistance = flightService.sumDistance(getCurrentYear());
-    const dbRequestsStats = {
-      numberOfClubs,
-      numberOfTeams,
-      numberOfUsers,
-      totalFlightDistance,
-    };
-
-    const sponsors = sponsorService.getAllActive();
-    const activeNews = newsService.getActive();
-    const bestTeams = resultService.getTeam(null, null, NUMBER_OF_TEAMS);
-    const bestClubs = resultService.getClub(null, NUMBER_OF_CLUBS);
-    const bestFlightsOverallCurrentYear = flightService.getAll({
-      year: getCurrentYear(),
-      limit: NUMBER_OF_FLIGHTS_OVERALL,
-      sort: ["flightPoints", "DESC"],
+    const seasonStats = await promiseAllObject({
+      numberOfClubs: clubService.count(),
+      numberOfTeams: teamService.countActive(),
+      numberOfUsers: userService.count(),
+      totalFlightDistance: flightService.sumDistance(getCurrentYear()),
     });
-    const todaysFlights = flightService.getTodays();
-    const randomPhotos = flightPhotoService.getRandomCurrentYear(20);
 
-    const seasonStats = await Promise.all(Object.values(dbRequestsStats)).then(
-      (values) => {
-        const keys = Object.keys(dbRequestsStats);
-        const res = {};
-        for (let index = 0; index < values.length; index++) {
-          res[keys[index]] = values[index];
-        }
-        return res;
-      }
-    );
-
-    const dbRequestsOther = {
-      resultRankingClasses: await retrieveRankingClassResults(currentSeason),
-      sponsors,
-      activeNews,
-      bestTeams,
-      bestClubs,
-      bestFlightsOverallCurrentYear,
-      todaysFlights,
-      randomPhotos,
-    };
-    const values = await Promise.all(Object.values(dbRequestsOther));
+    const stats = await promiseAllObject({
+      resultRankingClasses: retrieveRankingClassResults(currentSeason),
+      sponsors: sponsorService.getAllActive(),
+      activeNews: newsService.getActive(),
+      bestTeams: resultService.getTeam(null, null, NUMBER_OF_TEAMS),
+      bestClubs: resultService.getClub(null, NUMBER_OF_CLUBS),
+      bestFlightsOverallCurrentYear: flightService.getAll({
+        year: getCurrentYear(),
+        limit: NUMBER_OF_FLIGHTS_OVERALL,
+        sort: ["flightPoints", "DESC"],
+      }),
+      todaysFlights: flightService.getTodays(),
+      randomPhotos: flightPhotoService.getRandomCurrentYear(20),
+    });
 
     const res = {
       seasonStats,
       seasonDetails: currentSeason,
-      rankingClasses: values[0],
+      rankingClasses: stats.resultRankingClasses,
       /**
        * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
        * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
        * See also: https://github.com/pvorb/clone/issues/106
        */
-      sponsors: values[1].map((v) => v.toJSON()),
-      activeNews: values[2],
-      bestTeams: values[3].values,
-      bestClubs: values[4].values,
-      bestFlightsOverallCurrentYear: values[5].rows,
-      todaysFlights: values[6],
-      randomPhotos: values[7],
+      sponsors: stats.sponsors.map((v) => v.toJSON()),
+      activeNews: stats.activeNews,
+      bestTeams: stats.bestTeams.values,
+      bestClubs: stats.bestClubs.values,
+      bestFlightsOverallCurrentYear: stats.bestFlightsOverallCurrentYear.rows,
+      todaysFlights: stats.todaysFlights,
+      randomPhotos: stats.randomPhotos,
     };
 
     return res;
@@ -89,6 +73,7 @@ const service = {
 async function retrieveRankingClassResults(currentSeason) {
   if (!currentSeason) return;
 
+  //TODO: Check, this "for const of" will run sequentially, not parallel! The rankingRequests are NOT promises.
   const rankingRequests = {};
   for (const [key] of Object.entries(currentSeason.rankingClasses)) {
     rankingRequests[key] = (

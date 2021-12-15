@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   db:
-    image: postgis/postgis #odidev/postgis:13-3.1-alpine
+    image: postgis/postgis:13-3.1
     container_name: db
     environment:
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
@@ -31,6 +31,17 @@ services:
     depends_on:
       - db
     command: ./docker-entrypoint.sh
+
+  yarn:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: xccup/yarn
+    profiles: ['cli']
+    volumes:
+      - .:/home/node/app
+    command: "apk add --no-cache && libc6-compat && libstdc++"
+    entrypoint: ["yarn"]
 
 volumes:
   db:

@@ -1,9 +1,10 @@
 const nodemailer = require("nodemailer");
 const logger = require("./logger");
 
+// TODO: Shall we use "pool true" to send newsletters etc?
 const mailClient = nodemailer.createTransport({
   host: process.env.MAIL_SERVICE,
-  port: process.env.MAIL_SERVICE_PORT,
+  secure: true,
   auth: {
     user: process.env.MAIL_SERVICE_USER,
     pass: process.env.MAIL_SERVICE_PASSWORD,

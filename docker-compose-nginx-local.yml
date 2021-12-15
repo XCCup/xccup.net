@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  client:
+      build:
+        context: ./client
+        dockerfile: Dockerfile
+      image: xccup-client
+      container_name: xccup-client
+      env_file: ./client/.env
+      restart: always
+      ports:
+      - "80:80"

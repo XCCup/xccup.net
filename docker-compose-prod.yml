@@ -43,7 +43,7 @@ services:
     command: ./docker-entrypoint.sh
 
   db:
-    image: postgis/postgis
+    image: postgis/postgis:13-3.1
     container_name: xccup-db
     restart: always
     env_file: ./server/.env

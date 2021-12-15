@@ -1,6 +1,6 @@
 <template>
   <TheNavbar />
-  <main class="flex-shrink-0">
+  <main class="flex-shrink-0 flex-grow-1 position-relative">
     <div v-if="error" class="error-message">Uh oh .. {{ error }}</div>
     <router-view v-else v-slot="{ Component }">
       <template v-if="Component">

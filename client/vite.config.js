@@ -29,6 +29,7 @@ export default defineConfig({
       scss: {
         // Import custom bootstrap variable overrides in every component
         additionalData: `@import "./src/styles/variables";`,
+        charset: false,
       },
     },
   },

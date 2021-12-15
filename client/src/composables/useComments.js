@@ -8,21 +8,27 @@ export default () => {
 
   // Create a structured comments array with replies
   const commentsWithReplies = computed(() => {
-    let comments = flight.value.comments.flatMap((comment) =>
-      !comment.relatedTo ? [comment] : []
-    );
+    const repliesMap = new Map();
 
-    // Add replies
-    flight.value.comments.forEach((comment) => {
-      if (comment.relatedTo) {
-        let parent = comments.findIndex(
-          (element) => element.id === comment.relatedTo
-        );
-        if (!comments[parent]?.replies) comments[parent].replies = [];
-        comments[parent].replies.push(comment);
+    const requireReplies = (id) => {
+      if (!repliesMap.has(id)) {
+        repliesMap.set(id, []);
       }
-    });
-    return comments;
+      return repliesMap.get(id);
+    };
+
+    return flight.value.comments.reduce((extendedComments, comment) => {
+      const extendedComment = {
+        ...comment,
+        replies: requireReplies(comment.id),
+      };
+      if (comment.relatedTo) {
+        requireReplies(comment.relatedTo).push(extendedComment);
+      } else {
+        extendedComments.push(extendedComment);
+      }
+      return extendedComments;
+    }, []);
   });
 
   // Mutations

@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16.13.1-alpine3.14
 
 # Packages are necesseary to run c-compiled apps (e.g. OLC) on alpine
 # TODO: Replace compiled app through usage of Node’s N-API
@@ -6,13 +6,16 @@ RUN apk add --no-cache \
     libc6-compat \
     libstdc++ 
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 
-USER node
-# COPY package*.json ./
-COPY --chown=node:node . .
-RUN chmod +x ./igc/olc_lnx && chmod +x ./igc/olc_lnx_arm
-RUN npm install
+COPY . .
+RUN mkdir -p ./igc/flights \
+    && chmod a+wx ./igc/flights \
+    && chmod a+x ./igc/olc_lnx \
+    && chmod a+x ./igc/olc_lnx_arm
+RUN yarn install
 
-CMD [ "node", "app.js" ]
+USER node
+
+ENTRYPOINT [ "/bin/sh", "./docker-entrypoint.sh" ]

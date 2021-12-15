@@ -27,6 +27,7 @@
         class="my-2"
       />
     </div>
+    <!-- TODO: Enter key should submit -->
     <button type="submit" class="btn btn-primary">Anmelden</button>
   </form>
 
@@ -72,7 +73,10 @@ const handleSubmit = async () => {
       if (searchParams.has("redirect")) {
         router.push({ path: `${searchParams.get("redirect")}` });
       } else {
-        router.go(-1);
+        // TODO:
+        // Should the user always be pushed to home?
+        // If router.go(-1) is used the UX after password reset is pretty bad
+        router.push({ name: "Home" });
       }
     }
   } catch (error) {
