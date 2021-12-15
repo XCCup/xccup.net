@@ -1,8 +1,11 @@
 <template>
   <div :id="modalId" class="modal fade" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div
+      class="modal-dialog modal-lg"
+      :class="scrollable ? 'modal-dialog-scrollable' : ''"
+    >
       <div class="modal-content">
-        <div class="modal-header">
+        <div v-if="false" class="modal-header">
           <h5 class="modal-title">{{ modalTitle }}</h5>
           <button
             type="button"
@@ -16,22 +19,10 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn"
-            :class="isDangerousAction ? 'btn-danger' : 'btn-primary'"
-            data-bs-dismiss="modal"
-            @click="confirmAction"
-          >
-            {{ confirmButtonText }}
-          </button>
-          <button
-            type="button"
-            class="btn"
-            :class="
-              isDangerousAction ? 'btn-outline-primary' : 'btn-outline-danger'
-            "
+            class="btn btn-outline-primary"
             data-bs-dismiss="modal"
           >
-            Abbrechen
+            Schließen
           </button>
         </div>
       </div>
@@ -45,20 +36,7 @@ defineProps({
     type: String,
     required: true,
   },
-  modalTitle: {
-    type: String,
-    required: true,
-  },
-
-  confirmButtonText: {
-    type: String,
-    required: true,
-  },
-  confirmAction: {
-    type: Function,
-    required: true,
-  },
-  isDangerousAction: {
+  scrollable: {
     type: Boolean,
     default: false,
   },
