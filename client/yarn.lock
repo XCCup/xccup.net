@@ -153,10 +153,10 @@
   dependencies:
     "@types/node" "*"
 
-"@vitejs/plugin-vue@^1.10.1":
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-1.10.2.tgz#d718479e2789d8a94b63e00f23f1898ba239253a"
-  integrity sha512-/QJ0Z9qfhAFtKRY+r57ziY4BSbGUTGsPRMpB/Ron3QPwBZM4OZAZHdTa4a8PafCwU5DTatXG8TMDoP8z+oDqJw==
+"@vitejs/plugin-vue@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-2.0.1.tgz#db0e5eacf96358e04cc501c9008079b25a70a4ac"
+  integrity sha512-wtdMnGVvys9K8tg+DxowU1ytTrdVveXr3LzdhaKakysgGXyrsfaeds2cDywtvujEASjWOwWL/OgWM+qoeM8Plg==
 
 "@vue-leaflet/vue-leaflet@^0.6.1":
   version "0.6.1"
@@ -2153,10 +2153,10 @@ universalify@^2.0.0:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
   integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
 
-unplugin-vue-components@^0.17.0:
-  version "0.17.8"
-  resolved "https://registry.yarnpkg.com/unplugin-vue-components/-/unplugin-vue-components-0.17.8.tgz#16960d5761dc4ce73e70fcd4b76a708c38587eef"
-  integrity sha512-biyIE8TQwolK/ii3vu3xJ4w83+bliAgka3AuhU2cX5OOvJP+xuq39Skhf+BkNkZoY8xoeU65WHOgLFl//m3/YQ==
+unplugin-vue-components@^0.17.9:
+  version "0.17.9"
+  resolved "https://registry.yarnpkg.com/unplugin-vue-components/-/unplugin-vue-components-0.17.9.tgz#a2acc9b4e073f52df82d2036a318d76f0c66538b"
+  integrity sha512-SZrK3T/uEoP2g2bH+8DwBznoqlS0dI7kQvCmHmL8HmTXdM78kh5P/9SN5IwuNpfbmXoGXWJPB8Pr8Ke8zsgpmA==
   dependencies:
     "@antfu/utils" "^0.3.0"
     "@rollup/pluginutils" "^4.1.1"
@@ -2215,10 +2215,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vite@^2.6.14:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.7.1.tgz#be50ad13214290ecbebbe5ad389ed423cb5f137e"
-  integrity sha512-TDXXhcu5lyQ6uosK4ZWaOyB4VzOiizk0biitRzDzaEtgSUi8rVYPc4k1xgOjLSf0OuceDJmojFKXHOX9DB1WuQ==
+vite@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.7.2.tgz#f9937114cf2e730a7e2e4c4f8c26ed0ed1c3bb6b"
+  integrity sha512-wMffVVdKZRZP/HwW3yttKL8X+IJePz7bUcnGm0vqljffpVwHpjWC3duZtJQHAGvy+wrTjmwU7vkULpZ1dVXY6w==
   dependencies:
     esbuild "^0.13.12"
     postcss "^8.3.11"
@@ -2254,10 +2254,10 @@ vue-router@^4.0.12:
   dependencies:
     "@vue/devtools-api" "^6.0.0-beta.18"
 
-vue3-datepicker@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/vue3-datepicker/-/vue3-datepicker-0.2.5.tgz#4e31e05f713b0e6664145ea89df958b6bdd38cb2"
-  integrity sha512-knZCjq8320UjP1qPyJ62B08EUdRhMWbZOAR0gBWF+FRQTtkLv6SwgQdOdS1h0Xj7N8ov9thK1mD47gReXgQGkA==
+vue3-datepicker@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/vue3-datepicker/-/vue3-datepicker-0.3.1.tgz#b621bedfb06b33ab25fb238c6162d1dc72ce7295"
+  integrity sha512-JcEImBE9JPt4mC5A0Fm966luzmCYpYHOLl7x6u0svybi6cCN36OzxyhYKfxu04RG/R2S1ILteGbxZVA+kE2kgw==
   dependencies:
     date-fns "^2.22.1"
 
