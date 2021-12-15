@@ -141,10 +141,9 @@ function findIdsByNameParts() {
 
   const possibleUsers = userData.filter(
     (u) =>
-      u.firstName.toLowerCase().includes(selects.name.toLowerCase()) ||
-      u.lastName.toLowerCase().includes(selects.name.toLowerCase())
+      selects.name.toLowerCase().includes(u.firstName.toLowerCase()) ||
+      selects.name.toLowerCase().includes(u.lastName.toLowerCase())
   );
-
   return possibleUsers.map((u) => u.id);
 }
 </script>
