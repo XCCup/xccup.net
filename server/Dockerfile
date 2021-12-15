@@ -6,7 +6,9 @@ RUN apk add --no-cache \
     libc6-compat \
     libstdc++ 
 
-# RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# This is mandatory or the server chrashes. But why exactly?
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+
 WORKDIR /home/node/app
 
 COPY . .
