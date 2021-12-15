@@ -8,7 +8,8 @@ describe("check users register page", () => {
     const expectedPasswortWeak = "Hallo";
     const expectedCountry = "Deutschland";
 
-    cy.get("h3").should("have.text", `Registrieren`);
+    // cy.get("h3").should("have.text", `Registrieren`);
+    cy.get("h3").contains(`Registrieren`);
 
     cy.get("#firstName").type("Foo");
     cy.get("#lastName").type("Bar");
@@ -65,7 +66,7 @@ describe("check users register page", () => {
     const expectedCountry = "Belgien";
     const expectedMail = "foo@bar.org";
 
-    cy.get("h3").should("have.text", `Registrieren`);
+    cy.get("h3").contains(`Registrieren`);
 
     cy.get("#firstName").type("Foo");
     cy.get("#lastName").type("Bar");

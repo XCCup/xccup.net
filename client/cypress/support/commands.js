@@ -25,6 +25,9 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import "cypress-file-upload";
 
+// TODO: Can we have a documentation which command is needed when?
+// e.g. is clear() needed before seed()?
+
 Cypress.Commands.add("seedDb", () => {
   cy.request("http://localhost:3000/api/testdata/seed");
 });
