@@ -206,6 +206,8 @@ document.addEventListener(
 );
 
 const updateMarkerPosition = (position) => {
+  // Skip GND dataset
+  if (position.datasetIndex === 0) return;
   // Index - 1 because first dataset is GND and we need to skip that one
   const setIndex = position.datasetIndex - 1;
   const trackLog = tracklogs.value[setIndex];
