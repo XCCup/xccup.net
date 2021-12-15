@@ -15,6 +15,7 @@
         />
       </div>
     </div>
+    <BaseError :error-message="errorMessage" />
     <ResultsTableOverall />
     <ModalFilterFlights />
   </div>
@@ -38,7 +39,7 @@ const props = defineProps({
 });
 const route = useRoute();
 
-const { fetchData } = useData(ApiService.getFlights);
+const { fetchData, errorMessage } = useData(ApiService.getFlights);
 
 fetchData({ params: route.params, queries: route.query });
 

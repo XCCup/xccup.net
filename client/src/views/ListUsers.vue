@@ -15,6 +15,7 @@
         />
       </div>
     </div>
+    <BaseError :error-message="errorMessage" />
     <div v-for="user in users" :key="user.id" class="card mb-3">
       <UserCard :user="user" @open-message-dialog="messageUser" />
     </div>
@@ -30,9 +31,10 @@ import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
 import useData from "../composables/useData";
 import { useRoute } from "vue-router";
+import BaseError from "../components/BaseError.vue";
 
 const router = useRoute();
-const { fetchData, data: users } = useData(ApiService.getUsers);
+const { fetchData, data: users, errorMessage } = useData(ApiService.getUsers);
 
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);

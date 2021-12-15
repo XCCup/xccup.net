@@ -79,40 +79,40 @@ describe("check users page", () => {
     });
   });
 
-  // it("test filter on part name", () => {
-  //   const expectedNames = ["Camille Schaden", "Christie Schaefer"];
-  //   const expectedLength = 2;
+  it("test filter on part name", () => {
+    const expectedNames = ["Camille Schaden", "Christie Schaefer"];
+    const expectedLength = 2;
 
-  //   cy.loginNormalUser();
+    cy.loginNormalUser();
 
-  //   cy.get("#navbarLists").click();
-  //   cy.get("#navbarLists").find("li").contains("Registrierte Piloten").click();
+    cy.get("#navbarLists").click();
+    cy.get("#navbarLists").find("li").contains("Registrierte Piloten").click();
 
-  //   cy.get("#filterButton").click();
+    cy.get("#filterButton").click();
 
-  //   /*eslint-disable */
-  //   // TODO: Find better solution
-  //   // Wait will modal was fully rendered, otherwise the typing may not be successful
-  //   cy.wait(1000);
-  //   cy.get("#filterSelectName").type("Sc");
-  //   cy.get("button").contains("Anwenden").click();
+    /*eslint-disable */
+    // TODO: Find better solution
+    // Wait will modal was fully rendered, otherwise the typing may not be successful
+    cy.wait(1000);
+    cy.get("#filterSelectName").type("Sc");
+    cy.get("button").contains("Anwenden").click();
 
-  //   // Wait till table is updated otherwise its() will always resolve to 25
-  //   cy.wait(1000);
-  //   /*eslint-enable */
+    // Wait till table is updated otherwise its() will always resolve to 25
+    cy.wait(1000);
+    /*eslint-enable */
 
-  //   cy.get("#userListView")
-  //     .find(".cy-user-name-label")
-  //     .should("have.length", expectedLength);
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .should("have.length", expectedLength);
 
-  //   cy.get("#userListView")
-  //     .find(".cy-user-name-label")
-  //     .filter(`:contains("${expectedNames[0]}")`);
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .filter(`:contains("${expectedNames[0]}")`);
 
-  //   cy.get("#userListView")
-  //     .find(".cy-user-name-label")
-  //     .filter(`:contains("${expectedNames[0]}")`);
-  // });
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .filter(`:contains("${expectedNames[0]}")`);
+  });
 
   it("test filter type full name", () => {
     const expectedName = "Camille Schaden";
@@ -125,23 +125,23 @@ describe("check users page", () => {
 
     cy.get("#filterButton").click();
 
-    // /*eslint-disable */
-    // // TODO: Find better solution
-    // // Wait will modal was fully rendered, otherwise the typing may not be successful
-    // cy.wait(1000);
-    // cy.get("#filterSelectName").type(expectedName);
-    // cy.get("button").contains("Anwenden").click();
+    /*eslint-disable */
+    // TODO: Find better solution
+    // Wait will modal was fully rendered, otherwise the typing may not be successful
+    cy.wait(1000);
+    cy.get("#filterSelectName").type(expectedName);
+    cy.get("button").contains("Anwenden").click();
 
-    // // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
-    // /*eslint-enable */
+    // Wait till table is updated otherwise its() will always resolve to 25
+    cy.wait(1000);
+    /*eslint-enable */
 
-    // cy.get("#userListView")
-    //   .find(".cy-user-name-label")
-    //   .should("have.length", expectedLength);
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .should("have.length", expectedLength);
 
-    // cy.get("#userListView")
-    //   .find(".cy-user-name-label")
-    //   .filter(`:contains("${expectedName}")`);
+    cy.get("#userListView")
+      .find(".cy-user-name-label")
+      .filter(`:contains("${expectedName}")`);
   });
 });
