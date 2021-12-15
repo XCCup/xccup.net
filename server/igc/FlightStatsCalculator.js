@@ -3,7 +3,7 @@ const logger = require("../config/logger");
 /**
  * The time frame in which speed and climb will be calculated
  */
-const TIME_FRAME = 30;
+const TIME_FRAME = 45;
 
 function execute(fixes) {
   logger.debug("Start flight stats calculation");
@@ -57,7 +57,11 @@ function execute(fixes) {
       maxHeightGps = current.gpsAltitude;
     if (climb < maxSink) maxSink = climb;
     if (climb > maxClimb) maxClimb = climb;
-    if (speed > maxSpeed) maxSpeed = speed;
+    if (
+      (speed > maxSpeed && speed < maxSpeed * 1.2) ||
+      (speed > maxSpeed && speed > 0 && speed < 50)
+    )
+      maxSpeed = speed;
   }
 
   logger.debug("Finished flight stats calculation");
