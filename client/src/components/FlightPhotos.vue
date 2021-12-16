@@ -54,11 +54,9 @@
         >
           <a
             :href="baseURL + `media/` + photo.id"
-            data-gallery="photos"
-            data-type="image"
-            class="glightbox"
-            alt="image"
-            :data-description="photo.description ? photo.description : ``"
+            data-lightbox="photos"
+            :data-title="photo.description ? photo.description : ``"
+            class="position-relative"
           >
             <img
               :src="baseURL + `media/` + photo.id + `?thumb=true`"
@@ -125,8 +123,6 @@ import { v4 as uuidv4 } from "uuid";
 import { remove, last } from "lodash";
 import BaseError from "./BaseError.vue";
 import Constants from "@/common/Constants";
-import GLightbox from "glightbox";
-import "glightbox/dist/css/glightbox.css";
 
 // TODO: Backend allows to upload more and sometimes less in rare cases
 const MAX_PHOTOS = Constants.MAX_PHOTOS;
@@ -161,11 +157,6 @@ props.photos.forEach((e) =>
     uploadCue: null,
   })
 );
-
-// Activate lightbox
-onMounted(() => {
-  GLightbox({ touchNavigation: true, loop: true });
-});
 
 // Find the input dialog in template
 const photoInput = ref(null);

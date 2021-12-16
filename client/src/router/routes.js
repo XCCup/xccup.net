@@ -220,11 +220,6 @@ export const Routes = [
     component: () => import("../views/UserConfirmMail.vue"),
   },
   {
-    path: "/sandbox/",
-    name: "TheSandbox",
-    component: () => import("../views/TheSandbox.vue"),
-  },
-  {
     path: "/:catchAll(.*)",
     name: "NotFound",
     component: NotFound,
