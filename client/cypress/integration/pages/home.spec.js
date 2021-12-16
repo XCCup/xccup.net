@@ -13,6 +13,12 @@ describe("check landing page", () => {
     cy.get("#infoboxContent").should("include.text", "1177 km");
   });
 
+  it("just check content of flüge 2020", () => {
+    cy.visit("/2020/fluege/");
+
+    cy.get("table").find("tr").its("length").should("eq", 2);
+  });
+
   it("test daily ranking", () => {
     cy.get("#cy-daily-ranking-panel").within(() => {
       //Consider evaluating the date within the h3 (depends on the time; till 12oclock it's the day before to today)
