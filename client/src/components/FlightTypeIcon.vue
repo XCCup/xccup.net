@@ -1,9 +1,16 @@
 <template>
   <!-- FAI -->
-  <i v-if="flightType === `FAI`" class="bi bi-triangle me-1"></i>
+  <i
+    v-if="flightType === `FAI`"
+    ref="icon"
+    class="bi bi-triangle me-1"
+    data-bs-placement="top"
+    title="FAI Dreieck"
+  ></i>
   <!-- Flat -->
   <svg
     v-if="flightType === `FLAT`"
+    ref="icon"
     xmlns="http://www.w3.org/2000/svg"
     width="16"
     height="16"
@@ -11,6 +18,8 @@
     viewBox="0 0 487.047 487.047"
     style="enable-background: new 0 0 487.047 487.047"
     class="me-1"
+    data-bs-placement="top"
+    title="Flaches Dreieck"
   >
     <path
       d="M468.616,93.218c-3.098-0.208-6.241,0.759-9.151,2.838c-62.956,45.13-142.625,86.988-219.655,127.465
@@ -24,18 +33,39 @@
     />
   </svg>
   <!-- Free -->
-  <i v-if="flightType === `FREE`" class="bi bi-arrow-up-right"></i>
+  <i
+    v-if="flightType === `FREE`"
+    ref="icon"
+    class="bi bi-arrow-up-right"
+    data-bs-placement="top"
+    title="Freie Strecke"
+  ></i>
 </template>
 
-<script>
-export default {
-  props: {
-    flightType: {
-      type: String,
-      required: true,
-    },
+<script setup>
+import { onMounted, onUnmounted, ref } from "vue";
+import { Tooltip } from "bootstrap";
+
+defineProps({
+  flightType: {
+    type: String,
+    required: true,
   },
-};
+});
+
+const icon = ref(null);
+let tooltip = null;
+
+onMounted(() => {
+  tooltip = new Tooltip(icon.value);
+});
+
+onUnmounted(() => {
+  if (tooltip) {
+    tooltip.dispose();
+    tooltip = null;
+  }
+});
 </script>
 
 <style scoped></style>
