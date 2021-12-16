@@ -1,29 +1,29 @@
 <template>
   <i
     v-if="flightState === `In Wertung`"
-    class="bi bi-check2 text-success"
     ref="icon"
+    class="bi bi-check2 text-success"
     data-bs-placement="top"
     :title="flightState"
   ></i>
   <i
     v-if="flightState === `Nicht in Wertung`"
-    class="bi bi-x-circle text-danger"
     ref="icon"
+    class="bi bi-x-circle text-danger"
     data-bs-placement="top"
     :title="flightState"
   ></i>
   <i
     v-if="flightState === `Flugbuch`"
-    class="bi bi-journal-text"
     ref="icon"
+    class="bi bi-journal-text"
     data-bs-placement="top"
     :title="flightState"
   ></i>
   <i
     v-if="flightState === `In Bearbeitung`"
-    class="bi bi-hourglass-split"
     ref="icon"
+    class="bi bi-hourglass-split"
     data-bs-placement="top"
     :title="flightState"
   ></i>
