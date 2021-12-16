@@ -3,6 +3,7 @@ const router = express.Router();
 const service = require("../service/FlightPhotoService");
 const pathLib = require("path");
 const fs = require("fs");
+const exifr = require("exifr");
 const {
   NOT_FOUND,
   OK,
@@ -49,8 +50,12 @@ router.post(
 
     try {
       const { originalname, mimetype, size, path } = req.file;
-      const { flightId, timestamp } = req.body;
-      //TODO: Timestamp will be done in backend or frontend???
+      const { flightId } = req.body;
+
+      // Time is somehow off by 2 hours. Even if it's UTC
+      // Currently solved in client but maybe there is a better way to do correct this here
+      const exif = await exifr.parse(path);
+      const timestamp = exif.DateTimeOriginal ?? undefined; // Does this need more validation?
 
       const numberOfPhotos = await service.countPhotosOfFlight(flightId);
       logger.debug(

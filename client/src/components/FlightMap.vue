@@ -16,6 +16,7 @@ import Constants from "@/common/Constants";
 import ApiService from "@/services/ApiService";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
+import { getTime, parseISO } from "date-fns";
 
 import {
   convertMapBoundsToQueryString,
@@ -34,6 +35,10 @@ import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
 import landingIconRetinaUrl from "@/assets/images/landing-marker-2x.png?url";
 import landingIconUrl from "@/assets/images/landing-marker.png?url";
 
+// Photo marker
+import photoIconRetinaUrl from "@/assets/images/photo-marker-2x.png?url";
+import photoIconUrl from "@/assets/images/photo-marker.png?url";
+
 let landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,
   iconUrl: landingIconUrl,
@@ -44,9 +49,18 @@ let landingMarker = L.icon({
   shadowAnchor: [12, 41],
 });
 
+let photoMarker = L.icon({
+  iconRetinaUrl: photoIconRetinaUrl,
+  iconUrl: photoIconUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  shadowUrl: shadowUrl,
+  shadowSize: [41, 41],
+  shadowAnchor: [12, 41],
+});
+
 const { flight } = useFlight();
 const { activeAirbuddyFlights } = useAirbuddies();
-
 const trackColors = Constants.TRACK_COLORS;
 
 // Find a way to make this reactive
@@ -55,10 +69,11 @@ const userPrefersDark = ref(
 );
 
 // Leaflet objects
-let map = ref(null);
-let trackLines = ref();
-let positionMarkers = ref([]);
-let takeoffAndLandingMarkers = ref([]);
+const map = ref(null);
+const trackLines = ref();
+const positionMarkers = ref([]);
+const takeoffAndLandingMarkers = ref([]);
+const photoMarkers = ref([]);
 
 // All tracklogs that shall be drawn on map
 const tracklogs = computed(() =>
@@ -161,6 +176,29 @@ const drawTracks = (tracklogs) => {
             icon: landingMarker,
           }).addTo(map.value)
         );
+
+        // Create Photomarkers
+        const offset = 3600000 * 2; // 2 hours TODO: Is this always correct?
+        const roundBy = 10000; // Approximate values of GPS fix and photo timestamp
+
+        const photoTimestamps = flight.value.photos.map((e) =>
+          getTime(parseISO(e.timestamp))
+        );
+
+        // Find matching GPS and photo timestamps
+        photoTimestamps.forEach((timestamp) => {
+          const location = track.find((fix) => {
+            const minuteOfFix = Math.floor(fix[2] / roundBy);
+            const minuteOfPhoto = Math.floor((timestamp - offset) / roundBy);
+            return minuteOfFix === minuteOfPhoto;
+          });
+          if (!location) return;
+          photoMarkers.value.push(
+            L.marker(location, { title: "Photo", icon: photoMarker }).addTo(
+              map.value
+            )
+          );
+        });
       }
       // Create position markers for every track
       tmpPositionMarkers[index] = L.circleMarker(track[0], {
