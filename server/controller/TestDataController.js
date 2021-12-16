@@ -1,5 +1,6 @@
 const express = require("express");
 const logger = require("../config/logger");
+const { deleteCache } = require("./CacheManager");
 const router = express.Router();
 
 // @desc Seeds the DB with the testdatasets
@@ -8,6 +9,8 @@ const router = express.Router();
 router.get("/seed", async (req, res, next) => {
   try {
     const { Flight } = req.query;
+
+    deleteCache(["all"]);
 
     if (Flight) {
       const model = require("../config/postgres")["Flight"];
@@ -37,6 +40,8 @@ router.get("/seed", async (req, res, next) => {
 router.get("/clear", async (req, res, next) => {
   try {
     const queryParams = Object.keys(req.query);
+
+    deleteCache(["all"]);
 
     if (queryParams.length > 0) {
       for (let index = 0; index < queryParams.length; index++) {
