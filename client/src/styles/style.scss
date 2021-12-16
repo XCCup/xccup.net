@@ -69,6 +69,10 @@ a {
   filter: brightness(85%);
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 // TODO: Is this obsolete?
 // Fix for responsive scaling of barogramm
 // .barogramm-container {
