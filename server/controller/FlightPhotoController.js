@@ -24,7 +24,7 @@ const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 
 const IMAGE_STORE = "data/images/flights";
-const THUMBNAIL_IMAGE_HEIGHT = 200;
+const THUMBNAIL_IMAGE_HEIGHT = 310;
 const MAX_PHOTOS = 8;
 
 const imageUpload = multer({
