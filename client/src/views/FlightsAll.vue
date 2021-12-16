@@ -1,6 +1,6 @@
 <template>
   <div class="container-lg mb-3">
-    <h3>Streckenmeldungen {{ props.year }}</h3>
+    <h3>Streckenmeldungen {{ year }}</h3>
     <!-- TODO: Add filter spinner when loading -->
     <div class="row">
       <div class="col-6">
@@ -27,7 +27,7 @@ import { useRoute } from "vue-router";
 
 setWindowName("Streckenmeldungen");
 
-const props = defineProps({
+defineProps({
   year: {
     type: [String, Number],
     default: "",
