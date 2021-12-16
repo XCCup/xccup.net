@@ -287,8 +287,4 @@ const redirectToFlight = (id) => {
 };
 </script>
 
-<style scoped>
-.clickable {
-  cursor: pointer;
-}
-</style>
+<style scoped></style>

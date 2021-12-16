@@ -272,8 +272,4 @@ const onRetry = (options) => {
   uploadPhoto(retryItem, { retryIndex: options.index });
 };
 </script>
-<style scoped>
-.clickable {
-  cursor: pointer;
-}
-</style>
+<style scoped></style>
