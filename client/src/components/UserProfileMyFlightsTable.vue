@@ -85,6 +85,7 @@
   </section>
   <BaseModal
     modal-title="Flug löschen?"
+    modal-body="Dies kann nicht rückgängig gemacht werden"
     confirm-button-text="Löschen"
     modal-id="deleteFlightModal"
     :confirm-action="onConfirmDelete"
