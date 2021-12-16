@@ -1,5 +1,5 @@
 describe("check flight upload page", () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit("/");
   });
 
@@ -82,10 +82,55 @@ describe("check flight upload page", () => {
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
   });
 
+  it("test upload flight twice", () => {
+    const igcFileName = "47188_J3USaNi1.igc";
+    const expectedError =
+      "Dieser Flug ist bereits vorhanden. Wenn du denkst dass dies ein Fehler ist wende dich bitte an xccup-beta@stephanschoepe.de";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calclation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 20000,
+    }).should("have.value", "Serrig");
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    // Add same flight again
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because processing takes some time
+    cy.get("#upload-error", {
+      timeout: 10000,
+    }).should("have.text", expectedError);
+  });
+
   it("Test upload flight out of xccup area", () => {
     const igcFileName = "out_of_area_2.igc";
     const expectedError =
       "Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst dass dies ein Fehler ist wende dich bitte an xccup-beta@stephanschoepe.de";
+
+    cy.loginNormalUser();
 
     cy.get("button").contains("Flug hochladen").click();
 
@@ -108,6 +153,8 @@ describe("check flight upload page", () => {
     const expectedError =
       "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
 
+    cy.loginNormalUser();
+
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
@@ -128,6 +175,8 @@ describe("check flight upload page", () => {
     const igcFileName = "removed_line_20to22.igc";
     const expectedError =
       "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
+
+    cy.loginNormalUser();
 
     cy.get("button").contains("Flug hochladen").click();
 
