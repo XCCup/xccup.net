@@ -46,7 +46,6 @@ export const Routes = [
   {
     path: "/:year/fluege/",
     name: "FlightsAllYear",
-    props: true,
     beforeEnter: validateRouteParamYear,
     meta: { toTop: true },
     component: () => import("../views/FlightsAll.vue"),
