@@ -96,12 +96,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import useFlights from "@/composables/useFlights";
+import useData from "@/composables/useData";
 import { Modal } from "bootstrap";
 import ApiService from "@/services/ApiService";
 import useUser from "@/composables/useUser";
 
-const { flights, sortFlightsBy } = useFlights();
+const { data: flights, sortDataBy, fetchData } = useData(ApiService.getFlights);
 const router = useRouter();
 const showSpinner = ref(false);
 const errorMessage = ref("");
@@ -115,11 +115,10 @@ onMounted(() => {
 });
 
 // Fetch flights
-const { fetchFlights } = useFlights();
 const { getUserId } = useUser();
 
 // TODO: Spinner needed?
-await fetchFlights({ params: {}, queries: { userId: getUserId.value } });
+await fetchData({ params: {}, queries: { userId: getUserId.value } });
 
 const flightToDelete = ref(null);
 const onDeleteFlight = (flightId) => {
@@ -135,7 +134,7 @@ const deleteFlight = async (flightId) => {
   try {
     await ApiService.deleteFlight(flightId);
     flightToDelete.value = null;
-    await fetchFlights({ params: {}, queries: { userId: getUserId.value } });
+    // await fetchFlights({ params: {}, queries: { userId: getUserId.value } });
   } catch (error) {
     errorMessage.value = "Da ist leider was schief gelaufen";
     showSpinner.value = false;
@@ -156,7 +155,7 @@ const routeToFlight = (flightId) => {
 
 const handleSortChange = (value) => {
   currentSortColumnKey.value = value.key;
-  sortFlightsBy({
+  sortDataBy({
     sortCol: currentSortColumnKey.value,
     sortOrder: value.order,
   });

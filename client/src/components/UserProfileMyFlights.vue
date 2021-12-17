@@ -2,9 +2,16 @@
   <!-- TODO: Add filter spinner when loading -->
   <div class="row mt-3">
     <div class="col-6"></div>
-    <div class="col-6"><PaginationPanel /></div>
+    <div class="col-6">
+      <PaginationPanel
+        :api-endpoint="ApiService.getFlights"
+        entry-name="Flüge"
+      />
+    </div>
   </div>
   <UserProfileMyFlightsTable />
 </template>
 
-<script setup></script>
+<script setup>
+import ApiService from "@/services/ApiService";
+</script>

@@ -8,7 +8,7 @@
           <img class="rounded-circle" :src="avatarUrl" />
           <div class="row">
             <i
-              class="col bi bi-pencil text-primary avatar-editor-button"
+              class="col bi bi-pencil text-primary clickable"
               @click.prevent="onEditAvatar"
             ></i>
           </div>
@@ -168,8 +168,5 @@ const updateAvatar = () => {
 <style scoped>
 img {
   width: 150px;
-}
-.avatar-editor-button {
-  cursor: pointer;
 }
 </style>
