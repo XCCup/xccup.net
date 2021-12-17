@@ -82,9 +82,10 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-import useFlights from "@/composables/useFlights";
+import useData from "../composables/useData";
+import ApiService from "../services/ApiService";
 
-const { flights, sortFlightsBy } = useFlights();
+const { data: flights, sortDataBy } = useData(ApiService.getFlights);
 const router = useRouter();
 
 const currentSortColumnKey = ref(null);
@@ -100,7 +101,7 @@ const routeToFlight = (flightId) => {
 
 const handleSortChange = (value) => {
   currentSortColumnKey.value = value.key;
-  sortFlightsBy({
+  sortDataBy({
     sortCol: currentSortColumnKey.value,
     sortOrder: value.order,
   });

@@ -218,9 +218,19 @@ const igcSelected = async (file) => {
       error.response.data == "Invalid G-Record"
     )
       return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html). Bitte prüfe ob die Datei unverändert ist. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
-    if (error.response.status === 403)
+    if (
+      error.response.status === 403 &&
+      error.response.data.includes("already present")
+    )
+      return (errorMessage.value = `Dieser Flug ist bereits vorhanden. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+
+    if (
+      error.response.status === 403 &&
+      error.response.data.includes("Found no takeoff")
+    )
       // TODO: Find a way to make the email clickable without using v-html
       return (errorMessage.value = `Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+
     errorMessage.value = "Da ist leider was schief gelaufen";
     console.log(error);
   } finally {

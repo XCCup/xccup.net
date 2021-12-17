@@ -14,12 +14,15 @@ const {
   validationHasErrors,
 } = require("./Validation");
 const { getCurrentYear } = require("../helper/Utils");
-const { defineFileDestination, defineImageFileNameWithCurrentDateAsPrefix } = require("../helper/ImageUtils");
+const {
+  defineFileDestination,
+  defineImageFileNameWithCurrentDateAsPrefix,
+} = require("../helper/ImageUtils");
 
 const multer = require("multer");
 const path = require("path");
 
-const IMAGE_STORE = "data/images/sponsors";
+const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/sponsors";
 
 const storage = multer.diskStorage({
   destination: defineFileDestination(IMAGE_STORE),

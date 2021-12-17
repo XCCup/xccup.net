@@ -10,12 +10,32 @@ const app = express();
 const logger = require("./config/logger");
 const morganLogger = require("./config/logger").morganLogger;
 const { handleError } = require("./helper/ErrorHandler");
+const compression = require("compression");
 
 //Setup DB
 require("./config/postgres.js");
 
 //Logging
 app.use(morganLogger);
+
+//Compression
+app.use(
+  compression({
+    filter: (req, res) => {
+      if (req.headers["x-no-compression"]) {
+        // don't compress responses with this request header
+        return false;
+      }
+
+      /**
+       * This compression reduces the size of a JSON by roughly 4.5 times.
+       * It has no effect on images.
+       */
+
+      return compression.filter(req, res);
+    },
+  })
+);
 
 //Development Tools
 if (process.env.NODE_ENV !== "production") {

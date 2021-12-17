@@ -2,35 +2,42 @@
   <div class="container-lg mb-3">
     <h3>Streckenmeldungen {{ route.params.year }}</h3>
     <!-- TODO: Add filter spinner when loading -->
+
     <div class="row">
       <div class="col-6">
         <FilterPanel
-          :is-loading="isLoading"
-          :filter-active="filterActive"
-          @clear-filter="clearFilter"
+          :api-endpoint="ApiService.getFlights"
           @show-filter="showFilter"
         />
       </div>
-      <div class="col-6"><PaginationPanel /></div>
+      <div class="col-6">
+        <PaginationPanel
+          :api-endpoint="ApiService.getFlights"
+          entry-name="Flüge"
+        />
+      </div>
     </div>
+    <BaseError :error-message="errorMessage" />
     <ResultsTableOverall />
     <ModalFilterFlights />
   </div>
 </template>
 
 <script setup>
+import ApiService from "@/services/ApiService";
 import { onMounted } from "vue";
 import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
-import useFlights from "@/composables/useFlights";
+import useData from "@/composables/useData";
 import { useRoute } from "vue-router";
 
 setWindowName("Streckenmeldungen");
 
 const route = useRoute();
 
-const { fetchFlights, filterActive, clearFilter, isLoading } = useFlights();
-await fetchFlights({ params: route.params, queries: route.query });
+const { fetchData, errorMessage } = useData(ApiService.getFlights);
+
+fetchData({ params: route.params, queries: route.query });
 
 let filterModal;
 onMounted(() => {

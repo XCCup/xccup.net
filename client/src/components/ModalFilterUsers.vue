@@ -1,15 +1,15 @@
 <template>
   <div
-    id="flightFilterModal"
+    id="userFilterModal"
     class="modal fade"
     tabindex="-1"
-    aria-labelledby="flightFilterModalLabel"
+    aria-labelledby="userFilterModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="flightFilterModalLabel" class="modal-title">Flugfilter</h5>
+          <h5 id="userFilterModalLabel" class="modal-title">Pilotenfilter</h5>
           <button
             type="button"
             class="btn-close"
@@ -20,22 +20,20 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <BaseSelect
+            <label for="userDataList" class="form-label">Name</label>
+            <input
               id="filterSelectName"
-              v-model="selects.user"
-              label="Name"
-              :show-label="true"
-              :options="users"
-              :add-empty-option="true"
+              v-model="selects.name"
+              class="form-control mb-3"
+              list="datalistOptions"
+              placeholder="Suchen..."
             />
-            <BaseSelect
-              id="filterSelectSite"
-              v-model="selects.site"
-              label="Startplatz"
-              :show-label="true"
-              :options="sites"
-              :add-empty-option="true"
-            />
+            <datalist id="datalistOptions">
+              <option v-for="user in users" :key="user" :value="user">
+                {{ user }}
+              </option>
+            </datalist>
+
             <BaseSelect
               id="filterSelectClub"
               v-model="selects.club"
@@ -50,14 +48,6 @@
               label="Team"
               :show-label="true"
               :options="teams"
-              :add-empty-option="true"
-            />
-            <BaseSelect
-              id="filterSelectRanking"
-              v-model="selects.ranking"
-              label="Wertungsklasse"
-              :show-label="true"
-              :options="rankings"
               :add-empty-option="true"
             />
           </div>
@@ -96,39 +86,35 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
-import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 import useData from "../composables/useData";
+import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
-const { filterDataBy, filterActive } = useData(ApiService.getFlights);
+const { filterActive, filterDataBy } = useData(ApiService.getUsers);
 
 const selects = reactive({
-  user: "",
-  site: "",
+  name: "",
   club: "",
   team: "",
-  ranking: "",
 });
 const filterOptions = (await ApiService.getFilterOptions()).data;
 const userData = filterOptions.userNames;
-const siteData = filterOptions.siteNames;
 const clubData = filterOptions.clubNames;
 const teamData = filterOptions.teamNames;
-const rankingData = filterOptions.rankingClasses;
 const users = ref(userData.map((e) => `${e.firstName} ${e.lastName}`));
-const sites = ref(siteData.map((e) => e.name));
 const clubs = ref(clubData.map((e) => e.name));
 const teams = ref(teamData.map((e) => e.name));
-const rankings = ref(Object.values(rankingData).map((e) => e.shortDescription));
 
 const onActivate = async () => {
   // The variable name must match the appropriate query parameter in /flights
-  const userId = findIdByUserName();
-  const siteId = findIdByName(selects.site, siteData);
   const clubId = findIdByName(selects.club, clubData);
   const teamId = findIdByName(selects.team, teamData);
-  const rankingClass = findKeyOfRankingClass(selects.team, teamData);
+  const userIds = findIdsByNameParts();
 
-  filterDataBy({ userId, siteId, clubId, teamId, rankingClass });
+  filterDataBy({
+    clubId,
+    teamId,
+    userIds,
+  });
 };
 
 const anyFilterOptionSet = computed(() =>
@@ -149,14 +135,18 @@ function findIdByName(selectObject, initalData) {
     ? initalData.find((e) => e.name == selectObject).id
     : undefined;
 }
-function findIdByUserName() {
-  return selects.user
-    ? userData.find((e) => `${e.firstName} ${e.lastName}` == selects.user).id
-    : undefined;
-}
-function findKeyOfRankingClass() {
-  for (const [key, value] of Object.entries(rankingData)) {
-    if (value.shortDescription == selects.ranking) return key;
-  }
+function findIdsByNameParts() {
+  // Return undefined if no value was present
+  if (!selects.name.length) return;
+
+  const possibleUsers = userData.filter(
+    (u) =>
+      u.firstName.toLowerCase().includes(selects.name.toLowerCase()) ||
+      u.lastName.toLowerCase().includes(selects.name.toLowerCase()) ||
+      (u.firstName.toLowerCase() + " " + u.lastName.toLowerCase()).includes(
+        selects.name.toLowerCase()
+      )
+  );
+  return possibleUsers.map((u) => u.id);
 }
 </script>

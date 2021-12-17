@@ -10,7 +10,7 @@
               query: { userId: user.id },
             }"
           >
-            <img class="rounded-circle" :src="avatarUrl" />
+            <img class="rounded-circle img-fluid" :src="avatarUrl" />
           </router-link>
         </div>
       </div>
@@ -66,7 +66,7 @@
       </div>
       <div class="col-6">
         <div><strong>Hangar</strong></div>
-        <ul v-if="user.gliders.length" class="list-group">
+        <ul v-if="user.gliders.length" class="list-group list-unstyled">
           <li v-for="glider in user.gliders" :key="glider.id">
             <RankingClass :ranking-class="createRankingClass(glider)" />{{
               glider.brand
@@ -136,14 +136,6 @@ const onMessagePilot = () => {
 
 <style scoped>
 img {
-  max-height: 100px;
-  max-width: 150px;
-}
-button {
-  max-width: 100px;
-}
-ul {
-  list-style: none;
-  padding-left: 0;
+  max-width: 120px;
 }
 </style>

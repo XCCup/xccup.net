@@ -3,13 +3,13 @@
     <ul class="pagination pagination-sm justify-content-end align-items-center">
       <li class="me-2">
         <div class="no-line-break pagination-text hide-on-xs">
-          Anzahl Einträge pro Seite
+          Anzahl {{ entryName }} pro Seite
         </div>
       </li>
       <li class="me-2">
         <select
           id="cyPaginationAmountSelect"
-          v-model="numberFlightsPerPage"
+          v-model="numberEntriesPerPage"
           class="form-select form-select-sm hide-on-xs border-primary w-auto"
         >
           <option v-for="option in LIMIT_OPTIONS" :key="option" :value="option">
@@ -21,7 +21,7 @@
         <div id="cyPaginationInfo" class="no-line-break pagination-text">
           {{ currentRange.start }}-{{ currentRange.end }}
           von
-          {{ numberOfTotalFlights }}
+          {{ numberOfTotalEntries }}
         </div>
       </li>
       <li
@@ -90,29 +90,40 @@
 </template>
 
 <script setup>
-import useFlights from "@/composables/useFlights";
+import useData from "../composables/useData";
 import { ref, watch, computed } from "vue";
 
+const props = defineProps({
+  apiEndpoint: {
+    type: Function,
+    required: true,
+  },
+  entryName: {
+    type: String,
+    default: "Einträge",
+  },
+});
+
 const {
-  fetchFlights,
-  numberOfTotalFlights,
+  fetchData,
+  numberOfTotalEntries,
   DEFAULT_LIMIT,
   LIMIT_OPTIONS,
   currentRange,
-} = useFlights();
+} = useData(props.apiEndpoint);
 
-const numberFlightsPerPage = ref(DEFAULT_LIMIT);
+const numberEntriesPerPage = ref(DEFAULT_LIMIT);
 
-watch(numberFlightsPerPage, () => {
+watch(numberEntriesPerPage, () => {
   //Don't use watchEffect because this will always run once on setup and cause a second unneccessary request
-  fetchFlights({
-    limit: numberFlightsPerPage.value,
+  fetchData({
+    limit: numberEntriesPerPage.value,
     offset: currentRange.value.start - 1,
   });
 });
 
 const multiplePagesExists = computed(
-  () => numberFlightsPerPage.value < numberOfTotalFlights.value
+  () => numberEntriesPerPage.value < numberOfTotalEntries.value
 );
 
 const disableIfNoPreviousEntriesAvailable = computed(() =>
@@ -120,32 +131,32 @@ const disableIfNoPreviousEntriesAvailable = computed(() =>
 );
 
 const disableIfNoNextEntriesAvailable = computed(() => {
-  return currentRange.value.end < numberOfTotalFlights.value ? "" : "disabled";
+  return currentRange.value.end < numberOfTotalEntries.value ? "" : "disabled";
 });
 
 const onFirst = () => {
   if (disableIfNoPreviousEntriesAvailable.value) return;
-  fetchFlights({ limit: numberFlightsPerPage.value, offset: 0 });
+  fetchData({ limit: numberEntriesPerPage.value, offset: 0 });
 };
 const onPrevious = () => {
   if (disableIfNoPreviousEntriesAvailable.value) return;
-  fetchFlights({
-    limit: numberFlightsPerPage.value,
-    offset: currentRange.value.start - numberFlightsPerPage.value - 1,
+  fetchData({
+    limit: numberEntriesPerPage.value,
+    offset: currentRange.value.start - numberEntriesPerPage.value - 1,
   });
 };
 const onNext = () => {
   if (disableIfNoNextEntriesAvailable.value) return;
-  fetchFlights({
-    limit: numberFlightsPerPage.value,
+  fetchData({
+    limit: numberEntriesPerPage.value,
     offset: currentRange.value.end,
   });
 };
 const onLast = () => {
   if (disableIfNoNextEntriesAvailable.value) return;
-  fetchFlights({
-    limit: numberFlightsPerPage.value,
-    offset: numberOfTotalFlights.value - numberFlightsPerPage.value,
+  fetchData({
+    limit: numberEntriesPerPage.value,
+    offset: numberOfTotalEntries.value - numberEntriesPerPage.value,
   });
 };
 </script>

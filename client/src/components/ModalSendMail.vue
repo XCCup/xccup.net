@@ -11,7 +11,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 id="sendMailModalLabel" class="modal-title">
-            Sende Nachricht an {{ user?.firstName }} {{ user?.lastName }}
+            Nachricht an {{ user?.firstName }} {{ user?.lastName }}
           </h5>
           <button
             type="button"

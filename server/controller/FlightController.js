@@ -29,6 +29,7 @@ const {
   queryOptionalColumnExistsInModel,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
+const { createFileName } = require("../helper/igc-file-utils");
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
 const uploadLimiter = createRateLimiter(60, 10);
@@ -176,14 +177,12 @@ router.post(
     const igc = req.body.igc;
     const userId = req.user.id;
     try {
-      if (await requesterIsNotOwner(req, res, userId)) return;
-
       const validationResult = await igcValidator.execute(igc);
       if (!validationResult) {
-        logger.warn("G-Record Validation returned undefined");
+        logger.warn("FC: G-Record Validation returned undefined");
       } else if (validationResult != igcValidator.G_RECORD_PASSED) {
         logger.info(
-          "Invalid G-Record found. Validation result: " + validationResult
+          "FC: Invalid G-Record found. Validation result: " + validationResult
         );
         return res.status(BAD_REQUEST).send("Invalid G-Record");
       }
@@ -194,7 +193,10 @@ router.post(
         flightStatus: STATE.IN_PROCESS,
       });
 
-      flightDbObject.igcPath = await persistIgcFile(flightDbObject.id, igc);
+      flightDbObject.igcPath = await persistIgcFile(
+        flightDbObject.externalId,
+        igc
+      );
 
       const takeoffName =
         await service.extractFixesAndAddFurtherInformationToFlight(
@@ -298,14 +300,11 @@ router.put(
   }
 );
 
-//TODO Move to helper class "FileWriter"
-async function persistIgcFile(flightId, igcFile) {
-  const store = process.env.FLIGHT_STORE;
-  const pathToFolder = path.join(store, flightId.toString());
-  const pathToFile = path.join(pathToFolder.toString(), igcFile.name);
+async function persistIgcFile(externalId, igcFile) {
+  const pathToFile = createFileName(externalId, igcFile.name);
+
   const fsPromises = fs.promises;
-  fs.mkdirSync(pathToFolder, { recursive: true });
-  logger.debug(`Will write received IGC File to: ${pathToFile}`);
+  logger.debug(`FC: Will write received IGC File to: ${pathToFile}`);
   await fsPromises.writeFile(pathToFile.toString(), igcFile.body);
   return pathToFile;
 }

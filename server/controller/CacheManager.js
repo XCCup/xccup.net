@@ -21,13 +21,12 @@ const setCache = (req, value) => {
 
 const deleteCache = (keysArrayToDelete) => {
   const cachedKeys = cache.keys();
-  const keysToDelete = [];
-
-  cachedKeys.forEach((cacheKey) => {
-    keysArrayToDelete.forEach((includeKey) => {
-      if (cacheKey.includes(includeKey)) return keysToDelete.push(cacheKey);
-    });
-  });
+  const keysToDelete =
+    keysArrayToDelete[0] == "all"
+      ? cachedKeys
+      : cachedKeys.filter((ck) =>
+          keysArrayToDelete.some((includeKey) => ck.includes(includeKey))
+        );
 
   logger.debug("Will delete these keys from cache: " + keysToDelete);
 

@@ -2,7 +2,7 @@
   <label v-if="showLabel">{{ label }}</label>
   <select
     :id="id"
-    class="form-select"
+    class="form-select mb-3"
     :value="modelValue"
     :disabled="isDisabled"
     v-bind="{

@@ -60,8 +60,7 @@ router.get(
   query("records").optional().isBoolean(),
   query("limit").optional().isInt(),
   query("offset").optional().isInt(),
-  query("firstNameStartsWith").optional().trim().escape(),
-  query("lastNameStartsWith").optional().trim().escape(),
+  query("userIds").optional().isArray(),
   query("clubId").optional().isUUID(),
   query("teamId").optional().isUUID(),
   async (req, res, next) => {
@@ -70,23 +69,14 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const {
-      records,
-      limit,
-      offset,
-      firstNameStartsWith,
-      lastNameStartsWith,
-      clubId,
-      teamId,
-    } = req.query;
+    const { records, limit, offset, userIds, clubId, teamId } = req.query;
 
     try {
       const users = await service.getAll({
         records,
         limit,
         offset,
-        firstNameStartsWith,
-        lastNameStartsWith,
+        userIds,
         clubId,
         teamId,
       });
