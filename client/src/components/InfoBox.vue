@@ -1,12 +1,13 @@
 <template>
   <!-- Alert -->
-  <div class="alert alert-danger mb-0" role="alert">
+  <!-- <div class="alert alert-danger mb-0" role="alert">
     Erste Sonderwertung "Early Bird"
     <a href="#" class="alert-link">mehr Infos</a>
-  </div>
+  </div> -->
   <!-- Alert -->
-
-  <section class="container-fluid header-image"></section>
+  <div class="header-image-parent">
+    <section class="container-fluid header-image"></section>
+  </div>
   <section v-if="seasonStats" class="py-3 text-center container">
     <div class="col-md-8 mx-auto">
       <h1 class="fw-light">XCCup 2021</h1>
@@ -48,4 +49,12 @@ export default {
   background-size: cover;
   background-position: center center;
 }
+
+/* .header-image-parent {
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 50%,
+    transparent 100%
+  );
+} */
 </style>

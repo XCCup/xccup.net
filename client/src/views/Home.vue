@@ -5,13 +5,15 @@
 
   <InfoBox :season-stats="seasonStats" />
   <DailyResults :max-rows="10" :flights="dailyResults" />
+  <NewsPanel :news-items="newsItems" />
+  <PhotoCarousel :photos="randomPhotos" />
+
   <ResultsOverview
     :results-by-class="resultsByClass"
     :top-flights="topFlights"
     :best-clubs="bestClubs"
     :best-teams="bestTeams"
   />
-  <PhotoCarousel :photos="randomPhotos" />
   <SponsorsPanel :sponsors="sponsors" />
 </template>
 
@@ -26,6 +28,7 @@ const dailyResults = ref(null);
 const topFlights = ref(null);
 const resultsByClass = ref(null);
 const bestClubs = ref(null);
+const newsItems = ref(null);
 const bestTeams = ref(null);
 const seasonStats = ref(null);
 const sponsors = ref(null);
@@ -46,6 +49,7 @@ try {
   seasonStats.value = initialData.seasonStats;
   sponsors.value = initialData.sponsors;
   randomPhotos.value = initialData.randomPhotos;
+  newsItems.value = initialData.activeNews;
 } catch (error) {
   console.log(error);
   router.push({
