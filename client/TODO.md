@@ -36,12 +36,10 @@
 
 ### Profile
 
-- [x] Basic layout
-- [x] Connect to API
 - [x] Aircraft add/delete logic
-- [ ] Change profile picture
-- [ ] Overview of flights
+- [x] Change profile picture
 - [ ] Form input validation
+- [ ] List users flights with edit options
 
 ### Upload
 
@@ -60,14 +58,15 @@
 - [x] Basic layout
 - [x] Center map view on pilot by clicking on the barogram
 - [x] Pilot markers follow the barogram timeline
-- [ ] Add speed and climb label next to height label
 - [x] Airspace overlay on map
 - [x] Turnpoint overlay on map
 - [ ] Custom icons for takeoff & landing
-- [ ] Display alitude for pilot and airbuddies
-- [ ] Delete flight button
-- [ ] Edit flight view
-- [ ] Mark picture point in map
+- [x] Display stats for pilot
+- [ ] Display stats for airbuddies
+- [x] Delete flight button
+- [x] Edit flight view
+- [x] Mark photo location on map
+- [ ] Link photo location on map to picture
 - [x] Add comment
 - [x] Delete comment
 - [x] Edit comment
@@ -76,7 +75,7 @@
 
 ### FlightsAll
 
-- [ ] Sort functionality
+- [x] Sort functionality
 - [x] Connect to API
 
 ### Results

@@ -1,6 +1,8 @@
 <template>
   <div class="container-lg mb-3">
-    <h3>Streckenmeldungen {{ props.year }}</h3>
+    <h3>Streckenmeldungen {{ route.params.year }}</h3>
+    <!-- TODO: Add filter spinner when loading -->
+
     <div class="row">
       <div class="col-6">
         <FilterPanel
@@ -31,12 +33,6 @@ import { useRoute } from "vue-router";
 
 setWindowName("Streckenmeldungen");
 
-const props = defineProps({
-  year: {
-    type: [String, Number],
-    default: "",
-  },
-});
 const route = useRoute();
 
 const { fetchData, errorMessage } = useData(ApiService.getFlights);

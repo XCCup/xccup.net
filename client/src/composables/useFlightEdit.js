@@ -4,7 +4,7 @@ import { ref } from "vue";
 
 const modifiedFlightData = ref({
   externalId: null,
-  glider: {},
+  glider: { id: "" },
   report: "",
   hikeAndFly: false,
   onlyLogbook: false,
@@ -21,7 +21,7 @@ export default () => {
   // Actions
   const resetState = () => {
     modifiedFlightData.value = {
-      glider: {},
+      glider: { id: "" },
       report: "",
       hikeAndFly: false,
       onlyLogbook: false,

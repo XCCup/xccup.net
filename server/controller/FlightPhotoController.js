@@ -3,6 +3,7 @@ const router = express.Router();
 const service = require("../service/FlightPhotoService");
 const pathLib = require("path");
 const fs = require("fs");
+const exifr = require("exifr");
 const {
   NOT_FOUND,
   OK,
@@ -23,8 +24,9 @@ const multer = require("multer");
 const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 
+
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
-const THUMBNAIL_IMAGE_HEIGHT = 200;
+const THUMBNAIL_IMAGE_HEIGHT = 310;
 const MAX_PHOTOS = 8;
 
 const imageUpload = multer({
@@ -49,8 +51,12 @@ router.post(
 
     try {
       const { originalname, mimetype, size, path } = req.file;
-      const { flightId, timestamp } = req.body;
-      //TODO: Timestamp will be done in backend or frontend???
+      const { flightId } = req.body;
+
+      // Time is somehow off by 2 hours. Even if it's UTC
+      // Currently solved in client but maybe there is a better way to do correct this here
+      const exif = await exifr.parse(path);
+      const timestamp = exif?.DateTimeOriginal ?? undefined;
 
       const numberOfPhotos = await service.countPhotosOfFlight(flightId);
       logger.debug(

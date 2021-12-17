@@ -232,7 +232,7 @@ const updateSelectedGlider = () => {
   modifiedFlightData.value.glider = { ...newSelection };
 };
 
-// TODO: Should ther be a confirm message?
+// TODO: Should there be a confirm message?
 const onDeleteFlight = async () => {
   showSpinner.value = true;
   try {
@@ -246,8 +246,4 @@ const onDeleteFlight = async () => {
 };
 </script>
 
-<style scoped>
-.clickable {
-  cursor: pointer;
-}
-</style>
+<style scoped></style>

@@ -46,7 +46,6 @@ export const Routes = [
   {
     path: "/:year/fluege/",
     name: "FlightsAllYear",
-    props: true,
     beforeEnter: validateRouteParamYear,
     meta: { toTop: true },
     component: () => import("../views/FlightsAll.vue"),
@@ -218,6 +217,11 @@ export const Routes = [
     name: "ConfirmMail",
     props: (route) => ({ confirm: route.query.confirm }),
     component: () => import("../views/UserConfirmMail.vue"),
+  },
+  {
+    path: "/sandbox/",
+    name: "TheSandbox",
+    component: () => import("../views/TheSandbox.vue"),
   },
   {
     path: "/:catchAll(.*)",

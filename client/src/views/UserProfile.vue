@@ -3,12 +3,12 @@
     <!-- Editor -->
     <div class="row">
       <!-- Profile Picture -->
-      <div class="col-md-3">
+      <div class="col-lg-3">
         <div class="d-flex flex-column align-items-center text-center p-3">
           <img class="rounded-circle" :src="avatarUrl" />
           <div class="row">
             <i
-              class="col bi bi-pencil text-primary avatar-editor-button"
+              class="col bi bi-pencil text-primary clickable"
               @click.prevent="onEditAvatar"
             ></i>
           </div>
@@ -19,7 +19,7 @@
       </div>
 
       <!-- Tab Bar -->
-      <div class="col-md-9 col-lg-8">
+      <div class="col-lg-9">
         <nav>
           <div id="nav-tab" class="nav nav-tabs" role="tablist">
             <button
@@ -106,7 +106,7 @@
             role="tabpanel"
             aria-labelledby="nav-my-flights-tab"
           >
-            Such empty 😞
+            <UserProfileMyFlights />
           </div>
         </div>
       </div>
@@ -123,8 +123,11 @@ import { getUserAvatar } from "../helper/profilePictureHelper";
 import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
 import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
+import UserProfileMyFlights from "../components/UserProfileMyFlights.vue";
 
 setWindowName("Profil");
+
+// TODO: Remember the opened tab when navigating back to profile
 
 const props = defineProps({
   edit: {
@@ -165,8 +168,5 @@ const updateAvatar = () => {
 <style scoped>
 img {
   width: 150px;
-}
-.avatar-editor-button {
-  cursor: pointer;
 }
 </style>
