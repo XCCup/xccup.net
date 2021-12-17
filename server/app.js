@@ -1,3 +1,6 @@
+//Set timezone of node server
+if (process.env.SERVER_TIMEZONE) process.env.TZ = process.env.SERVER_TIMEZONE;
+
 if (process.env.NODE_ENV === "CI") {
   require("dotenv").config({ path: "./.env.ci" });
 }
