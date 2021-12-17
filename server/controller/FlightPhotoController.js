@@ -55,7 +55,7 @@ router.post(
       // Time is somehow off by 2 hours. Even if it's UTC
       // Currently solved in client but maybe there is a better way to do correct this here
       const exif = await exifr.parse(path);
-      const timestamp = exif.DateTimeOriginal ?? undefined; // Does this need more validation?
+      const timestamp = exif?.DateTimeOriginal ?? undefined;
 
       const numberOfPhotos = await service.countPhotosOfFlight(flightId);
       logger.debug(
