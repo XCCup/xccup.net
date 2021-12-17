@@ -3,16 +3,25 @@
     <h3>Registrierte Piloten</h3>
     <div class="row">
       <div class="col-6">
-        <FilterPanel :is-loading="false" :filter-active="false" />
-        <span class="text-danger">Funktion kommt bald 😉</span>
+        <FilterPanel
+          :api-endpoint="ApiService.getUsers"
+          @show-filter="showFilter"
+        />
       </div>
-      <div class="col-6"><PaginationPanel /></div>
+      <div class="col-6">
+        <PaginationPanel
+          :api-endpoint="ApiService.getUsers"
+          entry-name="Piloten"
+        />
+      </div>
     </div>
+    <BaseError :error-message="errorMessage" />
     <div v-for="user in users" :key="user.id" class="card mb-3">
       <UserCard :user="user" @open-message-dialog="messageUser" />
     </div>
   </div>
   <ModalSendMail :modal-id="mailModalId" :user="selectedUser" />
+  <ModalFilterUsers />
 </template>
 
 <script setup>
@@ -20,16 +29,23 @@ import { onMounted, ref } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
+import useData from "../composables/useData";
+import { useRoute } from "vue-router";
+import BaseError from "../components/BaseError.vue";
 
-const users = ref([]);
+const router = useRoute();
+const { fetchData, data: users, errorMessage } = useData(ApiService.getUsers);
+
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);
-let mailModal;
 
 setWindowName("Registrierte Piloten");
 
+let filterModal;
+let mailModal;
 onMounted(() => {
   mailModal = new Modal(document.getElementById(mailModalId.value));
+  filterModal = new Modal(document.getElementById("userFilterModal"));
 });
 
 const messageUser = (user) => {
@@ -37,16 +53,9 @@ const messageUser = (user) => {
   mailModal.show();
 };
 
-try {
-  const res = await ApiService.getUsers({
-    records: true,
-    limit: 20,
-    offset: 0,
-  });
-  if (res.status != 200) throw res.status.text;
+fetchData({ params: { records: true }, queries: router.query });
 
-  users.value = res.data;
-} catch (error) {
-  console.error(error);
-}
+const showFilter = () => {
+  filterModal.show();
+};
 </script>

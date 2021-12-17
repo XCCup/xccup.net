@@ -117,7 +117,7 @@ export default {
 
   // Results
 
-  getResults(category, params) {
+  getResults(params, category) {
     return apiClient.get("results/" + category, {
       params,
     });

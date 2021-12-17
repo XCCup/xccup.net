@@ -400,6 +400,8 @@ const flightService = {
     flight.region = flyingSite.region;
     flight.landing = results.length > 1 ? results[1] : "API Disabled";
 
+    await checkIfFlightWasNotUploadedBefore(flight.siteId, flight.takeoffTime);
+
     const {
       minHeightBaro,
       maxHeightBaro,
@@ -755,6 +757,22 @@ function createTeamInclude(id) {
     };
   }
   return include;
+}
+
+async function checkIfFlightWasNotUploadedBefore(siteId, takeoffTime) {
+  const { XccupRestrictionError } = require("../helper/ErrorHandler");
+
+  const flight = await Flight.findOne({
+    where: {
+      siteId,
+      takeoffTime,
+    },
+  });
+
+  if (flight)
+    throw new XccupRestrictionError(
+      `A flight with same takeoff site and time is already present. See Flight with ID ${flight.externalId}`
+    );
 }
 
 module.exports = flightService;

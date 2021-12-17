@@ -7,10 +7,6 @@
 # BlueJ files
 *.ctxt
 
-# Temp IGC Files
-server/igc/temp/
-server/igc/demo_igcs/temp/
-
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -27,6 +23,10 @@ server/igc/demo_igcs/temp/
 hs_err_pid*
 node_modules
 XCCup_DB_Schema/
+
 client/cypress/videos/
 client/cypress/screenshots/
+server/data/
+server/igc/
+
 .yarn-cache

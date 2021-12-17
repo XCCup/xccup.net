@@ -19,3 +19,5 @@ module.exports.REGIONS = [
   "Rhön",
   "Sauerland",
 ];
+
+module.exports.IGC_STORE = "/igc";

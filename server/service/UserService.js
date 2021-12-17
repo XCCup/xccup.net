@@ -15,17 +15,9 @@ const { arrayRemove, generateRandomString } = require("../helper/Utils");
 const logger = require("../config/logger");
 
 const userService = {
-  getAll: async ({
-    records,
-    limit,
-    offset,
-    firstNameStartsWith,
-    lastNameStartsWith,
-    clubId,
-    teamId,
-  } = {}) => {
-    const users = await User.findAll({
-      where: createUserWhereStatement(firstNameStartsWith, lastNameStartsWith),
+  getAll: async ({ records, limit, offset, userIds, clubId, teamId } = {}) => {
+    const users = await User.findAndCountAll({
+      where: createUserWhereStatement(userIds),
       attributes: ["id", "firstName", "lastName", "gender", "gliders"],
       include: [
         {
@@ -42,8 +34,8 @@ const userService = {
     });
 
     if (records) {
-      return await Promise.all(
-        users.map(async (user) => {
+      const usersWithRecords = await Promise.all(
+        users.rows.map(async (user) => {
           const userJson = user.toJSON();
           const bestFreeFlight = findFlightRecordOfType(userJson.id, TYPE.FREE);
           const bestFlatFlight = findFlightRecordOfType(userJson.id, TYPE.FLAT);
@@ -78,6 +70,8 @@ const userService = {
           return userJson;
         })
       );
+
+      return { count: users.count, rows: usersWithRecords };
     }
 
     /**
@@ -85,7 +79,7 @@ const userService = {
      * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
      * See also: https://github.com/pvorb/clone/issues/106
      */
-    return users.map((v) => v.toJSON());
+    return users.rows.map((v) => v.toJSON());
   },
   getAllNames: async () => {
     const users = await User.findAll({
@@ -251,7 +245,11 @@ const userService = {
   },
   validate: async (email, password) => {
     const user = await User.findOne({
-      where: { email },
+      where: {
+        email: {
+          [Op.iLike]: email,
+        },
+      },
     });
     if (!user) {
       logger.warn(`US: No user found for ${email}`);
@@ -338,20 +336,16 @@ function createBasicInclude(model, as, id) {
   return include;
 }
 
-function createUserWhereStatement(firstNameStartsWith, lastNameStartsWith) {
+function createUserWhereStatement(userIds) {
   const where = {
     role: {
       [Op.not]: ROLE.INACTIVE,
     },
   };
 
-  if (firstNameStartsWith)
-    where.firstName = {
-      [Op.iRegexp]: `^${firstNameStartsWith}`,
-    };
-  if (lastNameStartsWith)
-    where.lastName = {
-      [Op.iRegexp]: `^${lastNameStartsWith}`,
+  if (userIds)
+    where.id = {
+      [Op.in]: userIds,
     };
 
   return where;

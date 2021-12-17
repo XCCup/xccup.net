@@ -5,7 +5,9 @@ const devFormat = printf(({ level, message, timestamp, stack }) => {
   return `${timestamp} ${level}: ${stack || message}`;
 });
 
-const logLevel = process.env.SERVER_LOG_LEVEL;
+const logLevel = process.env.SERVER_LOG_LEVEL ?? "info";
+const dataPath = process.env.SERVER_DATA_PATH ?? "data";
+const logsPath = "logs";
 
 const createDevLogger = createLogger({
   level: logLevel,
@@ -24,15 +26,17 @@ const createProdLogger = createLogger({
   transports: [
     new transports.Console(),
     new transports.File({
-      filename: "data/logs/error_log.log",
+      filename: `${dataPath}/${logsPath}/error_log.log`,
       level: "error",
     }),
-    new transports.File({ filename: "data/logs/log.log" }),
+    new transports.File({ filename: `${dataPath}/${logsPath}/log.log` }),
   ],
 });
 
 const logger =
-  process.env.NODE_ENV !== "production" ? createDevLogger : createProdLogger;
+  process.env.NODE_ENV === "production" || process.env.NODE_ENV === "CI"
+    ? createDevLogger
+    : createProdLogger;
 
 const morgan = require("morgan");
 const morganLogger = morgan("dev", {

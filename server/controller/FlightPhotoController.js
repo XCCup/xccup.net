@@ -23,7 +23,7 @@ const multer = require("multer");
 const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 
-const IMAGE_STORE = "data/images/flights";
+const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
 const THUMBNAIL_IMAGE_HEIGHT = 200;
 const MAX_PHOTOS = 8;
 

@@ -29,11 +29,18 @@ test("Check if stats are correct for a flight with a fixes resolution of 10s", (
   const expectMaxHeightBaro = 2278;
   const expectMinHeightGps = 323;
   const expectMaxHeightGps = 2355;
-  const expectMaxSink = -4;
-  const expectMaxClimb = 4;
-  const expectMaxSpeed = 63.61;
-  const expectFixClimb = 2.1;
-  const expectFixSpeed = 34.01;
+  const expectMaxSink = -3.8;
+  const expectMaxClimb = 3.6;
+  const expectMaxSpeed = 60.29;
+  const expectFixClimb = 1.9;
+  const expectFixSpeed = 23.03;
+
+  // Values for TIME_FRAME = 30
+  // const expectMaxSink = -4;
+  // const expectMaxClimb = 4;
+  // const expectMaxSpeed = 63.61;
+  // const expectFixClimb = 2.1;
+  // const expectFixSpeed = 34.01;
 
   // Values for TIME_FRAME = 10
   // const expectMaxSink = -5;
@@ -74,11 +81,18 @@ test("Check if stats are correct for a flight with a fixes resolution of 1s", ()
   const expectMaxHeightBaro = 2354;
   const expectMinHeightGps = 252;
   const expectMaxHeightGps = 2487;
-  const expectMaxSink = -6.6;
-  const expectMaxClimb = 5.7;
-  const expectMaxSpeed = 83.94;
-  const expectFixClimb = 0.4;
-  const expectFixSpeed = 19.44;
+  const expectMaxSink = -4.3;
+  const expectMaxClimb = 5.4;
+  const expectMaxSpeed = 78.68;
+  const expectFixClimb = -0.1;
+  const expectFixSpeed = 8.21;
+
+  // Values for TIME_FRAME = 30
+  // const expectMaxSink = -6.6;
+  // const expectMaxClimb = 5.7;
+  // const expectMaxSpeed = 83.94;
+  // const expectFixClimb = 0.4;
+  // const expectFixSpeed = 19.44;
 
   expect(minHeightBaro).toBe(expectMinHeightBaro);
   expect(maxHeightBaro).toBe(expectMaxHeightBaro);
@@ -112,11 +126,17 @@ test("Check if stats are correct for a flight with a fixes resolution of 1s and 
   const expectMaxHeightBaro = 1939;
   const expectMinHeightGps = 97;
   const expectMaxHeightGps = 2011;
-  const expectMaxSink = -12.1;
-  const expectMaxClimb = 13.9;
-  const expectMaxSpeed = 61.96;
+  const expectMaxSink = -8.4;
+  const expectMaxClimb = 9.4;
+  const expectMaxSpeed = 60.46;
   const expectFixClimb = -0.2;
-  const expectFixSpeed = 24.94;
+  const expectFixSpeed = 14.07;
+
+  // Values for TIME_FRAME = 30
+  // const expectMaxSink = -12.1;
+  // const expectMaxClimb = 13.9;
+  // const expectMaxSpeed = 61.96;
+  // const expectFixSpeed = 24.94;
 
   expect(minHeightBaro).toBe(expectMinHeightBaro);
   expect(maxHeightBaro).toBe(expectMaxHeightBaro);

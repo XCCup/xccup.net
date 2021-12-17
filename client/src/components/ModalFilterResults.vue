@@ -121,16 +121,11 @@
 import ApiService from "@/services/ApiService.js";
 
 import { ref, reactive, watch, computed } from "vue";
+import useData from "../composables/useData";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
-const emit = defineEmits(["filter-results"]);
+const { filterActive, filterDataBy } = useData(ApiService.getResults);
 
-const props = defineProps({
-  filterActive: {
-    type: Boolean,
-    required: true,
-  },
-});
 const selects = reactive({
   site: "",
   club: "",
@@ -163,7 +158,7 @@ const onActivate = async () => {
   const isWeekend = weekend.value ? true : undefined;
   const isHikeAndFly = hikeAndFly.value ? true : undefined;
 
-  emit("filter-results", {
+  filterDataBy({
     siteId,
     clubId,
     rankingClass,
@@ -174,13 +169,10 @@ const onActivate = async () => {
   });
 };
 
-watch(
-  () => props.filterActive,
-  (newVal, oldVal) => {
-    // Clear all fields if an external source caused an reset
-    if (!oldVal && newVal) onClear();
-  }
-);
+watch(filterActive, (newVal, oldVal) => {
+  // Clear all fields if an external source caused an reset
+  if (!oldVal && newVal) onClear();
+});
 
 const anyFilterOptionSet = computed(() =>
   checkIfAnyValueOfObjectIsDefined(selects)

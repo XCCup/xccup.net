@@ -55,7 +55,7 @@ docker-compose run --rm yarn test
 ##### A single tests
 
 ```
-docker-compose run --rm yarn test -- test/LocationFinder.test.js
+docker-compose run --rm yarn test test/LocationFinder.test.js
 ```
 
 #### Connect PgAdmin to Postgres:
