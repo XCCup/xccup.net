@@ -1,4 +1,8 @@
 describe("check flight upload page", () => {
+  before(() => {
+    cy.seedFlightDb();
+  });
+
   beforeEach(() => {
     cy.visit("/");
   });
@@ -193,4 +197,28 @@ describe("check flight upload page", () => {
       timeout: 10000,
     }).should("include.text", expectedError);
   });
+
+  // // This test doesn't work because this functionality is overwriten in non production environments (see FlightController:checkIfFlightIsModifiable)
+  //   it("Test upload flight to old", () => {
+  //     const igcFileName = "73320_LA9ChMu1.igc";
+  //     const expectedError =
+  //       "Dieser Flug ist älter als 14 Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an xccup-beta@stephanschoepe.de";
+
+  //     cy.loginNormalUser();
+
+  //     cy.get("button").contains("Flug hochladen").click();
+
+  //     cy.fixture(igcFileName).then((fileContent) => {
+  //       cy.get('input[type="file"]#igcUploadForm').attachFile({
+  //         fileContent: fileContent.toString(),
+  //         fileName: igcFileName,
+  //         mimeType: "text/plain",
+  //       });
+  //     });
+
+  //     // Increase timeout because processing takes some time
+  //     cy.get("#upload-error", {
+  //       timeout: 10000,
+  //     }).should("have.text", expectedError);
+  //   });
 });
