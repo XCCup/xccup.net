@@ -5,6 +5,7 @@
       <!-- TODO: Align this nicely -->
       <h3 class="mt-3">Flug bearbeiten</h3>
       <div
+        id="cyFlightDeleteButton"
         class="ms-auto mt-3 text-danger clickable"
         @click.prevent="deleteFlightModal.show()"
       >
@@ -92,6 +93,7 @@
 
   <BaseModal
     modal-title="Flug löschen?"
+    modal-body="Dies kann nicht rückgängig gemacht werden"
     confirm-button-text="Löschen"
     modal-id="deleteFlightModal"
     :confirm-action="onDeleteFlight"
