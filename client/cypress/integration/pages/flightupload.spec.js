@@ -198,7 +198,7 @@ describe("check flight upload page", () => {
     }).should("include.text", expectedError);
   });
 
-  // // This test doesn't work because this functionality is overwriten in non production environments (see FlightController:checkIfFlightIsModifiable)
+  // // This test works only if the overwrite in FlightController:checkIfFlightIsModifiable is disabled/removed
   //   it("Test upload flight to old", () => {
   //     const igcFileName = "73320_LA9ChMu1.igc";
   //     const expectedError =
