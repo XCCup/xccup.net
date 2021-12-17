@@ -178,7 +178,6 @@ const drawTracks = (tracklogs) => {
         );
 
         // Create Photomarkers
-        const offset = 3600000 * 2; // 2 hours TODO: Is this always correct?
         const roundBy = 10000; // Approximate values of GPS fix and photo timestamp
 
         const photoTimestamps = flight.value.photos.map((e) =>
@@ -189,7 +188,7 @@ const drawTracks = (tracklogs) => {
         photoTimestamps.forEach((timestamp) => {
           const location = track.find((fix) => {
             const minuteOfFix = Math.floor(fix[2] / roundBy);
-            const minuteOfPhoto = Math.floor((timestamp - offset) / roundBy);
+            const minuteOfPhoto = Math.floor(timestamp / roundBy);
             return minuteOfFix === minuteOfPhoto;
           });
           if (!location) return;
