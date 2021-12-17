@@ -49,3 +49,10 @@ export function convertRemoteImageToDataUrl(url, callback) {
 export function checkIfAnyValueOfObjectIsDefined(object) {
   return object && Object.values(object).find((v) => !!v) ? true : false;
 }
+
+export function checkIfDateIsDaysBeforeToday(date, daysBeforeToday) {
+  return (
+    (new Date().getTime() - new Date(date).getTime()) / 1000 / 60 / 60 <
+    daysBeforeToday
+  );
+}

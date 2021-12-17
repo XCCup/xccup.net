@@ -207,11 +207,23 @@ import { computed } from "vue";
 import useUser from "@/composables/useUser";
 import useFlight from "@/composables/useFlight";
 import { getbaseURL } from "@/helper/baseUrlHelper";
+import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 
 const { getUserId } = useUser();
 const { flight } = useFlight();
 
-const showEditButton = computed(() => flight.value.userId === getUserId.value);
+const DAYS_FLIGHT_CHANGEABLE = 14;
+
+const showEditButton = computed(() => {
+  const isAuthor = flight.value.userId === getUserId.value;
+  return (
+    isAuthor &&
+    checkIfDateIsDaysBeforeToday(
+      flight.value.takeoffTime,
+      DAYS_FLIGHT_CHANGEABLE
+    )
+  );
+});
 
 const igcDownloadUrl = computed(() => {
   const baseURL = getbaseURL();
