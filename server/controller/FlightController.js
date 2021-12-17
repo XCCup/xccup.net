@@ -3,13 +3,17 @@ const router = express.Router();
 const service = require("../service/FlightService");
 const igcValidator = require("../igc/IgcValidator");
 const path = require("path");
+const moment = require("moment");
 const fs = require("fs");
 const {
   NOT_FOUND,
   OK,
   BAD_REQUEST,
 } = require("../constants/http-status-constants");
-const { STATE } = require("../constants/flight-constants");
+const {
+  STATE,
+  DAYS_FLIGHT_CHANGEABLE,
+} = require("../constants/flight-constants");
 const {
   authToken,
   requesterIsNotOwner,
@@ -148,6 +152,8 @@ router.delete(
     const flight = await service.getByExternalId(flightId);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
+    if (await checkIfFlightIsAllowedToBeChanged(flight, req, res)) return;
+
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
@@ -245,6 +251,8 @@ router.put(
 
     if (!flight) return res.sendStatus(NOT_FOUND);
 
+    if (await checkIfFlightIsAllowedToBeChanged(flight, req, res)) return;
+
     const { report, airspaceReport, onlyLogbook, glider, hikeAndFly } =
       req.body;
 
@@ -299,6 +307,20 @@ router.put(
     }
   }
 );
+
+async function checkIfFlightIsAllowedToBeChanged(flight, req, res) {
+  if (
+    !moment(flight.takeoffTime)
+      .add(DAYS_FLIGHT_CHANGEABLE, "days")
+      .isAfter(moment()) &&
+    (await requesterIsNotModerator(req, res))
+  )
+    return res
+      .status(BAD_REQUEST)
+      .send(
+        `It's not possible to change a flight after ${DAYS_FLIGHT_CHANGEABLE} days of submission`
+      );
+}
 
 async function persistIgcFile(externalId, igcFile) {
   const pathToFile = createFileName(externalId, igcFile.name);
