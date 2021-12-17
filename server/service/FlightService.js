@@ -381,14 +381,14 @@ const flightService = {
     }).catch((error) => logger.error(error));
   },
 
-  extractFixesAndAddFurtherInformationToFlight: async (flight) => {
-    const fixes = IgcAnalyzer.extractFixes(flight);
-
+  attachFixRelatedTimeData: (flight, fixes) => {
     flight.airtime = calcAirtime(fixes);
     flight.takeoffTime = new Date(fixes[0].timestamp);
     flight.landingTime = new Date(fixes[fixes.length - 1].timestamp);
     flight.isWeekend = isNoWorkday(flight.takeoffTime);
+  },
 
+  storeFixesAndAddFurtherInformationToFlight: async (flight, fixes) => {
     const requests = [findClosestTakeoff(fixes[0])];
     if (process.env.USE_GOOGLE_API === "true") {
       requests.push(findLanding(fixes[fixes.length - 1]));

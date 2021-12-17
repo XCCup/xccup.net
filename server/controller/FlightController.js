@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/FlightService");
+const { isAdmin } = require("../service/UserService");
 const igcValidator = require("../igc/IgcValidator");
+const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const path = require("path");
 const moment = require("moment");
 const fs = require("fs");
@@ -152,10 +154,10 @@ router.delete(
     const flight = await service.getByExternalId(flightId);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
-    if (await checkIfFlightIsAllowedToBeChanged(flight, req, res)) return;
-
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
+
+      await checkIfFlightIsModifiable(flight, req.user.id);
 
       const numberOfDestroyedRows = await service.delete(flight.id);
 
@@ -204,9 +206,15 @@ router.post(
         igc
       );
 
+      const fixes = IgcAnalyzer.extractFixes(flightDbObject);
+      service.attachFixRelatedTimeData(flightDbObject, fixes);
+
+      await checkIfFlightIsModifiable(flightDbObject, userId);
+
       const takeoffName =
-        await service.extractFixesAndAddFurtherInformationToFlight(
-          flightDbObject
+        await service.storeFixesAndAddFurtherInformationToFlight(
+          flightDbObject,
+          fixes
         );
 
       service.startResultCalculation(flightDbObject);
@@ -251,13 +259,13 @@ router.put(
 
     if (!flight) return res.sendStatus(NOT_FOUND);
 
-    if (await checkIfFlightIsAllowedToBeChanged(flight, req, res)) return;
-
     const { report, airspaceReport, onlyLogbook, glider, hikeAndFly } =
       req.body;
 
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
+
+      await checkIfFlightIsModifiable(flight, req.user.id);
 
       const result = await service.finalizeFlightSubmission(
         flight,
@@ -308,20 +316,6 @@ router.put(
   }
 );
 
-async function checkIfFlightIsAllowedToBeChanged(flight, req, res) {
-  if (
-    !moment(flight.takeoffTime)
-      .add(DAYS_FLIGHT_CHANGEABLE, "days")
-      .isAfter(moment()) &&
-    (await requesterIsNotModerator(req, res))
-  )
-    return res
-      .status(BAD_REQUEST)
-      .send(
-        `It's not possible to change a flight after ${DAYS_FLIGHT_CHANGEABLE} days of submission`
-      );
-}
-
 async function persistIgcFile(externalId, igcFile) {
   const pathToFile = createFileName(externalId, igcFile.name);
 
@@ -329,6 +323,30 @@ async function persistIgcFile(externalId, igcFile) {
   logger.debug(`FC: Will write received IGC File to: ${pathToFile}`);
   await fsPromises.writeFile(pathToFile.toString(), igcFile.body);
   return pathToFile;
+}
+
+async function checkIfFlightIsModifiable(flight, userId) {
+  const { XccupRestrictionError } = require("../helper/ErrorHandler");
+
+  // Allow flight uploads which are older than 14 days when not in production (Needed for testing)
+  const overwriteIfInProcessAndNotProduction =
+    flight.flightStatus == STATE.IN_PROCESS &&
+    process.env.NODE_ENV !== "production";
+
+  const flightIsYoungerThanThreshold = moment(flight.takeoffTime)
+    .add(DAYS_FLIGHT_CHANGEABLE, "days")
+    .isAfter(moment());
+
+  if (overwriteIfInProcessAndNotProduction) return;
+  console.log("no overwrite");
+  if (flightIsYoungerThanThreshold) return;
+  console.log("no threshold");
+  if (await isAdmin(userId)) return;
+  console.log("no admin");
+
+  throw new XccupRestrictionError(
+    `It's not possible to change a flight later than ${DAYS_FLIGHT_CHANGEABLE} days after takeoff`
+  );
 }
 
 module.exports = router;
