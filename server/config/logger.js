@@ -34,9 +34,7 @@ const createProdLogger = createLogger({
 });
 
 const logger =
-  process.env.NODE_ENV === "production" || process.env.NODE_ENV === "CI"
-    ? createDevLogger
-    : createProdLogger;
+  process.env.NODE_ENV === "development" ? createDevLogger : createProdLogger;
 
 const morgan = require("morgan");
 const morganLogger = morgan("dev", {
