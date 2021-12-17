@@ -48,7 +48,7 @@ import { Tooltip } from "bootstrap";
 
 defineProps({
   flightType: {
-    type: String,
+    type: [String, null],
     required: true,
   },
 });
@@ -57,7 +57,7 @@ const icon = ref(null);
 let tooltip = null;
 
 onMounted(() => {
-  tooltip = new Tooltip(icon.value);
+  if (icon.value) tooltip = new Tooltip(icon.value);
 });
 
 onUnmounted(() => {
