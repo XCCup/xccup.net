@@ -87,14 +87,16 @@
             </tr>
             <tr>
               <th>Strecke</th>
-              <td>
-                {{ flight.flightDistance?.toFixed(2) ?? "?" }} km
+              <td v-if="flight.flightDistance">
+                {{ flight.flightDistance.toFixed(2) }} km
                 <FlightTypeIcon :flight-type="flight.flightType" />
               </td>
+              <td v-else><i class="bi bi-hourglass-split"></i></td>
             </tr>
             <tr>
               <th>Punkte</th>
-              <td>{{ flight.flightPoints }}</td>
+              <td v-if="flight.flightPoints">{{ flight.flightPoints }}</td>
+              <td v-else><i class="bi bi-hourglass-split"></i></td>
             </tr>
 
             <tr>
