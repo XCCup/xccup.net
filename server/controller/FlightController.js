@@ -152,7 +152,7 @@ router.delete(
     const flight = await service.getByExternalId(flightId);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
-    if (checkIfFlightIsAllowedToBeChanged(flight, res)) return;
+    if (await checkIfFlightIsAllowedToBeChanged(flight, req, res)) return;
 
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
@@ -251,7 +251,7 @@ router.put(
 
     if (!flight) return res.sendStatus(NOT_FOUND);
 
-    if (checkIfFlightIsAllowedToBeChanged(flight, res)) return;
+    if (await checkIfFlightIsAllowedToBeChanged(flight, req, res)) return;
 
     const { report, airspaceReport, onlyLogbook, glider, hikeAndFly } =
       req.body;
@@ -308,11 +308,12 @@ router.put(
   }
 );
 
-function checkIfFlightIsAllowedToBeChanged(flight, res) {
+async function checkIfFlightIsAllowedToBeChanged(flight, req, res) {
   if (
     !moment(flight.takeoffTime)
       .add(DAYS_FLIGHT_CHANGEABLE, "days")
-      .isAfter(moment())
+      .isAfter(moment()) &&
+    (await requesterIsNotModerator(req, res))
   )
     return res
       .status(BAD_REQUEST)
