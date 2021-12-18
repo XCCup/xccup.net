@@ -30,7 +30,7 @@
 - [x] Connect to API
 - [x] Map visualizing all flights of the day
 - [x] Sponsors
-- [ ] Dynamic appearance of news
+- [x] Dynamic appearance of news
 - [x] Random image taken from the running season
 - [ ] Make the table link to flight page a real link
 
