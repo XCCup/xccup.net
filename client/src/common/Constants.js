@@ -14,5 +14,6 @@ let Constants = {
     "mediumvioletred",
   ],
   MAX_PHOTOS: 8,
+  DAYS_FLIGHT_CHANGEABLE: 14,
 };
 export default Constants;

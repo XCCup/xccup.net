@@ -227,7 +227,7 @@ const igcSelected = async (file) => {
       error.response.status === 403 &&
       error.response.data.includes("not possible to change")
     )
-      return (errorMessage.value = `Dieser Flug ist älter als 14 Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+      return (errorMessage.value = `Dieser Flug ist älter als ${Constants.DAYS_FLIGHT_CHANGEABLE} Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
 
     if (
       error.response.status === 403 &&

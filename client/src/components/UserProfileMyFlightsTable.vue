@@ -69,7 +69,7 @@
                 v-if="
                   checkIfDateIsDaysBeforeToday(
                     flight.takeoffTime,
-                    DAYS_FLIGHT_CHANGEABLE
+                    Constants.DAYS_FLIGHT_CHANGEABLE
                   )
                 "
                 class="bi bi-trash text-danger clickable"
@@ -107,8 +107,7 @@ import { Modal } from "bootstrap";
 import ApiService from "@/services/ApiService";
 import useUser from "@/composables/useUser";
 import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
-
-const DAYS_FLIGHT_CHANGEABLE = 14;
+import Constants from "../common/Constants";
 
 const { data: flights, sortDataBy, fetchData } = useData(ApiService.getFlights);
 const router = useRouter();
