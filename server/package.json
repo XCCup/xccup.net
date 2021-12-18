@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "author": "",
-  "license": "ISC",
+  "license": "GNU GPLv3 ",
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.16",
     "axios": "^0.21.1",
