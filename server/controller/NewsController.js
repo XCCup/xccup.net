@@ -4,6 +4,8 @@ const service = require("../service/NewsService");
 const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
+const { getCache, setCache, deleteCache } = require("./CacheManager");
+
 const {
   checkStringObjectNotEmpty,
   checkIsDateObject,
@@ -12,15 +14,22 @@ const {
   validationHasErrors,
 } = require("./Validation");
 
+const CACHE_RELEVANT_KEYS = ["home", "news"];
+
 // @desc Gets all news
 // @route GET /news
 // @access Only moderator
 
 router.get("/", authToken, async (req, res, next) => {
   try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
     if (await requesterIsNotModerator(req, res)) return;
 
     const news = await service.getAll();
+    setCache(req, news);
+
     res.json(news);
   } catch (error) {
     next(error);
@@ -36,6 +45,7 @@ router.post(
   authToken,
   checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("message"),
+  checkStringObjectNotEmpty("icon"),
   checkIsDateObject("from"),
   checkIsDateObject("till"),
   checkOptionalIsBoolean("sendByMail"),
@@ -47,6 +57,7 @@ router.post(
       const news = await service.create({
         title: req.body.title,
         message: req.body.message,
+        icon: req.body.icon,
         from: req.body.from,
         till: req.body.till,
         sendByMail: req.body.sendByMail,
@@ -58,6 +69,7 @@ router.post(
           text: news.message,
         });
       }
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(news);
     } catch (error) {
@@ -75,6 +87,7 @@ router.put(
   authToken,
   checkParamIsUuid("id"),
   checkStringObjectNotEmpty("title"),
+  checkStringObjectNotEmpty("icon"),
   checkStringObjectNotEmpty("message"),
   checkIsDateObject("from"),
   checkIsDateObject("till"),
@@ -83,6 +96,7 @@ router.put(
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
     const title = req.body.title;
+    const icon = req.body.icon;
     const message = req.body.message;
     const from = req.body.from;
     const till = req.body.till;
@@ -94,12 +108,14 @@ router.put(
       const news = await service.getById(id);
 
       news.title = title;
+      news.icon = icon;
       news.message = message;
       news.from = from;
       news.till = till;
       news.sendByMail = sendByMail;
 
       service.update(news).then((result) => res.json(result));
+      deleteCache(CACHE_RELEVANT_KEYS);
     } catch (error) {
       next(error);
     }
@@ -122,6 +138,7 @@ router.delete(
       if (await requesterIsNotModerator(req, res)) return;
       const user = await service.delete(id);
       if (!user) return res.sendStatus(NOT_FOUND);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(user);
     } catch (error) {

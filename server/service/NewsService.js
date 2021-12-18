@@ -8,7 +8,12 @@ const service = {
   },
 
   getAll: async () => {
-    return News.findAll();
+    return News.findAll({
+      order: [
+        ["from", "DESC"],
+        ["createdAt", "DESC"],
+      ],
+    });
   },
 
   getActive: async () => {
@@ -21,6 +26,10 @@ const service = {
           [Op.gte]: moment(),
         },
       },
+      order: [
+        ["from", "DESC"],
+        ["createdAt", "DESC"],
+      ],
     });
   },
 
