@@ -75,7 +75,7 @@ export const Routes = [
   {
     path: "/:year/seniorenwertung/",
     name: "ResultsSeniors",
-    props: (route) => ({ category: "seniors", year: route.params.year }),
+    props: () => ({ category: "seniors" }),
     beforeEnter: validateRouteParamYear,
 
     component: () => import("../views/ResultsView.vue"),
@@ -83,7 +83,7 @@ export const Routes = [
   {
     path: "/:year/damenwertung/",
     name: "ResultsLadies",
-    props: (route) => ({ category: "ladies", year: route.params.year }),
+    props: () => ({ category: "ladies" }),
     beforeEnter: validateRouteParamYear,
 
     component: () => import("../views/ResultsView.vue"),
@@ -91,7 +91,7 @@ export const Routes = [
   {
     path: "/:year/lux-championat/",
     name: "ResultsLux",
-    props: (route) => ({ category: "lux-state", year: route.params.year }),
+    props: () => ({ category: "lux-state" }),
     beforeEnter: validateRouteParamYear,
 
     component: () => import("../views/ResultsView.vue"),
@@ -99,7 +99,7 @@ export const Routes = [
   {
     path: "/:year/rlp-meisterschaft/",
     name: "ResultsRlp",
-    props: (route) => ({ category: "rlp-state", year: route.params.year }),
+    props: () => ({ category: "rlp-state" }),
     beforeEnter: validateRouteParamYear,
 
     component: () => import("../views/ResultsView.vue"),

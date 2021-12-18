@@ -1,6 +1,6 @@
 <template>
   <div class="container-lg">
-    <h3>Teamwertung {{ year }}</h3>
+    <h3>Teamwertung {{ route.params.year }}</h3>
     <ResultsTableTeams :results="results" />
   </div>
 </template>
@@ -9,20 +9,15 @@
 import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
+import { useRoute } from "vue-router";
 
-const props = defineProps({
-  year: {
-    type: [String, Number],
-    required: true,
-  },
-});
-
+const route = useRoute();
 const results = ref(null);
 
 setWindowName("Teamwertung");
 
 try {
-  const res = await ApiService.getResults({ year: props.year }, "teams");
+  const res = await ApiService.getResults(route.params.year, "teams");
   if (res.status != 200) throw res.status.text;
   results.value = res.data;
 } catch (error) {

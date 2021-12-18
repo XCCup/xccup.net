@@ -1,6 +1,8 @@
 <template>
   <div class="container-lg">
-    <h3 v-if="activeCategory">{{ activeCategory.title }} {{ year }}</h3>
+    <h3 v-if="activeCategory">
+      {{ activeCategory.title }} {{ router.params?.year }}
+    </h3>
     <p v-if="remark">Hinweis: {{ remark }}</p>
     <div v-if="category == 'overall'" class="row">
       <div class="col-6">
@@ -30,10 +32,6 @@ import useData from "../composables/useData";
 const router = useRoute();
 
 const props = defineProps({
-  year: {
-    type: [String, Number],
-    required: true,
-  },
   category: {
     type: String,
     required: true,
@@ -95,7 +93,7 @@ watchEffect(() => {
 });
 
 await fetchData({
-  params: { year: props.year },
+  params: router.params,
   queries: router.query,
 });
 // Remark has an internal reference to results. Therefore the fetchData function has to be run at least once before setting the remark value.
