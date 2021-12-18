@@ -39,7 +39,7 @@
 - [x] Aircraft add/delete logic
 - [x] Change profile picture
 - [ ] Form input validation
-- [ ] List users flights with edit options
+- [x] List users flights with edit options
 
 ### Upload
 
