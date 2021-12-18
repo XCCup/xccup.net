@@ -120,16 +120,8 @@ const flightService = {
     const queryObject = {
       include: [
         createUserInclude(),
-        {
-          model: FlightFixes,
-          as: "fixes",
-          attributes: ["geom"],
-        },
-        {
-          model: FlyingSite,
-          as: "takeoff",
-          attributes: ["name"],
-        },
+        createFixesInclude(["geom"]),
+        createSiteInclude(),
       ],
       where: await createWhereStatement(null, null, null, fromDate, tillDate),
       order: [["flightPoints", "DESC"]],
@@ -144,16 +136,8 @@ const flightService = {
 
   getById: async (id, noIncludes) => {
     const includes = [
-      {
-        model: FlyingSite,
-        as: "takeoff",
-        attributes: ["id", "name"],
-      },
-      {
-        model: FlightFixes,
-        as: "fixes",
-        attributes: ["geom", "timeAndHeights"],
-      },
+      createSiteInclude(),
+      createFixesInclude(["geom", "timeAndHeights"]),
     ];
     return await Flight.findOne({
       where: { id },
@@ -165,24 +149,16 @@ const flightService = {
     const flightDbObject = await Flight.findOne({
       where: { externalId },
       include: [
-        {
-          model: FlightFixes,
-          as: "fixes",
-          attributes: ["geom", "timeAndHeights", "stats"],
-        },
+        createFixesInclude(["geom", "timeAndHeights", "stats"]),
+        createUserInclude(),
+        createSiteInclude(),
+        createClubInclude(),
+        createTeamInclude(),
         {
           model: FlightComment,
           as: "comments",
           include: [createUserInclude()],
         },
-        createUserInclude(),
-        {
-          model: FlyingSite,
-          as: "takeoff",
-          attributes: ["id", "name", "direction"],
-        },
-        createClubInclude(),
-        createTeamInclude(),
         {
           model: FlightPhoto,
           as: "photos",
@@ -432,6 +408,14 @@ const flightService = {
     return flyingSite.name;
   },
 };
+
+function createFixesInclude(attributes) {
+  return {
+    model: FlightFixes,
+    as: "fixes",
+    attributes,
+  };
+}
 
 function createOrderStatement(sort) {
   if (!(sort && sort[0])) return ["takeoffTime", "DESC"];

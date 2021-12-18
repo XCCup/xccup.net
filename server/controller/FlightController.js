@@ -338,11 +338,8 @@ async function checkIfFlightIsModifiable(flight, userId) {
     .isAfter(moment());
 
   if (overwriteIfInProcessAndNotProduction) return;
-  console.log("no overwrite");
   if (flightIsYoungerThanThreshold) return;
-  console.log("no threshold");
   if (await isAdmin(userId)) return;
-  console.log("no admin");
 
   throw new XccupRestrictionError(
     `It's not possible to change a flight later than ${DAYS_FLIGHT_CHANGEABLE} days after takeoff`
