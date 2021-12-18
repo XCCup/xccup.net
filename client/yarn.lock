@@ -2259,11 +2259,6 @@ vue-router@^4.0.12:
   dependencies:
     "@vue/devtools-api" "^6.0.0-beta.18"
 
-vue-snip@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/vue-snip/-/vue-snip-1.3.0.tgz#15db1e28da4dc370afad7a7bda97dd62f3b2c88a"
-  integrity sha512-4OILdKYPWG5/FYvpFGR066Ql5nPUwAz/PLBfKHVL5cem5VUyrafuYzW/0NjMZj4ZRPLtVPTVhp55XAtJ199eXA==
-
 vue3-datepicker@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/vue3-datepicker/-/vue3-datepicker-0.3.1.tgz#b621bedfb06b33ab25fb238c6162d1dc72ce7295"
