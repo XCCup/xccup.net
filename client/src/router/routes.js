@@ -133,7 +133,6 @@ export const Routes = [
     props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import("../views/UserProfile.vue"),
-    children: [],
   },
   {
     path: "/profil/bearbeiten",
