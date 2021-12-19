@@ -40,7 +40,8 @@ router.get(
         : path.join(path.resolve(), media.path);
 
       setCache(req, { mimetype: media.mimetype, fullfilepath });
-
+      // TODO: Choose wisely for production
+      res.set("Cache-control", "public, max-age=1d");
       return res.type(media.mimetype).sendFile(fullfilepath);
     } catch (error) {
       next(error);
