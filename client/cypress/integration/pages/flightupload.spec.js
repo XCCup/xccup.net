@@ -15,7 +15,9 @@ describe("check flight upload page", () => {
 
   it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
-    const reportText = "This is a flight report.";
+    const flightReport = "This is a flight report.";
+    const airspaceReport = "Alles offen, kein Problem 🤪";
+
     const photo1 = "rachtig.jpg";
     const photo2 = "bremm.jpg";
 
@@ -71,7 +73,18 @@ describe("check flight upload page", () => {
     }).should("exist");
 
     // Add data to differnt inputs
-    cy.get(".cy-flight-report").type(reportText);
+
+    cy.get("[data-cy=airspace-comment-checkbox]").should("have.value", "false");
+    cy.get("[data-cy=airspace-comment-textarea]").should(
+      "have.class",
+      "collapsed"
+    );
+    cy.get("[data-cy=airspace-comment-checkbox]").click();
+    cy.get("[data-cy=airspace-comment-textarea]")
+      .should("not.have.class", "collapsed")
+      .type(airspaceReport);
+
+    cy.get(".cy-flight-report").type(flightReport);
     cy.get("#hikeAndFlyCheckbox").click();
     cy.get("#logbookCheckbox").click();
 
@@ -84,6 +97,13 @@ describe("check flight upload page", () => {
     cy.get("#cyFlightDetailsTable1").find("td").contains(expectedUserName);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+
+    cy.get("[data-cy=airspace-comment]")
+      .find("p")
+      .should("have.text", airspaceReport);
+    cy.get("[data-cy=flight-report]")
+      .find("p")
+      .should("have.text", flightReport);
   });
 
   it("test upload flight twice", () => {

@@ -69,6 +69,7 @@
           :disabled="!flightId"
           data-bs-toggle="collapse"
           data-bs-target="#airspace-collapse"
+          data-cy="airspace-comment-checkbox"
         />
         <label class="form-check-label" for="airspaceCommentCheckbox">
           Luftraumkommentar hinterlassen
@@ -83,6 +84,7 @@
             placeholder="Flugbericht"
             style="height: 80px"
             :disabled="!flightId"
+            data-cy="airspace-comment-textarea"
           ></textarea>
           <label for="airspaceComment">Luftraumkommentar</label>
         </div>
