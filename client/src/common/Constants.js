@@ -14,5 +14,6 @@ let Constants = {
     "mediumvioletred",
   ],
   MAX_PHOTOS: 8,
+  MAX_NEWS_CHARACTERS: 250,
 };
 export default Constants;

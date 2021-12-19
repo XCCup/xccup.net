@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(5000),
       allowNull: false,
     },
+    icon: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     from: {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW,

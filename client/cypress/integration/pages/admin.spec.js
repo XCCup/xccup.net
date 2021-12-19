@@ -20,11 +20,11 @@ describe("check admin page", () => {
   });
 
   it("test accept flight", () => {
-    const idOfFlightToAccept = 18;
+    const userOfFlightToAccept = "Olive Emmerich";
 
     cy.get("#adminFlightsPanel").within(() => {
       cy.get("table")
-        .contains("td", idOfFlightToAccept)
+        .contains("td", userOfFlightToAccept)
         .parent()
         .find("td")
         .eq(6)
@@ -36,16 +36,16 @@ describe("check admin page", () => {
 
     cy.get("#adminFlightsPanel")
       .find("table")
-      .contains("td", idOfFlightToAccept)
+      .contains("td", userOfFlightToAccept)
       .should("not.exist");
   });
 
   it("test delete flight", () => {
-    const idOfFlightToDelete = 19;
+    const userOfFlightToAccept = "Lois White";
 
     cy.get("#adminFlightsPanel").within(() => {
       cy.get("table")
-        .contains("td", idOfFlightToDelete)
+        .contains("td", userOfFlightToAccept)
         .parent()
         .find("td")
         .eq(7)
@@ -57,7 +57,7 @@ describe("check admin page", () => {
 
     cy.get("#adminFlightsPanel")
       .find("table")
-      .contains("td", idOfFlightToDelete)
+      .contains("td", userOfFlightToAccept)
       .should("not.exist");
   });
 

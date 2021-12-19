@@ -180,6 +180,11 @@
                   >Teams 2021</a
                 >
               </li>
+              <li>
+                <router-link :to="{ name: 'News' }" class="dropdown-item"
+                  >News</router-link
+                >
+              </li>
             </ul>
           </li>
           <li id="navbarPrivacy" class="nav-item dropdown">

@@ -54,7 +54,7 @@
         </div>
         <!-- Gender / Birthday -->
         <div class="row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <BaseSelect
               id="gender"
               v-model="userData.gender"
@@ -63,7 +63,7 @@
               :options="listOfGenders"
             />
           </div>
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <BaseDatePicker
               id="birthday"
               v-model="userData.birthday"
@@ -75,7 +75,7 @@
         </div>
         <!-- Country / Club -->
         <div class="row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <BaseSelect
               id="country"
               v-model="userData.address.country"
@@ -84,7 +84,7 @@
               :options="listOfCountries"
             />
           </div>
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <label>Verein</label>
             <select id="club" v-model="userData.clubId" class="form-select">
               <option
@@ -100,7 +100,7 @@
         </div>
         <!-- State / Shirt -->
         <div class="row">
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <BaseSelect
               id="state"
               v-model="userData.address.state"
@@ -110,7 +110,7 @@
               :disabled="!stateListIsEnabled"
             />
           </div>
-          <div class="col-md-6 mb-3">
+          <div class="col-md-6">
             <BaseSelect
               id="shirtSize"
               v-model="userData.tshirtSize"
@@ -119,7 +119,7 @@
               :options="tshirtSizes"
             />
           </div>
-          <div class="col-md-6 mb-3"></div>
+          <div class="col-md-6"></div>
         </div>
         <!-- Password -->
         <div class="row">

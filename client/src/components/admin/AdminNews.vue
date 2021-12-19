@@ -7,6 +7,8 @@
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Titel</th>
+            <th>Icon</th>
+
             <th>Nachricht</th>
             <th>Gültig ab</th>
             <th>Gültig bis</th>
@@ -22,6 +24,9 @@
             <tr v-for="entry in news" :key="entry.id" :item="entry">
               <td>
                 <strong>{{ entry.title }}</strong>
+              </td>
+              <td>
+                <i class="bi fs-2" :class="entry.icon ?? 'bi-megaphone'"></i>
               </td>
               <td>{{ entry.message }}</td>
               <td>

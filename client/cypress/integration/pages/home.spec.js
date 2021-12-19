@@ -1,6 +1,9 @@
 describe("check landing page", () => {
   before(() => {
     cy.seedDb();
+  });
+
+  beforeEach(() => {
     cy.visit("/");
   });
 
@@ -11,6 +14,62 @@ describe("check landing page", () => {
     cy.get("#infoboxContent").should("include.text", "44 Vereine");
     cy.get("#infoboxContent").should("include.text", "4 Teams");
     cy.get("#infoboxContent").should("include.text", "1177 km");
+  });
+
+  it("test news items", () => {
+    cy.get("[data-cy=news-items]").find("h2").should("have.text", "News");
+
+    const expectedInitialButtonLabel = "Mehr anzeigen";
+    const expectedSnippedLastWord = "temporib…";
+    const expectedLastWord = "voluptas?";
+
+    cy.get("[data-cy=news-item]").should("have.length", 3);
+    cy.get("[data-cy=news-item]")
+      .first()
+      .within(() => {
+        cy.get("[data-cy=news-item-icon]").should("have.class", "bi-alarm");
+        cy.get("h4").should("have.text", "Ad dolore");
+        cy.get("[data-cy=news-item-date]").should("have.text", "01.11.2021");
+        cy.get("[data-cy=news-item-text]").should(
+          "include.text",
+          expectedSnippedLastWord
+        );
+        cy.get("[data-cy=news-item-text]").should(
+          "not.include.text",
+          expectedLastWord
+        );
+        cy.get("[data-cy=news-item-button]")
+          .should("have.text", expectedInitialButtonLabel)
+          .click()
+          .should("have.text", "Weniger anzeigen");
+        cy.get("[data-cy=news-item-text]").should(
+          "include.text",
+          expectedLastWord
+        );
+
+        cy.get("[data-cy=news-item-button]")
+          .click()
+          .should("have.text", expectedInitialButtonLabel);
+        cy.get("[data-cy=news-item-text]").should(
+          "include.text",
+          expectedSnippedLastWord
+        );
+      });
+
+    cy.get("[data-cy=news-item]")
+      .last()
+      .within(() => {
+        cy.get("[data-cy=news-item-icon]").should(
+          "have.class",
+          "bi-exclamation-octagon"
+        );
+        cy.get("h4").should("have.text", "Tenetur quod quidem");
+        cy.get("[data-cy=news-item-date]").should("have.text", "01.02.2021");
+        cy.get("[data-cy=news-item-text]").should(
+          "include.text",
+          "pariatur at!"
+        );
+      });
   });
 
   it("test daily ranking", () => {
