@@ -27,7 +27,7 @@
               <li>
                 <router-link
                   :to="{
-                    name: 'FlightsAllYear',
+                    name: 'FlightsAll',
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"

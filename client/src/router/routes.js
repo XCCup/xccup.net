@@ -44,30 +44,22 @@ export const Routes = [
     component: () => import("../views/FlightEdit.vue"),
   },
   {
-    path: "/:year/fluege/",
-    name: "FlightsAllYear",
-    beforeEnter: validateRouteParamYear,
-    meta: { toTop: true },
-    component: () => import("../views/FlightsAll.vue"),
-  },
-  {
-    path: "/fluege/",
+    path: "/:year?/fluege/",
     name: "FlightsAll",
-    props: true,
     meta: { toTop: true },
     component: () => import("../views/FlightsAll.vue"),
   },
   {
     path: "/:year/einzelwertung/",
     name: "ResultsOverall",
-    props: (route) => ({ category: "overall", year: route.params.year }),
+    props: () => ({ category: "overall" }),
     beforeEnter: validateRouteParamYear,
     component: () => import("../views/ResultsView.vue"),
   },
   {
     path: "/:year/newcomer/",
     name: "ResultsNewcomer",
-    props: (route) => ({ category: "newcomer", year: route.params.year }),
+    props: () => ({ category: "newcomer" }),
     beforeEnter: validateRouteParamYear,
 
     component: () => import("../views/ResultsView.vue"),
@@ -141,6 +133,7 @@ export const Routes = [
     props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import("../views/UserProfile.vue"),
+    children: [],
   },
   {
     path: "/profil/bearbeiten",
