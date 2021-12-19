@@ -26,7 +26,11 @@
           <BaseTextarea v-model="newsObject.message" label="Nachricht" />
           <!-- TODO: Icon select. For now just paste the name of an icon as this component needs refactoring anyway 
           Later a picker would be nice -->
-          <BaseInput v-model="newsObject.icon" label="Icon" />
+          <BaseInput
+            v-model="newsObject.icon"
+            :is-required="false"
+            label="Icon"
+          />
           <BaseDatePicker v-model="newsObject.from" label="Gültig ab" />
           <!-- TODO: "Valid till" should not allow dates in the past -->
           <BaseDatePicker v-model="newsObject.till" label="Gültig bis" />
