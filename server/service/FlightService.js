@@ -755,6 +755,15 @@ async function checkIfFlightWasNotUploadedBefore(siteId, takeoffTime) {
     },
   });
 
+  if (flight?.flightStatus == STATE.IN_PROCESS) {
+    logger.info(
+      `FS: Will delete flight ${flight.externalId} which has same takeoff site and time but is still in process state`
+    );
+    flight.destroy();
+    logger.debug("FS: flight deleted");
+    return;
+  }
+
   if (flight)
     throw new XccupRestrictionError(
       `A flight with same takeoff site and time is already present. See Flight with ID ${flight.externalId}`
