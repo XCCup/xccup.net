@@ -132,6 +132,10 @@ describe("check flight upload page", () => {
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
+    // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How to do an retry on cy.visit or cy.request?
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000);
+
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
 
@@ -219,26 +223,26 @@ describe("check flight upload page", () => {
   });
 
   // // This test works only if the overwrite in FlightController:checkIfFlightIsModifiable is disabled/removed
-  //   it("Test upload flight to old", () => {
-  //     const igcFileName = "73320_LA9ChMu1.igc";
-  //     const expectedError =
-  //       "Dieser Flug ist älter als 14 Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an xccup-beta@stephanschoepe.de";
+  // it("Test upload flight to old", () => {
+  //   const igcFileName = "73320_LA9ChMu1.igc";
+  //   const expectedError =
+  //     "Dieser Flug ist älter als 14 Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an xccup-beta@stephanschoepe.de";
 
-  //     cy.loginNormalUser();
+  //   cy.loginNormalUser();
 
-  //     cy.get("button").contains("Flug hochladen").click();
+  //   cy.get("button").contains("Flug hochladen").click();
 
-  //     cy.fixture(igcFileName).then((fileContent) => {
-  //       cy.get('input[type="file"]#igcUploadForm').attachFile({
-  //         fileContent: fileContent.toString(),
-  //         fileName: igcFileName,
-  //         mimeType: "text/plain",
-  //       });
+  //   cy.fixture(igcFileName).then((fileContent) => {
+  //     cy.get('input[type="file"]#igcUploadForm').attachFile({
+  //       fileContent: fileContent.toString(),
+  //       fileName: igcFileName,
+  //       mimeType: "text/plain",
   //     });
-
-  //     // Increase timeout because processing takes some time
-  //     cy.get("#upload-error", {
-  //       timeout: 10000,
-  //     }).should("have.text", expectedError);
   //   });
+
+  //   // Increase timeout because processing takes some time
+  //   cy.get("#upload-error", {
+  //     timeout: 10000,
+  //   }).should("have.text", expectedError);
+  // });
 });
