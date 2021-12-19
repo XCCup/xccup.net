@@ -70,11 +70,6 @@ describe("check landing page", () => {
           "pariatur at!"
         );
       });
-
-    cy.get("[data-cy=news-button]")
-      .should("include.text", "Alle News anzeigen")
-      .click();
-    cy.url().should("include", "/news");
   });
 
   it("test daily ranking", () => {

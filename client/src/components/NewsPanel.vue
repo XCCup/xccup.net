@@ -14,17 +14,6 @@
         <NewsItem :news-item="newsItem" />
       </div>
     </div>
-    <div class="mt-3">
-      <router-link :to="{ name: 'News' }">
-        <button
-          data-cy="news-button"
-          class="btn btn-sm btn-primary"
-          @click="toggleSnipping"
-        >
-          Alle News anzeigen
-        </button>
-      </router-link>
-    </div>
   </div>
 </template>
 
