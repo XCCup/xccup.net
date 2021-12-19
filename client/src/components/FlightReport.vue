@@ -12,7 +12,7 @@
     </div>
     <div v-if="flight.report" class="row mt-4" data-cy="flight-report">
       <h3>Flugbericht</h3>
-      <p id="flightReport">
+      <p>
         {{ flight.report }}
       </p>
     </div>

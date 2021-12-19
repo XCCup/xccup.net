@@ -74,15 +74,12 @@ describe("check flight upload page", () => {
 
     // Add data to differnt inputs
 
-    cy.get("[data-cy=airspace-comment-checkbox]").should("have.value", "false");
-    cy.get("[data-cy=airspace-comment-textarea]").should(
-      "have.class",
-      "collapsed"
-    );
+    cy.get("[data-cy=airspace-comment-checkbox]").should("not.be.checked");
+    cy.get("#airspace-collapse").should("not.have.class", "show");
+
     cy.get("[data-cy=airspace-comment-checkbox]").click();
-    cy.get("[data-cy=airspace-comment-textarea]")
-      .should("not.have.class", "collapsed")
-      .type(airspaceReport);
+    cy.get("#airspace-collapse").should("have.class", "show");
+    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceReport);
 
     cy.get(".cy-flight-report").type(flightReport);
     cy.get("#hikeAndFlyCheckbox").click();

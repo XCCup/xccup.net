@@ -26,17 +26,18 @@
         class="form-control"
         placeholder="Flugbericht"
         style="height: 80px"
+        data-cy="airspace-comment-textarea"
       ></textarea>
       <label for="airspaceComment">Luftraumkommentar</label>
     </div>
     <div class="my-3">
       <div class="form-floating mb-3">
         <textarea
-          id="flightReport"
           v-model="modifiedFlightData.report"
           class="form-control"
           placeholder="Flugbericht"
           style="height: 12em"
+          data-cy="flight-report-textarea"
         ></textarea>
         <label for="flightReport">Flugbericht</label>
       </div>
