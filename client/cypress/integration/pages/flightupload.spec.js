@@ -112,9 +112,9 @@ describe("check flight upload page", () => {
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
-    // Wait till page was loaded. Calculation of the previous flight has to be finished to cause an error on second upload.
-    // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How todo an retry on cy.visit or cy.request?
-    cy.visit("/flug/44");
+    // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How to do an retry on cy.visit or cy.request?
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000);
 
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
