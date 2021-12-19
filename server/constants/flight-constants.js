@@ -21,3 +21,5 @@ module.exports.REGIONS = [
 ];
 
 module.exports.IGC_STORE = "/igc";
+
+module.exports.DAYS_FLIGHT_CHANGEABLE = 14;

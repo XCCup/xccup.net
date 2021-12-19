@@ -120,16 +120,8 @@ const flightService = {
     const queryObject = {
       include: [
         createUserInclude(),
-        {
-          model: FlightFixes,
-          as: "fixes",
-          attributes: ["geom"],
-        },
-        {
-          model: FlyingSite,
-          as: "takeoff",
-          attributes: ["name"],
-        },
+        createFixesInclude(["geom"]),
+        createSiteInclude(),
       ],
       where: await createWhereStatement(null, null, null, fromDate, tillDate),
       order: [["flightPoints", "DESC"]],
@@ -144,16 +136,8 @@ const flightService = {
 
   getById: async (id, noIncludes) => {
     const includes = [
-      {
-        model: FlyingSite,
-        as: "takeoff",
-        attributes: ["id", "name"],
-      },
-      {
-        model: FlightFixes,
-        as: "fixes",
-        attributes: ["geom", "timeAndHeights"],
-      },
+      createSiteInclude(),
+      createFixesInclude(["geom", "timeAndHeights"]),
     ];
     return await Flight.findOne({
       where: { id },
@@ -165,24 +149,16 @@ const flightService = {
     const flightDbObject = await Flight.findOne({
       where: { externalId },
       include: [
-        {
-          model: FlightFixes,
-          as: "fixes",
-          attributes: ["geom", "timeAndHeights", "stats"],
-        },
+        createFixesInclude(["geom", "timeAndHeights", "stats"]),
+        createUserInclude(),
+        createSiteInclude(),
+        createClubInclude(),
+        createTeamInclude(),
         {
           model: FlightComment,
           as: "comments",
           include: [createUserInclude()],
         },
-        createUserInclude(),
-        {
-          model: FlyingSite,
-          as: "takeoff",
-          attributes: ["id", "name", "direction"],
-        },
-        createClubInclude(),
-        createTeamInclude(),
         {
           model: FlightPhoto,
           as: "photos",
@@ -381,14 +357,14 @@ const flightService = {
     }).catch((error) => logger.error(error));
   },
 
-  extractFixesAndAddFurtherInformationToFlight: async (flight) => {
-    const fixes = IgcAnalyzer.extractFixes(flight);
-
+  attachFixRelatedTimeData: (flight, fixes) => {
     flight.airtime = calcAirtime(fixes);
     flight.takeoffTime = new Date(fixes[0].timestamp);
     flight.landingTime = new Date(fixes[fixes.length - 1].timestamp);
     flight.isWeekend = isNoWorkday(flight.takeoffTime);
+  },
 
+  storeFixesAndAddFurtherInformationToFlight: async (flight, fixes) => {
     const requests = [findClosestTakeoff(fixes[0])];
     if (process.env.USE_GOOGLE_API === "true") {
       requests.push(findLanding(fixes[fixes.length - 1]));
@@ -432,6 +408,14 @@ const flightService = {
     return flyingSite.name;
   },
 };
+
+function createFixesInclude(attributes) {
+  return {
+    model: FlightFixes,
+    as: "fixes",
+    attributes,
+  };
+}
 
 function createOrderStatement(sort) {
   if (!(sort && sort[0])) return ["takeoffTime", "DESC"];
@@ -768,6 +752,15 @@ async function checkIfFlightWasNotUploadedBefore(siteId, takeoffTime) {
       takeoffTime,
     },
   });
+
+  if (flight?.flightStatus == STATE.IN_PROCESS) {
+    logger.info(
+      `FS: Will delete flight ${flight.externalId} which has same takeoff site and time but is still in process state`
+    );
+    flight.destroy();
+    logger.debug("FS: flight deleted");
+    return;
+  }
 
   if (flight)
     throw new XccupRestrictionError(
