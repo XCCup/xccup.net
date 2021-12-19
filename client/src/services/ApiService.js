@@ -105,6 +105,9 @@ export default {
   getAllNews() {
     return jwtInterceptor.get(baseURL + "news/");
   },
+  getPublicNews() {
+    return apiClient.get(baseURL + "news/public/");
+  },
   addNews(news) {
     return jwtInterceptor.post(baseURL + "news/", news);
   },

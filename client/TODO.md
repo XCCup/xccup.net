@@ -30,7 +30,7 @@
 - [x] Connect to API
 - [x] Map visualizing all flights of the day
 - [x] Sponsors
-- [ ] Dynamic appearance of news
+- [x] Dynamic appearance of news
 - [x] Random image taken from the running season
 - [ ] Make the table link to flight page a real link
 
@@ -39,7 +39,7 @@
 - [x] Aircraft add/delete logic
 - [x] Change profile picture
 - [ ] Form input validation
-- [ ] List users flights with edit options
+- [x] List users flights with edit options
 
 ### Upload
 

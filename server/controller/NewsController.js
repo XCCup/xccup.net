@@ -4,6 +4,8 @@ const service = require("../service/NewsService");
 const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
+const { getCache, setCache, deleteCache } = require("./CacheManager");
+
 const {
   checkStringObjectNotEmpty,
   checkIsDateObject,
@@ -12,7 +14,9 @@ const {
   validationHasErrors,
 } = require("./Validation");
 
-// @desc Gets all news
+const CACHE_RELEVANT_KEYS = ["home", "news"];
+
+// @desc Gets all news (incl. also news which will become active in the future)
 // @route GET /news
 // @access Only moderator
 
@@ -20,7 +24,29 @@ router.get("/", authToken, async (req, res, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
 
-    const news = await service.getAll();
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const news = await service.getAll(true);
+
+    setCache(req, news);
+    res.json(news);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Gets all news (excl. news which will become active in the future)
+// @route GET /news/public
+
+router.get("/public", async (req, res, next) => {
+  try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const news = await service.getAll(false);
+
+    setCache(req, news);
     res.json(news);
   } catch (error) {
     next(error);
@@ -36,6 +62,7 @@ router.post(
   authToken,
   checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("message"),
+  checkStringObjectNotEmpty("icon"),
   checkIsDateObject("from"),
   checkIsDateObject("till"),
   checkOptionalIsBoolean("sendByMail"),
@@ -44,12 +71,15 @@ router.post(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
+      const { title, icon, message, from, till, sendByMail } = req.body;
+
       const news = await service.create({
-        title: req.body.title,
-        message: req.body.message,
-        from: req.body.from,
-        till: req.body.till,
-        sendByMail: req.body.sendByMail,
+        title,
+        message,
+        icon,
+        from,
+        till,
+        sendByMail,
       });
 
       if (news.sendByMail) {
@@ -58,6 +88,7 @@ router.post(
           text: news.message,
         });
       }
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(news);
     } catch (error) {
@@ -75,6 +106,7 @@ router.put(
   authToken,
   checkParamIsUuid("id"),
   checkStringObjectNotEmpty("title"),
+  checkStringObjectNotEmpty("icon"),
   checkStringObjectNotEmpty("message"),
   checkIsDateObject("from"),
   checkIsDateObject("till"),
@@ -82,11 +114,7 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const title = req.body.title;
-    const message = req.body.message;
-    const from = req.body.from;
-    const till = req.body.till;
-    const sendByMail = req.body.sendByMail;
+    const { title, icon, message, from, till, sendByMail } = req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -94,12 +122,16 @@ router.put(
       const news = await service.getById(id);
 
       news.title = title;
+      news.icon = icon;
       news.message = message;
       news.from = from;
       news.till = till;
       news.sendByMail = sendByMail;
 
-      service.update(news).then((result) => res.json(result));
+      const result = await service.update(news);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -122,6 +154,7 @@ router.delete(
       if (await requesterIsNotModerator(req, res)) return;
       const user = await service.delete(id);
       if (!user) return res.sendStatus(NOT_FOUND);
+      deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(user);
     } catch (error) {
@@ -129,17 +162,5 @@ router.delete(
     }
   }
 );
-
-// @desc Gets all news
-// @route GET /news/public
-
-router.get("/public", async (req, res, next) => {
-  try {
-    const airspaces = await service.getActive();
-    res.json(airspaces);
-  } catch (error) {
-    next(error);
-  }
-});
 
 module.exports = router;

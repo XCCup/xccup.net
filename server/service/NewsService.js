@@ -7,8 +7,22 @@ const service = {
     return News.findByPk(id);
   },
 
-  getAll: async () => {
-    return News.findAll();
+  getAll: async (includeFutureNews) => {
+    const whereStatement = includeFutureNews
+      ? {}
+      : {
+          till: {
+            [Op.lte]: moment(),
+          },
+        };
+
+    return News.findAll({
+      where: whereStatement,
+      order: [
+        ["from", "DESC"],
+        ["createdAt", "DESC"],
+      ],
+    });
   },
 
   getActive: async () => {
@@ -21,6 +35,10 @@ const service = {
           [Op.gte]: moment(),
         },
       },
+      order: [
+        ["from", "DESC"],
+        ["createdAt", "DESC"],
+      ],
     });
   },
 
