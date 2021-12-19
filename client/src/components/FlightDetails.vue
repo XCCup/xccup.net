@@ -139,6 +139,12 @@
       <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
+      <button
+        v-if="!showEditButton && showAdminEditButton"
+        class="btn btn-danger btn-sm ms-2"
+      >
+        <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten (Admin)
+      </button>
     </router-link>
     <div id="flightDetailsCollapse" class="collapse mt-2">
       <div class="row">
@@ -217,14 +223,15 @@ const showEditButton = computed(() => {
   const isAuthor = flight.value.userId === getUserId.value;
 
   return (
-    (isAuthor &&
-      checkIfDateIsDaysBeforeToday(
-        flight.value.takeoffTime,
-        Constants.DAYS_FLIGHT_CHANGEABLE
-      )) ||
-    hasElevatedRole.value
+    isAuthor &&
+    checkIfDateIsDaysBeforeToday(
+      flight.value.takeoffTime,
+      Constants.DAYS_FLIGHT_CHANGEABLE
+    )
   );
 });
+
+const showAdminEditButton = computed(() => hasElevatedRole.value);
 
 const igcDownloadUrl = computed(() => {
   const baseURL = getbaseURL();
