@@ -140,7 +140,7 @@ const props = defineProps({
   },
 });
 
-// TODO: Warn user if there are unsaved changes
+// TODO: Warn user if there are unsaved changes --> Use "beforeRouteLeave lifecycle hook"
 const { fetchProfile, userData } = useUserProfile();
 
 fetchProfile();
