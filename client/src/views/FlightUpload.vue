@@ -1,6 +1,6 @@
 <template>
   <slot-dialog>
-    <FlightUploadForm />
+    <UploadForm />
   </slot-dialog>
 </template>
 
