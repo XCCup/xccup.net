@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/CommentService");
+const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const {
@@ -51,13 +52,16 @@ router.post(
       const { message, flightId, relatedTo } = req.body;
       const userId = req.user.id;
 
-      const result = await service.create({
+      const comment = await service.create({
         message,
         flightId,
         userId,
         relatedTo,
       });
-      res.json(result);
+
+      mailService.sendNewFlightCommentMail(comment);
+
+      res.json(comment);
     } catch (error) {
       next(error);
     }

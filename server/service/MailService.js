@@ -10,38 +10,44 @@ const {
   REQUEST_NEW_PASSWORD_TEXT,
   CONFIRM_NEW_ADDRESS_TITLE,
   CONFIRM_NEW_ADDRESS_TEXT,
+  AIRSPACE_VIOLATION_TITLE,
+  AIRSPACE_VIOLATION_TEXT,
+  NEW_FLIGHT_COMMENT_TITLE,
+  NEW_FLIGHT_COMMENT_TEXT,
 } = require("../constants/email-message-constants");
-const userService = require("./UserService");
+const User = require("../config/postgres")["User"];
+const Flight = require("../config/postgres")["Flight"];
 
 const clientUrl = process.env.CLIENT_URL;
 const userActivateLink = process.env.CLIENT_USER_ACTIVATE;
 const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST;
 const confirmMailChangeLink = process.env.CLIENT_USER_MAIL_CHANGE;
+const flightLink = process.env.CLIENT_FLIGHT;
 
 const service = {
   sendMailSingle: async (fromUserId, toUserId, content) => {
-    logger.debug(`${fromUserId} requested to send an email`);
-
-    const usersData = await Promise.all([
-      userService.getById(toUserId),
-      userService.getById(fromUserId),
+    const [fromUser, toUser] = await Promise.all([
+      User.findByPk(fromUserId),
+      User.findByPk(toUserId),
     ]);
 
-    const isXccupOffical = usersData[0].role != "Keine";
+    logger.debug(`MS: ${fromUserId} requested to send an email`);
 
-    const toMail = usersData[0].email;
-    const fromMail = usersData[1].email;
-    const fromName = `${usersData[1].firstName} ${usersData[1].lastName}`;
+    const isXccupOffical = fromUserId.role != "Keine";
+
+    const toMail = fromUser.email;
+    const fromMail = toUser.email;
+    const fromName = `${toUser.firstName} ${toUser.lastName}`;
 
     if (!isXccupOffical) {
       content.text = MAIL_MESSAGE_PREFIX(fromName) + content.text;
     }
 
-    return await sendMail(toMail, content, fromMail);
+    return sendMail(toMail, content, fromMail);
   },
 
   sendActivationMail: async (user) => {
-    logger.info(`Send activation mail to ${user.email}`);
+    logger.info(`MS: Send activation mail to ${user.email}`);
 
     const activationLink = `${clientUrl}${userActivateLink}?userId=${user.id}&token=${user.token}`;
 
@@ -50,22 +56,22 @@ const service = {
       text: REGISTRATION_TEXT(user.firstName, activationLink),
     };
 
-    return await sendMail(user.email, content);
+    return sendMail(user.email, content);
   },
 
   sendNewPasswordMail: async (user, password) => {
-    logger.info(`Send new password to ${user.email}`);
+    logger.info(`MS: Send new password to ${user.email}`);
 
     const content = {
       title: NEW_PASSWORD_TITLE,
       text: NEW_PASSWORD_TEXT(user.firstName, password),
     };
 
-    return await sendMail(user.email, content);
+    return sendMail(user.email, content);
   },
 
   sendRequestNewPasswordMail: async (user) => {
-    logger.info(`Send new password request to ${user.email}`);
+    logger.info(`MS: Send new password request to ${user.email}`);
 
     const resetLink = `${clientUrl}${userPasswordLostLink}?confirm=true&userId=${user.id}&token=${user.token}`;
 
@@ -74,12 +80,12 @@ const service = {
       text: REQUEST_NEW_PASSWORD_TEXT(user.firstName, resetLink),
     };
 
-    return await sendMail(user.email, content);
+    return sendMail(user.email, content);
   },
 
   sendConfirmNewMailAddressMail: async (user, newEmail) => {
     logger.info(
-      `Send confirm new mail for user ${user.firstName} ${user.lastName} to ${newEmail}`
+      `MS: Send confirm new mail for user ${user.firstName} ${user.lastName} to ${newEmail}`
     );
 
     const confirmMailLink = `${clientUrl}${confirmMailChangeLink}?userId=${user.id}&token=${user.token}&email=${newEmail}`;
@@ -89,15 +95,63 @@ const service = {
       text: CONFIRM_NEW_ADDRESS_TEXT(user.firstName, confirmMailLink),
     };
 
-    return await sendMail(newEmail, content);
+    return sendMail(newEmail, content);
   },
 
-  sendMailAll: async (fromUserId, isNewsletter, content) => {
-    logger.info(`${fromUserId} requested to send an email to all users`);
+  sendAirspaceViolationMail: async (flight) => {
+    const user = await User.findByPk(flight.userId);
 
-    const mailAddresses = await userService.getAllEmail(isNewsletter);
+    logger.info(
+      `MS: Send airspace violation mail to user ${user.firstName} ${user.lastName}`
+    );
 
-    return await sendMail(mailAddresses, content);
+    const flightLinkUrl = `${clientUrl}${flightLink}/${flight.externalId}`;
+
+    const content = {
+      title: AIRSPACE_VIOLATION_TITLE,
+      text: AIRSPACE_VIOLATION_TEXT(user.firstName, flightLinkUrl),
+    };
+
+    return sendMail(user.email, content);
+  },
+
+  sendNewFlightCommentMail: async (comment) => {
+    const [fromUser, flight] = await Promise.all([
+      User.findByPk(comment.userId),
+      Flight.findByPk(comment.flightId),
+    ]);
+    const toUser = await User.findByPk(flight.userId);
+
+    logger.info(`MS: Send new flight comment mail to user ${toUser.id}`);
+
+    const flightLinkUrl = `${clientUrl}${flightLink}/${flight.externalId}`;
+
+    const content = {
+      title: NEW_FLIGHT_COMMENT_TITLE,
+      text: NEW_FLIGHT_COMMENT_TEXT(
+        toUser.firstName,
+        `${fromUser.firstName} ${fromUser.lastName} `,
+        comment.message,
+        flightLinkUrl
+      ),
+    };
+
+    return sendMail(toUser.email, content);
+  },
+
+  sendMailAll: async (user, content) => {
+    logger.info(`MS: ${user.id} requested to send an email to all users`);
+
+    const query = {
+      attributes: ["email"],
+      where: {
+        emailNewsletter: true,
+      },
+    };
+
+    const mailAddresses = await User.findAll(query);
+
+    return sendMail(mailAddresses, content);
   },
 };
 

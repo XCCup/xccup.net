@@ -19,6 +19,7 @@ const FlightStatsCalculator = require("../igc/FlightStatsCalculator");
 const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
+const { sendAirspaceViolationMail } = require("./MailService");
 
 const { isNoWorkday } = require("../helper/HolidayCalculator");
 const { sleep } = require("../helper/Utils");
@@ -337,6 +338,7 @@ const flightService = {
         if (await hasAirspaceViolation(fixes)) {
           flight.airspaceViolation = true;
           flight.save();
+          sendAirspaceViolationMail(flight);
         }
       }
     );
