@@ -16,20 +16,37 @@ const {
 
 const CACHE_RELEVANT_KEYS = ["home", "news"];
 
-// @desc Gets all news
+// @desc Gets all news (incl. also news which will become active in the future)
 // @route GET /news
 // @access Only moderator
 
 router.get("/", authToken, async (req, res, next) => {
   try {
+    if (await requesterIsNotModerator(req, res)) return;
+
     const value = getCache(req);
     if (value) return res.json(value);
 
-    if (await requesterIsNotModerator(req, res)) return;
+    const news = await service.getAll(true);
 
-    const news = await service.getAll();
     setCache(req, news);
+    res.json(news);
+  } catch (error) {
+    next(error);
+  }
+});
 
+// @desc Gets all news (excl. news which will become active in the future)
+// @route GET /news/public
+
+router.get("/public", async (req, res, next) => {
+  try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const news = await service.getAll(false);
+
+    setCache(req, news);
     res.json(news);
   } catch (error) {
     next(error);
@@ -54,13 +71,15 @@ router.post(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
+      const { title, icon, message, from, till, sendByMail } = req.body;
+
       const news = await service.create({
-        title: req.body.title,
-        message: req.body.message,
-        icon: req.body.icon,
-        from: req.body.from,
-        till: req.body.till,
-        sendByMail: req.body.sendByMail,
+        title,
+        message,
+        icon,
+        from,
+        till,
+        sendByMail,
       });
 
       if (news.sendByMail) {
@@ -95,12 +114,7 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const title = req.body.title;
-    const icon = req.body.icon;
-    const message = req.body.message;
-    const from = req.body.from;
-    const till = req.body.till;
-    const sendByMail = req.body.sendByMail;
+    const { title, icon, message, from, till, sendByMail } = req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -114,8 +128,10 @@ router.put(
       news.till = till;
       news.sendByMail = sendByMail;
 
-      service.update(news).then((result) => res.json(result));
+      const result = await service.update(news);
+
       deleteCache(CACHE_RELEVANT_KEYS);
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -146,17 +162,5 @@ router.delete(
     }
   }
 );
-
-// @desc Gets all news
-// @route GET /news/public
-
-router.get("/public", async (req, res, next) => {
-  try {
-    const airspaces = await service.getActive();
-    res.json(airspaces);
-  } catch (error) {
-    next(error);
-  }
-});
 
 module.exports = router;
