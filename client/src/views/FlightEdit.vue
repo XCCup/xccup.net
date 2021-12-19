@@ -17,7 +17,17 @@
       :gliders="listOfGliders"
       @update:model-value="updateSelectedGlider()"
     />
-
+    <!-- Airspace comment -->
+    <div class="form-floating my-3">
+      <textarea
+        id="airspaceComment"
+        v-model="modifiedFlightData.airspaceReport"
+        class="form-control"
+        placeholder="Flugbericht"
+        style="height: 80px"
+      ></textarea>
+      <label for="airspaceComment">Luftraumkommentar</label>
+    </div>
     <div class="my-3">
       <div class="form-floating mb-3">
         <textarea
@@ -52,7 +62,6 @@
           Nur Flugbuch
         </label>
       </div>
-      <!-- Bulder -->
       <h3>Bilder</h3>
       <!-- TODO: Include photos in state? -->
       <FlightPhotos
@@ -118,13 +127,7 @@ const { modifiedFlightData, unmodifiedFlightData, resetState } =
 const showSpinner = ref(false);
 const listOfGliders = ref(null);
 const errorMessage = ref("");
-// const modifiedFlightData = ref({
-//   glider: {},
-//   report: "",
-//   hikeAndFly: false,
-//   onlyLogbook: false,
-//   photos: [],
-// });
+
 const photosToDelete = ref([]);
 const photosAdded = ref([]);
 
@@ -142,6 +145,7 @@ if (modifiedFlightData.value.externalId != route.params.id) {
   modifiedFlightData.value.externalId = route.params.id;
   modifiedFlightData.value.glider = flight.value.glider;
   modifiedFlightData.value.report = flight.value.report;
+  modifiedFlightData.value.airspaceReport = flight.value.airspaceReport;
   modifiedFlightData.value.hikeAndFly = flight.value.hikeAndFly > 0;
   modifiedFlightData.value.onlyLogbook =
     flight.value.flightStatus === "Flugbuch";
