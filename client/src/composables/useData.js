@@ -79,6 +79,7 @@ function createInstance(apiEndpoint, apiExtension) {
       }
 
       data.value = res.data;
+      errorMessage.value = "";
     } catch (error) {
       console.error(error);
       errorMessage.value =

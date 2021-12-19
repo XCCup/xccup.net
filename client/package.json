@@ -2,6 +2,7 @@
   "name": "xccup-client",
   "version": "0.2.0",
   "private": true,
+  "license": "GNU GPLv3",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

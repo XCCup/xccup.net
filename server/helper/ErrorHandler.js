@@ -54,13 +54,16 @@ class XccupHttpError extends Error {
 }
 
 function createMetaDataFromReq(req) {
-  return Object.keys(req.body).length > 0
-    ? {
-        meta: {
-          body: req.body,
-        },
-      }
-    : undefined;
+  if (Object.keys(req.body).length == 0) return;
+
+  // Prevent storage of whole igc file in error log
+  if (req.body.igc.body) delete req.body.igc.body;
+
+  return {
+    meta: {
+      body: req.body,
+    },
+  };
 }
 
 // Don't change the signatur of this function. Even when "next" is not used, if "next" is missing, express won't use this middleware.

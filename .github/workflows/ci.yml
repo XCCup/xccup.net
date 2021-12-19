@@ -62,6 +62,7 @@ jobs:
           path: ./client/cypress/screenshots
       - name: Store artefacts of server logs
         uses: actions/upload-artifact@v1
+        if: always()
         with:
           name: server-logs
           path: ./server/data/logs

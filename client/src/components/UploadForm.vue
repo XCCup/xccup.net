@@ -223,6 +223,11 @@ const igcSelected = async (file) => {
       error.response.data.includes("already present")
     )
       return (errorMessage.value = `Dieser Flug ist bereits vorhanden. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+    if (
+      error.response.status === 403 &&
+      error.response.data.includes("not possible to change")
+    )
+      return (errorMessage.value = `Dieser Flug ist älter als ${Constants.DAYS_FLIGHT_CHANGEABLE} Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
 
     if (
       error.response.status === 403 &&
@@ -273,7 +278,6 @@ const uploadedPhotos = ref([]);
 const photosToDelete = ref([]);
 
 const onPhotosUpdated = (photos) => {
-  console.log(photos);
   uploadedPhotos.value = photos.all;
   photosToDelete.value = photos.removed;
 };

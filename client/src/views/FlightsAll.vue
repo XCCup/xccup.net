@@ -37,7 +37,7 @@ const route = useRoute();
 
 const { fetchData, errorMessage } = useData(ApiService.getFlights);
 
-fetchData({ params: route.params, queries: route.query });
+fetchData({ params: route.params.year, queries: route.query });
 
 let filterModal;
 onMounted(() => {
