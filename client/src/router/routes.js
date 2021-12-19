@@ -171,6 +171,11 @@ export const Routes = [
     component: () => import("../views/ListClubs.vue"),
   },
   {
+    path: "/news",
+    name: "News",
+    component: () => import("../views/ListNews.vue"),
+  },
+  {
     path: "/piloten",
     name: "Users",
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
