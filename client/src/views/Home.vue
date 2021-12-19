@@ -5,7 +5,7 @@
 
   <InfoBox :season-stats="seasonStats" />
   <DailyResults :max-rows="10" :flights="dailyResults" />
-  <NewsPanel :news-items="newsItems" />
+  <NewsPanel v-if="newsItems?.length > 0" :news-items="newsItems" />
   <PhotoCarousel :photos="randomPhotos" />
 
   <ResultsOverview
