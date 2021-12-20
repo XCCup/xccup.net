@@ -1,5 +1,6 @@
 const Team = require("../config/postgres")["Team"];
 const User = require("../config/postgres")["User"];
+const flightService = require("./FlightService");
 const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
@@ -7,21 +8,11 @@ const { TEAM_SIZE } = require("../config/result-determination-config");
 const logger = require("../config/logger");
 
 const service = {
-  getAllActive: async () => {
-    return await Team.findAll({
-      where: {
-        participantInSeasons: {
-          [Op.contains]: [getCurrentYear()],
-        },
-      },
-      include: createMemberInclude(),
-    });
-  },
-  getAllNames: async () => {
+  getAllNames: async (year) => {
     const teams = await Team.findAll({
       where: {
         participantInSeasons: {
-          [Op.contains]: [getCurrentYear()],
+          [Op.contains]: year ? [year] : [getCurrentYear()],
         },
       },
       attributes: ["id", "name"],
@@ -29,18 +20,40 @@ const service = {
     });
     return teams;
   },
-  getAll: async () => {
-    return await Team.findAll({
-      include: createMemberInclude(),
+
+  getAll: async ({ year = getCurrentYear(), includeStats } = {}) => {
+    const teams = await Team.findAll({
+      where: {
+        participantInSeasons: {
+          [Op.contains]: [year],
+        },
+      },
+      raw: true,
     });
+
+    const members = await Promise.all(
+      teams.map((team) => retrieveMembers(team))
+    );
+    const stats = includeStats
+      ? await Promise.all(teams.map((team) => retrieveStats(team, year)))
+      : undefined;
+    for (let i = 0; i < teams.length; i++) {
+      teams[i].members = members[i];
+      if (includeStats) teams[i].stats = stats[i];
+    }
+
+    return teams;
   },
+
   getById: async (id) => {
-    return await Team.findOne({
+    const team = await Team.findOne({
       where: {
         id,
       },
-      include: createMemberInclude(),
     });
+    const members = await retrieveMembers(team);
+    team.members = members;
+    return team;
   },
   getAllMemberOfTeam: async (name) => {
     return await User.findAll({
@@ -75,7 +88,7 @@ const service = {
     const members = await User.findAll({
       where: {
         id: {
-          [Op.or]: memberIds,
+          [Op.in]: memberIds,
         },
       },
     });
@@ -128,12 +141,41 @@ const service = {
   },
 };
 
-function createMemberInclude() {
-  return {
-    model: User,
-    as: "members",
+async function retrieveMembers(team) {
+  if (!team.members?.length) return;
+
+  const members = await User.findAll({
+    where: {
+      id: {
+        [Op.in]: team.members,
+      },
+    },
     attributes: ["firstName", "lastName", "id"],
-  };
+  });
+  return members.map((m) => m.toJSON());
 }
+
+async function retrieveStats(team, year) {
+  const flightsOfTeam = (await flightService.getAll({ year, teamId: team.id }))
+    .rows;
+
+  const stats = {
+    flights: flightsOfTeam.length,
+    distance: flightsOfTeam.reduce(
+      (acc, cur) => (acc += cur.flightDistance),
+      0
+    ),
+    points: flightsOfTeam.reduce((acc, cur) => (acc += cur.flightPoints), 0),
+  };
+
+  return stats;
+}
+// function createMemberInclude() {
+//   return {
+//     model: User,
+//     as: "members",
+//     attributes: ["firstName", "lastName", "id"],
+//   };
+// }
 
 module.exports = service;

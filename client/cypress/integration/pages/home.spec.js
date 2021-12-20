@@ -12,7 +12,7 @@ describe("check landing page", () => {
 
     cy.get("#infoboxContent").should("include.text", "20 Piloten");
     cy.get("#infoboxContent").should("include.text", "44 Vereine");
-    cy.get("#infoboxContent").should("include.text", "4 Teams");
+    cy.get("#infoboxContent").should("include.text", "3 Teams");
     cy.get("#infoboxContent").should("include.text", "1177 km");
   });
 

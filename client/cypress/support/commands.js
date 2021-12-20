@@ -38,7 +38,7 @@ Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
 Cypress.Commands.add("loginAdminUser", () => {
   cy.get("#loginNavButton").click();
 
-  cy.get("input#email").type("Camille@Schaden.name");
+  cy.get("input#email").type("xccup-beta@stephanschoepe.de");
   cy.get("input#password").type("PW_CamilleSchaden");
 
   cy.get("button").contains("Anmelden").click();
@@ -52,7 +52,7 @@ Cypress.Commands.add("loginAdminUser", () => {
 Cypress.Commands.add("loginNormalUser", () => {
   cy.get("#loginNavButton").click();
 
-  cy.get("input#email").type("Ramona@Gislason.name");
+  cy.get("input#email").type("Ramona@Gislason.fake");
   cy.get("input#password").type("PW_RamonaGislason");
 
   cy.get("button").contains("Anmelden").click();

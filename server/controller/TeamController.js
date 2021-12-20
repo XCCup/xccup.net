@@ -12,55 +12,70 @@ const {
   checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
+const { query } = require("express-validator");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const CACHE_RELEVANT_KEYS = ["teams", "filterOptions"];
 
-// @desc Gets information of all active teams
+// @desc Gets all teams of year
 // @route GET /teams
 
-router.get("/", async (req, res, next) => {
-  try {
-    const value = getCache(req);
-    if (value) return res.json(value);
+router.get(
+  "/",
+  query("year").optional().isInt(),
+  query("includeStats").optional().isBoolean(),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const { year, includeStats } = req.query;
 
-    const teams = await service.getAllActive();
+    try {
+      const value = getCache(req);
+      if (value) return res.json(value);
 
-    setCache(
-      req,
-      teams.map((t) => t.toJSON())
-    );
+      const teams = await service.getAll({ year, includeStats });
 
-    res.json(teams);
-  } catch (error) {
-    next(error);
+      console.log("Controller teams: ", teams);
+
+      setCache(req, teams);
+
+      res.json(teams);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-// @desc Gets all active teams names
+// @desc Gets all team names of year
 // @route GET /teams/names
 
-router.get("/names", async (req, res, next) => {
-  try {
-    const teams = await service.getAllNames();
-    res.json(teams);
-  } catch (error) {
-    next(error);
-  }
-});
+router.get(
+  "/names",
+  query("year").optional().isInt(),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const { year } = req.query;
 
-// @desc Gets all active and non-active teams
-// @route GET /teams/all
-// @access Only moderator
-
-router.get("/all", authToken, async (req, res, next) => {
-  try {
-    if (await requesterIsNotModerator(req, res)) return;
-    const teams = await service.getAll();
-    res.json(teams);
-  } catch (error) {
-    next(error);
+    try {
+      const teams = await service.getAllNames(year);
+      res.json(teams);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
+
+// // @desc Gets all active and non-active teams
+// // @route GET /teams/all
+// // @access Only moderator
+
+// router.get("/all", authToken, async (req, res, next) => {
+//   try {
+//     if (await requesterIsNotModerator(req, res)) return;
+//     const teams = await service.getAll();
+//     res.json(teams);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 // @desc Gets all members of teams
 // @route GET /teams/:name/member/
