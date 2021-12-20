@@ -25,7 +25,7 @@
 
 <script setup>
 import ApiService from "@/services/ApiService";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
 import useData from "@/composables/useData";
@@ -41,6 +41,8 @@ fetchData({ params: route.params.year, queries: route.query });
 
 let filterModal;
 onMounted(() => {
+  // TODO: This is not very clean as it is not clear where the id comes from.
+  // Better use ref instead of document selector
   filterModal = new Modal(document.getElementById("flightFilterModal"));
 });
 
