@@ -20,7 +20,7 @@ describe("Check user profile", () => {
     cy.get("#firstName").should("have.value", "Ramona");
     cy.get("#lastName").should("have.value", "Gislason");
     cy.get("#club").should("have.value", "1. Pfälzer DGFC");
-    cy.get("#email").should("have.value", "Ramona@Gislason.name");
+    cy.get("#email").should("have.value", "Ramona@Gislason.fake");
     cy.get("#street").should("have.value", "35975 Emmalee Forge");
     cy.get("#zip").should("have.value", "49453-5006");
     cy.get("#city").should("have.value", "South Skye");

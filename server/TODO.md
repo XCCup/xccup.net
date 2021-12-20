@@ -9,6 +9,7 @@
 - [ ] Use node cluster for scoring to prevent slow API response during results calculation
 - [ ] Find a way to add links to news items without injecting html (List of links with title?)
 - [ ] Create different sizes of flight photos. The client can than choose depending on its viewport size
+- [ ] Add flags to flight that indicates if it has a report, photos or comments
 
 ### Production
 

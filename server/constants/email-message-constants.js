@@ -64,3 +64,41 @@ ${confirmLink}
 Dein XCCup Team
     
 `;
+
+module.exports.AIRSPACE_VIOLATION_TITLE = "Luftraumverletzung auf XCCup.net";
+
+module.exports.AIRSPACE_VIOLATION_TEXT = (firstName, flightLink) =>
+  `Hallo ${firstName}!
+
+Du hast einen Flug hochgeladen, der eine Luftraumverletzung beinhaltet.
+${flightLink}
+
+Bitte gebe eine Stellungsnahme zu dieser Luftraumverletzung ab, falls Du dies noch nicht getan hast. 
+Die Moderatoren werden dies in Kürze bewerten. Bis dahin ist dein Flug nicht in den offiziellen Listen aufzufinden.
+
+Dein XCCup Team
+    
+`;
+
+module.exports.NEW_FLIGHT_COMMENT_TITLE = "Kommentar auf XCCup.net";
+
+module.exports.NEW_FLIGHT_COMMENT_TEXT = (
+  firstName,
+  commenterName,
+  commentMessage,
+  flightLink
+) =>
+  `Hallo ${firstName}!
+
+Dein Flug hat einen Kommentar erhalten.
+${flightLink}
+
+${commenterName} schrieb:
+${commentMessage}
+
+
+Falls Du in Zukunft keine Mails mehr zu neuen Kommentar erhalten möchtest, kannst Du dies in Deinem Profil einstellen.  
+
+Dein XCCup Team
+    
+`;
