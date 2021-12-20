@@ -97,7 +97,7 @@ ${commenterName} schrieb:
 ${commentMessage}
 
 
-Falls Du in Zukunft keine Mails mehr zu neuen Kommentar erhalten möchtest, so kannst Du dies in Deinem Profil einstellen.  
+Falls Du in Zukunft keine Mails mehr zu neuen Kommentar erhalten möchtest, kannst Du dies in Deinem Profil einstellen.  
 
 Dein XCCup Team
     
