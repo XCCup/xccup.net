@@ -126,28 +126,11 @@ export const Routes = [
     meta: { requiredAuth: true },
     component: () => import("../views/FlightUpload.vue"),
   },
-
   {
     path: "/profil",
     name: "Profile",
     props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () => import("../views/UserProfile.vue"),
-  },
-  {
-    path: "/profil/bearbeiten",
-    name: "ProfileEdit",
-    props: { edit: true },
-    meta: { requiredAuth: true },
-
-    component: () => import("../views/UserProfile.vue"),
-  },
-  {
-    path: "/profil/hangar",
-    name: "ProfileHangar",
-    props: { showHangar: true },
-    meta: { requiredAuth: true },
-
     component: () => import("../views/UserProfile.vue"),
   },
   {
