@@ -72,7 +72,7 @@ describe("Check user profile", () => {
 
     cy.get("#state").select(expectedState).should("have.value", expectedState);
 
-    cy.get(".v3dp__datepicker").click();
+    cy.get("#birthday").click();
     cy.get(".v3dp__elements").find("button").contains(birthday.year).click();
     cy.get(".v3dp__elements").find("button").contains(birthday.month).click();
     cy.get(".v3dp__elements").find("button").contains(birthday.day).click();
