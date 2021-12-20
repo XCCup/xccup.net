@@ -198,6 +198,10 @@ export default {
     return apiClient.get("teams/names/");
   },
 
+  getTeams(params) {
+    return apiClient.get("teams/", { params });
+  },
+
   // FlyingSites
 
   getSiteNames() {
