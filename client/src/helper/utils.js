@@ -9,6 +9,14 @@ export function setWindowName(namePostfix) {
 export function retrieveDateOnly(isoDate) {
   return isoDate.substring(0, 10);
 }
+export function retrieveDatePartFromDate(date) {
+  const offset = date.getTimezoneOffset();
+
+  // Without offset correction the wrong day (the day before) will maybe set
+  date.setHours(date.getHours() - offset / 60);
+
+  return retrieveDateOnly(date.toISOString());
+}
 
 export function dayAfter(date) {
   const dateObject = new Date(date);

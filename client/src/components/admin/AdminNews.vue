@@ -85,6 +85,7 @@
 <script>
 import ApiService from "@/services/ApiService";
 import { Modal } from "bootstrap";
+import { retrieveDatePartFromDate } from "../../helper/utils";
 
 export default {
   data() {
@@ -109,6 +110,7 @@ export default {
       try {
         const res = await ApiService.getAllNews();
         this.news = res.data;
+        transfromToDateObjects(this.news);
       } catch (error) {
         console.log(error);
       }
@@ -123,7 +125,9 @@ export default {
       this.addEditNewsModal.show();
     },
     async saveNews(news) {
+      this.selectedNews = createEmptyNewsObject();
       try {
+        transfromToDateString(news);
         const res = news.id
           ? await ApiService.editNews(news)
           : await ApiService.addNews(news);
@@ -148,9 +152,22 @@ function createEmptyNewsObject() {
   return {
     title: "",
     message: "",
-    from: new Date().toISOString().substring(0, 10),
-    till: null,
+    icon: "",
+    from: new Date(),
+    till: new Date(),
     sendByMail: false,
   };
+}
+
+function transfromToDateObjects(news) {
+  news.forEach((element) => {
+    element.from = new Date(element.from);
+    element.till = new Date(element.till);
+  });
+}
+
+function transfromToDateString(news) {
+  news.from = retrieveDatePartFromDate(news.from);
+  news.till = retrieveDatePartFromDate(news.till);
 }
 </script>
