@@ -120,6 +120,10 @@ const service = {
       User.findByPk(comment.userId),
       Flight.findByPk(comment.flightId),
     ]);
+
+    // Don't sent any email if commenter is the same person has the owner of the flight
+    if (comment.userId == flight.userId) return;
+
     const toUser = await User.findByPk(flight.userId);
 
     logger.info(`MS: Send new flight comment mail to user ${toUser.id}`);
