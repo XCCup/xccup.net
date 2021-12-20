@@ -53,7 +53,10 @@
             <td scope="col" class="hide-on-sm">
               {{ flight.team?.name }}
             </td>
-            <td class="hide-on-sm">{{ flight.takeoff.name }}</td>
+            <td class="hide-on-sm">
+              {{ flight.takeoff.name }}
+              <i v-if="flight.hikeAndFly > 0" class="bi bi-signpost-2"></i>
+            </td>
 
             <td scope="col" class="hide-on-sm no-line-break">
               <RankingClass :ranking-class="flight.glider?.gliderClass" />

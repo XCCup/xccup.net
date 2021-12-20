@@ -245,7 +245,7 @@ const flightService = {
   finalizeFlightSubmission: async (
     flight,
     report,
-    airspaceReport,
+    airspaceComment,
     onlyLogbook,
     glider,
     hikeAndFly
@@ -256,8 +256,8 @@ const flightService = {
     if (report || report == "") {
       columnsToUpdate.report = report;
     }
-    if (airspaceReport || airspaceReport == "") {
-      columnsToUpdate.airspaceReport = airspaceReport;
+    if (airspaceComment || airspaceComment == "") {
+      columnsToUpdate.airspaceComment = airspaceComment;
     }
 
     if (hikeAndFly) {
@@ -295,8 +295,16 @@ const flightService = {
   },
 
   addResult: async (result) => {
-    logger.info("Will add igc result to flight " + result.id);
+    logger.info("FS: Will add igc result to flight " + result.id);
     const flight = await flightService.getById(result.id, true);
+
+    if (!flight) {
+      // This can occur if a user uploads the same igc file again before the calculation has finished.
+      logger.warn(
+        `FS: Could not add result to flight ${result.id} because the flight wasn't found`
+      );
+      return;
+    }
 
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
@@ -452,7 +460,7 @@ async function calcFlightPoints(flight, glider) {
   const gliderClassDB = currentSeason.gliderClasses[gliderClassKey];
 
   logger.info(
-    `Glider class is ${gliderClassKey}. Will recalculate flightPoints`
+    `FS: Glider class is ${gliderClassKey}. Will recalculate flightPoints`
   );
 
   let flightPoints;
@@ -463,12 +471,12 @@ async function calcFlightPoints(flight, glider) {
     flightPoints = Math.round(typeFactor * gliderFactor * distance);
   } else {
     logger.debug(
-      "Flight calculation must be still in process. Will set flightPoints to 0."
+      "FS: Flight calculation must be still in process. Will set flightPoints to 0."
     );
     flightPoints = 0;
   }
 
-  logger.info(`Flight calculated with ${flightPoints} points`);
+  logger.info(`FS: Flight calculated with ${flightPoints} points`);
 
   return flightPoints;
 }
@@ -484,7 +492,7 @@ async function calcFlightStatus(flightPoints, onlyLogbook) {
   const flightStatus =
     flightPoints >= pointThreshold ? STATE.IN_RANKING : STATE.NOT_IN_RANKING;
 
-  logger.debug(`Flight status set to ${flightStatus}`);
+  logger.debug(`FS: Flight status set to ${flightStatus}`);
 
   return flightStatus;
 }
@@ -506,7 +514,7 @@ async function createGliderObject(columnsToUpdate, glider) {
 async function retrieveDbObjectOfFlightFixes(flightId) {
   const MAX_ATTEMPTS = 1;
 
-  logger.debug("Will retrieve fixes for flight: ", flightId);
+  logger.debug("FS: Will retrieve fixes for flight: ", flightId);
   for (let index = 0; index < MAX_ATTEMPTS; index++) {
     const fixes = await FlightFixes.findOne({
       where: {
@@ -516,7 +524,7 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
 
     if (fixes.geom?.coordinates.length > 0) return fixes;
 
-    logger.warn("Fixes geom was empty. Will try again.");
+    logger.warn("FS: Fixes geom was empty. Will try again.");
     sleep(1000);
   }
 }
@@ -602,7 +610,7 @@ async function findAirbuddies(flight) {
  */
 async function addExternalId(flight) {
   flight.externalId = (await Flight.max("externalId")) + 1;
-  logger.debug("New external ID was created: " + flight.externalId);
+  logger.debug("FS: New external ID was created: " + flight.externalId);
 }
 
 /**

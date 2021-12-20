@@ -173,6 +173,8 @@
     "userId": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
     "externalId": 1,
     "report": "neque ipsa incidunt et magni et at veniam omnis quod non libero aut autem illum ullam culpa quasi non exercitationem non ut maiores velit non dolores natus et soluta non et vero nam totam delectus et nostrum earum suscipit accusantium fugit et itaque enim labore cum inventore impedit quo dolor facere amet et est repellendus voluptatum laudantium quis id placeat ut accusantium dolores nesciunt ea architecto tempora est vel vero quo earum iusto aperiam saepe non eos voluptatem assumenda quo aspernatur pariatur quia nemo est architecto et officiis molestiae est dolores facere sit rerum debitis quis amet labore eaque enim sapiente autem vero tempore amet dolores corrupti pariatur quia dolor a",
+    "airspaceComment": "Lorem Ipsum ad alti",
+
     "glider": {
       "brand": "Little Cloud",
       "model": "Spiruline",
@@ -792,6 +794,7 @@
     "userId": "45907c75-9c14-42af-bc5a-993f4bec4b0f",
     "externalId": 11,
     "report": "amet perferendis voluptatem",
+    "airspaceComment": "Lorem Ipsum ad alti",
     "glider": {
       "brand": "U-Turn",
       "model": "Bodyguard",
