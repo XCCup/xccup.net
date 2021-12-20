@@ -18,35 +18,33 @@ const router = createRouter({
 const { saveTokenData, isTokenActive, updateTokens, authData } = useUser();
 
 router.beforeEach(async (to, from, next) => {
-  let accessToken = null;
-  let refreshToken = null;
-
-  console.log(authData.value);
+  // It would be possible to check for a non guarded route first and skip all auth methods
+  // The downside would be that the token is not observed regularly.
 
   // If no token is present in state check if there is token information in local storage
+  // TODO: Make this a method of useUser or leave it here?
   if (!authData.value.token) {
-    accessToken = localStorage.getItem("accessToken");
-    refreshToken = localStorage.getItem("refreshToken");
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
 
     // If there was token information in local storage => update state
-    if (accessToken && refreshToken) {
+    if (accessToken && refreshToken)
       saveTokenData({ accessToken, refreshToken });
-    }
   }
+  // Refresh if token is expired and refresh token existent
+  if (!isTokenActive() && authData.value.refreshToken) await updateTokens();
 
-  // Refresh if token is expired
-  if (!isTokenActive.value) await updateTokens();
-
-  // If a route doesn't need auth just go on
+  // Always allow to go to home
   if (to.fullPath == "/") return next();
 
+  // TODO: Prevent access of login page if user is already logged in
+
   // If a route needs auth and there is no active token => login
-  if (!isTokenActive.value && to.meta.requiredAuth) {
-    console.log(refreshToken);
-    console.log(isTokenActive.value);
+  // A redirect query is added. The calling component itself decides wether to use it or not
+  if (!isTokenActive() && to.meta.requiredAuth) {
     return next({ path: "/login", query: { redirect: to.fullPath } });
   }
-  // In all other cases just go on.
+  // In all other cases just go on to not freeze routing. Just pray.
   return next();
 });
 export default router;

@@ -17,9 +17,8 @@ jwtInterceptor.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log("Interceptor refresh…");
-    // TODO: Should the server error code be 403?
-    if (error.response.status === 403 || error.response.data === "EXPIRED") {
+    if (error.response.status === 403 && error.response.data === "EXPIRED") {
+      console.log("Interceptor refresh…");
       await updateTokens();
       error.config.headers["Authorization"] = `Bearer ${authData.value.token}`;
       console.log("…done");
