@@ -6,7 +6,7 @@ const modifiedFlightData = ref({
   externalId: null,
   glider: { id: "" },
   report: "",
-  airspaceReport: "",
+  airspaceComment: "",
   hikeAndFly: false,
   onlyLogbook: false,
   photos: [],
@@ -24,7 +24,7 @@ export default () => {
     modifiedFlightData.value = {
       glider: { id: "" },
       report: "",
-      airspaceReport: "",
+      airspaceComment: "",
       hikeAndFly: false,
       onlyLogbook: false,
       photos: [],

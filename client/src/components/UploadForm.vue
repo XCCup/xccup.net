@@ -283,7 +283,7 @@ const sendFlightDetails = async () => {
       report: flightReport.value,
       hikeAndFly: hikeAndFly.value,
       onlyLogbook: onlyLogbook.value,
-      airspaceReport: airspaceComment.value,
+      airspaceComment: airspaceComment.value,
     });
     if (response.status != 200) throw response.statusText;
 

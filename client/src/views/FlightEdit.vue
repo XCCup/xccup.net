@@ -22,7 +22,7 @@
     <div class="form-floating my-3">
       <textarea
         id="airspaceComment"
-        v-model="modifiedFlightData.airspaceReport"
+        v-model="modifiedFlightData.airspaceComment"
         class="form-control"
         placeholder="Flugbericht"
         style="height: 80px"
@@ -148,7 +148,7 @@ if (modifiedFlightData.value.externalId != route.params.id) {
   modifiedFlightData.value.externalId = route.params.id;
   modifiedFlightData.value.glider = flight.value.glider;
   modifiedFlightData.value.report = flight.value.report;
-  modifiedFlightData.value.airspaceReport = flight.value.airspaceReport;
+  modifiedFlightData.value.airspaceComment = flight.value.airspaceComment;
   modifiedFlightData.value.hikeAndFly = flight.value.hikeAndFly > 0;
   modifiedFlightData.value.onlyLogbook =
     flight.value.flightStatus === "Flugbuch";
