@@ -244,7 +244,7 @@ const flightService = {
   finalizeFlightSubmission: async (
     flight,
     report,
-    airspaceReport,
+    airspaceComment,
     onlyLogbook,
     glider,
     hikeAndFly
@@ -255,8 +255,8 @@ const flightService = {
     if (report || report == "") {
       columnsToUpdate.report = report;
     }
-    if (airspaceReport || airspaceReport == "") {
-      columnsToUpdate.airspaceReport = airspaceReport;
+    if (airspaceComment || airspaceComment == "") {
+      columnsToUpdate.airspaceComment = airspaceComment;
     }
 
     if (hikeAndFly) {
