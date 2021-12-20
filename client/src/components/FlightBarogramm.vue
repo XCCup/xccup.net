@@ -64,7 +64,7 @@
     </table>
   </div>
   <div class="container">
-    <canvas id="flight-barogramm"></canvas>
+    <canvas ref="ctx"></canvas>
   </div>
 </template>
 
@@ -119,95 +119,95 @@ onBeforeUnmount(() => {
   }
 });
 
+const ctx = ref(null);
 onMounted(() => {
   // Create a new chart
-  const ctx = document.getElementById("flight-barogramm");
-
-  chart.value = new Chart(ctx, {
-    type: "line",
-    data: {
-      // labels: this.labels,
-      datasets: baroDatasets.value,
-    },
-    options: {
-      onClick: () => {
-        // Center map at current position
-        const centerMapEvent = new CustomEvent("centerMapOnClick");
-        document.dispatchEvent(centerMapEvent);
-      },
-      maintainAspectRatio: false,
-      plugins: {
-        title: {
-          display: false,
-          text: "Barogramm",
-        },
-        legend: {
-          display: false,
-        },
-
-        tooltip: {
-          enabled: false,
-          mode: "x",
-          intersect: false,
-          animation: {
-            duration: 5,
-          },
-          // This does nothing but it is needed to trigger the callback
-          // even if the tooltip is disabled
-          external: function () {},
-          callbacks: {
-            label: (context) => {
-              // Skip GND dataset
-              if (context.datasetIndex === 0) return;
-
-              // Update marker position on map view event listener
-              const event = new CustomEvent("markerPositionUpdated", {
-                detail: {
-                  dataIndex: context.dataIndex,
-                  datasetIndex: context.datasetIndex,
-                },
-              });
-              document.dispatchEvent(event);
-              updateLabels(context);
-            },
-          },
-        },
-      },
-
-      scales: {
-        x: {
-          type: "time",
-          time: {
-            round: "second",
-            displayFormats: {
-              minute: "HH:mm",
-              hour: "HH:mm",
-            },
-            tooltipFormat: "HH:mm:ss",
-            minUnit: "hour",
-          },
-          title: {
-            display: false,
-            text: "Date",
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: "GPS Höhe",
-          },
-          beginAtZero: true,
-          ticks: {
-            callback: function (value) {
-              return value + "m";
-            },
-          },
-        },
-      },
-    },
-  });
+  if (ctx.value) chart.value = new Chart(ctx.value, options);
 });
 
+const options = {
+  type: "line",
+  data: {
+    // labels: this.labels,
+    datasets: baroDatasets.value,
+  },
+  options: {
+    onClick: () => {
+      // Center map at current position
+      const centerMapEvent = new CustomEvent("centerMapOnClick");
+      document.dispatchEvent(centerMapEvent);
+    },
+    maintainAspectRatio: false,
+    plugins: {
+      title: {
+        display: false,
+        text: "Barogramm",
+      },
+      legend: {
+        display: false,
+      },
+
+      tooltip: {
+        enabled: false,
+        mode: "x",
+        intersect: false,
+        animation: {
+          duration: 5,
+        },
+        // This does nothing but it is needed to trigger the callback
+        // even if the tooltip is disabled
+        external: function () {},
+        callbacks: {
+          label: (context) => {
+            // Skip GND dataset
+            if (context.datasetIndex === 0) return;
+
+            // Update marker position on map view event listener
+            const event = new CustomEvent("markerPositionUpdated", {
+              detail: {
+                dataIndex: context.dataIndex,
+                datasetIndex: context.datasetIndex,
+              },
+            });
+            document.dispatchEvent(event);
+            updateLabels(context);
+          },
+        },
+      },
+    },
+
+    scales: {
+      x: {
+        type: "time",
+        time: {
+          round: "second",
+          displayFormats: {
+            minute: "HH:mm",
+            hour: "HH:mm",
+          },
+          tooltipFormat: "HH:mm:ss",
+          minUnit: "hour",
+        },
+        title: {
+          display: false,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "GPS Höhe",
+        },
+        beginAtZero: true,
+        ticks: {
+          callback: function (value) {
+            return value + "m";
+          },
+        },
+      },
+    },
+  },
+};
 // Chart options
 
 Chart.defaults.elements.line.borderWidth = 2;
