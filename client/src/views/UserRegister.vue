@@ -69,7 +69,7 @@
               v-model="userData.birthday"
               label="Geburstag"
               starting-view="year"
-              :upper-limit="upperLimitBirthday"
+              :upper-limit="initialDate"
             />
           </div>
         </div>
@@ -231,7 +231,7 @@ import { Modal } from "bootstrap";
 import BaseSlotModal from "../components/BaseSlotModal.vue";
 import PrivacyPolicy from "../components/PrivacyPolicy.vue";
 
-const { userData } = useUserSignup();
+const { userData, initialDate } = useUserSignup();
 
 setWindowName("Registrieren");
 const signupSuccessfull = ref(false);
@@ -241,11 +241,6 @@ const rulesAccepted = ref(false);
 const errorMessage = ref(null);
 
 // TODO: Form input validation with vue
-
-// Set upper boundary of date picker
-const limitDate = new Date();
-limitDate.setYear(limitDate.getFullYear() - 20);
-const upperLimitBirthday = ref(limitDate);
 
 // Helpers
 const showSpinner = ref(false);
@@ -271,8 +266,7 @@ const registerButtonIsEnabled = computed(() => {
     userData.firstName.length > 0 &&
     userData.lastName.length > 0 &&
     userData.birthday &&
-    // Why does this happen anyway?
-    userData.birthday != "NaN-NaN-NaN" &&
+    userData.birthday &&
     userData.gender &&
     userData.clubId &&
     userData.address.country &&
@@ -338,12 +332,6 @@ const onSubmit = async () => {
     signupSuccessfull.value = true;
   } catch (error) {
     showSpinner.value = false;
-
-    // TODO: Where do this error messages come from? Is this safe?
-    // KW: Backend
-    // email must be unique: ErrorHandler.js -> handleSequelizeUniqueError
-    // email, password: Validaton.js middleware in endpoint
-    // I would say it's safe
 
     // E-Mail errors
     if (error.response?.data.conflict === "emailExists")
