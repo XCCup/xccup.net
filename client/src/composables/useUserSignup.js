@@ -2,10 +2,13 @@ import { reactive } from "@vue/reactivity";
 
 // This is a simple state with no actions/getters as it's only used by one component. (Signup)
 
+const initialDate = new Date();
+initialDate.setFullYear(initialDate.getFullYear() - 16);
+
 const state = reactive({
   firstName: "",
   lastName: "",
-  birthday: "",
+  birthday: initialDate,
   gender: "",
   password: "",
   passwordConfirm: "",
@@ -29,5 +32,5 @@ export default () => {
 
   // Actions
 
-  return { userData: state };
+  return { userData: state, initialDate };
 };

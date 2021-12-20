@@ -20,24 +20,25 @@
           ></button>
         </div>
         <div class="modal-body">
-          <!-- TODO: Fix modification of props -->
-          <!-- 🤨 ⬆️ -->
-          <BaseInput v-model="newsObject.title" label="Titel" />
-          <BaseTextarea v-model="newsObject.message" label="Nachricht" />
+          <BaseInput v-model="news.title" label="Titel" />
+          <BaseTextarea v-model="news.message" label="Nachricht" />
           <!-- TODO: Icon select. For now just paste the name of an icon as this component needs refactoring anyway 
           Later a picker would be nice -->
-          <BaseInput
-            v-model="newsObject.icon"
-            :is-required="false"
-            label="Icon"
+          <BaseInput v-model="news.icon" :is-required="false" label="Icon" />
+          <BaseDatePicker
+            v-model="news.from"
+            :lower-limit="new Date()"
+            label="Gültig ab"
           />
-          <BaseDatePicker v-model="newsObject.from" label="Gültig ab" />
-          <!-- TODO: "Valid till" should not allow dates in the past -->
-          <BaseDatePicker v-model="newsObject.till" label="Gültig bis" />
+          <BaseDatePicker
+            v-model="news.till"
+            :lower-limit="news.from"
+            label="Gültig bis"
+          />
           <div class="form-check">
             <input
               id="sendToAll"
-              v-model="newsObject.sendByMail"
+              v-model="news.sendByMail"
               class="form-check-input"
               type="checkbox"
               value
@@ -70,8 +71,7 @@
   </div>
 </template>
 <script setup>
-import { computed } from "vue";
-import { isIsoDateWithoutTime } from "@/helper/utils";
+import { computed, ref, watchEffect } from "vue";
 
 const props = defineProps({
   newsObject: {
@@ -80,18 +80,24 @@ const props = defineProps({
   },
 });
 
+const news = ref(null);
+
+watchEffect(() => {
+  news.value = props.newsObject;
+});
+
 const emit = defineEmits(["save-news"]);
 
 const saveButtonIsEnabled = computed(() => {
   return (
-    props.newsObject.title.length > 3 &&
-    props.newsObject.message.length > 3 &&
-    isIsoDateWithoutTime(props.newsObject.from) &&
-    isIsoDateWithoutTime(props.newsObject.till)
+    news.value.title.length > 3 &&
+    news.value.message.length > 3 &&
+    news.value.from != undefined &&
+    news.value.till != undefined
   );
 });
 
 const onSaveNews = () => {
-  emit("save-news", props.newsObject);
+  emit("save-news", news.value);
 };
 </script>
