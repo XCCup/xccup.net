@@ -1,5 +1,5 @@
 <template>
-  <section class="pb-3">
+  <section v-if="news" class="pb-3">
     <div id="adminNewsPanel" class="container-fluid">
       <div class="table-responsive">
         <h5>Nachrichten Redaktion</h5>
