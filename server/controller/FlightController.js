@@ -245,7 +245,7 @@ router.put(
   authToken,
   checkParamIsUuid("id"),
   checkStringObject("report"),
-  checkStringObject("airspaceReport"),
+  checkStringObject("airspaceComment"),
   checkOptionalIsBoolean("onlyLogbook"),
   checkIsUuidObject("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),
@@ -259,7 +259,7 @@ router.put(
 
     if (!flight) return res.sendStatus(NOT_FOUND);
 
-    const { report, airspaceReport, onlyLogbook, glider, hikeAndFly } =
+    const { report, airspaceComment, onlyLogbook, glider, hikeAndFly } =
       req.body;
 
     try {
@@ -270,7 +270,7 @@ router.put(
       const result = await service.finalizeFlightSubmission(
         flight,
         report,
-        airspaceReport,
+        airspaceComment,
         onlyLogbook,
         glider,
         hikeAndFly

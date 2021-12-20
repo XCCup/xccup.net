@@ -37,6 +37,10 @@ describe("check flight page", () => {
     // TODO: Test more details
   });
 
+  it("check non presence of airspace comment", () => {
+    cy.get("[data-cy=airspace-comment]").should("not.exist");
+  });
+
   it("check flight comments", () => {
     cy.get("#flight-comments");
     cy.get("#comment-5edc5c1c-3421-41f4-8d39-cb8f2f8ada44").contains(

@@ -19,7 +19,6 @@
       <!-- TODO: Put the spinner somewhere else -->
       <BaseSpinner v-if="showSpinner && !flightId" />
     </div>
-    <!-- TODO: The overflow… -->
     <div id="details-collapse" class="collapse">
       <div class="row">
         <div class="col-md-6 col-12">
@@ -40,7 +39,7 @@
         </div>
       </div>
       <!-- Glider select -->
-
+      <!-- TODO: Warn user of unsaved changes or open in modal -->
       <GliderSelect
         v-model="defaultGlider"
         label="Fluggerät"
@@ -52,15 +51,45 @@
       <!-- Report -->
       <div class="form-floating my-3">
         <textarea
-          id="floatingTextarea2"
+          id="flightReport"
           v-model="flightReport"
           class="form-control cy-flight-report"
           placeholder="Flugbericht"
           style="height: 100px"
           :disabled="!flightId"
         ></textarea>
-        <label for="floatingTextarea2">Flugbericht</label>
+        <label for="flightReport">Flugbericht</label>
       </div>
+      <!-- Airspace comment -->
+      <div class="form-check mb-3">
+        <input
+          id="airspaceCommentCheckbox"
+          class="form-check-input"
+          type="checkbox"
+          :disabled="!flightId"
+          data-bs-toggle="collapse"
+          data-bs-target="#airspace-collapse"
+          data-cy="airspace-comment-checkbox"
+        />
+        <label class="form-check-label" for="airspaceCommentCheckbox">
+          Luftraumkommentar hinterlassen
+        </label>
+      </div>
+      <div id="airspace-collapse" class="collapse">
+        <div class="form-floating mb-3">
+          <textarea
+            id="airspaceComment"
+            v-model="airspaceComment"
+            class="form-control"
+            placeholder="Flugbericht"
+            style="height: 80px"
+            :disabled="!flightId"
+            data-cy="airspace-comment-textarea"
+          ></textarea>
+          <label for="airspaceComment">Luftraumkommentar</label>
+        </div>
+      </div>
+
       <!-- Checkboxes -->
       <div class="form-check mb-3">
         <input
@@ -160,6 +189,7 @@ try {
 const rulesAccepted = ref(false);
 const onlyLogbook = ref(false);
 const hikeAndFly = ref(false);
+const airspaceComment = ref("");
 
 const flightId = ref(null);
 const externalId = ref(null);
@@ -253,6 +283,7 @@ const sendFlightDetails = async () => {
       report: flightReport.value,
       hikeAndFly: hikeAndFly.value,
       onlyLogbook: onlyLogbook.value,
+      airspaceComment: airspaceComment.value,
     });
     if (response.status != 200) throw response.statusText;
 
@@ -285,7 +316,8 @@ const onPhotosUpdated = (photos) => {
 const photoInput = ref(null);
 onMounted(() => {
   photoInput.value = document.getElementById("photo-input");
-  let myCollapse = document.getElementById("details-collapse");
+
+  const myCollapse = document.getElementById("details-collapse");
   detailsCollapse = new Collapse(myCollapse, {
     toggle: false,
   });

@@ -15,7 +15,9 @@ describe("check flight upload page", () => {
 
   it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
-    const reportText = "This is a flight report.";
+    const flightReport = "This is a flight report.";
+    const airspaceComment = "Alles offen, kein Problem 🤪";
+
     const photo1 = "rachtig.jpg";
     const photo2 = "bremm.jpg";
 
@@ -71,7 +73,15 @@ describe("check flight upload page", () => {
     }).should("exist");
 
     // Add data to differnt inputs
-    cy.get(".cy-flight-report").type(reportText);
+
+    cy.get("[data-cy=airspace-comment-checkbox]").should("not.be.checked");
+    cy.get("#airspace-collapse").should("not.have.class", "show");
+
+    cy.get("[data-cy=airspace-comment-checkbox]").click();
+    cy.get("#airspace-collapse").should("have.class", "show");
+    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
+
+    cy.get(".cy-flight-report").type(flightReport);
     cy.get("#hikeAndFlyCheckbox").click();
     cy.get("#logbookCheckbox").click();
 
@@ -84,6 +94,13 @@ describe("check flight upload page", () => {
     cy.get("#cyFlightDetailsTable1").find("td").contains(expectedUserName);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+
+    cy.get("[data-cy=airspace-comment]")
+      .find("p")
+      .should("have.text", airspaceComment);
+    cy.get("[data-cy=flight-report]")
+      .find("p")
+      .should("have.text", flightReport);
   });
 
   it("test upload flight twice", () => {
@@ -111,6 +128,10 @@ describe("check flight upload page", () => {
     cy.get("#acceptTermsCheckbox").check();
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How to do an retry on cy.visit or cy.request?
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000);
 
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
@@ -199,26 +220,26 @@ describe("check flight upload page", () => {
   });
 
   // // This test works only if the overwrite in FlightController:checkIfFlightIsModifiable is disabled/removed
-  //   it("Test upload flight to old", () => {
-  //     const igcFileName = "73320_LA9ChMu1.igc";
-  //     const expectedError =
-  //       "Dieser Flug ist älter als 14 Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an xccup-beta@stephanschoepe.de";
+  // it("Test upload flight to old", () => {
+  //   const igcFileName = "73320_LA9ChMu1.igc";
+  //   const expectedError =
+  //     "Dieser Flug ist älter als 14 Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an xccup-beta@stephanschoepe.de";
 
-  //     cy.loginNormalUser();
+  //   cy.loginNormalUser();
 
-  //     cy.get("button").contains("Flug hochladen").click();
+  //   cy.get("button").contains("Flug hochladen").click();
 
-  //     cy.fixture(igcFileName).then((fileContent) => {
-  //       cy.get('input[type="file"]#igcUploadForm').attachFile({
-  //         fileContent: fileContent.toString(),
-  //         fileName: igcFileName,
-  //         mimeType: "text/plain",
-  //       });
+  //   cy.fixture(igcFileName).then((fileContent) => {
+  //     cy.get('input[type="file"]#igcUploadForm').attachFile({
+  //       fileContent: fileContent.toString(),
+  //       fileName: igcFileName,
+  //       mimeType: "text/plain",
   //     });
-
-  //     // Increase timeout because processing takes some time
-  //     cy.get("#upload-error", {
-  //       timeout: 10000,
-  //     }).should("have.text", expectedError);
   //   });
+
+  //   // Increase timeout because processing takes some time
+  //   cy.get("#upload-error", {
+  //     timeout: 10000,
+  //   }).should("have.text", expectedError);
+  // });
 });

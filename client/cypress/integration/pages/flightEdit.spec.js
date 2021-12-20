@@ -48,14 +48,24 @@ describe("check flight page", () => {
     const oldFlightReport = "eius ullam omnis nesciunt amet dolorem";
     const newFlightReport = "Foo";
 
+    const oldAirspaceComment = "";
+    const newAirspaceComment = "Upsi voll rein geknattert.";
+
+    cy.get("[data-cy=airspace-comment-textarea]")
+      .should("have.text", oldAirspaceComment)
+      .clear()
+      .type(newAirspaceComment);
+
     cy.get("#glider-select").should("have.value", oldGliderId);
     cy.get("#glider-select")
       .select(newGliderId)
       .should("have.value", newGliderId);
 
-    cy.textareaIncludes("#flightReport", oldFlightReport);
-    cy.get("#flightReport").clear().type(newFlightReport);
-    cy.get("#flightReport").should("have.value", newFlightReport);
+    cy.textareaIncludes("[data-cy=flight-report-textarea]", oldFlightReport);
+    cy.get("[data-cy=flight-report-textarea]")
+      .clear()
+      .type(newFlightReport)
+      .should("have.value", newFlightReport);
 
     cy.get("#hikeAndFlyCheckbox").should("not.be.checked").check();
     cy.get("#logbookCheckbox").should("not.be.checked").check();
@@ -71,7 +81,13 @@ describe("check flight page", () => {
     cy.get("#flightDetailsButton").contains("Details anzeigen").click();
     cy.get("#moreFlightDetailsTable").contains("td", "Flugbuch");
 
-    cy.get("#flightReport").should("have.text", newFlightReport);
+    cy.get("[data-cy=flight-report]")
+      .find("p")
+      .should("have.text", newFlightReport);
+
+    cy.get("[data-cy=airspace-comment]")
+      .find("p")
+      .should("have.text", newAirspaceComment);
   });
 
   it("Check that admin is always able to edit flight", () => {
