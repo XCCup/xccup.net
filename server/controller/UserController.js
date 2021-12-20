@@ -485,6 +485,33 @@ router.put(
   }
 );
 
+// @desc Edits a users password
+// @route PUT /users/change-password/
+// @access Only owner
+
+router.put(
+  "/change-password",
+  authToken,
+  checkStrongPassword("password"),
+
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const id = req.user.id;
+    const { password } = req.body;
+
+    try {
+      const user = await service.getById(id);
+      if (!user) return res.sendStatus(NOT_FOUND);
+      user.password = password;
+      const result = await service.update(user);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // @desc Add a glider to the users glider array.
 // @route POST /users/gliders/add
 // @access Only owner

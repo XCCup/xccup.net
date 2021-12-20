@@ -1,10 +1,15 @@
 <template>
-  <div v-if="false" class="row">
+  <div class="row my-3">
     <p>
       Das Passwort muss aus mindestens 8 Zeichen bestehen und mindestens eine
       Zahl, Sonderzeichen und Großbuchstaben enthalten.
     </p>
     <div class="col-md-6 mb-3">
+      <!-- TODO: BaseInput should only be red if it was focused. 
+      Otherwise it always "screams" to the user. And also after a 
+      successfull change of password there is a lot of red that normally indicates error.
+      But there is no error… This is bad UX
+       -->
       <BaseInput
         id="password"
         v-model="password"
@@ -15,25 +20,31 @@
     <div class="col-md-6 mb-3">
       <BaseInput
         id="passwordConfirm"
-        v-model="password"
+        v-model="passwordConfirmation"
         label="Passwort wiederholen"
         :is-password="true"
         :external-validation-result="!passwordMatches"
       />
     </div>
+    <div class="col-md-6 mb-3">
+      <button class="btn btn-primary" @click="onSave">
+        Speichern
+        <BaseSpinner v-if="showSpinner" />
+        <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
+      </button>
+      <BaseError :error-message="errorMessage" />
+    </div>
   </div>
-  <p>Kommt hier mal hin</p>
 </template>
 <script setup>
 import ApiService from "@/services/ApiService.js";
 import { ref, computed } from "vue";
-import useUserProfile from "@/composables/useUserProfile";
 import BaseSpinner from "./BaseSpinner.vue";
-
-const { modifiedUserData, updateProfile, profileDataHasChanged } =
-  useUserProfile();
+import BaseError from "./BaseError.vue";
 
 const password = ref("");
+const passwordConfirmation = ref("");
+
 // Page state
 const showSpinner = ref(false);
 const showSuccessInidcator = ref(false);
@@ -43,28 +54,26 @@ const inidcateSuccess = () => {
   showSpinner.value = false;
   showSuccessInidcator.value = true;
   errorMessage.value = null;
-  setTimeout(() => (showSuccessInidcator.value = false), 2000);
+  setTimeout(() => (showSuccessInidcator.value = false), 3000);
 };
 
 const onSave = async () => {
   try {
     showSpinner.value = true;
-    await updateProfile();
+    await ApiService.changePassword({ password: password.value });
     inidcateSuccess();
+    password.value = "";
+    passwordConfirmation.value = "";
   } catch (error) {
     showSpinner.value = false;
     console.error(error);
-
-    if (error.response?.data.errors[0].param === "email")
-      return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
-
     errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";
   }
 };
 
 // Validation
 const passwordMatches = computed(() => {
-  return password.value === password.value;
+  return password.value === passwordConfirmation.value;
 });
 </script>
 

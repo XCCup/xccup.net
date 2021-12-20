@@ -152,6 +152,10 @@ export default {
     return apiClient.post(`users/request-new-password`, email);
   },
 
+  changePassword(password) {
+    return jwtInterceptor.put(baseURL + "users/change-password", password);
+  },
+
   confirmNewPassword(userId, token) {
     return apiClient.get(
       `users/renew-password?userId=${userId}&token=${token}`
