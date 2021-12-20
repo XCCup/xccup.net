@@ -4,7 +4,7 @@ describe("check login options", () => {
   });
 
   it("login/logout normal user", () => {
-    cy.login("Clinton@Hettinger.name", "PW_ClintonHettinger");
+    cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
 
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
     cy.get("#navbarAdminDashboard").should("not.exist");
@@ -15,7 +15,7 @@ describe("check login options", () => {
   });
 
   it("login/logout admin", () => {
-    cy.login("Camille@Schaden.name", "PW_CamilleSchaden");
+    cy.login("xccup-beta@stephanschoepe.de", "PW_CamilleSchaden");
 
     cy.get("#userNavDropdownMenu").should("includes.text", "Camille");
     cy.get("#navbarAdminDashboard").should("exist");
@@ -26,7 +26,7 @@ describe("check login options", () => {
   });
 
   it("login/logout moderator", () => {
-    cy.login("Olive@Emmerich.biz", "PW_OliveEmmerich");
+    cy.login("Olive@Emmerich.fake", "PW_OliveEmmerich");
 
     cy.get("#userNavDropdownMenu").should("includes.text", "Olive");
     cy.get("#navbarAdminDashboard").should("exist");
@@ -37,7 +37,7 @@ describe("check login options", () => {
   });
 
   it("login with wrong user/pw combination", () => {
-    cy.login("noone@neverland.it", "FancyPassword");
+    cy.login("noone@neverland.fake", "FancyPassword");
 
     cy.get("button").contains("Anmelden").click();
     cy.get("#loginErrorMessage").should(
