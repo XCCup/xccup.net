@@ -15,39 +15,38 @@ const router = createRouter({
   },
 });
 
-const { saveTokenData, isTokenActive, setLoginStatus, refreshToken, authData } =
-  useUser();
+const { saveTokenData, isTokenActive, updateTokens, authData } = useUser();
 
 router.beforeEach(async (to, from, next) => {
+  let accessToken = null;
+  let refreshToken = null;
+
+  console.log(authData.value);
+
+  // If no token is present in state check if there is token information in local storage
   if (!authData.value.token) {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (accessToken) {
-      const data = {
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-      };
-      saveTokenData(data);
+    accessToken = localStorage.getItem("accessToken");
+    refreshToken = localStorage.getItem("refreshToken");
+
+    // If there was token information in local storage => update state
+    if (accessToken && refreshToken) {
+      saveTokenData({ accessToken, refreshToken });
     }
   }
-  let auth = isTokenActive.value;
 
-  if (!auth) {
-    auth = await refreshToken();
-  } else {
-    setLoginStatus("success");
-  }
+  // Refresh if token is expired
+  if (!isTokenActive.value) await updateTokens();
 
-  if (to.fullPath == "/") {
-    return next();
-  } else if (auth && !to.meta.requiredAuth) {
-    // This is another place to redirect after login.
-    // Current implemantation redirects in BaseLogin Component
-    return next();
-  } else if (!auth && to.meta.requiredAuth) {
+  // If a route doesn't need auth just go on
+  if (to.fullPath == "/") return next();
+
+  // If a route needs auth and there is no active token => login
+  if (!isTokenActive.value && to.meta.requiredAuth) {
+    console.log(refreshToken);
+    console.log(isTokenActive.value);
     return next({ path: "/login", query: { redirect: to.fullPath } });
   }
-
+  // In all other cases just go on.
   return next();
 });
 export default router;

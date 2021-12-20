@@ -37,6 +37,7 @@ export default () => {
   // Mutations
 
   const saveTokenData = (data) => {
+    console.log("Save token data…");
     localStorage.setItem("accessToken", data.accessToken);
     localStorage.setItem("refreshToken", data.refreshToken);
     const jwtDecodedValue = jwtDecrypt(data.accessToken);
@@ -51,6 +52,10 @@ export default () => {
     };
     state.authData = newTokenData;
     setLoginStatus("success");
+    console.log("…token data:");
+    console.log(newTokenData);
+    console.log("State:");
+    console.log(state);
   };
 
   // TODO: Is this needed?
@@ -59,6 +64,7 @@ export default () => {
   };
 
   const logoutUser = () => {
+    console.log("Logout user…");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     state.loginStatus = "";
@@ -71,6 +77,7 @@ export default () => {
       lastName: "",
       role: "",
     };
+    console.log("…logged out");
   };
 
   // Actions
@@ -90,27 +97,26 @@ export default () => {
     logoutUser();
   };
 
-  const refreshToken = async () => {
+  const updateTokens = async () => {
+    console.log("Update tokens…");
     const authData = state.authData;
     if (authData.token) {
-      const payload = {
-        token: authData.refreshToken,
-      };
       try {
-        const refreshResponse = await axios.post(
-          baseURL + "users/token",
-          payload
-        );
+        const refreshResponse = await axios.post(baseURL + "users/token", {
+          token: authData.refreshToken,
+        });
         saveTokenData({
           accessToken: refreshResponse.data.accessToken,
           refreshToken: authData.refreshToken,
         });
         setLoginStatus("success");
-        return true;
+        console.log("…tokens:", authData);
       } catch (error) {
         logout();
         console.log(error);
       }
+    } else {
+      logoutUser();
     }
   };
 
@@ -124,6 +130,6 @@ export default () => {
     logout,
     saveTokenData,
     setLoginStatus,
-    refreshToken,
+    updateTokens,
   };
 };
