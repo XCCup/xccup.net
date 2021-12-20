@@ -27,7 +27,11 @@
       />
     </div>
     <div class="col-md-6 mb-3">
-      <button class="btn btn-primary" @click="onSave">
+      <button
+        class="btn btn-primary"
+        :disabled="!saveButtonIsEnabled"
+        @click="onSave"
+      >
         Speichern
         <BaseSpinner v-if="showSpinner" />
         <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
@@ -41,6 +45,7 @@ import ApiService from "@/services/ApiService.js";
 import { ref, computed } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
 import BaseError from "./BaseError.vue";
+import { isStrongPassword } from "../helper/utils";
 
 const password = ref("");
 const passwordConfirmation = ref("");
@@ -75,6 +80,12 @@ const onSave = async () => {
 const passwordMatches = computed(() => {
   return password.value === passwordConfirmation.value;
 });
+
+const saveButtonIsEnabled = computed(
+  () =>
+    password.value === passwordConfirmation.value &&
+    isStrongPassword(password.value)
+);
 </script>
 
 <style scoped></style>
