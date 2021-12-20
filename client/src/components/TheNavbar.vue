@@ -176,8 +176,10 @@
                 >
               </li>
               <li>
-                <a class="dropdown-item text-decoration-line-through" href="#"
-                  >Teams 2021</a
+                <router-link
+                  :to="{ name: 'Teams', params: { year: currentYear } }"
+                  class="dropdown-item"
+                  >Teams</router-link
                 >
               </li>
               <li>

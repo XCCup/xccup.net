@@ -33,7 +33,7 @@ import useData from "../composables/useData";
 import { useRoute } from "vue-router";
 import BaseError from "../components/BaseError.vue";
 
-const router = useRoute();
+const route = useRoute();
 const { fetchData, data: users, errorMessage } = useData(ApiService.getUsers);
 
 const mailModalId = ref("userMailModal");
@@ -53,7 +53,7 @@ const messageUser = (user) => {
   mailModal.show();
 };
 
-fetchData({ params: { records: true }, queries: router.query });
+fetchData({ params: { records: true }, queries: route.query });
 
 const showFilter = () => {
   filterModal.show();
