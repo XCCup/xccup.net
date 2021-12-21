@@ -12,7 +12,7 @@
               style="top: 20px; right: -10px"
               @click.prevent="onEditAvatar"
             >
-              <i class="col bi bi-pencil fs-6"></i>
+              <i class="col bi bi-plus-circle fs-6"></i>
             </span>
           </div>
 
@@ -95,6 +95,8 @@
             aria-labelledby="nav-hangar-tab"
           >
             <div id="glider-select" class="col-md-12 mb-4">
+              <h5>Standard Gerät wählen</h5>
+
               <UserProfileGliderlist />
             </div>
           </div>
