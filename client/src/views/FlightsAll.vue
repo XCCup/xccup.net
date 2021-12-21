@@ -25,7 +25,7 @@
 
 <script setup>
 import ApiService from "@/services/ApiService";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
 import useData from "@/composables/useData";
