@@ -119,7 +119,7 @@ import { setWindowName } from "../helper/utils";
 import useUserProfile from "@/composables/useUserProfile";
 import { onMounted, ref, computed } from "vue";
 import { Tab } from "bootstrap";
-import { getUserAvatar } from "../helper/profilePictureHelper";
+import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
 import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
@@ -153,7 +153,7 @@ onMounted(() => {
   if (props.showHangar) hangarTab.show();
 });
 
-const avatarUrl = computed(() => getUserAvatar(userData.value, true));
+const avatarUrl = computed(() => createUserPictureUrl(userData.value.id, true));
 
 const onEditAvatar = () => {
   editAvatarModal.value.show();
