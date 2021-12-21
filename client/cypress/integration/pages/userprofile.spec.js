@@ -130,9 +130,9 @@ describe("Check user profile", () => {
     cy.get("[data-cy=password-change-btn]").should("not.be.disabled").click();
 
     cy.logout();
-    // cy.visit("/");
-    // cy.login("Ramona@Gislason.fake", newPassword);
-    // cy.visit("/profil");
+    cy.visit("/");
+    cy.login("Ramona@Gislason.fake", newPassword);
+    cy.visit("/profil");
     // cy.get("#firstName").should("have.value", "Ramona");
     // cy.get("#lastName").should("have.value", "Gislason");
   });
