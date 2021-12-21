@@ -13,6 +13,7 @@
       data-bs-toggle="tooltip"
       data-bs-placement="top"
       :title="tooltipValue"
+      :data-cy="dataCy"
       @input="$emit('update:modelValue', $event.target.value)"
     />
     <label v-if="label && !showLabelOnTop">{{ label }}</label>
@@ -62,9 +63,16 @@ const props = defineProps({
     type: String,
     default: "Das Feld darf nicht leer sein",
   },
+  // TODO: Remove note
+  // NOTE: Emtpy strings will add the attribute with value "" which can cause duplicate ids
+  // Null does not add the attribute
   id: {
-    type: String,
-    default: "",
+    type: [String, null],
+    default: null,
+  },
+  dataCy: {
+    type: [String, null],
+    default: null,
   },
 });
 

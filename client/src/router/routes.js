@@ -32,6 +32,7 @@ export const Routes = [
   },
   {
     path: "/flug/:flightId",
+    alias: ["/FlugDetails/:flightId"],
     name: "Flight",
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
@@ -132,14 +133,6 @@ export const Routes = [
     name: "Profile",
     props: true,
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
-    component: () => import("../views/UserProfile.vue"),
-  },
-  {
-    path: "/profil/bearbeiten",
-    name: "ProfileEdit",
-    props: { edit: true },
-    meta: { requiredAuth: true },
-
     component: () => import("../views/UserProfile.vue"),
   },
   {

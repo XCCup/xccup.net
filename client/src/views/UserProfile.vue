@@ -5,13 +5,18 @@
       <!-- Profile Picture -->
       <div class="col-lg-3">
         <div class="d-flex flex-column align-items-center text-center p-3">
-          <img class="rounded-circle" :src="avatarUrl" />
-          <div class="row">
-            <i
-              class="col bi bi-pencil text-primary clickable"
+          <div class="position-relative">
+            <img class="rounded-circle" :src="avatarUrl" />
+            <span
+              class="shadow position-absolute translate-middle clickable badge rounded-pill bg-primary"
+              style="top: 20px; right: -10px"
               @click.prevent="onEditAvatar"
-            ></i>
+            >
+              <i class="col bi bi-pencil fs-6"></i>
+            </span>
           </div>
+
+          <div class="row"></div>
           <!-- TODO: Maybe use these elements to show some addtional data above the profil -->
           <!-- <span class="font-weight-bold">A nice fact</span>
           <span class="text-secondary">or two about the user</span> -->
@@ -55,6 +60,7 @@
               role="tab"
               aria-controls="nav-change-pw"
               aria-selected="false"
+              data-cy="change-password-tab"
             >
               Passwort ändern
             </button>

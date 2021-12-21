@@ -151,24 +151,6 @@
     </button>
     <!-- Error Message -->
     <BaseError :error-message="errorMessage" class="mt-3" />
-
-    <!-- Edit -->
-    <!-- <div v-if="!edit">
-              <router-link
-                :to="{ name: 'ProfileEdit' }"
-                class="btn btn-primary"
-              >
-                Edit
-              </router-link>
-            </div>
-            <div v-if="edit">
-              <div>Edit: {{ modifiedUserData.value.firstName }}</div>
-
-              <button class="btn btn-primary" @click="save">Speichern</button>
-              <button class="btn btn-outline-danger" @click="cancel">
-                Abbrechen
-              </button>
-            </div>-->
   </div>
 </template>
 <script setup>

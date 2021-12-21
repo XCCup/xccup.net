@@ -1,6 +1,6 @@
 <template>
   <div :id="`comment-${comment.id}`" class="d-flex mb-2">
-    <img src="@/assets/images/avatar2.png" class="rounded-circle" />
+    <img :src="avatarUrl" class="rounded-circle" />
     <!-- TODO: Insert link -->
     <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
       comment.user.firstName + " " + comment.user.lastName
@@ -75,6 +75,7 @@ import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { ref, onMounted } from "vue";
 import { Modal } from "bootstrap";
+import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment, submitComment } = useComments();
@@ -85,6 +86,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+// TODO: Server should return Dicebear image if no profile picture is present.
+const avatarUrl = getbaseURL() + "users/picture/" + props.comment.user.id;
 
 // Find a way to make this reactive
 const userPrefersDark = ref(

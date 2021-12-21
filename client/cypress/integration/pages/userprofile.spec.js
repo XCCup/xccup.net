@@ -1,10 +1,9 @@
 describe("Check user profile", () => {
-  before(() => {
-    cy.seedDb();
-  });
-
   beforeEach(() => {
     cy.visit("/profil");
+    // TODO: Is the seeding mandatory? It costs time…
+    // How to make the tests self containing otherwise?
+    cy.seedDb();
   });
 
   it("Visit profile as guest", () => {
@@ -111,5 +110,30 @@ describe("Check user profile", () => {
     cy.get("#optInNewsletter").should("be.checked");
 
     cy.get("Button").contains("Speichern").should("be.disabled");
+  });
+
+  it("Visit profile and change password", () => {
+    const newPassword = "Foobar2!";
+    const badPassword = "foobar";
+
+    cy.loginNormalUser();
+    cy.visit("/profil");
+
+    cy.get("[data-cy=change-password-tab]").click();
+    cy.get("[data-cy=password-input]").type(badPassword);
+    cy.get("[data-cy=password-change-btn]").should("be.disabled");
+    cy.get("[data-cy=password-confirm-input]").type(badPassword);
+    cy.get("[data-cy=password-change-btn]").should("be.disabled");
+
+    cy.get("[data-cy=password-input]").clear().type(newPassword);
+    cy.get("[data-cy=password-confirm-input]").clear().type(newPassword);
+    cy.get("[data-cy=password-change-btn]").should("not.be.disabled").click();
+
+    cy.logout();
+    cy.visit("/");
+    cy.login("Ramona@Gislason.fake", newPassword);
+    cy.visit("/profil");
+    cy.get("#firstName").should("have.value", "Ramona");
+    cy.get("#lastName").should("have.value", "Gislason");
   });
 });
