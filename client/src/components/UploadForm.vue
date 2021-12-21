@@ -19,7 +19,7 @@
       <!-- TODO: Put the spinner somewhere else -->
       <BaseSpinner v-if="showSpinner && !flightId" />
     </div>
-    <div id="details-collapse" class="collapse">
+    <div ref="collapse" class="collapse">
       <div class="row">
         <div class="col-md-6 col-12">
           <BaseInput
@@ -170,9 +170,20 @@ import { useRouter } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 import { Collapse } from "bootstrap";
 import Constants from "@/common/Constants";
-import { asyncForEach } from "../helper/utils";
+import { asyncForEach, setWindowName } from "../helper/utils";
 
 const router = useRouter();
+
+setWindowName("Flugh hochladen");
+
+const collapse = ref(null);
+let detailsCollapse = null;
+
+onMounted(() => {
+  detailsCollapse = new Collapse(collapse.value, {
+    toggle: false,
+  });
+});
 
 // Fetch users gliders
 const listOfGliders = ref(null);
@@ -199,8 +210,6 @@ const flightReport = ref(" ");
 const showSpinner = ref(false);
 
 const errorMessage = ref(null);
-
-let detailsCollapse = null;
 
 const sendButtonIsDisabled = computed(() => {
   return !rulesAccepted.value;
@@ -312,16 +321,6 @@ const onPhotosUpdated = (photos) => {
   uploadedPhotos.value = photos.all;
   photosToDelete.value = photos.removed;
 };
-
-const photoInput = ref(null);
-onMounted(() => {
-  photoInput.value = document.getElementById("photo-input");
-
-  const myCollapse = document.getElementById("details-collapse");
-  detailsCollapse = new Collapse(myCollapse, {
-    toggle: false,
-  });
-});
 
 const redirectToFlight = (id) => {
   router.push({
