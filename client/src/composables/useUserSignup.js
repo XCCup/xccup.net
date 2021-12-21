@@ -8,7 +8,7 @@ initialDate.setFullYear(initialDate.getFullYear() - 16);
 const state = reactive({
   firstName: "",
   lastName: "",
-  birthday: initialDate,
+  birthday: null,
   gender: "",
   password: "",
   passwordConfirm: "",

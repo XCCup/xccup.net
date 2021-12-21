@@ -454,8 +454,6 @@ router.put(
       password,
     } = req.body;
 
-    console.log("birthday: ", birthday);
-
     try {
       const user = await service.getById(id);
 
