@@ -112,7 +112,7 @@
       <br />
       <!-- Photos -->
       <h3>Bilder</h3>
-      <FlightPhotos :edit-mode="true" @photos-updated="onPhotosUpdated" />
+      <FlightPhotos :flight-id="flightId" @photos-updated="onPhotosUpdated" />
       <!-- Rules & Submit -->
       <div class="form-check mb-3">
         <input
