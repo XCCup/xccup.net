@@ -32,6 +32,7 @@ export const Routes = [
   },
   {
     path: "/flug/:flightId",
+    alias: ["/FlugDetails/:flightId"],
     name: "Flight",
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
