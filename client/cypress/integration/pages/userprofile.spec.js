@@ -133,7 +133,7 @@ describe("Check user profile", () => {
     cy.visit("/");
     cy.login("Ramona@Gislason.fake", newPassword);
     cy.visit("/profil");
-    // cy.get("#firstName").should("have.value", "Ramona");
-    // cy.get("#lastName").should("have.value", "Gislason");
+    cy.get("#firstName").should("have.value", "Ramona");
+    cy.get("#lastName").should("have.value", "Gislason");
   });
 });
