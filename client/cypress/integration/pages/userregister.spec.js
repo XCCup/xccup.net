@@ -17,12 +17,11 @@ describe("check users register page", () => {
     cy.get("#gender").select("M").should("have.value", "M");
 
     cy.get("#birthday").click();
-    for (let index = 0; index < 3; index++) {
-      cy.get(".v3dp__heading__button").first().click();
-    }
-    cy.get("Button").contains("1994").click();
-    cy.get("Button").contains("Mai").click();
-    cy.get("Button").contains("01").click();
+    // The current birthyear is 2005; Therefore it's sufficent to click once to switch to the previous decade for 1994
+    cy.get(".v3dp__heading__button").first().click();
+    cy.get(".v3dp__elements").find("button").contains("1994").click();
+    cy.get(".v3dp__elements").find("button").contains("Mai").click();
+    cy.get(".v3dp__elements").find("button").contains("01").click();
 
     cy.get("#country")
       .select(expectedCountry)
@@ -74,12 +73,10 @@ describe("check users register page", () => {
     cy.get("#gender").select("M").should("have.value", "M");
 
     cy.get("#birthday").click();
-    for (let index = 0; index < 3; index++) {
-      cy.get(".v3dp__heading__button").first().click();
-    }
-    cy.get("Button").contains("1996").click();
-    cy.get("Button").contains("Feb").click();
-    cy.get("Button").contains("28").click();
+    cy.get(".v3dp__heading__button").first().click();
+    cy.get(".v3dp__elements").find("button").contains("1996").click();
+    cy.get(".v3dp__elements").find("button").contains("Feb").click();
+    cy.get(".v3dp__elements").find("button").contains("28").click();
 
     cy.get("#country")
       .select(expectedCountry)

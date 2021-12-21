@@ -29,8 +29,9 @@ describe("Check user profile", () => {
     cy.get("#country").should("have.value", "Deutschland");
 
     cy.get("#gender").should("have.value", "W");
-    // TODO: How to check this?
-    // cy.get("#birthday").should("have.value", "16.01.1983");
+    cy.get(".v3dp__datepicker")
+      .find("input")
+      .should("have.value", "16.01.1983");
     cy.get("#shirtSize").should("have.value", "M");
 
     // Checkboxes
@@ -51,7 +52,8 @@ describe("Check user profile", () => {
     const expectedState = "Niedersachsen";
     const expectedCountry = "Deutschland";
     const expectedGender = "M";
-    // const expectedBirthday = "01.01.2000";
+    const birthday = { day: "13", month: "Jun", year: "1987" };
+    const expectedBirthday = "13.06.1987";
     const expectedShirtSize = "XL";
 
     cy.loginNormalUser();
@@ -69,7 +71,12 @@ describe("Check user profile", () => {
     cy.get("#zip").clear().type(expectedZip);
 
     cy.get("#state").select(expectedState).should("have.value", expectedState);
-    // TODO: Birthday
+
+    cy.get("#birthday").click();
+    cy.get(".v3dp__elements").find("button").contains(birthday.year).click();
+    cy.get(".v3dp__elements").find("button").contains(birthday.month).click();
+    cy.get(".v3dp__elements").find("button").contains(birthday.day).click();
+
     cy.get("#country")
       .select(expectedCountry)
       .should("have.value", expectedCountry);
@@ -102,7 +109,9 @@ describe("Check user profile", () => {
     cy.get("#country").should("have.value", expectedCountry);
 
     cy.get("#gender").should("have.value", expectedGender);
-    // TODO: birthday
+    cy.get(".v3dp__datepicker")
+      .find("input")
+      .should("have.value", expectedBirthday);
 
     cy.get("#shirtSize").should("have.value", expectedShirtSize);
 

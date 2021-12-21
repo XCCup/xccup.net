@@ -266,7 +266,6 @@ const registerButtonIsEnabled = computed(() => {
     userData.firstName.length > 0 &&
     userData.lastName.length > 0 &&
     userData.birthday &&
-    userData.birthday &&
     userData.gender &&
     userData.clubId &&
     userData.address.country &&
