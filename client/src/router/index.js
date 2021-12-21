@@ -15,7 +15,13 @@ const router = createRouter({
   },
 });
 
-const { saveTokenData, isTokenActive, updateTokens, authData } = useUser();
+const {
+  saveTokenData,
+  isTokenActive,
+  updateTokens,
+  authData,
+  hasElevatedRole,
+} = useUser();
 
 router.beforeEach(async (to, from, next) => {
   // It would be possible to check for a non guarded route first and skip all auth methods
@@ -36,6 +42,9 @@ router.beforeEach(async (to, from, next) => {
 
   // Always allow to go to home
   if (to.fullPath == "/") return next();
+
+  // Redirect non elevated users (admins and mods) to home when they try to access protected views (e.g. AdminDashboard)
+  if (to.meta.requiredElevated && !hasElevatedRole.value) return next("/");
 
   // TODO: Prevent access of login page if user is already logged in
 
