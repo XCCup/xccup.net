@@ -8,7 +8,7 @@ const { getCache, setCache, deleteCache } = require("./CacheManager");
 
 const {
   checkStringObjectNotEmpty,
-  checkIsDateObject,
+  checkIsISO8601,
   checkOptionalIsBoolean,
   checkParamIsUuid,
   validationHasErrors,
@@ -63,8 +63,8 @@ router.post(
   checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("message"),
   checkStringObjectNotEmpty("icon"),
-  checkIsDateObject("from"),
-  checkIsDateObject("till"),
+  checkIsISO8601("from"),
+  checkIsISO8601("till"),
   checkOptionalIsBoolean("sendByMail"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -108,8 +108,8 @@ router.put(
   checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("icon"),
   checkStringObjectNotEmpty("message"),
-  checkIsDateObject("from"),
-  checkIsDateObject("till"),
+  checkIsISO8601("from"),
+  checkIsISO8601("till"),
   checkOptionalIsBoolean("sendByMail"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
