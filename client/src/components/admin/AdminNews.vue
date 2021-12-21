@@ -85,7 +85,6 @@
 <script>
 import ApiService from "@/services/ApiService";
 import { Modal } from "bootstrap";
-import { retrieveDatePartFromDate } from "../../helper/utils";
 
 export default {
   data() {
@@ -127,7 +126,6 @@ export default {
     async saveNews(news) {
       this.selectedNews = createEmptyNewsObject();
       try {
-        transfromToDateString(news);
         const res = news.id
           ? await ApiService.editNews(news)
           : await ApiService.addNews(news);
@@ -164,10 +162,5 @@ function transfromToDateObjects(news) {
     element.from = new Date(element.from);
     element.till = new Date(element.till);
   });
-}
-
-function transfromToDateString(news) {
-  news.from = retrieveDatePartFromDate(news.from);
-  news.till = retrieveDatePartFromDate(news.till);
 }
 </script>

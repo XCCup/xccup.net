@@ -92,8 +92,8 @@ const saveButtonIsEnabled = computed(() => {
   return (
     news.value.title.length > 3 &&
     news.value.message.length > 3 &&
-    news.value.from != undefined &&
-    news.value.till != undefined
+    news.value.from &&
+    news.value.till
   );
 });
 
