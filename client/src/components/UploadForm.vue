@@ -39,24 +39,22 @@
         </div>
       </div>
       <!-- Glider select -->
-      <!-- TODO: Warn user of unsaved changes or open in modal -->
       <GliderSelect
         v-model="defaultGlider"
         label="Fluggerät"
         :show-label="true"
         :gliders="listOfGliders"
-        :is-disabled="!flightId"
+        @gliders-changed="fetchGliders"
       />
 
       <!-- Report -->
-      <div class="form-floating my-3">
+      <div class="form-floating my-4">
         <textarea
           id="flightReport"
           v-model="flightReport"
           class="form-control cy-flight-report"
           placeholder="Flugbericht"
           style="height: 100px"
-          :disabled="!flightId"
         ></textarea>
         <label for="flightReport">Flugbericht</label>
       </div>
@@ -66,7 +64,6 @@
           id="airspaceCommentCheckbox"
           class="form-check-input"
           type="checkbox"
-          :disabled="!flightId"
           data-bs-toggle="collapse"
           data-bs-target="#airspace-collapse"
           data-cy="airspace-comment-checkbox"
@@ -83,7 +80,6 @@
             class="form-control"
             placeholder="Flugbericht"
             style="height: 80px"
-            :disabled="!flightId"
             data-cy="airspace-comment-textarea"
           ></textarea>
           <label for="airspaceComment">Luftraumkommentar</label>
@@ -97,7 +93,6 @@
           v-model="hikeAndFly"
           class="form-check-input"
           type="checkbox"
-          :disabled="!flightId"
         />
         <label class="form-check-label" for="hikeAndFlyCheckbox">
           Hike & Fly
@@ -109,7 +104,6 @@
           v-model="onlyLogbook"
           class="form-check-input"
           type="checkbox"
-          :disabled="!flightId"
         />
         <label class="form-check-label" for="logbookCheckbox">
           Nur Flugbuch
@@ -118,11 +112,7 @@
       <br />
       <!-- Photos -->
       <h3>Bilder</h3>
-      <FlightPhotos
-        :edit-mode="true"
-        :flight-id="flightId"
-        @photos-updated="onPhotosUpdated"
-      />
+      <FlightPhotos :edit-mode="true" @photos-updated="onPhotosUpdated" />
       <!-- Rules & Submit -->
       <div class="form-check mb-3">
         <input
@@ -188,15 +178,19 @@ onMounted(() => {
 // Fetch users gliders
 const listOfGliders = ref(null);
 const defaultGlider = ref(null);
-try {
-  const { data: initialData } = await ApiService.getGliders();
 
-  listOfGliders.value = initialData.gliders;
-  defaultGlider.value = initialData.defaultGlider;
-} catch (error) {
-  console.log(error);
-}
+const fetchGliders = async () => {
+  try {
+    const { data: initialData } = await ApiService.getGliders();
 
+    listOfGliders.value = initialData.gliders;
+    defaultGlider.value = initialData.defaultGlider;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+await fetchGliders();
 const rulesAccepted = ref(false);
 const onlyLogbook = ref(false);
 const hikeAndFly = ref(false);
@@ -212,7 +206,7 @@ const showSpinner = ref(false);
 const errorMessage = ref(null);
 
 const sendButtonIsDisabled = computed(() => {
-  return !rulesAccepted.value;
+  return !(rulesAccepted.value && flightId.value);
 });
 
 // IGC

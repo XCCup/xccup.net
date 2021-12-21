@@ -1,29 +1,34 @@
 <template>
-  <h5>Standard Gerät wählen</h5>
-  <div v-for="glider in listOfGliders" :key="glider.id" class="form-check mt-2">
-    <input
-      :id="glider.id"
-      v-model="selectedGlider"
-      class="form-check-input"
-      type="radio"
-      name="gliderSelectRadios"
-      :value="glider.id"
-      :checked="glider.id === selectedGlider"
-      @change="updateDefaultGlider"
-    />
-    <label class="form-check-label" :for="glider.id">
-      {{ formatGliderName(glider) }}
-      <a href="#" @click.prevent="onDelete(glider)">
-        <i class="bi bi-trash"></i>
-      </a>
-    </label>
+  <div v-if="!hideList">
+    <div
+      v-for="glider in listOfGliders"
+      :key="glider.id"
+      class="form-check mt-2"
+    >
+      <input
+        :id="glider.id"
+        v-model="selectedGlider"
+        class="form-check-input"
+        type="radio"
+        name="gliderSelectRadios"
+        :value="glider.id"
+        :checked="glider.id === selectedGlider"
+        @change="updateDefaultGlider"
+      />
+      <label class="form-check-label" :for="glider.id">
+        {{ formatGliderName(glider) }}
+        <a href="#" @click.prevent="onDelete(glider)">
+          <i class="bi bi-trash"></i>
+        </a>
+      </label>
+    </div>
   </div>
-
   <button type="button" class="btn btn-outline-primary mt-2" @click="onAdd">
     <i class="bi bi-plus"></i> Gerät hinzufügen
   </button>
   <!-- Modals -->
   <ModalAddGlider
+    ref="addModal"
     :show-spinner="showAddGliderSpinner"
     :error-message="addGliderErrorMessage"
     @add-glider="addGlider"
@@ -43,11 +48,20 @@ import { Modal } from "bootstrap";
 import ApiService from "@/services/ApiService.js";
 import useUserProfile from "@/composables/useUserProfile";
 
+defineProps({
+  hideList: {
+    type: Boolean,
+    default: false,
+  },
+});
+const emit = defineEmits(["gliders-changed"]);
+
 const selectedGlider = ref(null);
 const listOfGliders = ref(null);
 
 const showSpinner = ref(false);
 
+const addModal = ref(null);
 const showAddGliderSpinner = ref(false);
 const addGliderErrorMessage = ref(null);
 
@@ -58,7 +72,6 @@ onMounted(() => {
   removeGliderModal.value = new Modal(
     document.getElementById("removeGliderModal")
   );
-  addGliderModal = new Modal(document.getElementById("addGliderModal"));
 });
 
 const removeMessage = computed(() => {
@@ -107,9 +120,8 @@ const removeGlider = async (result) => {
 };
 
 // Add glider
-let addGliderModal = null;
 const onAdd = () => {
-  addGliderModal.show();
+  addModal.value.show();
 };
 const addGlider = async (glider) => {
   try {
@@ -118,7 +130,8 @@ const addGlider = async (glider) => {
     if (res.status != 200) throw res.statusText;
     await updateGliderData(res.data);
     addGliderErrorMessage.value = null;
-    addGliderModal.hide();
+    addModal.value.hide();
+    emit("gliders-changed");
   } catch (error) {
     addGliderErrorMessage.value = error;
     console.error(error);
