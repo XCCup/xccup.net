@@ -108,7 +108,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { getUserAvatar } from "../helper/profilePictureHelper";
+import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import RankingClass from "./RankingClass.vue";
 
 const props = defineProps({
@@ -120,7 +120,7 @@ const props = defineProps({
 
 const emit = defineEmits(["open-message-dialog"]);
 
-const avatarUrl = ref(getUserAvatar(props.user), true);
+const avatarUrl = ref(createUserPictureUrl(props.user.id), true);
 
 const createRankingClass = (glider) => {
   return {
