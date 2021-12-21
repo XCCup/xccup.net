@@ -71,7 +71,7 @@ router.post(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const { title, icon, message, from, till, sendByMail } = req.body;
+      const { title, icon, message, from, till, sendByMail, meta } = req.body;
 
       const news = await service.create({
         title,
@@ -80,6 +80,7 @@ router.post(
         from,
         till,
         sendByMail,
+        meta,
       });
 
       if (news.sendByMail) {
@@ -114,7 +115,7 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const { title, icon, message, from, till, sendByMail } = req.body;
+    const { title, icon, message, from, till, sendByMail, meta } = req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -127,6 +128,7 @@ router.put(
       news.from = from;
       news.till = till;
       news.sendByMail = sendByMail;
+      news.meta = meta;
 
       const result = await service.update(news);
 

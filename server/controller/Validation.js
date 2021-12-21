@@ -242,7 +242,6 @@ exports.checkIsUuidObjectOrEmpty = checkIsUuidObjectOrEmpty;
 exports.checkIsBoolean = checkIsBoolean;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
-exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
 
 exports.checkIsOnlyOfValue = checkIsOnlyOfValue;
 exports.checkIsISO8601 = checkIsISO8601;
@@ -256,5 +255,7 @@ exports.checkOptionalStrongPassword = checkOptionalStrongPassword;
 
 exports.checkParamIsUuid = checkParamIsUuid;
 exports.checkParamIsInt = checkParamIsInt;
+
+exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
 
 exports.validationHasErrors = validationHasErrors;
