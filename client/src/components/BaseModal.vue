@@ -40,6 +40,7 @@
 </template>
 
 <script setup>
+// TODO: Refactor this to have a show method exposed?
 defineProps({
   modalId: {
     type: String,
