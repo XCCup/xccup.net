@@ -135,14 +135,6 @@ export const Routes = [
     component: () => import("../views/UserProfile.vue"),
   },
   {
-    path: "/profil/bearbeiten",
-    name: "ProfileEdit",
-    props: { edit: true },
-    meta: { requiredAuth: true },
-
-    component: () => import("../views/UserProfile.vue"),
-  },
-  {
     path: "/profil/hangar",
     name: "ProfileHangar",
     props: { showHangar: true },
