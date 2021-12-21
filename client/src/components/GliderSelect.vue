@@ -1,6 +1,6 @@
 <template>
   <div class="row d-flex align-items-end">
-    <div class="col-sm-8 mt-3">
+    <div class="col-md-8 mt-3">
       <label v-if="showLabel" class="form-label">Fluggerät</label>
       <select
         id="glider-select"
@@ -34,16 +34,19 @@
         </option>
       </select>
     </div>
-    <div class="col-sm-4 mt-3">
-      <router-link :to="{ name: 'ProfileHangar' }" class="d-grid gap-2">
-        <button type="button" class="btn btn-primary">Liste bearbeiten</button>
-      </router-link>
+    <div class="col-md-4 mt-3">
+      <div class="d-grid gap-2">
+        <UserProfileGliderlist
+          :hide-list="true"
+          @gliders-changed="glidersChanged"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "gliders-changed"]);
 defineProps({
   isDisabled: {
     type: Boolean,
@@ -62,4 +65,6 @@ defineProps({
     default: false,
   },
 });
+// TODO: Refactor with a composable to prevent nested emiting?
+const glidersChanged = () => emit("gliders-changed");
 </script>
