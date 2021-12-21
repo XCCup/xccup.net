@@ -55,6 +55,7 @@
               role="tab"
               aria-controls="nav-change-pw"
               aria-selected="false"
+              data-cy="change-password-tab"
             >
               Passwort ändern
             </button>

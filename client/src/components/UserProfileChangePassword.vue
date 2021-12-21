@@ -11,25 +11,26 @@
       But there is no error… This is bad UX
        -->
       <BaseInput
-        id="password"
         v-model="password"
         label="Passwort"
         :is-password="true"
+        data-cy="password-input"
       />
     </div>
     <div class="col-md-6 mb-3">
       <BaseInput
-        id="passwordConfirm"
         v-model="passwordConfirmation"
         label="Passwort wiederholen"
         :is-password="true"
         :external-validation-result="!passwordMatches"
+        data-cy="password-confirm-input"
       />
     </div>
     <div class="col-md-6 mb-3">
       <button
         class="btn btn-primary"
         :disabled="!saveButtonIsEnabled"
+        data-cy="password-change-btn"
         @click="onSave"
       >
         Speichern
