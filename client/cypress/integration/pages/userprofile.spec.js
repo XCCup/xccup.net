@@ -132,13 +132,11 @@ describe("Check user profile", () => {
 
     cy.get("h3", {
       timeout: 10000,
-    })
-      .should("have.text", `Login`)
-      .and("be.visible");
-
-    cy.wait(2000);
+    }).should("have.text", `Login`);
 
     cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
+    cy.wait(2000);
+
     cy.visit("/profil");
 
     cy.get("h4", {
@@ -158,6 +156,8 @@ describe("Check user profile", () => {
     cy.logout();
     cy.visit("/");
     cy.login("Clinton@Hettinger.fake", newPassword);
+    cy.wait(2000);
+
     cy.visit("/profil");
 
     cy.get("h4", {
