@@ -6,7 +6,7 @@
           Anzahl {{ entryName }} pro Seite
         </div>
       </li>
-      <li class="me-2">
+      <li>
         <select
           id="cyPaginationAmountSelect"
           v-model="numberEntriesPerPage"
