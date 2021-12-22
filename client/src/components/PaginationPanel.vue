@@ -1,6 +1,7 @@
 <template>
   <nav aria-label="Flights pagination">
     <ul class="pagination pagination-sm justify-content-end align-items-center">
+      <!-- TODO: How does a mobile device reach the next page? -->
       <li class="me-2">
         <div class="no-line-break pagination-text hide-on-xs">
           Anzahl {{ entryName }} pro Seite
