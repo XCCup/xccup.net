@@ -9,7 +9,7 @@ const userData = ref({
   id: "",
   firstName: "",
   lastName: "",
-  birthday: "",
+  birthday: null,
   gender: "",
   clubId: "",
   club: { name: "" },
@@ -35,7 +35,7 @@ export default () => {
   );
   // Mutations
   const updateState = (data) => {
-    userData.value = { ...data };
+    userData.value = { ...data, birthday: new Date(data.birthday) };
     modifiedUserData.value = cloneDeep(userData.value);
   };
   // Actions

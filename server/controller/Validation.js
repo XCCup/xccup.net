@@ -181,14 +181,13 @@ function checkIsBoolean(field) {
   return check(field).isBoolean().withMessage(`${field} must be a boolean`);
 }
 /**
- * Checks, when the field is present, if the field is a valid ISO8601 timestamp.
+ * Checks if the field is a valid ISO8601 timestamp.
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkOptionalIsISO8601(field) {
+function checkIsISO8601(field) {
   return check(field)
-    .optional()
-    .isBoolean()
+    .isISO8601()
     .withMessage(`${field} must be a ISO8601 timestamp`);
 }
 /**
@@ -243,10 +242,9 @@ exports.checkIsUuidObjectOrEmpty = checkIsUuidObjectOrEmpty;
 exports.checkIsBoolean = checkIsBoolean;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
-exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
 
 exports.checkIsOnlyOfValue = checkIsOnlyOfValue;
-exports.checkOptionalIsISO8601 = checkOptionalIsISO8601;
+exports.checkIsISO8601 = checkIsISO8601;
 
 exports.checkStringObjectNotEmpty = checkStringObjectNotEmpty;
 exports.checkStringObject = checkStringObject;
@@ -257,5 +255,7 @@ exports.checkOptionalStrongPassword = checkOptionalStrongPassword;
 
 exports.checkParamIsUuid = checkParamIsUuid;
 exports.checkParamIsInt = checkParamIsInt;
+
+exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
 
 exports.validationHasErrors = validationHasErrors;
