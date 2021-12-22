@@ -1,9 +1,12 @@
 describe("Check user profile", () => {
+  before(() => {
+    cy.seedDb();
+  });
+
   beforeEach(() => {
     cy.visit("/profil");
     // TODO: Is the seeding mandatory? It costs time…
     // How to make the tests self containing otherwise?
-    cy.seedDb();
   });
 
   it("Visit profile as guest", () => {
