@@ -7,7 +7,7 @@
       <div class="col-6">
         <FilterPanel
           :api-endpoint="ApiService.getFlights"
-          @show-filter="showFilter"
+          :flight-options="true"
         />
       </div>
       <div class="col-6">
@@ -19,15 +19,12 @@
     </div>
     <BaseError :error-message="errorMessage" />
     <ResultsTableOverall />
-    <ModalFilterFlights />
   </div>
 </template>
 
 <script setup>
 import ApiService from "@/services/ApiService";
-import { onMounted, ref } from "vue";
 import { setWindowName } from "../helper/utils";
-import { Modal } from "bootstrap";
 import useData from "@/composables/useData";
 import { useRoute } from "vue-router";
 
@@ -38,15 +35,4 @@ const route = useRoute();
 const { fetchData, errorMessage } = useData(ApiService.getFlights);
 
 fetchData({ params: route.params.year, queries: route.query });
-
-let filterModal;
-onMounted(() => {
-  // TODO: This is not very clean as it is not clear where the id comes from.
-  // Better use ref instead of document selector
-  filterModal = new Modal(document.getElementById("flightFilterModal"));
-});
-
-const showFilter = () => {
-  filterModal.show();
-};
 </script>

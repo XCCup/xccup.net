@@ -6,10 +6,7 @@
     <p v-if="remark">Hinweis: {{ remark }}</p>
     <div v-if="category == 'overall'" class="row">
       <div class="col-6">
-        <FilterPanel
-          :api-endpoint="ApiService.getResults"
-          @show-filter="showFilter"
-        />
+        <FilterPanel :api-endpoint="ApiService.getResults" />
       </div>
     </div>
     <BaseError :error-message="errorMessage" />
@@ -17,15 +14,13 @@
       :results="results?.values || []"
       :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS || 0"
     />
-    <ModalFilterResults />
   </div>
 </template>
 
 <script setup>
 import ApiService from "@/services/ApiService.js";
-import { ref, watchEffect, onMounted } from "vue";
+import { ref, watchEffect } from "vue";
 import { setWindowName } from "../helper/utils";
-import { Modal } from "bootstrap";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
 
@@ -96,15 +91,7 @@ await fetchData({
   params: router.params,
   queries: router.query,
 });
+
 // Remark has an internal reference to results. Therefore the fetchData function has to be run at least once before setting the remark value.
 if (activeCategory.remarks) remark.value = activeCategory.remarks();
-
-let filterModal;
-onMounted(() => {
-  filterModal = new Modal(document.getElementById("resultFilterModal"));
-});
-
-const showFilter = () => {
-  filterModal.show();
-};
 </script>

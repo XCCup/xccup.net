@@ -23,20 +23,53 @@ describe("check flights all page", () => {
       .and("include.text", "178 P");
   });
 
-  it("test filter on pilot name", () => {
+  it("test filter", () => {
     const expectedName = "Bobby Volkman";
+    const expectedClub = "Die Moselfalken";
+    const expectedTeam = "Die Elstern";
+    const expectedRanking = "GS Sport";
+    const expectedSite = "Adelberg";
     const expectedLength = 2;
 
     cy.get("#filterButton").click();
 
+    // TODO: Test filters more?
     cy.get("#filterSelectName").select(expectedName);
-    cy.get("button").contains("Anwenden").click();
+    cy.get("#filterSelectClub").select(expectedClub);
+    cy.get("#filterSelectTeam").select(expectedTeam);
+    cy.get("#filterSelectRanking").select(expectedRanking);
+    cy.get("#filterSelectRanking").select(expectedRanking);
+    cy.get("#filterSelectSite").select(expectedSite);
+
+    cy.get("[data-cy=activate-filter-button]").click();
 
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
     cy.wait(1000);
     /*eslint-enable */
+
+    cy.get("[data-cy=filter-badge-clubId]").should("contain", expectedClub);
+    cy.get("[data-cy=filter-badge-teamId]").should("contain", expectedTeam);
+    cy.get("[data-cy=filter-badge-rankingClass]").should(
+      "contain",
+      expectedRanking
+    );
+    cy.get("[data-cy=filter-badge-siteId]").should("contain", expectedSite);
+    cy.get("[data-cy=no-flights-listed]").should(
+      "contain",
+      "Keine Flüge gemeldet in diesem Jahr"
+    );
+
+    cy.get("[data-cy=filter-badge-siteId]").within(() => {
+      cy.get("[data-cy=filter-clear-one-button]").click();
+    });
+    /*eslint-disable */
+    // TODO: Find better solution
+    // Wait till table is updated otherwise its() will always resolve to 25
+    cy.wait(1000);
+    /*eslint-enable */
+
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
 
     cy.get("table")

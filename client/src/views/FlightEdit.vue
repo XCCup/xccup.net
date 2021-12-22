@@ -77,6 +77,7 @@
           class="btn btn-primary me-2"
           type="submit"
           :disabled="!submitButtonIsEnabled"
+          data-cy="save-flight-edit"
           @click.prevent="onSubmit"
         >
           Speichern

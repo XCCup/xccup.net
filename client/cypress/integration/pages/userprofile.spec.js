@@ -1,9 +1,10 @@
 describe("Check user profile", () => {
+  before(() => {
+    cy.seedDb();
+  });
+
   beforeEach(() => {
     cy.visit("/profil");
-    // TODO: Is the seeding mandatory? It costs time…
-    // How to make the tests self containing otherwise?
-    cy.seedDb();
   });
 
   it("Visit profile as guest", () => {
@@ -14,7 +15,9 @@ describe("Check user profile", () => {
     cy.loginNormalUser();
     cy.visit("/profil");
 
-    cy.get("h4").should("have.text", `Profil`);
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
 
     cy.get("#firstName").should("have.value", "Ramona");
     cy.get("#lastName").should("have.value", "Gislason");
@@ -58,7 +61,9 @@ describe("Check user profile", () => {
     cy.loginNormalUser();
     cy.visit("/profil");
 
-    cy.get("h4").should("have.text", `Profil`);
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
 
     cy.get("#city").clear().type(expectedCity);
     cy.get("Button").contains("Speichern").should("not.be.disabled");
@@ -125,8 +130,18 @@ describe("Check user profile", () => {
     const newPassword = "Foobar2!";
     const badPassword = "foobar";
 
-    cy.loginNormalUser();
+    cy.get("h3", {
+      timeout: 10000,
+    }).should("have.text", `Login`);
+
+    cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
+    cy.wait(2000);
+
     cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
 
     cy.get("[data-cy=change-password-tab]").click();
     cy.get("[data-cy=password-input]").type(badPassword);
@@ -140,9 +155,16 @@ describe("Check user profile", () => {
 
     cy.logout();
     cy.visit("/");
-    cy.login("Ramona@Gislason.fake", newPassword);
+    cy.login("Clinton@Hettinger.fake", newPassword);
+    cy.wait(2000);
+
     cy.visit("/profil");
-    cy.get("#firstName").should("have.value", "Ramona");
-    cy.get("#lastName").should("have.value", "Gislason");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
+    cy.get("#firstName").should("have.value", "Clinton");
+    cy.get("#lastName").should("have.value", "Hettinger");
   });
 });

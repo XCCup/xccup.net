@@ -1,4 +1,4 @@
-describe("check flight page", () => {
+describe("check edit flight page", () => {
   const editableFlightId = 6;
   const nonEditableFlightId = 26;
 
@@ -72,7 +72,7 @@ describe("check flight page", () => {
 
     // TODO: Check photos
 
-    cy.get("button").contains("Speichern").click();
+    cy.get("[data-cy=save-flight-edit]").contains("Speichern").click();
     cy.url().should("include", `/flug/${editableFlightId}`);
 
     cy.get("#cyFlightDetailsTable1").contains("td", "U-Turn Bodyguard");

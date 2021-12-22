@@ -31,9 +31,21 @@ function createInstance(apiEndpoint, apiExtension) {
     checkIfAnyValueOfObjectIsDefined(filterOptionsCache.value)
   );
 
+  const activeFilters = computed(() => {
+    if (!filterOptionsCache.value) return;
+    return Object.keys(filterOptionsCache.value)
+      .filter((k) => filterOptionsCache.value[k] != null)
+      .reduce((a, k) => ({ ...a, [k]: filterOptionsCache.value[k] }), {});
+  });
+
   // Mutations
   const clearFilter = () => {
     filterOptionsCache.value = null;
+    fetchData();
+  };
+
+  const clearOneFilter = (key) => {
+    filterOptionsCache.value[key] = undefined;
     fetchData();
   };
 
@@ -43,8 +55,6 @@ function createInstance(apiEndpoint, apiExtension) {
   };
 
   const filterDataBy = (filterOptions) => {
-    //Check if any filter value was set
-    if (!Object.values(filterOptions).find((v) => !!v)) return;
     filterOptionsCache.value = filterOptions;
     fetchData();
   };
@@ -108,7 +118,9 @@ function createInstance(apiEndpoint, apiExtension) {
     numberOfTotalEntries: readonly(numberOfTotalEntries),
     isLoading: readonly(isLoading),
     filterActive: readonly(filterActive),
+    activeFilters,
     clearFilter,
+    clearOneFilter,
     DEFAULT_LIMIT,
     LIMIT_OPTIONS,
   };

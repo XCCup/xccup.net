@@ -2,6 +2,7 @@
 <template>
   <div
     id="addGliderModal"
+    ref="_modal"
     class="modal fade"
     tabindex="-1"
     aria-labelledby="addAircraftModalLabel"
@@ -66,7 +67,8 @@
 </template>
 <script setup>
 import ApiService from "@/services/ApiService.js";
-import { ref, computed, reactive } from "vue";
+import { ref, computed, reactive, onMounted } from "vue";
+import { Modal } from "bootstrap";
 
 const emit = defineEmits(["add-glider"]);
 
@@ -80,6 +82,17 @@ defineProps({
     default: null,
   },
 });
+
+const _modal = ref(null);
+const modal = ref(null);
+onMounted(() => {
+  modal.value = new Modal(_modal.value);
+});
+
+const show = () => modal.value.show();
+const hide = () => modal.value.hide();
+
+defineExpose({ show, hide });
 
 const newGlider = reactive({
   brand: "",

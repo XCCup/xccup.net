@@ -12,7 +12,7 @@
               style="top: 20px; right: -10px"
               @click.prevent="onEditAvatar"
             >
-              <i class="col bi bi-pencil fs-6"></i>
+              <i class="col bi bi-plus-circle fs-6"></i>
             </span>
           </div>
 

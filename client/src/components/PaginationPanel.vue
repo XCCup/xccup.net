@@ -1,12 +1,12 @@
 <template>
   <nav aria-label="Flights pagination">
     <ul class="pagination pagination-sm justify-content-end align-items-center">
-      <li class="me-2">
+      <li>
         <div class="no-line-break pagination-text hide-on-xs">
           Anzahl {{ entryName }} pro Seite
         </div>
       </li>
-      <li class="me-2">
+      <li class="ms-2">
         <select
           id="cyPaginationAmountSelect"
           v-model="numberEntriesPerPage"
@@ -17,7 +17,7 @@
           </option>
         </select>
       </li>
-      <li v-show="multiplePagesExists" class="me-2">
+      <li v-show="multiplePagesExists" class="ms-2">
         <div id="cyPaginationInfo" class="no-line-break pagination-text">
           {{ currentRange.start }}-{{ currentRange.end }}
           von
@@ -26,7 +26,7 @@
       </li>
       <li
         v-show="multiplePagesExists"
-        class="page-item"
+        class="page-item ms-2"
         :class="disableIfNoPreviousEntriesAvailable"
         @click="onFirst"
       >
