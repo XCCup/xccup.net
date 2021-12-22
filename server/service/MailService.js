@@ -18,6 +18,7 @@ const {
 const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
 
+// TODO: Warn if this env are not set (They are not E2E testet)
 const clientUrl = process.env.CLIENT_URL;
 const userActivateLink = process.env.CLIENT_USER_ACTIVATE;
 const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST;

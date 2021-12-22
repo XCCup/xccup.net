@@ -30,13 +30,20 @@ router.get(
     try {
       const picture = await service.getByUserId(userId);
 
-      if (!picture) return res.sendStatus(NOT_FOUND);
+      if (picture) {
+        const fullfilepath = thumb
+          ? path.join(path.resolve(), picture.pathThumb)
+          : path.join(path.resolve(), picture.path);
 
-      const fullfilepath = thumb
-        ? path.join(path.resolve(), picture.pathThumb)
-        : path.join(path.resolve(), picture.path);
+        return res.type(picture.mimetype).sendFile(fullfilepath);
+      }
 
-      return res.type(picture.mimetype).sendFile(fullfilepath);
+      const user = await userService.getById(userId);
+      if (!user) return res.sendStatus(NOT_FOUND);
+
+      const diceBearUrl = grapImageFromDicebear(user);
+
+      return res.redirect(diceBearUrl);
     } catch (error) {
       next(error);
     }
@@ -100,5 +107,29 @@ router.post(
     }
   }
 );
+
+function grapImageFromDicebear(user) {
+  const { seed, initals } = generateDicebearSeed(user);
+
+  const diceBearUrl =
+    process.env.NODE_ENV === "production"
+      ? `${process.env.DICEBEAR_URL}api/initials/${seed}${initals}.svg`
+      : `https://avatars.dicebear.com/api/initials/${seed}${initals}.svg`;
+
+  return diceBearUrl;
+}
+
+function generateDicebearSeed(user) {
+  const seedChars = "<>!&()-:'|";
+
+  const initals =
+    user.firstName.substring(0, 1) + user.lastName.substring(0, 1);
+
+  const seed =
+    seedChars[user.id.charCodeAt(0) % seedChars.length] +
+    seedChars[user.id.charCodeAt(1) % seedChars.length] +
+    seedChars[user.id.charCodeAt(2) % seedChars.length];
+  return { seed, initals };
+}
 
 module.exports = router;

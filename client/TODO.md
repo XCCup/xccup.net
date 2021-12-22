@@ -87,7 +87,7 @@
 - [x] GS RLP
 - [x] Luxemburg XC-Championat
 - [x] Newcomer
-- [ ] Ranking Class
+- ~~[ ] Ranking Class~~Can be viewed with a filter on overall results
 - [x] Takeoff records
 - [ ] Early bird
 - [ ] "Late" bird
