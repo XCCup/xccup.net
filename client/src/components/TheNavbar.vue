@@ -258,7 +258,7 @@
           <button
             id="flightUploadNavButton"
             type="button"
-            class="btn btn-danger btn-sm m-1"
+            class="btn btn-danger btn-sm m-1 no-line-break"
           >
             Flug hochladen
           </button>
