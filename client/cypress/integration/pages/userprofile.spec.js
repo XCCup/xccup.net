@@ -5,8 +5,6 @@ describe("Check user profile", () => {
 
   beforeEach(() => {
     cy.visit("/profil");
-    // TODO: Is the seeding mandatory? It costs time…
-    // How to make the tests self containing otherwise?
   });
 
   it("Visit profile as guest", () => {
@@ -17,7 +15,9 @@ describe("Check user profile", () => {
     cy.loginNormalUser();
     cy.visit("/profil");
 
-    cy.get("h4").should("have.text", `Profil`);
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
 
     cy.get("#firstName").should("have.value", "Ramona");
     cy.get("#lastName").should("have.value", "Gislason");
@@ -61,7 +61,9 @@ describe("Check user profile", () => {
     cy.loginNormalUser();
     cy.visit("/profil");
 
-    cy.get("h4").should("have.text", `Profil`);
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
 
     cy.get("#city").clear().type(expectedCity);
     cy.get("Button").contains("Speichern").should("not.be.disabled");
@@ -128,8 +130,12 @@ describe("Check user profile", () => {
     const newPassword = "Foobar2!";
     const badPassword = "foobar";
 
-    cy.loginNormalUser();
+    cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
     cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
 
     cy.get("[data-cy=change-password-tab]").click();
     cy.get("[data-cy=password-input]").type(badPassword);
@@ -143,9 +149,9 @@ describe("Check user profile", () => {
 
     cy.logout();
     cy.visit("/");
-    cy.login("Ramona@Gislason.fake", newPassword);
+    cy.login("Clinton@Hettinger.fake", newPassword);
     cy.visit("/profil");
-    cy.get("#firstName").should("have.value", "Ramona");
-    cy.get("#lastName").should("have.value", "Gislason");
+    cy.get("#firstName").should("have.value", "Clinton");
+    cy.get("#lastName").should("have.value", "Hettinger");
   });
 });
