@@ -136,6 +136,8 @@ describe("Check user profile", () => {
       .should("have.text", `Login`)
       .and("be.visible");
 
+    cy.wait(2000);
+
     cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
     cy.visit("/profil");
 
