@@ -130,6 +130,12 @@ describe("Check user profile", () => {
     const newPassword = "Foobar2!";
     const badPassword = "foobar";
 
+    cy.get("h3", {
+      timeout: 10000,
+    })
+      .should("have.text", `Login`)
+      .and("be.visible");
+
     cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
     cy.visit("/profil");
 
@@ -151,6 +157,11 @@ describe("Check user profile", () => {
     cy.visit("/");
     cy.login("Clinton@Hettinger.fake", newPassword);
     cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
     cy.get("#firstName").should("have.value", "Clinton");
     cy.get("#lastName").should("have.value", "Hettinger");
   });
