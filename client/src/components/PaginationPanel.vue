@@ -1,12 +1,12 @@
 <template>
   <nav aria-label="Flights pagination">
     <ul class="pagination pagination-sm justify-content-end align-items-center">
-      <li class="me-2">
+      <li>
         <div class="no-line-break pagination-text hide-on-xs">
           Anzahl {{ entryName }} pro Seite
         </div>
       </li>
-      <li cass="ms-2">
+      <li class="ms-2">
         <select
           id="cyPaginationAmountSelect"
           v-model="numberEntriesPerPage"
