@@ -95,8 +95,6 @@
             aria-labelledby="nav-hangar-tab"
           >
             <div id="glider-select" class="col-md-12 mb-4">
-              <h5>Standard Gerät wählen</h5>
-
               <UserProfileGliderlist />
             </div>
           </div>

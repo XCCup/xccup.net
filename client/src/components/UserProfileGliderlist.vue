@@ -1,5 +1,6 @@
 <template>
   <div v-if="!hideList">
+    <h5>Standard Gerät wählen</h5>
     <div
       v-for="glider in listOfGliders"
       :key="glider.id"
