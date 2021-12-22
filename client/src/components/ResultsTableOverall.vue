@@ -28,7 +28,7 @@
             class="hide-on-xs"
             @head-sort-changed="handleSortChange"
           />
-          <th class="hide-on-sm">Status</th>
+          <th class="hide-on-md">Status</th>
         </thead>
         <tbody>
           <tr
@@ -70,14 +70,16 @@
             <td class="no-line-break hide-on-xs">
               {{ flight.flightPoints }} P
             </td>
-            <td class="hide-on-sm">
+            <td class="hide-on-md">
               <FlightState :flight-state="flight.flightStatus" />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div v-else>Keine Flüge gemeldet in diesem Jahr</div>
+    <div v-else data-cy="no-flights-listed">
+      Keine Flüge gemeldet in diesem Jahr
+    </div>
   </section>
 </template>
 
