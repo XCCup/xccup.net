@@ -653,7 +653,10 @@ async function createWhereStatement(
       violationAccepted: false,
     };
   } else {
-    whereStatement = {};
+    whereStatement = {
+      airspaceViolation: false,
+      uncheckedGRecord: false,
+    };
   }
   if (flightType) {
     whereStatement.flightType = flightType;
