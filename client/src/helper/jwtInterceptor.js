@@ -1,6 +1,6 @@
 import axios from "axios";
 import useUser from "@/composables/useUser";
-const { authData, refreshToken } = useUser();
+const { authData, updateTokens } = useUser();
 
 const jwtInterceptor = axios.create({});
 
@@ -21,10 +21,9 @@ jwtInterceptor.interceptors.response.use(
       console.log("Please check your internet connection.");
     }
     console.log("Interceptor refresh…");
-
-    // TODO: Should the server error code be 403?
-    if (error.response?.status === 401 || error.response?.data === "EXPIRED") {
-      await refreshToken();
+    if (error.response?.status === 403 && error.response?.data === "EXPIRED") {
+      console.log("Interceptor refresh…");
+      await updateTokens();
       error.config.headers["Authorization"] = `Bearer ${authData.value.token}`;
       console.log("…done");
       return axios(error.config);

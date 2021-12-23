@@ -1,10 +1,19 @@
 describe("check admin page", () => {
   before(() => {
     cy.seedFlightDb();
+  });
+
+  beforeEach(() => {
     cy.visit("/");
     cy.loginAdminUser();
     cy.visit("/admin");
-    // cy.get("#navbarAdminDashboard").click();
+  });
+
+  it("test accessing as non admin user", () => {
+    cy.logout();
+    cy.login("Clinton@Hettinger.name", "PW_ClintonHettinger");
+    cy.visit("/admin");
+    cy.url().should("include", "/").and("not.include", "/admin");
   });
 
   it("test general page loading", () => {

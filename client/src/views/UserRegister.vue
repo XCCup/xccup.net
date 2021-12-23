@@ -69,7 +69,7 @@
               v-model="userData.birthday"
               label="Geburstag"
               starting-view="year"
-              :upper-limit="upperLimitBirthday"
+              :upper-limit="initialDate"
             />
           </div>
         </div>
@@ -234,7 +234,7 @@ import { Modal } from "bootstrap";
 import BaseSlotModal from "../components/BaseSlotModal.vue";
 import PrivacyPolicy from "../components/PrivacyPolicy.vue";
 
-const { userData } = useUserSignup();
+const { userData, initialDate } = useUserSignup();
 
 setWindowName("Registrieren");
 const signupSuccessfull = ref(false);
@@ -244,11 +244,6 @@ const rulesAccepted = ref(false);
 const errorMessage = ref(null);
 
 // TODO: Form input validation with vue
-
-// Set upper boundary of date picker
-const limitDate = new Date();
-limitDate.setYear(limitDate.getFullYear() - 20);
-const upperLimitBirthday = ref(limitDate);
 
 // Helpers
 const showSpinner = ref(false);
@@ -277,9 +272,6 @@ const registerButtonIsEnabled = computed(() => {
     userData.firstName.length > 0 &&
     userData.lastName.length > 0 &&
     userData.birthday &&
-    // Why does this happen anyway?
-    // TODO: Is this solved?
-    userData.birthday != "NaN-NaN-NaN" &&
     userData.gender &&
     userData.clubId &&
     userData.address.country &&

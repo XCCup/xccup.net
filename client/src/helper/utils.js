@@ -9,7 +9,6 @@ export function setWindowName(namePostfix) {
 export function retrieveDateOnly(isoDate) {
   return isoDate.substring(0, 10);
 }
-
 export function dayAfter(date) {
   const dateObject = new Date(date);
   dateObject.setDate(dateObject.getDate() + 1);

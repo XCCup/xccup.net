@@ -15,7 +15,6 @@ const { query } = require("express-validator");
 const {
   checkIsUuidObject,
   checkParamIsUuid,
-  checkOptionalIsISO8601,
   checkStringObject,
   validationHasErrors,
 } = require("./Validation");
@@ -23,7 +22,6 @@ const multer = require("multer");
 
 const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
-
 
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
 const THUMBNAIL_IMAGE_HEIGHT = 310;
@@ -45,7 +43,6 @@ router.post(
   uploadLimiter,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
-  checkOptionalIsISO8601("timestamp"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
@@ -53,8 +50,6 @@ router.post(
       const { originalname, mimetype, size, path } = req.file;
       const { flightId } = req.body;
 
-      // Time is somehow off by 2 hours. Even if it's UTC
-      // Currently solved in client but maybe there is a better way to do correct this here
       const exif = await exifr.parse(path);
       const timestamp = exif?.DateTimeOriginal ?? undefined;
 

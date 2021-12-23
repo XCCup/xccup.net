@@ -26,7 +26,7 @@ const {
 const { query } = require("express-validator");
 const { createRateLimiter } = require("./api-protection");
 const {
-  checkIsDateObject,
+  checkIsISO8601,
   checkIsEmail,
   checkIsBoolean,
   checkIsOnlyOfValue,
@@ -351,7 +351,7 @@ router.post(
   userCreateLimiter,
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
-  checkIsDateObject("birthday"),
+  checkIsISO8601("birthday"),
   checkIsEmail("email"),
   checkIsUuidObject("clubId"),
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
@@ -419,13 +419,12 @@ router.post(
 // @desc Edits a user
 // @route PUT /users/
 // @access Only owner
-
 router.put(
   "/",
   authToken,
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
-  checkIsDateObject("birthday"),
+  checkIsISO8601("birthday"),
   checkIsEmail("email"),
   checkIsUuidObject("clubId"),
   checkIsOnlyOfValue("gender", Object.values(GENDER)),

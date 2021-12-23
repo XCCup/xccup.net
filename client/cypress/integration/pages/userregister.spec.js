@@ -20,9 +20,9 @@ describe("check users register page", () => {
     for (let index = 0; index < 3; index++) {
       cy.get(".v3dp__heading__button").first().click();
     }
-    cy.get("Button").contains("1994").click();
-    cy.get("Button").contains("Mai").click();
-    cy.get("Button").contains("01").click();
+    cy.get(".v3dp__elements").find("button").contains("1994").click();
+    cy.get(".v3dp__elements").find("button").contains("Mai").click();
+    cy.get(".v3dp__elements").find("button").contains("01").click();
 
     cy.get("#country")
       .select(expectedCountry)
@@ -77,9 +77,9 @@ describe("check users register page", () => {
     for (let index = 0; index < 3; index++) {
       cy.get(".v3dp__heading__button").first().click();
     }
-    cy.get("Button").contains("1996").click();
-    cy.get("Button").contains("Feb").click();
-    cy.get("Button").contains("28").click();
+    cy.get(".v3dp__elements").find("button").contains("1996").click();
+    cy.get(".v3dp__elements").find("button").contains("Feb").click();
+    cy.get(".v3dp__elements").find("button").contains("28").click();
 
     cy.get("#country")
       .select(expectedCountry)
