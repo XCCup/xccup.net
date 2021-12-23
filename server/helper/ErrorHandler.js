@@ -57,7 +57,7 @@ function createMetaDataFromReq(req) {
   if (Object.keys(req.body).length == 0) return;
 
   // Prevent storage of whole igc file in error log
-  if (req.body.igc.body) delete req.body.igc.body;
+  if (req?.body?.igc?.body) delete req.body.igc.body;
 
   return {
     meta: {
