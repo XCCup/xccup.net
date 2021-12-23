@@ -101,6 +101,7 @@ describe("check flights all page", () => {
     // Wait till table is updated otherwise its() will always resolve to 25
     // cy.wait(1000);
     /*eslint-enable */
+    cy.get("[data-cy=filter-icon]").should("be.visible");
     cy.get("table").find("tr").should("have.length", expectedLength);
 
     cy.get("table")
