@@ -8,8 +8,9 @@
   >
     Filter
     <!-- TODO: Move spinner elsewhere= -->
+    <!-- Beware e.g. sorting in flights all table. Table should not disapper or change position -->
     <BaseSpinner v-if="isLoading" />
-    <i v-else class="bi bi-funnel"></i>
+    <i v-else class="bi bi-funnel" data-cy="filter-icon"></i>
   </button>
 
   <div class="mb-3">

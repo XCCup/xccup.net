@@ -25,7 +25,7 @@
     </div>
   </div>
   <button type="button" class="btn btn-outline-primary mt-2" @click="onAdd">
-    <i class="bi bi-plus"></i> Gerät hinzufügen
+    <i class="bi bi-plus-circle"></i> Gerät hinzufügen
   </button>
   <!-- Modals -->
   <ModalAddGlider

@@ -21,17 +21,11 @@
 import { computed } from "vue";
 
 const props = defineProps({
-  preventOverflow: {
-    type: Boolean,
-    default: false,
-  },
   narrow: {
     type: Boolean,
     default: false,
   },
 });
-// TODO: Find a way to make his unnecessary
-const heightClass = computed(() => (props.preventOverflow ? "" : "vh-100"));
 
 // Width of the dialog
 const wide = "col-11 col-lg-9 col-xl-7";

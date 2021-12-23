@@ -94,11 +94,15 @@ describe("check users page", () => {
     // TODO: Find better solution
     // Wait will modal was fully rendered, otherwise the typing may not be successful
     cy.wait(1000);
+
+    cy.get("[data-cy=activate-filter-button]").should("be.visible");
     cy.get("#filterSelectName").type("Sc");
     cy.get("button").contains("Anwenden").click();
 
+    cy.get("[data-cy=filter-icon]").should("be.visible");
+
     // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
+    // cy.wait(1000);
     /*eslint-enable */
 
     cy.get("#userListView")
@@ -129,11 +133,15 @@ describe("check users page", () => {
     // TODO: Find better solution
     // Wait will modal was fully rendered, otherwise the typing may not be successful
     cy.wait(1000);
+    cy.get("[data-cy=activate-filter-button]").should("be.visible");
+    cy.get("#filterSelectName").should("have.text", "");
+
     cy.get("#filterSelectName").type(expectedName);
     cy.get("button").contains("Anwenden").click();
+    cy.get("[data-cy=filter-icon]").should("be.visible");
 
     // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
+    // cy.wait(1000);
     /*eslint-enable */
 
     cy.get("#userListView")

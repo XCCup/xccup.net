@@ -4,6 +4,7 @@ const mailService = require("../service/MailService");
 const { getCurrentActive } = require("../service/SeasonService");
 const {
   OK,
+  CREATED,
   NOT_FOUND,
   FORBIDDEN,
   UNAUTHORIZED,
@@ -400,12 +401,13 @@ router.post(
       const user = await service.save(newUser);
       mailService.sendActivationMail(user);
 
-      res.json(user);
+      res.status(CREATED).json(user);
     } catch (error) {
       if (
         error.name?.includes("SequelizeUniqueConstraintError") &&
         error.original?.constraint === "Users_email_key"
       ) {
+        // TODO: Why no http constant at this point?
         res.status(409).json({ conflict: "emailExists" });
       } else {
         next(error);

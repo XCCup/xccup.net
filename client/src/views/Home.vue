@@ -1,20 +1,22 @@
 <template>
-  <span class="d-none d-dark-inline container"
-    >Dark mode ist noch nicht schön, funktioniert aber…
-  </span>
+  <div v-if="seasonStats">
+    <span class="d-none d-dark-inline container"
+      >Dark mode ist noch nicht schön, funktioniert aber…
+    </span>
 
-  <InfoBox :season-stats="seasonStats" />
-  <DailyResults :max-rows="10" :flights="dailyResults" />
-  <NewsPanel v-if="newsItems?.length > 0" :news-items="newsItems" />
-  <PhotoCarousel :photos="randomPhotos" />
+    <InfoBox :season-stats="seasonStats" />
+    <DailyResults :max-rows="10" :flights="dailyResults" />
+    <NewsPanel v-if="newsItems?.length > 0" :news-items="newsItems" />
+    <PhotoCarousel :photos="randomPhotos" />
 
-  <ResultsOverview
-    :results-by-class="resultsByClass"
-    :top-flights="topFlights"
-    :best-clubs="bestClubs"
-    :best-teams="bestTeams"
-  />
-  <SponsorsPanel :sponsors="sponsors" />
+    <ResultsOverview
+      :results-by-class="resultsByClass"
+      :top-flights="topFlights"
+      :best-clubs="bestClubs"
+      :best-teams="bestTeams"
+    />
+    <SponsorsPanel :sponsors="sponsors" />
+  </div>
 </template>
 
 <script setup>
