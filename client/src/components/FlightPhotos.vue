@@ -53,6 +53,7 @@
           class="figure position-relative"
         >
           <a
+            :id="photo.id"
             :href="baseURL + `media/` + photo.id"
             data-gallery="photos"
             data-type="image"
