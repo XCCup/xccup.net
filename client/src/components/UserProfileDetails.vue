@@ -158,6 +158,7 @@ import ApiService from "@/services/ApiService.js";
 import { ref, computed } from "vue";
 import useUserProfile from "@/composables/useUserProfile";
 import BaseSpinner from "./BaseSpinner.vue";
+import Swal from "sweetalert2";
 
 const { modifiedUserData, updateProfile, profileDataHasChanged } =
   useUserProfile();
@@ -196,11 +197,21 @@ const stateListIsEnabled = computed(
   () => modifiedUserData.value.address.country === "Deutschland"
 );
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: true,
+});
+
 const inidcateSuccess = () => {
   showSpinner.value = false;
-  showSuccessInidcator.value = true;
   errorMessage.value = null;
-  setTimeout(() => (showSuccessInidcator.value = false), 2000);
+  Toast.fire({
+    icon: "success",
+    title: "Änderungen gespeichert",
+  });
 };
 
 const onSave = async () => {
