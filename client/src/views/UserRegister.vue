@@ -1,6 +1,6 @@
 <template>
   <!-- Form -->
-  <slot-dialog v-if="!signupSuccessfull" :prevent-overflow="true">
+  <slot-dialog>
     <div>
       <h3 class="mb-4">Registrieren</h3>
       <form>
@@ -209,20 +209,6 @@
       <CompRules />
     </BaseSlotModal>
   </slot-dialog>
-
-  <!-- Confirmation -->
-  <slot-dialog v-if="signupSuccessfull">
-    <div v-if="signupSuccessfull" id="registerConfirmation">
-      <div id="registerConfirmationHeader" class="text-center mb-3">
-        <h1><i class="bi bi-check-circle text-success"></i></h1>
-      </div>
-      <p>
-        Um deinen Account zu aktivieren öffne bitte den Link den wir dir gerade
-        per Email geschickt haben.
-      </p>
-      <router-link :to="{ name: 'Home' }"> Zurück zur Startseite </router-link>
-    </div>
-  </slot-dialog>
 </template>
 
 <script setup>
@@ -233,11 +219,13 @@ import useUserSignup from "@/composables/useUserSignup";
 import { Modal } from "bootstrap";
 import BaseSlotModal from "../components/BaseSlotModal.vue";
 import PrivacyPolicy from "../components/PrivacyPolicy.vue";
+import Swal from "sweetalert2";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const { userData, initialDate } = useUserSignup();
 
 setWindowName("Registrieren");
-const signupSuccessfull = ref(false);
 
 // User input
 const rulesAccepted = ref(false);
@@ -252,7 +240,17 @@ const showSpinner = ref(false);
 const privacyPolicyModal = ref(null);
 const compRulesModal = ref(null);
 
-onMounted(() => {
+const inidcateSuccess = async () => {
+  await Swal.fire({
+    icon: "success",
+    // TODO: Set color globally
+    confirmButtonColor: "#08556d",
+    text: "Um deinen Account zu aktivieren öffne bitte den Link den wir dir gerade per Email geschickt haben.",
+  });
+  router.push({ name: "Home" });
+};
+
+onMounted(async () => {
   privacyPolicyModal.value = new Modal(
     document.getElementById("privacy-policy-modal")
   );
@@ -333,7 +331,7 @@ const onSubmit = async () => {
     await ApiService.register(userData);
     errorMessage.value = null;
     showSpinner.value = false;
-    signupSuccessfull.value = true;
+    inidcateSuccess();
   } catch (error) {
     showSpinner.value = false;
 
