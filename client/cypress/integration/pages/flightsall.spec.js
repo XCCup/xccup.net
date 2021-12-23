@@ -42,11 +42,12 @@ describe("check flights all page", () => {
     cy.get("#filterSelectSite").select(expectedSite);
 
     cy.get("[data-cy=activate-filter-button]").click();
+    cy.get("[data-cy=filter-icon]").should("be.visible");
 
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
+    // cy.wait(1000);
     /*eslint-enable */
 
     cy.get("[data-cy=filter-badge-clubId]").should("contain", expectedClub);
@@ -64,10 +65,12 @@ describe("check flights all page", () => {
     cy.get("[data-cy=filter-badge-siteId]").within(() => {
       cy.get("[data-cy=filter-clear-one-button]").click();
     });
+    cy.get("[data-cy=filter-icon]").should("be.visible");
+
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
+    // cy.wait(1000);
     /*eslint-enable */
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
@@ -89,10 +92,12 @@ describe("check flights all page", () => {
     const expectedLength = 40;
 
     cy.get("th").contains("Punkte").dblclick();
+    cy.get("[data-cy=filter-icon]").should("be.visible");
+
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
+    // cy.wait(1000);
     /*eslint-enable */
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
 
@@ -112,17 +117,21 @@ describe("check flights all page", () => {
     const expectedLength = 10;
 
     cy.get("#cyPaginationAmountSelect").select("10");
+    cy.get("[data-cy=filter-icon]").should("be.visible");
+
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
+    // cy.wait(1000);
     /*eslint-enable */
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
     cy.get(".page-item").last().click();
+    cy.get("[data-cy=filter-icon]").should("be.visible");
+
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
+    // cy.wait(1000);
     /*eslint-enable */
     cy.get("table")
       .find("tr")
