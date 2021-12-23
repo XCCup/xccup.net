@@ -8,7 +8,7 @@ describe("check flights all page", () => {
   });
 
   it("test no filter no sorting", () => {
-    const expectedLength = 43;
+    const expectedLength = 40;
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
     cy.get("table")
@@ -86,7 +86,7 @@ describe("check flights all page", () => {
 
   it("test sort on points ascending", () => {
     const expectedName = "Ramona Gislason";
-    const expectedLength = 43;
+    const expectedLength = 40;
 
     cy.get("th").contains("Punkte").dblclick();
     /*eslint-disable */
