@@ -3,6 +3,8 @@
 // Bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
 
+@import "sweetalert2/src/sweetalert2.scss";
+
 // Workaround for dark mode
 @import "@/styles/bootstrapCustom";
 
