@@ -21,6 +21,7 @@
   </span>
   <span v-if="!fullsize" class="visually-hidden">Loading...</span>
 </template>
+<!-- TODO Only show spinner after 500ms -->
 
 <script setup>
 defineProps({
