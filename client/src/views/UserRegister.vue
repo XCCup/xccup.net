@@ -331,8 +331,7 @@ const stateListIsEnabled = computed(
 const onSubmit = async () => {
   showSpinner.value = true;
   try {
-    const res = await ApiService.register(userData);
-    if (res.status != 200) throw res.statusText;
+    await ApiService.register(userData);
     errorMessage.value = null;
     showSpinner.value = false;
     signupSuccessfull.value = true;
