@@ -1,5 +1,5 @@
 <template>
-  <div v-if="editMode" class="p-3">
+  <div class="p-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="text-right">Profil</h4>
     </div>
@@ -21,13 +21,14 @@
     </div>
     <div class="row mt-3">
       <div class="col-md-12">
-        <BaseInput
+        <BaseSelect
           id="club"
           v-model="modifiedUserData.club.name"
-          label="Verein"
-          :is-disabled="true"
+          label="Verein*"
+          :show-label="true"
+          :options="listOfClubs"
+          :is-disabled="!isOffseason"
         />
-
         <BaseInput id="email" v-model="modifiedUserData.email" label="E-Mail" />
         <BaseInput
           id="street"
@@ -150,6 +151,7 @@
       <BaseSpinner v-if="showSpinner" />
       <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
     </button>
+    <p class="mt-3">* Wechsel nur außerhalb der Saison erlaubt</p>
     <!-- Error Message -->
     <BaseError :error-message="errorMessage" class="mt-3" />
   </div>
@@ -168,29 +170,50 @@ const listOfCountries = ref(null);
 const listOfStates = ref(null);
 const listOfGenders = ref(null);
 const listOfTshirtSizes = ref([]);
+const listOfClubs = ref([]);
+const isOffseason = ref(false);
 
 // Page state
 const showSpinner = ref(false);
-const editMode = ref(true);
 const showSuccessInidcator = ref(false);
 const errorMessage = ref(null);
 
+// Clubs needs to be global to allow later access to object ids
+const dataClubs = ref([]);
+
 try {
   // Get constants
-  let res = await ApiService.getUserProfileConstants();
-  if (res.status != 200) throw res.statusText;
-  // Countries
+  const [resUserConstants, resClubs, resSeason] = await Promise.all([
+    ApiService.getUserProfileConstants(),
+    ApiService.getClubNames(),
+    ApiService.getCurrentSeason(),
+  ]);
 
-  listOfCountries.value = Object.values(res.data.countries);
+  if (resUserConstants.status != 200) throw resUserConstants.statusText;
+  if (resUserConstants.status != 200) throw resClubs.statusText;
+  if (resUserConstants.status != 200) throw resSeason.statusText;
+  const dataUserConstants = resUserConstants.data;
+  dataClubs.value = resClubs.data;
+  const dataSeason = resSeason.data;
+
+  // Countries
+  listOfCountries.value = Object.values(dataUserConstants.countries);
   // States
-  listOfStates.value = Object.values(res.data.states);
+  listOfStates.value = Object.values(dataUserConstants.states);
   // Genders
-  listOfGenders.value = Object.values(res.data.genders);
+  listOfGenders.value = Object.values(dataUserConstants.genders);
   // T-Shirt sizes
-  listOfTshirtSizes.value = res.data.tShirtSizes;
+  listOfTshirtSizes.value = dataUserConstants.tShirtSizes;
+  // Clubs
+  listOfClubs.value = dataClubs.value.map((c) => c.name);
+  // Offseason
+  isOffseason.value = calculateOffseason(dataSeason);
+
+  errorMessage.value = "";
 } catch (error) {
-  // TODO: Handle error
   console.log(error);
+  errorMessage.value =
+    "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
 }
 
 const stateListIsEnabled = computed(
@@ -207,12 +230,15 @@ const inidcateSuccess = () => {
 const onSave = async () => {
   try {
     showSpinner.value = true;
+
+    modifiedUserData.value.clubId = findClubIdByName();
+
     await updateProfile();
     inidcateSuccess();
   } catch (error) {
     console.error(error);
 
-    if (error.response?.data.errors[0].param === "email")
+    if (error.response?.data?.errors[0].param === "email")
       return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
 
     errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";
@@ -220,6 +246,19 @@ const onSave = async () => {
     showSpinner.value = false;
   }
 };
+
+function calculateOffseason(dataSeason) {
+  const today = new Date();
+  const startDate = new Date(dataSeason.startDate);
+  const endDate = new Date(dataSeason.endDate);
+  return today < startDate || today > endDate;
+}
+
+function findClubIdByName() {
+  return modifiedUserData.value.club.name
+    ? dataClubs.value.find((e) => e.name == modifiedUserData.value.club.name).id
+    : undefined;
+}
 </script>
 
 <style scoped></style>
