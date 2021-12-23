@@ -58,7 +58,6 @@ const props = defineProps({
   sponsors: {
     type: Array,
     required: true,
-    default: () => [],
   },
 });
 
