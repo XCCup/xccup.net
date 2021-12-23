@@ -167,8 +167,8 @@
           />
           <label class="form-check-label" for="acceptRulesCheckbox">
             Ich erkenne ich die
-            <!-- TODO: Add link to Rules -->
-            Ausschreibung und
+            <a href="#" @click.prevent="compRulesModal.show()">Ausschreibung</a>
+            und
 
             <a href="#" @click.prevent="privacyPolicyModal.show()"
               >Datenschutzbestimmungen</a
@@ -204,6 +204,9 @@
     </div>
     <BaseSlotModal modal-id="privacy-policy-modal" :scrollable="true">
       <PrivacyPolicy />
+    </BaseSlotModal>
+    <BaseSlotModal modal-id="comp-rules-modal" :scrollable="true">
+      <CompRules />
     </BaseSlotModal>
   </slot-dialog>
 
@@ -252,10 +255,13 @@ const showSpinner = ref(false);
 
 // Modal
 const privacyPolicyModal = ref(null);
+const compRulesModal = ref(null);
+
 onMounted(() => {
   privacyPolicyModal.value = new Modal(
     document.getElementById("privacy-policy-modal")
   );
+  compRulesModal.value = new Modal(document.getElementById("comp-rules-modal"));
 });
 
 // Validation
@@ -272,6 +278,7 @@ const registerButtonIsEnabled = computed(() => {
     userData.lastName.length > 0 &&
     userData.birthday &&
     // Why does this happen anyway?
+    // TODO: Is this solved?
     userData.birthday != "NaN-NaN-NaN" &&
     userData.gender &&
     userData.clubId &&
@@ -337,12 +344,6 @@ const onSubmit = async () => {
     signupSuccessfull.value = true;
   } catch (error) {
     showSpinner.value = false;
-
-    // TODO: Where do this error messages come from? Is this safe?
-    // KW: Backend
-    // email must be unique: ErrorHandler.js -> handleSequelizeUniqueError
-    // email, password: Validaton.js middleware in endpoint
-    // I would say it's safe
 
     // E-Mail errors
     if (error.response?.data.conflict === "emailExists")
