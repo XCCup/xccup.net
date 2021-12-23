@@ -86,20 +86,16 @@ const refresh = async (token) => {
     where: { token },
   });
   if (!found) return;
-  return await jwt.verify(
-    token,
-    process.env.JWT_REFRESH_TOKEN,
-    (error, user) => {
-      if (error) {
-        logger.warn(
-          `Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,
-          error
-        );
-        return;
-      }
-      return create(user);
+  return jwt.verify(token, process.env.JWT_REFRESH_TOKEN, (error, user) => {
+    if (error) {
+      logger.warn(
+        `Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,
+        error
+      );
+      return;
     }
-  );
+    return create(user);
+  });
 };
 
 /**
