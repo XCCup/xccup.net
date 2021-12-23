@@ -91,7 +91,9 @@ describe("check flights all page", () => {
     const expectedName = "Ramona Gislason";
     const expectedLength = 40;
 
-    cy.get("th").contains("Punkte").dblclick();
+    cy.get("th").contains("Punkte").click();
+    cy.get("[data-cy=filter-icon]").should("be.visible");
+    cy.get("th").contains("Punkte").click();
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     /*eslint-disable */
