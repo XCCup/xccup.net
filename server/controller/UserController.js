@@ -8,6 +8,7 @@ const {
   NOT_FOUND,
   FORBIDDEN,
   UNAUTHORIZED,
+  CONFLICT,
 } = require("../constants/http-status-constants");
 const {
   TSHIRT_SIZES,
@@ -408,7 +409,7 @@ router.post(
         error.original?.constraint === "Users_email_key"
       ) {
         // TODO: Why no http constant at this point?
-        res.status(409).json({ conflict: "emailExists" });
+        res.status(CONFLICT).json({ conflict: "emailExists" });
       } else {
         next(error);
       }
