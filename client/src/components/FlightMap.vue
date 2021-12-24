@@ -179,23 +179,28 @@ const drawTracks = (tracklogs) => {
 
         // Create Photomarkers
         const roundBy = 10000; // Approximate values of GPS fix and photo timestamp
-
-        const photoTimestamps = flight.value.photos.map((e) =>
-          getTime(parseISO(e.timestamp))
-        );
+        const photoTimestamps = flight.value.photos.map((e) => {
+          return { time: getTime(parseISO(e.timestamp)), id: e.id };
+        });
 
         // Find matching GPS and photo timestamps
-        photoTimestamps.forEach((timestamp) => {
+        photoTimestamps.forEach((photo) => {
           const location = track.find((fix) => {
             const minuteOfFix = Math.floor(fix[2] / roundBy);
-            const minuteOfPhoto = Math.floor(timestamp / roundBy);
+            const minuteOfPhoto = Math.floor(photo.time / roundBy);
             return minuteOfFix === minuteOfPhoto;
           });
           if (!location) return;
           photoMarkers.value.push(
-            L.marker(location, { title: "Photo", icon: photoMarker }).addTo(
-              map.value
-            )
+            L.marker(location, { title: "Photo", icon: photoMarker })
+              .on("click", () => {
+                // TODO: There may be a smarter way to do this
+                const el = document.getElementById(photo.id);
+                // Simulate click on photo element to open the lightbox modal
+                if (!el) return;
+                el.click();
+              })
+              .addTo(map.value)
           );
         });
       }

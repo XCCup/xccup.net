@@ -17,7 +17,11 @@ jwtInterceptor.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (error.response.status === 403 && error.response.data === "EXPIRED") {
+    if (!error.response) {
+      console.log("Please check your internet connection.");
+    }
+    console.log("Interceptor refresh…");
+    if (error.response?.status === 403 && error.response?.data === "EXPIRED") {
       console.log("Interceptor refresh…");
       await updateTokens();
       error.config.headers["Authorization"] = `Bearer ${authData.value.token}`;

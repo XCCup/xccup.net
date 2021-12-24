@@ -80,9 +80,9 @@ const handleSubmit = async () => {
       }
     }
   } catch (error) {
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       errorMessage.value = "Benutzername/Passwort falsch";
-    } else if (error.response.status === 429) {
+    } else if (error.response?.status === 429) {
       errorMessage.value =
         "Zu viele Versuche, bitte versuche es später noch mal.";
     } else {

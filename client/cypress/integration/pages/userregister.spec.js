@@ -1,4 +1,7 @@
 describe("check users register page", () => {
+  before(() => {
+    cy.seedDb();
+  });
   beforeEach(() => {
     cy.visit("/registrieren");
   });
@@ -53,12 +56,14 @@ describe("check users register page", () => {
     cy.get("#passwordConfirm").clear().type(expectedPasswort);
 
     cy.get("Button").contains("Registrieren").click();
-
-    cy.get("#registerConfirmation")
-      .find("p")
+    cy.get(".swal2-popup")
+      .should("be.visible")
       .contains(
         "Um deinen Account zu aktivieren öffne bitte den Link den wir dir gerade per Email geschickt haben."
       );
+    cy.get(".swal2-confirm").click();
+    cy.url().should("include", "/");
+    cy.get("h1").should("have.text", `XCCup ${new Date().getFullYear()}`);
   });
 
   it("Register user with same email address twice", () => {

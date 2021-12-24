@@ -75,7 +75,7 @@ import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { ref, onMounted } from "vue";
 import { Modal } from "bootstrap";
-import { getbaseURL } from "@/helper/baseUrlHelper";
+import { createUserPictureUrl } from "../helper/profilePictureHelper";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment, submitComment } = useComments();
@@ -87,8 +87,7 @@ const props = defineProps({
   },
 });
 
-// TODO: Server should return Dicebear image if no profile picture is present.
-const avatarUrl = getbaseURL() + "users/picture/" + props.comment.user.id;
+const avatarUrl = createUserPictureUrl(props.comment.user.id);
 
 // Find a way to make this reactive
 const userPrefersDark = ref(

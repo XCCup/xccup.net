@@ -1,12 +1,6 @@
 <template>
   <div :id="`comment-${reply.id}`" class="d-flex mb-2">
-    <img
-      src="@/assets/images/avatar2.png"
-      class="rounded-circle"
-      style="margin-right: 6px"
-      height="24"
-      width="24"
-    />
+    <img :src="avatarUrl" class="rounded-circle" />
     <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
       reply.user.firstName + " " + reply.user.lastName
     }}</a>
@@ -53,6 +47,7 @@ import { Modal } from "bootstrap";
 import { ref, onMounted } from "vue";
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
+import { createUserPictureUrl } from "../helper/profilePictureHelper";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment } = useComments();
@@ -63,6 +58,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const avatarUrl = createUserPictureUrl(props.reply.user.id);
 
 const userPrefersDark = ref(
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -110,3 +107,11 @@ const onCloseCommentEditor = () => {
   editedMessage.value = props.reply.message;
 };
 </script>
+
+<style lang="scss" scoped>
+.rounded-circle {
+  margin-right: 6px;
+  height: 24px;
+  width: 24px;
+}
+</style>
