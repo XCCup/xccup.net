@@ -1,5 +1,5 @@
 <template>
-  <div class="row d-flex align-items-end">
+  <div v-if="gliders" class="row d-flex align-items-end">
     <div class="col-md-8 mt-3">
       <label v-if="showLabel" class="form-label">Fluggerät</label>
       <select
@@ -34,6 +34,7 @@
         </option>
       </select>
     </div>
+    <!-- TODO: Automatically select newly added glider or make it default -->
     <div class="col-md-4 mt-3">
       <div class="d-grid gap-2">
         <UserProfileGliderlist
@@ -53,7 +54,7 @@ defineProps({
     default: false,
   },
   modelValue: {
-    type: String,
+    type: [String, null],
     required: true,
   },
   gliders: {
