@@ -35,7 +35,6 @@
       >
         Speichern
         <BaseSpinner v-if="showSpinner" />
-        <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
       </button>
       <BaseError :error-message="errorMessage" />
     </div>
@@ -47,20 +46,30 @@ import { ref, computed } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
 import BaseError from "./BaseError.vue";
 import { isStrongPassword } from "../helper/utils";
+import Swal from "sweetalert2";
 
 const password = ref("");
 const passwordConfirmation = ref("");
 
 // Page state
 const showSpinner = ref(false);
-const showSuccessInidcator = ref(false);
 const errorMessage = ref(null);
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: true,
+});
+
 const inidcateSuccess = () => {
+  Toast.fire({
+    icon: "success",
+    title: "Passwort geändert",
+  });
   showSpinner.value = false;
-  showSuccessInidcator.value = true;
   errorMessage.value = null;
-  setTimeout(() => (showSuccessInidcator.value = false), 3000);
 };
 
 const onSave = async () => {

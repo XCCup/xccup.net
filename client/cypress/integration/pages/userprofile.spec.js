@@ -135,7 +135,9 @@ describe("Check user profile", () => {
     }).should("have.text", `Login`);
 
     cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
-    cy.wait(2000);
+    cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
+
+    // cy.wait(2000);
 
     cy.visit("/profil");
 
@@ -152,12 +154,15 @@ describe("Check user profile", () => {
     cy.get("[data-cy=password-input]").clear().type(newPassword);
     cy.get("[data-cy=password-confirm-input]").clear().type(newPassword);
     cy.get("[data-cy=password-change-btn]").should("not.be.disabled").click();
+    cy.get(".swal2-title").should("be.visible");
 
-    cy.logout();
     cy.visit("/");
-    cy.login("Clinton@Hettinger.fake", newPassword);
-    cy.wait(2000);
+    cy.logout();
 
+    cy.login("Clinton@Hettinger.fake", newPassword);
+    cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
+
+    // cy.wait(2000);
     cy.visit("/profil");
 
     cy.get("h4", {
