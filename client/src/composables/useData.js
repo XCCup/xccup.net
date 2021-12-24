@@ -1,5 +1,6 @@
 import { ref, readonly, computed } from "vue";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
+import { useRouter } from "vue-router";
 
 const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
@@ -24,7 +25,8 @@ function createInstance(apiEndpoint, apiExtension) {
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
   const currentRange = ref({ start: 0, end: 0 });
-  const errorMessage = ref("");
+  const errorMessage = ref(null);
+  const router = useRouter();
 
   // Getters
   const filterActive = computed(() =>
@@ -61,6 +63,7 @@ function createInstance(apiEndpoint, apiExtension) {
 
   // Actions
   const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
+    console.log("fetch");
     if (params) paramsCache.value = params;
     if (queries) filterOptionsCache.value = queries;
     if (offset < 0) offset = 0;
@@ -85,15 +88,17 @@ function createInstance(apiEndpoint, apiExtension) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
         calcRanges(offset);
-        return;
+      } else {
+        data.value = res.data;
       }
-
-      data.value = res.data;
-      errorMessage.value = "";
+      errorMessage.value = null;
     } catch (error) {
       console.error(error);
-      errorMessage.value =
-        "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
+      router.push({
+        name: "NetworkError",
+      });
+      // errorMessage.value =
+      //   "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
     } finally {
       isLoading.value = false;
     }
