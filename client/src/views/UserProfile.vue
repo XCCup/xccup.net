@@ -136,10 +136,6 @@ setWindowName("Profil");
 // TODO: Remember the opened tab when navigating back to profile
 
 const props = defineProps({
-  edit: {
-    type: Boolean,
-    default: false,
-  },
   showHangar: {
     type: Boolean,
     default: false,
