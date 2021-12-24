@@ -17,6 +17,9 @@
     />
     <SponsorsPanel :sponsors="sponsors" />
   </div>
+  <div v-else>
+    <!-- Todo: Nice error message -->
+  </div>
 </template>
 
 <script setup>
