@@ -1,6 +1,5 @@
 <template>
   <div class="container mt-3">
-    <!-- Editor -->
     <div class="row">
       <!-- Profile Picture -->
       <div class="col-lg-3">
