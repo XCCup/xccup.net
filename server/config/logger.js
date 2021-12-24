@@ -17,7 +17,13 @@ const createDevLogger = createLogger({
     format.errors({ stack: true }),
     devFormat
   ),
-  transports: [new transports.Console()],
+  transports: [
+    new transports.Console(),
+    new transports.File({
+      filename: `${dataPath}/${logsPath}/error_log.log`,
+      level: "error",
+    }),
+  ],
 });
 
 const createProdLogger = createLogger({

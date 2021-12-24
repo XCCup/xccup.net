@@ -30,3 +30,5 @@ server/data/
 server/igc/
 
 .yarn-cache
+*convertTo*.json
+*Import.json
