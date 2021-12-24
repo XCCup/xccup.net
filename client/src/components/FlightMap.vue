@@ -196,6 +196,7 @@ const drawTracks = (tracklogs) => {
               .on("click", () => {
                 // TODO: There may be a smarter way to do this
                 const el = document.getElementById(photo.id);
+                // Simulate click on photo element to open the lightbox modal
                 if (!el) return;
                 el.click();
               })
