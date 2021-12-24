@@ -2,6 +2,9 @@ module.exports.COUNTRY = {
   DEU: "Deutschland",
   LUX: "Luxemburg",
   BEL: "Belgien",
+  FRA: "Frankreich",
+  NLD: "Niederlande",
+  NONE: ""
 };
 
 module.exports.STATE = {

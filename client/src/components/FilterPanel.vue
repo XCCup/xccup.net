@@ -299,7 +299,6 @@ const selectedFilters = computed(() => {
     siteId: findIdByName(selects.site, siteData),
     clubId: findIdByName(selects.club, clubData),
     rankingClass: findKeyOfRankingClass(selects.team, teamData),
-    // Is the 'ö' in Rhön save?
     region: selects.region ? selects.region : undefined,
     isWeekend: hikeAndFly.value ? true : undefined,
     isHikeAndFly: hikeAndFly.value ? true : undefined,

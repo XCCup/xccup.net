@@ -213,7 +213,9 @@ export default {
   },
 
   // General
-
+  getCurrentSeason() {
+    return apiClient.get(baseURL + "seasons/current");
+  },
   getBrands() {
     return apiClient.get(baseURL + "general/brands");
   },
