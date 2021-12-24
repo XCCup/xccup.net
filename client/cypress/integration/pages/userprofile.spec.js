@@ -22,7 +22,7 @@ describe("Check user profile", () => {
     cy.get("#firstName").should("have.value", "Ramona");
     cy.get("#lastName").should("have.value", "Gislason");
     cy.get("#club").should("have.value", "1. Pfälzer DGFC");
-    cy.get("#email").should("have.value", "Ramona@Gislason.fake");
+    cy.get("#email").should("have.value", "blackhole+ramona@stephanschoepe.de");
     cy.get("#street").should("have.value", "35975 Emmalee Forge");
     cy.get("#zip").should("have.value", "49453-5006");
     cy.get("#city").should("have.value", "South Skye");
@@ -134,7 +134,7 @@ describe("Check user profile", () => {
       timeout: 10000,
     }).should("have.text", `Login`);
 
-    cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
+    cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
 
     // cy.wait(2000);
@@ -159,7 +159,7 @@ describe("Check user profile", () => {
     cy.visit("/");
     cy.logout();
 
-    cy.login("Clinton@Hettinger.fake", newPassword);
+    cy.login("blackhole+clinton@stephanschoepe.de", newPassword);
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
 
     // cy.wait(2000);

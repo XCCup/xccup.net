@@ -52,7 +52,7 @@ Cypress.Commands.add("loginAdminUser", () => {
 Cypress.Commands.add("loginNormalUser", () => {
   cy.get("#loginNavButton").click();
 
-  cy.get("input#email").type("Ramona@Gislason.fake");
+  cy.get("input#email").type("blackhole+ramona@stephanschoepe.de");
   cy.get("input#password").type("PW_RamonaGislason");
 
   cy.get("button").contains("Anmelden").click();
