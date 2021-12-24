@@ -36,6 +36,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       gliders: {
         type: DataTypes.ARRAY(DataTypes.JSON),
+        /*
+        glider: {
+          brand: String,
+          model: String
+          gliderClass: String
+        }
+        */
         defaultValue: [],
       },
       emailInformIfComment: {

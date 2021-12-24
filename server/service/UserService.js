@@ -395,7 +395,7 @@ async function hasUserFlightsWithinCurrentSeason(user) {
     endDate: seasonDetails.endDate,
     userId: user.id,
   });
-  return flights.length > 0;
+  return flights.count;
 }
 
 async function findFlightRecordOfType(id, type) {

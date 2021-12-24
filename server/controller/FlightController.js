@@ -26,6 +26,7 @@ const { query } = require("express-validator");
 const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
+  checkStringObjectNotEmptyNoEscaping,
   checkStringObject,
   checkParamIsInt,
   checkParamIsUuid,
@@ -179,7 +180,7 @@ router.post(
   uploadLimiter,
   authToken,
   checkStringObjectNotEmpty("igc.name"),
-  checkStringObjectNotEmpty("igc.body"),
+  checkStringObjectNotEmptyNoEscaping("igc.body"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const igc = req.body.igc;
