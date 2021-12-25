@@ -11,9 +11,8 @@
       ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
-  <p v-if="!showCommentEditor">
-    {{ comment.message }}
-  </p>
+  <!-- TODO: Only use with html-sanitizer oin backend -->
+  <p v-if="!showCommentEditor" v-html="commentWithLinks"></p>
   <!-- Replies -->
   <div
     v-for="reply in comment.replies"
@@ -73,9 +72,10 @@
 <script setup>
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
+import { sanitizeComment } from "../helper/utils";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment, submitComment } = useComments();
@@ -86,6 +86,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const commentWithLinks = computed(() => sanitizeComment(props.comment.message));
 
 const avatarUrl = createUserPictureUrl(props.comment.user.id);
 
@@ -105,8 +107,10 @@ onMounted(() => {
 // Delete comment
 const onDeleteComment = async () => {
   try {
+    console.log(props.comment.id);
     const res = await deleteComment(props.comment.id);
     if (res.status != 200) throw res.statusText;
+    deleteCommentModal.value.hide();
   } catch (error) {
     console.log(error);
   }

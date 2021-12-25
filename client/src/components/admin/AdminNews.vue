@@ -143,6 +143,7 @@ export default {
     async deleteNews() {
       await ApiService.deleteNews(this.selectedNews.id);
       await this.fetchNews();
+      this.confirmModal.hide();
     },
   },
 };

@@ -43,6 +43,7 @@
 
 <script setup>
 // TODO: Refactor this to have a show method exposed?
+// TODO: Tests need to includ the hiding of the modal as well.
 defineProps({
   modalId: {
     type: String,

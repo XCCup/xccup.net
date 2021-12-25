@@ -132,6 +132,7 @@ export default {
         await ApiService.acceptFlightViolations(this.selectedFlight.id);
       }
       await this.fetchFlightsWithViolations();
+      this.confirmModal.hide();
     },
     onDeleteFlight(flight) {
       this.confirmType = KEY_DELETE;

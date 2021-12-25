@@ -143,7 +143,9 @@ const deleteFlight = async (flightId) => {
     await ApiService.deleteFlight(flightId);
     flightToDelete.value = null;
     // await fetchFlights({ params: {}, queries: { userId: getUserId.value } });
+    deleteFlightModal.value.hide();
   } catch (error) {
+    // TODO: Error message in modal?
     errorMessage.value = "Da ist leider was schief gelaufen";
     showSpinner.value = false;
     console.log({ error });

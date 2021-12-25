@@ -10,9 +10,7 @@
       ><BaseDate :timestamp="reply.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
-  <p v-if="!showReplyEditor">
-    {{ reply.message }}
-  </p>
+  <p v-if="!showReplyEditor" v-html="commentWithLinks"></p>
   <div v-if="showReplyEditor">
     <CommentInlineEditor
       :textarea-content="editedMessage"
@@ -44,10 +42,11 @@
 
 <script setup>
 import { Modal } from "bootstrap";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
+import { sanitizeComment } from "../helper/utils";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment } = useComments();
@@ -58,6 +57,7 @@ const props = defineProps({
     required: true,
   },
 });
+const commentWithLinks = computed(() => sanitizeComment(props.reply.message));
 
 const avatarUrl = createUserPictureUrl(props.reply.user.id);
 
@@ -76,6 +76,7 @@ const onDeleteComment = async () => {
   try {
     const res = await deleteComment(props.reply.id);
     if (res.status != 200) throw res.statusText;
+    deleteCommentModal.value.hide();
   } catch (error) {
     console.log(error);
   }
