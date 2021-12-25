@@ -1,9 +1,6 @@
 describe("Check user profile", () => {
-  before(() => {
-    cy.seedDb();
-  });
-
   beforeEach(() => {
+    cy.seedDb();
     cy.visit("/profil");
   });
 
@@ -171,5 +168,129 @@ describe("Check user profile", () => {
 
     cy.get("#firstName").should("have.value", "Clinton");
     cy.get("#lastName").should("have.value", "Hettinger");
+  });
+
+  it("Visit profile and change default glider", () => {
+    cy.get("h3", {
+      timeout: 10000,
+    }).should("have.text", `Login`);
+
+    cy.loginNormalUser();
+
+    cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
+
+    cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
+    cy.get("[data-cy=hangar-tab]").click();
+    cy.get("[data-cy=user-profile-glider-list]")
+      .should("be.visible")
+      .within(() => {
+        cy.get("input").should("have.length", 2);
+        cy.get(
+          "[data-cy=glider-list-item-cd25b974-1e30-4969-ba46-34990461990d]"
+        )
+          .should("include.text", "Flow XC Racer (GS Performance low)")
+          .within(() => {
+            cy.get("input").should("be.checked");
+          });
+        cy.get(
+          "[data-cy=glider-list-item-8f48aa72-6ea0-477e-ae3c-e76fa99e7fb5]"
+        )
+          .should("include.text", "U-Turn Bodyguard (GS Sport low)")
+          .within(() => {
+            cy.get("input").should("not.be.checked").click();
+          })
+
+          .within(() => {
+            cy.get("input").should("be.checked");
+          });
+      });
+    cy.get(".swal2-popup").should("be.visible");
+  });
+
+  it("Visit profile and delete glider", () => {
+    cy.get("h3", {
+      timeout: 10000,
+    }).should("have.text", `Login`);
+
+    cy.loginNormalUser();
+    cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
+    cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
+    cy.get("[data-cy=hangar-tab]").click();
+    cy.get("[data-cy=user-profile-glider-list]")
+      .should("be.visible")
+      .within(() => {
+        cy.get("input").should("have.length", 2);
+        cy.get(
+          "[data-cy=glider-list-item-cd25b974-1e30-4969-ba46-34990461990d]"
+        )
+          .should("include.text", "Flow XC Racer (GS Performance low)")
+          .within(() => {
+            cy.get("[data-cy=delete-glider]").click();
+          });
+      });
+    cy.clickButtonInModal("#removeGliderModal", "OK");
+    cy.get("[data-cy=user-profile-glider-list]")
+      .should("be.visible")
+      .within(() => {
+        cy.get("input").should("have.length", 1);
+
+        cy.get(
+          "[data-cy=glider-list-item-8f48aa72-6ea0-477e-ae3c-e76fa99e7fb5]"
+        )
+          .should("include.text", "U-Turn Bodyguard (GS Sport low)")
+          .within(() => {
+            cy.get("input").should("be.checked");
+          });
+      });
+  });
+
+  it("Visit profile and add glider", () => {
+    cy.get("h3", {
+      timeout: 10000,
+    }).should("have.text", `Login`);
+
+    cy.loginNormalUser();
+    cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
+    cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
+    cy.get("[data-cy=hangar-tab]").click();
+    cy.get("[data-cy=user-profile-glider-list]").should("be.visible");
+
+    cy.get("[data-cy=add-glider-button]").click();
+
+    const brand = "Little Cloud";
+    const gliderName = "Foo 2";
+    const rankingClass = "Schirme EN A+B mit einer Streckung <5,2";
+    cy.get("#addGliderModal").within(() => {
+      cy.get("#brand-select").select(brand).should("have.value", brand);
+      cy.get("#glider-name").type(gliderName);
+      cy.get("[data-cy=save-new-glider-button]").should("be.disabled");
+      cy.get("#ranking-class-select").select(rankingClass);
+      cy.get("[data-cy=save-new-glider-button]").should("be.enabled").click();
+    });
+    cy.get("#addGliderModal").should("not.be.visible");
+
+    cy.get("[data-cy=user-profile-glider-list]")
+      .should("be.visible")
+      .within(() => {
+        cy.get("div")
+          .should("have.length", 3)
+          .last()
+          .should("include.text", "Little Cloud Foo 2 (GS Sport low)");
+      });
   });
 });
