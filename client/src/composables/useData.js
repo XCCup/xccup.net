@@ -1,6 +1,5 @@
 import { ref, readonly, computed } from "vue";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
-import { useRouter } from "vue-router";
 
 const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
@@ -17,7 +16,7 @@ export default (apiEndpoint, apiExtension) => {
 };
 
 function createInstance(apiEndpoint, apiExtension) {
-  const data = ref([]);
+  const data = ref(null);
   const sortOptionsCache = ref(null);
   const filterOptionsCache = ref(null);
   const paramsCache = ref(null);
@@ -26,7 +25,6 @@ function createInstance(apiEndpoint, apiExtension) {
   const isLoading = ref(false);
   const currentRange = ref({ start: 0, end: 0 });
   const errorMessage = ref(null);
-  const router = useRouter();
 
   // Getters
   const filterActive = computed(() =>
@@ -63,7 +61,6 @@ function createInstance(apiEndpoint, apiExtension) {
 
   // Actions
   const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
-    console.log("fetch");
     if (params) paramsCache.value = params;
     if (queries) filterOptionsCache.value = queries;
     if (offset < 0) offset = 0;
@@ -94,9 +91,6 @@ function createInstance(apiEndpoint, apiExtension) {
       errorMessage.value = null;
     } catch (error) {
       console.error(error);
-      router.push({
-        name: "NetworkError",
-      });
       // errorMessage.value =
       //   "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
     } finally {

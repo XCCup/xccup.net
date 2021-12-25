@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg">
+  <div v-if="results?.values" class="container-lg">
     <h3 v-if="activeCategory">
       {{ activeCategory.title }} {{ router.params?.year }}
     </h3>
@@ -11,8 +11,8 @@
     </div>
     <BaseError :error-message="errorMessage" />
     <ResultsTableGeneric
-      :results="results?.values || []"
-      :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS || 0"
+      :results="results?.values"
+      :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
     />
   </div>
 </template>
@@ -45,14 +45,14 @@ const categories = [
     title: "Newcomerwertung",
     apiExtensionString: "newcomer",
     remarks: () =>
-      `Es werden nur Flüge mit Geräten bis zur ${results.value.constants.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
+      `Es werden nur Flüge mit Geräten bis zur ${results?.value?.constants?.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
   },
   {
     name: "seniors",
     title: "Seniorenwertung",
     apiExtensionString: "seniors",
     remarks: () =>
-      `Die Wertung beginnt ab einem Alter von ${results.value.constants.SENIOR_START_AGE} mit einem Bonus von ${results.value.constants.SENIOR_BONUS_PER_AGE}% pro Jahr`,
+      `Die Wertung beginnt ab einem Alter von ${results?.value?.constants?.SENIOR_START_AGE} mit einem Bonus von ${results?.value?.constants?.SENIOR_BONUS_PER_AGE}% pro Jahr`,
   },
   {
     name: "ladies",

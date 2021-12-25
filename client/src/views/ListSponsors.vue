@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div v-if="sponsors" class="container">
+    <!-- TODO: Shall the year be named? -->
     <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
     <div class="row gy-5 gx-5">
       <div

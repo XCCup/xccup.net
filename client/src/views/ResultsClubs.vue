@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg">
+  <div v-if="results" class="container-lg">
     <h3>Vereinswertung {{ route.params.year }}</h3>
     <ResultsTableClubs :results="results" />
   </div>
@@ -12,7 +12,6 @@ import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-
 const results = ref(null);
 
 setWindowName("Vereinswertung");

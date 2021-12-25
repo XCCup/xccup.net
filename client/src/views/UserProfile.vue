@@ -47,6 +47,7 @@
               role="tab"
               aria-controls="nav-hangar"
               aria-selected="false"
+              data-cy="hangar-tab"
             >
               Hangar
             </button>
@@ -93,9 +94,7 @@
             role="tabpanel"
             aria-labelledby="nav-hangar-tab"
           >
-            <div id="glider-select" class="col-md-12 mb-4">
-              <UserProfileGliderlist />
-            </div>
+            <UserProfileGliderlist />
           </div>
           <div
             id="nav-change-pw"
@@ -144,7 +143,11 @@ const props = defineProps({
 // TODO: Warn user if there are unsaved changes --> Use "beforeRouteLeave lifecycle hook"
 const { fetchProfile, userData } = useUserProfile();
 
-fetchProfile();
+try {
+  await fetchProfile();
+} catch (error) {
+  console.error(error);
+}
 
 const editAvatarModal = ref(null);
 onMounted(() => {

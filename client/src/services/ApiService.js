@@ -1,8 +1,10 @@
 import axios from "axios";
 import jwtInterceptor from "@/helper/jwtInterceptor";
 import { getbaseURL } from "@/helper/baseUrlHelper";
+import router from "@/router/";
 
 const baseURL = getbaseURL();
+
 const apiClient = axios.create({
   baseURL: baseURL,
   withCredentials: false,
@@ -11,7 +13,20 @@ const apiClient = axios.create({
     "Content-Type": "application/json",
   },
 });
-// Note: jwtInterceptor is used when a route needs authorization
+
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    //  Only route to network error page if it's a get request.
+    if (error.message === "Network Error" && error.config.method === "get") {
+      console.log("Network error");
+      router.push({
+        name: "NetworkError",
+      });
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default {
   getFlights(params) {

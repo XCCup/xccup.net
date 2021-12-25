@@ -1,10 +1,11 @@
 <template>
-  <div v-if="!hideList">
+  <div v-if="!hideList" data-cy="user-profile-glider-list">
     <h5>Standard Gerät wählen</h5>
     <div
       v-for="glider in listOfGliders"
       :key="glider.id"
       class="form-check mt-2"
+      :data-cy="`glider-list-item-${glider.id}`"
     >
       <input
         :id="glider.id"
@@ -18,13 +19,20 @@
       />
       <label class="form-check-label" :for="glider.id">
         {{ formatGliderName(glider) }}
-        <a href="#" @click.prevent="onDelete(glider)">
+        <a href="#" data-cy="delete-glider" @click.prevent="onRemove(glider)">
           <i class="bi bi-trash"></i>
         </a>
       </label>
     </div>
+    <!-- TODO: Move to more elegant position -->
+    <BaseSpinner v-if="showSpinner" />
   </div>
-  <button type="button" class="btn btn-outline-primary mt-2" @click="onAdd">
+  <button
+    type="button"
+    class="btn btn-outline-primary mt-2"
+    data-cy="add-glider-button"
+    @click="onAdd"
+  >
     <i class="bi bi-plus-circle"></i> Gerät hinzufügen
   </button>
   <!-- Modals -->
@@ -40,6 +48,8 @@
     confirm-button-text="OK"
     modal-id="removeGliderModal"
     :confirm-action="removeGlider"
+    :error-message="removeGliderErrorMessage"
+    :show-spinner="showRemoveGliderSpinner"
   />
 </template>
 
@@ -47,7 +57,7 @@
 import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import ApiService from "@/services/ApiService.js";
-import useUserProfile from "@/composables/useUserProfile";
+import Swal from "sweetalert2";
 
 defineProps({
   hideList: {
@@ -58,32 +68,24 @@ defineProps({
 const emit = defineEmits(["gliders-changed"]);
 
 const selectedGlider = ref(null);
-const listOfGliders = ref(null);
+const initialGlider = ref(null);
 
-const showSpinner = ref(false);
+const listOfGliders = ref(null);
 
 const addModal = ref(null);
 const showAddGliderSpinner = ref(false);
+const showSpinner = ref(false);
+
 const addGliderErrorMessage = ref(null);
-
-// Modal
-const removeGliderModal = ref(null);
-
-onMounted(() => {
-  removeGliderModal.value = new Modal(
-    document.getElementById("removeGliderModal")
-  );
-});
 
 const removeMessage = computed(() => {
   return `${selectedGlider.value?.brand} ${selectedGlider.value?.model} aus der Liste entfernen`;
 });
 
-// Update local copy of glider data
-const { fetchProfile } = useUserProfile();
-
+// // Update local copy of glider data
 const updateGliderData = async (data) => {
   selectedGlider.value = data.defaultGlider;
+  initialGlider.value = data.defaultGlider;
   listOfGliders.value = data.gliders;
 };
 
@@ -93,29 +95,41 @@ try {
   if (res.status != 200) throw res.statusText;
   await updateGliderData(res.data);
 } catch (error) {
-  // TODO: Hanlde error
   console.log(error);
 }
 
 // Remove Glider
-const onDelete = (glider) => {
+const showRemoveGliderSpinner = ref(false);
+const removeGliderErrorMessage = ref(null);
+
+const removeGliderModal = ref(null);
+
+onMounted(() => {
+  removeGliderModal.value = new Modal(
+    document.getElementById("removeGliderModal")
+  );
+});
+const onRemove = (glider) => {
   selectedGlider.value = glider;
+  removeGliderErrorMessage.value = null;
   removeGliderModal.value.show();
 };
+
 const removeGlider = async (result) => {
   if (result) {
     try {
-      showSpinner.value = true;
+      showRemoveGliderSpinner.value = true;
       const res = await ApiService.removeGlider(selectedGlider.value.id);
       if (res.status != 200) throw res.statusText;
       await updateGliderData(res.data);
-
-      showSpinner.value = false;
+      console.log("foo");
+      showRemoveGliderSpinner.value = false;
       removeGliderModal.value.hide();
     } catch (error) {
-      // TODO: Handle error
       console.error(error);
-      showSpinner.value = false;
+      removeGliderErrorMessage.value = "Da ist leider was schief gelaufen";
+
+      showRemoveGliderSpinner.value = false;
     }
   }
 };
@@ -134,7 +148,7 @@ const addGlider = async (glider) => {
     addModal.value.hide();
     emit("gliders-changed");
   } catch (error) {
-    addGliderErrorMessage.value = error;
+    addGliderErrorMessage.value = "Da ist leider was schief gelaufen";
     console.error(error);
   } finally {
     showAddGliderSpinner.value = false;
@@ -144,15 +158,41 @@ const addGlider = async (glider) => {
 // Update default glider
 const updateDefaultGlider = async () => {
   try {
+    showSpinner.value = true;
     const res = await ApiService.setDefaultGlider(selectedGlider.value);
     if (res.status != 200) throw res.statusText;
-    await fetchProfile();
-
-    // TODO: Show success indicator
+    updateGliderData(res.data);
+    changeGliderSuccess();
   } catch (error) {
-    // TODO: Handle error
+    selectedGlider.value = initialGlider.value;
+    changeGliderFailed();
     console.error(error);
+  } finally {
+    showSpinner.value = false;
   }
+};
+// Success indicator
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+});
+
+const changeGliderSuccess = () => {
+  Toast.fire({
+    icon: "success",
+    title: "Standard Gerät geändert",
+  });
+  // showSpinner.value = false;
+};
+const changeGliderFailed = () => {
+  Toast.fire({
+    icon: "error",
+    title: "Da ist leider was schief gelaufen",
+  });
+  // showSpinner.value = false;
 };
 
 const formatGliderName = (glider) =>

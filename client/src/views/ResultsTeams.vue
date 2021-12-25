@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg">
+  <div v-if="results" class="container-lg">
     <h3>Teamwertung {{ route.params.year }}</h3>
     <ResultsTableTeams :results="results" />
   </div>

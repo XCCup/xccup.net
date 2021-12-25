@@ -1,6 +1,6 @@
 <template>
   <section class="pb-3">
-    <div v-if="results.length > 0" class="table-responsive">
+    <div v-if="results?.length > 0 && maxFlights" class="table-responsive">
       <table class="table table-striped table-hover text-sm">
         <thead>
           <th>Platz</th>
@@ -57,8 +57,6 @@
         </tbody>
       </table>
     </div>
-    <!-- TODO: Handle this more elegant -->
-    <div v-if="!results">Fehler beim laden 🤯</div>
     <div v-if="results?.length === 0">Keine Flüge gemeldet in diesem Jahr</div>
   </section>
 </template>
@@ -70,7 +68,7 @@ defineProps({
     required: true,
   },
   maxFlights: {
-    type: [Number, String],
+    type: Number,
     required: true,
   },
 });
