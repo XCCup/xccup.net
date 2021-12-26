@@ -45,7 +45,8 @@ function createInstance(apiEndpoint, apiExtension) {
   };
 
   const clearOneFilter = (key) => {
-    filterOptionsCache.value[key] = undefined;
+    delete filterOptionsCache.value[key];
+
     fetchData();
   };
 
