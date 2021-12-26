@@ -144,7 +144,7 @@ export const Routes = [
   {
     path: "/login/",
     name: "Login",
-    component: () => "@/views/UserLogin.vue",
+    component: () => import("@/views/UserLogin.vue"),
   },
   {
     path: "/registrieren/",
