@@ -27,7 +27,6 @@ const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
   checkStringObjectNotEmptyNoEscaping,
-  checkStringObject,
   checkParamIsInt,
   checkParamIsUuid,
   checkIsUuidObject,
@@ -245,8 +244,8 @@ router.put(
   uploadLimiter,
   authToken,
   checkParamIsUuid("id"),
-  checkStringObject("report"),
-  checkStringObject("airspaceComment"),
+  checkStringObjectNotEmptyNoEscaping("report"),
+  checkStringObjectNotEmptyNoEscaping("airspaceComment"),
   checkOptionalIsBoolean("onlyLogbook"),
   checkIsUuidObject("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),

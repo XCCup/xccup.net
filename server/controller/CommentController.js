@@ -3,13 +3,14 @@ const router = express.Router();
 const service = require("../service/CommentService");
 const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
+
 const { authToken, requesterIsNotOwner } = require("./Auth");
 const {
-  checkStringObjectNotEmpty,
   checkIsUuidObject,
   checkOptionalUuidObject,
   validationHasErrors,
   checkParamIsUuid,
+  checkStringObjectNotEmptyNoEscaping,
 } = require("./Validation");
 
 // @desc Gets all comments of a flight
@@ -42,7 +43,7 @@ router.get(
 router.post(
   "/",
   authToken,
-  checkStringObjectNotEmpty("message"),
+  checkStringObjectNotEmptyNoEscaping("message"),
   checkIsUuidObject("flightId"),
   checkOptionalUuidObject("relatedTo"),
   async (req, res, next) => {
@@ -75,7 +76,7 @@ router.post(
 router.put(
   "/:id",
   authToken,
-  checkStringObjectNotEmpty("message"),
+  checkStringObjectNotEmptyNoEscaping("message"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
@@ -89,6 +90,7 @@ router.put(
       const result = await service.update(comment);
 
       //TODO Do we really want to return the comment? A HTTP 200 would be normally enough. Client should store the comment directly in the GUI.
+      // Yes because of escaping
       res.json(result);
     } catch (error) {
       next(error);

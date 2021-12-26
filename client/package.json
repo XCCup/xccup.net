@@ -29,7 +29,6 @@
     "leaflet": "^1.7.1",
     "leaflet-gesture-handling": "^1.2.2",
     "lodash-es": "^4.17.21",
-    "sanitize-html": "^2.6.1",
     "sweetalert2": "^11.3.0",
     "uuid": "^8.3.2",
     "vue": "^3.2.23",

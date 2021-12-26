@@ -1,4 +1,5 @@
 const { check, param, query, validationResult } = require("express-validator");
+const { sanitizeHtml } = require("../helper/Utils");
 
 /**
  * Checks if the field is a string. Addionally escapes all special charcters (e.g. ">","<").
@@ -22,12 +23,21 @@ function checkStringObjectNotEmpty(field) {
     .escape();
 }
 /**
- * Checks if the field is a string and not empty.
+ * Checks if the field is a string and not empty. HTML will be sanitized.
+ * If content only consists of html, value would be empty and therefore
+ * is checked again.
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
 function checkStringObjectNotEmptyNoEscaping(field) {
-  return check(field).not().isEmpty().withMessage(`${field} is required`);
+  return check(field)
+    .not()
+    .isEmpty()
+    .withMessage(`${field} is required`)
+    .customSanitizer((value) => sanitizeHtml(value))
+    .not()
+    .isEmpty()
+    .withMessage(`HTML is not allowed`);
 }
 /**
  * Checks if the field is a "strong" password (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1).
