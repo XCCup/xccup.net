@@ -12,6 +12,7 @@
         <i class="bi bi-trash d-inline me-1"></i> Flug löschen
       </div>
     </div>
+    <!-- TODO: Admin edit shows wrong gliders -->
     <GliderSelect
       v-model="modifiedFlightData.glider.id"
       :show-label="true"

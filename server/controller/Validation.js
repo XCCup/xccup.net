@@ -9,6 +9,18 @@ const { sanitizeHtml } = require("../helper/Utils");
 function checkStringObject(field) {
   return check(field).trim().escape();
 }
+
+/**
+ * Checks if the field is a string. HTML will be sanitized.
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkStringObjectNoEscaping(field) {
+  return check(field)
+    .trim()
+    .customSanitizer((value) => sanitizeHtml(value));
+}
+
 /**
  * Checks if the field is a string and not empty. Addionally escapes all special charcters (e.g. ">","<").
  * @param {*} field The field in the Request-Body to check.
@@ -263,6 +275,7 @@ exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
 
 exports.checkIsOnlyOfValue = checkIsOnlyOfValue;
 exports.checkIsISO8601 = checkIsISO8601;
+exports.checkStringObjectNoEscaping = checkStringObjectNoEscaping;
 
 exports.checkStringObjectNotEmpty = checkStringObjectNotEmpty;
 exports.checkStringObject = checkStringObject;
