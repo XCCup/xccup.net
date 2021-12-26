@@ -1,5 +1,9 @@
 <template>
-  <div :id="`comment-${reply.id}`" class="d-flex mb-2">
+  <div
+    :id="`comment-${reply.id}`"
+    class="d-flex mb-2"
+    data-cy="flight-comment-reply"
+  >
     <img :src="avatarUrl" class="rounded-circle" />
     <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
       reply.user.firstName + " " + reply.user.lastName
