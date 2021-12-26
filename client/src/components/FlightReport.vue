@@ -6,13 +6,13 @@
       data-cy="airspace-comment"
     >
       <h4>Luftraumkommentar</h4>
-      <p>
+      <p class="allow-white-spaces">
         {{ flight.airspaceComment }}
       </p>
     </div>
     <div v-if="flight.report" class="row mt-4" data-cy="flight-report">
       <h3>Flugbericht</h3>
-      <p>
+      <p class="allow-white-spaces">
         {{ flight.report }}
       </p>
     </div>

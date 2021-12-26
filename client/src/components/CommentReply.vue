@@ -10,7 +10,11 @@
       ><BaseDate :timestamp="reply.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
-  <p v-if="!showReplyEditor" v-html="commentWithLinks"></p>
+  <p
+    v-if="!showReplyEditor"
+    class="allow-white-spaces"
+    v-html="commentWithLinks"
+  ></p>
   <div v-if="showReplyEditor">
     <CommentInlineEditor
       :textarea-content="editedMessage"

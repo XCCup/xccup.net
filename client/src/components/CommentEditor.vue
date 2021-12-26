@@ -44,7 +44,7 @@ const { submitComment } = useComments();
 
 const route = useRoute();
 
-// Sumbit comment
+// Submit comment
 const message = ref("");
 const sendButtonIsDisabled = computed(() => message.value.length < 3);
 

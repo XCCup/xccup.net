@@ -11,8 +11,12 @@
       ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
-  <!-- TODO: Only use with html-sanitizer oin backend -->
-  <p v-if="!showCommentEditor" v-html="commentWithLinks"></p>
+  <p
+    v-if="!showCommentEditor"
+    class="allow-white-spaces"
+    v-html="commentWithLinks"
+  ></p>
+
   <!-- Replies -->
   <div
     v-for="reply in comment.replies"
