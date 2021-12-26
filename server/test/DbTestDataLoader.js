@@ -40,6 +40,7 @@ const dbTestData = {
       [Team, require("./testdatasets/teams.json")],
       [FlyingSite, require("./testdatasets/flyingSites.json")],
       [User, require("./testdatasets/users.json")],
+      [User, require("./testdatasets/usersImport.json")],
       [Flight, flights],
       [FlightPhoto, require("./testdatasets/flightPhotos.json")],
       [FlightComment, require("./testdatasets/comments.json")],

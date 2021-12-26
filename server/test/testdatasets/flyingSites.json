@@ -11,7 +11,7 @@
       "coordinates": [7.141794444444445, 50.094613888888894]
     },
     "id": "b45f5791-299b-4c07-97de-dbc1c373df3b",
-    "shortName": "NEEF",
+    "shortName": "PETERSBERG",
     "direction": "SW-W"
   },
   {
@@ -205,7 +205,19 @@
     },
     "id": "b2f94426-5230-46d0-9064-003735519c79",
     "shortName": "HOLZHEIM",
-    "direction": "Holzheim Schlepp"
+    "direction": ""
+  },
+  {
+    "name": "Halde Norddeutschland",
+    "heightDifference": "0",
+    "club": "http://www.skyteam-neuss.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [6.569476514, 51.472255]
+    },
+    "id": "e2fa44d6-ff30-16de-8153-b03735519c71",
+    "shortName": "HALDE_NORDDEUTSCHLAND",
+    "direction": ""
   },
   {
     "name": "Rosenberg",
@@ -472,6 +484,18 @@
     "direction": "NW-NNO"
   },
   {
+    "name": "Obermaubach",
+    "heightDifference": "0",
+    "club": "http://www.ostwindfreunde.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [6.451108, 50.714028]
+    },
+    "id": "5b1b3596-2dfc-591b-abe3-e4b2b64126b6",
+    "shortName": "OBERMAUBACH",
+    "direction": "NNW"
+  },
+  {
     "name": "Lasserg/Küppchen",
     "heightDifference": "260",
     "image": "Burgen_Lasserg01.jpg",
@@ -648,8 +672,22 @@
       "coordinates": [8.189727777777778, 51.302836111111105]
     },
     "id": "32c190ff-4408-4bca-b3cc-aaa23c1533fc",
-    "shortName": "WHH",
+    "shortName": "WENHOLTHAUSEN",
     "direction": "S-SW"
+  },
+  {
+    "name": "Wirminghausen",
+    "heightDifference": "100",
+    "image": "",
+    "region": "Sauerland",
+    "club": "http://www.sauerlandair.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [8.830304, 51.351107]
+    },
+    "id": "13c910ff-4508-3bca-b4cc-def23c4711ab",
+    "shortName": "WIRMINGHAUSEN",
+    "direction": "NW/N/W"
   },
   {
     "name": "Abtsrodaer Kuppe",
@@ -708,8 +746,36 @@
       "coordinates": [9.935052777777779, 50.49571944444445]
     },
     "id": "8dad4b7c-4844-4002-9dcc-1a89d9d2ca22",
-    "shortName": "WK_WEST",
+    "shortName": "WASSERKUPPE_WESTHANG",
     "direction": "W"
+  },
+  {
+    "name": "Wasserkuppe Südhang",
+    "heightDifference": "160",
+    "image": "",
+    "region": "Rhön",
+    "club": "http://www.rdg-ev.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [9.93808, 50.49734]
+    },
+    "id": "ff923958-be10-4873-8037-46fc2e2956be",
+    "shortName": "WASSERKUPPE_SUEDHANG",
+    "direction": "SO-SW"
+  },
+  {
+    "name": "Weiherkuppe",
+    "heightDifference": "40",
+    "image": "",
+    "region": "Rhön",
+    "club": "http://www.rdg-ev.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [9.913833, 50.511167]
+    },
+    "id": "4efe4b7c-1700-3991-9dcc-bb89d9d2ca13",
+    "shortName": "WEIHERKUPPE",
+    "direction": "SW"
   },
   {
     "name": "Kreuzberg",
@@ -758,7 +824,6 @@
   },
   {
     "name": "Asslar Schlepp",
-    "heightDifference": "290",
     "image": "",
     "region": "",
     "type": "SFP",
@@ -772,6 +837,50 @@
     "direction": "S,N"
   },
   {
+    "name": "Hirzenhain Schlepp",
+    "club": "http://www.asslarergleitschirmflieger.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [8.392188965, 50.787966049]
+    },
+    "id": "8c3326f4-75d5-4f77-a37c-5dc23aabcb31",
+    "shortName": "HIRZENHAIN",
+    "direction": "W/O"
+  },
+  {
+    "name": "Hohensolms Schlepp",
+    "club": "http://www.asslarergleitschirmflieger.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [8.521922487, 50.6529424]
+    },
+    "id": "086d4756-0af0-41d3-84c7-0ae36b5e93e2",
+    "shortName": "HOHENSOLMS",
+    "direction": " WNW-OSO"
+  },
+  {
+    "name": "Mudersbach Schlepp",
+    "club": "http://www.asslarergleitschirmflieger.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [8.49396036, 50.693054837]
+    },
+    "id": "95e590b0-57fb-480b-96e4-7ed459a37532",
+    "shortName": "MUDERSBACH",
+    "direction": "W-O"
+  },
+  {
+    "name": "Hockenheim Schlepp",
+    "region": "",
+    "point": {
+      "type": "Point",
+      "coordinates": [8.52699964, 49.32578722]
+    },
+    "id": "f82bb338-383a-4248-89cb-7f9d4d8098bf",
+    "shortName": "HOCKENHEIM",
+    "direction": "NW,SO"
+  },
+  {
     "name": "Bruchhauser Steine",
     "heightDifference": "635",
     "image": "",
@@ -783,7 +892,7 @@
       "coordinates": [8.54496111111111, 51.31816666666667]
     },
     "id": "6d860b6f-38c3-42fa-9045-82079a816f74",
-    "shortName": "BRUCHHAUSER_SUED",
+    "shortName": "BRUCHHAUSER_STEINE_S",
     "direction": "S"
   },
   {
@@ -798,7 +907,7 @@
       "coordinates": [8.548136111111111, 51.316088888888885]
     },
     "id": "9f281345-45e6-4675-85bd-88146bb7d4cc",
-    "shortName": "BRUCHHAUSER_SW",
+    "shortName": "BRUCHHAUSER_STEINE_SW",
     "direction": "S-W"
   },
   {
@@ -905,6 +1014,20 @@
     "id": "22564a5b-eca9-49d9-9732-9f7f4634523f",
     "shortName": "WILLINGEN",
     "direction": "N"
+  },
+  {
+    "name": "Düdinghausen",
+    "heightDifference": "255",
+    "image": "",
+    "region": "Sauerland",
+    "club": "http://www.sauerlandair.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [8.672129, 51.261767]
+    },
+    "id": "11564a5b-bca9-1234-9732-9e7e4634523e",
+    "shortName": "DUEDINGHAUSEN",
+    "direction": "SO"
   },
   {
     "name": "Reichenhausen",
@@ -1042,6 +1165,28 @@
     "direction": "NO-OSO"
   },
   {
+    "name": "Mellbeck",
+    "heightDifference": "50",
+    "point": {
+      "type": "Point",
+      "coordinates": [7.1910924, 51.314676]
+    },
+    "id": "45c0b209-bbee-4405-934a-92379f0946c0",
+    "shortName": "MELLBECK",
+    "direction": "NW-N"
+  },
+  {
+    "name": "Bergstein Schlepp",
+    "heightDifference": "0",
+    "point": {
+      "type": "Point",
+      "coordinates": [6.41570169, 50.69251151]
+    },
+    "id": "cf3bc974-d8b3-4c6d-93fb-85f31783114a",
+    "shortName": "BERGSTEIN",
+    "direction": "NO/SW"
+  },
+  {
     "name": "Willingen Sonnenhang",
     "heightDifference": "760",
     "image": "",
@@ -1055,6 +1200,20 @@
     "id": "16cb4cb3-e1b2-4dde-bdc3-dabb9621ed5b",
     "shortName": "SONNENHANG",
     "direction": "O"
+  },
+  {
+    "name": "Dolberg",
+    "heightDifference": "230",
+    "image": "",
+    "region": "Sauerland",
+    "type": "HGPGSTA",
+    "point": {
+      "type": "Point",
+      "coordinates": [8.16520841421272, 51.13120995764818]
+    },
+    "id": "61bc4bc3-b2e1-4dde-bdc3-dacc9634ed6c",
+    "shortName": "DOLBERG",
+    "direction": "N-NNO"
   },
   {
     "name": "Hohe Geba",
@@ -1216,7 +1375,7 @@
       "coordinates": [7.771944444444444, 49.87388888888889]
     },
     "id": "559f91bd-2c3b-4d72-bc95-f69a2d41aa0b",
-    "shortName": "KATHARINEN_MERGESFELD",
+    "shortName": "KATHARINEN_AUF_UNTEREM_MERGESFELD_SCHLEPP",
     "direction": "SO,NW"
   },
   {
@@ -1364,7 +1523,7 @@
     },
     "region": "Mosel",
     "id": "3fe092e3-6a38-4cd7-8b4a-5b612f3dd600",
-    "shortName": "MEERFELD_SUED",
+    "shortName": "MEERFELDER_MAAR_SUED",
     "direction": "S"
   },
   {
@@ -1467,6 +1626,19 @@
     "id": "5991b282-9a45-49e8-b385-2e4a0a843002",
     "shortName": "BOPPARD",
     "direction": "NO-SO"
+  },
+  {
+    "name": "Nannhausen Schlepp",
+    "heightDifference": "0",
+    "region": "",
+    "club": "http://www.thermik4u.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [7.479167, 49.97]
+    },
+    "id": "6a79741d-7917-4189-8a65-e646fd52249a",
+    "shortName": "NANNHAUSEN",
+    "direction": "NO/SW"
   },
   {
     "name": "Losheim am See/Am See Schlepp",
@@ -1785,6 +1957,39 @@
     "id": "7f33e27a-859e-4251-bb5f-28487ec31b43",
     "shortName": "HECKENKOPF",
     "direction": "O-S"
+  },
+  {
+    "name": "Zellhausen Schlepp",
+    "heightDifference": "0",
+    "point": {
+      "type": "Point",
+      "coordinates": [8.983333, 50.02]
+    },
+    "id": "d5da33ab-134e-4bde-82a5-7c773b253972",
+    "shortName": "ZELLHAUSEN",
+    "direction": "NO/SW"
+  },
+  {
+    "name": "Nilkheim Schlepp",
+    "heightDifference": "0",
+    "point": {
+      "type": "Point",
+      "coordinates": [9.1263303, 49.957696]
+    },
+    "id": "377c4648-482d-4fc6-9b24-f01139449591",
+    "shortName": "NILKHEIM",
+    "direction": "NO/SW"
+  },
+  {
+    "name": "Bischbrunn Schlepp",
+    "heightDifference": "0",
+    "point": {
+      "type": "Point",
+      "coordinates": [9.49575179, 49.86039182]
+    },
+    "id": "d65cd3c7-630b-4fec-b3e1-012f065484d0",
+    "shortName": "BISCHBRUNN",
+    "direction": "NW/SO"
   },
   {
     "name": "Großer Kopf/Römerturm",
