@@ -118,7 +118,7 @@ import useFlight from "@/composables/useFlight";
 import useFlightEdit from "@/composables/useFlightEdit";
 import ApiService from "@/services/ApiService";
 import { useRoute } from "vue-router";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "lodash-es";
 import router from "../router";
 import { asyncForEach } from "../helper/utils";
 import { Modal } from "bootstrap";

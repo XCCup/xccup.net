@@ -17,7 +17,7 @@
 <script setup>
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
-import { shuffle } from "lodash";
+import { shuffle } from "lodash-es";
 import { setWindowName } from "../helper/utils";
 
 const sponsors = ref([]);

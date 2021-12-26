@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
+import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vueschool.io/articles/vuejs-tutorials/import-aliases-in-vite/
 const path = require("path");
@@ -31,6 +32,11 @@ export default defineConfig({
         additionalData: `@import "./src/styles/variables";`,
         charset: false,
       },
+    },
+  },
+  build: {
+    rollupOptions: {
+      plugins: [visualizer()],
     },
   },
 });

@@ -123,7 +123,7 @@ import { getbaseURL } from "@/helper/baseUrlHelper";
 import useUser from "@/composables/useUser";
 import ApiService from "@/services/ApiService";
 import { v4 as uuidv4 } from "uuid";
-import { remove, last } from "lodash";
+import { remove, last } from "lodash-es";
 import BaseError from "./BaseError.vue";
 import Constants from "@/common/Constants";
 import GLightbox from "glightbox";
