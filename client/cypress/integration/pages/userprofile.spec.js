@@ -1,9 +1,10 @@
 describe("Check user profile", () => {
-  beforeEach(() => {
+  before(() => {
     cy.seedDb();
+  });
+  beforeEach(() => {
     cy.visit("/profil");
   });
-
   it("Visit profile as guest", () => {
     cy.get("h3").should("have.text", `Login`);
   });
@@ -171,6 +172,8 @@ describe("Check user profile", () => {
   });
 
   it("Visit profile and change default glider", () => {
+    cy.seedDb(); // I know i know. If you feel like changing the tests as needed without this => go for it
+
     cy.get("h3", {
       timeout: 10000,
     }).should("have.text", `Login`);
@@ -259,8 +262,8 @@ describe("Check user profile", () => {
       timeout: 10000,
     }).should("have.text", `Login`);
 
-    cy.loginNormalUser();
-    cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
+    cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
+    cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
     cy.visit("/profil");
 
     cy.get("h4", {
