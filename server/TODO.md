@@ -11,6 +11,7 @@
 - [ ] Create different sizes of flight photos. The client can than choose depending on its viewport size
 - [ ] Add flags to flight that indicates if it has a report, photos or comments
 - [ ] Use "convict" for better handling of env vars
+- [ ] Prevent server crashing if DB is shut down
 
 ### Production
 
