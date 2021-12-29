@@ -1,6 +1,6 @@
 <template>
   <!-- TODO: Add filter spinner when loading -->
-  <!-- TODO: How many flights shall be shown -->
+  <!-- TODO: Only show flights of current season -->
   <div class="row mt-3">
     <div class="col-6"></div>
     <div class="col-6">
