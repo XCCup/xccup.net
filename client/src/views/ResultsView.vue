@@ -1,19 +1,22 @@
 <template>
-  <div v-if="results?.values" class="container-lg">
-    <h3 v-if="activeCategory">
-      {{ activeCategory.title }} {{ router.params?.year }}
-    </h3>
-    <p v-if="remark">Hinweis: {{ remark }}</p>
-    <div v-if="category == 'overall'" class="row">
-      <div class="col-6">
-        <FilterPanel :api-endpoint="ApiService.getResults" />
+  <div class="container-lg">
+    <div v-if="results?.values">
+      <h3 v-if="activeCategory">
+        {{ activeCategory.title }} {{ router.params?.year }}
+      </h3>
+      <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div v-if="category == 'overall'" class="row">
+        <div class="col-6">
+          <FilterPanel :api-endpoint="ApiService.getResults" />
+        </div>
       </div>
+      <!-- <BaseError :error-message="errorMessage" /> -->
+      <ResultsTableGeneric
+        :results="results?.values"
+        :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
+      />
     </div>
-    <BaseError :error-message="errorMessage" />
-    <ResultsTableGeneric
-      :results="results?.values"
-      :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
-    />
+    <GenericError v-else />
   </div>
 </template>
 
@@ -79,7 +82,7 @@ const activeCategory = categories.find((e) => e.name === props.category);
 const {
   fetchData,
   data: results,
-  errorMessage,
+  // errorMessage,
 } = useData(ApiService.getResults, activeCategory.apiExtensionString);
 
 // Name the window

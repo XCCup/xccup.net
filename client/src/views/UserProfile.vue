@@ -146,6 +146,7 @@ const { fetchProfile, userData } = useUserProfile();
 try {
   await fetchProfile();
 } catch (error) {
+  // TODO: Do something
   console.error(error);
 }
 

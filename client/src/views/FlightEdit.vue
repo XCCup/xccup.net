@@ -18,6 +18,7 @@
       :show-label="true"
       :gliders="listOfGliders"
       @update:model-value="updateSelectedGlider()"
+      @gliders-changed="fetchGliders()"
     />
     <!-- Airspace comment -->
     <div class="form-floating my-3">
@@ -158,14 +159,19 @@ if (modifiedFlightData.value.externalId != route.params.id) {
   unmodifiedFlightData.value = cloneDeep(modifiedFlightData.value);
 }
 
-// Fetch users glider
-try {
-  const res = await ApiService.getGliders();
-  if (res.status != 200) throw res.statusText;
-  listOfGliders.value = res.data.gliders;
-} catch (error) {
-  console.log(error);
-}
+// Fetch users gliders
+
+const fetchGliders = async () => {
+  try {
+    const res = await ApiService.getGliders();
+    if (res.status != 200) throw res.statusText;
+    listOfGliders.value = res.data.gliders;
+  } catch (error) {
+    // TODO: Do something!
+    console.log(error);
+  }
+};
+await fetchGliders();
 
 // Submit changed flight data
 const onSubmit = async () => {

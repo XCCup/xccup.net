@@ -62,11 +62,11 @@ function createInstance(apiEndpoint, apiExtension) {
 
   // Actions
   const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
-    if (params) paramsCache.value = params;
-    if (queries) filterOptionsCache.value = queries;
-    if (offset < 0) offset = 0;
-    if (limit) limitCache.value = limit;
     try {
+      if (params) paramsCache.value = params;
+      if (queries) filterOptionsCache.value = queries;
+      if (offset < 0) offset = 0;
+      if (limit) limitCache.value = limit;
       isLoading.value = true;
       const res = await apiEndpoint(
         {
@@ -80,16 +80,16 @@ function createInstance(apiEndpoint, apiExtension) {
         apiExtension
       );
       if (res.status != 200) throw res.status.text;
-
+      if (!res?.data) return;
       //Check if data supports pagination (data split in rows and count)
       if (res.data.rows) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
         calcRanges(offset);
       } else {
-        data.value = res.data;
+        data.value = res?.data;
       }
-      errorMessage.value = null;
+      // errorMessage.value = null;
     } catch (error) {
       console.error(error);
       // errorMessage.value =

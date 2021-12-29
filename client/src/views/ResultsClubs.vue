@@ -1,7 +1,14 @@
 <template>
-  <div v-if="results" class="container-lg">
-    <h3>Vereinswertung {{ route.params.year }}</h3>
-    <ResultsTableClubs :results="results" />
+  <div class="container-lg">
+    <div v-if="results">
+      <h3>Vereinswertung {{ route.params.year }}</h3>
+      <ResultsTableClubs :results="results" />
+    </div>
+    <div v-if="results">
+      <h3>Teamwertung {{ route.params.year }}</h3>
+      <ResultsTableTeams :results="results" />
+    </div>
+    <GenericError v-else />
   </div>
 </template>
 
