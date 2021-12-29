@@ -26,8 +26,7 @@ const { query } = require("express-validator");
 const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
-  checkStringObjectNotEmptyNoEscaping,
-  checkStringObject,
+  checkStringObjectNoEscaping,
   checkParamIsInt,
   checkParamIsUuid,
   checkIsUuidObject,
@@ -180,7 +179,7 @@ router.post(
   uploadLimiter,
   authToken,
   checkStringObjectNotEmpty("igc.name"),
-  checkStringObjectNotEmptyNoEscaping("igc.body"),
+  checkStringObjectNotEmpty("igc.body"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const igc = req.body.igc;
@@ -245,8 +244,8 @@ router.put(
   uploadLimiter,
   authToken,
   checkParamIsUuid("id"),
-  checkStringObject("report"),
-  checkStringObject("airspaceComment"),
+  checkStringObjectNoEscaping("report"),
+  checkStringObjectNoEscaping("airspaceComment"),
   checkOptionalIsBoolean("onlyLogbook"),
   checkIsUuidObject("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),

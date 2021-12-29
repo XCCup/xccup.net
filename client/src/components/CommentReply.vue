@@ -1,5 +1,9 @@
 <template>
-  <div :id="`comment-${reply.id}`" class="d-flex mb-2">
+  <div
+    :id="`comment-${reply.id}`"
+    class="d-flex mb-2"
+    data-cy="flight-comment-reply"
+  >
     <img :src="avatarUrl" class="rounded-circle" />
     <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
       reply.user.firstName + " " + reply.user.lastName
@@ -10,7 +14,11 @@
       ><BaseDate :timestamp="reply.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
-  <p v-if="!showReplyEditor" v-html="commentWithLinks"></p>
+  <p
+    v-if="!showReplyEditor"
+    class="allow-white-spaces"
+    v-html="commentWithLinks"
+  ></p>
   <div v-if="showReplyEditor">
     <CommentInlineEditor
       :textarea-content="editedMessage"
