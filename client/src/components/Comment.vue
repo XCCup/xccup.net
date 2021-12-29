@@ -116,7 +116,6 @@ onMounted(() => {
 // Delete comment
 const onDeleteComment = async () => {
   try {
-    console.log(props.comment.id);
     const res = await deleteComment(props.comment.id);
     if (res.status != 200) throw res.statusText;
     deleteCommentModal.value.hide();
