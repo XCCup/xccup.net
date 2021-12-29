@@ -179,7 +179,7 @@ router.post(
   uploadLimiter,
   authToken,
   checkStringObjectNotEmpty("igc.name"),
-  checkStringObjectNotEmpty("igc.body"),
+  checkStringObjectNotEmptyNoEscaping("igc.body"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const igc = req.body.igc;

@@ -89,8 +89,7 @@ router.put(
       comment.message = req.body.message;
       const result = await service.update(comment);
 
-      //TODO Do we really want to return the comment? A HTTP 200 would be normally enough. Client should store the comment directly in the GUI.
-      // Yes because of escaping
+      // Return comment directly because of escaping
       res.json(result);
     } catch (error) {
       next(error);
