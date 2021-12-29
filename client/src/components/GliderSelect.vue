@@ -2,7 +2,6 @@
   <div v-if="gliders" class="row d-flex align-items-end">
     <div class="col-md-8 mt-3">
       <label v-if="showLabel" class="form-label">Fluggerät</label>
-      <!-- TODO: Automatically disable select if list of gliders is empty -->
       <select
         id="glider-select"
         class="form-select"
