@@ -29,7 +29,7 @@
   </div>
   <button
     type="button"
-    class="btn btn-outline-primary mt-2"
+    class="btn btn-outline-primary my-2"
     data-cy="add-glider-button"
     @click="onAdd"
   >
