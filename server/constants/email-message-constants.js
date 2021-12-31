@@ -50,16 +50,27 @@ Du wirst darauf eine Mail mit Deinem neuen Passwort erhalten.
 Dein XCCup Team
     
 `;
+// TODO: Replace subjects with nicer sounding text
+module.exports.CONFIRM_CHANGE_EMAIL_TITLE = "E-Mail bestätigen XCCup.net";
+module.exports.NOTIFY_CHANGE_EMAIL_TITLE =
+  "Änderungen deiner Email Adresse im XCCup";
 
-module.exports.CONFIRM_NEW_ADDRESS_TITLE = "E-Mail bestätigen XCCup.net";
-
-module.exports.CONFIRM_NEW_ADDRESS_TEXT = (firstName, confirmLink) =>
+module.exports.CONFIRM_CHANGE_EMAIL_TEXT = (firstName, confirmLink, newEmail) =>
   `Hallo ${firstName}!
 
-Du möchtest Deine hinterlegte E-Mail-Adresse ändern.
-
-Um die Änderung abzuschließen klicke bitte auf folgenden Link:
+um die Änderung deiner Email-Adresse (${newEmail}) zu bestätigen klicke bitte auf folgenden Link:
 ${confirmLink}
+
+Dein XCCup Team
+    
+`;
+// TODO: Replace admin email
+module.exports.NOTIFY_CHANGE_EMAIL_TEXT = (firstName, newEmail) =>
+  `Hallo ${firstName}!
+
+Du hast die Änderung deiner Email-Adresse angefordert. Wir haben dir eine Email mit einem Aktivierungslink an deine neue Email-Adresse (${newEmail}) geschickt.
+
+Falls du diese Änderung nicht angefordert hast wende dich bitte an xccup-beta@stephanschoepe.de
 
 Dein XCCup Team
     

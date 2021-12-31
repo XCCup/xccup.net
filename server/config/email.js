@@ -27,12 +27,11 @@ const sendMail = async (mailAddresses, content, replyTo) => {
     throw "content.title and content.text are not allowed to be empty";
 
   const message = createMessage(
-    process.env.MAIL_SERVICE_USER,
+    process.env.MAIL_SERVICE_FROM_EMAIL,
     mailAddresses,
     content,
     replyTo
   );
-
   try {
     const info = await mailClient.sendMail(message);
     logger.debug("Message sent: " + info.messageId);
@@ -48,6 +47,8 @@ const sendMail = async (mailAddresses, content, replyTo) => {
 function createMessage(from, to, content, replyTo) {
   return {
     from,
+    // TODO: Why are mails not received (or sent?) when "from" and "to" are identical?
+    // TODO: The "to" field should be used if it's a message to a single user
     bcc: to,
     subject: content.title,
     text: content.text,

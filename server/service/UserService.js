@@ -382,8 +382,10 @@ function checkForMailChange(user) {
     const oldEmail = user._previousDataValues.email;
 
     user.email = oldEmail;
-
-    mailService.sendConfirmNewMailAddressMail(user, newEmail);
+    // Sends a link to the new email
+    mailService.sendConfirmChangeEmailAddressMail(user, newEmail);
+    // Sends a notification to the old email about the requested change
+    mailService.sendNewEmailAddressMailNotification(user, newEmail);
   }
 }
 

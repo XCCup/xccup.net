@@ -33,6 +33,10 @@ export default () => {
     () =>
       JSON.stringify(modifiedUserData.value) != JSON.stringify(userData.value)
   );
+
+  const emailHasChanged = computed(
+    () => modifiedUserData.value.email != userData.value.email
+  );
   // Mutations
   const updateState = (data) => {
     userData.value = { ...data, birthday: new Date(data.birthday) };
@@ -64,5 +68,6 @@ export default () => {
     updateProfile,
     modifiedUserData,
     profileDataHasChanged,
+    emailHasChanged,
   };
 };

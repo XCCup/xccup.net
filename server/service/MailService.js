@@ -8,8 +8,10 @@ const {
   NEW_PASSWORD_TEXT,
   REQUEST_NEW_PASSWORD_TITLE,
   REQUEST_NEW_PASSWORD_TEXT,
-  CONFIRM_NEW_ADDRESS_TITLE,
-  CONFIRM_NEW_ADDRESS_TEXT,
+  CONFIRM_CHANGE_EMAIL_TITLE,
+  NOTIFY_CHANGE_EMAIL_TEXT,
+  NOTIFY_CHANGE_EMAIL_TITLE,
+  CONFIRM_CHANGE_EMAIL_TEXT,
   AIRSPACE_VIOLATION_TITLE,
   AIRSPACE_VIOLATION_TEXT,
   NEW_FLIGHT_COMMENT_TITLE,
@@ -20,9 +22,9 @@ const Flight = require("../config/postgres")["Flight"];
 
 // TODO: Warn if this env are not set (They are not E2E testet)
 const clientUrl = process.env.CLIENT_URL;
-const userActivateLink = process.env.CLIENT_USER_ACTIVATE;
-const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST;
-const confirmMailChangeLink = process.env.CLIENT_USER_MAIL_CHANGE;
+const userActivateLink = process.env.CLIENT_USER_ACTIVATE_PATH;
+const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST_PATH;
+const confirmMailChangeLink = process.env.CLIENT_USER_EMAIL_CHANGE_PATH;
 const flightLink = process.env.CLIENT_FLIGHT;
 
 const service = {
@@ -84,19 +86,36 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendConfirmNewMailAddressMail: async (user, newEmail) => {
+  sendConfirmChangeEmailAddressMail: async (user, newEmail) => {
     logger.info(
-      `MS: Send confirm new mail for user ${user.firstName} ${user.lastName} to ${newEmail}`
+      `MS: Send confirm new email for user ${user.firstName} ${user.lastName} to ${newEmail}`
     );
 
     const confirmMailLink = `${clientUrl}${confirmMailChangeLink}?userId=${user.id}&token=${user.token}&email=${newEmail}`;
 
     const content = {
-      title: CONFIRM_NEW_ADDRESS_TITLE,
-      text: CONFIRM_NEW_ADDRESS_TEXT(user.firstName, confirmMailLink),
+      title: CONFIRM_CHANGE_EMAIL_TITLE,
+      text: CONFIRM_CHANGE_EMAIL_TEXT(
+        user.firstName,
+        confirmMailLink,
+        newEmail
+      ),
     };
 
     return sendMail(newEmail, content);
+  },
+
+  sendNewEmailAddressMailNotification: async (user, newEmail) => {
+    logger.info(
+      `MS: Send notificatione mail for user ${user.firstName} ${user.lastName} to ${user.email}`
+    );
+
+    const content = {
+      title: NOTIFY_CHANGE_EMAIL_TITLE,
+      text: NOTIFY_CHANGE_EMAIL_TEXT(user.firstName, newEmail),
+    };
+
+    return sendMail(user.email, content);
   },
 
   sendAirspaceViolationMail: async (flight) => {
