@@ -1,19 +1,22 @@
 <template>
   <div class="container-lg">
-    <h3 v-if="activeCategory">
-      {{ activeCategory.title }} {{ router.params?.year }}
-    </h3>
-    <p v-if="remark">Hinweis: {{ remark }}</p>
-    <div v-if="category == 'overall'" class="row">
-      <div class="col-6">
-        <FilterPanel :api-endpoint="ApiService.getResults" />
+    <div v-if="results?.values">
+      <h3 v-if="activeCategory">
+        {{ activeCategory.title }} {{ router.params?.year }}
+      </h3>
+      <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div v-if="category == 'overall'" class="row">
+        <div class="col-6">
+          <FilterPanel :api-endpoint="ApiService.getResults" />
+        </div>
       </div>
+      <!-- <BaseError :error-message="errorMessage" /> -->
+      <ResultsTableGeneric
+        :results="results?.values"
+        :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
+      />
     </div>
-    <BaseError :error-message="errorMessage" />
-    <ResultsTableGeneric
-      :results="results?.values || []"
-      :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS || 0"
-    />
+    <GenericError v-else />
   </div>
 </template>
 
@@ -45,14 +48,14 @@ const categories = [
     title: "Newcomerwertung",
     apiExtensionString: "newcomer",
     remarks: () =>
-      `Es werden nur Flüge mit Geräten bis zur ${results.value.constants.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
+      `Es werden nur Flüge mit Geräten bis zur ${results?.value?.constants?.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`,
   },
   {
     name: "seniors",
     title: "Seniorenwertung",
     apiExtensionString: "seniors",
     remarks: () =>
-      `Die Wertung beginnt ab einem Alter von ${results.value.constants.SENIOR_START_AGE} mit einem Bonus von ${results.value.constants.SENIOR_BONUS_PER_AGE}% pro Jahr`,
+      `Die Wertung beginnt ab einem Alter von ${results?.value?.constants?.SENIOR_START_AGE} mit einem Bonus von ${results?.value?.constants?.SENIOR_BONUS_PER_AGE}% pro Jahr`,
   },
   {
     name: "ladies",
@@ -79,7 +82,7 @@ const activeCategory = categories.find((e) => e.name === props.category);
 const {
   fetchData,
   data: results,
-  errorMessage,
+  // errorMessage,
 } = useData(ApiService.getResults, activeCategory.apiExtensionString);
 
 // Name the window

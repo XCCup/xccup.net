@@ -16,7 +16,7 @@ describe("check users register page", () => {
 
     cy.get("#firstName").type("Foo");
     cy.get("#lastName").type("Bar");
-    cy.get("#email").type("foo@bar.fake");
+    cy.get("#email").type("blackhole+foo@stephanschoepe.de");
     cy.get("#gender").select("M").should("have.value", "M");
 
     cy.get("#birthday").click();
@@ -69,7 +69,7 @@ describe("check users register page", () => {
   it("Register user with same email address twice", () => {
     const expectedPasswort = "Foobar2!";
     const expectedCountry = "Belgien";
-    const expectedMail = "foo@bar.fake";
+    const expectedMail = "blackhole+foo@stephanschoepe.de";
 
     cy.get("h3").contains(`Registrieren`);
 

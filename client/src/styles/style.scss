@@ -75,6 +75,10 @@ a {
   cursor: pointer;
 }
 
+.allow-white-spaces {
+  white-space: pre-line;
+}
+
 // TODO: Is this obsolete?
 // Fix for responsive scaling of barogramm
 // .barogramm-container {

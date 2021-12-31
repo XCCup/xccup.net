@@ -1,8 +1,5 @@
-import Home from "@/views/Home.vue";
-import FlightView from "@/views/FlightView.vue";
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
-import UserLogin from "@/views/UserLogin.vue";
 
 const validateRouteParamYear = (to, from, next) => {
   if (isNaN(Number(to.params.year))) {
@@ -28,7 +25,8 @@ export const Routes = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+
+    component: () => import("../views/Home.vue"),
   },
   {
     path: "/flug/:flightId",
@@ -36,7 +34,7 @@ export const Routes = [
     name: "Flight",
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
-    component: FlightView,
+    component: () => import("../views/FlightView.vue"),
   },
   {
     path: "/flug/:id/bearbeiten",
@@ -146,7 +144,7 @@ export const Routes = [
   {
     path: "/login/",
     name: "Login",
-    component: UserLogin,
+    component: () => import("@/views/UserLogin.vue"),
   },
   {
     path: "/registrieren/",

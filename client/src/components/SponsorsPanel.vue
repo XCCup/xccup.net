@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { shuffle } from "lodash";
+import { shuffle } from "lodash-es";
 import { computed } from "vue";
 
 import { getbaseURL } from "@/helper/baseUrlHelper";

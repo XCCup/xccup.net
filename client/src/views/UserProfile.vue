@@ -1,6 +1,5 @@
 <template>
   <div class="container mt-3">
-    <!-- Editor -->
     <div class="row">
       <!-- Profile Picture -->
       <div class="col-lg-3">
@@ -48,6 +47,7 @@
               role="tab"
               aria-controls="nav-hangar"
               aria-selected="false"
+              data-cy="hangar-tab"
             >
               Hangar
             </button>
@@ -94,9 +94,7 @@
             role="tabpanel"
             aria-labelledby="nav-hangar-tab"
           >
-            <div id="glider-select" class="col-md-12 mb-4">
-              <UserProfileGliderlist />
-            </div>
+            <UserProfileGliderlist />
           </div>
           <div
             id="nav-change-pw"
@@ -136,10 +134,6 @@ setWindowName("Profil");
 // TODO: Remember the opened tab when navigating back to profile
 
 const props = defineProps({
-  edit: {
-    type: Boolean,
-    default: false,
-  },
   showHangar: {
     type: Boolean,
     default: false,
@@ -149,7 +143,12 @@ const props = defineProps({
 // TODO: Warn user if there are unsaved changes --> Use "beforeRouteLeave lifecycle hook"
 const { fetchProfile, userData } = useUserProfile();
 
-fetchProfile();
+try {
+  await fetchProfile();
+} catch (error) {
+  // TODO: Do something
+  console.error(error);
+}
 
 const editAvatarModal = ref(null);
 onMounted(() => {

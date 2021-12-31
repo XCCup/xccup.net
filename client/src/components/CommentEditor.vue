@@ -1,24 +1,25 @@
 <template>
-  <div id="comment-editor" class="border rounded shadow p-3 mb-3">
+  <div class="border rounded shadow p-3 mb-3">
     <div class="d-flex mb-2"></div>
     <div class="mb-3">
       <div v-if="loggedIn">
         <form @submit.prevent="onSubmitComment">
-          <label for="comment-editor" class="form-label"
-            >Kommentar verfassen:</label
-          >
+          <label for="comment-editor" class="form-label">
+            Kommentar verfassen:
+          </label>
 
           <textarea
-            id="comment-editor"
             v-model="message"
             class="form-control mb-2"
             :rows="3"
+            data-cy="comment-editor"
             @input="saveMessageToLocalStorage"
           ></textarea>
           <button
             class="btn btn-primary me-1"
             type="submit"
             :disabled="sendButtonIsDisabled"
+            data-cy="submit-comment-button"
           >
             Senden
           </button>
@@ -44,7 +45,7 @@ const { submitComment } = useComments();
 
 const route = useRoute();
 
-// Sumbit comment
+// Submit comment
 const message = ref("");
 const sendButtonIsDisabled = computed(() => message.value.length < 3);
 

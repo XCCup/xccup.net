@@ -10,6 +10,10 @@
 - daily results table hover color is ugly
 - table overflow at https://next.xccup.net/2021/fluege/
 
+### Tests
+
+- [ ] Tests for network errors?
+
 ### General functionality
 
 - [ ] Beautify spinner (Paraglider animation?)

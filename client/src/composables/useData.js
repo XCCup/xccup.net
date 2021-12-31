@@ -16,7 +16,7 @@ export default (apiEndpoint, apiExtension) => {
 };
 
 function createInstance(apiEndpoint, apiExtension) {
-  const data = ref([]);
+  const data = ref(null);
   const sortOptionsCache = ref(null);
   const filterOptionsCache = ref(null);
   const paramsCache = ref(null);
@@ -24,7 +24,7 @@ function createInstance(apiEndpoint, apiExtension) {
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
   const currentRange = ref({ start: 0, end: 0 });
-  const errorMessage = ref("");
+  const errorMessage = ref(null);
 
   // Getters
   const filterActive = computed(() =>
@@ -45,7 +45,8 @@ function createInstance(apiEndpoint, apiExtension) {
   };
 
   const clearOneFilter = (key) => {
-    filterOptionsCache.value[key] = undefined;
+    delete filterOptionsCache.value[key];
+
     fetchData();
   };
 
@@ -61,11 +62,11 @@ function createInstance(apiEndpoint, apiExtension) {
 
   // Actions
   const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
-    if (params) paramsCache.value = params;
-    if (queries) filterOptionsCache.value = queries;
-    if (offset < 0) offset = 0;
-    if (limit) limitCache.value = limit;
     try {
+      if (params) paramsCache.value = params;
+      if (queries) filterOptionsCache.value = queries;
+      if (offset < 0) offset = 0;
+      if (limit) limitCache.value = limit;
       isLoading.value = true;
       const res = await apiEndpoint(
         {
@@ -79,21 +80,20 @@ function createInstance(apiEndpoint, apiExtension) {
         apiExtension
       );
       if (res.status != 200) throw res.status.text;
-
+      if (!res?.data) return;
       //Check if data supports pagination (data split in rows and count)
       if (res.data.rows) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
         calcRanges(offset);
-        return;
+      } else {
+        data.value = res?.data;
       }
-
-      data.value = res.data;
-      errorMessage.value = "";
+      // errorMessage.value = null;
     } catch (error) {
       console.error(error);
-      errorMessage.value =
-        "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
+      // errorMessage.value =
+      //   "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
     } finally {
       isLoading.value = false;
     }

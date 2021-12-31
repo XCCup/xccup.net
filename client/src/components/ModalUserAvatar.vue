@@ -24,6 +24,7 @@
         <div class="modal-body d-flex justify-content-center">
           <div class="mb-3"></div>
           <div v-if="!errorMessage && !deleteRequest">
+            <!-- Todo: This is ugly on hiDPI screens -->
             <VueAvatar
               ref="vueavatar"
               :image="presetImage"

@@ -53,9 +53,53 @@ describe("check flight page", () => {
     // TODO: Test more details
   });
 
-  it("check comment editor", () => {
-    cy.get("#comment-editor");
+  it("check add a new comment", () => {
+    const link = "https://www.xccup.net";
+    const newComment = `Foo Bar ${link}`;
+    cy.loginNormalUser();
+    cy.visit("/flug/9");
 
-    // TODO: Test more details
+    cy.get("[data-cy=comment-editor]").clear().type(" ");
+    cy.get("[data-cy=submit-comment-button]").should("be.disabled");
+    cy.get("[data-cy=comment-editor]").clear().type(newComment);
+    cy.get("[data-cy=submit-comment-button]").should("not.be.disabled").click();
+    cy.visit("/flug/9"); // Make sure commet is already there
+
+    cy.get("[data-cy=flight-comment]")
+      .last()
+      .within(() => {
+        cy.get("[data-cy=comment-header]").should("include.text", "Ramona");
+        cy.get("[data-cy=comment-body]")
+          .should("have.text", newComment)
+          .within(() => {
+            cy.get("a").should("have.text", link);
+            // Visiting the link does not work due to CORS policy
+            // .invoke("removeAttr", "target")
+            // .click();
+          });
+      });
+    // cy.url().should("include", link);
+  });
+
+  it("try to add evil comment", () => {
+    const expectedComment = "PWND";
+    const evilComment = `<script>window.open("https://www.xccup.net")</script>${expectedComment}`;
+
+    // TODO: How to login if the previous test failed?
+    // TODO: Ask When is a user logged out exactly
+    cy.visit("/");
+    cy.loginNormalUser();
+    cy.visit("/flug/9");
+
+    cy.get("[data-cy=comment-editor]").clear().type(evilComment);
+    cy.get("[data-cy=submit-comment-button]").should("not.be.disabled").click();
+    cy.visit("/flug/9");
+
+    cy.get("[data-cy=flight-comment]")
+      .last()
+      .within(() => {
+        cy.get("[data-cy=comment-header]").should("include.text", "Ramona");
+        cy.get("[data-cy=comment-body]").should("have.text", expectedComment);
+      });
   });
 });

@@ -1,157 +1,159 @@
 <template>
-  <h3>Flug hochladen</h3>
-  <form @submit.prevent="sendFlightDetails">
-    <div class="mb-3">
-      <label for="igcUploadForm" class="form-label">
-        Flug auswählen (.igc)
-      </label>
-      <input
-        id="igcUploadForm"
-        class="form-control"
-        type="file"
-        accept=".igc"
-        @change="igcSelected"
-      />
-    </div>
-    <BaseError id="upload-error" :error-message="errorMessage" />
-
-    <div class="text-primary text-center lh-lg">
-      <!-- TODO: Put the spinner somewhere else -->
-      <BaseSpinner v-if="showSpinner && !flightId" />
-    </div>
-    <div ref="collapse" class="collapse">
-      <div class="row">
-        <div class="col-md-6 col-12">
-          <BaseInput
-            v-model="takeoff"
-            label="Startplatz"
-            :is-disabled="true"
-            :is-required="false"
-          />
-        </div>
-        <div class="col-md-6 col-12">
-          <BaseInput
-            v-model="landing"
-            label="Landeplatz"
-            :is-disabled="true"
-            :is-required="false"
-          />
-        </div>
-      </div>
-      <!-- Glider select -->
-      <GliderSelect
-        v-model="defaultGlider"
-        label="Fluggerät"
-        :show-label="true"
-        :gliders="listOfGliders"
-        @gliders-changed="fetchGliders"
-      />
-
-      <!-- Report -->
-      <div class="form-floating my-4">
-        <textarea
-          id="flightReport"
-          v-model="flightReport"
-          class="form-control cy-flight-report"
-          placeholder="Flugbericht"
-          style="height: 100px"
-        ></textarea>
-        <label for="flightReport">Flugbericht</label>
-      </div>
-      <!-- Airspace comment -->
-      <div class="form-check mb-3">
-        <input
-          id="airspaceCommentCheckbox"
-          class="form-check-input"
-          type="checkbox"
-          data-bs-toggle="collapse"
-          data-bs-target="#airspace-collapse"
-          data-cy="airspace-comment-checkbox"
-        />
-        <label class="form-check-label" for="airspaceCommentCheckbox">
-          Luftraumkommentar hinterlassen
+  <div v-if="listOfGliders">
+    <h3>Flug hochladen</h3>
+    <form @submit.prevent="sendFlightDetails">
+      <div class="mb-3">
+        <label for="igcUploadForm" class="form-label">
+          Flug auswählen (.igc)
         </label>
+        <input
+          id="igcUploadForm"
+          class="form-control"
+          type="file"
+          accept=".igc"
+          @change="igcSelected"
+        />
       </div>
-      <div id="airspace-collapse" class="collapse">
-        <div class="form-floating mb-3">
+      <BaseError id="upload-error" :error-message="errorMessage" />
+
+      <div class="text-primary text-center lh-lg">
+        <!-- TODO: Put the spinner somewhere else -->
+        <BaseSpinner v-if="showSpinner && !flightId" />
+      </div>
+      <div ref="collapse" class="collapse">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <BaseInput
+              v-model="takeoff"
+              label="Startplatz"
+              :is-disabled="true"
+              :is-required="false"
+            />
+          </div>
+          <div class="col-md-6 col-12">
+            <BaseInput
+              v-model="landing"
+              label="Landeplatz"
+              :is-disabled="true"
+              :is-required="false"
+            />
+          </div>
+        </div>
+        <!-- Glider select -->
+        <GliderSelect
+          v-model="defaultGlider"
+          label="Fluggerät"
+          :show-label="true"
+          :gliders="listOfGliders"
+          @gliders-changed="fetchGliders"
+        />
+
+        <!-- Report -->
+        <div class="form-floating my-4">
           <textarea
-            id="airspaceComment"
-            v-model="airspaceComment"
-            class="form-control"
+            id="flightReport"
+            v-model="flightReport"
+            class="form-control cy-flight-report"
             placeholder="Flugbericht"
-            style="height: 80px"
-            data-cy="airspace-comment-textarea"
+            style="height: 100px"
           ></textarea>
-          <label for="airspaceComment">Luftraumkommentar</label>
+          <label for="flightReport">Flugbericht</label>
         </div>
-      </div>
+        <!-- Airspace comment -->
+        <div class="form-check mb-3">
+          <input
+            id="airspaceCommentCheckbox"
+            class="form-check-input"
+            type="checkbox"
+            data-bs-toggle="collapse"
+            data-bs-target="#airspace-collapse"
+            data-cy="airspace-comment-checkbox"
+          />
+          <label class="form-check-label" for="airspaceCommentCheckbox">
+            Luftraumkommentar hinterlassen
+          </label>
+        </div>
+        <div id="airspace-collapse" class="collapse">
+          <div class="form-floating mb-3">
+            <textarea
+              id="airspaceComment"
+              v-model="airspaceComment"
+              class="form-control"
+              placeholder="Flugbericht"
+              style="height: 80px"
+              data-cy="airspace-comment-textarea"
+            ></textarea>
+            <label for="airspaceComment">Luftraumkommentar</label>
+          </div>
+        </div>
 
-      <!-- Checkboxes -->
-      <div class="form-check mb-3">
-        <input
-          id="hikeAndFlyCheckbox"
-          v-model="hikeAndFly"
-          class="form-check-input"
-          type="checkbox"
-        />
-        <label class="form-check-label" for="hikeAndFlyCheckbox">
-          Hike & Fly
-        </label>
-      </div>
-      <div class="form-check mb-3">
-        <input
-          id="logbookCheckbox"
-          v-model="onlyLogbook"
-          class="form-check-input"
-          type="checkbox"
-        />
-        <label class="form-check-label" for="logbookCheckbox">
-          Nur Flugbuch
-        </label>
-      </div>
-      <br />
-      <!-- Photos -->
-      <h3>Bilder</h3>
-      <FlightPhotos :flight-id="flightId" @photos-updated="onPhotosUpdated" />
-      <!-- Rules & Submit -->
-      <div class="form-check mb-3">
-        <input
-          id="acceptTermsCheckbox"
-          v-model="rulesAccepted"
-          class="form-check-input"
-          type="checkbox"
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Die Ausschreibung ist mir bekannt, flugrechtliche Auflagen wurden
-          eingehalten.<br />
-          Jeder Teilnehmer nimmt auf eigene Gefahr an diesem Wettbewerb teil.
-          Ansprüche gegenüber dem Veranstalter, dem Ausrichter, dem Organisator,
-          dem Wettbewerbsleiter sowie deren Helfer wegen einfacher
-          Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des Häckchens
-          erkenne ich die
-          <!-- TODO: Add links -->
-          <a href="#">Ausschreibung</a> und
-          <a href="#">Datenschutzbestimmungen</a>
-          an.
-        </label>
-      </div>
-      <!-- Submit Button -->
-      <button
-        type="submit"
-        class="btn btn-primary me-1"
-        :disabled="sendButtonIsDisabled"
-      >
-        Streckenmeldung absenden
-        <div
-          v-if="showSpinner"
-          class="spinner-border spinner-border-sm"
-          role="status"
-        >
-          <span class="visually-hidden">Loading...</span>
+        <!-- Checkboxes -->
+        <div class="form-check mb-3">
+          <input
+            id="hikeAndFlyCheckbox"
+            v-model="hikeAndFly"
+            class="form-check-input"
+            type="checkbox"
+          />
+          <label class="form-check-label" for="hikeAndFlyCheckbox">
+            Hike & Fly
+          </label>
         </div>
-      </button>
-    </div>
-  </form>
+        <div class="form-check mb-3">
+          <input
+            id="logbookCheckbox"
+            v-model="onlyLogbook"
+            class="form-check-input"
+            type="checkbox"
+          />
+          <label class="form-check-label" for="logbookCheckbox">
+            Nur Flugbuch
+          </label>
+        </div>
+        <br />
+        <!-- Photos -->
+        <h3>Bilder</h3>
+        <FlightPhotos :flight-id="flightId" @photos-updated="onPhotosUpdated" />
+        <!-- Rules & Submit -->
+        <div class="form-check mb-3">
+          <input
+            id="acceptTermsCheckbox"
+            v-model="rulesAccepted"
+            class="form-check-input"
+            type="checkbox"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Die Ausschreibung ist mir bekannt, flugrechtliche Auflagen wurden
+            eingehalten.<br />
+            Jeder Teilnehmer nimmt auf eigene Gefahr an diesem Wettbewerb teil.
+            Ansprüche gegenüber dem Veranstalter, dem Ausrichter, dem
+            Organisator, dem Wettbewerbsleiter sowie deren Helfer wegen
+            einfacher Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des
+            Häckchens erkenne ich die
+            <!-- TODO: Add links -->
+            <a href="#">Ausschreibung</a> und
+            <a href="#">Datenschutzbestimmungen</a>
+            an.
+          </label>
+        </div>
+        <!-- Submit Button -->
+        <button
+          type="submit"
+          class="btn btn-primary me-1"
+          :disabled="sendButtonIsDisabled"
+        >
+          Streckenmeldung absenden
+          <div
+            v-if="showSpinner"
+            class="spinner-border spinner-border-sm"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script setup>
@@ -170,9 +172,10 @@ const collapse = ref(null);
 let detailsCollapse = null;
 
 onMounted(() => {
-  detailsCollapse = new Collapse(collapse.value, {
-    toggle: false,
-  });
+  if (collapse.value)
+    detailsCollapse = new Collapse(collapse.value, {
+      toggle: false,
+    });
 });
 
 // Fetch users gliders
@@ -182,11 +185,13 @@ const defaultGlider = ref(null);
 const fetchGliders = async () => {
   try {
     const { data: initialData } = await ApiService.getGliders();
-
     listOfGliders.value = initialData.gliders;
     defaultGlider.value = initialData.defaultGlider;
   } catch (error) {
     console.log(error);
+    router.push({
+      name: "NetworkError",
+    });
   }
 };
 
@@ -302,6 +307,7 @@ const sendFlightDetails = async () => {
     redirectToFlight(externalId.value);
   } catch (error) {
     console.log(error);
+    errorMessage.value = "Da ist leider was schief gelaufen";
   } finally {
     showSpinner.value = false;
   }

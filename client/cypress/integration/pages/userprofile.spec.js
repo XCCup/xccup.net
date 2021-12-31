@@ -2,11 +2,9 @@ describe("Check user profile", () => {
   before(() => {
     cy.seedDb();
   });
-
   beforeEach(() => {
     cy.visit("/profil");
   });
-
   it("Visit profile as guest", () => {
     cy.get("h3").should("have.text", `Login`);
   });
@@ -22,7 +20,7 @@ describe("Check user profile", () => {
     cy.get("#firstName").should("have.value", "Ramona");
     cy.get("#lastName").should("have.value", "Gislason");
     cy.get("#club").should("have.value", "1. Pfälzer DGFC");
-    cy.get("#email").should("have.value", "Ramona@Gislason.fake");
+    cy.get("#email").should("have.value", "blackhole+ramona@stephanschoepe.de");
     cy.get("#street").should("have.value", "35975 Emmalee Forge");
     cy.get("#zip").should("have.value", "49453-5006");
     cy.get("#city").should("have.value", "South Skye");
@@ -134,7 +132,7 @@ describe("Check user profile", () => {
       timeout: 10000,
     }).should("have.text", `Login`);
 
-    cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
+    cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
 
     // cy.wait(2000);
@@ -159,7 +157,7 @@ describe("Check user profile", () => {
     cy.visit("/");
     cy.logout();
 
-    cy.login("Clinton@Hettinger.fake", newPassword);
+    cy.login("blackhole+clinton@stephanschoepe.de", newPassword);
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
 
     // cy.wait(2000);
@@ -171,5 +169,132 @@ describe("Check user profile", () => {
 
     cy.get("#firstName").should("have.value", "Clinton");
     cy.get("#lastName").should("have.value", "Hettinger");
+  });
+
+  it("Visit profile and change default glider", () => {
+    cy.seedDb(); // I know i know. If you feel like changing the tests as needed without this => go for it
+
+    cy.get("h3", {
+      timeout: 10000,
+    }).should("have.text", `Login`);
+
+    cy.loginNormalUser();
+
+    cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
+
+    cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
+    cy.get("[data-cy=hangar-tab]").click();
+    cy.get("[data-cy=user-profile-glider-list]")
+      .should("be.visible")
+      .within(() => {
+        cy.get("input").should("have.length", 2);
+        cy.get(
+          "[data-cy=glider-list-item-cd25b974-1e30-4969-ba46-34990461990d]"
+        )
+          .should("include.text", "Flow XC Racer (GS Performance low)")
+          .within(() => {
+            cy.get("input").should("be.checked");
+          });
+        cy.get(
+          "[data-cy=glider-list-item-8f48aa72-6ea0-477e-ae3c-e76fa99e7fb5]"
+        )
+          .should("include.text", "U-Turn Bodyguard (GS Sport low)")
+          .within(() => {
+            cy.get("input").should("not.be.checked").click();
+          })
+
+          .within(() => {
+            cy.get("input").should("be.checked");
+          });
+      });
+    cy.get(".swal2-popup").should("be.visible");
+  });
+
+  it("Visit profile and delete glider", () => {
+    cy.get("h3", {
+      timeout: 10000,
+    }).should("have.text", `Login`);
+
+    cy.loginNormalUser();
+    cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
+    cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
+    cy.get("[data-cy=hangar-tab]").click();
+    cy.get("[data-cy=user-profile-glider-list]")
+      .should("be.visible")
+      .within(() => {
+        cy.get("input").should("have.length", 2);
+        cy.get(
+          "[data-cy=glider-list-item-cd25b974-1e30-4969-ba46-34990461990d]"
+        )
+          .should("include.text", "Flow XC Racer (GS Performance low)")
+          .within(() => {
+            cy.get("[data-cy=delete-glider]").click();
+          });
+      });
+    cy.clickButtonInModal("#removeGliderModal", "OK");
+    cy.get("[data-cy=user-profile-glider-list]")
+      .should("be.visible")
+      .within(() => {
+        cy.get("input").should("have.length", 1);
+
+        cy.get(
+          "[data-cy=glider-list-item-8f48aa72-6ea0-477e-ae3c-e76fa99e7fb5]"
+        )
+          .should("include.text", "U-Turn Bodyguard (GS Sport low)")
+          .within(() => {
+            cy.get("input").should("be.checked");
+          });
+      });
+  });
+
+  it("Visit profile and add glider", () => {
+    cy.get("h3", {
+      timeout: 10000,
+    }).should("have.text", `Login`);
+
+    cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
+    cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
+    cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
+    cy.get("[data-cy=hangar-tab]").click();
+    cy.get("[data-cy=user-profile-glider-list]").should("be.visible");
+
+    cy.get("[data-cy=add-glider-button]").click();
+
+    const brand = "Little Cloud";
+    const gliderName = "Foo 2";
+    const rankingClass = "Schirme EN A+B mit einer Streckung <5,2";
+    cy.get("#addGliderModal").within(() => {
+      cy.get("#brand-select").select(brand).should("have.value", brand);
+      cy.wait(1000);
+      cy.get("#glider-name").type(gliderName);
+      cy.get("[data-cy=save-new-glider-button]").should("be.disabled");
+      cy.get("#ranking-class-select").select(rankingClass);
+      cy.get("[data-cy=save-new-glider-button]").should("be.enabled").click();
+    });
+    cy.get("#addGliderModal").should("not.be.visible");
+
+    cy.get("[data-cy=user-profile-glider-list]")
+      .should("be.visible")
+      .within(() => {
+        cy.get("div")
+          .should("have.length", 3)
+          .last()
+          .should("include.text", "Little Cloud Foo 2 (GS Sport low)");
+      });
   });
 });

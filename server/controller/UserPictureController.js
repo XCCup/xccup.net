@@ -41,7 +41,7 @@ router.get(
       const user = await userService.getById(userId);
       if (!user) return res.sendStatus(NOT_FOUND);
 
-      const diceBearUrl = grapImageFromDicebear(user);
+      const diceBearUrl = grabImageFromDicebear(user);
 
       return res.redirect(diceBearUrl);
     } catch (error) {
@@ -108,9 +108,9 @@ router.post(
   }
 );
 
-function grapImageFromDicebear(user) {
+function grabImageFromDicebear(user) {
   const { seed, initals } = generateDicebearSeed(user);
-
+  // TODO: Why not always our own service? And if there is an option it needs to be included in E2E tests
   const diceBearUrl =
     process.env.NODE_ENV === "production"
       ? `${process.env.DICEBEAR_URL}api/initials/${seed}${initals}.svg`

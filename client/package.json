@@ -28,7 +28,7 @@
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.7.1",
     "leaflet-gesture-handling": "^1.2.2",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "sweetalert2": "^11.3.0",
     "uuid": "^8.3.2",
     "vue": "^3.2.23",
@@ -49,6 +49,7 @@
     "eslint-plugin-vue": "^8.1.1",
     "har-validator": "^5.1.5",
     "prettier": "^2.5.0",
+    "rollup-plugin-visualizer": "^5.5.2",
     "sass": "^1.43.5",
     "unplugin-vue-components": "^0.17.9",
     "vite": "^2.7.2"

@@ -73,7 +73,33 @@
 // https://medium.com/risan/vue-chart-component-with-chart-js-db85a2d21288
 // https://dev.to/23subbhashit/fetching-and-visualizing-data-in-vue-using-axios-and-chart-js-k2h
 
-import Chart from "chart.js/auto";
+// import Chart from "chart.js/auto"; // Import all for dev purposes
+
+import {
+  Chart,
+  LineElement,
+  PointElement,
+  LineController,
+  LinearScale,
+  TimeScale,
+  Filler,
+  Legend,
+  Title,
+  Tooltip,
+} from "chart.js";
+
+Chart.register(
+  LineElement,
+  PointElement,
+  LineController,
+  LinearScale,
+  TimeScale,
+  Filler,
+  Legend,
+  Title,
+  Tooltip
+);
+
 import "chartjs-adapter-date-fns";
 import {
   ref,

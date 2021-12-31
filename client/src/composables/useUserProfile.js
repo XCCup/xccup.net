@@ -1,6 +1,6 @@
 import { ref, computed, readonly, watchEffect } from "vue";
 import ApiService from "@/services/ApiService";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "lodash-es";
 
 // Create a "prototype" of the user data expected by bindings in UserProfile.vue
 // This prevents null cases if the corresponding properties are none existent in API response
