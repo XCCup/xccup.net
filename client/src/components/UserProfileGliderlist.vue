@@ -122,7 +122,6 @@ const removeGlider = async (result) => {
       const res = await ApiService.removeGlider(selectedGlider.value.id);
       if (res.status != 200) throw res.statusText;
       await updateGliderData(res.data);
-      console.log("foo");
       showRemoveGliderSpinner.value = false;
       removeGliderModal.value.hide();
     } catch (error) {
