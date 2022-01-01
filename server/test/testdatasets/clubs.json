@@ -19,7 +19,7 @@
       }
     ],
     "id": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
-    "participantInSeasons": [2020, 2021, 2011, 2012, 2019]
+    "participantInSeasons": [2022, 2020, 2021, 2011, 2012, 2019]
   },
   {
     "shortName": "DFC_TR",
@@ -42,8 +42,8 @@
     ],
     "id": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
     "participantInSeasons": [
-      2020, 2021, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020,
-      2021
+      2022, 2020, 2021, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
+      2020, 2021
     ]
   },
   {
@@ -77,8 +77,8 @@
     ],
     "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "participantInSeasons": [
-      2020, 2021, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020,
-      2021
+      2022, 2020, 2021, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
+      2020, 2021
     ]
   },
   {
@@ -106,7 +106,7 @@
       }
     ],
     "id": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
-    "participantInSeasons": [2021, 2013, 2014, 2017, 2018, 2019]
+    "participantInSeasons": [2022, 2021, 2013, 2014, 2017, 2018, 2019]
   },
   {
     "shortName": "GF_HOCHWALD",
@@ -138,7 +138,7 @@
       }
     ],
     "id": "04e89089-7a65-4d3f-ab49-0a518e1d594e",
-    "participantInSeasons": [2021, 2011]
+    "participantInSeasons": [2022, 2021, 2011]
   },
   {
     "shortName": "DFC_VULKAN",
@@ -161,7 +161,7 @@
     ],
     "id": "90675c2e-3369-4d3f-afc4-d58e9cf69bf9",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -185,7 +185,7 @@
     ],
     "id": "c2026874-9cf0-4793-ad9a-66e22aea86af",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -219,7 +219,7 @@
     ],
     "id": "5d13f721-faf5-40af-9926-cb799294e982",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -297,7 +297,7 @@
     ],
     "id": "91af8d69-b162-4d60-8c47-77b3f05e8c20",
     "participantInSeasons": [
-      2011, 2012, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -316,7 +316,7 @@
       }
     ],
     "id": "af809952-b6ce-4c1e-998a-388f1dbb4923",
-    "participantInSeasons": [2011, 2012, 2013, 2014, 2015, 2016]
+    "participantInSeasons": [2022, 2011, 2012, 2013, 2014, 2015, 2016]
   },
   {
     "shortName": "DGCSIEBEN",
@@ -366,7 +366,7 @@
     ],
     "id": "d1ed2b23-c90f-4d40-bb1f-9d9f44c6fc1c",
     "participantInSeasons": [
-      2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -395,7 +395,7 @@
       }
     ],
     "id": "ed57c0d2-b141-404f-ae4a-d99ad17cf93d",
-    "participantInSeasons": [2011, 2012]
+    "participantInSeasons": [2022, 2011, 2012]
   },
   {
     "shortName": "GVNG",
@@ -423,7 +423,7 @@
     ],
     "id": "32d2ee23-27f9-444a-9fc1-44210e51cbe1",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -457,7 +457,7 @@
     ],
     "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -486,7 +486,7 @@
     ],
     "id": "165b1b87-8b03-43a6-b32c-8e147c9218db",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -510,7 +510,7 @@
       }
     ],
     "id": "f94c7e46-d3c2-4a4e-b2b6-49cae39cb73a",
-    "participantInSeasons": [2011, 2012]
+    "participantInSeasons": [2022, 2011, 2012]
   },
   {
     "shortName": "DELTACLUB",
@@ -549,7 +549,7 @@
     ],
     "id": "8ff0c760-0ee8-47e1-a14f-b99c4ac87b82",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -578,7 +578,7 @@
       }
     ],
     "id": "e0f14a79-1b0f-4f6d-a4cd-68a7fe6d9fb7",
-    "participantInSeasons": [2011]
+    "participantInSeasons": [2022, 2011]
   },
   {
     "shortName": "GLEITZEIT",
@@ -606,7 +606,7 @@
     ],
     "id": "4bfa6d77-0792-4e09-87ae-0a04081100a1",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -635,7 +635,7 @@
     ],
     "id": "b8337bb0-c16c-4db4-9915-918bab1fe0bc",
     "participantInSeasons": [
-      2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
     ]
   },
   {
@@ -680,7 +680,7 @@
       }
     ],
     "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863",
-    "participantInSeasons": [2013, 2020, 2021]
+    "participantInSeasons": [2022, 2013, 2020, 2021]
   },
   {
     "shortName": "GFSTAUBERT",
@@ -698,7 +698,7 @@
       }
     ],
     "id": "8ae84040-d496-4b8c-af1d-8211aade88cd",
-    "participantInSeasons": [2018]
+    "participantInSeasons": [2022, 2018]
   },
   {
     "shortName": "ARZBACH",
@@ -716,7 +716,7 @@
       }
     ],
     "id": "4e8354a6-d77e-45e7-8728-3b9949522edf",
-    "participantInSeasons": [2011]
+    "participantInSeasons": [2022, 2011]
   },
   {
     "shortName": "SKYTEAM",
@@ -739,7 +739,9 @@
       }
     ],
     "id": "e2a5f355-4027-4725-a7fe-cee70413f8ce",
-    "participantInSeasons": [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+    "participantInSeasons": [
+      2022, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018
+    ]
   },
   {
     "shortName": "BERGSTRAESSLER",
@@ -777,7 +779,9 @@
       }
     ],
     "id": "13726a2e-068e-4291-8e35-d3bf77ad1e67",
-    "participantInSeasons": [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020]
+    "participantInSeasons": [
+      2022, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020
+    ]
   },
   {
     "shortName": "AIRWALKER",
@@ -805,7 +809,7 @@
       }
     ],
     "id": "9379c8e0-47bb-4548-a773-e824ab670db0",
-    "participantInSeasons": [2013, 2014, 2015, 2016, 2017]
+    "participantInSeasons": [2022, 2013, 2014, 2015, 2016, 2017]
   },
   {
     "shortName": "KREUZBERGFLIEGER",
@@ -823,7 +827,7 @@
       }
     ],
     "id": "625d62a6-9d83-4ef2-8a59-7034905868bc",
-    "participantInSeasons": [2017, 2018]
+    "participantInSeasons": [2022, 2017, 2018]
   },
   {
     "shortName": "FUN_GLIDERS_WW",
@@ -846,7 +850,7 @@
       }
     ],
     "id": "16dd3dd1-a562-4022-9147-94ff2e23bd35",
-    "participantInSeasons": [2014, 2015, 2016, 2017]
+    "participantInSeasons": [2022, 2014, 2015, 2016, 2017]
   },
   {
     "shortName": "PC_WERRATAL",
@@ -868,7 +872,9 @@
       }
     ],
     "id": "6ce9a6c0-6056-4930-bdae-c17018626228",
-    "participantInSeasons": [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021]
+    "participantInSeasons": [
+      2022, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021
+    ]
   },
   {
     "shortName": "RDG_POPPENHAUSEN",
@@ -890,7 +896,7 @@
       }
     ],
     "id": "145e7f46-5dce-4269-917a-c78e0629b699",
-    "participantInSeasons": [2015, 2016, 2017, 2018, 2019, 2020, 2021]
+    "participantInSeasons": [2022, 2015, 2016, 2017, 2018, 2019, 2020, 2021]
   },
   {
     "shortName": "FLY_MIL",
@@ -924,7 +930,7 @@
     "updatedAt": "2017-05-28 22:14:12.620",
     "contacts": [],
     "id": "fd2b8a48-2615-46b4-b5b9-b040165120f7",
-    "participantInSeasons": [2017]
+    "participantInSeasons": [2022, 2017]
   },
   {
     "shortName": "ASSLAR",
@@ -946,7 +952,7 @@
       }
     ],
     "id": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa",
-    "participantInSeasons": [2017, 2018, 2019, 2020, 2021]
+    "participantInSeasons": [2022, 2017, 2018, 2019, 2020, 2021]
   },
   {
     "shortName": "MOSBACH",
@@ -986,7 +992,7 @@
       }
     ],
     "id": "c2098d88-c76f-449d-85d6-0335f12eec03",
-    "participantInSeasons": [2018]
+    "participantInSeasons": [2022, 2018]
   },
   {
     "shortName": "AERO_CLUB_ALTENA",
@@ -1008,7 +1014,7 @@
       }
     ],
     "id": "ccbdb7c3-d04d-4522-a653-7d254337a992",
-    "participantInSeasons": [2018, 2019, 2020, 2021]
+    "participantInSeasons": [2022, 2018, 2019, 2020, 2021]
   },
   {
     "shortName": "CUMULUX",
@@ -1030,7 +1036,7 @@
       }
     ],
     "id": "bd4eca98-d746-4b13-8c9f-14d466336cb3",
-    "participantInSeasons": [2019, 2020, 2021]
+    "participantInSeasons": [2022, 2019, 2020, 2021]
   },
   {
     "shortName": "ALBATROS",
@@ -1053,6 +1059,6 @@
       }
     ],
     "id": "ad944971-869b-4c9a-9c33-4d290f8c8471",
-    "participantInSeasons": [2018]
+    "participantInSeasons": [2022, 2018]
   }
 ]
