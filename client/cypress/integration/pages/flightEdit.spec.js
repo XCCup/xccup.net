@@ -29,7 +29,7 @@ describe("check edit flight page", () => {
 
   it("Check that flight edit is only possible within 14 days", () => {
     cy.loginNormalUser();
-    cy.visit(`/flug/${nonEditableFlightId}`);
+    cy.visit(`/flug/42`);
 
     cy.get("#flight-details");
     cy.get("button").contains("Flug bearbeiten").should("not.exist");
