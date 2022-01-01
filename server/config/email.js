@@ -48,8 +48,8 @@ function createMessage(from, to, content, replyTo) {
   return {
     from,
     // TODO: Why are mails not received (or sent?) when "from" and "to" are identical?
-    // TODO: The "to" field should be used if it's a message to a single user
-    bcc: to,
+    to: !Array.isArray(to) ? undefined : to,
+    bcc: Array.isArray(to) ? to : undefined,
     subject: content.title,
     text: content.text,
     replyTo,
