@@ -47,7 +47,7 @@ const inidcateSuccess = () => {
     // TODO: Set color globally
     confirmButtonColor: "#08556d",
     // TODO: Does this text sound nice?
-    text: "Um die Änderung deiner Email-Addresse zu bestätigen öffne bitte den Link den wir dir gerade per Email geschickt haben.",
+    text: "Um die Änderung deiner E-Mail-Addresse zu bestätigen öffne bitte den Link den wir dir gerade per Email geschickt haben.",
   });
 };
 const onSave = async () => {
