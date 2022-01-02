@@ -44,12 +44,18 @@ const sendMail = async (mailAddresses, content, replyTo) => {
   return true;
 };
 
-function createMessage(from, to, content, replyTo) {
+function createMessage(from, toAddresses, content, replyTo) {
+  const isArray = Array.isArray(toAddresses);
+  const to = isArray ? undefined : toAddresses;
+  const bcc = isArray ? toAddresses : undefined;
+
+  console.log("TO: ", to);
+  console.log("BCC: ", bcc);
   return {
     from,
     // TODO: Why are mails not received (or sent?) when "from" and "to" are identical?
-    // TODO: The "to" field should be used if it's a message to a single user
-    bcc: to,
+    to,
+    bcc,
     subject: content.title,
     text: content.text,
     replyTo,

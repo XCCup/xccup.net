@@ -10,7 +10,7 @@ Du kannst direkt auf diese E-Mail antworten.
 module.exports.REGISTRATION_TITLE = "Deine Anmeldung bei XCCup.net";
 
 module.exports.REGISTRATION_TEXT = (firstName, activateLink) =>
-  `Liebe/r ${firstName}! Willkommen beim XCCup.
+  `Hallo ${firstName}! Willkommen beim XCCup.
 
 Um dein Konto final zu aktivieren klicke bitte auf den folgenden Link:
 ${activateLink}
@@ -52,8 +52,6 @@ Dein XCCup Team
 `;
 // TODO: Replace subjects with nicer sounding text
 module.exports.CONFIRM_CHANGE_EMAIL_TITLE = "E-Mail bestätigen XCCup.net";
-module.exports.NOTIFY_CHANGE_EMAIL_TITLE =
-  "Änderungen deiner Email Adresse im XCCup";
 
 module.exports.CONFIRM_CHANGE_EMAIL_TEXT = (firstName, confirmLink, newEmail) =>
   `Hallo ${firstName}!
@@ -62,8 +60,11 @@ um die Änderung deiner Email-Adresse (${newEmail}) zu bestätigen klicke bitte 
 ${confirmLink}
 
 Dein XCCup Team
-    
+
 `;
+module.exports.NOTIFY_CHANGE_EMAIL_TITLE =
+  "Änderungen deiner Email Adresse im XCCup";
+
 // TODO: Replace admin email
 module.exports.NOTIFY_CHANGE_EMAIL_TEXT = (firstName, newEmail) =>
   `Hallo ${firstName}!
