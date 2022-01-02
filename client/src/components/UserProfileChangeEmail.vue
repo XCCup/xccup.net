@@ -46,7 +46,6 @@ const inidcateSuccess = () => {
     icon: "success",
     // TODO: Set color globally
     confirmButtonColor: "#08556d",
-    // TODO: Does this text sound nice?
     text: "Um die Änderung deiner E-Mail-Addresse zu bestätigen öffne bitte den Link den wir dir gerade per Email geschickt haben.",
   });
 };
