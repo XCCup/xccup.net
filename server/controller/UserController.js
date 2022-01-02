@@ -504,7 +504,6 @@ router.put(
 
       user.email = email;
       const result = await service.update(user);
-      // Are
       deleteCache(["users"]);
 
       res.json(result);

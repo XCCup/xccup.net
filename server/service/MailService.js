@@ -141,7 +141,7 @@ const service = {
       Flight.findByPk(comment.flightId),
     ]);
 
-    // Don't sent any email if commenter is the same person has the owner of the flight
+    // Don't sent any email if commenter is the same person as the owner of the flight
     if (comment.userId == flight.userId) return;
 
     const toUser = await User.findByPk(flight.userId);
