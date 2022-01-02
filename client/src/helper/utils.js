@@ -19,13 +19,14 @@ export function dayAfter(date) {
 
 export function isEmail(value) {
   if (!isString(value)) return;
-  return value && value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 }
 
 export function isStrongPassword(value) {
+  if (!isString(value)) return;
   const regex =
     /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
-  return value && value.match(regex);
+  return value.match(regex);
 }
 
 export async function asyncForEach(array, callback) {
