@@ -44,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
     heightDifference: {
       type: DataTypes.INTEGER,
     },
+    inactive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 
   FlyingSite.associate = (models) => {
