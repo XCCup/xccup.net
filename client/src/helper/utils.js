@@ -17,6 +17,14 @@ export function dayAfter(date) {
   return retrieveDateOnly(dateObject.toISOString());
 }
 
+export function adjustDateToLocal(originalDate) {
+  const dbBirthdayObject = new Date(originalDate);
+  return new Date(
+    dbBirthdayObject.getTime() +
+      dbBirthdayObject.getTimezoneOffset() * 60 * 1000
+  );
+}
+
 export function isEmail(value) {
   if (!isString(value)) return;
   return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
