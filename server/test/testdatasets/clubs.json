@@ -223,6 +223,34 @@
     ]
   },
   {
+    "shortName": "9",
+    "name": "Nix wie Nuff Offenbach",
+    "website": "",
+    "createdAt": "2022-01-03 12:00:00.000",
+    "updatedAt": "2022-01-03 12:00:00.000",
+    "mapPosition": {
+      "lat": "0",
+      "lon": "0"
+    },
+    "contacts": [],
+    "id": "56bde0d4-ccfb-486a-a744-e0f62e3ac0f2",
+    "participantInSeasons": [2004, 2005, 2006, 2007, 2008, 2009, 2010]
+  },
+  {
+    "shortName": "NIEDERRHEI",
+    "name": "Fliegerfreunde Niederrhein",
+    "website": "http://www.fliegerfreunde-niederrhein.de",
+    "createdAt": "2022-01-03 12:00:00.000",
+    "updatedAt": "2022-01-03 12:00:00.000",
+    "mapPosition": {
+      "lat": "0",
+      "lon": "0"
+    },
+    "contacts": [],
+    "id": "a9445cb6-2b80-4772-ab93-bdf046303763",
+    "participantInSeasons": [2011, 2012]
+  },
+  {
     "shortName": "GVNAHEGLAN",
     "name": "DGC Nahetal",
     "website": "http://www.dgcn.de",
