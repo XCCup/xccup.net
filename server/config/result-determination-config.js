@@ -1,3 +1,5 @@
+// TODO: Should this be part of the DB? It could change…
+
 /**
  * The number of top flights of one user which will be considered for the rankings.
  */
