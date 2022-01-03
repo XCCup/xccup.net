@@ -11,7 +11,7 @@ describe("check admin page", () => {
 
   it("test accessing as non admin user", () => {
     cy.logout();
-    cy.login("Clinton@Hettinger.name", "PW_ClintonHettinger");
+    cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
     cy.visit("/admin");
     cy.url().should("include", "/").and("not.include", "/admin");
   });
