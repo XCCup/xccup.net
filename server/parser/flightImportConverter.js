@@ -37,7 +37,7 @@ function findBrand(value) {
 
   if (!value || value == "NULL") return undefined;
 
-  console.log("No brand found for ", value);
+  // console.log("No brand found for ", value);
 
   return value;
 }
@@ -95,7 +95,7 @@ function findClub(value) {
   return clubs.find((c) => c.name == name || c.shortName == name)?.id;
 }
 
-const missingTakeoff = {};
+// const missingTakeoff = {};
 
 function findSite(value, takeoff) {
   const sites = require("../test/testdatasets/flyingSites.json");
@@ -126,6 +126,7 @@ function findSite(value, takeoff) {
       break;
     case "Bruchhausen":
     case "bruchhausen":
+    case "Istenberg":
       found = sites.find((s) => s.shortName == "BRUCHHAUSER_STEINE_S");
       break;
     case "Neef":
@@ -149,6 +150,12 @@ function findSite(value, takeoff) {
     case "Battenberg - DE[~1,77km]":
     case "Eisenberg":
       found = sites.find((s) => s.shortName == "EISENBERG");
+      break;
+    case "Flonheim":
+      found = sites.find((s) => s.shortName == "WALLERTHEIM");
+      break;
+    case "Wertheim am Main - DE[~3,19km]":
+      found = sites.find((s) => s.shortName == "URPHAR_NW");
       break;
     case "Nannhausen - DE[~0,54km]":
     case "Nannhausen Schlepp":
@@ -201,8 +208,14 @@ function findSite(value, takeoff) {
     case "Mainhausen - DE[~0,64km]":
       found = sites.find((s) => s.shortName == "ZELLHAUSEN");
       break;
+    case "Saalhausen SSO-Start":
+      found = sites.find((s) => s.shortName == "DOLBERG");
+      break;
     case "Hasloch SO":
       found = sites.find((s) => s.shortName == "HECKENKOPF");
+      break;
+    case "Ühlhof Winde":
+      found = sites.find((s) => s.shortName == "UELHOF");
       break;
     case "Bergstein":
     case "Bergstein-Segelflugplatz":
@@ -212,6 +225,20 @@ function findSite(value, takeoff) {
     case "Hockenheim Winde":
     case "Flugplatz Hockenheim - Winde":
       found = sites.find((s) => s.shortName == "HOCKENHEIM");
+      break;
+    case "Alsfeld Flugplatz":
+      found = sites.find((s) => s.shortName == "FLUGPLATZ_ALSFELD");
+      break;
+    case "Segelflugplatz Edermünde - Grifte":
+    case "Grifte Airport":
+      found = sites.find((s) => s.shortName == "EDERMUENDE");
+      break;
+    case "Schlepp Würzberg":
+    case "Würzberg Windenstart":
+      found = sites.find((s) => s.shortName == "WUERZBERG");
+      break;
+    case "Oberacker Winde":
+      found = sites.find((s) => s.shortName == "OBERACKER");
       break;
     case "Asslar":
     case "Aßlar":
@@ -225,6 +252,16 @@ function findSite(value, takeoff) {
       break;
     case "Winde Oberacker":
       found = sites.find((s) => s.shortName == "OBERACKER_WINDE");
+      break;
+    case "Flugplatz Ailertchen UL Schlepp":
+      found = sites.find((s) => s.shortName == "AILERTCHEN_UL");
+      break;
+    case "Winde Schönbrunn":
+      found = sites.find((s) => s.shortName == "SCHOENBRUNN");
+      break;
+    case "Fortunaweg Schlepp":
+    case "Bergheim":
+      found = sites.find((s) => s.shortName == "FORTUNAWEG");
       break;
     case "Bad Wildungen Schaufel":
     case "Bad Wildungen":
@@ -242,10 +279,10 @@ function findSite(value, takeoff) {
 
   if (found) return found?.id;
 
-  console.log("No site found for id: " + value + " Name: " + takeoff);
-  if (missingTakeoff[takeoff])
-    missingTakeoff[takeoff] = missingTakeoff[takeoff] + 1;
-  missingTakeoff[takeoff] = 1;
+  // console.log("No site found for id: " + value + " Name: " + takeoff);
+  // if (missingTakeoff[takeoff])
+  //   missingTakeoff[takeoff] = missingTakeoff[takeoff] + 1;
+  // missingTakeoff[takeoff] = 1;
 }
 
 function findUser(value) {
@@ -254,6 +291,8 @@ function findUser(value) {
   const found = users.find((u) => u.oldId == value);
 
   if (found) return found?.id;
+
+  if (value == "JSORWS") return;
 
   console.log("No user found for: ", value);
 }
@@ -359,12 +398,19 @@ function createReport(report, flightId) {
 }
 
 const convertedFlights = flights.map((flight) => {
+  const siteId = findSite(flight.StartplatzWPID, flight.Startplatz);
+
+  if (!siteId && flight.Punkte > 60)
+    console.log(
+      `No site found for name: ${flight.Startplatz} flight points: ${flight.Punkte} flight id: ${flight.FlugID}`
+    );
+
   return {
     id: uuidv4(),
     oldPilotId: flight.PilotID,
     externalId: flight.FlugID,
     clubId: findClub(flight.VereinID),
-    siteId: findSite(flight.StartplatzWPID, flight.Startplatz),
+    siteId,
     userId: findUser(flight.PilotID),
     landing: flight.Landeplatz,
     report: createReport(flight.Flugbericht, flight.FlugID),
@@ -398,7 +444,7 @@ const convertedFlights = flights.map((flight) => {
   };
 });
 
-console.log("Missing Takeoffs: ", missingTakeoff);
+// console.log("Missing Takeoffs: ", missingTakeoff);
 
 fs.writeFile(
   "flightsImport.json",
