@@ -12,7 +12,7 @@ services:
       - xccup-network
 
   pgadmin:
-    image: dpage/pgadmin4:6.1
+    image: dpage/pgadmin4:6.3
     container_name: db-admin
     restart: always
     env_file: .env
