@@ -177,6 +177,10 @@ export default {
     );
   },
 
+  changeEmail(email) {
+    return jwtInterceptor.put(baseURL + "users/change-email", email);
+  },
+
   confirmMailChange(userId, token, email) {
     return apiClient.get(
       `users/confirm-mail-change?userId=${userId}&token=${token}&email=${email}`

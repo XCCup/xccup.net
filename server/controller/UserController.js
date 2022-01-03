@@ -426,7 +426,6 @@ router.put(
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
   checkIsISO8601("birthday"),
-  checkIsEmail("email"),
   checkIsUuidObject("clubId"),
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
   checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
@@ -445,7 +444,6 @@ router.put(
       lastName,
       firstName,
       birthday,
-      email,
       clubId,
       gender,
       tshirtSize,
@@ -465,7 +463,6 @@ router.put(
       user.lastName = lastName;
       user.firstName = firstName;
       user.birthday = birthday;
-      user.email = email;
       user.clubId = clubId;
       user.gender = gender;
       user.tshirtSize = tshirtSize;
@@ -479,6 +476,35 @@ router.put(
       const result = await service.update(user);
 
       deleteCache(CACHE_RELEVANT_KEYS);
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Edits a users email
+// @route PUT /users/change-email
+// @access Only owner
+router.put(
+  "/change-email",
+  authToken,
+  checkIsEmail("email"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const id = req.user.id;
+
+    const { email } = req.body;
+
+    try {
+      const user = await service.getById(id);
+      if (!user) return res.sendStatus(NOT_FOUND);
+
+      user.email = email;
+      const result = await service.update(user);
+      deleteCache(["users"]);
 
       res.json(result);
     } catch (error) {

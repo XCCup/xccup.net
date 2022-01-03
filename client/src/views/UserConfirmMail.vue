@@ -1,31 +1,19 @@
 <template>
-  <section class="bg-light">
-    <!-- Todo this is reused a few times. Maybe but it in a component with slots -->
-    <div class="container py-5 h-100">
-      <div class="row justify-content-center align-items-center h-100">
-        <div class="col-12 col-lg-9 col-xl-7">
-          <div class="card shadow-2-strong" style="border-radius: 15px">
-            <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4">E-Mail Bestätigung</h3>
-              <div v-if="!errorMessage" class="mb-4">
-                <h5>Hallo {{ resfirstName }}!</h5>
-                Die Änderung deiner E-Mail-Adresse auf {{ resEmail }} wurde
-                erfolgreich durchgeführt 🥳
-              </div>
-              <BaseError v-else :error-message="errorMessage" class="mb-4" />
-
-              <p>
-                Falls Du Probleme feststellst wende Dich bitte an einen
-                <router-link :to="{ name: 'Imprint' }"
-                  >Administrator</router-link
-                >
-              </p>
-            </div>
-          </div>
-        </div>
+  <slot-dialog>
+    <div>
+      <div v-if="!errorMessage" class="mb-4">
+        <h5>Hallo {{ resfirstName }}!</h5>
+        Die Änderung deiner E-Mail-Adresse auf {{ resEmail }} wurde erfolgreich
+        durchgeführt.
       </div>
+      <BaseError v-else :error-message="errorMessage" class="mb-4" />
+      <!-- TODO: Add Mail link? -->
+      <p>
+        Falls Du Probleme feststellst wende Dich bitte an einen
+        <router-link :to="{ name: 'Imprint' }">Administrator</router-link>
+      </p>
     </div>
-  </section>
+  </slot-dialog>
 </template>
 
 <script setup>
