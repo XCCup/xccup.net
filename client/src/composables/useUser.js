@@ -9,8 +9,8 @@ const DEBUG = false;
 const baseURL = getbaseURL();
 const state = reactive({
   authData: {
-    token: "",
-    refreshToken: "",
+    // token: "",
+    // refreshToken: "",
     tokenExp: "",
     userId: "",
     firstName: "",
@@ -70,6 +70,7 @@ export default () => {
   // This needs to be a function because "Date" is not observed in computed properties
   const isTokenActive = () => {
     if (!state.authData.tokenExp) return false;
+    // TODO: Does this work in all timezones?
     return Date.now() <= state.authData.tokenExp * 1000;
   };
 
@@ -92,14 +93,14 @@ export default () => {
   const updateTokens = async () => {
     if (DEBUG) console.log("Update tokens…");
     const authData = state.authData;
-    if (authData.token) {
+    if (localStorage.getItem("accessToken")) {
       try {
         const refreshResponse = await axios.post(baseURL + "users/token", {
-          token: authData.refreshToken,
+          token: localStorage.getItem("refreshToken"),
         });
         saveTokenData({
           accessToken: refreshResponse.data.accessToken,
-          refreshToken: authData.refreshToken,
+          refreshToken: localStorage.getItem("refreshToken"),
         });
         state.loginStatus = "success";
         if (DEBUG) console.log("…tokens:", authData);
