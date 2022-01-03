@@ -237,6 +237,20 @@
     "participantInSeasons": [2004, 2005, 2006, 2007, 2008, 2009, 2010]
   },
   {
+    "shortName": "15",
+    "name": "FS Siegen Pilotenclub",
+    "website": "http://www.flugsport.de",
+    "createdAt": "2022-01-03 12:00:00.000",
+    "updatedAt": "2022-01-03 12:00:00.000",
+    "mapPosition": {
+      "lat": "0",
+      "lon": "0"
+    },
+    "contacts": [],
+    "id": "9021eeaa-6020-4401-b21d-bd5043a029cd",
+    "participantInSeasons": [2005, 2008]
+  },
+  {
     "shortName": "NIEDERRHEI",
     "name": "Fliegerfreunde Niederrhein",
     "website": "http://www.fliegerfreunde-niederrhein.de",
