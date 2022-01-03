@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="container my-3">
     <div class="row">
       <!-- Profile Picture -->
       <div class="col-lg-3">
@@ -39,6 +39,19 @@
               Profil
             </button>
             <button
+              id="nav-change-pw-tab"
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-change-pw"
+              type="button"
+              role="tab"
+              aria-controls="nav-change-pw"
+              aria-selected="false"
+              data-cy="change-password-tab"
+            >
+              Passwort & Email
+            </button>
+            <button
               id="nav-hangar-tab"
               class="nav-link"
               data-bs-toggle="tab"
@@ -50,19 +63,6 @@
               data-cy="hangar-tab"
             >
               Hangar
-            </button>
-            <button
-              id="nav-change-pw-tab"
-              class="nav-link"
-              data-bs-toggle="tab"
-              data-bs-target="#nav-change-pw"
-              type="button"
-              role="tab"
-              aria-controls="nav-change-pw"
-              aria-selected="false"
-              data-cy="change-password-tab"
-            >
-              Passwort ändern
             </button>
             <button
               id="nav-my-flights-tab"
@@ -103,6 +103,8 @@
             aria-labelledby="nav-change-pw"
           >
             <UserProfileChangePassword />
+            <hr class="my-4" />
+            <UserProfileChangeEmail />
           </div>
           <div
             id="nav-my-flights"
@@ -128,6 +130,7 @@ import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
 import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
 import UserProfileMyFlights from "../components/UserProfileMyFlights.vue";
+import UserProfileChangeEmail from "../components/UserProfileChangeEmail.vue";
 
 setWindowName("Profil");
 

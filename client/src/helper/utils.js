@@ -1,3 +1,5 @@
+import { isString } from "lodash-es";
+
 export function isIsoDateWithoutTime(string) {
   const regex = /^\d{4}-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/g;
   return string?.match(regex) != null;
@@ -16,13 +18,15 @@ export function dayAfter(date) {
 }
 
 export function isEmail(value) {
-  return value && value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  if (!isString(value)) return;
+  return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 }
 
 export function isStrongPassword(value) {
+  if (!isString(value)) return;
   const regex =
     /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
-  return value && value.match(regex);
+  return value.match(regex);
 }
 
 export async function asyncForEach(array, callback) {

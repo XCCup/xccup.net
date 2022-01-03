@@ -26,6 +26,7 @@
 - [x] browser window titles
 - [x] tooltips for icons
 - [x] dark mode
+- [ ] Sweetalert dark mode
 
 ### Home
 

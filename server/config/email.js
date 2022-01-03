@@ -27,12 +27,11 @@ const sendMail = async (mailAddresses, content, replyTo) => {
     throw "content.title and content.text are not allowed to be empty";
 
   const message = createMessage(
-    process.env.MAIL_SERVICE_USER,
+    process.env.MAIL_SERVICE_FROM_EMAIL,
     mailAddresses,
     content,
     replyTo
   );
-
   try {
     const info = await mailClient.sendMail(message);
     logger.debug("Message sent: " + info.messageId);
@@ -45,10 +44,18 @@ const sendMail = async (mailAddresses, content, replyTo) => {
   return true;
 };
 
-function createMessage(from, to, content, replyTo) {
+function createMessage(from, toAddresses, content, replyTo) {
+  const isArray = Array.isArray(toAddresses);
+  const to = isArray ? undefined : toAddresses;
+  const bcc = isArray ? toAddresses : undefined;
+
+  console.log("TO: ", to);
+  console.log("BCC: ", bcc);
   return {
     from,
-    bcc: to,
+    // TODO: Why are mails not received (or sent?) when "from" and "to" are identical?
+    to,
+    bcc,
     subject: content.title,
     text: content.text,
     replyTo,
