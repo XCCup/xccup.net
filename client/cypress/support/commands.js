@@ -37,6 +37,7 @@ Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
  */
 Cypress.Commands.add("loginAdminUser", () => {
   cy.get("#loginNavButton").click();
+  cy.url().should("include", "/login");
 
   cy.get("input#email").type("xccup-beta@stephanschoepe.de");
   cy.get("input#password").type("PW_CamilleSchaden");
@@ -51,8 +52,9 @@ Cypress.Commands.add("loginAdminUser", () => {
  */
 Cypress.Commands.add("loginNormalUser", () => {
   cy.get("#loginNavButton").click();
+  cy.url().should("include", "/login");
 
-  cy.get("input#email").type("Ramona@Gislason.fake");
+  cy.get("input#email").type("blackhole+ramona@stephanschoepe.de");
   cy.get("input#password").type("PW_RamonaGislason");
 
   cy.get("button").contains("Anmelden").click();
@@ -65,6 +67,7 @@ Cypress.Commands.add("loginNormalUser", () => {
  */
 Cypress.Commands.add("login", (email, password) => {
   cy.get("#loginNavButton").click();
+  cy.url().should("include", "/login");
 
   cy.get("input#email").type(email);
   cy.get("input#password").type(password);

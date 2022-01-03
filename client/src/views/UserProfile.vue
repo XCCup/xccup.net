@@ -1,6 +1,5 @@
 <template>
-  <div class="container mt-3">
-    <!-- Editor -->
+  <div class="container my-3">
     <div class="row">
       <!-- Profile Picture -->
       <div class="col-lg-3">
@@ -40,18 +39,6 @@
               Profil
             </button>
             <button
-              id="nav-hangar-tab"
-              class="nav-link"
-              data-bs-toggle="tab"
-              data-bs-target="#nav-hangar"
-              type="button"
-              role="tab"
-              aria-controls="nav-hangar"
-              aria-selected="false"
-            >
-              Hangar
-            </button>
-            <button
               id="nav-change-pw-tab"
               class="nav-link"
               data-bs-toggle="tab"
@@ -62,7 +49,20 @@
               aria-selected="false"
               data-cy="change-password-tab"
             >
-              Passwort ändern
+              Passwort & Email
+            </button>
+            <button
+              id="nav-hangar-tab"
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-hangar"
+              type="button"
+              role="tab"
+              aria-controls="nav-hangar"
+              aria-selected="false"
+              data-cy="hangar-tab"
+            >
+              Hangar
             </button>
             <button
               id="nav-my-flights-tab"
@@ -94,9 +94,7 @@
             role="tabpanel"
             aria-labelledby="nav-hangar-tab"
           >
-            <div id="glider-select" class="col-md-12 mb-4">
-              <UserProfileGliderlist />
-            </div>
+            <UserProfileGliderlist />
           </div>
           <div
             id="nav-change-pw"
@@ -105,6 +103,8 @@
             aria-labelledby="nav-change-pw"
           >
             <UserProfileChangePassword />
+            <hr class="my-4" />
+            <UserProfileChangeEmail />
           </div>
           <div
             id="nav-my-flights"
@@ -130,16 +130,13 @@ import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
 import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
 import UserProfileMyFlights from "../components/UserProfileMyFlights.vue";
+import UserProfileChangeEmail from "../components/UserProfileChangeEmail.vue";
 
 setWindowName("Profil");
 
 // TODO: Remember the opened tab when navigating back to profile
 
 const props = defineProps({
-  edit: {
-    type: Boolean,
-    default: false,
-  },
   showHangar: {
     type: Boolean,
     default: false,
@@ -149,7 +146,12 @@ const props = defineProps({
 // TODO: Warn user if there are unsaved changes --> Use "beforeRouteLeave lifecycle hook"
 const { fetchProfile, userData } = useUserProfile();
 
-fetchProfile();
+try {
+  await fetchProfile();
+} catch (error) {
+  // TODO: Do something
+  console.error(error);
+}
 
 const editAvatarModal = ref(null);
 onMounted(() => {

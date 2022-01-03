@@ -1,5 +1,6 @@
 <template>
-  <div class="container-lg">
+  <div v-if="clubs" class="container-lg">
+    <!-- TODO: Shall the year be named? -->
     <h3>Teilnehmende Vereine des Jahres {{ new Date().getFullYear() }}</h3>
     <ClubMap :clubs="clubs" />
   </div>
@@ -8,7 +9,6 @@
 <script setup>
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
-import { shuffle } from "lodash";
 import { setWindowName } from "../helper/utils";
 
 const clubs = ref([]);
@@ -18,10 +18,7 @@ setWindowName("Vereine");
 try {
   const res = await ApiService.getClubs();
   if (res.status != 200) throw res.status.text;
-
-  const shuffledData = shuffle(res.data);
-
-  clubs.value = shuffledData;
+  clubs.value = res.data;
 } catch (error) {
   console.error(error);
 }

@@ -1,15 +1,20 @@
 <template>
   <div class="container">
-    <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
-    <div class="row gy-5 gx-5">
-      <div
-        v-for="sponsor in sponsors"
-        :key="sponsor.id"
-        class="col-xl-6 col-md-12"
-      >
-        <SponsorCard :sponsor="sponsor" />
+    <div v-if="sponsors">
+      <!-- TODO: Shall the year be named? -->
+      <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
+      <div v-if="sponsors?.length > 0" class="row gy-5 gx-5">
+        <div
+          v-for="sponsor in sponsors"
+          :key="sponsor.id"
+          class="col-xl-6 col-md-12"
+        >
+          <SponsorCard :sponsor="sponsor" />
+        </div>
       </div>
+      <div v-else>Leider haben wir keine Sponsoren für dieses Jahr.</div>
     </div>
+    <GenericError v-else />
   </div>
 </template>
 

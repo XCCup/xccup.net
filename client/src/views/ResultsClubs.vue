@@ -1,7 +1,14 @@
 <template>
   <div class="container-lg">
-    <h3>Vereinswertung {{ route.params.year }}</h3>
-    <ResultsTableClubs :results="results" />
+    <div v-if="results">
+      <h3>Vereinswertung {{ route.params.year }}</h3>
+      <ResultsTableClubs :results="results" />
+    </div>
+    <div v-if="results">
+      <h3>Teamwertung {{ route.params.year }}</h3>
+      <ResultsTableTeams :results="results" />
+    </div>
+    <GenericError v-else />
   </div>
 </template>
 
@@ -12,7 +19,6 @@ import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-
 const results = ref(null);
 
 setWindowName("Vereinswertung");

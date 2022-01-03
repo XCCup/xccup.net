@@ -1,4 +1,5 @@
 const logger = require("../config/logger");
+const sanitizeHtml = require("sanitize-html");
 
 async function sleep(ms) {
   logger.info(`Will suspend thread for ${ms} ms on purpose`);
@@ -28,7 +29,15 @@ async function waitTillDbHasSync() {
   }
   logger.info("DB syncing finished");
 }
+function sanitize(text) {
+  return sanitizeHtml(text, {
+    // Do not allow html at all
+    allowedTags: [],
+    allowedAttributes: {},
+  });
+}
 
+exports.sanitizeHtml = sanitize;
 exports.sleep = sleep;
 exports.getCurrentYear = getCurrentYear;
 exports.arrayRemove = arrayRemove;

@@ -14,14 +14,16 @@
           <p>{{ modalBody }}</p>
         </div>
         <div class="modal-footer">
+          <BaseError :error-message="errorMessage" />
+
           <button
             type="button"
             class="btn"
             :class="isDangerousAction ? 'btn-danger' : 'btn-primary'"
-            data-bs-dismiss="modal"
             @click="confirmAction"
           >
             {{ confirmButtonText }}
+            <BaseSpinner v-if="showSpinner" />
           </button>
           <button
             type="button"
@@ -41,6 +43,7 @@
 
 <script setup>
 // TODO: Refactor this to have a show method exposed?
+// TODO: Tests need to includ the hiding of the modal as well.
 defineProps({
   modalId: {
     type: String,
@@ -53,6 +56,14 @@ defineProps({
   modalBody: {
     type: String,
     required: false,
+    default: null,
+  },
+  showSpinner: {
+    type: Boolean,
+    default: false,
+  },
+  errorMessage: {
+    type: [String, null],
     default: null,
   },
   confirmButtonText: {

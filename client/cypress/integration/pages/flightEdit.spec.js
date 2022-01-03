@@ -20,7 +20,7 @@ describe("check edit flight page", () => {
   });
 
   it("Check that guest isn't able to edit flight", () => {
-    cy.login("Clinton@Hettinger.fake", "PW_ClintonHettinger");
+    cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
     cy.visit(`/flug/${editableFlightId}`);
 
     cy.get("#flight-details");
@@ -29,7 +29,7 @@ describe("check edit flight page", () => {
 
   it("Check that flight edit is only possible within 14 days", () => {
     cy.loginNormalUser();
-    cy.visit(`/flug/${nonEditableFlightId}`);
+    cy.visit(`/flug/42`);
 
     cy.get("#flight-details");
     cy.get("button").contains("Flug bearbeiten").should("not.exist");

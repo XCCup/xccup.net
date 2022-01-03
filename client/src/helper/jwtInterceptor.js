@@ -1,5 +1,7 @@
 import axios from "axios";
 import useUser from "@/composables/useUser";
+import router from "@/router/";
+
 const { authData, updateTokens } = useUser();
 
 const jwtInterceptor = axios.create({});
@@ -17,10 +19,15 @@ jwtInterceptor.interceptors.response.use(
     return response;
   },
   async (error) => {
-    if (!error.response) {
-      console.log("Please check your internet connection.");
+    //  Only route to network error page if it's a get request.
+    if (error.message === "Network Error" && error.config.method === "get") {
+      console.log("Network Error");
+      router.push({
+        name: "NetworkError",
+      });
     }
-    console.log("Interceptor refresh…");
+
+    // Token refresh
     if (error.response?.status === 403 && error.response?.data === "EXPIRED") {
       console.log("Interceptor refresh…");
       await updateTokens();

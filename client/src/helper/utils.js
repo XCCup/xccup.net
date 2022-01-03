@@ -1,3 +1,5 @@
+import { isString } from "lodash-es";
+
 export function isIsoDateWithoutTime(string) {
   const regex = /^\d{4}-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/g;
   return string?.match(regex) != null;
@@ -16,13 +18,15 @@ export function dayAfter(date) {
 }
 
 export function isEmail(value) {
-  return value && value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  if (!isString(value)) return;
+  return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 }
 
 export function isStrongPassword(value) {
+  if (!isString(value)) return;
   const regex =
     /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
-  return value && value.match(regex);
+  return value.match(regex);
 }
 
 export async function asyncForEach(array, callback) {
@@ -53,4 +57,15 @@ export function checkIfDateIsDaysBeforeToday(date, daysBeforeToday) {
   const daysDifference =
     (new Date().getTime() - new Date(date).getTime()) / 1000 / 60 / 60 / 24;
   return daysDifference < daysBeforeToday;
+}
+export function sanitizeComment(message) {
+  // Create clickable links from link text
+  const URLMatcher =
+    /(?:(?:https):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?/i;
+
+  const html = message.replace(
+    URLMatcher,
+    (match) => `<a href="${match}" target="_blank">${match}</a>`
+  );
+  return html;
 }

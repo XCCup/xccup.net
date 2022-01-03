@@ -12,11 +12,13 @@
         <i class="bi bi-trash d-inline me-1"></i> Flug löschen
       </div>
     </div>
+    <!-- TODO: Admin edit shows wrong gliders -->
     <GliderSelect
       v-model="modifiedFlightData.glider.id"
       :show-label="true"
       :gliders="listOfGliders"
       @update:model-value="updateSelectedGlider()"
+      @gliders-changed="fetchGliders()"
     />
     <!-- Airspace comment -->
     <div class="form-floating my-3">
@@ -118,7 +120,7 @@ import useFlight from "@/composables/useFlight";
 import useFlightEdit from "@/composables/useFlightEdit";
 import ApiService from "@/services/ApiService";
 import { useRoute } from "vue-router";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "lodash-es";
 import router from "../router";
 import { asyncForEach } from "../helper/utils";
 import { Modal } from "bootstrap";
@@ -157,14 +159,19 @@ if (modifiedFlightData.value.externalId != route.params.id) {
   unmodifiedFlightData.value = cloneDeep(modifiedFlightData.value);
 }
 
-// Fetch users glider
-try {
-  const res = await ApiService.getGliders();
-  if (res.status != 200) throw res.statusText;
-  listOfGliders.value = res.data.gliders;
-} catch (error) {
-  console.log(error);
-}
+// Fetch users gliders
+
+const fetchGliders = async () => {
+  try {
+    const res = await ApiService.getGliders();
+    if (res.status != 200) throw res.statusText;
+    listOfGliders.value = res.data.gliders;
+  } catch (error) {
+    // TODO: Do something!
+    console.log(error);
+  }
+};
+await fetchGliders();
 
 // Submit changed flight data
 const onSubmit = async () => {
@@ -240,7 +247,7 @@ const updateSelectedGlider = () => {
   modifiedFlightData.value.glider = { ...newSelection };
 };
 
-// TODO: Should there be a confirm message?
+// TODO: Add confirm message
 const onDeleteFlight = async () => {
   showSpinner.value = true;
   try {
@@ -251,6 +258,7 @@ const onDeleteFlight = async () => {
     showSpinner.value = false;
     console.log({ error });
   }
+  deleteFlightModal.value.hide();
 };
 </script>
 

@@ -1,5 +1,9 @@
 <template>
-  <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''"></div>
+  <div
+    id="mapContainer"
+    class="mb-3"
+    :class="userPrefersDark ? 'darken-map' : ''"
+  ></div>
 </template>
 
 <script setup>
@@ -45,6 +49,7 @@ const createPopupContent = (club) => {
   return lines.join("<br>");
 };
 
+// TODO: Make this retina friendly
 const addClubLogos = (clubs) => {
   if (clubs.length === 0) return;
 

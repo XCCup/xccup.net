@@ -23,14 +23,23 @@
         </div>
         <div class="modal-body">
           <BaseSelect
+            id="brand-select"
             v-model="newGlider.brand"
             :options="brands"
             label="Hersteller"
           />
           <div class="mb-3"></div>
-          <BaseInput v-model="newGlider.model" label="Fluggerät" />
+          <BaseInput
+            id="glider-name"
+            v-model="newGlider.model"
+            label="Fluggerät"
+          />
 
-          <select v-model="newGlider.gliderClass" class="form-select">
+          <select
+            id="ranking-class-select"
+            v-model="newGlider.gliderClass"
+            class="form-select"
+          >
             <option disabled value selected>Geräteklasse</option>
             <option
               v-for="(gliderClass, classKey) in gliderClasses"
@@ -48,6 +57,7 @@
             type="button"
             class="btn btn-primary"
             :disabled="!saveButtonIsEnabled"
+            data-cy="save-new-glider-button"
             @click="onAddGlider"
           >
             Speichern

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3">
+  <div v-if="listOfCountries" class="p-3">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="text-right">Profil</h4>
     </div>
@@ -29,7 +29,6 @@
           :options="listOfClubs"
           :is-disabled="!isOffseason"
         />
-        <BaseInput id="email" v-model="modifiedUserData.email" label="E-Mail" />
         <BaseInput
           id="street"
           v-model="modifiedUserData.address.street"
@@ -248,10 +247,6 @@ const onSave = async () => {
     inidcateSuccess();
   } catch (error) {
     console.error(error);
-
-    if (error.response?.data?.errors[0].param === "email")
-      return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
-
     errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";
   } finally {
     showSpinner.value = false;

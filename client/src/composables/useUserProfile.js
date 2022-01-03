@@ -1,6 +1,6 @@
 import { ref, computed, readonly, watchEffect } from "vue";
 import ApiService from "@/services/ApiService";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "lodash-es";
 
 // Create a "prototype" of the user data expected by bindings in UserProfile.vue
 // This prevents null cases if the corresponding properties are none existent in API response
@@ -33,6 +33,10 @@ export default () => {
     () =>
       JSON.stringify(modifiedUserData.value) != JSON.stringify(userData.value)
   );
+
+  const emailHasChanged = computed(
+    () => modifiedUserData.value.email != userData.value.email
+  );
   // Mutations
   const updateState = (data) => {
     userData.value = { ...data, birthday: new Date(data.birthday) };
@@ -64,5 +68,6 @@ export default () => {
     updateProfile,
     modifiedUserData,
     profileDataHasChanged,
+    emailHasChanged,
   };
 };

@@ -1,7 +1,7 @@
 <template>
   <TheNavbar />
   <main class="flex-shrink-0 flex-grow-1 position-relative">
-    <div v-if="error" class="error-message">Uh oh .. {{ error }}</div>
+    <GenericError v-if="error" />
     <router-view v-else v-slot="{ Component }">
       <template v-if="Component">
         <suspense timeout="500">
@@ -40,6 +40,7 @@ import { ref, onErrorCaptured } from "vue";
 const error = ref(null);
 onErrorCaptured((e) => {
   error.value = e;
+  console.log(e);
   return true;
 });
 </script>

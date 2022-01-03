@@ -26,17 +26,17 @@
         data-cy="password-confirm-input"
       />
     </div>
-    <div class="col-md-6 mb-3">
+    <div class="col-md-6">
       <button
         class="btn btn-primary"
         :disabled="!saveButtonIsEnabled"
         data-cy="password-change-btn"
         @click="onSave"
       >
-        Speichern
+        Passwort ändern
         <BaseSpinner v-if="showSpinner" />
       </button>
-      <BaseError :error-message="errorMessage" />
+      <BaseError :error-message="errorMessage" class="my-2" />
     </div>
   </div>
 </template>

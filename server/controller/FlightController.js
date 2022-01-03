@@ -26,14 +26,14 @@ const { query } = require("express-validator");
 const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
-  checkStringObjectNotEmptyNoEscaping,
-  checkStringObject,
+  checkStringObjectNoEscaping,
   checkParamIsInt,
   checkParamIsUuid,
   checkIsUuidObject,
   validationHasErrors,
   checkOptionalIsBoolean,
   queryOptionalColumnExistsInModel,
+  checkStringObjectNotEmptyNoEscaping,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
@@ -245,8 +245,8 @@ router.put(
   uploadLimiter,
   authToken,
   checkParamIsUuid("id"),
-  checkStringObject("report"),
-  checkStringObject("airspaceComment"),
+  checkStringObjectNoEscaping("report"),
+  checkStringObjectNoEscaping("airspaceComment"),
   checkOptionalIsBoolean("onlyLogbook"),
   checkIsUuidObject("glider.id"),
   checkStringObjectNotEmpty("glider.brand"),

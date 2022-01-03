@@ -1,5 +1,5 @@
 <template>
-  <div id="userListView" class="container">
+  <div v-if="users" id="userListView" class="container">
     <h3>Registrierte Piloten</h3>
     <div class="row">
       <div class="col-6">
@@ -50,5 +50,5 @@ const messageUser = (user) => {
   mailModal.show();
 };
 
-fetchData({ params: { records: true }, queries: route.query });
+await fetchData({ params: { records: true }, queries: route.query });
 </script>
