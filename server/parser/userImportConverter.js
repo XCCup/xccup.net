@@ -191,7 +191,7 @@ const convertedUsers = users.map((user) => {
   if (emails.includes(user.EMail1)) {
     console.log("User duplicated: ", user.PilotID);
     transformedUser.email =
-      "duplicated_" + Math.random(4711) + transformedUser.email;
+      "duplicated_" + Math.ceil(Math.random() * 4711) + transformedUser.email;
     // return duplicatedUsers.push(transformedUser);
   }
 
