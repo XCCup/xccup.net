@@ -93,7 +93,7 @@ function adjustTimesToToday(flights, numberOfEntriesToAdjust) {
     takeoffDate.setMonth(today.getMonth());
     takeoffDate.setDate(today.getDate());
     flights[index].takeoffTime = takeoffDate.toISOString();
-    const landingDate = new Date(flights[index].takeoffTime);
+    const landingDate = new Date(flights[index].landingDate);
     landingDate.setFullYear(today.getFullYear());
     landingDate.setMonth(today.getMonth());
     landingDate.setDate(today.getDate());
