@@ -49,7 +49,7 @@
               aria-selected="false"
               data-cy="change-password-tab"
             >
-              Passwort & Email
+              Passwort & E-mail
             </button>
             <button
               id="nav-hangar-tab"
