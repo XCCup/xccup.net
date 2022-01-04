@@ -11,10 +11,10 @@
                 <router-link
                   :to="{
                     name: 'FlightsAll',
-                    query: { userId: flight.user.id },
+                    query: { userId: flight.user?.id },
                   }"
                 >
-                  {{ flight.user.firstName + " " + flight.user.lastName }}
+                  {{ flight.user?.firstName + " " + flight.user?.lastName }}
                 </router-link>
               </td>
             </tr>
@@ -24,11 +24,11 @@
                 <router-link
                   :to="{
                     name: 'FlightsAll',
-                    query: { clubId: flight.club.id },
+                    query: { clubId: flight.club?.id },
                   }"
                 >
                   <div>
-                    {{ flight.club.name }}
+                    {{ flight.club?.name }}
                   </div>
                 </router-link>
               </td>
