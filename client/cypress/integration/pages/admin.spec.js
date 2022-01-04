@@ -13,7 +13,9 @@ describe("check admin page", () => {
     cy.logout();
     cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
     cy.visit("/admin");
-    cy.url().should("include", "/").and("not.include", "/admin");
+
+    // Non admins should be redirected to the landing page
+    cy.get("h1").should("have.text", `XCCup ${new Date().getFullYear()}`);
   });
 
   it("test general page loading", () => {
