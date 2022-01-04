@@ -34,5 +34,7 @@ const route = useRoute();
 
 const { fetchData, errorMessage } = useData(ApiService.getFlights);
 
-fetchData({ params: route.params.year, queries: route.query });
+const params = route.params.year ? { year: route.params.year } : undefined;
+
+fetchData({ params, queries: route.query });
 </script>
