@@ -70,7 +70,6 @@ export default () => {
   // This needs to be a function because "Date" is not observed in computed properties
   const isTokenActive = () => {
     if (!state.authData.tokenExp) return false;
-    // TODO: Does this work in all timezones?
     return Date.now() <= state.authData.tokenExp * 1000;
   };
 
@@ -81,9 +80,9 @@ export default () => {
   };
 
   const logout = async () => {
-    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
     await axios
-      .post(baseURL + "users/logout", { token: accessToken })
+      .post(baseURL + "users/logout", { token: refreshToken })
       .catch((err) => {
         console.log(err);
       });
