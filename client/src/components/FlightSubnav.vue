@@ -8,11 +8,11 @@
       <router-link
         :to="{
           name: 'FlightsAll',
-          query: { userId: flight.user.id },
+          query: { userId: flight.user?.id },
         }"
         class="link-light"
       >
-        {{ flight.user.firstName + " " + flight.user.lastName }}
+        {{ flight.user?.firstName + " " + flight.user?.lastName }}
       </router-link>
       am
       <router-link
