@@ -286,7 +286,7 @@ function findSite(value, takeoff) {
 }
 
 function findUser(value) {
-  const users = require("../test/testdatasets/usersImport.json");
+  const users = require("../import/usersImport.json");
 
   const found = users.find((u) => u.oldId == value);
 
@@ -398,7 +398,7 @@ function createTime(date, time, id) {
 }
 
 function createReport(report, flightId, status) {
-  let prefix = `Dieser Flug wurde aus der alten Datenbank importiert. Für die Vollständigkeit kann keine Garantie gegeben werden. Du findest den Flug in der Originalversion unter https://archiv.xccup.netFlugDetails/${flightId}`;
+  let prefix = `Dieser Flug wurde aus der alten Datenbank importiert. Für die Vollständigkeit kann keine Garantie gegeben werden. Du findest den Flug in der Originalversion unter https://archiv.xccup.net/FlugDetails/${flightId}`;
 
   if (status == 0) prefix += "\n\nDieser Flug war ein Zielflug ohne IGC-Datei.";
 
