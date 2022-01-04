@@ -24,6 +24,7 @@
     "chart.js": "^3.6.0",
     "chartjs-adapter-date-fns": "^2.0.0",
     "date-fns": "^2.25.0",
+    "date-fns-tz": "^1.2.2",
     "glightbox": "^3.1.0",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.7.1",

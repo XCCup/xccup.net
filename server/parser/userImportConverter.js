@@ -1,4 +1,4 @@
-const users = require("../convertTo.json");
+const users = require("../convertToUserModel.json");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 
@@ -55,7 +55,7 @@ function findClubName(value, clubNames) {
     case "7":
       return "D.G.F. Rhein-Mosel-Lahn";
     case "8":
-      return "Ostwindfreunde";
+      return "Ostwindfreunde e.V.";
     case "11":
       return "DGF Hellertal";
     case "16":
@@ -113,25 +113,25 @@ function findCountry(value) {
 function findGliderClass(value) {
   switch (value) {
     case "GSSPORTL":
-      return "AB_low";
+      return { key: "AB_low", shortDescription: "GS Sport low" };
     case "GSSPORTH":
-      return "AB_high";
+      return { key: "AB_high", shortDescription: "GS Sport high" };
     case "GSINTERMEDIATEL":
-      return "C_low";
+      return { key: "C_low", shortDescription: "GS Intermediate low" };
     case "GSINTERMEDIATEH":
-      return "C_high";
+      return { key: "C_high", shortDescription: "GS Intermediate high" };
     case "GSPERFORMANCE":
-      return "D_low";
+      return { key: "D_low", shortDescription: "GS Performance low" };
     case "GSCOMP":
-      return "D_high";
+      return { key: "D_high", shortDescription: "GS Competition high" };
     case "GSTANDEM":
-      return "Tandem";
+      return { key: "Tandem", shortDescription: "GS Tandem" };
     case "HGFAI1":
-      return "HG_1_Turm";
+      return { key: "HG_1_Turm", shortDescription: "Turmdrachen" };
     case "HGFAI1TL":
-      return "HG_1_Turmlos";
+      return { key: "HG_1_Turmlos", shortDescription: "Drachen turmlos" };
     case "HGFAI5":
-      return "HG_5_starr";
+      return { key: "HG_5_starr", shortDescription: "Drachen Starre" };
     default:
       console.log("Couldn't match glider class " + value);
       break;
@@ -149,21 +149,11 @@ const convertedUsers = users.map((user) => {
     return;
   }
 
-  if (emails.includes(user.EMail1)) {
-    console.log("User duplicated: ", user.PilotID);
-    return duplicatedUsers.push(user);
-  }
-
-  if (!user.EMail1 == "") emails.push(user.EMail1);
-
   const clubId = findClub(user.VereinID);
-  if (!clubId) {
-    console.log("User without club");
-    return;
-  }
-
-  return {
+  const transformedUser = {
     id: uuidv4(),
+    password: uuidv4(),
+    oldId: user.PilotID,
     firstName: user.Vorname,
     lastName: user.Name,
     birthday: user.BirthDate == "NULL" ? undefined : user.BirthDate,
@@ -188,15 +178,27 @@ const convertedUsers = users.map((user) => {
     emailInformIfComment: user.KommentarEmail == "1" ? true : false,
     emailNewsletter: user.NewsletterEnabled == "1" ? true : false,
     email:
-      user.EMail1 == ""
+      user.EMail1 == "" || !user.EMail1
         ? uuidv4().substring(0, 6) + "@no-mail.import"
         : user.EMail1,
-    clubId: findClub(user.VereinID),
-    // teamId:
+    clubId,
   };
-});
+  // if (!clubId) {
+  //   console.log("User without club: ", user.PilotID);
+  //   return;
+  // }
 
-convertedUsers.filter((u) => !u);
+  if (emails.includes(user.EMail1)) {
+    console.log("User duplicated: ", user.PilotID);
+    transformedUser.email =
+      "duplicated_" + Math.ceil(Math.random() * 4711) + transformedUser.email;
+    // return duplicatedUsers.push(transformedUser);
+  }
+
+  if (!user.EMail1 == "") emails.push(user.EMail1);
+
+  return transformedUser;
+});
 
 console.log("Duplicated users: ");
 duplicatedUsers.forEach((u) =>

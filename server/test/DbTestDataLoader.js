@@ -51,6 +51,10 @@ const dbTestData = {
       [Brand, require("./testdatasets/brands.json")],
       [Logo, require("./testdatasets/logos.json")],
     ];
+    if (process.env.SERVER_IMPORT_ORIGINAL_DATA === "true") {
+      relations.push([User, require("./testdatasets/usersImport.json")]);
+      relations.push([Flight, require("./testdatasets/flightsImport.json")]);
+    }
 
     await addToDb(relations);
 
@@ -74,7 +78,8 @@ async function addDataset(model, dataset) {
   await Promise.all(
     dataset.map(async (entry) => {
       await model.create(entry).catch((err) => {
-        logger.error(err.errors[0].message);
+        if (err.errors) logger.error(err.errors[0].message);
+        else logger.error(err);
       });
     })
   );
@@ -132,5 +137,14 @@ function adjustYearOfEveryFlight(flights) {
   landingDate.setFullYear(today.getFullYear() - 1);
   flights[lastEntryIndex].landingDate = landingDate.toISOString();
 }
+
+// function sliceIntoChunks(arr, chunkSize) {
+//   const res = [];
+//   for (let i = 0; i < arr.length; i += chunkSize) {
+//     const chunk = arr.slice(i, i + chunkSize);
+//     res.push(chunk);
+//   }
+//   return res;
+// }
 
 module.exports = dbTestData;

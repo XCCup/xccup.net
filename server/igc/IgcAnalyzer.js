@@ -272,11 +272,12 @@ function writeFile(flightExternalId, fileLines, stripFactor) {
 
 function stripByFactor(factor, input) {
   const lines = input.split("\n");
+  const stripFactor = factor ? factor : 1;
   let reducedLines = [];
   for (let i = 0; i < lines.length; i++) {
     reducedLines.push(lines[i]);
     if (lines[i] && lines[i].startsWith("B")) {
-      i = i + (factor - 1);
+      i = i + (stripFactor - 1);
     }
   }
   return reducedLines;

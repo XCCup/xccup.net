@@ -85,6 +85,7 @@
 <script>
 import ApiService from "@/services/ApiService";
 import { Modal } from "bootstrap";
+import { adjustDateToLocal } from "../../helper/utils";
 
 export default {
   data() {
@@ -160,8 +161,8 @@ function createEmptyNewsObject() {
 
 function transfromToDateObjects(news) {
   news.forEach((element) => {
-    element.from = new Date(element.from);
-    element.till = new Date(element.till);
+    element.from = adjustDateToLocal(element.from);
+    element.till = adjustDateToLocal(element.till);
   });
 }
 </script>
