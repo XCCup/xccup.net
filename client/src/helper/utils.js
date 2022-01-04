@@ -1,4 +1,5 @@
 import { isString } from "lodash-es";
+import { utcToZonedTime } from "date-fns-tz";
 
 export function isIsoDateWithoutTime(string) {
   const regex = /^\d{4}-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/g;
@@ -18,11 +19,8 @@ export function dayAfter(date) {
 }
 
 export function adjustDateToLocal(originalDate) {
-  const dbBirthdayObject = new Date(originalDate);
-  return new Date(
-    dbBirthdayObject.getTime() +
-      dbBirthdayObject.getTimezoneOffset() * 60 * 1000
-  );
+  const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
+  return utcToZonedTime(new Date(originalDate).getTime(), tz);
 }
 
 export function isEmail(value) {
