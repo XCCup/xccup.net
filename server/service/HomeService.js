@@ -27,7 +27,7 @@ const service = {
     const currentSeason = await seasonService.getCurrentActive();
 
     const seasonStats = await promiseAllObject({
-      numberOfClubs: clubService.count(),
+      numberOfClubs: clubService.countActive(),
       numberOfTeams: teamService.countActive(),
       numberOfUsers: userService.count(),
       totalFlightDistance: flightService.sumDistance(getCurrentYear()),
