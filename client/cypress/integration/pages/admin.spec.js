@@ -16,6 +16,7 @@ describe("check admin page", () => {
     cy.visit("/admin");
 
     // Non admins should be redirected to the landing page
+    cy.url().should("not.contain", "/admin");
     cy.get("h1").should("have.text", `XCCup ${new Date().getFullYear()}`);
   });
 
