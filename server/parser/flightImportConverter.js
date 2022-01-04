@@ -277,7 +277,7 @@ function findSite(value, takeoff) {
       break;
   }
 
-  if (found) return found?.id;
+  if (found) return found;
 
   // console.log("No site found for id: " + value + " Name: " + takeoff);
   // if (missingTakeoff[takeoff])
@@ -299,14 +299,14 @@ function findUser(value) {
 
 function findStatus(value) {
   switch (value) {
-    case -1:
+    case "-1":
       return "Nicht in Wertung";
-    case 0:
+    case "0":
       return "Zielflug";
-    case 1:
-    case 2: //LRV In Wertung
+    case "1":
+    case "2": //LRV In Wertung
       return "In Wertung";
-    case 3:
+    case "3":
       return "Flugbuch";
 
     default:
@@ -314,7 +314,7 @@ function findStatus(value) {
   }
 }
 function findLVR(value) {
-  return value == 2;
+  return value == "2";
 }
 
 function findType(value) {
@@ -333,9 +333,14 @@ function findType(value) {
 }
 
 function createGlider(HerstellerID, Fluggeraet, GeraeteklasseID) {
+  let brand = findBrand(HerstellerID);
+  if (!brand && (Fluggeraet.includes("Atos") || Fluggeraet.includes("ATOS")))
+    brand = "A-I-R";
+
+  const model = Fluggeraet.replace(brand, "");
   return {
-    brand: findBrand(HerstellerID),
-    model: Fluggeraet,
+    brand,
+    model,
     gliderClass: findGliderClass(GeraeteklasseID),
   };
 }
@@ -379,8 +384,23 @@ function findGliderClass(value) {
   }
 }
 
-function createReport(report, flightId) {
-  const prefix = `Dieser Flug wurde aus der alten Datenbank importiert. Für die Vollständigkeit kann keine Garantie gegeben werden. Du findest den Flug in der Originalversion unter https://archiv.xccup.netFlugDetails/${flightId}`;
+function createTime(date, time, id) {
+  if (!time) return console.log("Time undefined of flight: " + id);
+
+  const fixedDate = new Date(date);
+  const timeParts = time.split(":");
+  fixedDate.setHours(timeParts[0]);
+  fixedDate.setMinutes(timeParts[1]);
+
+  // console.log(fixedDate);
+
+  return fixedDate.getTime();
+}
+
+function createReport(report, flightId, status) {
+  let prefix = `Dieser Flug wurde aus der alten Datenbank importiert. Für die Vollständigkeit kann keine Garantie gegeben werden. Du findest den Flug in der Originalversion unter https://archiv.xccup.netFlugDetails/${flightId}`;
+
+  if (status == 0) prefix += "\n\nDieser Flug war ein Zielflug ohne IGC-Datei.";
 
   // if (!report) return;
 
@@ -397,13 +417,79 @@ function createReport(report, flightId) {
   return prefix;
 }
 
-const convertedFlights = flights.map((flight) => {
-  const siteId = findSite(flight.StartplatzWPID, flight.Startplatz);
+// flights.forEach((element) => {
+//   if (!element.DateCreated)
+//     console.log("Flight malformed id: ", element.FlugID);
+//   const match = element.Flugbericht?.match(
+//     // /.*;(.*\.igc);.*;NULL;(\d{1,3});(-?\d{1});NULL;(.*);.*/
+//     // /.*;(.*\.igc);.*;NULL;(\d{1,3});(-?\d{1});\d;(.*);.*/
+//     // /.*;NULL;(\d{1,3});(-?\d{1});NULL;(.*);.*/
+//     // /.*;(.*\.IGC);.*;.*;(\d{1,3});(-?\d{1});NULL;(.*);.*/
+//     /.*;.*;(\d{1,3});(-?\d{1});NULL;(.*);.*/
+//   );
+//   if (match) {
+//     console.log(`"Flugbericht": "",`);
+//     // console.log(`"IGCFile":"${match[1]}",`);
+//     console.log(`"Punkte":"${match[1]}",`);
+//     console.log(`"FlugStatus":"${match[2]}",`);
+//     console.log(`"DateCreated":"${match[3]}"`);
+//     console.log("\n");
+//   }
+// });
 
-  if (!siteId && flight.Punkte > 60)
-    console.log(
-      `No site found for name: ${flight.Startplatz} flight points: ${flight.Punkte} flight id: ${flight.FlugID}`
-    );
+function parseLandingCoordinates(coordinates) {
+  const parseDMS = require("parse-dms");
+  if (coordinates) {
+    // console.log(coordinates);
+    try {
+      const co = parseDMS(coordinates);
+      // console.log(co);
+      return co;
+    } catch (error) {
+      console.log("malformed coordinates: " + coordinates);
+    }
+  }
+}
+
+const convertedFlights = flights.map((flight) => {
+  const site = findSite(flight.StartplatzWPID, flight.Startplatz);
+
+  const siteId = site?.id;
+  const region = site?.region;
+
+  const flightTurnpoints = [];
+  if (site)
+    flightTurnpoints.push({
+      time: flight.StartUhrzeit,
+      lat: site.point.coordinates[1],
+      long: site.point.coordinates[0],
+    });
+
+  const landingCo = parseLandingCoordinates(flight.LandeplatzKoordinaten);
+  if (landingCo)
+    flightTurnpoints.push({
+      time: flight.LandungUhrzeit,
+      lat: landingCo.lat,
+      long: landingCo.lon,
+    });
+
+  // if (!siteId && flight.Punkte > 60)
+  //   console.log(
+  //     `No site found for name: ${flight.Startplatz} flight points: ${flight.Punkte} flight id: ${flight.FlugID}`
+  //   );
+
+  const takeoffTime = createTime(
+    flight.Datum,
+    flight.StartUhrzeit,
+    flight.FlugID
+  );
+  const landingTime = createTime(
+    flight.Datum,
+    flight.LandungUhrzeit,
+    flight.FlugID
+  );
+
+  const airtime = (landingTime - takeoffTime) / 1000 / 60;
 
   return {
     id: uuidv4(),
@@ -413,7 +499,7 @@ const convertedFlights = flights.map((flight) => {
     siteId,
     userId: findUser(flight.PilotID),
     landing: flight.Landeplatz,
-    report: createReport(flight.Flugbericht, flight.FlugID),
+    report: createReport(flight.Flugbericht, flight.FlugID, flight.FlugStatus),
     airspaceComment: null,
     flightPoints: flight.Punkte,
     flightDistance: flight.Strecke,
@@ -422,10 +508,10 @@ const convertedFlights = flights.map((flight) => {
     flightDistanceFAI: 0,
     flightType: findType(flight.FlugaufgabeID),
     flightStatus: findStatus(flight.FlugStatus),
-    flightTurnpoints: {},
-    airtime: 0,
-    takeoffTime: 0,
-    landingTime: 0,
+    flightTurnpoints,
+    airtime,
+    takeoffTime,
+    landingTime,
     igcPath: flight.IGCFile,
     glider: createGlider(
       flight.HerstellerID,
@@ -437,7 +523,7 @@ const convertedFlights = flights.map((flight) => {
     violationAccepted: findLVR(flight.FlugStatus),
     hikeAndFly: 0,
     isWeekend: false,
-    region: "",
+    region,
     ageOfUser: 0,
     homeStateOfUser: "",
     flightStats: {},
