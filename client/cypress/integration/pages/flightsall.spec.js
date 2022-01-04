@@ -24,6 +24,24 @@ describe("check flights all page", () => {
       .and("include.text", "178 P");
   });
 
+  it("test flights of previous year", () => {
+    const expectedLength = 1;
+
+    cy.visit(`${new Date().getFullYear() - 1}/fluege`);
+
+    cy.get("table").find("tr").its("length").should("eq", expectedLength);
+    cy.get("table")
+      .find("tr")
+      .first()
+      .should("include.text", "Leo Altenwerth")
+      .and("include.text", "1. Pfälzer DGFC")
+      .and("include.text", "Die Möwen")
+      .and("include.text", "Boppard")
+      .and("include.text", "Sky Apollo")
+      .and("include.text", "10 km")
+      .and("include.text", "65 P");
+  });
+
   it("test filter", () => {
     const expectedName = "Bobby Volkman";
     const expectedClub = "Die Moselfalken";
