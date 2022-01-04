@@ -3,6 +3,11 @@ import axios from "axios";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { useJwt } from "@vueuse/integrations/useJwt";
 
+const ACCESS_TOKEN = "accessToken";
+const REFRESH_TOKEN = "refreshToken";
+const LOGIN_STATE_SUCCESS = "success";
+const USER_ROLE_NONE = "Keine";
+
 // Enables helpfull logs to understand auth
 const DEBUG = false;
 
@@ -23,18 +28,18 @@ const state = reactive({
 export default () => {
   // Getters
 
-  const loggedIn = computed(() => state.loginStatus === "success");
+  const loggedIn = computed(() => state.loginStatus === LOGIN_STATE_SUCCESS);
   const getUserId = computed(() => state.authData.userId);
   const hasElevatedRole = computed(() => {
-    return loggedIn.value && state.authData.role !== "Keine";
+    return loggedIn.value && state.authData.role !== USER_ROLE_NONE;
   });
 
   // Mutations
 
   const saveTokenData = (data) => {
     if (DEBUG) console.log("Save token data…");
-    localStorage.setItem("accessToken", data.accessToken);
-    localStorage.setItem("refreshToken", data.refreshToken);
+    localStorage.setItem(ACCESS_TOKEN, data.accessToken);
+    localStorage.setItem(REFRESH_TOKEN, data.refreshToken);
     const { payload } = useJwt(data.accessToken);
     const newTokenData = {
       token: data.accessToken,
@@ -46,13 +51,13 @@ export default () => {
       role: payload.value.role,
     };
     state.authData = newTokenData;
-    state.loginStatus = "success";
+    state.loginStatus = LOGIN_STATE_SUCCESS;
   };
 
   const logoutUser = () => {
     if (DEBUG) console.log("Logout user…");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
     state.loginStatus = "";
     state.authData = {
       token: "",
@@ -80,7 +85,7 @@ export default () => {
   };
 
   const logout = async () => {
-    const refreshToken = localStorage.getItem("refreshToken");
+    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
     await axios
       .post(baseURL + "users/logout", { token: refreshToken })
       .catch((err) => {
@@ -92,16 +97,16 @@ export default () => {
   const updateTokens = async () => {
     if (DEBUG) console.log("Update tokens…");
     const authData = state.authData;
-    if (localStorage.getItem("accessToken")) {
+    if (localStorage.getItem(ACCESS_TOKEN)) {
       try {
         const refreshResponse = await axios.post(baseURL + "users/token", {
-          token: localStorage.getItem("refreshToken"),
+          token: localStorage.getItem(REFRESH_TOKEN),
         });
         saveTokenData({
           accessToken: refreshResponse.data.accessToken,
-          refreshToken: localStorage.getItem("refreshToken"),
+          refreshToken: localStorage.getItem(REFRESH_TOKEN),
         });
-        state.loginStatus = "success";
+        state.loginStatus = LOGIN_STATE_SUCCESS;
         if (DEBUG) console.log("…tokens:", authData);
       } catch (error) {
         logoutUser();
