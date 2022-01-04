@@ -40,9 +40,7 @@ const dbTestData = {
       [Team, require("./testdatasets/teams.json")],
       [FlyingSite, require("./testdatasets/flyingSites.json")],
       [User, require("./testdatasets/users.json")],
-      // [User, require("./testdatasets/usersImport.json")],
       [Flight, flights],
-      // [Flight, require("./testdatasets/flightsImport.json")],
       [FlightPhoto, require("./testdatasets/flightPhotos.json")],
       [FlightComment, require("./testdatasets/comments.json")],
       [SeasonDetail, require("./testdatasets/seasonDetails.json")],
@@ -53,6 +51,10 @@ const dbTestData = {
       [Brand, require("./testdatasets/brands.json")],
       [Logo, require("./testdatasets/logos.json")],
     ];
+    if (process.env.SERVER_IMPORT_ORIGINAL_DATA === "true") {
+      relations.push([User, require("./testdatasets/usersImport.json")]);
+      relations.push([Flight, require("./testdatasets/flightsImport.json")]);
+    }
 
     await addToDb(relations);
 
@@ -136,13 +138,13 @@ function adjustYearOfEveryFlight(flights) {
   flights[lastEntryIndex].landingDate = landingDate.toISOString();
 }
 
-function sliceIntoChunks(arr, chunkSize) {
-  const res = [];
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    const chunk = arr.slice(i, i + chunkSize);
-    res.push(chunk);
-  }
-  return res;
-}
+// function sliceIntoChunks(arr, chunkSize) {
+//   const res = [];
+//   for (let i = 0; i < arr.length; i += chunkSize) {
+//     const chunk = arr.slice(i, i + chunkSize);
+//     res.push(chunk);
+//   }
+//   return res;
+// }
 
 module.exports = dbTestData;
