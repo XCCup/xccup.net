@@ -22,7 +22,7 @@
 
 <script setup>
 import ApiService from "@/services/ApiService.js";
-import { ref, watch, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
