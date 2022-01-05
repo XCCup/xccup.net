@@ -28,7 +28,7 @@ describe("Check user profile", () => {
     cy.get("#state").should("have.value", "Hessen");
     cy.get("#country").should("have.value", "Deutschland");
 
-    cy.get("#gender").should("have.value", "W");
+    cy.get("#gender").should("have.value", "F");
     cy.get(".v3dp__datepicker")
       .find("input")
       .should("have.value", "16.01.1983");
