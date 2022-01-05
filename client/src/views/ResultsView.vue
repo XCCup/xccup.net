@@ -22,7 +22,7 @@
 
 <script setup>
 import ApiService from "@/services/ApiService.js";
-import { ref, watchEffect } from "vue";
+import { ref, watch, watchEffect } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
@@ -79,22 +79,25 @@ const categories = [
 ];
 const activeCategory = categories.find((e) => e.name === props.category);
 
-const {
-  fetchData,
-  data: results,
-  // errorMessage,
-} = useData(ApiService.getResults, activeCategory.apiExtensionString);
-
 // Name the window
 watchEffect(() => {
   setWindowName(activeCategory.title);
+});
+
+const {
+  fetchData,
+  data: results,
+  changeApiExtension,
+} = useData(ApiService.getResults, activeCategory.apiExtensionString);
+
+watchEffect(() => {
+  changeApiExtension(activeCategory.apiExtensionString, router.params);
 });
 
 await fetchData({
   params: router.params,
   queries: router.query,
 });
-
 // Remark has an internal reference to results. Therefore the fetchData function has to be run at least once before setting the remark value.
 if (activeCategory.remarks) remark.value = activeCategory.remarks();
 </script>

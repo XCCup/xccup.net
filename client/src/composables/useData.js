@@ -19,6 +19,7 @@ function createInstance(apiEndpoint, apiExtension) {
   const data = ref(null);
   const sortOptionsCache = ref(null);
   const filterOptionsCache = ref(null);
+  const extensionCache = ref(apiExtension);
   const paramsCache = ref(null);
   const limitCache = ref(DEFAULT_LIMIT);
   const numberOfTotalEntries = ref(0);
@@ -60,6 +61,12 @@ function createInstance(apiEndpoint, apiExtension) {
     fetchData();
   };
 
+  const changeApiExtension = (newExtension, params) => {
+    extensionCache.value = newExtension;
+    paramsCache.value = params;
+    fetchData();
+  };
+
   // Actions
   const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
     try {
@@ -77,7 +84,7 @@ function createInstance(apiEndpoint, apiExtension) {
           limit: limitCache.value,
           offset,
         },
-        apiExtension
+        extensionCache.value
       );
       if (res.status != 200) throw res.status.text;
       if (!res?.data) return;
@@ -112,6 +119,7 @@ function createInstance(apiEndpoint, apiExtension) {
     fetchData,
     filterDataBy,
     sortDataBy,
+    changeApiExtension,
     data: readonly(data),
     errorMessage,
     currentRange: readonly(currentRange),
