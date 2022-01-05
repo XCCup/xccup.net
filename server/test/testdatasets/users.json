@@ -6,7 +6,7 @@
     "firstName": "Camille",
     "lastName": "Schaden",
     "birthday": "1979-08-15",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "XL",
     "gliders": [
       {
@@ -50,7 +50,7 @@
     "firstName": "Frank",
     "lastName": "Jacobs",
     "birthday": "1975-03-23",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "S",
     "role": "Keine",
     "gliders": [
@@ -229,7 +229,7 @@
     "firstName": "Ms.",
     "lastName": "Laurie",
     "birthday": "1975-03-16",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "XXL",
     "role": "Keine",
     "gliders": [
@@ -274,7 +274,7 @@
     "firstName": "Ramona",
     "lastName": "Gislason",
     "birthday": "1983-01-16",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "M",
     "role": "Keine",
     "gliders": [
@@ -364,7 +364,7 @@
     "firstName": "Sonia",
     "lastName": "Harber",
     "birthday": "1981-10-16",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "XL",
     "role": "Keine",
     "gliders": [
@@ -409,7 +409,7 @@
     "firstName": "Ron",
     "lastName": "Crooks",
     "birthday": "1996-05-08",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "L",
     "role": "Keine",
     "gliders": [
@@ -454,7 +454,7 @@
     "firstName": "Bobby",
     "lastName": "Volkman",
     "birthday": "1993-08-18",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "M",
     "role": "Keine",
     "gliders": [
@@ -498,7 +498,7 @@
     "firstName": "Tamara",
     "lastName": "Ledner",
     "birthday": "1974-09-12",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "M",
     "role": "Keine",
     "gliders": [
@@ -632,7 +632,7 @@
     "firstName": "Melinda",
     "lastName": "Tremblay",
     "birthday": "1955-02-16",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "L",
     "role": "Keine",
     "gliders": [
@@ -763,7 +763,7 @@
     "firstName": "Everett",
     "lastName": "Gislason",
     "birthday": "1974-11-11",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "XXL",
     "role": "Keine",
     "gliders": [
@@ -851,7 +851,7 @@
     "firstName": "Lois",
     "lastName": "White",
     "birthday": "1976-01-01",
-    "gender": "W",
+    "gender": "F",
     "tshirtSize": "M",
     "role": "Administrator",
     "gliders": [
