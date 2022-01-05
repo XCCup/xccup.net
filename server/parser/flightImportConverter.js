@@ -1,6 +1,7 @@
 const flights = require("../convertToFlightModel.json");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+const { isNoWorkday } = require("../helper/HolidayCalculator");
 
 function findBrand(value) {
   const brands = require("../test/testdatasets/brands.json");
@@ -97,7 +98,7 @@ function findClub(value) {
 
 // const missingTakeoff = {};
 
-function findSite(value, takeoff, id) {
+function findSite(value, takeoff) {
   const sites = require("../test/testdatasets/flyingSites.json");
 
   takeoff = takeoff.trim();
@@ -509,6 +510,10 @@ const convertedFlights = flights.map((flight) => {
   );
 
   const airtime = (landingTime - takeoffTime) / 1000 / 60;
+  const isWeekend = isNoWorkday(flight.Datum);
+
+  const birthYear = new Date(Date.parse(user.birthday)).getFullYear();
+  const ageOfUser = new Date(flight.Datum).getFullYear() - birthYear;
 
   return {
     id: uuidv4(),
@@ -541,14 +546,15 @@ const convertedFlights = flights.map((flight) => {
     uncheckedGRecord: false,
     violationAccepted: findLVR(flight.FlugStatus),
     hikeAndFly: 0,
-    isWeekend: false,
+    isWeekend,
     region,
-    ageOfUser: 0,
+    ageOfUser,
     birthdayUser: user.birthday,
     homeStateOfUser: "",
     flightStats: {
       taskSpeed: Math.round((flight.Strecke / airtime) * 600) / 10,
     },
+    createdAt: flight.DateCreated,
   };
 });
 
