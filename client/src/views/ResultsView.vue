@@ -60,7 +60,7 @@ const categories = [
   {
     name: "ladies",
     title: "Damenwertung",
-    apiExtensionString: "?gender=W",
+    apiExtensionString: "?gender=F",
   },
   {
     name: "rlp-state",
