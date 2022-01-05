@@ -74,7 +74,7 @@
             {{ glider.model }}
           </li>
         </ul>
-        <div v-else>🕵️</div>
+        <div v-else>-</div>
       </div>
     </div>
     <div class="col-xl-4 row mb-3">

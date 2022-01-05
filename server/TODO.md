@@ -13,6 +13,7 @@
 - [ ] Use "convict" for better handling of env vars
 - [ ] Prevent server crashing if DB is shut down
 - [ ] If no season details are present, use the ones fron the previous season?
+- [ ] Dynamic stripping of flight fixes. A minimum resolution should always be given.
 
 ### Production
 

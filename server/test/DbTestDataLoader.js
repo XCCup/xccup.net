@@ -52,8 +52,8 @@ const dbTestData = {
       [Logo, require("./testdatasets/logos.json")],
     ];
     if (process.env.SERVER_IMPORT_ORIGINAL_DATA === "true") {
-      relations.push([User, require("./testdatasets/usersImport.json")]);
-      relations.push([Flight, require("./testdatasets/flightsImport.json")]);
+      relations.push([User, require("../import/usersImport.json")]);
+      relations.push([Flight, require("../import/flightsImport.json")]);
     }
 
     await addToDb(relations);

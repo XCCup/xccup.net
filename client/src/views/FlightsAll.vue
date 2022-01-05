@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg mb-3">
+  <div class="container-xl mb-3">
     <h3>Streckenmeldungen {{ route.params.year }}</h3>
     <!-- TODO: Add filter spinner when loading -->
 
