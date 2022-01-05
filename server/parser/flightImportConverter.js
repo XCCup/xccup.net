@@ -97,19 +97,28 @@ function findClub(value) {
 
 // const missingTakeoff = {};
 
-function findSite(value, takeoff) {
+function findSite(value, takeoff, id) {
   const sites = require("../test/testdatasets/flyingSites.json");
 
   takeoff = takeoff.trim();
 
-  let found = sites.find(
-    (s) =>
-      value.includes(s.shortName) ||
-      takeoff.toUpperCase().includes(s.name.toUpperCase()) ||
-      s.name.toUpperCase().includes(takeoff.toUpperCase()) ||
-      s.shortName.toUpperCase().includes(takeoff) ||
-      takeoff.toUpperCase().includes(s.shortName)
-  );
+  let found = sites.find((s) => {
+    const newLocal = value.includes(s.shortName);
+    const newLocal_1 = takeoff.toUpperCase().includes(s.name.toUpperCase());
+    const newLocal_2 =
+      takeoff && s.name.toUpperCase().includes(takeoff.toUpperCase());
+    const newLocal_3 = takeoff && s.shortName.toUpperCase().includes(takeoff);
+    const newLocal_4 = takeoff.toUpperCase().includes(s.shortName);
+
+    // if (id == 34972)
+    //   console.log(
+    //     `SS: V: ${value} T: ${takeoff} 0: ${newLocal} 1: ${newLocal_1} 2: ${newLocal_2} 3: ${newLocal_3} 4: ${newLocal_4}`
+    //   );
+
+    return newLocal || newLocal_1 || newLocal_2 || newLocal_3 || newLocal_4;
+  });
+
+  if (found) return found;
 
   switch (takeoff) {
     case "Schwabhausen":
@@ -290,7 +299,7 @@ function findUser(value) {
 
   const found = users.find((u) => u.oldId == value);
 
-  if (found) return found?.id;
+  if (found) return found;
 
   if (value == "JSORWS") return;
 
@@ -452,10 +461,20 @@ function parseLandingCoordinates(coordinates) {
 }
 
 const convertedFlights = flights.map((flight) => {
-  const site = findSite(flight.StartplatzWPID, flight.Startplatz);
+  const site = findSite(
+    flight.StartplatzWPID,
+    flight.Startplatz,
+    flight.FlugID
+  );
 
   const siteId = site?.id;
   const region = site?.region;
+
+  if (!site) return;
+
+  const user = findUser(flight.PilotID);
+  if (!user) return;
+  const userId = user.id;
 
   const flightTurnpoints = [];
   if (site)
@@ -473,10 +492,10 @@ const convertedFlights = flights.map((flight) => {
       long: landingCo.lon,
     });
 
-  // if (!siteId && flight.Punkte > 60)
-  //   console.log(
-  //     `No site found for name: ${flight.Startplatz} flight points: ${flight.Punkte} flight id: ${flight.FlugID}`
-  //   );
+  if (!siteId && flight.Punkte > 60)
+    console.log(
+      `No site found for name: ${flight.Startplatz} flight points: ${flight.Punkte} flight id: ${flight.FlugID}`
+    );
 
   const takeoffTime = createTime(
     flight.Datum,
@@ -497,7 +516,7 @@ const convertedFlights = flights.map((flight) => {
     externalId: flight.FlugID,
     clubId: findClub(flight.VereinID),
     siteId,
-    userId: findUser(flight.PilotID),
+    userId,
     landing: flight.Landeplatz,
     report: createReport(flight.Flugbericht, flight.FlugID, flight.FlugStatus),
     airspaceComment: null,
@@ -525,8 +544,11 @@ const convertedFlights = flights.map((flight) => {
     isWeekend: false,
     region,
     ageOfUser: 0,
+    birthdayUser: user.birthday,
     homeStateOfUser: "",
-    flightStats: {},
+    flightStats: {
+      taskSpeed: Math.round((flight.Strecke / airtime) * 600) / 10,
+    },
   };
 });
 

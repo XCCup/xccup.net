@@ -513,7 +513,8 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
 function aggreateFlightsOverUser(resultQuery) {
   const result = [];
   resultQuery.forEach((entry) => {
-    const found = result.find((e) => e.user.id == entry.user.id);
+    const found = result.find((e) => e.user?.id == entry.user?.id);
+
     const flightEntry = {
       id: entry.id,
       externalId: entry.externalId,
@@ -521,10 +522,10 @@ function aggreateFlightsOverUser(resultQuery) {
       flightDistance: Math.round(entry.flightDistance * 100) / 100,
       glider: entry.glider,
       flightType: entry.flightType,
-      takeoffName: entry.takeoff.name,
-      takeoffShortName: entry.takeoff.shortName,
-      takeoffId: entry.takeoff.id,
-      takeoffRegion: entry.takeoff.region,
+      takeoffName: entry.takeoff?.name,
+      takeoffShortName: entry.takeoff?.shortName,
+      takeoffId: entry.takeoff?.id,
+      takeoffRegion: entry.takeoff?.region,
       ageOfUser: entry.ageOfUser,
     };
     if (found) {
@@ -538,8 +539,8 @@ function aggreateFlightsOverUser(resultQuery) {
           gender: entry.user.gender,
         },
         club: {
-          name: entry.club.name, //A user must always belong to a club
-          id: entry.club.id,
+          name: entry.club?.name, //A user must always belong to a club
+          id: entry.club?.id,
         },
         team: {
           name: entry.team?.name, //It is possible that a user has no team
