@@ -22,6 +22,7 @@ const {
   authData,
   hasElevatedRole,
   logout,
+  loggedIn,
 } = useUser();
 
 router.beforeEach(async (to, from, next) => {
@@ -31,8 +32,10 @@ router.beforeEach(async (to, from, next) => {
   // Check if there is token information in local storage. If not => logout user
   if (
     !localStorage.getItem("accessToken") &&
-    !localStorage.getItem("refreshToken")
+    !localStorage.getItem("refreshToken") &&
+    loggedIn.value
   ) {
+    console.log("foo");
     logout();
     if (to.meta.requiredAuth) {
       return next({ path: "/login", query: { redirect: to.fullPath } });
