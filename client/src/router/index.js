@@ -22,16 +22,19 @@ const {
   authData,
   hasElevatedRole,
   logout,
+  loggedIn,
 } = useUser();
 
 router.beforeEach(async (to, from, next) => {
   // It would be possible to check for a non guarded route first and skip all auth methods
   // The downside would be that the token is not observed regularly.
 
-  // Check if there is token information in local storage. If not => logout user
+  // Check if there is token information in local storage.
+  // If not => logout user if loggedIn is still true
   if (
     !localStorage.getItem("accessToken") &&
-    !localStorage.getItem("refreshToken")
+    !localStorage.getItem("refreshToken") &&
+    loggedIn.value
   ) {
     logout();
     if (to.meta.requiredAuth) {
