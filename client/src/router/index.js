@@ -35,7 +35,6 @@ router.beforeEach(async (to, from, next) => {
     !localStorage.getItem("refreshToken") &&
     loggedIn.value
   ) {
-    console.log("foo");
     logout();
     if (to.meta.requiredAuth) {
       return next({ path: "/login", query: { redirect: to.fullPath } });
