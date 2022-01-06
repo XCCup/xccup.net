@@ -130,7 +130,7 @@ const service = {
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
-    calcSeniorBonusForFlightResult(result);
+    await calcSeniorBonusForFlightResult(result);
     sortDescendingByTotalPoints(result);
 
     return addConstantInformationToResult(
@@ -568,23 +568,33 @@ async function retrieveSeasonDetails(year) {
   return seasonDetail;
 }
 
-function calcSeniorBonusForFlight(age) {
-  const seasonDetail = seasonService.getCurrentActive();
+//TODO: Calc bonus in regards of seasonDetails for year xxxx
+async function calcSeniorBonusForFlight(age) {
+  const seasonDetail = await seasonService.getCurrentActive();
   const bonusPerYear = seasonDetail.seniorBonusPerAge;
   const startAge = seasonDetail.seniorStartAge;
+
   return age > startAge ? bonusPerYear * (age - startAge) : 0;
 }
 
-function calcSeniorBonusForFlightResult(result) {
-  result.forEach((entry) => {
-    let totalPoints = 0;
-    entry.flights.forEach((flight) => {
-      flight.flightPoints *=
-        (100 + calcSeniorBonusForFlight(flight.ageOfUser)) / 100;
-      totalPoints += flight.flightPoints;
-    });
-    entry.totalPoints = totalPoints;
-  });
+async function calcSeniorBonusForFlightResult(result) {
+  await Promise.all(
+    result.map(async (entry) => {
+      let totalPoints = 0;
+      await Promise.all(
+        entry.flights.map(async (flight) => {
+          flight.flightPoints = Math.round(
+            (flight.flightPoints *
+              (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
+              100
+          );
+
+          totalPoints += flight.flightPoints;
+        })
+      );
+      entry.totalPoints = totalPoints;
+    })
+  );
 }
 
 module.exports = service;
