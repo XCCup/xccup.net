@@ -29,7 +29,7 @@
         </mj-text>
       </mj-column>
       <mj-column>
-        <mj-image src="" alt="Stephan Schöpe" width="140px" padding="0 25px"></mj-image>
+        <mj-image src="https://www.stephanschoepe.de/avatar-steph.png" alt="Stephan Schöpe" width="140px" padding="0 25px" ></mj-image>
         <mj-text align="center" color="#08556d" font-size="18px" font-family="Lato, Helvetica, Arial, sans-serif" vertical-align="top" padding="20px 25px"><strong>Stephan Schöpe</strong> <br />
           <p style="font-size: 15px;color:#000000;">bla bla</p>
         </mj-text>
