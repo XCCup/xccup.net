@@ -20,7 +20,7 @@ const results = ref(null);
 setWindowName("Teamwertung");
 
 try {
-  const res = await ApiService.getResults(route.params.year, "teams");
+  const res = await ApiService.getResultsTeams(route.params.year);
   if (res.status != 200) throw res.status.text;
   results.value = res.data;
 } catch (error) {

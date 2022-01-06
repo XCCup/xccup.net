@@ -4,10 +4,6 @@
       <h3>Vereinswertung {{ route.params.year }}</h3>
       <ResultsTableClubs :results="results" />
     </div>
-    <div v-if="results">
-      <h3>Teamwertung {{ route.params.year }}</h3>
-      <ResultsTableTeams :results="results" />
-    </div>
     <GenericError v-else />
   </div>
 </template>
@@ -24,7 +20,7 @@ const results = ref(null);
 setWindowName("Vereinswertung");
 
 try {
-  const res = await ApiService.getResults(route.params.year, "clubs");
+  const res = await ApiService.getResultsClubs(route.params.year);
   if (res.status != 200) throw res.status.text;
   results.value = res.data;
 } catch (error) {
