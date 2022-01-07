@@ -197,7 +197,6 @@ export const Routes = [
   {
     path: "/admin",
     name: "AdminDashboard",
-    //TODO: Check if logged-in user is a moderator or admin
     meta: {
       toTop: true,
       smoothScroll: true,

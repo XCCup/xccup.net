@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { ref, readonly } from "vue";
 import ApiService from "@/services/ApiService";
 import useAirbuddy from "@/composables/useAirbuddies";
 const { resetAirbuddyData } = useAirbuddy();
@@ -22,6 +22,5 @@ export default () => {
     flight.value.comments = [...res.data];
   };
 
-  //TODO: Make flight readOnly. Currently useComments manipulates the comment structur of flight. Therefore readOnly ist not possible
-  return { fetchOne, flight, updateComments };
+  return { fetchOne, flight: readonly(flight), updateComments };
 };
