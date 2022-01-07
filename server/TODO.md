@@ -14,6 +14,7 @@
 - [ ] Prevent server crashing if DB is shut down
 - [ ] If no season details are present, use the ones fron the previous season?
 - [ ] Dynamic stripping of flight fixes. A minimum resolution should always be given.
+- [ ] SiteRecords: Calculate table only once and compare after a single flight upload if flight is a new record to decrease time
 
 ### Production
 
