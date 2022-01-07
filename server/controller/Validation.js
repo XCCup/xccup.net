@@ -119,6 +119,14 @@ function checkIsInt(field) {
   return check(field).isInt().withMessage(`${field} must be a valid integer`);
 }
 /**
+ * Checks if the field is of a valid float value.
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkIsFloat(field) {
+  return check(field).isFloat().withMessage(`${field} must be a valid float`);
+}
+/**
  * Checks if the field is of a valid uuid format (e.g. 550e8400-e29b-11d4-a716-446655440000) or empty (null, undefined.
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -272,6 +280,7 @@ exports.checkIsUuidObjectOrEmpty = checkIsUuidObjectOrEmpty;
 exports.checkIsBoolean = checkIsBoolean;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
+exports.checkIsFloat = checkIsFloat;
 
 exports.checkIsOnlyOfValue = checkIsOnlyOfValue;
 exports.checkIsISO8601 = checkIsISO8601;

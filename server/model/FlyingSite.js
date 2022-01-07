@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     shortName: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: true,
     },
     direction: {
@@ -30,9 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     type: {
       type: DataTypes.STRING,
     },
-    club: {
-      type: DataTypes.STRING,
-    },
     region: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -44,9 +40,16 @@ module.exports = (sequelize, DataTypes) => {
     heightDifference: {
       type: DataTypes.INTEGER,
     },
-    inactive: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+    state: {
+      type: DataTypes.STRING,
+      // active, inactive, proposal
+      defaultValue: "active",
+    },
+    website: {
+      type: DataTypes.STRING,
+    },
+    submitter: {
+      type: DataTypes.JSON,
     },
   });
 
@@ -55,6 +58,13 @@ module.exports = (sequelize, DataTypes) => {
       as: "flights",
       foreignKey: {
         name: "siteId",
+      },
+    });
+
+    FlyingSite.belongsTo(models.Club, {
+      as: "club",
+      foreignKey: {
+        name: "clubId",
       },
     });
   };
