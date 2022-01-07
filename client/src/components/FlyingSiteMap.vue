@@ -32,8 +32,8 @@ const userPrefersDark = ref(
 const createPopupContent = (site) => {
   const lines = [];
   lines.push(`<strong>${site.name}</strong>`);
-  if (site.direction) lines.push(`${site.direction}`);
-  if (site.regclubion) lines.push(`Club: ${site.club}`);
+  if (site.direction) lines.push(`Startrichtung: ${site.direction}`);
+  if (site.club) lines.push(`Club: ${site.club.name}`);
   if (site.region) lines.push(`Region: ${site.region}`);
   if (site.heightDifference)
     lines.push(`Höhenunterschied: ${site.heightDifference}`);

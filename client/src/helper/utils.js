@@ -1,4 +1,4 @@
-import { isString } from "lodash-es";
+import { isString, isInteger } from "lodash-es";
 import { utcToZonedTime } from "date-fns-tz";
 
 export function isIsoDateWithoutTime(string) {
@@ -26,6 +26,20 @@ export function adjustDateToLocal(originalDate) {
 export function isEmail(value) {
   if (!isString(value)) return;
   return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+}
+
+export function isInt(value) {
+  return isInteger(parseInt(value));
+}
+
+export function isCoordinate(value) {
+  if (!isString(value)) return;
+  return value.match(/^-?\d{0,3}.\d{4,16}$/);
+}
+
+export function isDirection(value) {
+  if (!isString(value)) return;
+  return value.match(/^[NSOWnsow]{1,3}[-/,]?[NSOWnsow]{0,3}$/);
 }
 
 export function isStrongPassword(value) {
