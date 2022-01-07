@@ -13,13 +13,12 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import tileOptions from "@/config/mapbox.js";
 import { ref, onMounted } from "vue";
-import { getbaseURL } from "@/helper/baseUrlHelper";
 
 const map = ref(null);
 const logos = ref([]);
 
 const props = defineProps({
-  clubs: {
+  sites: {
     type: Array,
     required: true,
   },
@@ -30,44 +29,35 @@ const userPrefersDark = ref(
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
 );
 
-const createPopupContent = (club) => {
-  const baseURL = getbaseURL();
+const createPopupContent = (site) => {
   const lines = [];
-  lines.push(`<strong>${club.name}</strong>`);
-  lines.push(
-    `Anzahl Teilnahmen seit 2011: ${club.participantInSeasons.length}`
-  );
-  // It was also considered to add the total number of participants. But due to concerns that some clubs will stay absent when there are only a few participants, this idea is for now postponed.
-  // lines.push(`Mitglieder im XCCup: 42`);
-  lines.push(
-    `<a href=${club.website} target="_blank" rel="noreferrer noopener">${club.website}</a>`
-  );
-  lines.push(
-    `<a href=${club.website} target="_blank" rel="noreferrer noopener"><img src="${baseURL}clubs/logo/${club.logo.id}?thumb=true" height="50" max-width="150"></a>`
-  );
+  lines.push(`<strong>${site.name}</strong>`);
+  if (site.direction) lines.push(`Startrichtung: ${site.direction}`);
+  if (site.club) lines.push(`Club: ${site.club.name}`);
+  if (site.region) lines.push(`Region: ${site.region}`);
+  if (site.heightDifference)
+    lines.push(`Höhenunterschied: ${site.heightDifference}`);
 
   return lines.join("<br>");
 };
 
-// TODO: Make this retina friendly
-const addClubMarker = (clubs) => {
-  if (clubs.length === 0) return;
+const addSiteMarker = (sites) => {
+  if (sites.length === 0) return;
 
   const markerGroup = new L.featureGroup();
 
-  clubs.forEach((club) => {
-    if (!club.mapPosition) return;
+  sites.forEach((site) => {
+    if (!site.point) return;
 
     logos.value.push(
-      L.marker([club.mapPosition.lat, club.mapPosition.lon], {
-        title: club.name,
+      L.marker([site.point.coordinates[1], site.point.coordinates[0]], {
+        title: site.name,
         riseOnHover: true,
       })
-        .bindTooltip(club.name, {
-          permanent: true,
+        .bindTooltip(site.name, {
           direction: "right",
         })
-        .bindPopup(createPopupContent(club))
+        .bindPopup(createPopupContent(site))
         .addTo(markerGroup)
     );
   });
@@ -88,7 +78,7 @@ onMounted(() => {
     tileOptions
   ).addTo(map.value);
 
-  addClubMarker(props.clubs);
+  addSiteMarker(props.sites);
 });
 </script>
 

@@ -2,6 +2,7 @@
   <div class="container-lg">
     <div v-if="results?.values">
       <h3>{{ title }} {{ router.params?.year }}</h3>
+      <p v-if="remark">Hinweis: {{ remark }}</p>
       <ResultsTableGeneric
         :results="results?.values"
         :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
@@ -29,4 +30,6 @@ await fetchData({
   params: router.params,
   queries: router.query,
 });
+// Not yet used
+const remark = ref(results?.value?.constants?.REMARKS);
 </script>

@@ -21,9 +21,6 @@ import useData from "../composables/useData";
 
 const router = useRoute();
 const title = ref("Luxemburg Championat");
-const remark = ref(
-  "Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war"
-);
 
 setWindowName(title.value);
 
@@ -33,4 +30,5 @@ await fetchData({
   params: router.params,
   queries: router.query,
 });
+const remark = ref(results?.value?.constants?.REMARKS_STATE);
 </script>

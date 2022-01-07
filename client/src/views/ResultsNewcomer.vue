@@ -24,14 +24,11 @@ const title = ref("Newcomerwertung");
 
 setWindowName(title.value);
 
-const remark = ref("");
-
 const { fetchData, data: results } = useData(ApiService.getResultsNewcomer);
 
 await fetchData({
   params: router.params,
   queries: router.query,
 });
-// Remark has an internal reference to results. Therefore the fetchData function has to be run at least once before setting the remark value.
-remark.value = `Es werden nur Flüge mit Geräten bis zur ${results?.value?.constants?.NEWCOMER_MAX_RANKING_CLASS} berücksichtigt`;
+const remark = ref(results?.value?.constants?.REMARKS);
 </script>

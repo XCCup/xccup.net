@@ -17,10 +17,6 @@ const state = reactive({
   address: { country: "Deutschland", state: "" },
   emailNewsletter: true,
   tshirtSize: "",
-
-  // Set this options as defaults
-  // TODO: Maybe do this in backend?
-
   emailInformIfComment: true,
   emailTeamSearch: false,
 });

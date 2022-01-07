@@ -2,6 +2,7 @@
   <div class="container-lg">
     <div v-if="results?.values">
       <h3>{{ title }} {{ router.params?.year }}</h3>
+      <p v-if="remark">Hinweis: {{ remark }}</p>
       <div class="row">
         <div class="col-6">
           <FilterPanel :api-endpoint="ApiService.getResultsOverall" />
@@ -34,4 +35,6 @@ await fetchData({
   params: router.params,
   queries: router.query,
 });
+// Not yet used
+const remark = ref(results?.value?.constants?.REMARKS);
 </script>

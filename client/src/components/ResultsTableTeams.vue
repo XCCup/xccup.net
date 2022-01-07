@@ -1,13 +1,6 @@
 <template>
   <section class="pb-3">
     <div v-if="results?.values?.length > 0" class="table-responsive">
-      <div class="remarks">
-        <p>
-          Hinweis: Die schlechtesten
-          {{ results.constants.TEAM_DISMISSES }} Ergebnisse eines Teams werden
-          gelöscht
-        </p>
-      </div>
       <table class="table table-striped table-hover text-sm">
         <thead>
           <th>Platz</th>

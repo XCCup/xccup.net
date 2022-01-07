@@ -88,6 +88,7 @@
           <!-- Don't erase the :key; This is a hack to enfore new rendering on the component if the value changes;
           In this particular circumstance the vue reactivity system doesn't regcognize the change in birthday after the fetch.-->
           <div :key="modifiedUserData.birthday" class="col-md-6">
+            <!-- TODO: Replace with three seperate selects -->
             <BaseDatePicker
               id="birthday"
               v-model="modifiedUserData.birthday"
