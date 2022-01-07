@@ -6,7 +6,7 @@ const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createRateLimiter } = require("./api-protection");
 const { OK, NOT_FOUND } = require("../constants/http-status-constants");
 const {
-  checkStringObjectNotEmpty,
+  checkStringObjectNotEmptyNoEscaping,
   checkIsInt,
   checkIsFloat,
   checkIsUuidObjectOrEmpty,
@@ -75,8 +75,8 @@ router.post(
   "/",
   postLimiter,
   authToken,
-  checkStringObjectNotEmpty("name"),
-  checkStringObjectNotEmpty("direction"),
+  checkStringObjectNotEmptyNoEscaping("name"),
+  checkStringObjectNotEmptyNoEscaping("direction"),
   checkIsFloat("lat"),
   checkIsFloat("long"),
   checkIsUuidObjectOrEmpty("clubId"),
