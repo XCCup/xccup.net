@@ -1,0 +1,89 @@
+<template>
+  <div
+    id="mapContainer"
+    class="mb-3"
+    :class="userPrefersDark ? 'darken-map' : ''"
+  ></div>
+</template>
+
+<script setup>
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import { GestureHandling } from "leaflet-gesture-handling";
+import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
+import tileOptions from "@/config/mapbox.js";
+import { ref, onMounted } from "vue";
+
+const map = ref(null);
+const logos = ref([]);
+
+const props = defineProps({
+  sites: {
+    type: Array,
+    required: true,
+  },
+});
+
+// Find a way to make this reactive
+const userPrefersDark = ref(
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+);
+
+const createPopupContent = (site) => {
+  const lines = [];
+  lines.push(`<strong>${site.name}</strong>`);
+  if (site.direction) lines.push(`${site.direction}`);
+  if (site.regclubion) lines.push(`Club: ${site.club}`);
+  if (site.region) lines.push(`Region: ${site.region}`);
+  if (site.heightDifference)
+    lines.push(`Höhenunterschied: ${site.heightDifference}`);
+
+  return lines.join("<br>");
+};
+
+const addSiteMarker = (sites) => {
+  if (sites.length === 0) return;
+
+  const markerGroup = new L.featureGroup();
+
+  sites.forEach((site) => {
+    if (!site.point) return;
+
+    logos.value.push(
+      L.marker([site.point.coordinates[1], site.point.coordinates[0]], {
+        title: site.name,
+        riseOnHover: true,
+      })
+        .bindTooltip(site.name, {
+          direction: "right",
+        })
+        .bindPopup(createPopupContent(site))
+        .addTo(markerGroup)
+    );
+  });
+
+  map.value.addLayer(markerGroup);
+  map.value.fitBounds(markerGroup.getBounds());
+};
+
+onMounted(() => {
+  L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
+
+  map.value = L.map("mapContainer", {
+    gestureHandling: true,
+  }).setView([50.143, 7.146], 8);
+
+  L.tileLayer(
+    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+    tileOptions
+  ).addTo(map.value);
+
+  addSiteMarker(props.sites);
+});
+</script>
+
+<style scoped>
+#mapContainer {
+  min-height: 75vh;
+}
+</style>

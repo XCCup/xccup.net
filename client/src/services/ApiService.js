@@ -269,6 +269,10 @@ export default {
     return apiClient.get("sites/names/");
   },
 
+  getSites() {
+    return apiClient.get("sites");
+  },
+
   // General
   getCurrentSeason() {
     return apiClient.get(baseURL + "seasons/current");

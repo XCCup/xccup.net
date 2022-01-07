@@ -179,6 +179,12 @@ export const Routes = [
     component: () => import("../views/ListTeams.vue"),
   },
   {
+    path: "/fluggebiete",
+    name: "FlyingSites",
+    meta: { toTop: true, smoothScroll: true },
+    component: () => import("../views/ListFlyingSites.vue"),
+  },
+  {
     path: "/impressum",
     name: "Imprint",
     component: () => import("../views/ImprintView.vue"),
