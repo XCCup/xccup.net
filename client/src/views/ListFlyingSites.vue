@@ -6,6 +6,7 @@
       <button
         type="button"
         class="col btn btn-primary btn-sm me-1 mb-3"
+        data-cy="add-site-button"
         @click="onAddSite"
       >
         Fluggebiet vorschlagen

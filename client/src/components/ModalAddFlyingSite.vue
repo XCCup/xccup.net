@@ -42,7 +42,7 @@
             :show-label="true"
           />
           <BaseInput
-            id="site-long"
+            id="site-height"
             v-model="newSite.heightDifference"
             label="Höhenunterschied (in Meter)"
             :external-validation-result="!heightIsInt"
