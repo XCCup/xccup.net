@@ -10,7 +10,7 @@
       <!-- Intro text -->
     </mj-raw>
     <mj-section background-color="#fafafa">
-      <mj-column width="400px">
+      <mj-column >
         <mj-text font-size="20px" font-family="Helvetica Neue" color="#626262">Der neue XCCup</mj-text>
         <mj-text color="#525252">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin rutrum enim eget magna efficitur, eu semper augue semper. Aliquam erat volutpat. Cras id dui lectus. Vestibulum sed finibus lectus, sit amet suscipit nibh. Proin nec commodo purus.
           Sed eget nulla elit. Nulla aliquet mollis faucibus.</mj-text>
@@ -22,14 +22,14 @@
       <!-- Icons -->
     </mj-raw>
     <mj-section background-color="#fbfbfb">
-      <mj-column>
-        <mj-image src="" alt="Kai Wissel" width="140px" padding="0 25px"></mj-image>
+      <mj-column >
+        <mj-image src="https://www.stephanschoepe.de/avatar-kai.png" alt="Kai Wissel" width="120px" padding="0 25px"></mj-image>
         <mj-text align="center" color="#08556d" font-size="18px" font-family="Lato, Helvetica, Arial, sans-serif" vertical-align="top" padding="20px 25px"><strong>Kai Wissel</strong> <br />
           <p style="font-size: 15px;color:#000000;">bla bla</p>
         </mj-text>
       </mj-column>
       <mj-column>
-        <mj-image src="https://www.stephanschoepe.de/avatar-steph.png" alt="Stephan Schöpe" width="140px" padding="0 25px" ></mj-image>
+        <mj-image src="https://www.stephanschoepe.de/avatar-steph.png" alt="Stephan Schöpe" width="120px" padding="0 25px" ></mj-image>
         <mj-text align="center" color="#08556d" font-size="18px" font-family="Lato, Helvetica, Arial, sans-serif" vertical-align="top" padding="20px 25px"><strong>Stephan Schöpe</strong> <br />
           <p style="font-size: 15px;color:#000000;">bla bla</p>
         </mj-text>
