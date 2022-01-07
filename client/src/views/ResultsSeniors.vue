@@ -21,7 +21,6 @@ import useData from "../composables/useData";
 
 const router = useRoute();
 const title = ref("Seniorenwertung");
-const remark = ref("");
 
 setWindowName(title.value);
 
@@ -31,6 +30,5 @@ await fetchData({
   params: router.params,
   queries: router.query,
 });
-// Remark has an internal reference to results. Therefore the fetchData function has to be run at least once before setting the remark value.
-remark.value = `Die Wertung beginnt ab einem Alter von ${results?.value?.constants?.SENIOR_START_AGE} mit einem Bonus von ${results?.value?.constants?.SENIOR_BONUS_PER_AGE}% pro Jahr`;
+const remark = ref(results?.value?.constants?.REMARKS);
 </script>
