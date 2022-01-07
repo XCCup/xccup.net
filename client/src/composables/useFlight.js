@@ -22,5 +22,6 @@ export default () => {
     flight.value.comments = [...res.data];
   };
 
-  return { fetchOne, flight: readonly(flight), updateComments };
+  //TODO: Flight should be readonly; But currently it prevents that you can change the glider of a flight
+  return { fetchOne, flight, updateComments };
 };
