@@ -6,20 +6,19 @@ const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 const instances = {};
 
-export default (apiEndpoint, apiExtension) => {
+export default (apiEndpoint) => {
   if (!apiEndpoint) throw "No endpoint defined for useData";
 
   if (!instances[apiEndpoint])
-    instances[apiEndpoint] = createInstance(apiEndpoint, apiExtension);
+    instances[apiEndpoint] = createInstance(apiEndpoint);
 
   return instances[apiEndpoint];
 };
 
-function createInstance(apiEndpoint, apiExtension) {
+function createInstance(apiEndpoint) {
   const data = ref(null);
   const sortOptionsCache = ref(null);
   const filterOptionsCache = ref(null);
-  const extensionCache = ref(apiExtension);
   const paramsCache = ref(null);
   const limitCache = ref(DEFAULT_LIMIT);
   const numberOfTotalEntries = ref(0);
@@ -47,7 +46,6 @@ function createInstance(apiEndpoint, apiExtension) {
 
   const clearOneFilter = (key) => {
     delete filterOptionsCache.value[key];
-
     fetchData();
   };
 
@@ -61,12 +59,6 @@ function createInstance(apiEndpoint, apiExtension) {
     fetchData();
   };
 
-  const changeApiExtension = (newExtension, params) => {
-    extensionCache.value = newExtension;
-    paramsCache.value = params;
-    fetchData();
-  };
-
   // Actions
   const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
     try {
@@ -75,17 +67,14 @@ function createInstance(apiEndpoint, apiExtension) {
       if (offset < 0) offset = 0;
       if (limit) limitCache.value = limit;
       isLoading.value = true;
-      const res = await apiEndpoint(
-        {
-          ...paramsCache.value,
-          ...filterOptionsCache.value,
-          sortCol: sortOptionsCache.value?.sortCol,
-          sortOrder: sortOptionsCache.value?.sortOrder,
-          limit: limitCache.value,
-          offset,
-        },
-        extensionCache.value
-      );
+      const res = await apiEndpoint({
+        ...paramsCache.value,
+        ...filterOptionsCache.value,
+        sortCol: sortOptionsCache.value?.sortCol,
+        sortOrder: sortOptionsCache.value?.sortOrder,
+        limit: limitCache.value,
+        offset,
+      });
       if (res.status != 200) throw res.status.text;
       if (!res?.data) return;
       //Check if data supports pagination (data split in rows and count)
@@ -119,7 +108,6 @@ function createInstance(apiEndpoint, apiExtension) {
     fetchData,
     filterDataBy,
     sortDataBy,
-    changeApiExtension,
     data: readonly(data),
     errorMessage,
     currentRange: readonly(currentRange),

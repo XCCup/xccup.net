@@ -135,10 +135,48 @@ export default {
 
   // Results
 
-  getResults(params, category) {
-    return apiClient.get("results/" + category, {
+  getResultsOverall(params) {
+    return apiClient.get("results/", {
       params,
     });
+  },
+  getResultsNewcomer(params) {
+    return apiClient.get("results/newcomer", {
+      params,
+    });
+  },
+  getResultsSeniors(params) {
+    return apiClient.get("results/seniors", {
+      params,
+    });
+  },
+  getResultsLadies(params) {
+    return apiClient.get("results/?gender=F", {
+      params,
+    });
+  },
+  getResultsLux(params) {
+    return apiClient.get("results/?state=LUX", {
+      params,
+    });
+  },
+  getResultsRlp(params) {
+    return apiClient.get("results/?state=RP", {
+      params,
+    });
+  },
+  getResultsTeams(params) {
+    return apiClient.get("results/teams", {
+      params,
+    });
+  },
+  getResultsClubs(params) {
+    return apiClient.get("results/clubs", {
+      params,
+    });
+  },
+  getResultsSiteRecords() {
+    return apiClient.get("results/siteRecords");
   },
 
   // Users

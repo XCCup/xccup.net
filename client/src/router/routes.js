@@ -51,9 +51,8 @@ export const Routes = [
   {
     path: "/:year/einzelwertung/",
     name: "ResultsOverall",
-    props: () => ({ category: "overall" }),
     beforeEnter: validateRouteParamYear,
-    component: () => import("../views/ResultsView.vue"),
+    component: () => import("../views/ResultsOverall.vue"),
   },
   {
     path: "/:year/newcomer/",
@@ -61,7 +60,7 @@ export const Routes = [
     props: () => ({ category: "newcomer" }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/ResultsView.vue"),
+    component: () => import("../views/ResultsNewcomer.vue"),
   },
   {
     path: "/:year/seniorenwertung/",
@@ -69,7 +68,7 @@ export const Routes = [
     props: () => ({ category: "seniors" }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/ResultsView.vue"),
+    component: () => import("../views/ResultsSeniors.vue"),
   },
   {
     path: "/:year/damenwertung/",
@@ -77,7 +76,7 @@ export const Routes = [
     props: () => ({ category: "ladies" }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/ResultsView.vue"),
+    component: () => import("../views/ResultsLadies.vue"),
   },
   {
     path: "/:year/lux-championat/",
@@ -85,7 +84,7 @@ export const Routes = [
     props: () => ({ category: "lux-state" }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/ResultsView.vue"),
+    component: () => import("../views/ResultsLux.vue"),
   },
   {
     path: "/:year/rlp-meisterschaft/",
@@ -93,7 +92,7 @@ export const Routes = [
     props: () => ({ category: "rlp-state" }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/ResultsView.vue"),
+    component: () => import("../views/ResultsRlp.vue"),
   },
   {
     path: "/:year/teamwertung/",
