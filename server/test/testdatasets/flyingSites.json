@@ -115,7 +115,7 @@
     "direction": "S"
   },
   {
-    "name": "Urphar",
+    "name": "Urphar NO",
     "heightDifference": "130",
     "image": "",
     "region": "",
@@ -130,7 +130,7 @@
     "direction": "NO"
   },
   {
-    "name": "Urphar",
+    "name": "Urphar NW",
     "heightDifference": "130",
     "image": "",
     "region": "",
@@ -812,7 +812,7 @@
     "direction": "SW"
   },
   {
-    "name": "Kreuzberg",
+    "name": "Kreuzberg NO",
     "heightDifference": "750",
     "image": "",
     "region": "Rhön",
@@ -827,7 +827,7 @@
     "direction": "N-NO"
   },
   {
-    "name": "Kreuzberg",
+    "name": "Kreuzberg SO",
     "heightDifference": "882",
     "image": "",
     "region": "Rhön",
@@ -944,7 +944,7 @@
     "direction": "NW,SO"
   },
   {
-    "name": "Bruchhauser Steine",
+    "name": "Bruchhauser Steine S",
     "heightDifference": "635",
     "image": "",
     "region": "Sauerland",
@@ -959,7 +959,7 @@
     "direction": "S"
   },
   {
-    "name": "Bruchhauser Steine",
+    "name": "Bruchhauser Steine SW",
     "heightDifference": "715",
     "image": "",
     "region": "Sauerland",
@@ -1106,7 +1106,7 @@
     "direction": "S"
   },
   {
-    "name": "Maring-Noviand",
+    "name": "Maring-Noviand SO",
     "heightDifference": "290",
     "image": "maring_so.jpg",
     "type": "HGPGSTA",
@@ -1358,7 +1358,7 @@
     "direction": ""
   },
   {
-    "name": "Ürzig-Erden",
+    "name": "Ürzig-Erden SO",
     "heightDifference": "243",
     "image": "Erden01.jpg",
     "type": "HGPGSTA",
@@ -1403,7 +1403,7 @@
     "direction": "W"
   },
   {
-    "name": "St. Katharinen Schlepp",
+    "name": "St. Katharinen Mergesfeld Schlepp",
     "region": "",
     "website": "",
     "point": {
@@ -1444,7 +1444,7 @@
     "direction": "NO-SO"
   },
   {
-    "name": "Ürzig-Erden",
+    "name": "Ürzig-Erden SW",
     "heightDifference": "290",
     "image": "",
     "region": "Mosel",
@@ -1545,7 +1545,7 @@
   },
   {
     "name": "Meerfelder Maar",
-    "heightDifference": "520",
+    "heightDifference": "170",
     "image": "Meerfeld01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.moselfalken.de",
@@ -1615,7 +1615,7 @@
     "direction": "SSW-NW"
   },
   {
-    "name": "Maring-Noviand",
+    "name": "Maring-Noviand SW",
     "heightDifference": "133",
     "image": "maring_sw.jpg",
     "type": "HGPGSTA",
@@ -1851,7 +1851,7 @@
     "direction": "N"
   },
   {
-    "name": "Hönningen",
+    "name": "Hönningen O",
     "heightDifference": "0",
     "image": "Hoenningen_Ost01.jpg",
     "type": "HGPGSTA",
@@ -1865,7 +1865,7 @@
     "direction": "O"
   },
   {
-    "name": "Hönningen",
+    "name": "Hönningen S",
     "heightDifference": "0",
     "image": "Hoenningen_Sued01.jpg",
     "type": "HGPGSTA",
@@ -2012,16 +2012,6 @@
     "id": "d65cd3c7-630b-4fec-b3e1-012f065484d0",
     "shortName": "BISCHBRUNN",
     "direction": "NW/SO"
-  },
-  {
-    "name": "Oberacker Schlepp",
-    "point": {
-      "type": "Point",
-      "coordinates": [8.717392798, 49.101300551]
-    },
-    "id": "d212fef2-fa74-47e9-99b2-49603ff6154b",
-    "shortName": "OBERACKER",
-    "direction": "NO/SW"
   },
   {
     "name": "Treisberg",
@@ -2501,8 +2491,8 @@
     "direction": "SO,NW"
   },
   {
-    "name": "Meerfelder Maar",
-    "heightDifference": "520",
+    "name": "Meerfelder Maar O",
+    "heightDifference": "170",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
@@ -2709,7 +2699,7 @@
     "direction": ""
   },
   {
-    "name": "Wixberg",
+    "name": "Wixberg W",
     "heightDifference": "423",
     "image": "",
     "region": "",
@@ -2724,7 +2714,7 @@
     "direction": "W"
   },
   {
-    "name": "Wixberg",
+    "name": "Wixberg S",
     "heightDifference": "412",
     "image": "",
     "region": "",
@@ -2791,7 +2781,7 @@
       "coordinates": [8.716325, 49.100833333333334]
     },
     "id": "a043e78b-5fb3-4f55-9b07-101bfc59da90",
-    "shortName": "OBERACKER_WINDE",
+    "shortName": "OBERACKER",
     "direction": "NO,SW"
   },
   {
