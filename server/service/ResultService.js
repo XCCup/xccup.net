@@ -16,6 +16,12 @@ const {
   NUMBER_OF_SCORED_FLIGHTS,
   NEWCOMER_MAX_RANKING_CLASS,
 } = require("../config/result-determination-config");
+const {
+  REMARKS_NEWCOMER,
+  REMARKS_STATE,
+  REMARKS_SENIOR,
+  REMARKS_TEAM,
+} = require("../constants/result-remarks-constants");
 
 const logger = require("../config/logger");
 
@@ -74,7 +80,7 @@ const service = {
 
     return addConstantInformationToResult(
       result,
-      { NUMBER_OF_SCORED_FLIGHTS },
+      { NUMBER_OF_SCORED_FLIGHTS, REMARKS_STATE },
       limit
     );
   },
@@ -117,6 +123,7 @@ const service = {
         NUMBER_OF_SCORED_FLIGHTS,
         TEAM_DISMISSES,
         TEAM_SIZE,
+        REMARKS: REMARKS_TEAM(TEAM_DISMISSES),
       },
       limit
     );
@@ -139,6 +146,10 @@ const service = {
         NUMBER_OF_SCORED_FLIGHTS,
         SENIOR_START_AGE: seasonDetail.seniorStartAge,
         SENIOR_BONUS_PER_AGE: seasonDetail.seniorBonusPerAge,
+        REMARKS: REMARKS_SENIOR(
+          seasonDetail.seniorStartAge,
+          seasonDetail.seniorBonusPerAge
+        ),
       },
       limit
     );
@@ -169,6 +180,7 @@ const service = {
       {
         NUMBER_OF_SCORED_FLIGHTS,
         NEWCOMER_MAX_RANKING_CLASS: rankingClass.description,
+        REMARKS: REMARKS_NEWCOMER(rankingClass.description),
       },
       limit
     );
