@@ -50,10 +50,10 @@ const createPopupContent = (club) => {
 };
 
 // TODO: Make this retina friendly
-const addClubLogos = (clubs) => {
+const addClubMarker = (clubs) => {
   if (clubs.length === 0) return;
 
-  const logoGroup = new L.featureGroup();
+  const markerGroup = new L.featureGroup();
 
   clubs.forEach((club) => {
     if (!club.mapPosition) return;
@@ -68,12 +68,12 @@ const addClubLogos = (clubs) => {
           direction: "right",
         })
         .bindPopup(createPopupContent(club))
-        .addTo(logoGroup)
+        .addTo(markerGroup)
     );
   });
 
-  map.value.addLayer(logoGroup);
-  map.value.fitBounds(logoGroup.getBounds());
+  map.value.addLayer(markerGroup);
+  map.value.fitBounds(markerGroup.getBounds());
 };
 
 onMounted(() => {
@@ -88,7 +88,7 @@ onMounted(() => {
     tileOptions
   ).addTo(map.value);
 
-  addClubLogos(props.clubs);
+  addClubMarker(props.clubs);
 });
 </script>
 
