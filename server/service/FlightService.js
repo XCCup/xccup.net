@@ -216,6 +216,14 @@ const flightService = {
     return Flight.count({
       where: {
         userId,
+        [sequelize.Op.not]: { flightStatus: STATE.IN_PROCESS },
+        [sequelize.Op.or]: [
+          { violationAccepted: true },
+          {
+            airspaceViolation: false,
+            uncheckedGRecord: false,
+          },
+        ],
       },
     });
   },
