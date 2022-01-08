@@ -96,6 +96,8 @@
     modal-id="deleteFlightModal"
     :confirm-action="onConfirmDelete"
     :is-dangerous-action="true"
+    :show-spinner="showSpinner"
+    :error-message="errorMessage"
   />
 </template>
 
@@ -125,10 +127,21 @@ onMounted(() => {
 // Fetch flights
 const { getUserId } = useUser();
 
-// TODO: Spinner needed?
-await fetchData({ params: {}, queries: { userId: getUserId.value } });
+const fetchFlights = async () => {
+  // TODO: Spinner needed?
+  await fetchData({ params: {}, queries: { userId: getUserId.value } });
+};
+try {
+  await fetchFlights();
+} catch (error) {
+  console.log(error);
+  router.push({
+    name: "NetworkError",
+  });
+}
 
 const flightToDelete = ref(null);
+
 const onDeleteFlight = (flightId) => {
   flightToDelete.value = flightId;
   deleteFlightModal.value.show();
@@ -136,19 +149,18 @@ const onDeleteFlight = (flightId) => {
 
 const onConfirmDelete = () => deleteFlight(flightToDelete.value);
 
-// TODO: Should there be a confirm message?
 const deleteFlight = async (flightId) => {
   showSpinner.value = true;
   try {
     await ApiService.deleteFlight(flightId);
     flightToDelete.value = null;
-    // await fetchFlights({ params: {}, queries: { userId: getUserId.value } });
+    await fetchFlights();
     deleteFlightModal.value.hide();
   } catch (error) {
-    // TODO: Error message in modal?
     errorMessage.value = "Da ist leider was schief gelaufen";
+    console.log(error);
+  } finally {
     showSpinner.value = false;
-    console.log({ error });
   }
 };
 
