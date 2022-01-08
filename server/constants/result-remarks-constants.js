@@ -12,7 +12,7 @@ module.exports.REMARKS_NEWCOMER = (maxRankingClass) =>
  * Remark text for senior rankings
  */
 module.exports.REMARKS_SENIOR = (startAge, bonusPerAge) =>
-  `Die Wertung beginnt ab einem Alter von  mit einem Bonus von ${bonusPerAge}% pro Jahr`;
+  `Die Wertung beginnt ab einem Alter von ${startAge} mit einem Bonus von ${bonusPerAge}% pro Jahr`;
 /**
  * Remark text for team rankings
  */
