@@ -115,7 +115,7 @@ const service = {
     dissmissWorstFlights(resultOverTeam);
     sortDescendingByTotalPoints(resultOverTeam);
 
-    //TODO Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
+    //TODO: Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
 
     return addConstantInformationToResult(
       resultOverTeam,
