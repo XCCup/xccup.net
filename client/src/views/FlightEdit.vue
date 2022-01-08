@@ -1,6 +1,10 @@
 <template>
   <!-- TODO: Add warning when leaving without saving -->
-  <div id="flightEdit" class="container-md">
+  <div
+    v-if="modifiedFlightData.externalId"
+    id="flightEdit"
+    class="container-md"
+  >
     <div class="d-flex flex-wrap">
       <!-- TODO: Align this nicely -->
       <h3 class="mt-3">Flug bearbeiten</h3>
@@ -149,7 +153,8 @@ onMounted(() => {
 if (modifiedFlightData.value.externalId != route.params.id) {
   await fetchOne(route.params.id);
   modifiedFlightData.value.externalId = route.params.id;
-  modifiedFlightData.value.glider = flight.value.glider;
+  // TODO: test this!
+  modifiedFlightData.value.glider = { ...flight.value.glider };
   modifiedFlightData.value.report = flight.value.report;
   modifiedFlightData.value.airspaceComment = flight.value.airspaceComment;
   modifiedFlightData.value.hikeAndFly = flight.value.hikeAndFly > 0;
