@@ -38,9 +38,9 @@ const service = {
 
     const isXccupOffical = fromUserId.role != "Keine";
 
-    const toMail = fromUser.email;
-    const fromMail = toUser.email;
-    const fromName = `${toUser.firstName} ${toUser.lastName}`;
+    const toMail = toUser.email;
+    const fromMail = fromUser.email;
+    const fromName = `${fromUser.firstName} ${fromUser.lastName}`;
 
     if (!isXccupOffical) {
       content.text = MAIL_MESSAGE_PREFIX(fromName) + content.text;

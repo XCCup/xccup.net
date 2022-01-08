@@ -9,7 +9,7 @@ describe("check flights all page", () => {
 
   it("test no filter no sorting", () => {
     // By default flights will be sorted by takeoff date. This date will always change for 10 flights (5 flights to today, 5 flights to yesterday)
-    const expectedLength = 40;
+    const expectedLength = 41;
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
     cy.get("table")
@@ -108,7 +108,7 @@ describe("check flights all page", () => {
 
   it("test sort on points ascending", () => {
     const expectedName = "Ramona Gislason";
-    const expectedLength = 40;
+    const expectedLength = 41;
 
     cy.get("th").contains("Punkte").click();
     cy.get("[data-cy=filter-icon]").should("be.visible");

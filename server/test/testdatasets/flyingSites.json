@@ -1,11 +1,11 @@
 [
   {
     "name": "Neef/Petersberg",
-    "heightDifference": "260",
+    "heightDifference": "150",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.141794444444445, 50.094613888888894]
@@ -15,12 +15,25 @@
     "direction": "SW-W"
   },
   {
-    "name": "Heppenheim UL-Schlepp",
-    "heightDifference": "95",
+    "name": "Nur ein Vorschlag",
+    "heightDifference": "42",
     "image": "",
+    "region": "Mosel",
+    "website": "http://www.thermik4u.de",
+    "point": {
+      "type": "Point",
+      "coordinates": [7.60644938, 50.364990508]
+    },
+    "id": "adb1e986-e8b5-4594-a9e4-c27a013ffeea",
+    "direction": "W-O",
+    "state": "proposal",
+    "submitter": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae"
+  },
+  {
+    "name": "Heppenheim UL-Schlepp",
     "region": "",
     "type": "UL",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [8.613088888888889, 49.62085555555556]
@@ -31,10 +44,8 @@
   },
   {
     "name": "Bürstadt UL-Schlepp",
-    "heightDifference": "88",
-    "image": "Buerstadt_UL.jpg",
     "type": "UL",
-    "club": "http://www.igulb.de",
+    "website": "http://www.igulb.de",
     "point": {
       "type": "Point",
       "coordinates": [8.474555555555556, 49.65577777777778]
@@ -49,7 +60,7 @@
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
-    "club": "http://www.pfaelzergleitschirmclub.info",
+    "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
       "coordinates": [7.740575, 49.79244444444444]
@@ -64,7 +75,7 @@
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
-    "club": "http://www.pfaelzergleitschirmclub.info",
+    "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
       "coordinates": [7.722530555555555, 49.77610833333333]
@@ -79,7 +90,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.533175, 49.624497222222224]
@@ -94,7 +105,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [6.783822222222222, 49.31749166666667]
@@ -104,12 +115,12 @@
     "direction": "S"
   },
   {
-    "name": "Urphar",
-    "heightDifference": "266",
+    "name": "Urphar NO",
+    "heightDifference": "130",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.gleitschirmfreunde-taubertal.de",
+    "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
       "type": "Point",
       "coordinates": [9.549330555555555, 49.75289444444444]
@@ -119,12 +130,12 @@
     "direction": "NO"
   },
   {
-    "name": "Urphar",
+    "name": "Urphar NW",
     "heightDifference": "130",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.gleitschirmfreunde-taubertal.de",
+    "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
       "type": "Point",
       "coordinates": [9.570513888888888, 49.74339166666667]
@@ -146,26 +157,24 @@
   },
   {
     "name": "Schoden",
-    "heightDifference": "260",
+    "heightDifference": "130",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [6.593613888888888, 49.640008333333334]
     },
     "id": "28b733fa-a0a8-4c04-9ad8-cacec864f2e6",
-    "shortName": "SCHODEN",
+    "shortName": "SCHODEN_START",
     "direction": "S-W"
   },
   {
     "name": "Montebaur Segelflugplatz",
-    "heightDifference": "275",
-    "image": "",
     "region": "",
     "type": "SFP",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.824344444444444, 50.42107222222222]
@@ -176,11 +185,9 @@
   },
   {
     "name": "Lauterbach UL-Schlepp",
-    "heightDifference": "360",
-    "image": "",
     "region": "",
     "type": "UL",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [9.410261111111112, 50.68335277777778]
@@ -191,11 +198,11 @@
   },
   {
     "name": "Donnersberg Moltkefelsen",
-    "heightDifference": "540",
+    "heightDifference": "230",
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
-    "club": "http://www.pdgfc.de",
+    "website": "http://www.pdgfc.de",
     "point": {
       "type": "Point",
       "coordinates": [7.9413888888888895, 49.620555555555555]
@@ -206,10 +213,8 @@
   },
   {
     "name": "Vockrather Acker",
-    "heightDifference": "65",
-    "image": "vockrather_acker.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.skyteam-neuss.de",
+    "website": "http://www.skyteam-neuss.de",
     "point": {
       "type": "Point",
       "coordinates": [6.629472222222223, 51.14335]
@@ -220,8 +225,7 @@
   },
   {
     "name": "Halde Norddeutschland",
-    "heightDifference": "0",
-    "club": "http://www.skyteam-neuss.de",
+    "website": "http://www.skyteam-neuss.de",
     "point": {
       "type": "Point",
       "coordinates": [6.569476514, 51.472255]
@@ -232,11 +236,11 @@
   },
   {
     "name": "Rosenberg",
-    "heightDifference": "240",
+    "heightDifference": "170",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.461388888888889, 50.31777777777778]
@@ -251,7 +255,7 @@
     "image": "",
     "region": "Nahe",
     "type": "HGPGSTA",
-    "club": "http://www.gleitschirmverein-nahe-glan.de",
+    "website": "http://www.gleitschirmverein-nahe-glan.de",
     "point": {
       "type": "Point",
       "coordinates": [7.512222222222222, 49.79281111111111]
@@ -266,7 +270,7 @@
     "image": "",
     "region": "Luxemburg",
     "type": "HGPGSTA",
-    "club": "http://www.cumulux.lu",
+    "website": "http://www.cumulux.lu",
     "point": {
       "type": "Point",
       "coordinates": [6.091497222222222, 49.91557777777778]
@@ -281,7 +285,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [6.556894444444445, 49.620602777777776]
@@ -292,10 +296,10 @@
   },
   {
     "name": "Pfeffelbach",
-    "heightDifference": "586",
+    "heightDifference": "250",
     "image": "PfeffStart01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-saar.de",
+    "website": "http://www.dfc-saar.de",
     "point": {
       "type": "Point",
       "coordinates": [7.308222222222222, 49.549499999999995]
@@ -306,10 +310,10 @@
   },
   {
     "name": "Serrig",
-    "heightDifference": "356",
+    "heightDifference": "190",
     "image": "SerrigStart01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-trier.com",
+    "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [6.615483333333333, 49.568933333333334]
@@ -333,10 +337,10 @@
   },
   {
     "name": "Neumagen",
-    "heightDifference": "385",
+    "heightDifference": "267",
     "image": "Neumagen01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-trier.com",
+    "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [6.887555555555555, 49.87738888888889]
@@ -348,25 +352,25 @@
   },
   {
     "name": "Ockfen",
-    "heightDifference": "350",
+    "heightDifference": "150",
     "image": "OckfenStart01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-saar.de",
+    "website": "http://www.dfc-saar.de",
     "point": {
       "type": "Point",
       "coordinates": [6.594588888888889, 49.624230555555556]
     },
     "id": "3f37d5f1-f66f-40b1-adad-c9d189e57fa4",
-    "shortName": "OCKFEN",
+    "shortName": "OCKFEN_START",
     "direction": "SW"
   },
   {
     "name": "Dillingen Segelflugplatz",
-    "heightDifference": "245",
+    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "SFP",
-    "club": "http://lsc-dillingen.de/",
+    "website": "http://lsc-dillingen.de/",
     "point": {
       "type": "Point",
       "coordinates": [6.748611111111111, 49.38666666666666]
@@ -377,10 +381,10 @@
   },
   {
     "name": "Hoppstädten-Weiersbach Segelflugplatz",
-    "heightDifference": "332",
+    "heightDifference": "0",
     "image": "HoppstaedtenWeiersbach02.jpg",
     "type": "SFP",
-    "club": "http://www.fsv-howei.de",
+    "website": "http://www.fsv-howei.de",
     "point": {
       "type": "Point",
       "coordinates": [7.186, 49.61088888888889]
@@ -395,7 +399,7 @@
     "image": "",
     "region": "",
     "type": "HGPGLAN",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [6.104111111111111, 49.43863888888889]
@@ -410,7 +414,7 @@
     "image": "",
     "region": "",
     "type": "SFP",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [6.8397499999999996, 49.62163888888889]
@@ -424,7 +428,7 @@
     "heightDifference": "0",
     "image": "Schaumberg01.jpg",
     "type": "AND",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [7.033333333333333, 49.486111111111114]
@@ -438,7 +442,7 @@
     "heightDifference": "400",
     "image": "Bostalsee01.jpg",
     "type": "AND",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.072674999999999, 49.565149999999996]
@@ -453,7 +457,7 @@
     "image": "",
     "region": "",
     "type": "SFP",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [7.052861111111111, 49.409]
@@ -468,7 +472,7 @@
     "image": "",
     "region": "",
     "type": "UL",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [7.0313888888888885, 49.591944444444444]
@@ -479,10 +483,10 @@
   },
   {
     "name": "Zeltingen-Rachtig",
-    "heightDifference": "260",
+    "heightDifference": "220",
     "image": "ZeltingenRachtigStart01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [6.99335, 49.961600000000004]
@@ -494,22 +498,23 @@
   },
   {
     "name": "Dreiser Weiher",
-    "heightDifference": "545",
+    "heightDifference": "80",
     "image": "Dreiserweiher01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.ostwindfreunde.de",
+    "website": "http://www.ostwindfreunde.de",
     "point": {
       "type": "Point",
       "coordinates": [6.781111111111111, 50.25861111111111]
     },
     "id": "6a2b4405-2dfc-402a-abe3-d4b2b63127b5",
     "shortName": "DREISERWEIHER",
-    "direction": "NW-NNO"
+    "direction": "NW-NNO",
+    "state": "inactive"
   },
   {
     "name": "Obermaubach",
-    "heightDifference": "0",
-    "club": "http://www.ostwindfreunde.de",
+    "heightDifference": "100",
+    "website": "http://www.ostwindfreunde.de",
     "point": {
       "type": "Point",
       "coordinates": [6.451108, 50.714028]
@@ -520,10 +525,10 @@
   },
   {
     "name": "Lasserg/Küppchen",
-    "heightDifference": "260",
+    "heightDifference": "179",
     "image": "Burgen_Lasserg01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.385000000000001, 50.2175]
@@ -535,10 +540,10 @@
   },
   {
     "name": "Bremm",
-    "heightDifference": "305",
+    "heightDifference": "261",
     "image": "Bremmercalmontstart01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.114758333333333, 50.10680833333333]
@@ -550,11 +555,10 @@
   },
   {
     "name": "Schöneberg Schlepp",
-    "heightDifference": "280",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.fun-gliders-westerwald.de",
+    "website": "http://www.fun-gliders-westerwald.de",
     "point": {
       "type": "Point",
       "coordinates": [7.600608333333333, 50.65656111111111]
@@ -576,11 +580,10 @@
   },
   {
     "name": "Eichen Schlepp",
-    "heightDifference": "230",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.fun-gliders-westerwald.de",
+    "website": "http://www.fun-gliders-westerwald.de",
     "point": {
       "type": "Point",
       "coordinates": [7.532072222222222, 50.63138888888889]
@@ -591,11 +594,10 @@
   },
   {
     "name": "Gollershoben Schlepp",
-    "heightDifference": "260",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.fun-gliders-westerwald.de",
+    "website": "http://www.fun-gliders-westerwald.de",
     "point": {
       "type": "Point",
       "coordinates": [7.534166666666667, 50.63944444444444]
@@ -606,11 +608,10 @@
   },
   {
     "name": "Schnellmannshausen Schlepp",
-    "heightDifference": "258",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [10.231405555555556, 51.11572777777778]
@@ -625,7 +626,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [10.130125, 51.1722]
@@ -636,11 +637,10 @@
   },
   {
     "name": "Kella Schlepp",
-    "heightDifference": "500",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [10.07793888888889, 51.23714722222223]
@@ -655,7 +655,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [10.08038611111111, 51.24319444444445]
@@ -670,7 +670,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.afs-flugschule.de",
+    "website": "http://www.afs-flugschule.de",
     "point": {
       "type": "Point",
       "coordinates": [9.062261111111113, 51.10391111111111]
@@ -685,7 +685,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [9.846333333333334, 51.24563888888889]
@@ -700,7 +700,7 @@
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
-    "club": "http://www.sauerlandair.de",
+    "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
       "coordinates": [8.189727777777778, 51.302836111111105]
@@ -714,7 +714,7 @@
     "heightDifference": "100",
     "image": "",
     "region": "Sauerland",
-    "club": "http://www.sauerlandair.de",
+    "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
       "coordinates": [8.830304, 51.351107]
@@ -729,7 +729,7 @@
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
-    "club": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [9.939797222222223, 50.50008888888889]
@@ -744,7 +744,7 @@
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
-    "club": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [9.920958333333333, 50.490855555555555]
@@ -759,7 +759,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://saaleflieger.de",
+    "website": "http://saaleflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [9.916533333333334, 50.128433333333334]
@@ -774,7 +774,7 @@
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
-    "club": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [9.935052777777779, 50.49571944444445]
@@ -788,7 +788,7 @@
     "heightDifference": "160",
     "image": "",
     "region": "Rhön",
-    "club": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [9.93808, 50.49734]
@@ -802,7 +802,7 @@
     "heightDifference": "40",
     "image": "",
     "region": "Rhön",
-    "club": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [9.913833, 50.511167]
@@ -812,12 +812,12 @@
     "direction": "SW"
   },
   {
-    "name": "Kreuzberg",
+    "name": "Kreuzberg NO",
     "heightDifference": "750",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
-    "club": "http://www.kreuzbergflieger.de",
+    "website": "http://www.kreuzbergflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [9.984427777777777, 50.376125]
@@ -827,12 +827,12 @@
     "direction": "N-NO"
   },
   {
-    "name": "Kreuzberg",
+    "name": "Kreuzberg SO",
     "heightDifference": "882",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
-    "club": "http://www.kreuzbergflieger.de",
+    "website": "http://www.kreuzbergflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [9.98108888888889, 50.36464166666667]
@@ -843,11 +843,10 @@
   },
   {
     "name": "Oberhövels Schlepp",
-    "heightDifference": "220",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.paragliding-westerwald.de",
+    "website": "http://www.paragliding-westerwald.de",
     "point": {
       "type": "Point",
       "coordinates": [7.785, 50.794999999999995]
@@ -861,7 +860,7 @@
     "image": "",
     "region": "",
     "type": "SFP",
-    "club": "http://www.asslarergleitschirmflieger.de",
+    "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [8.444722222222222, 50.59916666666667]
@@ -902,7 +901,7 @@
   },
   {
     "name": "Hirzenhain Schlepp",
-    "club": "http://www.asslarergleitschirmflieger.de",
+    "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [8.392188965, 50.787966049]
@@ -913,7 +912,7 @@
   },
   {
     "name": "Hohensolms Schlepp",
-    "club": "http://www.asslarergleitschirmflieger.de",
+    "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [8.521922487, 50.6529424]
@@ -924,7 +923,7 @@
   },
   {
     "name": "Mudersbach Schlepp",
-    "club": "http://www.asslarergleitschirmflieger.de",
+    "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [8.49396036, 50.693054837]
@@ -945,12 +944,12 @@
     "direction": "NW,SO"
   },
   {
-    "name": "Bruchhauser Steine",
+    "name": "Bruchhauser Steine S",
     "heightDifference": "635",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
-    "club": "http://www.sauerlandair.de",
+    "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
       "coordinates": [8.54496111111111, 51.31816666666667]
@@ -960,12 +959,12 @@
     "direction": "S"
   },
   {
-    "name": "Bruchhauser Steine",
+    "name": "Bruchhauser Steine SW",
     "heightDifference": "715",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
-    "club": "http://www.sauerlandair.de",
+    "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
       "coordinates": [8.548136111111111, 51.316088888888885]
@@ -980,7 +979,7 @@
     "image": "",
     "region": "",
     "type": "UL",
-    "club": "http://www.sfg-wershofen.de",
+    "website": "http://www.sfg-wershofen.de",
     "point": {
       "type": "Point",
       "coordinates": [6.786888888888889, 50.45186944444445]
@@ -995,7 +994,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [10.372616666666667, 51.07446388888889]
@@ -1006,11 +1005,10 @@
   },
   {
     "name": "Altena-Hegenscheid Schlepp",
-    "heightDifference": "473",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
-    "club": "http://www.air-hegenscheid.de",
+    "website": "http://www.air-hegenscheid.de",
     "point": {
       "type": "Point",
       "coordinates": [7.7022305555555555, 51.312305555555554]
@@ -1025,7 +1023,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "https://www.dgc-battenberg.de",
+    "website": "https://www.dgc-battenberg.de",
     "point": {
       "type": "Point",
       "coordinates": [8.619886111111112, 51.01584722222222]
@@ -1036,11 +1034,10 @@
   },
   {
     "name": "Eisenberg Windenschlepp",
-    "heightDifference": "300",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "https://www.dgc-battenberg.de",
+    "website": "https://www.dgc-battenberg.de",
     "point": {
       "type": "Point",
       "coordinates": [8.607955555555556, 51.01787222222222]
@@ -1055,7 +1052,7 @@
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.222427777777778, 50.46478611111112]
@@ -1070,7 +1067,7 @@
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
-    "club": "http://www.sauerlandair.de",
+    "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
       "coordinates": [8.599386111111112, 51.282016666666664]
@@ -1084,7 +1081,7 @@
     "heightDifference": "255",
     "image": "",
     "region": "Sauerland",
-    "club": "http://www.sauerlandair.de",
+    "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
       "coordinates": [8.672129, 51.261767]
@@ -1099,7 +1096,7 @@
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
-    "club": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [10.126841666666667, 50.588658333333335]
@@ -1109,11 +1106,11 @@
     "direction": "S"
   },
   {
-    "name": "Maring-Noviand",
+    "name": "Maring-Noviand SO",
     "heightDifference": "290",
     "image": "maring_so.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-trier.com",
+    "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [6.990755555555555, 49.94385]
@@ -1129,7 +1126,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [8.13428611111111, 50.05439722222222]
@@ -1144,7 +1141,7 @@
     "image": "",
     "region": "Luxemburg",
     "type": "HGPGSTA",
-    "club": "http://cumulux.lu",
+    "website": "http://cumulux.lu",
     "point": {
       "type": "Point",
       "coordinates": [6.030788888888889, 49.95192222222222]
@@ -1159,7 +1156,7 @@
     "image": "",
     "region": "Luxemburg",
     "type": "HGPGSTA",
-    "club": "http://cumulux.lu",
+    "website": "http://cumulux.lu",
     "point": {
       "type": "Point",
       "coordinates": [6.0800777777777775, 49.899883333333335]
@@ -1174,7 +1171,7 @@
     "image": "",
     "region": "",
     "type": "SFP",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [8.729077777777778, 50.531930555555554]
@@ -1189,7 +1186,7 @@
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.803705555555555, 50.30577777777778]
@@ -1200,11 +1197,10 @@
   },
   {
     "name": "Segelflugplatz Auf der Schaufel",
-    "heightDifference": "310",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [9.149272222222221, 51.09737777777778]
@@ -1219,7 +1215,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [8.43207222222222, 51.26938611111111]
@@ -1256,7 +1252,7 @@
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
-    "club": "https://www.sauerlandair.de",
+    "website": "https://www.sauerlandair.de",
     "point": {
       "type": "Point",
       "coordinates": [8.581388888888888, 51.29194444444444]
@@ -1285,7 +1281,7 @@
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
-    "club": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [10.255, 50.56916666666667]
@@ -1300,7 +1296,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [6.09965, 49.44676666666666]
@@ -1315,7 +1311,7 @@
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
-    "club": "http://www.rdg-ev.de",
+    "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [10.22375, 50.659702777777774]
@@ -1326,11 +1322,11 @@
   },
   {
     "name": "Mehring",
-    "heightDifference": "356",
+    "heightDifference": "276",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [6.837580555555555, 49.78123055555555]
@@ -1341,10 +1337,7 @@
   },
   {
     "name": "Hinterweiler UL-Schlepp",
-    "heightDifference": "608",
-    "image": "Hinterweiler02.jpg",
-    "type": "UL",
-    "club": "http://www.dfc-vulkaneifel.de",
+    "website": "http://www.dfc-vulkaneifel.de",
     "point": {
       "type": "Point",
       "coordinates": [6.755833333333333, 50.24518611111111]
@@ -1355,10 +1348,7 @@
   },
   {
     "name": "Offenbach Schlepp",
-    "heightDifference": "0",
-    "image": "OffenbachSchlepp01.jpg",
-    "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [8.17611111111111, 49.16888888888889]
@@ -1368,11 +1358,11 @@
     "direction": ""
   },
   {
-    "name": "Ürzig-Erden",
+    "name": "Ürzig-Erden SO",
     "heightDifference": "243",
     "image": "Erden01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [7.030005555555555, 49.98511111111111]
@@ -1384,10 +1374,10 @@
   },
   {
     "name": "Klüsserath",
-    "heightDifference": "290",
+    "heightDifference": "170",
     "image": "Kluesserath01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-trier.com",
+    "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [6.870833333333334, 49.84777777777778]
@@ -1403,7 +1393,7 @@
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [6.85781111111111, 49.87016111111111]
@@ -1413,12 +1403,9 @@
     "direction": "W"
   },
   {
-    "name": "St. Katharinen Schlepp",
-    "heightDifference": "0",
-    "image": "",
+    "name": "St. Katharinen Mergesfeld Schlepp",
     "region": "",
-    "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.771944444444444, 49.87388888888889]
@@ -1433,7 +1420,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.787222222222222, 49.871944444444445]
@@ -1447,7 +1434,7 @@
     "heightDifference": "0",
     "image": "SophienheightDifference_O01.jpg",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [6.468758333333334, 50.942338888888884]
@@ -1457,12 +1444,12 @@
     "direction": "NO-SO"
   },
   {
-    "name": "Ürzig-Erden",
+    "name": "Ürzig-Erden SW",
     "heightDifference": "290",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [7.015544444444444, 49.984500000000004]
@@ -1476,7 +1463,7 @@
     "heightDifference": "386",
     "image": "Burgen01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [7.018825, 49.876847222222224]
@@ -1488,11 +1475,9 @@
   },
   {
     "name": "Himmighofen-Hainau Schlepp",
-    "heightDifference": "0",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [7.783333333333333, 50.21666666666667]
@@ -1507,7 +1492,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [8.043683333333334, 49.82311666666667]
@@ -1518,11 +1503,10 @@
   },
   {
     "name": "St. Katharinen Schlepp",
-    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.787222222222222, 49.865833333333335]
@@ -1537,7 +1521,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [7.658333333333334, 49.727222222222224]
@@ -1548,10 +1532,9 @@
   },
   {
     "name": "Losheim am See/Scheid Schlepp",
-    "heightDifference": "0",
     "image": "Losheim_Scheid01.jpg",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [6.743261111111111, 49.46886111111111]
@@ -1562,10 +1545,10 @@
   },
   {
     "name": "Meerfelder Maar",
-    "heightDifference": "520",
+    "heightDifference": "170",
     "image": "Meerfeld01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [6.755991666666667, 50.10613055555556]
@@ -1580,7 +1563,7 @@
     "heightDifference": "531",
     "image": "Orensberg01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.duddefliecher.de",
+    "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
       "coordinates": [8.026222222222223, 49.240363888888886]
@@ -1594,7 +1577,7 @@
     "heightDifference": "540",
     "image": "Adelberg01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.duddefliecher.de",
+    "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
       "coordinates": [7.9602611111111115, 49.216797222222226]
@@ -1608,7 +1591,7 @@
     "heightDifference": "477",
     "image": "Foerlenberg01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.duddefliecher.de",
+    "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
       "coordinates": [8.003069444444444, 49.19216944444444]
@@ -1622,7 +1605,7 @@
     "heightDifference": "0",
     "image": "Hoellenberg01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.duddefliecher.de",
+    "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
       "coordinates": [7.886749999999999, 49.190305555555554]
@@ -1632,11 +1615,11 @@
     "direction": "SSW-NW"
   },
   {
-    "name": "Maring-Noviand",
-    "heightDifference": "275",
+    "name": "Maring-Noviand SW",
+    "heightDifference": "133",
     "image": "maring_sw.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-trier.com",
+    "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [7.003611111111111, 49.94583333333333]
@@ -1651,7 +1634,7 @@
     "heightDifference": "530",
     "image": "Hohenberg_West01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.pdgfc.de/",
+    "website": "http://www.pdgfc.de/",
     "point": {
       "type": "Point",
       "coordinates": [8.003055555555555, 49.20027777777778]
@@ -1667,7 +1650,7 @@
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.572930555555556, 50.243788888888886]
@@ -1678,9 +1661,8 @@
   },
   {
     "name": "Nannhausen Schlepp",
-    "heightDifference": "0",
     "region": "",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.479167, 49.97]
@@ -1691,10 +1673,8 @@
   },
   {
     "name": "Losheim am See/Am See Schlepp",
-    "heightDifference": "0",
-    "image": "Losheim_Am_See01.jpg",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [6.740886111111111, 49.52296666666667]
@@ -1705,11 +1685,9 @@
   },
   {
     "name": "Losheim am See/Hungerberg Schlepp",
-    "heightDifference": "0",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [6.719727777777778, 49.46907222222222]
@@ -1724,7 +1702,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [7.009861111111111, 49.578361111111114]
@@ -1738,7 +1716,7 @@
     "heightDifference": "332",
     "image": "GraachHerbst01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [7.058827777777777, 49.94427222222222]
@@ -1750,10 +1728,8 @@
   },
   {
     "name": "Losheim am See/Kerzenberg Schlepp",
-    "heightDifference": "0",
-    "image": "Losheim_Kerzenberg01.jpg",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [6.7495972222222225, 49.495308333333334]
@@ -1767,7 +1743,7 @@
     "heightDifference": "0",
     "image": "Losheim_Galgenberg01.jpg",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [6.736291666666666, 49.50226388888889]
@@ -1778,10 +1754,10 @@
   },
   {
     "name": "Riol",
-    "heightDifference": "415",
+    "heightDifference": "291",
     "image": "RiolStart.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-trier.com",
+    "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [6.7998722222222225, 49.781277777777774]
@@ -1797,7 +1773,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.dgfhellertal.de",
+    "website": "http://www.dgfhellertal.de",
     "point": {
       "type": "Point",
       "coordinates": [7.929208333333333, 50.769888888888886]
@@ -1808,11 +1784,9 @@
   },
   {
     "name": "Hassloch Windenschlepp",
-    "heightDifference": "0",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.duddefliecher.de",
+    "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
       "coordinates": [8.28361111111111, 49.35416666666667]
@@ -1827,7 +1801,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.710555555555556, 49.765]
@@ -1838,11 +1812,9 @@
   },
   {
     "name": "Obergailbach Schlepp",
-    "heightDifference": "0",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [7.2339166666666666, 49.102111111111114]
@@ -1853,11 +1825,9 @@
   },
   {
     "name": "Herbitzheim Schlepp",
-    "heightDifference": "275",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://pski.errror.org",
+    "website": "http://pski.errror.org",
     "point": {
       "type": "Point",
       "coordinates": [7.225555555555555, 49.16138888888889]
@@ -1871,7 +1841,7 @@
     "heightDifference": "0",
     "image": "Krausberg01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dgc-siebengebirge.com",
+    "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
       "coordinates": [7.052611111111111, 50.528663888888886]
@@ -1881,11 +1851,11 @@
     "direction": "N"
   },
   {
-    "name": "Hönningen",
+    "name": "Hönningen O",
     "heightDifference": "0",
     "image": "Hoenningen_Ost01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dgc-siebengebirge.com",
+    "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
       "coordinates": [6.941663888888889, 50.470508333333335]
@@ -1895,11 +1865,11 @@
     "direction": "O"
   },
   {
-    "name": "Hönningen",
+    "name": "Hönningen S",
     "heightDifference": "0",
     "image": "Hoenningen_Sued01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dgc-siebengebirge.com",
+    "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
       "coordinates": [6.94705, 50.47857777777778]
@@ -1913,7 +1883,7 @@
     "heightDifference": "400",
     "image": "Schriesheim01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.bergstraessler-drachenflieger.de",
+    "website": "http://www.bergstraessler-drachenflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [8.678888888888888, 49.46527777777778]
@@ -1924,11 +1894,9 @@
   },
   {
     "name": "Michelstadt UL-Schlepp",
-    "heightDifference": "346",
-    "image": "",
     "region": "",
     "type": "UL",
-    "club": "http://www.flugplatz-michelstadt.de",
+    "website": "http://www.flugplatz-michelstadt.de",
     "point": {
       "type": "Point",
       "coordinates": [8.972016666666667, 49.67851944444444]
@@ -1939,10 +1907,8 @@
   },
   {
     "name": "Hohen Unkel Schlepp",
-    "heightDifference": "0",
-    "image": "Hohenunkel01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dgc-siebengebirge.com",
+    "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
       "coordinates": [7.234002777777778, 50.60306944444444]
@@ -1956,7 +1922,7 @@
     "heightDifference": "0",
     "image": "Haardskopf01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dgc-siebengebirge.com",
+    "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
       "coordinates": [7.434655555555556, 50.558375]
@@ -1970,13 +1936,13 @@
     "heightDifference": "255",
     "image": "Finkenberg01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.dgc-siebengebirge.com",
+    "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
       "coordinates": [7.411508333333334, 50.58224444444445]
     },
     "id": "18b36aaa-a7f9-447c-9c68-6ac0de8c9733",
-    "shortName": "FINKENBERG",
+    "shortName": "FINKENBERG_START",
     "direction": "S-SW"
   },
   {
@@ -1984,7 +1950,7 @@
     "heightDifference": "500",
     "image": "Melibokus01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.ersterodc.de",
+    "website": "http://www.ersterodc.de",
     "point": {
       "type": "Point",
       "coordinates": [8.635833333333332, 49.724444444444444]
@@ -1998,7 +1964,7 @@
     "heightDifference": "305",
     "image": "Hasloch_Heckenkopf01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.lilienthal-gleiter.de/suedost.html",
+    "website": "http://www.lilienthal-gleiter.de/suedost.html",
     "point": {
       "type": "Point",
       "coordinates": [9.46936111111111, 49.78680555555555]
@@ -2009,7 +1975,6 @@
   },
   {
     "name": "Zellhausen Schlepp",
-    "heightDifference": "0",
     "point": {
       "type": "Point",
       "coordinates": [8.983333, 50.02]
@@ -2020,7 +1985,6 @@
   },
   {
     "name": "Fortunaweg Schlepp",
-    "heightDifference": "0",
     "point": {
       "type": "Point",
       "coordinates": [6.64620667562, 50.96445080952]
@@ -2031,7 +1995,6 @@
   },
   {
     "name": "Nilkheim Schlepp",
-    "heightDifference": "0",
     "point": {
       "type": "Point",
       "coordinates": [9.1263303, 49.957696]
@@ -2042,7 +2005,6 @@
   },
   {
     "name": "Bischbrunn Schlepp",
-    "heightDifference": "0",
     "point": {
       "type": "Point",
       "coordinates": [9.49575179, 49.86039182]
@@ -2050,17 +2012,6 @@
     "id": "d65cd3c7-630b-4fec-b3e1-012f065484d0",
     "shortName": "BISCHBRUNN",
     "direction": "NW/SO"
-  },
-  {
-    "name": "Oberacker Schlepp",
-    "heightDifference": "0",
-    "point": {
-      "type": "Point",
-      "coordinates": [8.717392798, 49.101300551]
-    },
-    "id": "d212fef2-fa74-47e9-99b2-49603ff6154b",
-    "shortName": "OBERACKER",
-    "direction": "NO/SW"
   },
   {
     "name": "Treisberg",
@@ -2075,7 +2026,6 @@
   },
   {
     "name": "Würzberg Schlepp",
-    "heightDifference": "0",
     "point": {
       "type": "Point",
       "coordinates": [9.07247438, 49.658227193]
@@ -2089,7 +2039,7 @@
     "heightDifference": "430",
     "image": "GrosserKopfStart_01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.freiflieger-arzbach.de",
+    "website": "http://www.freiflieger-arzbach.de",
     "point": {
       "type": "Point",
       "coordinates": [7.756388888888889, 50.36972222222222]
@@ -2104,7 +2054,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.ersterodc.de",
+    "website": "http://www.ersterodc.de",
     "point": {
       "type": "Point",
       "coordinates": [8.82236111111111, 49.74297222222222]
@@ -2119,7 +2069,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.duddefliecher.de",
+    "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
       "coordinates": [8.070416666666667, 49.26569444444444]
@@ -2133,7 +2083,7 @@
     "heightDifference": "0",
     "image": "Ronneburg01.jpg",
     "type": "HGPGSTA",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [9.063472222222224, 50.239333333333335]
@@ -2147,7 +2097,7 @@
     "heightDifference": "540",
     "image": "KoenigstuhlStart01_650.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.kurpfaelzer-gleitschirmflieger.de",
+    "website": "http://www.kurpfaelzer-gleitschirmflieger.de",
     "point": {
       "type": "Point",
       "coordinates": [8.727172222222222, 49.40387222222222]
@@ -2163,7 +2113,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.723055555555556, 50.861666666666665]
@@ -2174,11 +2124,9 @@
   },
   {
     "name": "Roxheim-Windenschlepp",
-    "heightDifference": "0",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.708333333333334, 49.83861111111111]
@@ -2193,7 +2141,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [9.09138888888889, 49.33388888888889]
@@ -2208,7 +2156,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.691944444444444, 49.76777777777777]
@@ -2223,7 +2171,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.lilienthal-gleiter.de",
+    "website": "http://www.lilienthal-gleiter.de",
     "point": {
       "type": "Point",
       "coordinates": [9.2075, 49.73361111111111]
@@ -2238,7 +2186,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.719166666666667, 49.77055555555555]
@@ -2248,12 +2196,12 @@
     "direction": "W"
   },
   {
-    "name": "Longuich Start",
-    "heightDifference": "300",
+    "name": "Longuich",
+    "heightDifference": "175",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.dfc-trier.com",
+    "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [6.780141666666666, 49.81263055555555]
@@ -2268,7 +2216,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.7011111111111115, 49.788333333333334]
@@ -2279,11 +2227,9 @@
   },
   {
     "name": "Rheinstetten Forchheim UL-Schlepp",
-    "heightDifference": "113",
-    "image": "",
     "region": "",
     "type": "UL",
-    "club": "NULL",
+    "website": "NULL",
     "point": {
       "type": "Point",
       "coordinates": [8.343722222222222, 48.98097222222222]
@@ -2297,7 +2243,7 @@
     "heightDifference": "550",
     "image": "DonnersbergStart01.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.pdgfc.de",
+    "website": "http://www.pdgfc.de",
     "point": {
       "type": "Point",
       "coordinates": [7.9325277777777785, 49.635527777777774]
@@ -2312,7 +2258,7 @@
     "heightDifference": "290",
     "image": "Hasloch_Roettberg.jpg",
     "type": "HGPGSTA",
-    "club": "http://www.lilienthal-gleiter.de/suedwest.html",
+    "website": "http://www.lilienthal-gleiter.de/suedwest.html",
     "point": {
       "type": "Point",
       "coordinates": [9.506305555555555, 49.79087222222222]
@@ -2322,26 +2268,12 @@
     "direction": "S-W"
   },
   {
-    "name": "Flughafen Hahn",
-    "heightDifference": "480",
-    "image": "NULL",
-    "type": "FLP",
-    "club": "NULL",
-    "point": {
-      "type": "Point",
-      "coordinates": [7.269427777777778, 49.94599722222222]
-    },
-    "id": "e02716ba-86bf-4f33-8959-672cb858ddd5",
-    "shortName": "EDFH",
-    "direction": ""
-  },
-  {
     "name": "Norheim",
     "heightDifference": "210",
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
-    "club": "http://www.pfaelzergleitschirmclub.info",
+    "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
       "coordinates": [7.822958333333333, 49.806036111111105]
@@ -2356,7 +2288,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.para-now.de",
+    "website": "http://www.para-now.de",
     "point": {
       "type": "Point",
       "coordinates": [9.107394444444443, 49.36037777777778]
@@ -2371,7 +2303,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.para-now.de",
+    "website": "http://www.para-now.de",
     "point": {
       "type": "Point",
       "coordinates": [9.399969444444444, 49.32455277777778]
@@ -2386,7 +2318,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.754991666666666, 51.15215277777778]
@@ -2397,11 +2329,9 @@
   },
   {
     "name": "Boxberg Schlepp",
-    "heightDifference": "340",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.gleitschirmfreunde-taubertal.de",
+    "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
       "type": "Point",
       "coordinates": [9.646483333333332, 49.47018333333334]
@@ -2416,7 +2346,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.para-now.de",
+    "website": "http://www.para-now.de",
     "point": {
       "type": "Point",
       "coordinates": [9.149177777777778, 49.25286388888889]
@@ -2431,7 +2361,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [6.949038888888889, 49.903238888888886]
@@ -2446,7 +2376,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.para-now.de",
+    "website": "http://www.para-now.de",
     "point": {
       "type": "Point",
       "coordinates": [9.083172222222222, 49.39222777777778]
@@ -2461,7 +2391,7 @@
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
-    "club": "http://www.pfaelzergleitschirmclub.info",
+    "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
       "coordinates": [7.892672222222222, 49.92782222222222]
@@ -2476,7 +2406,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.entenberg.eu",
+    "website": "http://www.entenberg.eu",
     "point": {
       "type": "Point",
       "coordinates": [8.43378888888889, 50.91853888888889]
@@ -2491,7 +2421,7 @@
     "image": "",
     "region": "",
     "type": "SFP",
-    "club": "http://www.edrd.de",
+    "website": "http://www.edrd.de",
     "point": {
       "type": "Point",
       "coordinates": [6.917736111111111, 49.84278333333334]
@@ -2506,7 +2436,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://lilienthal-gleiter.de",
+    "website": "http://lilienthal-gleiter.de",
     "point": {
       "type": "Point",
       "coordinates": [9.288211111111112, 49.721250000000005]
@@ -2521,7 +2451,7 @@
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
-    "club": "http://www.pfaelzergleitschirmclub.info",
+    "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
       "coordinates": [7.808888888888888, 49.67972222222222]
@@ -2536,7 +2466,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.deltaclub.de",
+    "website": "http://www.deltaclub.de",
     "point": {
       "type": "Point",
       "coordinates": [7.376772222222222, 50.78089722222222]
@@ -2551,7 +2481,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [8.926488888888889, 49.40376666666666]
@@ -2561,12 +2491,12 @@
     "direction": "SO,NW"
   },
   {
-    "name": "Meerfelder Maar",
-    "heightDifference": "520",
+    "name": "Meerfelder Maar O",
+    "heightDifference": "170",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.moselfalken.de",
+    "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
       "coordinates": [6.746722222222222, 50.093411111111116]
@@ -2577,11 +2507,9 @@
   },
   {
     "name": "Linnich UL-Schlepp",
-    "heightDifference": "100",
-    "image": "",
     "region": "",
     "type": "UL",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [6.3379666666666665, 50.96293333333334]
@@ -2592,11 +2520,10 @@
   },
   {
     "name": "Hohenöllen",
-    "heightDifference": "290",
     "image": "",
     "region": "Nahe",
     "type": "HGPGSTA",
-    "club": "http://www.gleitschirmverein-nahe-glan.de",
+    "website": "http://www.gleitschirmverein-nahe-glan.de",
     "point": {
       "type": "Point",
       "coordinates": [7.621388888888889, 49.624722222222225]
@@ -2611,7 +2538,7 @@
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
-    "club": "http://www.thermik4u.de",
+    "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
       "coordinates": [7.615241666666666, 50.19385833333333]
@@ -2626,7 +2553,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [8.523652777777778, 50.353950000000005]
@@ -2637,11 +2564,9 @@
   },
   {
     "name": "Kaiskorb Schlepp",
-    "heightDifference": "115",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.ostwindfreunde.de",
+    "website": "http://www.ostwindfreunde.de",
     "point": {
       "type": "Point",
       "coordinates": [6.470775, 51.02428333333333]
@@ -2656,7 +2581,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.ul-kerken.de",
+    "website": "http://www.ul-kerken.de",
     "point": {
       "type": "Point",
       "coordinates": [6.445555555555556, 51.43888888888888]
@@ -2667,11 +2592,9 @@
   },
   {
     "name": "Sevelen Schlepp",
-    "heightDifference": "32",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.freiflieger-niederrhein.de",
+    "website": "http://www.freiflieger-niederrhein.de",
     "point": {
       "type": "Point",
       "coordinates": [6.428244444444445, 51.48574722222222]
@@ -2682,11 +2605,9 @@
   },
   {
     "name": "Flugplatz Alsfeld Schlepp",
-    "heightDifference": "0",
-    "image": "",
     "region": "",
     "type": "UL",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [9.24266111111111, 50.749050000000004]
@@ -2734,15 +2655,13 @@
     "id": "5b0d8a54-deac-4b14-95a4-d1195e9d0cf3",
     "shortName": "WALSDORF",
     "direction": "WSW",
-    "inactive": true
+    "state": "inactive"
   },
   {
     "name": "Neu-Anspach Schlepp",
-    "heightDifference": "326",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.gf-wehrheim.de",
+    "website": "http://www.gf-wehrheim.de",
     "point": {
       "type": "Point",
       "coordinates": [8.53038888888889, 50.28665]
@@ -2757,7 +2676,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.airwalker-ev.de",
+    "website": "http://www.airwalker-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [8.568238888888889, 51.377830555555555]
@@ -2768,11 +2687,9 @@
   },
   {
     "name": "Niederkleen Schlepp",
-    "heightDifference": "205",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.himmelsstuermerlahn.de",
+    "website": "http://www.himmelsstuermerlahn.de",
     "point": {
       "type": "Point",
       "coordinates": [8.59748888888889, 50.48328888888889]
@@ -2782,12 +2699,12 @@
     "direction": ""
   },
   {
-    "name": "Wixberg",
+    "name": "Wixberg W",
     "heightDifference": "423",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.663391666666667, 51.326750000000004]
@@ -2797,12 +2714,12 @@
     "direction": "W"
   },
   {
-    "name": "Wixberg",
+    "name": "Wixberg S",
     "heightDifference": "412",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "",
+    "website": "",
     "point": {
       "type": "Point",
       "coordinates": [7.66615, 51.31861111111112]
@@ -2817,7 +2734,7 @@
     "image": "",
     "region": "Nahe",
     "type": "HGPGSTA",
-    "club": "http://www.dgcn.de",
+    "website": "http://www.dgcn.de",
     "point": {
       "type": "Point",
       "coordinates": [7.830886111111111, 49.85563055555556]
@@ -2828,11 +2745,9 @@
   },
   {
     "name": "Ailertchen UL-Schlepp",
-    "heightDifference": "470",
-    "image": "",
     "region": "",
     "type": "UL",
-    "club": "http://www.flyranch-ww.de/",
+    "website": "http://www.flyranch-ww.de/",
     "point": {
       "type": "Point",
       "coordinates": [7.945, 50.59316666666667]
@@ -2847,7 +2762,7 @@
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
-    "club": "http://www.sauerlandair.de",
+    "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
       "coordinates": [8.42948611111111, 51.31431111111111]
@@ -2858,17 +2773,15 @@
   },
   {
     "name": "Oberacker Schlepp",
-    "heightDifference": "210",
-    "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.gleitschirmclub-kraichtal.de",
+    "website": "http://www.gleitschirmclub-kraichtal.de",
     "point": {
       "type": "Point",
       "coordinates": [8.716325, 49.100833333333334]
     },
     "id": "a043e78b-5fb3-4f55-9b07-101bfc59da90",
-    "shortName": "OBERACKER_WINDE",
+    "shortName": "OBERACKER",
     "direction": "NO,SW"
   },
   {
@@ -2877,7 +2790,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
-    "club": "http://www.airwalker-ev.de",
+    "website": "http://www.airwalker-ev.de",
     "point": {
       "type": "Point",
       "coordinates": [7.748, 51.247]

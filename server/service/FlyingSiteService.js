@@ -1,8 +1,16 @@
 const FlyingSite = require("../config/postgres")["FlyingSite"];
 const logger = require("../config/logger");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
+const Club = require("../config/postgres")["Club"];
+const User = require("../config/postgres")["User"];
 
 const MAX_DIST_TO_SEARCH = 5000;
+
+const STATES = {
+  ACTIVE: "active",
+  INACTIVE: "inactive",
+  PROPOSAL: "proposal",
+};
 
 const siteService = {
   getById: async (id) => {
@@ -21,11 +29,81 @@ const siteService = {
     const sites = await FlyingSite.findAll({
       attributes: ["id", "name"],
       order: [["name", "asc"]],
+      where: {
+        state: STATES.ACTIVE,
+      },
     });
     return sites;
   },
 
-  create: async (site) => {
+  getAll: async ({ state = STATES.ACTIVE } = {}) => {
+    const attributes = [
+      "id",
+      "name",
+      "direction",
+      "point",
+      "website",
+      "createdAt",
+      "region",
+      "heightDifference",
+    ];
+    if (state == STATES.PROPOSAL) attributes.push("submitter");
+
+    const sites = await FlyingSite.findAll({
+      attributes,
+      where: {
+        state,
+      },
+      include: {
+        model: Club,
+        as: "club",
+        attributes: ["id", "name"],
+      },
+    });
+
+    const plainSites = await Promise.all(
+      sites.map(async (s) => {
+        const plainSite = s.toJSON();
+        // Add submitter if it's a proposed site
+        if (state == STATES.PROPOSAL) {
+          console.log("get user");
+          const submitter = await User.findByPk(s.submitter);
+          plainSite.submitter = submitter;
+        }
+        return plainSite;
+      })
+    );
+
+    return plainSites;
+  },
+
+  create: async ({
+    name,
+    direction,
+    long,
+    lat,
+    clubId,
+    website,
+    region,
+    heightDifference,
+    submitter,
+  }) => {
+    console.log("SUB: ", submitter);
+
+    const site = {
+      name,
+      direction,
+      clubId,
+      website,
+      region,
+      heightDifference,
+      state: STATES.PROPOSAL,
+      submitter: submitter.id,
+      point: {
+        type: "Point",
+        coordinates: [long, lat],
+      },
+    };
     return FlyingSite.create(site);
   },
 
@@ -33,8 +111,14 @@ const siteService = {
     return FlyingSite.save(site);
   },
 
+  changeStateToActive: async (site) => {
+    site.state = STATES.ACTIVE;
+    site.changed("state", true);
+    return site.save();
+  },
+
   delete: async (id) => {
-    return await FlyingSite.destroy({
+    return FlyingSite.destroy({
       where: { id },
     });
   },

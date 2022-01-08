@@ -4,7 +4,7 @@ module.exports.COUNTRY = {
   BEL: "Belgien",
   FRA: "Frankreich",
   NLD: "Niederlande",
-  NONE: ""
+  NONE: "",
 };
 
 module.exports.STATE = {
@@ -29,7 +29,7 @@ module.exports.STATE = {
 
 module.exports.GENDER = {
   MALE: "M",
-  FEMALE: "W",
+  FEMALE: "F",
   DIVERS: "D",
 };
 

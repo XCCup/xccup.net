@@ -16,6 +16,12 @@ const {
   NUMBER_OF_SCORED_FLIGHTS,
   NEWCOMER_MAX_RANKING_CLASS,
 } = require("../config/result-determination-config");
+const {
+  REMARKS_NEWCOMER,
+  REMARKS_STATE,
+  REMARKS_SENIOR,
+  REMARKS_TEAM,
+} = require("../constants/result-remarks-constants");
 
 const logger = require("../config/logger");
 
@@ -74,7 +80,7 @@ const service = {
 
     return addConstantInformationToResult(
       result,
-      { NUMBER_OF_SCORED_FLIGHTS },
+      { NUMBER_OF_SCORED_FLIGHTS, REMARKS_STATE },
       limit
     );
   },
@@ -109,7 +115,7 @@ const service = {
     dissmissWorstFlights(resultOverTeam);
     sortDescendingByTotalPoints(resultOverTeam);
 
-    //TODO Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
+    //TODO: Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
 
     return addConstantInformationToResult(
       resultOverTeam,
@@ -117,6 +123,7 @@ const service = {
         NUMBER_OF_SCORED_FLIGHTS,
         TEAM_DISMISSES,
         TEAM_SIZE,
+        REMARKS: REMARKS_TEAM(TEAM_DISMISSES),
       },
       limit
     );
@@ -130,7 +137,7 @@ const service = {
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
-    calcSeniorBonusForFlightResult(result);
+    await calcSeniorBonusForFlightResult(result);
     sortDescendingByTotalPoints(result);
 
     return addConstantInformationToResult(
@@ -139,6 +146,10 @@ const service = {
         NUMBER_OF_SCORED_FLIGHTS,
         SENIOR_START_AGE: seasonDetail.seniorStartAge,
         SENIOR_BONUS_PER_AGE: seasonDetail.seniorBonusPerAge,
+        REMARKS: REMARKS_SENIOR(
+          seasonDetail.seniorStartAge,
+          seasonDetail.seniorBonusPerAge
+        ),
       },
       limit
     );
@@ -169,6 +180,7 @@ const service = {
       {
         NUMBER_OF_SCORED_FLIGHTS,
         NEWCOMER_MAX_RANKING_CLASS: rankingClass.description,
+        REMARKS: REMARKS_NEWCOMER(rankingClass.description),
       },
       limit
     );
@@ -453,7 +465,7 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
         clubName: entry.club.name,
         clubId: entry.club.id,
         members: [memberEntry],
-        totalDistance: memberEntry.totalPoints,
+        totalDistance: memberEntry.totalDistance,
         totalPoints: memberEntry.totalPoints,
       });
     }
@@ -502,7 +514,7 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
         teamName: entry.team.name,
         teamId: entry.team.id,
         members: [memberEntry],
-        totalDistance: memberEntry.totalPoints,
+        totalDistance: memberEntry.totalDistance,
         totalPoints: memberEntry.totalPoints,
       });
     }
@@ -513,7 +525,8 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
 function aggreateFlightsOverUser(resultQuery) {
   const result = [];
   resultQuery.forEach((entry) => {
-    const found = result.find((e) => e.user.id == entry.user.id);
+    const found = result.find((e) => e.user?.id == entry.user?.id);
+
     const flightEntry = {
       id: entry.id,
       externalId: entry.externalId,
@@ -521,10 +534,10 @@ function aggreateFlightsOverUser(resultQuery) {
       flightDistance: Math.round(entry.flightDistance * 100) / 100,
       glider: entry.glider,
       flightType: entry.flightType,
-      takeoffName: entry.takeoff.name,
-      takeoffShortName: entry.takeoff.shortName,
-      takeoffId: entry.takeoff.id,
-      takeoffRegion: entry.takeoff.region,
+      takeoffName: entry.takeoff?.name,
+      takeoffShortName: entry.takeoff?.shortName,
+      takeoffId: entry.takeoff?.id,
+      takeoffRegion: entry.takeoff?.region,
       ageOfUser: entry.ageOfUser,
     };
     if (found) {
@@ -538,8 +551,8 @@ function aggreateFlightsOverUser(resultQuery) {
           gender: entry.user.gender,
         },
         club: {
-          name: entry.club.name, //A user must always belong to a club
-          id: entry.club.id,
+          name: entry.club?.name, //A user must always belong to a club
+          id: entry.club?.id,
         },
         team: {
           name: entry.team?.name, //It is possible that a user has no team
@@ -567,23 +580,33 @@ async function retrieveSeasonDetails(year) {
   return seasonDetail;
 }
 
-function calcSeniorBonusForFlight(age) {
-  const seasonDetail = seasonService.getCurrentActive();
+//TODO: Calc bonus in regards of seasonDetails for year xxxx
+async function calcSeniorBonusForFlight(age) {
+  const seasonDetail = await seasonService.getCurrentActive();
   const bonusPerYear = seasonDetail.seniorBonusPerAge;
   const startAge = seasonDetail.seniorStartAge;
+
   return age > startAge ? bonusPerYear * (age - startAge) : 0;
 }
 
-function calcSeniorBonusForFlightResult(result) {
-  result.forEach((entry) => {
-    let totalPoints = 0;
-    entry.flights.forEach((flight) => {
-      flight.flightPoints *=
-        (100 + calcSeniorBonusForFlight(flight.ageOfUser)) / 100;
-      totalPoints += flight.flightPoints;
-    });
-    entry.totalPoints = totalPoints;
-  });
+async function calcSeniorBonusForFlightResult(result) {
+  await Promise.all(
+    result.map(async (entry) => {
+      let totalPoints = 0;
+      await Promise.all(
+        entry.flights.map(async (flight) => {
+          flight.flightPoints = Math.round(
+            (flight.flightPoints *
+              (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
+              100
+          );
+
+          totalPoints += flight.flightPoints;
+        })
+      );
+      entry.totalPoints = totalPoints;
+    })
+  );
 }
 
 module.exports = service;

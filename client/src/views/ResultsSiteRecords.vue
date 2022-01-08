@@ -38,7 +38,7 @@ const results = ref(null);
 setWindowName("Fluggebietsrekorde");
 
 try {
-  const res = await ApiService.getResults({}, "siteRecords");
+  const res = await ApiService.getResultsSiteRecords();
   if (res.status != 200) throw res.status.text;
   results.value = res.data;
 } catch (error) {

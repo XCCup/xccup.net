@@ -1,6 +1,6 @@
 describe("check admin page", () => {
   before(() => {
-    cy.seedFlightDb();
+    cy.seedDb();
   });
 
   beforeEach(() => {
@@ -72,6 +72,25 @@ describe("check admin page", () => {
       .find("table")
       .contains("td", userOfFlightToAccept)
       .should("not.exist");
+  });
+
+  it("test delete proposed flying site", () => {
+    const expectedName = "Nur ein Vorschlag";
+
+    cy.get("#adminSitesPanel").within(() => {
+      cy.get("table")
+        .contains("td", expectedName)
+        .parent()
+        .find("td")
+        .eq(9)
+        .find("button")
+        .click();
+    });
+
+    cy.clickButtonInModal("#modalSiteConfirm", "Löschen");
+
+    // Table will only be shown if there is at least one entry
+    cy.get("#adminFlightsPanel").find("table").should("not.exist");
   });
 
   it("test loaded news flights", () => {
