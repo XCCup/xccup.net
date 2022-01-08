@@ -42,6 +42,15 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   Club.associate = (models) => {
+    Club.hasMany(models.FlyingSite, {
+      as: "sites",
+      foreignKey: {
+        name: "clubId",
+      },
+    });
+  };
+
+  Club.associate = (models) => {
     Club.hasOne(models.Logo, {
       as: "logo",
       foreignKey: {

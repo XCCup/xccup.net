@@ -1,6 +1,7 @@
 import { ref, computed, readonly, watchEffect } from "vue";
 import ApiService from "@/services/ApiService";
 import { cloneDeep } from "lodash-es";
+import { adjustDateToLocal } from "../helper/utils";
 
 // Create a "prototype" of the user data expected by bindings in UserProfile.vue
 // This prevents null cases if the corresponding properties are none existent in API response
@@ -39,7 +40,7 @@ export default () => {
   );
   // Mutations
   const updateState = (data) => {
-    userData.value = { ...data, birthday: new Date(data.birthday) };
+    userData.value = { ...data, birthday: adjustDateToLocal(data.birthday) };
     modifiedUserData.value = cloneDeep(userData.value);
   };
   // Actions

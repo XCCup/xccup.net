@@ -3,6 +3,7 @@
     <h3>Kommandozentrale</h3>
   </div>
   <AdminFlights />
+  <AdminSites />
   <AdminNews />
 </template>
 

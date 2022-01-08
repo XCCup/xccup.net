@@ -533,7 +533,7 @@ function stripFlightFixesForTodayRanking(flightDbObjects) {
   const FIXES_PER_HOUR = 60;
   const flights = flightDbObjects.map((entry) => entry.toJSON());
   flights.forEach((entry) => {
-    const fixes = entry.fixes.geom.coordinates;
+    const fixes = entry.fixes.geom?.coordinates;
     entry.fixes = [];
 
     //Fixes are stored in db with an interval of 5s
@@ -654,8 +654,13 @@ async function createWhereStatement(
     };
   } else {
     whereStatement = {
-      airspaceViolation: false,
-      uncheckedGRecord: false,
+      [sequelize.Op.or]: [
+        { violationAccepted: true },
+        {
+          airspaceViolation: false,
+          uncheckedGRecord: false,
+        },
+      ],
     };
   }
   if (flightType) {

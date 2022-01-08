@@ -1,5 +1,6 @@
 <template>
   <!-- TODO: Put this in a dialog as well -->
+  <!-- TODO: Prevent short display of the heading before redirecting -->
   <div class="container mb-3">
     <h3>Nutzerprofilaktivierung</h3>
     <div v-if="state == 'incompleted'">
@@ -9,6 +10,7 @@
       <div>Es gab leider ein Problem mit der Aktivierung 😥</div>
       <div>
         Probiere es erneut oder wende Dich bitte an einen
+        <!-- TODO: Add email link -->
         <router-link to="Imprint">Administrator</router-link>
       </div>
     </div>

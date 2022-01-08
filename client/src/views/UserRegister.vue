@@ -64,6 +64,7 @@
             />
           </div>
           <div class="col-md-6">
+            <!-- TODO: Replace with three seperate selects -->
             <BaseDatePicker
               id="birthday"
               v-model="userData.birthday"

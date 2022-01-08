@@ -15,6 +15,8 @@
       :title="tooltipValue"
       :data-cy="dataCy"
       @input="$emit('update:modelValue', $event.target.value)"
+      @focus="isFocused = true"
+      @blur="isFocused = false"
     />
     <label v-if="label && !showLabelOnTop">{{ label }}</label>
     <!-- <p v-if="isInvalid">{{ validationText }}</p> -->
@@ -22,9 +24,11 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { isEmail, isStrongPassword } from "../helper/utils";
 defineEmits(["update:modelValue"]);
+
+const isFocused = ref(false);
 
 const props = defineProps({
   showLabelOnTop: {
@@ -94,7 +98,7 @@ const isInvalid = computed(() => {
 const formClass = computed(() => {
   let classValue = "form-control";
 
-  if (isInvalid.value) classValue += " is-invalid";
+  if (isInvalid.value && isFocused.value) classValue += " is-invalid";
 
   return classValue;
 });

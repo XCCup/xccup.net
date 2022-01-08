@@ -9,7 +9,7 @@ describe("check flights all page", () => {
 
   it("test no filter no sorting", () => {
     // By default flights will be sorted by takeoff date. This date will always change for 10 flights (5 flights to today, 5 flights to yesterday)
-    const expectedLength = 40;
+    const expectedLength = 41;
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
     cy.get("table")
@@ -22,6 +22,24 @@ describe("check flights all page", () => {
       .and("include.text", "Enzo 3")
       .and("include.text", "32 km")
       .and("include.text", "178 P");
+  });
+
+  it("test flights of previous year", () => {
+    const expectedLength = 1;
+
+    cy.visit(`${new Date().getFullYear() - 1}/fluege`);
+
+    cy.get("table").find("tr").its("length").should("eq", expectedLength);
+    cy.get("table")
+      .find("tr")
+      .first()
+      .should("include.text", "Leo Altenwerth")
+      .and("include.text", "1. Pfälzer DGFC")
+      .and("include.text", "Die Möwen")
+      .and("include.text", "Boppard")
+      .and("include.text", "Sky Apollo")
+      .and("include.text", "10 km")
+      .and("include.text", "65 P");
   });
 
   it("test filter", () => {
@@ -90,7 +108,7 @@ describe("check flights all page", () => {
 
   it("test sort on points ascending", () => {
     const expectedName = "Ramona Gislason";
-    const expectedLength = 40;
+    const expectedLength = 41;
 
     cy.get("th").contains("Punkte").click();
     cy.get("[data-cy=filter-icon]").should("be.visible");

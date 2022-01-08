@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg mb-3">
+  <div class="container-xl mb-3">
     <h3>Streckenmeldungen {{ route.params.year }}</h3>
     <!-- TODO: Add filter spinner when loading -->
 
@@ -34,5 +34,7 @@ const route = useRoute();
 
 const { fetchData, errorMessage } = useData(ApiService.getFlights);
 
-fetchData({ params: route.params.year, queries: route.query });
+const params = route.params.year ? { year: route.params.year } : undefined;
+
+fetchData({ params, queries: route.query });
 </script>

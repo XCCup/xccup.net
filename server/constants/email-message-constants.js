@@ -12,7 +12,7 @@ module.exports.REGISTRATION_TITLE = "Deine Anmeldung bei XCCup.net";
 module.exports.REGISTRATION_TEXT = (firstName, activateLink) =>
   `Hallo ${firstName}! Willkommen beim XCCup.
 
-Um dein Konto final zu aktivieren klicke bitte auf den folgenden Link:
+Um dein Konto zu aktivieren klicke bitte auf den folgenden Link:
 ${activateLink}
 
 Wir wünschen Dir allzeit gute Flüge und viel Spaß.

@@ -28,7 +28,10 @@ const { fetchOne, flight } = useFlight();
 try {
   await fetchOne(route.params.flightId);
   setWindowName(
-    "Flug von " + flight.value.user.firstName + " " + flight.value.user.lastName
+    "Flug von " +
+      flight.value.user?.firstName +
+      " " +
+      flight.value.user?.lastName
   );
 } catch (error) {
   if (error.response?.status == 404) {

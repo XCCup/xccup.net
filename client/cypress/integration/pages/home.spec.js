@@ -11,7 +11,7 @@ describe("check landing page", () => {
     cy.get("h1").should("have.text", `XCCup ${new Date().getFullYear()}`);
 
     cy.get("#infoboxContent").should("include.text", "20 Piloten");
-    cy.get("#infoboxContent").should("include.text", "44 Vereine");
+    cy.get("#infoboxContent").should("include.text", "36 Vereine");
     cy.get("#infoboxContent").should("include.text", "3 Teams");
     cy.get("#infoboxContent").should("include.text", "1177 km");
   });
@@ -116,7 +116,7 @@ describe("check landing page", () => {
     cy.get("#clubRankingTable")
       .find("tr")
       .last()
-      .should("have.text", "3Drachenflieger-Club Trier504 P430 km");
+      .should("have.text", "3Drachenflieger-Club Trier504 P176 km");
   });
 
   it("test team ranking", () => {
@@ -128,7 +128,7 @@ describe("check landing page", () => {
     cy.get("#teamRankingTable")
       .find("tr")
       .last()
-      .should("have.text", "3Die Möwen503 P249 km");
+      .should("have.text", "3Die Möwen503 P150 km");
   });
 
   it("test overall ranking", () => {

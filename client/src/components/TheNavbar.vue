@@ -183,6 +183,11 @@
                 >
               </li>
               <li>
+                <router-link :to="{ name: 'FlyingSites' }" class="dropdown-item"
+                  >Fluggebietsübersicht</router-link
+                >
+              </li>
+              <li>
                 <router-link :to="{ name: 'News' }" class="dropdown-item"
                   >News</router-link
                 >

@@ -68,8 +68,14 @@ const clubService = {
     });
   },
 
-  count: async () => {
-    return Club.count();
+  countActive: async () => {
+    return Club.count({
+      where: {
+        participantInSeasons: {
+          [Op.contains]: [getCurrentYear()],
+        },
+      },
+    });
   },
 
   create: async (club) => {

@@ -25,7 +25,7 @@ const clientUrl = process.env.CLIENT_URL;
 const userActivateLink = process.env.CLIENT_USER_ACTIVATE_PATH;
 const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST_PATH;
 const confirmMailChangeLink = process.env.CLIENT_USER_EMAIL_CHANGE_PATH;
-const flightLink = process.env.CLIENT_FLIGHT;
+const flightLink = process.env.CLIENT_FLIGHT_PATH;
 
 const service = {
   sendMailSingle: async (fromUserId, toUserId, content) => {
@@ -38,9 +38,9 @@ const service = {
 
     const isXccupOffical = fromUserId.role != "Keine";
 
-    const toMail = fromUser.email;
-    const fromMail = toUser.email;
-    const fromName = `${toUser.firstName} ${toUser.lastName}`;
+    const toMail = toUser.email;
+    const fromMail = fromUser.email;
+    const fromName = `${fromUser.firstName} ${fromUser.lastName}`;
 
     if (!isXccupOffical) {
       content.text = MAIL_MESSAGE_PREFIX(fromName) + content.text;

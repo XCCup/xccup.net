@@ -27,6 +27,7 @@
 - [x] tooltips for icons
 - [x] dark mode
 - [ ] Sweetalert dark mode
+- [ ] Allow to change to previous years
 
 ### Home
 

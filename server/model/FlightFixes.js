@@ -51,6 +51,8 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   FlightFixes.mergeData = function (fixes) {
+    if (!fixes) return [];
+
     const coordinates = fixes.geom.coordinates;
     const timeAndHeights = fixes.timeAndHeights;
     const stats = fixes.stats;

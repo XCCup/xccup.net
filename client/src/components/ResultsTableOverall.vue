@@ -44,17 +44,17 @@
 
             <td>
               <strong>{{
-                flight.user.firstName + " " + flight.user.lastName
+                flight.user?.firstName + " " + flight.user?.lastName
               }}</strong>
             </td>
             <td scope="col" class="hide-on-md">
-              {{ flight.club.name }}
+              {{ flight.club?.name }}
             </td>
             <td scope="col" class="hide-on-sm">
               {{ flight.team?.name }}
             </td>
             <td class="hide-on-sm">
-              {{ flight.takeoff.name }}
+              {{ flight.takeoff?.name }}
               <i v-if="flight.hikeAndFly > 0" class="bi bi-signpost-2"></i>
             </td>
 
@@ -84,6 +84,7 @@
 </template>
 
 <script setup>
+// TODO: Add more badges like H&F for photos / long flight reports?
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
