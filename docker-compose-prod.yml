@@ -57,11 +57,11 @@ services:
     env_file: ./server/.env
     labels:
       traefik.enable: true
-      traefik.http.routers.xccup-pg-admin.rule: "Host(`v2202201165351174766.goodsrv.de`)"
+      traefik.http.routers.xccup-pg-admin.rule: "Host(`v2202201165351174766.goodsrv.de`) && PathPrefix(`/pgadmin`)"
       traefik.http.routers.xccup-pg-admin.entrypoints: websecure
       traefik.http.routers.xccup-pg-admin.tls.certresolver: myresolver
       traefik.port: 65080
-      traefik.http.routers.xccup-pg-admin.priority: 100
+      traefik.http.routers.xccup-pg-admin.priority: 200
       traefik.docker.network: traefik
 
   traefik:
