@@ -465,7 +465,7 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
         clubName: entry.club.name,
         clubId: entry.club.id,
         members: [memberEntry],
-        totalDistance: memberEntry.totalPoints,
+        totalDistance: memberEntry.totalDistance,
         totalPoints: memberEntry.totalPoints,
       });
     }
@@ -514,7 +514,7 @@ function aggreateOverTeamAndCalcTotals(resultOverUser) {
         teamName: entry.team.name,
         teamId: entry.team.id,
         members: [memberEntry],
-        totalDistance: memberEntry.totalPoints,
+        totalDistance: memberEntry.totalDistance,
         totalPoints: memberEntry.totalPoints,
       });
     }
