@@ -35,6 +35,7 @@
               role="tab"
               aria-controls="nav-profile"
               aria-selected="true"
+              data-cy="profile-tab"
             >
               Profil
             </button>
@@ -73,6 +74,7 @@
               role="tab"
               aria-controls="nav-my-flights"
               aria-selected="false"
+              data-cy="my-flights-tab"
             >
               Meine Flüge
             </button>
@@ -100,7 +102,7 @@
             id="nav-change-pw"
             class="tab-pane fade"
             role="tabpanel"
-            aria-labelledby="nav-change-pw"
+            aria-labelledby="nav-change-pw-tab"
           >
             <UserProfileChangePassword />
             <hr class="my-4" />
