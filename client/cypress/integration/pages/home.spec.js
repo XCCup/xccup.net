@@ -116,7 +116,7 @@ describe("check landing page", () => {
     cy.get("#clubRankingTable")
       .find("tr")
       .last()
-      .should("have.text", "3Drachenflieger-Club Trier504 P430 km");
+      .should("have.text", "3Drachenflieger-Club Trier504 P176 km");
   });
 
   it("test team ranking", () => {
@@ -128,7 +128,7 @@ describe("check landing page", () => {
     cy.get("#teamRankingTable")
       .find("tr")
       .last()
-      .should("have.text", "3Die Möwen503 P249 km");
+      .should("have.text", "3Die Möwen503 P150 km");
   });
 
   it("test overall ranking", () => {
