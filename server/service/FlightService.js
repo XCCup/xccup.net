@@ -654,8 +654,13 @@ async function createWhereStatement(
     };
   } else {
     whereStatement = {
-      airspaceViolation: false,
-      uncheckedGRecord: false,
+      [sequelize.Op.or]: [
+        { violationAccepted: true },
+        {
+          airspaceViolation: false,
+          uncheckedGRecord: false,
+        },
+      ],
     };
   }
   if (flightType) {
