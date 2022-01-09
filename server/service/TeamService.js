@@ -19,7 +19,11 @@ const service = {
     return teams;
   },
 
-  getAll: async ({ year = getCurrentYear(), includeStats } = {}) => {
+  getAll: async ({
+    year = getCurrentYear(),
+    includeMembers = true,
+    includeStats = false,
+  } = {}) => {
     const teams = await Team.findAll({
       where: {
         season: year,
@@ -27,14 +31,14 @@ const service = {
       raw: true,
     });
 
-    const members = await Promise.all(
-      teams.map((team) => retrieveMembers(team))
-    );
+    const members = includeMembers
+      ? await Promise.all(teams.map((team) => retrieveMembers(team)))
+      : undefined;
     const stats = includeStats
       ? await Promise.all(teams.map((team) => retrieveStats(team, year)))
       : undefined;
     for (let i = 0; i < teams.length; i++) {
-      teams[i].members = members[i];
+      if (includeMembers) teams[i].members = members[i];
       if (includeStats) teams[i].stats = stats[i];
     }
 
