@@ -96,9 +96,19 @@ function findClub(value) {
   return clubs.find((c) => c.name == name || c.shortName == name)?.id;
 }
 
+function findTeam(pilotId, flightDate) {
+  const teams = require("../import/teamsImport.json");
+
+  const year = new Date(flightDate).getFullYear();
+
+  return teams.find((t) => t.season == year && t.members.includes(pilotId));
+
+  // return clubs.find((c) => c.name == name || c.shortName == name)?.id;
+}
+
 // const missingTakeoff = {};
 
-function findSite(value, takeoff) {
+function findSite(value, takeoff, flightId) {
   const sites = require("../test/testdatasets/flyingSites.json");
 
   takeoff = takeoff.trim();
@@ -108,7 +118,7 @@ function findSite(value, takeoff) {
     const newLocal_1 = takeoff.toUpperCase().includes(s.name.toUpperCase());
     const newLocal_2 =
       takeoff && s.name.toUpperCase().includes(takeoff.toUpperCase());
-    const newLocal_3 = takeoff && s.shortName.toUpperCase().includes(takeoff);
+    const newLocal_3 = takeoff && s.shortName?.toUpperCase().includes(takeoff);
     const newLocal_4 = takeoff.toUpperCase().includes(s.shortName);
 
     // if (id == 34972)
@@ -139,6 +149,9 @@ function findSite(value, takeoff) {
     case "Istenberg":
       found = sites.find((s) => s.shortName == "BRUCHHAUSER_STEINE_S");
       break;
+    case "Bruchhauser Steine Landeplatz":
+      found = sites.find((s) => s.shortName == "BRUCHHAUSER_STEINE_SW");
+      break;
     case "Neef":
       found = sites.find((s) => s.shortName == "PETERSBERG");
       break;
@@ -165,7 +178,7 @@ function findSite(value, takeoff) {
       found = sites.find((s) => s.shortName == "WALLERTHEIM");
       break;
     case "Wertheim am Main - DE[~3,19km]":
-      found = sites.find((s) => s.shortName == "URPHAR_NW");
+      found = sites.find((s) => s.shortName == "URPHAR_START_NO");
       break;
     case "Nannhausen - DE[~0,54km]":
     case "Nannhausen Schlepp":
@@ -219,6 +232,7 @@ function findSite(value, takeoff) {
       found = sites.find((s) => s.shortName == "ZELLHAUSEN");
       break;
     case "Saalhausen SSO-Start":
+    case "Rinsenberg":
       found = sites.find((s) => s.shortName == "DOLBERG");
       break;
     case "Hasloch SO":
@@ -248,6 +262,7 @@ function findSite(value, takeoff) {
       found = sites.find((s) => s.shortName == "WUERZBERG");
       break;
     case "Oberacker Winde":
+    case "Kraichtal Winde":
       found = sites.find((s) => s.shortName == "OBERACKER");
       break;
     case "Asslar":
@@ -289,7 +304,14 @@ function findSite(value, takeoff) {
 
   if (found) return found;
 
-  // console.log("No site found for id: " + value + " Name: " + takeoff);
+  console.log(
+    "No site found for id: " +
+      value +
+      " Name: " +
+      takeoff +
+      " Flug: " +
+      flightId
+  );
   // if (missingTakeoff[takeoff])
   //   missingTakeoff[takeoff] = missingTakeoff[takeoff] + 1;
   // missingTakeoff[takeoff] = 1;
@@ -513,7 +535,8 @@ const convertedFlights = flights.map((flight) => {
   const isWeekend = isNoWorkday(flight.Datum);
 
   const birthYear = new Date(Date.parse(user.birthday)).getFullYear();
-  const ageOfUser = new Date(flight.Datum).getFullYear() - birthYear;
+  const age = new Date(flight.Datum).getFullYear() - birthYear;
+  const ageOfUser = age ? age : 0;
 
   return {
     id: uuidv4(),
@@ -522,6 +545,7 @@ const convertedFlights = flights.map((flight) => {
     clubId: findClub(flight.VereinID),
     siteId,
     userId,
+    teamId: findTeam(userId, flight.Datum)?.id,
     landing: flight.Landeplatz,
     report: createReport(flight.Flugbericht, flight.FlugID, flight.FlugStatus),
     airspaceComment: null,
