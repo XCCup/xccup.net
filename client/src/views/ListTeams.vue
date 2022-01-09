@@ -1,18 +1,20 @@
 <template>
   <div id="userListView" class="container">
     <h3>Teams {{ route.params.year }}</h3>
-    <p v-if="route.params.year == new Date().getFullYear()">
-      Hinweis: Wenn Ihr die Zusammensetzung eures Teams ändern möchtet, tretet
-      bitte direkt in Kontakt mit einem Admin.
-    </p>
-    <div class="row"></div>
-    <button
-      type="button"
-      class="btn btn-outline-primary btn-sm mb-3"
-      @click="onNewTeam"
-    >
-      Melde ein neues Team
-    </button>
+    <div v-if="loggedIn">
+      <p>
+        Hinweis: Wenn Ihr die Zusammensetzung eures Teams ändern möchtet, tretet
+        bitte direkt in Kontakt mit einem Admin.
+      </p>
+      <div class="row"></div>
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm mb-3"
+        @click="onNewTeam"
+      >
+        Melde ein neues Team
+      </button>
+    </div>
     <BaseError :error-message="errorMessage" />
     <div v-for="team in teams" :key="team.id" class="card mb-3">
       <TeamCard :team="team" />
@@ -28,7 +30,9 @@ import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import BaseError from "../components/BaseError.vue";
 import ApiService from "../services/ApiService";
+import useUser from "@/composables/useUser";
 
+const { loggedIn } = useUser();
 const route = useRoute();
 
 const errorMessage = ref("");
