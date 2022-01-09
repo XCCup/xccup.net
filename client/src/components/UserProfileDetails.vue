@@ -123,7 +123,7 @@
         E-Mail bei neuem Kommentar
         <!-- TODO: Add popup description -->
 
-        <i class="bi bi-info-circle"></i>
+        <!-- <i class="bi bi-info-circle"></i> -->
       </label>
     </div>
     <div class="form-check">
@@ -137,7 +137,7 @@
       <label class="form-check-label" for="flexCheckDefault">
         Newsletter abonnieren
         <!-- TODO: Add popup description -->
-        <i class="bi bi-info-circle"></i>
+        <!-- <i class="bi bi-info-circle"></i> -->
       </label>
     </div>
 

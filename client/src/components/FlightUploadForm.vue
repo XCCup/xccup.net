@@ -63,6 +63,7 @@
         <div class="form-check mb-3">
           <input
             id="airspaceCommentCheckbox"
+            v-model="leaveAirspaceComment"
             class="form-check-input"
             type="checkbox"
             data-bs-toggle="collapse"
@@ -130,9 +131,11 @@
             Organisator, dem Wettbewerbsleiter sowie deren Helfer wegen
             einfacher Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des
             Häckchens erkenne ich die
-            <!-- TODO: Add links -->
-            <a href="#">Ausschreibung</a> und
-            <a href="#">Datenschutzbestimmungen</a>
+            <a href="#" @click.prevent="compRulesModal.show()">Ausschreibung</a>
+            und
+            <a href="#" @click.prevent="privacyPolicyModal.show()"
+              >Datenschutzbestimmungen
+            </a>
             an.
           </label>
         </div>
@@ -154,6 +157,12 @@
       </div>
     </form>
   </div>
+  <BaseSlotModal modal-id="privacy-policy-modal" :scrollable="true">
+    <PrivacyPolicy />
+  </BaseSlotModal>
+  <BaseSlotModal modal-id="comp-rules-modal" :scrollable="true">
+    <CompRules />
+  </BaseSlotModal>
 </template>
 
 <script setup>
@@ -163,6 +172,7 @@ import { ref, computed, onMounted } from "vue";
 import { Collapse } from "bootstrap";
 import Constants from "@/common/Constants";
 import { asyncForEach, setWindowName } from "../helper/utils";
+import { Modal } from "bootstrap";
 
 const router = useRouter();
 
@@ -176,6 +186,16 @@ onMounted(() => {
     detailsCollapse = new Collapse(collapse.value, {
       toggle: false,
     });
+});
+
+// Modal
+const privacyPolicyModal = ref(null);
+const compRulesModal = ref(null);
+onMounted(async () => {
+  privacyPolicyModal.value = new Modal(
+    document.getElementById("privacy-policy-modal")
+  );
+  compRulesModal.value = new Modal(document.getElementById("comp-rules-modal"));
 });
 
 // Fetch users gliders
@@ -197,6 +217,7 @@ const fetchGliders = async () => {
 
 await fetchGliders();
 const rulesAccepted = ref(false);
+const leaveAirspaceComment = ref(false);
 const onlyLogbook = ref(false);
 const hikeAndFly = ref(false);
 const airspaceComment = ref("");
@@ -205,7 +226,7 @@ const flightId = ref(null);
 const externalId = ref(null);
 const takeoff = ref("");
 const landing = ref("");
-const flightReport = ref(" ");
+const flightReport = ref("");
 const showSpinner = ref(false);
 
 const errorMessage = ref(null);
@@ -291,7 +312,7 @@ const sendFlightDetails = async () => {
       report: flightReport.value,
       hikeAndFly: hikeAndFly.value,
       onlyLogbook: onlyLogbook.value,
-      airspaceComment: airspaceComment.value,
+      airspaceComment: leaveAirspaceComment.value ? airspaceComment.value : "",
     });
     if (response.status != 200) throw response.statusText;
 
