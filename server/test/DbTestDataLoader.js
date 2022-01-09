@@ -53,6 +53,7 @@ const dbTestData = {
     ];
     if (process.env.SERVER_IMPORT_ORIGINAL_DATA === "true") {
       relations.push([User, require("../import/usersImport.json")]);
+      relations.push([Team, require("../import/teamsImport.json")]);
       relations.push([Flight, require("../import/flightsImport.json")]);
     }
 

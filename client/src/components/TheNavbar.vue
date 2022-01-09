@@ -175,13 +175,13 @@
                   >Registrierte Piloten</router-link
                 >
               </li>
-              <li>
+              <!-- <li>
                 <router-link
                   :to="{ name: 'Teams', params: { year: currentYear } }"
                   class="dropdown-item"
                   >Teams</router-link
                 >
-              </li>
+              </li> -->
               <li>
                 <router-link :to="{ name: 'FlyingSites' }" class="dropdown-item"
                   >Fluggebietsübersicht</router-link

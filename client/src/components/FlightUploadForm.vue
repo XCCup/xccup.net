@@ -176,7 +176,7 @@ import { Modal } from "bootstrap";
 
 const router = useRouter();
 
-setWindowName("Flugh hochladen");
+setWindowName("Flug hochladen");
 
 const collapse = ref(null);
 let detailsCollapse = null;
