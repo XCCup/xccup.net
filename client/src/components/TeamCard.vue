@@ -36,7 +36,6 @@
       <div>{{ team.stats.flights }} Flüge</div>
       <div>{{ Math.round(team.stats.distance) }} Kilometer</div>
       <div>{{ team.stats.points }} Punkte</div>
-      <div>Aktiv seit {{ team.participantInSeasons[0] }}</div>
     </div>
   </div>
 </template>
