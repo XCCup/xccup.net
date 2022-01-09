@@ -156,6 +156,11 @@ export const Routes = [
     component: () => import("../views/ListSponsors.vue"),
   },
   {
+    path: "/ausschreibung",
+    name: "Rules",
+    component: () => import("../views/ListRules.vue"),
+  },
+  {
     path: "/vereine",
     name: "Clubs",
     component: () => import("../views/ListClubs.vue"),
