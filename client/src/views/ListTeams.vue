@@ -2,10 +2,6 @@
   <div id="userListView" class="container">
     <h3>Teams {{ route.params.year }}</h3>
     <div v-if="loggedIn">
-      <p>
-        Hinweis: Wenn Ihr die Zusammensetzung eures Teams ändern möchtet, tretet
-        bitte direkt in Kontakt mit einem Admin.
-      </p>
       <div class="row"></div>
       <button
         type="button"
