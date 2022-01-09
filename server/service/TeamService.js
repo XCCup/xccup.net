@@ -8,12 +8,10 @@ const { TEAM_SIZE } = require("../config/result-determination-config");
 const logger = require("../config/logger");
 
 const service = {
-  getAllNames: async (year) => {
+  getAllNames: async (year = getCurrentYear()) => {
     const teams = await Team.findAll({
       where: {
-        participantInSeasons: {
-          [Op.contains]: year ? [year] : [getCurrentYear()],
-        },
+        season: year,
       },
       attributes: ["id", "name"],
       order: [["name", "asc"]],
@@ -24,9 +22,7 @@ const service = {
   getAll: async ({ year = getCurrentYear(), includeStats } = {}) => {
     const teams = await Team.findAll({
       where: {
-        participantInSeasons: {
-          [Op.contains]: [year],
-        },
+        season: year,
       },
       raw: true,
     });
@@ -72,9 +68,7 @@ const service = {
   countActive: async () => {
     return Team.count({
       where: {
-        participantInSeasons: {
-          [Op.contains]: [getCurrentYear()],
-        },
+        season: getCurrentYear(),
       },
     });
   },
@@ -82,7 +76,7 @@ const service = {
   create: async (teamName, memberIds) => {
     const team = {
       name: teamName,
-      participantInSeasons: [getCurrentYear()],
+      season: getCurrentYear(),
     };
     const newTeam = await Team.create(team);
     const members = await User.findAll({
