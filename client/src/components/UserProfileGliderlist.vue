@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!hideList" data-cy="user-profile-glider-list">
+  <div v-if="!hideList" class="mb-3" data-cy="user-profile-glider-list">
     <h5>Standard Gerät wählen</h5>
     <div
       v-for="glider in listOfGliders"
@@ -29,7 +29,7 @@
   </div>
   <button
     type="button"
-    class="btn btn-outline-primary my-2"
+    class="btn btn-outline-primary"
     data-cy="add-glider-button"
     @click="onAdd"
   >
