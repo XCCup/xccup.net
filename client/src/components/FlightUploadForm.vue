@@ -166,7 +166,7 @@ import { asyncForEach, setWindowName } from "../helper/utils";
 
 const router = useRouter();
 
-setWindowName("Flugh hochladen");
+setWindowName("Flug hochladen");
 
 const collapse = ref(null);
 let detailsCollapse = null;
