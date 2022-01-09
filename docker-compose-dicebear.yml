@@ -9,7 +9,7 @@ services:
       container_name: xccup-dicebear
       restart: always
 
-      abels:
+      labels:
         traefik.enable: true
         traefik.http.routers.xccup-dicebear.rule: "Host(`next.xccup.net`) && PathPrefix(`/dicebear`)"
         traefik.http.middlewares.dicebearpathstrip.stripprefix.prefixes: "/dicebear"
