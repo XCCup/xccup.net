@@ -17,7 +17,7 @@
       data-cy="email-change-btn"
       @click="onSave"
     >
-      Email ändern
+      E-mail ändern
       <BaseSpinner v-if="showSpinner" />
     </button>
     <BaseError :error-message="errorMessage" class="my-2" />
