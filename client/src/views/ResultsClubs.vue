@@ -22,7 +22,7 @@ const remark = ref(null);
 setWindowName("Vereinswertung");
 
 try {
-  const res = await ApiService.getResultsClubs(route.params.year);
+  const res = await ApiService.getResultsClubs({ ...route.params });
   if (res.status != 200) throw res.status.text;
   results.value = res.data;
   // Not yet used

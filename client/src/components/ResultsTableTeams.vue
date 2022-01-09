@@ -21,7 +21,7 @@
             <td>{{ index + 1 }}</td>
 
             <td>
-              <strong>{{ team.teamName }}</strong>
+              <strong>{{ team.name }}</strong>
             </td>
             <td>
               <tr class="no-line-break">
