@@ -122,6 +122,7 @@ const service = {
         },
       },
       attributes: ["firstName", "lastName", "id"],
+      order: [["firstName", "asc"]],
     });
     return users;
   },
