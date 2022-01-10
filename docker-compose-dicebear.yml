@@ -1,5 +1,7 @@
 version: "3.8"
 
+# To use the dicebear image clone the repo https://github.com/dicebear/api into the root folder of xccup.net
+
 services:
   dicebear:
       build:
