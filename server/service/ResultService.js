@@ -115,7 +115,7 @@ const service = {
           team.members.map(async (member) => {
             const where = createDefaultWhereForFlight(seasonDetail);
             where.userId = member.id;
-            const topFlightsOfMember = (
+            member.flights = (
               await queryDb({
                 where,
                 limit: NUMBER_OF_SCORED_FLIGHTS,
@@ -123,34 +123,18 @@ const service = {
                 useIncludes: ["site"],
               })
             ).map((e) => e.toJSON());
-
-            member.flights = topFlightsOfMember;
-            member.totalPoints = topFlightsOfMember.reduce(
-              (acc, flight) => acc + flight.flightPoints,
-              0
-            );
-            member.totalDistance = topFlightsOfMember.reduce(
-              (acc, flight) => acc + flight.flightDistance,
-              0
-            );
           })
         );
-        team.totalPoints = team.members.reduce(
-          (acc, member) => acc + member.totalPoints,
-          0
-        );
-        team.totalDistance = team.members.reduce(
-          (acc, member) => acc + member.totalDistance,
-          0
-        );
+
+        markFlightsToDismiss(team);
+
+        team.members.forEach((member) => {
+          calcTotalsOfMember(member);
+        });
+        calcTotalsOverMembers(team);
         sortDescendingByTotalPoints(team.members);
       })
     );
-
-    // TODO: Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
-    // Sollen wir wirklich an diesen Streichern festhalten? Irgendwie finde ich das doof. Hatte das schonmal bei Wolf hinterfragt, da hieß "das man die Motivation hat auch schlechte Leute im Team aufzunehmen".
-    // Ich finde allerdings das jeder Flug zählen sollte.
-    // dissmissWorstFlights(resultOverTeam);
 
     sortDescendingByTotalPoints(teamsOfSeason);
 
@@ -233,6 +217,48 @@ const service = {
     return mergeRecordsByTakeoffs(records);
   },
 };
+
+function markFlightsToDismiss(team) {
+  let allFlights = [];
+  team.members.forEach((member) => {
+    allFlights = allFlights.concat(member.flights);
+  });
+  allFlights.sort((a, b) => b.flightPoints - a.flightPoints);
+  for (
+    let i = TEAM_SIZE * NUMBER_OF_SCORED_FLIGHTS - TEAM_DISMISSES;
+    i < allFlights.length;
+    i++
+  ) {
+    team.members.forEach((member) => {
+      const found = member.flights.find((f) => f.id == allFlights[i].id);
+      if (found) {
+        found.isDismissed = true;
+      }
+    });
+  }
+}
+
+function calcTotalsOverMembers(team) {
+  team.totalPoints = team.members.reduce(
+    (acc, member) => acc + member.totalPoints,
+    0
+  );
+  team.totalDistance = team.members.reduce(
+    (acc, member) => acc + member.totalDistance,
+    0
+  );
+}
+
+function calcTotalsOfMember(member) {
+  member.totalPoints = member.flights.reduce((acc, flight) => {
+    if (flight.isDismissed) return acc;
+    return acc + flight.flightPoints;
+  }, 0);
+  member.totalDistance = member.flights.reduce((acc, flight) => {
+    if (flight.isDismissed) return acc;
+    return acc + flight.flightDistance;
+  }, 0);
+}
 
 function addConstantInformationToResult(result, constants, limit) {
   return {
@@ -514,25 +540,6 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
   });
   return result;
 }
-
-// function dissmissWorstFlights(resultOverTeam) {
-//   resultOverTeam.forEach((team) => {
-//     let flights = [];
-//     team.members.forEach((member) => {
-//       flights = flights.concat(member.flights);
-//     });
-//     const numberOfFlightsToDismiss =
-//       flights.length - NUMBER_OF_SCORED_FLIGHTS * TEAM_SIZE + TEAM_DISMISSES;
-//     if (numberOfFlightsToDismiss > 0) {
-//       logger.warn("DISMISS");
-//       flights.sort((a, b) => b.flightPoints - a.flightPoints);
-//       flights.forEach((e) => logger.debug(e.flightPoints));
-//       const worstFlights = flights.splice(numberOfFlightsToDismiss * -1);
-//       worstFlights.forEach((e) => logger.debug(e.flightPoints));
-//       //TODO Remove finally flights from result object
-//     }
-//   });
-// }
 
 function aggreateFlightsOverUser(resultQuery) {
   const result = [];
