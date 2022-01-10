@@ -76,6 +76,8 @@ Cypress.Commands.add("login", (email, password) => {
   cy.get("input#password").type(password);
 
   cy.get("button").contains("Anmelden").click();
+  // Wait will landing page was successfully loaded; Prevent to fast transition to another after login
+  cy.get("h1").should("includes.text", "XCCup");
 });
 
 /**
