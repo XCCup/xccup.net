@@ -174,7 +174,7 @@ export const Routes = [
   {
     path: "/teammeldung",
     name: "TeamSubmit",
-    meta: { toTop: true, smoothScroll: true },
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import("../views/TeamSubmit.vue"),
   },
   {
