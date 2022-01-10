@@ -194,6 +194,24 @@
               </li>
             </ul>
           </li>
+          <li v-if="loggedIn" id="navbarForms" class="nav-item dropdown">
+            <a
+              id="navbarDropdown"
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              >Formulare</a
+            >
+            <ul class="dropdown-menu">
+              <li>
+                <router-link :to="{ name: 'TeamSubmit' }" class="dropdown-item"
+                  >Teammeldung</router-link
+                >
+              </li>
+            </ul>
+          </li>
+
           <li id="navbarPrivacy" class="nav-item dropdown">
             <router-link :to="{ name: 'Privacy' }" class="nav-link active"
               >Datenschutz</router-link
