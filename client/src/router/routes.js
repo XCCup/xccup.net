@@ -156,6 +156,11 @@ export const Routes = [
     component: () => import("../views/ListSponsors.vue"),
   },
   {
+    path: "/ausschreibung",
+    name: "Rules",
+    component: () => import("../views/ListRules.vue"),
+  },
+  {
     path: "/vereine",
     name: "Clubs",
     component: () => import("../views/ListClubs.vue"),
@@ -172,11 +177,10 @@ export const Routes = [
     component: () => import("../views/ListUsers.vue"),
   },
   {
-    path: "/:year/teams",
-    name: "Teams",
-    beforeEnter: validateRouteParamYear,
-    meta: { toTop: true, smoothScroll: true },
-    component: () => import("../views/ListTeams.vue"),
+    path: "/teammeldung",
+    name: "TeamSubmit",
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
+    component: () => import("../views/TeamSubmit.vue"),
   },
   {
     path: "/fluggebiete",

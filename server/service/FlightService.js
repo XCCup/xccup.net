@@ -22,9 +22,9 @@ const { hasAirspaceViolation } = require("./AirspaceService");
 const { sendAirspaceViolationMail } = require("./MailService");
 
 const { isNoWorkday } = require("../helper/HolidayCalculator");
-const { sleep } = require("../helper/Utils");
+const { sleep, findKeyByValue } = require("../helper/Utils");
 
-const { COUNTRY } = require("../constants/user-constants");
+const { COUNTRY, STATE: USER_STATE } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
 
 const logger = require("../config/logger");
@@ -216,6 +216,14 @@ const flightService = {
     return Flight.count({
       where: {
         userId,
+        [sequelize.Op.not]: { flightStatus: STATE.IN_PROCESS },
+        [sequelize.Op.or]: [
+          { violationAccepted: true },
+          {
+            airspaceViolation: false,
+            uncheckedGRecord: false,
+          },
+        ],
       },
     });
   },
@@ -627,8 +635,8 @@ async function addUserData(flight) {
   flight.clubId = user.clubId;
   flight.homeStateOfUser =
     user.address.country == COUNTRY.DEU
-      ? user.address.state
-      : user.address.country;
+      ? findKeyByValue(USER_STATE, user.address.state)
+      : findKeyByValue(COUNTRY, user.address.country);
   flight.ageOfUser = user.getAge();
 }
 

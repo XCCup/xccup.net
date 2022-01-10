@@ -5,6 +5,7 @@ const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
 
 const seasonService = require("./SeasonService");
+const teamService = require("./TeamService");
 const sequelize = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
@@ -22,8 +23,6 @@ const {
   REMARKS_SENIOR,
   REMARKS_TEAM,
 } = require("../constants/result-remarks-constants");
-
-const logger = require("../config/logger");
 
 const cacheNonNewcomer = [];
 
@@ -106,19 +105,41 @@ const service = {
   getTeam: async (year, region, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const where = createDefaultWhereForFlight(seasonDetail);
-    const resultQuery = await queryDb({ where, region });
+    const teamsOfSeason = await teamService.getAll({
+      year,
+    });
 
-    const resultOverUser = aggreateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(resultOverUser, NUMBER_OF_SCORED_FLIGHTS);
-    const resultOverTeam = aggreateOverTeamAndCalcTotals(resultOverUser);
-    dissmissWorstFlights(resultOverTeam);
-    sortDescendingByTotalPoints(resultOverTeam);
+    await Promise.all(
+      teamsOfSeason.map(async (team) => {
+        await Promise.all(
+          team.members.map(async (member) => {
+            const where = createDefaultWhereForFlight(seasonDetail);
+            where.userId = member.id;
+            member.flights = (
+              await queryDb({
+                where,
+                limit: NUMBER_OF_SCORED_FLIGHTS,
+                region,
+                useIncludes: ["site"],
+              })
+            ).map((e) => e.toJSON());
+          })
+        );
 
-    //TODO: Entferne die schlechtesten drei Flüge des Teams (ggfs. ü. DB konfigurieren)
+        markFlightsToDismiss(team);
+
+        team.members.forEach((member) => {
+          calcTotalsOfMember(member);
+        });
+        calcTotalsOverMembers(team);
+        sortDescendingByTotalPoints(team.members);
+      })
+    );
+
+    sortDescendingByTotalPoints(teamsOfSeason);
 
     return addConstantInformationToResult(
-      resultOverTeam,
+      teamsOfSeason,
       {
         NUMBER_OF_SCORED_FLIGHTS,
         TEAM_DISMISSES,
@@ -196,6 +217,48 @@ const service = {
     return mergeRecordsByTakeoffs(records);
   },
 };
+
+function markFlightsToDismiss(team) {
+  let allFlights = [];
+  team.members.forEach((member) => {
+    allFlights = allFlights.concat(member.flights);
+  });
+  allFlights.sort((a, b) => b.flightPoints - a.flightPoints);
+  for (
+    let i = TEAM_SIZE * NUMBER_OF_SCORED_FLIGHTS - TEAM_DISMISSES;
+    i < allFlights.length;
+    i++
+  ) {
+    team.members.forEach((member) => {
+      const found = member.flights.find((f) => f.id == allFlights[i].id);
+      if (found) {
+        found.isDismissed = true;
+      }
+    });
+  }
+}
+
+function calcTotalsOverMembers(team) {
+  team.totalPoints = team.members.reduce(
+    (acc, member) => acc + member.totalPoints,
+    0
+  );
+  team.totalDistance = team.members.reduce(
+    (acc, member) => acc + member.totalDistance,
+    0
+  );
+}
+
+function calcTotalsOfMember(member) {
+  member.totalPoints = member.flights.reduce((acc, flight) => {
+    if (flight.isDismissed) return acc;
+    return acc + flight.flightPoints;
+  }, 0);
+  member.totalDistance = member.flights.reduce((acc, flight) => {
+    if (flight.isDismissed) return acc;
+    return acc + flight.flightDistance;
+  }, 0);
+}
 
 function addConstantInformationToResult(result, constants, limit) {
   return {
@@ -311,15 +374,20 @@ async function queryDb({
   region,
   club,
   clubId,
+  useIncludes = ["user", "site", "club", "team"],
 }) {
-  const userInclude = createIncludeStatementUser(gender);
-  const siteInclude = createIncludeStatementSite(site, siteId, region);
-  const clubInclude = cretaIncludeStatementClub(club, clubId);
-  const teamInclude = createIncludeStatementTeam();
+  const include = [];
+  if (useIncludes.includes("user"))
+    include.push(createIncludeStatementUser(gender));
+  if (useIncludes.includes("site"))
+    include.push(createIncludeStatementSite(site, siteId, region));
+  if (useIncludes.includes("club"))
+    include.push(cretaIncludeStatementClub(club, clubId));
+  if (useIncludes.includes("team")) include.push(createIncludeStatementTeam());
 
   const queryObject = {
     where,
-    include: [userInclude, siteInclude, clubInclude, teamInclude],
+    include,
     attributes: [
       "id",
       "externalId",
@@ -464,55 +532,6 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
       result.push({
         clubName: entry.club.name,
         clubId: entry.club.id,
-        members: [memberEntry],
-        totalDistance: memberEntry.totalDistance,
-        totalPoints: memberEntry.totalPoints,
-      });
-    }
-  });
-  return result;
-}
-
-function dissmissWorstFlights(resultOverTeam) {
-  resultOverTeam.forEach((team) => {
-    let flights = [];
-    team.members.forEach((member) => {
-      flights = flights.concat(member.flights);
-    });
-    const numberOfFlightsToDismiss =
-      flights.length - NUMBER_OF_SCORED_FLIGHTS * TEAM_SIZE + TEAM_DISMISSES;
-    if (numberOfFlightsToDismiss > 0) {
-      logger.warn("DISMISS");
-      flights.sort((a, b) => b.flightPoints - a.flightPoints);
-      flights.forEach((e) => logger.debug(e.flightPoints));
-      const worstFlights = flights.splice(numberOfFlightsToDismiss * -1);
-      worstFlights.forEach((e) => logger.debug(e.flightPoints));
-      //TODO Remove finally flights from result object
-    }
-  });
-}
-
-function aggreateOverTeamAndCalcTotals(resultOverUser) {
-  const result = [];
-  resultOverUser.forEach((entry) => {
-    const found = result.find((e) => e.teamId == entry.team.id);
-    const memberEntry = {
-      id: entry.user.id,
-      firstName: entry.user.firstName,
-      lastName: entry.user.lastName,
-      flights: entry.flights,
-      totalDistance: entry.totalDistance,
-      totalPoints: entry.totalPoints,
-    };
-    if (found) {
-      found.members.push(memberEntry);
-      found.totalPoints += memberEntry.totalPoints;
-      found.totalDistance += memberEntry.totalDistance;
-    } else if (entry.team.name) {
-      //Prevention for users with no team association
-      result.push({
-        teamName: entry.team.name,
-        teamId: entry.team.id,
         members: [memberEntry],
         totalDistance: memberEntry.totalDistance,
         totalPoints: memberEntry.totalPoints,

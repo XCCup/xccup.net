@@ -29,10 +29,11 @@ test("Check if stats are correct for a flight with a fixes resolution of 10s", (
   const expectMaxHeightBaro = 2278;
   const expectMinHeightGps = 323;
   const expectMaxHeightGps = 2355;
-  const expectMaxSink = -3.8;
-  const expectMaxClimb = 3.6;
+
+  const expectMaxSink = -3.9;
+  const expectMaxClimb = 3.5;
   const expectMaxSpeed = 60.29;
-  const expectFixClimb = 1.9;
+  const expectFixClimb = 1.6;
   const expectFixSpeed = 23.03;
 
   // Values for TIME_FRAME = 30
@@ -126,8 +127,8 @@ test("Check if stats are correct for a flight with a fixes resolution of 1s and 
   const expectMaxHeightBaro = 1939;
   const expectMinHeightGps = 97;
   const expectMaxHeightGps = 2011;
-  const expectMaxSink = -8.4;
-  const expectMaxClimb = 9.4;
+  const expectMaxSink = -3.5;
+  const expectMaxClimb = 3.8;
   const expectMaxSpeed = 60.46;
   const expectFixClimb = -0.2;
   const expectFixSpeed = 14.07;

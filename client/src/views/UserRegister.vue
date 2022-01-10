@@ -310,7 +310,9 @@ try {
   if (res.status != 200) throw res.statusText;
   listOfClubs.value = res.data;
 } catch (error) {
-  // TODO: Handle error
+  router.push({
+    name: "NetworkError",
+  });
   console.log(error);
 }
 

@@ -1,6 +1,10 @@
 <template>
   <!-- TODO: Add warning when leaving without saving -->
-  <div id="flightEdit" class="container-md">
+  <div
+    v-if="modifiedFlightData.externalId"
+    id="flightEdit"
+    class="container-md"
+  >
     <div class="d-flex flex-wrap">
       <!-- TODO: Align this nicely -->
       <h3 class="mt-3">Flug bearbeiten</h3>
@@ -124,6 +128,7 @@ import { cloneDeep } from "lodash-es";
 import router from "../router";
 import { asyncForEach } from "../helper/utils";
 import { Modal } from "bootstrap";
+import Swal from "sweetalert2";
 
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
@@ -149,7 +154,8 @@ onMounted(() => {
 if (modifiedFlightData.value.externalId != route.params.id) {
   await fetchOne(route.params.id);
   modifiedFlightData.value.externalId = route.params.id;
-  modifiedFlightData.value.glider = flight.value.glider;
+  // TODO: test this!
+  modifiedFlightData.value.glider = { ...flight.value.glider };
   modifiedFlightData.value.report = flight.value.report;
   modifiedFlightData.value.airspaceComment = flight.value.airspaceComment;
   modifiedFlightData.value.hikeAndFly = flight.value.hikeAndFly > 0;
@@ -167,8 +173,10 @@ const fetchGliders = async () => {
     if (res.status != 200) throw res.statusText;
     listOfGliders.value = res.data.gliders;
   } catch (error) {
-    // TODO: Do something!
     console.log(error);
+    router.push({
+      name: "NetworkError",
+    });
   }
 };
 await fetchGliders();
@@ -247,18 +255,28 @@ const updateSelectedGlider = () => {
   modifiedFlightData.value.glider = { ...newSelection };
 };
 
-// TODO: Add confirm message
+const inidcateSuccess = async () => {
+  await Swal.fire({
+    icon: "success",
+    // TODO: Set color globally
+    confirmButtonColor: "#08556d",
+    text: "Flug gelöscht",
+  });
+};
+
 const onDeleteFlight = async () => {
   showSpinner.value = true;
   try {
     await ApiService.deleteFlight(flight.value.externalId);
+    deleteFlightModal.value.hide();
+    await inidcateSuccess();
     router.push({ name: "Home" });
   } catch (error) {
     errorMessage.value = "Da ist leider was schief gelaufen";
+    console.log(error);
+  } finally {
     showSpinner.value = false;
-    console.log({ error });
   }
-  deleteFlightModal.value.hide();
 };
 </script>
 

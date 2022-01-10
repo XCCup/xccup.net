@@ -133,6 +133,7 @@ import { Modal } from "bootstrap";
 import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
 import UserProfileMyFlights from "../components/UserProfileMyFlights.vue";
 import UserProfileChangeEmail from "../components/UserProfileChangeEmail.vue";
+import { useRouter } from "vue-router";
 
 setWindowName("Profil");
 
@@ -148,11 +149,15 @@ const props = defineProps({
 // TODO: Warn user if there are unsaved changes --> Use "beforeRouteLeave lifecycle hook"
 const { fetchProfile, userData } = useUserProfile();
 
+const router = useRouter();
+
 try {
   await fetchProfile();
 } catch (error) {
-  // TODO: Do something
   console.error(error);
+  router.push({
+    name: "NetworkError",
+  });
 }
 
 const editAvatarModal = ref(null);
