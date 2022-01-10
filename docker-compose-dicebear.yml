@@ -13,7 +13,7 @@ services:
 
       labels:
         traefik.enable: true
-        traefik.http.routers.xccup-dicebear.rule: "Host(`v2202201165351174766.goodsrv.de`) && PathPrefix(`/dicebear`)"
+        traefik.http.routers.xccup-dicebear.rule: "Host(`next.xccup.net`) && PathPrefix(`/dicebear`)"
         traefik.http.middlewares.dicebearpathstrip.stripprefix.prefixes: "/dicebear"
         traefik.http.routers.xccup-dicebear.middlewares: dicebearpathstrip@docker
         traefik.http.middlewares.dicebearpathstrip.stripprefix.forceslash: true

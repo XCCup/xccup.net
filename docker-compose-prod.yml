@@ -14,7 +14,7 @@ services:
 
       labels:
         traefik.enable: true
-        traefik.http.routers.xccup.rule: "Host(`v2202201165351174766.goodsrv.de`)"
+        traefik.http.routers.xccup.rule: "Host(`next.xccup.net`)"
         traefik.http.routers.xccup.entrypoints: websecure
         traefik.http.routers.xccup.tls.certresolver: myresolver
         traefik.http.routers.xccup.priority: 100
@@ -34,7 +34,7 @@ services:
       - db
     labels:
       traefik.enable: true
-      traefik.http.routers.xccup-api.rule: "Host(`v2202201165351174766.goodsrv.de`) && PathPrefix(`/api`)"
+      traefik.http.routers.xccup-api.rule: "Host(`next.xccup.net`) && PathPrefix(`/api`)"
       traefik.http.routers.xccup-api.entrypoints: websecure
       traefik.http.routers.xccup-api.tls.certresolver: myresolver
       traefik.http.services.xccup-api.loadbalancer.server.port: 65090
@@ -57,11 +57,11 @@ services:
     env_file: ./server/.env
     labels:
       traefik.enable: true
-      traefik.http.routers.xccup-pg-admin.rule: "Host(`v2202201165351174766.goodsrv.de`) && PathPrefix(`/pgadmin`)"
+      traefik.http.routers.xccup-pg-admin.rule: "Host(`xccup.stephanschoepe.de`)"
       traefik.http.routers.xccup-pg-admin.entrypoints: websecure
       traefik.http.routers.xccup-pg-admin.tls.certresolver: myresolver
       traefik.port: 65080
-      traefik.http.routers.xccup-pg-admin.priority: 200
+      traefik.http.routers.xccup-pg-admin.priority: 100
       traefik.docker.network: traefik
 
   traefik:
