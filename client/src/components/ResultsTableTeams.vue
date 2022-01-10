@@ -32,7 +32,7 @@
               </tr>
               <tr class="no-line-break">
                 ({{
-                  Math.floor(team.totalDistance)
+                  Math.round(team.totalDistance)
                 }}
                 km)
               </tr>
@@ -77,7 +77,7 @@
                     {{ member.totalPoints }} P
                   </strong>
                   <span class="no-line-break">
-                    ({{ Math.floor(member.totalDistance) }} km)
+                    ({{ Math.round(member.totalDistance) }} km)
                   </span>
                 </td>
               </tr>
