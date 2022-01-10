@@ -31,12 +31,26 @@
         data-cy="team-input-team"
       />
       <hr />
-      <BaseSelect
+      <!-- <BaseSelect
         v-model="selectedUser"
-        label="Teammitglied auswählen"
+        label="Pilot ohne Team"
         :options="userNamesWithoutTeam"
         data-cy="team-select-member"
+      /> -->
+      <!-- <label for="team-select-member" class="form-label">Name</label> -->
+      <input
+        id="team-select-member"
+        v-model="selectedUser"
+        class="form-control mb-3"
+        list="datalistOptions"
+        placeholder="Pilot ohne Team suchen..."
+        data-cy="team-select-member"
       />
+      <datalist id="datalistOptions">
+        <option v-for="user in userNamesWithoutTeam" :key="user" :value="user">
+          {{ user }}
+        </option>
+      </datalist>
       <button
         class="mb-3 btn btn-primary btn"
         type="submit"
@@ -59,6 +73,7 @@
           </p>
         </li>
       </ul>
+      <hr />
       <button
         class="mt-3 btn btn-primary btn"
         type="submit"

@@ -41,7 +41,7 @@ describe("check flyingsites page", () => {
 
     // Add users to member list
     expectedUserNames.forEach((userName) => {
-      cy.get("[data-cy=team-select-member]").select(userName);
+      cy.get("[data-cy=team-select-member]").type(userName);
       cy.get("button").contains("Mitglied hinzufügen").click();
     });
 
