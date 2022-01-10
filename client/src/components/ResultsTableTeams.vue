@@ -32,7 +32,7 @@
               </tr>
               <tr class="no-line-break">
                 ({{
-                  Math.floor(team.totalDistance)
+                  Math.round(team.totalDistance)
                 }}
                 km)
               </tr>
@@ -59,7 +59,12 @@
                       name: 'Flight',
                       params: { flightId: member.flights[n - 1].externalId },
                     }"
-                    >{{ member.flights[n - 1].flightPoints }}
+                    ><span
+                      v-if="member.flights[n - 1].isDismissed"
+                      class="text-decoration-line-through fst-italic"
+                      >{{ member.flights[n - 1].flightPoints }}</span
+                    >
+                    <span v-else>{{ member.flights[n - 1].flightPoints }}</span>
                   </router-link>
                 </td>
                 <td v-else>-</td>
@@ -72,7 +77,7 @@
                     {{ member.totalPoints }} P
                   </strong>
                   <span class="no-line-break">
-                    ({{ Math.floor(member.totalDistance) }} km)
+                    ({{ Math.round(member.totalDistance) }} km)
                   </span>
                 </td>
               </tr>

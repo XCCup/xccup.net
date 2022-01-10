@@ -5,7 +5,8 @@ const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
 const { TEAM_SIZE } = require("../config/result-determination-config");
-const logger = require("../config/logger");
+const { ROLE } = require("../constants/user-constants");
+const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
 const service = {
   getAllNames: async (year = getCurrentYear()) => {
@@ -81,6 +82,7 @@ const service = {
     const team = {
       name: teamName,
       season: getCurrentYear(),
+      members: memberIds,
     };
     const newTeam = await Team.create(team);
     const members = await User.findAll({
@@ -115,8 +117,12 @@ const service = {
     const users = User.findAll({
       where: {
         teamId: null,
+        [Op.not]: {
+          role: ROLE.INACTIVE,
+        },
       },
-      attributes: ["name", "id"],
+      attributes: ["firstName", "lastName", "id"],
+      order: [["firstName", "asc"]],
     });
     return users;
   },
@@ -125,10 +131,10 @@ const service = {
     const availableUsers = await service.findAvailableUsers();
     const availableUserIds = availableUsers.map((user) => user.id);
     let result = memberIds.filter((id) => !availableUserIds.includes(id));
-    result.forEach((element) =>
-      logger.warn(`The user ${element} is already asigned to a team`)
-    );
-    return result.length;
+    if (result.length)
+      throw new XccupRestrictionError(
+        "Users are not allowed to be associated with multiple teams"
+      );
   },
 
   delete: async (id) => {

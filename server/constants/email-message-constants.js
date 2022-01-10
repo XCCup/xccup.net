@@ -114,3 +114,18 @@ Falls Du in Zukunft keine Mails mehr zu neuen Kommentar erhalten möchtest, kann
 Dein XCCup Team
     
 `;
+
+module.exports.ADDED_TO_TEAM_TITLE = "Dein Team auf XCCup.net";
+
+module.exports.ADDED_TO_TEAM_TEXT = (teamName) =>
+  `Hallo!
+
+Du wurdest dem Team ${teamName} hinzugefügt.
+
+Wir wünschen Euch viel Erfolg in der neuen Saison!
+
+Falls Du garnicht in das Team aufgenommen werden wolltest, wende Dich bitte direkt an uns.
+
+Dein XCCup Team
+    
+`;

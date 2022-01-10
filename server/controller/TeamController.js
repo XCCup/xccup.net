@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/TeamService");
-const {
-  NOT_FOUND,
-  BAD_REQUEST,
-} = require("../constants/http-status-constants");
+const mailService = require("../service/MailService");
+const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const {
   checkStringObjectNotEmpty,
@@ -25,15 +23,12 @@ router.get(
   query("includeStats").optional().isBoolean(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const { year, includeStats } = req.query;
 
     try {
       const value = getCache(req);
       if (value) return res.json(value);
 
-      const teams = await service.getAll({ year, includeStats });
-
-      console.log("Controller teams: ", teams);
+      const teams = await service.getAll({ ...req.query });
 
       setCache(req, teams);
 
@@ -62,20 +57,6 @@ router.get(
     }
   }
 );
-
-// // @desc Gets all active and non-active teams
-// // @route GET /teams/all
-// // @access Only moderator
-
-// router.get("/all", authToken, async (req, res, next) => {
-//   try {
-//     if (await requesterIsNotModerator(req, res)) return;
-//     const teams = await service.getAll();
-//     res.json(teams);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 // @desc Gets all members of teams
 // @route GET /teams/:name/member/
@@ -114,16 +95,13 @@ router.post(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const memberIds = req.body.memberIds;
-    const teamName = req.body.name;
+    const { name, memberIds } = req.body;
 
     try {
-      if (await service.checkMembersAlreadyAssigned(memberIds))
-        return res
-          .status(BAD_REQUEST)
-          .send("User already asigned to different team");
+      await service.checkMembersAlreadyAssigned(memberIds);
 
-      const team = await service.create(teamName, memberIds);
+      const team = await service.create(name, memberIds);
+      mailService.sendAddedToTeamMail(name, memberIds);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 

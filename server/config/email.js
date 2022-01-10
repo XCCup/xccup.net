@@ -49,8 +49,6 @@ function createMessage(from, toAddresses, content, replyTo) {
   const to = isArray ? undefined : toAddresses;
   const bcc = isArray ? toAddresses : undefined;
 
-  console.log("TO: ", to);
-  console.log("BCC: ", bcc);
   return {
     from,
     // TODO: Why are mails not received (or sent?) when "from" and "to" are identical?
