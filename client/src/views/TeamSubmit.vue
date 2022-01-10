@@ -1,7 +1,7 @@
 <template>
   <slot-dialog :narrow="true">
     <h3>Teammeldung</h3>
-    <div v-if="submitSuccessful">
+    <div v-if="submitSuccessful" data-cy="team-submit-successful">
       <p>
         Deine Meldung war erfolgreich.
         <router-link
@@ -15,7 +15,10 @@
         findest Du die aktuellen Teams mit all ihren Mitgliedern.
       </p>
     </div>
-    <div v-if="!loggedInUserIsAlreadyInATeam && !submitSuccessful">
+    <div
+      v-if="!loggedInUserIsAlreadyInATeam && !submitSuccessful"
+      data-cy="team-submit-panel"
+    >
       <ul class="mb-3">
         <li>Ein Team besteht immer aus 5 Mitgliedern</li>
         <li>Der Teamname muss einmalig sein</li>
@@ -25,12 +28,14 @@
         v-model="newTeamName"
         label="Teamname"
         :external-validation-result="nameIsAlreadyInUse"
+        data-cy="team-input-team"
       />
       <hr />
       <BaseSelect
         v-model="selectedUser"
         label="Teammitglied auswählen"
         :options="userNamesWithoutTeam"
+        data-cy="team-select-member"
       />
       <button
         class="mb-3 btn btn-primary btn"
@@ -40,7 +45,7 @@
       >
         Mitglied hinzufügen
       </button>
-      <ul class="list-group list-unstyled">
+      <ul class="list-group list-unstyled" data-cy="team-list-members">
         <li>
           <p>{{ submitterName }}</p>
         </li>
@@ -63,10 +68,13 @@
         Teammeldung absenden <BaseSpinner v-if="showSpinner" />
       </button>
     </div>
-    <div v-if="loggedInUserIsAlreadyInATeam && !submitSuccessful">
+    <div
+      v-if="loggedInUserIsAlreadyInATeam && !submitSuccessful"
+      data-cy="team-submit-already-associated"
+    >
       <p>
-        Du bist bereits in einem angemeldet. Deshalb kannst du kein neues Team
-        melden.
+        Du bist bereits in einem Team angemeldet. Deshalb kannst du kein neues
+        Team melden.
         <router-link
           :to="{
             name: 'ResultsTeams',
