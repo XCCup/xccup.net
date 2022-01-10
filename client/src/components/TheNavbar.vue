@@ -175,13 +175,6 @@
                   >Registrierte Piloten</router-link
                 >
               </li>
-              <!-- <li>
-                <router-link
-                  :to="{ name: 'Teams', params: { year: currentYear } }"
-                  class="dropdown-item"
-                  >Teams</router-link
-                >
-              </li> -->
               <li>
                 <router-link :to="{ name: 'FlyingSites' }" class="dropdown-item"
                   >Fluggebietsübersicht</router-link
@@ -194,7 +187,7 @@
               </li>
             </ul>
           </li>
-          <li v-if="loggedIn" id="navbarForms" class="nav-item dropdown">
+          <li id="navbarForms" class="nav-item dropdown">
             <a
               id="navbarDropdown"
               class="nav-link dropdown-toggle"
