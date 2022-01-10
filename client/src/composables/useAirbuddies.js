@@ -20,6 +20,10 @@ export default () => {
     return tmp;
   });
 
+  const airbuddiesInUse = computed(() =>
+    checkedAirbuddyFlightIds.value.length ? true : false
+  );
+
   // Mutations
   const updateCheckedAirbuddies = (data) => {
     checkedAirbuddyFlightIds.value = data;
@@ -48,5 +52,6 @@ export default () => {
     airbuddiesFlightData: readonly(airbuddiesFlightData),
     checkedAirbuddyFlightIds: readonly(checkedAirbuddyFlightIds),
     activeAirbuddyFlights,
+    airbuddiesInUse,
   };
 };

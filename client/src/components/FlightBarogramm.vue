@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <table id="positionStatsTable" class="table table-sm">
+    <table
+      v-if="!airbuddiesInUse"
+      id="positionStatsTable"
+      class="table table-sm"
+    >
       <tbody>
         <tr>
           <td class="col-4 col-md-2">
@@ -114,7 +118,7 @@ import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
 
 const { flight } = useFlight();
-const { activeAirbuddyFlights } = useAirbuddies();
+const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 
 const chart = shallowRef(null);
 const labelData = ref([{}]);
