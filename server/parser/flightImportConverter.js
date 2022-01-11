@@ -1,4 +1,5 @@
 const flights = require("../convertToFlightModel.json");
+const reports = require("../convertToFlightReports.json");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const { isNoWorkday } = require("../helper/HolidayCalculator");
@@ -429,10 +430,14 @@ function createTime(date, time, id) {
   return fixedDate.getTime();
 }
 
-function createReport(report, flightId, status) {
-  let prefix = `Dieser Flug wurde aus der alten Datenbank importiert. Für die Vollständigkeit kann keine Garantie gegeben werden. Du findest den Flug in der Originalversion unter https://archiv.xccup.net/FlugDetails/${flightId}`;
+function createReport(flightId, status) {
+  let text = `Dieser Flug wurde aus der alten Datenbank importiert. Für die Vollständigkeit kann keine Garantie gegeben werden. Du findest den Flug in der Originalversion unter https://archiv.xccup.net/FlugDetails/${flightId}`;
 
-  if (status == 0) prefix += "\n\nDieser Flug war ein Zielflug ohne IGC-Datei.";
+  if (status == 0) text += "\n\nDieser Flug war ein Zielflug ohne IGC-Datei.";
+
+  const found = reports.find((report) => report.FlugID == flightId);
+
+  if (found) text += "\n\n" + found.Flugbericht;
 
   // if (!report) return;
 
@@ -446,7 +451,7 @@ function createReport(report, flightId, status) {
   //   console.log(error);
   // }
 
-  return prefix;
+  return text;
 }
 
 // flights.forEach((element) => {
@@ -547,7 +552,7 @@ const convertedFlights = flights.map((flight) => {
     userId,
     teamId: findTeam(userId, flight.Datum)?.id,
     landing: flight.Landeplatz,
-    report: createReport(flight.Flugbericht, flight.FlugID, flight.FlugStatus),
+    report: createReport(flight.FlugID, flight.FlugStatus),
     airspaceComment: null,
     flightPoints: flight.Punkte,
     flightDistance: flight.Strecke,
