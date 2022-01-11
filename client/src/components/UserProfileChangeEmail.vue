@@ -30,10 +30,11 @@ import ApiService from "@/services/ApiService.js";
 import { ref, computed } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
 import BaseError from "./BaseError.vue";
-import Swal from "sweetalert2";
 import { isEmail } from "../helper/utils";
 import useUserProfile from "@/composables/useUserProfile";
+import useSwal from "../composables/useSwal";
 
+const { showSuccessAlert } = useSwal();
 const { modifiedUserData, emailHasChanged } = useUserProfile();
 
 // Page state
@@ -41,19 +42,13 @@ const showSpinner = ref(false);
 const errorMessage = ref(null);
 const emailFieldIsDisabled = ref(false);
 
-const inidcateSuccess = () => {
-  Swal.fire({
-    icon: "success",
-    // TODO: Set color globally
-    confirmButtonColor: "#08556d",
-    text: "Um die Änderung deiner E-Mail-Addresse zu bestätigen öffne bitte den Link den wir dir gerade per Email geschickt haben.",
-  });
-};
 const onSave = async () => {
   try {
     showSpinner.value = true;
     await ApiService.changeEmail({ email: modifiedUserData.value.email });
-    inidcateSuccess();
+    showSuccessAlert(
+      "Um die Änderung deiner E-Mail-Addresse zu bestätigen öffne bitte den Link den wir dir gerade per Email geschickt haben."
+    );
     emailFieldIsDisabled.value = true;
   } catch (error) {
     if (error.response?.data?.errors[0].param === "email")

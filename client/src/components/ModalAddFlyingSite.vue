@@ -98,7 +98,9 @@ import ApiService from "@/services/ApiService.js";
 import { ref, computed, reactive, onMounted } from "vue";
 import { Modal } from "bootstrap";
 import { isCoordinate, isDirection, isInt } from "../helper/utils";
-import Swal from "sweetalert2";
+import useSwal from "../composables/useSwal";
+
+const { showSuccessToast } = useSwal();
 
 const _modal = ref(null);
 const modal = ref(null);
@@ -155,21 +157,6 @@ const saveButtonIsEnabled = computed(() => {
   );
 });
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-});
-
-const addSiteSuccess = () => {
-  Toast.fire({
-    icon: "success",
-    title: "Dein Vorschlag wurde übermittelt",
-  });
-};
-
 const onAddSite = async () => {
   try {
     showSpinner.value = true;
@@ -179,7 +166,7 @@ const onAddSite = async () => {
       clubId: clubData.value.find((e) => e.name == newSite.club).id,
     });
     hide();
-    addSiteSuccess();
+    showSuccessToast("Dein Vorschlag wurde übermittelt");
   } catch (error) {
     console.error(error);
     errorMessage.value =
