@@ -1,36 +1,23 @@
 <template>
   <div v-if="sites" class="container-lg">
     <h3>Fluggebietsübersicht</h3>
-    <div v-if="loggedIn">
-      <!-- <p>Du vermisst ein Gelände? Dann mache uns einen Vorschlag.</p> -->
-      <button
-        type="button"
-        class="col btn btn-primary btn-sm me-1 mb-3"
-        data-cy="add-site-button"
-        @click="onAddSite"
-      >
-        Fluggebiet vorschlagen
-        <i class="bi bi-send-plus"></i>
-      </button>
-    </div>
+    <router-link
+      :to="{
+        name: 'SubmitFlyingSite',
+        params: { year: currentYear },
+      }"
+      class="btn btn-primary btn-sm me-1 mb-3"
+    >
+      Neues Fluggebiet vorschlagen <i class="bi bi-send-plus"></i
+    ></router-link>
     <FlyingSiteMap :sites="sites" />
   </div>
-  <ModalAddFlyingSite ref="addModal" />
 </template>
 
 <script setup>
 import { ref } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
-import FlyingSiteMap from "../components/FlyingSiteMap.vue";
-import useUser from "@/composables/useUser";
-
-const { loggedIn } = useUser();
-
-const addModal = ref(null);
-const onAddSite = () => {
-  addModal.value.show();
-};
 
 const sites = ref([]);
 

@@ -198,8 +198,15 @@
             >
             <ul class="dropdown-menu">
               <li>
-                <router-link :to="{ name: 'TeamSubmit' }" class="dropdown-item"
+                <router-link :to="{ name: 'SubmitTeam' }" class="dropdown-item"
                   >Teammeldung</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  :to="{ name: 'SubmitFlyingSite' }"
+                  class="dropdown-item"
+                  >Fluggebietsmeldung</router-link
                 >
               </li>
             </ul>

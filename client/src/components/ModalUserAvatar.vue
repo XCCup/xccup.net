@@ -187,8 +187,7 @@ function uploadAvatar() {
       if (res.status != 200) throw res.statusText;
       emit("avatar-changed");
     } catch (error) {
-      errorMessage.value =
-        "Es ist ein Fehler beim Senden deines Bildes aufgetreten. Versuche es erneut. Wenn der Fehler weiterhin besteht, wende dich bitte an einen Administrator.";
+      errorMessage.value = "Da ist leider was schief gelaufen.";
       console.log(error);
     } finally {
       showSpinner.value = false;
@@ -202,8 +201,7 @@ async function deleteAvatar() {
     if (res.status != 200) throw res.statusText;
     emit("avatar-changed");
   } catch (error) {
-    errorMessage.value =
-      "Es ist ein Fehler beim Löschen deines Bildes aufgetreten. Versuche es erneut. Wenn der Fehler weiterhin besteht, wende dich bitte an einen Administrator.";
+    errorMessage.value = "Da ist leider was schief gelaufen.";
     console.log(error);
   } finally {
     showSpinner.value = false;

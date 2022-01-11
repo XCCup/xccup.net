@@ -26,4 +26,18 @@ function createFileName(externalId, igcFileName, isTemp, stripFactor) {
   return pathToFile;
 }
 
+function deleteIgcFile(igcPath) {
+  if (!igcPath)
+    return logger.warn("IFU: Should delete igc file but path prop was empty");
+
+  const fullfilepath = path.join(global.__basedir, igcPath);
+  logger.debug("IFU: Will delete igc " + fullfilepath);
+  fs.unlink(fullfilepath, (err) => {
+    if (err) {
+      logger.error(err);
+    }
+  });
+}
+
 exports.createFileName = createFileName;
+exports.deleteIgcFile = deleteIgcFile;

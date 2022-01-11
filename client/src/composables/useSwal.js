@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 
-const DEFAULT_SUCCESS_MSG = "Speicherung erfolgreich";
+const DEFAULT_SUCCESS_MSG = "Änderung erfolgreich";
 const DEFAULT_FAILED_MSG = "Da ist leider was schief gelaufen";
 const DEFAULT_CONFIRM_COLOR = "#08556d";
 

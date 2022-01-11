@@ -74,6 +74,7 @@
         </li>
       </ul>
       <hr />
+      <BaseError id="saveErrorMessage" :error-message="errorMessage" />
       <button
         class="mt-3 btn btn-primary btn"
         type="submit"
@@ -106,10 +107,12 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 import useUser from "../composables/useUser";
 import ApiService from "../services/ApiService";
 
 const { authData, getUserId } = useUser();
+const { router } = useRouter();
 
 const submitterName = authData.value.firstName + " " + authData.value.lastName;
 const submitterId = getUserId.value;
@@ -124,6 +127,7 @@ const usersWithoutTeamData = ref([]);
 
 const showSpinner = ref(false);
 const submitSuccessful = ref(false);
+const errorMessage = ref(null);
 
 try {
   const [teamNamesRes, usersWithoutTeamRes] = await Promise.all([
@@ -140,6 +144,9 @@ try {
     (item) => item !== submitterName
   );
 } catch (error) {
+  router.push({
+    name: "NetworkError",
+  });
   console.error(error);
 }
 
@@ -167,6 +174,7 @@ const onSubmit = async () => {
     submitSuccessful.value = true;
   } catch (error) {
     console.error(error);
+    errorMessage.value = "Da ist leider was schief gelaufen.";
   } finally {
     showSpinner.value = false;
   }
