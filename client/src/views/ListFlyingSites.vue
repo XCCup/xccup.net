@@ -1,16 +1,15 @@
 <template>
   <div v-if="sites" class="container-lg">
     <h3>Fluggebietsübersicht</h3>
-    <p>
-      Du vermisst ein Gelände? Dann mache uns
-      <router-link
-        :to="{
-          name: 'SubmitFlyingSite',
-        }"
-      >
-        Hier </router-link
-      >einen Vorschlag.
-    </p>
+    <router-link
+      :to="{
+        name: 'SubmitFlyingSite',
+        params: { year: currentYear },
+      }"
+      class="btn btn-primary btn-sm me-1 mb-3"
+    >
+      Neues Fluggebiet vorschlagen <i class="bi bi-send-plus"></i
+    ></router-link>
     <FlyingSiteMap :sites="sites" />
   </div>
 </template>
