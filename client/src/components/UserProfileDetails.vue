@@ -161,8 +161,9 @@ import ApiService from "@/services/ApiService.js";
 import { ref, computed } from "vue";
 import useUserProfile from "@/composables/useUserProfile";
 import BaseSpinner from "./BaseSpinner.vue";
-import Swal from "sweetalert2";
+import useSwal from "../composables/useSwal";
 
+const { showSuccessToast } = useSwal();
 const { modifiedUserData, updateProfile, profileDataHasChanged } =
   useUserProfile();
 
@@ -221,23 +222,6 @@ const stateListIsEnabled = computed(
   () => modifiedUserData.value.address.country === "Deutschland"
 );
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: true,
-});
-
-const inidcateSuccess = () => {
-  showSpinner.value = false;
-  errorMessage.value = null;
-  Toast.fire({
-    icon: "success",
-    title: "Änderungen gespeichert",
-  });
-};
-
 const onSave = async () => {
   try {
     showSpinner.value = true;
@@ -245,7 +229,7 @@ const onSave = async () => {
     modifiedUserData.value.clubId = findClubIdByName();
 
     await updateProfile();
-    inidcateSuccess();
+    showSuccessToast("Änderungen gespeichert");
   } catch (error) {
     console.error(error);
     errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";

@@ -57,7 +57,9 @@
 import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import ApiService from "@/services/ApiService.js";
-import Swal from "sweetalert2";
+import useSwal from "../composables/useSwal";
+
+const { showSuccessToast, showFailedToast } = useSwal();
 
 defineProps({
   hideList: {
@@ -161,37 +163,14 @@ const updateDefaultGlider = async () => {
     const res = await ApiService.setDefaultGlider(selectedGlider.value);
     if (res.status != 200) throw res.statusText;
     updateGliderData(res.data);
-    changeGliderSuccess();
+    showSuccessToast("Standard Gerät geändert");
   } catch (error) {
     selectedGlider.value = initialGlider.value;
-    changeGliderFailed();
+    showFailedToast("Da ist leider was schief gelaufen");
     console.error(error);
   } finally {
     showSpinner.value = false;
   }
-};
-// Success indicator
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-});
-
-const changeGliderSuccess = () => {
-  Toast.fire({
-    icon: "success",
-    title: "Standard Gerät geändert",
-  });
-  // showSpinner.value = false;
-};
-const changeGliderFailed = () => {
-  Toast.fire({
-    icon: "error",
-    title: "Da ist leider was schief gelaufen",
-  });
-  // showSpinner.value = false;
 };
 
 const formatGliderName = (glider) =>
