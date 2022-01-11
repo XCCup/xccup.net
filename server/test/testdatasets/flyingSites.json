@@ -890,6 +890,27 @@
     "direction": "NO,SW"
   },
   {
+    "name": "Tollhausen Schlepp",
+    "point": {
+      "type": "Point",
+      "coordinates": [6.520912969, 50.946642821]
+    },
+    "id": "b16912c2-367d-4661-9759-8014374be41b",
+    "shortName": "TOLLHAUSEN",
+    "direction": "O,W",
+    "state": "inactive"
+  },
+  {
+    "name": "Heppendorf Schlepp",
+    "point": {
+      "type": "Point",
+      "coordinates": [6.63404, 50.920656]
+    },
+    "id": "0c30586f-1970-47b8-adc5-5b92f18a49e1",
+    "shortName": "HEPPENDORF",
+    "direction": "NO,NW"
+  },
+  {
     "name": "Holzbronn Schlepp",
     "point": {
       "type": "Point",
