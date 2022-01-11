@@ -141,7 +141,7 @@ try {
   clubs.value.push("");
 } catch (error) {
   errorMessage.value =
-    "Das speichern war nicht erfolgreich. Bitte prüfe noch einmal deine Angaben oder wende dich an einen Administrator.";
+    "Es gab Probleme beim Laden der Daten. Bitte lade den Dialog erneut oder wende dich an einen Administrator.";
   console.log(error);
 }
 
@@ -169,12 +169,6 @@ const addSiteSuccess = () => {
     title: "Dein Vorschlag wurde übermittelt",
   });
 };
-const addSiteFailed = () => {
-  Toast.fire({
-    icon: "error",
-    title: "Da ist leider was schief gelaufen",
-  });
-};
 
 const onAddSite = async () => {
   try {
@@ -188,7 +182,8 @@ const onAddSite = async () => {
     addSiteSuccess();
   } catch (error) {
     console.error(error);
-    addSiteFailed();
+    errorMessage.value =
+      "Das speichern war nicht erfolgreich. Bitte prüfe noch einmal deine Angaben oder wende dich an einen Administrator.";
   } finally {
     showSpinner.value = false;
   }
