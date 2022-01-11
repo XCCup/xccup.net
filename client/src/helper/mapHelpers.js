@@ -1,11 +1,13 @@
 export function convertMapBoundsToQueryString(data) {
   if (!data) return null;
   let bounds = [];
-  bounds.push(data.getBounds().getNorthEast());
-  bounds.push(data.getBounds().getNorthWest());
-  bounds.push(data.getBounds().getSouthWest());
-  bounds.push(data.getBounds().getSouthEast());
-  // TODO: Expand the boundary to show nearby airspaces
+  // Expand boundary by pad factor
+  const pad = 0.4;
+  const area = data.getBounds().pad(pad);
+  bounds.push(area.getNorthEast());
+  bounds.push(area.getNorthWest());
+  bounds.push(area.getSouthWest());
+  bounds.push(area.getSouthEast());
   return bounds.map((x) => [x.lng, x.lat]).join("|");
 }
 
