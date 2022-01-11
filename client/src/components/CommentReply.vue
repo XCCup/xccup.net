@@ -5,24 +5,30 @@
     data-cy="flight-comment-reply"
   >
     <img :src="avatarUrl" class="rounded-circle" />
-    <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
+    <!-- <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
       reply.user.firstName + " " + reply.user.lastName
-    }}</a>
+    }}</a> -->
+    {{ reply.user.firstName + " " + reply.user.lastName }}
     <span
       class="ms-auto fw-light"
       :class="userPrefersDark ? 'text-light' : 'text-secondary'"
       ><BaseDate :timestamp="reply.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
+  <!-- eslint-disable vue/no-v-html -->
   <p
     v-if="!showReplyEditor"
     class="allow-white-spaces"
     v-html="commentWithLinks"
   ></p>
+  <!--eslint-enable-->
+
   <div v-if="showReplyEditor">
     <CommentInlineEditor
       :textarea-content="editedMessage"
       :use-edit-labels="true"
+      :show-spinner="showSpinner"
+      :error-message="errorMessage"
       @save-message="onSaveEditedMessage"
       @close-editor="onCloseCommentEditor"
     />
@@ -45,16 +51,20 @@
     :modal-id="reply.id"
     :confirm-action="onDeleteComment"
     :is-dangerous-action="true"
+    :show-spinner="showSpinner"
+    :error-message="errorMessage"
   />
 </template>
 
 <script setup>
+// TODO: In theory it's possible to replace this compoinent with the regular comment component and a prop
 import { Modal } from "bootstrap";
 import { ref, onMounted, computed } from "vue";
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import { sanitizeComment } from "../helper/utils";
+import Constants from "@/common/Constants";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment } = useComments();
@@ -65,6 +75,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+const showSpinner = ref(false);
+const errorMessage = ref(null);
+
 const commentWithLinks = computed(() => sanitizeComment(props.reply.message));
 
 const avatarUrl = createUserPictureUrl(props.reply.user.id);
@@ -82,11 +96,16 @@ onMounted(() => {
 // Delete
 const onDeleteComment = async () => {
   try {
+    showSpinner.value = true;
     const res = await deleteComment(props.reply.id);
     if (res.status != 200) throw res.statusText;
+    errorMessage.value = null;
     deleteCommentModal.value.hide();
   } catch (error) {
+    errorMessage.value = Constants.GENERIC_ERROR;
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
 
@@ -104,11 +123,16 @@ const onSaveEditedMessage = async (message) => {
     id: props.reply.id,
   };
   try {
+    showSpinner.value = true;
     const res = await editComment(comment);
     if (res.status != 200) throw res.statusText;
-    showReplyEditor.value = false;
+    onCloseCommentEditor();
+    errorMessage.value = null;
   } catch (error) {
     console.log(error);
+    errorMessage.value = Constants.GENERIC_ERROR;
+  } finally {
+    showSpinner.value = false;
   }
 };
 const onCloseCommentEditor = () => {

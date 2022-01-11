@@ -33,9 +33,8 @@ jwtInterceptor.interceptors.response.use(
     if (error.response?.status === 403 && error.response?.data === "EXPIRED") {
       console.log("Interceptor refresh…");
       await updateTokens();
-      // error.config.headers["Authorization"] = `Bearer ${authData.value.token}`;
       error.config.headers["Authorization"] =
-        "Bearer" + localStorage.getItem("accessToken");
+        "Bearer " + localStorage.getItem("accessToken");
       console.log("…done");
       return axios(error.config);
     } else {
