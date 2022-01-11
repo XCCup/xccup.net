@@ -35,7 +35,7 @@ jwtInterceptor.interceptors.response.use(
       await updateTokens();
       // error.config.headers["Authorization"] = `Bearer ${authData.value.token}`;
       error.config.headers["Authorization"] =
-        "Bearer" + localStorage.getItem("accessToken");
+        "Bearer " + localStorage.getItem("accessToken");
       console.log("…done");
       return axios(error.config);
     } else {
