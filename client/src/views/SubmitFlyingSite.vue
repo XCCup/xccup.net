@@ -118,7 +118,7 @@ const onAddSite = async () => {
       clubId: clubData.value.find((e) => e.name == newSite.club).id,
     });
     await showSuccessAlert(
-      "Dein Vorschlag wurde übermittelt. Die Admins müssen diesen noch prüfen, bevor Du diesen nutzen kannst."
+      "Dein Vorschlag wurde übermittelt. Die Admins müssen diesen noch prüfen, bevor Du ihn nutzen kannst."
     );
     router.push({ name: "Home" });
   } catch (error) {
