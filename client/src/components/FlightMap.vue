@@ -128,18 +128,22 @@ onBeforeUnmount(() => {
 
 // Airspaces
 const drawAirspaces = async (bounds) => {
-  const res = await ApiService.getAirspaces(bounds);
-  const airspaceData = res.data;
-  const options = {
-    opacity: 0.1,
-    fillOpacity: 0.08,
-    color: "red",
-  };
-  airspaceData.forEach((airspace) => {
-    L.geoJSON(airspace.polygon, options)
-      .bindPopup(createAirspacePopupContent(airspace))
-      .addTo(map.value);
-  });
+  try {
+    const res = await ApiService.getAirspaces(bounds);
+    const airspaceData = res.data;
+    const options = {
+      opacity: 0.1,
+      fillOpacity: 0.08,
+      color: "red",
+    };
+    airspaceData.forEach((airspace) => {
+      L.geoJSON(airspace.polygon, options)
+        .bindPopup(createAirspacePopupContent(airspace))
+        .addTo(map.value);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // Update map
