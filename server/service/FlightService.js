@@ -23,6 +23,7 @@ const { sendAirspaceViolationMail } = require("./MailService");
 
 const { isNoWorkday } = require("../helper/HolidayCalculator");
 const { sleep, findKeyByValue } = require("../helper/Utils");
+const { deleteIgcFile } = require("../helper/igc-file-utils");
 
 const { COUNTRY, STATE: USER_STATE } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
@@ -296,10 +297,9 @@ const flightService = {
     });
   },
 
-  delete: async (id) => {
-    return Flight.destroy({
-      where: { id },
-    });
+  delete: async (flight) => {
+    deleteIgcFile(flight.igcPath);
+    return Flight.destroy({ where: { id: flight.id } });
   },
 
   addResult: async (result) => {
