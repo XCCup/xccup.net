@@ -2,7 +2,7 @@
   <div v-if="sites" class="container-lg">
     <h3>Fluggebietsübersicht</h3>
     <div v-if="loggedIn">
-      <p>Du vermisst ein Gelände? Dann mache uns einen Vorschlag.</p>
+      <!-- <p>Du vermisst ein Gelände? Dann mache uns einen Vorschlag.</p> -->
       <button
         type="button"
         class="col btn btn-primary btn-sm me-1 mb-3"
