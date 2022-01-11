@@ -13,12 +13,14 @@
         ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
       /></span>
     </div>
+    <!-- eslint-disable vue/no-v-html -->
     <p
       v-if="!showCommentEditor"
       class="allow-white-spaces"
       data-cy="comment-body"
       v-html="commentWithLinks"
     ></p>
+    <!--eslint-enable-->
 
     <!-- Replies -->
     <div

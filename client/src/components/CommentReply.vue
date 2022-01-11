@@ -15,11 +15,14 @@
       ><BaseDate :timestamp="reply.createdAt" date-format="dd.MM.yyyy"
     /></span>
   </div>
+  <!-- eslint-disable vue/no-v-html -->
   <p
     v-if="!showReplyEditor"
     class="allow-white-spaces"
     v-html="commentWithLinks"
   ></p>
+  <!--eslint-enable-->
+
   <div v-if="showReplyEditor">
     <CommentInlineEditor
       :textarea-content="editedMessage"
