@@ -160,7 +160,7 @@ router.delete(
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      const numberOfDestroyedRows = await service.delete(flight.id);
+      const numberOfDestroyedRows = await service.delete(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
