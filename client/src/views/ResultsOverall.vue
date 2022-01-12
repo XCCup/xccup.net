@@ -5,7 +5,7 @@
       <p v-if="remark">Hinweis: {{ remark }}</p>
       <div class="row">
         <div class="col-6">
-          <FilterPanel :api-endpoint="ApiService.getResultsOverall" />
+          <FilterPanel component-name="ResultsOverall" />
         </div>
       </div>
       <ResultsTableGeneric
@@ -22,19 +22,22 @@ import ApiService from "@/services/ApiService.js";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 
 const router = useRoute();
 const title = ref("Gesamtwertung");
+const remark = ref("");
 
 setWindowName(title.value);
 
-const { fetchData, data: results } = useData(ApiService.getResultsOverall);
+const { fetchData, data: results } = useData("ResultsOverall");
 
-await fetchData({
-  params: router.params,
-  queries: router.query,
+watchEffect(async () => {
+  await fetchData(ApiService.getResultsOverall, {
+    params: router.params,
+    queries: router.query,
+  });
+  // Not yet used
+  remark.value = results?.value?.constants?.REMARKS;
 });
-// Not yet used
-const remark = ref(results?.value?.constants?.REMARKS);
 </script>

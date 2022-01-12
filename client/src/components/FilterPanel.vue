@@ -242,8 +242,8 @@ import { ref, reactive, watch, computed, onUnmounted } from "vue";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const props = defineProps({
-  apiEndpoint: {
-    type: Function,
+  componentName: {
+    type: String,
     required: true,
   },
   // TODO: Selecting the modal body like this not effective and not idiot save
@@ -258,7 +258,7 @@ const props = defineProps({
 });
 
 const { filterDataBy, filterActive, isLoading, activeFilters, clearOneFilter } =
-  useData(props.apiEndpoint);
+  useData(props.componentName);
 
 const selects = reactive({
   site: "",
@@ -396,7 +396,7 @@ const filterDescription = (key, filter) => {
 
 const genderDescription = (gender) => {
   if (gender === "M") return "Männlich";
-  if (gender === "W") return "Weiblich";
+  if (gender === "F") return "Weiblich";
   return "Divers";
 };
 

@@ -1,4 +1,6 @@
+import { isInteger } from "lodash-es";
 import { ref, readonly, computed } from "vue";
+import { useRouter } from "vue-router";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const DEFAULT_LIMIT = 50;
@@ -6,16 +8,16 @@ const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 const instances = {};
 
-export default (apiEndpoint) => {
-  if (!apiEndpoint) throw "No endpoint defined for useData";
+export default (viewComponentName) => {
+  if (!viewComponentName) throw "No view defined for useData";
 
-  if (!instances[apiEndpoint])
-    instances[apiEndpoint] = createInstance(apiEndpoint);
+  if (!instances[viewComponentName])
+    instances[viewComponentName] = createInstance(viewComponentName);
 
-  return instances[apiEndpoint];
+  return instances[viewComponentName];
 };
 
-function createInstance(apiEndpoint) {
+function createInstance(viewComponentName) {
   const data = ref(null);
   const sortOptionsCache = ref(null);
   const filterOptionsCache = ref(null);
@@ -25,6 +27,8 @@ function createInstance(apiEndpoint) {
   const isLoading = ref(false);
   const currentRange = ref({ start: 0, end: 0 });
   const errorMessage = ref(null);
+
+  const router = useRouter();
 
   // Getters
   const filterActive = computed(() =>
@@ -41,31 +45,45 @@ function createInstance(apiEndpoint) {
   // Mutations
   const clearFilter = () => {
     filterOptionsCache.value = null;
-    fetchData();
+    routerPushView();
   };
 
   const clearOneFilter = (key) => {
+    //TODO: The cache and the data will be updated correctly, but the URL still shows the filter. WHY AND HOW???
     delete filterOptionsCache.value[key];
-    fetchData();
+    routerPushView();
   };
 
   const sortDataBy = async (sortOptions) => {
     sortOptionsCache.value = sortOptions;
-    fetchData();
+    routerPushView();
   };
 
   const filterDataBy = (filterOptions) => {
+    //Check if any filter value was set
+    if (!Object.values(filterOptions).find((v) => !!v)) return;
+
     filterOptionsCache.value = filterOptions;
-    fetchData();
+    routerPushView();
+  };
+
+  const paginatBy = async (limit, offset) => {
+    routerPushView(limit, offset);
   };
 
   // Actions
-  const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
+  const fetchData = async (apiEndpoint, { params, queries } = {}) => {
     try {
       if (params) paramsCache.value = params;
+      if (isInteger(queries?.limit)) limitCache.value = parseInt(queries.limit);
+      const offset =
+        queries?.offset && queries.offset > 0 ? parseInt(queries.offset) : 0;
+
+      // Delete pagination parameters from "normal" query parameters
+      if (queries?.limit) delete queries.limit;
+      if (queries?.offset) delete queries.offset;
       if (queries) filterOptionsCache.value = queries;
-      if (offset < 0) offset = 0;
-      if (limit) limitCache.value = limit;
+
       isLoading.value = true;
       const res = await apiEndpoint({
         ...paramsCache.value,
@@ -85,11 +103,8 @@ function createInstance(apiEndpoint) {
       } else {
         data.value = res?.data;
       }
-      // errorMessage.value = null;
     } catch (error) {
       console.error(error);
-      // errorMessage.value =
-      //   "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
     } finally {
       isLoading.value = false;
     }
@@ -104,10 +119,25 @@ function createInstance(apiEndpoint) {
         : currentRange.value.start + limitCache.value - 1;
   };
 
+  function routerPushView(limit, offset) {
+    router.push({
+      name: viewComponentName,
+      query: {
+        ...filterOptionsCache.value,
+        limit,
+        offset,
+      },
+      params: {
+        ...paramsCache.value,
+      },
+    });
+  }
+
   return {
     fetchData,
     filterDataBy,
     sortDataBy,
+    paginatBy,
     data: readonly(data),
     errorMessage,
     currentRange: readonly(currentRange),
@@ -119,5 +149,6 @@ function createInstance(apiEndpoint) {
     clearOneFilter,
     DEFAULT_LIMIT,
     LIMIT_OPTIONS,
+    limitCache,
   };
 }

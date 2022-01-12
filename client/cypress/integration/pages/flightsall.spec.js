@@ -82,7 +82,7 @@ describe("check flights all page", () => {
     );
 
     cy.get("[data-cy=filter-badge-siteId]").within(() => {
-      cy.get("[data-cy=filter-clear-one-button]").click();
+      cy.get("[data-cy=filter-clear-one-button]").click({ force: true });
     });
     // cy.get("[data-cy=filter-icon]").should("be.visible");
 
@@ -112,7 +112,7 @@ describe("check flights all page", () => {
 
     cy.get("th").contains("Punkte").click();
     cy.get("[data-cy=filter-icon]").should("be.visible");
-    cy.get("th").contains("Punkte").click();
+    cy.get("th").contains("Punkte").dblclick();
     // cy.get("[data-cy=filter-icon]").should("be.visible");
 
     /*eslint-disable */
@@ -144,16 +144,16 @@ describe("check flights all page", () => {
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
+    cy.wait(1000);
     /*eslint-enable */
     cy.get("table").find("tr").should("have.length", expectedLength);
     cy.get(".page-item").last().click();
-    cy.get("[data-cy=filter-icon]").should("be.visible");
+    // cy.get("[data-cy=filter-icon]").should("be.visible");
 
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
+    cy.wait(1000);
     /*eslint-enable */
     cy.get("table")
       .find("tr")

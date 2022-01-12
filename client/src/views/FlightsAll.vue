@@ -5,16 +5,10 @@
 
     <div class="row">
       <div class="col-6">
-        <FilterPanel
-          :api-endpoint="ApiService.getFlights"
-          :flight-options="true"
-        />
+        <FilterPanel component-name="FlightsAll" :flight-options="true" />
       </div>
       <div class="col-6">
-        <PaginationPanel
-          :api-endpoint="ApiService.getFlights"
-          entry-name="Flüge"
-        />
+        <PaginationPanel component-name="FlightsAll" entry-name="Flüge" />
       </div>
     </div>
     <BaseError :error-message="errorMessage" />
@@ -27,14 +21,16 @@ import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import useData from "@/composables/useData";
 import { useRoute } from "vue-router";
+import { watchEffect } from "vue-demi";
 
 setWindowName("Streckenmeldungen");
 
 const route = useRoute();
 
-const { fetchData, errorMessage } = useData(ApiService.getFlights);
+const { fetchData, errorMessage } = useData("FlightsAll");
 
-const params = route.params.year ? { year: route.params.year } : undefined;
-
-fetchData({ params, queries: route.query });
+watchEffect(() => {
+  const params = route.params.year ? { year: route.params.year } : undefined;
+  fetchData(ApiService.getFlights, { params, queries: route.query });
+});
 </script>

@@ -172,7 +172,7 @@ export const Routes = [
   },
   {
     path: "/piloten",
-    name: "Users",
+    name: "ListUsers",
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import("../views/ListUsers.vue"),
   },
