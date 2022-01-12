@@ -1,8 +1,8 @@
 <template>
   <div v-if="seasonStats">
-    <span class="d-none d-dark-inline container"
+    <!-- <span class="d-none d-dark-inline container"
       >Dark mode ist noch nicht schön, funktioniert aber…
-    </span>
+    </span> -->
 
     <InfoBox :season-stats="seasonStats" />
     <DailyResults :max-rows="10" :flights="dailyResults" />
