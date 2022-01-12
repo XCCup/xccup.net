@@ -32,7 +32,7 @@
 
           Ihr findet die neue Version hier: <a href="https://next.xccup.net" target="_blank">https://next.xccup.net</a>
           <p />
-          Zum login verwendet bitte eure E-Mail Adresse & euer aktuelles Passwort. Alle Daten werden nach der Testphase gelöscht und haben keine Auswirkungen auf die Wertung 2022. Probiert also gerne alles Mögliche aus.
+          Vor dem ersten Login müsst ihr auf "Passwort vergessen" klicken und ein neues Passwort anfordern. Verwendet dazu bitte eure im alten XCCup benutzte E-Mail Adresse. Alle Daten werden nach der Testphase gelöscht und haben keine Auswirkungen auf die Wertung 2022. Probiert also gerne alles Mögliche aus.
           <p />
 
           <strong>Neue Funktionen:</strong>
@@ -46,18 +46,22 @@
           <p />
           - Ihr könnt einen Hike&Fly Flug als solchen markieren. Die Höhenmeter werden in den Flugdetails angezeigt.
           <p />
-          - Ihr könnt nun unterschiedliche Schirme im Profil hinterlegen und aus diesen beim hochladen auswählen.
+          - Ihr könnt nun unterschiedliche Schirme im Profil hinterlegen und aus diesen beim Hochladen eines neuen Fluges auswählen.
           <p />
-          - “Dark mode” abhängig von euren Geräteeinstellungen.
+          - “Dark mode” abhängig von euren Geräteeinstellungen. (Dieser ist was die Farben angeht noch nicht ganz perfekt…)
           <p />
-          - $$ VORJAHRE ? $$
+          - Eine Übersicht der Flüge des aktuellen Tages inkl. Karte.
+          <p />
+           - Die Validität der IGC-Datei wird nach dem hochladen geprüft (G-Record)
+          <p />
+          - Eine offene API um ggfs. Daten für die eigene Vereinswertung leichter auszulesen
           <p />
 
           Das komplette Projekt ist “Open Source” - wer möchte kann sich gerne einbringen: 
           <a href="https://github.com/XCCup/xccup.net" target="_blank">https://github.com/XCCup/xccup.net</a>
           <p />
 
-          Wir haben in den letzten Monaten viele hundert Stunden mit dem Projekt verbracht. Bevor ihr Hassmails an uns schreibt falls etwas doch noch nicht klappen sollte oder eine Funktion vielleicht erst später hinzukommt bedenkt bitte, dass wir in unserer Freizeit daran arbeiten😜
+          Wir haben in den letzten Monaten viele hundert Stunden mit dem Projekt verbracht. Bevor ihr Hassmails an uns schreibt weil etwas doch noch nicht klappen sollte oder eine Funktion vielleicht erst später hinzukommt bedenkt bitte, dass wir in unserer Freizeit daran arbeiten😜
         </mj-text>
         <!-- <mj-button background-color="#F45E43" href="#">Button</mj-button> -->
       </mj-column>
