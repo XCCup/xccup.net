@@ -64,7 +64,7 @@ import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import { sanitizeComment } from "../helper/utils";
-import Constants from "@/common/Constants";
+import { GENERIC_ERROR } from "@/common/Constants";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment } = useComments();
@@ -102,7 +102,7 @@ const onDeleteComment = async () => {
     errorMessage.value = null;
     deleteCommentModal.value.hide();
   } catch (error) {
-    errorMessage.value = Constants.GENERIC_ERROR;
+    errorMessage.value = GENERIC_ERROR;
     console.log(error);
   } finally {
     showSpinner.value = false;
@@ -130,7 +130,7 @@ const onSaveEditedMessage = async (message) => {
     errorMessage.value = null;
   } catch (error) {
     console.log(error);
-    errorMessage.value = Constants.GENERIC_ERROR;
+    errorMessage.value = GENERIC_ERROR;
   } finally {
     showSpinner.value = false;
   }

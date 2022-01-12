@@ -12,7 +12,7 @@ import L from "leaflet";
 import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import Constants from "@/common/Constants";
+import { TRACK_COLORS } from "@/common/Constants";
 import ApiService from "@/services/ApiService";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
@@ -61,7 +61,7 @@ let photoMarker = L.icon({
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights } = useAirbuddies();
-const trackColors = Constants.TRACK_COLORS;
+const trackColors = TRACK_COLORS;
 
 // Find a way to make this reactive
 const userPrefersDark = ref(

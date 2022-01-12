@@ -1,5 +1,6 @@
 <template>
   <div v-if="seasonStats">
+    <BaseAdmin />
     <!-- <span class="d-none d-dark-inline container"
       >Dark mode ist noch nicht schön, funktioniert aber…
     </span> -->
