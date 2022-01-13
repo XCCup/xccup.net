@@ -1,6 +1,7 @@
-<!-- Hint: Use this => https://github.com/mjmlio/vscode-mjml -->
-
 <mjml>
+  <mj-raw>
+    <!-- Hint: Use this => https://github.com/mjmlio/vscode-mjml -->
+  </mj-raw>
   <mj-body>
     <mj-section background-color="#08556d">
       <mj-column>
@@ -8,8 +9,7 @@
       </mj-column>
     </mj-section>
     <mj-raw>
-
-      <!-- Intro text -->
+      <!-- Body text -->
     </mj-raw>
     <mj-section background-color="#fafafa">
       <mj-column>
@@ -18,57 +18,58 @@
           Liebe XCCup Pilot*innen
           <p />
 
-          Im letzten Jahr hatte Wolf bereits angekündigt das unser XCCup Entwickler Sascha den Posten nach vielen Jahren gerne abgeben würde und ein Nachfolger gesucht wird.<br />
+          Im letzten Jahr hatte Wolf bereits angekündigt, dass unser XCCup Entwickler Sascha den Posten nach vielen Jahren gerne abgeben würde und ein Nachfolger gesucht wird.<br />
 
           Diesem Aufruf sind wir (Kai & Stephan) gefolgt.
           <p />
-          Da die aktuelle Webseite aus einer Zeit stammt in der Smartphones noch kein Thema waren ist die Bedienung auf mobilen Geräten eher umständlich gewesen. Aus diesem Grund haben wir den XCCup mit Fokus auf mobile Geräte von neu auf programmiert.
+          Da die aktuelle Webseite aus einer Zeit stammt, in der Smartphones noch kein Thema waren ist die Bedienung auf mobilen Geräten eher umständlich gewesen. Aus diesem Grund haben wir den XCCup mit Fokus auf mobile Geräte von neu auf programmiert.
           <br />
-          So gut wie alle Funktionen haben wir dabei übernommen und zusätzlich noch einige Neue hinzugefügt.<p />
-          Wir sind optimistisch, dass wir die neue Webseite zum Saisonstart “live” gehen lassen können. Bis dahin möchten wir euch bitten diese schon mal zu testen und uns zu kontaktieren, wenn etwas nicht wie erwartet funktionieren sollte. Am besten mit Screenshot und Angabe zum verwendeten Gerät und Browser.<br />
-          Ihr könnt dabei auch alte Flüge verwenden. Zu Testzwecken gibt es kein 14-Tages-Limit beim hochladen.<br />
+          So gut wie alle Funktionen haben wir dabei übernommen und zusätzlich noch einige Neue hinzugefügt.
+          <p />
+          Wir sind optimistisch, dass wir die neue Webseite zum Saisonstart "live" gehen lassen können. Bis dahin möchten wir euch bitten diese schon mal zu testen und uns zu kontaktieren, wenn etwas nicht wie erwartet funktionieren sollte. Am besten mit Screenshot und Angabe zum verwendeten Gerät und Browser.<br />
+          Ihr könnt dabei auch alte Flüge verwenden. Zu Testzwecken gibt es kein 14-Tages-Limit beim Hochladen.<br />
           Feedback bitte an $$EMAIL EINFÜGEN$$
           <p />
 
           Ihr findet die neue Version hier: <a href="https://next.xccup.net" target="_blank">https://next.xccup.net</a>
           <p />
-          Vor dem ersten Login müsst ihr auf "Passwort vergessen" klicken und ein neues Passwort anfordern. Verwendet dazu bitte eure im alten XCCup benutzte E-Mail Adresse. Alle Daten werden nach der Testphase gelöscht und haben keine Auswirkungen auf die Wertung 2022. Probiert also gerne alles Mögliche aus.
+          Vor dem ersten Login müsst ihr auf "Passwort vergessen" klicken und ein neues Passwort anfordern. Verwendet dazu bitte eure im alten XCCup benutzte E-Mail-Adresse. Alle Daten werden nach der Testphase gelöscht und haben keine Auswirkungen auf die Wertung 2022. <br /> 
+          Probiert also gerne alles Mögliche aus und schaut nach, ob all eure Flüge aus den Vorjahren korrekt importiert wurden.
           <p />
 
           <strong>Neue Funktionen:</strong>
           <p />
 
-          - Man kann nun auf Kommentare antworten statt einfach nur einen Weiteren unter die Vorhandenen zu schreiben.
+          - Es ist nun möglich auf Kommentare zu antworten, statt einfach nur einen Weiteren unter die Vorhandenen zu schreiben.
           <p />
-          - Airbuddies: Solltet ihr zusammen mit anderen Piloten geflogen sein könnt ihr dessen Trackklog einblenden. Ihr müsst nichts weiter tun als euren Flug hoch zu laden und findet dann einen Button “Airbuddies” unter dem Barogramm. (Natürlich nur, wenn der andere Pilot auch seinen Fluch hochgeladen hat…)
+          - Airbuddies: Solltet ihr zusammen mit anderen Piloten geflogen sein könnt ihr dessen Trackklog einblenden. Ihr müsst nichts weiter tun, als euren Flug hochzuladen und findet dann einen Button “Airbuddies” unter dem Barogramm. (Natürlich nur, wenn der andere Pilot auch seinen Fluch hochgeladen hat…)
           <p />
           - Die Tabellen der Wertungen zeigen abhängig von der Gerätegröße unterschiedlich viele Details an.
           <p />
-          - Ihr könnt einen Hike&Fly Flug als solchen markieren. Die Höhenmeter werden in den Flugdetails angezeigt.
+          - Ihr könnt einen Hike&Fly Flug als solchen kennzeichnen. Die Höhenmeter werden in den Flugdetails angezeigt.
           <p />
-          - Ihr könnt nun unterschiedliche Schirme im Profil hinterlegen und aus diesen beim Hochladen eines neuen Fluges auswählen.
+          - Ihr könnt jetzt unterschiedliche Schirme im Profil hinterlegen und aus diesen beim Hochladen eines neuen Fluges auswählen.
           <p />
           - “Dark mode” abhängig von euren Geräteeinstellungen. (Dieser ist was die Farben angeht noch nicht ganz perfekt…)
           <p />
           - Eine Übersicht der Flüge des aktuellen Tages inkl. Karte.
           <p />
-           - Die Validität der IGC-Datei wird nach dem hochladen geprüft (G-Record)
+          - Die Validität der IGC-Datei wird nach dem Hochladen geprüft (G-Record)
           <p />
-          - Eine offene API um ggfs. Daten für die eigene Vereinswertung leichter auszulesen
+          - Eine offene API um ggf. Daten für die eigene Vereinswertung leichter auszulesen
           <p />
 
-          Das komplette Projekt ist “Open Source” - wer möchte kann sich gerne einbringen: 
+          Das komplette Projekt ist “Open Source” - wer möchte, kann sich gerne einbringen:
           <a href="https://github.com/XCCup/xccup.net" target="_blank">https://github.com/XCCup/xccup.net</a>
           <p />
 
-          Wir haben in den letzten Monaten viele hundert Stunden mit dem Projekt verbracht. Bevor ihr Hassmails an uns schreibt weil etwas doch noch nicht klappen sollte oder eine Funktion vielleicht erst später hinzukommt bedenkt bitte, dass wir in unserer Freizeit daran arbeiten😜
+          Wir haben in den letzten Monaten viele hundert Stunden mit dem Projekt verbracht. Bevor ihr Hassmails an uns schreibt, weil etwas doch noch nicht klappen sollte oder eine Funktion vielleicht erst später hinzukommt bedenkt bitte, dass wir in unserer Freizeit daran arbeiten😜
         </mj-text>
-        <!-- <mj-button background-color="#F45E43" href="#">Button</mj-button> -->
       </mj-column>
     </mj-section>
 
     <mj-raw>
-      <!-- Icons -->
+      <!-- Avatar -->
     </mj-raw>
     <mj-section background-color="#fbfbfb">
       <mj-column>
