@@ -1,4 +1,8 @@
-<template>Die Beta Phase startet am 15. Januar</template>
+<template>
+  <!-- <TheNavbar /> -->
+  <main class="container m-4">Die Beta-Phase startet am 15. Januar</main>
+  <!-- <TheFooter /> -->
+</template>
 
 <script setup>
 import { ref, onErrorCaptured } from "vue";
