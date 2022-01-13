@@ -7,7 +7,8 @@
       <div class="my-2"><SelectSeason /></div>
 
       <ResultsTableGeneric
-        :results="results === 'NO_DATA' ? ['NO_DATA'] : results?.values"
+        :results="results?.values"
+        :no-data-flag="noDataFlag"
         :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
       />
     </div>
@@ -27,7 +28,11 @@ const title = ref("Seniorenwertung");
 
 setWindowName(title.value);
 
-const { fetchData, data: results } = useData(ApiService.getResultsSeniors);
+const {
+  fetchData,
+  data: results,
+  noDataFlag,
+} = useData(ApiService.getResultsSeniors);
 
 await fetchData({
   params: router.params,

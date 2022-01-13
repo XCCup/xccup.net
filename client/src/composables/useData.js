@@ -25,6 +25,7 @@ function createInstance(apiEndpoint) {
   const isLoading = ref(false);
   const currentRange = ref({ start: 0, end: 0 });
   const errorMessage = ref(null);
+  const noDataFlag = ref(false);
 
   // Getters
   const filterActive = computed(() =>
@@ -88,10 +89,13 @@ function createInstance(apiEndpoint) {
       } else {
         data.value = res?.data;
       }
+      noDataFlag.value = false;
     } catch (error) {
       console.error(error);
       if (error.response.status === 422) {
-        data.value = "NO_DATA";
+        // Mimic empty response
+        data.value = { values: [] };
+        noDataFlag.value = true;
         return;
       }
       data.value = null;
@@ -114,6 +118,7 @@ function createInstance(apiEndpoint) {
     filterDataBy,
     sortDataBy,
     data: readonly(data),
+    noDataFlag,
     errorMessage,
     currentRange: readonly(currentRange),
     numberOfTotalEntries: readonly(numberOfTotalEntries),

@@ -30,7 +30,7 @@ try {
 } catch (error) {
   if (error.response.status === 422) {
     // TODO: Is there a smarter way?
-    results.value = { values: [], noData: true };
+    results.value = { values: [], noDataFlag: true };
   }
 }
 </script>

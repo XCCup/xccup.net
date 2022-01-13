@@ -6,7 +6,8 @@
       <div class="my-2"><SelectSeason /></div>
 
       <ResultsTableGeneric
-        :results="results === 'NO_DATA' ? ['NO_DATA'] : results?.values"
+        :results="results?.values"
+        :no-data-flag="noDataFlag"
         :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
       />
     </div>
@@ -26,7 +27,11 @@ const title = ref("Luxemburg Championat");
 
 setWindowName(title.value);
 
-const { fetchData, data: results } = useData(ApiService.getResultsLux);
+const {
+  fetchData,
+  data: results,
+  noDataFlag,
+} = useData(ApiService.getResultsLux);
 
 await fetchData({
   params: router.params,
