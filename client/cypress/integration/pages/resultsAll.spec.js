@@ -40,7 +40,7 @@ describe("check results overall page", () => {
       .and("include.text", "65 P (10 km)");
   });
 
-  it.only("test flights of first season", () => {
+  it("test flights of first season", () => {
     const year = 2004;
 
     cy.visit(`${year}/einzelwertung`);
