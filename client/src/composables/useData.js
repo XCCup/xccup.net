@@ -76,7 +76,10 @@ function createInstance(apiEndpoint) {
         offset,
       });
       if (res.status != 200) throw res.status.text;
+
+      // What is the intention here?
       if (!res?.data) return;
+
       //Check if data supports pagination (data split in rows and count)
       if (res.data.rows) {
         data.value = res.data.rows;
@@ -85,11 +88,13 @@ function createInstance(apiEndpoint) {
       } else {
         data.value = res?.data;
       }
-      // errorMessage.value = null;
     } catch (error) {
       console.error(error);
-      // errorMessage.value =
-      //   "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
+      if (error.response.status === 404) {
+        data.value = "NO_DATA";
+        return;
+      }
+      data.value = null;
     } finally {
       isLoading.value = false;
     }

@@ -3,6 +3,7 @@
     <div v-if="results">
       <h3>Teamwertung {{ route.params.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div class="my-2"><BaseSelectSeason /></div>
       <ResultsTableTeams :results="results" />
     </div>
     <GenericError v-else />
@@ -14,6 +15,7 @@ import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
+import BaseSelectSeason from "../components/BaseSelectSeason.vue";
 
 const route = useRoute();
 const results = ref(null);
@@ -27,6 +29,9 @@ try {
   results.value = res.data;
   remark.value = results?.value?.constants?.REMARKS;
 } catch (error) {
-  console.log(error);
+  if (error.response.status === 404) {
+    // TODO: Is there a smarter way?
+    results.value = { values: [], noData: true };
+  }
 }
 </script>

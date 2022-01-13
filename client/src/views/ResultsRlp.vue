@@ -1,11 +1,13 @@
 <template>
   <div class="container-lg">
-    <div v-if="results?.values">
+    <div v-if="results">
       <h3>{{ title }} {{ router.params?.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div class="my-2"><BaseSelectSeason /></div>
+
       <ResultsTableGeneric
-        :results="results?.values"
-        :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
+        :results="results === 'NO_DATA' ? ['NO_DATA'] : results?.values"
+        :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
       />
     </div>
     <GenericError v-else />

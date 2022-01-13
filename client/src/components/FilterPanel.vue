@@ -1,18 +1,27 @@
 <template>
   <div v-if="filterOptions">
-    <button
-      id="filterButton"
-      type="button"
-      class="col btn btn-outline-primary btn-sm me-1 mb-3"
-      data-bs-toggle="modal"
-      data-bs-target="#filterModal"
-    >
-      Filter
-      <!-- TODO: Move spinner elsewhere= -->
-      <!-- Beware e.g. sorting in flights all table. Table should not disapper or change position -->
-      <BaseSpinner v-if="isLoading" />
-      <i v-else class="bi bi-funnel" data-cy="filter-icon"></i>
-    </button>
+    <nav>
+      <ul class="nav justify-content-start align-items-start">
+        <li class="nav-item">
+          <button
+            id="filterButton"
+            type="button"
+            class="col btn btn-outline-primary btn-sm me-1 mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#filterModal"
+          >
+            Filter
+            <!-- TODO: Move spinner elsewhere= -->
+            <!-- Beware e.g. sorting in flights all table. Table should not disapper or change position -->
+            <BaseSpinner v-if="isLoading" />
+            <i v-else class="bi bi-funnel" data-cy="filter-icon"></i>
+          </button>
+        </li>
+        <li class="nav-item">
+          <BaseSelectSeason />
+        </li>
+      </ul>
+    </nav>
 
     <div class="mb-3">
       <span
