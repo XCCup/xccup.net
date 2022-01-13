@@ -1,4 +1,4 @@
-export const ADMIN_EMAIL = "xccup-beta@stephanschoepe.de";
+export const ADMIN_EMAIL = "next@xccup.net";
 export const TRACK_COLORS = [
   "DarkSlateBlue",
   "DarkRed",

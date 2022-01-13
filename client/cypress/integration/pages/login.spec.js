@@ -15,7 +15,7 @@ describe("check login options", () => {
   });
 
   it("login/logout admin", () => {
-    cy.login("xccup-beta@stephanschoepe.de", "PW_CamilleSchaden");
+    cy.login("next@xccup.net", "PW_CamilleSchaden");
 
     cy.get("#userNavDropdownMenu").should("includes.text", "Camille");
     cy.get("#navbarAdminDashboard").should("exist");
