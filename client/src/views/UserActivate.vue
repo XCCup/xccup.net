@@ -3,6 +3,9 @@
     <!-- TODO: Prevent short display of the heading before redirecting -->
     <div class="container mb-3">
       <h3>Nutzerprofilaktivierung</h3>
+      <div v-if="state != 'incompleted' && state != 'fail'">
+        Dein Konto wurde aktiviert.
+      </div>
       <div v-if="state == 'incompleted'">
         Es wurde kein Konto zur Aktivierung gefunden…
       </div>
@@ -28,10 +31,10 @@ const router = useRouter();
 
 const { userId, token } = route.query;
 
-const state = ref("fail");
+const state = ref(null);
 
 if (!(userId && token)) {
-  // state.value = "incompleted";
+  state.value = "incompleted";
 } else {
   try {
     const res = await ApiService.activate(userId, token);

@@ -36,7 +36,7 @@
     </p>
     <p>
       Falls Du diese nicht erhältst schaue bitte im Spam Ordner nach oder wende
-      Dich an einen <BaseAdmin />
+      dich an einen <BaseAdmin />
     </p>
   </div>
 </template>
