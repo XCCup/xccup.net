@@ -15,7 +15,6 @@ import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
-import SelectSeason from "../components/SelectSeason.vue";
 
 const route = useRoute();
 const results = ref(null);
@@ -29,7 +28,7 @@ try {
   results.value = res.data;
   remark.value = results?.value?.constants?.REMARKS;
 } catch (error) {
-  if (error.response.status === 404) {
+  if (error.response.status === 422) {
     // TODO: Is there a smarter way?
     results.value = { values: [], noData: true };
   }

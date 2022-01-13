@@ -90,9 +90,7 @@ function createInstance(apiEndpoint) {
       }
     } catch (error) {
       console.error(error);
-      // TODO: Can we do this more elegant?
-      // Maybe another error code if the request ist actually valid but there is no matching year?
-      if (error.response.status === 404) {
+      if (error.response.status === 422) {
         data.value = "NO_DATA";
         return;
       }

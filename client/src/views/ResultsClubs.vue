@@ -32,7 +32,7 @@ try {
   remark.value = results?.value?.constants?.REMARKS;
 } catch (error) {
   console.log(error);
-  if (error.response.status === 404) {
+  if (error.response.status === 422) {
     // TODO: Is there a smarter way?
     results.value = { values: [], noData: true };
   }

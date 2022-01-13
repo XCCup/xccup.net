@@ -9,12 +9,13 @@ describe("check results overall page", () => {
     cy.visit(`${year}/einzelwertung`);
   });
 
-  it("test no filter no sorting", () => {
+  it("test no filter", () => {
     const expectedLength = 18;
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
     cy.get("table")
       .find("tr")
+      .first()
       .should("include.text", "Lois White")
       .and("include.text", "Die Moselfalken")
       .and("include.text", "530 P (97 km)");
