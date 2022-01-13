@@ -18,7 +18,7 @@
           </button>
         </li>
         <li class="nav-item">
-          <BaseSelectSeason />
+          <SelectSeason />
         </li>
       </ul>
     </nav>

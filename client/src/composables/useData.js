@@ -77,10 +77,10 @@ function createInstance(apiEndpoint) {
       });
       if (res.status != 200) throw res.status.text;
 
-      // What is the intention here?
+      // TODO: What is the intention here?
       if (!res?.data) return;
 
-      //Check if data supports pagination (data split in rows and count)
+      // Check if data supports pagination (data split in rows and count)
       if (res.data.rows) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
@@ -90,6 +90,8 @@ function createInstance(apiEndpoint) {
       }
     } catch (error) {
       console.error(error);
+      // TODO: Can we do this more elegant?
+      // Maybe another error code if the request ist actually valid but there is no matching year?
       if (error.response.status === 404) {
         data.value = "NO_DATA";
         return;

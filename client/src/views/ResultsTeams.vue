@@ -3,7 +3,7 @@
     <div v-if="results">
       <h3>Teamwertung {{ route.params.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
-      <div class="my-2"><BaseSelectSeason /></div>
+      <div class="my-2"><SelectSeason /></div>
       <ResultsTableTeams :results="results" />
     </div>
     <GenericError v-else />
@@ -15,7 +15,7 @@ import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
-import BaseSelectSeason from "../components/BaseSelectSeason.vue";
+import SelectSeason from "../components/SelectSeason.vue";
 
 const route = useRoute();
 const results = ref(null);

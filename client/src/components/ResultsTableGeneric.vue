@@ -58,7 +58,7 @@
       </table>
     </div>
     <div v-if="results?.length === 0">Keine Flüge gemeldet in diesem Jahr</div>
-    <div v-if="results[0] === 'NO_DATA'">
+    <div v-if="results[0] === 'NO_DATA'" data-cy="no-data">
       Keine Wertung für dieses Jahr vorhanden.
     </div>
   </section>

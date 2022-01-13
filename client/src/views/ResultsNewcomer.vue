@@ -3,7 +3,7 @@
     <div v-if="results">
       <h3>{{ title }} {{ router.params?.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
-      <div class="my-2"><BaseSelectSeason /></div>
+      <div class="my-2"><SelectSeason /></div>
 
       <ResultsTableGeneric
         :results="results === 'NO_DATA' ? ['NO_DATA'] : results?.values"
