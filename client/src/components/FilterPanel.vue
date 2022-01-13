@@ -17,7 +17,7 @@
             <i v-else class="bi bi-funnel" data-cy="filter-icon"></i>
           </button>
         </li>
-        <li class="nav-item">
+        <li v-if="!disableSeasonSelect" class="nav-item">
           <SelectSeason />
         </li>
       </ul>
@@ -261,6 +261,10 @@ const props = defineProps({
     default: false,
   },
   flightOptions: {
+    type: Boolean,
+    default: false,
+  },
+  disableSeasonSelect: {
     type: Boolean,
     default: false,
   },
