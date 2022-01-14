@@ -37,7 +37,7 @@ const {
   data: results,
   dataConstants,
   noDataFlag,
-} = useData(ApiService.getResultsOverall);
+} = useData("ResultsOverall");
 
 watchEffect(async () => {
   await fetchData(ApiService.getResultsOverall, {

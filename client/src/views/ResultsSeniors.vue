@@ -33,14 +33,12 @@ const {
   data: results,
   dataConstants,
   noDataFlag,
-} = useData(ApiService.getResultsSeniors);
+} = useData("ResultsSeniors");
 
-await fetchData({
+await fetchData(ApiService.getResultsSeniors, {
   params: router.params,
   queries: router.query,
 });
-
-console.log("DC: ", dataConstants);
 
 const remark = ref(dataConstants.value?.REMARKS);
 </script>

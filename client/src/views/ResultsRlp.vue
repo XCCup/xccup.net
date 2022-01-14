@@ -32,9 +32,9 @@ const {
   data: results,
   dataConstants,
   noDataFlag,
-} = useData(ApiService.getResultsRlp);
+} = useData("ResultsRlp");
 
-await fetchData({
+await fetchData(ApiService.getResultsRlp, {
   params: router.params,
   queries: router.query,
 });
