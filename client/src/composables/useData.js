@@ -53,8 +53,11 @@ function createInstance(viewComponentName) {
   };
 
   const clearOneFilter = (key) => {
-    //TODO: The cache and the data will be updated correctly, but the URL still shows the filter. WHY AND HOW???
-    delete filterOptionsCache.value[key];
+    // I don't know why, but this "simple" delete key, doesn't remove the key from the URL. The result is correct, but as mentioned the URL will not be updated.
+    // delete filterOptionsCache.value[key];
+    let query = Object.assign({}, filterOptionsCache.value);
+    delete query[key];
+    filterOptionsCache.value = query;
     routerPushView();
   };
 
