@@ -82,9 +82,13 @@ describe("check flights all page", () => {
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
+    cy.wait(1000);
     /*eslint-enable */
 
+    cy.get("[data-cy=no-flights-listed]").should(
+      "contain",
+      "Keine Flüge gemeldet in diesem Jahr"
+    );
     cy.get("[data-cy=filter-badge-clubId]").should("contain", expectedClub);
     cy.get("[data-cy=filter-badge-teamId]").should("contain", expectedTeam);
     cy.get("[data-cy=filter-badge-rankingClass]").should(
@@ -92,15 +96,11 @@ describe("check flights all page", () => {
       expectedRanking
     );
     cy.get("[data-cy=filter-badge-siteId]").should("contain", expectedSite);
-    cy.get("[data-cy=no-flights-listed]").should(
-      "contain",
-      "Keine Flüge gemeldet in diesem Jahr"
-    );
 
     cy.get("[data-cy=filter-badge-siteId]").within(() => {
       cy.get("[data-cy=filter-clear-one-button]").click({ force: true });
     });
-    // cy.get("[data-cy=filter-icon]").should("be.visible");
+    cy.get("[data-cy=filter-icon]").should("be.visible");
 
     /*eslint-disable */
     // TODO: Find better solution
@@ -124,19 +124,20 @@ describe("check flights all page", () => {
 
   it("test sort on points ascending", () => {
     const expectedName = "Ramona Gislason";
-    const expectedLength = 41;
+    const expectedLength = 40;
+
+    cy.visit(`${new Date().getFullYear()}/fluege`);
 
     cy.get("th").contains("Punkte").click();
     cy.get("[data-cy=filter-icon]").should("be.visible");
-    cy.get("th").contains("Punkte").dblclick();
-    // cy.get("[data-cy=filter-icon]").should("be.visible");
+    cy.get("th").contains("Punkte").click();
+    cy.get("[data-cy=filter-icon]").should("be.visible");
 
     /*eslint-disable */
     // TODO: Find better solution
     // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
+    // cy.wait(1000);
     /*eslint-enable */
-    cy.get("[data-cy=filter-icon]").should("be.visible");
     cy.get("table").find("tr").should("have.length", expectedLength);
 
     cy.get("table")
@@ -155,20 +156,18 @@ describe("check flights all page", () => {
     const expectedLength = 10;
 
     cy.get("#cyPaginationAmountSelect").select("10");
+    /*eslint-disable */
+    // TODO: Find better solution
+    cy.wait(1000);
+    /*eslint-enable */
+
+    cy.get("table").find("tr").should("have.length", expectedLength);
+    cy.get(".page-item").last().click({ force: true });
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     /*eslint-disable */
     // TODO: Find better solution
-    // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
-    /*eslint-enable */
-    cy.get("table").find("tr").should("have.length", expectedLength);
-    cy.get(".page-item").last().click();
-    // cy.get("[data-cy=filter-icon]").should("be.visible");
-
-    /*eslint-disable */
-    // TODO: Find better solution
-    // Wait till table is updated otherwise its() will always resolve to 25
+    // Wait or you could run into "element is detached from the DOM" error (see: https://github.com/cypress-io/cypress/issues/7306)
     cy.wait(1000);
     /*eslint-enable */
     cy.get("table")
