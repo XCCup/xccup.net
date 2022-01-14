@@ -120,7 +120,7 @@ function createInstance(viewComponentName) {
       noDataFlag.value = false;
     } catch (error) {
       console.error(error);
-      if (error.response.status === 422) {
+      if (error?.response?.status === 422) {
         // Mimic empty response
         data.value = [];
         noDataFlag.value = true;
