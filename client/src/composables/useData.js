@@ -74,7 +74,7 @@ function createInstance(viewComponentName) {
     routerPushView();
   };
 
-  const paginatBy = async (limit, offset) => {
+  const paginateBy = async (limit, offset) => {
     routerPushView(limit, offset);
   };
 
@@ -159,7 +159,7 @@ function createInstance(viewComponentName) {
     fetchData,
     filterDataBy,
     sortDataBy,
-    paginatBy,
+    paginateBy,
     data: readonly(data),
     dataConstants: readonly(dataConstants),
     noDataFlag,
