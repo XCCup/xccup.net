@@ -27,14 +27,9 @@ const title = ref("Landesmeisterschaft RLP");
 
 setWindowName(title.value);
 
-const {
-  fetchData,
-  data: results,
-  dataConstants,
-  noDataFlag,
-} = useData(ApiService.getResultsRlp);
+const { fetchData, data: results, dataConstants, noDataFlag } = useData();
 
-await fetchData({
+await fetchData(ApiService.getResultsRlp, {
   params: router.params,
   queries: router.query,
 });

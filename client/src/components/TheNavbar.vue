@@ -171,7 +171,7 @@
                 >
               </li>
               <li>
-                <router-link :to="{ name: 'Users' }" class="dropdown-item"
+                <router-link :to="{ name: 'ListUsers' }" class="dropdown-item"
                   >Registrierte Piloten</router-link
                 >
               </li>

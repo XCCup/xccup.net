@@ -1,4 +1,6 @@
+import { isInteger } from "lodash-es";
 import { ref, readonly, computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const DEFAULT_LIMIT = 50;
@@ -6,16 +8,20 @@ const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 const instances = {};
 
-export default (apiEndpoint) => {
-  if (!apiEndpoint) throw "No endpoint defined for useData";
+export default () => {
+  const route = useRoute();
 
-  if (!instances[apiEndpoint])
-    instances[apiEndpoint] = createInstance(apiEndpoint);
+  const viewComponentName = route.name;
+  if (!viewComponentName)
+    throw "There was an error assigning the route name to this useData instance";
 
-  return instances[apiEndpoint];
+  if (!instances[viewComponentName])
+    instances[viewComponentName] = createInstance(viewComponentName);
+
+  return instances[viewComponentName];
 };
 
-function createInstance(apiEndpoint) {
+function createInstance(viewComponentName) {
   const data = ref(null);
   const sortOptionsCache = ref(null);
   const filterOptionsCache = ref(null);
@@ -27,6 +33,8 @@ function createInstance(apiEndpoint) {
   const errorMessage = ref(null);
   const noDataFlag = ref(false);
   const dataConstants = ref(null);
+
+  const router = useRouter();
 
   // Getters
   const filterActive = computed(() =>
@@ -43,31 +51,48 @@ function createInstance(apiEndpoint) {
   // Mutations
   const clearFilter = () => {
     filterOptionsCache.value = null;
-    fetchData();
+    routerPushView();
   };
 
   const clearOneFilter = (key) => {
-    delete filterOptionsCache.value[key];
-    fetchData();
+    // I don't know why, but this "simple" delete key, doesn't remove the key from the URL. The result is correct, but as mentioned the URL will not be updated.
+    // delete filterOptionsCache.value[key];
+    let query = Object.assign({}, filterOptionsCache.value);
+    delete query[key];
+    filterOptionsCache.value = query;
+    routerPushView();
   };
 
   const sortDataBy = async (sortOptions) => {
     sortOptionsCache.value = sortOptions;
-    fetchData();
+    routerPushView();
   };
 
   const filterDataBy = (filterOptions) => {
+    //Check if any filter value was set
+    if (!Object.values(filterOptions).find((v) => !!v)) return;
+
     filterOptionsCache.value = filterOptions;
-    fetchData();
+    routerPushView();
+  };
+
+  const paginateBy = async (limit, offset) => {
+    routerPushView(limit, offset);
   };
 
   // Actions
-  const fetchData = async ({ params, queries, limit, offset = 0 } = {}) => {
+  const fetchData = async (apiEndpoint, { params, queries } = {}) => {
     try {
       if (params) paramsCache.value = params;
+      if (isInteger(queries?.limit)) limitCache.value = parseInt(queries.limit);
+      const offset =
+        queries?.offset && queries.offset > 0 ? parseInt(queries.offset) : 0;
+
+      // Delete pagination parameters from "normal" query parameters
+      if (queries?.limit) delete queries.limit;
+      if (queries?.offset) delete queries.offset;
       if (queries) filterOptionsCache.value = queries;
-      if (offset < 0) offset = 0;
-      if (limit) limitCache.value = limit;
+
       isLoading.value = true;
       const res = await apiEndpoint({
         ...paramsCache.value,
@@ -118,10 +143,25 @@ function createInstance(apiEndpoint) {
         : currentRange.value.start + limitCache.value - 1;
   };
 
+  function routerPushView(limit, offset) {
+    router.push({
+      name: viewComponentName,
+      query: {
+        ...filterOptionsCache.value,
+        limit,
+        offset,
+      },
+      params: {
+        ...paramsCache.value,
+      },
+    });
+  }
+
   return {
     fetchData,
     filterDataBy,
     sortDataBy,
+    paginateBy,
     data: readonly(data),
     dataConstants: readonly(dataConstants),
     noDataFlag,
@@ -135,5 +175,6 @@ function createInstance(apiEndpoint) {
     clearOneFilter,
     DEFAULT_LIMIT,
     LIMIT_OPTIONS,
+    limitCache,
   };
 }
