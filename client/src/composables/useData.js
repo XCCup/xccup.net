@@ -7,9 +7,10 @@ const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 const instances = {};
-const route = useRoute();
 
 export default () => {
+  const route = useRoute();
+
   const viewComponentName = route.name;
   if (!viewComponentName)
     throw "There was an error assigning the route name to this useData instance";
