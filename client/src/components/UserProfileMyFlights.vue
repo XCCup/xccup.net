@@ -4,7 +4,7 @@
   <div class="row mt-3">
     <div class="col-6"></div>
     <div class="col-6">
-      <PaginationPanel component-name="Profile" entry-name="Flüge" />
+      <PaginationPanel entry-name="Flüge" />
     </div>
   </div>
   <UserProfileMyFlightsTable />

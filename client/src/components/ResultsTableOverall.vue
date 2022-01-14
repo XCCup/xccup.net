@@ -90,7 +90,7 @@ import { useRouter } from "vue-router";
 
 import useData from "../composables/useData";
 
-const { data: flights, sortDataBy } = useData("FlightsAll");
+const { data: flights, sortDataBy } = useData();
 const router = useRouter();
 
 const currentSortColumnKey = ref(null);
