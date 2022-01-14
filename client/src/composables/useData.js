@@ -9,7 +9,8 @@ const LIMIT_OPTIONS = [10, 25, 50, 100];
 const instances = {};
 
 export default (viewComponentName) => {
-  if (!viewComponentName) throw "No view defined for useData";
+  if (!viewComponentName)
+    throw "No view defined for useData. Make sure you use the same name es defined for vue-router.";
 
   if (!instances[viewComponentName])
     instances[viewComponentName] = createInstance(viewComponentName);
