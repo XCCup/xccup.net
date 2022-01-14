@@ -3,6 +3,7 @@
     <div v-if="results">
       <h3>Vereinswertung {{ route.params.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div class="my-2"><SelectSeason /></div>
       <ResultsTableClubs :results="results" />
     </div>
     <GenericError v-else />
@@ -14,6 +15,8 @@ import ApiService from "@/services/ApiService.js";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
+
+// TODO: Why is the suspende spinner not working?
 
 const route = useRoute();
 const results = ref(null);
@@ -29,5 +32,9 @@ try {
   remark.value = results?.value?.constants?.REMARKS;
 } catch (error) {
   console.log(error);
+  if (error.response.status === 422) {
+    // TODO: Is there a smarter way?
+    results.value = { values: [], noDataFlag: true };
+  }
 }
 </script>

@@ -125,12 +125,11 @@ import ApiService from "@/services/ApiService";
 import { v4 as uuidv4 } from "uuid";
 import { remove, last } from "lodash-es";
 import BaseError from "./BaseError.vue";
-import Constants from "@/common/Constants";
+import { MAX_PHOTOS } from "@/common/Constants";
 import GLightbox from "glightbox";
 import "glightbox/dist/css/glightbox.css";
 
 // TODO: Backend allows to upload more and sometimes less in rare cases
-const MAX_PHOTOS = Constants.MAX_PHOTOS;
 
 const { getUserId } = useUser();
 const baseURL = getbaseURL();

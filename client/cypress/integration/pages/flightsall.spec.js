@@ -26,8 +26,14 @@ describe("check flights all page", () => {
 
   it("test flights of previous year", () => {
     const expectedLength = 1;
+    const year = new Date().getFullYear();
 
-    cy.visit(`${new Date().getFullYear() - 1}/fluege`);
+    cy.visit(`${year}/fluege`);
+
+    cy.get("#select-season").should("have.value", "2022");
+    cy.get("#select-season").select((year - 1).toString());
+    cy.url().should("include", `${year - 1}/fluege`);
+    cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
     cy.get("table")
@@ -40,6 +46,16 @@ describe("check flights all page", () => {
       .and("include.text", "Sky Apollo")
       .and("include.text", "10 km")
       .and("include.text", "65 P");
+  });
+
+  it("test flights of first season", () => {
+    const year = 2004;
+
+    cy.visit(`${year}/fluege`);
+    cy.get("[data-cy=no-flights-listed]").should(
+      "contain",
+      "Keine Flüge gemeldet in diesem Jahr"
+    );
   });
 
   it("test filter", () => {

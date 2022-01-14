@@ -36,9 +36,7 @@
     </p>
     <p>
       Falls Du diese nicht erhältst schaue bitte im Spam Ordner nach oder wende
-      Dich an einen
-      <!-- TODO: Add mailto link for better UX -->
-      <router-link :to="{ name: 'Imprint' }">Administrator</router-link>
+      dich an einen <BaseAdmin />
     </p>
   </div>
 </template>

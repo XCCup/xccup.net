@@ -3,7 +3,11 @@
     <h3>Registrierte Piloten</h3>
     <div class="row">
       <div class="col-6">
-        <FilterPanel :api-endpoint="ApiService.getUsers" :user-options="true" />
+        <FilterPanel
+          :api-endpoint="ApiService.getUsers"
+          :user-options="true"
+          :disable-season-select="true"
+        />
       </div>
       <div class="col-6">
         <PaginationPanel

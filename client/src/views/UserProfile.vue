@@ -1,8 +1,8 @@
 <template>
-  <div class="container my-3">
+  <div class="container-lg my-3">
     <div class="row">
       <!-- Profile Picture -->
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <div class="d-flex flex-column align-items-center text-center p-3">
           <div class="position-relative">
             <img class="rounded-circle" :src="avatarUrl" />
@@ -23,7 +23,7 @@
       </div>
 
       <!-- Tab Bar -->
-      <div class="col-lg-9">
+      <div class="col-lg-10">
         <nav>
           <div id="nav-tab" class="nav nav-tabs" role="tablist">
             <button

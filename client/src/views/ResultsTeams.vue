@@ -3,6 +3,7 @@
     <div v-if="results">
       <h3>Teamwertung {{ route.params.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div class="my-2"><SelectSeason /></div>
       <ResultsTableTeams :results="results" />
     </div>
     <GenericError v-else />
@@ -27,6 +28,9 @@ try {
   results.value = res.data;
   remark.value = results?.value?.constants?.REMARKS;
 } catch (error) {
-  console.log(error);
+  if (error.response.status === 422) {
+    // TODO: Is there a smarter way?
+    results.value = { values: [], noDataFlag: true };
+  }
 }
 </script>

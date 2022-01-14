@@ -214,7 +214,7 @@ import useUser from "@/composables/useUser";
 import useFlight from "@/composables/useFlight";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
-import Constants from "../common/Constants";
+import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 
 const { getUserId, hasElevatedRole } = useUser();
 const { flight } = useFlight();
@@ -226,7 +226,7 @@ const showEditButton = computed(() => {
     isAuthor &&
     checkIfDateIsDaysBeforeToday(
       flight.value.takeoffTime,
-      Constants.DAYS_FLIGHT_CHANGEABLE
+      DAYS_FLIGHT_CHANGEABLE
     )
   );
 });

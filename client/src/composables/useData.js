@@ -25,6 +25,8 @@ function createInstance(apiEndpoint) {
   const isLoading = ref(false);
   const currentRange = ref({ start: 0, end: 0 });
   const errorMessage = ref(null);
+  const noDataFlag = ref(false);
+  const dataConstants = ref(null);
 
   // Getters
   const filterActive = computed(() =>
@@ -76,20 +78,32 @@ function createInstance(apiEndpoint) {
         offset,
       });
       if (res.status != 200) throw res.status.text;
+
+      // TODO: What is the intention here?
       if (!res?.data) return;
-      //Check if data supports pagination (data split in rows and count)
+
+      // Check if data supports pagination (data split in rows and count)
       if (res.data.rows) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
         calcRanges(offset);
-      } else {
-        data.value = res?.data;
       }
-      // errorMessage.value = null;
+      if (res.data.values) {
+        data.value = res.data.values;
+      }
+      if (res.data.constants) {
+        dataConstants.value = res.data.constants;
+      }
+      noDataFlag.value = false;
     } catch (error) {
       console.error(error);
-      // errorMessage.value =
-      //   "Beim laden der Daten ist ein Fehler aufgetreten. Bitte lade die Seite erneut.";
+      if (error.response.status === 422) {
+        // Mimic empty response
+        data.value = [];
+        noDataFlag.value = true;
+        return;
+      }
+      data.value = null;
     } finally {
       isLoading.value = false;
     }
@@ -109,6 +123,8 @@ function createInstance(apiEndpoint) {
     filterDataBy,
     sortDataBy,
     data: readonly(data),
+    dataConstants: readonly(dataConstants),
+    noDataFlag,
     errorMessage,
     currentRange: readonly(currentRange),
     numberOfTotalEntries: readonly(numberOfTotalEntries),
