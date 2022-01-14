@@ -50,7 +50,7 @@
               aria-selected="false"
               data-cy="change-password-tab"
             >
-              Passwort & E-mail
+              Passwort & E-Mail
             </button>
             <button
               id="nav-hangar-tab"
@@ -128,11 +128,7 @@ import useUserProfile from "@/composables/useUserProfile";
 import { onMounted, ref, computed } from "vue";
 import { Tab } from "bootstrap";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
-import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
-import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
-import UserProfileMyFlights from "../components/UserProfileMyFlights.vue";
-import UserProfileChangeEmail from "../components/UserProfileChangeEmail.vue";
 import { useRouter } from "vue-router";
 
 setWindowName("Profil");
