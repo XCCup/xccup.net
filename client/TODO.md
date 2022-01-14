@@ -98,6 +98,7 @@
 - [ ] Early bird
 - [ ] "Late" bird
 - [ ] Greatest altitude (will always be FL100 so ditch this?)
+- [ ] Limit column width of club in ResultsClub view (maybe break line when length > x and newline)
 
 ### Pages
 

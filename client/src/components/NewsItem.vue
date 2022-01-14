@@ -33,7 +33,7 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import Constants from "@/common/Constants";
+import { MAX_NEWS_CHARACTERS } from "@/common/Constants";
 
 const props = defineProps({
   newsItem: {
@@ -47,10 +47,7 @@ const props = defineProps({
 });
 
 const showReadMore = computed(() => {
-  if (
-    props.newsItem.message.length > Constants.MAX_NEWS_CHARACTERS &&
-    props.snipText
-  ) {
+  if (props.newsItem.message.length > MAX_NEWS_CHARACTERS && props.snipText) {
     return true;
   } else {
     return false;
@@ -59,8 +56,8 @@ const showReadMore = computed(() => {
 
 const snippedText = computed(() => {
   const text = props.newsItem.message;
-  if (text.length > Constants.MAX_NEWS_CHARACTERS && snippingActive.value) {
-    return text.substring(0, Constants.MAX_NEWS_CHARACTERS - 80) + "…";
+  if (text.length > MAX_NEWS_CHARACTERS && snippingActive.value) {
+    return text.substring(0, MAX_NEWS_CHARACTERS - 80) + "…";
   } else {
     return text;
   }

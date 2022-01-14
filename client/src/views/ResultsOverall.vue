@@ -1,7 +1,8 @@
 <template>
   <div class="container-lg">
-    <div v-if="results?.values">
-      <h3>{{ title }} {{ router.params?.year }}</h3>
+    <h3>{{ title }} {{ router.params?.year }}</h3>
+
+    <div v-if="results">
       <p v-if="remark">Hinweis: {{ remark }}</p>
       <div class="row">
         <div class="col-6">
@@ -9,8 +10,9 @@
         </div>
       </div>
       <ResultsTableGeneric
-        :results="results?.values"
-        :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
+        :results="results"
+        :no-data-flag="noDataFlag"
+        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
       />
     </div>
     <GenericError v-else />
@@ -30,7 +32,12 @@ const remark = ref("");
 
 setWindowName(title.value);
 
-const { fetchData, data: results } = useData("ResultsOverall");
+const {
+  fetchData,
+  data: results,
+  dataConstants,
+  noDataFlag,
+} = useData(ApiService.getResultsOverall);
 
 watchEffect(async () => {
   await fetchData(ApiService.getResultsOverall, {
@@ -38,6 +45,6 @@ watchEffect(async () => {
     queries: router.query,
   });
   // Not yet used
-  remark.value = results?.value?.constants?.REMARKS;
+  remark.value = dataConstants.value?.REMARKS;
 });
 </script>

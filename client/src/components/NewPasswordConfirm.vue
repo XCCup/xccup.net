@@ -1,8 +1,7 @@
 <template>
   <div v-if="!errorMessage" class="mb-4">
-    <!-- TODO: Change this text as it sounds a little stiff -->
-    Das Rücksetzen Deines Passwortes wurde bestätigt. Wird senden Dir in kürze
-    ein neues Passwort zu 📯
+    Wir haben dir ein neues Passwort per E-Mail geschickt. Falls du dieses nicht
+    bekommen haben solltest wende dich bitte an einen <BaseAdmin />
   </div>
   <BaseError
     v-else

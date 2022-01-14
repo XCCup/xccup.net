@@ -3,7 +3,11 @@
     <h3>Registrierte Piloten</h3>
     <div class="row">
       <div class="col-6">
-        <FilterPanel component-name="ListUsers" :user-options="true" />
+        <FilterPanel
+          component-name="ListUsers"
+          :user-options="true"
+          :disable-season-select="true"
+        />
       </div>
       <div class="col-6">
         <PaginationPanel component-name="ListUsers" entry-name="Piloten" />
@@ -25,7 +29,6 @@ import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import useData from "../composables/useData";
 import { useRoute } from "vue-router";
-import BaseError from "../components/BaseError.vue";
 import { Modal } from "bootstrap";
 
 const route = useRoute();

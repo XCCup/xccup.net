@@ -71,7 +71,7 @@ module.exports.NOTIFY_CHANGE_EMAIL_TEXT = (firstName, newEmail) =>
 
 Du hast die Änderung deiner Email-Adresse angefordert. Wir haben dir eine Email mit einem Aktivierungslink an deine neue Email-Adresse (${newEmail}) geschickt.
 
-Falls du diese Änderung nicht angefordert hast wende dich bitte an xccup-beta@stephanschoepe.de
+Falls du diese Änderung nicht angefordert hast wende dich bitte an next@xccup.net
 
 Dein XCCup Team
     

@@ -18,7 +18,10 @@ const service = {
     });
 
     if (!details)
-      throw new XccupHttpError(404, `There is no valid configuration for the requested year of ${year}`);
+      throw new XccupHttpError(
+        422,
+        `There is no valid configuration for the requested year of ${year}`
+      );
 
     return details;
   },

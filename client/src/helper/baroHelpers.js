@@ -1,6 +1,4 @@
-import Constants from "@/common/Constants";
-
-const trackColors = Constants.TRACK_COLORS;
+import { TRACK_COLORS } from "@/common/Constants";
 
 // Process tracklog data for barogramm
 export function processBaroData(flight, buddyTracks) {
@@ -43,8 +41,8 @@ export function processBaroData(flight, buddyTracks) {
   allBaroData[1] = {
     label: "Pilot 1",
     data: baroData,
-    backgroundColor: trackColors[0],
-    borderColor: trackColors[0],
+    backgroundColor: TRACK_COLORS[0],
+    borderColor: TRACK_COLORS[0],
   };
   // Datasets for all aribuddies
   if (buddyTracks) {
@@ -65,8 +63,8 @@ export function processBaroData(flight, buddyTracks) {
       allBaroData[index + 2] = {
         label: element.buddyName,
         data: buddyBaro,
-        backgroundColor: trackColors[index + 1],
-        borderColor: trackColors[index + 1],
+        backgroundColor: TRACK_COLORS[index + 1],
+        borderColor: TRACK_COLORS[index + 1],
       };
     });
   }

@@ -88,13 +88,15 @@
     </div>
     <!-- TODO: Handle this more elegant -->
     <div v-if="!results">Fehler beim laden 🤯</div>
-    <div v-if="results?.values?.length === 0">
+    <div v-if="results?.values?.length === 0 && !results.noDataFlag">
       Keine Flüge gemeldet in diesem Jahr
+    </div>
+    <div v-if="results.noDataFlag">
+      Keine Wertung für dieses Jahr vorhanden.
     </div>
   </section>
 </template>
 
-import RankingClass from ""../RankingClass.vue";
 <script setup>
 defineProps({
   results: {

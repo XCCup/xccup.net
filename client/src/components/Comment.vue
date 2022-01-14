@@ -94,7 +94,7 @@ import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import { sanitizeComment } from "../helper/utils";
-import Constants from "@/common/Constants";
+import { GENERIC_ERROR } from "@/common/Constants";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment, submitComment } = useComments();
@@ -135,7 +135,7 @@ const onDeleteComment = async () => {
     errorMessage.value = null;
     deleteCommentModal.value.hide();
   } catch (error) {
-    errorMessage.value = Constants.GENERIC_ERROR;
+    errorMessage.value = GENERIC_ERROR;
     console.log(error);
   } finally {
     showSpinner.value = false;
@@ -162,7 +162,7 @@ const onSaveEditedMessage = async (message) => {
     errorMessage.value = null;
   } catch (error) {
     console.log(error);
-    errorMessage.value = Constants.GENERIC_ERROR;
+    errorMessage.value = GENERIC_ERROR;
   } finally {
     showSpinner.value = false;
   }
@@ -192,7 +192,7 @@ const onSubmitReplyMessage = async (message) => {
     closeReplyEditor();
     errorMessage.value = null;
   } catch (error) {
-    errorMessage.value = Constants.GENERIC_ERROR;
+    errorMessage.value = GENERIC_ERROR;
     console.log(error);
   } finally {
     showSpinner.value = false;
