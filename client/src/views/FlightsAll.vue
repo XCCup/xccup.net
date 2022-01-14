@@ -6,10 +6,10 @@
 
     <div class="row">
       <div class="col-6">
-        <FilterPanel component-name="FlightsAll" :flight-options="true" />
+        <FilterPanel :flight-options="true" />
       </div>
       <div class="col-6">
-        <PaginationPanel component-name="FlightsAll" entry-name="Flüge" />
+        <PaginationPanel entry-name="Flüge" />
       </div>
     </div>
     <BaseError :error-message="errorMessage" />
@@ -28,7 +28,7 @@ setWindowName("Streckenmeldungen");
 
 const route = useRoute();
 
-const { fetchData, errorMessage } = useData("FlightsAll");
+const { fetchData, errorMessage } = useData();
 
 watchEffect(() => {
   const params = route.params.year ? { year: route.params.year } : undefined;

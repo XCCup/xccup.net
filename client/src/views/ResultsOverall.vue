@@ -6,7 +6,7 @@
       <p v-if="remark">Hinweis: {{ remark }}</p>
       <div class="row">
         <div class="col-6">
-          <FilterPanel component-name="ResultsOverall" />
+          <FilterPanel />
         </div>
       </div>
       <ResultsTableGeneric
@@ -32,12 +32,7 @@ const remark = ref("");
 
 setWindowName(title.value);
 
-const {
-  fetchData,
-  data: results,
-  dataConstants,
-  noDataFlag,
-} = useData("ResultsOverall");
+const { fetchData, data: results, dataConstants, noDataFlag } = useData();
 
 watchEffect(async () => {
   await fetchData(ApiService.getResultsOverall, {

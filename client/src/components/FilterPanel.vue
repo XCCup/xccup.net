@@ -250,11 +250,7 @@ import ApiService from "@/services/ApiService.js";
 import { ref, reactive, watch, computed, onUnmounted } from "vue";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
-const props = defineProps({
-  componentName: {
-    type: String,
-    required: true,
-  },
+defineProps({
   // TODO: Selecting the modal body like this not effective and not idiot save
   userOptions: {
     type: Boolean,
@@ -271,7 +267,7 @@ const props = defineProps({
 });
 
 const { filterDataBy, filterActive, isLoading, activeFilters, clearOneFilter } =
-  useData(props.componentName);
+  useData();
 
 const selects = reactive({
   site: "",

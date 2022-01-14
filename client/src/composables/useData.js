@@ -1,6 +1,6 @@
 import { isInteger } from "lodash-es";
 import { ref, readonly, computed } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const DEFAULT_LIMIT = 50;
@@ -8,7 +8,8 @@ const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 const instances = {};
 
-export default (viewComponentName) => {
+export default () => {
+  const viewComponentName = useRoute().name;
   if (!viewComponentName)
     throw "No view defined for useData. Make sure you use the same name es defined for vue-router.";
 

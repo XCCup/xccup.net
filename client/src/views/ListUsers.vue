@@ -3,14 +3,10 @@
     <h3>Registrierte Piloten</h3>
     <div class="row">
       <div class="col-6">
-        <FilterPanel
-          component-name="ListUsers"
-          :user-options="true"
-          :disable-season-select="true"
-        />
+        <FilterPanel :user-options="true" :disable-season-select="true" />
       </div>
       <div class="col-6">
-        <PaginationPanel component-name="ListUsers" entry-name="Piloten" />
+        <PaginationPanel entry-name="Piloten" />
       </div>
     </div>
     <BaseError :error-message="errorMessage" />
@@ -32,7 +28,7 @@ import { useRoute } from "vue-router";
 import { Modal } from "bootstrap";
 
 const route = useRoute();
-const { fetchData, data: users, errorMessage } = useData("ListUsers");
+const { fetchData, data: users, errorMessage } = useData();
 
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);

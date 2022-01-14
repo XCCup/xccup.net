@@ -93,11 +93,7 @@
 import useData from "../composables/useData";
 import { ref, watch, computed } from "vue";
 
-const props = defineProps({
-  componentName: {
-    type: String,
-    required: true,
-  },
+defineProps({
   entryName: {
     type: String,
     default: "Einträge",
@@ -110,7 +106,7 @@ const {
   numberOfTotalEntries,
   LIMIT_OPTIONS,
   currentRange,
-} = useData(props.componentName);
+} = useData();
 
 const numberEntriesPerPage = ref(limitCache);
 
