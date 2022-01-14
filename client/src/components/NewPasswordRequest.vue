@@ -61,7 +61,7 @@ const onSubmit = async () => {
     // TODO: Anscheinend fliegt der Fehler schon vorher und die nachfolgende Zeile wird garnicht erreicht
     if (res.status != 200 && res.status != 404) throw res.statusText;
   } catch (error) {
-    if (error.response.status == 404) {
+    if (error?.response?.status == 404) {
       errorMessage.value = `Es wurde kein Konto zur E-Mail ${email.value} gefunden 🤨`;
     }
     console.error(error);

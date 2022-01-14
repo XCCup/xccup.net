@@ -273,23 +273,23 @@ const igcSelected = async (file) => {
     detailsCollapse.hide();
     console.log(error.response);
     if (
-      error.response.status === 400 &&
+      error?.response?.status === 400 &&
       error.response.data == "Invalid G-Record"
     )
       return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html). Bitte prüfe ob die Datei unverändert ist. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
     if (
-      error.response.status === 403 &&
+      error?.response?.status === 403 &&
       error.response.data.includes("already present")
     )
       return (errorMessage.value = `Dieser Flug ist bereits vorhanden. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
     if (
-      error.response.status === 403 &&
+      error?.response?.status === 403 &&
       error.response.data.includes("not possible to change")
     )
       return (errorMessage.value = `Dieser Flug ist älter als ${DAYS_FLIGHT_CHANGEABLE} Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
 
     if (
-      error.response.status === 403 &&
+      error?.response?.status === 403 &&
       error.response.data.includes("Found no takeoff")
     )
       // TODO: Find a way to make the email clickable without using v-html

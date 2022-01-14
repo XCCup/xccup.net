@@ -101,7 +101,7 @@ defineProps({
 });
 
 const {
-  paginatBy,
+  paginateBy,
   limitCache,
   numberOfTotalEntries,
   LIMIT_OPTIONS,
@@ -112,7 +112,7 @@ const numberEntriesPerPage = ref(limitCache);
 
 watch(numberEntriesPerPage, () => {
   //Don't use watchEffect because this will always run once on setup and cause a second unneccessary request
-  paginatBy(numberEntriesPerPage.value, currentRange.value.start - 1);
+  paginateBy(numberEntriesPerPage.value, currentRange.value.start - 1);
 });
 
 const multiplePagesExists = computed(
@@ -129,22 +129,22 @@ const disableIfNoNextEntriesAvailable = computed(() => {
 
 const onFirst = () => {
   if (disableIfNoPreviousEntriesAvailable.value) return;
-  paginatBy(numberEntriesPerPage.value, 0);
+  paginateBy(numberEntriesPerPage.value, 0);
 };
 const onPrevious = () => {
   if (disableIfNoPreviousEntriesAvailable.value) return;
-  paginatBy(
+  paginateBy(
     numberEntriesPerPage.value,
     currentRange.value.start - numberEntriesPerPage.value - 1
   );
 };
 const onNext = () => {
   if (disableIfNoNextEntriesAvailable.value) return;
-  paginatBy(numberEntriesPerPage.value, currentRange.value.end);
+  paginateBy(numberEntriesPerPage.value, currentRange.value.end);
 };
 const onLast = () => {
   if (disableIfNoNextEntriesAvailable.value) return;
-  paginatBy(
+  paginateBy(
     numberEntriesPerPage.value,
     numberOfTotalEntries.value - numberEntriesPerPage.value
   );

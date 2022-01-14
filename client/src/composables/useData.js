@@ -75,7 +75,7 @@ function createInstance(viewComponentName) {
     routerPushView();
   };
 
-  const paginatBy = async (limit, offset) => {
+  const paginateBy = async (limit, offset) => {
     routerPushView(limit, offset);
   };
 
@@ -121,7 +121,7 @@ function createInstance(viewComponentName) {
       noDataFlag.value = false;
     } catch (error) {
       console.error(error);
-      if (error.response.status === 422) {
+      if (error?.response?.status === 422) {
         // Mimic empty response
         data.value = [];
         noDataFlag.value = true;
@@ -160,7 +160,7 @@ function createInstance(viewComponentName) {
     fetchData,
     filterDataBy,
     sortDataBy,
-    paginatBy,
+    paginateBy,
     data: readonly(data),
     dataConstants: readonly(dataConstants),
     noDataFlag,

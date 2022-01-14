@@ -28,7 +28,7 @@ try {
   results.value = res.data;
   remark.value = results?.value?.constants?.REMARKS;
 } catch (error) {
-  if (error.response.status === 422) {
+  if (error?.response?.status === 422) {
     // TODO: Is there a smarter way?
     results.value = { values: [], noDataFlag: true };
   }
