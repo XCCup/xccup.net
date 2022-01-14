@@ -11,7 +11,7 @@ const instances = {};
 export default () => {
   const viewComponentName = useRoute().name;
   if (!viewComponentName)
-    throw "No view defined for useData. Make sure you use the same name es defined for vue-router.";
+    throw "No view defined for useData. Make sure you use the same name as defined for vue-router.";
 
   if (!instances[viewComponentName])
     instances[viewComponentName] = createInstance(viewComponentName);
