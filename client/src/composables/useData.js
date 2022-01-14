@@ -26,6 +26,7 @@ function createInstance(apiEndpoint) {
   const currentRange = ref({ start: 0, end: 0 });
   const errorMessage = ref(null);
   const noDataFlag = ref(false);
+  const dataConstants = ref(null);
 
   // Getters
   const filterActive = computed(() =>
@@ -86,15 +87,19 @@ function createInstance(apiEndpoint) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
         calcRanges(offset);
-      } else {
-        data.value = res?.data;
+      }
+      if (res.data.values) {
+        data.value = res.data.values;
+      }
+      if (res.data.constants) {
+        dataConstants.value = res.data.constants;
       }
       noDataFlag.value = false;
     } catch (error) {
       console.error(error);
       if (error.response.status === 422) {
         // Mimic empty response
-        data.value = { values: [] };
+        data.value = [];
         noDataFlag.value = true;
         return;
       }
@@ -118,6 +123,7 @@ function createInstance(apiEndpoint) {
     filterDataBy,
     sortDataBy,
     data: readonly(data),
+    dataConstants: readonly(dataConstants),
     noDataFlag,
     errorMessage,
     currentRange: readonly(currentRange),

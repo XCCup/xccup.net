@@ -7,9 +7,9 @@
       <div class="my-2"><SelectSeason /></div>
 
       <ResultsTableGeneric
-        :results="results?.values"
+        :results="results"
         :no-data-flag="noDataFlag"
-        :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
+        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
       />
     </div>
     <GenericError v-else />
@@ -31,6 +31,7 @@ setWindowName(title.value);
 const {
   fetchData,
   data: results,
+  dataConstants,
   noDataFlag,
 } = useData(ApiService.getResultsSeniors);
 
@@ -38,5 +39,8 @@ await fetchData({
   params: router.params,
   queries: router.query,
 });
-const remark = ref(results?.value?.constants?.REMARKS);
+
+console.log("DC: ", dataConstants);
+
+const remark = ref(dataConstants.value?.REMARKS);
 </script>
