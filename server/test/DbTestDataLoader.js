@@ -63,7 +63,11 @@ const dbTestData = {
       relations.push([User, require("../import/usersImport.json")]);
       relations.push([Team, require("../import/teamsImport.json")]);
       relations.push([Flight, require("../import/flightsImport.json")]);
-      relations.push([FlightFixes, findAllFlightFixes(2021)]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/a")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/b")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/c")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/d")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/e")]);
     }
 
     await addToDb(relations);
@@ -159,9 +163,12 @@ function adjustYearOfEveryFlight(flights) {
 
 function findAllFlightFixes(year) {
   const fs = require("fs");
-  const fixesFileNames = fs.readdirSync(`../import/fixes/${year}`);
+  const fixesDir = `${global.__basedir}/fixes/${year}`;
+  const fixesFileNames = fs.readdirSync(fixesDir);
   console.log("FOUND FIXES: ", fixesFileNames);
-  const fixesAsOneArray = fixesFileNames.map((file) => require(file));
+  const fixesAsOneArray = fixesFileNames.map((file) =>
+    require(fixesDir + "/" + file)
+  );
   console.log(fixesAsOneArray[0]);
   return fixesAsOneArray;
 }

@@ -20,6 +20,12 @@ const sequelize = new Sequelize(
   `postgres://${user}:${pw}@${host}:${port}/${postDb}`,
   {
     logging: (msg) => logger.debug(msg),
+    pool: {
+      max: 20,
+      min: 0,
+      acquire: 60000,
+      idle: 10000,
+    },
   }
 );
 
