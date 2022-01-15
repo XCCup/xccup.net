@@ -67,6 +67,13 @@ function createInstance(viewComponentName) {
     sortOptionsCache.value = sortOptions;
     routerPushView();
   };
+  const selectSeason = async (year) => {
+    paramsCache.value = {
+      ...paramsCache.value,
+      year,
+    };
+    routerPushView();
+  };
 
   const filterDataBy = (filterOptions) => {
     //Check if any filter value was set
@@ -89,9 +96,9 @@ function createInstance(viewComponentName) {
         queries?.offset && queries.offset > 0 ? parseInt(queries.offset) : 0;
 
       // Delete pagination parameters from "normal" query parameters
-      if (queries?.limit) delete queries.limit;
-      if (queries?.offset) delete queries.offset;
       if (queries) filterOptionsCache.value = queries;
+      if (queries?.limit) delete filterOptionsCache.value.limit;
+      if (queries?.offset) delete filterOptionsCache.value.offset;
 
       isLoading.value = true;
       const res = await apiEndpoint({
@@ -146,14 +153,8 @@ function createInstance(viewComponentName) {
   function routerPushView(limit, offset) {
     router.push({
       name: viewComponentName,
-      query: {
-        ...filterOptionsCache.value,
-        limit,
-        offset,
-      },
-      params: {
-        ...paramsCache.value,
-      },
+      query: { ...filterOptionsCache.value, limit, offset },
+      params: paramsCache.value,
     });
   }
 
@@ -162,6 +163,7 @@ function createInstance(viewComponentName) {
     filterDataBy,
     sortDataBy,
     paginateBy,
+    selectSeason,
     data: readonly(data),
     dataConstants: readonly(dataConstants),
     noDataFlag,

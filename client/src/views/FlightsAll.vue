@@ -31,7 +31,9 @@ const route = useRoute();
 const { fetchData, errorMessage } = useData();
 
 watchEffect(() => {
-  const params = route.params.year ? { year: route.params.year } : undefined;
-  fetchData(ApiService.getFlights, { params, queries: route.query });
+  fetchData(ApiService.getFlights, {
+    params: route.params,
+    queries: route.query,
+  });
 });
 </script>
