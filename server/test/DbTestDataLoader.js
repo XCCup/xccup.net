@@ -163,7 +163,7 @@ function adjustYearOfEveryFlight(flights) {
 
 function findAllFlightFixes(year) {
   const fs = require("fs");
-  const fixesDir = `${global.__basedir}/fixes/${year}`;
+  const fixesDir = `${global.__basedir}/import/fixes/${year}`;
   const fixesFileNames = fs.readdirSync(fixesDir);
   console.log("FOUND FIXES: ", fixesFileNames);
   const fixesAsOneArray = fixesFileNames.map((file) =>
