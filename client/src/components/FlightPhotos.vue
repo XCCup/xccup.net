@@ -256,7 +256,7 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     // Inform the parent about edits
     photosChanged();
   } catch (error) {
-    if (error.response.status == 429)
+    if (error?.response?.status == 429)
       errorMessage.value = "Du kannst maximal acht Photos hochladen";
 
     console.log(error);

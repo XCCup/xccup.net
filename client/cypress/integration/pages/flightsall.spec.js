@@ -32,6 +32,8 @@ describe("check flights all page", () => {
 
     cy.get("#select-season").should("have.value", "2022");
     cy.get("#select-season").select((year - 1).toString());
+
+    // Wait till table was updated
     cy.url().should("include", `${year - 1}/fluege`);
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
@@ -64,11 +66,15 @@ describe("check flights all page", () => {
     const expectedTeam = "Die Elstern";
     const expectedRanking = "GS Sport";
     const expectedSite = "Adelberg";
+    const expectedSiteId = "0466eb59-726f-4c98-bb42-a854e21edbe2";
     const expectedLength = 2;
 
     cy.get("#filterButton").click();
 
     // TODO: Test filters more?
+    // Wait till all filter data is loaded
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.get("#filterSelectName").select(expectedName);
     cy.get("#filterSelectClub").select(expectedClub);
     cy.get("#filterSelectTeam").select(expectedTeam);
@@ -77,14 +83,15 @@ describe("check flights all page", () => {
     cy.get("#filterSelectSite").select(expectedSite);
 
     cy.get("[data-cy=activate-filter-button]").click();
+
+    // Wait till table was updated
+    cy.url().should("contain", `siteId=${expectedSiteId}`);
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
-    /*eslint-disable */
-    // TODO: Find better solution
-    // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
-    /*eslint-enable */
-
+    cy.get("[data-cy=no-flights-listed]").should(
+      "contain",
+      "Keine Flüge gemeldet in diesem Jahr"
+    );
     cy.get("[data-cy=filter-badge-clubId]").should("contain", expectedClub);
     cy.get("[data-cy=filter-badge-teamId]").should("contain", expectedTeam);
     cy.get("[data-cy=filter-badge-rankingClass]").should(
@@ -92,21 +99,14 @@ describe("check flights all page", () => {
       expectedRanking
     );
     cy.get("[data-cy=filter-badge-siteId]").should("contain", expectedSite);
-    cy.get("[data-cy=no-flights-listed]").should(
-      "contain",
-      "Keine Flüge gemeldet in diesem Jahr"
-    );
 
     cy.get("[data-cy=filter-badge-siteId]").within(() => {
-      cy.get("[data-cy=filter-clear-one-button]").click();
+      cy.get("[data-cy=filter-clear-one-button]").click({ force: true });
     });
-    // cy.get("[data-cy=filter-icon]").should("be.visible");
 
-    /*eslint-disable */
-    // TODO: Find better solution
-    // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
-    /*eslint-enable */
+    // Wait till table was updated
+    cy.url().should("not.include", `siteId=${expectedSiteId}`);
+    cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table").find("tr").should("have.length", expectedLength);
 
@@ -124,19 +124,15 @@ describe("check flights all page", () => {
 
   it("test sort on points ascending", () => {
     const expectedName = "Ramona Gislason";
-    const expectedLength = 41;
+    const expectedLength = 40;
+
+    cy.visit(`${new Date().getFullYear()}/fluege`);
 
     cy.get("th").contains("Punkte").click();
     cy.get("[data-cy=filter-icon]").should("be.visible");
     cy.get("th").contains("Punkte").click();
-    // cy.get("[data-cy=filter-icon]").should("be.visible");
-
-    /*eslint-disable */
-    // TODO: Find better solution
-    // Wait till table is updated otherwise its() will always resolve to 25
-    cy.wait(1000);
-    /*eslint-enable */
     cy.get("[data-cy=filter-icon]").should("be.visible");
+
     cy.get("table").find("tr").should("have.length", expectedLength);
 
     cy.get("table")
@@ -155,22 +151,18 @@ describe("check flights all page", () => {
     const expectedLength = 10;
 
     cy.get("#cyPaginationAmountSelect").select("10");
+
+    // Wait till table was updated
+    cy.url().should("contain", "limit=10");
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
-    /*eslint-disable */
-    // TODO: Find better solution
-    // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
-    /*eslint-enable */
     cy.get("table").find("tr").should("have.length", expectedLength);
-    cy.get(".page-item").last().click();
+    cy.get(".page-item").last().click({ force: true });
+
+    // Wait till table was updated
+    cy.url().should("contain", "limit=10&offset=31");
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
-    /*eslint-disable */
-    // TODO: Find better solution
-    // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
-    /*eslint-enable */
     cy.get("table")
       .find("tr")
       .last()

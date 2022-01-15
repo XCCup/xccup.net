@@ -22,7 +22,6 @@ const route = useRoute();
 const selectedSeason = ref(route.params.year);
 const onSeasonSelected = () => {
   router.push({
-    // I am so smart!
     name: route.name,
     params: {
       year: selectedSeason.value,
