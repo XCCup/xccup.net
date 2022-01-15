@@ -22,8 +22,8 @@
         </li>
       </ul>
     </nav>
-
-    <div class="mb-3">
+    <!-- v-if enforced rerendering of filter badges -->
+    <div v-if="filterActive" class="mb-3">
       <span
         v-for="(filter, key) in activeFilters"
         :key="key"
