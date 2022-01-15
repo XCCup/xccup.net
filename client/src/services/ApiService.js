@@ -233,7 +233,7 @@ export default {
    */
   getSponsors(retrieveAll) {
     return retrieveAll
-      ? jwtInterceptor.get("/sponsors")
+      ? jwtInterceptor.get(baseURL + "/sponsors")
       : apiClient.get("/sponsors/public");
   },
 
@@ -249,7 +249,7 @@ export default {
    */
   getClubs(retrieveAll) {
     return retrieveAll
-      ? jwtInterceptor.get("/clubs")
+      ? jwtInterceptor.get(baseURL + "/clubs")
       : apiClient.get("/clubs/public");
   },
 
@@ -261,6 +261,14 @@ export default {
 
   getTeams(params) {
     return apiClient.get("teams/", { params });
+  },
+
+  getUserWithoutTeam() {
+    return apiClient.get("teams/availableUsers/");
+  },
+
+  addTeam(data) {
+    return jwtInterceptor.post(baseURL + "teams/", data);
   },
 
   // FlyingSites

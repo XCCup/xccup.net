@@ -46,8 +46,9 @@ import { ref, computed } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
 import BaseError from "./BaseError.vue";
 import { isStrongPassword } from "../helper/utils";
-import Swal from "sweetalert2";
+import useSwal from "../composables/useSwal";
 
+const { showSuccessToast } = useSwal();
 const password = ref("");
 const passwordConfirmation = ref("");
 
@@ -55,34 +56,18 @@ const passwordConfirmation = ref("");
 const showSpinner = ref(false);
 const errorMessage = ref(null);
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 4000,
-  timerProgressBar: true,
-});
-
-const inidcateSuccess = () => {
-  Toast.fire({
-    icon: "success",
-    title: "Passwort geändert",
-  });
-  showSpinner.value = false;
-  errorMessage.value = null;
-};
-
 const onSave = async () => {
   try {
     showSpinner.value = true;
     await ApiService.changePassword({ password: password.value });
-    inidcateSuccess();
+    showSuccessToast("Passwort geändert");
     password.value = "";
     passwordConfirmation.value = "";
   } catch (error) {
-    showSpinner.value = false;
     console.error(error);
     errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";
+  } finally {
+    showSpinner.value = false;
   }
 };
 

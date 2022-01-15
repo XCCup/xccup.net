@@ -220,9 +220,10 @@ import useUserSignup from "@/composables/useUserSignup";
 import { Modal } from "bootstrap";
 import BaseSlotModal from "../components/BaseSlotModal.vue";
 import PrivacyPolicy from "../components/PrivacyPolicy.vue";
-import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
+import useSwal from "../composables/useSwal";
 
+const { showSuccessAlert } = useSwal();
 const router = useRouter();
 const { userData, initialDate } = useUserSignup();
 
@@ -242,12 +243,9 @@ const privacyPolicyModal = ref(null);
 const compRulesModal = ref(null);
 
 const inidcateSuccess = async () => {
-  await Swal.fire({
-    icon: "success",
-    // TODO: Set color globally
-    confirmButtonColor: "#08556d",
-    text: "Um deinen Account zu aktivieren öffne bitte den Link den wir dir gerade per Email geschickt haben.",
-  });
+  await showSuccessAlert(
+    "Um deinen Account zu aktivieren öffne bitte den Link den wir dir gerade per Email geschickt haben."
+  );
   router.push({ name: "Home" });
 };
 

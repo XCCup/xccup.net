@@ -23,11 +23,11 @@ function execute(fixes) {
   // It's possible that some igc files have no baro data.
   // Baro data is the preferred option because of accurrucy.
   // If no baro data is available switch to gps data.
-  const noBaro =
+  const hasBaro =
     fixes[0].pressureAltitude && fixes[fixes.length - 1].pressureAltitude;
-  const heightDifferenceFunction = noBaro
-    ? gpsHeightDifference
-    : pressureHeightDifference;
+  const heightDifferenceFunction = hasBaro
+    ? pressureHeightDifference
+    : gpsHeightDifference;
 
   for (let index = 1; index < step; index++) {
     //Fill gaps at the start

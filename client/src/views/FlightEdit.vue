@@ -128,8 +128,9 @@ import { cloneDeep } from "lodash-es";
 import router from "../router";
 import { asyncForEach } from "../helper/utils";
 import { Modal } from "bootstrap";
-import Swal from "sweetalert2";
+import useSwal from "../composables/useSwal";
 
+const { showSuccessAlert } = useSwal();
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
 const { modifiedFlightData, unmodifiedFlightData, resetState } =
@@ -255,21 +256,12 @@ const updateSelectedGlider = () => {
   modifiedFlightData.value.glider = { ...newSelection };
 };
 
-const inidcateSuccess = async () => {
-  await Swal.fire({
-    icon: "success",
-    // TODO: Set color globally
-    confirmButtonColor: "#08556d",
-    text: "Flug gelöscht",
-  });
-};
-
 const onDeleteFlight = async () => {
   showSpinner.value = true;
   try {
     await ApiService.deleteFlight(flight.value.externalId);
     deleteFlightModal.value.hide();
-    await inidcateSuccess();
+    await showSuccessAlert("Flug gelöscht");
     router.push({ name: "Home" });
   } catch (error) {
     errorMessage.value = "Da ist leider was schief gelaufen";

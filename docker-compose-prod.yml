@@ -64,6 +64,37 @@ services:
       traefik.http.routers.xccup-pg-admin.priority: 100
       traefik.docker.network: traefik
 
+  traefik:
+    image: traefik
+    restart: unless-stopped
+    container_name: traefik
+    command:
+      #- "--log.level=DEBUG"
+      #- "--api.insecure=true"
+      - "--log.level=ERROR"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myresolver.acme.email=next@xccup.net"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    labels:
+      traefik.http.routers.redirs.rule: HostRegexp(`{host:.+}`)
+      traefik.http.routers.redirs.entrypoints: web
+      traefik.http.routers.redirs.middlewares: redirect-to-https
+      traefik.enable: true
+      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
+      traefik.http.middlewares.redirect-to-https.redirectscheme.permanent: true
+
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
 volumes:
   xccup-db:
 

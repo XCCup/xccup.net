@@ -3,13 +3,10 @@
     <h3>Registrierte Piloten</h3>
     <div class="row">
       <div class="col-6">
-        <FilterPanel :api-endpoint="ApiService.getUsers" :user-options="true" />
+        <FilterPanel :user-options="true" :disable-season-select="true" />
       </div>
       <div class="col-6">
-        <PaginationPanel
-          :api-endpoint="ApiService.getUsers"
-          entry-name="Piloten"
-        />
+        <PaginationPanel entry-name="Piloten" />
       </div>
     </div>
     <BaseError :error-message="errorMessage" />
@@ -23,16 +20,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import useData from "../composables/useData";
 import { useRoute } from "vue-router";
-import BaseError from "../components/BaseError.vue";
 import { Modal } from "bootstrap";
 
 const route = useRoute();
-const { fetchData, data: users, errorMessage } = useData(ApiService.getUsers);
+const { fetchData, data: users, errorMessage } = useData();
 
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);
@@ -49,6 +45,10 @@ const messageUser = (user) => {
   selectedUser.value = user;
   mailModal.show();
 };
-
-await fetchData({ params: { records: true }, queries: route.query });
+watchEffect(() => {
+  fetchData(ApiService.getUsers, {
+    params: { records: true },
+    queries: route.query,
+  });
+});
 </script>

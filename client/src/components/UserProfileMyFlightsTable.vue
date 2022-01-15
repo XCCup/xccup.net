@@ -69,7 +69,7 @@
                 v-if="
                   checkIfDateIsDaysBeforeToday(
                     flight.takeoffTime,
-                    Constants.DAYS_FLIGHT_CHANGEABLE
+                    DAYS_FLIGHT_CHANGEABLE
                   )
                 "
                 class="bi bi-trash text-danger clickable"
@@ -102,16 +102,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import { useRouter } from "vue-router";
-import useData from "@/composables/useData";
 import { Modal } from "bootstrap";
+import useData from "@/composables/useData";
 import ApiService from "@/services/ApiService";
 import useUser from "@/composables/useUser";
 import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
-import Constants from "../common/Constants";
+import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 
-const { data: flights, sortDataBy, fetchData } = useData(ApiService.getFlights);
+const { data: flights, sortDataBy, fetchData } = useData("Profile");
 const router = useRouter();
 const showSpinner = ref(false);
 const errorMessage = ref("");
@@ -129,7 +129,10 @@ const { getUserId } = useUser();
 
 const fetchFlights = async () => {
   // TODO: Spinner needed?
-  await fetchData({ params: {}, queries: { userId: getUserId.value } });
+  await fetchData(ApiService.getFlights, {
+    params: {},
+    queries: { userId: getUserId.value },
+  });
 };
 try {
   await fetchFlights();
@@ -139,6 +142,10 @@ try {
     name: "NetworkError",
   });
 }
+
+watchEffect(() => {
+  fetchFlights();
+});
 
 const flightToDelete = ref(null);
 

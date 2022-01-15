@@ -10,6 +10,12 @@ function getCurrentYear() {
   return new Date().getFullYear();
 }
 
+function findKeyByValue(objectToSearch, valueToFind) {
+  for (const [key, value] of Object.entries(objectToSearch)) {
+    if (value == valueToFind) return key;
+  }
+}
+
 function arrayRemove(array, elementToRemove) {
   array.splice(array.indexOf(elementToRemove), 1);
 }
@@ -42,4 +48,5 @@ exports.sleep = sleep;
 exports.getCurrentYear = getCurrentYear;
 exports.arrayRemove = arrayRemove;
 exports.waitTillDbHasSync = waitTillDbHasSync;
+exports.findKeyByValue = findKeyByValue;
 exports.generateRandomString = generateRandomString;

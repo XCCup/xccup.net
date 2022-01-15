@@ -3,21 +3,24 @@
     <div class="d-flex mb-2" data-cy="comment-header">
       <img :src="avatarUrl" class="rounded-circle" />
       <!-- TODO: Insert link -->
-      <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
+      <!-- <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
         comment.user.firstName + " " + comment.user.lastName
-      }}</a>
+      }}</a> -->
+      {{ comment.user.firstName + " " + comment.user.lastName }}
       <span
         class="ms-auto fw-light"
         :class="userPrefersDark ? 'text-light' : 'text-secondary'"
         ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
       /></span>
     </div>
+    <!-- eslint-disable vue/no-v-html -->
     <p
       v-if="!showCommentEditor"
       class="allow-white-spaces"
       data-cy="comment-body"
       v-html="commentWithLinks"
     ></p>
+    <!--eslint-enable-->
 
     <!-- Replies -->
     <div
@@ -33,6 +36,8 @@
       <CommentInlineEditor
         :textarea-content="editedComment"
         :use-edit-labels="true"
+        :show-spinner="showSpinner"
+        :error-message="errorMessage"
         @save-message="onSaveEditedMessage"
         @close-editor="closeCommentEditor"
       />
@@ -42,6 +47,8 @@
     <div v-if="showReplyEditor">
       <CommentInlineEditor
         :textarea-content="replyMessage"
+        :show-spinner="showSpinner"
+        :error-message="errorMessage"
         @save-message="onSubmitReplyMessage"
         @close-editor="closeReplyEditor"
       />
@@ -75,6 +82,8 @@
     :modal-id="comment.id"
     :confirm-action="onDeleteComment"
     :is-dangerous-action="true"
+    :show-spinner="showSpinner"
+    :error-message="errorMessage"
   />
 </template>
 
@@ -85,6 +94,7 @@ import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import { sanitizeComment } from "../helper/utils";
+import { GENERIC_ERROR } from "@/common/Constants";
 
 const { getUserId } = useUser();
 const { deleteComment, editComment, submitComment } = useComments();
@@ -95,6 +105,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+const showSpinner = ref(false);
+const errorMessage = ref(null);
 
 const commentWithLinks = computed(() => sanitizeComment(props.comment.message));
 
@@ -116,11 +129,16 @@ onMounted(() => {
 // Delete comment
 const onDeleteComment = async () => {
   try {
+    showSpinner.value = true;
     const res = await deleteComment(props.comment.id);
     if (res.status != 200) throw res.statusText;
+    errorMessage.value = null;
     deleteCommentModal.value.hide();
   } catch (error) {
+    errorMessage.value = GENERIC_ERROR;
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
 
@@ -129,6 +147,7 @@ const showCommentEditor = ref(false);
 const editedComment = ref(props.comment.message);
 
 const onEditComment = () => (showCommentEditor.value = true);
+
 const onSaveEditedMessage = async (message) => {
   const comment = {
     message: message,
@@ -136,11 +155,16 @@ const onSaveEditedMessage = async (message) => {
     id: props.comment.id,
   };
   try {
+    showSpinner.value = true;
     const res = await editComment(comment);
     if (res.status != 200) throw res.statusText;
     closeCommentEditor();
+    errorMessage.value = null;
   } catch (error) {
     console.log(error);
+    errorMessage.value = GENERIC_ERROR;
+  } finally {
+    showSpinner.value = false;
   }
 };
 
@@ -162,11 +186,16 @@ const onSubmitReplyMessage = async (message) => {
     relatedTo: props.comment.id,
   };
   try {
+    showSpinner.value = true;
     const res = await submitComment(comment);
     if (res.status != 200) throw res.statusText;
     closeReplyEditor();
+    errorMessage.value = null;
   } catch (error) {
+    errorMessage.value = GENERIC_ERROR;
     console.log(error);
+  } finally {
+    showSpinner.value = false;
   }
 };
 

@@ -38,8 +38,9 @@ Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
 Cypress.Commands.add("loginAdminUser", () => {
   cy.get("#loginNavButton").click();
   cy.url().should("include", "/login");
+  cy.get("h3").should("have.text", "Login");
 
-  cy.get("input#email").type("xccup-beta@stephanschoepe.de");
+  cy.get("input#email").type("next@xccup.net");
   cy.get("input#password").type("PW_CamilleSchaden");
 
   cy.get("button").contains("Anmelden").click();
@@ -53,6 +54,7 @@ Cypress.Commands.add("loginAdminUser", () => {
 Cypress.Commands.add("loginNormalUser", () => {
   cy.get("#loginNavButton").click();
   cy.url().should("include", "/login");
+  cy.get("h3").should("have.text", "Login");
 
   cy.get("input#email").type("blackhole+ramona@stephanschoepe.de");
   cy.get("input#password").type("PW_RamonaGislason");
@@ -68,11 +70,14 @@ Cypress.Commands.add("loginNormalUser", () => {
 Cypress.Commands.add("login", (email, password) => {
   cy.get("#loginNavButton").click();
   cy.url().should("include", "/login");
+  cy.get("h3").should("have.text", "Login");
 
   cy.get("input#email").type(email);
   cy.get("input#password").type(password);
 
   cy.get("button").contains("Anmelden").click();
+  // Wait will landing page was successfully loaded; Prevent to fast transition to another after login
+  cy.get("h1").should("includes.text", "XCCup");
 });
 
 /**

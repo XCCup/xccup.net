@@ -57,7 +57,12 @@
         </tbody>
       </table>
     </div>
-    <div v-if="results?.length === 0">Keine Flüge gemeldet in diesem Jahr</div>
+    <div v-if="results?.length === 0 && !noDataFlag">
+      Keine Flüge gemeldet in diesem Jahr
+    </div>
+    <div v-if="noDataFlag" data-cy="no-data">
+      Keine Wertung für dieses Jahr vorhanden.
+    </div>
   </section>
 </template>
 
@@ -70,6 +75,10 @@ defineProps({
   maxFlights: {
     type: Number,
     required: true,
+  },
+  noDataFlag: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>

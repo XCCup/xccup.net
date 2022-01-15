@@ -1,11 +1,14 @@
 <template>
   <div class="container-lg">
-    <div v-if="results?.values">
-      <h3>{{ title }} {{ router.params?.year }}</h3>
+    <div v-if="results">
+      <h3>{{ title }} {{ route.params?.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div class="my-2"><SelectSeason /></div>
+
       <ResultsTableGeneric
-        :results="results?.values"
-        :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
+        :results="results"
+        :no-data-flag="noDataFlag"
+        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
       />
     </div>
     <GenericError v-else />
@@ -19,17 +22,17 @@ import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
 
-const router = useRoute();
+const route = useRoute();
 const title = ref("Damenwertung");
 
 setWindowName(title.value);
 
-const { fetchData, data: results } = useData(ApiService.getResultsLadies);
+const { fetchData, data: results, dataConstants, noDataFlag } = useData();
 
-await fetchData({
-  params: router.params,
-  queries: router.query,
+await fetchData(ApiService.getResultsLadies, {
+  params: route.params,
+  queries: route.query,
 });
 // Not yet used
-const remark = ref(results?.value?.constants?.REMARKS);
+const remark = ref(dataConstants.value?.REMARKS);
 </script>

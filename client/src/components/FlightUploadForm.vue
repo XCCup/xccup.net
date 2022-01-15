@@ -170,13 +170,13 @@ import ApiService from "@/services/ApiService";
 import { useRouter } from "vue-router";
 import { ref, computed, onMounted } from "vue";
 import { Collapse } from "bootstrap";
-import Constants from "@/common/Constants";
+import { DAYS_FLIGHT_CHANGEABLE, ADMIN_EMAIL } from "@/common/Constants";
 import { asyncForEach, setWindowName } from "../helper/utils";
 import { Modal } from "bootstrap";
 
 const router = useRouter();
 
-setWindowName("Flugh hochladen");
+setWindowName("Flug hochladen");
 
 const collapse = ref(null);
 let detailsCollapse = null;
@@ -273,27 +273,27 @@ const igcSelected = async (file) => {
     detailsCollapse.hide();
     console.log(error.response);
     if (
-      error.response.status === 400 &&
+      error?.response?.status === 400 &&
       error.response.data == "Invalid G-Record"
     )
-      return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html). Bitte prüfe ob die Datei unverändert ist. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+      return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html). Bitte prüfe ob die Datei unverändert ist. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
     if (
-      error.response.status === 403 &&
+      error?.response?.status === 403 &&
       error.response.data.includes("already present")
     )
-      return (errorMessage.value = `Dieser Flug ist bereits vorhanden. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+      return (errorMessage.value = `Dieser Flug ist bereits vorhanden. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
     if (
-      error.response.status === 403 &&
+      error?.response?.status === 403 &&
       error.response.data.includes("not possible to change")
     )
-      return (errorMessage.value = `Dieser Flug ist älter als ${Constants.DAYS_FLIGHT_CHANGEABLE} Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+      return (errorMessage.value = `Dieser Flug ist älter als ${DAYS_FLIGHT_CHANGEABLE} Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
 
     if (
-      error.response.status === 403 &&
+      error?.response?.status === 403 &&
       error.response.data.includes("Found no takeoff")
     )
       // TODO: Find a way to make the email clickable without using v-html
-      return (errorMessage.value = `Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${Constants.ADMIN_EMAIL}`);
+      return (errorMessage.value = `Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
 
     errorMessage.value = "Da ist leider was schief gelaufen";
     console.log(error);

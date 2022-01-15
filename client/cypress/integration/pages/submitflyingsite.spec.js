@@ -7,12 +7,18 @@ describe("check flyingsites page", () => {
     cy.visit("/");
   });
 
-  it("test add new site button not visible if not logged in", () => {
-    cy.visit("/fluggebiete");
+  // it("test add new site button not visible if not logged in", () => {
+  //   cy.visit("/fluggebietsmeldung");
 
-    cy.get("h3").should("have.text", "Fluggebietsübersicht");
-    cy.get("[data-cy=add-site-button]").should("not.exist");
-    cy.get("#mapContainer").should("exist");
+  //   cy.get("h3").should("have.text", "Fluggebiets vorschlagen");
+  //   cy.get("[data-cy=add-site-button]").should("not.exist");
+  //   cy.get("#mapContainer").should("exist");
+  // });
+
+  it("test site access only allowed for logged in users", () => {
+    cy.visit("/fluggebietsmeldung");
+
+    cy.location("pathname").should("eq", "/login");
   });
 
   it("test propose new site and find it in admin site panel", () => {
@@ -25,11 +31,9 @@ describe("check flyingsites page", () => {
     const expectedLong = "7.270120454";
 
     cy.loginAdminUser();
-    cy.visit("/fluggebiete");
+    cy.visit("/fluggebietsmeldung");
 
     // Create a new proposal
-    cy.get("[data-cy=add-site-button]").click();
-
     cy.get("#club-select").select(expectedClub);
     cy.get("#site-name").type(expectedName);
     cy.get("#site-direction").type(expectedDirection);

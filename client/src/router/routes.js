@@ -172,16 +172,21 @@ export const Routes = [
   },
   {
     path: "/piloten",
-    name: "Users",
+    name: "ListUsers",
     meta: { toTop: true, smoothScroll: true, requiredAuth: true },
     component: () => import("../views/ListUsers.vue"),
   },
   {
-    path: "/:year/teams",
-    name: "Teams",
-    beforeEnter: validateRouteParamYear,
-    meta: { toTop: true, smoothScroll: true },
-    component: () => import("../views/ListTeams.vue"),
+    path: "/teammeldung",
+    name: "SubmitTeam",
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
+    component: () => import("../views/SubmitTeam.vue"),
+  },
+  {
+    path: "/fluggebietsmeldung",
+    name: "SubmitFlyingSite",
+    meta: { toTop: true, smoothScroll: true, requiredAuth: true },
+    component: () => import("../views/SubmitFlyingSite.vue"),
   },
   {
     path: "/fluggebiete",

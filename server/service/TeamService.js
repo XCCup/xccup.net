@@ -5,15 +5,14 @@ const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");
 const { TEAM_SIZE } = require("../config/result-determination-config");
-const logger = require("../config/logger");
+const { ROLE } = require("../constants/user-constants");
+const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
 const service = {
-  getAllNames: async (year) => {
+  getAllNames: async (year = getCurrentYear()) => {
     const teams = await Team.findAll({
       where: {
-        participantInSeasons: {
-          [Op.contains]: year ? [year] : [getCurrentYear()],
-        },
+        season: year,
       },
       attributes: ["id", "name"],
       order: [["name", "asc"]],
@@ -21,24 +20,26 @@ const service = {
     return teams;
   },
 
-  getAll: async ({ year = getCurrentYear(), includeStats } = {}) => {
+  getAll: async ({
+    year = getCurrentYear(),
+    includeMembers = true,
+    includeStats = false,
+  } = {}) => {
     const teams = await Team.findAll({
       where: {
-        participantInSeasons: {
-          [Op.contains]: [year],
-        },
+        season: year,
       },
       raw: true,
     });
 
-    const members = await Promise.all(
-      teams.map((team) => retrieveMembers(team))
-    );
+    const members = includeMembers
+      ? await Promise.all(teams.map((team) => retrieveMembers(team)))
+      : undefined;
     const stats = includeStats
       ? await Promise.all(teams.map((team) => retrieveStats(team, year)))
       : undefined;
     for (let i = 0; i < teams.length; i++) {
-      teams[i].members = members[i];
+      if (includeMembers) teams[i].members = members[i];
       if (includeStats) teams[i].stats = stats[i];
     }
 
@@ -72,9 +73,7 @@ const service = {
   countActive: async () => {
     return Team.count({
       where: {
-        participantInSeasons: {
-          [Op.contains]: [getCurrentYear()],
-        },
+        season: getCurrentYear(),
       },
     });
   },
@@ -82,7 +81,8 @@ const service = {
   create: async (teamName, memberIds) => {
     const team = {
       name: teamName,
-      participantInSeasons: [getCurrentYear()],
+      season: getCurrentYear(),
+      members: memberIds,
     };
     const newTeam = await Team.create(team);
     const members = await User.findAll({
@@ -117,8 +117,12 @@ const service = {
     const users = User.findAll({
       where: {
         teamId: null,
+        [Op.not]: {
+          role: ROLE.INACTIVE,
+        },
       },
-      attributes: ["name", "id"],
+      attributes: ["firstName", "lastName", "id"],
+      order: [["firstName", "asc"]],
     });
     return users;
   },
@@ -127,10 +131,10 @@ const service = {
     const availableUsers = await service.findAvailableUsers();
     const availableUserIds = availableUsers.map((user) => user.id);
     let result = memberIds.filter((id) => !availableUserIds.includes(id));
-    result.forEach((element) =>
-      logger.warn(`The user ${element} is already asigned to a team`)
-    );
-    return result.length;
+    if (result.length)
+      throw new XccupRestrictionError(
+        "Users are not allowed to be associated with multiple teams"
+      );
   },
 
   delete: async (id) => {

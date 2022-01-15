@@ -28,7 +28,9 @@
       />
     </div>
     <!-- TODO: Enter key should submit -->
-    <button type="submit" class="btn btn-primary">Anmelden</button>
+    <button type="submit" class="btn btn-primary">
+      Anmelden <BaseSpinner v-if="showSpinner" />
+    </button>
   </form>
 
   <div class="my-3">
@@ -47,6 +49,7 @@
 import useUser from "@/composables/useUser";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import BaseSpinner from "./BaseSpinner.vue";
 const { login } = useUser();
 const router = useRouter();
 
@@ -59,9 +62,11 @@ const props = defineProps({
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
+const showSpinner = ref(false);
 
 const handleSubmit = async () => {
   try {
+    showSpinner.value = true;
     const response = await login({
       email: email.value,
       password: password.value,
@@ -90,6 +95,8 @@ const handleSubmit = async () => {
         "Da ist was schief gegangen, bitte versuche es später noch mal.";
       console.log(error.response);
     }
+  } finally {
+    showSpinner.value = false;
   }
 };
 </script>

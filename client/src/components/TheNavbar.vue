@@ -171,15 +171,8 @@
                 >
               </li>
               <li>
-                <router-link :to="{ name: 'Users' }" class="dropdown-item"
+                <router-link :to="{ name: 'ListUsers' }" class="dropdown-item"
                   >Registrierte Piloten</router-link
-                >
-              </li>
-              <li>
-                <router-link
-                  :to="{ name: 'Teams', params: { year: currentYear } }"
-                  class="dropdown-item"
-                  >Teams</router-link
                 >
               </li>
               <li>
@@ -194,6 +187,31 @@
               </li>
             </ul>
           </li>
+          <li id="navbarForms" class="nav-item dropdown">
+            <a
+              id="navbarDropdown"
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              >Formulare</a
+            >
+            <ul class="dropdown-menu">
+              <li>
+                <router-link :to="{ name: 'SubmitTeam' }" class="dropdown-item"
+                  >Teammeldung</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  :to="{ name: 'SubmitFlyingSite' }"
+                  class="dropdown-item"
+                  >Fluggebietsmeldung</router-link
+                >
+              </li>
+            </ul>
+          </li>
+
           <li id="navbarPrivacy" class="nav-item dropdown">
             <router-link :to="{ name: 'Privacy' }" class="nav-link active"
               >Datenschutz</router-link

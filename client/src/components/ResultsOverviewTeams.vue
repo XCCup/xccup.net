@@ -3,13 +3,13 @@
     <tbody>
       <tr
         v-for="(team, index) in bestTeams.slice(0, 5)"
-        :key="team.teamId"
+        :key="team.id"
         :item="team"
         :index="index"
       >
         <th scope="row">{{ index + 1 }}</th>
         <!-- TODO: Add link to team -->
-        <td>{{ team.teamName }}</td>
+        <td>{{ team.name }}</td>
         <td class="no-line-break">{{ team.totalPoints }} P</td>
         <td class="no-line-break">{{ Math.floor(team.totalDistance) }} km</td>
       </tr>

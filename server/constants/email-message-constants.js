@@ -71,7 +71,7 @@ module.exports.NOTIFY_CHANGE_EMAIL_TEXT = (firstName, newEmail) =>
 
 Du hast die Änderung deiner Email-Adresse angefordert. Wir haben dir eine Email mit einem Aktivierungslink an deine neue Email-Adresse (${newEmail}) geschickt.
 
-Falls du diese Änderung nicht angefordert hast wende dich bitte an xccup-beta@stephanschoepe.de
+Falls du diese Änderung nicht angefordert hast wende dich bitte an next@xccup.net
 
 Dein XCCup Team
     
@@ -110,6 +110,21 @@ ${commentMessage}
 
 
 Falls Du in Zukunft keine Mails mehr zu neuen Kommentar erhalten möchtest, kannst Du dies in Deinem Profil einstellen.  
+
+Dein XCCup Team
+    
+`;
+
+module.exports.ADDED_TO_TEAM_TITLE = "Dein Team auf XCCup.net";
+
+module.exports.ADDED_TO_TEAM_TEXT = (teamName) =>
+  `Hallo!
+
+Du wurdest dem Team ${teamName} hinzugefügt.
+
+Wir wünschen Euch viel Erfolg in der neuen Saison!
+
+Falls Du garnicht in das Team aufgenommen werden wolltest, wende Dich bitte direkt an uns.
 
 Dein XCCup Team
     

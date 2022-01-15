@@ -21,7 +21,7 @@
             <td>{{ index + 1 }}</td>
 
             <td>
-              <strong>{{ team.teamName }}</strong>
+              <strong>{{ team.name }}</strong>
             </td>
             <td>
               <tr class="no-line-break">
@@ -32,7 +32,7 @@
               </tr>
               <tr class="no-line-break">
                 ({{
-                  Math.floor(team.totalDistance)
+                  Math.round(team.totalDistance)
                 }}
                 km)
               </tr>
@@ -59,7 +59,12 @@
                       name: 'Flight',
                       params: { flightId: member.flights[n - 1].externalId },
                     }"
-                    >{{ member.flights[n - 1].flightPoints }}
+                    ><span
+                      v-if="member.flights[n - 1].isDismissed"
+                      class="text-decoration-line-through fst-italic"
+                      >{{ member.flights[n - 1].flightPoints }}</span
+                    >
+                    <span v-else>{{ member.flights[n - 1].flightPoints }}</span>
                   </router-link>
                 </td>
                 <td v-else>-</td>
@@ -72,7 +77,7 @@
                     {{ member.totalPoints }} P
                   </strong>
                   <span class="no-line-break">
-                    ({{ Math.floor(member.totalDistance) }} km)
+                    ({{ Math.round(member.totalDistance) }} km)
                   </span>
                 </td>
               </tr>
@@ -83,13 +88,15 @@
     </div>
     <!-- TODO: Handle this more elegant -->
     <div v-if="!results">Fehler beim laden 🤯</div>
-    <div v-if="results?.values?.length === 0">
+    <div v-if="results?.values?.length === 0 && !results.noDataFlag">
       Keine Flüge gemeldet in diesem Jahr
+    </div>
+    <div v-if="results.noDataFlag">
+      Keine Wertung für dieses Jahr vorhanden.
     </div>
   </section>
 </template>
 
-import RankingClass from ""../RankingClass.vue";
 <script setup>
 defineProps({
   results: {

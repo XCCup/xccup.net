@@ -1,5 +1,7 @@
 version: "3.8"
 
+# To use the dicebear image clone the repo https://github.com/dicebear/api into the root folder of xccup.net
+
 services:
   dicebear:
       build:
@@ -9,7 +11,7 @@ services:
       container_name: xccup-dicebear
       restart: always
 
-      abels:
+      labels:
         traefik.enable: true
         traefik.http.routers.xccup-dicebear.rule: "Host(`next.xccup.net`) && PathPrefix(`/dicebear`)"
         traefik.http.middlewares.dicebearpathstrip.stripprefix.prefixes: "/dicebear"

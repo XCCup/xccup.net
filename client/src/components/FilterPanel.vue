@@ -1,20 +1,29 @@
 <template>
   <div v-if="filterOptions">
-    <button
-      id="filterButton"
-      type="button"
-      class="col btn btn-outline-primary btn-sm me-1 mb-3"
-      data-bs-toggle="modal"
-      data-bs-target="#filterModal"
-    >
-      Filter
-      <!-- TODO: Move spinner elsewhere= -->
-      <!-- Beware e.g. sorting in flights all table. Table should not disapper or change position -->
-      <BaseSpinner v-if="isLoading" />
-      <i v-else class="bi bi-funnel" data-cy="filter-icon"></i>
-    </button>
-
-    <div class="mb-3">
+    <nav>
+      <ul class="nav justify-content-start align-items-start">
+        <li class="nav-item">
+          <button
+            id="filterButton"
+            type="button"
+            class="col btn btn-outline-primary btn-sm me-1 mb-3"
+            data-bs-toggle="modal"
+            data-bs-target="#filterModal"
+          >
+            Filter
+            <!-- TODO: Move spinner elsewhere= -->
+            <!-- Beware e.g. sorting in flights all table. Table should not disapper or change position -->
+            <BaseSpinner v-if="isLoading" />
+            <i v-else class="bi bi-funnel" data-cy="filter-icon"></i>
+          </button>
+        </li>
+        <li v-if="!disableSeasonSelect" class="nav-item">
+          <SelectSeason />
+        </li>
+      </ul>
+    </nav>
+    <!-- v-if enforced rerendering of filter badges -->
+    <div v-if="filterActive" class="mb-3">
       <span
         v-for="(filter, key) in activeFilters"
         :key="key"
@@ -241,11 +250,7 @@ import ApiService from "@/services/ApiService.js";
 import { ref, reactive, watch, computed, onUnmounted } from "vue";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
-const props = defineProps({
-  apiEndpoint: {
-    type: Function,
-    required: true,
-  },
+defineProps({
   // TODO: Selecting the modal body like this not effective and not idiot save
   userOptions: {
     type: Boolean,
@@ -255,10 +260,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  disableSeasonSelect: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const { filterDataBy, filterActive, isLoading, activeFilters, clearOneFilter } =
-  useData(props.apiEndpoint);
+  useData();
 
 const selects = reactive({
   site: "",
@@ -396,7 +405,7 @@ const filterDescription = (key, filter) => {
 
 const genderDescription = (gender) => {
   if (gender === "M") return "Männlich";
-  if (gender === "W") return "Weiblich";
+  if (gender === "F") return "Weiblich";
   return "Divers";
 };
 

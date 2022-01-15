@@ -27,7 +27,10 @@ const sendMail = async (mailAddresses, content, replyTo) => {
     throw "content.title and content.text are not allowed to be empty";
 
   const message = createMessage(
-    process.env.MAIL_SERVICE_FROM_EMAIL,
+    {
+      name: process.env.MAIL_SERVICE_FROM_NAME,
+      address: process.env.MAIL_SERVICE_FROM_EMAIL,
+    },
     mailAddresses,
     content,
     replyTo
@@ -45,12 +48,11 @@ const sendMail = async (mailAddresses, content, replyTo) => {
 };
 
 function createMessage(from, toAddresses, content, replyTo) {
+  // TODO: Sent mails are not saved. this is out of scope of nodemailer. Use node-imap instead?
   const isArray = Array.isArray(toAddresses);
   const to = isArray ? undefined : toAddresses;
   const bcc = isArray ? toAddresses : undefined;
 
-  console.log("TO: ", to);
-  console.log("BCC: ", bcc);
   return {
     from,
     // TODO: Why are mails not received (or sent?) when "from" and "to" are identical?

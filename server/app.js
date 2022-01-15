@@ -1,3 +1,6 @@
+// Set global base dir
+global.__basedir = __dirname;
+
 //Set timezone of node server
 if (process.env.SERVER_TIMEZONE) process.env.TZ = process.env.SERVER_TIMEZONE;
 
@@ -14,6 +17,9 @@ const compression = require("compression");
 
 //Setup DB
 require("./config/postgres.js");
+
+//Start Cron Jobs
+require("./cron/CleanIgcStore");
 
 //Logging
 app.use(morganLogger);

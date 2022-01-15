@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: false, // It's allowed that the same name can appear in two different years
     },
-    participantInSeasons: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+    season: {
+      type: DataTypes.INTEGER,
     },
     // Create a complete new team entry if the compostion of members changes
     members: {
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  // ??? Don't make this association because a user can change his association in a later season ???
+  // // ??? Don't make this association because a user can change his association in a later season ???
   // Team.associate = (models) => {
   //   Team.hasMany(models.User, {
   //     as: "members",

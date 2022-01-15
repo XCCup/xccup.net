@@ -16,6 +16,8 @@ const {
   AIRSPACE_VIOLATION_TEXT,
   NEW_FLIGHT_COMMENT_TITLE,
   NEW_FLIGHT_COMMENT_TEXT,
+  ADDED_TO_TEAM_TITLE,
+  ADDED_TO_TEAM_TEXT,
 } = require("../constants/email-message-constants");
 const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
@@ -133,6 +135,26 @@ const service = {
     };
 
     return sendMail(user.email, content);
+  },
+
+  sendAddedToTeamMail: async (teamName, memberIds) => {
+    const users = await User.findAll({
+      where: {
+        id: memberIds,
+      },
+    });
+    const userMails = users.map((u) => u.email);
+
+    users.forEach((u) => {
+      logger.info(`MS: Send "Added to team mail" to user ${u.id}`);
+    });
+
+    const content = {
+      title: ADDED_TO_TEAM_TITLE,
+      text: ADDED_TO_TEAM_TEXT(teamName),
+    };
+
+    return sendMail(userMails, content);
   },
 
   sendNewFlightCommentMail: async (comment) => {

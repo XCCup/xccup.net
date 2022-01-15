@@ -1,16 +1,18 @@
 <template>
   <div class="container-lg">
-    <div v-if="results?.values">
-      <h3>{{ title }} {{ router.params?.year }}</h3>
+    <h3>{{ title }} {{ router.params?.year }}</h3>
+
+    <div v-if="results">
       <p v-if="remark">Hinweis: {{ remark }}</p>
       <div class="row">
         <div class="col-6">
-          <FilterPanel :api-endpoint="ApiService.getResultsOverall" />
+          <FilterPanel />
         </div>
       </div>
       <ResultsTableGeneric
-        :results="results?.values"
-        :max-flights="results?.constants?.NUMBER_OF_SCORED_FLIGHTS"
+        :results="results"
+        :no-data-flag="noDataFlag"
+        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
       />
     </div>
     <GenericError v-else />
@@ -22,19 +24,22 @@ import ApiService from "@/services/ApiService.js";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 
 const router = useRoute();
 const title = ref("Gesamtwertung");
+const remark = ref("");
 
 setWindowName(title.value);
 
-const { fetchData, data: results } = useData(ApiService.getResultsOverall);
+const { fetchData, data: results, dataConstants, noDataFlag } = useData();
 
-await fetchData({
-  params: router.params,
-  queries: router.query,
+watchEffect(async () => {
+  await fetchData(ApiService.getResultsOverall, {
+    params: router.params,
+    queries: router.query,
+  });
+  // Not yet used
+  remark.value = dataConstants.value?.REMARKS;
 });
-// Not yet used
-const remark = ref(results?.value?.constants?.REMARKS);
 </script>

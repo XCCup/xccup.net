@@ -1,8 +1,8 @@
 <template>
-  <div class="container my-3">
+  <div class="container-lg my-3">
     <div class="row">
       <!-- Profile Picture -->
-      <div class="col-lg-3">
+      <div class="col-lg-2">
         <div class="d-flex flex-column align-items-center text-center p-3">
           <div class="position-relative">
             <img class="rounded-circle" :src="avatarUrl" />
@@ -23,7 +23,7 @@
       </div>
 
       <!-- Tab Bar -->
-      <div class="col-lg-9">
+      <div class="col-lg-10">
         <nav>
           <div id="nav-tab" class="nav nav-tabs" role="tablist">
             <button
@@ -50,7 +50,7 @@
               aria-selected="false"
               data-cy="change-password-tab"
             >
-              Passwort & E-mail
+              Passwort & E-Mail
             </button>
             <button
               id="nav-hangar-tab"
@@ -128,11 +128,7 @@ import useUserProfile from "@/composables/useUserProfile";
 import { onMounted, ref, computed } from "vue";
 import { Tab } from "bootstrap";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
-import ModalUserAvatar from "../components/ModalUserAvatar.vue";
 import { Modal } from "bootstrap";
-import UserProfileChangePassword from "../components/UserProfileChangePassword.vue";
-import UserProfileMyFlights from "../components/UserProfileMyFlights.vue";
-import UserProfileChangeEmail from "../components/UserProfileChangeEmail.vue";
 import { useRouter } from "vue-router";
 
 setWindowName("Profil");

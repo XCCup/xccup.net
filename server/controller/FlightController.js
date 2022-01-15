@@ -160,7 +160,7 @@ router.delete(
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      const numberOfDestroyedRows = await service.delete(flight.id);
+      const numberOfDestroyedRows = await service.delete(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -331,8 +331,9 @@ async function checkIfFlightIsModifiable(flight, userId) {
 
   // Allow flight uploads which are older than 14 days when not in production (Needed for testing)
   const overwriteIfInProcessAndNotProduction =
-    flight.flightStatus == STATE.IN_PROCESS &&
-    process.env.NODE_ENV !== "production";
+    (flight.flightStatus == STATE.IN_PROCESS &&
+      process.env.NODE_ENV !== "production") ||
+    process.env.OVERRULE_ACTIVE === "true";
 
   const flightIsYoungerThanThreshold = moment(flight.takeoffTime)
     .add(DAYS_FLIGHT_CHANGEABLE, "days")
