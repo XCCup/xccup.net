@@ -35,26 +35,35 @@ const dbTestData = {
     adjustYearOfEveryFlight(flights);
     adjustTimesToToday(flights, 5);
 
+    // Real data without personal data
     const relations = [
       [Club, require("./testdatasets/clubs.json")],
-      [Team, require("./testdatasets/teams.json")],
       [FlyingSite, require("./testdatasets/flyingSites.json")],
-      [User, require("./testdatasets/users.json")],
-      [Flight, flights],
-      [FlightPhoto, require("./testdatasets/flightPhotos.json")],
-      [FlightComment, require("./testdatasets/comments.json")],
       [SeasonDetail, require("./testdatasets/seasonDetails.json")],
       [Airspace, require("./testdatasets/airspaces.json")],
-      [FlightFixes, require("./testdatasets/fixes.json")],
       [News, require("./testdatasets/news.json")],
       [Sponsor, require("./testdatasets/sponsors.json")],
       [Brand, require("./testdatasets/brands.json")],
       [Logo, require("./testdatasets/logos.json")],
     ];
+    // Test data with personal data
+    if (process.env.SERVER_IMPORT_TEST_DATA === "true") {
+      relations.push([Team, require("./testdatasets/teams.json")]);
+      relations.push([User, require("./testdatasets/users.json")]);
+      relations.push([Flight, flights]);
+      relations.push([
+        FlightPhoto,
+        require("./testdatasets/flightPhotos.json"),
+      ]);
+      relations.push([FlightComment, require("./testdatasets/comments.json")]);
+      relations.push([FlightFixes, require("./testdatasets/fixes.json")]);
+    }
+    // Real data with personal data
     if (process.env.SERVER_IMPORT_ORIGINAL_DATA === "true") {
       relations.push([User, require("../import/usersImport.json")]);
       relations.push([Team, require("../import/teamsImport.json")]);
       relations.push([Flight, require("../import/flightsImport.json")]);
+      relations.push([FlightFixes, findAllFlightFixes(2021)]);
     }
 
     await addToDb(relations);
@@ -147,5 +156,14 @@ function adjustYearOfEveryFlight(flights) {
 //   }
 //   return res;
 // }
+
+function findAllFlightFixes(year) {
+  const fs = require("fs");
+  const fixesFileNames = fs.readdirSync(`../import/fixes/${year}`);
+  console.log("FOUND FIXES: ", fixesFileNames);
+  const fixesAsOneArray = fixesFileNames.map((file) => require(file));
+  console.log(fixesAsOneArray[0]);
+  return fixesAsOneArray;
+}
 
 module.exports = dbTestData;
