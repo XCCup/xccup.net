@@ -27,7 +27,10 @@ const sendMail = async (mailAddresses, content, replyTo) => {
     throw "content.title and content.text are not allowed to be empty";
 
   const message = createMessage(
-    process.env.MAIL_SERVICE_FROM_EMAIL,
+    {
+      name: process.env.MAIL_SERVICE_FROM_NAME,
+      address: process.env.MAIL_SERVICE_FROM_EMAIL,
+    },
     mailAddresses,
     content,
     replyTo
