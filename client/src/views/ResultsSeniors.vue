@@ -1,6 +1,6 @@
 <template>
   <div class="container-lg">
-    <h3>{{ title }} {{ router.params?.year }}</h3>
+    <h3>{{ title }} {{ route.params?.year }}</h3>
 
     <div v-if="results">
       <p v-if="remark">Hinweis: {{ remark }}</p>
@@ -23,24 +23,17 @@ import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
 
-const router = useRoute();
+const route = useRoute();
 const title = ref("Seniorenwertung");
 
 setWindowName(title.value);
 
-const {
-  fetchData,
-  data: results,
-  dataConstants,
-  noDataFlag,
-} = useData(ApiService.getResultsSeniors);
+const { fetchData, data: results, dataConstants, noDataFlag } = useData();
 
-await fetchData({
-  params: router.params,
-  queries: router.query,
+await fetchData(ApiService.getResultsSeniors, {
+  params: route.params,
+  queries: route.query,
 });
-
-console.log("DC: ", dataConstants);
 
 const remark = ref(dataConstants.value?.REMARKS);
 </script>

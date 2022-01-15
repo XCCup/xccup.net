@@ -1,7 +1,7 @@
 <template>
   <div class="container-lg">
     <div v-if="results">
-      <h3>{{ title }} {{ router.params?.year }}</h3>
+      <h3>{{ title }} {{ route.params?.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
       <div class="my-2"><SelectSeason /></div>
 
@@ -22,21 +22,16 @@ import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
 
-const router = useRoute();
+const route = useRoute();
 const title = ref("Newcomerwertung");
 
 setWindowName(title.value);
 
-const {
-  fetchData,
-  data: results,
-  dataConstants,
-  noDataFlag,
-} = useData(ApiService.getResultsNewcomer);
+const { fetchData, data: results, dataConstants, noDataFlag } = useData();
 
-await fetchData({
-  params: router.params,
-  queries: router.query,
+await fetchData(ApiService.getResultsNewcomer, {
+  params: route.params,
+  queries: route.query,
 });
 const remark = ref(dataConstants.value?.REMARKS);
 </script>
