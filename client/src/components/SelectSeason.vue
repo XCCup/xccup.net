@@ -13,19 +13,16 @@
 
 <script setup>
 import { SEASONS } from "../common/Constants";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import { ref } from "vue";
+import useData from "../composables/useData";
 
-const router = useRouter();
+const { selectSeason } = useData();
+
 const route = useRoute();
 
 const selectedSeason = ref(route.params.year);
 const onSeasonSelected = () => {
-  router.push({
-    name: route.name,
-    params: {
-      year: selectedSeason.value,
-    },
-  });
+  selectSeason(selectedSeason.value);
 };
 </script>
