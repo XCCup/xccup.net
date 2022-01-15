@@ -351,7 +351,7 @@ async function findSiteRecordOfType(type) {
             [sequelize.Op.not]: null,
           },
         },
-        order: [["flightPoints", "DESC"]],
+        order: [["flightDistance", "DESC"]],
         limit: 1,
         include: {
           model: User,
