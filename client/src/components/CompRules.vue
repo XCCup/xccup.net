@@ -10,8 +10,8 @@
     <p>
       <strong>2. Teilnehmer</strong><br />
       Alle Mitglieder der teilnehmenden Vereine. Die Teilnehmer müssen im Besitz
-      einer in der BRD anerkannten und gültigen Berechtigung zum Überlandflug
-      sein.
+      einer in Deutschland anerkannten und gültigen Berechtigung zum
+      Überlandflug sein.
     </p>
     <p>
       <strong>3. Fluggeräte</strong><br />
@@ -19,10 +19,7 @@
     </p>
     <p>
       <strong>4. Gewertete Flüge</strong><br />
-      Flüge mit Start von Geländen der Region. Ausnahme: „Die mögliche
-      Wertungsstrecke beginnt mit Start oder Einflug ins XCCup Gebiet. Beim
-      Start außerhalb des XCCup Gebietes, wird aber bei Ausflug aus dem XC-Cup
-      Gebiet die Wertung beendet."
+      Flüge mit Start im XCCup Gebiet.
 
       <!-- TODO: Karte des XCCup Gebietes !  -->
     </p>
@@ -38,7 +35,7 @@
     </p>
     <p>
       <strong>5. Zeitraum</strong><br />
-      01.02.2021 bis 15.10.2021
+      15.02.2021 bis 15.10.2021
     </p>
     <p>
       <strong>6. Faktoren</strong><br />
@@ -66,12 +63,12 @@
         Performance Klasse (EN D + CC mit AR 7,0 und höher) Unterteilt in 2
         Wertungsklassen. Klasse Performance: Schirme mit EN-D und einer
         maximalen Streckung von 6,99. Klasse Competition: Schirme mit EN-D oder
-        CCC und einer Streckung von 7,0 und mehr. CC = Competion Class = ab
-        aspect ratio von 7 ausgelegt, nach Herstellerangaben.
+        CCC und einer Streckung von 7,0 und mehr. CCC = Competion Class = ab
+        ausgelegter Streckung von 7 ausgelegt, nach Herstellerangaben.
       </li>
     </ul>
-    Alle Gleitschirmklassen werden mit ihrem aspect ratio gekoppelt berechnet.
-    Siehe Faktoren Tabelle.<br />
+    Alle Gleitschirmklassen werden mit ihrer ausgelegter Streckung gekoppelt
+    berechnet. Siehe Faktoren Tabelle.<br />
     <strong>Gleitschirm Tandem</strong><br />
     (ab 5 Teilnehmern mit Wertungsflügen, sonst Sportklasse)
     <strong>Drachen Turm/turmlos</strong><br />
@@ -91,11 +88,12 @@
     </p>
     <p>
       <strong>11.Newcomerwertung</strong><br />
+      <!-- TODO: Klingt chaotisch -->
       Separate Wertung der Neuteilnehmer am XCCUP 2022 ab mind. 5 Teilnehmern
-      mit Wertungsflügen. Teilnehmer berechtigt sind nur Flügel bis B hoch Für
-      alle Klassen gilt: Die Streckung (aspect ratio = AR) wird nach
+      mit Wertungsflügen. Teilnehmer berechtigt sind nur Geräte bis EN-B hoch
+      Für alle Klassen gilt: Die Streckung (aspect ratio = AR) wird nach
       Herstellerangaben den entsprechenden Geräteklassen zugeordnet. Hier wird
-      die ausgelegte Streckung ( flat aspect ratio ) für die Zuordnung
+      die ausgelegte Streckung (flat aspect ratio) für die Zuordnung
       herangezogen.
     </p>
     <p>
@@ -137,13 +135,11 @@
     </p>
     <p>
       <strong>17. Meldungen/ Einreichung der Flüge</strong><br />
-      Direkt in die Online Datenbank des XCCup zusätzliche separate Wertung
-      aller Piloten ab 60 Jahre
+      Direkt in die Online Datenbank des XCCup.
     </p>
     <p>
       <strong>18. Dokumentation</strong><br />
-      innerhalb 2 Wochen nach Flugdatum Täuschungsversuche bei der vereinfachten
-      Doku werden mit Ausschluß vom Wettbewerb geahndet.
+      Innerhalb 2 Wochen nach Flugdatum.
     </p>
     <p>
       <strong>19. Wertung</strong><br />
