@@ -48,6 +48,7 @@ const sendMail = async (mailAddresses, content, replyTo) => {
 };
 
 function createMessage(from, toAddresses, content, replyTo) {
+  // TODO: Sent mails are not saved. this is out of scope of nodemailer. Use node-imap instead?
   const isArray = Array.isArray(toAddresses);
   const to = isArray ? undefined : toAddresses;
   const bcc = isArray ? toAddresses : undefined;
