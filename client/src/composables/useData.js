@@ -95,7 +95,7 @@ function createInstance(viewComponentName) {
       const offset =
         queries?.offset && queries.offset > 0 ? parseInt(queries.offset) : 0;
 
-      // Delete pagination parameters from "normal" query parameters
+      // Delete pagination parameters in cache; Otherwise the query object will trigger the watcher in the view
       if (queries) filterOptionsCache.value = queries;
       if (queries?.limit) delete filterOptionsCache.value.limit;
       if (queries?.offset) delete filterOptionsCache.value.offset;
