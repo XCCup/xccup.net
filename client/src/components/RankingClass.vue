@@ -1,9 +1,9 @@
 <template v-if="rankingClass">
   <i
+    ref="icon"
     class="bi bi-trophy"
     :class="rankingClass.key"
     data-bs-placement="top"
-    ref="icon"
     :title="rankingClass.description ?? rankingClass.shortDescription"
   ></i>
   {{ showDescription == true ? displayedDescription : "" }}

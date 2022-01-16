@@ -38,6 +38,7 @@
       15.02.2022 bis 15.10.2022
     </p>
     <p>
+      <!-- TODO: Tabelle oder Link einfügen "hier" -->
       <strong>6. Faktoren</strong><br />
       Details zu den Faktoren der Geräteklassen und Aufgaben sind hier
       zusammengefasst.
@@ -165,7 +166,7 @@
       Gesamtstrecke beträgt.
     </p>
     <p>
-      <strong>20.Sonderwertungen</strong><br />
+      <strong>20. Sonderwertungen</strong><br />
       2 Sonderwertungen in der Saison werden geflogen und gewertet. 20/a) Early
       Bird Wertung 20b) Letzte Flüge. Auswertung Einreichung der Flüge an die
       Online Datenbank des XCCup. Zwischenstand: immer aktuell auf der Homepage

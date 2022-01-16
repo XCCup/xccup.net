@@ -1,5 +1,5 @@
 <template>
-  <div class="container"><CompRules /></div>
+  <div class="container"><CompRules /> <CompFactors /></div>
 </template>
 
 <script setup></script>
