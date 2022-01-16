@@ -30,6 +30,9 @@ services:
     env_file: ./server/.env
     environment:
       - NODE_ENV=production
+    volumes:
+      - ./data:/home/node/app/data
+      - ./import:/home/node/app/import
     depends_on:
       - db
     labels:
@@ -55,6 +58,8 @@ services:
     container_name: xccup-db-admin
     restart: always
     env_file: ./server/.env
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
     labels:
       traefik.enable: true
       traefik.http.routers.xccup-pg-admin.rule: "Host(`xccup.stephanschoepe.de`)"
@@ -97,6 +102,7 @@ services:
 
 volumes:
   xccup-db:
+  pgadmin-data:
 
 networks:
   default:

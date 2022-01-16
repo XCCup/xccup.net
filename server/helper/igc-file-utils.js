@@ -41,7 +41,7 @@ function deleteIgcFile(igcPath) {
   logger.debug("IFU: Will delete igc " + fullfilepath);
   fs.unlink(fullfilepath, (err) => {
     if (err) {
-      logger.error(err);
+      logger.error("IFU: " + err);
     }
   });
 }
