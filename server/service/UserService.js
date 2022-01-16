@@ -195,8 +195,10 @@ const userService = {
   },
   requestNewPassword: async (email) => {
     const user = await User.findOne({
-      email: {
-        [Op.iLike]: email,
+      where: {
+        email: {
+          [Op.iLike]: email,
+        },
       },
     });
 
