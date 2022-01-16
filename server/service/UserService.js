@@ -195,7 +195,9 @@ const userService = {
   },
   requestNewPassword: async (email) => {
     const user = await User.findOne({
-      where: { email },
+      email: {
+        [Op.iLike]: email,
+      },
     });
 
     // Return empty object, otherwise destructering doesn't work
@@ -259,7 +261,7 @@ const userService = {
       logger.debug(`US: The password is valid`);
       return user;
     }
-    logger.warn(`US: The password is not valid`);
+    logger.warn(`US: The password for ${user.id} is not valid`);
     return null;
   },
   addGlider: async (userId, glider) => {

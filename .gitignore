@@ -28,6 +28,7 @@ client/cypress/videos/
 client/cypress/screenshots/
 server/data/
 server/igc/
+server/import/
 
 .yarn-cache
 *convertTo*.json
