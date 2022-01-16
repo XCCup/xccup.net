@@ -37,11 +37,11 @@ const sendMail = async (mailAddresses, content, replyTo) => {
   );
   try {
     const info = await mailClient.sendMail(message);
-    logger.debug("Message sent: " + info.messageId);
+    logger.debug("E: Message sent: " + info.messageId);
   } catch (error) {
     // Message failed: 451 4.3.0 pymilter: untrapped exception in pythonfilter
     // This error indicates that the netcup mailservice doesn't allow to send mails from a different domain then the domain of the mail user account.
-    logger.error(error);
+    logger.error("E: " + error);
   }
 
   return true;
