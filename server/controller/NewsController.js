@@ -8,6 +8,7 @@ const { getCache, setCache, deleteCache } = require("./CacheManager");
 
 const {
   checkStringObjectNotEmpty,
+  checkStringObjectNotEmptyNoEscaping,
   checkIsISO8601,
   checkOptionalIsBoolean,
   checkParamIsUuid,
@@ -61,7 +62,7 @@ router.post(
   "/",
   authToken,
   checkStringObjectNotEmpty("title"),
-  checkStringObjectNotEmpty("message"),
+  checkStringObjectNotEmptyNoEscaping("message"),
   checkStringObjectNotEmpty("icon"),
   checkIsISO8601("from"),
   checkIsISO8601("till"),
@@ -108,7 +109,7 @@ router.put(
   checkParamIsUuid("id"),
   checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("icon"),
-  checkStringObjectNotEmpty("message"),
+  checkStringObjectNotEmptyNoEscaping("message"),
   checkIsISO8601("from"),
   checkIsISO8601("till"),
   checkOptionalIsBoolean("sendByMail"),

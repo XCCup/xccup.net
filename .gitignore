@@ -33,3 +33,4 @@ server/import/
 .yarn-cache
 *convertTo*.json
 *Import.json
+server/fixes/
