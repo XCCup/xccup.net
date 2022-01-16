@@ -130,15 +130,15 @@
       Das Gesamtpreisgeld "Gpg" wird nach folgendem Schlüssel ermittelt:
       Festbetrag pro Verein: 1,50 EURO für jedes Mitglied, welches dem DHV zum
       Stichtag 01.01. gemeldet wurde (wird von den Vereinen im Voraus bezahlt)
-      vom Gpg werden die Werbungs- kosten (T-Shirts, Datenbank, Preisgelder
-      etc.) bestritten
+      vom Gpg werden die Werbungskosten (T-Shirts, Datenbank, Preisgelder etc.)
+      bestritten
     </p>
     <p>
       <strong>16. Preise</strong><br />
       75 % vom verbleibenden Gpg an die Einzelwertungssieger der jeweiligen
       Klassen 25 % vom verbleibenden Gpg an Sieger der Teamwertung. Es werden
-      Sachpreise, soweit vorhanden, an die jeweils Zweit und Drittplazierten der
-      Wertungen nach Geräteklassen vergeben.
+      Sachpreise, soweit vorhanden, an die jeweils Zweit- und Drittplazierten
+      der Wertungen nach Geräteklassen vergeben.
     </p>
     <p>
       <strong>17. Meldungen/ Einreichung der Flüge</strong><br />
@@ -157,7 +157,7 @@
       Startplatz zu Landeplatz über 3 Wendepunkte. Flaches Dreieck: Ein Flug
       kann als Dreiecksflug gewertet werden, wenn die Entfernung zwischen
       Startplatz und Landeplatz weniger als 20 % der durch die 3 Wegpunkte
-      definierten Dreiecks- strecke beträgt. Als Wertungsstrecke gilt dann die
+      definierten Dreiecksstrecke beträgt. Als Wertungsstrecke gilt dann die
       Dreiecksstrecke um die drei Wegpunkte reduziert um den Abstand zwischen
       Startplatz und Landeplatz. FAI-Dreieck: Es gelten die Regeln eines
       Dreiecksflugs, zusätzlich muss es sich um ein FAI-Dreieck nach der
@@ -191,7 +191,7 @@
       der Pilot die Einhaltung aller Auflagen bestätigt und eine schlüssige
       Erklärung geliefert, wird der Flug ohne weitere Prüfung in die Wertung
       übernommen. Flüge werden nach EINEM regelgerechten Einspruch überprüft und
-      ggf. aus der Wertung ge- nommen. Der XCCup behält sich vor, Flüge die eine
+      ggf. aus der Wertung genommen. Der XCCup behält sich vor, Flüge die eine
       Luftraumverletzung beinhalten, nicht in die Wertung zu nehmen.
     </p>
     <p>
