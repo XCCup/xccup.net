@@ -29,11 +29,11 @@
         <td>
           <RankingClass
             :ranking-class="{
-              key: 'hgFixed',
+              key: 'hgFlex',
               description: 'HG FAI-1 (Drachen Turm)',
             }"
+            :show-description="true"
           />
-          <span>HG FAI-1 (Drachen Turm)</span>
         </td>
         <td>2,20</td>
         <td>1,10</td>
@@ -48,7 +48,13 @@
       </tr>
       <tr>
         <td>
-          <span>HG FAI-1 (Drachen turmlos)</span>
+          <RankingClass
+            :ranking-class="{
+              key: 'hgFixed',
+              description: 'HG FAI-1 (Drachen turmlos)',
+            }"
+            :show-description="true"
+          />
         </td>
         <td>1,90</td>
         <td>1,10</td>
