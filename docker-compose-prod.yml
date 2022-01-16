@@ -30,6 +30,9 @@ services:
     env_file: ./server/.env
     environment:
       - NODE_ENV=production
+    volumes:
+      - ./data:/home/node/app/data
+      - ./import:/home/node/app/import
     depends_on:
       - db
     labels:
