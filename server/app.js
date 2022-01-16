@@ -100,13 +100,15 @@ app.use("*", (req, res) => {
 const PORT = process.env.SERVER_PORT || 3000;
 const server = app.listen(
   PORT,
-  logger.info(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  logger.info(
+    `A: Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
+  )
 );
 
 function shutdown() {
-  logger.info("Shutting down ...");
+  logger.info("A: Shutting down ...");
   server.close(() => {
-    logger.info("Exiting ...");
+    logger.info("A: Exiting ...");
     process.exit(0);
   });
 }

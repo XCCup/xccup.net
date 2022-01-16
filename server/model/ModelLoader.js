@@ -12,7 +12,7 @@ const load = (db, sequelize) => {
       );
     })
     .forEach((file) => {
-      logger.debug("Load model of file: " + file);
+      logger.debug("ML: Load model of file: " + file);
       const model = require(path.join(__dirname, file))(
         sequelize,
         Sequelize.DataTypes

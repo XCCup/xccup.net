@@ -59,9 +59,9 @@ const dbTestData = {
 
     await addToDb(relations);
 
-    logger.debug("Will fix invalid GeoJSON data of airspaces");
+    logger.debug("DTDL: Will fix invalid GeoJSON data of airspaces");
     await AirspaceService.fixInvalidGeoData();
-    logger.debug("Finished repair of GeoJSON");
+    logger.debug("DTDL: Finished repair of GeoJSON");
   },
 };
 
@@ -69,9 +69,9 @@ async function addToDb(relations) {
   for (let index = 0; index < relations.length; index++) {
     const model = relations[index][0];
     const dataset = relations[index][1];
-    logger.debug("Start adding " + model.name);
+    logger.debug("DTDL: Start adding " + model.name);
     await addDataset(model, dataset);
-    logger.debug("Finished adding " + model.name);
+    logger.debug("DTDL: Finished adding " + model.name);
   }
 }
 
@@ -79,8 +79,8 @@ async function addDataset(model, dataset) {
   await Promise.all(
     dataset.map(async (entry) => {
       await model.create(entry).catch((err) => {
-        if (err.errors) logger.error(err.errors[0].message);
-        else logger.error(err);
+        if (err.errors) logger.error("DTDL: " + err.errors[0].message);
+        else logger.error("DTDL: " + err);
       });
     })
   );
