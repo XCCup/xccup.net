@@ -17,4 +17,4 @@ module.exports.REMARKS_SENIOR = (startAge, bonusPerAge) =>
  * Remark text for team rankings
  */
 module.exports.REMARKS_TEAM = (dismisses) =>
-  `Die schlechtesten ${dismisses} Ergebnisse eines Teams werden gelöscht`;
+  `Die schlechtesten ${dismisses} Ergebnisse eines Teams werden gestrichen`;
