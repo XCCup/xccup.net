@@ -8,6 +8,11 @@ const TIME_FRAME = 45;
 function execute(fixes) {
   logger.debug("FSC: Start flight stats calculation");
 
+  if (!fixes[0] || !fixes[1]) {
+    logger.warn("FSC: Fixes are undefined");
+    return {};
+  }
+
   const resolution = (fixes[1].timestamp - fixes[0].timestamp) / 1000;
   const step = Math.ceil(TIME_FRAME / resolution);
 

@@ -2,13 +2,20 @@ const { IGC_STORE } = require("../constants/flight-constants");
 const path = require("path");
 const fs = require("fs");
 const logger = require("../config/logger");
+const { getCurrentYear } = require("./Utils");
 
-function createFileName(externalId, igcFileName, isTemp, stripFactor) {
+function createFileName(
+  externalId,
+  igcFileName,
+  isTemp,
+  stripFactor,
+  year = getCurrentYear().toString()
+) {
   const dataPath = process.env.SERVER_DATA_PATH;
   const store = IGC_STORE;
   const pathToFolder = isTemp
-    ? path.join(dataPath, store, "temp", externalId.toString())
-    : path.join(dataPath, store);
+    ? path.join(dataPath, store, "temp", externalId.toString(), year)
+    : path.join(dataPath, store, year);
 
   //Ensure that path exists
   fs.mkdirSync(pathToFolder, { recursive: true });

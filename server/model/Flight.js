@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     report: {
-      type: DataTypes.STRING(5000),
+      type: DataTypes.STRING(10000),
       //Default is VARCHAR(255)
     },
     airspaceComment: {
