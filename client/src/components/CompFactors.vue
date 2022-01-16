@@ -1,5 +1,7 @@
 <template>
   <h4>Faktoren</h4>
+  <!-- {{ Object.entries(seasonDetails.gliderClasses) }} -->
+
   <table class="table">
     <thead>
       <tr>
@@ -25,206 +27,41 @@
     </thead>
 
     <tbody>
-      <tr>
+      <tr v-for="[key, value] in Object.entries(gliderClasses)" :key="key">
         <td>
           <RankingClass
-            :ranking-class="{
-              key: 'hgFlex',
-              description: 'HG FAI-1 (Drachen Turm)',
-            }"
+            :ranking-class="{ ...value, key }"
             :show-description="true"
           />
         </td>
-        <td>2,20</td>
-        <td>1,10</td>
-        <td>2,42</td>
-        <td>24,8</td>
-        <td>1,70</td>
-        <td>3,74</td>
-        <td>16,0</td>
-        <td>1,90</td>
-        <td>4,18</td>
-        <td>14,4</td>
-      </tr>
-      <tr>
+        <td>{{ value.scoringMultiplicator }}</td>
+        <td>{{ flightTypeFactors.FREE }}</td>
         <td>
-          <RankingClass
-            :ranking-class="{
-              key: 'hgFixed',
-              description: 'HG FAI-1 (Drachen turmlos)',
-            }"
-            :show-description="true"
-          />
+          {{ round(value.scoringMultiplicator * flightTypeFactors?.FREE, 2) }}
         </td>
-        <td>1,90</td>
-        <td>1,10</td>
-        <td>2,09</td>
-        <td>28,7</td>
-        <td>1,70</td>
-        <td>3,23</td>
-        <td>18,6</td>
-        <td>1,90</td>
-        <td>3,61</td>
-        <td>16,6</td>
-      </tr>
-      <tr>
         <td>
-          <span>HG FAI-5 (Starrflügel)</span>
+          {{ minDistance(value.scoringMultiplicator, flightTypeFactors?.FREE) }}
         </td>
-        <td>1,50</td>
-        <td>1,10</td>
-        <td>1,65</td>
-        <td>36,4</td>
-        <td>1,50</td>
-        <td>2,25</td>
-        <td>26,7</td>
-        <td>1,80</td>
-        <td>2,70</td>
-        <td>22,2</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
+        <td>{{ flightTypeFactors.FLAT }}</td>
         <td>
-          <span>GS Sport low (EN A+B mit einer Streckung &lt;5,2)</span>
+          {{ round(value.scoringMultiplicator * flightTypeFactors?.FLAT, 2) }}
         </td>
-        <td>2,80</td>
-        <td>1,10</td>
-        <td>3,08</td>
-        <td>19,5</td>
-        <td>2,20</td>
-        <td>6,16</td>
-        <td>9,7</td>
-        <td>2,50</td>
-        <td>7,00</td>
-        <td>8,6</td>
-      </tr>
-      <tr>
         <td>
-          <span>GS Sport high (EN A+B mit einer Streckung &gt;=5,2)</span>
+          {{ minDistance(value.scoringMultiplicator, flightTypeFactors?.FLAT) }}
         </td>
-        <td>2,70</td>
-        <td>1,10</td>
-        <td>2,97</td>
-        <td>20,2</td>
-        <td>2,10</td>
-        <td>5,67</td>
-        <td>10,6</td>
-        <td>2,30</td>
-        <td>6,21</td>
-        <td>9,7</td>
-      </tr>
-      <tr>
+        <td>{{ flightTypeFactors.FAI }}</td>
         <td>
-          <span>GS Intermediate low (EN C mit einer Streckung &lt;6,4)</span>
+          {{ round(value.scoringMultiplicator * flightTypeFactors?.FAI, 2) }}
         </td>
-        <td>2,60</td>
-        <td>1,10</td>
-        <td>2,86</td>
-        <td>21,0</td>
-        <td>2,10</td>
-        <td>5,46</td>
-        <td>11,0</td>
-        <td>2,30</td>
-        <td>5,98</td>
-        <td>10,0</td>
-      </tr>
-      <tr>
         <td>
-          <span>GS Intermediate high (EN C mit einer Streckung &gt;=6,4)</span>
+          {{ minDistance(value.scoringMultiplicator, flightTypeFactors?.FAI) }}
         </td>
-        <td>2,50</td>
-        <td>1,10</td>
-        <td>2,75</td>
-        <td>21,8</td>
-        <td>2,10</td>
-        <td>5,25</td>
-        <td>11,4</td>
-        <td>2,30</td>
-        <td>5,75</td>
-        <td>10,4</td>
-      </tr>
-      <tr>
-        <td>
-          <span>GS Performance low (EN-D und einer Streckung von &lt;7,0)</span>
-        </td>
-        <td>2,40</td>
-        <td>1,10</td>
-        <td>2,64</td>
-        <td>22,7</td>
-        <td>2,10</td>
-        <td>5,04</td>
-        <td>11,9</td>
-        <td>2,30</td>
-        <td>5,52</td>
-        <td>10,9</td>
-      </tr>
-      <tr>
-        <td>
-          <span
-            >GS Competition high (EN-D oder CCC und einer Streckung von 7,0 und
-            mehr)</span
-          >
-        </td>
-        <td>2,20</td>
-        <td>1,10</td>
-        <td>2,42</td>
-        <td>24,8</td>
-        <td>2,00</td>
-        <td>4,40</td>
-        <td>13,6</td>
-        <td>2,20</td>
-        <td>4,84</td>
-        <td>12,4</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>
-          <span>GS TANDEM</span>
-        </td>
-        <td>3,00</td>
-        <td>1,10</td>
-        <td>3,30</td>
-        <td>18,2</td>
-        <td>2,25</td>
-        <td>6,75</td>
-        <td>8,9</td>
-        <td>2,75</td>
-        <td>8,25</td>
-        <td>7,3</td>
-      </tr>
-
-      <tr>
-        <td></td>
       </tr>
     </tbody>
 
     <tfoot>
       <tr>
-        <td>Mindestpunkte:60</td>
+        <td colspan="2">Mindestpunkte: {{ pointThresholdForFlight }}</td>
       </tr>
     </tfoot>
   </table>
@@ -232,13 +69,11 @@
   <b><u>Faktoren Aufgaben:</u></b>
 
   <br /><br />
-  <table class="TableMain" border="0" cellpadding="0" cellspacing="0">
+  <table>
     <tbody>
       <tr>
-        <td style="white-space: nowrap">
-          <img src="../images/Aufgaben/Aufg_ziel.png" />
-        </td>
-        <td style="width: 100%"><b>Freie Strecke (Zielflug)</b></td>
+        <td></td>
+        <td><b>Freie Strecke (Zielflug)</b></td>
       </tr>
       <tr>
         <td></td>
@@ -254,9 +89,7 @@
       </tr>
 
       <tr>
-        <td style="white-space: nowrap">
-          <img src="../images/Aufgaben/Aufg_jojo.png" />
-        </td>
+        <td></td>
         <td><b>Freie Strecke (JOJO)</b></td>
       </tr>
       <tr>
@@ -273,9 +106,7 @@
       </tr>
 
       <tr>
-        <td style="white-space: nowrap">
-          <img src="../images/Aufgaben/Aufg_dreieck.png" />
-        </td>
+        <td></td>
         <td><b>Geschlossenes Dreieck</b></td>
       </tr>
       <tr>
@@ -294,9 +125,7 @@
       </tr>
 
       <tr>
-        <td style="white-space: nowrap">
-          <img src="../images/Aufgaben/Aufg_fai.png" />
-        </td>
+        <td></td>
         <td><b>FAI-Dreieck</b></td>
       </tr>
       <tr>
@@ -344,3 +173,32 @@
     </tbody>
   </table>
 </template>
+<script setup>
+import ApiService from "@/services/ApiService.js";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { round } from "lodash-es";
+const router = useRouter();
+const gliderClasses = ref(null);
+const flightTypeFactors = ref(null);
+const pointThresholdForFlight = ref(null);
+
+try {
+  gliderClasses;
+  const { data: initialData } = await ApiService.getInitialData();
+  gliderClasses.value = initialData.seasonDetails.gliderClasses;
+  flightTypeFactors.value = initialData.seasonDetails.flightTypeFactors;
+  pointThresholdForFlight.value =
+    initialData.seasonDetails.pointThresholdForFlight;
+} catch (error) {
+  console.log(error);
+  router.push({
+    name: "NetworkError",
+  });
+}
+
+const minDistance = (multiplicator, factor) => {
+  if (!multiplicator || !factor) return;
+  return round(pointThresholdForFlight.value / (multiplicator * factor), 2);
+};
+</script>
