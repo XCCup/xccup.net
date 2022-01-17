@@ -27,3 +27,8 @@ const calculateSeasons = () => {
 };
 
 export const SEASONS = calculateSeasons();
+export const FLIGHT_TYPES = {
+  FREE: "Freie Strecke",
+  FLAT: "Flaches Dreieck",
+  FAI: "FAI Dreieck",
+};

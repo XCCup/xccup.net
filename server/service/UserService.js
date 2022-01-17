@@ -186,6 +186,13 @@ const userService = {
     if (!user) return {};
 
     logger.info("US: Will create a new password for " + user.email);
+
+    if (user.role == ROLE.INACTIVE) {
+      logger.info(
+        "US: The user was inactive. The user will now be considerd as active"
+      );
+      user.role = ROLE.NONE;
+    }
     const newPassword = generateRandomString();
     user.password = newPassword;
     user.token = "";

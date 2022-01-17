@@ -3,9 +3,9 @@ const router = express.Router();
 const service = require("../service/MailService");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const {
-  checkStringObjectNotEmpty,
   checkIsUuidObject,
   validationHasErrors,
+  checkStringObjectNotEmptyNoEscaping,
 } = require("./Validation");
 
 // @desc Send a mail to a single user
@@ -15,8 +15,8 @@ const {
 router.post(
   "/single",
   authToken,
-  checkStringObjectNotEmpty("content.title"),
-  checkStringObjectNotEmpty("content.text"),
+  checkStringObjectNotEmptyNoEscaping("content.title"),
+  checkStringObjectNotEmptyNoEscaping("content.text"),
   checkIsUuidObject("toUserId"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -43,8 +43,8 @@ router.post(
 router.post(
   "/all",
   authToken,
-  checkStringObjectNotEmpty("content.title"),
-  checkStringObjectNotEmpty("content.text"),
+  checkStringObjectNotEmptyNoEscaping("content.title"),
+  checkStringObjectNotEmptyNoEscaping("content.text"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
