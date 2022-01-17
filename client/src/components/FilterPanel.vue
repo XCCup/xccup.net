@@ -210,6 +210,14 @@
                 :options="rankings"
                 :add-empty-option="true"
               />
+              <BaseSelect
+                id="filterSelectType"
+                v-model="selects.flightType"
+                label="Aufgabentyp"
+                :show-label="true"
+                :options="flightTypes"
+                :add-empty-option="true"
+              />
             </div>
           </div>
           <div class="modal-footer">
@@ -248,7 +256,11 @@
 import useData from "../composables/useData";
 import ApiService from "@/services/ApiService.js";
 import { ref, reactive, watch, computed, onUnmounted } from "vue";
-import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
+import {
+  checkIfAnyValueOfObjectIsDefined,
+  findKeyByValue,
+} from "../helper/utils";
+import { FLIGHT_TYPES } from "../common/Constants";
 
 defineProps({
   // TODO: Selecting the modal body like this not effective and not idiot save
@@ -278,6 +290,7 @@ const selects = reactive({
   gender: "",
   name: "",
   user: "",
+  flightType: "",
 });
 const weekend = ref(false);
 const hikeAndFly = ref(false);
@@ -297,6 +310,7 @@ const sites = ref(null);
 const clubs = ref(null);
 const rankings = ref(null);
 const genders = ref(null);
+const flightTypes = ref(Object.values(FLIGHT_TYPES));
 
 try {
   const res = await ApiService.getFilterOptions();
@@ -329,8 +343,8 @@ const selectedFilters = computed(() => {
     gender: selects.gender ? selects.gender : undefined,
     userIds: findIdsByNameParts(),
     userId: findIdByUserName(),
-
     teamId: findIdByName(selects.team, teamData),
+    flightType: findKeyByValue(FLIGHT_TYPES, selects.flightType),
   };
 });
 

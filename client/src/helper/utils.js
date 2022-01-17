@@ -32,6 +32,10 @@ export function isInt(value) {
   return isInteger(parseInt(value));
 }
 
+export function findKeyByValue(object, value) {
+  return Object.keys(object).find((k) => object[k] == value);
+}
+
 export function isCoordinate(value) {
   if (!isString(value)) return;
   return value.match(/^-?\d{0,3}.\d{4,16}$/);
