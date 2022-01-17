@@ -9,14 +9,14 @@ function handleSequelizeUniqueError(error, req, res) {
 
 function handleXccupRestrictionError(error, req, res) {
   if (error.name?.includes("XccupRestrictionError")) {
-    logger.error(error, createMetaDataFromReq(req));
+    logger.warn(error, createMetaDataFromReq(req));
     return res.status(403).send(error.message);
   }
 }
 
 function handleXccupHttpError(error, req, res) {
   if (error.name === "XccupHttpError") {
-    logger.error(error, createMetaDataFromReq(req));
+    logger.warn(error, createMetaDataFromReq(req));
     return res.status(error.statusCode).send(error.clientMessage); //do not expose error messages in general to the client!
   }
 }

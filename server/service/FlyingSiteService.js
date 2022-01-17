@@ -149,11 +149,9 @@ const siteService = {
       return takeoffs[0];
     } else if (takeoffs.length > 1) {
       const errorMsg = `Found more than one takeoff in DB for lat: ${location.latitude} long: ${location.longitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
-      logger.error(errorMsg);
       throw new XccupRestrictionError(errorMsg);
     } else {
       const errorMsg = `Found no takeoff in DB for lat: ${location.latitude} long: ${location.longitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
-      logger.error(errorMsg);
       throw new XccupRestrictionError(errorMsg);
     }
   },
