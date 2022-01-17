@@ -120,7 +120,7 @@
     <!-- Details -->
     <button
       id="flightDetailsButton"
-      class="btn btn-primary btn-sm me-2 dropdown-toggle"
+      class="btn btn-primary btn-sm me-2 mb-2 dropdown-toggle"
       type="button"
       data-bs-toggle="collapse"
       data-bs-target="#flightDetailsCollapse"
@@ -128,7 +128,7 @@
       Details anzeigen
     </button>
     <a :href="igcDownloadUrl"
-      ><button type="button" class="btn btn-sm btn-outline-primary">
+      ><button type="button" class="btn btn-sm me-2 mb-2 btn-outline-primary">
         <i class="bi bi-cloud-download"></i> .igc
       </button></a
     >
@@ -136,12 +136,15 @@
     <router-link
       :to="{ name: 'FlightEdit', params: { id: flight.externalId } }"
     >
-      <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
+      <button
+        v-if="showEditButton"
+        class="btn btn-outline-primary btn-sm mb-2 me-2"
+      >
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
       <button
         v-if="!showEditButton && showAdminEditButton"
-        class="btn btn-danger btn-sm ms-2"
+        class="btn btn-danger btn-sm mb-2 me-2"
       >
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten (Admin)
       </button>
