@@ -28,7 +28,7 @@ router.get("/", authToken, async (req, res, next) => {
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const news = await service.getAll(true);
+    const news = await service.getAll({ includeFutureNews: true });
 
     setCache(req, news);
     res.json(news);
@@ -45,7 +45,7 @@ router.get("/public", async (req, res, next) => {
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const news = await service.getAll(false);
+    const news = await service.getAll({ includeFutureNews: false });
 
     setCache(req, news);
     res.json(news);
