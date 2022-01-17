@@ -8,10 +8,27 @@
             Kommentar verfassen:
           </label>
 
+          <div class="dropend my-2">
+            <button
+              id="dropdownMenuButton1"
+              class="btn btn-secondary btn-sm dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              data-bs-auto-close="outside"
+              aria-expanded="false"
+            >
+              <i class="bi bi-emoji-smile"></i>
+            </button>
+            <div class="dropdown-menu">
+              <VuemojiPicker @emoji-click="handleEmojiClick" />
+            </div>
+          </div>
+
           <textarea
+            ref="ta"
             v-model="message"
             class="form-control mb-2"
-            :rows="3"
+            :rows="4"
             data-cy="comment-editor"
             @input="saveMessageToLocalStorage"
           ></textarea>
@@ -36,9 +53,9 @@
 <script setup>
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
-
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import { VuemojiPicker } from "vuemoji-picker";
 
 const { getUserId, loggedIn } = useUser();
 const { submitComment } = useComments();
@@ -59,6 +76,7 @@ const onSubmitComment = async () => {
     if (res.status != 200) throw res.statusText;
     clearCommentEditorInput();
   } catch (error) {
+    // TODO: Do something
     console.log(error);
   }
 };
@@ -96,6 +114,23 @@ const getMessageFromLocalStorage = () => {
     } else {
       return "";
     }
+  }
+};
+
+// Emoji Picker
+const ta = ref(null);
+const handleEmojiClick = (detail) => {
+  if (!detail.unicode) return;
+  try {
+    ta.value.focus();
+    ta.value.setRangeText(
+      detail.unicode,
+      ta.value.selectionStart,
+      ta.value.selectionStart,
+      "end"
+    );
+  } catch (error) {
+    console.log(error);
   }
 };
 </script>
