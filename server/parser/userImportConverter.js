@@ -42,10 +42,6 @@ function findClubName(value, clubNames) {
   if (found) return found;
 
   switch (value) {
-    case "GVNAHEGLAN":
-      return "";
-    case "PC_WERRATAL_ESCHWEGE_EICHSFELD":
-      return "";
     case "1":
       return "Drachenflugclub Saar";
     case "3":
