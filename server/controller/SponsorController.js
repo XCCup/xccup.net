@@ -78,8 +78,7 @@ router.get(
         ? path.join(path.resolve(), logo.pathThumb)
         : path.join(path.resolve(), logo.path);
 
-      // TODO: Choose wisely for production
-      res.set("Cache-control", "public, max-age=7d");
+      res.set("Cache-control", "public, max-age=172800, immutable");
       return res.type(logo.mimetype).sendFile(fullfilepath);
     } catch (error) {
       next(error);
