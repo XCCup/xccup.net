@@ -36,7 +36,7 @@ const flightService = {
     year,
     site,
     siteId,
-    type,
+    flightType,
     rankingClass,
     limit,
     offset,
@@ -62,7 +62,7 @@ const flightService = {
       ],
       where: await createWhereStatement(
         year,
-        type,
+        flightType,
         rankingClass,
         startDate,
         endDate,
