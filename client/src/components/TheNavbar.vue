@@ -211,11 +211,6 @@
               </li>
             </ul>
           </li>
-          <li id="navbarImprint" class="nav-item dropdown">
-            <router-link :to="{ name: 'Imprint' }" class="nav-link active"
-              >Impressum</router-link
-            >
-          </li>
         </ul>
         <!-- Login button -->
 
