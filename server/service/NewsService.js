@@ -7,8 +7,8 @@ const service = {
     return News.findByPk(id);
   },
 
-  getAll: async (options) => {
-    const whereStatement = options.includeFutureNews
+  getAll: async ({ includeFutureNews } = {}) => {
+    const whereStatement = includeFutureNews
       ? {}
       : {
           from: {

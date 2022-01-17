@@ -26,9 +26,9 @@ const service = {
     return details;
   },
 
-  getAll: async (options) => {
+  getAll: async ({ retrieveOnlyYears } = {}) => {
     return SeasonDetail.findAll({
-      attributes: options.retrieveOnlyYears ? ["year"] : undefined,
+      attributes: retrieveOnlyYears ? ["year"] : undefined,
     });
   },
 
