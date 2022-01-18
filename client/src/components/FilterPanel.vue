@@ -255,7 +255,7 @@
 <script setup>
 import useData from "../composables/useData";
 import ApiService from "@/services/ApiService.js";
-import { ref, reactive, watch, computed, onUnmounted } from "vue";
+import { ref, reactive, computed, onUnmounted } from "vue";
 import {
   checkIfAnyValueOfObjectIsDefined,
   findKeyByValue,
@@ -352,12 +352,6 @@ const onActivate = async () => {
   filterDataBy(selectedFilters.value);
 };
 
-watch(filterActive, (newVal, oldVal) => {
-  // Clear all fields if an external source caused an reset
-  // TODO: Sometimes this clears without known reason
-  if (!oldVal && newVal) onClear();
-});
-
 const findIdByName = (selectObject, initalData) => {
   return selectObject
     ? initalData.find((e) => e.name == selectObject).id
@@ -410,6 +404,7 @@ const filterDescription = (key, filter) => {
   if (key == "gender") return genderDescription(filter);
   if (key == "region") return filter;
   if (key == "teamId") return teamData.find((e) => e.id == filter).name;
+  if (key == "flightType") return FLIGHT_TYPES[filter];
 
   // This is inconsistent but currently there is no other way to show the actual search value of "name"
   if (key == "userIds") return selects.name.length > 0 ? selects.name : "Name";

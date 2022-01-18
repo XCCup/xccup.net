@@ -43,7 +43,7 @@ export const Routes = [
     component: () => import("../views/FlightEdit.vue"),
   },
   {
-    path: "/:year?/fluege/",
+    path: "/fluege/",
     name: "FlightsAll",
     meta: { toTop: true },
     component: () => import("../views/FlightsAll.vue"),

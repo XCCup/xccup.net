@@ -22,7 +22,7 @@ import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import useData from "@/composables/useData";
 import { useRoute } from "vue-router";
-import { watchEffect } from "vue-demi";
+import { watch } from "vue";
 
 setWindowName("Streckenmeldungen");
 
@@ -30,17 +30,18 @@ const route = useRoute();
 
 const { fetchData, errorMessage } = useData();
 
-// Prevent to send a request query with an empty year parameter
-const params = route.params.year ? route.params : undefined;
+// Await is necessary to trigger the suspense feature
 await fetchData(ApiService.getFlights, {
-  params,
   queries: route.query,
 });
 
-watchEffect(() => {
-  fetchData(ApiService.getFlights, {
-    params,
-    queries: route.query,
-  });
-});
+// Refetch data if a query param changes
+watch(
+  () => route.query,
+  () => {
+    fetchData(ApiService.getFlights, {
+      queries: route.query,
+    });
+  }
+);
 </script>

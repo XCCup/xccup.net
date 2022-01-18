@@ -23,9 +23,7 @@ export default () => {
 
 function createInstance(viewComponentName) {
   const data = ref(null);
-  const sortOptionsCache = ref(null);
-  const filterOptionsCache = ref(null);
-  const paramsCache = ref(null);
+  const queryCache = ref({});
   const limitCache = ref(DEFAULT_LIMIT);
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
@@ -35,81 +33,60 @@ function createInstance(viewComponentName) {
   const dataConstants = ref(null);
 
   const router = useRouter();
+  const route = useRoute();
 
   // Getters
   const filterActive = computed(() =>
-    checkIfAnyValueOfObjectIsDefined(filterOptionsCache.value)
+    checkIfAnyValueOfObjectIsDefined(route.query)
   );
 
   const activeFilters = computed(() => {
-    if (!filterOptionsCache.value) return;
-    return Object.keys(filterOptionsCache.value)
-      .filter((k) => filterOptionsCache.value[k] != null)
-      .reduce((a, k) => ({ ...a, [k]: filterOptionsCache.value[k] }), {});
+    // Don't show these query params as filter badges
+    const filterBlackList = ["offset", "limit", "year"];
+    return Object.keys(route.query)
+      .filter((k) => route.query[k] != null && !filterBlackList.includes(k))
+      .reduce((a, k) => ({ ...a, [k]: route.query[k] }), {});
   });
 
   // Mutations
-  const clearFilter = () => {
-    filterOptionsCache.value = null;
-    routerPushView();
-  };
-
   const clearOneFilter = (key) => {
-    // I don't know why, but this "simple" delete key, doesn't remove the key from the URL. The result is correct, but as mentioned the URL will not be updated.
-    // delete filterOptionsCache.value[key];
-    let query = Object.assign({}, filterOptionsCache.value);
-    delete query[key];
-    filterOptionsCache.value = query;
+    delete queryCache.value[key];
     routerPushView();
   };
 
   const sortDataBy = async (sortOptions) => {
-    sortOptionsCache.value = sortOptions;
+    queryCache.value.sortCol = sortOptions.sortCol;
+    queryCache.value.sortOrder = sortOptions.sortOrder;
     routerPushView();
   };
   const selectSeason = async (year) => {
-    paramsCache.value = {
-      ...paramsCache.value,
-      year,
-    };
+    // Reset query if year changes
+    queryCache.value = { year };
     routerPushView();
   };
 
   const filterDataBy = (filterOptions) => {
-    //Check if any filter value was set
-    if (!Object.values(filterOptions).find((v) => !!v)) return;
-
-    filterOptionsCache.value = filterOptions;
+    queryCache.value = {
+      ...queryCache.value,
+      ...filterOptions,
+    };
     routerPushView();
   };
 
   const paginateBy = async (limit, offset) => {
+    queryCache.value.limit = parseInt(limit);
+    queryCache.value.offset = offset > 0 ? parseInt(offset) : 0;
+    calcRanges();
+
     routerPushView(limit, offset);
   };
 
   // Actions
-  const fetchData = async (apiEndpoint, { params, queries } = {}) => {
+  const fetchData = async (apiEndpoint, { queries } = {}) => {
     try {
-      // await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      if (params) paramsCache.value = params;
-      if (isInteger(queries?.limit)) limitCache.value = parseInt(queries.limit);
-      const offset =
-        queries?.offset && queries.offset > 0 ? parseInt(queries.offset) : 0;
-
-      // Delete pagination parameters in cache; Otherwise the query object will trigger the watcher in the view
-      if (queries) filterOptionsCache.value = queries;
-      if (queries?.limit) delete filterOptionsCache.value.limit;
-      if (queries?.offset) delete filterOptionsCache.value.offset;
-
       isLoading.value = true;
       const res = await apiEndpoint({
-        ...paramsCache.value,
-        ...filterOptionsCache.value,
-        sortCol: sortOptionsCache.value?.sortCol,
-        sortOrder: sortOptionsCache.value?.sortOrder,
-        limit: limitCache.value,
-        offset,
+        ...queries,
       });
       if (res.status != 200) throw res.status.text;
 
@@ -120,7 +97,7 @@ function createInstance(viewComponentName) {
       if (res.data.rows) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
-        calcRanges(offset);
+        // calcRanges(offset);
       }
       if (res.data.values) {
         data.value = res.data.values;
@@ -143,8 +120,8 @@ function createInstance(viewComponentName) {
     }
   };
 
-  const calcRanges = (offset) => {
-    currentRange.value.start = offset + 1;
+  const calcRanges = () => {
+    currentRange.value.start = queryCache.value.offset + 1;
     currentRange.value.end =
       currentRange.value.start + limitCache.value - 1 >=
       numberOfTotalEntries.value
@@ -152,11 +129,10 @@ function createInstance(viewComponentName) {
         : currentRange.value.start + limitCache.value - 1;
   };
 
-  function routerPushView(limit, offset) {
+  function routerPushView() {
     router.push({
       name: viewComponentName,
-      query: { ...filterOptionsCache.value, limit, offset },
-      params: paramsCache.value,
+      query: queryCache.value,
     });
   }
 
@@ -166,17 +142,16 @@ function createInstance(viewComponentName) {
     sortDataBy,
     paginateBy,
     selectSeason,
+    clearOneFilter,
     data: readonly(data),
     dataConstants: readonly(dataConstants),
-    noDataFlag,
+    noDataFlag: readonly(noDataFlag),
     errorMessage,
     currentRange: readonly(currentRange),
     numberOfTotalEntries: readonly(numberOfTotalEntries),
     isLoading: readonly(isLoading),
-    filterActive: readonly(filterActive),
+    filterActive,
     activeFilters,
-    clearFilter,
-    clearOneFilter,
     DEFAULT_LIMIT,
     LIMIT_OPTIONS,
     limitCache,
