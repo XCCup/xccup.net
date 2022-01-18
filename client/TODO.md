@@ -78,6 +78,7 @@
 - [x] Edit comment
 - [x] Delete comment modal (Are you sure?)
 - [x] Connect to API
+- [ ] Add emoji picker to flight report
 
 ### FlightsAll
 
