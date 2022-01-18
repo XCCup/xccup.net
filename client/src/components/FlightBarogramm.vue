@@ -7,7 +7,7 @@
     >
       <tbody>
         <tr>
-          <td class="col-4 col-md-2">
+          <td class="col-3 col-md-2 no-line-break">
             <i class="bi bi-cloud-upload"></i>
             {{
               labelData[1]?.altitude ? Math.floor(labelData[1]?.altitude) : "0"
@@ -15,7 +15,7 @@
             m
           </td>
 
-          <td class="col-4 col-md-2">
+          <td class="col-3 col-md-2 no-line-break">
             <i class="bi bi-arrows-expand"></i>
             {{
               labelData[1]?.speed
@@ -24,12 +24,14 @@
             }}
             m/s
           </td>
-          <td class="col-4 col-md-2">
+          <td class="col-3 col-md-2 no-line-break">
             <i class="bi bi-speedometer2"></i>
             {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
             km/h
           </td>
-          <td class=""></td>
+          <td class="col-3 col-md-2 hide-on-xs no-line-break">
+            <i class="bi bi-clock"></i> {{ labelData[1]?.time }}
+          </td>
         </tr>
         <!-- <tr v-for="(_, index) in statsTableData" :key="index">
           <td class="col-3">
@@ -133,6 +135,7 @@ const updateLabels = (context) => {
     altitude: context.raw.y,
     climb: context.raw.climb,
     name: context.dataset.label,
+    time: context.label,
   };
 };
 
@@ -215,7 +218,7 @@ const options = {
             minute: "HH:mm",
             hour: "HH:mm",
           },
-          tooltipFormat: "HH:mm:ss",
+          tooltipFormat: "HH:mm",
           minUnit: "hour",
         },
         title: {
