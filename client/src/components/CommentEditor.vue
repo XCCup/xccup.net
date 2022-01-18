@@ -64,7 +64,7 @@ const route = useRoute();
 
 // Submit comment
 const message = ref("");
-const sendButtonIsDisabled = computed(() => message.value.length < 3);
+const sendButtonIsDisabled = computed(() => !message.value.length);
 
 const onSubmitComment = async () => {
   const comment = {
@@ -123,14 +123,10 @@ const handleEmojiClick = (detail) => {
   if (!detail.unicode) return;
   try {
     ta.value.focus();
-    ta.value.setRangeText(
-      detail.unicode,
-      ta.value.selectionStart,
-      ta.value.selectionStart,
-      "end"
-    );
-    // Somehow changing the value of the textarea does not update the ref value
-    message.value = ta.value.value;
+    message.value =
+      message.value.substring(0, ta.value.selectionStart) +
+      detail.unicode +
+      message.value.substring(ta.value.selectionEnd);
   } catch (error) {
     console.log(error);
   }

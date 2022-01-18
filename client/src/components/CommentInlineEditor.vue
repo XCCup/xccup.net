@@ -64,7 +64,7 @@ const message = ref(props.textareaContent);
 const emit = defineEmits(["saveMessage", "closeEditor"]);
 
 const onSaveMessage = () => emit("saveMessage", message.value);
-const saveButtonIsDisabled = computed(() => message.value.length < 3);
+const saveButtonIsDisabled = computed(() => message.value.length < 1);
 
 const onCancel = () => emit("closeEditor");
 
@@ -74,14 +74,10 @@ const handleEmojiClick = (detail) => {
   if (!detail.unicode) return;
   try {
     ta.value.focus();
-    ta.value.setRangeText(
-      detail.unicode,
-      ta.value.selectionStart,
-      ta.value.selectionEnd,
-      "end"
-    );
-    // Somehow changing the value of the textarea does not update the ref value
-    message.value = ta.value.value;
+    message.value =
+      message.value.substring(0, ta.value.selectionStart) +
+      detail.unicode +
+      message.value.substring(ta.value.selectionEnd);
   } catch (error) {
     console.log(error);
   }
