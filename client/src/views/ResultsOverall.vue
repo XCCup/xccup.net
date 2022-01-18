@@ -34,6 +34,13 @@ setWindowName(title.value);
 
 const { fetchData, data: results, dataConstants, noDataFlag } = useData();
 
+await fetchData(ApiService.getResultsOverall, {
+  params: router.params,
+  queries: router.query,
+});
+// Not yet used
+remark.value = dataConstants.value?.REMARKS;
+
 watchEffect(async () => {
   await fetchData(ApiService.getResultsOverall, {
     params: router.params,

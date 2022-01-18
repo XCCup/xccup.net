@@ -90,6 +90,8 @@ function createInstance(viewComponentName) {
   // Actions
   const fetchData = async (apiEndpoint, { params, queries } = {}) => {
     try {
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
+
       if (params) paramsCache.value = params;
       if (isInteger(queries?.limit)) limitCache.value = parseInt(queries.limit);
       const offset =

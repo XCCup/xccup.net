@@ -45,6 +45,12 @@ const messageUser = (user) => {
   selectedUser.value = user;
   mailModal.show();
 };
+
+await fetchData(ApiService.getUsers, {
+  params: { records: true },
+  queries: route.query,
+});
+
 watchEffect(() => {
   fetchData(ApiService.getUsers, {
     params: { records: true },

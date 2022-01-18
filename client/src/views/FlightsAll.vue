@@ -30,9 +30,14 @@ const route = useRoute();
 
 const { fetchData, errorMessage } = useData();
 
+// Prevent to send a request query with an empty year parameter
+const params = route.params.year ? route.params : undefined;
+await fetchData(ApiService.getFlights, {
+  params,
+  queries: route.query,
+});
+
 watchEffect(() => {
-  // Prevent to send a request query with an empty year parameter
-  const params = route.params.year ? route.params : undefined;
   fetchData(ApiService.getFlights, {
     params,
     queries: route.query,
