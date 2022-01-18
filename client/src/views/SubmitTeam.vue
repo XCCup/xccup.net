@@ -47,7 +47,11 @@
         data-cy="team-select-member"
       />
       <datalist id="datalistOptions">
-        <option v-for="user in userNamesWithoutTeam" :key="user" :value="user">
+        <option
+          v-for="user in userNamesWithoutTeam"
+          :key="user"
+          :data-value="user"
+        >
           {{ user }}
         </option>
       </datalist>
