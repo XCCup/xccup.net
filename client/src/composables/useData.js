@@ -78,7 +78,7 @@ function createInstance(viewComponentName) {
     queryCache.value.offset = offset > 0 ? parseInt(offset) : 0;
     calcRanges();
 
-    routerPushView(limit, offset);
+    routerPushView();
   };
 
   // Actions
@@ -97,7 +97,6 @@ function createInstance(viewComponentName) {
       if (res.data.rows) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
-        // calcRanges(offset);
       }
       if (res.data.values) {
         data.value = res.data.values;
