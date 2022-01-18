@@ -42,7 +42,7 @@ function createInstance(viewComponentName) {
 
   const activeFilters = computed(() => {
     // Don't show these query params as filter badges
-    const filterBlackList = ["offset", "limit", "year"];
+    const filterBlackList = ["offset", "limit", "year", "sortOrder"];
     return Object.keys(route.query)
       .filter((k) => route.query[k] != null && !filterBlackList.includes(k))
       .reduce((a, k) => ({ ...a, [k]: route.query[k] }), {});
