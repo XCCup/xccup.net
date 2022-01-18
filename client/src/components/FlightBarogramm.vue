@@ -106,7 +106,10 @@ Chart.register(
   Tooltip
 );
 
-import "chartjs-adapter-date-fns";
+import "chartjs-adapter-luxon";
+const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
+// TODO: Replace all date-fns with luxon?
+
 import {
   ref,
   onMounted,
@@ -220,6 +223,11 @@ const options = {
           },
           tooltipFormat: "HH:mm",
           minUnit: "hour",
+        },
+        adapters: {
+          date: {
+            zone: tz,
+          },
         },
         title: {
           display: false,
