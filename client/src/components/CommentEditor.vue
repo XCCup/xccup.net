@@ -129,6 +129,8 @@ const handleEmojiClick = (detail) => {
       ta.value.selectionStart,
       "end"
     );
+    // Somehow changing the value of the textarea does not update the ref value
+    message.value = ta.value.value;
   } catch (error) {
     console.log(error);
   }

@@ -67,6 +67,7 @@ const onSaveMessage = () => emit("saveMessage", message.value);
 const saveButtonIsDisabled = computed(() => message.value.length < 3);
 
 const onCancel = () => emit("closeEditor");
+
 // Emoji Picker
 const ta = ref(null);
 const handleEmojiClick = (detail) => {
@@ -76,9 +77,11 @@ const handleEmojiClick = (detail) => {
     ta.value.setRangeText(
       detail.unicode,
       ta.value.selectionStart,
-      ta.value.selectionStart,
+      ta.value.selectionEnd,
       "end"
     );
+    // Somehow changing the value of the textarea does not update the ref value
+    message.value = ta.value.value;
   } catch (error) {
     console.log(error);
   }
