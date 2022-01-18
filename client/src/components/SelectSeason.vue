@@ -5,6 +5,7 @@
     class="form-select form-select-sm border-primary w-auto"
     @change="onSeasonSelected"
   >
+    <option :value="undefined">Alle</option>
     <option v-for="season in SEASONS" :key="season" :value="season">
       {{ season }}
     </option>

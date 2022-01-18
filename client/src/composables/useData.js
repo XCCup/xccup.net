@@ -1,4 +1,3 @@
-import { isInteger } from "lodash-es";
 import { ref, readonly, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
