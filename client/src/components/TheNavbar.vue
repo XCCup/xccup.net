@@ -39,7 +39,7 @@
                 <router-link
                   :to="{
                     name: 'ResultsOverall',
-                    params: { year: currentYear },
+                    query: { year: currentYear },
                   }"
                   class="dropdown-item"
                 >
