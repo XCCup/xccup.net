@@ -81,7 +81,7 @@ describe("check flight upload page", () => {
     cy.get("#airspace-collapse").should("have.class", "show");
     cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
 
-    cy.get(".cy-flight-report").type(flightReport);
+    cy.get("[data-cy=text-editor-textarea]").type(flightReport);
     cy.get("#hikeAndFlyCheckbox").click();
     cy.get("#logbookCheckbox").click();
 

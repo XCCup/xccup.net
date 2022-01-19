@@ -49,16 +49,11 @@
         />
 
         <!-- Report -->
-        <div class="form-floating my-4">
-          <textarea
-            id="flightReport"
-            v-model="flightReport"
-            class="form-control cy-flight-report"
-            placeholder="Flugbericht"
-            style="height: 100px"
-          ></textarea>
-          <label for="flightReport">Flugbericht</label>
-        </div>
+        <TextEditor
+          v-model="flightReport"
+          style="height: 120px"
+          placeholder="Flugbericht"
+        />
         <!-- Airspace comment -->
         <div class="form-check mb-3">
           <input

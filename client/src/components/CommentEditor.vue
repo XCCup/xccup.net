@@ -8,30 +8,7 @@
             Kommentar verfassen:
           </label>
 
-          <div class="dropend my-2">
-            <button
-              id="dropdownMenuButton1"
-              class="btn btn-secondary btn-sm dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              data-bs-auto-close="outside"
-              aria-expanded="false"
-            >
-              <i class="bi bi-emoji-smile"></i>
-            </button>
-            <div class="dropdown-menu">
-              <VuemojiPicker @emoji-click="handleEmojiClick" />
-            </div>
-          </div>
-
-          <textarea
-            ref="ta"
-            v-model="message"
-            class="form-control mb-2"
-            :rows="4"
-            data-cy="comment-editor"
-            @input="saveMessageToLocalStorage"
-          ></textarea>
+          <TextEditor v-model="message" @change="saveMessageToLocalStorage" />
           <button
             class="btn btn-primary me-1"
             type="submit"
@@ -55,7 +32,7 @@ import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import { VuemojiPicker } from "vuemoji-picker";
+import TextEditor from "./TextEditor.vue";
 
 const { getUserId, loggedIn } = useUser();
 const { submitComment } = useComments();
@@ -64,7 +41,7 @@ const route = useRoute();
 
 // Submit comment
 const message = ref("");
-const sendButtonIsDisabled = computed(() => !message.value.length);
+const sendButtonIsDisabled = computed(() => !message.value.trim().length);
 
 const onSubmitComment = async () => {
   const comment = {
@@ -90,6 +67,7 @@ const clearCommentEditorInput = () => {
 };
 
 const saveMessageToLocalStorage = () => {
+  console.log("saved");
   localStorage.setItem(
     "commentMessage",
     JSON.stringify({
@@ -114,21 +92,6 @@ const getMessageFromLocalStorage = () => {
     } else {
       return "";
     }
-  }
-};
-
-// Emoji Picker
-const ta = ref(null);
-const handleEmojiClick = (detail) => {
-  if (!detail.unicode) return;
-  try {
-    ta.value.focus();
-    message.value =
-      message.value.substring(0, ta.value.selectionStart) +
-      detail.unicode +
-      message.value.substring(ta.value.selectionEnd);
-  } catch (error) {
-    console.log(error);
   }
 };
 </script>

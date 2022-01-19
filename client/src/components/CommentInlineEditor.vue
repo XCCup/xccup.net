@@ -1,25 +1,7 @@
 <template>
-  <div class="dropend my-2">
-    <button
-      id="dropdownMenuButton1"
-      class="btn btn-secondary btn-sm dropdown-toggle"
-      type="button"
-      data-bs-toggle="dropdown"
-      data-bs-auto-close="outside"
-      aria-expanded="false"
-    >
-      <i class="bi bi-emoji-smile"></i>
-    </button>
-    <div class="dropdown-menu">
-      <VuemojiPicker @emoji-click="handleEmojiClick" />
-    </div>
-  </div>
-  <textarea
-    id="reply-editor"
-    ref="ta"
-    v-model="message"
-    class="form-control mb-2"
-  ></textarea>
+  <!-- TODO: Save reply drafts to local storage as well -->
+  <TextEditor v-model="message" />
+
   <span v-if="errorMessage" class="text-danger">{{ errorMessage }}</span>
   <div>
     <button
@@ -39,7 +21,6 @@
 <script setup>
 import { computed, ref } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
-import { VuemojiPicker } from "vuemoji-picker";
 
 const props = defineProps({
   textareaContent: {
@@ -67,19 +48,4 @@ const onSaveMessage = () => emit("saveMessage", message.value);
 const saveButtonIsDisabled = computed(() => message.value.length < 1);
 
 const onCancel = () => emit("closeEditor");
-
-// Emoji Picker
-const ta = ref(null);
-const handleEmojiClick = (detail) => {
-  if (!detail.unicode) return;
-  try {
-    ta.value.focus();
-    message.value =
-      message.value.substring(0, ta.value.selectionStart) +
-      detail.unicode +
-      message.value.substring(ta.value.selectionEnd);
-  } catch (error) {
-    console.log(error);
-  }
-};
 </script>
