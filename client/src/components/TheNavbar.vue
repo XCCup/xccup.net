@@ -28,7 +28,7 @@
                 <router-link
                   :to="{
                     name: 'FlightsAll',
-                    query: { year: currentYear },
+                    params: { year: currentYear },
                   }"
                   class="dropdown-item"
                   ><i class="bi bi-send me-1"></i>Eingereichte
@@ -39,7 +39,7 @@
                 <router-link
                   :to="{
                     name: 'ResultsOverall',
-                    query: { year: currentYear },
+                    params: { year: currentYear },
                   }"
                   class="dropdown-item"
                 >

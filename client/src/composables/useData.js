@@ -1,4 +1,4 @@
-import { ref, readonly, computed } from "vue";
+import { ref, readonly, computed, watch, watchEffect } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
@@ -30,46 +30,99 @@ function createInstance(viewComponentName) {
   const errorMessage = ref(null);
   const noDataFlag = ref(false);
   const dataConstants = ref(null);
+  let apiEndpoint = null;
 
   const router = useRouter();
-  const route = useRoute();
+
+  const filterBlackList = ["offset", "limit", "year", "sortOrder", "sortCol"];
 
   // Getters
-  const filterActive = computed(() =>
-    checkIfAnyValueOfObjectIsDefined(route.query)
+  const filterActive = computed(() => {
+    // console.log("QC Before: ", Object.keys(queryCache.value));
+    // return checkIfAnyValueOfObjectIsDefined(queryCache.value);
+
+    return activeFilters.value.length > 0;
+
+    // const entries = Object.entries(queryCache.value).filter(
+    //   ([k, v]) => v != undefined && !filterBlackList.includes(k)
+    // );
+
+    // console.log("entries: ", entries);
+    // return queryCache.value.length;
+
+    // const filteredQueryObject = Object.fromEntries(
+    // );
+
+    // console.log("FQO: ", filteredQueryObject);
+
+    // const newLocal = Object.keys(filteredQueryObject).length > 0;
+    // console.log("Fil Act: ", newLocal);
+    // return newLocal;
+    // // return {checkIfAnyValueOfObjectIsDefined(filteredParameters)}
+  });
+
+  const activeFilters = ref([]);
+
+  watch(
+    () => queryCache.value,
+    () => {
+      const newLocal = Object.keys(queryCache.value)
+        .filter(
+          (k) => queryCache.value[k] != null && !filterBlackList.includes(k)
+        )
+        .reduce((a, k) => ({ ...a, [k]: queryCache.value[k] }), {});
+      // Don't show these query params as filter badges
+
+      console.log("ACT FIL: ", newLocal.value);
+
+      activeFilters.value = newLocal;
+    },
+    { deep: true }
   );
 
-  const activeFilters = computed(() => {
-    // Don't show these query params as filter badges
-    const filterBlackList = ["offset", "limit", "year", "sortOrder"];
-    return Object.keys(route.query)
-      .filter((k) => route.query[k] != null && !filterBlackList.includes(k))
-      .reduce((a, k) => ({ ...a, [k]: route.query[k] }), {});
-  });
+  // const activeFilters = computed(() => {
+  //   console.log("ACT FIL ENT");
+  //   const newLocal = Object.keys(queryCache.value)
+  //     .filter(
+  //       (k) => queryCache.value[k] != null && !filterBlackList.includes(k)
+  //     )
+  //     .reduce((a, k) => ({ ...a, [k]: queryCache.value[k] }), {});
+  //   // Don't show these query params as filter badges
+
+  //   console.log("ACT FIL: ", activeFilters);
+  //   return newLocal;
+  // });
 
   // Mutations
   const clearOneFilter = (key) => {
     delete queryCache.value[key];
-    routerPushView();
+    fetchData();
   };
 
   const sortDataBy = async (sortOptions) => {
+    console.log("SDB");
     queryCache.value.sortCol = sortOptions.sortCol;
     queryCache.value.sortOrder = sortOptions.sortOrder;
-    routerPushView();
+    fetchData();
   };
   const selectSeason = async (year) => {
-    // Reset query if year changes
-    queryCache.value = { year };
-    routerPushView();
+    console.log("SS");
+    // // Reset query if year changes
+    // queryCache.value = { year };
+    router.push({
+      name: viewComponentName,
+      params: { year },
+    });
+    // fetchData();
   };
 
   const filterDataBy = (filterOptions) => {
+    console.log("FDB");
     queryCache.value = {
       ...queryCache.value,
       ...filterOptions,
     };
-    routerPushView();
+    fetchData();
   };
 
   const paginateBy = async (limit, offset) => {
@@ -77,16 +130,21 @@ function createInstance(viewComponentName) {
     queryCache.value.offset = offset > 0 ? parseInt(offset) : 0;
     calcRanges();
 
-    routerPushView();
+    fetchData();
+  };
+  // Actions
+  const initData = async (apiEndpointFunction, { queryParameters } = {}) => {
+    queryCache.value = queryParameters;
+    apiEndpoint = apiEndpointFunction;
+    await fetchData();
   };
 
   // Actions
-  const fetchData = async (apiEndpoint, { queries } = {}) => {
+  const fetchData = async () => {
     try {
       isLoading.value = true;
-      const res = await apiEndpoint({
-        ...queries,
-      });
+      const res = await apiEndpoint(queryCache.value);
+
       if (res.status != 200) throw res.status.text;
 
       // TODO: What is the intention here?
@@ -127,14 +185,8 @@ function createInstance(viewComponentName) {
         : currentRange.value.start + limitCache.value - 1;
   };
 
-  function routerPushView() {
-    router.push({
-      name: viewComponentName,
-      query: queryCache.value,
-    });
-  }
-
   return {
+    initData,
     fetchData,
     filterDataBy,
     sortDataBy,

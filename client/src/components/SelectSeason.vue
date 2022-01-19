@@ -22,7 +22,7 @@ const { selectSeason } = useData();
 
 const route = useRoute();
 
-const selectedSeason = ref(route.query.year);
+const selectedSeason = ref(route.params.year);
 const onSeasonSelected = () => {
   selectSeason(selectedSeason.value);
 };

@@ -2,7 +2,7 @@ import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 
 const validateRouteParamYear = (to, from, next) => {
-  if (isNaN(Number(to.params.year))) {
+  if (isNaN(Number(to.query.year))) {
     return next({
       name: "404Resource",
       params: { resource: "Dies ist kein gültiges Jahr" },
@@ -43,14 +43,15 @@ export const Routes = [
     component: () => import("../views/FlightEdit.vue"),
   },
   {
-    path: "/fluege/",
+    path: "/:year?/fluege/",
     name: "FlightsAll",
     meta: { toTop: true },
     component: () => import("../views/FlightsAll.vue"),
   },
   {
-    path: "/einzelwertung/",
+    path: "/:year/einzelwertung/",
     name: "ResultsOverall",
+    beforeEnter: validateRouteParamYear,
     component: () => import("../views/ResultsOverall.vue"),
   },
   {
