@@ -1,6 +1,6 @@
 <template>
   <div class="container-lg">
-    <h3>{{ title }} {{ router.params?.year }}</h3>
+    <h3>{{ title }} {{ route.params?.year }}</h3>
 
     <div v-if="results">
       <p v-if="remark">Hinweis: {{ remark }}</p>
@@ -24,22 +24,23 @@ import ApiService from "@/services/ApiService.js";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 
-const router = useRoute();
+const route = useRoute();
 const title = ref("Gesamtwertung");
 const remark = ref("");
 
 setWindowName(title.value);
 
-const { fetchData, data: results, dataConstants, noDataFlag } = useData();
+const { initData, data: results, dataConstants, noDataFlag } = useData();
 
-watchEffect(async () => {
-  await fetchData(ApiService.getResultsOverall, {
-    params: router.params,
-    queries: router.query,
-  });
-  // Not yet used
-  remark.value = dataConstants.value?.REMARKS;
+// Prevent to send a request query with an empty year parameter
+const params = route.params.year ? route.params : undefined;
+// Await is necessary to trigger the suspense feature
+await initData(ApiService.getResultsOverall, {
+  queryParameters: {
+    ...route.query,
+    ...params,
+  },
 });
 </script>
