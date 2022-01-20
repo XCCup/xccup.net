@@ -18,7 +18,7 @@
           </button>
         </li>
         <li v-if="!disableSeasonSelect" class="nav-item">
-          <SelectSeason allow-all-seasons="allowAllSeasons" />
+          <SelectSeason :allow-all-seasons="allowAllSeasons" />
         </li>
       </ul>
     </nav>
