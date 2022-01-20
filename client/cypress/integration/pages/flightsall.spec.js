@@ -34,6 +34,8 @@ describe("check flights all page", () => {
     cy.get("#select-season").select((year - 1).toString());
 
     // Wait till table was updated
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.url().should("include", `${year - 1}/fluege`);
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
@@ -84,6 +86,8 @@ describe("check flights all page", () => {
     cy.get("[data-cy=activate-filter-button]").click();
 
     // Wait till table was updated
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("[data-cy=no-flights-listed]").should(
