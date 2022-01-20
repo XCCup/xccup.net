@@ -13,7 +13,7 @@
     </button>
     <div class="dropdown-menu">
       <!-- TODO: Self host emoji DB? -->
-      <VuemojiPicker @emoji-click="handleEmojiClick" />
+      <VuemojiPicker :data-source="emojiDB" @emoji-click="handleEmojiClick" />
     </div>
   </div>
   <div :class="$attrs.placeholder?.length ? 'form-floating' : ''">
@@ -37,9 +37,11 @@
 <script setup>
 import { ref } from "vue";
 import { VuemojiPicker } from "vuemoji-picker";
+import emojiDB from "emoji-picker-element-data/en/emojibase/data.json?url";
 
 const emit = defineEmits(["update:modelValue", "change"]);
 
+console.log(emojiDB);
 const props = defineProps({
   modelValue: {
     type: [String, Number],

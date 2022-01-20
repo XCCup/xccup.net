@@ -25,6 +25,7 @@
     "chartjs-adapter-date-fns": "^2.0.0",
     "date-fns": "^2.28.0",
     "date-fns-tz": "^1.2.2",
+    "emoji-picker-element-data": "^1",
     "glightbox": "^3.1.0",
     "jwt-decode": "^3.1.2",
     "leaflet": "^1.7.1",
