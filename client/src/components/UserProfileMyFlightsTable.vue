@@ -102,7 +102,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import useData from "@/composables/useData";
@@ -111,7 +111,7 @@ import useUser from "@/composables/useUser";
 import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 
-const { data: flights, sortDataBy, fetchData } = useData("Profile");
+const { data: flights, sortDataBy, initData } = useData("Profile");
 const router = useRouter();
 const showSpinner = ref(false);
 const errorMessage = ref("");
@@ -129,9 +129,10 @@ const { getUserId } = useUser();
 
 const fetchFlights = async () => {
   // TODO: Spinner needed?
-  await fetchData(ApiService.getFlights, {
-    params: {},
-    queries: { userId: getUserId.value },
+  await initData(ApiService.getFlights, {
+    queryParameters: {
+      userId: getUserId.value,
+    },
   });
 };
 try {
@@ -142,10 +143,6 @@ try {
     name: "NetworkError",
   });
 }
-
-watchEffect(() => {
-  fetchFlights();
-});
 
 const flightToDelete = ref(null);
 
