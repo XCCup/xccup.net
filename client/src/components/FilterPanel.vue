@@ -144,7 +144,8 @@
                 placeholder="Suchen..."
               />
               <datalist id="datalistOptions">
-                <option v-for="user in users" :key="user" :value="user">
+                <!-- Beware: If you associate the user to the normal "value" attribute, this element will cause long loading times in chrome -->
+                <option v-for="user in users" :key="user" :data-value="user">
                   {{ user }}
                 </option>
               </datalist>

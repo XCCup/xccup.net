@@ -37,7 +37,9 @@ describe("check flights all page", () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
     cy.url().should("include", `${year - 1}/fluege`);
+
     cy.get("[data-cy=filter-icon]").should("be.visible");
+    cy.url().should("include", `${year - 1}/fluege`);
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
     cy.get("table")
@@ -88,7 +90,9 @@ describe("check flights all page", () => {
     // Wait till table was updated
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1000);
+
     cy.get("[data-cy=filter-icon]").should("be.visible");
+    cy.url().should("contain", `siteId=${expectedSiteId}`);
 
     cy.get("[data-cy=no-flights-listed]").should(
       "contain",
