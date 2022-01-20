@@ -10,13 +10,8 @@
             <th>Icon</th>
 
             <th>Nachricht</th>
-            <th>Gültig ab</th>
-            <th>Gültig bis</th>
-            <th
-              title="Falls der Haken gesetzt wird, wird automatische eine Rundmail mit dem Inhalt der Nachricht an alle Nutzer versendet"
-            >
-              Nachricht versenden
-            </th>
+            <th>Von</th>
+            <th>bis</th>
             <th>Geändert am</th>
             <th></th>
           </thead>
@@ -35,15 +30,7 @@
               <td>
                 <BaseDate :timestamp="entry.till" />
               </td>
-              <td v-if="entry.sendByMail && entry.mailalreadySent">
-                <i class="bi bi-check2-all"></i>
-              </td>
-              <td v-else-if="entry.sendByMail && !entry.mailalreadySent">
-                <i class="bi bi-check2"></i>
-              </td>
-              <td v-else>
-                <i class="bi bi-x"></i>
-              </td>
+
               <td>
                 <BaseDate :timestamp="entry.updatedAt" />
               </td>
@@ -155,7 +142,6 @@ function createEmptyNewsObject() {
     icon: "",
     from: new Date(),
     till: new Date(),
-    sendByMail: false,
   };
 }
 

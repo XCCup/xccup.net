@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/NewsService");
-const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
@@ -10,7 +9,6 @@ const {
   checkStringObjectNotEmpty,
   checkStringObjectNotEmptyNoEscaping,
   checkIsISO8601,
-  checkOptionalIsBoolean,
   checkParamIsUuid,
   validationHasErrors,
 } = require("./Validation");
@@ -66,13 +64,12 @@ router.post(
   checkStringObjectNotEmpty("icon"),
   checkIsISO8601("from"),
   checkIsISO8601("till"),
-  checkOptionalIsBoolean("sendByMail"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const { title, icon, message, from, till, sendByMail, meta } = req.body;
+      const { title, icon, message, from, till, meta } = req.body;
 
       const news = await service.create({
         title,
@@ -80,16 +77,9 @@ router.post(
         icon,
         from,
         till,
-        sendByMail,
         meta,
       });
 
-      if (news.sendByMail) {
-        mailService.sendMailAll(req.user.id, true, {
-          title: news.title,
-          text: news.message,
-        });
-      }
       deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(news);
@@ -112,11 +102,10 @@ router.put(
   checkStringObjectNotEmptyNoEscaping("message"),
   checkIsISO8601("from"),
   checkIsISO8601("till"),
-  checkOptionalIsBoolean("sendByMail"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const { title, icon, message, from, till, sendByMail, meta } = req.body;
+    const { title, icon, message, from, till, meta } = req.body;
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -128,7 +117,6 @@ router.put(
       news.message = message;
       news.from = from;
       news.till = till;
-      news.sendByMail = sendByMail;
       news.meta = meta;
 
       const result = await service.update(news);
