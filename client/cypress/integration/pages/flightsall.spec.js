@@ -34,6 +34,10 @@ describe("check flights all page", () => {
     cy.get("#select-season").select((year - 1).toString());
 
     // Wait till table was updated
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
+    cy.url().should("include", `${year - 1}/fluege`);
+
     cy.get("[data-cy=filter-icon]").should("be.visible");
     cy.url().should("include", `${year - 1}/fluege`);
 
@@ -66,7 +70,6 @@ describe("check flights all page", () => {
     const expectedTeam = "Die Elstern";
     const expectedRanking = "GS Sport";
     const expectedSite = "Adelberg";
-    const expectedSiteId = "0466eb59-726f-4c98-bb42-a854e21edbe2";
     const expectedLength = 2;
 
     cy.get("#filterButton").click();
@@ -85,8 +88,9 @@ describe("check flights all page", () => {
     cy.get("[data-cy=activate-filter-button]").click();
 
     // Wait till table was updated
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     cy.get("[data-cy=filter-icon]").should("be.visible");
-    cy.url().should("contain", `siteId=${expectedSiteId}`);
 
     cy.get("[data-cy=no-flights-listed]").should(
       "contain",
@@ -105,7 +109,6 @@ describe("check flights all page", () => {
     });
 
     // Wait till table was updated
-    cy.url().should("not.include", `siteId=${expectedSiteId}`);
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table").find("tr").should("have.length", expectedLength);
@@ -153,14 +156,12 @@ describe("check flights all page", () => {
     cy.get("#cyPaginationAmountSelect").select("10");
 
     // Wait till table was updated
-    cy.url().should("contain", "limit=10");
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table").find("tr").should("have.length", expectedLength);
     cy.get(".page-item").last().click({ force: true });
 
     // Wait till table was updated
-    cy.url().should("contain", "limit=10&offset=31");
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table")
