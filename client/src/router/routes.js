@@ -2,7 +2,7 @@ import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 
 const validateRouteParamYear = (to, from, next) => {
-  if (isNaN(Number(to.query.year))) {
+  if (isNaN(Number(to.params.year))) {
     return next({
       name: "404Resource",
       params: { resource: "Dies ist kein gültiges Jahr" },

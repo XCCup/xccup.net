@@ -5,7 +5,7 @@
     class="form-select form-select-sm border-primary w-auto"
     @change="onSeasonSelected"
   >
-    <option :value="undefined">Alle</option>
+    <option v-if="allowAllSeasons" :value="undefined">Alle</option>
     <option v-for="season in SEASONS" :key="season" :value="season">
       {{ season }}
     </option>
@@ -18,8 +18,14 @@ import { useRoute } from "vue-router";
 import { ref } from "vue";
 import useData from "../composables/useData";
 
-const { selectSeason } = useData();
+defineProps({
+  allowAllSeasons: {
+    type: Boolean,
+    default: false,
+  },
+});
 
+const { selectSeason } = useData();
 const route = useRoute();
 
 const selectedSeason = ref(route.params.year);

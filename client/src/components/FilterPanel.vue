@@ -18,13 +18,12 @@
           </button>
         </li>
         <li v-if="!disableSeasonSelect" class="nav-item">
-          <SelectSeason />
+          <SelectSeason allow-all-seasons="allowAllSeasons" />
         </li>
       </ul>
     </nav>
     <!-- v-if enforced rerendering of filter badges -->
-    <div v-if="filterActive" class="mb-3">
-      <p>hello</p>
+    <div class="mb-3">
       <span
         v-for="(filter, key) in activeFilters"
         :key="key"
@@ -277,10 +276,13 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  allowAllSeasons: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const { filterDataBy, filterActive, isLoading, activeFilters, clearOneFilter } =
-  useData();
+const { filterDataBy, isLoading, activeFilters, clearOneFilter } = useData();
 
 const selects = reactive({
   site: "",

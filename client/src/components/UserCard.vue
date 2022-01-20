@@ -124,8 +124,8 @@ const avatarUrl = ref(createUserPictureUrl(props.user.id), true);
 
 const createRankingClass = (glider) => {
   return {
-    key: glider.gliderClass.key,
-    description: glider.gliderClass.shortDescription,
+    key: glider?.gliderClass?.key,
+    description: glider?.gliderClass?.shortDescription,
   };
 };
 

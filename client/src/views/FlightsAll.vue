@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="col-6">
-        <FilterPanel :flight-options="true" />
+        <FilterPanel :flight-options="true" :allow-all-seasons="true" />
       </div>
       <div class="col-6">
         <PaginationPanel entry-name="Flüge" />

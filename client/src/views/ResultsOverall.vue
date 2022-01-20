@@ -24,7 +24,7 @@ import ApiService from "@/services/ApiService.js";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 const route = useRoute();
 const title = ref("Gesamtwertung");
@@ -32,19 +32,15 @@ const remark = ref("");
 
 setWindowName(title.value);
 
-const { fetchData, data: results, dataConstants, noDataFlag } = useData();
+const { initData, data: results, dataConstants, noDataFlag } = useData();
 
-const fetch = async () => {
-  await fetchData(ApiService.getResultsOverall, {
-    queries: route.query,
-  });
-};
+// Prevent to send a request query with an empty year parameter
+const params = route.params.year ? route.params : undefined;
 // Await is necessary to trigger the suspense feature
-await fetch();
-
-// Refetch data if a query param changes
-watch(
-  () => route.query,
-  () => fetch()
-);
+await initData(ApiService.getResultsOverall, {
+  queryParameters: {
+    ...route.query,
+    ...params,
+  },
+});
 </script>

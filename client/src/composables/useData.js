@@ -1,6 +1,5 @@
-import { ref, readonly, computed, watch, watchEffect } from "vue";
+import { ref, readonly } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
@@ -34,64 +33,18 @@ function createInstance(viewComponentName) {
 
   const router = useRouter();
 
-  const filterBlackList = ["offset", "limit", "year", "sortOrder", "sortCol"];
-
-  // Getters
-  const filterActive = computed(() => {
-    // console.log("QC Before: ", Object.keys(queryCache.value));
-    // return checkIfAnyValueOfObjectIsDefined(queryCache.value);
-
-    return activeFilters.value.length > 0;
-
-    // const entries = Object.entries(queryCache.value).filter(
-    //   ([k, v]) => v != undefined && !filterBlackList.includes(k)
-    // );
-
-    // console.log("entries: ", entries);
-    // return queryCache.value.length;
-
-    // const filteredQueryObject = Object.fromEntries(
-    // );
-
-    // console.log("FQO: ", filteredQueryObject);
-
-    // const newLocal = Object.keys(filteredQueryObject).length > 0;
-    // console.log("Fil Act: ", newLocal);
-    // return newLocal;
-    // // return {checkIfAnyValueOfObjectIsDefined(filteredParameters)}
-  });
-
+  const filterBlackList = [
+    "offset",
+    "limit",
+    "year",
+    "sortOrder",
+    "sortCol",
+    "records",
+  ];
+  // We tried to implement activeFilters/filterActive as computed values. But due to some nested (?) stuff the update doesn't work as expected.
+  // The calculation of these values was therefore moved to the fetchData function.
   const activeFilters = ref([]);
-
-  watch(
-    () => queryCache.value,
-    () => {
-      const newLocal = Object.keys(queryCache.value)
-        .filter(
-          (k) => queryCache.value[k] != null && !filterBlackList.includes(k)
-        )
-        .reduce((a, k) => ({ ...a, [k]: queryCache.value[k] }), {});
-      // Don't show these query params as filter badges
-
-      console.log("ACT FIL: ", newLocal.value);
-
-      activeFilters.value = newLocal;
-    },
-    { deep: true }
-  );
-
-  // const activeFilters = computed(() => {
-  //   console.log("ACT FIL ENT");
-  //   const newLocal = Object.keys(queryCache.value)
-  //     .filter(
-  //       (k) => queryCache.value[k] != null && !filterBlackList.includes(k)
-  //     )
-  //     .reduce((a, k) => ({ ...a, [k]: queryCache.value[k] }), {});
-  //   // Don't show these query params as filter badges
-
-  //   console.log("ACT FIL: ", activeFilters);
-  //   return newLocal;
-  // });
+  const filterActive = ref(false);
 
   // Mutations
   const clearOneFilter = (key) => {
@@ -100,24 +53,20 @@ function createInstance(viewComponentName) {
   };
 
   const sortDataBy = async (sortOptions) => {
-    console.log("SDB");
     queryCache.value.sortCol = sortOptions.sortCol;
     queryCache.value.sortOrder = sortOptions.sortOrder;
     fetchData();
   };
+
   const selectSeason = async (year) => {
-    console.log("SS");
-    // // Reset query if year changes
-    // queryCache.value = { year };
+    // This call reloads the view and which leads to a new initData call. The year param will then be stored in queryCache again.
     router.push({
       name: viewComponentName,
       params: { year },
     });
-    // fetchData();
   };
 
   const filterDataBy = (filterOptions) => {
-    console.log("FDB");
     queryCache.value = {
       ...queryCache.value,
       ...filterOptions,
@@ -135,6 +84,8 @@ function createInstance(viewComponentName) {
   // Actions
   const initData = async (apiEndpointFunction, { queryParameters } = {}) => {
     queryCache.value = queryParameters;
+    // Add default limit if none is present
+    if (!queryParameters.limit) queryCache.value.limit = DEFAULT_LIMIT;
     apiEndpoint = apiEndpointFunction;
     await fetchData();
   };
@@ -144,11 +95,10 @@ function createInstance(viewComponentName) {
     try {
       isLoading.value = true;
       const res = await apiEndpoint(queryCache.value);
+      calcFilterActive();
+      calcActiveFilters();
 
       if (res.status != 200) throw res.status.text;
-
-      // TODO: What is the intention here?
-      if (!res?.data) return;
 
       // Check if data supports pagination (data split in rows and count)
       if (res.data.rows) {
@@ -185,9 +135,22 @@ function createInstance(viewComponentName) {
         : currentRange.value.start + limitCache.value - 1;
   };
 
+  function calcFilterActive() {
+    filterActive.value =
+      Object.keys(queryCache.value)
+        .filter((k) => queryCache.value[k] != undefined)
+        .filter((k) => !filterBlackList.includes(k)).length > 0;
+  }
+
+  function calcActiveFilters() {
+    activeFilters.value = Object.keys(queryCache.value)
+      .filter((k) => queryCache.value[k] != undefined)
+      .filter((k) => !filterBlackList.includes(k))
+      .reduce((a, k) => ({ ...a, [k]: queryCache.value[k] }), {});
+  }
+
   return {
     initData,
-    fetchData,
     filterDataBy,
     sortDataBy,
     paginateBy,
