@@ -20,12 +20,18 @@ const {
 } = require("./Validation");
 const multer = require("multer");
 
-const { createThumbnail, deleteImages } = require("../helper/ImageUtils");
+const {
+  createThumbnail,
+  deleteImages,
+  resizeImage,
+} = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
 const THUMBNAIL_IMAGE_HEIGHT = 310;
 const MAX_PHOTOS = 8;
+const IMAGE_BYTES_LIMIT = 1_500_000;
+const IMAGE_HEIGHT_LIMIT = 1_200;
 
 const imageUpload = multer({
   dest: IMAGE_STORE,
@@ -72,6 +78,10 @@ router.post(
       const userId = req.user.id;
 
       const pathThumb = await createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
+      if (size > IMAGE_BYTES_LIMIT) {
+        logger.info("FPC: Image exceeds size limit");
+        await resizeImage(path, IMAGE_HEIGHT_LIMIT);
+      }
 
       const media = await service.create({
         originalname,

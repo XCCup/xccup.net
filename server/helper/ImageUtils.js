@@ -4,27 +4,48 @@ const fs = require("fs");
 const logger = require("../config/logger");
 
 const THUMBNAIL_POSTFIX = "-thumb";
+
 /**
  * This function creates a thumbnail for a given image.
  * The thumbnail will be stored next to the given image.
  * The filename of the thumbnail is based on the given image but extended by "-thumb".
  * @param {*} path The path of the image to which a thumbnail should be created.
  */
-async function create(path, targetHeight) {
-  const pathThumb = await new Promise(function (resolve, reject) {
-    const pathThumb = createThumbnailPath(path);
-    sharp(path)
+async function createThumbnail(path, targetHeight) {
+  const pathThumb = createThumbnailPath(path);
+  return await resizeImage(path, targetHeight, pathThumb);
+}
+
+/**
+ * This function resizes the original image.
+ * If no targetPath is supplied the original image will be overridden.
+ * @param {*} sourcePath The path of the image to resize.
+ * @param {*} targetHeight The height to which the image will be resized. The height/width proportion will be keeped.
+ * @param {*} targetPath The path where the resized image should be stored.
+ */
+async function resizeImage(sourcePath, targetHeight, targetPath) {
+  const replaceOriginal = targetPath ? false : true;
+  const target = replaceOriginal ? sourcePath + "_resize" : targetPath;
+
+  logger.info("IU: Will resize image and store it to: " + target);
+  const targetResult = await new Promise(function (resolve, reject) {
+    sharp(sourcePath)
       .resize(null, targetHeight)
       // eslint-disable-next-line no-unused-vars
-      .toFile(pathThumb, (err, resizedImageInfo) => {
+      .toFile(target, (err, resizedImageInfo) => {
         if (err) {
           logger.error(err);
           reject(err);
         }
-        resolve(pathThumb);
+        resolve(target);
       });
   });
-  return pathThumb;
+
+  if (!replaceOriginal) return targetResult;
+
+  await fs.rename(target, sourcePath, (err) => {
+    if (err) logger.error("IU: " + err);
+  });
 }
 
 /**
@@ -96,7 +117,8 @@ function defineImageFileNameWithCurrentDateAsPrefix() {
 }
 
 exports.deleteImages = deleteImages;
-exports.createThumbnail = create;
+exports.resizeImage = resizeImage;
+exports.createThumbnail = createThumbnail;
 exports.createThumbnailPath = createThumbnailPath;
 exports.defineFileDestination = defineFileDestination;
 exports.defineImageFileNameWithCurrentDateAsPrefix =
