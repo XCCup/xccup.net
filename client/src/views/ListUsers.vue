@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect } from "vue";
+import { ref, onMounted } from "vue";
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import useData from "../composables/useData";
@@ -28,7 +28,7 @@ import { useRoute } from "vue-router";
 import { Modal } from "bootstrap";
 
 const route = useRoute();
-const { fetchData, data: users, errorMessage } = useData();
+const { initData, data: users, errorMessage } = useData();
 
 const mailModalId = ref("userMailModal");
 const selectedUser = ref(null);
@@ -45,10 +45,12 @@ const messageUser = (user) => {
   selectedUser.value = user;
   mailModal.show();
 };
-watchEffect(() => {
-  fetchData(ApiService.getUsers, {
-    params: { records: true },
-    queries: route.query,
-  });
+
+// Await is necessary to trigger the suspense feature
+await initData(ApiService.getUsers, {
+  queryParameters: {
+    ...route.query,
+    records: true,
+  },
 });
 </script>
