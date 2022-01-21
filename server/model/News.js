@@ -26,14 +26,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW,
     },
-    sendByMail: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
-    mailalreadySent: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
     // This column should support features like links
     // e.g.:
     // meta : {
