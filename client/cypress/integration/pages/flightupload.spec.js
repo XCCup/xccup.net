@@ -106,7 +106,7 @@ describe("check flight upload page", () => {
   it("test upload flight twice", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const expectedError =
-      "Dieser Flug ist bereits vorhanden. Wenn du denkst dass dies ein Fehler ist wende dich bitte an next@xccup.net";
+      "Dieser Flug ist bereits vorhanden. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an next@xccup.net";
 
     cy.loginNormalUser();
 
@@ -131,7 +131,9 @@ describe("check flight upload page", () => {
 
     // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How to do an retry on cy.visit or cy.request?
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(5000);
+    // cy.wait(5000);
+    // cy.get("[data-cy=base-spinner]").should("be.visible");
+    // cy.get("[data-cy=base-spinner]").should("not.be.visible");
 
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
@@ -153,7 +155,7 @@ describe("check flight upload page", () => {
   it("Test upload flight out of xccup area", () => {
     const igcFileName = "out_of_area_2.igc";
     const expectedError =
-      "Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst dass dies ein Fehler ist wende dich bitte an next@xccup.net";
+      "Dieser Flug liegt ausserhalb des XCCup Gebiets. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an next@xccup.net";
 
     cy.loginNormalUser();
 
@@ -223,7 +225,7 @@ describe("check flight upload page", () => {
   // it("Test upload flight to old", () => {
   //   const igcFileName = "73320_LA9ChMu1.igc";
   //   const expectedError =
-  //     "Dieser Flug ist älter als 14 Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst dass dies ein Fehler ist wende dich bitte an next@xccup.net";
+  //     "Dieser Flug ist älter als 14 Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an next@xccup.net";
 
   //   cy.loginNormalUser();
 
