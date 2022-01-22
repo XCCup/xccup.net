@@ -130,11 +130,13 @@ describe("check flight upload page", () => {
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
+    cy.clearIndexedDB();
     // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How to do an retry on cy.visit or cy.request?
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    // cy.wait(5000);
+    cy.wait(5000);
     // cy.get("[data-cy=base-spinner]").should("be.visible");
     // cy.get("[data-cy=base-spinner]").should("not.be.visible");
+    cy.clearIndexedDB();
 
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
