@@ -116,11 +116,6 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@this-dot/cypress-indexeddb@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@this-dot/cypress-indexeddb/-/cypress-indexeddb-1.1.0.tgz#28addeaa9ca3b46d802da5062bcf3a7637f6f6f2"
-  integrity sha512-K29Nul4VlKOO0TXVtK4k+d78Ne5188Ia55td2GT8uS99/vElpOGJ8HV18faoR4qAeAWZK/zrAV4MVJznfdVSXQ==
-
 "@types/cookie@^0.3.3":
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.3.3.tgz#85bc74ba782fb7aa3a514d11767832b0e3bc6803"

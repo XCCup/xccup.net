@@ -7,7 +7,7 @@ describe("check edit flight page", () => {
   });
 
   beforeEach(() => {
-    cy.clearIndexedDb("emoji-picker-element-en");
+    cy.clearIndexedDB();
     cy.visit("/");
   });
 

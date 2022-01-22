@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.2",
-    "@this-dot/cypress-indexeddb": "^1.1.0",
     "@vue-leaflet/vue-leaflet": "^0.6.1",
     "@vueuse/integrations": "^7.5.3",
     "axios": "^0.24.0",
