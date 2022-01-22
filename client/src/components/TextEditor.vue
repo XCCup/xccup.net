@@ -13,7 +13,6 @@
     </button>
     <div class="dropdown-menu">
       <!-- TODO: Self host emoji DB? -->
-      <!-- <VuemojiPicker :data-source="emojiDB" @emoji-click="handleEmojiClick" /> -->
       <VuemojiPicker @emoji-click="handleEmojiClick" />
     </div>
   </div>
@@ -38,15 +37,6 @@
 <script setup>
 import { ref } from "vue";
 import { VuemojiPicker } from "vuemoji-picker";
-
-// let emojiDB = null;
-// try {
-//   emojiDB = require("emoji-picker-element-data/en/emojibase/data.json?url");
-//   // import emojiDB from "emoji-picker-element-data/en/emojibase/data.json?url";
-// } catch (error) {
-//   console.error("Could not load emojiDB");
-// }
-// console.log(emojiDB);
 
 const emit = defineEmits(["update:modelValue", "change"]);
 

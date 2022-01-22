@@ -1,4 +1,5 @@
 import "cypress-file-upload";
+import "@this-dot/cypress-indexeddb";
 
 /**
  * Clears and reseeds the whole Database.
