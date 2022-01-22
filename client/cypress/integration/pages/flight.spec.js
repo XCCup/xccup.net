@@ -3,6 +3,10 @@ describe("check flight page", () => {
     cy.visit("/flug/9");
   });
 
+  beforeEach(() => {
+    cy.clearIndexedDb("FORM_CACHE");
+  });
+
   it("test correct values for subnav", () => {
     const today = new Date().toLocaleDateString("de-DE", {
       year: "numeric",

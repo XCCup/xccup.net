@@ -4,6 +4,7 @@ describe("check flight upload page", () => {
   });
 
   beforeEach(() => {
+    cy.clearIndexedDb("FORM_CACHE");
     cy.visit("/");
   });
 
