@@ -4,7 +4,7 @@ describe("check flight page", () => {
   });
 
   beforeEach(() => {
-    cy.clearIndexedDb("FORM_CACHE");
+    cy.clearIndexedDb("emoji-picker-element-en");
   });
 
   it("test correct values for subnav", () => {
