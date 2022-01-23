@@ -12,7 +12,7 @@ const router = express.Router();
 router.get(
   "/",
   query("modelName").not().isEmpty().trim().escape(),
-  query("fileName").not().isEmpty().trim().escape(),
+  query("fileName").not().isEmpty().trim(),
   query("token").isUUID(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -27,10 +27,10 @@ router.get(
       );
 
       const model = require("../config/postgres")[modelName];
-      if (!model) return res.status(NOT_FOUND).send("Model Not found");
+      if (!model) return res.status(NOT_FOUND).send("Model not found");
 
       const fileContent =
-        model == "FlightFixes"
+        modelName == "FlightFixes"
           ? findAllFlightFixes(fileName)
           : require("../import/" + fileName + ".json");
 
@@ -59,7 +59,7 @@ router.get(
       logger.info("Will truncate all data of model " + modelName);
 
       const model = require("../config/postgres")[modelName];
-      if (!model) return res.status(NOT_FOUND).send("Model Not found");
+      if (!model) return res.status(NOT_FOUND).send("Model not found");
 
       await model.destroy({
         truncate: { cascade: true },
