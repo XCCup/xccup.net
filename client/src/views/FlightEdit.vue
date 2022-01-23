@@ -37,16 +37,11 @@
       <label for="airspaceComment">Luftraumkommentar</label>
     </div>
     <div class="my-3">
-      <div class="form-floating mb-3">
-        <textarea
-          v-model="modifiedFlightData.report"
-          class="form-control"
-          placeholder="Flugbericht"
-          style="height: 12em"
-          data-cy="flight-report-textarea"
-        ></textarea>
-        <label for="flightReport">Flugbericht</label>
-      </div>
+      <TextEditor
+        v-model="modifiedFlightData.report"
+        style="height: 12em"
+        placeholder="Flugbericht"
+      />
 
       <div class="form-check mb-3">
         <input
