@@ -1,5 +1,5 @@
 <template>
-  <div class="dropend my-2">
+  <div v-if="!excludeEmojiPicker" class="dropend my-2">
     <button
       id="dropdownMenuButton1"
       class="btn btn-secondary btn-sm dropdown-toggle"
@@ -37,6 +37,9 @@
 <script setup>
 import { ref } from "vue";
 import { VuemojiPicker } from "vuemoji-picker";
+
+const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER;
+console.log("Exclude Picker: ", excludeEmojiPicker);
 
 const emit = defineEmits(["update:modelValue", "change"]);
 
