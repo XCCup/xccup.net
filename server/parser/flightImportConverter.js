@@ -1,7 +1,8 @@
 const flights = require("../convertToFlightModel.json");
 const reports = require("../convertToFlightReports.json");
 const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
+const { v5: uuidv5 } = require("uuid");
+const flightUuidNamespace = "ec433d37-1d08-45ad-8da0-1fbde31e7b3d";
 const { isNoWorkday } = require("../helper/HolidayCalculator");
 
 function findBrand(value) {
@@ -115,6 +116,7 @@ function findSite(value, takeoff, flightId) {
   takeoff = takeoff.trim();
 
   let found = sites.find((s) => {
+    const newLocal_0 = value == s.shortName;
     const newLocal = value.includes(s.shortName);
     const newLocal_1 = takeoff.toUpperCase().includes(s.name.toUpperCase());
     const newLocal_2 =
@@ -127,7 +129,14 @@ function findSite(value, takeoff, flightId) {
     //     `SS: V: ${value} T: ${takeoff} 0: ${newLocal} 1: ${newLocal_1} 2: ${newLocal_2} 3: ${newLocal_3} 4: ${newLocal_4}`
     //   );
 
-    return newLocal || newLocal_1 || newLocal_2 || newLocal_3 || newLocal_4;
+    return (
+      newLocal_0 ||
+      newLocal ||
+      newLocal_1 ||
+      newLocal_2 ||
+      newLocal_3 ||
+      newLocal_4
+    );
   });
 
   if (found) return found;
@@ -179,7 +188,7 @@ function findSite(value, takeoff, flightId) {
       found = sites.find((s) => s.shortName == "WALLERTHEIM");
       break;
     case "Wertheim am Main - DE[~3,19km]":
-      found = sites.find((s) => s.shortName == "URPHAR_START_NO");
+      found = sites.find((s) => s.shortName == "URPHAR_NO");
       break;
     case "Nannhausen - DE[~0,54km]":
     case "Nannhausen Schlepp":
@@ -544,7 +553,7 @@ const convertedFlights = flights.map((flight) => {
   const ageOfUser = age ? age : 0;
 
   return {
-    id: uuidv4(),
+    id: uuidv5(flight.FlugID + flight.PilotID, flightUuidNamespace),
     oldPilotId: flight.PilotID,
     externalId: flight.FlugID,
     clubId: findClub(flight.VereinID),
