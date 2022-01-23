@@ -14,28 +14,20 @@ router.get(
   query("modelName").not().isEmpty().trim().escape(),
   query("fileName").not().isEmpty().trim().escape(),
   query("token").isUUID(),
-  query("sync").optional().isBoolean(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     try {
-      const { modelName, fileName, token, truncate } = req.query;
+      const { modelName, fileName, token } = req.query;
 
       logger.info(
         "Will try to import data from " + fileName + " to model " + modelName
       );
-      if (truncate) logger.info("We truncate all data before import");
 
       if (token != process.env.SERVER_IMPORT_TOKEN)
         return res.status(FORBIDDEN).send("Wrong token");
 
       const model = require("../config/postgres")[modelName];
       if (!model) return res.status(NOT_FOUND).send("Model Not found");
-
-      if (truncate) {
-        await model.destroy({
-          truncate: { cascade: true },
-        });
-      }
 
       const jsonFileContent = require("../import/" + fileName + ".json");
 
