@@ -19,21 +19,51 @@ router.get(
     try {
       const { modelName, fileName, token } = req.query;
 
+      if (token != process.env.SERVER_IMPORT_TOKEN)
+        return res.status(FORBIDDEN).send("Wrong token");
+
       logger.info(
         "Will try to import data from " + fileName + " to model " + modelName
       );
 
+      const model = require("../config/postgres")[modelName];
+      if (!model) return res.status(NOT_FOUND).send("Model Not found");
+
+      const fileContent =
+        model == "FlightFixes"
+          ? findAllFlightFixes(fileName)
+          : require("../import/" + fileName + ".json");
+
+      const importErros = await addDataset(model, fileContent);
+      res.json(importErros);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// @desc Truncates a data model
+// @route GET /importdata/truncate
+
+router.get(
+  "/truncate",
+  query("modelName").not().isEmpty().trim().escape(),
+  query("token").isUUID(),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    try {
+      const { modelName, token } = req.query;
+
       if (token != process.env.SERVER_IMPORT_TOKEN)
         return res.status(FORBIDDEN).send("Wrong token");
+
+      logger.info("Will truncate all data of model " + modelName);
 
       const model = require("../config/postgres")[modelName];
       if (!model) return res.status(NOT_FOUND).send("Model Not found");
 
-      const jsonFileContent = require("../import/" + fileName + ".json");
-
-      const importErros = await addDataset(model, jsonFileContent);
-
-      res.json(importErros);
+      await model.destroy({
+        truncate: { cascade: true },
+      });
     } catch (error) {
       next(error);
     }
@@ -66,6 +96,17 @@ function sliceIntoChunks(arr, chunkSize) {
     res.push(chunk);
   }
   return res;
+}
+
+function findAllFlightFixes(year) {
+  const fs = require("fs");
+  const fixesDir = `${global.__basedir}/import/fixes/${year}`;
+  const fixesFileNames = fs.readdirSync(fixesDir);
+  console.log("FOUND FIXES: ", fixesFileNames);
+  const fixesAsOneArray = fixesFileNames.map((file) =>
+    require(fixesDir + "/" + file)
+  );
+  return fixesAsOneArray;
 }
 
 module.exports = router;
