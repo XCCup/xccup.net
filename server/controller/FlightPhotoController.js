@@ -30,8 +30,8 @@ const logger = require("../config/logger");
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
 const THUMBNAIL_IMAGE_HEIGHT = 310;
 const MAX_PHOTOS = 8;
-const IMAGE_BYTES_LIMIT = 1_500_000;
-const IMAGE_HEIGHT_LIMIT = 1_200;
+const IMAGE_BYTES_LIMIT = 2_000_000;
+const IMAGE_HEIGHT_LIMIT = 2_160; //4K Height
 
 const imageUpload = multer({
   dest: IMAGE_STORE,
