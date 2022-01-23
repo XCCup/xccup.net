@@ -7,7 +7,6 @@ describe("check edit flight page", () => {
   });
 
   beforeEach(() => {
-    cy.clearIndexedDB();
     cy.visit("/");
   });
 

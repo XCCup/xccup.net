@@ -67,7 +67,6 @@ const clearCommentEditorInput = () => {
 };
 
 const saveMessageToLocalStorage = () => {
-  console.log("saved");
   localStorage.setItem(
     "commentMessage",
     JSON.stringify({

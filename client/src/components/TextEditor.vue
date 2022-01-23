@@ -38,8 +38,8 @@
 import { ref } from "vue";
 import { VuemojiPicker } from "vuemoji-picker";
 
+// Exclude emoji picker in ci build because in causes test errors in cypress
 const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER;
-console.log("Exclude Picker: ", excludeEmojiPicker);
 
 const emit = defineEmits(["update:modelValue", "change"]);
 
