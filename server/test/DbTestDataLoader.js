@@ -169,7 +169,6 @@ function findAllFlightFixes(year) {
   const fixesAsOneArray = fixesFileNames.map((file) =>
     require(fixesDir + "/" + file)
   );
-  console.log(fixesAsOneArray[0]);
   return fixesAsOneArray;
 }
 
