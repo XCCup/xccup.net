@@ -411,10 +411,10 @@ async function hasUserFlightsWithinCurrentSeason(user) {
   return flights.count;
 }
 
-async function findFlightRecordOfType(id, type) {
+async function findFlightRecordOfType(id, flightType) {
   return (
     await flightService.getAll({
-      type,
+      flightType,
       limit: 1,
       sort: ["flightPoints", "DESC"],
       userId: id,
