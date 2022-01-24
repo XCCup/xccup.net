@@ -79,6 +79,7 @@ if (
   process.env.OVERRULE_ACTIVE === "true"
 ) {
   app.use("/api/testdata", require("./controller/TestDataController"));
+  app.use("/api/importdata", require("./controller/ImportDataController"));
   app.use("/api/cache", require("./controller/CacheController"));
 }
 
