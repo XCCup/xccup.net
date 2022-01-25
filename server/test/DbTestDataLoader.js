@@ -14,6 +14,7 @@ const Brand = require("../config/postgres")["Brand"];
 const Logo = require("../config/postgres")["Logo"];
 const AirspaceService = require("../service/AirspaceService");
 const logger = require("../config/logger");
+const config = require("../config/env-config");
 
 const dbTestData = {
   addFlights: async () => {
@@ -47,7 +48,7 @@ const dbTestData = {
       [Logo, require("./testdatasets/logos.json")],
     ];
     // Test data with personal data
-    if (process.env.SERVER_IMPORT_TEST_DATA === "true") {
+    if (config.get("serverImportTestData")) {
       relations.push([Team, require("./testdatasets/teams.json")]);
       relations.push([User, require("./testdatasets/users.json")]);
       relations.push([Flight, flights]);
@@ -59,7 +60,7 @@ const dbTestData = {
       relations.push([FlightFixes, require("./testdatasets/fixes.json")]);
     }
     // Real data with personal data
-    if (process.env.SERVER_IMPORT_ORIGINAL_DATA === "true") {
+    if (config.get("serverImportOriginalData")) {
       relations.push([User, require("../import/usersImport.json")]);
       relations.push([Team, require("../import/teamsImport.json")]);
       relations.push([Flight, require("../import/flightsImport.json")]);

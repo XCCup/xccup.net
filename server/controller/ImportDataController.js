@@ -8,6 +8,7 @@ const {
 const { validationHasErrors } = require("./Validation");
 const { query } = require("express-validator");
 const { sleep } = require("../helper/Utils");
+const config = require("../config/env-config");
 const router = express.Router();
 
 // @desc Initiates the import of data from the import folder
@@ -22,8 +23,7 @@ router.get(
     if (validationHasErrors(req, res)) return;
     try {
       const { modelName, fileName, token } = req.query;
-
-      if (token != process.env.SERVER_IMPORT_TOKEN)
+      if (token != config.get("serverImportToken"))
         return res.status(FORBIDDEN).send("Wrong token");
 
       logger.info(
@@ -62,7 +62,7 @@ router.get(
     try {
       const { modelName, token } = req.query;
 
-      if (token != process.env.SERVER_IMPORT_TOKEN)
+      if (token != config.get("serverImportToken"))
         return res.status(FORBIDDEN).send("Wrong token");
 
       logger.info("Will truncate all data of model " + modelName);

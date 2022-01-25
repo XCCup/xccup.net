@@ -1,12 +1,11 @@
 // Set global base dir
 global.__basedir = __dirname;
 
-//Set timezone of node server
-if (process.env.SERVER_TIMEZONE) process.env.TZ = process.env.SERVER_TIMEZONE;
+// Load server config
+const config = require("./config/env-config");
 
-if (process.env.NODE_ENV === "CI") {
-  require("dotenv").config({ path: "./.env.ci" });
-}
+//Set timezone of node server
+process.env.TZ = config.get("timezone");
 
 const express = require("express");
 const app = express();
@@ -44,7 +43,7 @@ app.use(
 );
 
 //Development Tools
-if (process.env.NODE_ENV !== "production") {
+if (config.get("env") !== "production") {
   // https://expressjs.com/en/resources/middleware/cors.html
   // https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
   var cors = require("cors");
@@ -74,10 +73,7 @@ app.use("/api/media", require("./controller/MediaController"));
 app.use("/api/general", require("./controller/GeneralController"));
 app.use("/api/mail", require("./controller/MailController"));
 app.use("/api/sites", require("./controller/SiteController"));
-if (
-  process.env.NODE_ENV !== "production" ||
-  process.env.OVERRULE_ACTIVE === "true"
-) {
+if (config.get("env") !== "production" || config.get("overruleActive")) {
   app.use("/api/testdata", require("./controller/TestDataController"));
   app.use("/api/importdata", require("./controller/ImportDataController"));
   app.use("/api/cache", require("./controller/CacheController"));
@@ -98,12 +94,10 @@ app.use("*", (req, res) => {
   });
 });
 
-const PORT = process.env.SERVER_PORT || 3000;
+const port = config.get("port");
 const server = app.listen(
-  PORT,
-  logger.info(
-    `A: Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
-  )
+  port,
+  logger.info(`A: Server running in ${config.get("env")} mode on port ${port}`)
 );
 
 function shutdown() {
