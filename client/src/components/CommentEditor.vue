@@ -8,13 +8,7 @@
             Kommentar verfassen:
           </label>
 
-          <textarea
-            v-model="message"
-            class="form-control mb-2"
-            :rows="3"
-            data-cy="comment-editor"
-            @input="saveMessageToLocalStorage"
-          ></textarea>
+          <TextEditor v-model="message" @change="saveMessageToLocalStorage" />
           <button
             class="btn btn-primary me-1"
             type="submit"
@@ -36,9 +30,9 @@
 <script setup>
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
-
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import TextEditor from "./TextEditor.vue";
 
 const { getUserId, loggedIn } = useUser();
 const { submitComment } = useComments();
@@ -47,7 +41,7 @@ const route = useRoute();
 
 // Submit comment
 const message = ref("");
-const sendButtonIsDisabled = computed(() => message.value.length < 3);
+const sendButtonIsDisabled = computed(() => !message.value.trim().length);
 
 const onSubmitComment = async () => {
   const comment = {
@@ -59,6 +53,7 @@ const onSubmitComment = async () => {
     if (res.status != 200) throw res.statusText;
     clearCommentEditorInput();
   } catch (error) {
+    // TODO: Do something
     console.log(error);
   }
 };

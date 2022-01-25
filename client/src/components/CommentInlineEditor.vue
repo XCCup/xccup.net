@@ -1,9 +1,7 @@
 <template>
-  <textarea
-    id="reply-editor"
-    v-model="message"
-    class="form-control mb-2"
-  ></textarea>
+  <!-- TODO: Save reply drafts to local storage as well -->
+  <TextEditor v-model="message" />
+
   <span v-if="errorMessage" class="text-danger">{{ errorMessage }}</span>
   <div>
     <button
@@ -47,7 +45,7 @@ const message = ref(props.textareaContent);
 const emit = defineEmits(["saveMessage", "closeEditor"]);
 
 const onSaveMessage = () => emit("saveMessage", message.value);
-const saveButtonIsDisabled = computed(() => message.value.length < 3);
+const saveButtonIsDisabled = computed(() => message.value.length < 1);
 
 const onCancel = () => emit("closeEditor");
 </script>

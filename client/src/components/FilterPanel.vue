@@ -18,12 +18,12 @@
           </button>
         </li>
         <li v-if="!disableSeasonSelect" class="nav-item">
-          <SelectSeason />
+          <SelectSeason :allow-all-seasons="allowAllSeasons" />
         </li>
       </ul>
     </nav>
     <!-- v-if enforced rerendering of filter badges -->
-    <div v-if="filterActive" class="mb-3">
+    <div class="mb-3">
       <span
         v-for="(filter, key) in activeFilters"
         :key="key"
@@ -144,7 +144,8 @@
                 placeholder="Suchen..."
               />
               <datalist id="datalistOptions">
-                <option v-for="user in users" :key="user" :value="user">
+                <!-- Beware: If you associate the user to the normal "value" attribute, this element will cause long loading times in chrome -->
+                <option v-for="user in users" :key="user" :data-value="user">
                   {{ user }}
                 </option>
               </datalist>
@@ -210,6 +211,14 @@
                 :options="rankings"
                 :add-empty-option="true"
               />
+              <BaseSelect
+                id="filterSelectType"
+                v-model="selects.flightType"
+                label="Aufgabentyp"
+                :show-label="true"
+                :options="flightTypes"
+                :add-empty-option="true"
+              />
             </div>
           </div>
           <div class="modal-footer">
@@ -247,8 +256,12 @@
 <script setup>
 import useData from "../composables/useData";
 import ApiService from "@/services/ApiService.js";
-import { ref, reactive, watch, computed, onUnmounted } from "vue";
-import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
+import { ref, reactive, computed, onUnmounted } from "vue";
+import {
+  checkIfAnyValueOfObjectIsDefined,
+  findKeyByValue,
+} from "../helper/utils";
+import { FLIGHT_TYPES } from "../common/Constants";
 
 defineProps({
   // TODO: Selecting the modal body like this not effective and not idiot save
@@ -264,10 +277,13 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  allowAllSeasons: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const { filterDataBy, filterActive, isLoading, activeFilters, clearOneFilter } =
-  useData();
+const { filterDataBy, isLoading, activeFilters, clearOneFilter } = useData();
 
 const selects = reactive({
   site: "",
@@ -278,6 +294,7 @@ const selects = reactive({
   gender: "",
   name: "",
   user: "",
+  flightType: "",
 });
 const weekend = ref(false);
 const hikeAndFly = ref(false);
@@ -297,6 +314,7 @@ const sites = ref(null);
 const clubs = ref(null);
 const rankings = ref(null);
 const genders = ref(null);
+const flightTypes = ref(Object.values(FLIGHT_TYPES));
 
 try {
   const res = await ApiService.getFilterOptions();
@@ -329,20 +347,14 @@ const selectedFilters = computed(() => {
     gender: selects.gender ? selects.gender : undefined,
     userIds: findIdsByNameParts(),
     userId: findIdByUserName(),
-
     teamId: findIdByName(selects.team, teamData),
+    flightType: findKeyByValue(FLIGHT_TYPES, selects.flightType),
   };
 });
 
 const onActivate = async () => {
   filterDataBy(selectedFilters.value);
 };
-
-watch(filterActive, (newVal, oldVal) => {
-  // Clear all fields if an external source caused an reset
-  // TODO: Sometimes this clears without known reason
-  if (!oldVal && newVal) onClear();
-});
 
 const findIdByName = (selectObject, initalData) => {
   return selectObject
@@ -396,6 +408,7 @@ const filterDescription = (key, filter) => {
   if (key == "gender") return genderDescription(filter);
   if (key == "region") return filter;
   if (key == "teamId") return teamData.find((e) => e.id == filter).name;
+  if (key == "flightType") return FLIGHT_TYPES[filter];
 
   // This is inconsistent but currently there is no other way to show the actual search value of "name"
   if (key == "userIds") return selects.name.length > 0 ? selects.name : "Name";

@@ -11,7 +11,16 @@
         </thead>
         <tbody>
           <tr v-for="result in results" :key="result.takeoff.id">
-            <td>{{ result.takeoff.name }}</td>
+            <td>
+              <router-link
+                :to="{
+                  name: 'FlightsAll',
+                  query: { siteId: result.takeoff.id },
+                }"
+              >
+                {{ result.takeoff.name }}
+              </router-link>
+            </td>
             <td>
               <SiteRecord :record="result.free" />
             </td>

@@ -35,18 +35,6 @@
             :lower-limit="news.from"
             label="Gültig bis"
           />
-          <div class="form-check">
-            <input
-              id="sendToAll"
-              v-model="news.sendByMail"
-              class="form-check-input"
-              type="checkbox"
-              value
-            />
-            <label class="form-check-label" for="flexCheckDefault"
-              >Per E-Mail an Alle senden</label
-            >
-          </div>
         </div>
         <div class="modal-footer">
           <button

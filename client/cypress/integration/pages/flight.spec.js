@@ -59,9 +59,9 @@ describe("check flight page", () => {
     cy.loginNormalUser();
     cy.visit("/flug/9");
 
-    cy.get("[data-cy=comment-editor]").clear().type(" ");
+    cy.get("[data-cy=text-editor-textarea]").clear().type(" ");
     cy.get("[data-cy=submit-comment-button]").should("be.disabled");
-    cy.get("[data-cy=comment-editor]").clear().type(newComment);
+    cy.get("[data-cy=text-editor-textarea]").clear().type(newComment);
     cy.get("[data-cy=submit-comment-button]").should("not.be.disabled").click();
     cy.visit("/flug/9"); // Make sure commet is already there
 
@@ -91,7 +91,7 @@ describe("check flight page", () => {
     cy.loginNormalUser();
     cy.visit("/flug/9");
 
-    cy.get("[data-cy=comment-editor]").clear().type(evilComment);
+    cy.get("[data-cy=text-editor-textarea]").clear().type(evilComment);
     cy.get("[data-cy=submit-comment-button]").should("not.be.disabled").click();
     cy.visit("/flug/9");
 

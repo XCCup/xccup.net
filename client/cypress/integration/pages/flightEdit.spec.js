@@ -61,8 +61,8 @@ describe("check edit flight page", () => {
       .select(newGliderId)
       .should("have.value", newGliderId);
 
-    cy.textareaIncludes("[data-cy=flight-report-textarea]", oldFlightReport);
-    cy.get("[data-cy=flight-report-textarea]")
+    cy.textareaIncludes("[data-cy=text-editor-textarea]", oldFlightReport);
+    cy.get("[data-cy=text-editor-textarea]")
       .clear()
       .type(newFlightReport)
       .should("have.value", newFlightReport);

@@ -126,13 +126,11 @@ const siteService = {
   findClosestTakeoff: async (location) => {
     const query = `
     SELECT
-    "id","name","region", ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
+    "id","name","region", ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
     FROM
     "FlyingSites"
     WHERE
-    ST_Distance(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") < ${
-      MAX_DIST_TO_SEARCH / 95_0000
-    }
+    ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") < ${MAX_DIST_TO_SEARCH}
     ORDER BY 
     distance
     LIMIT 1
@@ -142,7 +140,6 @@ const siteService = {
       replacements: {
         latitude: parseFloat(location.latitude),
         longitude: parseFloat(location.longitude),
-        maxDistance: MAX_DIST_TO_SEARCH,
       },
       type: FlyingSite.sequelize.QueryTypes.SELECT,
     });
@@ -151,12 +148,10 @@ const siteService = {
       logger.debug("Found takeoff in DB");
       return takeoffs[0];
     } else if (takeoffs.length > 1) {
-      const errorMsg = `Found more than one takeoff in DB for lat: ${location.latitude} long: ${location.latitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
-      logger.error(errorMsg);
+      const errorMsg = `Found more than one takeoff in DB for lat: ${location.latitude} long: ${location.longitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
       throw new XccupRestrictionError(errorMsg);
     } else {
-      const errorMsg = `Found no takeoff in DB for lat: ${location.latitude} long: ${location.latitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
-      logger.error(errorMsg);
+      const errorMsg = `Found no takeoff in DB for lat: ${location.latitude} long: ${location.longitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
       throw new XccupRestrictionError(errorMsg);
     }
   },

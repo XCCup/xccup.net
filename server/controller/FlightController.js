@@ -53,7 +53,7 @@ router.get(
     query("year").optional().isInt(),
     query("site").optional().not().isEmpty().trim().escape(),
     query("siteId").optional().isUUID(),
-    query("type").optional().not().isEmpty().trim().escape(),
+    query("flightType").optional().not().isEmpty().trim().escape(),
     query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
     query("offset").optional().isInt(),
@@ -134,7 +134,14 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
 
     const fullfilepath = path.join(path.resolve(), flight.igcPath);
 
-    return res.download(fullfilepath);
+    return res.download(fullfilepath, () => {
+      if (!res.headersSent)
+        res.status(NOT_FOUND).send("The file you requested was deleted");
+      logger.error(
+        "FC: An igc file was requested but seems to be deleted. igcPath: " +
+          flight.igcPath
+      );
+    });
   } catch (error) {
     next(error);
   }

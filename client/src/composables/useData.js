@@ -1,7 +1,5 @@
-import { isInteger } from "lodash-es";
-import { ref, readonly, computed } from "vue";
+import { ref, readonly } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { checkIfAnyValueOfObjectIsDefined } from "../helper/utils";
 
 const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
@@ -23,9 +21,7 @@ export default () => {
 
 function createInstance(viewComponentName) {
   const data = ref(null);
-  const sortOptionsCache = ref(null);
-  const filterOptionsCache = ref(null);
-  const paramsCache = ref(null);
+  const queryCache = ref({});
   const limitCache = ref(DEFAULT_LIMIT);
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
@@ -33,92 +29,81 @@ function createInstance(viewComponentName) {
   const errorMessage = ref(null);
   const noDataFlag = ref(false);
   const dataConstants = ref(null);
+  let apiEndpoint = null;
 
   const router = useRouter();
 
-  // Getters
-  const filterActive = computed(() =>
-    checkIfAnyValueOfObjectIsDefined(filterOptionsCache.value)
-  );
-
-  const activeFilters = computed(() => {
-    if (!filterOptionsCache.value) return;
-    return Object.keys(filterOptionsCache.value)
-      .filter((k) => filterOptionsCache.value[k] != null)
-      .reduce((a, k) => ({ ...a, [k]: filterOptionsCache.value[k] }), {});
-  });
+  const filterBlackList = [
+    "offset",
+    "limit",
+    "year",
+    "sortOrder",
+    "sortCol",
+    "records",
+  ];
+  // We tried to implement activeFilters/filterActive as computed values. But due to some nested (?) stuff the update doesn't work as expected.
+  // The calculation of these values was therefore moved to the fetchData function.
+  const activeFilters = ref([]);
+  const filterActive = ref(false);
 
   // Mutations
-  const clearFilter = () => {
-    filterOptionsCache.value = null;
-    routerPushView();
-  };
-
   const clearOneFilter = (key) => {
-    // I don't know why, but this "simple" delete key, doesn't remove the key from the URL. The result is correct, but as mentioned the URL will not be updated.
-    // delete filterOptionsCache.value[key];
-    let query = Object.assign({}, filterOptionsCache.value);
-    delete query[key];
-    filterOptionsCache.value = query;
-    routerPushView();
+    delete queryCache.value[key];
+    fetchData();
   };
 
   const sortDataBy = async (sortOptions) => {
-    sortOptionsCache.value = sortOptions;
-    routerPushView();
+    queryCache.value.sortCol = sortOptions.sortCol;
+    queryCache.value.sortOrder = sortOptions.sortOrder;
+    fetchData();
   };
+
   const selectSeason = async (year) => {
-    paramsCache.value = {
-      ...paramsCache.value,
-      year,
-    };
-    routerPushView();
+    // This call reloads the view and which leads to a new initData call. The year param will then be stored in queryCache again.
+    router.push({
+      name: viewComponentName,
+      params: { year },
+    });
   };
 
   const filterDataBy = (filterOptions) => {
-    //Check if any filter value was set
-    if (!Object.values(filterOptions).find((v) => !!v)) return;
-
-    filterOptionsCache.value = filterOptions;
-    routerPushView();
+    queryCache.value = {
+      ...queryCache.value,
+      ...filterOptions,
+    };
+    fetchData();
   };
 
   const paginateBy = async (limit, offset) => {
-    routerPushView(limit, offset);
+    queryCache.value.limit = parseInt(limit);
+    queryCache.value.offset = offset > 0 ? parseInt(offset) : 0;
+    calcRanges();
+
+    fetchData();
+  };
+  // Actions
+  const initData = async (apiEndpointFunction, { queryParameters } = {}) => {
+    queryCache.value = queryParameters;
+    // Add default limit if none is present
+    if (!queryParameters.limit) queryCache.value.limit = DEFAULT_LIMIT;
+    apiEndpoint = apiEndpointFunction;
+    await fetchData();
   };
 
   // Actions
-  const fetchData = async (apiEndpoint, { params, queries } = {}) => {
+  const fetchData = async () => {
     try {
-      if (params) paramsCache.value = params;
-      if (isInteger(queries?.limit)) limitCache.value = parseInt(queries.limit);
-      const offset =
-        queries?.offset && queries.offset > 0 ? parseInt(queries.offset) : 0;
-
-      // Delete pagination parameters in cache; Otherwise the query object will trigger the watcher in the view
-      if (queries) filterOptionsCache.value = queries;
-      if (queries?.limit) delete filterOptionsCache.value.limit;
-      if (queries?.offset) delete filterOptionsCache.value.offset;
-
       isLoading.value = true;
-      const res = await apiEndpoint({
-        ...paramsCache.value,
-        ...filterOptionsCache.value,
-        sortCol: sortOptionsCache.value?.sortCol,
-        sortOrder: sortOptionsCache.value?.sortOrder,
-        limit: limitCache.value,
-        offset,
-      });
-      if (res.status != 200) throw res.status.text;
+      const res = await apiEndpoint(queryCache.value);
+      calcFilterActive();
+      calcActiveFilters();
 
-      // TODO: What is the intention here?
-      if (!res?.data) return;
+      if (res.status != 200) throw res.status.text;
 
       // Check if data supports pagination (data split in rows and count)
       if (res.data.rows) {
         data.value = res.data.rows;
         numberOfTotalEntries.value = res.data.count;
-        calcRanges(offset);
       }
       if (res.data.values) {
         data.value = res.data.values;
@@ -141,8 +126,8 @@ function createInstance(viewComponentName) {
     }
   };
 
-  const calcRanges = (offset) => {
-    currentRange.value.start = offset + 1;
+  const calcRanges = () => {
+    currentRange.value.start = queryCache.value.offset + 1;
     currentRange.value.end =
       currentRange.value.start + limitCache.value - 1 >=
       numberOfTotalEntries.value
@@ -150,31 +135,36 @@ function createInstance(viewComponentName) {
         : currentRange.value.start + limitCache.value - 1;
   };
 
-  function routerPushView(limit, offset) {
-    router.push({
-      name: viewComponentName,
-      query: { ...filterOptionsCache.value, limit, offset },
-      params: paramsCache.value,
-    });
+  function calcFilterActive() {
+    filterActive.value =
+      Object.keys(queryCache.value)
+        .filter((k) => queryCache.value[k] != undefined)
+        .filter((k) => !filterBlackList.includes(k)).length > 0;
+  }
+
+  function calcActiveFilters() {
+    activeFilters.value = Object.keys(queryCache.value)
+      .filter((k) => queryCache.value[k] != undefined)
+      .filter((k) => !filterBlackList.includes(k))
+      .reduce((a, k) => ({ ...a, [k]: queryCache.value[k] }), {});
   }
 
   return {
-    fetchData,
+    initData,
     filterDataBy,
     sortDataBy,
     paginateBy,
     selectSeason,
+    clearOneFilter,
     data: readonly(data),
     dataConstants: readonly(dataConstants),
-    noDataFlag,
+    noDataFlag: readonly(noDataFlag),
     errorMessage,
     currentRange: readonly(currentRange),
     numberOfTotalEntries: readonly(numberOfTotalEntries),
     isLoading: readonly(isLoading),
-    filterActive: readonly(filterActive),
+    filterActive,
     activeFilters,
-    clearFilter,
-    clearOneFilter,
     DEFAULT_LIMIT,
     LIMIT_OPTIONS,
     limitCache,

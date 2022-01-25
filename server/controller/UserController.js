@@ -408,7 +408,6 @@ router.post(
         error.name?.includes("SequelizeUniqueConstraintError") &&
         error.original?.constraint === "Users_email_key"
       ) {
-        // TODO: Why no http constant at this point?
         res.status(CONFLICT).json({ conflict: "emailExists" });
       } else {
         next(error);

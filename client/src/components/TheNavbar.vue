@@ -211,21 +211,14 @@
               </li>
             </ul>
           </li>
-
-          <li id="navbarPrivacy" class="nav-item dropdown">
-            <router-link :to="{ name: 'Privacy' }" class="nav-link active"
-              >Datenschutz</router-link
-            >
-          </li>
-          <li id="navbarImprint" class="nav-item dropdown">
-            <router-link :to="{ name: 'Imprint' }" class="nav-link active"
-              >Impressum</router-link
-            >
-          </li>
         </ul>
         <!-- Login button -->
 
-        <router-link v-if="!loggedIn" :to="{ name: 'Login' }">
+        <router-link
+          v-if="!loggedIn"
+          :to="{ name: 'Login' }"
+          class="no-line-break"
+        >
           <button
             id="loginNavButton"
             type="button"

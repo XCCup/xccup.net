@@ -1,6 +1,8 @@
 const users = require("../convertToUserModel.json");
 const fs = require("fs");
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4, v5: uuidv5 } = require("uuid");
+
+const userUuidNamespace = "630eb68f-e0fa-5ecc-887a-7c7a62614681";
 
 function findBrand(value) {
   const brands = require("../test/testdatasets/brands.json");
@@ -42,10 +44,6 @@ function findClubName(value, clubNames) {
   if (found) return found;
 
   switch (value) {
-    case "GVNAHEGLAN":
-      return "";
-    case "PC_WERRATAL_ESCHWEGE_EICHSFELD":
-      return "";
     case "1":
       return "Drachenflugclub Saar";
     case "3":
@@ -151,7 +149,7 @@ const convertedUsers = users.map((user) => {
 
   const clubId = findClub(user.VereinID);
   const transformedUser = {
-    id: uuidv4(),
+    id: uuidv5(user.PilotID, userUuidNamespace),
     password: uuidv4(),
     oldId: user.PilotID,
     firstName: user.Vorname,

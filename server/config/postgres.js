@@ -20,6 +20,12 @@ const sequelize = new Sequelize(
   `postgres://${user}:${pw}@${host}:${port}/${postDb}`,
   {
     logging: (msg) => logger.debug(msg),
+    pool: {
+      max: 20,
+      min: 0,
+      acquire: 60000,
+      idle: 10000,
+    },
   }
 );
 
@@ -30,7 +36,7 @@ dbConnectionTest().then(async () => {
     process.env.DB_SYNC_FORCE == "true"
     // && process.env.NODE_ENV === "development"
   ) {
-    logger.info("Will create DB Tables");
+    logger.info("P: Will create DB Tables");
     await sequelize
       .sync({ force: true })
       .then(() => addTestData())
@@ -46,17 +52,17 @@ async function dbConnectionTest(numberOfRetry = 0) {
   try {
     await sequelize.authenticate();
     logger.info(
-      `Connection has been established successfully to database ${postDb} on ${host}:${port}.`
+      `P: Connection has been established successfully to database ${postDb} on ${host}:${port}.`
     );
   } catch (error) {
     logger.warn(
-      `Unable to connect to the database ${postDb} on ${host}:${port}. Attempt number: ${numberOfRetry}:`,
+      `P: Unable to connect to the database ${postDb} on ${host}:${port}. Attempt number: ${numberOfRetry}:`,
       error
     );
     if (numberOfRetry == maxNumberOfRetries) {
       if (failProcess == "true") {
         logger.error(
-          `Unable to connect to the database after ${maxNumberOfRetries} attempts. Will terminate process.`
+          `P: Unable to connect to the database after ${maxNumberOfRetries} attempts. Will terminate process.`
         );
         process.exit(1);
       }
@@ -69,7 +75,7 @@ async function dbConnectionTest(numberOfRetry = 0) {
 
 function addTestData() {
   if (process.env.DB_ADD_TESTDATA == "true") {
-    logger.info("Will check for testdata");
+    logger.info("P: Will check for testdata");
     require("../test/DbTestDataLoader").addTestData();
   }
 }

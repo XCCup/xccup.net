@@ -27,7 +27,7 @@
           label="Verein*"
           :show-label="true"
           :options="listOfClubs"
-          :is-disabled="!isOffseason"
+          :is-disabled="!isClubChangeable"
         />
         <BaseInput
           id="street"
@@ -162,10 +162,13 @@ import { ref, computed } from "vue";
 import useUserProfile from "@/composables/useUserProfile";
 import BaseSpinner from "./BaseSpinner.vue";
 import useSwal from "../composables/useSwal";
+import { retrieveDateOnly } from "../helper/utils";
+import useUser from "../composables/useUser";
 
 const { showSuccessToast } = useSwal();
 const { modifiedUserData, updateProfile, profileDataHasChanged } =
   useUserProfile();
+const { getUserId } = useUser();
 
 // Fetched data
 const listOfCountries = ref(null);
@@ -173,7 +176,7 @@ const listOfStates = ref(null);
 const listOfGenders = ref(null);
 const listOfTshirtSizes = ref([]);
 const listOfClubs = ref([]);
-const isOffseason = ref(false);
+const isClubChangeable = ref(false);
 
 // Page state
 const showSpinner = ref(false);
@@ -208,8 +211,9 @@ try {
   listOfTshirtSizes.value = dataUserConstants.tShirtSizes;
   // Clubs
   listOfClubs.value = dataClubs.value.map((c) => c.name);
-  // Offseason
-  isOffseason.value = calculateOffseason(dataSeason);
+  // Is club changeable
+  isClubChangeable.value =
+    calculateOffseason(dataSeason) || (await hasNoFlightInSeason(dataSeason));
 
   errorMessage.value = "";
 } catch (error) {
@@ -249,6 +253,22 @@ function findClubIdByName() {
   return modifiedUserData.value.club.name
     ? dataClubs.value.find((e) => e.name == modifiedUserData.value.club.name).id
     : undefined;
+}
+
+async function hasNoFlightInSeason(dataSeason) {
+  try {
+    const flights = (
+      await ApiService.getFlights({
+        userId: getUserId.value,
+        startDate: retrieveDateOnly(dataSeason.startDate),
+        endDate: retrieveDateOnly(dataSeason.endDate),
+        limit: 1,
+      })
+    ).data;
+    return flights.count == 0;
+  } catch (error) {
+    console.error(error);
+  }
 }
 </script>
 

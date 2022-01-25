@@ -6,7 +6,12 @@ const logger = require("../config/logger");
 const TIME_FRAME = 45;
 
 function execute(fixes) {
-  logger.debug("Start flight stats calculation");
+  logger.debug("FSC: Start flight stats calculation");
+
+  if (!fixes[0] || !fixes[1]) {
+    logger.warn("FSC: Fixes are undefined");
+    return {};
+  }
 
   const resolution = (fixes[1].timestamp - fixes[0].timestamp) / 1000;
   const step = Math.ceil(TIME_FRAME / resolution);
@@ -64,7 +69,7 @@ function execute(fixes) {
       maxSpeed = speed;
   }
 
-  logger.debug("Finished flight stats calculation");
+  logger.debug("FSC: Finished flight stats calculation");
 
   return {
     minHeightBaro,
