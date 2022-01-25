@@ -7,7 +7,7 @@
     >
       <tbody>
         <tr>
-          <td class="col-3 col-md-2 no-line-break">
+          <td class="col-3 col-md-2 hide-on-xs no-line-break">
             <i class="bi bi-cloud-upload"></i>
             {{
               labelData[1]?.altitude ? Math.floor(labelData[1]?.altitude) : "0"
@@ -29,7 +29,7 @@
             {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
             km/h
           </td>
-          <td class="col-3 col-md-2 hide-on-xs no-line-break">
+          <td class="col-3 col-md-2 no-line-break">
             <i class="bi bi-clock"></i> {{ labelData[1]?.time }}
           </td>
         </tr>
