@@ -18,7 +18,7 @@ convict.addFormat({
 const config = convict({
   env: {
     doc: "The application environment",
-    format: ["production", "development", "CI"],
+    format: ["production", "development", "test", "CI"],
     default: "development",
     env: "NODE_ENV",
   },
