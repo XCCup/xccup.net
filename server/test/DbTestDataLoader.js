@@ -92,7 +92,10 @@ async function addDataset(model, dataset) {
   await Promise.all(
     dataset.map(async (entry) => {
       await model.create(entry).catch((err) => {
-        if (err.errors) logger.error("DTDL: " + err.errors[0].message);
+        if (err.errors)
+          logger.error(
+            "DTDL: " + err.errors[0].message + " Value: " + err.errors[0].value
+          );
         else logger.error("DTDL: " + err);
       });
     })
