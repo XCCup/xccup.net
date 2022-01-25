@@ -32,7 +32,7 @@ const { initData, data: results, dataConstants, noDataFlag } = useData();
 // Prevent to send a request query with an empty year parameter
 const params = route.params.year ? route.params : undefined;
 // Await is necessary to trigger the suspense feature
-await initData(ApiService.getResultsOverall, {
+await initData(ApiService.getResultsRlp, {
   queryParameters: {
     ...route.query,
     ...params,
