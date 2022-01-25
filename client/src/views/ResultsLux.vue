@@ -27,11 +27,16 @@ const title = ref("Luxemburg Championat");
 
 setWindowName(title.value);
 
-const { fetchData, data: results, dataConstants, noDataFlag } = useData();
+const { initData, data: results, dataConstants, noDataFlag } = useData();
 
-await fetchData(ApiService.getResultsLux, {
-  params: route.params,
-  queries: route.query,
+// Prevent to send a request query with an empty year parameter
+const params = route.params.year ? route.params : undefined;
+// Await is necessary to trigger the suspense feature
+await initData(ApiService.getResultsLux, {
+  queryParameters: {
+    ...route.query,
+    ...params,
+  },
 });
 const remark = ref(dataConstants.value?.REMARKS_STATE);
 </script>
