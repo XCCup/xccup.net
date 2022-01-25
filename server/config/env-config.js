@@ -5,16 +5,6 @@ if (process.env.NODE_ENV === "CI") {
 const convict = require("convict");
 const { isString } = require("lodash");
 
-convict.addFormat({
-  name: "BooleanCustom",
-  validate: function (val) {
-    return typeof val === "boolean" || typeof val === "string";
-  },
-  coerce: function (val) {
-    return Boolean(val);
-  },
-});
-
 const config = convict({
   env: {
     doc: "The application environment",
