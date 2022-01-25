@@ -2,8 +2,8 @@
   <div class="bg-primary">
     <!-- This prevents long components on big screens but leaves a nasty background "blitzer" -->
     <div class="container-xl">
-      <div v-if="flights" id="cy-daily-ranking-panel" class="row">
-        <div class="col-xl-5 col-lg-6 col-12">
+      <div id="cy-daily-ranking-panel" class="row">
+        <div v-if="flights.length > 0" class="col-xl-5 col-lg-6 col-12">
           <div class="pb-3 text-light">
             <h3>
               Tageswertung
@@ -15,7 +15,7 @@
               />
             </h3>
             <!-- TODO: Beautify the hover -->
-            <div v-if="flights.length > 0">
+            <div>
               <table class="table table-hover text-light bg-primary">
                 <tbody>
                   <tr
@@ -50,21 +50,22 @@
                 >Alle Flüge anzeigen</router-link
               >
             </div>
-            <div v-else class="text-center mt-5">
-              <p class="fs-1">
-                <i class="bi bi-cloud-lightning-rain mx-2"></i>
-                <i class="bi bi-emoji-angry mx-2"></i>
-              </p>
-              Heute noch keine eingereichten Flüge vorhanden
-            </div>
           </div>
         </div>
 
-        <div class="col-xl-7 col-lg-6 col-12 p-0 m-0">
+        <div v-if="flights.length > 0" class="col-xl-7 col-lg-6 col-12 p-0 m-0">
           <DailyResultsMap
             :highlighted-flight="highlightedFlightId"
             :tracks="dailyFlightsMapTracks"
           />
+        </div>
+        <div v-if="!flights.length > 0" class="text-center pb-3 text-light">
+          <h3>Tageswertung</h3>
+          <p class="fs-1">
+            <i class="bi bi-cloud-lightning-rain mx-2"></i>
+            <i class="bi bi-emoji-angry mx-2"></i>
+          </p>
+          Heute noch keine eingereichten Flüge vorhanden
         </div>
       </div>
     </div>
