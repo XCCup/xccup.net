@@ -86,7 +86,7 @@ const config = convict({
   elevationUrl: {
     doc: "The URL to the elevation api (if googles elevation api is not used)",
     format: noEmptyString,
-    default: noEmptyString,
+    default: "a.elevation-service.net",
     env: "ELEVATION_URL",
   },
 
