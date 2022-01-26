@@ -23,7 +23,7 @@ import { useRoute } from "vue-router";
 import useData from "../composables/useData";
 
 const route = useRoute();
-const title = ref("Landesmeisterschaft RLP");
+const title = ref("Rheinland-Pfalz Pokal");
 
 setWindowName(title.value);
 
