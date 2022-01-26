@@ -8,7 +8,7 @@
       54538 Kinderbeuern <br />
 
       Vertretungsberechtigt <br />
-      +49 6532 9557706 <br />
+      +49 173 3034107 <br />
 
       wolf@xccup.net
     </p>
