@@ -38,25 +38,25 @@ const config = convict({
   },
 
   clientActivateProfil: {
-    doc: "The timezone in which the server operates",
+    doc: "The URL path in the frontend to the activate user profile view",
     format: noEmptyString,
     default: "/profil/aktivieren",
     env: "CLIENT_USER_ACTIVATE_PATH",
   },
   clientPasswordLost: {
-    doc: "The timezone in which the server operates",
+    doc: "The URL path in the frontend to the password lost view",
     format: noEmptyString,
     default: "/passwort-vergessen",
     env: "CLIENT_USER_PASSWORD_LOST_PATH",
   },
   clientConfirmEmail: {
-    doc: "The timezone in which the server operates",
+    doc: "The URL path in the frontend to the confirm email view",
     format: noEmptyString,
     default: "/email-bestaetigen",
     env: "CLIENT_USER_EMAIL_CHANGE_PATH",
   },
   clientFlight: {
-    doc: "The timezone in which the server operates",
+    doc: "The URL path in the frontend to the flight view",
     format: noEmptyString,
     default: "/flug",
     env: "CLIENT_FLIGHT",
@@ -152,7 +152,7 @@ const config = convict({
     env: "SERVER_IMPORT_ORIGINAL_DATA",
   },
   serverImportToken: {
-    doc: "A token to confirm any action which the ImportDataController",
+    doc: "A token to confirm any action with the ImportDataController",
     format: noEmptyString,
     default: "2025a7ec-d1e1-40b1-aadd-7d14b1ccf4c5",
     env: "SERVER_IMPORT_TOKEN",
