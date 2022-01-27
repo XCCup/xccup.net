@@ -27,12 +27,12 @@
       "C_low": {
         "scoringMultiplicator": 2.6,
         "description": "Schirme EN C mit einer Streckung <6,4",
-        "shortDescription": "GS Intermdediate low"
+        "shortDescription": "GS Intermediate low"
       },
       "C_high": {
         "scoringMultiplicator": 2.5,
         "description": "Schirme EN C mit einer Streckung >=6,4",
-        "shortDescription": "GS Intermdediate high"
+        "shortDescription": "GS Intermediate high"
       },
       "D_low": {
         "scoringMultiplicator": 2.4,
@@ -127,12 +127,12 @@
       "C_low": {
         "scoringMultiplicator": 2.6,
         "description": "Schirme EN C mit einer Streckung <6,4",
-        "shortDescription": "GS Intermdediate low"
+        "shortDescription": "GS Intermediate low"
       },
       "C_high": {
         "scoringMultiplicator": 2.5,
         "description": "Schirme EN C mit einer Streckung >=6,4",
-        "shortDescription": "GS Intermdediate high"
+        "shortDescription": "GS Intermediate high"
       },
       "D_low": {
         "scoringMultiplicator": 2.4,
@@ -227,12 +227,12 @@
       "C_low": {
         "scoringMultiplicator": 2.6,
         "description": "Schirme EN C mit einer Streckung <6,4",
-        "shortDescription": "GS Intermdediate low"
+        "shortDescription": "GS Intermediate low"
       },
       "C_high": {
         "scoringMultiplicator": 2.5,
         "description": "Schirme EN C mit einer Streckung >=6,4",
-        "shortDescription": "GS Intermdediate high"
+        "shortDescription": "GS Intermediate high"
       },
       "D_low": {
         "scoringMultiplicator": 2.4,
@@ -327,12 +327,12 @@
       "C_low": {
         "scoringMultiplicator": 2.6,
         "description": "Schirme EN C mit einer Streckung <6,4",
-        "shortDescription": "GS Intermdediate low"
+        "shortDescription": "GS Intermediate low"
       },
       "C_high": {
         "scoringMultiplicator": 2.5,
         "description": "Schirme EN C mit einer Streckung >=6,4",
-        "shortDescription": "GS Intermdediate high"
+        "shortDescription": "GS Intermediate high"
       },
       "D_low": {
         "scoringMultiplicator": 2.4,
@@ -427,12 +427,12 @@
       "C_low": {
         "scoringMultiplicator": 2.6,
         "description": "Schirme EN C mit einer Streckung <6,4",
-        "shortDescription": "GS Intermdediate low"
+        "shortDescription": "GS Intermediate low"
       },
       "C_high": {
         "scoringMultiplicator": 2.5,
         "description": "Schirme EN C mit einer Streckung >=6,4",
-        "shortDescription": "GS Intermdediate high"
+        "shortDescription": "GS Intermediate high"
       },
       "D_low": {
         "scoringMultiplicator": 2.4,

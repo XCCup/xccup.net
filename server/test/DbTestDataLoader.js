@@ -14,6 +14,7 @@ const Brand = require("../config/postgres")["Brand"];
 const Logo = require("../config/postgres")["Logo"];
 const AirspaceService = require("../service/AirspaceService");
 const logger = require("../config/logger");
+const config = require("../config/env-config");
 
 const dbTestData = {
   addFlights: async () => {
@@ -40,14 +41,15 @@ const dbTestData = {
       [Club, require("./testdatasets/clubs.json")],
       [FlyingSite, require("./testdatasets/flyingSites.json")],
       [SeasonDetail, require("./testdatasets/seasonDetails.json")],
-      [Airspace, require("./testdatasets/airspaces.json")],
+      [Airspace, require("./testdatasets/airspaces_lux.json")],
+      [Airspace, require("./testdatasets/airspaces_deu.json")],
       [News, require("./testdatasets/news.json")],
       [Sponsor, require("./testdatasets/sponsors.json")],
       [Brand, require("./testdatasets/brands.json")],
       [Logo, require("./testdatasets/logos.json")],
     ];
     // Test data with personal data
-    if (process.env.SERVER_IMPORT_TEST_DATA === "true") {
+    if (config.get("serverImportTestData")) {
       relations.push([Team, require("./testdatasets/teams.json")]);
       relations.push([User, require("./testdatasets/users.json")]);
       relations.push([Flight, flights]);
@@ -59,7 +61,7 @@ const dbTestData = {
       relations.push([FlightFixes, require("./testdatasets/fixes.json")]);
     }
     // Real data with personal data
-    if (process.env.SERVER_IMPORT_ORIGINAL_DATA === "true") {
+    if (config.get("serverImportOriginalData")) {
       relations.push([User, require("../import/usersImport.json")]);
       relations.push([Team, require("../import/teamsImport.json")]);
       relations.push([Flight, require("../import/flightsImport.json")]);
@@ -92,7 +94,10 @@ async function addDataset(model, dataset) {
   await Promise.all(
     dataset.map(async (entry) => {
       await model.create(entry).catch((err) => {
-        if (err.errors) logger.error("DTDL: " + err.errors[0].message);
+        if (err.errors)
+          logger.error(
+            "DTDL: " + err.errors[0].message + " Value: " + err.errors[0].value
+          );
         else logger.error("DTDL: " + err);
       });
     })

@@ -29,6 +29,7 @@ const { COUNTRY, STATE: USER_STATE } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
 
 const logger = require("../config/logger");
+const config = require("../config/env-config");
 const { deleteCache } = require("../controller/CacheManager");
 
 const flightService = {
@@ -384,7 +385,7 @@ const flightService = {
 
   storeFixesAndAddFurtherInformationToFlight: async (flight, fixes) => {
     const requests = [findClosestTakeoff(fixes[0])];
-    if (process.env.USE_GOOGLE_API === "true") {
+    if (config.get("useGoogleApi")) {
       requests.push(findLanding(fixes[fixes.length - 1]));
     }
     const results = await Promise.all(requests);

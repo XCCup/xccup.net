@@ -1,11 +1,12 @@
 const axios = require("axios");
 const debounce = require("lodash/debounce");
+const config = require("../config/env-config");
 const logger = require("../config/logger");
 
-const host = process.env.ELEVATION_HOST;
-const dataset = process.env.ELEVATION_DATASET;
-const numberOfFixesPerApiRequest =
-  process.env.USE_GOOGLE_ELEVATION_API == "true" ? 500 : 50;
+const elevationUrl = config.get("elevationUrl");
+const numberOfFixesPerApiRequest = config.get("useGoogleElevationApi")
+  ? 500
+  : 50;
 
 const elevationAttacher = {
   execute: (fixes, callback) => {
@@ -28,7 +29,7 @@ function executeRequest(stack) {
   let locations = stack
     .map(({ fix }) => `${fix.latitude},${fix.longitude}`)
     .join("|");
-  let url = `${host}/${dataset}?locations=${locations}&nodata_value=0`;
+  let url = `${elevationUrl}?locations=${locations}&nodata_value=0`;
   return axios.get(url);
 }
 
@@ -43,7 +44,7 @@ function executeRequestGoogle(stack) {
   return client.elevation({
     params: {
       locations: locations,
-      key: process.env.GOOGLE_MAPS_API_KEY,
+      key: config.get("googleMapsApiKey"),
     },
     timeout: 1000, // milliseconds
   });
@@ -53,7 +54,7 @@ const resolveStack = debounce(async () => {
   let stack = tmpFixes.splice(0, numberOfFixesPerApiRequest);
   try {
     let response;
-    if (process.env.USE_GOOGLE_ELEVATION_API == "true") {
+    if (config.get("useGoogleElevationApi")) {
       response = await executeRequestGoogle(stack);
     } else {
       response = await executeRequest(stack);

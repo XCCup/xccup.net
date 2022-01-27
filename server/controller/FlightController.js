@@ -37,6 +37,7 @@ const {
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
+const config = require("../config/env-config");
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
 const uploadLimiter = createRateLimiter(60, 10);
@@ -335,12 +336,11 @@ async function persistIgcFile(externalId, igcFile) {
 
 async function checkIfFlightIsModifiable(flight, userId) {
   const { XccupRestrictionError } = require("../helper/ErrorHandler");
-
   // Allow flight uploads which are older than 14 days when not in production (Needed for testing)
   const overwriteIfInProcessAndNotProduction =
     (flight.flightStatus == STATE.IN_PROCESS &&
-      process.env.NODE_ENV !== "production") ||
-    process.env.OVERRULE_ACTIVE === "true";
+      config.get("env") !== "production") ||
+    config.get("overruleActive");
 
   const flightIsYoungerThanThreshold = moment(flight.takeoffTime)
     .add(DAYS_FLIGHT_CHANGEABLE, "days")

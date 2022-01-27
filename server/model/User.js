@@ -108,6 +108,8 @@ module.exports = (sequelize, DataTypes) => {
     );
   };
   User.prototype.getAge = function () {
+    if (!this.birthday) return 0;
+
     const birthYear = new Date(Date.parse(this.birthday)).getFullYear();
     const currentYear = new Date().getFullYear();
     return currentYear - birthYear;
