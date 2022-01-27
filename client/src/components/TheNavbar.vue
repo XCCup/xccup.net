@@ -112,8 +112,8 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  ><i class="bi bi-flag-fill me-1"></i>Landesmeisterschaft
-                  RLP</router-link
+                  ><i class="bi bi-flag-fill me-1"></i>Rheinland-Pfalz
+                  Pokal</router-link
                 >
               </li>
               <li>
