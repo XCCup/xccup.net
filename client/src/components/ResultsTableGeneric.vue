@@ -16,7 +16,7 @@
           <th>Gesamt</th>
         </thead>
         <tbody>
-          <tr v-for="(result, index) in results" :key="result.user.idex">
+          <tr v-for="(result, index) in results" :key="result.user.id">
             <td>{{ index + 1 }}</td>
             <td>
               <strong>{{

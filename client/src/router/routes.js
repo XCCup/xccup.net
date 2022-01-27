@@ -111,6 +111,14 @@ export const Routes = [
     component: () => import("../views/ResultsClubs.vue"),
   },
   {
+    path: "/:year/earlybird/",
+    name: "ResultsEarlybird",
+    props: true,
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import("../views/ResultsEarlybird.vue"),
+  },
+  {
     path: "/fluggebietsrekorde/",
     name: "SiteRecords",
     props: true,
