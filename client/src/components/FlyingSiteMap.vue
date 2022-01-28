@@ -11,7 +11,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import tileOptions from "@/config/mapbox.js";
+import { tileOptions } from "@/config/mapbox.js";
 import { ref, onMounted } from "vue";
 
 const map = ref(null);

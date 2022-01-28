@@ -9,7 +9,6 @@
 <script setup>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import tileOptions from "@/config/mapbox";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { TRACK_COLORS } from "@/common/Constants";
@@ -38,6 +37,7 @@ import landingIconUrl from "@/assets/images/landing-marker.png?url";
 // Photo marker
 import photoIconRetinaUrl from "@/assets/images/photo-marker-2x.png?url";
 import photoIconUrl from "@/assets/images/photo-marker.png?url";
+import { tileOptionsSatellite, tileOptions } from "../config/mapbox";
 
 let landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,
@@ -89,14 +89,27 @@ onMounted(() => {
   // Setup leaflet
   L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
+  let terrain = L.tileLayer(
+    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+    tileOptions
+  );
+
+  let satellite = L.tileLayer(
+    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+    tileOptionsSatellite
+  );
+
+  let baseMaps = {
+    Gelände: terrain,
+    Satellit: satellite,
+  };
+
   map.value = L.map("mapContainer", {
     gestureHandling: true,
   }).setView([50.143, 7.146], 8);
 
-  L.tileLayer(
-    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
-    tileOptions
-  ).addTo(map.value);
+  terrain.addTo(map.value);
+  L.control.layers(baseMaps).addTo(map.value);
 
   // Fix for default marker image paths
   delete L.Icon.Default.prototype._getIconUrl;

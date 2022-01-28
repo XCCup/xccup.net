@@ -7,7 +7,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import tileOptions from "@/config/mapbox.js";
+import { tileOptions } from "@/config/mapbox.js";
 import { watchEffect, onMounted, ref } from "vue";
 // Fix for default marker image paths
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
