@@ -4,8 +4,6 @@
     <router-link
       :to="{
         name: 'SubmitFlyingSite',
-        // TODO: Fix the missing currentYear attribute
-        params: { year: currentYear },
       }"
       class="btn btn-primary btn-sm me-1 mb-3"
     >
