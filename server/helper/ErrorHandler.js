@@ -23,8 +23,11 @@ function handleXccupHttpError(error, req, res) {
 
 function handleGeneralError(error, req, res) {
   logger.error(error, {
-    meta: {
-      req,
+    req: {
+      originalUrl: req.originalUrl,
+      params: req.params,
+      query: req.query,
+      body: req.body.igc ? { name: req.body.igc.name } : req.body,
     },
   });
   res

@@ -8,14 +8,14 @@ module.exports = (sequelize, DataTypes) => {
     },
     externalId: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
+      // autoIncrement: true, // Not supported on non PK column in Postgres
       unique: true,
     },
     landing: {
       type: DataTypes.STRING,
     },
     report: {
-      type: DataTypes.STRING(10000),
+      type: DataTypes.STRING(12000),
       //Default is VARCHAR(255)
     },
     airspaceComment: {
