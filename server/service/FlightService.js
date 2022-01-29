@@ -286,7 +286,7 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, glider);
       columnsToUpdate.flightPoints = flightPoints;
 
-      const flightStatus = await calcFlightStatus(flightPoints, onlyLogbook);
+      const flightStatus = await calcFlightStatus(flight, onlyLogbook);
       columnsToUpdate.flightStatus = flightStatus;
     }
 
@@ -496,11 +496,19 @@ async function calcFlightPoints(flight, glider) {
   return flightPoints;
 }
 
-async function calcFlightStatus(flightPoints, onlyLogbook) {
-  if (!flightPoints) return STATE.IN_PROCESS;
-  const currentSeason = await getCurrentActive();
+async function calcFlightStatus(flight, onlyLogbook) {
+  const flightPoints = flight.flightPoints;
 
-  if (onlyLogbook || currentSeason.isPaused == true) return STATE.FLIGHTBOOK;
+  if (!flightPoints) return STATE.IN_PROCESS;
+
+  const currentSeason = await getCurrentActive();
+  const isOffSeason = !moment(flight.takeoffTime).isBetween(
+    currentSeason.startDate,
+    currentSeason.endDate
+  );
+
+  if (onlyLogbook || currentSeason.isPaused == true || isOffSeason)
+    return STATE.FLIGHTBOOK;
 
   const pointThreshold = currentSeason.pointThresholdForFlight;
 
