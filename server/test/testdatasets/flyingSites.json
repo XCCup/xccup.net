@@ -967,7 +967,7 @@
   },
   {
     "name": "Niederzissen/Bausenberg",
-    "heightDifference": "317",
+    "heightDifference": "54",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
@@ -1565,7 +1565,7 @@
   },
   {
     "name": "Boppard",
-    "heightDifference": "276",
+    "heightDifference": "150",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
@@ -2476,7 +2476,7 @@
   },
   {
     "name": "Boppard-Weiler",
-    "heightDifference": "385",
+    "heightDifference": "170",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",

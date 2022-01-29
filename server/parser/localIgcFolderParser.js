@@ -9,7 +9,7 @@ const { sleep } = require("../helper/Utils");
 
 const folderPath = process.argv[2];
 const year = process.argv[3];
-const flightsAll = require("../import/flightsImport.json");
+const flightsAll = require("../import/flightsImport2014.json");
 const flights = flightsAll.filter((f) => {
   if (!f?.takeoffTime) return;
   return new Date(f.takeoffTime).getFullYear() == year;
@@ -125,7 +125,7 @@ function saveTurnpoints(res) {
       JSON.stringify(flightsAll, null, 2),
       "utf8",
       (err) => {
-        console.log(err);
+        if (err) console.log(err);
       }
     );
   }

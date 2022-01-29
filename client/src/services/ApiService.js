@@ -175,6 +175,11 @@ export default {
       params,
     });
   },
+  getResultsEarlybird(params) {
+    return apiClient.get("results/earlybird", {
+      params,
+    });
+  },
   getResultsSiteRecords() {
     return apiClient.get("results/siteRecords");
   },
