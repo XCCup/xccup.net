@@ -89,27 +89,28 @@ onMounted(() => {
   // Setup leaflet
   L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
-  let terrain = L.tileLayer(
+  const terrain = L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptions
   );
 
-  let satellite = L.tileLayer(
+  const satellite = L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptionsSatellite
   );
 
-  let baseMaps = {
+  const baseMaps = {
     Gelände: terrain,
     Satellit: satellite,
   };
 
   map.value = L.map("mapContainer", {
     gestureHandling: true,
-  }).setView([50.143, 7.146], 8);
+  });
 
   terrain.addTo(map.value);
   L.control.layers(baseMaps).addTo(map.value);
+  map.value.setView([50.143, 7.146], 8);
 
   // Fix for default marker image paths
   delete L.Icon.Default.prototype._getIconUrl;

@@ -11,7 +11,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import { tileOptions } from "@/config/mapbox.js";
+import { tileOptions, tileOptionsSatellite } from "@/config/mapbox.js";
 import { ref, onMounted } from "vue";
 
 const map = ref(null);
@@ -69,14 +69,28 @@ const addSiteMarker = (sites) => {
 onMounted(() => {
   L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
-  map.value = L.map("mapContainer", {
-    gestureHandling: true,
-  }).setView([50.143, 7.146], 8);
-
-  L.tileLayer(
+  const terrain = L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptions
-  ).addTo(map.value);
+  );
+
+  const satellite = L.tileLayer(
+    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+    tileOptionsSatellite
+  );
+
+  const baseMaps = {
+    Gelände: terrain,
+    Satellit: satellite,
+  };
+
+  map.value = L.map("mapContainer", {
+    gestureHandling: true,
+  });
+
+  terrain.addTo(map.value);
+  L.control.layers(baseMaps).addTo(map.value);
+  map.value.setView([50.143, 7.146], 8);
 
   addSiteMarker(props.sites);
 });
