@@ -28,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
       allowNull: false,
     },
-    flightTypeFactors: {
-      type: DataTypes.JSON,
-      allowNull: false,
-    },
+    // flightTypeFactors: {
+    //   type: DataTypes.JSON,
+    //   allowNull: false,
+    // },
     rankingClasses: {
       type: DataTypes.JSON,
       allowNull: false,

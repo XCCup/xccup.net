@@ -370,10 +370,14 @@ const flightService = {
   },
 
   startResultCalculation: async (flight) => {
-    const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
-    IgcAnalyzer.startCalculation(flight, flightTypeFactors, (result) => {
-      flightService.addResult(result);
-    }).catch((error) => logger.error(error));
+    // const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
+    IgcAnalyzer.startCalculation(
+      flight,
+      { FREE: 1, FLAT: 1.5455, FAI: 1.7273 },
+      (result) => {
+        flightService.addResult(result);
+      }
+    ).catch((error) => logger.error(error));
   },
 
   attachFixRelatedTimeData: (flight, fixes) => {
@@ -474,8 +478,10 @@ async function calcFlightPoints(flight, glider) {
 
   let flightPoints;
   if (flight.flightType && flight.flightDistance) {
-    const typeFactor = currentSeason.flightTypeFactors[flight.flightType];
-    const gliderFactor = gliderClassDB.scoringMultiplicator;
+    // const typeFactor = currentSeason.flightTypeFactors[flight.flightType];
+    // const gliderFactor = gliderClassDB.scoringMultiplicator;
+    const typeFactor = gliderClassDB.scoringMultiplicator[flight.flightType];
+    const gliderFactor = gliderClassDB.scoringMultiplicator.BASE;
     const distance = flight.flightDistance;
     flightPoints = Math.round(typeFactor * gliderFactor * distance);
   } else {
