@@ -135,13 +135,15 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
 
     const fullfilepath = path.join(path.resolve(), flight.igcPath);
 
-    return res.download(fullfilepath, () => {
-      if (!res.headersSent)
-        res.status(NOT_FOUND).send("The file you requested was deleted");
-      logger.error(
-        "FC: An igc file was requested but seems to be deleted. igcPath: " +
-          flight.igcPath
-      );
+    return res.download(fullfilepath, (err) => {
+      if (err) {
+        if (!res.headersSent)
+          res.status(NOT_FOUND).send("The file you requested was deleted");
+        logger.error(
+          "FC: An igc file was requested but seems to be deleted. igcPath: " +
+            flight.igcPath
+        );
+      }
     });
   } catch (error) {
     next(error);
