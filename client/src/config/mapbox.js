@@ -24,5 +24,4 @@ const tileOptionsSatellite = {
   accessToken: import.meta.env.VITE_MAPBOX_API_KEY,
 };
 
-// module.exports = tileOptions;
 export { tileOptions, tileOptionsSatellite };
