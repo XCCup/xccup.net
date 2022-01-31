@@ -104,8 +104,14 @@ onMounted(() => {
     Satellit: satellite,
   };
 
+  /**
+   * Vue 3 with leaflet causes some errors when zooming.
+   * Therefore zoomAnimation was disabled.
+   * See: https://stackoverflow.com/questions/65981712/uncaught-typeerror-this-map-is-null-vue-js-3-leaflet
+   */
   map.value = L.map("mapContainer", {
     gestureHandling: true,
+    zoomAnimation: false,
   });
 
   terrain.addTo(map.value);
