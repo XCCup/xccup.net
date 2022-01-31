@@ -29,6 +29,7 @@ const { COUNTRY, STATE: USER_STATE } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
 
 const logger = require("../config/logger");
+const config = require("../config/env-config");
 const { deleteCache } = require("../controller/CacheManager");
 
 const flightService = {
@@ -36,7 +37,7 @@ const flightService = {
     year,
     site,
     siteId,
-    type,
+    flightType,
     rankingClass,
     limit,
     offset,
@@ -62,7 +63,7 @@ const flightService = {
       ],
       where: await createWhereStatement(
         year,
-        type,
+        flightType,
         rankingClass,
         startDate,
         endDate,
@@ -285,7 +286,11 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, glider);
       columnsToUpdate.flightPoints = flightPoints;
 
-      const flightStatus = await calcFlightStatus(flightPoints, onlyLogbook);
+      const flightStatus = await calcFlightStatus(
+        flight.takeoffTime,
+        flightPoints,
+        onlyLogbook
+      );
       columnsToUpdate.flightStatus = flightStatus;
     }
 
@@ -325,7 +330,10 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, flight.glider);
       flight.flightPoints = flightPoints;
 
-      const flightStatus = await calcFlightStatus(flight);
+      const flightStatus = await calcFlightStatus(
+        flight.takeoffTime,
+        flight.flightPoints
+      );
       flight.flightStatus = flightStatus;
     }
 
@@ -384,7 +392,7 @@ const flightService = {
 
   storeFixesAndAddFurtherInformationToFlight: async (flight, fixes) => {
     const requests = [findClosestTakeoff(fixes[0])];
-    if (process.env.USE_GOOGLE_API === "true") {
+    if (config.get("useGoogleApi")) {
       requests.push(findLanding(fixes[fixes.length - 1]));
     }
     const results = await Promise.all(requests);
@@ -473,8 +481,10 @@ async function calcFlightPoints(flight, glider) {
 
   let flightPoints;
   if (flight.flightType && flight.flightDistance) {
-    const typeFactor = currentSeason.flightTypeFactors[flight.flightType];
-    const gliderFactor = gliderClassDB.scoringMultiplicator;
+    // const typeFactor = currentSeason.flightTypeFactors[flight.flightType];
+    // const gliderFactor = gliderClassDB.scoringMultiplicator;
+    const typeFactor = gliderClassDB.scoringMultiplicator[flight.flightType];
+    const gliderFactor = gliderClassDB.scoringMultiplicator.BASE;
     const distance = flight.flightDistance;
     flightPoints = Math.round(typeFactor * gliderFactor * distance);
   } else {
@@ -489,11 +499,17 @@ async function calcFlightPoints(flight, glider) {
   return flightPoints;
 }
 
-async function calcFlightStatus(flightPoints, onlyLogbook) {
+async function calcFlightStatus(takeoffTime, flightPoints, onlyLogbook) {
   if (!flightPoints) return STATE.IN_PROCESS;
-  const currentSeason = await getCurrentActive();
 
-  if (onlyLogbook || currentSeason.isPaused == true) return STATE.FLIGHTBOOK;
+  const currentSeason = await getCurrentActive();
+  const isOffSeason = !moment(takeoffTime).isBetween(
+    currentSeason.startDate,
+    currentSeason.endDate
+  );
+
+  if (onlyLogbook || currentSeason.isPaused == true || isOffSeason)
+    return STATE.FLIGHTBOOK;
 
   const pointThreshold = currentSeason.pointThresholdForFlight;
 

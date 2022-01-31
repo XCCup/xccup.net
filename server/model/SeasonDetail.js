@@ -44,6 +44,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    misc: {
+      type: DataTypes.JSON,
+    },
   });
   return SeasonDetail;
 };

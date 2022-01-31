@@ -1,3 +1,4 @@
+0
 <template>
   <div class="container">
     <div
@@ -12,6 +13,7 @@
     </div>
     <div v-if="flight.report" class="row mt-4" data-cy="flight-report">
       <h3>Flugbericht</h3>
+      <!-- eslint-disable-next-line vue/no-v-html -> Will be sanitzed in function sanitizeComment -->
       <p class="allow-white-spaces" v-html="reportWithLinks"></p>
     </div>
   </div>

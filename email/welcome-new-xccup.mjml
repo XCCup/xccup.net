@@ -1,0 +1,93 @@
+<mjml>
+  <mj-raw>
+    <!-- Hint: Use this => https://github.com/mjmlio/vscode-mjml -->
+  </mj-raw>
+  <mj-body>
+    <mj-section background-color="#08556d">
+      <mj-column>
+        <mj-image width="150px" src="https://next.xccup.net/assets/xccup_white.352249d0.svg"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-raw>
+      <!-- Body text -->
+    </mj-raw>
+    <mj-section background-color="#fafafa">
+      <mj-column>
+        <mj-text font-size="20px" font-family="Helvetica Neue" color="#626262">Der neue XCCup</mj-text>
+        <mj-text color="#525252">
+          Liebe XCCup Pilot*innen
+          <p />
+
+          Im letzten Jahr hatte Wolf bereits angekündigt, dass unser XCCup Entwickler Sascha den Posten nach vielen Jahren gerne abgeben würde und ein Nachfolger gesucht wird.<br />
+
+          Diesem Aufruf sind wir (Kai & Stephan) als langjährige XCCup Teilnehmer gefolgt.
+          <p />
+          Da die aktuelle Webseite aus einer Zeit stammt, in der Smartphones noch kein Thema waren ist die Bedienung auf mobilen Geräten eher umständlich gewesen. Aus diesem Grund haben wir den XCCup mit Fokus auf mobile Geräte von neu auf programmiert.
+          <br />
+          So gut wie alle Funktionen haben wir dabei übernommen und zusätzlich noch einige Neue hinzugefügt.
+          <p />
+          Wir sind optimistisch, dass wir die neue Webseite zum Saisonstart "live" gehen lassen können. Bis dahin möchten wir euch bitten diese schon mal zu testen und uns zu kontaktieren, wenn etwas nicht wie erwartet funktionieren sollte. Am besten mit Screenshot und Angabe zum verwendeten Gerät und Browser.<br />
+          Ihr könnt dabei auch alte Flüge verwenden. Zu Testzwecken gibt es kein 14-Tages-Limit beim Hochladen.<br />
+          Feedback bitte an <a href="mailto:next@xccup.net">next@xccup.net</a>
+
+          <p />
+
+          Ihr findet die neue Version hier: <a href="https://next.xccup.net" target="_blank">https://next.xccup.net</a>
+          <p />
+          Vor dem ersten Login müsst ihr auf "Passwort vergessen" klicken und ein neues Passwort anfordern. Verwendet dazu bitte eure im alten XCCup benutzte E-Mail-Adresse. Alle Daten werden nach der Testphase gelöscht und haben keine Auswirkungen auf die Wertung 2022. <br /> 
+          Probiert also gerne alles Mögliche aus und schaut nach, ob all eure Flüge aus den Vorjahren korrekt importiert wurden. (In allen Flügen vor 2021 und einigen aus 2021 fehlen noch die Trackpunkte auf der Karte & Barogramm. Diese werden nach und nach importiert.)
+          <p />
+
+          <strong>Neue Funktionen:</strong>
+          <p />
+
+          - Es ist nun möglich auf Kommentare zu antworten, statt einfach nur einen Weiteren unter die Vorhandenen zu schreiben.
+          <p />
+          - Airbuddies: Solltet ihr zusammen mit anderen Piloten geflogen sein könnt ihr dessen Trackklog einblenden. Ihr müsst nichts weiter tun, als euren Flug hochzuladen und findet dann einen Button “Airbuddies” unter dem Barogramm. (Natürlich nur, wenn der andere Pilot auch seinen Fluch hochgeladen hat…)
+          <p />
+          - Die Tabellen der Wertungen zeigen abhängig von der Gerätegröße unterschiedlich viele Details an.
+          <p />
+          - Ihr könnt einen Hike&Fly Flug als solchen kennzeichnen. Die Höhenmeter werden in den Flugdetails angezeigt.
+          <p />
+          - Ihr könnt jetzt unterschiedliche Schirme im Profil hinterlegen und aus diesen beim Hochladen eines neuen Fluges auswählen.
+          <p />
+          - "Dark mode" abhängig von euren Geräteeinstellungen. (Dieser ist was die Farben angeht noch nicht ganz perfekt…)
+          <p />
+          - Eine Übersicht der Flüge des aktuellen Tages inkl. Karte.
+          <p />
+          - Die Validität der IGC-Datei wird nach dem Hochladen geprüft (G-Record)
+          <p />
+          - Eine offene API um ggf. Daten für die eigene Vereinswertung leichter auszulesen
+          <p />
+
+          Das komplette Projekt ist "Open Source" - wer möchte, kann sich gerne einbringen:
+          <a href="https://github.com/XCCup/xccup.net" target="_blank">https://github.com/XCCup/xccup.net</a>
+          <p />
+
+          Wir haben in den letzten Monaten viele hundert Stunden mit dem Projekt verbracht. Bevor ihr Hassmails an uns schreibt, weil etwas doch noch nicht klappen sollte oder eine Funktion vielleicht erst später hinzukommt bedenkt bitte, dass wir in unserer Freizeit daran arbeiten 😜 <p />
+
+          PS: Einige von euch haben diese Mail versehentlich zwei mal bekommen. Kann ich ja nicht alles direkt rund laufen.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-raw>
+      <!-- Avatar -->
+    </mj-raw>
+    <mj-section background-color="#fbfbfb">
+      <mj-column>
+        <mj-image src="https://www.stephanschoepe.de/avatar-kai.png" alt="Kai Wissel" width="120px" padding="0 25px"></mj-image>
+        <mj-text align="center" color="#08556d" font-size="18px" font-family="Lato, Helvetica, Arial, sans-serif" vertical-align="top" padding="20px 25px"><strong>Kai Wissel</strong> <br />
+          <!-- <p style="font-size: 15px;color:#000000;">bla bla</p>-->
+        </mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-image src="https://www.stephanschoepe.de/avatar-steph.png" alt="Stephan Schöpe" width="120px" padding="0 25px"></mj-image>
+        <mj-text align="center" color="#08556d" font-size="18px" font-family="Lato, Helvetica, Arial, sans-serif" vertical-align="top" padding="20px 25px"><strong>Stephan Schöpe</strong> <br />
+          <!-- <p style="font-size: 15px;color:#000000;">bla bla</p>-->
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

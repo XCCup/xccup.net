@@ -26,7 +26,7 @@ const service = {
     return details;
   },
 
-  getAll: async (retrieveOnlyYears) => {
+  getAll: async ({ retrieveOnlyYears } = {}) => {
     return SeasonDetail.findAll({
       attributes: retrieveOnlyYears ? ["year"] : undefined,
     });

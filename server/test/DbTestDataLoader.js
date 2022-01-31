@@ -14,6 +14,7 @@ const Brand = require("../config/postgres")["Brand"];
 const Logo = require("../config/postgres")["Logo"];
 const AirspaceService = require("../service/AirspaceService");
 const logger = require("../config/logger");
+const config = require("../config/env-config");
 
 const dbTestData = {
   addFlights: async () => {
@@ -35,33 +36,47 @@ const dbTestData = {
     adjustYearOfEveryFlight(flights);
     adjustTimesToToday(flights, 5);
 
+    // Real data without personal data
     const relations = [
       [Club, require("./testdatasets/clubs.json")],
-      [Team, require("./testdatasets/teams.json")],
       [FlyingSite, require("./testdatasets/flyingSites.json")],
-      [User, require("./testdatasets/users.json")],
-      [Flight, flights],
-      [FlightPhoto, require("./testdatasets/flightPhotos.json")],
-      [FlightComment, require("./testdatasets/comments.json")],
       [SeasonDetail, require("./testdatasets/seasonDetails.json")],
-      [Airspace, require("./testdatasets/airspaces.json")],
-      [FlightFixes, require("./testdatasets/fixes.json")],
+      [Airspace, require("./testdatasets/airspaces_lux.json")],
+      [Airspace, require("./testdatasets/airspaces_deu.json")],
       [News, require("./testdatasets/news.json")],
       [Sponsor, require("./testdatasets/sponsors.json")],
       [Brand, require("./testdatasets/brands.json")],
       [Logo, require("./testdatasets/logos.json")],
     ];
-    if (process.env.SERVER_IMPORT_ORIGINAL_DATA === "true") {
+    // Test data with personal data
+    if (config.get("serverImportTestData")) {
+      relations.push([Team, require("./testdatasets/teams.json")]);
+      relations.push([User, require("./testdatasets/users.json")]);
+      relations.push([Flight, flights]);
+      relations.push([
+        FlightPhoto,
+        require("./testdatasets/flightPhotos.json"),
+      ]);
+      relations.push([FlightComment, require("./testdatasets/comments.json")]);
+      relations.push([FlightFixes, require("./testdatasets/fixes.json")]);
+    }
+    // Real data with personal data
+    if (config.get("serverImportOriginalData")) {
       relations.push([User, require("../import/usersImport.json")]);
       relations.push([Team, require("../import/teamsImport.json")]);
       relations.push([Flight, require("../import/flightsImport.json")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/a")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/b")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/c")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/d")]);
+      relations.push([FlightFixes, findAllFlightFixes("2021/e")]);
     }
 
     await addToDb(relations);
 
-    logger.debug("Will fix invalid GeoJSON data of airspaces");
+    logger.debug("DTDL: Will fix invalid GeoJSON data of airspaces");
     await AirspaceService.fixInvalidGeoData();
-    logger.debug("Finished repair of GeoJSON");
+    logger.debug("DTDL: Finished repair of GeoJSON");
   },
 };
 
@@ -69,9 +84,9 @@ async function addToDb(relations) {
   for (let index = 0; index < relations.length; index++) {
     const model = relations[index][0];
     const dataset = relations[index][1];
-    logger.debug("Start adding " + model.name);
+    logger.debug("DTDL: Start adding " + model.name);
     await addDataset(model, dataset);
-    logger.debug("Finished adding " + model.name);
+    logger.debug("DTDL: Finished adding " + model.name);
   }
 }
 
@@ -79,8 +94,11 @@ async function addDataset(model, dataset) {
   await Promise.all(
     dataset.map(async (entry) => {
       await model.create(entry).catch((err) => {
-        if (err.errors) logger.error(err.errors[0].message);
-        else logger.error(err);
+        if (err.errors)
+          logger.error(
+            "DTDL: " + err.errors[0].message + " Value: " + err.errors[0].value
+          );
+        else logger.error("DTDL: " + err);
       });
     })
   );
@@ -147,5 +165,16 @@ function adjustYearOfEveryFlight(flights) {
 //   }
 //   return res;
 // }
+
+function findAllFlightFixes(year) {
+  const fs = require("fs");
+  const fixesDir = `${global.__basedir}/import/fixes/${year}`;
+  const fixesFileNames = fs.readdirSync(fixesDir);
+  console.log("FOUND FIXES: ", fixesFileNames);
+  const fixesAsOneArray = fixesFileNames.map((file) =>
+    require(fixesDir + "/" + file)
+  );
+  return fixesAsOneArray;
+}
 
 module.exports = dbTestData;

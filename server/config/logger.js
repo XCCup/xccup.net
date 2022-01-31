@@ -1,12 +1,14 @@
 const { createLogger: createLogger, format, transports } = require("winston");
 const { combine, timestamp, printf, colorize, json } = format;
+const morgan = require("morgan");
+const config = require("./env-config");
 
 const devFormat = printf(({ level, message, timestamp, stack }) => {
   return `${timestamp} ${level}: ${stack || message}`;
 });
 
-const logLevel = process.env.SERVER_LOG_LEVEL ?? "info";
-const dataPath = process.env.SERVER_DATA_PATH ?? "data";
+const logLevel = config.get("logLevel");
+const dataPath = config.get("dataPath");
 const logsPath = "logs";
 
 const createDevLogger = createLogger({
@@ -40,9 +42,8 @@ const createProdLogger = createLogger({
 });
 
 const logger =
-  process.env.NODE_ENV === "development" ? createDevLogger : createProdLogger;
+  config.get("env") === "development" ? createDevLogger : createProdLogger;
 
-const morgan = require("morgan");
 const morganLogger = morgan("dev", {
   stream: {
     write: (text) => {

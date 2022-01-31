@@ -186,6 +186,13 @@ const userService = {
     if (!user) return {};
 
     logger.info("US: Will create a new password for " + user.email);
+
+    if (user.role == ROLE.INACTIVE) {
+      logger.info(
+        "US: The user was inactive. The user will now be considerd as active"
+      );
+      user.role = ROLE.NONE;
+    }
     const newPassword = generateRandomString();
     user.password = newPassword;
     user.token = "";
@@ -195,7 +202,11 @@ const userService = {
   },
   requestNewPassword: async (email) => {
     const user = await User.findOne({
-      where: { email },
+      where: {
+        email: {
+          [Op.iLike]: email,
+        },
+      },
     });
 
     // Return empty object, otherwise destructering doesn't work
@@ -259,7 +270,7 @@ const userService = {
       logger.debug(`US: The password is valid`);
       return user;
     }
-    logger.warn(`US: The password is not valid`);
+    logger.warn(`US: The password for ${user.id} is not valid`);
     return null;
   },
   addGlider: async (userId, glider) => {
@@ -400,10 +411,10 @@ async function hasUserFlightsWithinCurrentSeason(user) {
   return flights.count;
 }
 
-async function findFlightRecordOfType(id, type) {
+async function findFlightRecordOfType(id, flightType) {
   return (
     await flightService.getAll({
-      type,
+      flightType,
       limit: 1,
       sort: ["flightPoints", "DESC"],
       userId: id,

@@ -81,6 +81,7 @@ router.get("/brands", async (req, res, next) => {
 router.get("/filterOptions", async (req, res, next) => {
   try {
     const value = getCache(req);
+    res.set("Cache-control", "public, max-age=3600, immutable");
     if (value) return res.json(value);
 
     const userNames = userService.getAllNames();

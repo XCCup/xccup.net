@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="col-6">
-        <FilterPanel :flight-options="true" />
+        <FilterPanel :flight-options="true" :allow-all-seasons="true" />
       </div>
       <div class="col-6">
         <PaginationPanel entry-name="Flüge" />
@@ -22,16 +22,20 @@ import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import useData from "@/composables/useData";
 import { useRoute } from "vue-router";
-import { watchEffect } from "vue-demi";
 
 setWindowName("Streckenmeldungen");
 
 const route = useRoute();
 
-const { fetchData, errorMessage } = useData();
+const { errorMessage, initData } = useData();
 
-watchEffect(() => {
-  const params = route.params.year ? { year: route.params.year } : undefined;
-  fetchData(ApiService.getFlights, { params, queries: route.query });
+// Prevent to send a request query with an empty year parameter
+const params = route.params.year ? route.params : undefined;
+// Await is necessary to trigger the suspense feature
+await initData(ApiService.getFlights, {
+  queryParameters: {
+    ...route.query,
+    ...params,
+  },
 });
 </script>

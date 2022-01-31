@@ -7,6 +7,7 @@ const userService = require("../service/UserService");
 require("../service/UserService");
 const Token = require("../config/postgres")["Token"];
 const logger = require("../config/logger");
+const config = require("../config/env-config");
 
 /**
  * The authentication middleware for the request. If any error within authentication happens the request will be terminated here.
@@ -16,10 +17,9 @@ const auth = (req, res, next) => {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
-
     if (!token) return res.sendStatus(UNAUTHORIZED);
 
-    jwt.verify(token, process.env.JWT_LOGIN_TOKEN, (error, user) => {
+    jwt.verify(token, config.get("jwtLogin"), (error, user) => {
       if (error) {
         if (error.toString().includes("jwt expired")) {
           return res.status(FORBIDDEN).send("EXPIRED");
@@ -51,7 +51,7 @@ const create = (user) => {
       lastName: user.lastName,
       role: user.role,
     },
-    process.env.JWT_LOGIN_TOKEN,
+    config.get("jwtLogin"),
     {
       expiresIn: "200s",
     }
@@ -67,7 +67,7 @@ const createRefresh = (user) => {
       lastName: user.lastName,
       role: user.role,
     },
-    process.env.JWT_REFRESH_TOKEN
+    config.get("jwtRefresh")
   );
   Token.create({ token });
   return token;
@@ -86,7 +86,7 @@ const refresh = async (token) => {
     where: { token },
   });
   if (!found) return;
-  return jwt.verify(token, process.env.JWT_REFRESH_TOKEN, (error, user) => {
+  return jwt.verify(token, config.get("jwtRefresh"), (error, user) => {
     if (error) {
       logger.warn(
         `Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,

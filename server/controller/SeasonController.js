@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
 
 router.get("/years", async (req, res, next) => {
   try {
-    const years = await service.getAll(true);
+    const years = await service.getAll({ retrieveOnlyYears: true });
     res.json(years);
   } catch (error) {
     next(error);

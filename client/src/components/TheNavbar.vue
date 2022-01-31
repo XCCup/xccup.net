@@ -112,8 +112,8 @@
                     params: { year: currentYear },
                   }"
                   class="dropdown-item"
-                  ><i class="bi bi-flag-fill me-1"></i>Landesmeisterschaft
-                  RLP</router-link
+                  ><i class="bi bi-flag-fill me-1"></i>Rheinland-Pfalz
+                  Pokal</router-link
                 >
               </li>
               <li>
@@ -127,6 +127,18 @@
                   <i class="bi bi-flag me-1"></i>Luxemburg
                   Championat</router-link
                 >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsEarlybird',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  <i class="bi bi-twitter me-1"></i>Early Bird
+                </router-link>
               </li>
               <li><hr class="dropdown-divider" /></li>
 
@@ -216,21 +228,14 @@
               </li>
             </ul>
           </li>
-
-          <li id="navbarPrivacy" class="nav-item dropdown">
-            <router-link :to="{ name: 'Privacy' }" class="nav-link active"
-              >Datenschutz</router-link
-            >
-          </li>
-          <li id="navbarImprint" class="nav-item dropdown">
-            <router-link :to="{ name: 'Imprint' }" class="nav-link active"
-              >Impressum</router-link
-            >
-          </li>
         </ul>
         <!-- Login button -->
 
-        <router-link v-if="!loggedIn" :to="{ name: 'Login' }">
+        <router-link
+          v-if="!loggedIn"
+          :to="{ name: 'Login' }"
+          class="no-line-break"
+        >
           <button
             id="loginNavButton"
             type="button"

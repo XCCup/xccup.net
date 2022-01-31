@@ -37,6 +37,7 @@ const {
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
+const config = require("../config/env-config");
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
 const uploadLimiter = createRateLimiter(60, 10);
@@ -53,7 +54,7 @@ router.get(
     query("year").optional().isInt(),
     query("site").optional().not().isEmpty().trim().escape(),
     query("siteId").optional().isUUID(),
-    query("type").optional().not().isEmpty().trim().escape(),
+    query("flightType").optional().not().isEmpty().trim().escape(),
     query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
     query("offset").optional().isInt(),
@@ -134,7 +135,16 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
 
     const fullfilepath = path.join(path.resolve(), flight.igcPath);
 
-    return res.download(fullfilepath);
+    return res.download(fullfilepath, (err) => {
+      if (err) {
+        if (!res.headersSent)
+          res.status(NOT_FOUND).send("The file you requested was deleted");
+        logger.error(
+          "FC: An igc file was requested but seems to be deleted. igcPath: " +
+            flight.igcPath
+        );
+      }
+    });
   } catch (error) {
     next(error);
   }
@@ -328,12 +338,11 @@ async function persistIgcFile(externalId, igcFile) {
 
 async function checkIfFlightIsModifiable(flight, userId) {
   const { XccupRestrictionError } = require("../helper/ErrorHandler");
-
   // Allow flight uploads which are older than 14 days when not in production (Needed for testing)
   const overwriteIfInProcessAndNotProduction =
     (flight.flightStatus == STATE.IN_PROCESS &&
-      process.env.NODE_ENV !== "production") ||
-    process.env.OVERRULE_ACTIVE === "true";
+      config.get("env") !== "production") ||
+    config.get("overruleActive");
 
   const flightIsYoungerThanThreshold = moment(flight.takeoffTime)
     .add(DAYS_FLIGHT_CHANGEABLE, "days")

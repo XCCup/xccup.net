@@ -22,7 +22,9 @@ const {
   REMARKS_STATE,
   REMARKS_SENIOR,
   REMARKS_TEAM,
+  REMARKS_EARLYBIRD,
 } = require("../constants/result-remarks-constants");
+const moment = require("moment");
 
 const cacheNonNewcomer = [];
 
@@ -173,6 +175,27 @@ const service = {
         ),
       },
       limit
+    );
+  },
+
+  getEarlyBird: async (year, region) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const startDate = seasonDetail.startDate;
+    const endDate = moment(startDate).add(3, "months");
+    const where = createDefaultWhereForFlight({ startDate, endDate });
+    const sortOrder = ["takeoffTime"];
+
+    const resultQuery = await queryDb({ where, region, sortOrder });
+    const result = resultQuery.map((r) => r.toJSON());
+    const resultSingleUserEntries = removeMultipleEntriesForUsers(result);
+
+    return addConstantInformationToResult(
+      resultSingleUserEntries,
+      {
+        REMARKS: REMARKS_EARLYBIRD,
+      },
+      20
     );
   },
 
@@ -351,7 +374,7 @@ async function findSiteRecordOfType(type) {
             [sequelize.Op.not]: null,
           },
         },
-        order: [["flightPoints", "DESC"]],
+        order: [["flightDistance", "DESC"]],
         limit: 1,
         include: {
           model: User,
@@ -375,6 +398,7 @@ async function queryDb({
   club,
   clubId,
   useIncludes = ["user", "site", "club", "team"],
+  sortOrder,
 }) {
   const include = [];
   if (useIncludes.includes("user"))
@@ -393,6 +417,7 @@ async function queryDb({
       "externalId",
       "flightPoints",
       "flightDistance",
+      "takeoffTime",
       "glider",
       "flightType",
       "ageOfUser",
@@ -401,6 +426,9 @@ async function queryDb({
   };
   if (limit) {
     queryObject.limit = limit;
+  }
+  if (sortOrder) {
+    queryObject.order = sortOrder;
   }
   return Flight.findAll(queryObject);
 }
@@ -589,6 +617,16 @@ function aggreateFlightsOverUser(resultQuery) {
  */
 function sortDescendingByTotalPoints(resultArray) {
   resultArray.sort((a, b) => b.totalPoints - a.totalPoints);
+}
+
+function removeMultipleEntriesForUsers(resultsWithMultipleEntriesForUser) {
+  const results = [];
+  resultsWithMultipleEntriesForUser.forEach((e) => {
+    const found = results.find((r) => r.user.id == e.user.id);
+    if (found) return;
+    results.push(e);
+  });
+  return results;
 }
 
 async function retrieveSeasonDetails(year) {

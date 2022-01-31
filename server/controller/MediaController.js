@@ -24,6 +24,7 @@ router.get(
 
     try {
       const value = getCache(req);
+      res.set("Cache-control", "public, max-age=172800, immutable");
       if (value) return res.type(value.mimetype).sendFile(value.fullfilepath);
 
       const results = await Promise.all([
@@ -40,8 +41,6 @@ router.get(
         : path.join(path.resolve(), media.path);
 
       setCache(req, { mimetype: media.mimetype, fullfilepath });
-      // TODO: Choose wisely for production
-      res.set("Cache-control", "public, max-age=1d");
       return res.type(media.mimetype).sendFile(fullfilepath);
     } catch (error) {
       next(error);

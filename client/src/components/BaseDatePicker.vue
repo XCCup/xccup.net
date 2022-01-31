@@ -43,7 +43,7 @@ const props = defineProps({
   },
   lowerLimit: {
     type: Date,
-    default: new Date(1950, 0, 0),
+    default: new Date(1930, 0, 0),
   },
 });
 const emit = defineEmits(["update:modelValue"]);

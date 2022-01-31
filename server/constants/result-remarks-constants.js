@@ -17,4 +17,8 @@ module.exports.REMARKS_SENIOR = (startAge, bonusPerAge) =>
  * Remark text for team rankings
  */
 module.exports.REMARKS_TEAM = (dismisses) =>
-  `Die schlechtesten ${dismisses} Ergebnisse eines Teams werden gelöscht`;
+  `Die schlechtesten ${dismisses} Ergebnisse eines Teams werden gestrichen`;
+/**
+ * Remark text for early bird ranking
+ */
+module.exports.REMARKS_EARLYBIRD = `Es werden die ersten 20 Flüge einer Saison gewertet. Sortiert nach Startzeit. In der Early Bird Wertung wird nur der erste Flug eines Piloten gewertet.`;

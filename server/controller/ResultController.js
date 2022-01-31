@@ -166,6 +166,35 @@ router.get(
   }
 );
 
+// @desc Gets the result for the early bird ranking (first N flights of the season)
+// @route GET /results/earlybird/
+
+router.get(
+  "/earlybird",
+  [
+    query("year").optional().isInt(),
+    query("region").optional().not().isEmpty().trim().escape(),
+  ],
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const { year, region } = req.query;
+
+    try {
+      const result = await service.getEarlyBird(year, region);
+
+      setCache(req, result);
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // @desc Gets the result for the newcomer ranking
 // @route GET /results/newcomer/
 

@@ -27,24 +27,28 @@ const sendMail = async (mailAddresses, content, replyTo) => {
     throw "content.title and content.text are not allowed to be empty";
 
   const message = createMessage(
-    process.env.MAIL_SERVICE_FROM_EMAIL,
+    {
+      name: process.env.MAIL_SERVICE_FROM_NAME,
+      address: process.env.MAIL_SERVICE_FROM_EMAIL,
+    },
     mailAddresses,
     content,
     replyTo
   );
   try {
     const info = await mailClient.sendMail(message);
-    logger.debug("Message sent: " + info.messageId);
+    logger.debug("E: Message sent: " + info.messageId);
   } catch (error) {
     // Message failed: 451 4.3.0 pymilter: untrapped exception in pythonfilter
     // This error indicates that the netcup mailservice doesn't allow to send mails from a different domain then the domain of the mail user account.
-    logger.error(error);
+    logger.error("E: " + error);
   }
 
   return true;
 };
 
 function createMessage(from, toAddresses, content, replyTo) {
+  // TODO: Sent mails are not saved. this is out of scope of nodemailer. Use node-imap instead?
   const isArray = Array.isArray(toAddresses);
   const to = isArray ? undefined : toAddresses;
   const bcc = isArray ? toAddresses : undefined;

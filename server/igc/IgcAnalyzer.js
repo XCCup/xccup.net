@@ -79,7 +79,7 @@ const IgcAnalyzer = {
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
     logger.debug(`IA: Finished parsing`);
     const currentResolution =
-      (igcAsJson.fixes[1].timestamp - igcAsJson.fixes[0].timestamp) / 1000;
+      (igcAsJson.fixes[2].timestamp - igcAsJson.fixes[1].timestamp) / 1000;
     let shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
     logger.debug(
       `IA: Will shrink extracted fixes by factor ${shrinkingFactor}`
@@ -141,7 +141,9 @@ function determineOlcBinary() {
 
 function runOlc(filePath, flightDataObject, isTurnpointIteration) {
   const { exec } = require("child_process");
-  logger.info("IA: Start OLC analysis");
+  isTurnpointIteration
+    ? logger.info("IA: Start OLC analysis turnpoint iteration")
+    : logger.info("IA: Start OLC analysis stripped iteration");
   logger.debug(`IA: CWD of proccess: ${process.cwd()}`);
 
   //TODO: Replace compiled app through usage of Node’s N-API
@@ -324,7 +326,7 @@ function stripAroundTurnpoints(input, turnpoints) {
 
 function getResolution(igcAsJson) {
   const resolutionInMillis =
-    igcAsJson.fixes[1].timestamp - igcAsJson.fixes[0].timestamp;
+    igcAsJson.fixes[2].timestamp - igcAsJson.fixes[1].timestamp;
   const resolutionInSeconds = resolutionInMillis / 1000;
   logger.debug(
     `The resolution of the timestamps is ${resolutionInSeconds} seconds`

@@ -126,7 +126,7 @@
       "coordinates": [9.549330555555555, 49.75289444444444]
     },
     "id": "a6fdb989-4165-4d98-99f1-f7c9d2b5a9c3",
-    "shortName": "URPHAR_START_NO",
+    "shortName": "URPHAR_NO",
     "direction": "NO"
   },
   {
@@ -141,7 +141,7 @@
       "coordinates": [9.570513888888888, 49.74339166666667]
     },
     "id": "ade6170b-313c-47b5-bbf1-01d946de42b2",
-    "shortName": "URPHAR_START_NW",
+    "shortName": "URPHAR_NW",
     "direction": "NW"
   },
   {
@@ -167,7 +167,7 @@
       "coordinates": [6.593613888888888, 49.640008333333334]
     },
     "id": "28b733fa-a0a8-4c04-9ad8-cacec864f2e6",
-    "shortName": "SCHODEN_START",
+    "shortName": "SCHODEN",
     "direction": "S-W"
   },
   {
@@ -180,7 +180,7 @@
       "coordinates": [7.824344444444444, 50.42107222222222]
     },
     "id": "8e9c0913-486c-470b-b025-3b0702253398",
-    "shortName": "MONTABAUR",
+    "shortName": "MONTABAUR_SEGELFLUG",
     "direction": ""
   },
   {
@@ -361,95 +361,8 @@
       "coordinates": [6.594588888888889, 49.624230555555556]
     },
     "id": "3f37d5f1-f66f-40b1-adad-c9d189e57fa4",
-    "shortName": "OCKFEN_START",
+    "shortName": "OCKFEN",
     "direction": "SW"
-  },
-  {
-    "name": "Dillingen Segelflugplatz",
-    "heightDifference": "0",
-    "image": "",
-    "region": "",
-    "type": "SFP",
-    "website": "http://lsc-dillingen.de/",
-    "point": {
-      "type": "Point",
-      "coordinates": [6.748611111111111, 49.38666666666666]
-    },
-    "id": "f9ce9fd7-bc42-480c-96af-eedafba7b126",
-    "shortName": "DILLINGEN",
-    "direction": ""
-  },
-  {
-    "name": "Hoppstädten-Weiersbach Segelflugplatz",
-    "heightDifference": "0",
-    "image": "HoppstaedtenWeiersbach02.jpg",
-    "type": "SFP",
-    "website": "http://www.fsv-howei.de",
-    "point": {
-      "type": "Point",
-      "coordinates": [7.186, 49.61088888888889]
-    },
-    "id": "15f24621-87db-4da1-ba52-9b40f64a4668",
-    "shortName": "HOPPSTAEDTENSEGELFLUG",
-    "direction": ""
-  },
-  {
-    "name": "Kanfen Ort",
-    "heightDifference": "0",
-    "image": "",
-    "region": "",
-    "type": "HGPGLAN",
-    "website": "NULL",
-    "point": {
-      "type": "Point",
-      "coordinates": [6.104111111111111, 49.43863888888889]
-    },
-    "id": "e0589bef-5f82-4280-9051-4ba80af3e85a",
-    "shortName": "KANFENORT",
-    "direction": ""
-  },
-  {
-    "name": "Kell Segelflugplatz",
-    "heightDifference": "0",
-    "image": "",
-    "region": "",
-    "type": "SFP",
-    "website": "NULL",
-    "point": {
-      "type": "Point",
-      "coordinates": [6.8397499999999996, 49.62163888888889]
-    },
-    "id": "b30950ef-cd2f-43fb-a7d6-71fafc030bf5",
-    "shortName": "KELL",
-    "direction": ""
-  },
-  {
-    "name": "Schaumberg Turm",
-    "heightDifference": "0",
-    "image": "Schaumberg01.jpg",
-    "type": "AND",
-    "website": "NULL",
-    "point": {
-      "type": "Point",
-      "coordinates": [7.033333333333333, 49.486111111111114]
-    },
-    "id": "cfe0d0ff-6021-4bb2-bfa6-c3a4f964b816",
-    "shortName": "SCHAUMBERGTURM",
-    "direction": ""
-  },
-  {
-    "name": "Bostalsee",
-    "heightDifference": "400",
-    "image": "Bostalsee01.jpg",
-    "type": "AND",
-    "website": "",
-    "point": {
-      "type": "Point",
-      "coordinates": [7.072674999999999, 49.565149999999996]
-    },
-    "id": "3fcf1c54-b25d-4040-84cc-c4bc99aa275f",
-    "shortName": "BOSTALSEE",
-    "direction": ""
   },
   {
     "name": "Wustweiler Segelflugplatz",
@@ -464,21 +377,6 @@
     },
     "id": "440a8d9f-952b-49e8-a4fd-0fd736ac3985",
     "shortName": "WUSTWEILER",
-    "direction": ""
-  },
-  {
-    "name": "Schwarzenbach Ultraleicht",
-    "heightDifference": "0",
-    "image": "",
-    "region": "",
-    "type": "UL",
-    "website": "NULL",
-    "point": {
-      "type": "Point",
-      "coordinates": [7.0313888888888885, 49.591944444444444]
-    },
-    "id": "a7e66e05-73b1-4eb4-be9b-de496754aedb",
-    "shortName": "SCHWARZENBACH_UL",
     "direction": ""
   },
   {
@@ -661,7 +559,7 @@
       "coordinates": [10.08038611111111, 51.24319444444445]
     },
     "id": "65089c2d-a94f-4414-ae1d-430c8e2f602c",
-    "shortName": "KELLA",
+    "shortName": "KELLA_BERG",
     "direction": "O-SO"
   },
   {
@@ -735,7 +633,7 @@
       "coordinates": [9.939797222222223, 50.50008888888889]
     },
     "id": "32547e9c-dfed-4098-92f0-1f433d995ded",
-    "shortName": "ABTSRODAER",
+    "shortName": "ABTSRODAER_KUPPE",
     "direction": "N-NO"
   },
   {
@@ -1069,7 +967,7 @@
   },
   {
     "name": "Niederzissen/Bausenberg",
-    "heightDifference": "317",
+    "heightDifference": "54",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
@@ -1667,7 +1565,7 @@
   },
   {
     "name": "Boppard",
-    "heightDifference": "276",
+    "heightDifference": "150",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
@@ -1963,7 +1861,7 @@
       "coordinates": [7.411508333333334, 50.58224444444445]
     },
     "id": "18b36aaa-a7f9-447c-9c68-6ac0de8c9733",
-    "shortName": "FINKENBERG_START",
+    "shortName": "FINKENBERG",
     "direction": "S-SW"
   },
   {
@@ -2578,7 +2476,7 @@
   },
   {
     "name": "Boppard-Weiler",
-    "heightDifference": "385",
+    "heightDifference": "170",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
@@ -2588,7 +2486,7 @@
       "coordinates": [7.615241666666666, 50.19385833333333]
     },
     "id": "8a4eaf9d-0520-4d58-a0b0-6ad1917be158",
-    "shortName": "BOPPARD_WEILER",
+    "shortName": "B_WEILER",
     "direction": "N-O"
   },
   {
