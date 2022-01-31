@@ -1,27 +1,20 @@
 <template>
   <h4>Faktoren</h4>
-  <!-- {{ Object.entries(seasonDetails.gliderClasses) }} -->
 
   <table class="table">
     <thead>
       <tr>
-        <th></th>
-        <th>Faktoren</th>
-        <th colspan="3">Zielflug/JOJO</th>
-        <th colspan="3">Dreieck</th>
-        <th colspan="3">FAI-Dreieck</th>
+        <th rowspan="2">Geräteklasse</th>
+        <th colspan="2">Freie Strecke</th>
+        <th colspan="2">Flaches Dreieck</th>
+        <th colspan="2">FAI Dreieck</th>
       </tr>
       <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>Gesamt</th>
+        <th>Faktor</th>
         <th>min. km</th>
-        <th></th>
-        <th>Gesamt</th>
+        <th>Faktor</th>
         <th>min. km</th>
-        <th></th>
-        <th>Gesamt</th>
+        <th>Faktor</th>
         <th>min. km</th>
       </tr>
     </thead>
@@ -34,140 +27,56 @@
             :show-description="true"
           />
         </td>
-        <td>{{ value.scoringMultiplicator }}</td>
-        <td>{{ flightTypeFactors.FREE }}</td>
         <td>
-          {{ round(value.scoringMultiplicator * flightTypeFactors?.FREE, 2) }}
-        </td>
-        <td>
-          {{ minDistance(value.scoringMultiplicator, flightTypeFactors?.FREE) }}
-        </td>
-        <td>{{ flightTypeFactors.FLAT }}</td>
-        <td>
-          {{ round(value.scoringMultiplicator * flightTypeFactors?.FLAT, 2) }}
+          {{
+            round(
+              value.scoringMultiplicator?.BASE *
+                value.scoringMultiplicator?.FREE,
+              2
+            )
+          }}
         </td>
         <td>
-          {{ minDistance(value.scoringMultiplicator, flightTypeFactors?.FLAT) }}
+          {{
+            minDistance(
+              value.scoringMultiplicator?.BASE,
+              value.scoringMultiplicator?.FREE
+            )
+          }}
         </td>
-        <td>{{ flightTypeFactors.FAI }}</td>
         <td>
-          {{ round(value.scoringMultiplicator * flightTypeFactors?.FAI, 2) }}
+          {{
+            round(
+              value.scoringMultiplicator?.BASE *
+                value.scoringMultiplicator?.FLAT,
+              2
+            )
+          }}
         </td>
         <td>
-          {{ minDistance(value.scoringMultiplicator, flightTypeFactors?.FAI) }}
+          {{
+            minDistance(
+              value.scoringMultiplicator?.BASE,
+              value.scoringMultiplicator?.FLAT
+            )
+          }}
         </td>
-      </tr>
-    </tbody>
-
-    <tfoot>
-      <tr>
-        <td colspan="2">Mindestpunkte: {{ pointThresholdForFlight }}</td>
-      </tr>
-    </tfoot>
-  </table>
-
-  <b><u>Faktoren Aufgaben:</u></b>
-
-  <br /><br />
-  <table>
-    <tbody>
-      <tr>
-        <td></td>
-        <td><b>Freie Strecke (Zielflug)</b></td>
-      </tr>
-      <tr>
-        <td></td>
         <td>
-          OHNE GPS-Track wird nur die einfache Entfernung zwischen angegebenem
-          Start und Landeplatz gewertet, keine Wegpunkte (online Einreichung per
-          Formular).
+          {{
+            round(
+              value.scoringMultiplicator?.BASE *
+                value.scoringMultiplicator?.FAI,
+              2
+            )
+          }}
         </td>
-      </tr>
-
-      <tr>
-        <td colspan="2"></td>
-      </tr>
-
-      <tr>
-        <td></td>
-        <td><b>Freie Strecke (JOJO)</b></td>
-      </tr>
-      <tr>
-        <td></td>
         <td>
-          MIT GPS-Track wird die Auswertung unter Berücksichtigung von
-          Wegpunkten optimiert (JOJO Wertung) - Die Auswertung erfolgt
-          automatisch nach Einreichen des Fluges und wird nicht nachbearbeitet.
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2"></td>
-      </tr>
-
-      <tr>
-        <td></td>
-        <td><b>Geschlossenes Dreieck</b></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          Ein Flug kann als Dreiecksflug gewertet werden, wenn die Entfernung
-          zwischen Abflugpunkt und Endpunkt weniger als 20 % der durch die drei
-          Wegpunkte definierten Dreiecksstrecke beträgt. Als Wertungsstrecke
-          gilt dann die Dreiecksstrecke um die drei Wegpunkte reduziert um den
-          Abstand zwischen Abflugpunkt und Endpunkt.
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2"></td>
-      </tr>
-
-      <tr>
-        <td></td>
-        <td><b>FAI-Dreieck</b></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          Es gelten die Regeln eines Dreiecksflugs, zusätzlich muss es sich um
-          ein FAI-Dreieck nach der Definition handeln, dass der kürzeste
-          Schenkel mindestens 28 % der Gesamtstrecke beträgt.
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2"></td>
-      </tr>
-
-      <tr>
-        <td colspan="2">
-          <b><u>Mindestpunktzahl:</u></b>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          Die Mindestpunktzahl wird für 2021 auf
-          <b>60 Punkte</b> gesetzt.
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2"></td>
-      </tr>
-
-      <tr>
-        <td colspan="2">
-          <b><u>Hinweise:</u></b>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          F-Schlepp: Schlepphöhe darf 1000m und 5km Radius vom Flugfeld nicht
-          überschreiten.
+          {{
+            minDistance(
+              value.scoringMultiplicator?.BASE,
+              value.scoringMultiplicator?.FAI
+            )
+          }}
         </td>
       </tr>
     </tbody>
