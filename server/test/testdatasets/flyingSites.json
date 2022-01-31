@@ -594,7 +594,7 @@
   },
   {
     "name": "Wenholthausen",
-    "heightDifference": "571",
+    "heightDifference": "304",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
@@ -864,7 +864,7 @@
   },
   {
     "name": "Bruchhauser Steine S",
-    "heightDifference": "635",
+    "heightDifference": "215",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
@@ -879,7 +879,7 @@
   },
   {
     "name": "Bruchhauser Steine SW",
-    "heightDifference": "715",
+    "heightDifference": "275",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
@@ -982,7 +982,7 @@
   },
   {
     "name": "Willingen-Ettelsberg",
-    "heightDifference": "794",
+    "heightDifference": "200",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
@@ -1130,7 +1130,7 @@
   },
   {
     "name": "Elpe-Steinmarkskopf",
-    "heightDifference": "670",
+    "heightDifference": "170",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1167,7 +1167,7 @@
   },
   {
     "name": "Willingen Sonnenhang",
-    "heightDifference": "760",
+    "heightDifference": "190",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
@@ -2700,7 +2700,7 @@
   },
   {
     "name": "Stüppel",
-    "heightDifference": "730",
+    "heightDifference": "215",
     "image": "",
     "region": "Sauerland",
     "type": "HGPGSTA",
