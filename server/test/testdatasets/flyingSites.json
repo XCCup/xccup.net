@@ -623,7 +623,7 @@
   },
   {
     "name": "Abtsrodaer Kuppe",
-    "heightDifference": "933",
+    "heightDifference": "330",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
@@ -638,7 +638,7 @@
   },
   {
     "name": "Pferdskopf",
-    "heightDifference": "840",
+    "heightDifference": "250",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
@@ -668,7 +668,7 @@
   },
   {
     "name": "Wasserkuppe Westhang",
-    "heightDifference": "914",
+    "heightDifference": "350",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
@@ -697,7 +697,7 @@
   },
   {
     "name": "Weiherkuppe",
-    "heightDifference": "40",
+    "heightDifference": "140",
     "image": "",
     "region": "Rhön",
     "website": "http://www.rdg-ev.de",
@@ -711,7 +711,7 @@
   },
   {
     "name": "Kreuzberg NO",
-    "heightDifference": "750",
+    "heightDifference": "300",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
