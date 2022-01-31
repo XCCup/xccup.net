@@ -101,7 +101,16 @@
 
             <tr>
               <th>Startplatz</th>
-              <td>{{ flight.takeoff.name }} {{ flight.takeoff.direction }}</td>
+              <td>
+                <router-link
+                  :to="{
+                    name: 'FlightsAll',
+                    query: { siteId: flight.takeoff?.id },
+                  }"
+                >
+                  {{ flight.takeoff.name }} {{ flight.takeoff.direction }}
+                </router-link>
+              </td>
             </tr>
             <tr>
               <th>Uhrzeit</th>

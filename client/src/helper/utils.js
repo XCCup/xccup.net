@@ -49,7 +49,7 @@ export function isDirection(value) {
 export function isStrongPassword(value) {
   if (!isString(value)) return;
   const regex =
-    /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/;
+    /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%/=?^&*()<>\-__+.]){1,}).{8,}$/;
   return value.match(regex);
 }
 
