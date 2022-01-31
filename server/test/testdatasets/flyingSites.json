@@ -275,6 +275,7 @@
     "heightDifference": "196",
     "image": "",
     "region": "Luxemburg",
+    "country": "LUX",
     "type": "HGPGSTA",
     "website": "http://www.cumulux.lu",
     "point": {
@@ -1076,6 +1077,7 @@
     "heightDifference": "133",
     "image": "",
     "region": "Luxemburg",
+    "country": "LUX",
     "type": "HGPGSTA",
     "website": "http://cumulux.lu",
     "point": {
@@ -1091,6 +1093,7 @@
     "heightDifference": "401",
     "image": "",
     "region": "Luxemburg",
+    "country": "LUX",
     "type": "HGPGSTA",
     "website": "http://cumulux.lu",
     "point": {
@@ -1231,6 +1234,7 @@
     "image": "",
     "region": "",
     "type": "HGPGSTA",
+    "country": "LUX",
     "website": "",
     "point": {
       "type": "Point",
