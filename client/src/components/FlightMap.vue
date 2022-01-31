@@ -108,6 +108,7 @@ onMounted(() => {
    * Vue 3 with leaflet causes some errors when zooming.
    * Therefore zoomAnimation was disabled.
    * See: https://stackoverflow.com/questions/65981712/uncaught-typeerror-this-map-is-null-vue-js-3-leaflet
+   * TODO: Reevaluated with error is still present in future versions (2022-01-31)
    */
   map.value = L.map("mapContainer", {
     gestureHandling: true,
