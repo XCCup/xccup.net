@@ -365,6 +365,7 @@
     "heightDifference": "150",
     "image": "OckfenStart01.jpg",
     "type": "HGPGSTA",
+    "country": "RP",
     "website": "http://www.dfc-saar.de",
     "point": {
       "type": "Point",

@@ -73,6 +73,7 @@ const service = {
       region,
       club,
       clubId,
+      state,
     });
 
     const result = aggreateFlightsOverUser(resultQuery);
@@ -399,12 +400,13 @@ async function queryDb({
   clubId,
   useIncludes = ["user", "site", "club", "team"],
   sortOrder,
+  state,
 }) {
   const include = [];
   if (useIncludes.includes("user"))
     include.push(createIncludeStatementUser(gender));
   if (useIncludes.includes("site"))
-    include.push(createIncludeStatementSite(site, siteId, region));
+    include.push(createIncludeStatementSite(site, siteId, region, state));
   if (useIncludes.includes("club"))
     include.push(cretaIncludeStatementClub(club, clubId));
   if (useIncludes.includes("team")) include.push(createIncludeStatementTeam());
@@ -499,7 +501,7 @@ function createIncludeStatementUser(gender) {
   }
   return userInclude;
 }
-function createIncludeStatementSite(site, siteId, region) {
+function createIncludeStatementSite(site, siteId, region, country) {
   const siteInclude = {
     model: FlyingSite,
     as: "takeoff",
@@ -518,6 +520,11 @@ function createIncludeStatementSite(site, siteId, region) {
   if (region) {
     siteInclude.where = {
       region,
+    };
+  }
+  if (country) {
+    siteInclude.where = {
+      country,
     };
   }
   return siteInclude;
