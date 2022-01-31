@@ -286,7 +286,11 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, glider);
       columnsToUpdate.flightPoints = flightPoints;
 
-      const flightStatus = await calcFlightStatus(flight, onlyLogbook);
+      const flightStatus = await calcFlightStatus(
+        flight.takeoffTime,
+        flightPoints,
+        onlyLogbook
+      );
       columnsToUpdate.flightStatus = flightStatus;
     }
 
@@ -326,7 +330,10 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, flight.glider);
       flight.flightPoints = flightPoints;
 
-      const flightStatus = await calcFlightStatus(flight);
+      const flightStatus = await calcFlightStatus(
+        flight.takeoffTime,
+        flight.flightPoints
+      );
       flight.flightStatus = flightStatus;
     }
 
@@ -370,14 +377,10 @@ const flightService = {
   },
 
   startResultCalculation: async (flight) => {
-    // const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
-    IgcAnalyzer.startCalculation(
-      flight,
-      { FREE: 1, FLAT: 1.5455, FAI: 1.7273 },
-      (result) => {
-        flightService.addResult(result);
-      }
-    ).catch((error) => logger.error(error));
+    const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
+    IgcAnalyzer.startCalculation(flight, flightTypeFactors, (result) => {
+      flightService.addResult(result);
+    }).catch((error) => logger.error(error));
   },
 
   attachFixRelatedTimeData: (flight, fixes) => {
@@ -496,13 +499,11 @@ async function calcFlightPoints(flight, glider) {
   return flightPoints;
 }
 
-async function calcFlightStatus(flight, onlyLogbook) {
-  const flightPoints = flight.flightPoints;
-
+async function calcFlightStatus(takeoffTime, flightPoints, onlyLogbook) {
   if (!flightPoints) return STATE.IN_PROCESS;
 
   const currentSeason = await getCurrentActive();
-  const isOffSeason = !moment(flight.takeoffTime).isBetween(
+  const isOffSeason = !moment(takeoffTime).isBetween(
     currentSeason.startDate,
     currentSeason.endDate
   );

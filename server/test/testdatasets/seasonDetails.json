@@ -8,6 +8,11 @@
     "numberOfFlightsForShirt": 2,
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
+    "flightTypeFactors": {
+      "FAI": 1.7273,
+      "FLAT": 1.5455,
+      "FREE": 1
+    },
     "gliderClasses": {
       "AB_low": {
         "scoringMultiplicator": {
@@ -153,6 +158,11 @@
     "numberOfFlightsForShirt": 5,
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
+    "flightTypeFactors": {
+      "FAI": 1.7273,
+      "FLAT": 1.5455,
+      "FREE": 1
+    },
     "gliderClasses": {
       "AB_low": {
         "scoringMultiplicator": {
@@ -298,6 +308,11 @@
     "numberOfFlightsForShirt": 3,
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
+    "flightTypeFactors": {
+      "FAI": 1.7273,
+      "FLAT": 1.5455,
+      "FREE": 1
+    },
     "gliderClasses": {
       "AB_low": {
         "scoringMultiplicator": {
@@ -443,6 +458,11 @@
     "numberOfFlightsForShirt": 2,
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
+    "flightTypeFactors": {
+      "FAI": 1.7273,
+      "FLAT": 1.5455,
+      "FREE": 1
+    },
     "gliderClasses": {
       "AB_low": {
         "scoringMultiplicator": {
@@ -588,6 +608,11 @@
     "numberOfFlightsForShirt": 2,
     "seniorBonusPerAge": 2,
     "seniorStartAge": 60,
+    "flightTypeFactors": {
+      "FAI": 1.7273,
+      "FLAT": 1.5455,
+      "FREE": 1
+    },
     "gliderClasses": {
       "AB_low": {
         "scoringMultiplicator": {

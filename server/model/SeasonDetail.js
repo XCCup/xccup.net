@@ -28,10 +28,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.JSON,
       allowNull: false,
     },
-    // flightTypeFactors: {
-    //   type: DataTypes.JSON,
-    //   allowNull: false,
-    // },
+    flightTypeFactors: {
+      type: DataTypes.JSON,
+      allowNull: false,
+    },
     rankingClasses: {
       type: DataTypes.JSON,
       allowNull: false,
@@ -43,6 +43,9 @@ module.exports = (sequelize, DataTypes) => {
     seniorBonusPerAge: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    misc: {
+      type: DataTypes.JSON,
     },
   });
   return SeasonDetail;
