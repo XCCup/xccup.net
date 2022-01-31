@@ -56,7 +56,7 @@
   },
   {
     "name": "Gangelsberg",
-    "heightDifference": "300",
+    "heightDifference": "170",
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
@@ -86,7 +86,7 @@
   },
   {
     "name": "Offenbach-Hundheim",
-    "heightDifference": "310",
+    "heightDifference": "90",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -171,7 +171,7 @@
     "direction": "S-W"
   },
   {
-    "name": "Montebaur Segelflugplatz",
+    "name": "Montabaur Segelflugplatz",
     "region": "",
     "type": "SFP",
     "website": "",
@@ -251,7 +251,7 @@
   },
   {
     "name": "Hochstetten-Dhaun/Strüther Wald ",
-    "heightDifference": "280",
+    "heightDifference": "105",
     "image": "",
     "region": "Nahe",
     "type": "HGPGSTA",
@@ -266,7 +266,7 @@
   },
   {
     "name": "Gringlay",
-    "heightDifference": "426",
+    "heightDifference": "196",
     "image": "",
     "region": "Luxemburg",
     "type": "HGPGSTA",
@@ -281,7 +281,7 @@
   },
   {
     "name": "Saarburg-Kreuzberg",
-    "heightDifference": "300",
+    "heightDifference": "160",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -296,7 +296,7 @@
   },
   {
     "name": "Pfeffelbach",
-    "heightDifference": "250",
+    "heightDifference": "155",
     "image": "PfeffStart01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.dfc-saar.de",
@@ -366,7 +366,6 @@
   },
   {
     "name": "Wustweiler Segelflugplatz",
-    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "SFP",
@@ -520,7 +519,7 @@
   },
   {
     "name": "Wanfried-Aue",
-    "heightDifference": "345",
+    "heightDifference": "165",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -549,7 +548,7 @@
   },
   {
     "name": "Kella-Berg",
-    "heightDifference": "500",
+    "heightDifference": "130",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -564,7 +563,7 @@
   },
   {
     "name": "Hahnberg",
-    "heightDifference": "540",
+    "heightDifference": "195",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -579,7 +578,7 @@
   },
   {
     "name": "Hoher Meissner Uengsterode",
-    "heightDifference": "537",
+    "heightDifference": "213",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -711,7 +710,7 @@
   },
   {
     "name": "Kreuzberg NO",
-    "heightDifference": "300",
+    "heightDifference": "200",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
@@ -726,7 +725,7 @@
   },
   {
     "name": "Kreuzberg SO",
-    "heightDifference": "882",
+    "heightDifference": "247",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
@@ -893,8 +892,7 @@
     "direction": "S-W"
   },
   {
-    "name": "Wershofen EDRV",
-    "heightDifference": "482",
+    "name": "Wershofen",
     "image": "",
     "region": "",
     "type": "UL",
@@ -909,7 +907,7 @@
   },
   {
     "name": "Harsberg",
-    "heightDifference": "465",
+    "heightDifference": "120",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -938,7 +936,7 @@
   },
   {
     "name": "Eisenberg/Battenberg",
-    "heightDifference": "450",
+    "heightDifference": "150",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1011,7 +1009,7 @@
   },
   {
     "name": "Reichenhausen",
-    "heightDifference": "550",
+    "heightDifference": "40",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
@@ -1026,7 +1024,7 @@
   },
   {
     "name": "Maring-Noviand SO",
-    "heightDifference": "290",
+    "heightDifference": "155",
     "image": "maring_so.jpg",
     "type": "HGPGSTA",
     "website": "http://www.dfc-trier.com",
@@ -1041,7 +1039,7 @@
   },
   {
     "name": "Martinsthal",
-    "heightDifference": "225",
+    "heightDifference": "70",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1056,7 +1054,7 @@
   },
   {
     "name": "Kautenbach",
-    "heightDifference": "397",
+    "heightDifference": "133",
     "image": "",
     "region": "Luxemburg",
     "type": "HGPGSTA",
@@ -1086,7 +1084,6 @@
   },
   {
     "name": "Pohlheim Segelflugplatz",
-    "heightDifference": "233",
     "image": "",
     "region": "",
     "type": "SFP",
@@ -1101,7 +1098,7 @@
   },
   {
     "name": "Nassauer Berg",
-    "heightDifference": "268",
+    "heightDifference": "170",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
@@ -1156,7 +1153,6 @@
   },
   {
     "name": "Bergstein Schlepp",
-    "heightDifference": "0",
     "point": {
       "type": "Point",
       "coordinates": [6.41570169, 50.69251151]
@@ -1196,7 +1192,7 @@
   },
   {
     "name": "Hohe Geba",
-    "heightDifference": "560",
+    "heightDifference": "150",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
@@ -1211,7 +1207,7 @@
   },
   {
     "name": "Kanfen",
-    "heightDifference": "420",
+    "heightDifference": "120",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1226,7 +1222,7 @@
   },
   {
     "name": "Spielberg",
-    "heightDifference": "531",
+    "heightDifference": "150",
     "image": "",
     "region": "Rhön",
     "type": "HGPGSTA",
@@ -1278,7 +1274,7 @@
   },
   {
     "name": "Ürzig-Erden SO",
-    "heightDifference": "243",
+    "heightDifference": "185",
     "image": "Erden01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.moselfalken.de",
@@ -1308,7 +1304,7 @@
   },
   {
     "name": "Rivenich",
-    "heightDifference": "280",
+    "heightDifference": "150",
     "image": "",
     "region": "Mosel",
     "type": "HGPGSTA",
@@ -1379,7 +1375,7 @@
   },
   {
     "name": "Burgen",
-    "heightDifference": "386",
+    "heightDifference": "270",
     "image": "Burgen01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.moselfalken.de",
@@ -1406,8 +1402,7 @@
     "direction": ""
   },
   {
-    "name": "Wallertheim Start",
-    "heightDifference": "0",
+    "name": "Wallertheim Schlepp",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1435,8 +1430,8 @@
     "direction": "N,S"
   },
   {
-    "name": "Raumbach ",
-    "heightDifference": "0",
+    "name": "Raumbach",
+    "heightDifference": "150",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1479,7 +1474,7 @@
   },
   {
     "name": "Orensberg",
-    "heightDifference": "531",
+    "heightDifference": "346",
     "image": "Orensberg01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
@@ -1493,7 +1488,7 @@
   },
   {
     "name": "Adelberg",
-    "heightDifference": "540",
+    "heightDifference": "280",
     "image": "Adelberg01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
@@ -1507,7 +1502,7 @@
   },
   {
     "name": "Förlenberg",
-    "heightDifference": "477",
+    "heightDifference": "230",
     "image": "Foerlenberg01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
@@ -1521,7 +1516,7 @@
   },
   {
     "name": "Höllenberg",
-    "heightDifference": "0",
+    "heightDifference": "140",
     "image": "Hoellenberg01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
@@ -1550,7 +1545,7 @@
   },
   {
     "name": "Hohenberg",
-    "heightDifference": "530",
+    "heightDifference": "260",
     "image": "Hohenberg_West01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.pdgfc.de/",
@@ -1617,7 +1612,7 @@
   },
   {
     "name": "Peterberg Nonnweiler-Braunshausen ",
-    "heightDifference": "584",
+    "heightDifference": "140",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1632,7 +1627,7 @@
   },
   {
     "name": "Graach",
-    "heightDifference": "332",
+    "heightDifference": "210",
     "image": "GraachHerbst01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.moselfalken.de",
@@ -1659,7 +1654,6 @@
   },
   {
     "name": "Losheim am See/Galgenberg ",
-    "heightDifference": "0",
     "image": "Losheim_Galgenberg01.jpg",
     "type": "HGPGSTA",
     "website": "NULL",
@@ -1688,7 +1682,7 @@
   },
   {
     "name": "Herdorf Sassenroth",
-    "heightDifference": "380",
+    "heightDifference": "155",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1757,7 +1751,7 @@
   },
   {
     "name": "Krausberg",
-    "heightDifference": "0",
+    "heightDifference": "217",
     "image": "Krausberg01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.dgc-siebengebirge.com",
@@ -1771,7 +1765,7 @@
   },
   {
     "name": "Hönningen O",
-    "heightDifference": "0",
+    "heightDifference": "185",
     "image": "Hoenningen_Ost01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.dgc-siebengebirge.com",
@@ -1785,7 +1779,7 @@
   },
   {
     "name": "Hönningen S",
-    "heightDifference": "0",
+    "heightDifference": "185",
     "image": "Hoenningen_Sued01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.dgc-siebengebirge.com",
@@ -1799,7 +1793,7 @@
   },
   {
     "name": "Schriesheim-Ölberg",
-    "heightDifference": "400",
+    "heightDifference": "270",
     "image": "Schriesheim01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.bergstraessler-drachenflieger.de",
@@ -1838,7 +1832,7 @@
   },
   {
     "name": "Haardskopf",
-    "heightDifference": "0",
+    "heightDifference": "180",
     "image": "Haardskopf01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.dgc-siebengebirge.com",
@@ -1852,7 +1846,7 @@
   },
   {
     "name": "Finkenberg",
-    "heightDifference": "255",
+    "heightDifference": "200",
     "image": "Finkenberg01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.dgc-siebengebirge.com",
@@ -1866,7 +1860,7 @@
   },
   {
     "name": "Melibokus",
-    "heightDifference": "500",
+    "heightDifference": "400",
     "image": "Melibokus01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.ersterodc.de",
@@ -1955,7 +1949,7 @@
   },
   {
     "name": "Großer Kopf/Römerturm",
-    "heightDifference": "430",
+    "heightDifference": "145",
     "image": "GrosserKopfStart_01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.freiflieger-arzbach.de",
@@ -1969,7 +1963,7 @@
   },
   {
     "name": "Erlau",
-    "heightDifference": "350",
+    "heightDifference": "175",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1984,7 +1978,7 @@
   },
   {
     "name": "Blättersberg",
-    "heightDifference": "550",
+    "heightDifference": "305",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -1999,7 +1993,7 @@
   },
   {
     "name": "Ronneburg",
-    "heightDifference": "0",
+    "heightDifference": "230",
     "image": "Ronneburg01.jpg",
     "type": "HGPGSTA",
     "website": "NULL",
@@ -2013,7 +2007,7 @@
   },
   {
     "name": "Königstuhl",
-    "heightDifference": "540",
+    "heightDifference": "400",
     "image": "KoenigstuhlStart01_650.jpg",
     "type": "HGPGSTA",
     "website": "http://www.kurpfaelzer-gleitschirmflieger.de",
@@ -2027,8 +2021,8 @@
     "direction": "W"
   },
   {
-    "name": "Morsbach Start",
-    "heightDifference": "0",
+    "name": "Morsbach",
+    "heightDifference": "125",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2056,7 +2050,7 @@
   },
   {
     "name": "Mosbach/Finkenhof",
-    "heightDifference": "0",
+    "heightDifference": "190",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2071,7 +2065,7 @@
   },
   {
     "name": "Odernheim-Neuberg ",
-    "heightDifference": "0",
+    "heightDifference": "110",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2086,7 +2080,7 @@
   },
   {
     "name": "Busigberg/Großheubach ",
-    "heightDifference": "296",
+    "heightDifference": "171",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2101,7 +2095,7 @@
   },
   {
     "name": "Weilerkopf",
-    "heightDifference": "307",
+    "heightDifference": "165",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2131,7 +2125,7 @@
   },
   {
     "name": "Staudernheim",
-    "heightDifference": "218",
+    "heightDifference": "85",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2159,7 +2153,7 @@
   },
   {
     "name": "Donnersberg",
-    "heightDifference": "550",
+    "heightDifference": "230",
     "image": "DonnersbergStart01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.pdgfc.de",
@@ -2186,7 +2180,7 @@
   },
   {
     "name": "Hasloch-Röttberg",
-    "heightDifference": "290",
+    "heightDifference": "169",
     "image": "Hasloch_Roettberg.jpg",
     "type": "HGPGSTA",
     "website": "http://www.lilienthal-gleiter.de/suedwest.html",
@@ -2215,7 +2209,7 @@
   },
   {
     "name": "Schreckhof",
-    "heightDifference": "250",
+    "heightDifference": "120",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2245,7 +2239,7 @@
   },
   {
     "name": "Nordhelle Startplatz",
-    "heightDifference": "600",
+    "heightDifference": "150",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2284,7 +2278,7 @@
   },
   {
     "name": "Heinsheim",
-    "heightDifference": "227",
+    "heightDifference": "63",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2299,7 +2293,6 @@
   },
   {
     "name": "Kesten Startplatz",
-    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2314,7 +2307,6 @@
   },
   {
     "name": "Neckargerach",
-    "heightDifference": "0",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2329,7 +2321,7 @@
   },
   {
     "name": "Laubenheim",
-    "heightDifference": "0",
+    "heightDifference": "60",
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
@@ -2344,7 +2336,7 @@
   },
   {
     "name": "Entenberg",
-    "heightDifference": "520",
+    "heightDifference": "230",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2359,7 +2351,6 @@
   },
   {
     "name": "Neumagen Segelflugplatz",
-    "heightDifference": "267",
     "image": "",
     "region": "",
     "type": "SFP",
@@ -2374,7 +2365,7 @@
   },
   {
     "name": "Bürgstadt",
-    "heightDifference": "385",
+    "heightDifference": "220",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2389,7 +2380,7 @@
   },
   {
     "name": "Stolzenberg/Steckweiler",
-    "heightDifference": "323",
+    "heightDifference": "150",
     "image": "",
     "region": "Pfalz",
     "type": "HGPGSTA",
@@ -2404,7 +2395,7 @@
   },
   {
     "name": "Stachelhardt",
-    "heightDifference": "200",
+    "heightDifference": "120",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2419,7 +2410,6 @@
   },
   {
     "name": "Schönbrunn Schlepp",
-    "heightDifference": "437",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2491,7 +2481,7 @@
   },
   {
     "name": "Eschbach",
-    "heightDifference": "380",
+    "heightDifference": "57",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2519,7 +2509,6 @@
   },
   {
     "name": "Kerken UL-Flugplatz",
-    "heightDifference": "34",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2614,7 +2603,7 @@
   },
   {
     "name": "Brilon-Poppenberg",
-    "heightDifference": "600",
+    "heightDifference": "110",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2642,7 +2631,7 @@
   },
   {
     "name": "Wixberg W",
-    "heightDifference": "423",
+    "heightDifference": "285",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2657,7 +2646,7 @@
   },
   {
     "name": "Wixberg S",
-    "heightDifference": "412",
+    "heightDifference": "285",
     "image": "",
     "region": "",
     "type": "HGPGSTA",
@@ -2672,7 +2661,7 @@
   },
   {
     "name": "Kronenberg",
-    "heightDifference": "207",
+    "heightDifference": "70",
     "image": "",
     "region": "Nahe",
     "type": "HGPGSTA",
