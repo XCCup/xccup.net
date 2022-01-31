@@ -192,17 +192,17 @@ function convertToMeterMSL(heightValue, elevation) {
     return 0;
   }
   if (heightValue.includes("AGL")) {
-    const regex = /(\d+)ft AGL/;
+    const regex = /(\d+)(F|ft) AGL/;
     const matchingResult = heightValue.match(regex);
     return convertFeetToMeter(matchingResult[1]) + elevation;
   }
   if (heightValue.includes("MSL")) {
-    const regex = /(\d+)ft MSL/;
+    const regex = /(\d+)(F|ft) MSL/;
     const matchingResult = heightValue.match(regex);
     return convertFeetToMeter(matchingResult[1]);
   }
   if (heightValue.includes("FL")) {
-    const regex = /FL(\d+)/;
+    const regex = /FL\s?(\d+)/;
     const matchingResult = heightValue.match(regex);
     return convertFeetToMeter(matchingResult[1] * 100);
   }

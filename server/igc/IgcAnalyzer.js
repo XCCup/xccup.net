@@ -141,7 +141,9 @@ function determineOlcBinary() {
 
 function runOlc(filePath, flightDataObject, isTurnpointIteration) {
   const { exec } = require("child_process");
-  logger.info("IA: Start OLC analysis");
+  isTurnpointIteration
+    ? logger.info("IA: Start OLC analysis turnpoint iteration")
+    : logger.info("IA: Start OLC analysis stripped iteration");
   logger.debug(`IA: CWD of proccess: ${process.cwd()}`);
 
   //TODO: Replace compiled app through usage of Node’s N-API
