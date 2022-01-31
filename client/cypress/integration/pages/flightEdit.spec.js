@@ -51,7 +51,9 @@ describe("check edit flight page", () => {
     const oldAirspaceComment = "";
     const newAirspaceComment = "Upsi voll rein geknattert.";
 
-    cy.get("[data-cy=airspace-comment-textarea]")
+    cy.get("[data-cy=airspace-comment-textarea]", {
+      timeout: 10000,
+    })
       .should("have.text", oldAirspaceComment)
       .clear()
       .type(newAirspaceComment);
@@ -76,7 +78,7 @@ describe("check edit flight page", () => {
     cy.url().should("include", `/flug/${editableFlightId}`);
 
     cy.get("#cyFlightDetailsTable1").contains("td", "U-Turn Bodyguard");
-    cy.get("#cyFlightDetailsTable1").contains("td", "400m Höhenunterschied");
+    cy.get("#cyFlightDetailsTable1").contains("td", "270m Höhenunterschied");
 
     cy.get("#flightDetailsButton").contains("Details anzeigen").click();
     cy.get("#moreFlightDetailsTable").contains("td", "Flugbuch");
