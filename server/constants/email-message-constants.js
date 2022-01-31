@@ -115,6 +115,27 @@ Dein XCCup Team
     
 `;
 
+module.exports.NEW_FLIGHT_COMMENT_RESPONSE_TEXT = (
+  firstName,
+  commenterName,
+  commentMessage,
+  flightLink
+) =>
+  `Hallo ${firstName}!
+
+Auf deinen Kommentar wurde geantwortet.
+${flightLink}
+
+${commenterName} schrieb:
+${commentMessage}
+
+
+Falls Du in Zukunft keine Mails mehr zu neuen Kommentaren erhalten möchtest, kannst Du dies in Deinem Profil einstellen.  
+
+Dein XCCup Team
+    
+`;
+
 module.exports.ADDED_TO_TEAM_TITLE = "Dein Team auf XCCup.net";
 
 module.exports.ADDED_TO_TEAM_TEXT = (teamName) =>
