@@ -66,7 +66,6 @@ const siteService = {
         const plainSite = s.toJSON();
         // Add submitter if it's a proposed site
         if (state == STATES.PROPOSAL) {
-          console.log("get user");
           const submitter = await User.findByPk(s.submitter);
           plainSite.submitter = submitter;
         }
@@ -88,14 +87,14 @@ const siteService = {
     heightDifference,
     submitter,
   }) => {
-    console.log("SUB: ", submitter);
-
     const site = {
       name,
       direction,
       clubId,
       website,
-      region,
+      locationData: {
+        region,
+      },
       heightDifference,
       state: STATES.PROPOSAL,
       submitter: submitter.id,
