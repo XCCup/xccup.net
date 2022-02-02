@@ -501,11 +501,11 @@ function createIncludeStatementUser(gender) {
   }
   return userInclude;
 }
-function createIncludeStatementSite(site, siteId, region, country) {
+function createIncludeStatementSite(site, siteId, region, stateOrCountry) {
   const siteInclude = {
     model: FlyingSite,
     as: "takeoff",
-    attributes: ["name", "shortName", "id", "region"],
+    attributes: ["name", "shortName", "id"],
   };
   if (site) {
     siteInclude.where = {
@@ -517,14 +517,25 @@ function createIncludeStatementSite(site, siteId, region, country) {
       id: siteId,
     };
   }
-  if (region) {
+  if (region || stateOrCountry) {
+    /**
+     * A state like RLP is coded with it's ISO Two letter Code (RP).
+     * A country like Germany with it's ISO Three letter Code (DEU).
+     */
+    const country = stateOrCountry?.length == 3 ? stateOrCountry : undefined;
+    const state = stateOrCountry?.length == 2 ? stateOrCountry : undefined;
+    const locationData = {};
+    if (region) {
+      locationData.region = region;
+    }
+    if (state) {
+      locationData.state = state;
+    }
+    if (country) {
+      locationData.country = country;
+    }
     siteInclude.where = {
-      region,
-    };
-  }
-  if (country) {
-    siteInclude.where = {
-      country,
+      locationData,
     };
   }
   return siteInclude;

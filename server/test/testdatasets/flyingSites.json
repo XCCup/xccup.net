@@ -3,7 +3,11 @@
     "name": "Neef/Petersberg",
     "heightDifference": "150",
     "image": "",
-    "region": "Mosel",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.thermik4u.de",
     "point": {
@@ -18,7 +22,11 @@
     "name": "Nur ein Vorschlag",
     "heightDifference": "42",
     "image": "",
-    "region": "Mosel",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
@@ -31,7 +39,11 @@
   },
   {
     "name": "Heppenheim UL-Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "UL",
     "website": "",
     "point": {
@@ -46,6 +58,11 @@
     "name": "Bürstadt UL-Schlepp",
     "type": "UL",
     "website": "http://www.igulb.de",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [8.474555555555556, 49.65577777777778]
@@ -58,8 +75,11 @@
     "name": "Gangelsberg",
     "heightDifference": "170",
     "image": "",
-    "region": "Pfalz",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
@@ -74,8 +94,11 @@
     "name": "Duchroth",
     "heightDifference": "209",
     "image": "",
-    "region": "Pfalz",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
@@ -90,7 +113,11 @@
     "name": "Offenbach-Hundheim",
     "heightDifference": "90",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -105,7 +132,11 @@
     "name": "Halde Ensorf",
     "heightDifference": "310",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -120,7 +151,11 @@
     "name": "Urphar NO",
     "heightDifference": "130",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
@@ -135,7 +170,11 @@
     "name": "Urphar NW",
     "heightDifference": "130",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
@@ -149,6 +188,11 @@
   {
     "name": "Adolzfurt",
     "heightDifference": "140",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [9.4706845552, 49.1606082571]
@@ -161,8 +205,11 @@
     "name": "Schoden",
     "heightDifference": "130",
     "image": "",
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.moselfalken.de",
     "point": {
@@ -175,7 +222,11 @@
   },
   {
     "name": "Montabaur Segelflugplatz",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "SFP",
     "website": "",
     "point": {
@@ -188,7 +239,11 @@
   },
   {
     "name": "Lauterbach UL-Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "UL",
     "website": "",
     "point": {
@@ -203,8 +258,11 @@
     "name": "Donnersberg Moltkefelsen",
     "heightDifference": "230",
     "image": "",
-    "region": "Pfalz",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.pdgfc.de",
     "point": {
@@ -217,6 +275,11 @@
   },
   {
     "name": "Vockrather Acker",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.skyteam-neuss.de",
     "point": {
@@ -230,6 +293,11 @@
   {
     "name": "Halde Norddeutschland",
     "website": "http://www.skyteam-neuss.de",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [6.569476514, 51.472255]
@@ -242,8 +310,11 @@
     "name": "Rosenberg",
     "heightDifference": "170",
     "image": "",
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.thermik4u.de",
     "point": {
@@ -258,8 +329,11 @@
     "name": "Hochstetten-Dhaun/Strüther Wald ",
     "heightDifference": "105",
     "image": "",
-    "region": "Nahe",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Nahe"
+    },
     "type": "HGPGSTA",
     "website": "http://www.gleitschirmverein-nahe-glan.de",
     "point": {
@@ -274,8 +348,11 @@
     "name": "Gringlay",
     "heightDifference": "196",
     "image": "",
-    "region": "Luxemburg",
-    "country": "LUX",
+    "locationData": {
+      "country": "LUX",
+      "state": "",
+      "region": "Luxemburg"
+    },
     "type": "HGPGSTA",
     "website": "http://www.cumulux.lu",
     "point": {
@@ -290,8 +367,11 @@
     "name": "Saarburg-Kreuzberg",
     "heightDifference": "160",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -306,7 +386,11 @@
     "name": "Pfeffelbach",
     "heightDifference": "155",
     "image": "PfeffStart01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.dfc-saar.de",
     "point": {
@@ -321,14 +405,18 @@
     "name": "Serrig",
     "heightDifference": "190",
     "image": "SerrigStart01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [6.615483333333333, 49.568933333333334]
     },
-    "region": "Mosel",
+
     "id": "b9a05268-a802-423e-8981-b1c01dafc754",
     "shortName": "SERRIG",
     "direction": "SW-W"
@@ -340,7 +428,11 @@
       "type": "Point",
       "coordinates": [8.7683954493525, 49.68794910818]
     },
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "id": "7508381f-f6db-4126-803d-ea8b5fe26642",
     "shortName": "LINDENFELDS",
     "direction": "S-SW"
@@ -355,8 +447,11 @@
       "type": "Point",
       "coordinates": [6.887555555555555, 49.87738888888889]
     },
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "76386969-edae-4bfc-9461-fcef7c5f2843",
     "shortName": "NEUMAGEN",
     "direction": "NO-SO"
@@ -366,7 +461,11 @@
     "heightDifference": "150",
     "image": "OckfenStart01.jpg",
     "type": "HGPGSTA",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "website": "http://www.dfc-saar.de",
     "point": {
       "type": "Point",
@@ -379,7 +478,11 @@
   {
     "name": "Wustweiler Segelflugplatz",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "SFP",
     "website": "NULL",
     "point": {
@@ -400,8 +503,11 @@
       "type": "Point",
       "coordinates": [6.99335, 49.961600000000004]
     },
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "4c81a555-fcba-4c79-8127-ece934e5b9b1",
     "shortName": "ZELTINGEN",
     "direction": "O"
@@ -412,6 +518,11 @@
     "image": "Dreiserweiher01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.ostwindfreunde.de",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [6.781111111111111, 50.25861111111111]
@@ -429,6 +540,11 @@
       "type": "Point",
       "coordinates": [6.451108, 50.714028]
     },
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "id": "5b1b3596-2dfc-591b-abe3-e4b2b64126b6",
     "shortName": "OBERMAUBACH",
     "direction": "NNW"
@@ -443,8 +559,11 @@
       "type": "Point",
       "coordinates": [7.385000000000001, 50.2175]
     },
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "9268835e-e375-4c1f-837a-5f0c32206cfe",
     "shortName": "LASSERG",
     "direction": "O-SO"
@@ -452,6 +571,11 @@
   {
     "name": "Bremm",
     "heightDifference": "261",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "image": "Bremmercalmontstart01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.thermik4u.de",
@@ -459,8 +583,6 @@
       "type": "Point",
       "coordinates": [7.114758333333333, 50.10680833333333]
     },
-    "region": "Mosel",
-    "country": "RP",
     "id": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "shortName": "BREMM",
     "direction": "SSO-SSW"
@@ -468,8 +590,11 @@
   {
     "name": "Schöneberg Schlepp",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.fun-gliders-westerwald.de",
     "point": {
@@ -487,6 +612,11 @@
       "type": "Point",
       "coordinates": [8.449224235, 50.25675651]
     },
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "id": "57798d95-cb65-4a39-8609-e9517246dd63",
     "shortName": "ARNOLDSHAIN",
     "direction": "NO"
@@ -494,8 +624,11 @@
   {
     "name": "Eichen Schlepp",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.fun-gliders-westerwald.de",
     "point": {
@@ -509,7 +642,11 @@
   {
     "name": "Gollershoben Schlepp",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.fun-gliders-westerwald.de",
     "point": {
@@ -523,7 +660,11 @@
   {
     "name": "Schnellmannshausen Schlepp",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -538,7 +679,11 @@
     "name": "Wanfried-Aue",
     "heightDifference": "165",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -552,7 +697,11 @@
   {
     "name": "Kella Schlepp",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "TH",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -567,7 +716,11 @@
     "name": "Kella-Berg",
     "heightDifference": "130",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "TH",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -582,7 +735,11 @@
     "name": "Hahnberg",
     "heightDifference": "195",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.afs-flugschule.de",
     "point": {
@@ -597,7 +754,11 @@
     "name": "Hoher Meissner Uengsterode",
     "heightDifference": "213",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -612,7 +773,11 @@
     "name": "Wenholthausen",
     "heightDifference": "304",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "website": "http://www.sauerlandair.de",
     "point": {
@@ -627,7 +792,11 @@
     "name": "Wirminghausen",
     "heightDifference": "100",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
@@ -641,7 +810,11 @@
     "name": "Abtsrodaer Kuppe",
     "heightDifference": "330",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": "Rhön"
+    },
     "type": "HGPGSTA",
     "website": "http://www.rdg-ev.de",
     "point": {
@@ -656,7 +829,11 @@
     "name": "Pferdskopf",
     "heightDifference": "250",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": "Rhön"
+    },
     "type": "HGPGSTA",
     "website": "http://www.rdg-ev.de",
     "point": {
@@ -671,7 +848,11 @@
     "name": "Ofentaler Berg",
     "heightDifference": "312",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://saaleflieger.de",
     "point": {
@@ -686,7 +867,11 @@
     "name": "Wasserkuppe Westhang",
     "heightDifference": "350",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": "Rhön"
+    },
     "type": "HGPGSTA",
     "website": "http://www.rdg-ev.de",
     "point": {
@@ -701,7 +886,11 @@
     "name": "Wasserkuppe Südhang",
     "heightDifference": "160",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": "Rhön"
+    },
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
@@ -715,7 +904,11 @@
     "name": "Weiherkuppe",
     "heightDifference": "140",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": "Rhön"
+    },
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
@@ -729,7 +922,11 @@
     "name": "Kreuzberg NO",
     "heightDifference": "200",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": "Rhön"
+    },
     "type": "HGPGSTA",
     "website": "http://www.kreuzbergflieger.de",
     "point": {
@@ -744,7 +941,11 @@
     "name": "Kreuzberg SO",
     "heightDifference": "247",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": "Rhön"
+    },
     "type": "HGPGSTA",
     "website": "http://www.kreuzbergflieger.de",
     "point": {
@@ -758,9 +959,12 @@
   {
     "name": "Oberhövels Schlepp",
     "image": "",
-    "region": "",
     "type": "HGPGSTA",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "website": "http://www.paragliding-westerwald.de",
     "point": {
       "type": "Point",
@@ -773,7 +977,11 @@
   {
     "name": "Asslar Schlepp",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "SFP",
     "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
@@ -870,7 +1078,11 @@
   },
   {
     "name": "Hockenheim Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [8.52699964, 49.32578722]
@@ -883,7 +1095,11 @@
     "name": "Bruchhauser Steine S",
     "heightDifference": "215",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "website": "http://www.sauerlandair.de",
     "point": {
@@ -898,7 +1114,11 @@
     "name": "Bruchhauser Steine SW",
     "heightDifference": "275",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "website": "http://www.sauerlandair.de",
     "point": {
@@ -912,7 +1132,11 @@
   {
     "name": "Wershofen",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "UL",
     "website": "http://www.sfg-wershofen.de",
     "point": {
@@ -927,7 +1151,11 @@
     "name": "Harsberg",
     "heightDifference": "120",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -941,7 +1169,11 @@
   {
     "name": "Altena-Hegenscheid Schlepp",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "website": "http://www.air-hegenscheid.de",
     "point": {
@@ -956,7 +1188,11 @@
     "name": "Eisenberg/Battenberg",
     "heightDifference": "150",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "https://www.dgc-battenberg.de",
     "point": {
@@ -970,7 +1206,11 @@
   {
     "name": "Eisenberg Windenschlepp",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "https://www.dgc-battenberg.de",
     "point": {
@@ -985,8 +1225,11 @@
     "name": "Niederzissen/Bausenberg",
     "heightDifference": "54",
     "image": "",
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.thermik4u.de",
     "point": {
@@ -1001,7 +1244,11 @@
     "name": "Willingen-Ettelsberg",
     "heightDifference": "200",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "website": "http://www.sauerlandair.de",
     "point": {
@@ -1016,7 +1263,11 @@
     "name": "Düdinghausen",
     "heightDifference": "255",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
@@ -1030,7 +1281,11 @@
     "name": "Reichenhausen",
     "heightDifference": "40",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": "Rhön"
+    },
     "type": "HGPGSTA",
     "website": "http://www.rdg-ev.de",
     "point": {
@@ -1051,8 +1306,12 @@
       "type": "Point",
       "coordinates": [6.990755555555555, 49.94385]
     },
-    "region": "Mosel",
-    "country": "RP",
+
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "a6606392-22de-4395-86fb-5162c8f37a9b",
     "shortName": "MARING_SO",
     "direction": "SO"
@@ -1061,7 +1320,11 @@
     "name": "Martinsthal",
     "heightDifference": "70",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -1076,8 +1339,12 @@
     "name": "Kautenbach",
     "heightDifference": "133",
     "image": "",
-    "region": "Luxemburg",
-    "country": "LUX",
+
+    "locationData": {
+      "country": "LUX",
+      "state": "",
+      "region": "Luxemburg"
+    },
     "type": "HGPGSTA",
     "website": "http://cumulux.lu",
     "point": {
@@ -1092,8 +1359,12 @@
     "name": "Michaelau",
     "heightDifference": "401",
     "image": "",
-    "region": "Luxemburg",
-    "country": "LUX",
+
+    "locationData": {
+      "country": "LUX",
+      "state": "",
+      "region": "Luxemburg"
+    },
     "type": "HGPGSTA",
     "website": "http://cumulux.lu",
     "point": {
@@ -1107,7 +1378,11 @@
   {
     "name": "Pohlheim Segelflugplatz",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "SFP",
     "website": "",
     "point": {
@@ -1122,8 +1397,11 @@
     "name": "Nassauer Berg",
     "heightDifference": "170",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.thermik4u.de",
     "point": {
@@ -1137,7 +1415,11 @@
   {
     "name": "Segelflugplatz Auf der Schaufel",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -1152,7 +1434,11 @@
     "name": "Elpe-Steinmarkskopf",
     "heightDifference": "170",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -1188,7 +1474,11 @@
     "name": "Willingen Sonnenhang",
     "heightDifference": "190",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "website": "https://www.sauerlandair.de",
     "point": {
@@ -1203,7 +1493,11 @@
     "name": "Dolberg",
     "heightDifference": "230",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "point": {
       "type": "Point",
@@ -1217,7 +1511,11 @@
     "name": "Hohe Geba",
     "heightDifference": "150",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": "Rhön"
+    },
     "type": "HGPGSTA",
     "website": "http://www.rdg-ev.de",
     "point": {
@@ -1232,9 +1530,12 @@
     "name": "Kanfen",
     "heightDifference": "120",
     "image": "",
-    "region": "",
     "type": "HGPGSTA",
-    "country": "LUX",
+    "locationData": {
+      "country": "LUX",
+      "state": "",
+      "region": "Luxemburg"
+    },
     "website": "",
     "point": {
       "type": "Point",
@@ -1248,7 +1549,11 @@
     "name": "Spielberg",
     "heightDifference": "150",
     "image": "",
-    "region": "Rhön",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": "Rhön"
+    },
     "type": "HGPGSTA",
     "website": "http://www.rdg-ev.de",
     "point": {
@@ -1263,8 +1568,11 @@
     "name": "Mehring",
     "heightDifference": "276",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -1278,7 +1586,11 @@
   {
     "name": "Hinterweiler UL-Schlepp",
     "website": "http://www.dfc-vulkaneifel.de",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [6.755833333333333, 50.24518611111111]
@@ -1289,7 +1601,11 @@
   },
   {
     "name": "Offenbach Schlepp",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "website": "",
     "point": {
       "type": "Point",
@@ -1309,8 +1625,11 @@
       "type": "Point",
       "coordinates": [7.030005555555555, 49.98511111111111]
     },
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "e33e251a-960e-4dc3-b898-35131dd18aa2",
     "shortName": "UERZIG",
     "direction": "SO"
@@ -1325,7 +1644,11 @@
       "type": "Point",
       "coordinates": [6.870833333333334, 49.84777777777778]
     },
-    "region": "Mosel",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "aa9b4b1e-24e1-4c31-ba2e-aee945a88941",
     "shortName": "KLUESSEARTH",
     "direction": "S-W"
@@ -1334,8 +1657,11 @@
     "name": "Rivenich",
     "heightDifference": "150",
     "image": "",
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.moselfalken.de",
     "point": {
@@ -1348,9 +1674,12 @@
   },
   {
     "name": "St. Katharinen Mergesfeld Schlepp",
-    "region": "",
     "website": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [7.771944444444444, 49.87388888888889]
@@ -1363,8 +1692,11 @@
     "name": "St. Katharinen Hang",
     "heightDifference": "0",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -1379,6 +1711,11 @@
     "name": "Sophienhöhe",
     "heightDifference": "0",
     "image": "SophienheightDifference_O01.jpg",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "NULL",
     "point": {
@@ -1393,7 +1730,11 @@
     "name": "Ürzig-Erden SW",
     "heightDifference": "290",
     "image": "",
-    "region": "Mosel",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.moselfalken.de",
     "point": {
@@ -1414,15 +1755,22 @@
       "type": "Point",
       "coordinates": [7.018825, 49.876847222222224]
     },
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "a4d07fb6-df15-420c-8e89-6265c8a9c2aa",
     "shortName": "BURGEN",
     "direction": "N-NW"
   },
   {
     "name": "Himmighofen-Hainau Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "NULL",
     "point": {
@@ -1431,15 +1779,19 @@
     },
     "id": "3e83e194-5479-41af-ad23-450561683b9a",
     "shortName": "HIMMIGHOFEN",
-    "direction": ""
+    "direction": "",
+    "state": "inactive"
   },
   {
     "name": "Wallertheim Schlepp",
     "image": "",
-    "region": "",
     "type": "HGPGSTA",
     "website": "NULL",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [8.043683333333334, 49.82311666666667]
@@ -1451,7 +1803,11 @@
   {
     "name": "St. Katharinen Schlepp",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -1466,8 +1822,11 @@
     "name": "Raumbach",
     "heightDifference": "150",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "NULL",
     "point": {
@@ -1482,6 +1841,11 @@
     "name": "Losheim am See/Scheid Schlepp",
     "image": "Losheim_Scheid01.jpg",
     "type": "HGPGSTA",
+    "locationData": {
+      "country": "GER",
+      "state": "SL",
+      "region": ""
+    },
     "website": "NULL",
     "point": {
       "type": "Point",
@@ -1501,7 +1865,11 @@
       "type": "Point",
       "coordinates": [6.755991666666667, 50.10613055555556]
     },
-    "region": "Mosel",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "id": "3fe092e3-6a38-4cd7-8b4a-5b612f3dd600",
     "shortName": "MEERFELDER_MAAR_SUED",
     "direction": "S"
@@ -1510,7 +1878,11 @@
     "name": "Orensberg",
     "heightDifference": "346",
     "image": "Orensberg01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
     "point": {
@@ -1525,7 +1897,11 @@
     "name": "Adelberg",
     "heightDifference": "280",
     "image": "Adelberg01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
     "point": {
@@ -1542,7 +1918,11 @@
     "image": "Foerlenberg01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "point": {
       "type": "Point",
       "coordinates": [8.003069444444444, 49.19216944444444]
@@ -1555,7 +1935,11 @@
     "name": "Höllenberg",
     "heightDifference": "140",
     "image": "Hoellenberg01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
     "point": {
@@ -1576,8 +1960,11 @@
       "type": "Point",
       "coordinates": [7.003611111111111, 49.94583333333333]
     },
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "790161fe-40b0-4ee8-bebe-a9cebc12d736",
     "shortName": "MARING",
     "direction": "SW-S"
@@ -1592,8 +1979,11 @@
       "type": "Point",
       "coordinates": [8.003055555555555, 49.20027777777778]
     },
-    "region": "Pfalz",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "id": "c24f64b5-5367-491a-9c93-de686121ae57",
     "shortName": "HOHENBERG",
     "direction": "S-W"
@@ -1602,8 +1992,11 @@
     "name": "Boppard",
     "heightDifference": "150",
     "image": "",
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.thermik4u.de",
     "point": {
@@ -1616,7 +2009,11 @@
   },
   {
     "name": "Nannhausen Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
@@ -1629,6 +2026,11 @@
   {
     "name": "Losheim am See/Am See Schlepp",
     "type": "HGPGSTA",
+    "locationData": {
+      "country": "GER",
+      "state": "SL",
+      "region": ""
+    },
     "website": "",
     "point": {
       "type": "Point",
@@ -1640,7 +2042,11 @@
   },
   {
     "name": "Losheim am See/Hungerberg Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "SL",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "NULL",
     "point": {
@@ -1655,7 +2061,11 @@
     "name": "Peterberg Nonnweiler-Braunshausen ",
     "heightDifference": "140",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "SL",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "NULL",
     "point": {
@@ -1676,8 +2086,11 @@
       "type": "Point",
       "coordinates": [7.058827777777777, 49.94427222222222]
     },
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "id": "5727014e-2909-408b-833c-18125302889e",
     "shortName": "GRAACH",
     "direction": "S-SW"
@@ -1686,7 +2099,11 @@
     "name": "Losheim am See/Kerzenberg Schlepp",
     "type": "HGPGSTA",
     "website": "NULL",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "SL",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [6.7495972222222225, 49.495308333333334]
@@ -1699,6 +2116,11 @@
     "name": "Losheim am See/Galgenberg ",
     "image": "Losheim_Galgenberg01.jpg",
     "type": "HGPGSTA",
+    "locationData": {
+      "country": "GER",
+      "state": "SL",
+      "region": ""
+    },
     "website": "NULL",
     "point": {
       "type": "Point",
@@ -1712,14 +2134,17 @@
     "name": "Riol",
     "heightDifference": "291",
     "image": "RiolStart.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
       "coordinates": [6.7998722222222225, 49.781277777777774]
     },
-    "region": "Mosel",
     "id": "dd469912-75d8-4952-a46c-afe41832a0ff",
     "shortName": "RIOL",
     "direction": "NNW-N"
@@ -1728,8 +2153,11 @@
     "name": "Herdorf Sassenroth",
     "heightDifference": "155",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.dgfhellertal.de",
     "point": {
@@ -1742,8 +2170,11 @@
   },
   {
     "name": "Hassloch Windenschlepp",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
     "point": {
@@ -1758,8 +2189,11 @@
     "name": "Odernheim",
     "heightDifference": "214",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -1772,7 +2206,11 @@
   },
   {
     "name": "Obergailbach Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "FRA",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "NULL",
     "point": {
@@ -1785,7 +2223,11 @@
   },
   {
     "name": "Herbitzheim Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "SL",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://pski.errror.org",
     "point": {
@@ -1801,7 +2243,11 @@
     "heightDifference": "217",
     "image": "Krausberg01.jpg",
     "type": "HGPGSTA",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Ahr"
+    },
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
@@ -1815,7 +2261,11 @@
     "name": "Hönningen O",
     "heightDifference": "185",
     "image": "Hoenningen_Ost01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Ahr"
+    },
     "type": "HGPGSTA",
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -1830,7 +2280,11 @@
     "name": "Hönningen S",
     "heightDifference": "185",
     "image": "Hoenningen_Sued01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Ahr"
+    },
     "type": "HGPGSTA",
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -1845,6 +2299,11 @@
     "name": "Schriesheim-Ölberg",
     "heightDifference": "270",
     "image": "Schriesheim01.jpg",
+    "locationData": {
+      "country": "GER",
+      "state": "BW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.bergstraessler-drachenflieger.de",
     "point": {
@@ -1857,7 +2316,11 @@
   },
   {
     "name": "Michelstadt UL-Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "UL",
     "website": "http://www.flugplatz-michelstadt.de",
     "point": {
@@ -1871,7 +2334,11 @@
   {
     "name": "Hohen Unkel Schlepp",
     "type": "HGPGSTA",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
@@ -1885,7 +2352,11 @@
     "name": "Haardskopf",
     "heightDifference": "180",
     "image": "Haardskopf01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
@@ -1901,7 +2372,11 @@
     "heightDifference": "200",
     "image": "Finkenberg01.jpg",
     "type": "HGPGSTA",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
@@ -1915,6 +2390,11 @@
     "name": "Melibokus",
     "heightDifference": "400",
     "image": "Melibokus01.jpg",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.ersterodc.de",
     "point": {
@@ -1929,6 +2409,11 @@
     "name": "Hasloch-Heckenkopf",
     "heightDifference": "305",
     "image": "Hasloch_Heckenkopf01.jpg",
+    "locationData": {
+      "country": "GER",
+      "state": "BW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.lilienthal-gleiter.de/suedost.html",
     "point": {
@@ -1941,6 +2426,11 @@
   },
   {
     "name": "Zellhausen Schlepp",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [8.983333, 50.02]
@@ -1951,6 +2441,11 @@
   },
   {
     "name": "Fortunaweg Schlepp",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [6.64620667562, 50.96445080952]
@@ -1961,6 +2456,11 @@
   },
   {
     "name": "Nilkheim Schlepp",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [9.1263303, 49.957696]
@@ -1971,6 +2471,11 @@
   },
   {
     "name": "Bischbrunn Schlepp",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [9.49575179, 49.86039182]
@@ -1982,6 +2487,11 @@
   {
     "name": "Treisberg",
     "heightDifference": "180",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [8.431985939969, 50.2935292726602]
@@ -1992,6 +2502,11 @@
   },
   {
     "name": "Würzberg Schlepp",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [9.07247438, 49.658227193]
@@ -2004,7 +2519,11 @@
     "name": "Großer Kopf/Römerturm",
     "heightDifference": "145",
     "image": "GrosserKopfStart_01.jpg",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.freiflieger-arzbach.de",
     "point": {
@@ -2019,7 +2538,11 @@
     "name": "Erlau",
     "heightDifference": "175",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.ersterodc.de",
     "point": {
@@ -2034,8 +2557,11 @@
     "name": "Blättersberg",
     "heightDifference": "305",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.duddefliecher.de",
     "point": {
@@ -2050,6 +2576,11 @@
     "name": "Ronneburg",
     "heightDifference": "230",
     "image": "Ronneburg01.jpg",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "NULL",
     "point": {
@@ -2070,7 +2601,11 @@
       "type": "Point",
       "coordinates": [8.727172222222222, 49.40387222222222]
     },
-    "region": "Pfalz",
+    "locationData": {
+      "country": "GER",
+      "state": "BW",
+      "region": "Pfalz"
+    },
     "id": "8ff0d86a-ccdf-495f-950b-8f7d4b5b062c",
     "shortName": "KOENIGSTUHL",
     "direction": "W"
@@ -2079,7 +2614,11 @@
     "name": "Morsbach",
     "heightDifference": "125",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2092,7 +2631,11 @@
   },
   {
     "name": "Roxheim-Windenschlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2107,7 +2650,11 @@
     "name": "Mosbach/Finkenhof",
     "heightDifference": "190",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2122,7 +2669,11 @@
     "name": "Odernheim-Neuberg ",
     "heightDifference": "110",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2137,7 +2688,11 @@
     "name": "Busigberg/Großheubach ",
     "heightDifference": "171",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.lilienthal-gleiter.de",
     "point": {
@@ -2152,8 +2707,11 @@
     "name": "Weilerkopf",
     "heightDifference": "165",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2168,8 +2726,11 @@
     "name": "Longuich",
     "heightDifference": "175",
     "image": "",
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.dfc-trier.com",
     "point": {
@@ -2184,8 +2745,11 @@
     "name": "Staudernheim",
     "heightDifference": "85",
     "image": "",
-    "region": "",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2198,7 +2762,11 @@
   },
   {
     "name": "Rheinstetten Forchheim UL-Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "BW",
+      "region": ""
+    },
     "type": "UL",
     "website": "NULL",
     "point": {
@@ -2219,8 +2787,11 @@
       "type": "Point",
       "coordinates": [7.9325277777777785, 49.635527777777774]
     },
-    "region": "Pfalz",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "id": "b3d31a8e-0125-49a2-9609-b0d42da88437",
     "shortName": "DONNERSBERG",
     "direction": "NO-O"
@@ -2228,6 +2799,11 @@
   {
     "name": "Mäusberg",
     "heightDifference": "60",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "website": "https://www.dhv.de/db2/details.php?qi=glp_details&popup=1&item=658",
     "point": {
       "type": "Point",
@@ -2241,6 +2817,11 @@
     "name": "Hasloch-Röttberg",
     "heightDifference": "169",
     "image": "Hasloch_Roettberg.jpg",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.lilienthal-gleiter.de/suedwest.html",
     "point": {
@@ -2255,7 +2836,11 @@
     "name": "Norheim",
     "heightDifference": "210",
     "image": "",
-    "region": "Pfalz",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
@@ -2270,7 +2855,11 @@
     "name": "Schreckhof",
     "heightDifference": "120",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.para-now.de",
     "point": {
@@ -2285,7 +2874,11 @@
     "name": "Widdern Start",
     "heightDifference": "245",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.para-now.de",
     "point": {
@@ -2300,7 +2893,11 @@
     "name": "Nordhelle Startplatz",
     "heightDifference": "150",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2313,7 +2910,11 @@
   },
   {
     "name": "Boxberg Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
@@ -2326,6 +2927,11 @@
   },
   {
     "name": "Osterberg Schlepp",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "website": "https://www.dhv.de/db2/details.php?qi=glp_details&item=970",
     "point": {
       "type": "Point",
@@ -2339,7 +2945,11 @@
     "name": "Heinsheim",
     "heightDifference": "63",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.para-now.de",
     "point": {
@@ -2353,7 +2963,11 @@
   {
     "name": "Kesten Startplatz",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2367,7 +2981,11 @@
   {
     "name": "Neckargerach",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.para-now.de",
     "point": {
@@ -2382,7 +3000,11 @@
     "name": "Laubenheim",
     "heightDifference": "60",
     "image": "",
-    "region": "Pfalz",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
@@ -2397,7 +3019,11 @@
     "name": "Entenberg",
     "heightDifference": "230",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.entenberg.eu",
     "point": {
@@ -2411,10 +3037,13 @@
   {
     "name": "Neumagen Segelflugplatz",
     "image": "",
-    "region": "",
     "type": "SFP",
     "website": "http://www.edrd.de",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "point": {
       "type": "Point",
       "coordinates": [6.917736111111111, 49.84278333333334]
@@ -2427,7 +3056,11 @@
     "name": "Bürgstadt",
     "heightDifference": "220",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://lilienthal-gleiter.de",
     "point": {
@@ -2442,7 +3075,11 @@
     "name": "Stolzenberg/Steckweiler",
     "heightDifference": "150",
     "image": "",
-    "region": "Pfalz",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Pfalz"
+    },
     "type": "HGPGSTA",
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
@@ -2457,7 +3094,11 @@
     "name": "Stachelhardt",
     "heightDifference": "120",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.deltaclub.de",
     "point": {
@@ -2471,7 +3112,11 @@
   {
     "name": "Schönbrunn Schlepp",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2486,7 +3131,11 @@
     "name": "Meerfelder Maar O",
     "heightDifference": "170",
     "image": "",
-    "region": "Mosel",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.moselfalken.de",
     "point": {
@@ -2499,7 +3148,11 @@
   },
   {
     "name": "Linnich UL-Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "UL",
     "website": "",
     "point": {
@@ -2513,8 +3166,11 @@
   {
     "name": "Hohenöllen",
     "image": "",
-    "region": "Nahe",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Nahe"
+    },
     "type": "HGPGSTA",
     "website": "http://www.gleitschirmverein-nahe-glan.de",
     "point": {
@@ -2529,8 +3185,11 @@
     "name": "Boppard-Weiler",
     "heightDifference": "170",
     "image": "",
-    "region": "Mosel",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Mosel"
+    },
     "type": "HGPGSTA",
     "website": "http://www.thermik4u.de",
     "point": {
@@ -2545,7 +3204,11 @@
     "name": "Eschbach",
     "heightDifference": "57",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "HE",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2558,7 +3221,11 @@
   },
   {
     "name": "Kaiskorb Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.ostwindfreunde.de",
     "point": {
@@ -2572,7 +3239,11 @@
   {
     "name": "Kerken UL-Flugplatz",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.ul-kerken.de",
     "point": {
@@ -2585,7 +3256,11 @@
   },
   {
     "name": "Sevelen Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.freiflieger-niederrhein.de",
     "point": {
@@ -2598,7 +3273,11 @@
   },
   {
     "name": "Flugplatz Alsfeld Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "UL",
     "website": "",
     "point": {
@@ -2611,6 +3290,11 @@
   },
   {
     "name": "Dauborn Schlepp",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [8.19288724473, 50.32201690999]
@@ -2621,7 +3305,11 @@
   },
   {
     "name": "Alpenrod Schlepp",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [7.8799148754635, 50.6409108739]
@@ -2632,6 +3320,11 @@
   },
   {
     "name": "Edermünde Schlepp",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [9.4500757859, 51.2223806331]
@@ -2642,6 +3335,11 @@
   },
   {
     "name": "Walsdorf",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "point": {
       "type": "Point",
       "coordinates": [6.72, 50.2725]
@@ -2653,7 +3351,11 @@
   },
   {
     "name": "Neu-Anspach Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.gf-wehrheim.de",
     "point": {
@@ -2668,7 +3370,11 @@
     "name": "Brilon-Poppenberg",
     "heightDifference": "110",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.airwalker-ev.de",
     "point": {
@@ -2681,7 +3387,11 @@
   },
   {
     "name": "Niederkleen Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.himmelsstuermerlahn.de",
     "point": {
@@ -2696,7 +3406,11 @@
     "name": "Wixberg W",
     "heightDifference": "285",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2711,7 +3425,11 @@
     "name": "Wixberg S",
     "heightDifference": "285",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "",
     "point": {
@@ -2726,8 +3444,11 @@
     "name": "Kronenberg",
     "heightDifference": "70",
     "image": "",
-    "region": "Nahe",
-    "country": "RP",
+    "locationData": {
+      "country": "GER",
+      "state": "RP",
+      "region": "Nahe"
+    },
     "type": "HGPGSTA",
     "website": "http://www.dgcn.de",
     "point": {
@@ -2740,7 +3461,11 @@
   },
   {
     "name": "Ailertchen UL-Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "UL",
     "website": "http://www.flyranch-ww.de/",
     "point": {
@@ -2755,7 +3480,11 @@
     "name": "Stüppel",
     "heightDifference": "215",
     "image": "",
-    "region": "Sauerland",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": "Sauerland"
+    },
     "type": "HGPGSTA",
     "website": "http://www.sauerlandair.de",
     "point": {
@@ -2768,7 +3497,11 @@
   },
   {
     "name": "Oberacker Schlepp",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.gleitschirmclub-kraichtal.de",
     "point": {
@@ -2783,7 +3516,11 @@
     "name": "Werdohl-Riesenberg",
     "heightDifference": "250",
     "image": "",
-    "region": "",
+    "locationData": {
+      "country": "GER",
+      "state": "NW",
+      "region": ""
+    },
     "type": "HGPGSTA",
     "website": "http://www.airwalker-ev.de",
     "point": {

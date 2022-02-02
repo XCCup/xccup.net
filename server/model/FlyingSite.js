@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       primaryKey: true,
     },
+    locationData: {
+      type: DataTypes.JSON,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -29,16 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.STRING,
-    },
-    region: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "",
-    },
-    country: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: "",
     },
     image: {
       type: DataTypes.STRING,
