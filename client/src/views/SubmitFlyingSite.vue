@@ -74,7 +74,6 @@ const newSite = reactive({
   heightDifference: "0",
   lat: "",
   long: "",
-  regions: "",
 });
 
 const clubs = ref(null);
