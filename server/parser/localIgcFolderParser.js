@@ -9,7 +9,7 @@ const { sleep } = require("../helper/Utils");
 
 const folderPath = process.argv[2];
 const year = process.argv[3];
-const flightsAll = require("../import/flightsImport2014.json");
+const flightsAll = require("../import/flightsImport2007.json");
 const flights = flightsAll.filter((f) => {
   if (!f?.takeoffTime) return;
   return new Date(f.takeoffTime).getFullYear() == year;
@@ -38,6 +38,11 @@ fs.readdir(directoryPath, async function (err, files) {
       const found = flights.find((flight) => flight.igcPath?.includes(file));
 
       if (found) {
+        if (index == flights.length - 1) {
+          console.log("Is last flight");
+          isLastFlight = true;
+        }
+
         await sleep(4000);
         // Move igc file
         const srcPath = path.join(directoryPath, file);
@@ -89,13 +94,14 @@ fs.readdir(directoryPath, async function (err, files) {
           JSON.stringify(fixesOfFlight, null, 2),
           "utf8",
           (err) => {
+            console.log(
+              "Wrote fixes file for " + found.externalId + " " + file
+            );
             if (err) console.log(err);
           }
         );
 
         // Analyze and retrieve turnpoints
-
-        if (index == flights.length - 1) isLastFlight = true;
 
         IgcAnalyzer.startCalculation(
           found,
@@ -103,7 +109,7 @@ fs.readdir(directoryPath, async function (err, files) {
           saveTurnpoints
         );
       } else {
-        // console.log("No flight found for igc " + file);
+        console.log("No flight found for igc " + file);
       }
     } catch (error) {
       console.error(error);
@@ -111,6 +117,7 @@ fs.readdir(directoryPath, async function (err, files) {
   }
   console.log("+++++++++++++++++++++++++++++");
   console.log("Finished parsing all igc data");
+  isLastFlight = true;
 });
 
 function saveTurnpoints(res) {
