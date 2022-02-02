@@ -28,7 +28,8 @@ defineProps({
 const { selectSeason } = useData();
 const route = useRoute();
 
-const selectedSeason = ref(route.params.year);
+const yearParam = route.params.year ?? "";
+const selectedSeason = ref(yearParam);
 const onSeasonSelected = () => {
   selectSeason(selectedSeason.value);
 };
