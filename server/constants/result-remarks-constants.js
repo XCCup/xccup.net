@@ -25,4 +25,4 @@ module.exports.REMARKS_EARLYBIRD = `Es werden die ersten 20 Flüge einer Saison 
 /**
  * Remark text for late bird ranking
  */
-module.exports.REMARKS_LATEBIRD = `Es werden die letzten 20 Flüge einer Saison gewertet. Sortiert nach Startzeit. In der Late Bird Wertung wird nur der letzte Flug eines Piloten gewertet.`;
+module.exports.REMARKS_LATEBIRD = `Es werden die letzten 20 Flüge einer Saison gewertet. Sortiert nach Landezeit. In der Late Bird Wertung wird nur der letzte Flug eines Piloten gewertet.`;

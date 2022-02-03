@@ -206,7 +206,7 @@ const service = {
     const endDate = seasonDetail.endDate;
     const startDate = moment(endDate).subtract(3, "months");
     const where = createDefaultWhereForFlight({ startDate, endDate });
-    const sortOrder = [["takeoffTime", "DESC"]];
+    const sortOrder = [["landingTime", "DESC"]];
 
     const resultQuery = await queryDb({ where, region, sortOrder });
     const result = resultQuery.map((r) => r.toJSON());
