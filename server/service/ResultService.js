@@ -23,6 +23,7 @@ const {
   REMARKS_SENIOR,
   REMARKS_TEAM,
   REMARKS_EARLYBIRD,
+  REMARKS_LATEBIRD,
 } = require("../constants/result-remarks-constants");
 const moment = require("moment");
 
@@ -194,6 +195,27 @@ const service = {
       resultSingleUserEntries,
       {
         REMARKS: REMARKS_EARLYBIRD,
+      },
+      20
+    );
+  },
+
+  getLateBird: async (year, region) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const endDate = seasonDetail.endDate;
+    const startDate = moment(endDate).subtract(3, "months");
+    const where = createDefaultWhereForFlight({ startDate, endDate });
+    const sortOrder = [["takeoffTime", "DESC"]];
+
+    const resultQuery = await queryDb({ where, region, sortOrder });
+    const result = resultQuery.map((r) => r.toJSON());
+    const resultSingleUserEntries = removeMultipleEntriesForUsers(result);
+
+    return addConstantInformationToResult(
+      resultSingleUserEntries,
+      {
+        REMARKS: REMARKS_LATEBIRD,
       },
       20
     );
