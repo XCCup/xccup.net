@@ -138,6 +138,12 @@ const config = convict({
     default: false,
     env: "OVERRULE_ACTIVE",
   },
+  daysFlightEditable: {
+    doc: "This option defines the timeframe after takeoff in which a flight can be uploaded or edited",
+    format: "nat",
+    default: 14,
+    env: "DAYS_FLIGHT_EDITABLE",
+  },
 
   serverImportTestData: {
     doc: "A switch which signals that on server startup a testdata set should be loaded",
