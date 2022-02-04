@@ -53,8 +53,16 @@
             </tbody>
           </table>
         </div>
-        <div v-if="results?.length === 0 && !noDataFlag">
-          Keine Flüge gemeldet in diesem Jahr
+        <div
+          v-if="results?.length === 0 && !noDataFlag && category == 'earlyBird'"
+        >
+          Keine Flüge gemeldet in diesem Jahr.
+        </div>
+        <div
+          v-if="results?.length === 0 && !noDataFlag && category == 'lateBird'"
+        >
+          <br />Die Late Bird Wertung beginnt erst im letzten Viertel der
+          Saison.
         </div>
         <div v-if="noDataFlag" data-cy="no-data">
           Keine Wertung für dieses Jahr vorhanden.
