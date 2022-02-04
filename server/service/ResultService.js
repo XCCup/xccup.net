@@ -204,7 +204,7 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const endDate = seasonDetail.endDate;
-    const startDate = moment(endDate).subtract(3, "months");
+    const startDate = moment(endDate).subtract(2, "months");
     const where = createDefaultWhereForFlight({ startDate, endDate });
     const sortOrder = [["landingTime", "DESC"]];
 
