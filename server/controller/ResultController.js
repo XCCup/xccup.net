@@ -2,8 +2,12 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/ResultService");
 const { query } = require("express-validator");
-const { validationHasErrors } = require("./Validation");
+const {
+  validationHasErrors,
+  checkParamIsOnlyOfValue,
+} = require("./Validation");
 const { getCache, setCache } = require("./CacheManager");
+const { STATE, COUNTRY } = require("../constants/user-constants");
 
 // @desc Gets the overall result
 // @route GET /results
@@ -18,10 +22,10 @@ router.get(
     query("isSenior").optional().isBoolean(),
     query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("gender").optional().not().isEmpty().trim().escape(),
+    query("homeStateOfUser").optional().not().isEmpty().trim().escape(),
     query("site").optional().not().isEmpty().trim().escape(),
     query("siteId").optional().isUUID(),
-    query("region").optional().not().isEmpty().trim().escape(),
-    query("state").optional().not().isEmpty().trim().escape(),
+    query("siteRegion").optional().not().isEmpty().trim().escape(),
     query("club").optional().not().isEmpty().trim().escape(),
     query("clubId").optional().isUUID(),
   ],
@@ -31,14 +35,14 @@ router.get(
       year,
       rankingClass,
       gender,
+      homeStateOfUser,
       isWeekend,
       isHikeAndFly,
       isSenior,
       limit,
       site,
       siteId,
-      region,
-      state,
+      siteRegion,
       club,
       clubId,
     } = req.query;
@@ -51,14 +55,14 @@ router.get(
         year,
         rankingClass,
         gender,
+        homeStateOfUser,
         isWeekend,
         isHikeAndFly,
         isSenior,
         limit,
         site,
         siteId,
-        region,
-        state,
+        siteRegion,
         club,
         clubId,
       });
@@ -113,7 +117,7 @@ router.get(
   "/teams",
   [
     query("year").optional().isInt(),
-    query("region").optional().not().isEmpty().trim().escape(),
+    query("siteRegion").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
   ],
   async (req, res, next) => {
@@ -122,10 +126,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, region, limit } = req.query;
+    const { year, siteRegion, limit } = req.query;
 
     try {
-      const result = await service.getTeam(year, region, limit);
+      const result = await service.getTeam(year, siteRegion, limit);
 
       setCache(req, result);
 
@@ -152,10 +156,42 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, region, limit } = req.query;
+    const { year, region: siteRegion, limit } = req.query;
 
     try {
-      const result = await service.getSenior(year, region, limit);
+      const result = await service.getSenior(year, siteRegion, limit);
+
+      setCache(req, result);
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Gets the result for a state / country cup
+// @route GET /results/state/:isoCode
+
+router.get(
+  "/state/:isoCode",
+  query("year").optional().isInt(),
+  query("limit").optional().isInt(),
+  checkParamIsOnlyOfValue(
+    "isoCode",
+    Object.keys(STATE).concat(Object.keys(COUNTRY))
+  ),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const { year, limit } = req.query;
+    const isoCode = req.params.isoCode;
+
+    try {
+      const result = await service.getCountryOrState(year, isoCode, limit);
 
       setCache(req, result);
 
@@ -173,7 +209,7 @@ router.get(
   "/earlybird",
   [
     query("year").optional().isInt(),
-    query("region").optional().not().isEmpty().trim().escape(),
+    query("siteRegion").optional().not().isEmpty().trim().escape(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -181,10 +217,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, region } = req.query;
+    const { year, siteRegion } = req.query;
 
     try {
-      const result = await service.getEarlyBird(year, region);
+      const result = await service.getEarlyBird(year, siteRegion);
 
       setCache(req, result);
 
@@ -202,7 +238,7 @@ router.get(
   "/latebird",
   [
     query("year").optional().isInt(),
-    query("region").optional().not().isEmpty().trim().escape(),
+    query("siteRegion").optional().not().isEmpty().trim().escape(),
   ],
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -210,10 +246,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, region } = req.query;
+    const { year, siteRegion } = req.query;
 
     try {
-      const result = await service.getLateBird(year, region);
+      const result = await service.getLateBird(year, siteRegion);
 
       setCache(req, result);
 
@@ -231,7 +267,7 @@ router.get(
   "/newcomer",
   [
     query("year").optional().isInt(),
-    query("region").optional().not().isEmpty().trim().escape(),
+    query("siteRegion").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
   ],
   async (req, res, next) => {
@@ -240,10 +276,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, region, limit } = req.query;
+    const { year, siteRegion, limit } = req.query;
 
     try {
-      const result = await service.getNewcomer(year, region, limit);
+      const result = await service.getNewcomer(year, siteRegion, limit);
 
       setCache(req, result);
 

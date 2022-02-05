@@ -194,6 +194,18 @@ function checkOptionalIsOnlyOfValue(field, arrayOfValidValues) {
  * @param {*} arrayOfValidValues A array of valid values to check against.
  * @returns A ValidationChain object for the checked field.
  */
+function checkParamIsOnlyOfValue(field, arrayOfValidValues) {
+  return check(field)
+    .optional()
+    .isIn(arrayOfValidValues)
+    .withMessage(`Value in ${field} must fit one of ${arrayOfValidValues}`);
+}
+/**
+ * Checks if the field value matches one value of the provided valid values.
+ * @param {*} field The field in the Request-Body to check.
+ * @param {*} arrayOfValidValues A array of valid values to check against.
+ * @returns A ValidationChain object for the checked field.
+ */
 function checkIsOnlyOfValue(field, arrayOfValidValues) {
   return check(field)
     .isIn(arrayOfValidValues)
@@ -279,6 +291,7 @@ exports.checkOptionalUuidObject = checkOptionalUuidObject;
 exports.checkIsUuidObjectOrEmpty = checkIsUuidObjectOrEmpty;
 exports.checkIsBoolean = checkIsBoolean;
 exports.checkOptionalIsBoolean = checkOptionalIsBoolean;
+exports.checkParamIsOnlyOfValue = checkParamIsOnlyOfValue;
 exports.checkOptionalIsOnlyOfValue = checkOptionalIsOnlyOfValue;
 exports.checkIsFloat = checkIsFloat;
 
