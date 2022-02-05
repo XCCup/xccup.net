@@ -13,6 +13,7 @@ const {
   STATE: conutryStates,
   TSHIRT_SIZES,
   GENDER,
+  STATE,
 } = require("../constants/user-constants");
 
 const { getCache, setCache } = require("./CacheManager");
@@ -106,6 +107,7 @@ router.get("/filterOptions", async (req, res, next) => {
       teamNames: values[3],
       brandNames: values[4],
       rankingClasses: values[5].rankingClasses,
+      states: STATE,
       regions: REGIONS,
       genders: GENDER,
     };
