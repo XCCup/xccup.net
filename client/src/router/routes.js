@@ -87,7 +87,7 @@ export const Routes = [
     component: () => import("../views/ResultsLux.vue"),
   },
   {
-    path: "/:year/rlp-meisterschaft/",
+    path: "/:year/rlp-pokal/",
     name: "ResultsRlp",
     props: () => ({ category: "rlp-state" }),
     beforeEnter: validateRouteParamYear,

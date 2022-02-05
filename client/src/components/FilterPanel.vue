@@ -92,19 +92,27 @@
                 :add-empty-option="true"
               />
               <BaseSelect
-                id="filterSelectRegion"
-                v-model="selects.region"
-                label="Region*"
-                :show-label="true"
-                :options="regions"
-                :add-empty-option="true"
-              />
-              <BaseSelect
                 id="filterSelectGender"
                 v-model="selects.gender"
                 label="Geschlecht"
                 :show-label="true"
                 :options="genders"
+                :add-empty-option="true"
+              />
+              <BaseSelect
+                id="filterSelectState"
+                v-model="selects.homeStateOfUser"
+                label="Heimat-Bundesland"
+                :show-label="true"
+                :options="states"
+                :add-empty-option="true"
+              />
+              <BaseSelect
+                id="filterSelectRegion"
+                v-model="selects.region"
+                label="Region*"
+                :show-label="true"
+                :options="regions"
                 :add-empty-option="true"
               />
               <div class="form-check mt-3 mb-3">
@@ -294,6 +302,7 @@ const selects = reactive({
   gender: "",
   name: "",
   user: "",
+  homeStateOfUser: "",
   flightType: "",
 });
 const weekend = ref(false);
@@ -306,6 +315,7 @@ let userData = null;
 let teamData = null;
 let rankingData = null;
 let genderData = null;
+let statesData = null;
 let regions = null;
 
 const users = ref(null);
@@ -314,6 +324,7 @@ const sites = ref(null);
 const clubs = ref(null);
 const rankings = ref(null);
 const genders = ref(null);
+const states = ref(null);
 const flightTypes = ref(Object.values(FLIGHT_TYPES));
 
 try {
@@ -323,6 +334,7 @@ try {
   siteData = filterOptions.siteNames;
   clubData = filterOptions.clubNames;
   teamData = filterOptions.teamNames;
+  statesData = filterOptions.states;
   rankingData = filterOptions.rankingClasses;
   genderData = filterOptions.genders;
   regions = filterOptions.regions;
@@ -330,6 +342,7 @@ try {
   teams.value = teamData.map((e) => e.name);
   sites.value = siteData.map((e) => e.name);
   clubs.value = clubData.map((e) => e.name);
+  states.value = Object.values(statesData).map((e) => e);
   rankings.value = Object.values(rankingData).map((e) => e.shortDescription);
   genders.value = Object.values(genderData).map((e) => e);
 } catch (error) {
@@ -341,10 +354,13 @@ const selectedFilters = computed(() => {
     siteId: findIdByName(selects.site, siteData),
     clubId: findIdByName(selects.club, clubData),
     rankingClass: findKeyOfRankingClass(selects.team, teamData),
-    region: selects.region ? selects.region : undefined,
+    siteRegion: selects.region ? selects.region : undefined,
     isWeekend: hikeAndFly.value ? true : undefined,
     isHikeAndFly: hikeAndFly.value ? true : undefined,
     gender: selects.gender ? selects.gender : undefined,
+    homeStateOfUser: selects.homeStateOfUser
+      ? findKeyByValue(statesData, selects.homeStateOfUser)
+      : undefined,
     userIds: findIdsByNameParts(),
     userId: findIdByUserName(),
     teamId: findIdByName(selects.team, teamData),
@@ -406,7 +422,8 @@ const filterDescription = (key, filter) => {
   if (key == "isWeekend") return "Wochenende";
   if (key == "isHikeAndFly") return "Hike & Fly";
   if (key == "gender") return genderDescription(filter);
-  if (key == "region") return filter;
+  if (key == "siteRegion") return filter;
+  if (key == "homeStateOfUser") return statesData[filter];
   if (key == "teamId") return teamData.find((e) => e.id == filter).name;
   if (key == "flightType") return FLIGHT_TYPES[filter];
 
