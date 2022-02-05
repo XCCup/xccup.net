@@ -11,11 +11,10 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import tileOptions from "@/config/mapbox.js";
+import { tileOptions, tileOptionsSatellite } from "@/config/mapbox.js";
 import { ref, onMounted } from "vue";
 
 const map = ref(null);
-const logos = ref([]);
 
 const props = defineProps({
   sites: {
@@ -28,6 +27,35 @@ const props = defineProps({
 const userPrefersDark = ref(
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
 );
+
+onMounted(() => {
+  L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
+
+  const terrain = L.tileLayer(
+    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+    tileOptions
+  );
+
+  const satellite = L.tileLayer(
+    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
+    tileOptionsSatellite
+  );
+
+  const baseMaps = {
+    Gelände: terrain,
+    Satellit: satellite,
+  };
+
+  map.value = L.map("mapContainer", {
+    gestureHandling: true,
+  });
+
+  terrain.addTo(map.value);
+  createTakeOffMarkers(props.sites).addTo(map.value);
+
+  L.control.layers(baseMaps).addTo(map.value);
+  map.value.setView([50.143, 7.146], 8);
+});
 
 const createPopupContent = (site) => {
   const lines = [];
@@ -42,15 +70,14 @@ const createPopupContent = (site) => {
   return lines.join("<br>");
 };
 
-const addSiteMarker = (sites) => {
+const createTakeOffMarkers = (sites) => {
   if (sites.length === 0) return;
-
-  const markerGroup = new L.featureGroup();
+  const listOfTakeoffs = ref([]);
 
   sites.forEach((site) => {
     if (!site.point) return;
 
-    logos.value.push(
+    listOfTakeoffs.value.push(
       L.marker([site.point.coordinates[1], site.point.coordinates[0]], {
         title: site.name,
         riseOnHover: true,
@@ -59,28 +86,13 @@ const addSiteMarker = (sites) => {
           direction: "right",
         })
         .bindPopup(createPopupContent(site))
-        .addTo(markerGroup)
     );
   });
 
-  map.value.addLayer(markerGroup);
-  map.value.fitBounds(markerGroup.getBounds());
+  let takeoffMarkerGroup = L.layerGroup(listOfTakeoffs.value);
+
+  return takeoffMarkerGroup;
 };
-
-onMounted(() => {
-  L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
-
-  map.value = L.map("mapContainer", {
-    gestureHandling: true,
-  }).setView([50.143, 7.146], 8);
-
-  L.tileLayer(
-    "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
-    tileOptions
-  ).addTo(map.value);
-
-  addSiteMarker(props.sites);
-});
 </script>
 
 <style scoped>

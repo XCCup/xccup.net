@@ -113,10 +113,18 @@ export const Routes = [
   {
     path: "/:year/earlybird/",
     name: "ResultsEarlybird",
-    props: true,
+    props: () => ({ category: "earlyBird" }),
     beforeEnter: validateRouteParamYear,
 
-    component: () => import("../views/ResultsEarlybird.vue"),
+    component: () => import("../views/ResultsSpecial.vue"),
+  },
+  {
+    path: "/:year/latebird/",
+    name: "ResultsLatebird",
+    props: () => ({ category: "lateBird" }),
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import("../views/ResultsSpecial.vue"),
   },
   {
     path: "/fluggebietsrekorde/",
@@ -166,6 +174,7 @@ export const Routes = [
   {
     path: "/ausschreibung",
     name: "Rules",
+    meta: { smoothScroll: true },
     component: () => import("../views/ListRules.vue"),
   },
   {

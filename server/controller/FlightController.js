@@ -345,7 +345,7 @@ async function checkIfFlightIsModifiable(flight, userId) {
     config.get("overruleActive");
 
   const flightIsYoungerThanThreshold = moment(flight.takeoffTime)
-    .add(DAYS_FLIGHT_CHANGEABLE, "days")
+    .add(config.get("daysFlightEditable"), "days")
     .isAfter(moment());
 
   if (overwriteIfInProcessAndNotProduction) return;

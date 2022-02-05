@@ -195,6 +195,35 @@ router.get(
   }
 );
 
+// @desc Gets the result for the late bird ranking (last N flights of the season)
+// @route GET /results/latebird/
+
+router.get(
+  "/latebird",
+  [
+    query("year").optional().isInt(),
+    query("region").optional().not().isEmpty().trim().escape(),
+  ],
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const { year, region } = req.query;
+
+    try {
+      const result = await service.getLateBird(year, region);
+
+      setCache(req, result);
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // @desc Gets the result for the newcomer ranking
 // @route GET /results/newcomer/
 
