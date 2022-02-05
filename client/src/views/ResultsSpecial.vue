@@ -53,8 +53,16 @@
             </tbody>
           </table>
         </div>
-        <div v-if="results?.length === 0 && !noDataFlag">
-          Keine Flüge gemeldet in diesem Jahr
+        <div
+          v-if="results?.length === 0 && !noDataFlag && category == 'earlyBird'"
+        >
+          Keine Flüge gemeldet in diesem Jahr.
+        </div>
+        <div
+          v-if="results?.length === 0 && !noDataFlag && category == 'lateBird'"
+        >
+          <br />Die Late Bird Wertung beginnt erst im letzten Viertel der
+          Saison.
         </div>
         <div v-if="noDataFlag" data-cy="no-data">
           Keine Wertung für dieses Jahr vorhanden.
@@ -74,7 +82,29 @@ import useData from "../composables/useData";
 
 const route = useRoute();
 const router = useRouter();
-const title = ref("Early Bird");
+const title = ref("");
+
+const props = defineProps({
+  category: {
+    type: String,
+    required: true,
+  },
+});
+
+const categories = {
+  earlyBird: {
+    title: "Early Bird",
+    endpoint: ApiService.getResultsEarlybird,
+  },
+  lateBird: {
+    title: "Late Bird",
+    endpoint: ApiService.getResultsLatebird,
+  },
+};
+
+const selectedCategory = categories[props.category];
+if (!selectedCategory) throw "No supported category for " + props.category;
+title.value = selectedCategory.title;
 
 setWindowName(title.value);
 
@@ -83,7 +113,7 @@ const { initData, data: results, dataConstants, noDataFlag } = useData();
 // Prevent to send a request query with an empty year parameter
 const params = route.params.year ? route.params : undefined;
 // Await is necessary to trigger the suspense feature
-await initData(ApiService.getResultsEarlybird, {
+await initData(selectedCategory.endpoint, {
   queryParameters: {
     ...route.query,
     ...params,

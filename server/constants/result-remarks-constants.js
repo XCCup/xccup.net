@@ -22,3 +22,7 @@ module.exports.REMARKS_TEAM = (dismisses) =>
  * Remark text for early bird ranking
  */
 module.exports.REMARKS_EARLYBIRD = `Es werden die ersten 20 Flüge einer Saison gewertet. Sortiert nach Startzeit. In der Early Bird Wertung wird nur der erste Flug eines Piloten gewertet.`;
+/**
+ * Remark text for late bird ranking
+ */
+module.exports.REMARKS_LATEBIRD = `Es werden die letzten 20 Flüge einer Saison gewertet. Sortiert nach Landezeit. In der Late Bird Wertung wird nur der letzte Flug eines Piloten gewertet.`;

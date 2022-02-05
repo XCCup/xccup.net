@@ -180,6 +180,11 @@ export default {
       params,
     });
   },
+  getResultsLatebird(params) {
+    return apiClient.get("results/latebird", {
+      params,
+    });
+  },
   getResultsSiteRecords() {
     return apiClient.get("results/siteRecords");
   },
