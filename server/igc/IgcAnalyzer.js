@@ -71,24 +71,24 @@ const IgcAnalyzer = {
   },
 
   extractFixes: (flight) => {
-    //TODO Currently the file will be deserailized twice!
-    //1x startCalculation and 1x extractFixes
     logger.debug(`IA: read file from ${flight.igcPath}`);
     const igcAsPlainText = readIgcFile(flight);
     logger.debug(`IA: start parsing`);
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
     logger.debug(`IA: Finished parsing`);
-    const currentResolution =
-      (igcAsJson.fixes[2].timestamp - igcAsJson.fixes[1].timestamp) / 1000;
+
+    const currentResolution = getResolution(igcAsJson);
+
     let shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
+
     logger.debug(
       `IA: Will shrink extracted fixes by factor ${shrinkingFactor}`
     );
-    let reducedFixes = [];
-    if (shrinkingFactor < 1) {
-      //Prevent endless loop for negative numbers
-      shrinkingFactor = 1;
-    }
+
+    //Prevent endless loop for negative numbers
+    if (shrinkingFactor < 1) shrinkingFactor = 1;
+
+    const reducedFixes = [];
     for (let i = 0; i < igcAsJson.fixes.length; i += shrinkingFactor) {
       reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
     }
@@ -325,13 +325,37 @@ function stripAroundTurnpoints(input, turnpoints) {
 }
 
 function getResolution(igcAsJson) {
-  const resolutionInMillis =
-    igcAsJson.fixes[2].timestamp - igcAsJson.fixes[1].timestamp;
-  const resolutionInSeconds = resolutionInMillis / 1000;
+  /**
+   * Start with the second timestamp.
+   * It occured a few times that the first and second timestamp are in the same second.
+   * Maybe this is due to some corner case in the tracker. Therefore skip the first timestamp.
+   */
+  const referenceTimestamp = igcAsJson.fixes[1].timestamp;
+  let currentResolution =
+    (igcAsJson.fixes[2].timestamp - referenceTimestamp) / 1000;
+
+  /**
+   * Some few pilots have their tracker configurated with a tracking interval <1 second.
+   * This is not supported by the igc definition. All these timestamps will have the same value.
+   * To counter this we will search for the next timestamp which has a different value.
+   */
+
+  if (currentResolution == 0) {
+    const startIndex = 3;
+    // Just search in the first 20 fixes to fail fast
+    for (let index = startIndex; index < 20; index++) {
+      const elementTimestamp = igcAsJson.fixes[index].timestamp;
+      if (elementTimestamp != referenceTimestamp) {
+        currentResolution = 1 / index;
+        break;
+      }
+    }
+  }
+
   logger.debug(
-    `The resolution of the timestamps is ${resolutionInSeconds} seconds`
+    `The resolution of the timestamps is ${currentResolution} seconds`
   );
-  return resolutionInSeconds;
+  return currentResolution;
 }
 
 function getResolutionForDuration(durationInMinutes) {
