@@ -8,8 +8,13 @@ const router = createRouter({
   scrollBehavior(to) {
     const scroll = {};
 
+    console.log("TO: ", to);
+
+    if (to.hash) scroll.selector = to.hash;
     if (to.meta.toTop) scroll.top = 0;
     if (to.meta.smoothScroll) scroll.behavior = "smooth";
+
+    console.log("SCR: ", scroll);
 
     return scroll;
   },

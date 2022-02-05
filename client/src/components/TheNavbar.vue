@@ -197,6 +197,11 @@
                   >News</router-link
                 >
               </li>
+              <li>
+                <router-link :to="{ name: 'Rules' }" class="dropdown-item"
+                  >Ausschreibung 2022</router-link
+                >
+              </li>
             </ul>
           </li>
           <li id="navbarForms" class="nav-item dropdown">

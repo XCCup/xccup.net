@@ -166,6 +166,7 @@ export const Routes = [
   {
     path: "/ausschreibung",
     name: "Rules",
+    meta: { smoothScroll: true },
     component: () => import("../views/ListRules.vue"),
   },
   {
