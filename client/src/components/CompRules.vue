@@ -165,10 +165,10 @@
       </li>
       <li class="mb-3">
         <strong>Rheinland-Pfalz Pokal</strong><br />
-        Gewertet werden die 3 besten Flüge die von in Rheinland-Pfalz gemeldeten
-        Piloten von rheinland-pfälzischen Startplätzen aus geflogen wurden. Es
-        zählt dabei die Einstellung des Bundeslandes im Profil des Piloten zum
-        Zeitpunkt der Einreichung des jeweiligen Fluges.
+        Gewertet werden die 3 besten Flüge, die von in Rheinland-Pfalz
+        gemeldeten Piloten von rheinland-pfälzischen Startplätzen aus geflogen
+        wurden. Es zählt dabei die Einstellung des Bundeslandes im Profil des
+        Piloten zum Zeitpunkt der Einreichung des jeweiligen Fluges.
       </li>
       <li class="mb-3">
         <strong>Preisgeld</strong><br />
