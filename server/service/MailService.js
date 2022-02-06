@@ -1,5 +1,6 @@
 const sendMail = require("../config/email");
 const logger = require("../config/logger");
+const config = require("../config/env-config");
 const {
   MAIL_MESSAGE_PREFIX,
   REGISTRATION_TEXT,
@@ -18,16 +19,17 @@ const {
   NEW_FLIGHT_COMMENT_TEXT,
   ADDED_TO_TEAM_TITLE,
   ADDED_TO_TEAM_TEXT,
+  NEW_FLIGHT_COMMENT_RESPONSE_TEXT,
 } = require("../constants/email-message-constants");
 const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
+const Comment = require("../config/postgres")["FlightComment"];
 
-// TODO: Warn if this env are not set (They are not E2E testet)
-const clientUrl = process.env.CLIENT_URL;
-const userActivateLink = process.env.CLIENT_USER_ACTIVATE_PATH;
-const userPasswordLostLink = process.env.CLIENT_USER_PASSWORD_LOST_PATH;
-const confirmMailChangeLink = process.env.CLIENT_USER_EMAIL_CHANGE_PATH;
-const flightLink = process.env.CLIENT_FLIGHT_PATH;
+const clientUrl = config.get("clientUrl");
+const userActivateLink = config.get("clientActivateProfil");
+const userPasswordLostLink = config.get("clientPasswordLost");
+const confirmMailChangeLink = config.get("clientConfirmEmail");
+const flightLink = config.get("clientFlight");
 
 const service = {
   sendMailSingle: async (fromUserId, toUserId, content) => {
@@ -158,23 +160,34 @@ const service = {
   },
 
   sendNewFlightCommentMail: async (comment) => {
-    const [fromUser, flight] = await Promise.all([
+    const queries = [
       User.findByPk(comment.userId),
       Flight.findByPk(comment.flightId),
-    ]);
+    ];
+    if (comment.relatedTo) {
+      queries.push(Comment.findByPk(comment.relatedTo));
+    }
+
+    const [fromUser, flight, relatedComment] = await Promise.all(queries);
+
+    const toUserId = relatedComment ? relatedComment.userId : flight.userId;
 
     // Don't sent any email if commenter is the same person as the owner of the flight
-    if (comment.userId == flight.userId) return;
+    if (comment.userId == toUserId) return;
 
-    const toUser = await User.findByPk(flight.userId);
+    const toUser = await User.findByPk(toUserId);
 
     logger.info(`MS: Send new flight comment mail to user ${toUser.id}`);
 
     const flightLinkUrl = `${clientUrl}${flightLink}/${flight.externalId}`;
 
+    const textFunction = relatedComment
+      ? NEW_FLIGHT_COMMENT_RESPONSE_TEXT
+      : NEW_FLIGHT_COMMENT_TEXT;
+
     const content = {
       title: NEW_FLIGHT_COMMENT_TITLE,
-      text: NEW_FLIGHT_COMMENT_TEXT(
+      text: textFunction(
         toUser.firstName,
         `${fromUser.firstName} ${fromUser.lastName} `,
         comment.message,

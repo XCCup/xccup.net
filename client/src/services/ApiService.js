@@ -156,12 +156,12 @@ export default {
     });
   },
   getResultsLux(params) {
-    return apiClient.get("results/?state=LUX", {
+    return apiClient.get("results/state/LUX", {
       params,
     });
   },
   getResultsRlp(params) {
-    return apiClient.get("results/?state=RP", {
+    return apiClient.get("results/state/RP", {
       params,
     });
   },

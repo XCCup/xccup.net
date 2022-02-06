@@ -10,8 +10,10 @@ describe("check results overall page", () => {
   });
 
   it("test first flight is listed not most points", () => {
-    // It's missing one entry for Olive Emmerich because his flight is from july and we count only flights within the first three months of the season
-    const expectedLength = 17;
+    /**
+     * It's missing two entries for Olive Emmerich and Everett Gislason because their flights are from july and we only consider the first three months of the season.
+     */
+    const expectedLength = 16;
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
 

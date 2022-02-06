@@ -44,7 +44,7 @@ const siteService = {
       "point",
       "website",
       "createdAt",
-      "region",
+      "locationData",
       "heightDifference",
     ];
     if (state == STATES.PROPOSAL) attributes.push("submitter");
@@ -66,7 +66,6 @@ const siteService = {
         const plainSite = s.toJSON();
         // Add submitter if it's a proposed site
         if (state == STATES.PROPOSAL) {
-          console.log("get user");
           const submitter = await User.findByPk(s.submitter);
           plainSite.submitter = submitter;
         }
@@ -88,14 +87,14 @@ const siteService = {
     heightDifference,
     submitter,
   }) => {
-    console.log("SUB: ", submitter);
-
     const site = {
       name,
       direction,
       clubId,
       website,
-      region,
+      locationData: {
+        region,
+      },
       heightDifference,
       state: STATES.PROPOSAL,
       submitter: submitter.id,
@@ -126,7 +125,7 @@ const siteService = {
   findClosestTakeoff: async (location) => {
     const query = `
     SELECT
-    "id","name","region", ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
+    "id","name", ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
     FROM
     "FlyingSites"
     WHERE

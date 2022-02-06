@@ -34,16 +34,16 @@ const service = {
     year,
     rankingClass,
     gender,
+    homeStateOfUser,
+    isSenior,
     isWeekend,
     isHikeAndFly,
-    isSenior,
-    limit,
     site,
     siteId,
-    region,
-    state,
+    siteRegion,
     club,
     clubId,
+    limit,
   }) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
@@ -63,15 +63,15 @@ const service = {
         [sequelize.Op.gt]: 0,
       };
     }
-    if (state) {
-      where.homeStateOfUser = state;
+    if (homeStateOfUser) {
+      where.homeStateOfUser = homeStateOfUser;
     }
     const resultQuery = await queryDb({
       where,
       gender,
       site,
       siteId,
-      region,
+      siteRegion,
       club,
       clubId,
     });
@@ -82,7 +82,7 @@ const service = {
 
     return addConstantInformationToResult(
       result,
-      { NUMBER_OF_SCORED_FLIGHTS, REMARKS_STATE },
+      { NUMBER_OF_SCORED_FLIGHTS },
       limit
     );
   },
@@ -105,7 +105,7 @@ const service = {
     );
   },
 
-  getTeam: async (year, region, limit) => {
+  getTeam: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const teamsOfSeason = await teamService.getAll({
@@ -122,7 +122,7 @@ const service = {
               await queryDb({
                 where,
                 limit: NUMBER_OF_SCORED_FLIGHTS,
-                region,
+                siteRegion,
                 useIncludes: ["site"],
               })
             ).map((e) => e.toJSON());
@@ -153,11 +153,11 @@ const service = {
     );
   },
 
-  getSenior: async (year, region, limit) => {
+  getSenior: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail, true);
-    const resultQuery = await queryDb({ where, region });
+    const resultQuery = await queryDb({ where, siteRegion });
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
@@ -179,7 +179,41 @@ const service = {
     );
   },
 
-  getEarlyBird: async (year, region) => {
+  /**
+   * Calculate the results for a country or state cup.
+   *
+   * @param {*} year The year to calculate the ranking for
+   * @param {*} isoCode The isoCode of the country (3-Letter-Code) or state (2-Letter-Code)
+   * @param {*} limit The limit of results to retrieve
+   * @returns The results of the ranking for this country or state of the provided year
+   */
+  getCountryOrState: async (year, isoCode, limit) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const where = createDefaultWhereForFlight(seasonDetail);
+    where.homeStateOfUser = isoCode;
+
+    const siteCountry = isoCode?.length == 3 ? isoCode : undefined;
+    const siteState = isoCode?.length == 2 ? isoCode : undefined;
+
+    const resultQuery = await queryDb({ where, siteCountry, siteState });
+
+    const result = aggreateFlightsOverUser(resultQuery);
+    limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
+    await calcSeniorBonusForFlightResult(result);
+    sortDescendingByTotalPoints(result);
+
+    return addConstantInformationToResult(
+      result,
+      {
+        NUMBER_OF_SCORED_FLIGHTS,
+        REMARKS_STATE,
+      },
+      limit
+    );
+  },
+
+  getEarlyBird: async (year, siteRegion) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const startDate = seasonDetail.startDate;
@@ -187,7 +221,7 @@ const service = {
     const where = createDefaultWhereForFlight({ startDate, endDate });
     const sortOrder = ["takeoffTime"];
 
-    const resultQuery = await queryDb({ where, region, sortOrder });
+    const resultQuery = await queryDb({ where, siteRegion, sortOrder });
     const result = resultQuery.map((r) => r.toJSON());
     const resultSingleUserEntries = removeMultipleEntriesForUsers(result);
 
@@ -200,7 +234,7 @@ const service = {
     );
   },
 
-  getLateBird: async (year, region) => {
+  getLateBird: async (year, siteRegion) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const endDate = seasonDetail.endDate;
@@ -208,7 +242,7 @@ const service = {
     const where = createDefaultWhereForFlight({ startDate, endDate });
     const sortOrder = [["landingTime", "DESC"]];
 
-    const resultQuery = await queryDb({ where, region, sortOrder });
+    const resultQuery = await queryDb({ where, siteRegion, sortOrder });
     const result = resultQuery.map((r) => r.toJSON());
     const resultSingleUserEntries = removeMultipleEntriesForUsers(result);
 
@@ -221,7 +255,7 @@ const service = {
     );
   },
 
-  getNewcomer: async (year, region, limit) => {
+  getNewcomer: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
@@ -232,7 +266,7 @@ const service = {
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
 
-    const resultQuery = await queryDb({ where, region });
+    const resultQuery = await queryDb({ where, siteRegion });
 
     const resultAllUsers = aggreateFlightsOverUser(resultQuery);
     const resultsNewcomer = await removeNonNewcomer(resultAllUsers, year);
@@ -416,17 +450,27 @@ async function queryDb({
   limit,
   site,
   siteId,
-  region,
   club,
   clubId,
   useIncludes = ["user", "site", "club", "team"],
+  siteRegion,
+  siteState,
+  siteCountry,
   sortOrder,
 }) {
   const include = [];
   if (useIncludes.includes("user"))
     include.push(createIncludeStatementUser(gender));
   if (useIncludes.includes("site"))
-    include.push(createIncludeStatementSite(site, siteId, region));
+    include.push(
+      createIncludeStatementSite({
+        site,
+        siteId,
+        region: siteRegion,
+        state: siteState,
+        country: siteCountry,
+      })
+    );
   if (useIncludes.includes("club"))
     include.push(cretaIncludeStatementClub(club, clubId));
   if (useIncludes.includes("team")) include.push(createIncludeStatementTeam());
@@ -521,11 +565,17 @@ function createIncludeStatementUser(gender) {
   }
   return userInclude;
 }
-function createIncludeStatementSite(site, siteId, region) {
+function createIncludeStatementSite({
+  site,
+  siteId,
+  region,
+  state,
+  country,
+} = {}) {
   const siteInclude = {
     model: FlyingSite,
     as: "takeoff",
-    attributes: ["name", "shortName", "id", "region"],
+    attributes: ["name", "shortName", "id"],
   };
   if (site) {
     siteInclude.where = {
@@ -537,9 +587,19 @@ function createIncludeStatementSite(site, siteId, region) {
       id: siteId,
     };
   }
-  if (region) {
+  if (region || state || country) {
+    const locationData = {};
+    if (region) {
+      locationData.region = region;
+    }
+    if (state) {
+      locationData.state = state;
+    }
+    if (country) {
+      locationData.country = country;
+    }
     siteInclude.where = {
-      region,
+      locationData,
     };
   }
   return siteInclude;
