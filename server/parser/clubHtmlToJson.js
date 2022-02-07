@@ -5,10 +5,11 @@ const path = require("path");
 const { sanitizeHtml } = require("../helper/Utils");
 const users = require("../import/usersImport.json");
 const flights = require("../import/flightsImport.json");
+const clubs = require("../test/testdatasets/clubs.json");
 
 const tabletojson = require("tabletojson").Tabletojson;
 
-const tableDir = path.resolve(__dirname, "../oldresults/teams");
+const tableDir = path.resolve(__dirname, "../oldresults/clubs");
 var files = fs.readdirSync(tableDir);
 
 const results = [];
@@ -24,13 +25,13 @@ files.forEach((file) => {
     ignoreColumns: [0, 5, 9],
   })[0];
   stripHtmlOfColumnsExcept(converted, ["F1", "F2", "F3"]);
-  const aggreatedResOfYear = aggregateOverTeam(converted);
+  const aggreatedResOfYear = aggregateOverClub(converted);
 
-  results.push({ season, type: "team", result: aggreatedResOfYear });
+  results.push({ season, type: "club", result: aggreatedResOfYear });
 });
 
 fs.writeFile(
-  "oldTeamRankings.json",
+  "oldClubRankings.json",
   JSON.stringify(results, null, 2),
   "utf8",
   (err) => {
@@ -71,7 +72,7 @@ function extractFlightData(value) {
   }
 }
 
-function aggregateOverTeam(jsonObject) {
+function aggregateOverClub(jsonObject) {
   const result = [];
   jsonObject.forEach((element) => {
     const totalData = extractTotalData(element["∑"]);
@@ -85,15 +86,17 @@ function aggregateOverTeam(jsonObject) {
       id: findUserId(firstName, lastName),
       ...totalData,
     };
-    if (element.Team) {
+    const clubFound = result.find((c) => c.clubName == element.Verein);
+    if (clubFound) {
+      clubFound.members.push(member);
+    } else {
       const totalData = extractTotalData(element["Punkte/Strecke"]);
       result.push({
-        name: element.Team,
+        clubName: element.Verein,
+        clubId: findClubId(element.Verein),
         members: [member],
         ...totalData,
       });
-    } else {
-      result[result.length - 1].members.push(member);
     }
   });
 
@@ -124,5 +127,24 @@ function findUserId(firstName, lastName) {
     return "9d1455cc-8882-5adb-abe6-5811ba7b3fe9";
   if (`${firstName} ${lastName}` == "Klaus Rottland")
     return "1ba9c1e1-2905-5f17-89f6-3412160c7e1b";
+  if (`${firstName} ${lastName}` == "Piotr Josko")
+    return "9ab88e58-157f-5130-b84d-0ed967ab284a";
+  if (`${firstName} ${lastName}` == "Klaus Wilming")
+    return "d51b7cb6-027e-55d8-9069-cbcb0a0e5d79";
+  if (`${firstName} ${lastName}` == "Zdzislaw Stankiewicz")
+    return "2f01cddc-55fb-5fac-8876-81d815edfa1c";
   console.log(`Found no user for ${firstName} ${lastName}`);
+}
+
+function findClubId(clubName) {
+  const found = clubs.find((c) => c.name == clubName);
+  if (found) {
+    return found.id;
+  }
+  if (clubName == "Drachen und Gleitschirmclub Frankfurt-Rhein-Main")
+    return "d1ed2b23-c90f-4d40-bb1f-9d9f44c6fc1c";
+  if (clubName == "Ostwindfreunde")
+    return "5d13f721-faf5-40af-9926-cb799294e982";
+
+  console.log(`Found no club for ${clubName}`);
 }

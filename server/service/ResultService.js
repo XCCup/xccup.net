@@ -89,6 +89,16 @@ const service = {
   },
 
   getClub: async (year, limit) => {
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, "club");
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          { NUMBER_OF_SCORED_FLIGHTS },
+          limit
+        );
+    }
+
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
