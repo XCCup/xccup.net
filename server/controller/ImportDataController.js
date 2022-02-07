@@ -37,12 +37,12 @@ router.get(
         const importErros = await addAllFlightFixes(fileName);
         return res.json(importErros);
       }
-      // const fileContent =
-      //   modelName == "FlightFixes"
-      //     ? findAllFlightFixes(fileName)
-      //     : require("../import/" + fileName + ".json");
+      const fileContent =
+        modelName == "FlightFixes"
+          ? findAllFlightFixes(fileName)
+          : require("../import/" + fileName + ".json");
 
-      const fileContent = require("../import/" + fileName + ".json");
+      // const fileContent = require("../import/" + fileName + ".json");
       const importErros = await addDataset(model, fileContent);
       res.json(importErros);
     } catch (error) {
@@ -97,7 +97,7 @@ async function addDataset(model, dataset) {
       }
     });
     // Let the db take a break ;-)
-    await sleep(1000);
+    // await sleep(1000);
   }
   return errors;
 }
@@ -128,15 +128,15 @@ async function addAllFlightFixes(year) {
   }
   return errors;
 }
-// function findAllFlightFixes(year) {
-//   const fs = require("fs");
-//   const fixesDir = `${global.__basedir}/import/fixes/${year}`;
-//   const fixesFileNames = fs.readdirSync(fixesDir);
-//   console.log("FOUND FIXES: ", fixesFileNames);
-//   const fixesAsOneArray = fixesFileNames.map((file) =>
-//     require(fixesDir + "/" + file)
-//   );
-//   return fixesAsOneArray;
-// }
+function findAllFlightFixes(year) {
+  const fs = require("fs");
+  const fixesDir = `${global.__basedir}/import/fixes/${year}`;
+  const fixesFileNames = fs.readdirSync(fixesDir);
+  console.log("FOUND FIXES: ", fixesFileNames);
+  const fixesAsOneArray = fixesFileNames.map((file) =>
+    require(fixesDir + "/" + file)
+  );
+  return fixesAsOneArray;
+}
 
 module.exports = router;
