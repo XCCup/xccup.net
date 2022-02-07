@@ -65,8 +65,8 @@ function aggregateOverTeam(jsonObject) {
   const result = [];
   jsonObject.forEach((element) => {
     const totalData = extractTotalData(element["∑"]);
-    const firstName = element.Pilot.split(" ")[1];
-    const lastName = element.Pilot.split(" ")[0];
+    const firstName = element.Pilot.split(" ")[1] ?? "";
+    const lastName = element.Pilot.split(" ")[0] ?? "";
     if (!firstName || !lastName) console.log("Error parsing: " + element.Pilot);
     const member = {
       firstName,
