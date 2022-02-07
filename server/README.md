@@ -68,7 +68,7 @@ docker-compose run --rm yarn test test/LocationFinder.test.js
 
 File -> Preferences -> Query Tool -> Results grid -> "Do as you like"
 
-#### Complie the OLC Binary
+#### Compile the OLC Binary
 
 ```
 gcc olc2002.c -o olc_lnx -lm
