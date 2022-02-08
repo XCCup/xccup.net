@@ -3,6 +3,7 @@ const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
 const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
+const Result = require("../config/postgres")["Result"];
 
 const seasonService = require("./SeasonService");
 const teamService = require("./TeamService");
@@ -106,6 +107,11 @@ const service = {
   },
 
   getTeam: async (year, siteRegion, limit) => {
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, "team");
+      if (oldResult) return oldResult;
+    }
+
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const teamsOfSeason = await teamService.getAll({
@@ -296,6 +302,15 @@ const service = {
     return mergeRecordsByTakeoffs(records);
   },
 };
+
+async function findOldResult(season, type) {
+  return await Result.findOne({
+    where: {
+      season,
+      type,
+    },
+  });
+}
 
 function markFlightsToDismiss(team) {
   let allFlights = [];
