@@ -29,14 +29,17 @@
       </li>
       <li>
         Airbuddies: Solltet ihr zusammen mit anderen Piloten geflogen sein könnt
-        ihr dessen Trackklog einblenden. Ihr müsst nichts weiter tun, als euren
+        ihr dessen Tracklog einblenden. Ihr müsst nichts weiter tun, als euren
         Flug hochzuladen und findet dann einen Button “Airbuddies” unter dem
         Barogramm. (Natürlich nur, wenn der andere Pilot auch seinen Flug
-        hochgeladen hat…)
+        hochgeladen hat und eine min. Punktzahl von aktuell 30 Punkten erfolgen
+        hat)
       </li>
       <li>
         Die Tabellen der Wertungen zeigen abhängig von der Gerätegröße
-        unterschiedlich viele Details an.
+        unterschiedlich viele Details an. Dies unterstützt die Lesbarkeit auf
+        kleinen Geräten. Hier Ihr könnt Euer Smartphone, o.ä. auch im Querformat
+        benutzen.
       </li>
 
       <li>
@@ -62,7 +65,8 @@
 
       <li>
         Eine offene API um ggf. Daten für die eigene Vereinswertung leichter
-        auszulesen
+        auszulesen. Gerne kommen wir Euch da entgegen, falls ihr hier besondere
+        Wünsche habt. Nehmt einfach Konktakt mit uns Admins auf.
       </li>
       <li>
         Das komplette Projekt ist "Open Source" - wer möchte, kann sich gerne
