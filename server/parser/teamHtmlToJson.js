@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { sanitizeHtml } = require("../helper/Utils");
 const users = require("../import/usersImport.json");
+const flights = require("../import/flightsImport.json");
 
 const tabletojson = require("tabletojson").Tabletojson;
 
@@ -44,12 +45,21 @@ function stripHtmlOfColumnsExcept(jsonObject, exceptColumnsArray) {
       if (!exceptColumnsArray.includes(key)) {
         element[key] = sanitizeHtml(value).trim();
       } else {
-        const newLocal = extractFlightData(value);
-        flights.push(newLocal);
+        const flight = extractFlightData(value);
+        addGliderToFlightData(flight);
+        flights.push(flight);
       }
     }
     element.flights = flights;
   });
+}
+
+function addGliderToFlightData(flight) {
+  const found = flights.find((f) => f?.externalId == flight?.externalId);
+  if (found) {
+    flight.id = found.id;
+    flight.glider = found.glider;
+  }
 }
 
 function extractFlightData(value) {
