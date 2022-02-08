@@ -109,7 +109,13 @@ const service = {
   getTeam: async (year, siteRegion, limit) => {
     if (year < 2022) {
       const oldResult = await findOldResult(year, "team");
-      if (oldResult) return oldResult;
+      if (oldResult)
+        return addConstantInformationToResult(oldResult, {
+          NUMBER_OF_SCORED_FLIGHTS,
+          TEAM_DISMISSES,
+          TEAM_SIZE,
+          REMARKS: REMARKS_TEAM(TEAM_DISMISSES),
+        });
     }
 
     const seasonDetail = await retrieveSeasonDetails(year);
@@ -304,12 +310,14 @@ const service = {
 };
 
 async function findOldResult(season, type) {
-  return await Result.findOne({
-    where: {
-      season,
-      type,
-    },
-  });
+  return (
+    await Result.findOne({
+      where: {
+        season,
+        type,
+      },
+    })
+  ).result;
 }
 
 function markFlightsToDismiss(team) {
