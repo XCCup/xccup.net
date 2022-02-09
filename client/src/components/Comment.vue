@@ -10,7 +10,9 @@
       <span
         class="ms-auto fw-light"
         :class="userPrefersDark ? 'text-light' : 'text-secondary'"
-        ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
+        ><BaseDate
+          :timestamp="comment.createdAt"
+          date-format="dd.MM.yyyy hh:mm"
       /></span>
     </div>
     <!-- eslint-disable vue/no-v-html -->
