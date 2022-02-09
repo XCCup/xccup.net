@@ -164,15 +164,21 @@ onMounted(() => {
   if (props.showHangar) hangarTab.show();
 });
 
-const avatarUrl = computed(() => createUserPictureUrl(userData.value.id, true));
+const avatarUrl = computed(
+  () =>
+    createUserPictureUrl(userData.value.id, true) +
+    `&?timestamp=${avatarTimestamp.value}`
+);
 
 const onEditAvatar = () => {
   editAvatarModal.value.show();
 };
-
+// This forces the browser to reload the image after it's changed. Even if the URL did not change.
+const avatarTimestamp = ref(Date.now());
 const updateAvatar = () => {
   editAvatarModal.value.hide();
   fetchProfile();
+  avatarTimestamp.value = Date.now();
 };
 </script>
 
