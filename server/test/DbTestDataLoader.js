@@ -70,6 +70,7 @@ const dbTestData = {
       relations.push([FlightFixes, findAllFlightFixes("2021/c")]);
       relations.push([FlightFixes, findAllFlightFixes("2021/d")]);
       relations.push([FlightFixes, findAllFlightFixes("2021/e")]);
+      relations.push([FlightComment, require("../import/commentsImport.json")]);
     }
 
     await addToDb(relations);
