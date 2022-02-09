@@ -120,12 +120,16 @@ const service = {
     if (year < 2022) {
       const oldResult = await findOldResult(year, "team");
       if (oldResult)
-        return addConstantInformationToResult(oldResult, {
-          NUMBER_OF_SCORED_FLIGHTS,
-          TEAM_DISMISSES,
-          TEAM_SIZE,
-          REMARKS: REMARKS_TEAM(TEAM_DISMISSES),
-        });
+        return addConstantInformationToResult(
+          oldResult,
+          {
+            NUMBER_OF_SCORED_FLIGHTS,
+            TEAM_DISMISSES,
+            TEAM_SIZE,
+            REMARKS: REMARKS_TEAM(TEAM_DISMISSES),
+          },
+          limit
+        );
     }
 
     const seasonDetail = await retrieveSeasonDetails(year);
@@ -210,6 +214,19 @@ const service = {
    * @returns The results of the ranking for this country or state of the provided year
    */
   getCountryOrState: async (year, isoCode, limit) => {
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, isoCode);
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          {
+            NUMBER_OF_SCORED_FLIGHTS,
+            REMARKS_STATE,
+          },
+          limit
+        );
+    }
+
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
@@ -320,14 +337,13 @@ const service = {
 };
 
 async function findOldResult(season, type) {
-  return (
-    await Result.findOne({
-      where: {
-        season,
-        type,
-      },
-    })
-  ).result;
+  const result = await Result.findOne({
+    where: {
+      season,
+      type,
+    },
+  });
+  return result ? result.result : undefined;
 }
 
 function markFlightsToDismiss(team) {
