@@ -597,156 +597,16 @@
         "shortDescription": "HG Starr"
       }
     },
-    "stateChampionChips": ["LUX", "RP"]
-  },
-  {
-    "year": 2022,
-    "startDate": "2022-03-01T00:00:00",
-    "endDate": "2022-10-01T00:00:00",
-    "isPaused": false,
-    "pointThresholdForFlight": 60,
-    "numberOfFlightsForShirt": 2,
-    "seniorBonusPerAge": 2,
-    "seniorStartAge": 60,
-    "flightTypeFactors": {
-      "FAI": 1.7273,
-      "FLAT": 1.5455,
-      "FREE": 1
-    },
-    "gliderClasses": {
-      "AB_low": {
-        "scoringMultiplicator": {
-          "BASE": 2.8,
-          "FREE": 1.1,
-          "FLAT": 2.2,
-          "FAI": 2.5
-        },
-        "description": "Schirme EN A+B mit einer Streckung <5,2",
-        "shortDescription": "GS Sport low"
-      },
-      "AB_high": {
-        "scoringMultiplicator": {
-          "BASE": 2.7,
-          "FREE": 1.1,
-          "FLAT": 2.1,
-          "FAI": 2.3
-        },
-        "description": "Schirme EN A+B mit einer Streckung >=5,2",
-        "shortDescription": "GS Sport high"
-      },
-      "C_low": {
-        "scoringMultiplicator": {
-          "BASE": 2.6,
-          "FREE": 1.1,
-          "FLAT": 2.1,
-          "FAI": 2.3
-        },
-        "description": "Schirme EN C mit einer Streckung <6,4",
-        "shortDescription": "GS Intermediate low"
-      },
-      "C_high": {
-        "scoringMultiplicator": {
-          "BASE": 2.5,
-          "FREE": 1.1,
-          "FLAT": 2.1,
-          "FAI": 2.3
-        },
-        "description": "Schirme EN C mit einer Streckung >=6,4",
-        "shortDescription": "GS Intermediate high"
-      },
-      "D_low": {
-        "scoringMultiplicator": {
-          "BASE": 2.4,
-          "FREE": 1.1,
-          "FLAT": 2.1,
-          "FAI": 2.3
-        },
-        "description": "Schirme mit EN-D und einer Streckung von <7,0",
-        "shortDescription": "GS Performance low"
-      },
-      "D_high": {
-        "scoringMultiplicator": {
-          "BASE": 2.2,
-          "FREE": 1.1,
-          "FLAT": 2.0,
-          "FAI": 2.2
-        },
-        "description": "Schirme mit EN-D oder CCC und einer Streckung von 7,0 und mehr",
-        "shortDescription": "GS Performance high"
-      },
-      "Tandem": {
-        "scoringMultiplicator": {
-          "BASE": 3,
-          "FREE": 1.1,
-          "FLAT": 2.25,
-          "FAI": 2.75
-        },
-        "description": "Tandemschirme",
-        "shortDescription": "GS Tandem"
-      },
-      "HG_1_Turm": {
-        "scoringMultiplicator": {
-          "BASE": 2.2,
-          "FREE": 1.1,
-          "FLAT": 1.7,
-          "FAI": 1.9
-        },
-        "description": "Turmdrachen",
-        "shortDescription": "Turmdrachen"
-      },
-      "HG_1_Turmlos": {
-        "scoringMultiplicator": {
-          "BASE": 1.9,
-          "FREE": 1.1,
-          "FLAT": 1.7,
-          "FAI": 1.9
-        },
-        "description": "Drachen turmlos",
-        "shortDescription": "Drachen turmlos"
-      },
-      "HG_5_starr": {
-        "scoringMultiplicator": {
-          "BASE": 1.5,
-          "FREE": 1.1,
-          "FLAT": 1.5,
-          "FAI": 1.8
-        },
-        "description": "Drachen Starre",
-        "shortDescription": "Drachen starr"
+    "stateChampionChips": ["LUX", "RP"],
+    "misc": {
+      "textMessages": {
+        "resultsEarlybird": "Es werden die ersten 20 Flüge einer Saison gewertet. Sortiert nach Startzeit. In der Early Bird Wertung wird nur der erste Flug eines Piloten gewertet",
+        "resultsLatebird": "Es werden die letzten 20 Flüge einer Saison gewertet. Sortiert nach Landezeit. In der Late Bird Wertung wird nur der letzte Flug eines Piloten gewertet",
+        "resultsState": "Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war",
+        "resultsTeams": "Die schlechtesten 3 Ergebnisse eines Teams werden gestrichen",
+        "resultsSeniors": "Die Wertung beginnt ab einem Alter von 60 mit einem Bonus von 2 pro Jahr",
+        "resultsNewcomer": "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben. Es werden nur Flüge mit Geräten bis zur Sportklasse (EN A+EN B) berücksichtigt"
       }
-    },
-    "rankingClasses": {
-      "gsTandem": {
-        "gliderClasses": ["Tandem"],
-        "description": "Gleitschirm Tandem",
-        "shortDescription": "GS Tandem"
-      },
-      "gsSport": {
-        "gliderClasses": ["AB_low", "AB_high"],
-        "description": "Sportklasse (EN A+EN B)",
-        "shortDescription": "GS Sport"
-      },
-      "gsIntermediate": {
-        "gliderClasses": ["C_low", "C_high"],
-        "description": "Intermediate-Klasse (EN C)",
-        "shortDescription": "GS Intermediate"
-      },
-      "gsPerformance": {
-        "gliderClasses": ["D_low", "D_high"],
-        "description": "Performance-Klasse (EN D+CCC)",
-        "shortDescription": "GS Performance"
-      },
-      "hgFlex": {
-        "gliderClasses": ["HG_1_Turm", "HG_1_Turmlos"],
-        "description": "Flexdrachen",
-        "shortDescription": "HG Flex"
-      },
-      "hgFixed": {
-        "gliderClasses": ["HG_5_starr"],
-        "description": "Starrflügler",
-        "shortDescription": "HG Starr"
-      }
-    },
-    "stateChampionChips": ["LUX", "RP"]
+    }
   }
 ]
