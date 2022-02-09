@@ -1,0 +1,4127 @@
+[
+  {
+    "season": "2019",
+    "type": "Newcomer",
+    "result": [
+      {
+        "Pilot": "Sudermann Simon",
+        "flights": [
+          {
+            "flightPoints": "547",
+            "externalId": "63875",
+            "id": "c942c06d-75de-5526-9fa5-f4d3a64ac354",
+            "glider": {
+              "brand": "Flow",
+              "model": "XC Racer ML",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "212",
+            "externalId": "47081",
+            "id": "1c48bdbb-4011-5f65-922f-8b1c51629391",
+            "glider": {
+              "brand": "Flow",
+              "model": "XC Racer ML",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "175",
+            "externalId": "53602",
+            "id": "36ad83eb-daa3-5024-8184-65ccc82bff92",
+            "glider": {
+              "brand": "Flow",
+              "model": "XC Racer ML",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "6a639b31-41ea-54aa-afdb-e1e9d7199caf",
+          "firstName": "Simon",
+          "lastName": "Sudermann"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "246",
+        "totalPoints": "934"
+      },
+      {
+        "Pilot": "Fürst Hansi",
+        "flights": [
+          {
+            "flightPoints": "328",
+            "externalId": "67775",
+            "id": "bac7f241-0ce2-5391-b0bb-5d7a860bd979",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Cumeo S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "279",
+            "externalId": "67804",
+            "id": "74b08ad8-6d91-509e-961f-c4cd4be9abd9",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Cumeo S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "275",
+            "externalId": "67537",
+            "id": "19106b12-149b-5feb-ae2e-60687b0b7d1b",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Cumeo S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "715f660f-a061-5ddd-91fa-ed7d55b07759",
+          "firstName": "Hansi",
+          "lastName": "Fürst"
+        },
+        "club": {
+          "name": "Bergsträßler Drachen und Gleitschirmflieger",
+          "id": "13726a2e-068e-4291-8e35-d3bf77ad1e67"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "297",
+        "totalPoints": "882"
+      },
+      {
+        "Pilot": "Roth-Profenius Clemens",
+        "flights": [
+          {
+            "flightPoints": "277",
+            "externalId": "62795",
+            "id": "c99e55fa-c660-5728-9955-0823d87e6cca",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "GS",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "244",
+            "externalId": "67719",
+            "id": "b8cf268d-b9b7-5e9d-bd47-25fe50e7a94e",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Cayenne 5",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "228",
+            "externalId": "53608",
+            "id": "6cdae954-90cd-52ab-bbda-f92946adbc4f",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "GS",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "921a4e25-aabe-5a4e-8c50-b4d218953409",
+          "firstName": "Clemens",
+          "lastName": "Roth-Profenius"
+        },
+        "club": {
+          "name": "DGLC Frankfurt-Rhein-Main",
+          "id": "d1ed2b23-c90f-4d40-bb1f-9d9f44c6fc1c"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "224",
+        "totalPoints": "749"
+      },
+      {
+        "Pilot": "Börner Markus",
+        "flights": [
+          {
+            "flightPoints": "243",
+            "externalId": "67732",
+            "id": "8c383907-b8b8-52ad-9415-9f28e202babd",
+            "glider": {
+              "brand": "Advance",
+              "model": "IOTA 2 - 27",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "201",
+            "externalId": "67725",
+            "id": "65f90655-d5fd-5d13-ad6d-b7067543e5c3",
+            "glider": {
+              "brand": "Advance",
+              "model": "IOTA 2 - 27",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "191",
+            "externalId": "67868",
+            "id": "8cad3344-fce1-50c2-92d2-7906a3e1e766",
+            "glider": {
+              "brand": "Advance",
+              "model": "IOTA 2 - 27",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "1b44a7b8-8cf2-5351-a69d-c67c482e9d0d",
+          "firstName": "Markus",
+          "lastName": "Börner"
+        },
+        "club": {
+          "name": "Asslarer Gleitschirmflieger",
+          "id": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "171",
+        "totalPoints": "635"
+      },
+      {
+        "Pilot": "Pfeiffer Andreas",
+        "flights": [
+          {
+            "flightPoints": "319",
+            "externalId": "63862",
+            "id": "88b8a19a-0c1f-547f-8761-f1b25e6d3b4d",
+            "glider": {
+              "brand": "Ozone",
+              "model": "LM6",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "170",
+            "externalId": "62762",
+            "id": "4c262d4a-a05e-54cf-a91c-c58bace40bb6",
+            "glider": {
+              "brand": "Ozone",
+              "model": "LM6",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "114",
+            "externalId": "62764",
+            "id": "32479673-6bad-5992-8417-a3d85111b2c5",
+            "glider": {
+              "brand": "Ozone",
+              "model": "LM6",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "e1606f62-9bcb-527e-8815-1d2ea8ff434d",
+          "firstName": "Andreas",
+          "lastName": "Pfeiffer"
+        },
+        "club": {
+          "name": "Südpfälzer GFC",
+          "id": "91af8d69-b162-4d60-8c47-77b3f05e8c20"
+        },
+        "team": {
+          "name": "die mit de Dudd fliechen",
+          "id": "E69FAF09-44B6-4B6F-A1C3-FF3BDD277F95"
+        },
+        "totalDistance": "143",
+        "totalPoints": "603"
+      },
+      {
+        "Pilot": "Bornschier Simon",
+        "flights": [
+          {
+            "flightPoints": "186",
+            "externalId": "60670",
+            "id": "843ec9bb-02cb-5e21-85d5-c09ba89fea97",
+            "glider": {
+              "brand": "Nova",
+              "model": "Ion 4",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "183",
+            "externalId": "67586",
+            "id": "58585c2e-c647-5f50-afdf-cf27f486f5f7",
+            "glider": {
+              "brand": "Nova",
+              "model": "Ion 4",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "146",
+            "externalId": "67448",
+            "id": "b2e68e3f-218b-529c-95bc-58a3bbd0a2f2",
+            "glider": {
+              "brand": "Nova",
+              "model": "Ion 4",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "c4ede8d6-2608-5873-9ce8-aa435e6571e5",
+          "firstName": "Simon",
+          "lastName": "Bornschier"
+        },
+        "club": {
+          "name": "PC Werratal-Eschwege-Eichsfeld e.V.",
+          "id": "6ce9a6c0-6056-4930-bdae-c17018626228"
+        },
+        "team": {
+          "name": "Streckenschnüffler",
+          "id": "9F67902F-2142-440F-A141-9F2B8B5D3104"
+        },
+        "totalDistance": "167",
+        "totalPoints": "515"
+      },
+      {
+        "Pilot": "Oppelt Herbert",
+        "flights": [
+          {
+            "flightPoints": "185",
+            "externalId": "67506",
+            "id": "555173fd-61e9-5275-89ef-a036df3b657c",
+            "glider": {
+              "brand": "Advance",
+              "model": "Sigma 10",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "164",
+            "externalId": "63849",
+            "id": "59f9eb6d-69ff-5119-bca3-25c91889d27c",
+            "glider": {
+              "brand": "Advance",
+              "model": "Sigma 10",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "164",
+            "externalId": "67456",
+            "id": "c40c6953-2459-531d-a598-a105b3463af9",
+            "glider": {
+              "brand": "Advance",
+              "model": "Sigma 10",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "2ef5d9d8-5814-5315-93cb-600679dd69b9",
+          "firstName": "Herbert",
+          "lastName": "Oppelt"
+        },
+        "club": {
+          "name": "Asslarer Gleitschirmflieger",
+          "id": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa"
+        },
+        "team": {
+          "name": "Die die sonst keiner will",
+          "id": "8F02C251-6F70-4FBE-BA1A-AEFACAE880EC"
+        },
+        "totalDistance": "187",
+        "totalPoints": "513"
+      },
+      {
+        "Pilot": "Samir Samir",
+        "flights": [
+          {
+            "flightPoints": "286",
+            "externalId": "67173",
+            "id": "65b7fe5f-476d-594a-8250-9674ac2a5b46",
+            "glider": {
+              "brand": "Nova",
+              "model": "Mentor 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "112",
+            "externalId": "67204",
+            "id": "038ac375-4682-5fd0-8430-3b0271bbbe24",
+            "glider": {
+              "brand": "Nova",
+              "model": "Mentor 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "95",
+            "externalId": "67979",
+            "id": "b82a1f24-dea2-5ad8-850d-d024be1d923f",
+            "glider": {
+              "brand": "Nova",
+              "model": "Mentor 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "437aeb1c-5199-5e8c-94b5-622a5994a59f",
+          "firstName": "Samir",
+          "lastName": "Samir"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "Rhöner Himmelhunde",
+          "id": "247CE43E-9BB5-4E02-AE49-76F4B08E6654"
+        },
+        "totalDistance": "166",
+        "totalPoints": "493"
+      },
+      {
+        "Pilot": "Citoler Pedro",
+        "flights": [
+          {
+            "flightPoints": "191",
+            "externalId": "67769",
+            "id": "c0d9ac6f-26aa-524c-bb28-9310c014073e",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Enzo3",
+              "gliderClass": {
+                "key": "D_high",
+                "shortDescription": "GS Competition high"
+              }
+            }
+          },
+          {
+            "flightPoints": "156",
+            "externalId": "47475",
+            "id": "80e151c6-c7f6-5353-98ba-3aab8ac55fe3",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Enzo3",
+              "gliderClass": {
+                "key": "D_high",
+                "shortDescription": "GS Competition high"
+              }
+            }
+          },
+          {
+            "flightPoints": "110",
+            "externalId": "47152",
+            "id": "c6bc9b22-23be-54a0-ac0c-6b7eb1da6323",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Mantra 6 ",
+              "gliderClass": {
+                "key": "D_high",
+                "shortDescription": "GS Competition high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "05c2abeb-78b5-5fc9-9bbe-6085eccd975b",
+          "firstName": "Pedro",
+          "lastName": "Citoler"
+        },
+        "club": {
+          "name": "Ostwindfreunde e.V.",
+          "id": "5d13f721-faf5-40af-9926-cb799294e982"
+        },
+        "team": {
+          "name": "Die sympathischen Speeditöre",
+          "id": "4E34B4F2-B449-4162-9B8A-5C132A27DF64"
+        },
+        "totalDistance": "189",
+        "totalPoints": "457"
+      },
+      {
+        "Pilot": "Marhöfer-Moskopp Beate",
+        "flights": [
+          {
+            "flightPoints": "224",
+            "externalId": "67707",
+            "id": "5775f04f-d7bf-52be-a976-8012d0755500",
+            "glider": {
+              "brand": "BGD",
+              "model": "Base",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "107",
+            "externalId": "67025",
+            "id": "2ce5c11c-4d55-575b-a0c5-587cb626868c",
+            "glider": {
+              "brand": "BGD",
+              "model": "Base",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "88",
+            "externalId": "63870",
+            "id": "09041502-c4ef-588a-b8b0-19b327a3c732",
+            "glider": {
+              "brand": "BGD",
+              "model": "Base",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "62c532b6-4363-58c4-81d5-4ccd4c48b808",
+          "firstName": "Beate",
+          "lastName": "Marhöfer-Moskopp"
+        },
+        "club": {
+          "name": "Südpfälzer GFC",
+          "id": "91af8d69-b162-4d60-8c47-77b3f05e8c20"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "85",
+        "totalPoints": "419"
+      },
+      {
+        "Pilot": "Berberich Claus",
+        "flights": [
+          {
+            "flightPoints": "260",
+            "externalId": "64932",
+            "id": "a64e664a-ac3c-58fb-9804-1ded64ac6abc",
+            "glider": {
+              "brand": "Skywalk",
+              "model": " Spice",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          {
+            "flightPoints": "145",
+            "externalId": "67228",
+            "id": "2d24de94-ea1f-5544-a472-e56672da6123",
+            "glider": {
+              "brand": "Skywalk",
+              "model": " Spice",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "b97a13dc-08d9-5d54-a6c4-6ff1dc51fa70",
+          "firstName": "Claus",
+          "lastName": "Berberich"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "99",
+        "totalPoints": "405"
+      },
+      {
+        "Pilot": "Nelis Dominique",
+        "flights": [
+          {
+            "flightPoints": "162",
+            "externalId": "64913",
+            "id": "367927f3-e376-5fb3-9ab2-1ef79fba7004",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Zeno",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "127",
+            "externalId": "67700",
+            "id": "b199c416-f35c-5749-ac3c-1f30f483a37b",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Zeno",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "91",
+            "externalId": "67872",
+            "id": "1c7e923c-6dfb-55be-b9f8-e0ca2f363598",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Zeno",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "25d56dcb-5d64-53a9-9253-49cfa10c8b09",
+          "firstName": "Dominique",
+          "lastName": "Nelis"
+        },
+        "club": {
+          "name": "Cumulux Paragliding Club",
+          "id": "bd4eca98-d746-4b13-8c9f-14d466336cb3"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "144",
+        "totalPoints": "380"
+      },
+      {
+        "Pilot": "Fuchs Martin",
+        "flights": [
+          {
+            "flightPoints": "147",
+            "externalId": "67838",
+            "id": "f6d0c734-cb10-5ab1-b97d-6248930e2784",
+            "glider": {
+              "brand": "Bautek",
+              "model": "Kite",
+              "gliderClass": {
+                "key": "HG_1_Turm",
+                "shortDescription": "Turmdrachen"
+              }
+            }
+          },
+          {
+            "flightPoints": "135",
+            "externalId": "67720",
+            "id": "882085d7-0e1b-5c90-b280-65d6f2f04c34",
+            "glider": {
+              "brand": "Bautek",
+              "model": "Kite",
+              "gliderClass": {
+                "key": "HG_1_Turm",
+                "shortDescription": "Turmdrachen"
+              }
+            }
+          },
+          {
+            "flightPoints": "95",
+            "externalId": "64916",
+            "id": "b6c64bd9-570c-58bc-8903-0ea4f8b1f36e",
+            "glider": {
+              "brand": "Bautek",
+              "model": "Kite",
+              "gliderClass": {
+                "key": "HG_1_Turm",
+                "shortDescription": "Turmdrachen"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "fd090d37-74d0-563a-b248-9ecc000f2022",
+          "firstName": "Martin",
+          "lastName": "Fuchs"
+        },
+        "club": {
+          "name": "DFC Vulkaneifel",
+          "id": "90675c2e-3369-4d3f-afc4-d58e9cf69bf9"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "122",
+        "totalPoints": "377"
+      },
+      {
+        "Pilot": "Engert Heiko",
+        "flights": [
+          {
+            "flightPoints": "170",
+            "externalId": "68026",
+            "id": "ce244830-1893-5f7d-9767-f6d4890fb708",
+            "glider": {
+              "brand": "U-Turn",
+              "model": "Gleitschirm  Eternity",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "123",
+            "externalId": "68021",
+            "id": "b94d328a-ae19-5dd5-bf5e-17275ac4dfc4",
+            "glider": {
+              "brand": "U-Turn",
+              "model": "Gleitschirm  Eternity",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "66",
+            "externalId": "68034",
+            "id": "054d336c-ea8b-5101-93bf-78036d7d4962",
+            "glider": {
+              "brand": "U-Turn",
+              "model": "Gleitschirm  Eternity",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "75d4230d-7ae2-5b5e-9882-7d35674449fe",
+          "firstName": "Heiko",
+          "lastName": "Engert"
+        },
+        "club": {
+          "name": "Bergsträßler Drachen und Gleitschirmflieger",
+          "id": "13726a2e-068e-4291-8e35-d3bf77ad1e67"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "85",
+        "totalPoints": "359"
+      },
+      {
+        "Pilot": "Liemke Eckart",
+        "flights": [
+          {
+            "flightPoints": "151",
+            "externalId": "67056",
+            "id": "89915ce6-a192-5045-b1e7-e2dd07b797cc",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Swift",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "142",
+            "externalId": "67214",
+            "id": "c4ba36c0-bb53-5d2a-be22-9c4ffe193e1d",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Swift",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "65",
+            "externalId": "63890",
+            "id": "c12bf6e1-544e-53fa-b70a-00ea36c02a05",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Swift",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "84873e4d-1e44-50ed-8848-8cddca6a91b0",
+          "firstName": "Eckart",
+          "lastName": "Liemke"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "109",
+        "totalPoints": "358"
+      },
+      {
+        "Pilot": "Reuschenbach Markus",
+        "flights": [
+          {
+            "flightPoints": "135",
+            "externalId": "67249",
+            "id": "b7201ed9-0731-56a6-807a-7c82a7c9f663",
+            "glider": {
+              "brand": "PHI",
+              "model": "Maestro",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "103",
+            "externalId": "67250",
+            "id": "e95f758b-c380-5dd2-9400-66c8892b9e6f",
+            "glider": {
+              "brand": "PHI",
+              "model": "Maestro",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "84",
+            "externalId": "67253",
+            "id": "8976c7bc-e99f-5dfd-bea1-9f30e0663b57",
+            "glider": {
+              "brand": "PHI",
+              "model": "Maestro",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "8eb4b6ae-1c90-5b4a-be69-52e5bf38228b",
+          "firstName": "Markus",
+          "lastName": "Reuschenbach"
+        },
+        "club": {
+          "name": "D.G.F. Rhein-Mosel-Lahn",
+          "id": "c2026874-9cf0-4793-ad9a-66e22aea86af"
+        },
+        "team": {
+          "name": "Cloudsurfer",
+          "id": "0CAA8F0F-4FE7-47AE-9754-828B103FDEC9"
+        },
+        "totalDistance": "109",
+        "totalPoints": "322"
+      },
+      {
+        "Pilot": "Scholz Stefan",
+        "flights": [
+          {
+            "flightPoints": "106",
+            "externalId": "67507",
+            "id": "bf716c44-bcc0-58cf-ac72-045dd50e9eab",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Chili 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "106",
+            "externalId": "67532",
+            "id": "c74c1ad2-5e68-58cb-8b01-45fe6d290c41",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Chili 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "83",
+            "externalId": "67044",
+            "id": "50ebb561-4de7-51d9-b2f1-e2e49bfa573c",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Chili 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "e9885a40-4ee7-5a38-b12f-b3a0b077df39",
+          "firstName": "Stefan",
+          "lastName": "Scholz"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "RDG Einsteiger",
+          "id": "6B8F35C5-BFB8-4BA7-A030-06EF884F514B"
+        },
+        "totalDistance": "51",
+        "totalPoints": "295"
+      },
+      {
+        "Pilot": "Wölfle Matthias",
+        "flights": [
+          {
+            "flightPoints": "125",
+            "externalId": "67697",
+            "id": "c82f6977-7b07-5e37-9654-2ce958e39c0a",
+            "glider": {
+              "brand": "Advance",
+              "model": "XI",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "75",
+            "externalId": "62722",
+            "id": "0e884dcb-2203-5de7-9c83-767d7519f956",
+            "glider": {
+              "brand": "Advance",
+              "model": "XI",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "74",
+            "externalId": "62788",
+            "id": "0b9bd647-1a15-5efa-a1b7-8005104c01e8",
+            "glider": {
+              "brand": "Advance",
+              "model": "XI",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "06f933eb-578e-5588-b98c-6b6a4c56c68e",
+          "firstName": "Matthias",
+          "lastName": "Wölfle"
+        },
+        "club": {
+          "name": "Südpfälzer GFC",
+          "id": "91af8d69-b162-4d60-8c47-77b3f05e8c20"
+        },
+        "team": {
+          "name": "die mit de Dudd fliechen",
+          "id": "E69FAF09-44B6-4B6F-A1C3-FF3BDD277F95"
+        },
+        "totalDistance": "66",
+        "totalPoints": "274"
+      },
+      {
+        "Pilot": "Kierspel Ralf",
+        "flights": [
+          {
+            "flightPoints": "266",
+            "externalId": "66964",
+            "id": "38167765-4a35-521d-8f25-86c5720e7ca5",
+            "glider": {
+              "brand": "Gin",
+              "model": "Carrera",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "01f1b6f8-f6b7-500a-acbf-9cdcab5f42bc",
+          "firstName": "Ralf",
+          "lastName": "Kierspel"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "90",
+        "totalPoints": "266"
+      },
+      {
+        "Pilot": "Dittel Agnes",
+        "flights": [
+          {
+            "flightPoints": "103",
+            "externalId": "64894",
+            "id": "b7386f1f-d774-5b14-85d6-e027df9737ac",
+            "glider": {
+              "brand": "BGD",
+              "model": "Punk",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "74",
+            "externalId": "63844",
+            "id": "e59abbc7-6f27-5535-85b1-24b09229cbcf",
+            "glider": {
+              "brand": "BGD",
+              "model": "Punk",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "73",
+            "externalId": "67607",
+            "id": "299e6699-0244-5c61-b008-fd972c594d67",
+            "glider": {
+              "brand": "BGD",
+              "model": "Punk",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "99de21b9-cf2c-5cfb-bff6-48545ad3ad23",
+          "firstName": "Agnes",
+          "lastName": "Dittel"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "60",
+        "totalPoints": "250"
+      },
+      {
+        "Pilot": "Helbing Arndt",
+        "flights": [
+          {
+            "flightPoints": "153",
+            "externalId": "66946",
+            "id": "800180ec-189e-5d29-ad86-7a542e8418a0",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Chili 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "88",
+            "externalId": "66948",
+            "id": "92ff2241-b953-5cd1-8da5-01f9ed49a5b4",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Chili 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "ef6120df-55ac-54b1-b262-97337a090160",
+          "firstName": "Arndt",
+          "lastName": "Helbing"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": "Stachelhardtspatzen",
+          "id": "F8C575A7-A245-421E-AC88-E63F717FB902"
+        },
+        "totalDistance": "81",
+        "totalPoints": "241"
+      },
+      {
+        "Pilot": "Baumhöfner Axel",
+        "flights": [
+          {
+            "flightPoints": "202",
+            "externalId": "67548",
+            "id": "17371098-11f5-5597-a6b5-ce0af10bf5fa",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Rush 5",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "da6a7bf6-8ad4-555c-9d3d-4ca75cc1fa29",
+          "firstName": "Axel",
+          "lastName": "Baumhöfner"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "TEAM PHÖNIX",
+          "id": "088DCF5C-5F17-40F3-BD4B-0DCF21B724DF"
+        },
+        "totalDistance": "68",
+        "totalPoints": "202"
+      },
+      {
+        "Pilot": "Spurfeld Frank",
+        "flights": [
+          {
+            "flightPoints": "197",
+            "externalId": "67479",
+            "id": "f630e643-2fb3-5270-a655-9e3fef1010b0",
+            "glider": {
+              "brand": "Triple Seven",
+              "model": "Queen 2",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "1718e03f-580e-5bb6-8cbb-abebe8103777",
+          "firstName": "Frank",
+          "lastName": "Spurfeld"
+        },
+        "club": {
+          "name": "Gleitschirmverein Nahe Glan",
+          "id": "32d2ee23-27f9-444a-9fc1-44210e51cbe1"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "69",
+        "totalPoints": "197"
+      },
+      {
+        "Pilot": "Kleiner Ralph",
+        "flights": [
+          {
+            "flightPoints": "62",
+            "externalId": "67999",
+            "id": "84a6e7d5-413f-554c-a2ff-283ba440bba1",
+            "glider": {
+              "brand": "AirDesign",
+              "model": "Volt 1",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          {
+            "flightPoints": "62",
+            "externalId": "47258",
+            "id": "f53ff4b8-76ea-5c14-8cc3-254d9519fedf",
+            "glider": {
+              "brand": "AirDesign",
+              "model": "Volt 1",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          {
+            "flightPoints": "60",
+            "externalId": "67996",
+            "id": "05f2307f-6c6e-5a77-aa43-e55d6238b4b3",
+            "glider": {
+              "brand": "AirDesign",
+              "model": "Volt 1",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "aacb76bb-6f16-5cc8-a4c2-af35d20e781f",
+          "firstName": "Ralph",
+          "lastName": "Kleiner"
+        },
+        "club": {
+          "name": "D.G.F. Rhein-Mosel-Lahn",
+          "id": "c2026874-9cf0-4793-ad9a-66e22aea86af"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "31",
+        "totalPoints": "184"
+      },
+      {
+        "Pilot": "Zimmer Daniel",
+        "flights": [
+          {
+            "flightPoints": "86",
+            "externalId": "67114",
+            "id": "c1de4ac5-9878-5641-8023-67c3c7e645fa",
+            "glider": {
+              "brand": "Advance",
+              "model": "Epsilon 7",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "85",
+            "externalId": "47285",
+            "id": "45a44786-a22b-573e-98ef-6d9b80d84d5e",
+            "glider": {
+              "brand": "Advance",
+              "model": "Epsilon 7",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "724c1372-111f-5eef-a453-f3b59516a0c7",
+          "firstName": "Daniel",
+          "lastName": "Zimmer"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "26",
+        "totalPoints": "171"
+      },
+      {
+        "Pilot": "Andras Vizler",
+        "flights": [
+          {
+            "flightPoints": "107",
+            "externalId": "67113",
+            "id": "61beebee-866b-5087-808b-8744ef583f5e",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Buzz Z5",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "64",
+            "externalId": "56645",
+            "id": "e08c1869-a4a1-5d1f-83f9-842f9576eed9",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Buzz Z5",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "67c94e46-0a2e-5482-9279-328a9ee2a776",
+          "firstName": "Vizler",
+          "lastName": "Andras"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "24",
+        "totalPoints": "171"
+      },
+      {
+        "Pilot": "Moch Andreas",
+        "flights": [
+          {
+            "flightPoints": "84",
+            "externalId": "67902",
+            "id": "711d2060-a7fc-52fe-94fb-a01e96c5cd3a",
+            "glider": {
+              "brand": "Swing",
+              "model": " Nyos RS",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "82",
+            "externalId": "67701",
+            "id": "a711e7dc-2474-5766-864d-f487c4f512fc",
+            "glider": {
+              "brand": "Swing",
+              "model": " Nyos RS",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "461d283e-e324-5f76-83f6-15e940a6b2d4",
+          "firstName": "Andreas",
+          "lastName": "Moch"
+        },
+        "club": {
+          "name": "Asslarer Gleitschirmflieger",
+          "id": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "42",
+        "totalPoints": "166"
+      },
+      {
+        "Pilot": "Kongs Claude",
+        "flights": [
+          {
+            "flightPoints": "91",
+            "externalId": "67376",
+            "id": "903c4b0a-31dd-53a9-839a-83d0e0c775c9",
+            "glider": {
+              "brand": "PHI",
+              "model": "Maestro",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "68",
+            "externalId": "67579",
+            "id": "b09ca05f-f3bf-59ed-b4d2-b193badf47ba",
+            "glider": {
+              "brand": "PHI",
+              "model": "Maestro",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "1cd65067-ae7a-5bb3-b48f-bf641f64a428",
+          "firstName": "Claude",
+          "lastName": "Kongs"
+        },
+        "club": {
+          "name": "Cumulux Paragliding Club",
+          "id": "bd4eca98-d746-4b13-8c9f-14d466336cb3"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "54",
+        "totalPoints": "159"
+      },
+      {
+        "Pilot": "van der Poel Rob",
+        "flights": [
+          {
+            "flightPoints": "158",
+            "externalId": "67704",
+            "id": "d5322f11-0445-5483-99e3-d64e04eb0b6e",
+            "glider": {
+              "brand": "Advance",
+              "model": "Sigma 9",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "a614ff5b-7e2f-5c9f-8fb2-96cfd1ba517a",
+          "firstName": "Rob",
+          "lastName": "van der Poel"
+        },
+        "club": {
+          "name": "Cumulux Paragliding Club",
+          "id": "bd4eca98-d746-4b13-8c9f-14d466336cb3"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "55",
+        "totalPoints": "158"
+      },
+      {
+        "Pilot": "Schädel Pascal",
+        "flights": [
+          {
+            "flightPoints": "150",
+            "externalId": "67773",
+            "id": "b58354be-298c-5558-8e6d-30399651461e",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Alpina 2 s",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "3fad6d77-620c-5df4-9aed-e2ab64f08808",
+          "firstName": "Pascal",
+          "lastName": "Schädel"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "Rhönadler",
+          "id": "56EB7231-A277-4274-A086-2A15B40F8911"
+        },
+        "totalDistance": "52",
+        "totalPoints": "150"
+      },
+      {
+        "Pilot": "Daus Christian",
+        "flights": [
+          {
+            "flightPoints": "87",
+            "externalId": "67649",
+            "id": "e052a292-4571-55f6-97a3-a11b2c2d3836",
+            "glider": {
+              "brand": "Advance",
+              "model": "Iota 2",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "60",
+            "externalId": "67001",
+            "id": "09f999be-c532-581f-86c3-b1ec4fd0c821",
+            "glider": {
+              "brand": "Advance",
+              "model": "Epsilon 8",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "279940ce-255f-57c2-9e2b-e6d7c4c90132",
+          "firstName": "Christian",
+          "lastName": "Daus"
+        },
+        "club": {
+          "name": "Asslarer Gleitschirmflieger",
+          "id": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa"
+        },
+        "team": {
+          "name": "Die die sonst keiner will",
+          "id": "8F02C251-6F70-4FBE-BA1A-AEFACAE880EC"
+        },
+        "totalDistance": "48",
+        "totalPoints": "147"
+      },
+      {
+        "Pilot": "Kochem Michael",
+        "flights": [
+          {
+            "flightPoints": "120",
+            "externalId": "67062",
+            "id": "5f022f0c-2675-50d0-b034-610f370d24d7",
+            "glider": {
+              "brand": "Nova",
+              "model": "Ion 4 M",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "a1154446-cb84-5a48-b4a3-86f696ecdf9b",
+          "firstName": "Michael",
+          "lastName": "Kochem"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "Rhönadler",
+          "id": "56EB7231-A277-4274-A086-2A15B40F8911"
+        },
+        "totalDistance": "20",
+        "totalPoints": "120"
+      },
+      {
+        "Pilot": "Sobisch Michael",
+        "flights": [
+          {
+            "flightPoints": "81",
+            "externalId": "67085",
+            "id": "2ea845fa-0621-590d-a8b3-971ee4080e3b",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Chili 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "d1ec104f-549a-5fc9-8e3f-c6cddc900928",
+          "firstName": "Michael",
+          "lastName": "Sobisch"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": "Stachelhardtspatzen",
+          "id": "F8C575A7-A245-421E-AC88-E63F717FB902"
+        },
+        "totalDistance": "27",
+        "totalPoints": "81"
+      },
+      {
+        "Pilot": "Ludwig Joachim",
+        "flights": [
+          {
+            "flightPoints": "78",
+            "externalId": "47462",
+            "id": "3f37c1be-2dbb-5199-a6bc-bdc66c91d337",
+            "glider": {
+              "brand": "Mac Para",
+              "model": "Eden6",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "d6b3961c-ad3d-50f1-a490-035e4084edea",
+          "firstName": "Joachim",
+          "lastName": "Ludwig"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": "Dream Team",
+          "id": "38A01359-4AF1-4567-B7BD-2C552419AFA4"
+        },
+        "totalDistance": "26",
+        "totalPoints": "78"
+      },
+      {
+        "Pilot": "Wagner Ralf",
+        "flights": [
+          {
+            "flightPoints": "73",
+            "externalId": "67485",
+            "id": "defe2bf2-d7fd-53ba-9cf2-52c67babd37f",
+            "glider": {
+              "brand": "BGD",
+              "model": "Echo M",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "2a95dc2b-48b1-5b66-bbe7-e906d2d75383",
+          "firstName": "Ralf",
+          "lastName": "Wagner"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "RDG Einsteiger",
+          "id": "6B8F35C5-BFB8-4BA7-A030-06EF884F514B"
+        },
+        "totalDistance": "12",
+        "totalPoints": "73"
+      },
+      {
+        "Pilot": "Rossrucker Andreas",
+        "flights": [
+          {
+            "flightPoints": "65",
+            "externalId": "47384",
+            "id": "e28aed59-0438-5815-8da8-c4ec626419bb",
+            "glider": {
+              "brand": "Gin",
+              "model": "Carrera plus",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "bd6b0077-edc2-559f-b379-85dc6bee0ad8",
+          "firstName": "Andreas",
+          "lastName": "Rossrucker"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": "Stachelhardtspatzen",
+          "id": "F8C575A7-A245-421E-AC88-E63F717FB902"
+        },
+        "totalDistance": "11",
+        "totalPoints": "65"
+      },
+      {
+        "Pilot": "van Loo Martijn",
+        "flights": [
+          {
+            "flightPoints": "62",
+            "externalId": "47072",
+            "id": "9ffdeca5-dc92-5928-8876-8cd8c2499882",
+            "glider": {
+              "brand": "Ozone",
+              "model": "GEO5",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "4de58cee-09b3-5e1c-94d5-11618775a46f",
+          "firstName": "Martijn",
+          "lastName": "van Loo"
+        },
+        "club": {
+          "name": "D.G.F. Rhein-Mosel-Lahn",
+          "id": "c2026874-9cf0-4793-ad9a-66e22aea86af"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "9",
+        "totalPoints": "62"
+      },
+      {
+        "Pilot": "Große Matthias",
+        "flights": [
+          {
+            "flightPoints": "61",
+            "externalId": "66989",
+            "id": "3071da9b-c037-527a-8048-b02061df596a",
+            "glider": {
+              "brand": "Swing",
+              "model": " Nyos RS",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "0ca2dae0-48bc-5b79-b5fb-d81d483a8252",
+          "firstName": "Matthias",
+          "lastName": "Große"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "21",
+        "totalPoints": "61"
+      }
+    ]
+  },
+  {
+    "season": "2020",
+    "type": "Newcomer",
+    "result": [
+      {
+        "Pilot": "Trapp Eric",
+        "flights": [
+          {
+            "flightPoints": "768",
+            "externalId": "68981",
+            "id": "e4bec76f-7b58-5f46-bacb-dedce80d25c1",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Zeno ML",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "692",
+            "externalId": "69353",
+            "id": "6aa7a392-a0f8-5820-aba6-475614cd969c",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Cayenne 6 ",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "657",
+            "externalId": "69049",
+            "id": "fe772446-3af7-5149-aa58-8407f82c67ad",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Zeno ML",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "5948e074-64c2-5bdd-920d-cdb8aeab275d",
+          "firstName": "Eric",
+          "lastName": "Trapp"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": "Skyhawks",
+          "id": "01DA5B64-9C44-4759-8D9C-B8C26C149924"
+        },
+        "totalDistance": "378",
+        "totalPoints": "2117"
+      },
+      {
+        "Pilot": "Schulte-Pieper Thomas",
+        "flights": [
+          {
+            "flightPoints": "666",
+            "externalId": "69416",
+            "id": "a189dca4-73f7-5717-86cb-367d927c765d",
+            "glider": {
+              "brand": "BGD",
+              "model": " Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "405",
+            "externalId": "68614",
+            "id": "8a935979-e571-5079-8e2f-9672211f0386",
+            "glider": {
+              "brand": "BGD",
+              "model": " Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "392",
+            "externalId": "69007",
+            "id": "e3ea325a-872b-5648-b44f-f93618110ec2",
+            "glider": {
+              "brand": "BGD",
+              "model": " Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "206ac021-f06c-5825-934a-2d5e104f91cf",
+          "firstName": "Thomas",
+          "lastName": "Schulte-Pieper"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "FOBs on fire",
+          "id": "F884E6D4-11E3-4775-B96A-6B914163D578"
+        },
+        "totalDistance": "268",
+        "totalPoints": "1463"
+      },
+      {
+        "Pilot": "Kohlrausch Anja",
+        "flights": [
+          {
+            "flightPoints": "700",
+            "externalId": "69023",
+            "id": "f135088c-cb56-58c3-8fc0-ede3db278149",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Rush 5",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "377",
+            "externalId": "69548",
+            "id": "3dde5bc7-dcb3-52ea-ad3e-772f4d359d06",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Rush 5",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "279",
+            "externalId": "69116",
+            "id": "d4950ef6-c8a0-5d93-932a-af8214fe2d5e",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Rush 5",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "c522fe48-4755-565e-b5c6-d0647b8441cf",
+          "firstName": "Anja",
+          "lastName": "Kohlrausch"
+        },
+        "club": {
+          "name": "GSC Neckar-Odenwald",
+          "id": "165b1b87-8b03-43a6-b32c-8e147c9218db"
+        },
+        "team": {
+          "name": "auch namenlos grandios",
+          "id": "C8C947AC-F6F8-437C-8FC5-B2117332903B"
+        },
+        "totalDistance": "223",
+        "totalPoints": "1356"
+      },
+      {
+        "Pilot": "Modrock Harrie",
+        "flights": [
+          {
+            "flightPoints": "384",
+            "externalId": "69041",
+            "id": "0536a547-69b7-5374-b623-974889f545d0",
+            "glider": {
+              "brand": "Flow",
+              "model": "Xc Racer",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "377",
+            "externalId": "69386",
+            "id": "6405a6e0-f08b-5a01-9dbb-9a6d16fb5458",
+            "glider": {
+              "brand": "Flow",
+              "model": "Xc Racer",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "256",
+            "externalId": "69485",
+            "id": "9cf670ef-de90-549e-b631-4a76def42306",
+            "glider": {
+              "brand": "Flow",
+              "model": "Xc Racer",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "9342ecc5-ddac-5128-826b-277cd95f1af1",
+          "firstName": "Harrie",
+          "lastName": "Modrock"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "Up And Away",
+          "id": "2600C432-0CA8-49A0-86B2-2F2DD43B3AD8"
+        },
+        "totalDistance": "316",
+        "totalPoints": "1017"
+      },
+      {
+        "Pilot": "Müller Britta",
+        "flights": [
+          {
+            "flightPoints": "496",
+            "externalId": "69422",
+            "id": "407be7f4-ed9f-505b-bf30-2bf0c7cf4f59",
+            "glider": {
+              "brand": "BGD",
+              "model": "Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "191",
+            "externalId": "69392",
+            "id": "e72d4e2f-d330-5cf9-a098-6076eda69577",
+            "glider": {
+              "brand": "BGD",
+              "model": "Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "111",
+            "externalId": "69391",
+            "id": "08d615fb-2d52-5522-ab59-e43297eb30a8",
+            "glider": {
+              "brand": "BGD",
+              "model": "Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "5d017003-e244-59a1-80ef-6f7fc9304d0b",
+          "firstName": "Britta",
+          "lastName": "Müller"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "Up And Away",
+          "id": "2600C432-0CA8-49A0-86B2-2F2DD43B3AD8"
+        },
+        "totalDistance": "163",
+        "totalPoints": "798"
+      },
+      {
+        "Pilot": "Weber Tim",
+        "flights": [
+          {
+            "flightPoints": "376",
+            "externalId": "69436",
+            "id": "f4bf685f-7257-5ef8-9c00-fc8dfffc6dea",
+            "glider": {
+              "brand": "UP",
+              "model": " Summit XC 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "204",
+            "externalId": "69371",
+            "id": "507bf615-7b8b-5a83-8121-ad70d584fd47",
+            "glider": {
+              "brand": "UP",
+              "model": " Summit XC 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "203",
+            "externalId": "68813",
+            "id": "8588d3ab-b69f-5ed4-a9df-5c7e8e5f461e",
+            "glider": {
+              "brand": "UP",
+              "model": " Summit XC 4",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "6c573c49-79e2-5be9-8afb-f6a280293f6a",
+          "firstName": "Tim",
+          "lastName": "Weber"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "Up And Away",
+          "id": "2600C432-0CA8-49A0-86B2-2F2DD43B3AD8"
+        },
+        "totalDistance": "204",
+        "totalPoints": "783"
+      },
+      {
+        "Pilot": "Sorgner Frank",
+        "flights": [
+          {
+            "flightPoints": "280",
+            "externalId": "69208",
+            "id": "e5d4f724-9e90-54ba-8b91-5ed5ee4bacc6",
+            "glider": {
+              "brand": "Flow",
+              "model": "Gleitschirm",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "236",
+            "externalId": "69225",
+            "id": "1dee9af6-2baa-5fe6-bda6-7ba7d9e0617c",
+            "glider": {
+              "brand": "Flow",
+              "model": "Freedom",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "223",
+            "externalId": "69207",
+            "id": "3fe6da70-a670-550e-b9e0-585b1d60c7ca",
+            "glider": {
+              "brand": "Flow",
+              "model": "Gleitschirm",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "e1017fd6-c4c2-5482-a18d-0e5118077592",
+          "firstName": "Frank",
+          "lastName": "Sorgner"
+        },
+        "club": {
+          "name": "Asslarer Gleitschirmflieger",
+          "id": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "211",
+        "totalPoints": "739"
+      },
+      {
+        "Pilot": "Reichwein Insa",
+        "flights": [
+          {
+            "flightPoints": "243",
+            "externalId": "69060",
+            "id": "d402451e-2c2c-5500-9ad2-068f06324866",
+            "glider": {
+              "brand": "Skywalk",
+              "model": " Arak",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "215",
+            "externalId": "68613",
+            "id": "e8f28c2d-73ae-5846-8ad5-548964bec58b",
+            "glider": {
+              "brand": "Skywalk",
+              "model": " Arak",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "175",
+            "externalId": "69177",
+            "id": "2aea3700-fc80-5f28-b027-9c18ac9ca7d2",
+            "glider": {
+              "brand": "Skywalk",
+              "model": " Arak",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "b817f978-1359-5328-8b10-d0e38b918446",
+          "firstName": "Insa",
+          "lastName": "Reichwein"
+        },
+        "club": {
+          "name": "D.G.F. Rhein-Mosel-Lahn",
+          "id": "c2026874-9cf0-4793-ad9a-66e22aea86af"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "94",
+        "totalPoints": "633"
+      },
+      {
+        "Pilot": "Walch Fabian",
+        "flights": [
+          {
+            "flightPoints": "610",
+            "externalId": "69426",
+            "id": "269c89ac-1cdd-509c-b2f2-8c456fe8c372",
+            "glider": {
+              "brand": "Advance",
+              "model": "XI 23qm",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "491623e2-7f3e-5292-917b-cc2a7c66fd4d",
+          "firstName": "Fabian",
+          "lastName": "Walch"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "98",
+        "totalPoints": "610"
+      },
+      {
+        "Pilot": "Hößler Torsten",
+        "flights": [
+          {
+            "flightPoints": "372",
+            "externalId": "69024",
+            "id": "81b1a2a4-5d65-5d41-b9d3-352300744dc7",
+            "glider": {
+              "brand": "Nova",
+              "model": "Phantom",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "140",
+            "externalId": "68820",
+            "id": "8625041e-561f-53df-8059-8750bde68f9a",
+            "glider": {
+              "brand": "Nova",
+              "model": "Phantom",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "90",
+            "externalId": "68626",
+            "id": "b888c1f8-71db-5608-b977-8b0055898124",
+            "glider": {
+              "brand": "Nova",
+              "model": "Phantom",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "29f584bb-2481-53dc-ae54-3a00eb4990f7",
+          "firstName": "Torsten",
+          "lastName": "Hößler"
+        },
+        "club": {
+          "name": "Cumulux Paragliding Club",
+          "id": "bd4eca98-d746-4b13-8c9f-14d466336cb3"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "93",
+        "totalPoints": "602"
+      },
+      {
+        "Pilot": "Hanses Karl-Josef",
+        "flights": [
+          {
+            "flightPoints": "143",
+            "externalId": "68775",
+            "id": "ec75f71f-a9c3-56e9-9caf-2a76062bcf94",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Cilli 3 S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "141",
+            "externalId": "68965",
+            "id": "e2d9259e-2505-5c2f-a822-c7440ccb82fc",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Cilli 3 S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "139",
+            "externalId": "69273",
+            "id": "735765f4-6069-5c24-ab15-9a49e192f5d8",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Cilli 3 S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "92813974-59a1-5104-a297-ca91761e849f",
+          "firstName": "Karl-Josef",
+          "lastName": "Hanses"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "LockAIR vom HockAIR",
+          "id": "4AD71A32-E10A-4A30-AE2A-85225EAB475B"
+        },
+        "totalDistance": "75",
+        "totalPoints": "423"
+      },
+      {
+        "Pilot": "Wichert Gerhard",
+        "flights": [
+          {
+            "flightPoints": "147",
+            "externalId": "69031",
+            "id": "1aabff4a-c39c-551a-b282-782bb19afa04",
+            "glider": {
+              "brand": "BGD",
+              "model": " Cure2 M",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "115",
+            "externalId": "69337",
+            "id": "b47daec7-601c-5547-a9e1-6e71212014b0",
+            "glider": {
+              "brand": "BGD",
+              "model": " Cure2 M",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "90",
+            "externalId": "69365",
+            "id": "19e3d9b4-6891-5e2d-a329-057eae7105e4",
+            "glider": {
+              "brand": "BGD",
+              "model": " Cure2 M",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "3b870479-8112-514b-8271-6cc03fb7f418",
+          "firstName": "Gerhard",
+          "lastName": "Wichert"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "Up And Away",
+          "id": "2600C432-0CA8-49A0-86B2-2F2DD43B3AD8"
+        },
+        "totalDistance": "78",
+        "totalPoints": "352"
+      },
+      {
+        "Pilot": "Beckmann Hubert",
+        "flights": [
+          {
+            "flightPoints": "192",
+            "externalId": "69452",
+            "id": "6ba71520-8cee-50b7-a6a9-20883b60d7db",
+            "glider": {
+              "brand": "A-I-R",
+              "model": "Atos VN",
+              "gliderClass": {
+                "key": "HG_5_starr",
+                "shortDescription": "Drachen Starre"
+              }
+            }
+          },
+          {
+            "flightPoints": "81",
+            "externalId": "69451",
+            "id": "45abdfe8-435b-5364-bb39-f3671d6e8a46",
+            "glider": {
+              "brand": "A-I-R",
+              "model": "Atos VN",
+              "gliderClass": {
+                "key": "HG_5_starr",
+                "shortDescription": "Drachen Starre"
+              }
+            }
+          },
+          {
+            "flightPoints": "78",
+            "externalId": "69283",
+            "id": "edcc5aa9-1ed1-5932-8b71-c8c379216fd7",
+            "glider": {
+              "brand": "A-I-R",
+              "model": "Atos VN",
+              "gliderClass": {
+                "key": "HG_5_starr",
+                "shortDescription": "Drachen Starre"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "c9d857c5-a11e-5805-aee2-31e5db4b4d4e",
+          "firstName": "Hubert",
+          "lastName": "Beckmann"
+        },
+        "club": {
+          "name": "DFC Vulkaneifel",
+          "id": "90675c2e-3369-4d3f-afc4-d58e9cf69bf9"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "136",
+        "totalPoints": "351"
+      },
+      {
+        "Pilot": "Karcher Vivien",
+        "flights": [
+          {
+            "flightPoints": "193",
+            "externalId": "68909",
+            "id": "19c4b735-e06a-5505-84f8-5f065a6f16a3",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Arak XXS",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "149",
+            "externalId": "68941",
+            "id": "9e332413-a2de-56cc-b778-e3f9215b6f2d",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Arak XXS",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "fdfc13d5-d98b-5ae1-b977-501b5511b70d",
+          "firstName": "Vivien",
+          "lastName": "Karcher"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": "K5 Team",
+          "id": "E55CC620-9A58-4B17-A045-9ED34C4556B5"
+        },
+        "totalDistance": "115",
+        "totalPoints": "342"
+      },
+      {
+        "Pilot": "Reisinger Holger",
+        "flights": [
+          {
+            "flightPoints": "149",
+            "externalId": "69405",
+            "id": "e0951068-a28d-55f9-b1e7-b014f536b714",
+            "glider": {
+              "brand": "Swing",
+              "model": "Arcus RS",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "100",
+            "externalId": "69255",
+            "id": "a48b9eb1-26c9-5870-b232-8fd33fa244aa",
+            "glider": {
+              "brand": "Swing",
+              "model": "Arcus RS",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "79",
+            "externalId": "69406",
+            "id": "ea40dc30-b28f-57af-bd1d-3d7ee05ad031",
+            "glider": {
+              "brand": "Swing",
+              "model": "Arcus RS",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "a67a1c71-589a-551a-8082-f5b1807120f4",
+          "firstName": "Holger",
+          "lastName": "Reisinger"
+        },
+        "club": {
+          "name": "Asslarer Gleitschirmflieger",
+          "id": "1b8a6a9b-d890-4656-a87c-63b7c22ef4fa"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "73",
+        "totalPoints": "328"
+      },
+      {
+        "Pilot": "Wigge Marius",
+        "flights": [
+          {
+            "flightPoints": "250",
+            "externalId": "68726",
+            "id": "f934475b-f532-5818-b0cf-191e6283b010",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "XALPS4",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "69",
+            "externalId": "68115",
+            "id": "24b29862-b047-5262-8b7d-ac9138adef59",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "XALPS4",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "2ed301c9-7451-532d-bc30-83d15b2c3f8a",
+          "firstName": "Marius",
+          "lastName": "Wigge"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "Team Sauerland",
+          "id": "DE32762C-BCF2-48C2-B14F-1C314EB6FC0E"
+        },
+        "totalDistance": "121",
+        "totalPoints": "319"
+      },
+      {
+        "Pilot": "Tohermes Norbert",
+        "flights": [
+          {
+            "flightPoints": "198",
+            "externalId": "68644",
+            "id": "566e9fa8-957f-5c4b-8b21-7c75aae97831",
+            "glider": {
+              "brand": "Nova",
+              "model": "Mentor 4 u.Swing  Nyos",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "67",
+            "externalId": "69574",
+            "id": "22a5c32a-8b75-59ca-9fdd-9618fa8886c0",
+            "glider": {
+              "brand": "Nova",
+              "model": "Mentor 4 u.Swing  Nyos",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "6b962881-485d-5bcb-b130-6e437e56d85b",
+          "firstName": "Norbert",
+          "lastName": "Tohermes"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "Up And Away",
+          "id": "2600C432-0CA8-49A0-86B2-2F2DD43B3AD8"
+        },
+        "totalDistance": "89",
+        "totalPoints": "265"
+      },
+      {
+        "Pilot": "Lemke Christian",
+        "flights": [
+          {
+            "flightPoints": "200",
+            "externalId": "69528",
+            "id": "1644253b-4de0-5feb-96ca-2821a09b0153",
+            "glider": {
+              "brand": "Nova",
+              "model": "Mentor 3 light",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "62",
+            "externalId": "69527",
+            "id": "69a2308f-6570-5852-ae3f-95e1773a9034",
+            "glider": {
+              "brand": "Nova",
+              "model": "Mentor 3 light",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "caa98953-eba9-5a89-a2d3-c4f1b8491c4b",
+          "firstName": "Christian",
+          "lastName": "Lemke"
+        },
+        "club": {
+          "name": "Gleitzeit e.V.",
+          "id": "4bfa6d77-0792-4e09-87ae-0a04081100a1"
+        },
+        "team": {
+          "name": "Haldenknaller",
+          "id": "C7CD50AD-CA95-411F-B20A-005A1DB9BDBE"
+        },
+        "totalDistance": "56",
+        "totalPoints": "262"
+      },
+      {
+        "Pilot": "Faber Fenn",
+        "flights": [
+          {
+            "flightPoints": "97",
+            "externalId": "69129",
+            "id": "accff292-e1ef-5c7b-9657-f52473ffb4f7",
+            "glider": {
+              "brand": "Mac Para",
+              "model": "Illusion 24",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "81",
+            "externalId": "69420",
+            "id": "8b89527b-8040-5ae9-9fa2-ce9de789698c",
+            "glider": {
+              "brand": "Mac Para",
+              "model": "Illusion 24",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "cef376e4-54d4-53f9-8c10-2fbc7ee022f0",
+          "firstName": "Fenn",
+          "lastName": "Faber"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "46",
+        "totalPoints": "178"
+      },
+      {
+        "Pilot": "Ruby Michael",
+        "flights": [
+          {
+            "flightPoints": "99",
+            "externalId": "68104",
+            "id": "09ab945a-9d0c-526c-adc5-001c17d2ea16",
+            "glider": {
+              "brand": "Mac Para",
+              "model": " / Elan 2",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          {
+            "flightPoints": "64",
+            "externalId": "69623",
+            "id": "c093e2ac-1793-5f65-ae40-4477d885fddc",
+            "glider": {
+              "brand": "Mac Para",
+              "model": " / Elan 2",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "b55e7600-5f03-5c40-9e77-d5b9976a066f",
+          "firstName": "Michael",
+          "lastName": "Ruby"
+        },
+        "club": {
+          "name": "Pfälzer Gleitschirmclub",
+          "id": "8ff0c760-0ee8-47e1-a14f-b99c4ac87b82"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "57",
+        "totalPoints": "163"
+      },
+      {
+        "Pilot": "Wilms Werner",
+        "flights": [
+          {
+            "flightPoints": "132",
+            "externalId": "69509",
+            "id": "9d8ed42c-abc8-53a8-bd28-5434c75b3cae",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Arak",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "92ff0b4c-70fe-57b8-b7ec-f5a0e10546c8",
+          "firstName": "Werner",
+          "lastName": "Wilms"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "LockAIR vom HockAIR",
+          "id": "4AD71A32-E10A-4A30-AE2A-85225EAB475B"
+        },
+        "totalDistance": "21",
+        "totalPoints": "132"
+      },
+      {
+        "Pilot": "Schumacher Moritz",
+        "flights": [
+          {
+            "flightPoints": "85",
+            "externalId": "69476",
+            "id": "3b4cc55d-e96d-54b7-9d38-6a8bbd723fe4",
+            "glider": {
+              "model": "Spyder",
+              "gliderClass": {
+                "key": "HG_1_Turm",
+                "shortDescription": "Turmdrachen"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "e510d27c-a474-58e7-a8dc-be2ebedeed9d",
+          "firstName": "Moritz",
+          "lastName": "Schumacher"
+        },
+        "club": {
+          "name": "Ourewäller Iwwefliejer",
+          "id": "b8337bb0-c16c-4db4-9915-918bab1fe0bc"
+        },
+        "team": {
+          "name": "Michelstadt Airlines",
+          "id": "E5129607-D023-47AC-80D3-879BF2946037"
+        },
+        "totalDistance": "20",
+        "totalPoints": "85"
+      },
+      {
+        "Pilot": "Esch Martina",
+        "flights": [
+          {
+            "flightPoints": "83",
+            "externalId": "69589",
+            "id": "8e30efeb-b93b-5917-a418-0488930848e9",
+            "glider": {
+              "brand": "BGD",
+              "model": "Punk",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "0d506665-5edc-589e-8395-4ed5024098a8",
+          "firstName": "Martina",
+          "lastName": "Esch"
+        },
+        "club": {
+          "name": "Südpfälzer GFC",
+          "id": "91af8d69-b162-4d60-8c47-77b3f05e8c20"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "28",
+        "totalPoints": "83"
+      },
+      {
+        "Pilot": "Schmitt Volker",
+        "flights": [
+          {
+            "flightPoints": "64",
+            "externalId": "69155",
+            "id": "4f90c514-48cb-5229-baf9-22908eefb7a0",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Teuqila 5",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "bee59b71-7f0e-567d-80f1-d711e55b1480",
+          "firstName": "Volker",
+          "lastName": "Schmitt"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "21",
+        "totalPoints": "64"
+      },
+      {
+        "Pilot": "Helmich Klaus",
+        "flights": [
+          {
+            "flightPoints": "61",
+            "externalId": "68651",
+            "id": "a393150d-2de1-56c3-8137-99c67ab4615d",
+            "glider": {
+              "brand": "Papillon Paragliders",
+              "model": "Raqoon",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "ea95e8cc-fdbb-5637-967c-a6a22ffcd43c",
+          "firstName": "Klaus",
+          "lastName": "Helmich"
+        },
+        "club": {
+          "name": "Gleitzeit e.V.",
+          "id": "4bfa6d77-0792-4e09-87ae-0a04081100a1"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "20",
+        "totalPoints": "61"
+      }
+    ]
+  },
+  {
+    "season": "2021",
+    "type": "Newcomer",
+    "result": [
+      {
+        "Pilot": "Adelsberger Jörg",
+        "flights": [
+          {
+            "flightPoints": "188",
+            "externalId": "71007",
+            "id": "420c03a5-1b96-54d8-8ae4-aa2bf1efb7e8",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Mantra ML 7",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "166",
+            "externalId": "71260",
+            "id": "8cb420c4-4130-5ca7-bc4e-4c9a679915d8",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Mantra ML 7",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          },
+          {
+            "flightPoints": "166",
+            "externalId": "71739",
+            "id": "fbd203b4-a5f1-5ced-9f13-84d65fb197b0",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Mantra ML 7",
+              "gliderClass": {
+                "key": "D_low",
+                "shortDescription": "GS Performance low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "20f234b5-328e-593c-aaf0-278fe75fb80f",
+          "firstName": "Jörg",
+          "lastName": "Adelsberger"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "197",
+        "totalPoints": "520"
+      },
+      {
+        "Pilot": "Hillwig Frank",
+        "flights": [
+          {
+            "flightPoints": "275",
+            "externalId": "71444",
+            "id": "eec716de-241e-5759-93ae-79a98cbfd535",
+            "glider": {
+              "brand": "Nova",
+              "model": "Factor 25",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          {
+            "flightPoints": "115",
+            "externalId": "71070",
+            "id": "747a2fc4-1dfb-5c8b-a9e0-df3ba4b035d6",
+            "glider": {
+              "brand": "Nova",
+              "model": "Factor 25",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          {
+            "flightPoints": "100",
+            "externalId": "71502",
+            "id": "e29a2c6f-be51-556e-b39c-06f3ceac6bb0",
+            "glider": {
+              "brand": "Nova",
+              "model": "Factor 25",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "06958b8b-36af-5d72-b230-fa645ff7dcfb",
+          "firstName": "Frank",
+          "lastName": "Hillwig"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "Nuff un wech",
+          "id": "64D92956-6C08-4C27-86F9-56E00C0BA5DE"
+        },
+        "totalDistance": "171",
+        "totalPoints": "490"
+      },
+      {
+        "Pilot": "Probst Joris",
+        "flights": [
+          {
+            "flightPoints": "185",
+            "externalId": "71584",
+            "id": "3dccab36-9c71-53b0-aa82-f3908bd3c871",
+            "glider": {
+              "brand": "Swing",
+              "model": " Nyos M",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "155",
+            "externalId": "71320",
+            "id": "d595bc5a-b854-573e-8180-3c5bbbf9f59a",
+            "glider": {
+              "brand": "Swing",
+              "model": " Nyos M",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "136",
+            "externalId": "71324",
+            "id": "b835a1a0-ae73-56c6-b146-da9a989a18eb",
+            "glider": {
+              "brand": "Swing",
+              "model": " Nyos M",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "2df91efc-52d1-50a9-a8f7-94be4103cc80",
+          "firstName": "Joris",
+          "lastName": "Probst"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "160",
+        "totalPoints": "476"
+      },
+      {
+        "Pilot": "Kierspel Erik",
+        "flights": [
+          {
+            "flightPoints": "183",
+            "externalId": "71341",
+            "id": "dfa092fb-3308-5635-91b4-03627b3a3002",
+            "glider": {
+              "brand": "Ozone",
+              "model": " Alpina 4",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          {
+            "flightPoints": "118",
+            "externalId": "71054",
+            "id": "b180b2ce-3517-5948-bb18-0ab7b1a7d383",
+            "glider": {
+              "brand": "Ozone",
+              "model": " Alpina 4",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          },
+          {
+            "flightPoints": "101",
+            "externalId": "71232",
+            "id": "73aba64a-f141-58da-bd6d-e9e6ab1fdc9b",
+            "glider": {
+              "brand": "Ozone",
+              "model": " Alpina 4",
+              "gliderClass": {
+                "key": "C_low",
+                "shortDescription": "GS Intermediate low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "0892d772-23a3-5044-9b84-40ebac590cb8",
+          "firstName": "Erik",
+          "lastName": "Kierspel"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "141",
+        "totalPoints": "402"
+      },
+      {
+        "Pilot": "Koch Mathias",
+        "flights": [
+          {
+            "flightPoints": "152",
+            "externalId": "71470",
+            "id": "34108a96-2947-5bdd-8bfc-f2177d4dcbe2",
+            "glider": {
+              "brand": "Advance",
+              "model": "Epsilon 9",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "118",
+            "externalId": "71326",
+            "id": "1444edbc-0dbd-5f70-9f2c-3101af64d7d6",
+            "glider": {
+              "brand": "Advance",
+              "model": "Epsilon 9",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "71",
+            "externalId": "71137",
+            "id": "225c5557-a6fa-5e54-9f3f-ea4e508ee6e3",
+            "glider": {
+              "brand": "Advance",
+              "model": "Epsilon 9",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "3c1db0e1-f5db-5c39-929d-f4c546e155aa",
+          "firstName": "Mathias",
+          "lastName": "Koch"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": "Ziegenpeter",
+          "id": "1A5A14C3-78FC-480C-9F1B-FDF94D023948"
+        },
+        "totalDistance": "49",
+        "totalPoints": "341"
+      },
+      {
+        "Pilot": "Griesshaber Steffen",
+        "flights": [
+          {
+            "flightPoints": "180",
+            "externalId": "71571",
+            "id": "a35f0956-2014-5e39-83a5-1878f67d05f3",
+            "glider": {
+              "brand": "Advance",
+              "model": "Iota 2 25",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "69",
+            "externalId": "71936",
+            "id": "793c08e2-d97f-5bf6-8c6d-195234588307",
+            "glider": {
+              "brand": "Advance",
+              "model": "Iota 2 25",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "68",
+            "externalId": "73285",
+            "id": "df725fed-bc81-505e-be36-94437477d0a9",
+            "glider": {
+              "brand": "Advance",
+              "model": "Iota 2 25",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "ae4a19dd-ca70-5ca0-8c2e-d822c469d3e2",
+          "firstName": "Steffen",
+          "lastName": "Griesshaber"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": "K3 Team",
+          "id": "9B67A2E0-B94B-4FC4-A3EC-0B88E7E51841"
+        },
+        "totalDistance": "53",
+        "totalPoints": "317"
+      },
+      {
+        "Pilot": "Hanses Markus",
+        "flights": [
+          {
+            "flightPoints": "196",
+            "externalId": "73015",
+            "id": "b39cfa0a-bc3a-5263-8484-8a2abf4a91ce",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Chili 5 S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "109",
+            "externalId": "73013",
+            "id": "1d278df6-fdc9-5f9a-aea7-39b8f225c38b",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Chili 5 S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "10779c40-61cf-5993-bfc2-94fcf66e23c3",
+          "firstName": "Markus",
+          "lastName": "Hanses"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "LockAir vom HockAir",
+          "id": "8EF82450-82A7-4331-9F85-4B02FAEE03ED"
+        },
+        "totalDistance": "54",
+        "totalPoints": "305"
+      },
+      {
+        "Pilot": "Schmidt Nicolas Patrick",
+        "flights": [
+          {
+            "flightPoints": "107",
+            "externalId": "71553",
+            "id": "b96b0f38-3f79-59ce-be21-f70005500235",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Swift 5",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "103",
+            "externalId": "71372",
+            "id": "d903ddc2-421a-5129-9201-bc437bced73a",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Swift 5",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "82",
+            "externalId": "71314",
+            "id": "ab1e4b35-46da-5640-9e84-a8173440e47c",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Swift 5",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "a36e5f40-29f4-5701-bde5-b2cb6b0f1548",
+          "firstName": "Nicolas Patrick",
+          "lastName": "Schmidt"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "Rhöner Wolkenditscher",
+          "id": "D772523E-EEF0-4661-ABA2-009B4A801D78"
+        },
+        "totalDistance": "99",
+        "totalPoints": "292"
+      },
+      {
+        "Pilot": "Wannags Andreas",
+        "flights": [
+          {
+            "flightPoints": "123",
+            "externalId": "70977",
+            "id": "49a75481-0ef2-5e0f-8839-36af0618afdf",
+            "glider": {
+              "brand": "BGD",
+              "model": "Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "100",
+            "externalId": "73008",
+            "id": "5a7124c2-866f-53d1-ad36-912f695ba034",
+            "glider": {
+              "brand": "BGD",
+              "model": "Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          {
+            "flightPoints": "67",
+            "externalId": "71605",
+            "id": "7a071eaf-b6e5-5de5-9c5e-96d99c2ce130",
+            "glider": {
+              "brand": "BGD",
+              "model": "Lynx",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          }
+        ],
+        "user": {
+          "id": "b1884723-e47e-5170-8740-d7e15710d986",
+          "firstName": "Andreas",
+          "lastName": "Wannags"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": "LockAir vom HockAir",
+          "id": "8EF82450-82A7-4331-9F85-4B02FAEE03ED"
+        },
+        "totalDistance": "53",
+        "totalPoints": "290"
+      },
+      {
+        "Pilot": "Green Steven",
+        "flights": [
+          {
+            "flightPoints": "135",
+            "externalId": "70966",
+            "id": "89971f6c-538e-5d77-9ff7-c1e1543d391d",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Buzz z6",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "80",
+            "externalId": "73045",
+            "id": "c09358bf-f992-5eb4-a989-c986ae4395a8",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Buzz z6",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "acae9ece-ef26-5b9c-9db2-bf6c2b853f9d",
+          "firstName": "Steven",
+          "lastName": "Green"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "31",
+        "totalPoints": "215"
+      },
+      {
+        "Pilot": "Greybus Natalia",
+        "flights": [
+          {
+            "flightPoints": "97",
+            "externalId": "73055",
+            "id": "7a397a4e-46c1-5345-b9dd-12c125c8abab",
+            "glider": {
+              "brand": "Niviuk",
+              "model": " Ikuma 2",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "73",
+            "externalId": "73059",
+            "id": "bb84e9df-2d48-5104-9fbc-2fdb6b40e8e2",
+            "glider": {
+              "brand": "Niviuk",
+              "model": " Ikuma 2",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "b95ef523-2137-539d-a09e-fc88ccd0c3d6",
+          "firstName": "Natalia",
+          "lastName": "Greybus"
+        },
+        "club": {
+          "name": "Gleitschirmverein Nahe Glan",
+          "id": "32d2ee23-27f9-444a-9fc1-44210e51cbe1"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "30",
+        "totalPoints": "170"
+      },
+      {
+        "Pilot": "Rüttinger Michael",
+        "flights": [
+          {
+            "flightPoints": "161",
+            "externalId": "71738",
+            "id": "ebb7f10e-d76f-50dc-9f28-f118e1cbc4a9",
+            "glider": {
+              "brand": "U-Turn",
+              "model": "Blacklight 2",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "1d6a03e3-7318-556b-9724-4850eea3a3af",
+          "firstName": "Michael",
+          "lastName": "Rüttinger"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "Die Kuppe Connection",
+          "id": "440EAC77-8349-4C57-8F12-C8A13F0976C6"
+        },
+        "totalDistance": "54",
+        "totalPoints": "161"
+      },
+      {
+        "Pilot": "Böhnisch Markus",
+        "flights": [
+          {
+            "flightPoints": "82",
+            "externalId": "71610",
+            "id": "47f2a6d7-fab4-58c6-b17b-a3269f4544c3",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Arak S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          {
+            "flightPoints": "60",
+            "externalId": "71039",
+            "id": "61c092f0-cec6-53ee-924e-f29de77e74fd",
+            "glider": {
+              "brand": "Skywalk",
+              "model": "Arak S",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "7f0e983d-9b31-54ca-b898-5d7c9ee62a9b",
+          "firstName": "Markus",
+          "lastName": "Böhnisch"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "24",
+        "totalPoints": "142"
+      },
+      {
+        "Pilot": "Iosifidis Vasilios",
+        "flights": [
+          {
+            "flightPoints": "70",
+            "externalId": "71146",
+            "id": "d62ecb23-ceb1-5468-bb18-53eba151ad65",
+            "glider": {
+              "brand": "Nova",
+              "model": " Mentor 3",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          {
+            "flightPoints": "61",
+            "externalId": "73095",
+            "id": "ed52f0b9-6b33-59e9-a1e8-26ba160bd1d1",
+            "glider": {
+              "brand": "Swing",
+              "model": "helios",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null
+        ],
+        "user": {
+          "id": "7032bdfa-4e5a-5803-bbdd-e8d07f02e5d2",
+          "firstName": "Vasilios",
+          "lastName": "Iosifidis"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": "Die Stachelhardtspatzen",
+          "id": "7875DE01-5D12-4706-8285-1662CEE8C9CF"
+        },
+        "totalDistance": "20",
+        "totalPoints": "131"
+      },
+      {
+        "Pilot": "Boscheinen Johannes",
+        "flights": [
+          {
+            "flightPoints": "126",
+            "externalId": "71332",
+            "id": "31eb4973-14dd-5932-af8f-98ed60f37e74",
+            "glider": {
+              "brand": "Nova",
+              "model": " Mentor 5 light",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "3b146b0c-eac4-5b5e-9046-eb697cb89b01",
+          "firstName": "Johannes",
+          "lastName": "Boscheinen"
+        },
+        "club": {
+          "name": "SauerlandAir e.V.",
+          "id": "c22ed571-f731-4ae6-9b3c-4a20ca211863"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "42",
+        "totalPoints": "126"
+      },
+      {
+        "Pilot": "Dick Jürgen",
+        "flights": [
+          {
+            "flightPoints": "108",
+            "externalId": "71034",
+            "id": "ac320c52-c814-5f5f-946e-c39b7994f543",
+            "glider": {
+              "brand": "Advance",
+              "model": "Xi",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "cb09ae2f-c8df-5354-ac4b-a8f11b76ec25",
+          "firstName": "Jürgen",
+          "lastName": "Dick"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "36",
+        "totalPoints": "108"
+      },
+      {
+        "Pilot": "Lettmayer Lars",
+        "flights": [
+          {
+            "flightPoints": "95",
+            "externalId": "71037",
+            "id": "5e4b0506-fc11-5cfe-9104-addd83b71a70",
+            "glider": {
+              "brand": "Gin",
+              "model": "Carrera",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "5c0fb1a2-98d7-5c43-ac65-c4275a70feda",
+          "firstName": "Lars",
+          "lastName": "Lettmayer"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "15",
+        "totalPoints": "95"
+      },
+      {
+        "Pilot": "Greb Gerd",
+        "flights": [
+          {
+            "flightPoints": "77",
+            "externalId": "71624",
+            "id": "2c0d7cc7-ff7d-56c3-b18c-0667a0517d85",
+            "glider": {
+              "brand": "Ozone",
+              "model": "Swift 5",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "c8b973a2-09e8-5170-b28f-18da42652f48",
+          "firstName": "Gerd",
+          "lastName": "Greb"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "Rhöner Skymasters",
+          "id": "2C1DA277-93AB-490F-8609-FBBF1FCA94AF"
+        },
+        "totalDistance": "12",
+        "totalPoints": "77"
+      },
+      {
+        "Pilot": "Kern Bernhard",
+        "flights": [
+          {
+            "flightPoints": "75",
+            "externalId": "71975",
+            "id": "061648e5-acc3-576b-830a-275363773652",
+            "glider": {
+              "brand": "PHI",
+              "model": "Tenor",
+              "gliderClass": {
+                "key": "AB_low",
+                "shortDescription": "GS Sport low"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "626c914c-de5d-5f35-be49-58dabf0d280d",
+          "firstName": "Bernhard",
+          "lastName": "Kern"
+        },
+        "club": {
+          "name": "Kurpfälzer Gleitschirmflieger",
+          "id": "c966eb29-fa8b-4c9e-a17c-74a3d58df90a"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "11",
+        "totalPoints": "75"
+      },
+      {
+        "Pilot": "Göller Klaus",
+        "flights": [
+          {
+            "flightPoints": "68",
+            "externalId": "73306",
+            "id": "6af5bdd3-fd6d-50c7-b260-d4ddaeaeca9e",
+            "glider": {
+              "brand": "Mac Para",
+              "model": "EDEN 7",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "0a930320-3058-5dbd-b19a-b9707c5563dc",
+          "firstName": "Klaus",
+          "lastName": "Göller"
+        },
+        "club": {
+          "name": "Südpfälzer GFC",
+          "id": "91af8d69-b162-4d60-8c47-77b3f05e8c20"
+        },
+        "team": {
+          "name": ""
+        },
+        "totalDistance": "12",
+        "totalPoints": "68"
+      },
+      {
+        "Pilot": "Zangerle Dirk",
+        "flights": [
+          {
+            "flightPoints": "64",
+            "externalId": "71852",
+            "id": "270070b2-e43b-5615-8098-ad12d49dcf0b",
+            "glider": {
+              "brand": "Mac Para",
+              "model": "Eden 7",
+              "gliderClass": {
+                "key": "AB_high",
+                "shortDescription": "GS Sport high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "f3ecfc4c-ba5b-5d85-8375-ed09fc80e958",
+          "firstName": "Dirk",
+          "lastName": "Zangerle"
+        },
+        "club": {
+          "name": "Die Moselfalken",
+          "id": "e496ea3d-594f-41b0-9a10-2ebf50c7af66"
+        },
+        "team": {
+          "name": "Saarfalken",
+          "id": "2B6C72B2-2E17-4EF6-94C1-BB50D3610A7A"
+        },
+        "totalDistance": "10",
+        "totalPoints": "64"
+      },
+      {
+        "Pilot": "Gutmann Thomas",
+        "flights": [
+          {
+            "flightPoints": "63",
+            "externalId": "71057",
+            "id": "5cd50614-a1f6-55ed-ac0e-29f487bcd36e",
+            "glider": {
+              "brand": "U-Turn",
+              "model": "Passion",
+              "gliderClass": {
+                "key": "C_high",
+                "shortDescription": "GS Intermediate high"
+              }
+            }
+          },
+          null,
+          null
+        ],
+        "user": {
+          "id": "7dafeb0e-960c-5961-86bb-cebe86b4b585",
+          "firstName": "Thomas",
+          "lastName": "Gutmann"
+        },
+        "club": {
+          "name": "RDG Poppenhausen e.V.",
+          "id": "145e7f46-5dce-4269-917a-c78e0629b699"
+        },
+        "team": {
+          "name": "Rhöner Skymasters",
+          "id": "2C1DA277-93AB-490F-8609-FBBF1FCA94AF"
+        },
+        "totalDistance": "12",
+        "totalPoints": "63"
+      }
+    ]
+  }
+]
