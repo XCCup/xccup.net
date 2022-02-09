@@ -295,6 +295,19 @@ const service = {
   },
 
   getNewcomer: async (year, siteRegion, limit) => {
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, "newcomer");
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          {
+            NUMBER_OF_SCORED_FLIGHTS,
+            REMARKS: REMARKS_NEWCOMER(),
+          },
+          limit
+        );
+    }
+
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);

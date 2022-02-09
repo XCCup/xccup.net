@@ -6,8 +6,14 @@ module.exports.REMARKS_STATE =
 /**
  * Remark text for newcomer rankings
  */
-module.exports.REMARKS_NEWCOMER = (maxRankingClass) =>
-  `Es werden nur Flüge mit Geräten bis zur ${maxRankingClass} berücksichtigt`;
+module.exports.REMARKS_NEWCOMER = (maxRankingClass) => {
+  let text =
+    "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben.";
+  if (maxRankingClass)
+    text += ` Es werden nur Flüge mit Geräten bis zur ${maxRankingClass} berücksichtigt`;
+  return text;
+};
+
 /**
  * Remark text for senior rankings
  */

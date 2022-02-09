@@ -57,7 +57,7 @@ files.forEach((file) => {
     delete element["∑"];
   });
 
-  results.push({ season, type: "Newcomer", result: converted });
+  results.push({ season, type: "newcomer", result: converted });
 });
 
 fs.writeFile(
