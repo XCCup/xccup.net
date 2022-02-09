@@ -147,7 +147,17 @@
         "shortDescription": "HG Starr"
       }
     },
-    "stateChampionChips": ["LUX", "RP"]
+    "stateChampionChips": ["LUX", "RP"],
+    "misc": {
+      "textMessages": {
+        "resultsEarlybird": "Es werden die ersten 20 Flüge einer Saison gewertet. Sortiert nach Startzeit. In der Early Bird Wertung wird nur der erste Flug eines Piloten gewertet",
+        "resultsLatebird": "Es werden die letzten 20 Flüge einer Saison gewertet. Sortiert nach Landezeit. In der Late Bird Wertung wird nur der letzte Flug eines Piloten gewertet",
+        "resultsState": "Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war",
+        "resultsTeams": "Die schlechtesten 3 Ergebnisse eines Teams werden gestrichen",
+        "resultsSeniors": "Gewertet werden alle Senioren älter als 60 Jahre",
+        "resultsNewcomer": "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben"
+      }
+    }
   },
   {
     "year": 2020,
@@ -297,7 +307,17 @@
         "shortDescription": "HG Starr"
       }
     },
-    "stateChampionChips": ["LUX", "RP"]
+    "stateChampionChips": ["LUX", "RP"],
+    "misc": {
+      "textMessages": {
+        "resultsEarlybird": "Es werden die ersten 20 Flüge einer Saison gewertet. Sortiert nach Startzeit. In der Early Bird Wertung wird nur der erste Flug eines Piloten gewertet",
+        "resultsLatebird": "Es werden die letzten 20 Flüge einer Saison gewertet. Sortiert nach Landezeit. In der Late Bird Wertung wird nur der letzte Flug eines Piloten gewertet",
+        "resultsState": "Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war",
+        "resultsTeams": "Die schlechtesten 3 Ergebnisse eines Teams werden gestrichen",
+        "resultsSeniors": "Gewertet werden alle Senioren älter als 60 Jahre",
+        "resultsNewcomer": "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben"
+      }
+    }
   },
   {
     "year": 2021,
@@ -447,7 +467,17 @@
         "shortDescription": "HG Starr"
       }
     },
-    "stateChampionChips": ["LUX", "RP"]
+    "stateChampionChips": ["LUX", "RP"],
+    "misc": {
+      "textMessages": {
+        "resultsEarlybird": "Es werden die ersten 20 Flüge einer Saison gewertet. Sortiert nach Startzeit. In der Early Bird Wertung wird nur der erste Flug eines Piloten gewertet",
+        "resultsLatebird": "Es werden die letzten 20 Flüge einer Saison gewertet. Sortiert nach Landezeit. In der Late Bird Wertung wird nur der letzte Flug eines Piloten gewertet",
+        "resultsState": "Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war",
+        "resultsTeams": "Die schlechtesten 3 Ergebnisse eines Teams werden gestrichen",
+        "resultsSeniors": "Die Wertung beginnt ab einem Alter von 60 mit einem Bonus von 2% pro weiterem Lebensjahr",
+        "resultsNewcomer": "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben"
+      }
+    }
   },
   {
     "year": 2022,
@@ -604,7 +634,7 @@
         "resultsLatebird": "Es werden die letzten 20 Flüge einer Saison gewertet. Sortiert nach Landezeit. In der Late Bird Wertung wird nur der letzte Flug eines Piloten gewertet",
         "resultsState": "Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war",
         "resultsTeams": "Die schlechtesten 3 Ergebnisse eines Teams werden gestrichen",
-        "resultsSeniors": "Die Wertung beginnt ab einem Alter von 60 mit einem Bonus von 2 pro Jahr",
+        "resultsSeniors": "Die Wertung beginnt ab einem Alter von 60 mit einem Bonus von 2% pro weiterem Lebensjahr",
         "resultsNewcomer": "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben. Es werden nur Flüge mit Geräten bis zur Sportklasse (EN A+EN B) berücksichtigt"
       }
     }
