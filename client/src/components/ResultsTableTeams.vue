@@ -52,7 +52,9 @@
               <tr v-for="member in team.members" :key="member.id">
                 <td v-if="member.flights[n - 1]" class="no-line-break">
                   <RankingClass
-                    :ranking-class="member.flights[n - 1].glider.gliderClass"
+                    :ranking-class="
+                      member.flights[n - 1].glider?.gliderClass ?? {}
+                    "
                   />
                   <router-link
                     :to="{
