@@ -118,7 +118,7 @@ const service = {
             NUMBER_OF_SCORED_FLIGHTS,
             TEAM_DISMISSES,
             TEAM_SIZE,
-            REMARKS: REMARKS_TEAM(TEAM_DISMISSES),
+            REMARKS: seasonDetail.misc?.textMessages?.resultsTeam,
           },
           limit
         );
@@ -307,7 +307,7 @@ const service = {
           oldResult,
           {
             NUMBER_OF_SCORED_FLIGHTS,
-            REMARKS: seasonDetail.misc?.textMessages?.resultsSeniors,
+            REMARKS: seasonDetail.misc?.textMessages?.resultsNewcomer,
           },
           limit
         );
@@ -334,7 +334,7 @@ const service = {
       {
         NUMBER_OF_SCORED_FLIGHTS,
         NEWCOMER_MAX_RANKING_CLASS: rankingClass.description,
-        REMARKS: seasonDetail.misc?.textMessages?.resultsSeniors,
+        REMARKS: seasonDetail.misc?.textMessages?.resultsNewcomer,
       },
       limit
     );
