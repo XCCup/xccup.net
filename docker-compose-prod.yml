@@ -2,23 +2,23 @@ version: "3.8"
 
 services:
   client:
-      build:
-        context: ./client
-        dockerfile: Dockerfile
-      image: xccup-client
-      container_name: xccup-client
-      env_file: ./client/.env
-      restart: always
-      depends_on:
-        - server
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: xccup-client
+    container_name: xccup-client
+    env_file: ./client/.env
+    restart: always
+    depends_on:
+      - server
 
-      labels:
-        traefik.enable: true
-        traefik.http.routers.xccup.rule: "Host(`next.xccup.net`)"
-        traefik.http.routers.xccup.entrypoints: websecure
-        traefik.http.routers.xccup.tls.certresolver: myresolver
-        traefik.http.routers.xccup.priority: 100
-        traefik.docker.network: traefik
+    labels:
+      traefik.enable: true
+      traefik.http.routers.xccup.rule: "Host(`www.xccup.net`, `xccup.net`)"
+      traefik.http.routers.xccup.entrypoints: websecure
+      traefik.http.routers.xccup.tls.certresolver: myresolver
+      traefik.http.routers.xccup.priority: 100
+      traefik.docker.network: traefik
 
   server:
     build:
@@ -37,7 +37,7 @@ services:
       - db
     labels:
       traefik.enable: true
-      traefik.http.routers.xccup-api.rule: "Host(`next.xccup.net`) && PathPrefix(`/api`)"
+      traefik.http.routers.xccup-api.rule: "Host(`www.xccup.net`, `xccup.net`) && PathPrefix(`/api`)"
       traefik.http.routers.xccup-api.entrypoints: websecure
       traefik.http.routers.xccup-api.tls.certresolver: myresolver
       traefik.http.services.xccup-api.loadbalancer.server.port: 65090
@@ -107,4 +107,3 @@ volumes:
 networks:
   default:
     name: traefik
-
