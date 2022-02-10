@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/FlightService");
-const { isAdmin } = require("../service/UserService");
+const { isAdmin, validate } = require("../service/UserService");
 const igcValidator = require("../igc/IgcValidator");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const path = require("path");
@@ -11,6 +11,7 @@ const {
   NOT_FOUND,
   OK,
   BAD_REQUEST,
+  UNAUTHORIZED,
 } = require("../constants/http-status-constants");
 const {
   STATE,
@@ -181,9 +182,9 @@ router.delete(
   }
 );
 
-// @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File.
+// @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File and starts the result calculation
 // @route POST /flights/
-// @access Only owner
+// @access All logged-in users
 
 router.post(
   "/",
@@ -195,16 +196,10 @@ router.post(
     if (validationHasErrors(req, res)) return;
     const igc = req.body.igc;
     const userId = req.user.id;
+
     try {
       const validationResult = await igcValidator.execute(igc);
-      if (!validationResult) {
-        logger.warn("FC: G-Record Validation returned undefined");
-      } else if (validationResult != igcValidator.G_RECORD_PASSED) {
-        logger.info(
-          "FC: Invalid G-Record found. Validation result: " + validationResult
-        );
-        return res.status(BAD_REQUEST).send("Invalid G-Record");
-      }
+      if (isGRecordResultInvalid(res, validationResult)) return;
 
       const flightDbObject = await service.create({
         userId,
@@ -246,6 +241,72 @@ router.post(
   }
 );
 
+// @desc Allows to upload a flight via the leonardo format directly from a tracker
+// @route POST /flights/leonardo
+// @access All logged-in users
+
+router.post(
+  "/leonardo",
+  uploadLimiter,
+  checkStringObjectNotEmpty("user"),
+  checkStringObjectNotEmptyNoEscaping("pass"),
+  checkStringObjectNotEmptyNoEscaping("IGCigcIGC"),
+  checkStringObjectNotEmptyNoEscaping("igcfn"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const igc = { body: req.body.IGCigcIGC, name: req.body.igcfn };
+
+    try {
+      const user = await validate(req.body.user, req.body.pass);
+      if (!user) return res.sendStatus(UNAUTHORIZED);
+      const glider = user.gliders.find((g) => g.id == user.defaultGlider);
+      if (!glider)
+        return res
+          .status(BAD_REQUEST)
+          .send("No default glider configured in profil");
+
+      const validationResult = await igcValidator.execute(igc);
+      if (isGRecordResultInvalid(res, validationResult)) return;
+
+      const flightDbObject = await service.create({
+        userId: user.id,
+        uncheckedGRecord: validationResult == undefined ? true : false,
+        flightStatus: STATE.IN_PROCESS,
+      });
+
+      flightDbObject.igcPath = await persistIgcFile(
+        flightDbObject.externalId,
+        igc
+      );
+
+      const fixes = IgcAnalyzer.extractFixes(flightDbObject);
+      service.attachFixRelatedTimeData(flightDbObject, fixes);
+
+      await checkIfFlightIsModifiable(flightDbObject, user.id);
+
+      await service.storeFixesAndAddFurtherInformationToFlight(
+        flightDbObject,
+        fixes
+      );
+
+      service.startResultCalculation(flightDbObject);
+      await service.update(flightDbObject);
+
+      await service.finalizeFlightSubmission({
+        flight: flightDbObject,
+        glider,
+      });
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // @desc Edits flightReport, flightStatus and glider of a existing flight and calcs the flightPoints
 // @route PUT /flights/:id
 // @access Only owner
@@ -278,14 +339,14 @@ router.put(
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      const result = await service.finalizeFlightSubmission(
+      const result = await service.finalizeFlightSubmission({
         flight,
         report,
         airspaceComment,
         onlyLogbook,
         glider,
-        hikeAndFly
-      );
+        hikeAndFly,
+      });
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -355,6 +416,24 @@ async function checkIfFlightIsModifiable(flight, userId) {
   throw new XccupRestrictionError(
     `It's not possible to change a flight later than ${DAYS_FLIGHT_CHANGEABLE} days after takeoff`
   );
+}
+
+/**
+ * Checks if the validation result is defined and if the result is != PASSED sends a BAD_REQUEST response to the user.
+ * @param {*} res The response object of the current request
+ * @param {*} validationResult The result to check
+ * @returns true if the result is invalid otherwise undefined
+ */
+function isGRecordResultInvalid(res, validationResult) {
+  if (!validationResult) {
+    logger.warn("FC: G-Record Validation returned undefined");
+  } else if (validationResult != igcValidator.G_RECORD_PASSED) {
+    logger.info(
+      "FC: Invalid G-Record found. Validation result: " + validationResult
+    );
+    res.status(BAD_REQUEST).send("Invalid G-Record");
+    return true;
+  }
 }
 
 module.exports = router;

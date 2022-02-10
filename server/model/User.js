@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ARRAY(DataTypes.JSON),
         /*
         glider: {
+          id: UUID
           brand: String,
           model: String
           gliderClass: String
