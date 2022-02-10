@@ -128,7 +128,7 @@
         XCCup eingereicht haben, sind berichtigt an der "Newcomerwertung"
         teilzunehmen. Die Wertung kommt ab einer Mindestteilnehmerzahl von 5
         Personen zustande. Gewertet werden dabei nur Flüge, welche mit einem
-        Gerät bis zur Klassifizerung "Sportklasse high" (vgl. 7. Einzelwertung)
+        Gerät bis zur Klassifizerung "Sportklasse high" (vgl. 8. Gerätewertung)
         eingereicht wurden. Es zählen jeweils die drei Flüge mit den meisten
         Punkten.
       </li>
@@ -200,11 +200,11 @@
           </router-link>
         </p>
         <ul>
-          <li class="mb-3">
+          <li>
             <strong> Freie Strecke: </strong>Optimierung der Strecke von
             Startplatz zu Landeplatz über 3 Wendepunkte.
           </li>
-          <li class="mb-3">
+          <li>
             <strong>Flaches Dreieck:</strong> Ein Flug kann als Dreiecksflug
             gewertet werden, wenn die Entfernung zwischen Startplatz und
             Landeplatz weniger als 20% der durch die 3 Wendepunkte definierten
