@@ -1,5 +1,5 @@
 <template>
-  <div class="container d-grid gap-3">
+  <div class="container">
     <CompRules />
     <hr />
     <div id="factorPanel">
