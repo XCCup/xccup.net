@@ -21,11 +21,14 @@
     <div class="mt-4">
       <h5>Web-/Datenbankentwicklung</h5>
 
-      <p>Kai Wissel - <a href="mailto:kai@xccup.net">kai@xccup.net</a></p>
+      Kai Wissel & Stephan Schöpe
+      <a href="mailto:next@xccup.net">next@xccup.net</a>
+
+      <!-- <p>Kai Wissel - <a href="mailto:kai@xccup.net">kai@xccup.net</a></p>
       <p>
         Stephan Schöpe -
         <a href="mailto:kai@steph@xccup.net">steph@xccup.net</a>
-      </p>
+      </p> -->
     </div>
   </div>
 </template>
