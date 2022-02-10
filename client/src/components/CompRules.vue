@@ -67,59 +67,47 @@
           Wertungsklassen ggfs. verschiedene Geräteklassen.
         </p>
 
+        <strong>Sportklasse</strong> (EN A + EN B, Tandem)
         <ul>
-          <li class="mb-3">
-            <strong>Sportklasse</strong> (EN A + EN B, Tandem)
-            <ul>
-              <li>
-                Sport Low: Schirme EN A+B mit einer maximalen Streckung &lt;5,2
-              </li>
-              <li>Sport High: Schirme EN A+B mit einer Streckung >=5,2</li>
-            </ul>
+          <li>
+            Sport Low: Schirme EN A+B mit einer maximalen Streckung &lt;5,2
           </li>
-          <li class="mb-3">
-            <strong> Intermediate Klasse</strong> (EN C)
-            <ul>
-              <li>
-                Intermediate Low: Schirme EN C mit einer maximalen Streckung
-                &lt;6,4
-              </li>
-              <li>
-                Intermediate High: Schirme EN C mit einer Streckung von >6,4
-              </li>
-            </ul>
+          <li>Sport High: Schirme EN A+B mit einer Streckung >=5,2</li>
+        </ul>
+
+        <strong> Intermediate Klasse</strong> (EN C)
+        <ul>
+          <li>
+            Intermediate Low: Schirme EN C mit einer maximalen Streckung &lt;6,4
           </li>
-          <li class="mb-3">
-            <strong>Performance Klasse</strong> (EN D + CC mit AR 7,0 und höher)
-            <ul>
-              <li>
-                Performance: Schirme mit EN-D und einer maximalen Streckung von
-                6,99
-              </li>
-              <li>
-                Competition: Schirme mit EN-D oder CCC und einer Streckung von
-                7,0 und mehr
-              </li>
-            </ul>
+          <li>Intermediate High: Schirme EN C mit einer Streckung von >6,4</li>
+        </ul>
+
+        <strong>Performance Klasse</strong> (EN D + CC mit AR 7,0 und höher)
+        <ul>
+          <li>
+            Performance: Schirme mit EN-D und einer maximalen Streckung von 6,99
           </li>
-          <li class="mb-3">
-            <strong>Gleitschirm Tandem</strong><br />
-            (ab 5 Teilnehmern mit Wertungsflügen, sonst Sportklasse)
-          </li>
-          <li class="mb-3">
-            <strong>Flexdrachen</strong><br />
-            <ul>
-              <li>Turmdrachen</li>
-              <li>Drachen turmlos</li>
-            </ul>
-          </li>
-          <li class="mb-3">
-            <strong>Starrflüger</strong><br />
-            <ul>
-              <li>Drachen starre</li>
-            </ul>
+          <li>
+            Competition: Schirme mit EN-D oder CCC und einer Streckung von 7,0
+            und mehr
           </li>
         </ul>
+
+        <strong>Gleitschirm Tandem</strong><br />
+        (ab 5 Teilnehmern mit Wertungsflügen, sonst Sportklasse)
+        <br />
+        <strong>Flexdrachen</strong><br />
+        <ul>
+          <li>Turmdrachen</li>
+          <li>Drachen turmlos</li>
+        </ul>
+
+        <strong>Starrflüger</strong><br />
+        <ul>
+          <li>Drachen starre</li>
+        </ul>
+        <br />
         Alle Gleitschirmklassen werden mit ihrer ausgelegter Streckung (gem.
         Herstellerangaben) gekoppelt berechnet. Siehe Faktoren Tabelle.
       </li>
