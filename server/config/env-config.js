@@ -70,7 +70,7 @@ const config = convict({
   dicebearUrl: {
     doc: "The URL to the dicebear api",
     format: noEmptyString,
-    default: "https://next.xccup.net/dicebear/",
+    default: "https://www.xccup.net/dicebear/",
     env: "DICEBEAR_URL",
   },
   elevationUrl: {

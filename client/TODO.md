@@ -8,7 +8,7 @@
 
 - text-light produces a too dark font in dark mode
 - daily results table hover color is ugly
-- table overflow at https://next.xccup.net/2021/fluege/
+- table overflow at https://www.xccup.net/2021/fluege/
 
 ### Tests
 
