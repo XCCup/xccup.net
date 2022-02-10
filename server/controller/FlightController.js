@@ -264,7 +264,7 @@ router.post(
       if (!glider)
         return res
           .status(BAD_REQUEST)
-          .send("No default glider configured in profil");
+          .send("No default glider configured in profile");
 
       const validationResult = await igcValidator.execute(igc);
       if (isGRecordResultInvalid(res, validationResult)) return;
