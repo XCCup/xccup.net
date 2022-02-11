@@ -30,9 +30,7 @@ const logger = require("../config/logger");
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
 const THUMBNAIL_IMAGE_HEIGHT = 310;
 const MAX_PHOTOS = 8;
-// Das ist eigentlich ein bisschen unlogisch: Wenn ein Bild 2MB hat nehmen wir es so,
-// aber wenn ein Bild 2,1MB hat zerquetschen wir es auf 300kb😂
-const IMAGE_BYTES_LIMIT = 2_000_000;
+const IMAGE_BYTES_LIMIT = 4_000_000;
 const IMAGE_HEIGHT_LIMIT = 4_000;
 
 const imageUpload = multer({
