@@ -32,7 +32,7 @@
         ihr dessen Tracklog einblenden. Ihr müsst nichts weiter tun, als euren
         Flug hochzuladen und findet dann einen Button “Airbuddies” unter dem
         Barogramm. (Natürlich nur, wenn der andere Pilot auch seinen Flug
-        hochgeladen hat und eine min. Punktzahl von aktuell 30 Punkten erfolgen
+        hochgeladen hat und eine min. Punktzahl von aktuell 30 Punkten erflogen
         hat)
       </li>
       <li>
