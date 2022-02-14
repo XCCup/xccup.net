@@ -252,14 +252,14 @@ const flightService = {
     return flight.save();
   },
 
-  finalizeFlightSubmission: async (
+  finalizeFlightSubmission: async ({
     flight,
     report,
     airspaceComment,
     onlyLogbook,
     glider,
-    hikeAndFly
-  ) => {
+    hikeAndFly,
+  } = {}) => {
     const columnsToUpdate = {};
 
     // Set report when value is defined or emptry
