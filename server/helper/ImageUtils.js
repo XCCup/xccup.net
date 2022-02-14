@@ -33,6 +33,7 @@ async function resizeImage(sourcePath, maxDimensions, targetPath) {
       .withMetadata()
       .resize(maxDimensions, maxDimensions, {
         fit: "inside",
+        withoutEnlargement: true,
       })
       // eslint-disable-next-line no-unused-vars
       .toFile(target, (err, resizedImageInfo) => {
