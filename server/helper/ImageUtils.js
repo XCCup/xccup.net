@@ -20,17 +20,21 @@ async function createThumbnail(path, targetHeight) {
  * This function resizes the original image.
  * If no targetPath is supplied the original image will be overridden.
  * @param {*} sourcePath The path of the image to resize.
- * @param {*} targetHeight The height to which the image will be resized. The height/width proportion will be keeped.
+ * @param {*} maxDimensions The max height or width to which the image will be resized. Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
  * @param {*} targetPath The path where the resized image should be stored.
  */
-async function resizeImage(sourcePath, targetHeight, targetPath) {
+async function resizeImage(sourcePath, maxDimensions, targetPath) {
   const replaceOriginal = targetPath ? false : true;
   const target = replaceOriginal ? sourcePath + "_resize" : targetPath;
 
   logger.info("IU: Will resize image and store it to: " + target);
   const targetResult = await new Promise(function (resolve, reject) {
     sharp(sourcePath)
-      .resize(null, targetHeight)
+      .withMetadata()
+      .resize(maxDimensions, maxDimensions, {
+        fit: "inside",
+        withoutEnlargement: true,
+      })
       // eslint-disable-next-line no-unused-vars
       .toFile(target, (err, resizedImageInfo) => {
         if (err) {
