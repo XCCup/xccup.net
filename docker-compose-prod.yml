@@ -62,7 +62,7 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     labels:
       traefik.enable: true
-      traefik.http.routers.xccup-pg-admin.rule: "Host(`xccup.stephanschoepe.de`)"
+      traefik.http.routers.xccup-pg-admin.rule: "Host(`pga.xccup.net`)"
       traefik.http.routers.xccup-pg-admin.entrypoints: websecure
       traefik.http.routers.xccup-pg-admin.tls.certresolver: myresolver
       traefik.port: 65080
@@ -83,7 +83,7 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.myresolver.acme.email=next@xccup.net"
+      - "--certificatesresolvers.myresolver.acme.email=info@xccup.net"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     labels:
       traefik.http.routers.redirs.rule: HostRegexp(`{host:.+}`)
