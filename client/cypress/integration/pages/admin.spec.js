@@ -21,7 +21,7 @@ describe("check admin page", () => {
   });
 
   it("test general page loading", () => {
-    cy.get("h3").should("have.text", `Kommandozentrale`);
+    cy.get("[data-cy=admin-headline]").should("have.text", "Admin Dashboard");
   });
 
   it("test loaded unchecked flights", () => {
@@ -45,7 +45,7 @@ describe("check admin page", () => {
         .click();
     });
 
-    cy.clickButtonInModal("#modalFlightConfirm", "Akzeptieren");
+    cy.clickButtonInModal("#acceptFlightModal", "Akzeptieren");
 
     cy.get("#adminFlightsPanel")
       .find("table")
@@ -66,7 +66,7 @@ describe("check admin page", () => {
         .click();
     });
 
-    cy.clickButtonInModal("#modalFlightConfirm", "Löschen");
+    cy.clickButtonInModal("#deleteFlightModal", "Löschen");
 
     cy.get("#adminFlightsPanel")
       .find("table")
@@ -77,6 +77,7 @@ describe("check admin page", () => {
   it("test delete proposed flying site", () => {
     const expectedName = "Nur ein Vorschlag";
 
+    cy.get("#nav-sites-tab").click();
     cy.get("#adminSitesPanel").within(() => {
       cy.get("table")
         .contains("td", expectedName)
@@ -90,7 +91,7 @@ describe("check admin page", () => {
     cy.clickButtonInModal("#modalSiteConfirm", "Löschen");
 
     // Table will only be shown if there is at least one entry
-    cy.get("#adminFlightsPanel").find("table").should("not.exist");
+    cy.get("#adminSitesPanel").find("table").should("not.exist");
   });
 
   it("test loaded news flights", () => {

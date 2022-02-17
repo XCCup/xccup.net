@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h5>Admin Dashboard</h5>
+    <h5 data-cy="admin-headline">Admin Dashboard</h5>
     <nav>
       <div
         id="nav-tab"
