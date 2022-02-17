@@ -8,8 +8,8 @@
             <th>ID</th>
             <th>Pilot</th>
             <th>Hochgeladen am</th>
-            <th>LR Verletzung</th>
             <th>G-Check</th>
+            <th>LR Verletzung</th>
             <th>Nachricht an Pilot</th>
             <th>Akzeptieren</th>
             <th>Flug löschen</th>
@@ -29,18 +29,21 @@
               <td>
                 <BaseDate :timestamp="flight.createdAt" />
               </td>
-              <td v-if="flight.uncheckedGRecord">
-                <i class="bi bi-exclamation-diamond text-danger"></i>
+              <td>
+                <i
+                  v-if="flight.uncheckedGRecord"
+                  class="bi bi-exclamation-diamond text-danger"
+                ></i>
+                <i v-else class="bi bi-check-circle text-success"></i>
               </td>
-              <td v-else>
-                <i class="bi bi-slash-circle text-success"></i>
+
+              <td>
+                <i
+                  v-if="flight.airspaceViolation"
+                  class="bi bi-exclamation-diamond text-danger"
+                ></i>
               </td>
-              <td v-if="flight.airspaceViolation">
-                <i class="bi bi-exclamation-diamond text-danger"></i>
-              </td>
-              <td v-else>
-                <i class="bi bi-slash-circle text-success"></i>
-              </td>
+
               <td>
                 <button
                   class="btn btn-outline-primary btn-sm"
@@ -92,6 +95,9 @@
     :show-spinner="showSpinner"
     :error-message="errorMessage"
   />
+  <!-- TODO: When using this modal the reply-to email address will be the 
+  one of the admin account used and not info@xccup.net 
+  Is that the way we want it to be? -->
   <ModalSendMail modal-id="messagePilotModal" :user="selectedUser" />
 </template>
 
@@ -100,7 +106,7 @@ import ApiService from "@/services/ApiService.js";
 import { useRouter } from "vue-router";
 import BaseDate from "../BaseDate.vue";
 import { Modal } from "bootstrap";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 const router = useRouter();
 
@@ -122,6 +128,12 @@ try {
     name: "NetworkError",
   });
 }
+
+// Count and expose open flight tickets
+const count = computed(() => flights.value.length);
+defineExpose({
+  count,
+});
 
 // Modals
 const deleteFlightModal = ref(null);
@@ -159,6 +171,7 @@ const deleteFlight = async () => {
     showSpinner.value = false;
   }
 };
+
 // Accept flight
 const onAcceptFlight = (flight) => {
   selectedFlight.value = flight;
@@ -170,7 +183,7 @@ const acceptFlight = async () => {
   try {
     await ApiService.acceptFlightViolations(selectedFlight.value.id);
     await fetchFlightsWithViolations();
-    deleteFlightModal.value.hide();
+    acceptFlightModal.value.hide();
   } catch (error) {
     errorMessage.value = "Da ist leider was schief gelaufen";
     console.log(error);

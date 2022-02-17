@@ -18,7 +18,11 @@
           aria-selected="true"
         >
           Flüge
-          <span class="badge rounded-pill bg-danger">2</span>
+          <span
+            v-if="adminFlights?.count > 0"
+            class="badge rounded-pill bg-danger"
+            >{{ adminFlights?.count }}</span
+          >
         </button>
         <button
           id="nav-sites-tab"
@@ -53,7 +57,7 @@
         role="tabpanel"
         aria-labelledby="nav-flights-tab"
       >
-        <AdminFlights />
+        <AdminFlights ref="adminFlights" />
       </div>
       <div
         id="nav-sites"
@@ -73,16 +77,15 @@
       </div>
     </div>
   </div>
-  <!-- <div class="container-fluid">
-    <h3>Kommandozentrale</h3>
-  </div>
-  <AdminSites />
-  <AdminNews /> -->
 </template>
 
 <script setup>
 import { setWindowName } from "../helper/utils";
+import { ref } from "vue";
+
 setWindowName("Admin");
+
+const adminFlights = ref(null);
 </script>
 
 <style scoped></style>

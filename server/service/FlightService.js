@@ -341,10 +341,11 @@ const flightService = {
 
     deleteCache(["home", "flights", "results"]);
 
+    // TODO: Should the check for airspace violations not be independent from the elevation attacher?
     ElevationAttacher.execute(
       FlightFixes.mergeData(fixes),
       async (fixesWithElevation) => {
-        //TODO Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
+        // TODO: Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
         for (let i = 0; i < fixes.timeAndHeights.length; i++) {
           fixes.timeAndHeights[i].elevation = fixesWithElevation[i].elevation;
         }
