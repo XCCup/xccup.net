@@ -81,6 +81,8 @@ const service = {
   },
 
   getClub: async (year, limit) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
     if (year < 2022) {
       const oldResult = await findOldResult(year, "club");
       if (oldResult)
@@ -90,8 +92,6 @@ const service = {
           limit
         );
     }
-
-    const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
     const resultQuery = await queryDb({ where });
@@ -109,6 +109,8 @@ const service = {
   },
 
   getTeam: async (year, siteRegion, limit) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
     if (year < 2022) {
       const oldResult = await findOldResult(year, "team");
       if (oldResult)
@@ -124,7 +126,6 @@ const service = {
         );
     }
 
-    const seasonDetail = await retrieveSeasonDetails(year);
 
     const teamsOfSeason = await teamService.getAll({
       year,
@@ -218,6 +219,8 @@ const service = {
    * @returns The results of the ranking for this country or state of the provided year
    */
   getCountryOrState: async (year, isoCode, limit) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
     if (year < 2022) {
       const oldResult = await findOldResult(year, isoCode);
       if (oldResult)
@@ -230,8 +233,6 @@ const service = {
           limit
         );
     }
-
-    const seasonDetail = await retrieveSeasonDetails(year);
 
     const where = createDefaultWhereForFlight(seasonDetail);
     where.homeStateOfUser = isoCode;
@@ -801,7 +802,7 @@ async function calcSeniorBonusForFlightResult(result) {
           flight.flightPoints = Math.round(
             (flight.flightPoints *
               (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
-              100
+            100
           );
 
           totalPoints += flight.flightPoints;
