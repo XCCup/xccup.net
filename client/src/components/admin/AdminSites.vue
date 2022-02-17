@@ -1,8 +1,9 @@
 <template>
   <section class="pb-3">
-    <div id="adminSitesPanel" class="container-fluid">
+    <div id="adminSitesPanel">
+      <h5>Ausstehende Fluggebietsprüfungen</h5>
+
       <div v-if="proposedSitesPresent" class="table-responsive">
-        <h5>Ausstehende Fluggebietsprüfungen</h5>
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Name</th>
