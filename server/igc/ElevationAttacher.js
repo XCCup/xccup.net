@@ -25,7 +25,7 @@ function createPromise() {
 
 function executeRequest(stack) {
   // TODO: Domain was hardcoded in the log…
-  logger.debug("Request Elevation Data at  XXX");
+  logger.debug(`Request Elevation Data at ${elevationUrl}`);
 
   let locations = stack
     .map(({ fix }) => `${fix.latitude},${fix.longitude}`)
@@ -61,6 +61,7 @@ const resolveStack = debounce(async () => {
       response = await executeRequest(stack);
     }
     const jsonData = response.data;
+    console.log(jsonData);
     stack.forEach(({ resolve }, index) => {
       const GND = jsonData.results[index].elevation;
       resolve(Math.round(GND));
