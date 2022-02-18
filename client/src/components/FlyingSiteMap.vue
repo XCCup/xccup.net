@@ -55,12 +55,6 @@ onMounted(() => {
     gestureHandling: true,
   });
 
-  terrain.addTo(map.value);
-  createTakeOffMarkers(props.sites).addTo(map.value);
-
-  L.control.layers(baseMaps).addTo(map.value);
-  map.value.setView([50.143, 7.146], 8);
-
   // Fix for default marker image paths
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.imagePath = "/";
@@ -69,6 +63,12 @@ onMounted(() => {
     iconUrl: iconUrl,
     shadowUrl: shadowUrl,
   });
+
+  terrain.addTo(map.value);
+  createTakeOffMarkers(props.sites).addTo(map.value);
+
+  L.control.layers(baseMaps).addTo(map.value);
+  map.value.setView([50.143, 7.146], 8);
 });
 
 const createPopupContent = (site) => {
