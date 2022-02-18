@@ -61,7 +61,6 @@ const resolveStack = debounce(async () => {
       response = await executeRequest(stack);
     }
     const jsonData = response.data;
-    console.log(jsonData);
     stack.forEach(({ resolve }, index) => {
       const GND = jsonData.results[index].elevation;
       resolve(Math.round(GND));
