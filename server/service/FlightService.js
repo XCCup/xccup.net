@@ -239,7 +239,7 @@ const flightService = {
     // });
 
     // // Refactor array of objects to plain array of strings
-    const brands = await Brand.findAll();
+    const brands = await Brand.findAll({ order: [["name", "ASC"]] });
     return brands.map((e) => e.name);
   },
 
