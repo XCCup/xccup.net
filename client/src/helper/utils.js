@@ -84,12 +84,23 @@ export function checkIfDateIsDaysBeforeToday(date, daysBeforeToday) {
 }
 export function activateHtmlLinks(message) {
   // Create clickable links from link text
-  const URLMatcher =
-    /(?:(?:https):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?/i;
 
-  const html = message.replace(
-    URLMatcher,
-    (match) => `<a href="${match}" target="_blank">${match}</a>`
-  );
+  const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+
+  // Leave the stricter rule here for reference
+  // const urlRegex =
+  //   /(?:(?:https):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?/g;
+
+  const html = message.replace(urlRegex, (url) => {
+    let hyperlink = url;
+
+    if (!hyperlink.match("^https?://")) {
+      hyperlink = "https://" + hyperlink;
+    }
+    // Open internal links in same window
+    if (url.startsWith("https://xccup.net"))
+      return `<a href="${hyperlink}" >${url}</a>`;
+    return `<a href="${hyperlink}" target="_blank">${hyperlink}</a>`;
+  });
   return html;
 }
