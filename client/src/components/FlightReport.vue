@@ -13,7 +13,7 @@
     </div>
     <div v-if="flight.report" class="row mt-4" data-cy="flight-report">
       <h3>Flugbericht</h3>
-      <!-- eslint-disable-next-line vue/no-v-html -> Will be sanitzed in function sanitizeComment -->
+      <!-- eslint-disable-next-line vue/no-v-html -> Will be sanitzed in function activateHtmlLinks -->
       <p class="allow-white-spaces" v-html="reportWithLinks"></p>
     </div>
   </div>
@@ -22,9 +22,9 @@
 <script setup>
 import useFlight from "@/composables/useFlight";
 import { computed } from "vue";
-import { sanitizeComment } from "../helper/utils";
+import { activateHtmlLinks } from "../helper/utils";
 const { flight } = useFlight();
-const reportWithLinks = computed(() => sanitizeComment(flight.value.report));
+const reportWithLinks = computed(() => activateHtmlLinks(flight.value.report));
 </script>
 
 <style scoped></style>

@@ -20,7 +20,14 @@
             <td>
               <i class="bi fs-2" :class="entry.icon"></i>
             </td>
-            <td>{{ snipText(entry.message) }}</td>
+            <!-- eslint-disable vue/no-v-html -->
+            <td
+              class="allow-white-spaces"
+              data-cy="news-text"
+              v-html="activateHtmlLinks(snipText(entry.message))"
+            ></td>
+            <!--eslint-enable-->
+
             <td>
               <BaseDate :timestamp="entry.from" />
             </td>
@@ -79,7 +86,8 @@ import { useRouter } from "vue-router";
 import { MAX_NEWS_CHARACTERS } from "@/common/Constants";
 import { GENERIC_ERROR } from "@/common/Constants";
 import { Modal } from "bootstrap";
-import { adjustDateToLocal } from "../../helper/utils";
+import { adjustDateToLocal, activateHtmlLinks } from "../../helper/utils";
+
 import { cloneDeep } from "lodash-es";
 
 const router = useRouter();
