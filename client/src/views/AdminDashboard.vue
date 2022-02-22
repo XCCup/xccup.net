@@ -1,15 +1,97 @@
 <template>
-  <div class="container-fluid">
-    <h3>Kommandozentrale</h3>
+  <div class="container">
+    <h3 data-cy="admin-headline">Admin Dashboard</h3>
+    <nav>
+      <div
+        id="nav-tab"
+        class="nav nav-tabs flex-column flex-sm-row"
+        role="tablist"
+      >
+        <button
+          id="nav-flights-tab"
+          class="nav-link active"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-flights"
+          type="button"
+          role="tab"
+          aria-controls="nav-flights"
+          aria-selected="true"
+        >
+          Flüge
+          <span
+            v-if="adminFlights?.count > 0"
+            class="badge rounded-pill bg-danger"
+            >{{ adminFlights?.count }}</span
+          >
+        </button>
+        <button
+          id="nav-sites-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-sites"
+          type="button"
+          role="tab"
+          aria-controls="nav-sites"
+          aria-selected="false"
+        >
+          Fluggebiete
+          <span
+            v-if="adminSites?.count > 0"
+            class="badge rounded-pill bg-danger"
+            >{{ adminSites?.count }}</span
+          >
+        </button>
+        <button
+          id="nav-news-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-news"
+          type="button"
+          role="tab"
+          aria-controls="nav-news"
+          aria-selected="false"
+        >
+          News
+        </button>
+      </div>
+    </nav>
+    <div id="nav-tabContent" class="tab-content">
+      <div
+        id="nav-flights"
+        class="tab-pane fade show active"
+        role="tabpanel"
+        aria-labelledby="nav-flights-tab"
+      >
+        <AdminFlights ref="adminFlights" />
+      </div>
+      <div
+        id="nav-sites"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-sites-tab"
+      >
+        <AdminSites ref="adminSites" />
+      </div>
+      <div
+        id="nav-news"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-news-tab"
+      >
+        <AdminNews />
+      </div>
+    </div>
   </div>
-  <AdminFlights />
-  <AdminSites />
-  <AdminNews />
 </template>
 
 <script setup>
 import { setWindowName } from "../helper/utils";
+import { ref } from "vue";
+
 setWindowName("Admin");
+
+const adminFlights = ref(null);
+const adminSites = ref(null);
 </script>
 
 <style scoped></style>

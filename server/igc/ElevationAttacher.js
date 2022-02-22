@@ -24,7 +24,8 @@ function createPromise() {
 }
 
 function executeRequest(stack) {
-  logger.debug("Request Elevation Data at lurb.org");
+  // TODO: Domain was hardcoded in the log…
+  logger.debug(`Request Elevation Data at ${elevationUrl}`);
 
   let locations = stack
     .map(({ fix }) => `${fix.latitude},${fix.longitude}`)

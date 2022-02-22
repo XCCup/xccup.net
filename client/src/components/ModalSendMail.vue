@@ -30,8 +30,8 @@
               Kontaktaufnahme mit Dir deine persönliche E-Mail-Adresse.
             </p>
             <br />
-            <BaseInput v-model="content.title" label="Betreff" />
-            <BaseTextarea v-model="content.text" label="Inhalt" />
+            <BaseInput v-model="mailSubject" label="Betreff" />
+            <BaseTextarea v-model="mailMessage" label="Inhalt" />
           </div>
           <div v-else>
             {{ afterMessage }}
@@ -72,7 +72,7 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 
-import { computed, ref, reactive, toRefs } from "vue";
+import { computed, ref } from "vue";
 
 const mailSent = ref(false);
 const showSpinner = ref(false);
@@ -88,22 +88,18 @@ const props = defineProps({
     required: true,
   },
 });
-
-const content = reactive({
-  title: "",
-  text: "",
-});
+const mailSubject = ref("");
+const mailMessage = ref("");
 
 const saveButtonIsEnabled = computed(() => {
-  return content.title.length > 2 && content.text.length > 2;
+  return mailSubject.value.length > 2 && mailMessage.value.length > 2;
 });
 
 const onClose = () => {
   mailSent.value = false;
   afterMessage.value = "";
-  const { title, text } = toRefs(content);
-  title.value = "";
-  text.value = "";
+  mailSubject.value = "";
+  mailMessage.value = "";
 };
 
 const onSendMail = async () => {
@@ -113,15 +109,15 @@ const onSendMail = async () => {
   const mail = {
     toUserId: props.user.id,
     content: {
-      title: content.title,
-      text: content.text,
+      title: mailSubject.value,
+      text: mailMessage.value,
     },
   };
 
   try {
     const res = await ApiService.sendMailToSingleUser(mail);
     if (res.status != 200) throw res.statusText;
-
+    // TODO: Show sweetalert instead
     afterMessage.value = "Deine Nachricht wurde versendet";
   } catch (error) {
     afterMessage.value = "Es gab ein Problem beim senden Deiner Nachricht";

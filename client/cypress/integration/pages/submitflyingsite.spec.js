@@ -46,6 +46,7 @@ describe("check flyingsites page", () => {
 
     // Find the proposed site
     cy.visit("/admin");
+    cy.get("#nav-sites-tab").click();
 
     cy.get("#adminSitesPanel").within(() => {
       cy.get("table")
@@ -70,7 +71,7 @@ describe("check flyingsites page", () => {
         .click();
     });
 
-    cy.get("button").contains("Akzeptieren").click();
+    cy.clickButtonInModal("#modalSiteConfirm", "Akzeptieren");
 
     // Check that the former proposed site is no longer listed
     cy.get("#adminSitesPanel")

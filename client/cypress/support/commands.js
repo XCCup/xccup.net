@@ -58,7 +58,7 @@ Cypress.Commands.add("loginAdminUser", () => {
   cy.url().should("include", "/login");
   cy.get("h3").should("have.text", "Login");
 
-  cy.get("input#email").type("next@xccup.net");
+  cy.get("input#email").type("steph@xccup.net");
   cy.get("input#password").type("PW_CamilleSchaden");
 
   cy.get("button").contains("Anmelden").click();

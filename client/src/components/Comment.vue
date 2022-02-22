@@ -95,7 +95,7 @@ import useComments from "@/composables/useComments";
 import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
-import { sanitizeComment } from "../helper/utils";
+import { activateHtmlLinks } from "../helper/utils";
 import { GENERIC_ERROR } from "@/common/Constants";
 
 const { getUserId } = useUser();
@@ -111,7 +111,9 @@ const props = defineProps({
 const showSpinner = ref(false);
 const errorMessage = ref(null);
 
-const commentWithLinks = computed(() => sanitizeComment(props.comment.message));
+const commentWithLinks = computed(() =>
+  activateHtmlLinks(props.comment.message)
+);
 
 const avatarUrl = createUserPictureUrl(props.comment.user.id);
 
