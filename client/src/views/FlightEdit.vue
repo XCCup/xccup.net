@@ -18,7 +18,6 @@
     </div>
     <!-- TODO: Admin edit shows wrong gliders -->
     <GliderSelect
-      v-if="getUserId == flight.userId"
       v-model="modifiedFlightData.glider.id"
       :show-label="true"
       :gliders="listOfGliders"
@@ -119,19 +118,18 @@ import { computed, ref, onMounted } from "vue";
 import useFlight from "@/composables/useFlight";
 import useFlightEdit from "@/composables/useFlightEdit";
 import ApiService from "@/services/ApiService";
-import useUser from "@/composables/useUser";
-
 import { useRoute } from "vue-router";
 import { cloneDeep } from "lodash-es";
 import router from "../router";
 import { asyncForEach } from "../helper/utils";
 import { Modal } from "bootstrap";
 import useSwal from "../composables/useSwal";
-const { getUserId } = useUser();
+import useUser from "../composables/useUser";
 
 const { showSuccessAlert } = useSwal();
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
+const { hasElevatedRole } = useUser();
 const { modifiedFlightData, unmodifiedFlightData, resetState } =
   useFlightEdit();
 
@@ -169,7 +167,11 @@ if (modifiedFlightData.value.externalId != route.params.id) {
 
 const fetchGliders = async () => {
   try {
-    const res = await ApiService.getGliders();
+    console.log("User ID: ", flight.value.userId);
+    console.log("User Elevated: ", hasElevatedRole.value);
+    const res = hasElevatedRole.value
+      ? await ApiService.getGliders(flight.value.userId)
+      : await ApiService.getGliders();
     if (res.status != 200) throw res.statusText;
     listOfGliders.value = res.data.gliders;
   } catch (error) {
