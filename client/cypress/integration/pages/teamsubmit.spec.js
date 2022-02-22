@@ -14,7 +14,7 @@ describe("check flyingsites page", () => {
   });
 
   it("test user is already in a team", () => {
-    cy.login("blackhole+leo@stephanschoepe.de", "PW_LeoAltenwerth");
+    cy.login("blackhole+leo@xccup.net", "PW_LeoAltenwerth");
     cy.visit("/teammeldung");
 
     cy.get("h3").should("have.text", "Teammeldung");
@@ -34,7 +34,7 @@ describe("check flyingsites page", () => {
       "Christie Schaefer",
       "Everett Gislason",
     ];
-    cy.login("blackhole+olive@stephanschoepe.de", "PW_OliveEmmerich");
+    cy.login("blackhole+olive@xccup.net", "PW_OliveEmmerich");
     cy.visit("/teammeldung");
 
     cy.get("h3").should("have.text", "Teammeldung");

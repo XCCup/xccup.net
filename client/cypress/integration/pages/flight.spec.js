@@ -41,18 +41,6 @@ describe("check flight page", () => {
     cy.get("[data-cy=airspace-comment]").should("not.exist");
   });
 
-  it("check flight comments", () => {
-    cy.get("#flight-comments");
-    cy.get("#comment-5edc5c1c-3421-41f4-8d39-cb8f2f8ada44").contains(
-      "Lois White"
-    );
-    cy.get("#comment-5edc5c1c-3421-41f4-8d39-cb8f2f8ada46").contains(
-      "Olive Emmerich"
-    );
-
-    // TODO: Test more details
-  });
-
   it("check add a new comment", () => {
     const link = "https://www.xccup.net";
     const newComment = `Foo Bar ${link}`;
