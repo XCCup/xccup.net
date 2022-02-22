@@ -75,6 +75,21 @@
           <i class="bi bi-trash mx-1"></i>Löschen
         </a>
       </div>
+      <div
+        v-if="hasElevatedRole && !showCommentEditor"
+        class="text-secondary text-end"
+      >
+        <a href="#" class="text-danger" @click.prevent="onEditComment"
+          ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten (Admin)</a
+        >
+        <a
+          href="#"
+          class="text-danger"
+          @click.prevent="deleteCommentModal.show()"
+        >
+          <i class="bi bi-trash mx-1"></i>Löschen (Admin)
+        </a>
+      </div>
     </div>
   </div>
 
@@ -98,7 +113,7 @@ import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import { activateHtmlLinks } from "../helper/utils";
 import { GENERIC_ERROR } from "@/common/Constants";
 
-const { getUserId } = useUser();
+const { getUserId, hasElevatedRole } = useUser();
 const { deleteComment, editComment, submitComment } = useComments();
 
 const props = defineProps({
