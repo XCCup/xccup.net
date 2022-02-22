@@ -106,7 +106,12 @@ const props = defineProps({
 });
 
 const news = ref(null);
-const newsIcons = ["bi-alarm", "bi-megaphone", "bi-exclamation-octagon"];
+const newsIcons = [
+  "bi-alarm",
+  "bi-megaphone",
+  "bi-exclamation-octagon",
+  "bi bi-calendar-event",
+];
 
 watchEffect(() => {
   news.value = props.newsObject;
