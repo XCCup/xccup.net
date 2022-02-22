@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h5 data-cy="admin-headline">Admin Dashboard</h5>
+    <h3 data-cy="admin-headline">Admin Dashboard</h3>
     <nav>
       <div
         id="nav-tab"
@@ -35,6 +35,11 @@
           aria-selected="false"
         >
           Fluggebiete
+          <span
+            v-if="adminSites?.count > 0"
+            class="badge rounded-pill bg-danger"
+            >{{ adminSites?.count }}</span
+          >
         </button>
         <button
           id="nav-news-tab"
@@ -65,7 +70,7 @@
         role="tabpanel"
         aria-labelledby="nav-sites-tab"
       >
-        <AdminSites />
+        <AdminSites ref="adminSites" />
       </div>
       <div
         id="nav-news"
@@ -86,6 +91,7 @@ import { ref } from "vue";
 setWindowName("Admin");
 
 const adminFlights = ref(null);
+const adminSites = ref(null);
 </script>
 
 <style scoped></style>

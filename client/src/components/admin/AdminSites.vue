@@ -99,6 +99,12 @@ onMounted(() => {
 
 await fetchProposedSites();
 
+// Count and expose open flight tickets
+const count = computed(() => sites.value.length);
+defineExpose({
+  count,
+});
+
 async function fetchProposedSites() {
   try {
     const res = await ApiService.getSitesProposed();
