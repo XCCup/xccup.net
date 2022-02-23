@@ -136,7 +136,10 @@ const service = {
       text: AIRSPACE_VIOLATION_TEXT(user.firstName, flightLinkUrl),
     };
 
-    return sendMail(user.email, content);
+    const adminMail = config.get("mailServiceFromEmail");
+    const mailReceivers = [user.email, adminMail];
+
+    return sendMail(mailReceivers, content);
   },
 
   sendAddedToTeamMail: async (teamName, memberIds) => {
