@@ -7,8 +7,8 @@ const sendMail = require("../config/email");
 
 const DAILY_WINNER_THRESHOLD = 5;
 
-// Run the job every day at 22:00
-const task = cron.schedule("* 22 * * *", informAboutDailyWinner);
+// Run the job every day at 22:15
+const task = cron.schedule("15 22 * * *", informAboutDailyWinner);
 
 logger.info("DWE: Will start cron job: daily winner email");
 task.start();
@@ -37,14 +37,14 @@ async function informAboutDailyWinner() {
         text: `Hallo Wolf,
 Heute gab es insgesamt ${result.length} Wertungsflüge. 
         
-Bis jetzt ${new Date().toISOString()} liegt der Flug https://xccup.net/flug/${
+Bis jetzt ${moment().format("HH:mm")} liegt der Flug https://xccup.net/flug/${
           result[0].externalId
         } vorne. Den aktuell Stand findest du auf der Startseite https://xccup.net.
         
 Viele Grüße Deine Admins`,
       };
 
-      sendMail(["info@xccup.net"], content);
+      sendMail(["wolf@xccup.net", "info@xccup.net"], content);
     }
   } catch (error) {
     logger.error(
