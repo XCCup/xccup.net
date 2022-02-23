@@ -62,6 +62,28 @@ const service = {
         );
     }
 
+    if (
+      year < 2022 &&
+      gender == GENDER.FEMALE &&
+      !(
+        rankingClass ||
+        homeStateOfUser ||
+        isSenior ||
+        isWeekend ||
+        isHikeAndFly ||
+        siteId ||
+        clubId
+      )
+    ) {
+      const oldResult = await findOldResult(year, "ladies");
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          { NUMBER_OF_SCORED_FLIGHTS },
+          limit
+        );
+    }
+
     const where = createDefaultWhereForFlight(seasonDetail, isSenior);
     if (rankingClass) {
       const gliderClasses =
