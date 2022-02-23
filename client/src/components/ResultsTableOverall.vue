@@ -39,7 +39,10 @@
             @click="routeToFlight(flight.externalId)"
           >
             <td>
-              <BaseDate :timestamp="flight.takeoffTime" date-format="dd.MM" />
+              <BaseDate
+                :timestamp="flight.takeoffTime"
+                :date-format="$route.params.year ? 'dd.MM' : 'dd.MM.yy'"
+              />
             </td>
 
             <td>
