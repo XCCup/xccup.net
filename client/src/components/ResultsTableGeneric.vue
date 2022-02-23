@@ -33,7 +33,7 @@
             <td v-for="n in maxFlights" :key="n" class="no-line-break">
               <RankingClass
                 v-if="result.flights[n - 1]?.flightPoints"
-                :ranking-class="result.flights[n - 1].glider.gliderClass"
+                :ranking-class="result.flights[n - 1].glider?.gliderClass ?? {}"
               />
               <router-link
                 v-if="result.flights[n - 1]"

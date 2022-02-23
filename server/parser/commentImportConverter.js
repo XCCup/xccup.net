@@ -40,9 +40,9 @@ lineReader.on("close", function () {
 
   commentsToDelete.forEach((c) => console.log(c));
 
-  const filteredComments = comments.filter(
-    (c) => !commentsToDelete.includes(c.CommentID)
-  );
+  const filteredComments = comments
+    .filter((c) => !commentsToDelete.includes(c.CommentID))
+    .filter((c) => c.Status == 0);
 
   fs.writeFile(
     "commentsImport.json",
