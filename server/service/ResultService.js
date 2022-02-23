@@ -40,6 +40,28 @@ const service = {
   }) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
+    if (
+      year < 2022 &&
+      !(
+        rankingClass ||
+        gender ||
+        homeStateOfUser ||
+        isSenior ||
+        isWeekend ||
+        isHikeAndFly ||
+        siteId ||
+        clubId
+      )
+    ) {
+      const oldResult = await findOldResult(year, "overall");
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          { NUMBER_OF_SCORED_FLIGHTS },
+          limit
+        );
+    }
+
     const where = createDefaultWhereForFlight(seasonDetail, isSenior);
     if (rankingClass) {
       const gliderClasses =
@@ -125,7 +147,6 @@ const service = {
           limit
         );
     }
-
 
     const teamsOfSeason = await teamService.getAll({
       year,
@@ -802,7 +823,7 @@ async function calcSeniorBonusForFlightResult(result) {
           flight.flightPoints = Math.round(
             (flight.flightPoints *
               (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
-            100
+              100
           );
 
           totalPoints += flight.flightPoints;
