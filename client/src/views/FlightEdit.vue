@@ -124,10 +124,12 @@ import router from "../router";
 import { asyncForEach } from "../helper/utils";
 import { Modal } from "bootstrap";
 import useSwal from "../composables/useSwal";
+import useUser from "../composables/useUser";
 
 const { showSuccessAlert } = useSwal();
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
+const { hasElevatedRole } = useUser();
 const { modifiedFlightData, unmodifiedFlightData, resetState } =
   useFlightEdit();
 
@@ -165,7 +167,11 @@ if (modifiedFlightData.value.externalId != route.params.id) {
 
 const fetchGliders = async () => {
   try {
-    const res = await ApiService.getGliders();
+    console.log("User ID: ", flight.value.userId);
+    console.log("User Elevated: ", hasElevatedRole.value);
+    const res = hasElevatedRole.value
+      ? await ApiService.getGliders(flight.value.userId)
+      : await ApiService.getGliders();
     if (res.status != 200) throw res.statusText;
     listOfGliders.value = res.data.gliders;
   } catch (error) {

@@ -23,6 +23,7 @@ const {
   createRefreshToken,
   logoutToken,
   refreshToken,
+  requesterIsNotModerator,
 } = require("./Auth");
 const { query } = require("express-validator");
 const { createRateLimiter } = require("./api-protection");
@@ -611,6 +612,29 @@ router.put("/gliders/default/:id", authToken, async (req, res, next) => {
     next(error);
   }
 });
+
+// @desc Retrieves the gliders of an user.
+// @route GET /users/gliders/:userId
+// Only moderator
+
+router.get(
+  "/gliders/get/:userId",
+  authToken,
+  checkParamIsUuid("userId"),
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      if (validationHasErrors(req, res)) return;
+      const userId = req.params.userId;
+
+      const result = await service.getGlidersById(userId);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 // @desc Retrieves the gliders of an user.
 // @route GET /users/gliders/
