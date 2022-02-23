@@ -65,13 +65,13 @@ Dein XCCup Team
 module.exports.NOTIFY_CHANGE_EMAIL_TITLE =
   "Änderungen deiner Email Adresse im XCCup";
 
-// TODO: Replace admin email
+// TODO: Replace admin email with Constant or env
 module.exports.NOTIFY_CHANGE_EMAIL_TEXT = (firstName, newEmail) =>
   `Hallo ${firstName}!
 
 Du hast die Änderung deiner Email-Adresse angefordert. Wir haben dir eine Email mit einem Aktivierungslink an deine neue Email-Adresse (${newEmail}) geschickt.
 
-Falls du diese Änderung nicht angefordert hast wende dich bitte an next@xccup.net
+Falls du diese Änderung nicht angefordert hast wende dich bitte an info@xccup.net
 
 Dein XCCup Team
     

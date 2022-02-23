@@ -3,6 +3,7 @@ const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
 const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
+const Result = require("../config/postgres")["Result"];
 
 const seasonService = require("./SeasonService");
 const teamService = require("./TeamService");
@@ -17,14 +18,6 @@ const {
   NUMBER_OF_SCORED_FLIGHTS,
   NEWCOMER_MAX_RANKING_CLASS,
 } = require("../config/result-determination-config");
-const {
-  REMARKS_NEWCOMER,
-  REMARKS_STATE,
-  REMARKS_SENIOR,
-  REMARKS_TEAM,
-  REMARKS_EARLYBIRD,
-  REMARKS_LATEBIRD,
-} = require("../constants/result-remarks-constants");
 const moment = require("moment");
 
 const cacheNonNewcomer = [];
@@ -90,6 +83,16 @@ const service = {
   getClub: async (year, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, "club");
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          { NUMBER_OF_SCORED_FLIGHTS },
+          limit
+        );
+    }
+
     const where = createDefaultWhereForFlight(seasonDetail);
     const resultQuery = await queryDb({ where });
 
@@ -107,6 +110,22 @@ const service = {
 
   getTeam: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
+
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, "team");
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          {
+            NUMBER_OF_SCORED_FLIGHTS,
+            TEAM_DISMISSES,
+            TEAM_SIZE,
+            REMARKS: seasonDetail.misc?.textMessages?.resultsTeam,
+          },
+          limit
+        );
+    }
+
 
     const teamsOfSeason = await teamService.getAll({
       year,
@@ -147,7 +166,7 @@ const service = {
         NUMBER_OF_SCORED_FLIGHTS,
         TEAM_DISMISSES,
         TEAM_SIZE,
-        REMARKS: REMARKS_TEAM(TEAM_DISMISSES),
+        REMARKS: seasonDetail.misc?.textMessages?.resultsTeams,
       },
       limit
     );
@@ -155,6 +174,21 @@ const service = {
 
   getSenior: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
+
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, "seniors");
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          {
+            NUMBER_OF_SCORED_FLIGHTS,
+            SENIOR_START_AGE: seasonDetail.seniorStartAge,
+            SENIOR_BONUS_PER_AGE: seasonDetail.seniorBonusPerAge,
+            REMARKS: seasonDetail.misc?.textMessages?.resultsSeniors,
+          },
+          limit
+        );
+    }
 
     const where = createDefaultWhereForFlight(seasonDetail, true);
     const resultQuery = await queryDb({ where, siteRegion });
@@ -170,10 +204,7 @@ const service = {
         NUMBER_OF_SCORED_FLIGHTS,
         SENIOR_START_AGE: seasonDetail.seniorStartAge,
         SENIOR_BONUS_PER_AGE: seasonDetail.seniorBonusPerAge,
-        REMARKS: REMARKS_SENIOR(
-          seasonDetail.seniorStartAge,
-          seasonDetail.seniorBonusPerAge
-        ),
+        REMARKS: seasonDetail.misc?.textMessages?.resultsSeniors,
       },
       limit
     );
@@ -190,6 +221,19 @@ const service = {
   getCountryOrState: async (year, isoCode, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, isoCode);
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          {
+            NUMBER_OF_SCORED_FLIGHTS,
+            REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
+          },
+          limit
+        );
+    }
+
     const where = createDefaultWhereForFlight(seasonDetail);
     where.homeStateOfUser = isoCode;
 
@@ -200,14 +244,13 @@ const service = {
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
-    await calcSeniorBonusForFlightResult(result);
     sortDescendingByTotalPoints(result);
 
     return addConstantInformationToResult(
       result,
       {
         NUMBER_OF_SCORED_FLIGHTS,
-        REMARKS_STATE,
+        REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
       },
       limit
     );
@@ -228,7 +271,7 @@ const service = {
     return addConstantInformationToResult(
       resultSingleUserEntries,
       {
-        REMARKS: REMARKS_EARLYBIRD,
+        REMARKS: seasonDetail.misc?.textMessages?.resultsEarlybird,
       },
       20
     );
@@ -249,7 +292,7 @@ const service = {
     return addConstantInformationToResult(
       resultSingleUserEntries,
       {
-        REMARKS: REMARKS_LATEBIRD,
+        REMARKS: seasonDetail.misc?.textMessages?.resultsLatebird,
       },
       20
     );
@@ -257,6 +300,19 @@ const service = {
 
   getNewcomer: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
+
+    if (year < 2022) {
+      const oldResult = await findOldResult(year, "newcomer");
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          {
+            NUMBER_OF_SCORED_FLIGHTS,
+            REMARKS: seasonDetail.misc?.textMessages?.resultsNewcomer,
+          },
+          limit
+        );
+    }
 
     const where = createDefaultWhereForFlight(seasonDetail);
     const rankingClass =
@@ -272,7 +328,6 @@ const service = {
     const resultsNewcomer = await removeNonNewcomer(resultAllUsers, year);
 
     limitFlightsForUserAndCalcTotals(resultsNewcomer, NUMBER_OF_SCORED_FLIGHTS);
-    calcSeniorBonusForFlightResult(resultsNewcomer);
     sortDescendingByTotalPoints(resultsNewcomer);
 
     return addConstantInformationToResult(
@@ -280,7 +335,7 @@ const service = {
       {
         NUMBER_OF_SCORED_FLIGHTS,
         NEWCOMER_MAX_RANKING_CLASS: rankingClass.description,
-        REMARKS: REMARKS_NEWCOMER(rankingClass.description),
+        REMARKS: seasonDetail.misc?.textMessages?.resultsNewcomer,
       },
       limit
     );
@@ -296,6 +351,16 @@ const service = {
     return mergeRecordsByTakeoffs(records);
   },
 };
+
+async function findOldResult(season, type) {
+  const result = await Result.findOne({
+    where: {
+      season,
+      type,
+    },
+  });
+  return result ? result.result : undefined;
+}
 
 function markFlightsToDismiss(team) {
   let allFlights = [];
@@ -737,7 +802,7 @@ async function calcSeniorBonusForFlightResult(result) {
           flight.flightPoints = Math.round(
             (flight.flightPoints *
               (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
-              100
+            100
           );
 
           totalPoints += flight.flightPoints;

@@ -14,7 +14,13 @@
           ><BaseDate :timestamp="newsItem.from" date-format="dd.MM.yyyy"
         /></small>
         -
-        <span data-cy="news-item-text"> {{ snippedText }}</span>
+        <!-- eslint-disable vue/no-v-html -->
+        <span
+          data-cy="news-item-text"
+          class="allow-white-spaces"
+          v-html="activateHtmlLinks(snippedText)"
+        ></span>
+        <!--eslint-enable-->
       </p>
 
       <!-- TODO: Animate this? -->
@@ -34,6 +40,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import { MAX_NEWS_CHARACTERS } from "@/common/Constants";
+import { activateHtmlLinks } from "../helper/utils";
 
 const props = defineProps({
   newsItem: {

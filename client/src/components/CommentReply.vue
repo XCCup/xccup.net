@@ -45,6 +45,17 @@
       <i class="bi bi-trash mx-1"></i>Löschen
     </a>
   </div>
+  <div
+    v-if="hasElevatedRole && !showCommentEditor"
+    class="text-secondary text-end"
+  >
+    <a href="#" class="text-danger" @click.prevent="onEditComment"
+      ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten (Admin)</a
+    >
+    <a href="#" class="text-danger" @click.prevent="deleteCommentModal.show()">
+      <i class="bi bi-trash mx-1"></i>Löschen (Admin)
+    </a>
+  </div>
   <BaseModal
     modal-title="Kommentar löschen?"
     confirm-button-text="Löschen"
@@ -63,10 +74,10 @@ import { ref, onMounted, computed } from "vue";
 import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
-import { sanitizeComment } from "../helper/utils";
+import { activateHtmlLinks } from "../helper/utils";
 import { GENERIC_ERROR } from "@/common/Constants";
 
-const { getUserId } = useUser();
+const { getUserId, hasElevatedRole } = useUser();
 const { deleteComment, editComment } = useComments();
 
 const props = defineProps({
@@ -79,7 +90,7 @@ const props = defineProps({
 const showSpinner = ref(false);
 const errorMessage = ref(null);
 
-const commentWithLinks = computed(() => sanitizeComment(props.reply.message));
+const commentWithLinks = computed(() => activateHtmlLinks(props.reply.message));
 
 const avatarUrl = createUserPictureUrl(props.reply.user.id);
 

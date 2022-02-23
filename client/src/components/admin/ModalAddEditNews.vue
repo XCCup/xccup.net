@@ -22,9 +22,36 @@
         <div class="modal-body">
           <BaseInput v-model="news.title" label="Titel" />
           <BaseTextarea v-model="news.message" label="Nachricht" />
-          <!-- TODO: Icon select. For now just paste the name of an icon as this component needs refactoring anyway 
-          Later a picker would be nice -->
-          <BaseInput v-model="news.icon" :is-required="false" label="Icon" />
+          <label>Icon</label>
+          <div class="row">
+            <div class="col-md-1">
+              <i class="bi fs-3" :class="news.icon"></i>
+            </div>
+            <div class="col-md-11">
+              <select
+                id="newsIconPicker"
+                v-model="news.icon"
+                class="form-select mb-3"
+              >
+                <option selected></option>
+                <option v-for="icon in newsIcons" :key="icon" :value="icon">
+                  {{ icon }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <a
+            href="https://icons.getbootstrap.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            >List of icons</a
+          >
+          <BaseInput
+            v-model="news.icon"
+            :is-required="false"
+            label="Custom icon"
+          />
+
           <BaseDatePicker
             v-model="news.from"
             :lower-limit="new Date()"
@@ -37,14 +64,16 @@
           />
         </div>
         <div class="modal-footer">
+          <BaseError :error-message="errorMessage" />
+
           <button
             type="button"
             class="btn btn-primary"
             :disabled="!saveButtonIsEnabled"
-            data-bs-dismiss="modal"
             @click="onSaveNews"
           >
             Speichern
+            <BaseSpinner v-if="showSpinner" />
           </button>
           <button
             type="button"
@@ -66,9 +95,23 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  showSpinner: {
+    type: Boolean,
+    default: false,
+  },
+  errorMessage: {
+    type: [String, null],
+    default: null,
+  },
 });
 
 const news = ref(null);
+const newsIcons = [
+  "bi-alarm",
+  "bi-megaphone",
+  "bi-exclamation-octagon",
+  "bi bi-calendar-event",
+];
 
 watchEffect(() => {
   news.value = props.newsObject;
@@ -81,7 +124,8 @@ const saveButtonIsEnabled = computed(() => {
     news.value.title.length > 3 &&
     news.value.message.length > 3 &&
     news.value.from &&
-    news.value.till
+    news.value.till &&
+    news.value.icon.length > 6
   );
 });
 

@@ -1,15 +1,15 @@
 <template>
   <section class="pb-3">
-    <div id="adminFlightsPanel" class="container-fluid">
-      <div v-if="violationsPresent" class="table-responsive">
-        <h5>Ausstehende Flugprüfungen</h5>
+    <div v-if="flights.length > 0" id="adminFlightsPanel">
+      <h5>Ausstehende Flugprüfungen</h5>
+      <div class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>ID</th>
             <th>Pilot</th>
             <th>Hochgeladen am</th>
-            <th>LR Verletzung</th>
             <th>G-Check</th>
+            <th>LR Verletzung</th>
             <th>Nachricht an Pilot</th>
             <th>Akzeptieren</th>
             <th>Flug löschen</th>
@@ -29,18 +29,21 @@
               <td>
                 <BaseDate :timestamp="flight.createdAt" />
               </td>
-              <td v-if="flight.uncheckedGRecord">
-                <i class="bi bi-exclamation-diamond text-danger"></i>
+              <td>
+                <i
+                  v-if="flight.uncheckedGRecord"
+                  class="bi bi-exclamation-diamond text-danger"
+                ></i>
+                <i v-else class="bi bi-check-circle text-success"></i>
               </td>
-              <td v-else>
-                <i class="bi bi-slash-circle text-success"></i>
+
+              <td>
+                <i
+                  v-if="flight.airspaceViolation"
+                  class="bi bi-exclamation-diamond text-danger"
+                ></i>
               </td>
-              <td v-if="flight.airspaceViolation">
-                <i class="bi bi-exclamation-diamond text-danger"></i>
-              </td>
-              <td v-else>
-                <i class="bi bi-slash-circle text-success"></i>
-              </td>
+
               <td>
                 <button
                   class="btn btn-outline-primary btn-sm"
@@ -70,91 +73,131 @@
         </table>
       </div>
     </div>
+    <div v-else><h5>Keine ausstehenden Flugprüfungen</h5></div>
   </section>
   <BaseModal
-    :modal-title="confirmModalTitle"
-    :modal-body="confirmMessage"
-    :confirm-button-text="confirmModalButtonText"
-    :modal-id="confirmModalId"
-    :confirm-action="processConfirmResult"
+    modal-title="Flug löschen?"
+    modal-body="Dies kann nicht rückgängig gemacht werden"
+    confirm-button-text="Löschen"
+    modal-id="deleteFlightModal"
+    :confirm-action="deleteFlight"
     :is-dangerous-action="true"
+    :show-spinner="showSpinner"
+    :error-message="errorMessage"
   />
-  <ModalSendMail :modal-id="mailModalId" :user="selectedUser" />
+  <BaseModal
+    modal-title="Flug akzeptieren?"
+    modal-body="Dies kann nicht rückgängig gemacht werden"
+    confirm-button-text="Akzeptieren"
+    modal-id="acceptFlightModal"
+    :confirm-action="acceptFlight"
+    :is-dangerous-action="true"
+    :show-spinner="showSpinner"
+    :error-message="errorMessage"
+  />
+  <!-- TODO: When using this modal the reply-to email address will be the 
+  one of the admin account used and not info@xccup.net 
+  Is that the way we want it to be? -->
+  <ModalSendMail modal-id="messagePilotModal" :user="selectedUser" />
 </template>
 
-<script>
+<script setup>
 import ApiService from "@/services/ApiService.js";
 import { useRouter } from "vue-router";
 import BaseDate from "../BaseDate.vue";
 import { Modal } from "bootstrap";
+import { ref, onMounted, computed } from "vue";
 
-const KEY_DELETE = "DELETE";
-const KEY_ACCEPT = "ACCEPT";
-export default {
-  components: { BaseDate },
-  data() {
-    return {
-      flights: [],
-      router: null,
-      confirmModal: null,
-      confirmMessage: "",
-      confirmType: "",
-      confirmModalId: "modalFlightConfirm",
-      confirmModalTitle: "",
-      confirmModalButtonText: "",
-      mailModal: null,
-      mailModalId: "adminFlightsMailModal",
-      selectedFlight: null,
-      selectedUser: null,
-    };
-  },
-  computed: {
-    violationsPresent: function () {
-      return this.flights.length > 0;
-    },
-  },
-  async mounted() {
-    this.router = useRouter();
-    this.confirmModal = new Modal(document.getElementById(this.confirmModalId));
-    this.mailModal = new Modal(document.getElementById(this.mailModalId));
-    await this.fetchFlightsWithViolations();
-  },
-  methods: {
-    async fetchFlightsWithViolations() {
-      const res = await ApiService.getFlightViolations();
-      this.flights = res.data.rows;
-    },
-    async processConfirmResult() {
-      if (this.confirmType === KEY_DELETE) {
-        await ApiService.deleteFlight(this.selectedFlight.externalId);
-      }
-      if (this.confirmType === KEY_ACCEPT) {
-        await ApiService.acceptFlightViolations(this.selectedFlight.id);
-      }
-      await this.fetchFlightsWithViolations();
-      this.confirmModal.hide();
-    },
-    onDeleteFlight(flight) {
-      this.confirmType = KEY_DELETE;
-      this.confirmModalTitle = "Flug löschen?";
-      this.confirmMessage = "Willst du diesen Flug wirklich löschen?";
-      this.confirmModalButtonText = "Löschen";
-      this.selectedFlight = flight;
-      this.confirmModal.show();
-    },
-    onAcceptFlight(flight) {
-      this.confirmType = KEY_ACCEPT;
-      this.confirmModalTitle = "Flug akzeptieren?";
-      this.confirmMessage = "Willst du diesen Flug wirklich akzeptieren?";
-      this.confirmModalButtonText = "Akzeptieren";
-      this.selectedFlight = flight;
-      this.confirmModal.show();
-    },
-    onMessagePilot(flight) {
-      this.selectedUser = flight.user;
-      this.mailModal.show();
-    },
-  },
+const router = useRouter();
+
+const flights = ref([]);
+const showSpinner = ref(false);
+const errorMessage = ref("");
+const selectedFlight = ref(null);
+
+const fetchFlightsWithViolations = async () => {
+  const res = await ApiService.getFlightViolations();
+  flights.value = res.data.rows;
+};
+
+try {
+  await fetchFlightsWithViolations();
+} catch (error) {
+  console.log(error);
+  router.push({
+    name: "NetworkError",
+  });
+}
+
+// Count and expose open flight tickets
+const count = computed(() => flights.value.length);
+defineExpose({
+  count,
+});
+
+// Modals
+const deleteFlightModal = ref(null);
+const acceptFlightModal = ref(null);
+const messagePilotModal = ref(null);
+onMounted(() => {
+  deleteFlightModal.value = new Modal(
+    document.getElementById("deleteFlightModal")
+  );
+  acceptFlightModal.value = new Modal(
+    document.getElementById("acceptFlightModal")
+  );
+  messagePilotModal.value = new Modal(
+    document.getElementById("messagePilotModal")
+  );
+});
+
+// Delete flight
+const onDeleteFlight = (flight) => {
+  selectedFlight.value = flight;
+  deleteFlightModal.value.show();
+};
+
+const deleteFlight = async () => {
+  showSpinner.value = true;
+  try {
+    await ApiService.deleteFlight(selectedFlight.value.externalId);
+    await fetchFlightsWithViolations();
+    deleteFlightModal.value.hide();
+  } catch (error) {
+    errorMessage.value = "Da ist leider was schief gelaufen";
+    console.log(error);
+  } finally {
+    selectedFlight.value = null;
+    showSpinner.value = false;
+  }
+};
+
+// Accept flight
+const onAcceptFlight = (flight) => {
+  selectedFlight.value = flight;
+  acceptFlightModal.value.show();
+};
+
+const acceptFlight = async () => {
+  showSpinner.value = true;
+  try {
+    await ApiService.acceptFlightViolations(selectedFlight.value.id);
+    await fetchFlightsWithViolations();
+    acceptFlightModal.value.hide();
+  } catch (error) {
+    errorMessage.value = "Da ist leider was schief gelaufen";
+    console.log(error);
+  } finally {
+    selectedFlight.value = null;
+    showSpinner.value = false;
+  }
+};
+
+// Message pilot
+const selectedUser = ref(null);
+const onMessagePilot = (flight) => {
+  selectedUser.value = flight.user;
+  messagePilotModal.value.show();
 };
 </script>
 

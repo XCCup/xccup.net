@@ -10,7 +10,9 @@
       <span
         class="ms-auto fw-light"
         :class="userPrefersDark ? 'text-light' : 'text-secondary'"
-        ><BaseDate :timestamp="comment.createdAt" date-format="dd.MM.yyyy"
+        ><BaseDate
+          :timestamp="comment.createdAt"
+          date-format="dd.MM.yyyy hh:mm"
       /></span>
     </div>
     <!-- eslint-disable vue/no-v-html -->
@@ -73,6 +75,21 @@
           <i class="bi bi-trash mx-1"></i>Löschen
         </a>
       </div>
+      <div
+        v-if="hasElevatedRole && !showCommentEditor"
+        class="text-secondary text-end"
+      >
+        <a href="#" class="text-danger" @click.prevent="onEditComment"
+          ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten (Admin)</a
+        >
+        <a
+          href="#"
+          class="text-danger"
+          @click.prevent="deleteCommentModal.show()"
+        >
+          <i class="bi bi-trash mx-1"></i>Löschen (Admin)
+        </a>
+      </div>
     </div>
   </div>
 
@@ -93,10 +110,10 @@ import useComments from "@/composables/useComments";
 import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
-import { sanitizeComment } from "../helper/utils";
+import { activateHtmlLinks } from "../helper/utils";
 import { GENERIC_ERROR } from "@/common/Constants";
 
-const { getUserId } = useUser();
+const { getUserId, hasElevatedRole } = useUser();
 const { deleteComment, editComment, submitComment } = useComments();
 
 const props = defineProps({
@@ -109,7 +126,9 @@ const props = defineProps({
 const showSpinner = ref(false);
 const errorMessage = ref(null);
 
-const commentWithLinks = computed(() => sanitizeComment(props.comment.message));
+const commentWithLinks = computed(() =>
+  activateHtmlLinks(props.comment.message)
+);
 
 const avatarUrl = createUserPictureUrl(props.comment.user.id);
 

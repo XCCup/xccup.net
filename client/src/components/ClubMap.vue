@@ -15,6 +15,11 @@ import { tileOptions } from "@/config/mapbox.js";
 import { ref, onMounted } from "vue";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 
+// Fix for default marker image paths
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
+import iconUrl from "leaflet/dist/images/marker-icon.png?url";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
+
 const map = ref(null);
 const logos = ref([]);
 
@@ -87,6 +92,15 @@ onMounted(() => {
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptions
   ).addTo(map.value);
+
+  // Fix for default marker image paths
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.imagePath = "/";
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: iconRetinaUrl,
+    iconUrl: iconUrl,
+    shadowUrl: shadowUrl,
+  });
 
   addClubMarker(props.clubs);
 });

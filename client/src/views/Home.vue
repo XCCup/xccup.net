@@ -1,8 +1,11 @@
 <template>
   <div v-if="seasonStats">
-    <!-- <span class="d-none d-dark-inline container"
-      >Dark mode ist noch nicht schön, funktioniert aber…
-    </span> -->
+    <div class="alert alert-danger mb-0" role="alert">
+      Falls dies dein erster Besuch der neuen Webseite ist, lies dir bitte die
+      <router-link :to="{ name: 'NewXccup' }" class="alert-link"
+        >Hinweise und Neuerungen durch.</router-link
+      >
+    </div>
 
     <InfoBox :season-stats="seasonStats" />
     <DailyResults :max-rows="10" :flights="dailyResults" />

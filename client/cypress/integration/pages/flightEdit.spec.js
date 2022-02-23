@@ -20,7 +20,7 @@ describe("check edit flight page", () => {
   });
 
   it("Check that guest isn't able to edit flight", () => {
-    cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
+    cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
     cy.visit(`/flug/${editableFlightId}`);
 
     cy.get("#flight-details");

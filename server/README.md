@@ -32,14 +32,6 @@ docker-compose up
 
 You need to create a .env File in the root folder. There is a .env-sample which you can copy and rename for this purpose. To create proper JWT Tokens you can run `./helper/create-jwt-token.js` and copy the output into your .env-File.
 
-## After first StartUp
-
-#### Config DB
-
-After the first start up of the DB, it's necessary to activate the PostGIS plugin and set the correct timezone
-
-```
-docker exec -it db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
 ```
 
 ## HowTo
@@ -49,13 +41,17 @@ docker exec -it db psql -U xccup_user xccup_db -c "create extension postgis;" -c
 ##### All tests
 
 ```
+
 docker-compose run --rm yarn test
+
 ```
 
 ##### A single tests
 
 ```
+
 docker-compose run --rm yarn test test/LocationFinder.test.js
+
 ```
 
 #### Connect PgAdmin to Postgres:
@@ -68,8 +64,12 @@ docker-compose run --rm yarn test test/LocationFinder.test.js
 
 File -> Preferences -> Query Tool -> Results grid -> "Do as you like"
 
-#### Complie the OLC Binary
+#### Compile the OLC Binary
 
 ```
+
 gcc olc2002.c -o olc_lnx -lm
+
+```
+
 ```

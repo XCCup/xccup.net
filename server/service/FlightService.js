@@ -239,7 +239,7 @@ const flightService = {
     // });
 
     // // Refactor array of objects to plain array of strings
-    const brands = await Brand.findAll();
+    const brands = await Brand.findAll({ order: [["name", "ASC"]] });
     return brands.map((e) => e.name);
   },
 
@@ -252,14 +252,14 @@ const flightService = {
     return flight.save();
   },
 
-  finalizeFlightSubmission: async (
+  finalizeFlightSubmission: async ({
     flight,
     report,
     airspaceComment,
     onlyLogbook,
     glider,
-    hikeAndFly
-  ) => {
+    hikeAndFly,
+  } = {}) => {
     const columnsToUpdate = {};
 
     // Set report when value is defined or emptry
@@ -341,10 +341,11 @@ const flightService = {
 
     deleteCache(["home", "flights", "results"]);
 
+    // TODO: Should the check for airspace violations not be independent from the elevation attacher?
     ElevationAttacher.execute(
       FlightFixes.mergeData(fixes),
       async (fixesWithElevation) => {
-        //TODO Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
+        // TODO: Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
         for (let i = 0; i < fixes.timeAndHeights.length; i++) {
           fixes.timeAndHeights[i].elevation = fixesWithElevation[i].elevation;
         }

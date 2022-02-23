@@ -209,6 +209,11 @@
                 >
               </li>
               <li>
+                <router-link :to="{ name: 'NewXccup' }" class="dropdown-item"
+                  >Der neue XCCup</router-link
+                >
+              </li>
+              <li>
                 <router-link :to="{ name: 'Rules' }" class="dropdown-item"
                   >Ausschreibung 2022</router-link
                 >

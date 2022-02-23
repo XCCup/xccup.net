@@ -2,23 +2,23 @@ version: "3.8"
 
 services:
   client:
-      build:
-        context: ./client
-        dockerfile: Dockerfile
-      image: xccup-client
-      container_name: xccup-client
-      env_file: ./client/.env
-      restart: always
-      depends_on:
-        - server
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: xccup-client
+    container_name: xccup-client
+    env_file: ./client/.env
+    restart: always
+    depends_on:
+      - server
 
-      labels:
-        traefik.enable: true
-        traefik.http.routers.xccup.rule: "Host(`next.xccup.net`)"
-        traefik.http.routers.xccup.entrypoints: websecure
-        traefik.http.routers.xccup.tls.certresolver: myresolver
-        traefik.http.routers.xccup.priority: 100
-        traefik.docker.network: traefik
+    labels:
+      traefik.enable: true
+      traefik.http.routers.xccup.rule: "Host(`xccup.net`)"
+      traefik.http.routers.xccup.entrypoints: websecure
+      traefik.http.routers.xccup.tls.certresolver: myresolver
+      traefik.http.routers.xccup.priority: 100
+      traefik.docker.network: traefik
 
   server:
     build:
@@ -37,7 +37,7 @@ services:
       - db
     labels:
       traefik.enable: true
-      traefik.http.routers.xccup-api.rule: "Host(`next.xccup.net`) && PathPrefix(`/api`)"
+      traefik.http.routers.xccup-api.rule: "Host(`xccup.net`) && PathPrefix(`/api`)"
       traefik.http.routers.xccup-api.entrypoints: websecure
       traefik.http.routers.xccup-api.tls.certresolver: myresolver
       traefik.http.services.xccup-api.loadbalancer.server.port: 65090
@@ -62,7 +62,7 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     labels:
       traefik.enable: true
-      traefik.http.routers.xccup-pg-admin.rule: "Host(`xccup.stephanschoepe.de`)"
+      traefik.http.routers.xccup-pg-admin.rule: "Host(`pga.xccup.net`)"
       traefik.http.routers.xccup-pg-admin.entrypoints: websecure
       traefik.http.routers.xccup-pg-admin.tls.certresolver: myresolver
       traefik.port: 65080
@@ -70,7 +70,7 @@ services:
       traefik.docker.network: traefik
 
   traefik:
-    image: traefik
+    image: traefik:2.6.1
     restart: unless-stopped
     container_name: traefik
     command:
@@ -83,15 +83,26 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.myresolver.acme.email=next@xccup.net"
+      - "--certificatesresolvers.myresolver.acme.email=info@xccup.net"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     labels:
-      traefik.http.routers.redirs.rule: HostRegexp(`{host:.+}`)
-      traefik.http.routers.redirs.entrypoints: web
-      traefik.http.routers.redirs.middlewares: redirect-to-https
       traefik.enable: true
-      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
-      traefik.http.middlewares.redirect-to-https.redirectscheme.permanent: true
+
+      # Global redirection: http to https
+      traefik.http.routers.http-catchall.rule: HostRegexp(`{host:(www\.)?.+}`)
+      traefik.http.routers.http-catchall.entrypoints: web
+      traefik.http.routers.http-catchall.middlewares: wwwtohttps
+      
+      # Global redirection: https (www.) to https
+      traefik.http.routers.wwwsecure-catchall.rule: HostRegexp(`{host:(www\.).+}`)
+      traefik.http.routers.wwwsecure-catchall.entrypoints: websecure
+      traefik.http.routers.wwwsecure-catchall.tls: true
+      traefik.http.routers.wwwsecure-catchall.middlewares: wwwtohttps
+
+      # middleware: http(s)://(www.) to  https://
+      traefik.http.middlewares.wwwtohttps.redirectregex.regex: ^https?://(?:www\.)?(.+)
+      traefik.http.middlewares.wwwtohttps.redirectregex.replacement: https://$${1}
+      traefik.http.middlewares.wwwtohttps.redirectregex.permanent: true
 
     ports:
       - "80:80"
@@ -107,4 +118,3 @@ volumes:
 networks:
   default:
     name: traefik
-

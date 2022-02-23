@@ -4,7 +4,7 @@ describe("check login options", () => {
   });
 
   it("login/logout normal user", () => {
-    cy.login("blackhole+clinton@stephanschoepe.de", "PW_ClintonHettinger");
+    cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
 
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
     cy.get("#navbarAdminDashboard").should("not.exist");
@@ -15,7 +15,7 @@ describe("check login options", () => {
   });
 
   it("login/logout admin", () => {
-    cy.login("next@xccup.net", "PW_CamilleSchaden");
+    cy.login("steph@xccup.net", "PW_CamilleSchaden");
 
     cy.get("#userNavDropdownMenu").should("includes.text", "Camille");
     cy.get("#navbarAdminDashboard").should("exist");
@@ -26,7 +26,7 @@ describe("check login options", () => {
   });
 
   it("login/logout moderator", () => {
-    cy.login("blackhole+olive@stephanschoepe.de", "PW_OliveEmmerich");
+    cy.login("blackhole+olive@xccup.net", "PW_OliveEmmerich");
 
     cy.get("#userNavDropdownMenu").should("includes.text", "Olive");
     cy.get("#navbarAdminDashboard").should("exist");

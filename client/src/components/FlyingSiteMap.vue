@@ -14,6 +14,11 @@ import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { tileOptions, tileOptionsSatellite } from "@/config/mapbox.js";
 import { ref, onMounted } from "vue";
 
+// Fix for default marker image paths
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
+import iconUrl from "leaflet/dist/images/marker-icon.png?url";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
+
 const map = ref(null);
 
 const props = defineProps({
@@ -48,6 +53,15 @@ onMounted(() => {
 
   map.value = L.map("mapContainer", {
     gestureHandling: true,
+  });
+
+  // Fix for default marker image paths
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.imagePath = "/";
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: iconRetinaUrl,
+    iconUrl: iconUrl,
+    shadowUrl: shadowUrl,
   });
 
   terrain.addTo(map.value);
