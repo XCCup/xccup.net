@@ -302,7 +302,11 @@ router.post(
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
-      res.sendStatus(OK);
+      res
+        .status(OK)
+        .send(
+          `Der Flug wurde mit dem Gerät ${glider.brand} ${glider.model} eingereicht`
+        );
     } catch (error) {
       next(error);
     }
