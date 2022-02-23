@@ -40,6 +40,7 @@ const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
 const config = require("../config/env-config");
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
+const multer = require("multer");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -243,11 +244,12 @@ router.post(
 
 // @desc Allows to upload a flight via the leonardo format directly from a tracker
 // @route POST /flights/leonardo
-// @access All logged-in users
 
+const leonardoUpload = multer();
 router.post(
   "/leonardo",
   uploadLimiter,
+  leonardoUpload.none(),
   checkStringObjectNotEmpty("user"),
   checkStringObjectNotEmptyNoEscaping("pass"),
   checkStringObjectNotEmptyNoEscaping("IGCigcIGC"),
