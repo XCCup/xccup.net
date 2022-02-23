@@ -74,7 +74,7 @@ describe("check landing page", () => {
 
   it("test daily ranking", () => {
     cy.get("#cy-daily-ranking-panel").within(() => {
-      //Consider evaluating the date within the h3 (depends on the time; till 12oclock it's the day before to today)
+      //Consider evaluating the date within the h3 (depends on the time; till XX oclock it's the day before to today)
       cy.get("h3").should("include.text", "Tageswertung");
 
       //TODO: Do more than just check if the component is there
@@ -82,11 +82,12 @@ describe("check landing page", () => {
 
       cy.get("table").find("tr").its("length").should("gte", 5);
 
-      const isAfter12OClock = new Date().getHours() >= 12;
-      const anyRow1 = isAfter12OClock
+      const isNextDailyRanking =
+        new Date().getHours() >= 15 - new Date().getTimezoneOffset() / 60;
+      const anyRow1 = isNextDailyRanking
         ? ["Leo Altenwerth", "Stüppel", "74 km", "212 P"]
         : ["Ms. Laurie", "Burgen", "12 km", "75 P"];
-      const anyRow2 = isAfter12OClock
+      const anyRow2 = isNextDailyRanking
         ? ["Camille Schaden", "Königstuhl", "19 km", "55 P"]
         : ["Ramona Gislason", "Schriesheim-Ölberg", "9 km", "53 P"];
 
