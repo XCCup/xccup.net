@@ -107,7 +107,7 @@ const flightService = {
   },
 
   getTodays: async () => {
-    const SWITCHOVER_HOUR_TODAY_RANKING = 12;
+    const SWITCHOVER_HOUR_TODAY_RANKING = 15;
 
     const today = new Date();
     let fromDay = today.getDate() - 1;
