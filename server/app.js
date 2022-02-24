@@ -19,6 +19,7 @@ require("./config/postgres.js");
 
 //Start Cron Jobs
 require("./cron/CleanIgcStore");
+require("./cron/DailyWinnerEMail");
 
 //Logging
 app.use(morganLogger);
