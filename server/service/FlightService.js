@@ -231,13 +231,6 @@ const flightService = {
   },
 
   getAllBrands: async () => {
-    // const query = `SELECT DISTINCT ON (glider->'brand') glider->'brand' AS "brand"
-    // FROM "Flights";`;
-
-    // const brands = await Flight.sequelize.query(query, {
-    //   type: Flight.sequelize.QueryTypes.SELECT,
-    // });
-
     // // Refactor array of objects to plain array of strings
     const brands = await Brand.findAll({ order: [["name", "ASC"]] });
     return brands.map((e) => e.name);

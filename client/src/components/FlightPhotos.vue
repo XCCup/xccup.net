@@ -240,6 +240,7 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     const formData = new FormData();
     formData.append("image", item.photo, item.photo.name);
     formData.append("flightId", props.flightId);
+    // TODO: If an admin uploads a picture the admins userId will be attached. Fix this, or remove the admin ability to upload a picture?
     formData.append("userId", getUserId);
 
     const res = await ApiService.uploadPhotos(formData);

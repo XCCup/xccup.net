@@ -44,7 +44,7 @@ defineProps({
 });
 
 onMounted(() => {
-  tooltip = new Tooltip(icon.value);
+  if (icon.value) tooltip = new Tooltip(icon.value);
 });
 
 onUnmounted(() => {
