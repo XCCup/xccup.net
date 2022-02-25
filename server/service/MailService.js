@@ -126,7 +126,7 @@ const service = {
     const user = await User.findByPk(flight.userId);
 
     logger.info(
-      `MS: Send airspace violation mail to user ${user.firstName} ${user.lastName}`
+      `MS: Send airspace violation mail for flight ${flight.externalId}`
     );
 
     const flightLinkUrl = `${clientUrl}${flightLink}/${flight.externalId}`;
@@ -137,7 +137,12 @@ const service = {
     };
 
     const adminMail = config.get("mailServiceFromEmail");
-    const mailReceivers = [user.email, adminMail];
+    const mailReceivers = [adminMail];
+
+    // Only send an email to the user if he hasn't already submitted an airspace comment
+    if (!(flight.airspaceComment && flight.airspaceComment.length > 10)) {
+      mailReceivers.push(user.email);
+    }
 
     return sendMail(mailReceivers, content);
   },

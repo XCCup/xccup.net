@@ -54,7 +54,13 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 id="resultFilterModalLabel" class="modal-title">
-              {{ userOptions ? "Pilotenfilter" : "Wertungsfilter" }}
+              {{
+                userOptions
+                  ? "Pilotenfilter"
+                  : flightOptions
+                  ? "Flugfilter"
+                  : "Wertungsfilter"
+              }}
             </h5>
             <button
               type="button"
@@ -227,6 +233,20 @@
                 :options="flightTypes"
                 :add-empty-option="true"
               />
+              <BaseDatePicker
+                id="filterSelectFrom"
+                v-model="fromDate"
+                label="Von"
+                :upper-limit="tillDate"
+                :lower-limit="new Date('2004-01-01')"
+              />
+              <BaseDatePicker
+                id="filterSelectTill"
+                v-model="tillDate"
+                label="Bis"
+                :upper-limit="new Date()"
+                :lower-limit="fromDate"
+              />
             </div>
           </div>
           <div class="modal-footer">
@@ -270,6 +290,7 @@ import {
   findKeyByValue,
 } from "../helper/utils";
 import { FLIGHT_TYPES } from "../common/Constants";
+import { format } from "date-fns";
 
 defineProps({
   // TODO: Selecting the modal body like this not effective and not idiot save
@@ -307,6 +328,8 @@ const selects = reactive({
 });
 const weekend = ref(false);
 const hikeAndFly = ref(false);
+const fromDate = ref(null);
+const tillDate = ref(null);
 
 let filterOptions = null;
 let siteData = null;
@@ -365,6 +388,8 @@ const selectedFilters = computed(() => {
     userId: findIdByUserName(),
     teamId: findIdByName(selects.team, teamData),
     flightType: findKeyByValue(FLIGHT_TYPES, selects.flightType),
+    startDate: findDate(fromDate.value),
+    endDate: findDate(tillDate.value),
   };
 });
 
@@ -399,20 +424,32 @@ const findKeyOfRankingClass = () => {
   }
 };
 
+const findDate = (value) => {
+  if (!(value instanceof Date)) return undefined;
+  return format(value, "yyyy-MM-dd");
+};
+
 function findIdByUserName() {
   return selects.user
     ? userData.find((e) => `${e.firstName} ${e.lastName}` == selects.user).id
     : undefined;
 }
 
-const anyFilterOptionSet = computed(() =>
-  checkIfAnyValueOfObjectIsDefined(selects)
+const anyFilterOptionSet = computed(
+  () =>
+    checkIfAnyValueOfObjectIsDefined(selects) ||
+    weekend.value ||
+    hikeAndFly.value ||
+    fromDate.value ||
+    tillDate.value
 );
 
 const onClear = () => {
   Object.keys(selects).forEach((key) => (selects[key] = ""));
   weekend.value = false;
   hikeAndFly.value = false;
+  fromDate.value = null;
+  tillDate.value = null;
 };
 
 const filterDescription = (key, filter) => {
@@ -426,6 +463,9 @@ const filterDescription = (key, filter) => {
   if (key == "homeStateOfUser") return statesData[filter];
   if (key == "teamId") return teamData.find((e) => e.id == filter).name;
   if (key == "flightType") return FLIGHT_TYPES[filter];
+  if (key == "startDate")
+    return "Von " + format(new Date(filter), "dd.MM.yyyy");
+  if (key == "endDate") return "Bis " + format(new Date(filter), "dd.MM.yyyy");
 
   // This is inconsistent but currently there is no other way to show the actual search value of "name"
   if (key == "userIds") return selects.name.length > 0 ? selects.name : "Name";
