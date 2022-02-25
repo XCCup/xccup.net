@@ -121,7 +121,7 @@ const selectedFlight = ref(null);
 const fetchFlightsWithViolations = async () => {
   const res = await ApiService.getFlightViolations();
   flights.value = res.data.rows;
-  refreshNotifications();
+  await refreshNotifications();
 };
 
 try {
