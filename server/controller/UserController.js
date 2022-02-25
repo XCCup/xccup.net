@@ -659,16 +659,11 @@ router.get("/gliders/get", authToken, async (req, res, next) => {
 router.get("/adminNotifications", authToken, async (req, res, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
-    try {
-      const flights = await flightService.getAll({
-        unchecked: true,
-      });
-
-      const sites = await siteService.getAll({ state: "proposal" });
-      res.json(sites.length + flights.count);
-    } catch (error) {
-      next(error);
-    }
+    const flights = await flightService.getAll({
+      unchecked: true,
+    });
+    const sites = await siteService.getAll({ state: "proposal" });
+    res.json(sites.length + flights.count);
   } catch (error) {
     next(error);
   }

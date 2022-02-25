@@ -74,6 +74,9 @@ import ApiService from "@/services/ApiService.js";
 import BaseDate from "../BaseDate.vue";
 import { Modal } from "bootstrap";
 import { computed, onMounted, ref } from "vue";
+import useNotifications from "@/composables/useNotifications";
+
+const { refreshNotifications } = useNotifications();
 
 const KEY_DELETE = "DELETE";
 const KEY_ACCEPT = "ACCEPT";
@@ -109,6 +112,7 @@ async function fetchProposedSites() {
   try {
     const res = await ApiService.getSitesProposed();
     sites.value = res.data;
+    await refreshNotifications();
   } catch (error) {
     console.error(error);
   }
