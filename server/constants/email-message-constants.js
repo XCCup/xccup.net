@@ -85,7 +85,7 @@ module.exports.AIRSPACE_VIOLATION_TEXT = (firstName, flightLink) =>
 Du hast einen Flug hochgeladen, der eine Luftraumverletzung beinhaltet.
 ${flightLink}
 
-Bitte gebe eine Stellungsnahme zu dieser Luftraumverletzung ab, falls Du dies noch nicht getan hast. 
+Bitte gebe eine Stellungsnahme zu dieser Luftraumverletzung ab. 
 Nutze zur Stellungnahme bitte das Feld "Luftraumkommentar" (Flug bearbeiten) in deinem Flug.
 Die Moderatoren werden dies in Kürze bewerten. Bis dahin ist dein Flug nicht in den offiziellen Listen aufzufinden.
 
