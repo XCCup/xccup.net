@@ -363,7 +363,9 @@ const flightService = {
         if (await hasAirspaceViolation(fixes)) {
           flight.airspaceViolation = true;
           flight.save();
-          sendAirspaceViolationMail(flight);
+          // Don't send an email if the user has already submitted an airspace comment
+          if (!(flight.airspaceComment && flight.airspaceComment.length > 10))
+            sendAirspaceViolationMail(flight);
         }
       }
     );
