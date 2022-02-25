@@ -706,6 +706,11 @@ async function createWhereStatement(
       [sequelize.Op.between]: [startDate, definedEndDate],
     };
   }
+  if (!startDate && endDate) {
+    whereStatement.takeoffTime = {
+      [sequelize.Op.between]: ["2004-01-01", endDate],
+    };
+  }
   if (rankingClass) {
     const gliderClasses =
       (await getCurrentActive()).rankingClasses[rankingClass].gliderClasses ??
