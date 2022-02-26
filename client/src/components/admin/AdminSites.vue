@@ -148,7 +148,6 @@ function onAccept(site) {
 }
 
 function onMessageSubmitter(site) {
-  console.log("SUBMITTER: ", site.submitter);
   selectedUser.value = site.submitter;
   mailModal.value.show();
 }
