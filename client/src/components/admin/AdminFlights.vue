@@ -107,6 +107,9 @@ import { useRouter } from "vue-router";
 import BaseDate from "../BaseDate.vue";
 import { Modal } from "bootstrap";
 import { ref, onMounted, computed } from "vue";
+import useNotifications from "@/composables/useNotifications";
+
+const { refreshNotifications } = useNotifications();
 
 const router = useRouter();
 
@@ -118,6 +121,7 @@ const selectedFlight = ref(null);
 const fetchFlightsWithViolations = async () => {
   const res = await ApiService.getFlightViolations();
   flights.value = res.data.rows;
+  await refreshNotifications();
 };
 
 try {

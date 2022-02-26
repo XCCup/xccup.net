@@ -1,5 +1,7 @@
 const express = require("express");
 const service = require("../service/UserService");
+const flightService = require("../service/FlightService");
+const siteService = require("../service/FlyingSiteService");
 const mailService = require("../service/MailService");
 const { getCurrentActive } = require("../service/SeasonService");
 const {
@@ -646,6 +648,22 @@ router.get("/gliders/get", authToken, async (req, res, next) => {
   try {
     const result = await service.getGlidersById(userId);
     res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Gets the admin panel notifications
+// @route GET /users/adminNotifications
+
+router.get("/adminNotifications", authToken, async (req, res, next) => {
+  try {
+    if (await requesterIsNotModerator(req, res)) return;
+    const flights = await flightService.getAll({
+      unchecked: true,
+    });
+    const sites = await siteService.getAll({ state: "proposal" });
+    res.json(sites.length + flights.count);
   } catch (error) {
     next(error);
   }

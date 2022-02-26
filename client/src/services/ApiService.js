@@ -113,6 +113,9 @@ export default {
 
   // Admin
 
+  getAdminNotifications() {
+    return jwtInterceptor.get(baseURL + "users/adminNotifications");
+  },
   getFlightViolations() {
     return jwtInterceptor.get(baseURL + "flights/violations");
   },
