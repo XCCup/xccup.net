@@ -74,31 +74,27 @@ describe("check admin page", () => {
       .should("not.exist");
   });
 
-  it("test delete proposed flying site", () => {
-    const expectedName = "Nur ein Vorschlag";
+  it("test cache control", () => {
+    cy.get("#nav-cache-tab").click();
 
-    cy.get("#nav-sites-tab").click();
-    cy.get("#adminSitesPanel").within(() => {
-      cy.get("table")
-        .contains("td", expectedName)
-        .parent()
-        .find("td")
-        .eq(9)
-        .find("button")
-        .click();
-    });
+    cy.get("#adminCachePanel")
+      .find("button")
+      .contains("Statistik anfordern")
+      .click();
 
-    cy.clickButtonInModal("#modalSiteConfirm", "Löschen");
+    cy.get("#adminCachePanel")
+      .get("p")
+      .should("include.text", "Generelle Daten");
+    cy.get("#adminCachePanel")
+      .get("li")
+      .should("include.text", "hits")
+      .and("include.text", "misses")
+      .and("include.text", "keys")
+      .and("include.text", "ksize")
+      .and("include.text", "vsize");
 
-    // Table will only be shown if there is at least one entry
-    cy.get("#adminSitesPanel").find("table").should("not.exist");
-  });
-
-  it("test loaded news flights", () => {
-    cy.get("#adminNewsPanel")
-      .find("table")
-      .find("tr")
-      .its("length")
-      .should("eq", 3);
+    cy.get("#adminCachePanel")
+      .get("p")
+      .should("include.text", "Vorhandene Keys");
   });
 });

@@ -54,9 +54,9 @@ import ApiService from "../../services/ApiService";
 
 const { showSuccessAlert } = useSwal();
 
-const promptText = "z.B. home oder all für den gesamten Cache";
+const promptText = 'z.B. "home" oder "all" für den gesamten Cache';
 const keyValue = ref(promptText);
-const stats = ref([]);
+const stats = ref({});
 const listedKeys = ref([]);
 
 const onClear = async () => {
