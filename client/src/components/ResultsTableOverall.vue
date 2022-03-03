@@ -25,10 +25,10 @@
             content="Punkte"
             column-object-key="flightPoints"
             :current-sort-column-key="currentSortColumnKey"
-            class="hide-on-xs"
+            class="hide-on-sm"
             @head-sort-changed="handleSortChange"
           />
-          <th class="hide-on-md">Status</th>
+          <th class="hide-on-xs">Status</th>
         </thead>
         <tbody>
           <tr
@@ -39,16 +39,39 @@
             @click="routeToFlight(flight.externalId)"
           >
             <td>
-              <BaseDate
-                :timestamp="flight.takeoffTime"
-                :date-format="$route.params.year ? 'dd.MM' : 'dd.MM.yy'"
-              />
+              <table>
+                <tr>
+                  <td>
+                    <BaseDate
+                      :timestamp="flight.takeoffTime"
+                      :date-format="$route.params.year ? 'dd.MM' : 'dd.MM.yy'"
+                    />
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td class="fw-lighter max-width-11ch">
+                    {{ flight.takeoff?.name }}
+                  </td>
+                </tr>
+              </table>
             </td>
 
             <td>
-              <strong>{{
-                flight.user?.firstName + " " + flight.user?.lastName
-              }}</strong>
+              <table>
+                <tr>
+                  <td>
+                    <strong>{{
+                      flight.user?.firstName + " " + flight.user?.lastName
+                    }}</strong>
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td scope="col" class="no-line-break">
+                    <RankingClass :ranking-class="flight.glider?.gliderClass" />
+                    {{ flight.glider?.model }}
+                  </td>
+                </tr>
+              </table>
             </td>
             <td scope="col" class="hide-on-md">
               {{ flight.club?.name }}
@@ -61,19 +84,32 @@
               <i v-if="flight.hikeAndFly > 0" class="bi bi-signpost-2"></i>
             </td>
 
-            <td scope="col" class="hide-on-sm no-line-break">
+            <td scope="col" class="hide-on-sm d-lg-none no-line-break">
+              <RankingClass :ranking-class="flight.glider?.gliderClass" />
+              {{ flight.glider?.model }}
+            </td>
+            <td scope="col" class="hide-on-md no-line-break">
               <RankingClass :ranking-class="flight.glider?.gliderClass" />
               {{ flight.glider?.brand + " " + flight.glider?.model }}
             </td>
-
-            <td class="no-line-break">
-              {{ Math.floor(flight.flightDistance) }} km
-              <FlightTypeIcon :flight-type="flight.flightType" />
+            <td>
+              <table>
+                <tr>
+                  <td class="no-line-break">
+                    {{ Math.floor(flight.flightDistance) }} km
+                    <FlightTypeIcon :flight-type="flight.flightType" />
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td class="no-line-break">{{ flight.flightPoints }} P</td>
+                </tr>
+              </table>
             </td>
-            <td class="no-line-break hide-on-xs">
+
+            <td class="no-line-break hide-on-sm">
               {{ flight.flightPoints }} P
             </td>
-            <td class="hide-on-md">
+            <td class="hide-on-xs">
               <FlightState :flight-state="flight.flightStatus" />
             </td>
           </tr>
@@ -123,5 +159,10 @@ tr:hover {
   box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1); */
 
   cursor: pointer;
+}
+
+.max-width-11ch {
+  overflow: hidden;
+  max-width: 11ch;
 }
 </style>
