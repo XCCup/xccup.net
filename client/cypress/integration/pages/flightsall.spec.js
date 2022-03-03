@@ -11,7 +11,11 @@ describe("check flights all page", () => {
     // By default flights will be sorted by takeoff date. This date will always change for 10 flights (5 flights to today, 5 flights to yesterday)
     const expectedLength = 41;
 
-    cy.get("table").find("tr").its("length").should("eq", expectedLength);
+    cy.get("table")
+      .get("tbody")
+      .children()
+      .its("length")
+      .should("eq", expectedLength);
     cy.get("table")
       .find("tr")
       // .first()
@@ -41,7 +45,11 @@ describe("check flights all page", () => {
     cy.get("[data-cy=filter-icon]").should("be.visible");
     cy.url().should("include", `${year - 1}/fluege`);
 
-    cy.get("table").find("tr").its("length").should("eq", expectedLength);
+    cy.get("table")
+      .get("tbody")
+      .children()
+      .its("length")
+      .should("eq", expectedLength);
     cy.get("table")
       .find("tr")
       .first()
@@ -111,7 +119,11 @@ describe("check flights all page", () => {
     // Wait till table was updated
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
-    cy.get("table").find("tr").should("have.length", expectedLength);
+    cy.get("table")
+      .get("tbody")
+      .children()
+      .its("length")
+      .should("eq", expectedLength);
 
     cy.get("table")
       .find("tr")
@@ -136,7 +148,11 @@ describe("check flights all page", () => {
     cy.get("th").contains("Punkte").click();
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
-    cy.get("table").find("tr").should("have.length", expectedLength);
+    cy.get("table")
+      .get("tbody")
+      .children()
+      .its("length")
+      .should("eq", expectedLength);
 
     cy.get("table")
       .find("tr")
@@ -157,15 +173,22 @@ describe("check flights all page", () => {
 
     // Wait till table was updated
     cy.get("[data-cy=filter-icon]").should("be.visible");
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
 
-    cy.get("table").find("tr").should("have.length", expectedLength);
+    cy.get("table")
+      .get("tbody")
+      .children()
+      .its("length")
+      .should("eq", expectedLength);
     cy.get(".page-item").last().click({ force: true });
 
     // Wait till table was updated
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table")
-      .find("tr")
+      .get("tbody")
+      .children()
       .last()
       .should("include.text", expectedName)
       .and("include.text", "Die Möwen")
