@@ -1,9 +1,8 @@
 <template>
   <section class="pb-3">
     <div id="adminSitesPanel">
-      <h5>Ausstehende Fluggebietsprüfungen</h5>
-
       <div v-if="proposedSitesPresent" class="table-responsive">
+        <h5>Ausstehende Fluggebietsprüfungen</h5>
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Name</th>
@@ -56,6 +55,7 @@
           </tbody>
         </table>
       </div>
+      <div v-else><h5>Keine ausstehenden Fluggebietsprüfungen</h5></div>
     </div>
   </section>
   <BaseModal
