@@ -1,3 +1,5 @@
+import { isInSeason } from "../../support/utils";
+
 describe("check results overall page", () => {
   const year = new Date().getFullYear();
 
@@ -10,7 +12,7 @@ describe("check results overall page", () => {
   });
 
   it("test no filter", () => {
-    const expectedLength = 18;
+    const expectedLength = isInSeason ? 19 : 18;
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
     cy.get("table")

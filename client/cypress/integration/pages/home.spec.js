@@ -1,3 +1,5 @@
+import { isInSeason } from "../../support/utils";
+
 describe("check landing page", () => {
   before(() => {
     cy.seedDb();
@@ -121,6 +123,11 @@ describe("check landing page", () => {
   });
 
   it("test team ranking", () => {
+    //Due to the modifaction on the "daily flights" this value will change
+    const expectedValue = isInSeason()
+      ? "3Die Adler739 P199 km"
+      : "3Die Möwen587 P179 km";
+
     cy.get("#overallResultsTabPanel").within(() => {
       cy.get(".nav-item").contains("Teamwertung").click();
     });
@@ -129,7 +136,7 @@ describe("check landing page", () => {
     cy.get("#teamRankingTable")
       .find("tr")
       .last()
-      .should("have.text", "3Die Möwen587 P179 km");
+      .should("have.text", expectedValue);
   });
 
   it("test overall ranking", () => {
