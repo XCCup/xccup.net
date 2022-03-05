@@ -52,6 +52,14 @@ function checkStringObjectNotEmptyNoEscaping(field) {
     .withMessage(`HTML is not allowed`);
 }
 /**
+ * Checks if the field is not empty.
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkFieldNotEmpty(field) {
+  return check(field).not().isEmpty().withMessage(`${field} is required`);
+}
+/**
  * Checks if the field is a "strong" password (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1).
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -312,5 +320,7 @@ exports.checkParamIsUuid = checkParamIsUuid;
 exports.checkParamIsInt = checkParamIsInt;
 
 exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
+
+exports.checkFieldNotEmpty = checkFieldNotEmpty;
 
 exports.validationHasErrors = validationHasErrors;

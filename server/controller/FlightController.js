@@ -35,6 +35,7 @@ const {
   checkOptionalIsBoolean,
   queryOptionalColumnExistsInModel,
   checkStringObjectNotEmptyNoEscaping,
+  checkFieldNotEmpty,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
@@ -192,7 +193,7 @@ router.post(
   uploadLimiter,
   authToken,
   checkStringObjectNotEmpty("igc.name"),
-  checkStringObjectNotEmptyNoEscaping("igc.body"),
+  checkFieldNotEmpty("igc.body"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const igc = req.body.igc;
