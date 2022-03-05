@@ -240,7 +240,8 @@ const readFile = (file) => {
       resolve(res.target.result);
     };
     reader.onerror = (err) => reject(err);
-    reader.readAsText(file);
+    // reader.readAsText(file);
+    reader.readAsBinaryString(file);
   });
 };
 
@@ -266,7 +267,7 @@ const igcSelected = async (file) => {
     detailsCollapse.show();
   } catch (error) {
     detailsCollapse.hide();
-    console.log(error.response);
+    console.log(error?.response);
     if (
       error?.response?.status === 400 &&
       error.response.data == "Invalid G-Record"
