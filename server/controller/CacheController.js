@@ -1,18 +1,27 @@
 const express = require("express");
+const { requesterIsNotAdmin, authToken } = require("./Auth");
 const router = express.Router();
 
 const { deleteCache, listCache, getCacheStats } = require("./CacheManager");
 
-router.get("/clear/:key", (req, res) => {
-  res.json(deleteCache([req.params.key]));
+router.get("/clear/:key", authToken, async (req, res, next) => {
+  try {
+    if (await requesterIsNotAdmin(req, res)) return;
+
+    res.json(deleteCache([req.params.key]));
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.get("/list", (req, res) => {
-  res.json(listCache());
-});
+router.get("/stats", authToken, async (req, res, next) => {
+  try {
+    if (await requesterIsNotAdmin(req, res)) return;
 
-router.get("/stats", (req, res) => {
-  res.json(getCacheStats());
+    res.json({ stats: getCacheStats(), keys: listCache() });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;

@@ -2,8 +2,7 @@ const SeasonDetail = require("../config/postgres")["SeasonDetail"];
 const { getCurrentYear } = require("../helper/Utils");
 const logger = require("../config/logger");
 const { XccupHttpError } = require("../helper/ErrorHandler");
-
-let currentSeasonDetailCache;
+const { getCache, setCache } = require("../controller/CacheManager");
 
 const service = {
   getById: async (id) => {
@@ -32,20 +31,27 @@ const service = {
     });
   },
 
-  getCurrentActive: () => {
-    return (currentSeasonDetailCache = currentSeasonDetailCache
-      ? currentSeasonDetailCache
-      : service.refreshCurrentSeasonDetails());
+  getCurrentActive: async () => {
+    const cacheKey = { originalUrl: "currentSeasonDetails" };
+
+    const cachedDetails = getCache(cacheKey);
+
+    if (cachedDetails) return cachedDetails;
+
+    const currentSeasonDetails = await service.refreshCurrentSeasonDetails();
+    setCache(cacheKey, currentSeasonDetails);
+
+    return currentSeasonDetails;
   },
 
   refreshCurrentSeasonDetails: async () => {
     logger.info("Refresh cache for currentSeasonDetails");
-    return (currentSeasonDetailCache = SeasonDetail.findOne({
+    return SeasonDetail.findOne({
       where: {
         year: getCurrentYear(),
       },
       raw: true,
-    }));
+    });
   },
 
   create: async (season) => {

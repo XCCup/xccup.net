@@ -12,7 +12,7 @@
         :class="userPrefersDark ? 'text-light' : 'text-secondary'"
         ><BaseDate
           :timestamp="comment.createdAt"
-          date-format="dd.MM.yyyy hh:mm"
+          date-format="dd.MM.yyyy HH:mm"
       /></span>
     </div>
     <!-- eslint-disable vue/no-v-html -->
