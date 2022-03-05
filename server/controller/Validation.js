@@ -56,7 +56,7 @@ function checkStringObjectNotEmptyNoEscaping(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkFieldNotEmptyPresent(field) {
+function checkFieldNotEmpty(field) {
   return check(field).not().isEmpty().withMessage(`${field} is required`);
 }
 /**
@@ -321,6 +321,6 @@ exports.checkParamIsInt = checkParamIsInt;
 
 exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
 
-exports.checkFieldNotEmptyPresent = checkFieldNotEmptyPresent;
+exports.checkFieldNotEmpty = checkFieldNotEmpty;
 
 exports.validationHasErrors = validationHasErrors;
