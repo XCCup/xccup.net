@@ -50,13 +50,13 @@
             </tr>
             <tr>
               <th>Fluggerät</th>
-              <td>{{ flight.glider.brand }} {{ flight.glider.model }}</td>
+              <td>{{ flight.glider?.brand }} {{ flight.glider?.model }}</td>
             </tr>
             <tr>
               <th>Geräteklasse</th>
               <td>
                 <RankingClass
-                  :ranking-class="flight.glider.gliderClass"
+                  :ranking-class="flight.glider?.gliderClass"
                   :short="true"
                   :show-description="true"
                 />

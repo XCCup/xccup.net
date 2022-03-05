@@ -1,12 +1,14 @@
-<template v-if="rankingClass">
-  <i
-    ref="icon"
-    class="bi bi-trophy"
-    :class="rankingClass.key"
-    data-bs-placement="top"
-    :title="rankingClass.description ?? rankingClass.shortDescription"
-  ></i>
-  {{ showDescription == true ? displayedDescription : "" }}
+<template>
+  <div v-if="rankingClass">
+    <i
+      ref="icon"
+      class="bi bi-trophy"
+      :class="rankingClass?.key"
+      data-bs-placement="top"
+      :title="rankingClass?.description ?? rankingClass?.shortDescription"
+    ></i>
+    {{ showDescription == true ? displayedDescription : "" }}
+  </div>
 </template>
 
 <script setup>
