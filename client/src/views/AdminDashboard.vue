@@ -53,6 +53,19 @@
         >
           News
         </button>
+        <button
+          v-if="authData.role == 'Administrator'"
+          id="nav-cache-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-cache"
+          type="button"
+          role="tab"
+          aria-controls="nav-cache"
+          aria-selected="false"
+        >
+          Cache
+        </button>
       </div>
     </nav>
     <div id="nav-tabContent" class="tab-content">
@@ -80,6 +93,15 @@
       >
         <AdminNews />
       </div>
+      <div
+        v-if="authData.role == 'Administrator'"
+        id="nav-cache"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-cache-tab"
+      >
+        <AdminCache />
+      </div>
     </div>
   </div>
 </template>
@@ -87,6 +109,9 @@
 <script setup>
 import { setWindowName } from "../helper/utils";
 import { ref } from "vue";
+import useUser from "../composables/useUser";
+
+const { authData } = useUser();
 
 setWindowName("Admin");
 

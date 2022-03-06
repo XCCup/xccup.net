@@ -116,6 +116,12 @@ export default {
   getAdminNotifications() {
     return jwtInterceptor.get(baseURL + "users/adminNotifications");
   },
+  getCacheStats() {
+    return jwtInterceptor.get(baseURL + "cache/stats");
+  },
+  deleteCache(key) {
+    return jwtInterceptor.get(baseURL + "cache/clear/" + key);
+  },
   getFlightViolations() {
     return jwtInterceptor.get(baseURL + "flights/violations");
   },

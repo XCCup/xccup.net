@@ -101,4 +101,28 @@ describe("check admin page", () => {
       .its("length")
       .should("eq", 3);
   });
+
+  it("test cache control", () => {
+    cy.get("#nav-cache-tab").click();
+
+    cy.get("#adminCachePanel")
+      .find("button")
+      .contains("Statistik anfordern")
+      .click();
+
+    cy.get("#adminCachePanel")
+      .get("p")
+      .should("include.text", "Generelle Daten");
+    cy.get("#adminCachePanel")
+      .get("li")
+      .should("include.text", "hits")
+      .and("include.text", "misses")
+      .and("include.text", "keys")
+      .and("include.text", "ksize")
+      .and("include.text", "vsize");
+
+    cy.get("#adminCachePanel")
+      .get("p")
+      .should("include.text", "Vorhandene Keys");
+  });
 });
