@@ -1,5 +1,5 @@
 <template>
-  <div v-if="rankingClass">
+  <span v-if="rankingClass">
     <i
       ref="icon"
       class="bi bi-trophy"
@@ -8,7 +8,7 @@
       :title="rankingClass?.description ?? rankingClass?.shortDescription"
     ></i>
     {{ showDescription == true ? displayedDescription : "" }}
-  </div>
+  </span>
 </template>
 
 <script setup>
