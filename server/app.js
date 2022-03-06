@@ -74,10 +74,10 @@ app.use("/api/media", require("./controller/MediaController"));
 app.use("/api/general", require("./controller/GeneralController"));
 app.use("/api/mail", require("./controller/MailController"));
 app.use("/api/sites", require("./controller/SiteController"));
+app.use("/api/cache", require("./controller/CacheController"));
 if (config.get("env") !== "production" || config.get("overruleActive")) {
   app.use("/api/testdata", require("./controller/TestDataController"));
   app.use("/api/importdata", require("./controller/ImportDataController"));
-  app.use("/api/cache", require("./controller/CacheController"));
 }
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!

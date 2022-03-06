@@ -823,7 +823,7 @@ async function retrieveSeasonDetails(year) {
   const seasonDetail =
     year && year != getCurrentYear()
       ? await seasonService.getByYear(year)
-      : seasonService.getCurrentActive();
+      : await seasonService.getCurrentActive();
   return seasonDetail;
 }
 

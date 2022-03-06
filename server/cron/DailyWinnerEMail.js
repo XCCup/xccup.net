@@ -4,14 +4,18 @@ const { STATE } = require("../constants/flight-constants");
 const flightService = require("../service/FlightService");
 const moment = require("moment");
 const sendMail = require("../config/email");
+const config = require("../config/env-config");
 
 const DAILY_WINNER_THRESHOLD = 5;
 
-// Run the job every day at 22:15
-const task = cron.schedule("15 22 * * *", informAboutDailyWinner);
+// Run cron job only in production
+if (config.get("env") === "production") {
+  // Run the job every day at 22:15
+  const task = cron.schedule("15 22 * * *", informAboutDailyWinner);
 
-logger.info("DWE: Will start cron job: daily winner email");
-task.start();
+  logger.info("DWE: Will start cron job: daily winner email");
+  task.start();
+}
 
 async function informAboutDailyWinner() {
   try {
