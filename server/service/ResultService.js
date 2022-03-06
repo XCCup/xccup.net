@@ -19,8 +19,17 @@ const {
   NEWCOMER_MAX_RANKING_CLASS,
 } = require("../config/result-determination-config");
 const moment = require("moment");
+const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
 const cacheNonNewcomer = [];
+const RANKINGS = {
+  OVERALL: "overall",
+  LADIES: "ladies",
+  CLUB: "club",
+  TEAM: "team",
+  SENIORS: "seniors",
+  NEWCOMER: "newcomer",
+};
 
 const service = {
   getOverall: async ({
@@ -53,13 +62,13 @@ const service = {
         clubId
       )
     ) {
-      const oldResult = await findOldResult(year, "overall");
+      checkIfRankingWasPresent(seasonDetail, RANKINGS.OVERALL);
+
+      const oldResult = await findOldResult(year, RANKINGS.OVERALL);
       if (oldResult)
-        return addConstantInformationToResult(
-          oldResult,
-          { NUMBER_OF_SCORED_FLIGHTS },
-          limit
-        );
+        return addConstantInformationToResult(oldResult, {
+          NUMBER_OF_SCORED_FLIGHTS,
+        });
     }
 
     if (
@@ -75,7 +84,8 @@ const service = {
         clubId
       )
     ) {
-      const oldResult = await findOldResult(year, "ladies");
+      checkIfRankingWasPresent(seasonDetail, RANKINGS.LADIES);
+      const oldResult = await findOldResult(year, RANKINGS.LADIES);
       if (oldResult)
         return addConstantInformationToResult(
           oldResult,
@@ -128,7 +138,8 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < 2022) {
-      const oldResult = await findOldResult(year, "club");
+      checkIfRankingWasPresent(seasonDetail, RANKINGS.CLUB);
+      const oldResult = await findOldResult(year, RANKINGS.CLUB);
       if (oldResult)
         return addConstantInformationToResult(
           oldResult,
@@ -156,7 +167,8 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < 2022) {
-      const oldResult = await findOldResult(year, "team");
+      checkIfRankingWasPresent(seasonDetail, RANKINGS.TEAM);
+      const oldResult = await findOldResult(year, RANKINGS.TEAM);
       if (oldResult)
         return addConstantInformationToResult(
           oldResult,
@@ -219,7 +231,8 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < 2022) {
-      const oldResult = await findOldResult(year, "seniors");
+      checkIfRankingWasPresent(seasonDetail, RANKINGS.SENIORS);
+      const oldResult = await findOldResult(year, RANKINGS.SENIORS);
       if (oldResult)
         return addConstantInformationToResult(
           oldResult,
@@ -265,6 +278,7 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < 2022) {
+      checkIfRankingWasPresent(seasonDetail, isoCode);
       const oldResult = await findOldResult(year, isoCode);
       if (oldResult)
         return addConstantInformationToResult(
@@ -345,7 +359,8 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < 2022) {
-      const oldResult = await findOldResult(year, "newcomer");
+      checkIfRankingWasPresent(seasonDetail, RANKINGS.NEWCOMER);
+      const oldResult = await findOldResult(year, RANKINGS.NEWCOMER);
       if (oldResult)
         return addConstantInformationToResult(
           oldResult,
@@ -854,6 +869,20 @@ async function calcSeniorBonusForFlightResult(result) {
       entry.totalPoints = totalPoints;
     })
   );
+}
+
+/**
+ * Checks if a ranking was present in the specific season. If not throws an error.
+ * @param {*} seasonDetail The seasonDetails of the specific season
+ * @param {*} rankingType The type of ranking (e.g. overall, senior, ladies) which will be checked
+ * @throws An XccupRestrictionError if the rankingType was no active in the season
+ */
+function checkIfRankingWasPresent(seasonDetail, rankingType) {
+  if (!seasonDetail.activeRankings.includes(rankingType)) {
+    throw new XccupRestrictionError(
+      `The ranking ${rankingType} was not present within the season ${seasonDetail.year}`
+    );
+  }
 }
 
 module.exports = service;
