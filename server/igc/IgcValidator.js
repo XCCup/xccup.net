@@ -49,8 +49,5 @@ async function executeRequest(igc, transcode) {
 
   const result = res.data.result;
   logger.debug("Validation result: " + result);
-
-  console.log("RESULT DATA: ", JSON.stringify(res.data, null, 2));
-
   return result;
 }
