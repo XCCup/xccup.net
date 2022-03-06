@@ -244,19 +244,25 @@ const readFile = (file) => {
   });
 };
 
-const sendIgc = async () => {
-  if (igc.value.body == null) return;
-  return await ApiService.uploadIgc({ igc: igc.value });
-};
+// const sendIgc = async () => {
+//   if (igc.value.body == null) return;
+//   return await ApiService.uploadIgc({ igc: igc.value });
+// };
 
 const igcSelected = async (file) => {
   flightId.value = null;
   showSpinner.value = true;
   try {
     if (!file.target.files[0]) return;
-    igc.value.body = await readFile(file.target.files[0]);
-    igc.value.name = file.target.files[0].name;
-    const response = await sendIgc();
+    // igc.value.body = await readFile(file.target.files[0]);
+    // igc.value.name = file.target.files[0].name;
+    // const response = await sendIgc();
+
+    const formData = new FormData();
+    formData.append("igcFile", file.target.files[0], file.target.files[0].name);
+
+    const response = await ApiService.uploadIgc(formData);
+
     if (response.status != 200) throw response.statusText;
     errorMessage.value = null;
     flightId.value = response.data.flightId;
