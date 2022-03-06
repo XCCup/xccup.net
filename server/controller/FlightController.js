@@ -16,6 +16,7 @@ const {
 const {
   STATE,
   DAYS_FLIGHT_CHANGEABLE,
+  IGC_STORE,
 } = require("../constants/flight-constants");
 const {
   authToken,
@@ -42,6 +43,7 @@ const { createFileName } = require("../helper/igc-file-utils");
 const config = require("../config/env-config");
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const multer = require("multer");
+const { getCurrentYear } = require("../helper/Utils");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -188,31 +190,49 @@ router.delete(
 // @route POST /flights/
 // @access All logged-in users
 
+const igcStorage = multer.diskStorage({
+  destination: path
+    .join(process.env.SERVER_DATA_PATH, IGC_STORE, getCurrentYear().toString())
+    .toString(),
+  filename: function (req, file, cb) {
+    service.createExternalId().then((externalId) => {
+      req.externalId = externalId;
+      cb(null, externalId + "_" + file.originalname);
+    });
+  },
+});
+const igcFileUpload = multer({
+  storage: igcStorage,
+  limits: {
+    fileSize: 5_242_880, // 5 MB
+    files: 1,
+    parts: 1,
+  },
+});
 router.post(
   "/",
   uploadLimiter,
+  igcFileUpload.single("igcFile"),
   authToken,
-  checkStringObjectNotEmpty("igc.name"),
-  checkFieldNotEmpty("igc.body"),
   async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-    const igc = req.body.igc;
     const userId = req.user.id;
 
     try {
-      const validationResult = await igcValidator.execute(igc);
+      const validationResult = await igcValidator.execute(req.file);
       if (isGRecordResultInvalid(res, validationResult)) return;
 
       const flightDbObject = await service.create({
         userId,
+        igcPath: req.file.path,
+        externalId: req.externalId,
         uncheckedGRecord: validationResult == undefined ? true : false,
         flightStatus: STATE.IN_PROCESS,
       });
 
-      flightDbObject.igcPath = await persistIgcFile(
-        flightDbObject.externalId,
-        igc
-      );
+      // flightDbObject.igcPath = await persistIgcFile(
+      //   flightDbObject.externalId,
+      //   igc
+      // );
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
       service.attachFixRelatedTimeData(flightDbObject, fixes);
@@ -232,8 +252,8 @@ router.post(
       deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json({
-        flightId: result.id,
-        externalId: result.externalId,
+        flightId: flightDbObject.id,
+        externalId: flightDbObject.externalId,
         takeoff: takeoffName,
         landing: result.landing,
       });
