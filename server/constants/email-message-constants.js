@@ -93,6 +93,19 @@ Dein XCCup Team
     
 `;
 
+module.exports.AIRSPACE_VIOLATION_ACCEPTED_TITLE =
+  "Luftraumverletzung Akzeptiert";
+
+module.exports.AIRSPACE_VIOLATION_ACCEPTED_TEXT = (firstName, flightLink) =>
+  `Hallo ${firstName}!
+
+Deine mögliche Luftraumverletzung wurde geprüft und akzeptiert. Dein Flug ist ab nun regulär auf der Webseite einsehbar.
+${flightLink}
+
+Dein XCCup Team
+    
+`;
+
 module.exports.NEW_FLIGHT_COMMENT_TITLE = "Kommentar auf XCCup.net";
 
 module.exports.NEW_FLIGHT_COMMENT_TEXT = (

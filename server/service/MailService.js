@@ -20,6 +20,8 @@ const {
   ADDED_TO_TEAM_TITLE,
   ADDED_TO_TEAM_TEXT,
   NEW_FLIGHT_COMMENT_RESPONSE_TEXT,
+  AIRSPACE_VIOLATION_ACCEPTED_TEXT,
+  AIRSPACE_VIOLATION_ACCEPTED_TITLE,
 } = require("../constants/email-message-constants");
 const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
@@ -145,6 +147,23 @@ const service = {
     }
 
     return sendMail(mailReceivers, content);
+  },
+
+  sendAirspaceViolationAcceptedMail: async (flight) => {
+    const user = await User.findByPk(flight.userId);
+
+    logger.info(
+      `MS: Send airspace violation accepted mail for flight ${flight.externalId}`
+    );
+
+    const flightLinkUrl = `${clientUrl}${flightLink}/${flight.externalId}`;
+
+    const content = {
+      title: AIRSPACE_VIOLATION_ACCEPTED_TITLE,
+      text: AIRSPACE_VIOLATION_ACCEPTED_TEXT(user.firstName, flightLinkUrl),
+    };
+
+    return sendMail(user.email, content);
   },
 
   sendAddedToTeamMail: async (teamName, memberIds) => {
