@@ -17,9 +17,10 @@ const igcValidator = {
       const buffer = igc.path
         ? fs.readFileSync(igc.path)
         : Buffer.from(igc.body);
+      const filename = igc.filename ?? igc.name;
 
       formData.append("igcfile", buffer, {
-        filename: igc.filename,
+        filename,
         contentType: "application/octet-stream",
       });
 
