@@ -106,6 +106,16 @@ Dein XCCup Team
     
 `;
 
+module.exports.NEW_ADMIN_TASK_TITLE = "Neue Admin Aufgabe";
+
+module.exports.NEW_ADMIN_TASK_TEXT = `Hallo Admins!
+
+Es es gibt was Neues für Euch zu tun. Schaut doch mal vorbei https://xccup.net/admin
+
+Euer Server-Knecht
+    
+`;
+
 module.exports.NEW_FLIGHT_COMMENT_TITLE = "Kommentar auf XCCup.net";
 
 module.exports.NEW_FLIGHT_COMMENT_TEXT = (

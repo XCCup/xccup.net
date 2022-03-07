@@ -22,6 +22,8 @@ const {
   NEW_FLIGHT_COMMENT_RESPONSE_TEXT,
   AIRSPACE_VIOLATION_ACCEPTED_TEXT,
   AIRSPACE_VIOLATION_ACCEPTED_TITLE,
+  NEW_ADMIN_TASK_TITLE,
+  NEW_ADMIN_TASK_TEXT,
 } = require("../constants/email-message-constants");
 const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
@@ -122,6 +124,19 @@ const service = {
     };
 
     return sendMail(user.email, content);
+  },
+
+  sendNewAdminTask: async () => {
+    logger.info(`MS: Send new admin task mail`);
+
+    const content = {
+      title: NEW_ADMIN_TASK_TITLE,
+      text: NEW_ADMIN_TASK_TEXT,
+    };
+
+    const adminMail = config.get("mailServiceFromEmail");
+
+    return sendMail(adminMail, content);
   },
 
   sendAirspaceViolationMail: async (flight) => {
