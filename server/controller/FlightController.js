@@ -36,7 +36,6 @@ const {
   checkOptionalIsBoolean,
   queryOptionalColumnExistsInModel,
   checkStringObjectNotEmptyNoEscaping,
-  checkFieldNotEmpty,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
@@ -190,25 +189,7 @@ router.delete(
 // @route POST /flights/
 // @access All logged-in users
 
-const igcStorage = multer.diskStorage({
-  destination: path
-    .join(process.env.SERVER_DATA_PATH, IGC_STORE, getCurrentYear().toString())
-    .toString(),
-  filename: function (req, file, cb) {
-    service.createExternalId().then((externalId) => {
-      req.externalId = externalId;
-      cb(null, externalId + "_" + file.originalname);
-    });
-  },
-});
-const igcFileUpload = multer({
-  storage: igcStorage,
-  limits: {
-    fileSize: 5_242_880, // 5 MB
-    files: 1,
-    parts: 1,
-  },
-});
+const igcFileUpload = createMulterIgcUploadHandler();
 router.post(
   "/",
   uploadLimiter,
@@ -228,11 +209,6 @@ router.post(
         uncheckedGRecord: validationResult == undefined ? true : false,
         flightStatus: STATE.IN_PROCESS,
       });
-
-      // flightDbObject.igcPath = await persistIgcFile(
-      //   flightDbObject.externalId,
-      //   igc
-      // );
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
       service.attachFixRelatedTimeData(flightDbObject, fixes);
@@ -414,6 +390,32 @@ router.put(
     }
   }
 );
+
+function createMulterIgcUploadHandler() {
+  const igcStorage = multer.diskStorage({
+    destination: path
+      .join(
+        process.env.SERVER_DATA_PATH,
+        IGC_STORE,
+        getCurrentYear().toString()
+      )
+      .toString(),
+    filename: function (req, file, cb) {
+      service.createExternalId().then((externalId) => {
+        req.externalId = externalId;
+        cb(null, externalId + "_" + file.originalname);
+      });
+    },
+  });
+  return multer({
+    storage: igcStorage,
+    limits: {
+      fileSize: 2097152,
+      files: 1,
+      parts: 1,
+    },
+  });
+}
 
 async function persistIgcFile(externalId, igcFile) {
   const pathToFile = createFileName(externalId, igcFile.name);
