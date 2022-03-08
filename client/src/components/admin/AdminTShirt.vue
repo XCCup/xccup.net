@@ -15,7 +15,7 @@
     </button>
     <div v-if="entries.length">
       <h5>Statistik</h5>
-      <p>
+      <p data-cy="tshirt-overall-count">
         Zur Zeit haben sich {{ entries.length }} Piloten für ein T-Shirt
         qualifiziert. Dies teilt sich wie folgt auf.
       </p>

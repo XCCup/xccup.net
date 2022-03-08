@@ -135,10 +135,10 @@ describe("check admin page", () => {
       .click();
 
     cy.get("#adminTShirtPanel")
-      .get("p")
+      .get("[data-cy=tshirt-overall-count]")
       .should(
         "include.text",
-        "Zur Zeit haben sich 11 Piloten für ein T-Shirt qualifiziert. Dies teilt sich wie folgt auf."
+        "Zur Zeit haben sich 10 Piloten für ein T-Shirt qualifiziert. Dies teilt sich wie folgt auf."
       );
   });
 });
