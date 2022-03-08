@@ -8,10 +8,10 @@
     </button>
     <button
       type="button"
-      class="col-2 btn btn-outline-primary bi bi-printer btn-sm disabled"
-      @click="onPrint"
+      class="col-2 btn btn-outline-primary bi bi-file-earmark-arrow-down btn-sm"
+      @click="onExport"
     >
-      Tabelle drucken
+      Liste exportieren
     </button>
     <div v-if="entries.length">
       <h5>Statistik</h5>
@@ -81,9 +81,11 @@ const router = useRouter();
 const entries = ref([]);
 const stats = ref([]);
 
-const onPrint = () => {
-  console.log("on print clicked");
-  // TODO: Implemented this function when it's clear what should really be listed
+const onExport = () => {
+  //TODO: Implement an CSV export
+  alert(
+    "Diese Funktion ist noch nicht implementiert! Wir sollten zuerst absprechen, welche Daten wirklich alle benötigt werden"
+  );
 };
 
 const onFetch = async () => {
