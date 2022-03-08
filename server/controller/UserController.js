@@ -37,6 +37,7 @@ const {
   checkStringObjectNotEmpty,
   checkIsUuidObject,
   checkParamIsUuid,
+  checkParamIsInt,
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
@@ -631,6 +632,28 @@ router.get(
       const userId = req.params.userId;
 
       const result = await service.getGlidersById(userId);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// @desc Retrieves all users which have qualified for a tshirt in the current season
+// @route GET /users/tshirts/:year
+// Only moderator
+
+router.get(
+  "/tshirts/:year",
+  authToken,
+  checkParamIsInt("year"),
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      if (validationHasErrors(req, res)) return;
+      const year = req.params.year;
+
+      const result = await service.getTShirtList(year);
       res.json(result);
     } catch (error) {
       next(error);

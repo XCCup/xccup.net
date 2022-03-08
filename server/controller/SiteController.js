@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/FlyingSiteService");
+const mailService = require("../service/MailService");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createRateLimiter } = require("./api-protection");
 const { OK, NOT_FOUND } = require("../constants/http-status-constants");
 const {
   checkStringObjectNotEmptyNoEscaping,
+  checkStringObjectNoEscaping,
   checkIsInt,
   checkIsFloat,
   checkIsUuidObjectOrEmpty,
@@ -80,7 +82,7 @@ router.post(
   checkIsFloat("lat"),
   checkIsFloat("long"),
   checkIsUuidObjectOrEmpty("clubId"),
-  checkStringObject("website"),
+  checkStringObjectNoEscaping("website"),
   checkStringObject("region"),
   checkIsInt("heightDifference"),
   async (req, res, next) => {
@@ -91,6 +93,7 @@ router.post(
         ...req.body,
         submitter: req.user,
       });
+      mailService.sendNewAdminTask();
 
       deleteCache(["sites"]);
       res.sendStatus(OK);

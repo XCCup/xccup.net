@@ -26,7 +26,7 @@ async function informAboutDailyWinner() {
 
     const result = (
       await flightService.getAll({
-        state: STATE.IN_RANKING,
+        status: STATE.IN_RANKING,
         startDate: today,
         endDate: tomorrow,
         sort: ["flightPoints", "DESC"],

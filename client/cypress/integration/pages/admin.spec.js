@@ -74,6 +74,34 @@ describe("check admin page", () => {
       .should("not.exist");
   });
 
+  it("test delete proposed flying site", () => {
+    const expectedName = "Nur ein Vorschlag";
+
+    cy.get("#nav-sites-tab").click();
+    cy.get("#adminSitesPanel").within(() => {
+      cy.get("table")
+        .contains("td", expectedName)
+        .parent()
+        .find("td")
+        .eq(9)
+        .find("button")
+        .click();
+    });
+
+    cy.clickButtonInModal("#modalSiteConfirm", "Löschen");
+
+    // Table will only be shown if there is at least one entry
+    cy.get("#adminSitesPanel").find("table").should("not.exist");
+  });
+
+  it("test loaded news flights", () => {
+    cy.get("#adminNewsPanel")
+      .find("table")
+      .find("tr")
+      .its("length")
+      .should("eq", 3);
+  });
+
   it("test cache control", () => {
     cy.get("#nav-cache-tab").click();
 
@@ -96,5 +124,21 @@ describe("check admin page", () => {
     cy.get("#adminCachePanel")
       .get("p")
       .should("include.text", "Vorhandene Keys");
+  });
+
+  it("test tshirt list", () => {
+    cy.get("#nav-tshirt-tab").click();
+
+    cy.get("#adminTShirtPanel")
+      .find("button")
+      .contains("Statistik anfordern")
+      .click();
+
+    cy.get("#adminTShirtPanel")
+      .get("[data-cy=tshirt-overall-count]")
+      .should(
+        "include.text",
+        "Zur Zeit haben sich 10 Piloten für ein T-Shirt qualifiziert. Dies teilt sich wie folgt auf."
+      );
   });
 });

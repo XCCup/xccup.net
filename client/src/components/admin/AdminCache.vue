@@ -6,7 +6,7 @@
         <BaseInput
           v-model="keyValue"
           class="mt-3"
-          label="Key zur Bereinigung"
+          label="Keyfragment"
           @focus="keyValue = ''"
         />
         <button

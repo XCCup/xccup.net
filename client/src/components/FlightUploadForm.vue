@@ -231,32 +231,20 @@ const sendButtonIsDisabled = computed(() => {
 });
 
 // IGC
-const igc = ref({ filename: "", body: null });
-
-const readFile = (file) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (res) => {
-      resolve(res.target.result);
-    };
-    reader.onerror = (err) => reject(err);
-    reader.readAsText(file);
-  });
-};
-
-const sendIgc = async () => {
-  if (igc.value.body == null) return;
-  return await ApiService.uploadIgc({ igc: igc.value });
-};
+async function sendIgc(file) {
+  const formData = new FormData();
+  formData.append("igcFile", file.target.files[0], file.target.files[0].name);
+  const response = await ApiService.uploadIgc(formData);
+  return response;
+}
 
 const igcSelected = async (file) => {
   flightId.value = null;
   showSpinner.value = true;
   try {
     if (!file.target.files[0]) return;
-    igc.value.body = await readFile(file.target.files[0]);
-    igc.value.name = file.target.files[0].name;
-    const response = await sendIgc();
+    const response = await sendIgc(file);
+
     if (response.status != 200) throw response.statusText;
     errorMessage.value = null;
     flightId.value = response.data.flightId;

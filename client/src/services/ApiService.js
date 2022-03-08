@@ -116,6 +116,9 @@ export default {
   getAdminNotifications() {
     return jwtInterceptor.get(baseURL + "users/adminNotifications");
   },
+  getTShirtList(year = new Date().getFullYear()) {
+    return jwtInterceptor.get(baseURL + "users/tshirts/" + year);
+  },
   getCacheStats() {
     return jwtInterceptor.get(baseURL + "cache/stats");
   },
