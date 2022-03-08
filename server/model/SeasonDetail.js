@@ -44,6 +44,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    activeRankings: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false,
+      defaultValue: ["overall", "ladies", "club", "team"],
+      // All current options: ["overall", "ladies", "club", "team","seniors","newcomer","fun","sundays","RP","LUX","earlyBird","lateBird"]
+    },
     misc: {
       type: DataTypes.JSON,
     },
