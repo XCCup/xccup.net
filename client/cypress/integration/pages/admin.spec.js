@@ -125,4 +125,20 @@ describe("check admin page", () => {
       .get("p")
       .should("include.text", "Vorhandene Keys");
   });
+
+  it("test tshirt list", () => {
+    cy.get("#nav-tshirt-tab").click();
+
+    cy.get("#adminTShirtPanel")
+      .find("button")
+      .contains("Statistik anfordern")
+      .click();
+
+    cy.get("#adminTShirtPanel")
+      .get("[data-cy=tshirt-overall-count]")
+      .should(
+        "include.text",
+        "Zur Zeit haben sich 10 Piloten für ein T-Shirt qualifiziert. Dies teilt sich wie folgt auf."
+      );
+  });
 });

@@ -54,6 +54,18 @@
           News
         </button>
         <button
+          id="nav-tshirt-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-tshirt"
+          type="button"
+          role="tab"
+          aria-controls="nav-tshirt"
+          aria-selected="false"
+        >
+          T-Shirts
+        </button>
+        <button
           v-if="authData.role == 'Administrator'"
           id="nav-cache-tab"
           class="nav-link"
@@ -92,6 +104,14 @@
         aria-labelledby="nav-news-tab"
       >
         <AdminNews />
+      </div>
+      <div
+        id="nav-tshirt"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-tshirt-tab"
+      >
+        <AdminTShirt />
       </div>
       <div
         v-if="authData.role == 'Administrator'"

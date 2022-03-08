@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/FlyingSiteService");
+const mailService = require("../service/MailService");
 const { authToken, requesterIsNotModerator } = require("./Auth");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createRateLimiter } = require("./api-protection");
@@ -92,6 +93,7 @@ router.post(
         ...req.body,
         submitter: req.user,
       });
+      mailService.sendNewAdminTask();
 
       deleteCache(["sites"]);
       res.sendStatus(OK);

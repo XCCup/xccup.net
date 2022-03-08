@@ -1,14 +1,16 @@
 const User = require("../config/postgres")["User"];
 const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
+const Flight = require("../config/postgres")["Flight"];
 const flightService = require("../service/FlightService");
 const mailService = require("../service/MailService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const { ROLE } = require("../constants/user-constants");
-const { TYPE } = require("../constants/flight-constants");
+const { TYPE, STATE } = require("../constants/flight-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
 const { Op } = require("sequelize");
+const sequelize = require("sequelize");
 const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 const { arrayRemove, generateRandomString } = require("../helper/Utils");
@@ -127,6 +129,45 @@ const userService = {
     return await User.findByPk(id, {
       attributes: ["gliders", "defaultGlider"],
     });
+  },
+  getTShirtList: async (year) => {
+    const allUsers = await User.findAll({
+      role: {
+        [Op.not]: ROLE.INACTIVE,
+      },
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "tshirtSize",
+        "address",
+        "email",
+        "gender",
+      ],
+      include: [
+        {
+          model: Flight,
+          as: "flights",
+          attributes: ["flightStatus", "takeoffTime"],
+          limit: 2,
+          where: {
+            flightStatus: STATE.IN_RANKING,
+            andOp: sequelize.where(
+              sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
+              year
+            ),
+          },
+        },
+        createBasicInclude(Club, "club"),
+      ],
+    });
+    const onlyUsersWithEnoughFlights = allUsers
+      .filter((u) => u.flights.length == 2)
+      .map((u) => u.toJSON());
+    onlyUsersWithEnoughFlights.sort((a, b) => {
+      a.club?.name < b.club?.name;
+    });
+    return onlyUsersWithEnoughFlights;
   },
   getByIdPublic: async (id) => {
     const userQuery = User.findOne({
