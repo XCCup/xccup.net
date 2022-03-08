@@ -1,5 +1,5 @@
 <template>
-  <div id="adminNewsPanel" class="py-3">
+  <div id="adminTShirtPanel" class="py-3">
     <button
       class="col-2 btn btn-outline-primary btn-sm bi bi-list-columns me-3"
       @click="onFetch"
