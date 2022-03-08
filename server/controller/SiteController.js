@@ -8,6 +8,7 @@ const { createRateLimiter } = require("./api-protection");
 const { OK, NOT_FOUND } = require("../constants/http-status-constants");
 const {
   checkStringObjectNotEmptyNoEscaping,
+  checkStringObjectNoEscaping,
   checkIsInt,
   checkIsFloat,
   checkIsUuidObjectOrEmpty,
@@ -81,7 +82,7 @@ router.post(
   checkIsFloat("lat"),
   checkIsFloat("long"),
   checkIsUuidObjectOrEmpty("clubId"),
-  checkStringObject("website"),
+  checkStringObjectNoEscaping("website"),
   checkStringObject("region"),
   checkIsInt("heightDifference"),
   async (req, res, next) => {

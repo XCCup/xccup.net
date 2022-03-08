@@ -1,3 +1,4 @@
+const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
 const logger = require("../config/logger");
@@ -8,14 +9,18 @@ const igcValidator = {
   execute: async (igc) => {
     // http://vali.fai-civl.org/webservice.html
     logger.info("Validating igc file with FAI API");
-
     try {
       const url = "http://vali.fai-civl.org/api/vali/json";
       const formData = new FormData();
-      var buffer = Buffer.from(igc.body);
+
+      // Differenciate between IGC upload via file transfer (normal) or via stream (leonardo)
+      const buffer = igc.path
+        ? fs.readFileSync(igc.path)
+        : Buffer.from(igc.body);
+      const filename = igc.filename ?? igc.name;
 
       formData.append("igcfile", buffer, {
-        filename: igc.name,
+        filename,
         contentType: "application/octet-stream",
       });
 
@@ -30,6 +35,7 @@ const igcValidator = {
 
       const result = res.data.result;
       logger.debug("Validation result: " + result);
+
       return result;
     } catch (error) {
       logger.error(error);
