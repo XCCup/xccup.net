@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  archiv:
+      build:
+        context: ./archiv
+        dockerfile: Dockerfile
+      image: xccup-archiv
+      container_name: xccup-archiv
+      restart: always
+      ports:
+      - "55580:80"

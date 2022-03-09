@@ -20,6 +20,22 @@ services:
       traefik.http.routers.xccup.priority: 100
       traefik.docker.network: traefik
 
+  archiv:
+    build:
+      context: ./archiv
+      dockerfile: Dockerfile
+    image: xccup-archiv
+    container_name: xccup-archiv
+    restart: always
+
+    labels:
+      traefik.enable: true
+      traefik.http.routers.xccup.rule: "Host(`archiv.xccup.net`)"
+      traefik.http.routers.xccup.entrypoints: websecure
+      traefik.http.routers.xccup.tls.certresolver: myresolver
+      traefik.http.routers.xccup.priority: 100
+      traefik.docker.network: traefik
+
   server:
     build:
       context: ./server
