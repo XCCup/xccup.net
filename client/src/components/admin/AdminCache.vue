@@ -52,7 +52,7 @@ import { ref } from "vue";
 import useSwal from "../../composables/useSwal";
 import ApiService from "../../services/ApiService";
 
-const { showSuccessAlert } = useSwal();
+const { showSuccessAlert, showFailedToast } = useSwal();
 
 const promptText = 'z.B. "home" oder "all" für den gesamten Cache';
 const keyValue = ref(promptText);
@@ -67,6 +67,7 @@ const onClear = async () => {
     showSuccessAlert(`Es wurden ${numberOfDeleteKeys} Keys gelöscht`);
   } catch (error) {
     console.error(error);
+    showFailedToast("Da ist leider was schief gelaufen");
   }
 };
 
