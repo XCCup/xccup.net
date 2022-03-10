@@ -97,7 +97,7 @@ describe("check edit flight page", () => {
     cy.visit(`/flug/${nonEditableFlightId}`);
 
     cy.get("#flight-details");
-    cy.get("button").contains("Flug bearbeiten").click();
+    cy.get("button").contains("Admin").click();
     cy.url().should("include", `/flug/${nonEditableFlightId}/bearbeiten`);
   });
 
@@ -106,7 +106,7 @@ describe("check edit flight page", () => {
     cy.visit(`/flug/${nonEditableFlightId}`);
 
     cy.get("#flight-details");
-    cy.get("button").contains("Flug bearbeiten").click();
+    cy.get("button").contains("Admin").click();
     cy.url().should("include", `/flug/${nonEditableFlightId}/bearbeiten`);
 
     cy.get("#cyFlightDeleteButton").click();
