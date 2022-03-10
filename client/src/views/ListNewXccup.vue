@@ -120,7 +120,7 @@
         diversen Gründen nicht mehr. Es gibt jedoch die Möglichkeit über
         Formulare einen neuen Startplatz an uns zu melden. Welche Startplätze
         aktuell im System hinterlegt sind, seht ihr in der Fluggebietsübersicht
-        unter Listen.
+        unter Info.
       </li>
 
       <li>
