@@ -14,11 +14,11 @@
     </p>
 
     <p>
-      <strong
-        >Vor dem ersten Login müsst ihr auf "Passwort vergessen" klicken und ein
+      <strong>
+        Vor dem ersten Login müsst ihr auf "Passwort vergessen" klicken und ein
         neues Passwort anfordern. Verwendet dazu bitte eure im alten XCCup
-        benutzte E-Mail-Adresse.</strong
-      >
+        benutzte E-Mail-Adresse.
+      </strong>
     </p>
 
     <h5>Neue Funktionen:</h5>
@@ -139,12 +139,14 @@
       Streckenmeldungen in der „alten“ Welt werden nicht für die kommende Saison
       gezählt.
     </p>
-
+    <h4>Leonardo Schnittstelle</h4>
     <p>
-      Falls Ihr Euch auf der Testplattform noch nicht eingeloggt hattet, müsst
-      ihr beim ersten Login auf "Passwort vergessen" klicken und ein neues
-      Passwort anfordern. Verwendet dazu bitte Eure im alten XCCup benutzte
-      E-Mail-Adresse.
+      Ihr könnt Flüge direkt von euren Instrumenten hochladen, wenn diese die
+      Option bieten Flüge direkt an einen Leonardo Server zu schicken.
+      <br />
+      Die URL ist: <code>https://xccup.net/api/flights/leonardo</code> Das
+      angegebene Gerät wird ignoriert und stattdessen euer Standardgerät aus dem
+      Profil verwendet.
     </p>
   </div>
 </template>
