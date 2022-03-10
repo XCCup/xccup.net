@@ -150,9 +150,9 @@
       </button>
       <button
         v-if="!showEditButton && showAdminEditButton"
-        class="btn btn-danger btn-sm ms-2"
+        class="btn btn-outline-danger btn-sm ms-2"
       >
-        <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten (Admin)
+        <i class="bi bi-pencil-square mx-1"></i>Admin
       </button>
     </router-link>
     <div id="flightDetailsCollapse" class="collapse mt-2">
