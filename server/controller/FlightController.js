@@ -409,10 +409,10 @@ function paramIdIsLeonardo(req, res) {
   Content-Type: multipart/form-data<br/>
   <br/>
   Fields:<br/>
-  * user: Your login e-mail address<br/>
-  * pass: Your login password<br/>
-  * IGCigcIGC: The file content (plain-text) of the IGC-file<br/>
-  * igcfn: The filename of the IGC-file<br/>
+  * user: Deine Login E-Mail<br/>
+  * pass: Dein Login Passwort<br/>
+  * IGCigcIGC: Der Inhalt der IGC-Datei (plain-text)<br/>
+  * igcfn: Der Name der IGC-Datei<br/>
   <br/>
   Bemerkung:<br/>
   Zur Berechnung der Punkte wird das Fluggerät, welches im Nutzerprofil als Standart definiert wurde, herangezogen. 
