@@ -128,6 +128,9 @@ export default {
   getFlightViolations() {
     return jwtInterceptor.get(baseURL + "flights/violations");
   },
+  getFlightsSelf() {
+    return jwtInterceptor.get(baseURL + "flights/self");
+  },
   acceptFlightViolations(flightId) {
     return jwtInterceptor.put(baseURL + "flights/acceptViolation/" + flightId);
   },

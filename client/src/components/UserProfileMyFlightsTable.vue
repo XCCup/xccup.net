@@ -107,7 +107,6 @@ import { useRouter } from "vue-router";
 import { Modal } from "bootstrap";
 import useData from "@/composables/useData";
 import ApiService from "@/services/ApiService";
-import useUser from "@/composables/useUser";
 import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 
@@ -125,14 +124,10 @@ onMounted(() => {
 });
 
 // Fetch flights
-const { getUserId } = useUser();
-
 const fetchFlights = async () => {
   // TODO: Spinner needed?
-  await initData(ApiService.getFlights, {
-    queryParameters: {
-      userId: getUserId.value,
-    },
+  await initData(ApiService.getFlightsSelf, {
+    queryParameters: {},
   });
 };
 try {
