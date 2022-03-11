@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg">
+  <div v-once class="container-lg">
     <h3>{{ title }} {{ route.params?.year }}</h3>
 
     <div v-if="results">
