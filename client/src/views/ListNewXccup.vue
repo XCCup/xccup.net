@@ -142,11 +142,12 @@
     <h4>Leonardo Schnittstelle</h4>
     <p>
       Ihr könnt Flüge direkt von euren Instrumenten hochladen, wenn diese die
-      Option bieten Flüge direkt an einen Leonardo Server zu schicken.
+      Option bieten Flüge direkt an einen Leonardo Server zu senden.
       <br />
-      Die URL ist: <code>https://xccup.net/api/flights/leonardo</code> Das
-      angegebene Gerät wird ignoriert und stattdessen euer Standardgerät aus dem
-      Profil verwendet.
+      Die URL ist: <code>https://xccup.net/api/flights/leonardo</code> <br />Das
+      in eurem Instrument angegebene Fluggerät wird ignoriert. Stattdessen wird
+      das Standardgerät aus eurem XCCup Profil zur Berechnung der Punkte
+      verwendet.
     </p>
   </div>
 </template>
