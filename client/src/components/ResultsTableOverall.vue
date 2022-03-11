@@ -101,7 +101,9 @@
                   </td>
                 </tr>
                 <tr class="d-md-none">
-                  <td class="no-line-break">{{ flight.flightPoints }} P</td>
+                  <td class="fw-lighter no-line-break">
+                    {{ flight.flightPoints }} P
+                  </td>
                 </tr>
               </table>
             </td>
