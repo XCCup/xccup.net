@@ -683,7 +683,7 @@ router.get("/adminNotifications", authToken, async (req, res, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
     const flights = await flightService.getAll({
-      unchecked: true,
+      onlyUnchecked: true,
     });
     const sites = await siteService.getAll({ state: "proposal" });
     res.json(sites.length + flights.count);

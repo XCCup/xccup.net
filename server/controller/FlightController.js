@@ -100,7 +100,25 @@ router.get("/violations", authToken, async (req, res, next) => {
 
   try {
     const flights = await service.getAll({
-      unchecked: true,
+      onlyUnchecked: true,
+    });
+
+    res.json(flights);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Retrieves all flights of the requester
+// @route GET /flights/violations
+// @access Only owner
+
+router.get("/self", authToken, async (req, res, next) => {
+  try {
+    const flights = await service.getAll({
+      includeUnchecked: true,
+      userId: req.user.id,
+      sort: [req.query.sortCol, req.query.sortOrder],
     });
 
     res.json(flights);
