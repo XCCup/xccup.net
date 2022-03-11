@@ -113,6 +113,8 @@ router.get("/violations", authToken, async (req, res, next) => {
 // @route GET /flights/:id
 
 router.get("/:id", checkParamIsInt("id"), async (req, res, next) => {
+  if (paramIdIsLeonardo(req, res)) return;
+
   if (validationHasErrors(req, res)) return;
 
   const flight = await service.getByExternalId(req.params.id);
@@ -390,6 +392,33 @@ router.put(
     }
   }
 );
+
+function paramIdIsLeonardo(req, res) {
+  if (
+    !(
+      typeof req.params.id == "string" &&
+      req.params.id.toLowerCase() == "leonardo"
+    )
+  )
+    return;
+
+  return res.status(BAD_REQUEST).send(`Zur Nutzung des Leonardo Endpunktes:<br/>
+  <br/>
+  URL: https://xccup.net/api/flights/leonardo<br/>
+  HTTP-Method: POST<br/>
+  Content-Type: multipart/form-data<br/>
+  <br/>
+  Fields:<br/>
+  * user: Your login e-mail address<br/>
+  * pass: Your login password<br/>
+  * IGCigcIGC: The file content (plain-text) of the IGC-file<br/>
+  * igcfn: The filename of the IGC-file<br/>
+  <br/>
+  Bemerkung:<br/>
+  Zur Berechnung der Punkte wird das Fluggerät, welches im Nutzerprofil als Standart definiert wurde, herangezogen. 
+
+  `);
+}
 
 function createMulterIgcUploadHandler() {
   const igcStorage = multer.diskStorage({
