@@ -11,6 +11,12 @@
 @import "@/styles/rankingClasses";
 @import "@/styles/dialogBackground";
 
+@import "nprogress/nprogress.css";
+
+#nprogress .bar {
+  background: #57ad8d;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

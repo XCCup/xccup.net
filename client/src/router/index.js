@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import useUser from "@/composables/useUser";
 import { Routes } from "./routes";
+import { useNProgress } from "@vueuse/integrations/useNProgress";
+
+const { start, done } = useNProgress(null, { showSpinner: false });
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
@@ -26,52 +29,62 @@ const {
   loggedIn,
 } = useUser();
 
-router.beforeEach(async (to, from, next) => {
-  // It would be possible to check for a non guarded route first and skip all auth methods
-  // The downside would be that the token is not observed regularly.
+router.beforeResolve(() => {
+  start();
+}),
+  router.beforeEach(async (to, from, next) => {
+    // start();
+    // It would be possible to check for a non guarded route first and skip all auth methods
+    // The downside would be that the token is not observed regularly.
 
-  // Check if there is token information in local storage.
-  // If not => logout user if loggedIn is still true
-  if (
-    !localStorage.getItem("accessToken") &&
-    !localStorage.getItem("refreshToken") &&
-    loggedIn.value
-  ) {
-    logout();
-    if (to.meta.requiredAuth) {
-      return next({ path: "/login", query: { redirect: to.fullPath } });
-    } else {
-      return next();
+    // Check if there is token information in local storage.
+    // If not => logout user if loggedIn is still true
+    if (
+      !localStorage.getItem("accessToken") &&
+      !localStorage.getItem("refreshToken") &&
+      loggedIn.value
+    ) {
+      logout();
+      if (to.meta.requiredAuth) {
+        return next({ path: "/login", query: { redirect: to.fullPath } });
+      } else {
+        return next();
+      }
     }
-  }
 
-  // If no token is present in state check if there is token information in local storage
-  // TODO: Make this a method of useUser or leave it here?
-  if (!authData.value.token) {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
+    // If no token is present in state check if there is token information in local storage
+    // TODO: Make this a method of useUser or leave it here?
+    if (!authData.value.token) {
+      const accessToken = localStorage.getItem("accessToken");
+      const refreshToken = localStorage.getItem("refreshToken");
 
-    // If there was token information in local storage => update state
-    if (accessToken && refreshToken)
-      saveTokenData({ accessToken, refreshToken });
-  }
-  // Refresh if token is expired and refresh token existent
-  if (!isTokenActive() && authData.value.refreshToken) await updateTokens();
+      // If there was token information in local storage => update state
+      if (accessToken && refreshToken)
+        saveTokenData({ accessToken, refreshToken });
+    }
+    // Refresh if token is expired and refresh token existent
+    if (!isTokenActive() && authData.value.refreshToken) await updateTokens();
 
-  // Always allow to go to home
-  if (to.fullPath == "/") return next();
+    // Always allow to go to home
+    if (to.fullPath == "/") return next();
 
-  // Redirect non elevated users (admins and mods) to home when they try to access protected views (e.g. AdminDashboard)
-  if (to.meta.requiredElevated && !hasElevatedRole.value) return next("/");
+    // Redirect non elevated users (admins and mods) to home when they try to access protected views (e.g. AdminDashboard)
+    if (to.meta.requiredElevated && !hasElevatedRole.value) return next("/");
 
-  // TODO: Prevent access of login page if user is already logged in
+    // TODO: Prevent access of login page if user is already logged in
 
-  // If a route needs auth and there is no active token => login
-  // A redirect query is added. The calling component itself decides wether to use it or not
-  if (!isTokenActive() && to.meta.requiredAuth) {
-    return next({ path: "/login", query: { redirect: to.fullPath } });
-  }
-  // In all other cases just go on to not freeze routing. Just pray.
-  return next();
+    // If a route needs auth and there is no active token => login
+    // A redirect query is added. The calling component itself decides wether to use it or not
+    if (!isTokenActive() && to.meta.requiredAuth) {
+      return next({ path: "/login", query: { redirect: to.fullPath } });
+    }
+    // In all other cases just go on to not freeze routing. Just pray.
+    return next();
+  });
+
+router.afterEach(async () => {
+  // TODO: This cancels the progress bar immediatly and does not wait for active fetch requests.
+  done();
 });
+
 export default router;
