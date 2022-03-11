@@ -14,7 +14,8 @@
 @import "nprogress/nprogress.css";
 
 #nprogress .bar {
-  background: #57ad8d;
+  // TODO: Is there a better color option?
+  background: #f0faf6;
 }
 
 #app {
