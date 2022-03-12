@@ -100,7 +100,25 @@ router.get("/violations", authToken, async (req, res, next) => {
 
   try {
     const flights = await service.getAll({
-      unchecked: true,
+      onlyUnchecked: true,
+    });
+
+    res.json(flights);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Retrieves all flights of the requester
+// @route GET /flights/violations
+// @access Only owner
+
+router.get("/self", authToken, async (req, res, next) => {
+  try {
+    const flights = await service.getAll({
+      includeUnchecked: true,
+      userId: req.user.id,
+      sort: [req.query.sortCol, req.query.sortOrder],
     });
 
     res.json(flights);
@@ -113,6 +131,8 @@ router.get("/violations", authToken, async (req, res, next) => {
 // @route GET /flights/:id
 
 router.get("/:id", checkParamIsInt("id"), async (req, res, next) => {
+  if (paramIdIsLeonardo(req, res)) return;
+
   if (validationHasErrors(req, res)) return;
 
   const flight = await service.getByExternalId(req.params.id);
@@ -390,6 +410,33 @@ router.put(
     }
   }
 );
+
+function paramIdIsLeonardo(req, res) {
+  if (
+    !(
+      typeof req.params.id == "string" &&
+      req.params.id.toLowerCase() == "leonardo"
+    )
+  )
+    return;
+
+  return res.status(BAD_REQUEST).send(`Zur Nutzung des Leonardo Endpunktes:<br/>
+  <br/>
+  URL: https://xccup.net/api/flights/leonardo<br/>
+  HTTP-Method: POST<br/>
+  Content-Type: multipart/form-data<br/>
+  <br/>
+  Fields:<br/>
+  * user: Deine Login E-Mail<br/>
+  * pass: Dein Login Passwort<br/>
+  * IGCigcIGC: Der Inhalt der IGC-Datei (plain-text)<br/>
+  * igcfn: Der Name der IGC-Datei<br/>
+  <br/>
+  Bemerkung:<br/>
+  Zur Berechnung der Punkte wird das Fluggerät, welches im Nutzerprofil als Standart definiert wurde, herangezogen. 
+
+  `);
+}
 
 function createMulterIgcUploadHandler() {
   const igcStorage = multer.diskStorage({

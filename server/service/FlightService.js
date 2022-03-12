@@ -51,7 +51,8 @@ const flightService = {
     teamId,
     gliderClass,
     status,
-    unchecked,
+    onlyUnchecked,
+    includeUnchecked,
     sort,
     minimumData,
   } = {}) => {
@@ -73,7 +74,8 @@ const flightService = {
         userId,
         gliderClass,
         status,
-        unchecked
+        onlyUnchecked,
+        includeUnchecked
       ),
       order: [orderStatement],
     };
@@ -664,10 +666,11 @@ async function createWhereStatement(
   userId,
   gliderClass,
   flightStatus,
-  unchecked
+  onlyUnchecked,
+  includeUnchecked
 ) {
   let whereStatement;
-  if (unchecked) {
+  if (onlyUnchecked) {
     whereStatement = {
       [sequelize.Op.or]: [
         { airspaceViolation: true },
@@ -675,7 +678,7 @@ async function createWhereStatement(
       ],
       violationAccepted: false,
     };
-  } else {
+  } else if (!includeUnchecked) {
     whereStatement = {
       [sequelize.Op.or]: [
         { violationAccepted: true },
@@ -685,6 +688,8 @@ async function createWhereStatement(
         },
       ],
     };
+  } else {
+    whereStatement = {};
   }
   if (flightType) {
     whereStatement.flightType = flightType;
