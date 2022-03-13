@@ -169,6 +169,28 @@ const userService = {
     });
     return onlyUsersWithEnoughFlights;
   },
+  /**
+   * Retrieves e-mail-addresses of active users.
+   * @param {boolean} includeAll If set to true all e-mail addresses will be retrieved. Otherwise only the e-mail-addresses of users which subscribed to the newsletter will be retrieved.
+   * @returns An array of e-mail-addresses
+   */
+  getEmails: async (includeAll) => {
+    const where = {
+      role: {
+        [Op.not]: ROLE.INACTIVE,
+      },
+    };
+
+    if (!includeAll) {
+      where.emailNewsletter = true;
+    }
+
+    const result = await User.findAll({
+      where,
+      attributes: ["email"],
+    });
+    return result.map((e) => e.email);
+  },
   getByIdPublic: async (id) => {
     const userQuery = User.findOne({
       where: { id },
