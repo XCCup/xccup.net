@@ -1,6 +1,31 @@
 <template>
   <div id="adminNewsPanel" class="py-3">
-    <div class="table-responsive">
+    <div>
+      <h5>Newsletter</h5>
+      <div class="form-check m-1">
+        <input
+          id="flexCheckDefault"
+          v-model="includeAllUserEmails"
+          class="form-check-input text-danger"
+          type="checkbox"
+          @change="onIncludeAllChanged"
+        />
+        <label class="form-check-label" for="flexCheckDefault">
+          Sende Nachricht an alle Nutzer anstatt nur Newsletter Abonennten
+        </label>
+      </div>
+      <a
+        class="bi bi-envelope btn btn-outline-primary btn-sm"
+        :class="disableNewsLetter ? 'disabled' : ''"
+        :href="`mailto:?bcc=${userEmails.join(
+          ';'
+        )}&amp;subject=XCCup Newsletter`"
+      >
+        Starte einen Newsletter
+      </a>
+    </div>
+    <div class="table-responsive mt-3">
+      <h5>Nachrichten auf der Startseite</h5>
       <table class="table table-striped table-hover text-sm">
         <thead>
           <th>Titel</th>
@@ -95,16 +120,9 @@ const router = useRouter();
 const showSpinner = ref(false);
 const errorMessage = ref(null);
 
-const createEmptyNewsObject = () => {
-  return {
-    title: "",
-    message: "",
-    icon: "bi-megaphone",
-    from: new Date(),
-    till: new Date(),
-  };
-};
-
+const userEmails = ref([]);
+const includeAllUserEmails = ref(false);
+const disableNewsLetter = ref(true);
 const news = ref([]);
 
 const fetchNews = async () => {
@@ -119,15 +137,26 @@ const fetchNews = async () => {
     });
   }
 };
-// Base-date-picker needs this
-const transfromToDateObjects = (news) => {
-  news.forEach((element) => {
-    element.from = adjustDateToLocal(element.from);
-    element.till = adjustDateToLocal(element.till);
-  });
+const fetchEmails = async () => {
+  try {
+    disableNewsLetter.value = true;
+    const res = await ApiService.getUserEmails(includeAllUserEmails.value);
+    userEmails.value = res.data;
+  } catch (error) {
+    console.log(error);
+    router.push({
+      name: "NetworkError",
+    });
+  } finally {
+    disableNewsLetter.value = false;
+  }
 };
 
-await fetchNews();
+await Promise.all([fetchNews(), fetchEmails()]);
+
+const onIncludeAllChanged = () => {
+  fetchEmails();
+};
 
 // Modals
 const addEditNewsModal = ref(null);
@@ -194,12 +223,30 @@ const deleteNews = async () => {
   }
 };
 
+function createEmptyNewsObject() {
+  return {
+    title: "",
+    message: "",
+    icon: "bi-megaphone",
+    from: new Date(),
+    till: new Date(),
+  };
+}
+
 // Snip text helper
-const snipText = (text) => {
+function snipText(text) {
   if (text.length > MAX_NEWS_CHARACTERS) {
     return text.substring(0, MAX_NEWS_CHARACTERS - 80) + "…";
   } else {
     return text;
   }
-};
+}
+
+// Base-date-picker needs this
+function transfromToDateObjects(news) {
+  news.forEach((element) => {
+    element.from = adjustDateToLocal(element.from);
+    element.till = adjustDateToLocal(element.till);
+  });
+}
 </script>
