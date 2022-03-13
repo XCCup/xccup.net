@@ -18,7 +18,7 @@
         class="bi bi-envelope btn btn-outline-primary btn-sm"
         :class="disableNewsLetter ? 'disabled' : ''"
         :href="`mailto:?bcc=${userEmails.join(
-          ';'
+          ','
         )}&amp;subject=XCCup Newsletter`"
       >
         Starte einen Newsletter
