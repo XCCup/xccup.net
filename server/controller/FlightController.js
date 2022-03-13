@@ -290,6 +290,7 @@ router.post(
 
       const flightDbObject = await service.create({
         userId: user.id,
+        externalId: await service.createExternalId(),
         uncheckedGRecord: validationResult == undefined ? true : false,
         flightStatus: STATE.IN_PROCESS,
       });
