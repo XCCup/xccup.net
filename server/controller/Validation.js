@@ -167,6 +167,14 @@ function checkParamIsUuid(name) {
     .withMessage(`${name} must be a valid uuid format`);
 }
 /**
+ * Checks if the parameter is of a valid boolean type
+ * @param {*} name The name of the Request-Parameter to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkParamIsBoolean(name) {
+  return param(name).isBoolean().withMessage(`${name} must be a valid boolean`);
+}
+/**
  * Checks if the parameter is of a valid integer.
  * @param {*} name The name of the Request-Parameter to check.
  * @returns A ValidationChain object for the checked field.
@@ -318,6 +326,7 @@ exports.checkOptionalStrongPassword = checkOptionalStrongPassword;
 
 exports.checkParamIsUuid = checkParamIsUuid;
 exports.checkParamIsInt = checkParamIsInt;
+exports.checkParamIsBoolean = checkParamIsBoolean;
 
 exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
 

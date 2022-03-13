@@ -38,6 +38,7 @@ const {
   checkIsUuidObject,
   checkParamIsUuid,
   checkParamIsInt,
+  checkParamIsBoolean,
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
@@ -654,6 +655,28 @@ router.get(
       const year = req.params.year;
 
       const result = await service.getTShirtList(year);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// @desc Retrieves all user e-mails
+// @route GET /users/emails/:includeAll
+// Only moderator
+
+router.get(
+  "/emails/:includeAll",
+  authToken,
+  checkParamIsBoolean("includeAll"),
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      if (validationHasErrors(req, res)) return;
+
+      const includeAll = req.params.includeAll.toLowerCase() === "true";
+      const result = await service.getEmails(includeAll);
       res.json(result);
     } catch (error) {
       next(error);
