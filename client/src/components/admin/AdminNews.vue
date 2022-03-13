@@ -1,6 +1,6 @@
 <template>
   <div id="adminNewsPanel" class="py-3">
-    <div>
+    <div v-if="authData.role == 'Administrator'">
       <h5>Newsletter</h5>
       <div class="form-check m-1">
         <input
@@ -113,9 +113,10 @@ import { MAX_NEWS_CHARACTERS } from "@/common/Constants";
 import { GENERIC_ERROR } from "@/common/Constants";
 import { Modal } from "bootstrap";
 import { adjustDateToLocal, activateHtmlLinks } from "../../helper/utils";
-
 import { cloneDeep } from "lodash-es";
+import useUser from "@/composables/useUser";
 
+const { authData } = useUser();
 const router = useRouter();
 
 const showSpinner = ref(false);
