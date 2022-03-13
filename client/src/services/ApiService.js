@@ -119,6 +119,9 @@ export default {
   getTShirtList(year = new Date().getFullYear()) {
     return jwtInterceptor.get(baseURL + "users/tshirts/" + year);
   },
+  getUserEmails(includeAll) {
+    return jwtInterceptor.get(baseURL + "users/emails/" + includeAll);
+  },
   getCacheStats() {
     return jwtInterceptor.get(baseURL + "cache/stats");
   },
