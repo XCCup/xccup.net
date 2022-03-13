@@ -6,7 +6,7 @@
         <input
           id="flexCheckDefault"
           v-model="includeAllUserEmails"
-          class="form-check-input text-danger"
+          class="form-check-input"
           type="checkbox"
           @change="onIncludeAllChanged"
         />
