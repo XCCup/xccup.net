@@ -15,12 +15,13 @@
         </label>
       </div>
       <a
-        class="bi bi-envelope btn btn-outline-primary btn-sm"
-        :class="disableNewsLetter ? 'disabled' : ''"
+        class="btn btn-outline-primary btn-sm"
+        :class="disableNewsLetter ? 'disabled' : 'bi bi-envelope'"
         :href="`mailto:?bcc=${userEmails.join(
           ','
         )}&amp;subject=XCCup Newsletter`"
       >
+        <BaseSpinner v-if="disableNewsLetter" />
         Starte einen Newsletter
       </a>
     </div>
