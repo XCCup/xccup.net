@@ -136,17 +136,16 @@ const service = {
 };
 
 /**
- * To ensure that smaller airspaces are not overlayed by bigger ones we will sort big airspace to the beginning
+ * To ensure that lower level airspaces are not overlayed by others we will these airspaces to the end
  * @param {Array} airspaces The airspace array which will be sorted
  */
 function sortAirspaces(airspaces) {
-  const bigAirspaceClasses = ["C", "D"];
   airspaces.sort((a, b) => {
-    const aIsBigClass = bigAirspaceClasses.includes(a.class);
-    const bIsBigClass = bigAirspaceClasses.includes(b.class);
-    if (aIsBigClass == bIsBigClass) return 0;
-    if (bIsBigClass) return 1;
-    return -1;
+    const aIsGnd = a.floor == "GND";
+    const bIsGnd = b.floor == "GND";
+    if (aIsGnd == bIsGnd) return 0;
+    if (bIsGnd) return -1;
+    return 1;
   });
 }
 
