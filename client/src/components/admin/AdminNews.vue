@@ -1,30 +1,6 @@
 <template>
   <div id="adminNewsPanel" class="py-3">
-    <div>
-      <h5>Newsletter</h5>
-      <div class="form-check m-1">
-        <input
-          id="flexCheckDefault"
-          v-model="includeAllUserEmails"
-          class="form-check-input"
-          type="checkbox"
-          @change="onIncludeAllChanged"
-        />
-        <label class="form-check-label" for="flexCheckDefault">
-          Sende Nachricht an alle Nutzer anstatt nur Newsletter Abonennten
-        </label>
-      </div>
-      <a
-        class="bi bi-envelope btn btn-outline-primary btn-sm"
-        :class="disableNewsLetter ? 'disabled' : ''"
-        :href="`mailto:?bcc=${userEmails.join(
-          ';'
-        )}&amp;subject=XCCup Newsletter`"
-      >
-        Starte einen Newsletter
-      </a>
-    </div>
-    <div class="table-responsive mt-3">
+    <div class="table-responsive">
       <h5>Nachrichten auf der Startseite</h5>
       <table class="table table-striped table-hover text-sm">
         <thead>
@@ -112,7 +88,6 @@ import { MAX_NEWS_CHARACTERS } from "@/common/Constants";
 import { GENERIC_ERROR } from "@/common/Constants";
 import { Modal } from "bootstrap";
 import { adjustDateToLocal, activateHtmlLinks } from "../../helper/utils";
-
 import { cloneDeep } from "lodash-es";
 
 const router = useRouter();
@@ -120,9 +95,6 @@ const router = useRouter();
 const showSpinner = ref(false);
 const errorMessage = ref(null);
 
-const userEmails = ref([]);
-const includeAllUserEmails = ref(false);
-const disableNewsLetter = ref(true);
 const news = ref([]);
 
 const fetchNews = async () => {
@@ -137,26 +109,8 @@ const fetchNews = async () => {
     });
   }
 };
-const fetchEmails = async () => {
-  try {
-    disableNewsLetter.value = true;
-    const res = await ApiService.getUserEmails(includeAllUserEmails.value);
-    userEmails.value = res.data;
-  } catch (error) {
-    console.log(error);
-    router.push({
-      name: "NetworkError",
-    });
-  } finally {
-    disableNewsLetter.value = false;
-  }
-};
 
-await Promise.all([fetchNews(), fetchEmails()]);
-
-const onIncludeAllChanged = () => {
-  fetchEmails();
-};
+await fetchNews();
 
 // Modals
 const addEditNewsModal = ref(null);
