@@ -2,11 +2,16 @@
   <div v-if="comment" :id="`comment-${comment.id}`" data-cy="flight-comment">
     <div class="d-flex mb-2" data-cy="comment-header">
       <img :src="avatarUrl" class="rounded-circle" />
-      <!-- TODO: Insert link -->
-      <!-- <a href="#" :class="userPrefersDark ? 'link-light' : ''">{{
-        comment.user.firstName + " " + comment.user.lastName
-      }}</a> -->
-      {{ comment.user.firstName + " " + comment.user.lastName }}
+      <router-link
+        :class="userPrefersDark ? 'link-light' : ''"
+        :to="{
+          name: 'FlightsAll',
+          query: { userId: comment?.user?.id },
+        }"
+      >
+        {{ comment.user.firstName + " " + comment.user.lastName }}
+      </router-link>
+
       <span
         class="ms-auto fw-light"
         :class="userPrefersDark ? 'text-light' : 'text-secondary'"
@@ -56,23 +61,36 @@
       />
     </div>
     <div data-cy="comment-footer">
+      <!-- Don't show the reply button if it's a reply -->
       <div
-        v-if="getUserId && comment.userId != getUserId"
+        v-if="getUserId && comment.userId != getUserId && !comment?.relatedTo"
         class="text-secondary text-end"
       >
-        <!-- Don't show the reply button if it's a reply -->
-        <a v-if="!comment?.relatedTo" href="#" @click.prevent="openReplyEditor"
-          ><i class="bi bi-reply"></i> Antworten</a
+        <a
+          href="#"
+          :class="userPrefersDark ? 'link-light' : ''"
+          @click.prevent="openReplyEditor"
         >
+          <i class="bi bi-reply"></i> Antworten
+        </a>
       </div>
+      <!-- Show edit btns to the author of a comment -->
       <div
         v-if="comment.userId === getUserId && !showCommentEditor"
         class="text-secondary text-end"
       >
-        <a href="#" @click.prevent="onEditComment"
-          ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten</a
+        <a
+          href="#"
+          :class="userPrefersDark ? 'link-light' : ''"
+          @click.prevent="onEditComment"
         >
-        <a href="#" @click.prevent="deleteCommentModal.show()">
+          <i class="bi bi-pencil-square mx-1"></i>Bearbeiten
+        </a>
+        <a
+          href="#"
+          :class="userPrefersDark ? 'link-light' : ''"
+          @click.prevent="deleteCommentModal.show()"
+        >
           <i class="bi bi-trash mx-1"></i>Löschen
         </a>
       </div>
@@ -84,8 +102,8 @@
         class="text-secondary text-end"
       >
         <a href="#" class="text-danger" @click.prevent="onEditComment"
-          ><i class="bi bi-pencil-square mx-1"></i>(Admin)</a
-        >
+          ><i class="bi bi-pencil-square mx-1"></i>(Admin)
+        </a>
         <a
           href="#"
           class="text-danger"
