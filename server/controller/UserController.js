@@ -26,6 +26,7 @@ const {
   logoutToken,
   refreshToken,
   requesterIsNotModerator,
+  requesterIsNotAdmin,
 } = require("./Auth");
 const { query } = require("express-validator");
 const { createRateLimiter } = require("./api-protection");
@@ -671,7 +672,7 @@ router.get(
   checkParamIsBoolean("includeAll"),
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
+      if (await requesterIsNotAdmin(req, res)) return;
 
       if (validationHasErrors(req, res)) return;
 
