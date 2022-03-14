@@ -1,5 +1,5 @@
 <template>
-  <div :id="`comment-${comment.id}`" data-cy="flight-comment">
+  <div v-if="comment" :id="`comment-${comment.id}`" data-cy="flight-comment">
     <div class="d-flex mb-2" data-cy="comment-header">
       <img :src="avatarUrl" class="rounded-circle" />
       <!-- TODO: Insert link -->
@@ -31,7 +31,7 @@
       class="shadow-sm rounded p-3 mb-3"
       :class="userPrefersDark ? 'dark-reply' : ''"
     >
-      <CommentReply :reply="reply" />
+      <Comment :comment="reply" />
     </div>
     <!-- Comment Editor -->
     <div v-if="showCommentEditor">
@@ -60,7 +60,8 @@
         v-if="getUserId && comment.userId != getUserId"
         class="text-secondary text-end"
       >
-        <a href="#" @click.prevent="openReplyEditor"
+        <!-- Don't show the reply button if it's a reply -->
+        <a v-if="!comment?.relatedTo" href="#" @click.prevent="openReplyEditor"
           ><i class="bi bi-reply"></i> Antworten</a
         >
       </div>
@@ -75,25 +76,29 @@
           <i class="bi bi-trash mx-1"></i>Löschen
         </a>
       </div>
+      <!-- Show admin edit btns only to admins on comments of other users -->
       <div
-        v-if="hasElevatedRole && !showCommentEditor"
+        v-if="
+          hasElevatedRole && !showCommentEditor && comment.userId != getUserId
+        "
         class="text-secondary text-end"
       >
         <a href="#" class="text-danger" @click.prevent="onEditComment"
-          ><i class="bi bi-pencil-square mx-1"></i>Bearbeiten (Admin)</a
+          ><i class="bi bi-pencil-square mx-1"></i>(Admin)</a
         >
         <a
           href="#"
           class="text-danger"
           @click.prevent="deleteCommentModal.show()"
         >
-          <i class="bi bi-trash mx-1"></i>Löschen (Admin)
+          <i class="bi bi-trash mx-1"></i>(Admin)
         </a>
       </div>
     </div>
   </div>
 
   <BaseModal
+    v-if="comment"
     modal-title="Kommentar löschen?"
     confirm-button-text="Löschen"
     :modal-id="comment.id"
@@ -127,10 +132,10 @@ const showSpinner = ref(false);
 const errorMessage = ref(null);
 
 const commentWithLinks = computed(() =>
-  activateHtmlLinks(props.comment.message)
+  activateHtmlLinks(props.comment?.message)
 );
 
-const avatarUrl = createUserPictureUrl(props.comment.user.id);
+const avatarUrl = createUserPictureUrl(props.comment?.user?.id);
 
 // Find a way to make this reactive
 const userPrefersDark = ref(
@@ -140,9 +145,8 @@ const userPrefersDark = ref(
 // Modal
 const deleteCommentModal = ref(null);
 onMounted(() => {
-  deleteCommentModal.value = new Modal(
-    document.getElementById(props.comment.id)
-  );
+  const el = document.getElementById(props.comment?.id);
+  if (el) deleteCommentModal.value = new Modal(el);
 });
 
 // Delete comment
@@ -163,7 +167,7 @@ const onDeleteComment = async () => {
 
 // Edit Comment
 const showCommentEditor = ref(false);
-const editedComment = ref(props.comment.message);
+const editedComment = ref(props.comment?.message);
 
 const onEditComment = () => (showCommentEditor.value = true);
 
@@ -189,7 +193,7 @@ const onSaveEditedMessage = async (message) => {
 
 const closeCommentEditor = () => {
   showCommentEditor.value = false;
-  editedComment.value = props.comment.message;
+  editedComment.value = props.comment?.message;
 };
 
 // Submit new reply
