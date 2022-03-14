@@ -2,7 +2,7 @@
   <footer class="footer p-3 text-light bg-primary mt-auto">
     <p class="float-end"><a href="#" class="link-light">Nach oben</a></p>
     <p>
-      © XCCup 2021 ·
+      © XCCup {{ new Date().getFullYear() }} ·
       <router-link :to="{ name: 'Privacy' }" class="link-light"
         >Datenschutz
       </router-link>

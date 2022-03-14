@@ -78,6 +78,19 @@
         >
           Cache
         </button>
+        <button
+          v-if="authData.role == 'Administrator'"
+          id="nav-newsletter-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-newsletter"
+          type="button"
+          role="tab"
+          aria-controls="nav-newsletter"
+          aria-selected="false"
+        >
+          Newsletter
+        </button>
       </div>
     </nav>
     <div id="nav-tabContent" class="tab-content">
@@ -121,6 +134,15 @@
         aria-labelledby="nav-cache-tab"
       >
         <AdminCache />
+      </div>
+      <div
+        v-if="authData.role == 'Administrator'"
+        id="nav-newsletter"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-newsletter-tab"
+      >
+        <AdminNewsletter />
       </div>
     </div>
   </div>

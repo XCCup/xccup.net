@@ -29,13 +29,18 @@ const service = {
    * class='RMZ', 'Q', 'W' will not be retrieved
    */
   getAllRelevant: async () => {
-    return Airspace.findAll({
+    const result = await Airspace.findAll({
       where: {
         class: {
           [Op.notIn]: ["RMZ", "Q", "W"],
         },
       },
     });
+
+    const plainResult = result.map((e) => e.toJSON());
+    sortAirspaces(plainResult);
+
+    return plainResult;
   },
 
   /**
@@ -98,7 +103,7 @@ const service = {
               fix.pressureAltitude <= ceilingInMeter
             ) {
               logger.warn(
-                "Found airspace violation at LAT/LONG: " +
+                "AS: Found airspace violation at LAT/LONG: " +
                   lat +
                   "/" +
                   long +
@@ -120,7 +125,7 @@ const service = {
     const endTime = new Date();
 
     logger.debug(
-      "It took " +
+      "AS: It took " +
         (endTime.getTime() -
           startTime.getTime() +
           "ms to scan for airspace violations")
@@ -129,6 +134,20 @@ const service = {
     return violationFound;
   },
 };
+
+/**
+ * To ensure that lower level airspaces are not overlayed by others we will these airspaces to the end
+ * @param {Array} airspaces The airspace array which will be sorted
+ */
+function sortAirspaces(airspaces) {
+  airspaces.sort((a, b) => {
+    const aIsGnd = a.floor == "GND";
+    const bIsGnd = b.floor == "GND";
+    if (aIsGnd == bIsGnd) return 0;
+    if (bIsGnd) return -1;
+    return 1;
+  });
+}
 
 async function find2dIntersection(fixesId) {
   const query = `
@@ -184,7 +203,11 @@ async function findAirspacesWithinPolygon(points) {
     },
   });
 
-  return airspaces.length ? airspaces : [];
+  const result = airspaces.length ? airspaces : [];
+  const plainResult = result.map((e) => e.toJSON());
+  sortAirspaces(plainResult);
+
+  return plainResult;
 }
 
 function convertToMeterMSL(heightValue, elevation) {
@@ -206,7 +229,7 @@ function convertToMeterMSL(heightValue, elevation) {
     const matchingResult = heightValue.match(regex);
     return convertFeetToMeter(matchingResult[1] * 100);
   }
-  logger.warn("No parsable height value found: " + heightValue);
+  logger.warn("AS: No parsable height value found: " + heightValue);
 }
 
 function convertFeetToMeter(feet) {
