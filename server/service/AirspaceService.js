@@ -35,12 +35,11 @@ const service = {
           [Op.notIn]: ["RMZ", "Q", "W"],
         },
       },
+      // To ensure that lower level airspaces are not overlayed by others we will sort these airspaces to the end
+      order: [["floor", "asc"]],
     });
 
-    const plainResult = result.map((e) => e.toJSON());
-    sortAirspaces(plainResult);
-
-    return plainResult;
+    return result;
   },
 
   /**
@@ -135,20 +134,6 @@ const service = {
   },
 };
 
-/**
- * To ensure that lower level airspaces are not overlayed by others we will these airspaces to the end
- * @param {Array} airspaces The airspace array which will be sorted
- */
-function sortAirspaces(airspaces) {
-  airspaces.sort((a, b) => {
-    const aIsGnd = a.floor == "GND";
-    const bIsGnd = b.floor == "GND";
-    if (aIsGnd == bIsGnd) return 0;
-    if (bIsGnd) return -1;
-    return 1;
-  });
-}
-
 async function find2dIntersection(fixesId) {
   const query = `
   SELECT id, class, name, floor, ceiling, "intersectionLine" FROM(
@@ -201,13 +186,13 @@ async function findAirspacesWithinPolygon(points) {
         [Op.in]: intersectionIds,
       },
     },
+    // To ensure that lower level airspaces are not overlayed by others we will sort these airspaces to the end
+    order: [["floor", "asc"]],
   });
 
   const result = airspaces.length ? airspaces : [];
-  const plainResult = result.map((e) => e.toJSON());
-  sortAirspaces(plainResult);
 
-  return plainResult;
+  return result;
 }
 
 function convertToMeterMSL(heightValue, elevation) {
