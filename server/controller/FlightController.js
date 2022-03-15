@@ -16,6 +16,7 @@ const {
 const {
   STATE,
   DAYS_FLIGHT_CHANGEABLE,
+  IGC_STORE,
 } = require("../constants/flight-constants");
 const {
   authToken,
@@ -41,6 +42,7 @@ const { createFileName } = require("../helper/igc-file-utils");
 const config = require("../config/env-config");
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const multer = require("multer");
+const { getCurrentYear } = require("../helper/Utils");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -98,7 +100,25 @@ router.get("/violations", authToken, async (req, res, next) => {
 
   try {
     const flights = await service.getAll({
-      unchecked: true,
+      onlyUnchecked: true,
+    });
+
+    res.json(flights);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Retrieves all flights of the requester
+// @route GET /flights/violations
+// @access Only owner
+
+router.get("/self", authToken, async (req, res, next) => {
+  try {
+    const flights = await service.getAll({
+      includeUnchecked: true,
+      userId: req.user.id,
+      sort: [req.query.sortCol, req.query.sortOrder],
     });
 
     res.json(flights);
@@ -111,6 +131,8 @@ router.get("/violations", authToken, async (req, res, next) => {
 // @route GET /flights/:id
 
 router.get("/:id", checkParamIsInt("id"), async (req, res, next) => {
+  if (paramIdIsLeonardo(req, res)) return;
+
   if (validationHasErrors(req, res)) return;
 
   const flight = await service.getByExternalId(req.params.id);
@@ -187,31 +209,26 @@ router.delete(
 // @route POST /flights/
 // @access All logged-in users
 
+const igcFileUpload = createMulterIgcUploadHandler();
 router.post(
   "/",
   uploadLimiter,
+  igcFileUpload.single("igcFile"),
   authToken,
-  checkStringObjectNotEmpty("igc.name"),
-  checkStringObjectNotEmptyNoEscaping("igc.body"),
   async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-    const igc = req.body.igc;
     const userId = req.user.id;
 
     try {
-      const validationResult = await igcValidator.execute(igc);
+      const validationResult = await igcValidator.execute(req.file);
       if (isGRecordResultInvalid(res, validationResult)) return;
 
       const flightDbObject = await service.create({
         userId,
+        igcPath: req.file.path,
+        externalId: req.externalId,
         uncheckedGRecord: validationResult == undefined ? true : false,
         flightStatus: STATE.IN_PROCESS,
       });
-
-      flightDbObject.igcPath = await persistIgcFile(
-        flightDbObject.externalId,
-        igc
-      );
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
       service.attachFixRelatedTimeData(flightDbObject, fixes);
@@ -231,8 +248,8 @@ router.post(
       deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json({
-        flightId: result.id,
-        externalId: result.externalId,
+        flightId: flightDbObject.id,
+        externalId: flightDbObject.externalId,
         takeoff: takeoffName,
         landing: result.landing,
       });
@@ -273,6 +290,7 @@ router.post(
 
       const flightDbObject = await service.create({
         userId: user.id,
+        externalId: await service.createExternalId(),
         uncheckedGRecord: validationResult == undefined ? true : false,
         flightStatus: STATE.IN_PROCESS,
       });
@@ -393,6 +411,59 @@ router.put(
     }
   }
 );
+
+function paramIdIsLeonardo(req, res) {
+  if (
+    !(
+      typeof req.params.id == "string" &&
+      req.params.id.toLowerCase() == "leonardo"
+    )
+  )
+    return;
+
+  return res.status(BAD_REQUEST).send(`Zur Nutzung des Leonardo Endpunktes:<br/>
+  <br/>
+  URL: https://xccup.net/api/flights/leonardo<br/>
+  HTTP-Method: POST<br/>
+  Content-Type: multipart/form-data<br/>
+  <br/>
+  Fields:<br/>
+  * user: Deine Login E-Mail<br/>
+  * pass: Dein Login Passwort<br/>
+  * IGCigcIGC: Der Inhalt der IGC-Datei (plain-text)<br/>
+  * igcfn: Der Name der IGC-Datei<br/>
+  <br/>
+  Bemerkung:<br/>
+  Zur Berechnung der Punkte wird das Fluggerät, welches im Nutzerprofil als Standart definiert wurde, herangezogen. 
+
+  `);
+}
+
+function createMulterIgcUploadHandler() {
+  const igcStorage = multer.diskStorage({
+    destination: path
+      .join(
+        process.env.SERVER_DATA_PATH,
+        IGC_STORE,
+        getCurrentYear().toString()
+      )
+      .toString(),
+    filename: function (req, file, cb) {
+      service.createExternalId().then((externalId) => {
+        req.externalId = externalId;
+        cb(null, externalId + "_" + file.originalname);
+      });
+    },
+  });
+  return multer({
+    storage: igcStorage,
+    limits: {
+      fileSize: 2097152,
+      files: 1,
+      parts: 1,
+    },
+  });
+}
 
 async function persistIgcFile(externalId, igcFile) {
   const pathToFile = createFileName(externalId, igcFile.name);

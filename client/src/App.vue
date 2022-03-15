@@ -4,7 +4,7 @@
     <GenericError v-if="error" />
     <router-view v-else v-slot="{ Component }">
       <template v-if="Component">
-        <suspense timeout="500">
+        <suspense timeout="500" @pending="start" @resolve="done">
           <template #default>
             <!-- 
           :key="$route.path" is neccesary to re-render and fetch API when 
@@ -36,6 +36,9 @@
 
 <script setup>
 import { ref, onErrorCaptured } from "vue";
+import { useNProgress } from "@vueuse/integrations/useNProgress";
+
+const { start, done } = useNProgress(null, { showSpinner: false });
 
 const error = ref(null);
 onErrorCaptured((e) => {

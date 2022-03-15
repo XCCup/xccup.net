@@ -52,6 +52,14 @@ function checkStringObjectNotEmptyNoEscaping(field) {
     .withMessage(`HTML is not allowed`);
 }
 /**
+ * Checks if the field is not empty.
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkFieldNotEmpty(field) {
+  return check(field).not().isEmpty().withMessage(`${field} is required`);
+}
+/**
  * Checks if the field is a "strong" password (minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1).
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
@@ -157,6 +165,14 @@ function checkParamIsUuid(name) {
   return param(name)
     .isUUID()
     .withMessage(`${name} must be a valid uuid format`);
+}
+/**
+ * Checks if the parameter is of a valid boolean type
+ * @param {*} name The name of the Request-Parameter to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+function checkParamIsBoolean(name) {
+  return param(name).isBoolean().withMessage(`${name} must be a valid boolean`);
 }
 /**
  * Checks if the parameter is of a valid integer.
@@ -310,7 +326,10 @@ exports.checkOptionalStrongPassword = checkOptionalStrongPassword;
 
 exports.checkParamIsUuid = checkParamIsUuid;
 exports.checkParamIsInt = checkParamIsInt;
+exports.checkParamIsBoolean = checkParamIsBoolean;
 
 exports.queryOptionalColumnExistsInModel = queryOptionalColumnExistsInModel;
+
+exports.checkFieldNotEmpty = checkFieldNotEmpty;
 
 exports.validationHasErrors = validationHasErrors;

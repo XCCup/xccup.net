@@ -1,14 +1,16 @@
 const User = require("../config/postgres")["User"];
 const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
+const Flight = require("../config/postgres")["Flight"];
 const flightService = require("../service/FlightService");
 const mailService = require("../service/MailService");
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
 const { ROLE } = require("../constants/user-constants");
-const { TYPE } = require("../constants/flight-constants");
+const { TYPE, STATE } = require("../constants/flight-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
 const { Op } = require("sequelize");
+const sequelize = require("sequelize");
 const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 const { arrayRemove, generateRandomString } = require("../helper/Utils");
@@ -127,6 +129,67 @@ const userService = {
     return await User.findByPk(id, {
       attributes: ["gliders", "defaultGlider"],
     });
+  },
+  getTShirtList: async (year) => {
+    const allUsers = await User.findAll({
+      role: {
+        [Op.not]: ROLE.INACTIVE,
+      },
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "tshirtSize",
+        "address",
+        "email",
+        "gender",
+      ],
+      include: [
+        {
+          model: Flight,
+          as: "flights",
+          attributes: ["flightStatus", "takeoffTime"],
+          limit: 2,
+          where: {
+            flightStatus: STATE.IN_RANKING,
+            andOp: sequelize.where(
+              sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
+              year
+            ),
+          },
+        },
+        createBasicInclude(Club, "club"),
+      ],
+    });
+    const onlyUsersWithEnoughFlights = allUsers
+      .filter((u) => u.flights.length == 2)
+      .map((u) => u.toJSON());
+    onlyUsersWithEnoughFlights.sort((a, b) => {
+      a.club?.name < b.club?.name;
+    });
+    return onlyUsersWithEnoughFlights;
+  },
+  /**
+   * Retrieves e-mail-addresses of active users.
+   * @param {boolean} includeAll If set to true all e-mail addresses will be retrieved. Otherwise only the e-mail-addresses of users which subscribed to the newsletter will be retrieved.
+   * @returns An array of e-mail-addresses
+   */
+  getEmails: async (includeAll) => {
+    const where = {
+      role: {
+        [Op.not]: ROLE.INACTIVE,
+      },
+    };
+
+    if (!includeAll) {
+      where.emailNewsletter = true;
+    }
+
+    const result = await User.findAll({
+      where,
+      attributes: ["email"],
+    });
+    return result.map((e) => e.email);
   },
   getByIdPublic: async (id) => {
     const userQuery = User.findOne({

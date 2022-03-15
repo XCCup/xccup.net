@@ -19,7 +19,10 @@ const FlightStatsCalculator = require("../igc/FlightStatsCalculator");
 const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
-const { sendAirspaceViolationMail } = require("./MailService");
+const {
+  sendAirspaceViolationMail,
+  sendAirspaceViolationAcceptedMail,
+} = require("./MailService");
 
 const { isNoWorkday } = require("../helper/HolidayCalculator");
 const { sleep, findKeyByValue } = require("../helper/Utils");
@@ -48,7 +51,8 @@ const flightService = {
     teamId,
     gliderClass,
     status,
-    unchecked,
+    onlyUnchecked,
+    includeUnchecked,
     sort,
     minimumData,
   } = {}) => {
@@ -70,7 +74,8 @@ const flightService = {
         userId,
         gliderClass,
         status,
-        unchecked
+        onlyUnchecked,
+        includeUnchecked
       ),
       order: [orderStatement],
     };
@@ -242,7 +247,9 @@ const flightService = {
 
   acceptViolation: async (flight) => {
     flight.violationAccepted = true;
-    return flight.save();
+    const result = await flight.save();
+    sendAirspaceViolationAcceptedMail(flight);
+    return result;
   },
 
   finalizeFlightSubmission: async ({
@@ -365,8 +372,7 @@ const flightService = {
   },
 
   create: async (flight) => {
-    //TODO ExternalID als Hook im Model realisieren?
-    await Promise.all([addUserData(flight), addExternalId(flight)]);
+    await addUserData(flight);
     return Flight.create(flight);
   },
 
@@ -426,6 +432,20 @@ const flightService = {
     });
 
     return flyingSite.name;
+  },
+
+  /**
+   * This method will generate a new externalId for a flight by finding the current heightest externalId and increment it by one.
+   *
+   * Postgres does not support auto increment on non PK columns.
+   * Therefore a manual auto increment is necessary.
+   *
+   * @param {*} flight The flight the externalId will be attached to.
+   */
+  createExternalId: async () => {
+    const externalId = (await Flight.max("externalId")) + 1;
+    logger.debug("FS: New external ID was created: " + externalId);
+    return externalId;
   },
 };
 
@@ -619,19 +639,6 @@ async function findAirbuddies(flight) {
 }
 
 /**
- * This method will generate a new externalId for a flight by finding the current heightest externalId and increment it by one.
- *
- * Postgres does not support auto increment on non PK columns.
- * Therefore a manual auto increment is necessary.
- *
- * @param {*} flight The flight the externalId will be attached to.
- */
-async function addExternalId(flight) {
-  flight.externalId = (await Flight.max("externalId")) + 1;
-  logger.debug("FS: New external ID was created: " + flight.externalId);
-}
-
-/**
  * This method will add specific user data (current clubId, teamId and age of the user) to the flight.
  *
  * It's necessary to add team and club id of user directly to the flight.
@@ -659,10 +666,11 @@ async function createWhereStatement(
   userId,
   gliderClass,
   flightStatus,
-  unchecked
+  onlyUnchecked,
+  includeUnchecked
 ) {
   let whereStatement;
-  if (unchecked) {
+  if (onlyUnchecked) {
     whereStatement = {
       [sequelize.Op.or]: [
         { airspaceViolation: true },
@@ -670,7 +678,7 @@ async function createWhereStatement(
       ],
       violationAccepted: false,
     };
-  } else {
+  } else if (!includeUnchecked) {
     whereStatement = {
       [sequelize.Op.or]: [
         { violationAccepted: true },
@@ -680,6 +688,8 @@ async function createWhereStatement(
         },
       ],
     };
+  } else {
+    whereStatement = {};
   }
   if (flightType) {
     whereStatement.flightType = flightType;

@@ -74,4 +74,5 @@ router.beforeEach(async (to, from, next) => {
   // In all other cases just go on to not freeze routing. Just pray.
   return next();
 });
+
 export default router;

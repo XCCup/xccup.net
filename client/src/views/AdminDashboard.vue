@@ -53,6 +53,44 @@
         >
           News
         </button>
+        <button
+          id="nav-tshirt-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-tshirt"
+          type="button"
+          role="tab"
+          aria-controls="nav-tshirt"
+          aria-selected="false"
+        >
+          T-Shirts
+        </button>
+        <button
+          v-if="authData.role == 'Administrator'"
+          id="nav-cache-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-cache"
+          type="button"
+          role="tab"
+          aria-controls="nav-cache"
+          aria-selected="false"
+        >
+          Cache
+        </button>
+        <button
+          v-if="authData.role == 'Administrator'"
+          id="nav-newsletter-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-newsletter"
+          type="button"
+          role="tab"
+          aria-controls="nav-newsletter"
+          aria-selected="false"
+        >
+          Newsletter
+        </button>
       </div>
     </nav>
     <div id="nav-tabContent" class="tab-content">
@@ -80,6 +118,32 @@
       >
         <AdminNews />
       </div>
+      <div
+        id="nav-tshirt"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-tshirt-tab"
+      >
+        <AdminTShirt />
+      </div>
+      <div
+        v-if="authData.role == 'Administrator'"
+        id="nav-cache"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-cache-tab"
+      >
+        <AdminCache />
+      </div>
+      <div
+        v-if="authData.role == 'Administrator'"
+        id="nav-newsletter"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-newsletter-tab"
+      >
+        <AdminNewsletter />
+      </div>
     </div>
   </div>
 </template>
@@ -87,6 +151,9 @@
 <script setup>
 import { setWindowName } from "../helper/utils";
 import { ref } from "vue";
+import useUser from "../composables/useUser";
+
+const { authData } = useUser();
 
 setWindowName("Admin");
 

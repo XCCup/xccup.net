@@ -1,6 +1,7 @@
 <template>
   <div id="adminNewsPanel" class="py-3">
     <div class="table-responsive">
+      <h5>Nachrichten auf der Startseite</h5>
       <table class="table table-striped table-hover text-sm">
         <thead>
           <th>Titel</th>
@@ -87,23 +88,12 @@ import { MAX_NEWS_CHARACTERS } from "@/common/Constants";
 import { GENERIC_ERROR } from "@/common/Constants";
 import { Modal } from "bootstrap";
 import { adjustDateToLocal, activateHtmlLinks } from "../../helper/utils";
-
 import { cloneDeep } from "lodash-es";
 
 const router = useRouter();
 
 const showSpinner = ref(false);
 const errorMessage = ref(null);
-
-const createEmptyNewsObject = () => {
-  return {
-    title: "",
-    message: "",
-    icon: "bi-megaphone",
-    from: new Date(),
-    till: new Date(),
-  };
-};
 
 const news = ref([]);
 
@@ -118,13 +108,6 @@ const fetchNews = async () => {
       name: "NetworkError",
     });
   }
-};
-// Base-date-picker needs this
-const transfromToDateObjects = (news) => {
-  news.forEach((element) => {
-    element.from = adjustDateToLocal(element.from);
-    element.till = adjustDateToLocal(element.till);
-  });
 };
 
 await fetchNews();
@@ -194,12 +177,30 @@ const deleteNews = async () => {
   }
 };
 
+function createEmptyNewsObject() {
+  return {
+    title: "",
+    message: "",
+    icon: "bi-megaphone",
+    from: new Date(),
+    till: new Date(),
+  };
+}
+
 // Snip text helper
-const snipText = (text) => {
+function snipText(text) {
   if (text.length > MAX_NEWS_CHARACTERS) {
     return text.substring(0, MAX_NEWS_CHARACTERS - 80) + "…";
   } else {
     return text;
   }
-};
+}
+
+// Base-date-picker needs this
+function transfromToDateObjects(news) {
+  news.forEach((element) => {
+    element.from = adjustDateToLocal(element.from);
+    element.till = adjustDateToLocal(element.till);
+  });
+}
 </script>

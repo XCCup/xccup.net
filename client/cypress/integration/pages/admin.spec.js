@@ -101,4 +101,44 @@ describe("check admin page", () => {
       .its("length")
       .should("eq", 3);
   });
+
+  it("test cache control", () => {
+    cy.get("#nav-cache-tab").click();
+
+    cy.get("#adminCachePanel")
+      .find("button")
+      .contains("Statistik anfordern")
+      .click();
+
+    cy.get("#adminCachePanel")
+      .get("p")
+      .should("include.text", "Generelle Daten");
+    cy.get("#adminCachePanel")
+      .get("li")
+      .should("include.text", "hits")
+      .and("include.text", "misses")
+      .and("include.text", "keys")
+      .and("include.text", "ksize")
+      .and("include.text", "vsize");
+
+    cy.get("#adminCachePanel")
+      .get("p")
+      .should("include.text", "Vorhandene Keys");
+  });
+
+  it("test tshirt list", () => {
+    cy.get("#nav-tshirt-tab").click();
+
+    cy.get("#adminTShirtPanel")
+      .find("button")
+      .contains("Statistik anfordern")
+      .click();
+
+    cy.get("#adminTShirtPanel")
+      .get("[data-cy=tshirt-overall-count]")
+      .should(
+        "include.text",
+        "Zur Zeit haben sich 10 Piloten für ein T-Shirt qualifiziert. Dies teilt sich wie folgt auf."
+      );
+  });
 });

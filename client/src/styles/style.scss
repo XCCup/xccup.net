@@ -11,6 +11,13 @@
 @import "@/styles/rankingClasses";
 @import "@/styles/dialogBackground";
 
+@import "nprogress/nprogress.css";
+
+#nprogress .bar {
+  // TODO: Is there a better color option?
+  background: #f0faf6;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

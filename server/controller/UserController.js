@@ -26,6 +26,7 @@ const {
   logoutToken,
   refreshToken,
   requesterIsNotModerator,
+  requesterIsNotAdmin,
 } = require("./Auth");
 const { query } = require("express-validator");
 const { createRateLimiter } = require("./api-protection");
@@ -37,6 +38,8 @@ const {
   checkStringObjectNotEmpty,
   checkIsUuidObject,
   checkParamIsUuid,
+  checkParamIsInt,
+  checkParamIsBoolean,
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
@@ -637,6 +640,50 @@ router.get(
     }
   }
 );
+// @desc Retrieves all users which have qualified for a tshirt in the current season
+// @route GET /users/tshirts/:year
+// Only moderator
+
+router.get(
+  "/tshirts/:year",
+  authToken,
+  checkParamIsInt("year"),
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      if (validationHasErrors(req, res)) return;
+      const year = req.params.year;
+
+      const result = await service.getTShirtList(year);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+// @desc Retrieves all user e-mails
+// @route GET /users/emails/:includeAll
+// Only moderator
+
+router.get(
+  "/emails/:includeAll",
+  authToken,
+  checkParamIsBoolean("includeAll"),
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotAdmin(req, res)) return;
+
+      if (validationHasErrors(req, res)) return;
+
+      const includeAll = req.params.includeAll.toLowerCase() === "true";
+      const result = await service.getEmails(includeAll);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 // @desc Retrieves the gliders of an user.
 // @route GET /users/gliders/
@@ -660,7 +707,7 @@ router.get("/adminNotifications", authToken, async (req, res, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
     const flights = await flightService.getAll({
-      unchecked: true,
+      onlyUnchecked: true,
     });
     const sites = await siteService.getAll({ state: "proposal" });
     res.json(sites.length + flights.count);

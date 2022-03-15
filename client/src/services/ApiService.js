@@ -116,8 +116,23 @@ export default {
   getAdminNotifications() {
     return jwtInterceptor.get(baseURL + "users/adminNotifications");
   },
+  getTShirtList(year = new Date().getFullYear()) {
+    return jwtInterceptor.get(baseURL + "users/tshirts/" + year);
+  },
+  getUserEmails(includeAll) {
+    return jwtInterceptor.get(baseURL + "users/emails/" + includeAll);
+  },
+  getCacheStats() {
+    return jwtInterceptor.get(baseURL + "cache/stats");
+  },
+  deleteCache(key) {
+    return jwtInterceptor.get(baseURL + "cache/clear/" + key);
+  },
   getFlightViolations() {
     return jwtInterceptor.get(baseURL + "flights/violations");
+  },
+  getFlightsSelf() {
+    return jwtInterceptor.get(baseURL + "flights/self");
   },
   acceptFlightViolations(flightId) {
     return jwtInterceptor.put(baseURL + "flights/acceptViolation/" + flightId);

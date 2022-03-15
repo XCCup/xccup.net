@@ -1,9 +1,8 @@
 <template>
   <section class="pb-3">
     <div id="adminSitesPanel">
-      <h5>Ausstehende Fluggebietsprüfungen</h5>
-
       <div v-if="proposedSitesPresent" class="table-responsive">
+        <h5>Ausstehende Fluggebietsprüfungen</h5>
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Name</th>
@@ -29,12 +28,12 @@
                 <BaseDate :timestamp="site.createdAt" />
               </td>
               <td>
-                <button
+                <a
                   class="btn btn-outline-primary btn-sm"
-                  @click="onMessageSubmitter(site)"
+                  :href="`mailto:${site.submitter?.email}?subject=Dein Fluggebietsvorschlag (${site.name})`"
                 >
                   <i class="bi bi-envelope"></i>
-                </button>
+                </a>
               </td>
               <td>
                 <button
@@ -56,6 +55,7 @@
           </tbody>
         </table>
       </div>
+      <div v-else><h5>Keine ausstehenden Fluggebietsprüfungen</h5></div>
     </div>
   </section>
   <BaseModal
@@ -66,7 +66,6 @@
     :confirm-action="processConfirmResult"
     :is-dangerous-action="true"
   />
-  <ModalSendMail :modal-id="mailModalId" :user="selectedUser" />
 </template>
 
 <script setup>
@@ -88,16 +87,12 @@ const confirmType = ref("");
 const confirmModalId = ref("modalSiteConfirm");
 const confirmModalTitle = ref("");
 const confirmModalButtonText = ref("");
-const mailModal = ref(null);
-const mailModalId = ref("adminSiteMailModal");
 const selectedSite = ref(null);
-const selectedUser = ref(null);
 
 const proposedSitesPresent = computed(() => sites.value.length > 0);
 
 onMounted(() => {
   confirmModal.value = new Modal(document.getElementById(confirmModalId.value));
-  mailModal.value = new Modal(document.getElementById(mailModalId.value));
 });
 
 await fetchProposedSites();
@@ -145,11 +140,6 @@ function onAccept(site) {
   confirmModalButtonText.value = "Akzeptieren";
   selectedSite.value = site;
   confirmModal.value.show();
-}
-
-function onMessageSubmitter(site) {
-  selectedUser.value = site.submitter;
-  mailModal.value.show();
 }
 </script>
 

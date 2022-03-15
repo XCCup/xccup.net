@@ -84,8 +84,7 @@ describe("check landing page", () => {
 
       cy.get("table").find("tr").its("length").should("gte", 5);
 
-      const isNextDailyRanking =
-        new Date().getHours() >= 15 - new Date().getTimezoneOffset() / 60;
+      const isNextDailyRanking = new Date().getHours() >= 15;
       const anyRow1 = isNextDailyRanking
         ? ["Leo Altenwerth", "Stüppel", "74 km", "212 P"]
         : ["Ms. Laurie", "Burgen", "12 km", "75 P"];
