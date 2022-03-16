@@ -34,7 +34,7 @@
     </div>
   </div>
   <div class="container">
-    <LineChart :chart-data="baroDatasets" :options="options2" :height="150" />
+    <LineChart :chart-data="baroDatasets" :options="options" :height="150" />
   </div>
 </template>
 
@@ -75,9 +75,8 @@ const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 const labelData = ref([{}]);
 
 const baroDatasets = computed(() => {
-  if (!activeAirbuddyFlights.value[0]) return [];
-  return processBaroData(flight.value, []);
-  // return processBaroData(flight.value, activeAirbuddyFlights.value);
+  if (!flight.value) return [];
+  return processBaroData(flight.value, activeAirbuddyFlights.value);
 });
 
 const updateLabels = (context) => {
@@ -191,7 +190,7 @@ const userPrefersDark = ref(
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
 );
 
-const options2 = {
+const options = {
   maintainAspectRatio: false,
   responsive: true,
 

@@ -5,11 +5,6 @@ export function processBaroData(flight, buddyTracks) {
   const allBaroData = [];
   const baroData = [];
   const elevation = [];
-  // const elevation = [
-  //   { x: 1620901004000, y: 10 },
-  //   { x: 1620901006000, y: 100 },
-  //   { x: 1620901008000, y: 50 },
-  // ];
   if (!flight) return [];
   for (var i = 0; i < flight.fixes.length; i++) {
     elevation.push({
