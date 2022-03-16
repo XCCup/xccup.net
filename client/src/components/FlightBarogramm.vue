@@ -1,73 +1,37 @@
 <template>
   <div class="container">
-    <table
+    <div
       v-if="!airbuddiesInUse"
       id="positionStatsTable"
-      class="table table-sm"
+      class="row row-cols-2 row-cols-md-3 row-cols-lg-4 my-2"
     >
-      <tbody>
-        <tr>
-          <td class="col-3 col-md-2 hide-on-xs no-line-break">
-            <i class="bi bi-cloud-upload"></i>
-            {{
-              labelData[1]?.altitude ? Math.floor(labelData[1]?.altitude) : "0"
-            }}
-            m
-          </td>
-
-          <td class="col-3 col-md-2 no-line-break">
-            <i class="bi bi-arrows-expand"></i>
-            {{
-              labelData[1]?.speed
-                ? Math.round(labelData[1]?.climb * 10) / 10
-                : "0"
-            }}
-            m/s
-          </td>
-          <td class="col-3 col-md-2 no-line-break">
-            <i class="bi bi-speedometer2"></i>
-            {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
-            km/h
-          </td>
-          <td class="col-3 col-md-2 no-line-break">
-            <i class="bi bi-clock"></i> {{ labelData[1]?.time }}
-          </td>
-        </tr>
-        <!-- <tr v-for="(_, index) in statsTableData" :key="index">
-          <td class="col-3">
-            Name:
-            {{ labelData[index]?.name ?? "" }}
-          </td>
-          <td class="col-3">
-            <i class="bi bi-arrow-bar-up"></i>
-            {{
-              labelData[index]?.altitude
-                ? Math.floor(labelData[index]?.altitude)
-                : "0"
-            }}
-            m
-          </td>
-          <td class="">
-            <i class="bi bi-speedometer2"></i>
-            {{
-              labelData[index]?.speed
-                ? Math.floor(labelData[index]?.speed)
-                : "0"
-            }}
-            km/h
-          </td>
-          <td class="col-3">
-            <i class="bi bi-arrows-expand"></i>
-            {{
-              labelData[index]?.speed
-                ? Math.floor(labelData[index]?.climb)
-                : "0"
-            }}
-            m/s
-          </td>
-        </tr> -->
-      </tbody>
-    </table>
+      <div class="col">
+        <i class="bi bi-cloud-upload"></i>
+        {{ labelData[1]?.altitude ? Math.floor(labelData[1]?.altitude) : "0" }}
+        m /
+        {{
+          labelData[1]?.pressureAltitude
+            ? Math.floor(labelData[1]?.pressureAltitude)
+            : "0"
+        }}
+        m (ISA)
+      </div>
+      <div class="col">
+        <i class="bi bi-arrows-expand"></i>
+        {{
+          labelData[1]?.speed ? Math.round(labelData[1]?.climb * 10) / 10 : "0"
+        }}
+        m/s
+      </div>
+      <div class="col">
+        <i class="bi bi-speedometer2"></i>
+        {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
+        km/h
+      </div>
+      <div class="col">
+        <i class="bi bi-clock"></i> {{ labelData[1]?.time }}
+      </div>
+    </div>
   </div>
   <div class="container">
     <canvas ref="ctx"></canvas>
@@ -94,6 +58,20 @@ import {
   Tooltip,
 } from "chart.js";
 
+import {
+  ref,
+  onMounted,
+  computed,
+  onBeforeUnmount,
+  watchEffect,
+  shallowRef,
+} from "vue";
+import { processBaroData } from "../helper/baroHelpers";
+import useFlight from "@/composables/useFlight";
+import useAirbuddies from "@/composables/useAirbuddies";
+// TODO: Replace all date-fns with luxon?
+import "chartjs-adapter-luxon";
+
 Chart.register(
   LineElement,
   PointElement,
@@ -106,21 +84,7 @@ Chart.register(
   Tooltip
 );
 
-import "chartjs-adapter-luxon";
 const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
-// TODO: Replace all date-fns with luxon?
-
-import {
-  ref,
-  onMounted,
-  computed,
-  onBeforeUnmount,
-  watchEffect,
-  shallowRef,
-} from "vue";
-import { processBaroData } from "../helper/baroHelpers";
-import useFlight from "@/composables/useFlight";
-import useAirbuddies from "@/composables/useAirbuddies";
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
@@ -135,6 +99,7 @@ const baroDatasets = computed(() =>
 const updateLabels = (context) => {
   labelData.value[context.datasetIndex] = {
     speed: context.raw.speed,
+    pressureAltitude: context.raw.pressureAltitude,
     altitude: context.raw.y,
     climb: context.raw.climb,
     name: context.dataset.label,

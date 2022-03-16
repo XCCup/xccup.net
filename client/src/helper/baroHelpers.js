@@ -14,6 +14,7 @@ export function processBaroData(flight, buddyTracks) {
     baroData.push({
       x: flight.fixes[i].timestamp,
       y: flight.fixes[i].gpsAltitude,
+      pressureAltitude: flight.fixes[i].pressureAltitude,
       speed: flight.fixes[i].speed,
       climb: flight.fixes[i].climb,
     });
@@ -45,28 +46,28 @@ export function processBaroData(flight, buddyTracks) {
     borderColor: TRACK_COLORS[0],
   };
   // Datasets for all aribuddies
-  if (buddyTracks) {
-    buddyTracks.forEach((element, index) => {
-      const buddyBaro = [];
-      // Check if this track is activated
-      if (element.isActive) {
-        for (var i = 0; i < element.fixes.length; i++) {
-          buddyBaro.push({
-            x: element.fixes[i].timestamp,
-            y: element.fixes[i].gpsAltitude,
-            speed: element.fixes[i].speed,
-            climb: element.fixes[i].climb,
-          });
-        }
-      }
-      // Create the buddy dataset
-      allBaroData[index + 2] = {
-        label: element.buddyName,
-        data: buddyBaro,
-        backgroundColor: TRACK_COLORS[index + 1],
-        borderColor: TRACK_COLORS[index + 1],
-      };
-    });
-  }
+  // if (buddyTracks) {
+  //   buddyTracks.forEach((element, index) => {
+  //     const buddyBaro = [];
+  //     // Check if this track is activated
+  //     if (element.isActive) {
+  //       for (var i = 0; i < element.fixes.length; i++) {
+  //         buddyBaro.push({
+  //           x: element.fixes[i].timestamp,
+  //           y: element.fixes[i].gpsAltitude,
+  //           speed: element.fixes[i].speed,
+  //           climb: element.fixes[i].climb,
+  //         });
+  //       }
+  //     }
+  //     // Create the buddy dataset
+  //     allBaroData[index + 2] = {
+  //       label: element.buddyName,
+  //       data: buddyBaro,
+  //       backgroundColor: TRACK_COLORS[index + 1],
+  //       borderColor: TRACK_COLORS[index + 1],
+  //     };
+  //   });
+  // }
   return allBaroData;
 }
