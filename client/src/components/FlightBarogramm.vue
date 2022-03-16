@@ -34,7 +34,7 @@
     </div>
   </div>
   <div class="container">
-    <LineChart :chart-data="baroDatasets" :options="options2" />
+    <LineChart :chart-data="baroDatasets" :options="options2" :height="150" />
   </div>
 </template>
 
@@ -74,9 +74,11 @@ const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 
 const labelData = ref([{}]);
 
-const baroDatasets = computed(() =>
-  processBaroData(flight.value, activeAirbuddyFlights.value)
-);
+const baroDatasets = computed(() => {
+  if (!activeAirbuddyFlights.value[0]) return [];
+  return processBaroData(flight.value, []);
+  // return processBaroData(flight.value, activeAirbuddyFlights.value);
+});
 
 const updateLabels = (context) => {
   labelData.value[context.datasetIndex] = {
@@ -88,25 +90,6 @@ const updateLabels = (context) => {
     time: context.label,
   };
 };
-
-// watchEffect(() => {
-//   if (chart.value) {
-//     chart.value.data.datasets = baroDatasets.value;
-//     chart.value.update();
-//   }
-// });
-
-// onBeforeUnmount(() => {
-//   if (chart.value) {
-//     chart.value.destroy();
-//   }
-// });
-
-// const ctx = ref(null);
-// onMounted(() => {
-//   // Create a new chart
-//   if (ctx.value) chart.value = new Chart(ctx.value, options);
-// });
 
 // const options = {
 //   type: "line",
@@ -210,6 +193,8 @@ const userPrefersDark = ref(
 
 const options2 = {
   maintainAspectRatio: false,
+  responsive: true,
+
   onClick: () => {
     // Center map at current position
     const centerMapEvent = new CustomEvent("centerMapOnClick");
@@ -298,89 +283,4 @@ const options2 = {
     },
   },
 };
-
-const options3 = {
-  plugins: {
-    legend: {
-      display: false,
-    },
-    tooltip: {
-      enabled: true,
-      mode: "x",
-      intersect: false,
-      animation: {
-        duration: 5,
-      },
-      // This does nothing but it is needed to trigger the callback
-      // even if the tooltip is disabled
-      external: function () {},
-      callbacks: {
-        label: (context) => {
-          // Skip GND dataset
-          if (context.datasetIndex === 0) return;
-          // Update marker position on map view event listener
-          // const event = new CustomEvent("markerPositionUpdated", {
-          //   detail: {
-          //     dataIndex: context.dataIndex,
-          //     datasetIndex: context.datasetIndex,
-          //   },
-          // });
-          // document.dispatchEvent(event);
-        },
-      },
-    },
-  },
-
-  scales: {
-    x: {
-      type: "time",
-      time: {
-        round: "second",
-        displayFormats: {
-          minute: "HH:mm:ss",
-          hour: "HH:mm:ss",
-        },
-        tooltipFormat: "HH:mm:ss",
-        minUnit: "second",
-      },
-      adapters: {
-        date: {
-          zone: tz,
-        },
-      },
-      title: {
-        display: false,
-        text: "Date",
-      },
-    },
-    y: {
-      title: {
-        display: true,
-        text: "GPS Höhe",
-      },
-      beginAtZero: true,
-      ticks: {
-        callback: function (value) {
-          return value + "m";
-        },
-      },
-    },
-  },
-};
-
-// Chart options
-
-// Chart.defaults.elements.line.borderWidth = 2;
-// Chart.defaults.elements.line.tension = 1;
-// Chart.defaults.elements.point.pointBorderWidth = 0;
-// Chart.defaults.elements.point.pointRadius = 0;
-// //Chart.defaults.elements.point.pointHitRadius = 0;
-// Chart.defaults.elements.point.pointHoverRadius = 0;
-// // Chart.defaults.plugins.decimation.enabled = true;
 </script>
-
-<style lang="scss" scoped>
-// #barogramm {
-//   height: 200px;
-// }
-</style>
