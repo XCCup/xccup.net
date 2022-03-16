@@ -1,4 +1,8 @@
 describe("check flight comments", () => {
+  before(() => {
+    cy.seedDb();
+  });
+
   beforeEach(() => {
     cy.visit("/");
     // TODO: Shouldn't there be a db seed to make this working on it's own?
