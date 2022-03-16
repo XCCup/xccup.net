@@ -131,6 +131,11 @@ onMounted(() => {
   if (ctx.value) chart.value = new Chart(ctx.value, options);
 });
 
+// Find a way to make this reactive
+const userPrefersDark = ref(
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+);
+
 const options = {
   type: "line",
   data: {
@@ -154,11 +159,10 @@ const options = {
       },
       crosshair: {
         line: {
-          color: "#GGG", // crosshair line color
-          width: 1, // crosshair line width
+          color: userPrefersDark.value ? "darkgrey" : "#GGG",
+          width: 1,
         },
       },
-
       tooltip: {
         enabled: false,
         mode: "x",

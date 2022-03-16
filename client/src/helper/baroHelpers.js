@@ -34,6 +34,7 @@ export function processBaroData(flight, buddyTracks) {
     label: "GND",
     hidden: hideGND,
     fill: true,
+    order: 10,
     data: elevation,
     backgroundColor: "SaddleBrown",
     borderColor: "SaddleBrown",
