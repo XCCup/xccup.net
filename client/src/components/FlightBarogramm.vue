@@ -56,6 +56,7 @@ import {
   Legend,
   Title,
   Tooltip,
+  Interaction,
 } from "chart.js";
 
 import {
@@ -72,6 +73,8 @@ import useAirbuddies from "@/composables/useAirbuddies";
 // TODO: Replace all date-fns with luxon?
 import "chartjs-adapter-luxon";
 
+import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
+
 Chart.register(
   LineElement,
   PointElement,
@@ -81,8 +84,10 @@ Chart.register(
   Filler,
   Legend,
   Title,
-  Tooltip
+  Tooltip,
+  CrosshairPlugin
 );
+Interaction.modes.interpolate = Interpolate;
 
 const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
 
@@ -146,6 +151,12 @@ const options = {
       },
       legend: {
         display: false,
+      },
+      crosshair: {
+        line: {
+          color: "#GGG", // crosshair line color
+          width: 1, // crosshair line width
+        },
       },
 
       tooltip: {
