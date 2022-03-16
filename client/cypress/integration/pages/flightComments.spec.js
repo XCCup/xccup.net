@@ -1,6 +1,11 @@
 describe("check flight comments", () => {
+  before(() => {
+    cy.seedDb();
+  });
+
   beforeEach(() => {
     cy.visit("/");
+    // TODO: Shouldn't there be a db seed to make this working on it's own?
   });
 
   it("check flight comments not editable", () => {
@@ -62,10 +67,10 @@ describe("check flight comments", () => {
       "Lois White"
     );
     cy.get("#comment-5edc5c1c-3421-41f4-8d39-cb8f2f8ada44")
-      .contains("a", "Bearbeiten (Admin)")
+      .contains("a", "(Admin)")
       .should("exist");
     cy.get("#comment-5edc5c1c-3421-41f4-8d39-cb8f2f8ada44")
-      .contains("a", "Löschen (Admin)")
+      .contains("a", "(Admin)")
       .should("exist");
   });
 });
