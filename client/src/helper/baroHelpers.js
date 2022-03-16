@@ -5,7 +5,12 @@ export function processBaroData(flight, buddyTracks) {
   const allBaroData = [];
   const baroData = [];
   const elevation = [];
-  if (!flight) return null;
+  // const elevation = [
+  //   { x: 1620901004000, y: 10 },
+  //   { x: 1620901006000, y: 100 },
+  //   { x: 1620901008000, y: 50 },
+  // ];
+  if (!flight) return [];
   for (var i = 0; i < flight.fixes.length; i++) {
     elevation.push({
       x: flight.fixes[i].timestamp,
@@ -38,6 +43,7 @@ export function processBaroData(flight, buddyTracks) {
     backgroundColor: "SaddleBrown",
     borderColor: "SaddleBrown",
   };
+
   // Dataset for main flight
   allBaroData[1] = {
     label: "Pilot",
@@ -69,5 +75,5 @@ export function processBaroData(flight, buddyTracks) {
       };
     });
   }
-  return allBaroData;
+  return { datasets: allBaroData };
 }

@@ -34,39 +34,14 @@
     </div>
   </div>
   <div class="container">
-    <canvas ref="ctx"></canvas>
+    <LineChart :chart-data="baroDatasets" :options="options2" />
   </div>
 </template>
 
 <script setup>
-//  This helps:
-// https://medium.com/risan/vue-chart-component-with-chart-js-db85a2d21288
-// https://dev.to/23subbhashit/fetching-and-visualizing-data-in-vue-using-axios-and-chart-js-k2h
-
-// import Chart from "chart.js/auto"; // Import all for dev purposes
-
-import {
-  Chart,
-  LineElement,
-  PointElement,
-  LineController,
-  LinearScale,
-  TimeScale,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-  Interaction,
-} from "chart.js";
-
-import {
-  ref,
-  onMounted,
-  computed,
-  onBeforeUnmount,
-  watchEffect,
-  shallowRef,
-} from "vue";
+import { Chart, Interaction, registerables } from "chart.js";
+import { ref, computed } from "vue";
+import { LineChart } from "vue-chart-3";
 import { processBaroData } from "../helper/baroHelpers";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
@@ -75,18 +50,21 @@ import "chartjs-adapter-luxon";
 
 import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
 
-Chart.register(
-  LineElement,
-  PointElement,
-  LineController,
-  LinearScale,
-  TimeScale,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-  CrosshairPlugin
-);
+// Chart.register(
+//   LineElement,
+//   PointElement,
+//   LineController,
+//   LinearScale,
+//   TimeScale,
+//   Filler,
+//   Legend,
+//   Title,
+//   Tooltip,
+//   CrosshairPlugin
+// );
+
+Chart.register(...registerables, CrosshairPlugin);
+
 Interaction.modes.interpolate = Interpolate;
 
 const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
@@ -94,7 +72,6 @@ const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 
-const chart = shallowRef(null);
 const labelData = ref([{}]);
 
 const baroDatasets = computed(() =>
@@ -112,128 +89,294 @@ const updateLabels = (context) => {
   };
 };
 
-watchEffect(() => {
-  if (chart.value) {
-    chart.value.data.datasets = baroDatasets.value;
-    chart.value.update();
-  }
-});
+// watchEffect(() => {
+//   if (chart.value) {
+//     chart.value.data.datasets = baroDatasets.value;
+//     chart.value.update();
+//   }
+// });
 
-onBeforeUnmount(() => {
-  if (chart.value) {
-    chart.value.destroy();
-  }
-});
+// onBeforeUnmount(() => {
+//   if (chart.value) {
+//     chart.value.destroy();
+//   }
+// });
 
-const ctx = ref(null);
-onMounted(() => {
-  // Create a new chart
-  if (ctx.value) chart.value = new Chart(ctx.value, options);
-});
+// const ctx = ref(null);
+// onMounted(() => {
+//   // Create a new chart
+//   if (ctx.value) chart.value = new Chart(ctx.value, options);
+// });
 
-const options = {
-  type: "line",
-  data: {
-    // labels: this.labels,
-    datasets: baroDatasets.value,
+// const options = {
+//   type: "line",
+//   data: {
+//     // labels: this.labels,
+//     datasets: baroDatasets.value,
+//   },
+//   options: {
+//     onClick: () => {
+//       // Center map at current position
+//       const centerMapEvent = new CustomEvent("centerMapOnClick");
+//       document.dispatchEvent(centerMapEvent);
+//     },
+//     maintainAspectRatio: false,
+//     plugins: {
+//       title: {
+//         display: false,
+//         text: "Barogramm",
+//       },
+//       legend: {
+//         display: false,
+//       },
+//       crosshair: {
+//         line: {
+//           color: "#GGG", // crosshair line color
+//           width: 1, // crosshair line width
+//         },
+//       },
+
+//       tooltip: {
+//         enabled: false,
+//         mode: "x",
+//         intersect: false,
+//         animation: {
+//           duration: 5,
+//         },
+//         // This does nothing but it is needed to trigger the callback
+//         // even if the tooltip is disabled
+//         external: function () {},
+//         callbacks: {
+//           label: (context) => {
+//             // Skip GND dataset
+//             if (context.datasetIndex === 0) return;
+
+//             // Update marker position on map view event listener
+//             const event = new CustomEvent("markerPositionUpdated", {
+//               detail: {
+//                 dataIndex: context.dataIndex,
+//                 datasetIndex: context.datasetIndex,
+//               },
+//             });
+//             document.dispatchEvent(event);
+//             updateLabels(context);
+//           },
+//         },
+//       },
+//     },
+
+//     scales: {
+//       x: {
+//         type: "time",
+//         time: {
+//           round: "second",
+//           displayFormats: {
+//             minute: "HH:mm",
+//             hour: "HH:mm",
+//           },
+//           tooltipFormat: "HH:mm",
+//           minUnit: "hour",
+//         },
+//         adapters: {
+//           date: {
+//             zone: tz,
+//           },
+//         },
+//         title: {
+//           display: false,
+//           text: "Date",
+//         },
+//       },
+//       y: {
+//         title: {
+//           display: true,
+//           text: "GPS Höhe",
+//         },
+//         beginAtZero: true,
+//         ticks: {
+//           callback: function (value) {
+//             return value + "m";
+//           },
+//         },
+//       },
+//     },
+//   },
+// };
+
+// Find a way to make this reactive
+const userPrefersDark = ref(
+  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+);
+
+const options2 = {
+  maintainAspectRatio: false,
+  onClick: () => {
+    // Center map at current position
+    const centerMapEvent = new CustomEvent("centerMapOnClick");
+    document.dispatchEvent(centerMapEvent);
   },
-  options: {
-    onClick: () => {
-      // Center map at current position
-      const centerMapEvent = new CustomEvent("centerMapOnClick");
-      document.dispatchEvent(centerMapEvent);
+  plugins: {
+    legend: {
+      display: false,
     },
-    maintainAspectRatio: false,
-    plugins: {
+    crosshair: {
+      line: {
+        color: userPrefersDark.value ? "darkgrey" : "#GGG",
+        width: 1,
+      },
+    },
+    tooltip: {
+      enabled: false,
+      mode: "x",
+      intersect: false,
+      animation: {
+        duration: 5,
+      },
+      // This does nothing but it is needed to trigger the callback
+      // even if the tooltip is disabled
+      external: function () {},
+      callbacks: {
+        label: (context) => {
+          // Skip GND dataset
+          if (context.datasetIndex === 0) return;
+          // Update marker position on map view event listener
+          const event = new CustomEvent("markerPositionUpdated", {
+            detail: {
+              dataIndex: context.dataIndex,
+              datasetIndex: context.datasetIndex,
+            },
+          });
+          document.dispatchEvent(event);
+          // Update baro stats for main flight only
+          if (context.datasetIndex != 1) return;
+          updateLabels(context);
+        },
+      },
+    },
+  },
+
+  scales: {
+    x: {
+      type: "time",
+      time: {
+        round: "second",
+        displayFormats: {
+          minute: "HH:mm",
+          hour: "HH:mm",
+        },
+        tooltipFormat: "HH:mm",
+        minUnit: "hour",
+      },
+      adapters: {
+        date: {
+          zone: tz,
+        },
+      },
+    },
+    y: {
+      title: {
+        display: true,
+        text: "GPS Höhe",
+      },
+      beginAtZero: true,
+      ticks: {
+        callback: function (value) {
+          return value + "m";
+        },
+      },
+    },
+  },
+  elements: {
+    line: {
+      borderWith: 2,
+      tension: 1,
+    },
+    point: {
+      pointBorderWidth: 0,
+      pointRadius: 0,
+      pointHoverRadius: 0,
+    },
+  },
+};
+
+const options3 = {
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      enabled: true,
+      mode: "x",
+      intersect: false,
+      animation: {
+        duration: 5,
+      },
+      // This does nothing but it is needed to trigger the callback
+      // even if the tooltip is disabled
+      external: function () {},
+      callbacks: {
+        label: (context) => {
+          // Skip GND dataset
+          if (context.datasetIndex === 0) return;
+          // Update marker position on map view event listener
+          // const event = new CustomEvent("markerPositionUpdated", {
+          //   detail: {
+          //     dataIndex: context.dataIndex,
+          //     datasetIndex: context.datasetIndex,
+          //   },
+          // });
+          // document.dispatchEvent(event);
+        },
+      },
+    },
+  },
+
+  scales: {
+    x: {
+      type: "time",
+      time: {
+        round: "second",
+        displayFormats: {
+          minute: "HH:mm:ss",
+          hour: "HH:mm:ss",
+        },
+        tooltipFormat: "HH:mm:ss",
+        minUnit: "second",
+      },
+      adapters: {
+        date: {
+          zone: tz,
+        },
+      },
       title: {
         display: false,
-        text: "Barogramm",
-      },
-      legend: {
-        display: false,
-      },
-      crosshair: {
-        line: {
-          color: "#GGG", // crosshair line color
-          width: 1, // crosshair line width
-        },
-      },
-
-      tooltip: {
-        enabled: false,
-        mode: "x",
-        intersect: false,
-        animation: {
-          duration: 5,
-        },
-        // This does nothing but it is needed to trigger the callback
-        // even if the tooltip is disabled
-        external: function () {},
-        callbacks: {
-          label: (context) => {
-            // Skip GND dataset
-            if (context.datasetIndex === 0) return;
-
-            // Update marker position on map view event listener
-            const event = new CustomEvent("markerPositionUpdated", {
-              detail: {
-                dataIndex: context.dataIndex,
-                datasetIndex: context.datasetIndex,
-              },
-            });
-            document.dispatchEvent(event);
-            updateLabels(context);
-          },
-        },
+        text: "Date",
       },
     },
-
-    scales: {
-      x: {
-        type: "time",
-        time: {
-          round: "second",
-          displayFormats: {
-            minute: "HH:mm",
-            hour: "HH:mm",
-          },
-          tooltipFormat: "HH:mm",
-          minUnit: "hour",
-        },
-        adapters: {
-          date: {
-            zone: tz,
-          },
-        },
-        title: {
-          display: false,
-          text: "Date",
-        },
+    y: {
+      title: {
+        display: true,
+        text: "GPS Höhe",
       },
-      y: {
-        title: {
-          display: true,
-          text: "GPS Höhe",
-        },
-        beginAtZero: true,
-        ticks: {
-          callback: function (value) {
-            return value + "m";
-          },
+      beginAtZero: true,
+      ticks: {
+        callback: function (value) {
+          return value + "m";
         },
       },
     },
   },
 };
+
 // Chart options
 
-Chart.defaults.elements.line.borderWidth = 2;
-Chart.defaults.elements.line.tension = 1;
-Chart.defaults.elements.point.pointBorderWidth = 0;
-Chart.defaults.elements.point.pointRadius = 0;
-//Chart.defaults.elements.point.pointHitRadius = 0;
-Chart.defaults.elements.point.pointHoverRadius = 0;
-// Chart.defaults.plugins.decimation.enabled = true;
+// Chart.defaults.elements.line.borderWidth = 2;
+// Chart.defaults.elements.line.tension = 1;
+// Chart.defaults.elements.point.pointBorderWidth = 0;
+// Chart.defaults.elements.point.pointRadius = 0;
+// //Chart.defaults.elements.point.pointHitRadius = 0;
+// Chart.defaults.elements.point.pointHoverRadius = 0;
+// // Chart.defaults.plugins.decimation.enabled = true;
 </script>
 
 <style lang="scss" scoped>
