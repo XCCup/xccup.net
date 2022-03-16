@@ -8,13 +8,16 @@
       <div class="col">
         <i class="bi bi-cloud-upload"></i>
         {{ labelData[1]?.altitude ? Math.floor(labelData[1]?.altitude) : "0" }}
-        m /
-        {{
-          labelData[1]?.pressureAltitude
-            ? Math.floor(labelData[1]?.pressureAltitude)
-            : "0"
-        }}
-        m (ISA)
+        m
+        <span v-if="labelData[1]?.pressureAltitude">
+          /
+          {{
+            labelData[1]?.pressureAltitude
+              ? Math.floor(labelData[1]?.pressureAltitude)
+              : "0"
+          }}
+          m (ISA)</span
+        >
       </div>
       <div class="col">
         <i class="bi bi-arrows-expand"></i>
