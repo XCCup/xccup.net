@@ -1,8 +1,8 @@
 import { TRACK_COLORS } from "@/common/Constants";
 
 // Process tracklog data for barogramm
-export function processBaroData(flight, buddyTracks) {
-  const allBaroData = [];
+export function processBaroData(flight, buddyTracks, options) {
+  const chartData = [];
   const baroData = [];
   const elevation = [];
   if (!flight) return null;
@@ -13,7 +13,11 @@ export function processBaroData(flight, buddyTracks) {
     });
     baroData.push({
       x: flight.fixes[i].timestamp,
-      y: flight.fixes[i].gpsAltitude,
+      y: options.usePressureAlt
+        ? flight.fixes[i].pressureAltitude
+        : flight.fixes[i].gpsAltitude,
+      // This may seem duplicate but is needed for for the stats to update
+      gpsAltitude: flight.fixes[i].gpsAltitude,
       pressureAltitude: flight.fixes[i].pressureAltitude,
       speed: flight.fixes[i].speed,
       climb: flight.fixes[i].climb,
@@ -30,7 +34,7 @@ export function processBaroData(flight, buddyTracks) {
     });
   }
   // Dataset for elevation graph (GND)
-  allBaroData[0] = {
+  chartData[0] = {
     label: "GND",
     hidden: hideGND,
     fill: true,
@@ -40,7 +44,7 @@ export function processBaroData(flight, buddyTracks) {
     borderColor: "SaddleBrown",
   };
   // Dataset for main flight
-  allBaroData[1] = {
+  chartData[1] = {
     label: "Pilot",
     data: baroData,
     backgroundColor: TRACK_COLORS[0],
@@ -62,7 +66,7 @@ export function processBaroData(flight, buddyTracks) {
         }
       }
       // Create the buddy dataset
-      allBaroData[index + 2] = {
+      chartData[index + 2] = {
         label: element.buddyName,
         data: buddyBaro,
         backgroundColor: TRACK_COLORS[index + 1],
@@ -70,5 +74,5 @@ export function processBaroData(flight, buddyTracks) {
       };
     });
   }
-  return allBaroData;
+  return chartData;
 }

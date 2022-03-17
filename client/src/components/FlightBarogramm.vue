@@ -1,43 +1,51 @@
 <template>
-  <div class="container">
-    <div
-      v-if="!airbuddiesInUse"
-      id="positionStatsTable"
-      class="row row-cols-2 row-cols-md-3 row-cols-lg-4 my-2"
-    >
-      <div class="col">
-        <i class="bi bi-cloud-upload"></i>
-        {{ labelData[1]?.altitude ? Math.floor(labelData[1]?.altitude) : "0" }}
-        m
-        <span v-if="labelData[1]?.pressureAltitude">
-          /
+  <!-- Stats -->
+  <div class="">
+    <div id="statsCollapse" class="collapse container">
+      <div class="row row-cols-2 row-cols-md-4 my-2">
+        <div class="col">
+          <i class="bi bi-cloud-upload"></i>
+          {{ altitudeToShow }} m
+        </div>
+        <div class="col">
+          <i class="bi bi-arrows-expand"></i>
           {{
-            labelData[1]?.pressureAltitude
-              ? Math.floor(labelData[1]?.pressureAltitude)
+            flightStats[1]?.speed
+              ? Math.round(flightStats[1]?.climb * 10) / 10
               : "0"
           }}
-          m (ISA)</span
-        >
-      </div>
-      <div class="col">
-        <i class="bi bi-arrows-expand"></i>
-        {{
-          labelData[1]?.speed ? Math.round(labelData[1]?.climb * 10) / 10 : "0"
-        }}
-        m/s
-      </div>
-      <div class="col">
-        <i class="bi bi-speedometer2"></i>
-        {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
-        km/h
-      </div>
-      <div class="col">
-        <i class="bi bi-clock"></i> {{ labelData[1]?.time }}
+          m/s
+        </div>
+        <div class="col">
+          <i class="bi bi-speedometer2"></i>
+          {{ flightStats[1]?.speed ? Math.floor(flightStats[1]?.speed) : "0" }}
+          km/h
+        </div>
+        <div class="col">
+          <i class="bi bi-clock"></i> {{ flightStats[1]?.time }}
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Baro -->
   <div class="container">
     <canvas ref="ctx"></canvas>
+  </div>
+  <div id="altSwitchCollapse" class="collapse container">
+    <div class="form-check form-switch mb-3">
+      <input
+        id="flexSwitchCheckChecked"
+        v-model="pressureAltToggle"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        :disabled="airbuddiesInUse"
+      />
+      <label class="form-check-label" for="flexSwitchCheckChecked"
+        >Barometrische Höhe anzeigen (ISA)</label
+      >
+    </div>
   </div>
 </template>
 
@@ -75,6 +83,7 @@ import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
 // TODO: Replace all date-fns with luxon?
 import "chartjs-adapter-luxon";
+import { Collapse } from "bootstrap";
 
 import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
 
@@ -97,27 +106,71 @@ const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 
-const chart = shallowRef(null);
-const labelData = ref([{}]);
+// UI Elements
+const pressureAltToggle = ref(false);
 
-const baroDatasets = computed(() =>
-  processBaroData(flight.value, activeAirbuddyFlights.value)
+// Only show pressure alt switch if pressure alt is present in flight fixes
+const showPressureAltSwitch = computed(() =>
+  flight.value.fixes[0].pressureAltitude ? true : false
 );
 
-const updateLabels = (context) => {
-  labelData.value[context.datasetIndex] = {
+const usePressureAlt = computed(() =>
+  airbuddiesInUse.value ? false : pressureAltToggle.value
+);
+
+const altitudeToShow = computed(() => {
+  if (usePressureAlt.value && !airbuddiesInUse.value)
+    return flightStats.value[1]?.pressureAltitude
+      ? Math.floor(flightStats.value[1]?.pressureAltitude)
+      : 0;
+
+  return flightStats.value[1]?.gpsAltitude
+    ? Math.floor(flightStats.value[1]?.gpsAltitude)
+    : 0;
+});
+
+const chartData = computed(() =>
+  processBaroData(flight.value, activeAirbuddyFlights.value, {
+    usePressureAlt: usePressureAlt.value,
+  })
+);
+let statsCollapse = null;
+let altSwitchCollapse = null;
+
+watchEffect(() => {
+  if (airbuddiesInUse.value) {
+    pressureAltToggle.value = false;
+    statsCollapse.hide();
+    altSwitchCollapse.hide();
+  } else {
+    if (statsCollapse) {
+      statsCollapse.show();
+      if (showPressureAltSwitch.value) altSwitchCollapse.show();
+    }
+  }
+});
+const flightStats = ref([{}]);
+
+const updateFlightStats = (context) => {
+  flightStats.value[context.datasetIndex] = {
     speed: context.raw.speed,
+    gpsAltitude: context.raw.gpsAltitude,
     pressureAltitude: context.raw.pressureAltitude,
-    altitude: context.raw.y,
     climb: context.raw.climb,
     name: context.dataset.label,
     time: context.label,
   };
 };
 
+const chart = shallowRef(null);
+
+// Watch and update the chart
 watchEffect(() => {
   if (chart.value) {
-    chart.value.data.datasets = baroDatasets.value;
+    chart.value.data.datasets = chartData.value;
+    chart.value.options.scales.y.title.text = usePressureAlt.value
+      ? "Baro Höhe"
+      : "GPS Höhe";
     chart.value.update();
   }
 });
@@ -129,9 +182,20 @@ onBeforeUnmount(() => {
 });
 
 const ctx = ref(null);
+
 onMounted(() => {
   // Create a new chart
-  if (ctx.value) chart.value = new Chart(ctx.value, options);
+  if (ctx.value) chart.value = new Chart(ctx.value, config);
+
+  const statsCollapseEl = document.getElementById("statsCollapse");
+  statsCollapse = new Collapse(statsCollapseEl, {
+    toggle: true,
+  });
+
+  const altSwitchCollapseEl = document.getElementById("altSwitchCollapse");
+  altSwitchCollapse = new Collapse(altSwitchCollapseEl, {
+    toggle: showPressureAltSwitch.value,
+  });
 });
 
 // Find a way to make this reactive
@@ -140,111 +204,105 @@ const userPrefersDark = ref(
 );
 
 const options = {
-  type: "line",
-  data: {
-    // labels: this.labels,
-    datasets: baroDatasets.value,
+  responsive: true,
+  onClick: () => {
+    // Center map at current position
+    const centerMapEvent = new CustomEvent("centerMapOnClick");
+    document.dispatchEvent(centerMapEvent);
   },
-  options: {
-    onClick: () => {
-      // Center map at current position
-      const centerMapEvent = new CustomEvent("centerMapOnClick");
-      document.dispatchEvent(centerMapEvent);
+  maintainAspectRatio: false,
+  plugins: {
+    title: {
+      display: false,
+      text: "Barogramm",
     },
-    maintainAspectRatio: false,
-    plugins: {
+    legend: {
+      display: false,
+    },
+    crosshair: {
+      line: {
+        color: userPrefersDark.value ? "darkgrey" : "#GGG",
+        width: 1,
+      },
+    },
+    tooltip: {
+      enabled: false,
+      mode: "x",
+      intersect: false,
+      animation: {
+        duration: 5,
+      },
+      // This does nothing but it is needed to trigger the callback
+      // even if the tooltip is disabled
+      external: function () {},
+      callbacks: {
+        label: (context) => {
+          // Skip GND dataset
+          if (context.datasetIndex === 0) return;
+
+          // Update marker position on map view event listener
+          const event = new CustomEvent("markerPositionUpdated", {
+            detail: {
+              dataIndex: context.dataIndex,
+              datasetIndex: context.datasetIndex,
+            },
+          });
+          document.dispatchEvent(event);
+          updateFlightStats(context);
+        },
+      },
+    },
+  },
+  scales: {
+    x: {
+      type: "time",
+      time: {
+        round: "second",
+        displayFormats: {
+          minute: "HH:mm",
+          hour: "HH:mm",
+        },
+        tooltipFormat: "HH:mm",
+        minUnit: "hour",
+      },
+      adapters: {
+        date: {
+          zone: tz,
+        },
+      },
+    },
+    y: {
       title: {
-        display: false,
-        text: "Barogramm",
+        display: true,
+        text: "GPS Höhe",
       },
-      legend: {
-        display: false,
-      },
-      crosshair: {
-        line: {
-          color: userPrefersDark.value ? "darkgrey" : "#GGG",
-          width: 1,
-        },
-      },
-      tooltip: {
-        enabled: false,
-        mode: "x",
-        intersect: false,
-        animation: {
-          duration: 5,
-        },
-        // This does nothing but it is needed to trigger the callback
-        // even if the tooltip is disabled
-        external: function () {},
-        callbacks: {
-          label: (context) => {
-            // Skip GND dataset
-            if (context.datasetIndex === 0) return;
-
-            // Update marker position on map view event listener
-            const event = new CustomEvent("markerPositionUpdated", {
-              detail: {
-                dataIndex: context.dataIndex,
-                datasetIndex: context.datasetIndex,
-              },
-            });
-            document.dispatchEvent(event);
-            updateLabels(context);
-          },
+      beginAtZero: true,
+      ticks: {
+        callback: function (value) {
+          return value + "m";
         },
       },
     },
-
-    scales: {
-      x: {
-        type: "time",
-        time: {
-          round: "second",
-          displayFormats: {
-            minute: "HH:mm",
-            hour: "HH:mm",
-          },
-          tooltipFormat: "HH:mm",
-          minUnit: "hour",
-        },
-        adapters: {
-          date: {
-            zone: tz,
-          },
-        },
-        title: {
-          display: false,
-          text: "Date",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "GPS Höhe",
-        },
-        beginAtZero: true,
-        ticks: {
-          callback: function (value) {
-            return value + "m";
-          },
-        },
-      },
+  },
+  elements: {
+    line: {
+      borderWidth: 2,
+      tension: 1,
+    },
+    point: {
+      pointBorderWidth: 0,
+      pointRadius: 0,
     },
   },
 };
-// Chart options
 
-Chart.defaults.elements.line.borderWidth = 2;
-Chart.defaults.elements.line.tension = 1;
-Chart.defaults.elements.point.pointBorderWidth = 0;
-Chart.defaults.elements.point.pointRadius = 0;
-//Chart.defaults.elements.point.pointHitRadius = 0;
-Chart.defaults.elements.point.pointHoverRadius = 0;
-// Chart.defaults.plugins.decimation.enabled = true;
+const config = {
+  type: "line",
+  data: {
+    datasets: chartData.value,
+  },
+  options: options,
+};
 </script>
 
-<style lang="scss" scoped>
-// #barogramm {
-//   height: 200px;
-// }
-</style>
+<style scoped></style>
