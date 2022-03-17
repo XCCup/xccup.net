@@ -37,7 +37,6 @@
     "uuid": "^8.3.2",
     "vue": "^3.2.29",
     "vue-avatar-editor-improved": "^1.0.7",
-    "vue-chart-3": "^3.1.4",
     "vue-router": "^4.0.14",
     "vue3-datepicker": "^0.3.2",
     "vuemoji-picker": "^0.1.1"
