@@ -34,14 +34,16 @@
     </div>
   </div>
   <div class="container">
-    <LineChart :chart-data="baroDatasets" :options="options" :height="150" />
+    <button @click="updateData">foo</button>
+    <!-- <LineChart :chart-data="baroDatasets" :options="options" :height="150" /> -->
+    <LineChart v-bind="lineChartProps" />
   </div>
 </template>
 
 <script setup>
 import { Chart, Interaction, registerables } from "chart.js";
 import { ref, computed } from "vue";
-import { LineChart } from "vue-chart-3";
+import { LineChart, useLineChart } from "vue-chart-3";
 import { processBaroData } from "../helper/baroHelpers";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
@@ -74,11 +76,36 @@ const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 
 const labelData = ref([{}]);
 
-const baroDatasets = computed(() => {
-  if (!flight.value) return [];
-  return processBaroData(flight.value, activeAirbuddyFlights.value);
-});
+const data = ref([
+  {
+    label: "GND",
+    fill: true,
+    data: [
+      { x: 1620901004000, y: 10 },
+      { x: 1620901006000, y: 100 },
+      { x: 1620901008000, y: 50 },
+    ],
+    backgroundColor: "SaddleBrown",
+    borderColor: "SaddleBrown",
+  },
+]);
+const chartData = computed(
+  () => ({ datasets: data.value })
+  // processBaroData(flight.value, activeAirbuddyFlights.value)
+);
 
+const updateData = () => {
+  data.value.push({
+    label: "Pilot",
+    data: [
+      { x: 1620901004000, y: 130 },
+      { x: 1620901006000, y: 1020 },
+      { x: 1620901008000, y: 70 },
+    ],
+    backgroundColor: "blue",
+    borderColor: "blue",
+  });
+};
 const updateLabels = (context) => {
   labelData.value[context.datasetIndex] = {
     speed: context.raw.speed,
@@ -89,101 +116,6 @@ const updateLabels = (context) => {
     time: context.label,
   };
 };
-
-// const options = {
-//   type: "line",
-//   data: {
-//     // labels: this.labels,
-//     datasets: baroDatasets.value,
-//   },
-//   options: {
-//     onClick: () => {
-//       // Center map at current position
-//       const centerMapEvent = new CustomEvent("centerMapOnClick");
-//       document.dispatchEvent(centerMapEvent);
-//     },
-//     maintainAspectRatio: false,
-//     plugins: {
-//       title: {
-//         display: false,
-//         text: "Barogramm",
-//       },
-//       legend: {
-//         display: false,
-//       },
-//       crosshair: {
-//         line: {
-//           color: "#GGG", // crosshair line color
-//           width: 1, // crosshair line width
-//         },
-//       },
-
-//       tooltip: {
-//         enabled: false,
-//         mode: "x",
-//         intersect: false,
-//         animation: {
-//           duration: 5,
-//         },
-//         // This does nothing but it is needed to trigger the callback
-//         // even if the tooltip is disabled
-//         external: function () {},
-//         callbacks: {
-//           label: (context) => {
-//             // Skip GND dataset
-//             if (context.datasetIndex === 0) return;
-
-//             // Update marker position on map view event listener
-//             const event = new CustomEvent("markerPositionUpdated", {
-//               detail: {
-//                 dataIndex: context.dataIndex,
-//                 datasetIndex: context.datasetIndex,
-//               },
-//             });
-//             document.dispatchEvent(event);
-//             updateLabels(context);
-//           },
-//         },
-//       },
-//     },
-
-//     scales: {
-//       x: {
-//         type: "time",
-//         time: {
-//           round: "second",
-//           displayFormats: {
-//             minute: "HH:mm",
-//             hour: "HH:mm",
-//           },
-//           tooltipFormat: "HH:mm",
-//           minUnit: "hour",
-//         },
-//         adapters: {
-//           date: {
-//             zone: tz,
-//           },
-//         },
-//         title: {
-//           display: false,
-//           text: "Date",
-//         },
-//       },
-//       y: {
-//         title: {
-//           display: true,
-//           text: "GPS Höhe",
-//         },
-//         beginAtZero: true,
-//         ticks: {
-//           callback: function (value) {
-//             return value + "m";
-//           },
-//         },
-//       },
-//     },
-//   },
-// };
 
 // Find a way to make this reactive
 const userPrefersDark = ref(
@@ -282,4 +214,104 @@ const options = {
     },
   },
 };
+const { lineChartProps } = useLineChart({
+  chartData,
+  options,
+  height: 150,
+});
+
+// const options = {
+//   type: "line",
+//   data: {
+//     // labels: this.labels,
+//     datasets: baroDatasets.value,
+//   },
+//   options: {
+//     onClick: () => {
+//       // Center map at current position
+//       const centerMapEvent = new CustomEvent("centerMapOnClick");
+//       document.dispatchEvent(centerMapEvent);
+//     },
+//     maintainAspectRatio: false,
+//     plugins: {
+//       title: {
+//         display: false,
+//         text: "Barogramm",
+//       },
+//       legend: {
+//         display: false,
+//       },
+//       crosshair: {
+//         line: {
+//           color: "#GGG", // crosshair line color
+//           width: 1, // crosshair line width
+//         },
+//       },
+
+//       tooltip: {
+//         enabled: false,
+//         mode: "x",
+//         intersect: false,
+//         animation: {
+//           duration: 5,
+//         },
+//         // This does nothing but it is needed to trigger the callback
+//         // even if the tooltip is disabled
+//         external: function () {},
+//         callbacks: {
+//           label: (context) => {
+//             // Skip GND dataset
+//             if (context.datasetIndex === 0) return;
+
+//             // Update marker position on map view event listener
+//             const event = new CustomEvent("markerPositionUpdated", {
+//               detail: {
+//                 dataIndex: context.dataIndex,
+//                 datasetIndex: context.datasetIndex,
+//               },
+//             });
+//             document.dispatchEvent(event);
+//             updateLabels(context);
+//           },
+//         },
+//       },
+//     },
+
+//     scales: {
+//       x: {
+//         type: "time",
+//         time: {
+//           round: "second",
+//           displayFormats: {
+//             minute: "HH:mm",
+//             hour: "HH:mm",
+//           },
+//           tooltipFormat: "HH:mm",
+//           minUnit: "hour",
+//         },
+//         adapters: {
+//           date: {
+//             zone: tz,
+//           },
+//         },
+//         title: {
+//           display: false,
+//           text: "Date",
+//         },
+//       },
+//       y: {
+//         title: {
+//           display: true,
+//           text: "GPS Höhe",
+//         },
+//         beginAtZero: true,
+//         ticks: {
+//           callback: function (value) {
+//             return value + "m";
+//           },
+//         },
+//       },
+//     },
+//   },
+// };
 </script>
