@@ -88,7 +88,7 @@ import useAirbuddies from "@/composables/useAirbuddies";
 // TODO: Replace all date-fns with luxon?
 import "chartjs-adapter-luxon";
 import { Collapse } from "bootstrap";
-import { options } from "@/config/chartoptions";
+import { options } from "@/config/chartOptions";
 
 import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
 
