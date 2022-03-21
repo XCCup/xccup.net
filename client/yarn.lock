@@ -2363,10 +2363,10 @@ vue-avatar-editor-improved@^1.0.7:
   dependencies:
     vue "^2.4.1"
 
-vue-chart-3@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/vue-chart-3/-/vue-chart-3-3.1.4.tgz#77bf7fc55987b686ca67e4725faae7d2501d6daf"
-  integrity sha512-6ynam+Lky6iUCC1Kr140HtnzrCwyy5CKuprWgDFiJCr5pzZ20L4ZE2fyz3z5zTSg+QUnsrujtZGw7TJKvseKoQ==
+vue-chart-3@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/vue-chart-3/-/vue-chart-3-3.1.5.tgz#a7d0577e990080a6cea7664d3ed5d377144580ca"
+  integrity sha512-r8TDgBnH4G6pSqHpFBfSi/jx2UlcCtwov4zwuyqLjx3kuAw4wS+jtILfRhGOjtoZNZUr/cZzRc2fPAOxR7YHAg==
   dependencies:
     "@vue/runtime-core" latest
     "@vue/runtime-dom" latest
