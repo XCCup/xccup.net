@@ -20,7 +20,7 @@ describe("check flight page", () => {
   });
 
   it("check presence of position flight stats", () => {
-    cy.get("#positionStatsTable").should("exist");
+    cy.get("#positionDetailsCollapse").should("exist");
   });
 
   it("check airbuddies", () => {
