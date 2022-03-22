@@ -1,6 +1,6 @@
 <template>
   <!-- Position details -->
-  <div class="">
+  <div>
     <div id="positionDetailsCollapse" class="collapse container">
       <div class="row row-cols-2 row-cols-md-4 my-2">
         <div class="col">
@@ -30,10 +30,9 @@
         </div>
       </div>
     </div>
-  </div>
 
   <!-- Baro -->
-  <div class="container">
+  <div class="container mt-3">
     <canvas ref="ctx"></canvas>
   </div>
   <div id="altSwitchCollapse" class="collapse container">
@@ -50,6 +49,7 @@
         >Barometrische Höhe anzeigen (ISA)</label
       >
     </div>
+  </div>
   </div>
 </template>
 
