@@ -1,76 +1,55 @@
 <template>
-  <div class="container">
-    <table
-      v-if="!airbuddiesInUse"
-      id="positionStatsTable"
-      class="table table-sm"
-    >
-      <tbody>
-        <tr>
-          <td class="col-3 col-md-2 hide-on-xs no-line-break">
-            <i class="bi bi-cloud-upload"></i>
-            {{
-              labelData[1]?.altitude ? Math.floor(labelData[1]?.altitude) : "0"
-            }}
-            m
-          </td>
+  <!-- Position details -->
+  <div>
+    <div id="positionDetailsCollapse" class="collapse container">
+      <div class="row row-cols-2 row-cols-md-4 my-2">
+        <div class="col">
+          <i class="bi bi-cloud-upload"></i>
+          {{ altitudeToShow }} m
+        </div>
+        <div class="col">
+          <i class="bi bi-arrows-expand"></i>
+          {{
+            positionDetails[1]?.speed
+              ? Math.round(positionDetails[1]?.climb * 10) / 10
+              : "0"
+          }}
+          m/s
+        </div>
+        <div class="col">
+          <i class="bi bi-speedometer2"></i>
+          {{
+            positionDetails[1]?.speed
+              ? Math.floor(positionDetails[1]?.speed)
+              : "0"
+          }}
+          km/h
+        </div>
+        <div class="col">
+          <i class="bi bi-clock"></i> {{ positionDetails[1]?.time }}
+        </div>
+      </div>
+    </div>
 
-          <td class="col-3 col-md-2 no-line-break">
-            <i class="bi bi-arrows-expand"></i>
-            {{
-              labelData[1]?.speed
-                ? Math.round(labelData[1]?.climb * 10) / 10
-                : "0"
-            }}
-            m/s
-          </td>
-          <td class="col-3 col-md-2 no-line-break">
-            <i class="bi bi-speedometer2"></i>
-            {{ labelData[1]?.speed ? Math.floor(labelData[1]?.speed) : "0" }}
-            km/h
-          </td>
-          <td class="col-3 col-md-2 no-line-break">
-            <i class="bi bi-clock"></i> {{ labelData[1]?.time }}
-          </td>
-        </tr>
-        <!-- <tr v-for="(_, index) in statsTableData" :key="index">
-          <td class="col-3">
-            Name:
-            {{ labelData[index]?.name ?? "" }}
-          </td>
-          <td class="col-3">
-            <i class="bi bi-arrow-bar-up"></i>
-            {{
-              labelData[index]?.altitude
-                ? Math.floor(labelData[index]?.altitude)
-                : "0"
-            }}
-            m
-          </td>
-          <td class="">
-            <i class="bi bi-speedometer2"></i>
-            {{
-              labelData[index]?.speed
-                ? Math.floor(labelData[index]?.speed)
-                : "0"
-            }}
-            km/h
-          </td>
-          <td class="col-3">
-            <i class="bi bi-arrows-expand"></i>
-            {{
-              labelData[index]?.speed
-                ? Math.floor(labelData[index]?.climb)
-                : "0"
-            }}
-            m/s
-          </td>
-        </tr> -->
-      </tbody>
-    </table>
-  </div>
-  <div class="container">
+  <!-- Baro -->
+  <div class="container mt-3">
     <canvas ref="ctx"></canvas>
+  </div>
+  <div id="altSwitchCollapse" class="collapse container">
+    <div class="form-check form-switch mb-3">
+      <input
+        id="flexSwitchCheckChecked"
+        v-model="pressureAltToggle"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        :disabled="airbuddiesInUse"
+      />
+      <label class="form-check-label" for="flexSwitchCheckChecked"
+        >Barometrische Höhe anzeigen (ISA)</label
+      >
+    </div>
+  </div>
   </div>
 </template>
 
@@ -92,23 +71,8 @@ import {
   Legend,
   Title,
   Tooltip,
+  Interaction,
 } from "chart.js";
-
-Chart.register(
-  LineElement,
-  PointElement,
-  LineController,
-  LinearScale,
-  TimeScale,
-  Filler,
-  Legend,
-  Title,
-  Tooltip
-);
-
-import "chartjs-adapter-luxon";
-const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
-// TODO: Replace all date-fns with luxon?
 
 import {
   ref,
@@ -121,32 +85,123 @@ import {
 import { processBaroData } from "../helper/baroHelpers";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
+// TODO: Replace all date-fns with luxon?
+import "chartjs-adapter-luxon";
+import { Collapse } from "bootstrap";
+import { options } from "@/config/chartOptions";
+
+import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
+
+Chart.register(
+  LineElement,
+  PointElement,
+  LineController,
+  LinearScale,
+  TimeScale,
+  Filler,
+  Legend,
+  Title,
+  Tooltip,
+  CrosshairPlugin
+);
+Interaction.modes.interpolate = Interpolate;
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 
-const chart = shallowRef(null);
-const labelData = ref([{}]);
+// UI Elements
+const pressureAltToggle = ref(false);
 
-const baroDatasets = computed(() =>
-  processBaroData(flight.value, activeAirbuddyFlights.value)
+// Only show pressure alt switch if pressure alt is present in flight fixes
+const showPressureAltSwitch = computed(() =>
+  flight.value.fixes[0].pressureAltitude ? true : false
 );
 
-const updateLabels = (context) => {
-  labelData.value[context.datasetIndex] = {
+const usePressureAlt = computed(() =>
+  airbuddiesInUse.value ? false : pressureAltToggle.value
+);
+
+const altitudeToShow = computed(() => {
+  if (usePressureAlt.value && !airbuddiesInUse.value)
+    return positionDetails.value[1]?.pressureAltitude
+      ? Math.floor(positionDetails.value[1]?.pressureAltitude)
+      : 0;
+
+  return positionDetails.value[1]?.gpsAltitude
+    ? Math.floor(positionDetails.value[1]?.gpsAltitude)
+    : 0;
+});
+
+// Chart data
+const chartData = computed(() =>
+  processBaroData(flight.value, activeAirbuddyFlights.value, {
+    usePressureAlt: usePressureAlt.value,
+  })
+);
+
+// Collapse setup
+let positionDetailsCollapse = null;
+let altSwitchCollapse = null;
+
+onMounted(() => {
+  const positionDetailsCollapseEl = document.getElementById(
+    "positionDetailsCollapse"
+  );
+  positionDetailsCollapse = new Collapse(positionDetailsCollapseEl, {
+    toggle: true,
+  });
+
+  const altSwitchCollapseEl = document.getElementById("altSwitchCollapse");
+  altSwitchCollapse = new Collapse(altSwitchCollapseEl, {
+    toggle: showPressureAltSwitch.value,
+  });
+});
+
+// Determine what to show (baro switch / position details)
+watchEffect(() => {
+  if (airbuddiesInUse.value) {
+    pressureAltToggle.value = false;
+    positionDetailsCollapse.hide();
+    altSwitchCollapse.hide();
+  } else {
+    if (positionDetailsCollapse) {
+      positionDetailsCollapse.show();
+      if (showPressureAltSwitch.value) altSwitchCollapse.show();
+    }
+  }
+});
+
+// Position details
+const positionDetails = ref([{}]);
+const updatePositionDetails = (context) => {
+  positionDetails.value[context.datasetIndex] = {
     speed: context.raw.speed,
-    altitude: context.raw.y,
+    gpsAltitude: context.raw.gpsAltitude,
+    pressureAltitude: context.raw.pressureAltitude,
     climb: context.raw.climb,
     name: context.dataset.label,
     time: context.label,
   };
 };
 
+// Chart setup
+const chart = shallowRef(null);
+const ctx = ref(null);
+
+// Watch and update the chart
 watchEffect(() => {
   if (chart.value) {
-    chart.value.data.datasets = baroDatasets.value;
+    chart.value.data.datasets = chartData.value;
+    chart.value.options.scales.y.title.text = usePressureAlt.value
+      ? "Baro Höhe"
+      : "GPS Höhe";
     chart.value.update();
   }
+});
+
+onMounted(() => {
+  // Create a new chart
+  if (ctx.value) chart.value = new Chart(ctx.value, config);
 });
 
 onBeforeUnmount(() => {
@@ -155,113 +210,13 @@ onBeforeUnmount(() => {
   }
 });
 
-const ctx = ref(null);
-onMounted(() => {
-  // Create a new chart
-  if (ctx.value) chart.value = new Chart(ctx.value, options);
-});
-
-const options = {
+const config = {
   type: "line",
   data: {
-    // labels: this.labels,
-    datasets: baroDatasets.value,
+    datasets: chartData.value,
   },
-  options: {
-    onClick: () => {
-      // Center map at current position
-      const centerMapEvent = new CustomEvent("centerMapOnClick");
-      document.dispatchEvent(centerMapEvent);
-    },
-    maintainAspectRatio: false,
-    plugins: {
-      title: {
-        display: false,
-        text: "Barogramm",
-      },
-      legend: {
-        display: false,
-      },
-
-      tooltip: {
-        enabled: false,
-        mode: "x",
-        intersect: false,
-        animation: {
-          duration: 5,
-        },
-        // This does nothing but it is needed to trigger the callback
-        // even if the tooltip is disabled
-        external: function () {},
-        callbacks: {
-          label: (context) => {
-            // Skip GND dataset
-            if (context.datasetIndex === 0) return;
-
-            // Update marker position on map view event listener
-            const event = new CustomEvent("markerPositionUpdated", {
-              detail: {
-                dataIndex: context.dataIndex,
-                datasetIndex: context.datasetIndex,
-              },
-            });
-            document.dispatchEvent(event);
-            updateLabels(context);
-          },
-        },
-      },
-    },
-
-    scales: {
-      x: {
-        type: "time",
-        time: {
-          round: "second",
-          displayFormats: {
-            minute: "HH:mm",
-            hour: "HH:mm",
-          },
-          tooltipFormat: "HH:mm",
-          minUnit: "hour",
-        },
-        adapters: {
-          date: {
-            zone: tz,
-          },
-        },
-        title: {
-          display: false,
-          text: "Date",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "GPS Höhe",
-        },
-        beginAtZero: true,
-        ticks: {
-          callback: function (value) {
-            return value + "m";
-          },
-        },
-      },
-    },
-  },
+  options: options(updatePositionDetails),
 };
-// Chart options
-
-Chart.defaults.elements.line.borderWidth = 2;
-Chart.defaults.elements.line.tension = 1;
-Chart.defaults.elements.point.pointBorderWidth = 0;
-Chart.defaults.elements.point.pointRadius = 0;
-//Chart.defaults.elements.point.pointHitRadius = 0;
-Chart.defaults.elements.point.pointHoverRadius = 0;
-// Chart.defaults.plugins.decimation.enabled = true;
 </script>
 
-<style lang="scss" scoped>
-// #barogramm {
-//   height: 200px;
-// }
-</style>
+<style scoped></style>
