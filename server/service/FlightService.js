@@ -64,6 +64,11 @@ const flightService = {
         createSiteInclude(site, siteId),
         createTeamInclude(teamId),
         createClubInclude(clubId),
+        {
+          model: FlightPhoto,
+          as: "photos",
+        },
+        // TODO: How to only get the number of photos?
       ],
       where: await createWhereStatement(
         year,
@@ -179,7 +184,7 @@ const flightService = {
     });
     if (flightDbObject) {
       const flight = flightDbObject.toJSON();
-      //TODO Merge directly when model is retrieved?
+      //TODO: Merge directly when model is retrieved?
 
       flight.fixes = FlightFixes.mergeData(flight.fixes);
       flight.airbuddies = await findAirbuddies(flight);
