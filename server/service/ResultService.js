@@ -860,7 +860,7 @@ async function calcSeniorBonusForFlightResult(result) {
           flight.flightPoints = Math.round(
             (flight.flightPoints *
               (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
-              100
+            100
           );
 
           totalPoints += flight.flightPoints;
@@ -878,7 +878,7 @@ async function calcSeniorBonusForFlightResult(result) {
  * @throws An XccupRestrictionError if the rankingType was no active in the season
  */
 function checkIfRankingWasPresent(seasonDetail, rankingType) {
-  if (!seasonDetail.activeRankings.includes(rankingType)) {
+  if (!seasonDetail.activeRankings?.includes(rankingType)) {
     throw new XccupRestrictionError(
       `The ranking ${rankingType} was not present within the season ${seasonDetail.year}`
     );
