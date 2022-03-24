@@ -1,7 +1,7 @@
 <template>
   <div id="flight-subnav" class="container-fluid custom text-light mb-0 p-1">
     <p class="m-0">
-      <a href="#" class="link-light" @click="$router.go(-1)"
+      <a href="#" class="link-light" @click.prevent="$router.go(-1)"
         ><i class="bi bi-chevron-left mx-2"></i
       ></a>
       Flug von
