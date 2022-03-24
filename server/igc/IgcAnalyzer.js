@@ -55,8 +55,6 @@ const IgcAnalyzer = {
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
-    igcAsJson.fixes = [];
-    console.log(igcAsJson);
     const currentResolutionInSeconds = getResolution(igcAsJson);
     const durationInMinutes = getDuration(igcAsJson);
     const requiredResolution = getResolutionForDuration(durationInMinutes);
