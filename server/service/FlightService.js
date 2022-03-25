@@ -179,7 +179,7 @@ const flightService = {
     });
     if (flightDbObject) {
       const flight = flightDbObject.toJSON();
-      //TODO Merge directly when model is retrieved?
+      //TODO: Merge directly when model is retrieved?
 
       flight.fixes = FlightFixes.mergeData(flight.fixes);
       flight.airbuddies = await findAirbuddies(flight);
@@ -458,7 +458,9 @@ function createFixesInclude(attributes) {
 }
 
 function createOrderStatement(sort) {
-  if (!(sort && sort[0])) return ["takeoffTime", "DESC"];
+  if (!(sort && sort[0])) {
+    return ["takeoffTime", "DESC"], ["flightPoints", "DESC"];
+  }
 
   if (!sort[1]) return [sort[0], "DESC"];
 

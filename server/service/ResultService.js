@@ -70,7 +70,7 @@ const service = {
           NUMBER_OF_SCORED_FLIGHTS,
         });
     }
-
+    // Things like this would be easier to understand if they were commented.
     if (
       year < 2022 &&
       gender == GENDER.FEMALE &&
@@ -860,7 +860,7 @@ async function calcSeniorBonusForFlightResult(result) {
           flight.flightPoints = Math.round(
             (flight.flightPoints *
               (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
-            100
+              100
           );
 
           totalPoints += flight.flightPoints;
