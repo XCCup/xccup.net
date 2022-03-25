@@ -3,8 +3,8 @@
 
   <h3>
     {{ GENERIC_ERROR }} <br />
-    <a href="#" @click="$router.go(0)">Hier klicken</a> um es noch mal zu
-    probieren
+    <a href="#" @click.prevent="$router.go(0)">Hier klicken</a> um es noch mal
+    zu probieren
   </h3>
 </template>
 
