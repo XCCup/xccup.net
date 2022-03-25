@@ -55,6 +55,9 @@ const IgcAnalyzer = {
     //IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
+    // TODO: Implement the actions after detecting a manipulated igc
+    console.log(igcIsPotentiallyManipulated(igcAsJson));
+
     const currentResolutionInSeconds = getResolution(igcAsJson);
     const durationInMinutes = getDuration(igcAsJson);
     const requiredResolution = getResolutionForDuration(durationInMinutes);
@@ -97,7 +100,13 @@ const IgcAnalyzer = {
   },
 };
 
-function igcIsManipulated(igc) {
+// Checks if an igc files was manipulated by "MaxPunkte"
+// At this time it fails always when it was signed by MaxPunkte.
+// It could be smarter to also check for the L-Record "LXMP X Trackpoints removed by user"
+// if it really was manipulated but L-Records are not parsed by igc-parser und
+// thus the complete file would have been parsed again line-by-line to find the LXMP keywords
+
+function igcIsPotentiallyManipulated(igc) {
   if (igc.loggerManufacturer == "XMP" || igc.security.includes("MaxPunkte"))
     return true;
   return false;
