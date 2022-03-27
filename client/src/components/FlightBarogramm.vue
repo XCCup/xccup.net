@@ -31,25 +31,25 @@
       </div>
     </div>
 
-  <!-- Baro -->
-  <div class="container mt-3">
-    <canvas ref="ctx"></canvas>
-  </div>
-  <div id="altSwitchCollapse" class="collapse container">
-    <div class="form-check form-switch mb-3">
-      <input
-        id="flexSwitchCheckChecked"
-        v-model="pressureAltToggle"
-        class="form-check-input"
-        type="checkbox"
-        role="switch"
-        :disabled="airbuddiesInUse"
-      />
-      <label class="form-check-label" for="flexSwitchCheckChecked"
-        >Barometrische Höhe anzeigen (ISA)</label
-      >
+    <!-- Baro -->
+    <div class="container mt-3">
+      <canvas ref="ctx"></canvas>
     </div>
-  </div>
+    <div id="altSwitchCollapse" class="collapse container">
+      <div class="form-check form-switch mb-3">
+        <input
+          id="flexSwitchCheckChecked"
+          v-model="pressureAltToggle"
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          :disabled="airbuddiesInUse"
+        />
+        <label class="form-check-label" for="flexSwitchCheckChecked"
+          >Barometrische Höhe anzeigen (ISA)</label
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -71,7 +71,7 @@ import {
   Legend,
   Title,
   Tooltip,
-  Interaction,
+  // Interaction,
 } from "chart.js";
 
 import {
@@ -90,7 +90,7 @@ import "chartjs-adapter-luxon";
 import { Collapse } from "bootstrap";
 import { options } from "@/config/chartOptions";
 
-import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
+// import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
 
 Chart.register(
   LineElement,
@@ -101,10 +101,10 @@ Chart.register(
   Filler,
   Legend,
   Title,
-  Tooltip,
-  CrosshairPlugin
+  Tooltip
+  // CrosshairPlugin
 );
-Interaction.modes.interpolate = Interpolate;
+// Interaction.modes.interpolate = Interpolate;
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
