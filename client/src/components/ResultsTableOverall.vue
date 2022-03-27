@@ -128,7 +128,6 @@
 </template>
 
 <script setup>
-// TODO: Add more badges like H&F for photos / long flight reports?
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
