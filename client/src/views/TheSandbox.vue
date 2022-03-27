@@ -1,9 +1,9 @@
 <template>
   <div v-if="flight">
     <FlightSubnav />
-    <FlightMap />
+    <!-- <FlightMap /> -->
     <!-- <FlightBarogramm /> -->
-    <FlightAirbuddies v-if="flight.airbuddies.length > 0" />
+    <!-- <FlightAirbuddies v-if="flight.airbuddies.length > 0" /> -->
     <FlightDetails />
     <FlightReport />
     <FlightPhotos :photos="flight.photos" />
