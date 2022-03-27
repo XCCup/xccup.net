@@ -261,7 +261,7 @@ export const Routes = [
   // },
   {
     path: "/sandbox/:flightId",
-    name: "Flight",
+    name: "Sandbox",
     beforeEnter: validateRouteParamFlightId,
     meta: { toTop: true },
     component: () => import("../views/TheSandbox.vue"),
