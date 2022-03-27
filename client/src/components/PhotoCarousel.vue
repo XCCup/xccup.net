@@ -17,6 +17,16 @@
           <!-- TODO: Serve viewport dependent image size to save data on mobiles -->
           <img
             :src="baseURL + `media/` + photo.id"
+            :srcset="
+              baseURL +
+              `media/` +
+              photo.id +
+              '?size=mobile 640w, ' +
+              baseURL +
+              `media/` +
+              photo.id +
+              ' 1024w'
+            "
             class="d-block w-100 carousel"
             :alt="photo.description"
           />
