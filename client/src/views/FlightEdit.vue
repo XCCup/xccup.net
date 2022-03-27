@@ -167,8 +167,6 @@ if (modifiedFlightData.value.externalId != route.params.id) {
 
 const fetchGliders = async () => {
   try {
-    console.log("User ID: ", flight.value.userId);
-    console.log("User Elevated: ", hasElevatedRole.value);
     const res = hasElevatedRole.value
       ? await ApiService.getGliders(flight.value.userId)
       : await ApiService.getGliders();
