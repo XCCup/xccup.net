@@ -71,6 +71,7 @@ import {
   Legend,
   Title,
   Tooltip,
+  // Interaction,
 } from "chart.js";
 
 import {
@@ -89,7 +90,7 @@ import "chartjs-adapter-luxon";
 import { Collapse } from "bootstrap";
 import { options } from "@/config/chartOptions";
 
-import { CrosshairPlugin } from "chartjs-plugin-crosshair";
+// import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
 
 Chart.register(
   LineElement,
@@ -100,9 +101,10 @@ Chart.register(
   Filler,
   Legend,
   Title,
-  Tooltip,
-  CrosshairPlugin
+  Tooltip
+  // CrosshairPlugin
 );
+// Interaction.modes.interpolate = Interpolate;
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
