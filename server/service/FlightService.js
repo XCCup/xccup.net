@@ -57,6 +57,7 @@ const flightService = {
     minimumData,
   } = {}) => {
     const orderStatement = createOrderStatement(sort);
+    console.log("STATEMENT: ", JSON.stringify(orderStatement, null, 2));
 
     const queryObject = {
       include: [
@@ -77,7 +78,7 @@ const flightService = {
         onlyUnchecked,
         includeUnchecked
       ),
-      order: [orderStatement],
+      order: orderStatement,
     };
 
     if (limit) {
@@ -459,12 +460,17 @@ function createFixesInclude(attributes) {
 
 function createOrderStatement(sort) {
   if (!(sort && sort[0])) {
-    return ["takeoffTime", "DESC"], ["flightPoints", "DESC"];
+    return [
+      ["takeoffTime", "DESC"],
+      ["flightPoints", "DESC"],
+    ];
   }
 
-  if (!sort[1]) return [sort[0], "DESC"];
+  if (!sort[1]) {
+    return [[sort[0], "DESC"]];
+  }
 
-  return sort;
+  return [sort];
 }
 
 function calculateTaskSpeed(result, flight) {
