@@ -4,7 +4,6 @@
     <FlightMap />
     <FlightBarogramm />
     <FlightAirbuddies v-if="flight.airbuddies.length > 0" />
-    <h4>Hey Andy</h4>
     <FlightDetails />
     <FlightReport />
     <FlightPhotos :photos="flight.photos" />
