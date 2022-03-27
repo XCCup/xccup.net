@@ -1,7 +1,7 @@
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 const Airspace = require("../config/postgres")["Airspace"];
 const { Op } = require("sequelize");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 
 // const XCCUP_REGION_OUTLINE = {
 //   NW: "6.01,51.49",

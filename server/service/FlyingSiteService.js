@@ -1,5 +1,5 @@
 const FlyingSite = require("../config/postgres")["FlyingSite"];
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const Club = require("../config/postgres")["Club"];
 const User = require("../config/postgres")["User"];

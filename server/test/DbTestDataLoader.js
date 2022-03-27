@@ -13,8 +13,8 @@ const Sponsor = require("../config/postgres")["Sponsor"];
 const Brand = require("../config/postgres")["Brand"];
 const Logo = require("../config/postgres")["Logo"];
 const AirspaceService = require("../service/AirspaceService");
-const logger = require("../config/logger");
-const config = require("../config/env-config");
+const logger = require("../config/logger").default;
+const config = require("../config/env-config").default;
 
 const dbTestData = {
   addFlights: async () => {

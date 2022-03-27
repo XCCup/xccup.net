@@ -1,4 +1,4 @@
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const sanitizeHtml = require("sanitize-html");
 
 async function sleep(ms) {

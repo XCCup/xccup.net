@@ -25,7 +25,7 @@ const {
   deleteImages,
   resizeImage,
 } = require("../helper/ImageUtils");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
 const THUMBNAIL_IMAGE_HEIGHT = 310;

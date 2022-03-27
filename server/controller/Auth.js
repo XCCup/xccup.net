@@ -6,8 +6,8 @@ const {
 const userService = require("../service/UserService");
 require("../service/UserService");
 const Token = require("../config/postgres")["Token"];
-const logger = require("../config/logger");
-const config = require("../config/env-config");
+const logger = require("../config/logger").default;
+const config = require("../config/env-config").default;
 
 /**
  * The authentication middleware for the request. If any error within authentication happens the request will be terminated here.

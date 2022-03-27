@@ -1,7 +1,7 @@
-const { createLogger: createLogger, format, transports } = require("winston");
+import { createLogger, format, transports } from "winston";
 const { combine, timestamp, printf, colorize, json } = format;
-const morgan = require("morgan");
-const config = require("./env-config");
+import morgan from "morgan";
+import config from "./env-config";
 
 const devFormat = printf(({ level, message, timestamp, stack }) => {
   return `${timestamp} ${level}: ${stack || message}`;
@@ -36,11 +36,11 @@ const createProdLogger = createLogger({
     new transports.File({
       filename: `${dataPath}/${logsPath}/error_log.log`,
       level: "error",
-      colorize: false,
+      // colorize: false,
     }),
     new transports.File({
       filename: `${dataPath}/${logsPath}/log.log`,
-      colorize: false,
+      // colorize: false,
     }),
   ],
 });
@@ -48,7 +48,7 @@ const createProdLogger = createLogger({
 const logger =
   config.get("env") === "development" ? createDevLogger : createProdLogger;
 
-const morganLogger = morgan("dev", {
+export const morganLogger = morgan("dev", {
   stream: {
     write: (text) => {
       logger.info(text);
@@ -56,5 +56,4 @@ const morganLogger = morgan("dev", {
   },
 });
 
-module.exports = logger;
-module.exports.morganLogger = morganLogger;
+export default logger;

@@ -9,5 +9,5 @@ echo "Starting the API server..."
 if [ $NODE_ENV == "development" ]; then
     exec yarn run dev
 else
-    exec node app.js
+    exec yarn start
 fi

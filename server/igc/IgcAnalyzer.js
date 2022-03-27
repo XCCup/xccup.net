@@ -9,7 +9,7 @@ const {
   IGC_FIXES_RESOLUTION,
   RESOLUTION_FACTOR,
 } = require("../config/igc-analyzer-config");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const { createFileName } = require("../helper/igc-file-utils");
 
 let flightTypeFactors;

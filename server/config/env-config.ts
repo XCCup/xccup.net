@@ -1,9 +1,10 @@
+import convict from "convict";
+import { isString } from "lodash";
+
 if (process.env.NODE_ENV === "CI") {
   // Load a different env file when running in CI; By default .env will always be loaded
   require("dotenv").config({ path: "./.env.ci" });
 }
-const convict = require("convict");
-const { isString } = require("lodash");
 
 const config = convict({
   env: {
@@ -242,15 +243,14 @@ const config = convict({
 
 config.validate({ allowed: "strict" });
 
-module.exports = config;
-
-function check128Hex(val) {
+export default config;
+function check128Hex(val: string) {
   if (!/^[a-fA-F0-9]{128}$/.test(val)) {
     throw new Error("must be a 128 character hex key");
   }
 }
 
-function noEmptyString(val) {
+function noEmptyString(val: string) {
   if (!isString(val) || !val.trim().length) {
     throw new Error("must be a non empty string");
   }

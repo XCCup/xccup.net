@@ -1,25 +1,28 @@
 // Set global base dir
+// TODO: A config with export may be more elegant => config/path.ts
+// @ts-ignore
 global.__basedir = __dirname;
 
 // Load server config
-const config = require("./config/env-config");
+import config from "./config/env-config";
+import express from "express";
+import logger from "./config/logger";
+// @ts-ignore
+import { handleError } from "./helper/ErrorHandler";
+import compression from "compression";
+import { morganLogger } from "./config/logger";
 
 //Set timezone of node server
 process.env.TZ = config.get("timezone");
 
-const express = require("express");
 const app = express();
-const logger = require("./config/logger");
-const morganLogger = require("./config/logger").morganLogger;
-const { handleError } = require("./helper/ErrorHandler");
-const compression = require("compression");
 
 //Setup DB
-require("./config/postgres.js");
+import "./config/postgres.js";
 
 //Start Cron Jobs
-require("./cron/CleanIgcStore");
-require("./cron/DailyWinnerEMail");
+import "./cron/CleanIgcStore";
+import "./cron/DailyWinnerEMail";
 
 //Logging
 app.use(morganLogger);
@@ -96,8 +99,7 @@ app.use("*", (req, res) => {
 });
 
 const port = config.get("port");
-const server = app.listen(
-  port,
+const server = app.listen(port, () =>
   logger.info(`A: Server running in ${config.get("env")} mode on port ${port}`)
 );
 

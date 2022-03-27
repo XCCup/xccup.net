@@ -1,10 +1,10 @@
 const cron = require("node-cron");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const { STATE } = require("../constants/flight-constants");
 const flightService = require("../service/FlightService");
 const moment = require("moment");
 const sendMail = require("../config/email");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
 
 const DAILY_WINNER_THRESHOLD = 5;
 

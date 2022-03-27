@@ -1,6 +1,7 @@
 const sendMail = require("../config/email");
-const logger = require("../config/logger");
-const config = require("../config/env-config");
+const logger = require("../config/logger").default;
+const config = require("../config/env-config").default;
+
 const {
   MAIL_MESSAGE_PREFIX,
   REGISTRATION_TEXT,

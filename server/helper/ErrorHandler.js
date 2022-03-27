@@ -1,4 +1,4 @@
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 
 function handleSequelizeUniqueError(error, req, res) {
   if (error.name?.includes("SequelizeUniqueConstraintError")) {

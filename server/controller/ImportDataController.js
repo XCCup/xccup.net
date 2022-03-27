@@ -1,5 +1,5 @@
 const express = require("express");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const {
   FORBIDDEN,
   NOT_FOUND,
@@ -8,7 +8,8 @@ const {
 const { validationHasErrors } = require("./Validation");
 const { query } = require("express-validator");
 const { sleep } = require("../helper/Utils");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
+
 const router = express.Router();
 
 // @desc Initiates the import of data from the import folder

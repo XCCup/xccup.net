@@ -1,8 +1,8 @@
 const { Sequelize } = require("sequelize");
 const { loadModels } = require("../model/ModelLoader");
-const logger = require("./logger");
+const logger = require("./logger").default;
 const { sleep } = require("../helper/Utils");
-const config = require("./env-config");
+const config = require("./env-config").default;
 
 const port = config.get("postgresPort");
 const user = config.get("postgresUser");
@@ -12,7 +12,6 @@ const host = config.get("postgresHost");
 const maxNumberOfRetries = config.get("dbConnectMaxAttempts");
 const reconnectTimeout = config.get("dbConnectTimeout");
 const failProcess = config.get("dbConnectFailProcess");
-
 const db = {};
 
 const sequelize = new Sequelize(

@@ -31,8 +31,9 @@ const { deleteIgcFile } = require("../helper/igc-file-utils");
 const { COUNTRY, STATE: USER_STATE } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
 
-const logger = require("../config/logger");
-const config = require("../config/env-config");
+const logger = require("../config/logger").default;
+const config = require("../config/env-config").default;
+
 const { deleteCache } = require("../controller/CacheManager");
 
 const flightService = {

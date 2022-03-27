@@ -1,5 +1,5 @@
 const NodeCache = require("node-cache");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 
 // All cache elements will be deleted after one week
 const cache = new NodeCache({

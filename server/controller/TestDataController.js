@@ -1,5 +1,5 @@
 const express = require("express");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const { deleteCache } = require("./CacheManager");
 const router = express.Router();
 

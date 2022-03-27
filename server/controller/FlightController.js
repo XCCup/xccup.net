@@ -25,7 +25,7 @@ const {
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const {
   checkStringObjectNotEmpty,
   checkStringObjectNoEscaping,
@@ -39,7 +39,8 @@ const {
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
+
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const multer = require("multer");
 const { getCurrentYear } = require("../helper/Utils");

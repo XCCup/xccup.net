@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const cron = require("node-cron");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const { deleteIgcFile } = require("../helper/igc-file-utils");
 const { Op } = require("sequelize");
 const Flight = require("../config/postgres")["Flight"];

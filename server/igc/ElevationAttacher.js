@@ -1,7 +1,8 @@
 const axios = require("axios");
 const debounce = require("lodash/debounce");
-const config = require("../config/env-config");
-const logger = require("../config/logger");
+const config = require("../config/env-config").default;
+
+const logger = require("../config/logger").default;
 
 const elevationUrl = config.get("elevationUrl");
 const numberOfFixesPerApiRequest = config.get("useGoogleElevationApi")

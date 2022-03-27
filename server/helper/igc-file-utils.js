@@ -1,7 +1,7 @@
 const { IGC_STORE } = require("../constants/flight-constants");
 const path = require("path");
 const fs = require("fs");
-const logger = require("../config/logger");
+const logger = require("../config/logger").default;
 const { getCurrentYear } = require("./Utils");
 
 function createFileName(
