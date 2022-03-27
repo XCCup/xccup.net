@@ -11,6 +11,11 @@ export const TRACK_COLORS = [
   "steelblue",
   "sienna",
   "mediumvioletred",
+  "Salmon",
+  "DarkMagenta",
+  "SpringGreen",
+  "Chocolate",
+  "RosyBrown",
 ];
 export const MAX_PHOTOS = 8;
 export const DAYS_FLIGHT_CHANGEABLE = 14;
