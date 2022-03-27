@@ -3,7 +3,7 @@
     <FlightSubnav />
     <FlightMap />
     <!-- <FlightBarogramm /> -->
-    <!-- <FlightAirbuddies v-if="flight.airbuddies.length > 0" /> -->
+    <FlightAirbuddies v-if="flight.airbuddies.length > 0" />
     <h4>Hey Andy</h4>
     <FlightDetails />
     <FlightReport />
