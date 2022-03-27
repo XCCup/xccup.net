@@ -5,15 +5,10 @@
   "private": true,
   "license": "GNU GPLv3",
   "main": "app.js",
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/test/setup-tests.js"
-    ]
-  },
   "scripts": {
     "start": "node dist/app",
     "dev": "ts-node-dev --respawn --pretty --transpile-only app.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "lint": "eslint",
     "test": "jest"
   },
