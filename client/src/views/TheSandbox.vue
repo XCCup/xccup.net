@@ -1,13 +1,13 @@
 <template>
   <div v-if="flight">
-    <FlightSubnav />
+    <!-- <FlightSubnav /> -->
     <!-- <FlightMap /> -->
     <!-- <FlightBarogramm /> -->
     <!-- <FlightAirbuddies v-if="flight.airbuddies.length > 0" /> -->
-    <FlightDetails />
+    <!-- <FlightDetails />
     <FlightReport />
     <FlightPhotos :photos="flight.photos" />
-    <Comments />
+    <Comments /> -->
   </div>
 </template>
 
