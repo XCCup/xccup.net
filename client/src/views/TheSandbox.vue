@@ -8,7 +8,7 @@
     <FlightDetails />
     <FlightReport />
     <FlightPhotos :photos="flight.photos" />
-    <!-- <Comments /> -->
+    <Comments />
   </div>
 </template>
 
