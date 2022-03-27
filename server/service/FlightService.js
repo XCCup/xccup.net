@@ -65,6 +65,18 @@ const flightService = {
         createSiteInclude(site, siteId),
         createTeamInclude(teamId),
         createClubInclude(clubId),
+
+        // The includes for photos and comments are only present to count the releated objects
+        {
+          model: FlightPhoto,
+          as: "photos",
+          attributes: ["id"],
+        },
+        {
+          model: FlightComment,
+          as: "comments",
+          attributes: ["id"],
+        },
       ],
       where: await createWhereStatement(
         year,
@@ -100,6 +112,12 @@ const flightService = {
       ];
     }
 
+    /**
+     * distinct=true was necesseary after photos and comments where included
+     * https://github.com/sequelize/sequelize/issues/9481
+     * */
+    queryObject.distinct = true;
+
     const flights = await Flight.findAndCountAll(queryObject);
 
     /**
@@ -108,6 +126,9 @@ const flightService = {
      * See also: https://github.com/pvorb/clone/issues/106
      */
     flights.rows = flights.rows.map((v) => v.toJSON());
+
+    countRelatedObjects(flights.rows, "photos");
+    countRelatedObjects(flights.rows, "comments");
 
     return flights;
   },
@@ -483,6 +504,21 @@ function calcAirtime(fixes) {
   return Math.round(
     (fixes[fixes.length - 1].timestamp - fixes[0].timestamp) / 1000 / 60
   );
+}
+
+/**
+ * Calculates the length of an array included in every entry of the flights array and add this length as a new property to every flight object.
+ *
+ * @param {Array} flights An array of flight objects.
+ * @param {String} flightProperty The name of the flight property which represents the array which will be counted.
+ */
+function countRelatedObjects(flights, flightProperty) {
+  flights.forEach((f) => {
+    f[flightProperty + "Count"] = f[flightProperty]?.length
+      ? f[flightProperty].length
+      : 0;
+    delete f[flightProperty];
+  });
 }
 
 /**
