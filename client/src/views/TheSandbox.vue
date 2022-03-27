@@ -1,6 +1,6 @@
 <template>
   <div v-if="flight">
-    <!-- <FlightSubnav /> -->
+    <FlightSubnav />
     <FlightMap />
     <!-- <FlightBarogramm /> -->
     <!-- <FlightAirbuddies v-if="flight.airbuddies.length > 0" /> -->
