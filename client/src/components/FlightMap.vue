@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
