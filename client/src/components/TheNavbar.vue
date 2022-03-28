@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-primary bg-gradient">
     <div class="container-fluid">
-      <router-link :to="{ name: 'Home' }" class="navbar-brand" href="/">
+      <router-link :to="{ name: 'Home' }" class="navbar-brand clickable">
         <img src="../assets/images/xccup_white.svg" alt="XCCup" height="50" />
       </router-link>
       <button

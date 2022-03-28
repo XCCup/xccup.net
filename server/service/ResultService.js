@@ -70,7 +70,7 @@ const service = {
           NUMBER_OF_SCORED_FLIGHTS,
         });
     }
-
+    // Things like this would be easier to understand if they were commented.
     if (
       year < 2022 &&
       gender == GENDER.FEMALE &&
@@ -878,7 +878,7 @@ async function calcSeniorBonusForFlightResult(result) {
  * @throws An XccupRestrictionError if the rankingType was no active in the season
  */
 function checkIfRankingWasPresent(seasonDetail, rankingType) {
-  if (!seasonDetail.activeRankings.includes(rankingType)) {
+  if (!seasonDetail.activeRankings?.includes(rankingType)) {
     throw new XccupRestrictionError(
       `The ranking ${rankingType} was not present within the season ${seasonDetail.year}`
     );

@@ -9,10 +9,10 @@
             :current-sort-column-key="currentSortColumnKey"
             @head-sort-changed="handleSortChange"
           />
+          <th class="hide-on-xs"></th>
           <th>Name</th>
           <th scope="col" class="hide-on-md">Verein</th>
           <th scope="col" class="hide-on-sm">Team</th>
-
           <th class="hide-on-sm">Startplatz</th>
           <th scope="col" class="hide-on-sm">Gerät</th>
           <TableSortHead
@@ -55,7 +55,10 @@
                 </tr>
               </table>
             </td>
-
+            <td class="hide-on-xs px-0 mx-0">
+              <!-- TODO: Find an elegant way to integrate this on sm and xs -->
+              <FlightInfoIcons :flight="flight" />
+            </td>
             <td>
               <table>
                 <tr>
@@ -125,11 +128,11 @@
 </template>
 
 <script setup>
-// TODO: Add more badges like H&F for photos / long flight reports?
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 import useData from "../composables/useData";
+import FlightInfoIcons from "./FlightInfoIcons.vue";
 
 const { data: flights, sortDataBy } = useData();
 const router = useRouter();
@@ -164,6 +167,10 @@ tr:hover {
 }
 
 .max-width-11ch {
+  overflow: hidden;
+  max-width: 11ch;
+}
+.max-width-1ch {
   overflow: hidden;
   max-width: 11ch;
 }
