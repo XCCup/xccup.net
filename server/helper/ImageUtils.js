@@ -4,6 +4,10 @@ const fs = require("fs");
 const logger = require("../config/logger");
 
 const THUMBNAIL_POSTFIX = "-thumb";
+const MOBILE_POSTFIX = "-mobile";
+
+const THUMBNAIL_MAX_DIMENSION = 256;
+const MOBILE_MAX_DIMENSION = 1024;
 
 /**
  * This function creates a thumbnail for a given image.
@@ -12,8 +16,17 @@ const THUMBNAIL_POSTFIX = "-thumb";
  * @param {*} path The path of the image to which a thumbnail should be created.
  */
 async function createThumbnail(path, targetHeight) {
-  const pathThumb = createThumbnailPath(path);
+  const pathThumb = createSizePath(path, THUMBNAIL_POSTFIX);
   return await resizeImage(path, targetHeight, pathThumb);
+}
+
+async function createSmallerSizes(path) {
+  const pathThumb = createSizePath(path, THUMBNAIL_POSTFIX);
+  const pathMobile = createSizePath(path, MOBILE_POSTFIX);
+  return await Promise.all(
+    [resizeImage(path, THUMBNAIL_MAX_DIMENSION, pathThumb)],
+    [resizeImage(path, MOBILE_MAX_DIMENSION, pathMobile)]
+  );
 }
 
 /**
@@ -58,14 +71,14 @@ async function resizeImage(sourcePath, maxDimensions, targetPath) {
  * @param {*} basePath
  * @returns
  */
-function createThumbnailPath(basePath) {
+function createSizePath(basePath, postfix) {
   const pathAsString = basePath.toString();
   const indexOfFileExtension = pathAsString.lastIndexOf(".");
   const insertionPosition =
     indexOfFileExtension < 0 ? pathAsString.length : indexOfFileExtension;
   return (
     pathAsString.slice(0, insertionPosition) +
-    THUMBNAIL_POSTFIX +
+    postfix +
     pathAsString.slice(insertionPosition)
   );
 }
@@ -79,8 +92,24 @@ async function deleteImages(imageObject) {
   const pathBase = imageObject.path;
   const deleteOperations = [];
   if (pathBase) {
-    logger.debug("Will delete images for path " + pathBase);
-    const fullfilepath = path.join(path.resolve(), pathBase);
+    deletePath(pathBase, deleteOperations);
+    deletePath(pathBase, deleteOperations, MOBILE_POSTFIX);
+    deletePath(pathBase, deleteOperations, THUMBNAIL_POSTFIX);
+  }
+  const pathThumb = imageObject.pathThumb;
+  if (pathThumb) {
+    deletePath(pathThumb, deleteOperations);
+  }
+  return await Promise.all(deleteOperations);
+}
+
+function deletePath(pathValue, deleteOperations, optionalPostfix) {
+  logger.debug("Will delete images for path " + pathValue);
+  const fullfilepath = optionalPostfix
+    ? path.join(path.resolve(), pathValue + optionalPostfix)
+    : path.join(path.resolve(), pathValue);
+
+  if (fs.existsSync(fullfilepath)) {
     deleteOperations.push(
       fs.unlink(fullfilepath, (err) => {
         if (err) {
@@ -89,19 +118,6 @@ async function deleteImages(imageObject) {
       })
     );
   }
-  const pathThumb = imageObject.pathThumb;
-  if (pathThumb) {
-    logger.debug("Will delete images for path " + pathThumb);
-    const fullfilepathThumb = path.join(path.resolve(), pathThumb);
-    deleteOperations.push(
-      fs.unlink(fullfilepathThumb, (err) => {
-        if (err) {
-          logger.error(err);
-        }
-      })
-    );
-  }
-  return await Promise.all(deleteOperations);
 }
 
 function defineFileDestination(destination) {
@@ -120,10 +136,20 @@ function defineImageFileNameWithCurrentDateAsPrefix() {
   };
 }
 
+function retrieveFilePath(pathValue, size) {
+  const sizeValue = size ?? "";
+  const postfix = sizeValue ? "-" + sizeValue : "";
+  const filePathSmallerSize = path.join(path.resolve(), pathValue + postfix);
+  return fs.existsSync(filePathSmallerSize)
+    ? filePathSmallerSize
+    : path.join(path.resolve(), pathValue);
+}
+
+exports.retrieveFilePath = retrieveFilePath;
 exports.deleteImages = deleteImages;
 exports.resizeImage = resizeImage;
 exports.createThumbnail = createThumbnail;
-exports.createThumbnailPath = createThumbnailPath;
+exports.createSmallerSizes = createSmallerSizes;
 exports.defineFileDestination = defineFileDestination;
 exports.defineImageFileNameWithCurrentDateAsPrefix =
   defineImageFileNameWithCurrentDateAsPrefix;

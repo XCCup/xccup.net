@@ -3,12 +3,12 @@ const router = express.Router();
 const FlightPhoto = require("../config/postgres")["FlightPhoto"];
 const Logo = require("../config/postgres")["Logo"];
 const ProfilePicture = require("../config/postgres")["ProfilePicture"];
-const path = require("path");
 const _ = require("lodash");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
 const { checkParamIsUuid, validationHasErrors } = require("./Validation");
 const { getCache, setCache } = require("./CacheManager");
+const { retrieveFilePath } = require("../helper/ImageUtils");
 
 // @desc Gets the flight photo
 // @route GET /media/:id
@@ -16,11 +16,11 @@ const { getCache, setCache } = require("./CacheManager");
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  query("thumb").optional().isBoolean(),
+  query("size").optional().escape().trim(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const thumb = req.query.thumb;
+    const size = req.query.size;
 
     try {
       const value = getCache(req);
@@ -36,9 +36,7 @@ router.get(
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
-      const fullfilepath = thumb
-        ? path.join(path.resolve(), media.pathThumb)
-        : path.join(path.resolve(), media.path);
+      const fullfilepath = retrieveFilePath(media.path, size);
 
       setCache(req, { mimetype: media.mimetype, fullfilepath });
       return res.type(media.mimetype).sendFile(fullfilepath);

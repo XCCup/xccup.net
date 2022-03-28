@@ -21,14 +21,14 @@ const {
 const multer = require("multer");
 
 const {
-  createThumbnail,
+  createSmallerSizes,
   deleteImages,
   resizeImage,
+  retrieveFilePath,
 } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
-const THUMBNAIL_IMAGE_HEIGHT = 310;
 const MAX_PHOTOS = 8;
 const IMAGE_DIMENSION_LIMIT = 4_000;
 
@@ -76,7 +76,8 @@ router.post(
 
       const userId = req.user.id;
 
-      const pathThumb = await createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
+      // await createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
+      await createSmallerSizes(path);
       logger.info("FPC: Resizing photo");
       await resizeImage(path, IMAGE_DIMENSION_LIMIT);
 
@@ -85,7 +86,7 @@ router.post(
         mimetype,
         size,
         path,
-        pathThumb,
+        // pathThumb,
         flightId,
         userId,
         timestamp,
@@ -104,20 +105,18 @@ router.post(
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  query("thumb").optional().isBoolean(),
+  query("size").optional().escape().trim(),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const thumb = req.query.thumb;
+    const size = req.query.size;
 
     try {
       const media = await service.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
-      const fullfilepath = thumb
-        ? pathLib.join(pathLib.resolve(), media.pathThumb)
-        : pathLib.join(pathLib.resolve(), media.path);
+      const fullfilepath = retrieveFilePath(media.path, size);
 
       return res.type(media.mimetype).sendFile(fullfilepath);
     } catch (error) {
