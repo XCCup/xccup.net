@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const logger = require("./logger");
+const logger = require("./logger").default;
 
 // TODO: Shall we use "pool true" to send newsletters etc?
 const mailClient = nodemailer.createTransport({
