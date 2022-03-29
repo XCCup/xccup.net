@@ -353,7 +353,7 @@ const service = {
     return addConstantInformationToResult(
       result,
       {
-        NUMBER_OF_SCORED_FLIGHTS_LUX,
+        NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_LUX,
         REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
       },
       limit
