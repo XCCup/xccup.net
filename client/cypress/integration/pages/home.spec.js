@@ -1,9 +1,7 @@
 import { isInSeason } from "../../support/utils";
 
 describe("check landing page", () => {
-  before(() => {
-    // cy.seedDb();
-  });
+  before(() => {});
 
   beforeEach(() => {
     cy.visit("/");
@@ -156,7 +154,7 @@ describe("check landing page", () => {
     });
   });
 
-  it.only("test class ranking", () => {
+  it("test class ranking", () => {
     cy.get("[data-cy=class-results]").within(() => {
       cy.get("[data-cy=class-results-gsSport]")
         .find("tr")
