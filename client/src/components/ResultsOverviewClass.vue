@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" data-cy="class-results">
     <div
       v-for="(result, index) in results"
       :key="index"
@@ -11,7 +11,7 @@
           {{ result.shortReadableName }}
         </h6>
         <p class="card-text"></p>
-        <table class="table">
+        <table class="table" :data-cy="`class-results-${result.name}`">
           <tbody>
             <tr v-for="n in 3" :key="n">
               <td>{{ n }}</td>
