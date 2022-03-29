@@ -10,7 +10,7 @@
           <th scope="col" class="hide-on-sm">Team</th>
 
           <th v-for="n in maxFlights" :key="n" class="no-line-break">
-            Flug {{ n }}
+            #{{ n }}
           </th>
 
           <th>Gesamt</th>
