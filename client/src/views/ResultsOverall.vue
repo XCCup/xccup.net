@@ -41,6 +41,7 @@ await initData(ApiService.getResultsOverall, {
   queryParameters: {
     ...route.query,
     ...params,
+    limit: 500, // Overwrites the default limit to display more/all results
   },
 });
 </script>
