@@ -8,7 +8,7 @@ const { NOT_FOUND } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
 const { checkParamIsUuid, validationHasErrors } = require("./Validation");
 const { getCache, setCache } = require("./CacheManager");
-const { retrieveFilePath } = require("../helper/ImageUtils");
+const { retrieveFilePath, IMAGE_FORMATS } = require("../helper/ImageUtils");
 
 // @desc Gets the flight photo
 // @route GET /media/:id
@@ -16,7 +16,9 @@ const { retrieveFilePath } = require("../helper/ImageUtils");
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  query("size").optional().escape().trim(),
+  query("size")
+    .optional()
+    .isIn(Object.values(IMAGE_FORMATS).map((f) => f.name)),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;

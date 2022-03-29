@@ -25,6 +25,7 @@ const {
   deleteImages,
   resizeImage,
   retrieveFilePath,
+  IMAGE_FORMATS,
 } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 
@@ -76,7 +77,6 @@ router.post(
 
       const userId = req.user.id;
 
-      // await createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
       await createSmallerSizes(path);
       logger.info("FPC: Resizing photo");
       await resizeImage(path, IMAGE_DIMENSION_LIMIT);
@@ -86,7 +86,6 @@ router.post(
         mimetype,
         size,
         path,
-        // pathThumb,
         flightId,
         userId,
         timestamp,
@@ -105,7 +104,9 @@ router.post(
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  query("size").optional().escape().trim(),
+  query("size")
+    .optional()
+    .isIn(Object.values(IMAGE_FORMATS).map((f) => f.name)),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;

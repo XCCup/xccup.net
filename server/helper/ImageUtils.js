@@ -176,3 +176,4 @@ exports.createSmallerSizes = createSmallerSizes;
 exports.defineFileDestination = defineFileDestination;
 exports.defineImageFileNameWithCurrentDateAsPrefix =
   defineImageFileNameWithCurrentDateAsPrefix;
+exports.IMAGE_FORMATS = IMAGE_FORMATS;
