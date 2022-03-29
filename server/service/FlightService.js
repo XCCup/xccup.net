@@ -57,7 +57,6 @@ const flightService = {
     minimumData,
   } = {}) => {
     const orderStatement = createOrderStatement(sort);
-    console.log("STATEMENT: ", JSON.stringify(orderStatement, null, 2));
 
     const queryObject = {
       include: [
