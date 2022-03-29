@@ -68,6 +68,5 @@ async function dbConnectionTest(numberOfRetry = 0) {
 }
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
 module.exports = db;
