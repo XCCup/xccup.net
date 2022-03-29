@@ -1,7 +1,7 @@
 <template>
-  <div v-once class="container-lg">
+  <div class="container-lg">
     <div v-if="results">
-      <h3>{{ title }} {{ route.params?.year }}</h3>
+      <h3 v-once>{{ title }} {{ route.params?.year }}</h3>
       <p v-if="remark">Hinweis: {{ remark }}</p>
       <div class="my-2"><SelectSeason /></div>
 
