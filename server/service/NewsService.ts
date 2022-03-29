@@ -1,7 +1,5 @@
-// const NewsModel = require("../config/postgres")["News"];
+const NewsModel = require("../config/postgres")["News"];
 
-import DB from "../config/postgres";
-const NewsModel = DB["News"];
 import moment from "moment";
 import { Op } from "sequelize";
 import type News from "../types/News";
