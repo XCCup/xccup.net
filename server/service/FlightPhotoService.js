@@ -10,16 +10,16 @@ const service = {
 
   getRandomCurrentYear: async (count) => {
     const randomPhotos = await FlightPhoto.findAll({
-      // where: {
-      //   andOp: sequelize.where(
-      //     sequelize.fn(
-      //       "date_part",
-      //       "year",
-      //       sequelize.col("FlightPhoto.createdAt")
-      //     ),
-      //     new Date().getFullYear()
-      //   ),
-      // },
+      where: {
+        andOp: sequelize.where(
+          sequelize.fn(
+            "date_part",
+            "year",
+            sequelize.col("FlightPhoto.createdAt")
+          ),
+          new Date().getFullYear()
+        ),
+      },
       order: Sequelize.literal("random()"),
       limit: count,
       include: [
