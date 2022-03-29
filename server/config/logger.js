@@ -1,6 +1,5 @@
 const { createLogger: createLogger, format, transports } = require("winston");
 const { combine, timestamp, printf, colorize, json } = format;
-const morgan = require("morgan");
 const config = require("./env-config");
 
 const devFormat = printf(({ level, message, timestamp, stack }) => {
@@ -48,13 +47,4 @@ const createProdLogger = createLogger({
 const logger =
   config.get("env") === "development" ? createDevLogger : createProdLogger;
 
-const morganLogger = morgan("dev", {
-  stream: {
-    write: (text) => {
-      logger.info(text);
-    },
-  },
-});
-
 module.exports = logger;
-module.exports.morganLogger = morganLogger;
