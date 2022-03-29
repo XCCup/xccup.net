@@ -62,7 +62,7 @@
             :data-description="photo.description ? photo.description : ``"
           >
             <img
-              :src="baseURL + `media/` + photo.id + `?thumb=true`"
+              :src="baseURL + `media/` + photo.id + `?size=thumb`"
               class="figure-img img-fluid img-thumbnail"
               alt=""
             />
