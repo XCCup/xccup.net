@@ -125,25 +125,6 @@ router.get(
   }
 );
 
-// @desc Gets the meta-data to a flight photo
-// @route GET /flights/photos/meta/:id
-// TODO Is this endpoint of any interest?
-
-router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
-  if (validationHasErrors(req, res)) return;
-  const id = req.params.id;
-
-  try {
-    const media = await service.getById(id);
-
-    if (!media) return res.sendStatus(NOT_FOUND);
-
-    return res.json(media);
-  } catch (error) {
-    next(error);
-  }
-});
-
 // @desc Toggles (assigns or removes) the "like" to a flight photo from the requester
 // @route GET /photos/like/:id
 // @access All logged-in users
