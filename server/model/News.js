@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Token = sequelize.define("News", {
+  const News = sequelize.define("News", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -43,5 +43,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  return Token;
+  return News;
 };

@@ -1,17 +1,18 @@
-const express = require("express");
-const router = express.Router();
-const service = require("../service/NewsService");
-const { NOT_FOUND } = require("../constants/http-status-constants");
-const { authToken, requesterIsNotModerator } = require("./Auth");
-const { getCache, setCache, deleteCache } = require("./CacheManager");
+import express, { Request, Response } from "express";
+import service from "../service/NewsService";
+import { NOT_FOUND } from "../constants/http-status-constants";
+import { authToken, requesterIsNotModerator } from "./Auth";
+import { getCache, setCache, deleteCache } from "./CacheManager";
 
-const {
+import {
   checkStringObjectNotEmpty,
   checkStringObjectNotEmptyNoEscaping,
   checkIsISO8601,
   checkParamIsUuid,
   validationHasErrors,
-} = require("./Validation");
+} from "./Validation";
+
+const router = express.Router();
 
 const CACHE_RELEVANT_KEYS = ["home", "news"];
 
@@ -19,7 +20,7 @@ const CACHE_RELEVANT_KEYS = ["home", "news"];
 // @route GET /news
 // @access Only moderator
 
-router.get("/", authToken, async (req, res, next) => {
+router.get("/", authToken, async (req: Request, res: Response, next) => {
   try {
     if (await requesterIsNotModerator(req, res)) return;
 
@@ -38,7 +39,7 @@ router.get("/", authToken, async (req, res, next) => {
 // @desc Gets all news (excl. news which will become active in the future)
 // @route GET /news/public
 
-router.get("/public", async (req, res, next) => {
+router.get("/public", async (req: Request, res: Response, next) => {
   try {
     const value = getCache(req);
     if (value) return res.json(value);
@@ -64,7 +65,7 @@ router.post(
   checkStringObjectNotEmpty("icon"),
   checkIsISO8601("from"),
   checkIsISO8601("till"),
-  async (req, res, next) => {
+  async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     try {
       if (await requesterIsNotModerator(req, res)) return;
@@ -102,7 +103,7 @@ router.put(
   checkStringObjectNotEmptyNoEscaping("message"),
   checkIsISO8601("from"),
   checkIsISO8601("till"),
-  async (req, res, next) => {
+  async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
     const { title, icon, message, from, till, meta } = req.body;
@@ -137,7 +138,7 @@ router.delete(
   "/:id",
   checkParamIsUuid("id"),
   authToken,
-  async (req, res, next) => {
+  async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
 
@@ -154,4 +155,4 @@ router.delete(
   }
 );
 
-module.exports = router;
+export default router;

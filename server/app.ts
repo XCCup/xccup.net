@@ -11,6 +11,7 @@ import logger from "./config/logger";
 import { handleError } from "./helper/ErrorHandler";
 import compression from "compression";
 import { morganLogger } from "./config/logger";
+import { Request, Response } from "express";
 
 //Set timezone of node server
 process.env.TZ = config.get("timezone");
@@ -59,9 +60,11 @@ app.use(express.urlencoded({ extended: false }));
 //IGC-Files can easily exceed this limit
 app.use(express.json({ limit: "5mb" }));
 
-app.get("/api", (request, response) =>
+app.get("/api", (request: Request, response: Response) =>
   response.json({ info: "Welcome to the XCCup API" })
 );
+
+import NewsController from "./controller/NewsController";
 app.use("/api/users", require("./controller/UserController.js"));
 app.use("/api/flights", require("./controller/FlightController.js"));
 app.use("/api/comments", require("./controller/CommentController.js"));
@@ -71,7 +74,7 @@ app.use("/api/teams", require("./controller/TeamController"));
 app.use("/api/airspaces", require("./controller/AirspaceController"));
 app.use("/api/results", require("./controller/ResultController"));
 app.use("/api/home", require("./controller/HomeController"));
-app.use("/api/news", require("./controller/NewsController"));
+app.use("/api/news", NewsController);
 app.use("/api/sponsors", require("./controller/SponsorController"));
 app.use("/api/media", require("./controller/MediaController"));
 app.use("/api/general", require("./controller/GeneralController"));
