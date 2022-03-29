@@ -14,16 +14,9 @@
           class="carousel-item"
           :class="index === 0 ? 'active' : ''"
         >
-          <!-- prettier-ignore -->
           <img
             :src="baseURL + `media/` + photo.id"
-            :srcset="
-              baseURL + `media/` + photo.id + '?size=thumb 310w, ' +
-              baseURL + `media/` + photo.id + '?size=xsmall 620w, ' +
-              baseURL + `media/` + photo.id + '?size=small 1100w, ' +
-              baseURL + `media/` + photo.id + '?size=regular 2000w, ' +
-              baseURL + `media/` + photo.id
-            "
+            :srcset="createImageSrcSet(photo.id)"
             class="d-block w-100 carousel"
             :alt="photo.description"
           />
@@ -70,9 +63,10 @@
 </template>
 
 <script setup>
+import { createImageSrcSet } from "@/helper/imageHelper";
 import { getbaseURL } from "@/helper/baseUrlHelper";
-
 const baseURL = getbaseURL();
+
 defineProps({
   photos: {
     type: Array,
