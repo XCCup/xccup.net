@@ -13,7 +13,7 @@ class ImageFormat {
   }
 }
 
-const IMAGE_FORMATS = {
+const IMAGE_SIZES = {
   THUMB: new ImageFormat("thumb", 310),
   XSMALL: new ImageFormat("xsmall", 620),
   SMALL: new ImageFormat("small", 1100),
@@ -27,12 +27,12 @@ const IMAGE_FORMATS = {
  * @param {*} path The path of the image to which a thumbnail should be created.
  */
 async function createThumbnail(path, targetHeight) {
-  const pathThumb = createSizePath(path, IMAGE_FORMATS.THUMB.getPostfix());
+  const pathThumb = createSizePath(path, IMAGE_SIZES.THUMB.getPostfix());
   return await resizeImage(path, targetHeight, pathThumb);
 }
 
 async function createSmallerSizes(path) {
-  const resizingCalls = Object.values(IMAGE_FORMATS).map((format) => {
+  const resizingCalls = Object.values(IMAGE_SIZES).map((format) => {
     const imagePath = createSizePath(path, format.getPostfix());
     return resizeImage(path, format.maxDimension, imagePath);
   });
@@ -115,7 +115,7 @@ async function deleteImages(imageObject) {
   const deleteOperations = [];
   if (pathBase) {
     deletePath(pathBase, deleteOperations);
-    Object.values(IMAGE_FORMATS).forEach((format) =>
+    Object.values(IMAGE_SIZES).forEach((format) =>
       deletePath(pathBase, deleteOperations, format.getPostfix())
     );
   }
@@ -176,4 +176,4 @@ exports.createSmallerSizes = createSmallerSizes;
 exports.defineFileDestination = defineFileDestination;
 exports.defineImageFileNameWithCurrentDateAsPrefix =
   defineImageFileNameWithCurrentDateAsPrefix;
-exports.IMAGE_FORMATS = IMAGE_FORMATS;
+exports.IMAGE_SIZES = IMAGE_SIZES;

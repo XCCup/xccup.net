@@ -25,7 +25,7 @@ const {
   deleteImages,
   resizeImage,
   retrieveFilePath,
-  IMAGE_FORMATS,
+  IMAGE_SIZES,
 } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 
@@ -106,7 +106,7 @@ router.get(
   checkParamIsUuid("id"),
   query("size")
     .optional()
-    .isIn(Object.values(IMAGE_FORMATS).map((f) => f.name)),
+    .isIn(Object.values(IMAGE_SIZES).map((f) => f.name)),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
