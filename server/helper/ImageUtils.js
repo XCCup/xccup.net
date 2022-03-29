@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const logger = require("../config/logger");
 
-class ImageFormat {
+class ImageSize {
   constructor(name, maxDimension) {
     this.name = name;
     this.maxDimension = maxDimension;
@@ -14,10 +14,10 @@ class ImageFormat {
 }
 
 const IMAGE_SIZES = {
-  THUMB: new ImageFormat("thumb", 310),
-  XSMALL: new ImageFormat("xsmall", 620),
-  SMALL: new ImageFormat("small", 1100),
-  REGULAR: new ImageFormat("regular", 2000),
+  THUMB: new ImageSize("thumb", 310),
+  XSMALL: new ImageSize("xsmall", 620),
+  SMALL: new ImageSize("small", 1100),
+  REGULAR: new ImageSize("regular", 2000),
 };
 
 /**
