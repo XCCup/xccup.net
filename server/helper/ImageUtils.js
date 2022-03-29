@@ -3,11 +3,22 @@ const path = require("path");
 const fs = require("fs");
 const logger = require("../config/logger");
 
-const THUMBNAIL_POSTFIX = "-thumb";
-const MOBILE_POSTFIX = "-mobile";
+class ImageFormat {
+  constructor(name, maxDimension) {
+    this.name = name;
+    this.maxDimension = maxDimension;
+  }
+  getPostfix() {
+    return "-" + this.name;
+  }
+}
 
-const THUMBNAIL_MAX_DIMENSION = 256;
-const MOBILE_MAX_DIMENSION = 1024;
+const IMAGE_FORMATS = {
+  THUMB: new ImageFormat("thumb", 310),
+  XSMALL: new ImageFormat("xsmall", 620),
+  SMALL: new ImageFormat("small", 1100),
+  REGULAR: new ImageFormat("regular", 2000),
+};
 
 /**
  * This function creates a thumbnail for a given image.
@@ -16,22 +27,23 @@ const MOBILE_MAX_DIMENSION = 1024;
  * @param {*} path The path of the image to which a thumbnail should be created.
  */
 async function createThumbnail(path, targetHeight) {
-  const pathThumb = createSizePath(path, THUMBNAIL_POSTFIX);
+  const pathThumb = createSizePath(path, IMAGE_FORMATS.THUMB.getPostfix());
   return await resizeImage(path, targetHeight, pathThumb);
 }
 
 async function createSmallerSizes(path) {
-  const pathThumb = createSizePath(path, THUMBNAIL_POSTFIX);
-  const pathMobile = createSizePath(path, MOBILE_POSTFIX);
-  return await Promise.all(
-    [resizeImage(path, THUMBNAIL_MAX_DIMENSION, pathThumb)],
-    [resizeImage(path, MOBILE_MAX_DIMENSION, pathMobile)]
-  );
+  const resizingCalls = Object.values(IMAGE_FORMATS).map((format) => {
+    const imagePath = createSizePath(path, format.getPostfix());
+    return resizeImage(path, format.maxDimension, imagePath);
+  });
+  return await Promise.all(resizingCalls);
 }
 
 /**
  * This function resizes the original image.
  * If no targetPath is supplied the original image will be overridden.
+ * If the max dimension of the original file is smaller than the request maxDimension no resizing will be executed.
+ *
  * @param {*} sourcePath The path of the image to resize.
  * @param {*} maxDimensions The max height or width to which the image will be resized. Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
  * @param {*} targetPath The path where the resized image should be stored.
@@ -40,9 +52,19 @@ async function resizeImage(sourcePath, maxDimensions, targetPath) {
   const replaceOriginal = targetPath ? false : true;
   const target = replaceOriginal ? sourcePath + "_resize" : targetPath;
 
-  logger.info("IU: Will resize image and store it to: " + target);
+  logger.debug("IU: Will attempt to resize image and store it to " + target);
+
+  const image = sharp(sourcePath);
+
+  // Don't create new file if dimension is already smaller than the maxDimension
+  const { width, height } = await image.metadata();
+  const maxDim = Math.max(width, height);
+  if (maxDim < maxDimensions) return;
+
+  logger.info("IU: Will start resizing to " + maxDimensions);
+
   const targetResult = await new Promise(function (resolve, reject) {
-    sharp(sourcePath)
+    image
       .withMetadata()
       .resize(maxDimensions, maxDimensions, {
         fit: "inside",
@@ -93,8 +115,9 @@ async function deleteImages(imageObject) {
   const deleteOperations = [];
   if (pathBase) {
     deletePath(pathBase, deleteOperations);
-    deletePath(pathBase, deleteOperations, MOBILE_POSTFIX);
-    deletePath(pathBase, deleteOperations, THUMBNAIL_POSTFIX);
+    Object.values(IMAGE_FORMATS).forEach((format) =>
+      deletePath(pathBase, deleteOperations, format.getPostfix())
+    );
   }
   const pathThumb = imageObject.pathThumb;
   if (pathThumb) {
@@ -153,4 +176,3 @@ exports.createSmallerSizes = createSmallerSizes;
 exports.defineFileDestination = defineFileDestination;
 exports.defineImageFileNameWithCurrentDateAsPrefix =
   defineImageFileNameWithCurrentDateAsPrefix;
-exports.THUMBNAIL_POSTFIX = THUMBNAIL_POSTFIX;
