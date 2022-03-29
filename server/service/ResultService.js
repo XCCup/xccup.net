@@ -340,7 +340,7 @@ const service = {
 
     const where = createDefaultWhereForFlight({
       seasonDetail,
-      flightStatus: undefined,
+      flightStatus: [STATE.IN_RANKING, STATE.NOT_IN_RANKING],
     });
     where.homeStateOfUser = RANKINGS.LUX;
 
@@ -701,11 +701,14 @@ function cretaIncludeStatementClub(club, clubId) {
 function createDefaultWhereForFlight({
   seasonDetail,
   isSenior,
-  flightStatus = STATE.IN_RANKING,
+  flightStatus = [STATE.IN_RANKING],
 } = {}) {
   const where = {
     takeoffTime: {
       [sequelize.Op.between]: [seasonDetail?.startDate, seasonDetail?.endDate],
+    },
+    flightStatus: {
+      [sequelize.Op.in]: flightStatus,
     },
     [sequelize.Op.or]: [
       { violationAccepted: true },
@@ -717,10 +720,6 @@ function createDefaultWhereForFlight({
       },
     ],
   };
-
-  if (flightStatus) {
-    where.flightStatus = flightStatus;
-  }
 
   if (isSenior) {
     where.ageOfUser = {
