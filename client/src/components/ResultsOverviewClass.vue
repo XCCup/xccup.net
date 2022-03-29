@@ -16,17 +16,17 @@
             <tr v-for="n in 3" :key="n">
               <td>{{ n }}</td>
               <!-- TODO: Add link to pilot -->
-              <td v-if="result.values[n]">
+              <td v-if="result.values[n - 1]">
                 {{
-                  result.values[n]?.user.firstName +
+                  result.values[n - 1]?.user.firstName +
                   " " +
-                  result.values[n]?.user.lastName
+                  result.values[n - 1]?.user.lastName
                 }}
               </td>
               <td v-else>-</td>
-              <td v-if="result.values[n]">
+              <td v-if="result.values[n - 1]">
                 <span class="fw-lighter no-line-break"
-                  >{{ result.values[n]?.totalPoints }} P</span
+                  >{{ result.values[n - 1]?.totalPoints }} P</span
                 >
               </td>
             </tr>
