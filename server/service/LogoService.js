@@ -1,6 +1,6 @@
 const Logo = require("../config/postgres")["Logo"];
 
-const { deleteImages, createSmallerSizes } = require("../helper/ImageUtils");
+const { deleteImages, createImageVersions } = require("../helper/ImageUtils");
 
 const service = {
   getById: async (id) => {
@@ -12,7 +12,7 @@ const service = {
   },
 
   create: async (logo) => {
-    await createSmallerSizes(logo.path);
+    await createImageVersions(logo.path);
     return Logo.create(logo);
   },
 

@@ -27,7 +27,7 @@ const IMAGE_SIZES = {
  *
  * @param {String} path The path of the image to which a smaller versions should be created.
  */
-async function createSmallerSizes(path) {
+async function createImageVersions(path) {
   const resizingCalls = Object.values(IMAGE_SIZES).map((format) => {
     const reziseImagePath = createSizePath(path, format.getPostfix());
     return resizeImage(path, format.maxDimension, reziseImagePath);
@@ -169,7 +169,7 @@ function retrieveFilePath(orginalPath, size) {
 exports.retrieveFilePath = retrieveFilePath;
 exports.deleteImages = deleteImages;
 exports.resizeImage = resizeImage;
-exports.createSmallerSizes = createSmallerSizes;
+exports.createImageVersions = createImageVersions;
 exports.defineFileDestination = defineFileDestination;
 exports.defineImageFileNameWithCurrentDateAsPrefix =
   defineImageFileNameWithCurrentDateAsPrefix;
