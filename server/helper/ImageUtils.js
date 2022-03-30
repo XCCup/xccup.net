@@ -29,8 +29,8 @@ const IMAGE_SIZES = {
  */
 async function createSmallerSizes(path) {
   const resizingCalls = Object.values(IMAGE_SIZES).map((format) => {
-    const imagePath = createSizePath(path, format.getPostfix());
-    return resizeImage(path, format.maxDimension, imagePath);
+    const reziseImagePath = createSizePath(path, format.getPostfix());
+    return resizeImage(path, format.maxDimension, reziseImagePath);
   });
   return await Promise.all(resizingCalls);
 }
@@ -166,8 +166,6 @@ function retrieveFilePath(orginalPath, size) {
     postfix +
     orginalPath.slice(sizeInsertionPosition);
   const filePath = path.join(path.resolve(), fileName);
-
-  console.log("FPSS: ", filePath);
 
   return fs.existsSync(filePath)
     ? filePath
