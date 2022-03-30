@@ -15,7 +15,7 @@
           :class="index === 0 ? 'active' : ''"
         >
           <img
-            :src="baseURL + `medias/` + photo.id"
+            :src="baseURL + `media/` + photo.id"
             :srcset="createImageSrcSet(photo.id)"
             sizes="100vw"
             class="d-block w-100 carousel"
