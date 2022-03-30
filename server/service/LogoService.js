@@ -1,8 +1,6 @@
 const Logo = require("../config/postgres")["Logo"];
 
-const { deleteImages, createThumbnail } = require("../helper/ImageUtils");
-
-const THUMBNAIL_IMAGE_HEIGHT = 50;
+const { deleteImages, createSmallerSizes } = require("../helper/ImageUtils");
 
 const service = {
   getById: async (id) => {
@@ -14,8 +12,8 @@ const service = {
   },
 
   create: async (logo) => {
-    const pathThumb = await createThumbnail(logo.path, THUMBNAIL_IMAGE_HEIGHT);
-    return Logo.create({ ...logo, pathThumb });
+    await createSmallerSizes(logo.path);
+    return Logo.create(logo);
   },
 
   update: async (logo) => {

@@ -80,11 +80,7 @@ router.post(
   imageUpload.single("image"),
   async (req, res, next) => {
     try {
-      const originalname = req.file.originalname;
-      const mimetype = req.file.mimetype;
-      const size = req.file.size;
-      const path = req.file.path;
-
+      const { originalname, mimetype, size, path } = req.file;
       const userId = req.user.id;
 
       const user = await userService.getById(userId);
