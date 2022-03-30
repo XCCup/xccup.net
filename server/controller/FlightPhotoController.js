@@ -23,7 +23,6 @@ const multer = require("multer");
 const {
   createImageVersions,
   deleteImages,
-  resizeImage,
   retrieveFilePath,
   IMAGE_SIZES,
 } = require("../helper/ImageUtils");
@@ -31,7 +30,6 @@ const logger = require("../config/logger");
 
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
 const MAX_PHOTOS = 8;
-const IMAGE_DIMENSION_LIMIT = 4_000;
 
 const imageUpload = multer({
   dest: IMAGE_STORE,
@@ -72,14 +70,15 @@ router.post(
             logger.error(err);
           }
         });
+        // TODO: is this really the best http code for photo limit reached?
         return res.sendStatus(TOO_MANY_REQUESTS);
       }
 
       const userId = req.user.id;
 
       await createImageVersions(path);
-      logger.info("FPC: Resizing photo");
-      await resizeImage(path, IMAGE_DIMENSION_LIMIT);
+      // logger.info("FPC: Resizing photo");
+      // await resizeImage(path, IMAGE_DIMENSION_LIMIT);
 
       const media = await service.create({
         originalname,

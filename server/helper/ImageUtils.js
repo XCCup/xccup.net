@@ -4,12 +4,13 @@ const fs = require("fs");
 const logger = require("../config/logger");
 
 class ImageSize {
-  constructor(name, maxDimension) {
+  constructor(name, maxWidth) {
     this.name = name;
-    this.maxDimension = maxDimension;
+    this.maxWidth = maxWidth;
   }
   getPostfix() {
-    return "-" + this.name;
+    if (this.name) return "-" + this.name;
+    return "";
   }
 }
 
@@ -18,6 +19,7 @@ const IMAGE_SIZES = {
   XSMALL: new ImageSize("xsmall", 620),
   SMALL: new ImageSize("small", 1100),
   REGULAR: new ImageSize("regular", 2000),
+  FULL: new ImageSize(null, 4000),
 };
 
 /**
@@ -28,42 +30,47 @@ const IMAGE_SIZES = {
  * @param {String} path The path of the image to which a smaller versions should be created.
  */
 async function createImageVersions(path) {
+  if (!path) return logger.error("IU: Missing arguments");
+
   const resizingCalls = Object.values(IMAGE_SIZES).map((format) => {
     const resizeImagePath = createSizePath(path, format.getPostfix());
-    return resizeImage(path, format.maxDimension, resizeImagePath);
+    return resizeImage(path, resizeImagePath, format.maxWidth);
   });
   return await Promise.all(resizingCalls);
 }
 
 /**
  * This function resizes the original image.
- * If no targetPath is supplied the original image will be overridden.
- * If the max dimension of the original file is smaller than the request maxDimension no resizing will be executed.
+ * If no targetPath is supplied the original image will be overwritten.
  *
  * @param {String} sourcePath The path of the image to resize.
- * @param {Number} maxDimensions The max height or width to which the image will be resized. Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
  * @param {String} targetPath The path where the resized image should be stored.
+ * @param {Number} maxDimensions The max height or width to which the image will be resized. Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
  */
-async function resizeImage(sourcePath, maxDimensions, targetPath) {
-  const replaceOriginal = targetPath ? false : true;
-  // Sharp cannot read and write to the same location at the same time. Therefore we create a new name for the reszied image and rename it later.
+async function resizeImage(sourcePath, targetPath, maxWidth) {
+  if (!sourcePath || !targetPath || !maxWidth)
+    return logger.error("IU: Missing arguments"); // TODO: Should something happen?
+
+  // Never allow image dimensions to exceed 4000px
+  const MAX_DIMENSION = 4000;
+  const targetWidth = maxWidth < MAX_DIMENSION ? maxWidth : MAX_DIMENSION;
+
+  // Sharp cannot read and write to the same location at the same time.
+  // Therefore we create a temporary name for the resized image and change it back later.
+  const replaceOriginal = targetPath == sourcePath;
   const target = replaceOriginal ? sourcePath + "_resize" : targetPath;
 
-  logger.debug("IU: Will attempt to resize image and store it to " + target);
+  logger.debug(
+    "IU: Resizing image to width " + maxWidth + " and store it to " + target
+  );
 
   const image = sharp(sourcePath);
-
-  // Don't create new file if dimension is already smaller than the maxDimension
-  const { width, height } = await image.metadata();
-  const maxDim = Math.max(width, height);
-  if (maxDim < maxDimensions) return;
-
-  logger.info("IU: Will start resizing to " + maxDimensions);
-
-  const targetResult = await new Promise(function (resolve, reject) {
+  const resizedImage = await new Promise(function (resolve, reject) {
     image
       .withMetadata()
-      .resize(maxDimensions, maxDimensions, {
+      .resize({
+        width: targetWidth,
+        height: MAX_DIMENSION,
         fit: "inside",
         withoutEnlargement: true,
       })
@@ -77,16 +84,16 @@ async function resizeImage(sourcePath, maxDimensions, targetPath) {
       });
   });
 
-  if (!replaceOriginal) return targetResult;
+  if (!replaceOriginal) return resizedImage;
 
-  await fs.rename(target, sourcePath, (err) => {
+  fs.rename(target, sourcePath, (err) => {
     if (err) logger.error("IU: " + err);
   });
 }
 
 /**
  * Creates a path for a smaller size version of the base image. The path of the base image will be extended by a postfix.
- * The position of a possible fileextension at the end of a path will be keeped.
+ * The position of a possible fileextension at the end of a path will be preserved.
  *
  * @param {String} basePath The path to the original image.
  * @returns {String} A file name for a smaller size version of the original image.
@@ -98,6 +105,7 @@ function createSizePath(basePath, postfix) {
     indexOfFileExtension < 0 ? pathAsString.length : indexOfFileExtension;
   return (
     pathAsString.slice(0, insertionPosition) +
+    "-" +
     postfix +
     pathAsString.slice(insertionPosition)
   );
@@ -161,6 +169,8 @@ function retrieveFilePath(orginalPath, size) {
   const fileName = createSizePath(orginalPath, size);
   const filePath = path.join(path.resolve(), fileName);
 
+  console.log(fileName);
+  console.log(filePath);
   return fs.existsSync(filePath)
     ? filePath
     : path.join(path.resolve(), orginalPath);
