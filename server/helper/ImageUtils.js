@@ -21,16 +21,12 @@ const IMAGE_SIZES = {
 };
 
 /**
- * This function creates a thumbnail for a given image.
- * The thumbnail will be stored next to the given image.
- * The filename of the thumbnail is based on the given image but extended by "-thumb".
- * @param {*} path The path of the image to which a thumbnail should be created.
+ * This function creates a smaller versions for a given image.
+ * The these images will be stored next to the given image.
+ * The filename of the smaller version is based on the given image but extended by "-<<SIZE_NAME>>".
+ *
+ * @param {String} path The path of the image to which a smaller versions should be created.
  */
-async function createThumbnail(path, targetHeight) {
-  const pathThumb = createSizePath(path, IMAGE_SIZES.THUMB.getPostfix());
-  return await resizeImage(path, targetHeight, pathThumb);
-}
-
 async function createSmallerSizes(path) {
   const resizingCalls = Object.values(IMAGE_SIZES).map((format) => {
     const imagePath = createSizePath(path, format.getPostfix());
@@ -44,9 +40,9 @@ async function createSmallerSizes(path) {
  * If no targetPath is supplied the original image will be overridden.
  * If the max dimension of the original file is smaller than the request maxDimension no resizing will be executed.
  *
- * @param {*} sourcePath The path of the image to resize.
- * @param {*} maxDimensions The max height or width to which the image will be resized. Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
- * @param {*} targetPath The path where the resized image should be stored.
+ * @param {String} sourcePath The path of the image to resize.
+ * @param {Number} maxDimensions The max height or width to which the image will be resized. Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
+ * @param {String} targetPath The path where the resized image should be stored.
  */
 async function resizeImage(sourcePath, maxDimensions, targetPath) {
   const replaceOriginal = targetPath ? false : true;
@@ -90,7 +86,7 @@ async function resizeImage(sourcePath, maxDimensions, targetPath) {
 /**
  * Creates a path for a thumbnail. The path of the base image will be extended by a postfix.
  * The position of a possible fileextension at the end of a path will be keeped.
- * @param {*} basePath
+ * @param {String} basePath
  * @returns
  */
 function createSizePath(basePath, postfix) {
@@ -107,7 +103,7 @@ function createSizePath(basePath, postfix) {
 
 /**
  * Deletes the images to the corresponding imageObject properties path and pathThumb
- * @param {*} imageObject The imageObject from the db.
+ * @param {Object} imageObject The imageObject from the db.
  * @returns A promise of the delete operations
  */
 async function deleteImages(imageObject) {
@@ -159,19 +155,28 @@ function defineImageFileNameWithCurrentDateAsPrefix() {
   };
 }
 
-function retrieveFilePath(pathValue, size) {
+function retrieveFilePath(orginalPath, size) {
   const sizeValue = size ?? "";
   const postfix = sizeValue ? "-" + sizeValue : "";
-  const filePathSmallerSize = path.join(path.resolve(), pathValue + postfix);
-  return fs.existsSync(filePathSmallerSize)
-    ? filePathSmallerSize
-    : path.join(path.resolve(), pathValue);
+  const startOfFileExtension = orginalPath.lastIndexOf(".");
+  const sizeInsertionPosition =
+    startOfFileExtension > 0 ? startOfFileExtension : orginalPath.length;
+  const fileName =
+    orginalPath.slice(0, sizeInsertionPosition) +
+    postfix +
+    orginalPath.slice(sizeInsertionPosition);
+  const filePath = path.join(path.resolve(), fileName);
+
+  console.log("FPSS: ", filePath);
+
+  return fs.existsSync(filePath)
+    ? filePath
+    : path.join(path.resolve(), orginalPath);
 }
 
 exports.retrieveFilePath = retrieveFilePath;
 exports.deleteImages = deleteImages;
 exports.resizeImage = resizeImage;
-exports.createThumbnail = createThumbnail;
 exports.createSmallerSizes = createSmallerSizes;
 exports.defineFileDestination = defineFileDestination;
 exports.defineImageFileNameWithCurrentDateAsPrefix =

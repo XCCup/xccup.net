@@ -48,7 +48,7 @@ const createPopupContent = (club) => {
     `<a href=${club.website} target="_blank" rel="noreferrer noopener">${club.website}</a>`
   );
   lines.push(
-    `<a href=${club.website} target="_blank" rel="noreferrer noopener"><img src="${baseURL}clubs/logo/${club.logo.id}?thumb=true" height="50" max-width="150"></a>`
+    `<a href=${club.website} target="_blank" rel="noreferrer noopener"><img src="${baseURL}clubs/logo/${club.logo.id}?size=thumb" height="50" max-width="150"></a>`
   );
 
   return lines.join("<br>");
