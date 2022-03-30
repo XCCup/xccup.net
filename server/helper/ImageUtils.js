@@ -29,8 +29,8 @@ const IMAGE_SIZES = {
  */
 async function createImageVersions(path) {
   const resizingCalls = Object.values(IMAGE_SIZES).map((format) => {
-    const reziseImagePath = createSizePath(path, format.getPostfix());
-    return resizeImage(path, format.maxDimension, reziseImagePath);
+    const resizeImagePath = createSizePath(path, format.getPostfix());
+    return resizeImage(path, format.maxDimension, resizeImagePath);
   });
   return await Promise.all(resizingCalls);
 }
