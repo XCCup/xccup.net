@@ -85,10 +85,11 @@ async function resizeImage(sourcePath, maxDimensions, targetPath) {
 }
 
 /**
- * Creates a path for a thumbnail. The path of the base image will be extended by a postfix.
+ * Creates a path for a smaller size version of the base image. The path of the base image will be extended by a postfix.
  * The position of a possible fileextension at the end of a path will be keeped.
- * @param {String} basePath
- * @returns
+ *
+ * @param {String} basePath The path to the original image.
+ * @returns {String} A file name for a smaller size version of the original image.
  */
 function createSizePath(basePath, postfix) {
   const pathAsString = basePath.toString();
@@ -157,15 +158,7 @@ function defineImageFileNameWithCurrentDateAsPrefix() {
 }
 
 function retrieveFilePath(orginalPath, size) {
-  const sizeValue = size ?? "";
-  const postfix = sizeValue ? "-" + sizeValue : "";
-  const startOfFileExtension = orginalPath.lastIndexOf(".");
-  const sizeInsertionPosition =
-    startOfFileExtension > 0 ? startOfFileExtension : orginalPath.length;
-  const fileName =
-    orginalPath.slice(0, sizeInsertionPosition) +
-    postfix +
-    orginalPath.slice(sizeInsertionPosition);
+  const fileName = createSizePath(orginalPath, size);
   const filePath = path.join(path.resolve(), fileName);
 
   return fs.existsSync(filePath)
