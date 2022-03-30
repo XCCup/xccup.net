@@ -155,13 +155,23 @@ function defineImageFileNameWithCurrentDateAsPrefix() {
   };
 }
 
-function retrieveFilePath(pathValue, size) {
+function retrieveFilePath(orginalPath, size) {
   const sizeValue = size ?? "";
   const postfix = sizeValue ? "-" + sizeValue : "";
-  const filePathSmallerSize = path.join(path.resolve(), pathValue + postfix);
-  return fs.existsSync(filePathSmallerSize)
-    ? filePathSmallerSize
-    : path.join(path.resolve(), pathValue);
+  const startOfFileExtension = orginalPath.lastIndexOf(".");
+  const sizeInsertionPosition =
+    startOfFileExtension > 0 ? startOfFileExtension : orginalPath.length;
+  const fileName =
+    orginalPath.slice(0, sizeInsertionPosition) +
+    postfix +
+    orginalPath.slice(sizeInsertionPosition);
+  const filePath = path.join(path.resolve(), fileName);
+
+  console.log("FPSS: ", filePath);
+
+  return fs.existsSync(filePath)
+    ? filePath
+    : path.join(path.resolve(), orginalPath);
 }
 
 exports.retrieveFilePath = retrieveFilePath;
