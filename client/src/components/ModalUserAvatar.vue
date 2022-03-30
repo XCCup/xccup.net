@@ -152,7 +152,7 @@ const isDefaultImage = ref(true);
 watchEffect(() => {
   if (props.avatarUrl) {
     const imageUrl = props.avatarUrl
-      .replace("?thumb=true", "")
+      .replace("?size=thumb", "")
       .replace(/&\?timestamp=\d+/, "");
     convertRemoteImageToDataUrl(imageUrl, (dataUrl, mimeType) => {
       presetImage.value = dataUrl;
