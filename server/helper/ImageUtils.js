@@ -166,11 +166,9 @@ function defineImageFileNameWithCurrentDateAsPrefix() {
 }
 
 function retrieveFilePath(orginalPath, size) {
-  const fileName = createSizePath(orginalPath, size);
+  const fileName = size ? createSizePath(orginalPath, size) : orginalPath;
   const filePath = path.join(path.resolve(), fileName);
 
-  console.log(fileName);
-  console.log(filePath);
   return fs.existsSync(filePath)
     ? filePath
     : path.join(path.resolve(), orginalPath);
