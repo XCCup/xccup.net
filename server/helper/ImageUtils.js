@@ -46,6 +46,7 @@ async function createSmallerSizes(path) {
  */
 async function resizeImage(sourcePath, maxDimensions, targetPath) {
   const replaceOriginal = targetPath ? false : true;
+  // Sharp cannot read and write to the same location at the same time. Therefore we create a new name for the reszied image and rename it later.
   const target = replaceOriginal ? sourcePath + "_resize" : targetPath;
 
   logger.debug("IU: Will attempt to resize image and store it to " + target);
