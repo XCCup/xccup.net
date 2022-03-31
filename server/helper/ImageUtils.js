@@ -136,10 +136,6 @@ async function deleteImages(imageObject) {
       deletePath(pathBase, deleteOperations, "-" + format.getPostfix())
     );
   }
-  const pathThumb = imageObject.pathThumb;
-  if (pathThumb) {
-    deletePath(pathThumb, deleteOperations);
-  }
   return await Promise.all(deleteOperations);
 }
 
