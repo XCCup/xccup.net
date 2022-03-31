@@ -55,7 +55,13 @@ describe("check flight upload page", () => {
 
     cy.get("#photo-0", {
       timeout: 10000,
-    }).should("exist");
+    })
+      .should("exist")
+      .find("img")
+      .should("be.visible")
+      .and(($img) => {
+        expect($img[0].naturalWidth).to.be.greaterThan(0);
+      });
 
     cy.fixture(photo2)
       .then(Cypress.Blob.base64StringToBlob)
@@ -67,9 +73,6 @@ describe("check flight upload page", () => {
         });
       });
 
-    cy.get("#photo-0", {
-      timeout: 10000,
-    }).should("exist");
     cy.get("#photo-1", {
       timeout: 10000,
     }).should("exist");
