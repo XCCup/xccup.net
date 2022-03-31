@@ -55,6 +55,8 @@
           <a
             :id="photo.id"
             :href="baseURL + `media/` + photo.id"
+            data-sizes="(max-width: 800px) 1100px, 4000px"
+            :data-srcset="createImageSrcSet(photo.id)"
             data-gallery="photos"
             data-type="image"
             class="glightbox"
@@ -62,7 +64,7 @@
             :data-description="photo.description ? photo.description : ``"
           >
             <img
-              :src="baseURL + `media/` + photo.id + `?thumb=true`"
+              :src="baseURL + `media/` + photo.id + `?size=thumb`"
               class="figure-img img-fluid img-thumbnail"
               alt=""
             />
@@ -127,6 +129,8 @@ import { remove, last } from "lodash-es";
 import BaseError from "./BaseError.vue";
 import { MAX_PHOTOS } from "@/common/Constants";
 import GLightbox from "glightbox";
+import { createImageSrcSet } from "@/helper/imageHelper";
+
 import "glightbox/dist/css/glightbox.css";
 
 // TODO: Backend allows to upload more and sometimes less in rare cases

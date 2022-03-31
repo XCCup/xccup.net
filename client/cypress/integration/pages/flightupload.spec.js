@@ -18,8 +18,8 @@ describe("check flight upload page", () => {
     const flightReport = "This is a flight report.";
     const airspaceComment = "Alles offen, kein Problem 🤪";
 
-    const photo1 = "rachtig.jpg";
-    const photo2 = "bremm.jpg";
+    const photo1 = "bremm.jpg";
+    const photo2 = "rachtig.jpg";
 
     const expectedTakeoff = "Laubenheim";
     const expectedUserName = "Ramona Gislason";
@@ -52,6 +52,17 @@ describe("check flight upload page", () => {
           mimeType: "image/jpg",
         });
       });
+
+    cy.get("#photo-0", {
+      timeout: 10000,
+    })
+      .should("exist")
+      .find("img")
+      .should("be.visible")
+      .and(($img) => {
+        expect($img[0].naturalWidth).to.be.greaterThan(0);
+      });
+
     cy.fixture(photo2)
       .then(Cypress.Blob.base64StringToBlob)
       .then((fileContent) => {
@@ -62,9 +73,6 @@ describe("check flight upload page", () => {
         });
       });
 
-    cy.get("#photo-0", {
-      timeout: 10000,
-    }).should("exist");
     cy.get("#photo-1", {
       timeout: 10000,
     }).should("exist");
@@ -91,6 +99,8 @@ describe("check flight upload page", () => {
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
+    // Expect to be redirected to flight view after submitting
+
     cy.get("#cyFlightDetailsTable1").find("td").contains(expectedUserName);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
@@ -101,6 +111,23 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=flight-report]")
       .find("p")
       .should("have.text", flightReport);
+
+    cy.get("#photo-0")
+      .find("img")
+      .should("be.visible")
+      .and(($img) => {
+        expect($img[0].naturalWidth).to.equal(310);
+      });
+
+    cy.get("#photo-0").click();
+
+    cy.get("#glightbox-slider").within(() => {
+      cy.get(".gslide-image")
+        .find("img")
+        .and(($img) => {
+          expect($img[0].naturalWidth).to.equal(4000);
+        });
+    });
   });
 
   it("test upload flight twice", () => {

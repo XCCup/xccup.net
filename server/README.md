@@ -32,7 +32,11 @@ docker-compose up
 
 You need to create a .env File in the root folder. There is a .env-sample which you can copy and rename for this purpose. To create proper JWT Tokens you can run `./helper/create-jwt-token.js` and copy the output into your .env-File.
 
-```
+## After setup
+
+#### Config backup
+
+Define credentials in backup.sh and config a cron job to execute backup.sh on a daily basis.
 
 ## HowTo
 
@@ -69,6 +73,8 @@ File -> Preferences -> Query Tool -> Results grid -> "Do as you like"
 ```
 
 gcc olc2002.c -o olc_lnx -lm
+
+```
 
 ```
 

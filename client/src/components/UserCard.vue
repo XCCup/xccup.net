@@ -120,7 +120,7 @@ const props = defineProps({
 
 const emit = defineEmits(["open-message-dialog"]);
 
-const avatarUrl = ref(createUserPictureUrl(props.user.id), true);
+const avatarUrl = ref(createUserPictureUrl(props.user.id), { size: "thumb" });
 
 const createRankingClass = (glider) => {
   return {
