@@ -41,10 +41,6 @@ defineProps({
     type: String,
     required: true,
   },
-  airspaceViolation: {
-    type: Boolean,
-    required: true,
-  },
 });
 
 onMounted(() => {
