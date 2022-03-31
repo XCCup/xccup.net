@@ -10,7 +10,6 @@ const FlyingSite = require("../config/postgres")["FlyingSite"];
 const FlightFixes = require("../config/postgres")["FlightFixes"];
 
 const moment = require("moment");
-const _ = require("lodash");
 
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findLanding } = require("../igc/LocationFinder");
@@ -204,11 +203,6 @@ const flightService = {
 
       flight.fixes = FlightFixes.mergeData(flight.fixes);
       flight.airbuddies = await findAirbuddies(flight);
-
-      //Unescape characters which where sanitzied before stored to db
-      flight.photos.forEach((photo) => {
-        photo.description = _.unescape(photo.description);
-      });
 
       return flight;
     }
