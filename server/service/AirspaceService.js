@@ -68,11 +68,13 @@ const service = {
 
   hasAirspaceViolation: async (fixesWithElevation) => {
     const startTime = new Date();
-    const intersections2D = await find2dIntersection(fixesWithElevation.id);
+    const intersections2D = await findHorizontalIntersection(
+      fixesWithElevation.id
+    );
 
     const line = FlightFixes.mergeData(fixesWithElevation);
 
-    let violationFound = false;
+    let violationFound = null;
     for (let rI = 0; rI < intersections2D.length && !violationFound; rI++) {
       const intersection = intersections2D[rI];
 
@@ -83,41 +85,13 @@ const service = {
         cI++
       ) {
         const coordinate = intersection.intersectionLine.coordinates[cI];
-        const long = coordinate[0];
-        const lat = coordinate[1];
 
-        line.forEach((fix) => {
-          if (fix.longitude == long && fix.latitude == lat) {
-            const floorInMeter = convertToMeterMSL(
-              intersection.floor,
-              fix.elevation
-            );
-            const ceilingInMeter = convertToMeterMSL(
-              intersection.ceiling,
-              fix.elevation
-            );
-
-            if (
-              floorInMeter <= fix.pressureAltitude &&
-              fix.pressureAltitude <= ceilingInMeter
-            ) {
-              logger.warn(
-                "AS: Found airspace violation at LAT/LONG: " +
-                  lat +
-                  "/" +
-                  long +
-                  " Baro:" +
-                  fix.pressureAltitude +
-                  " F/C: " +
-                  floorInMeter +
-                  "/" +
-                  ceilingInMeter
-              );
-              violationFound = true;
-              return;
-            }
-          }
-        });
+        violationFound = findVerticalIntersection(
+          line,
+          coordinate,
+          intersection,
+          violationFound
+        );
       }
     }
 
@@ -134,7 +108,56 @@ const service = {
   },
 };
 
-async function find2dIntersection(fixesId) {
+function findVerticalIntersection(
+  line,
+  coordinate,
+  intersection,
+  violationFound
+) {
+  const long = coordinate[0];
+  const lat = coordinate[1];
+
+  line.forEach((fix) => {
+    if (fix.longitude == long && fix.latitude == lat) {
+      const floorInMeter = convertToMeterMSL(intersection.floor, fix.elevation);
+      const ceilingInMeter = convertToMeterMSL(
+        intersection.ceiling,
+        fix.elevation
+      );
+
+      if (
+        floorInMeter <= fix.pressureAltitude &&
+        fix.pressureAltitude <= ceilingInMeter
+      ) {
+        logger.warn(
+          "AS: Found airspace violation at LAT/LONG: " +
+            lat +
+            "/" +
+            long +
+            " Baro:" +
+            fix.pressureAltitude +
+            " F/C: " +
+            floorInMeter +
+            "/" +
+            ceilingInMeter
+        );
+
+        return (violationFound = {
+          lat,
+          long,
+          altitude: fix.pressureAltitude,
+          floorInMeter,
+          ceilingInMeter,
+          timestamp: fix.timestamp,
+          line,
+        });
+      }
+    }
+  });
+  return violationFound;
+}
+
+async function findHorizontalIntersection(fixesId) {
   const query = `
   SELECT id, class, name, floor, ceiling, "intersectionLine" FROM(
     SELECT *, (ST_Dump(ST_Intersection(
