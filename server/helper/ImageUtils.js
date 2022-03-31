@@ -61,10 +61,6 @@ async function resizeImage(sourcePath, targetPath, maxWidth, options) {
   const replaceOriginal = targetPath == sourcePath;
   const target = replaceOriginal ? sourcePath + "_resize" : targetPath;
 
-  logger.debug(
-    "IU: Resizing image to width " + maxWidth + " and store it to " + target
-  );
-
   const image = sharp(sourcePath);
   const metadata = await sharp(sourcePath).metadata();
 
@@ -74,6 +70,10 @@ async function resizeImage(sourcePath, targetPath, maxWidth, options) {
   // But make sure that the orignal is reprocessed in all cases to keep the 80% jpeg quality goal.
   if (maxWidth > metadata.width && maxWidth == MAX_DIMENSION)
     targetWidth = metadata.width;
+
+  logger.debug(
+    "IU: Resizing image to width " + maxWidth + " and store it to " + target
+  );
 
   const resizedImage = await new Promise(function (resolve, reject) {
     if (options.forceJpeg) image.jpeg();
