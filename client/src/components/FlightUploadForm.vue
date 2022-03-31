@@ -252,7 +252,7 @@ const sendButtonIsDisabled = computed(() => {
     !(rulesAccepted.value && flightId.value) ||
     !(
       !airspaceViolation.value ||
-      (airspaceViolation.value && airspaceComment.value.length)
+      (airspaceViolation.value && airspaceComment.value.length >= 10)
     )
   );
 });
