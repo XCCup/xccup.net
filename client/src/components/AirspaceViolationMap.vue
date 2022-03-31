@@ -116,7 +116,7 @@ const drawViolation = (violation) => {
 };
 
 const createPopupContent = (violation) => {
-  return "Höhe (MSL):" + violation.altitude;
+  return "Höhe: " + violation.altitude + "m MSL";
 };
 </script>
 
