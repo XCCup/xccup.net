@@ -206,10 +206,6 @@ const flightService = {
       flight.airbuddies = await findAirbuddies(flight);
 
       //Unescape characters which where sanitzied before stored to db
-      flight.report = _.unescape(flight.report);
-      flight.comments.forEach((comment) => {
-        comment.message = _.unescape(comment.message);
-      });
       flight.photos.forEach((photo) => {
         photo.description = _.unescape(photo.description);
       });

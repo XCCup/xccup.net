@@ -231,9 +231,9 @@ router.post(
       });
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-      service.attachFixRelatedTimeData(flightDbObject, fixes);
-
       await checkIfFlightIsModifiable(flightDbObject, userId);
+
+      service.attachFixRelatedTimeData(flightDbObject, fixes);
 
       const takeoffName =
         await service.storeFixesAndAddFurtherInformationToFlight(
@@ -245,7 +245,7 @@ router.post(
 
       const result = await service.update(flightDbObject);
 
-      deleteCache(CACHE_RELEVANT_KEYS);
+      // deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json({
         flightId: flightDbObject.id,
