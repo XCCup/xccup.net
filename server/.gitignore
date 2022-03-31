@@ -1,10 +1,15 @@
 .DS_Store
 node_modules
-/dist
+
+dist
 
 
-/igc/flights
-/data/images
+data/
+igc/flights
+igc/demo_igcs/temp
+
+import/
+fixes
 
 # local env files
 .env
