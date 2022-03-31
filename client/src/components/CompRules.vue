@@ -29,10 +29,10 @@
         <!-- TODO: Karte des XCCup Gebietes !  -->
         <p class="mb-3">
           <strong>Koordinaten</strong> <br />
-          NO: N51°29'19.70" E010° 18' 13"<br />
-          NW: N51° 29' 19.70" E006° 02' 32.9"<br />
-          SW: N48° 56' 19.5" E006° 02' 32.9"<br />
-          SO: N48° 56' 19.5" E010° 18' 13“<br />
+          NO: 51.68, 10.38<br />
+          NW: 51.68, 6.02<br />
+          SW: 48.93, 6.02<br />
+          SO: 48.93, 10.38<br />
         </p>
         <strong>Mindestpunktzahl</strong> <br />
         Ein Flug muss eine Punktzahl von mindestens 60 erreichen, um als
