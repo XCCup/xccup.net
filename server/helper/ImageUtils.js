@@ -14,12 +14,15 @@ class ImageSize {
   }
 }
 
+// Never allow image dimensions to exceed 4000px
+const MAX_DIMENSION = 4000;
+
 const IMAGE_SIZES = {
   THUMB: new ImageSize("thumb", 310),
   XSMALL: new ImageSize("xsmall", 620),
   SMALL: new ImageSize("small", 1100),
   REGULAR: new ImageSize("regular", 2000),
-  FULL: new ImageSize(null, 4000),
+  FULL: new ImageSize(null, MAX_DIMENSION),
 };
 
 /**
@@ -51,9 +54,7 @@ async function resizeImage(sourcePath, targetPath, maxWidth, options) {
   if (!sourcePath || !targetPath || !maxWidth)
     return logger.error("IU: Missing arguments"); // TODO: Should something happen?
 
-  // Never allow image dimensions to exceed 4000px
-  const MAX_DIMENSION = 4000;
-  const targetWidth = maxWidth < MAX_DIMENSION ? maxWidth : MAX_DIMENSION;
+  let targetWidth = maxWidth < MAX_DIMENSION ? maxWidth : MAX_DIMENSION;
 
   // Sharp cannot read and write to the same location at the same time.
   // Therefore we create a temporary name for the resized image and change it back later.
@@ -65,8 +66,14 @@ async function resizeImage(sourcePath, targetPath, maxWidth, options) {
   );
 
   const image = sharp(sourcePath);
-  // const metadata = await sharp(sourcePath).metadata();
-  console.log(await image.metadata());
+  const metadata = await sharp(sourcePath).metadata();
+
+  // Do not resize if the desired size is bigger than the original image.
+  if (maxWidth > metadata.width && maxWidth != MAX_DIMENSION) return;
+
+  // But make sure that the orignal is reprocessed in all cases to keep the 80% jpeg quality goal.
+  if (maxWidth > metadata.width && maxWidth == MAX_DIMENSION)
+    targetWidth = metadata.width;
 
   const resizedImage = await new Promise(function (resolve, reject) {
     if (options.forceJpeg) image.jpeg();
