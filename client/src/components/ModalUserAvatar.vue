@@ -179,7 +179,7 @@ const onSave = async () => {
 };
 
 function uploadAvatar() {
-  const img = vueavatar.value.getImageScaled();
+  const img = vueavatar.value.getImage();
   img.toBlob(async function (blob) {
     try {
       const formData = new FormData();

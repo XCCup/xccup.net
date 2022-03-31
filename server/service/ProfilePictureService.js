@@ -10,7 +10,7 @@ const service = {
   },
 
   create: async (picture) => {
-    await createImageVersions(picture.path);
+    await createImageVersions(picture.path, { forceJpeg: true });
     return ProfilePicture.create(picture);
   },
 
