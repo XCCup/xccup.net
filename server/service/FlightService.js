@@ -247,7 +247,6 @@ const flightService = {
   },
 
   getAllBrands: async () => {
-    // // Refactor array of objects to plain array of strings
     const brands = await Brand.findAll({ order: [["name", "ASC"]] });
     return brands.map((e) => e.name);
   },
@@ -258,6 +257,12 @@ const flightService = {
 
   acceptViolation: async (flight) => {
     flight.violationAccepted = true;
+    flight.flightStatus = calcFlightStatus(
+      flight.takeoffTime,
+      flight.flightPoints,
+      flight.onlyLogbook
+    );
+
     const result = await flight.save();
     sendAirspaceViolationAcceptedMail(flight);
     return result;
@@ -297,12 +302,14 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, glider);
       columnsToUpdate.flightPoints = flightPoints;
 
-      const flightStatus = await calcFlightStatus(
-        flight.takeoffTime,
-        flightPoints,
-        onlyLogbook
-      );
-      columnsToUpdate.flightStatus = flightStatus;
+      if (flight.flightStatus != STATE.IN_REVIEW) {
+        const flightStatus = await calcFlightStatus(
+          flight.takeoffTime,
+          flightPoints,
+          onlyLogbook
+        );
+        columnsToUpdate.flightStatus = flightStatus;
+      }
     }
 
     return Flight.update(columnsToUpdate, {
@@ -341,49 +348,70 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, flight.glider);
       flight.flightPoints = flightPoints;
 
-      const flightStatus = await calcFlightStatus(
-        flight.takeoffTime,
-        flight.flightPoints
-      );
-      flight.flightStatus = flightStatus;
+      if (flight.flightStatus != STATE.IN_REVIEW) {
+        const flightStatus = await calcFlightStatus(
+          flight.takeoffTime,
+          flight.flightPoints
+        );
+        flight.flightStatus = flightStatus;
+      }
     }
 
-    const fixes = await retrieveDbObjectOfFlightFixes(flight.id);
-
-    deleteCache(["home", "flights", "results"]);
-
-    // TODO: Should the check for airspace violations not be independent from the elevation attacher?
-    ElevationAttacher.execute(
-      FlightFixes.mergeData(fixes),
-      async (fixesWithElevation) => {
-        // TODO: Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
-        for (let i = 0; i < fixes.timeAndHeights.length; i++) {
-          fixes.timeAndHeights[i].elevation = fixesWithElevation[i].elevation;
-        }
-        /**
-         * It is necessary to explicit call "changed", because a call to "save" will only updated data when a value has changed.
-         * Unforunatly the addition of elevation data inside the data object doesn't trigger any change event.
-         */
-        fixes.changed("timeAndHeights", true);
-        await fixes.save();
-
-        /**
-         * Before evaluating airspace violation it's necessary to determine the elevation data.
-         * Because some airspace bounderies are defined in relation to the surface (e.g. Floor 1500FT AGL)
-         */
-        if (await hasAirspaceViolation(fixes)) {
-          flight.airspaceViolation = true;
-          flight.save();
-          sendAirspaceViolationMail(flight);
-        }
-      }
-    );
-
     flight.save();
+    deleteCache(["home", "flights", "results"]);
   },
 
-  create: async (flight) => {
-    await addUserData(flight);
+  attachElevationDataAndCheckForAirspaceViolations: async (
+    flight,
+    { sendMail } = {}
+  ) => {
+    const fixes = await retrieveDbObjectOfFlightFixes(flight.id);
+
+    // eslint-disable-next-line no-unused-vars
+    await new Promise(function (resolve, reject) {
+      ElevationAttacher.execute(
+        FlightFixes.mergeData(fixes),
+        async (fixesWithElevation) => {
+          // TODO: Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
+          for (let i = 0; i < fixes.timeAndHeights.length; i++) {
+            fixes.timeAndHeights[i].elevation = fixesWithElevation[i].elevation;
+          }
+          /**
+           * It is necessary to explicit call "changed", because a call to "save" will only updated data when a value has changed.
+           * Unforunatly the addition of elevation data inside the data object doesn't trigger any change event.
+           */
+          fixes.changed("timeAndHeights", true);
+          await fixes.save();
+          resolve();
+        }
+      );
+    });
+
+    /**
+     * Before evaluating airspace violation it's necessary to determine the elevation data.
+     * Because some airspace bounderies are defined in relation to the surface (e.g. Floor 1500FT AGL)
+     */
+    const violationResult = await hasAirspaceViolation(fixes);
+    if (violationResult) {
+      flight.airspaceViolation = true;
+      flight.flightStatus = STATE.IN_REVIEW;
+      flight.save();
+      if (sendMail) sendAirspaceViolationMail(flight);
+    }
+
+    return violationResult;
+  },
+
+  create: async ({ userId, igcPath, externalId, validationResult }) => {
+    const flight = {
+      userId,
+      igcPath,
+      externalId,
+      uncheckedGRecord: validationResult == undefined ? true : false,
+      flightStatus: STATE.IN_PROCESS,
+    };
+
+    await attachUserData(flight);
     return Flight.create(flight);
   },
 
@@ -394,55 +422,38 @@ const flightService = {
     }).catch((error) => logger.error(error));
   },
 
-  attachFixRelatedTimeData: (flight, fixes) => {
+  /**
+   * Attaches fix related data like takeoffTime, airtime to the flight object from the db.
+   * It's necessary to call the save method of the object to persist the data.
+   *
+   * @param {Object} flight The db object of the flight.
+   * @param {Array} fixes An array of fixes of the related flight.
+   */
+  attachFixRelatedTimeDataToFlight: (flight, fixes) => {
     flight.airtime = calcAirtime(fixes);
     flight.takeoffTime = new Date(fixes[0].timestamp);
     flight.landingTime = new Date(fixes[fixes.length - 1].timestamp);
     flight.isWeekend = isNoWorkday(flight.takeoffTime);
   },
 
+  /**
+   * Searches for takeoff and landing.
+   * It's necessary to call the save method of the object to persist the data.
+   *
+   * @param {Object} flight The db object of the flight
+   * @param {Array} fixes An array of fixes of the related flight
+   * @returns The name of the takeoff site
+   */
   storeFixesAndAddFurtherInformationToFlight: async (flight, fixes) => {
-    const requests = [findClosestTakeoff(fixes[0])];
-    if (config.get("useGoogleApi")) {
-      requests.push(findLanding(fixes[fixes.length - 1]));
-    }
-    const results = await Promise.all(requests);
-    const flyingSite = results[0];
+    const fixesStats = attachFlightStats(flight, fixes);
 
-    flight.siteId = flyingSite.id;
-    flight.region = flyingSite.region;
-    flight.landing = results.length > 1 ? results[1] : "API Disabled";
+    await storeFixesToDB(flight, fixes, fixesStats);
+
+    const takeoffName = await attachTakeoffAndLanding(flight, fixes);
 
     await checkIfFlightWasNotUploadedBefore(flight.siteId, flight.takeoffTime);
 
-    const {
-      minHeightBaro,
-      maxHeightBaro,
-      minHeightGps,
-      maxHeightGps,
-      maxSink,
-      maxClimb,
-      maxSpeed,
-      fixesStats,
-    } = FlightStatsCalculator.execute(fixes);
-    flight.flightStats = {
-      minHeightBaro,
-      maxHeightBaro,
-      minHeightGps,
-      maxHeightGps,
-      maxSink,
-      maxClimb,
-      maxSpeed,
-    };
-
-    FlightFixes.create({
-      flightId: flight.id,
-      geom: FlightFixes.createGeometry(fixes),
-      timeAndHeights: FlightFixes.extractTimeAndHeights(fixes),
-      stats: fixesStats,
-    });
-
-    return flyingSite.name;
+    return takeoffName;
   },
 
   /**
@@ -459,6 +470,53 @@ const flightService = {
     return externalId;
   },
 };
+
+async function storeFixesToDB(flight, fixes, fixesStats) {
+  await FlightFixes.create({
+    flightId: flight.id,
+    geom: FlightFixes.createGeometry(fixes),
+    timeAndHeights: FlightFixes.extractTimeAndHeights(fixes),
+    stats: fixesStats,
+  });
+}
+
+async function attachTakeoffAndLanding(flight, fixes) {
+  const requests = [findClosestTakeoff(fixes[0])];
+  if (config.get("useGoogleApi")) {
+    requests.push(findLanding(fixes[fixes.length - 1]));
+  }
+  const results = await Promise.all(requests);
+  const flyingSite = results[0];
+
+  flight.siteId = flyingSite.id;
+  flight.region = flyingSite.region;
+  flight.landing = results.length > 1 ? results[1] : "API Disabled";
+
+  return flyingSite.name;
+}
+
+function attachFlightStats(flight, fixes) {
+  const {
+    minHeightBaro,
+    maxHeightBaro,
+    minHeightGps,
+    maxHeightGps,
+    maxSink,
+    maxClimb,
+    maxSpeed,
+    fixesStats,
+  } = FlightStatsCalculator.execute(fixes);
+  flight.flightStats = {
+    minHeightBaro,
+    maxHeightBaro,
+    minHeightGps,
+    maxHeightGps,
+    maxSink,
+    maxClimb,
+    maxSpeed,
+  };
+  return fixesStats;
+}
 
 function createFixesInclude(attributes) {
   return {
@@ -679,7 +737,7 @@ async function findAirbuddies(flight) {
  *
  * @param {*} flight The flight the user data will be attached to.
  */
-async function addUserData(flight) {
+async function attachUserData(flight) {
   const user = await User.findByPk(flight.userId);
   flight.teamId = user.teamId;
   flight.clubId = user.clubId;
@@ -827,6 +885,15 @@ function createTeamInclude(id) {
   return include;
 }
 
+/**
+ * Checks if an flight was uploaded before.
+ * The check is done by searching the db for a flight from the same takeoff at the same takeoffTime.
+ * If a flight was found an XccupRestrictionError will be thrown.
+ *
+ * @param {*} siteId The id of the takeoff of the current flight.
+ * @param {*} takeoffTime The takeoffTime of the current flight.
+ * @throws An XccupRestrictionError if an flight was found.
+ */
 async function checkIfFlightWasNotUploadedBefore(siteId, takeoffTime) {
   const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
@@ -837,7 +904,10 @@ async function checkIfFlightWasNotUploadedBefore(siteId, takeoffTime) {
     },
   });
 
-  if (flight?.flightStatus == STATE.IN_PROCESS) {
+  if (
+    flight?.flightStatus == STATE.IN_PROCESS ||
+    flight?.flightStatus == STATE.IN_REVIEW
+  ) {
     logger.info(
       `FS: Will delete flight ${flight.externalId} which has same takeoff site and time but is still in process state`
     );
