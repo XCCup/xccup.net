@@ -69,7 +69,7 @@ onMounted(() => {
   createXccupBorder().addTo(map.value);
 
   L.control.layers(baseMaps).addTo(map.value);
-  map.value.setView([50.143, 7.146], 8);
+  map.value.setView([50.5, 8.0], 7);
 });
 
 const createPopupContent = (site) => {
