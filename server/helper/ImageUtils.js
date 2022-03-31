@@ -133,7 +133,7 @@ async function deleteImages(imageObject) {
   if (pathBase) {
     deletePath(pathBase, deleteOperations);
     Object.values(IMAGE_SIZES).forEach((format) =>
-      deletePath(pathBase, deleteOperations, format.getPostfix())
+      deletePath(pathBase, deleteOperations, "-" + format.getPostfix())
     );
   }
   const pathThumb = imageObject.pathThumb;
