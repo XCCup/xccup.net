@@ -91,6 +91,8 @@ describe("check flight upload page", () => {
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
+    // Expect to be redirected to flight view after submitting
+
     cy.get("#cyFlightDetailsTable1").find("td").contains(expectedUserName);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
@@ -101,6 +103,23 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=flight-report]")
       .find("p")
       .should("have.text", flightReport);
+
+    cy.get("#photo-0")
+      .find("img")
+      .should("be.visible")
+      .and(($img) => {
+        expect($img[0].naturalWidth).to.equal(310);
+      });
+
+    cy.get("#photo-0").click();
+
+    cy.get("#glightbox-slider").within(() => {
+      cy.get(".gslide-image")
+        .find("img")
+        .and(($img) => {
+          expect($img[0].naturalWidth).to.equal(4000);
+        });
+    });
   });
 
   it("test upload flight twice", () => {
