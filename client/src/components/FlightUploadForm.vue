@@ -20,6 +20,12 @@
         <!-- TODO: Put the spinner somewhere else -->
         <BaseSpinner v-if="showSpinner && !flightId" />
       </div>
+      <div class="text-center lh-lg">
+        <p v-if="showSpinner && !flightId">
+          Prüfe G-Record, rufe Höhendaten ab, prüfe Luftraumverletzungen...<br />
+          Dieser Vorgang kann einige Sekunden dauern
+        </p>
+      </div>
       <div ref="collapse" class="collapse">
         <div class="row">
           <div class="col-md-6 col-12">
@@ -55,6 +61,14 @@
           placeholder="Flugbericht"
         />
         <!-- Airspace comment -->
+        <p v-if="airspaceViolation" class="text-danger">
+          Dieser Flug enthält eine Luftraumverletzung. Du musst zwingend einen
+          Luftraumkommentar dazu abgeben.
+        </p>
+        <AirspaceViolationMap
+          v-if="airspaceViolation"
+          :airspace-violation="airspaceViolation"
+        />
         <div class="form-check mb-3">
           <input
             id="airspaceCommentCheckbox"
@@ -63,6 +77,7 @@
             type="checkbox"
             data-bs-toggle="collapse"
             data-bs-target="#airspace-collapse"
+            :data-bs-show="airspaceViolation != null"
             data-cy="airspace-comment-checkbox"
           />
           <label class="form-check-label" for="airspaceCommentCheckbox">
@@ -174,6 +189,7 @@ const router = useRouter();
 setWindowName("Flug hochladen");
 
 const collapse = ref(null);
+const airspaceCollapse = ref(null);
 let detailsCollapse = null;
 
 onMounted(() => {
@@ -191,6 +207,10 @@ onMounted(async () => {
     document.getElementById("privacy-policy-modal")
   );
   compRulesModal.value = new Modal(document.getElementById("comp-rules-modal"));
+
+  airspaceCollapse.value = new Collapse(
+    document.getElementById("airspace-collapse")
+  );
 });
 
 // Fetch users gliders
@@ -219,6 +239,7 @@ const airspaceComment = ref("");
 
 const flightId = ref(null);
 const externalId = ref(null);
+const airspaceViolation = ref(null);
 const takeoff = ref("");
 const landing = ref("");
 const flightReport = ref("");
@@ -227,7 +248,13 @@ const showSpinner = ref(false);
 const errorMessage = ref(null);
 
 const sendButtonIsDisabled = computed(() => {
-  return !(rulesAccepted.value && flightId.value);
+  return (
+    !(rulesAccepted.value && flightId.value) ||
+    !(
+      !airspaceViolation.value ||
+      (airspaceViolation.value && airspaceComment.value.length >= 10)
+    )
+  );
 });
 
 // IGC
@@ -251,6 +278,11 @@ const igcSelected = async (file) => {
     externalId.value = response.data.externalId;
     takeoff.value = response.data.takeoff;
     landing.value = response.data.landing;
+    airspaceViolation.value = response.data.airspaceViolation;
+    if (airspaceViolation.value) {
+      leaveAirspaceComment.value = true;
+      airspaceCollapse.value.show();
+    }
     detailsCollapse.show();
   } catch (error) {
     detailsCollapse.hide();

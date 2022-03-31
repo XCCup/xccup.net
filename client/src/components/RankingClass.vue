@@ -41,7 +41,7 @@ const displayedDescription = computed(() =>
 onMounted(() => {
   // Activate popper tooltips
   if (props.showDescription) return;
-  tooltip = new Tooltip(icon.value);
+  if (icon.value) tooltip = new Tooltip(icon.value);
 });
 
 onUnmounted(() => {
