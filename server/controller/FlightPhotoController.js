@@ -76,9 +76,7 @@ router.post(
 
       const userId = req.user.id;
 
-      await createImageVersions(path);
-      // logger.info("FPC: Resizing photo");
-      // await resizeImage(path, IMAGE_DIMENSION_LIMIT);
+      await createImageVersions(path, { forceJpeg: true });
 
       const media = await service.create({
         originalname,
