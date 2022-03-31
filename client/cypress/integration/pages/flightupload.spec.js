@@ -13,13 +13,13 @@ describe("check flight upload page", () => {
     cy.location("pathname").should("eq", "/login");
   });
 
-  it("test upload flight", () => {
+  it.only("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const flightReport = "This is a flight report.";
     const airspaceComment = "Alles offen, kein Problem 🤪";
 
-    const photo1 = "rachtig.jpg";
-    const photo2 = "bremm.jpg";
+    const photo1 = "bremm.jpg";
+    const photo2 = "rachtig.jpg";
 
     const expectedTakeoff = "Laubenheim";
     const expectedUserName = "Ramona Gislason";
@@ -52,6 +52,11 @@ describe("check flight upload page", () => {
           mimeType: "image/jpg",
         });
       });
+
+    cy.get("#photo-0", {
+      timeout: 10000,
+    }).should("exist");
+
     cy.fixture(photo2)
       .then(Cypress.Blob.base64StringToBlob)
       .then((fileContent) => {
