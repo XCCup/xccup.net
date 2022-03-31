@@ -9,7 +9,7 @@ class ImageSize {
     this.maxWidth = maxWidth;
   }
   getPostfix() {
-    if (this.name) return "-" + this.name;
+    if (this.name) return this.name;
     return "";
   }
 }
@@ -29,12 +29,12 @@ const IMAGE_SIZES = {
  *
  * @param {String} path The path of the image to which a smaller versions should be created.
  */
-async function createImageVersions(path) {
+async function createImageVersions(path, options) {
   if (!path) return logger.error("IU: Missing arguments");
 
   const resizingCalls = Object.values(IMAGE_SIZES).map((format) => {
     const resizeImagePath = createSizePath(path, format.getPostfix());
-    return resizeImage(path, resizeImagePath, format.maxWidth);
+    return resizeImage(path, resizeImagePath, format.maxWidth, options);
   });
   return await Promise.all(resizingCalls);
 }
@@ -47,7 +47,7 @@ async function createImageVersions(path) {
  * @param {String} targetPath The path where the resized image should be stored.
  * @param {Number} maxDimensions The max height or width to which the image will be resized. Preserving aspect ratio, resize the image to be as large as possible while ensuring its dimensions are less than or equal to both those specified.
  */
-async function resizeImage(sourcePath, targetPath, maxWidth) {
+async function resizeImage(sourcePath, targetPath, maxWidth, options) {
   if (!sourcePath || !targetPath || !maxWidth)
     return logger.error("IU: Missing arguments"); // TODO: Should something happen?
 
@@ -65,7 +65,11 @@ async function resizeImage(sourcePath, targetPath, maxWidth) {
   );
 
   const image = sharp(sourcePath);
+  // const metadata = await sharp(sourcePath).metadata();
+  console.log(await image.metadata());
+
   const resizedImage = await new Promise(function (resolve, reject) {
+    if (options.forceJpeg) image.jpeg();
     image
       .withMetadata()
       .resize({
@@ -98,14 +102,14 @@ async function resizeImage(sourcePath, targetPath, maxWidth) {
  * @param {String} basePath The path to the original image.
  * @returns {String} A file name for a smaller size version of the original image.
  */
-function createSizePath(basePath, postfix) {
+function createSizePath(basePath, size) {
   const pathAsString = basePath.toString();
+  const postfix = size ? "-" + size : "";
   const indexOfFileExtension = pathAsString.lastIndexOf(".");
   const insertionPosition =
     indexOfFileExtension < 0 ? pathAsString.length : indexOfFileExtension;
   return (
     pathAsString.slice(0, insertionPosition) +
-    "-" +
     postfix +
     pathAsString.slice(insertionPosition)
   );
