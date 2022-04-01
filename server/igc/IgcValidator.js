@@ -2,11 +2,25 @@ const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
 const logger = require("../config/logger");
+const config = require("../config/env-config");
 
 const igcValidator = {
   G_RECORD_PASSED: "PASSED",
   G_RECORD_FAILED: "FAILED",
-  execute: async (igc) => {
+
+  /**
+   *
+   * @param {*} igc
+   * @param {boolean} options Options: { disableGCheck }
+   * @returns
+   */
+  execute: async (igc, options) => {
+    // Skip igc validation if disabled in .env or method options
+    if (config.get("disableGCheck") || options?.disableGCheck) {
+      logger.info("Skipping igc G-Record validation");
+      return "PASSED";
+    }
+
     // http://vali.fai-civl.org/webservice.html
     logger.info("Validating igc file with FAI API");
     try {

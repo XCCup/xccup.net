@@ -207,7 +207,12 @@ const config = convict({
     default: "qwertz12345",
     env: "GOOGLE_MAPS_API_KEY",
   },
-
+  disableGCheck: {
+    doc: "Disables the G-Record check of igc files",
+    format: Boolean,
+    default: false,
+    env: "DISABLE_G_CHECK",
+  },
   postgresUser: {
     doc: "The key for the google maps api",
     format: String,
