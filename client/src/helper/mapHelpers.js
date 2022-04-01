@@ -19,23 +19,17 @@ export function createAirspacePopupContent(airspace) {
 }
 
 function addRepresentationInMeters(value) {
-  const valueInMeters = convertVerticalLimitToMeterMSL(value);
-  return valueInMeters ? ` / ${valueInMeters} m` : "";
-}
-
-function convertVerticalLimitToMeterMSL(value) {
   const FACTOR_FT_TO_M = 0.3048;
 
-  // TODO: "0" ist actually not correct. The elevation of the fix would be the correct altitiude.
-  if (value == "GND") return 0;
+  if (value == "GND") return "";
 
-  // TODO: On server side we convert FL to meters MSL in a pretty uncorrect way.
-  // How to explain this to the user here? For now we just give him the FL
-  if (value.includes("FL")) return value;
+  if (value.includes("FL")) return "";
   // if (value.includes("FL")) return Math.round(parseInt(value.substring(2, value.length)) * FACTOR_FT_TO_M * 100);
 
-  if (value.includes("ft"))
-    return Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
+  if (value.includes("ft")) {
+    const meters = Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
+    return ` / ${meters} m`;
+  }
 }
 
 function createTrackLog(flight) {
