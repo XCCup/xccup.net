@@ -389,7 +389,7 @@ const flightService = {
 
     /**
      * Before evaluating airspace violation it's necessary to determine the elevation data.
-     * Because some airspace bounderies are defined in relation to the surface (e.g. Floor 1500FT AGL)
+     * Because some airspace boundaries are defined in relation to the surface (e.g. Floor 1500FT AGL)
      */
     const violationResult = await hasAirspaceViolation(fixes);
     if (violationResult) {
