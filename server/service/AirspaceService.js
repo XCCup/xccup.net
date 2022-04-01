@@ -119,35 +119,34 @@ function findVerticalIntersection(
 
   line.forEach((fix) => {
     if (fix.longitude == long && fix.latitude == lat) {
-      const floorInMeter = convertToMeterMSL(intersection.floor, fix.elevation);
-      const ceilingInMeter = convertToMeterMSL(
+      const lowerLimit = convertVerticalLimitToMeterMSL(
+        intersection.floor,
+        fix.elevation
+      );
+      const upperLimit = convertVerticalLimitToMeterMSL(
         intersection.ceiling,
         fix.elevation
       );
-
-      if (
-        floorInMeter <= fix.pressureAltitude &&
-        fix.pressureAltitude <= ceilingInMeter
-      ) {
+      if (lowerLimit <= fix.gpsAltitude && fix.gpsAltitude <= upperLimit) {
         logger.warn(
           "AS: Found airspace violation at LAT/LONG: " +
             lat +
             "/" +
             long +
             " Baro:" +
-            fix.pressureAltitude +
+            fix.gpsAltitude +
             " F/C: " +
-            floorInMeter +
+            lowerLimit +
             "/" +
-            ceilingInMeter
+            upperLimit
         );
 
         return (violationFound = {
           lat,
           long,
-          altitude: fix.pressureAltitude,
-          floorInMeter,
-          ceilingInMeter,
+          altitude: fix.gpsAltitude,
+          lowerLimit,
+          upperLimit,
           timestamp: fix.timestamp,
           line,
         });
@@ -182,7 +181,7 @@ async function findHorizontalIntersection(fixesId) {
 
 async function findAirspacesWithinPolygon(points) {
   const polygonPoints = points.map((e) => e.replace(",", " "));
-  //Close polygon and add first entry again as last entry
+  // Close polygon and add first entry again as last entry
   polygonPoints.push(polygonPoints[0]);
   const polygonPointsAsLinestring = polygonPoints.join(",");
 
@@ -218,26 +217,40 @@ async function findAirspacesWithinPolygon(points) {
   return result;
 }
 
-function convertToMeterMSL(heightValue, elevation) {
-  if (heightValue.includes("GND")) {
-    return 0;
+/**
+ * Converts a vertical airspace limit (GND/MSL/AGL/FL) to MSL (in meter)
+ * @param {string} verticalLimit
+ * @param {number} elevation
+ * @returns
+ */
+function convertVerticalLimitToMeterMSL(verticalLimit, elevation) {
+  if (verticalLimit.includes("GND")) {
+    return elevation ?? 0;
   }
-  if (heightValue.includes("AGL")) {
+
+  if (verticalLimit.includes("AGL")) {
     const regex = /(\d+)(F|ft) AGL/;
-    const matchingResult = heightValue.match(regex);
-    return convertFeetToMeter(matchingResult[1]) + elevation;
+    const matchingResult = verticalLimit.match(regex);
+    return convertFeetToMeter(matchingResult[1]) + elevation ?? 0;
   }
-  if (heightValue.includes("MSL")) {
+
+  if (verticalLimit.includes("MSL")) {
     const regex = /(\d+)(F|ft) MSL/;
-    const matchingResult = heightValue.match(regex);
+    const matchingResult = verticalLimit.match(regex);
     return convertFeetToMeter(matchingResult[1]);
   }
-  if (heightValue.includes("FL")) {
+
+  /**
+   * This is actually not the correct way to convert a FL to a MSL altitude. On high pressure
+   * days the result will to low. But it's the only practical way for the moment because not
+   * every flightlog includes the pressure altitude…
+   */
+  if (verticalLimit.includes("FL")) {
     const regex = /FL\s?(\d+)/;
-    const matchingResult = heightValue.match(regex);
+    const matchingResult = verticalLimit.match(regex);
     return convertFeetToMeter(matchingResult[1] * 100);
   }
-  logger.warn("AS: No parsable height value found: " + heightValue);
+  logger.warn("AS: No parsable height value found: " + verticalLimit);
 }
 
 function convertFeetToMeter(feet) {

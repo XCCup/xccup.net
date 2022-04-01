@@ -12,24 +12,28 @@ export function convertMapBoundsToQueryString(data) {
 }
 
 export function createAirspacePopupContent(airspace) {
-  const ceilingInMeters = addRepresentationInMeters(airspace.ceiling);
-  const floorInMeters = addRepresentationInMeters(airspace.floor);
-  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`;
+  const upperLimit = addRepresentationInMeters(airspace.ceiling);
+  const lowerLimit = addRepresentationInMeters(airspace.floor);
+  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${upperLimit}<br>Floor: ${airspace.floor}${lowerLimit}`;
   return content;
 }
 
 function addRepresentationInMeters(value) {
-  const valueInMeters = convertHeightStringToMetersValue(value);
+  const valueInMeters = convertVerticalLimitToMeterMSL(value);
   return valueInMeters ? ` / ${valueInMeters} m` : "";
 }
 
-function convertHeightStringToMetersValue(value) {
+function convertVerticalLimitToMeterMSL(value) {
   const FACTOR_FT_TO_M = 0.3048;
 
+  // TODO: "0" ist actually not correct. The elevation of the fix would be the correct altitiude.
   if (value == "GND") return 0;
-  //FL is calculated in relation to a local pressure value we don't know. Therefore we will return undefined.
-  if (value.includes("FL")) return undefined;
+
+  // TODO: On server side we convert FL to meters MSL in a pretty uncorrect way.
+  // How to explain this to the user here? For now we just give him the FL
+  if (value.includes("FL")) return value;
   // if (value.includes("FL")) return Math.round(parseInt(value.substring(2, value.length)) * FACTOR_FT_TO_M * 100);
+
   if (value.includes("ft"))
     return Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
 }
