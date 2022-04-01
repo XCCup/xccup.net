@@ -18,7 +18,7 @@ const igcValidator = {
     // Skip igc validation if disabled in .env or method options
     if (config.get("disableGCheck") || options?.disableGCheck) {
       logger.info("Skipping igc G-Record validation");
-      return "PASSED";
+      return "PASSED"; // TODO:  Why does this.G_RECORD_PASSED return undefined?
     }
 
     // http://vali.fai-civl.org/webservice.html
