@@ -73,12 +73,6 @@ const config = convict({
     default: "https://next.xccup.net/dicebear/",
     env: "DICEBEAR_URL",
   },
-  elevationUrl: {
-    doc: "The URL to the elevation api (if googles elevation api is not used)",
-    format: noEmptyString,
-    default: "a.elevation-service.net",
-    env: "ELEVATION_URL",
-  },
 
   jwtLogin: {
     doc: "The login token for the jwt authentication mechanism",
