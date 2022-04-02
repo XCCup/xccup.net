@@ -26,13 +26,13 @@ const service = {
   },
 
   /**
-   * class='RMZ', 'Q', 'W' will not be retrieved
+   * class='W' will not be retrieved
    */
   getAllRelevant: async () => {
     const result = await Airspace.findAll({
       where: {
         class: {
-          [Op.notIn]: ["RMZ", "Q", "W"],
+          [Op.notIn]: ["W"],
         },
       },
       // To ensure that lower level airspaces are not overlayed by others we will sort these airspaces to the end
@@ -143,7 +143,7 @@ async function find2dIntersection(fixesId) {
     ))).geom AS "intersectionLine"
     FROM "Airspaces"
     WHERE season=date_part('year',now()) 
-    AND NOT (class='RMZ' OR class='Q' OR class='W'))
+    AND NOT (class='Q' OR class='W'))
   AS "intersectionEntry"
   `;
 
