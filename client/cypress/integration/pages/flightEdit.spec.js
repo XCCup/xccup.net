@@ -35,7 +35,7 @@ describe("check edit flight page", () => {
     cy.get("button").contains("Flug bearbeiten").should("not.exist");
   });
 
-  it("check edit flight details", () => {
+  it.only("check edit flight details", () => {
     cy.loginNormalUser();
     cy.visit(`/flug/${editableFlightId}`);
 
@@ -72,12 +72,10 @@ describe("check edit flight page", () => {
     cy.get("#hikeAndFlyCheckbox").should("not.be.checked").check();
     cy.get("#logbookCheckbox").should("not.be.checked").check();
 
-    // TODO: Check photos
-
     cy.get("[data-cy=save-flight-edit]").contains("Speichern").click();
     cy.url().should("include", `/flug/${editableFlightId}`);
 
-    cy.get("#cyFlightDetailsTable1").contains("td", "U-Turn Bodyguard");
+    cy.get("[data-cy=flight-details-pilot]").contains("p", "U-Turn Bodyguard");
     cy.get("#cyFlightDetailsTable1").contains("td", "270m Höhenunterschied");
 
     cy.get("#flightDetailsButton").contains("Details anzeigen").click();

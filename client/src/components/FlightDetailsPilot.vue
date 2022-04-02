@@ -1,5 +1,5 @@
 <template>
-  <div v-if="flight" class="d-flex my-4" data-cy="comment-header">
+  <div v-if="flight" class="d-flex my-4" data-cy="flight-details-pilot">
     <div>
       <img :src="avatarUrl" class="rounded-circle" />
     </div>
