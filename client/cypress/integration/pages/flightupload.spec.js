@@ -130,8 +130,9 @@ describe("check flight upload page", () => {
     });
   });
 
-  it("test upload flight twice", () => {
+  it.only("test upload flight twice", () => {
     const igcFileName = "47188_J3USaNi1.igc";
+    const airspaceComment = "CTR Büchel inaktiv";
     const expectedError =
       "Dieser Flug ist bereits vorhanden. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an info@xccup.net";
 
@@ -154,6 +155,10 @@ describe("check flight upload page", () => {
 
     cy.get("#acceptTermsCheckbox").check();
 
+    // This flight contains a airspace violation. Unless the user has explained this violation the commit button should be disabled.
+    cy.get("Button").contains("Streckenmeldung absenden").should("be.disabled");
+    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
+
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
     // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How to do an retry on cy.visit or cy.request?
@@ -163,6 +168,9 @@ describe("check flight upload page", () => {
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
 
+    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
+
+    // Try to upload the same flight a second time
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
         fileContent: fileContent.toString(),
