@@ -3,14 +3,7 @@ const Airspace = require("../config/postgres")["Airspace"];
 const { Op } = require("sequelize");
 const logger = require("../config/logger");
 
-// const XCCUP_REGION_OUTLINE = {
-//   NW: "6.01,51.49",
-//   NO: "10.39,51.49",
-//   SO: "10.39,49.98",
-//   SW: "6.01,49.98",
-// };
-
-// let cacheAirspacesInRegion;
+const FEET_IN_METER = 0.3048;
 
 const service = {
   getById: async (id) => {
@@ -68,11 +61,15 @@ const service = {
 
   hasAirspaceViolation: async (fixesWithElevation) => {
     const startTime = new Date();
+
+    const line = FlightFixes.mergeData(fixesWithElevation);
+
+    const fl100Violation = findViolationOfFL100(line);
+    if (fl100Violation) return fl100Violation;
+
     const intersections2D = await findHorizontalIntersection(
       fixesWithElevation.id
     );
-
-    const line = FlightFixes.mergeData(fixesWithElevation);
 
     let violationFound = null;
     for (let rI = 0; rI < intersections2D.length && !violationFound; rI++) {
@@ -133,7 +130,7 @@ function findVerticalIntersection(
             lat +
             "/" +
             long +
-            " Baro:" +
+            " Altitude:" +
             fix.gpsAltitude +
             " F/C: " +
             lowerLimit +
@@ -151,6 +148,34 @@ function findVerticalIntersection(
           line,
         });
       }
+    }
+  });
+  return violationFound;
+}
+
+function findViolationOfFL100(fixesWithElevation) {
+  const fl100InMeters = FEET_IN_METER * 10_000;
+
+  let violationFound = null;
+
+  fixesWithElevation.forEach((fix) => {
+    if (fix.gpsAltitude >= fl100InMeters) {
+      logger.warn(
+        "AS: Found violation of FL100 at LAT/LONG: " +
+          fix.latitude +
+          "/" +
+          fix.longitude +
+          " Altitude:" +
+          fix.gpsAltitude
+      );
+
+      return (violationFound = {
+        lat: fix.latitude,
+        long: fix.longitude,
+        altitude: fix.gpsAltitude,
+        timestamp: fix.timestamp,
+        line: fixesWithElevation,
+      });
     }
   });
   return violationFound;
@@ -254,7 +279,7 @@ function convertVerticalLimitToMeterMSL(verticalLimit, elevation) {
 }
 
 function convertFeetToMeter(feet) {
-  return feet * 0.3048;
+  return feet * FEET_IN_METER;
 }
 
 module.exports = service;
