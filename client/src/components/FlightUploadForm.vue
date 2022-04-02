@@ -77,7 +77,6 @@
             type="checkbox"
             data-bs-toggle="collapse"
             data-bs-target="#airspace-collapse"
-            :data-bs-show="airspaceViolation != null"
             data-cy="airspace-comment-checkbox"
           />
           <label class="form-check-label" for="airspaceCommentCheckbox">
@@ -282,6 +281,8 @@ const igcSelected = async (file) => {
     if (airspaceViolation.value) {
       leaveAirspaceComment.value = true;
       airspaceCollapse.value.show();
+    } else {
+      airspaceCollapse.value.hide();
     }
     detailsCollapse.show();
   } catch (error) {
