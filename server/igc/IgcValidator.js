@@ -9,16 +9,17 @@ const igcValidator = {
   G_RECORD_FAILED: "FAILED",
 
   /**
+   * Checks with the FAI API if a IGC file has a valid G record.
    *
-   * @param {*} igc
-   * @param {boolean} options Options: { disableGCheck }
+   * @param {Object} igc An object which contains the path to or the content of the IGC file as also the IGC filename.
+   * @param {Boolean} options Options: { disableGCheck }
    * @returns
    */
   execute: async (igc, options) => {
     // Skip igc validation if disabled in .env or method options
     if (config.get("disableGCheck") || options?.disableGCheck) {
       logger.info("Skipping igc G-Record validation");
-      return "PASSED"; // TODO:  Why does this.G_RECORD_PASSED return undefined?
+      return igcValidator.G_RECORD_PASSED;
     }
 
     // http://vali.fai-civl.org/webservice.html

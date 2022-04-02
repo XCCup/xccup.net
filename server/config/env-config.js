@@ -207,6 +207,7 @@ const config = convict({
     default: false,
     env: "DISABLE_G_CHECK",
   },
+
   postgresUser: {
     doc: "The key for the google maps api",
     format: String,

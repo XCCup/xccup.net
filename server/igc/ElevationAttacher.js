@@ -3,6 +3,7 @@ const config = require("../config/env-config");
 const logger = require("../config/logger");
 
 const numberOfFixesPerApiRequest = 500;
+let client;
 
 const elevationAttacher = {
   execute: (fixes, callback) => {
@@ -22,14 +23,13 @@ function createPromise() {
 function executeRequestGoogle(stack) {
   logger.debug("Request Elevation Data from Google");
 
-  let locations = [];
-  stack.forEach(({ fix }) =>
-    locations.push({ lat: fix.latitude, lng: fix.longitude })
-  );
+  const locations = stack.map(({ fix }) => {
+    return { lat: fix.latitude, lng: fix.longitude };
+  });
 
   return client.elevation({
     params: {
-      locations: locations,
+      locations,
       key: config.get("googleMapsApiKey"),
     },
     timeout: 1000, // milliseconds
@@ -60,10 +60,6 @@ const getElevationData = async (fix) => {
   resolveStack();
   return promise;
 };
-
-// TODO: Doesn't he feel lonely here?
-let client;
-
 /**
  *
  * @param {object} fixes
@@ -73,6 +69,7 @@ const getFixesWithElevation = async (fixes, callback) => {
   const _fixesWithElevation = [];
   const { Client } = require("@googlemaps/google-maps-services-js");
   client = new Client({});
+
   logger.info(
     "Will request elevation data in bunches of " + numberOfFixesPerApiRequest
   );
