@@ -39,7 +39,7 @@ describe("check flight upload page", () => {
 
     // Increase timeout because calclation takes some time
     cy.get('input[type="text"]', {
-      timeout: 20000,
+      timeout: 30000,
     }).should("have.value", expectedTakeoff);
 
     // Add photos
@@ -149,7 +149,7 @@ describe("check flight upload page", () => {
 
     // Increase timeout because calclation takes some time
     cy.get('input[type="text"]', {
-      timeout: 20000,
+      timeout: 30000,
     }).should("have.value", "Serrig");
 
     cy.get("#acceptTermsCheckbox").check();
