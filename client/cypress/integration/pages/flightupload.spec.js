@@ -130,7 +130,7 @@ describe("check flight upload page", () => {
     });
   });
 
-  it.only("test upload flight twice", () => {
+  it("test upload flight twice", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError =
@@ -167,8 +167,6 @@ describe("check flight upload page", () => {
 
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
-
-    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
 
     // Try to upload the same flight a second time
     cy.fixture(igcFileName).then((fileContent) => {
