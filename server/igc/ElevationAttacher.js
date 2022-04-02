@@ -46,7 +46,10 @@ const resolveStack = debounce(async () => {
       resolve(Math.round(GND));
     });
   } catch (error) {
-    logger.error("Error while fetching elevation data: " + error);
+    logger.error("EA: Error while fetching elevation data: " + error);
+    stack.forEach(({ resolve }) => {
+      resolve(null);
+    });
   }
   if (tmpFixes.length) {
     resolveStack();
