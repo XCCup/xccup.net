@@ -130,7 +130,7 @@ describe("check flight upload page", () => {
     });
   });
 
-  it.only("test upload flight twice", () => {
+  it("test upload flight twice", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError =
