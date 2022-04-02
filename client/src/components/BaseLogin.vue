@@ -1,5 +1,5 @@
 <template>
-  <form class="login-form" @submit.prevent="handleSubmit">
+  <form @submit.prevent="handleSubmit">
     <div class="my-3">
       <label for="email" class="form-label">E-Mail</label>
       <input
@@ -109,7 +109,7 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped>
-.login-form {
+form {
   max-width: 500px;
 }
 </style>
