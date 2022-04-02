@@ -8,6 +8,8 @@ const {
 } = require("./Validation");
 const { getCache, setCache } = require("./CacheManager");
 const { STATE, COUNTRY } = require("../constants/user-constants");
+const { XccupHttpError } = require("../helper/ErrorHandler");
+const { NOT_FOUND } = require("../constants/http-status-constants");
 
 // @desc Gets the overall result
 // @route GET /results
@@ -191,7 +193,22 @@ router.get(
     const isoCode = req.params.isoCode;
 
     try {
-      const result = await service.getCountryOrState(year, isoCode, limit);
+      let resultFunction;
+      switch (isoCode) {
+        case "LUX":
+          resultFunction = service.getLuxemburg;
+          break;
+        case "RP":
+          resultFunction = service.getRhineland;
+          break;
+        default:
+          throw new XccupHttpError(
+            NOT_FOUND,
+            `No ranking defined for ${isoCode}`
+          );
+      }
+
+      const result = await resultFunction(year, limit);
 
       setCache(req, result);
 

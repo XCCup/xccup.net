@@ -17,8 +17,19 @@
             <i v-else class="bi bi-funnel" data-cy="filter-icon"></i>
           </button>
         </li>
-        <li v-if="!disableSeasonSelect" class="nav-item">
+        <li v-if="!disableSeasonSelect" class="nav-item me-1 mb-3">
           <SelectSeason :allow-all-seasons="allowAllSeasons" />
+        </li>
+        <li v-if="anyFilterOptionSet" class="nav-item">
+          <button
+            id="shareButton"
+            type="button"
+            class="col btn btn-outline-primary btn-sm"
+            @click="onShareButtonClicked"
+          >
+            Filter teilen
+            <i class="bi bi-share" data-cy="filter-icon"></i>
+          </button>
         </li>
       </ul>
     </nav>
@@ -291,6 +302,7 @@ import {
 } from "../helper/utils";
 import { FLIGHT_TYPES } from "../common/Constants";
 import { format } from "date-fns";
+import useSwal from "../composables/useSwal";
 
 defineProps({
   // TODO: Selecting the modal body like this not effective and not idiot save
@@ -450,6 +462,23 @@ const onClear = () => {
   hikeAndFly.value = false;
   fromDate.value = null;
   tillDate.value = null;
+};
+
+const onShareButtonClicked = async () => {
+  const { showSuccessAlert } = useSwal();
+
+  let baseUrl = window.location.href;
+  baseUrl =
+    baseUrl.charAt(baseUrl.length - 1) == "/" ? baseUrl.slice(0, -1) : baseUrl;
+  const filterString = Object.entries(activeFilters.value)
+    .map((f) => f[0] + "=" + f[1])
+    .join("&");
+  const filterUrl = baseUrl + "?" + filterString;
+
+  // This works only on https sites???
+  navigator.clipboard.writeText(filterUrl);
+
+  await showSuccessAlert(filterUrl);
 };
 
 const filterDescription = (key, filter) => {

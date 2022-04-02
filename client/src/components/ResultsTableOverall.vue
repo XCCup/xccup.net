@@ -69,7 +69,7 @@
                   </td>
                 </tr>
                 <tr class="d-md-none">
-                  <td scope="col" class="no-line-break">
+                  <td scope="col">
                     <RankingClass :ranking-class="flight.glider?.gliderClass" />
                     {{ flight.glider?.model }}
                   </td>

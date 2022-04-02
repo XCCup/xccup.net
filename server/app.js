@@ -10,7 +10,7 @@ process.env.TZ = config.get("timezone");
 const express = require("express");
 const app = express();
 const logger = require("./config/logger");
-const morganLogger = require("./config/logger").morganLogger;
+const expressLogger = require("./config/express-logger");
 const { handleError } = require("./helper/ErrorHandler");
 const compression = require("compression");
 
@@ -22,7 +22,7 @@ require("./cron/CleanIgcStore");
 require("./cron/DailyWinnerEMail");
 
 //Logging
-app.use(morganLogger);
+app.use(expressLogger);
 
 //Compression
 app.use(
