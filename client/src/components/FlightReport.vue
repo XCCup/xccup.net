@@ -26,7 +26,7 @@
         :to="{ name: 'FlightEdit', params: { id: flight.externalId } }"
       >
         <i class="bi bi-pencil-square mx-1"></i>Füge deinem Flug einen
-        Flugbericht zu.
+        Flugbericht hinzu.
       </router-link>
       <p></p>
     </div>
