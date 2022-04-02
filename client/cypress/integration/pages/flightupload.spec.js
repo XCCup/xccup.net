@@ -168,8 +168,6 @@ describe("check flight upload page", () => {
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
 
-    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
-
     // Try to upload the same flight a second time
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
