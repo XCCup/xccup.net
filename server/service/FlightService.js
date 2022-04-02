@@ -904,10 +904,7 @@ async function checkIfFlightWasNotUploadedBefore(siteId, takeoffTime) {
     },
   });
 
-  if (
-    flight?.flightStatus == STATE.IN_PROCESS ||
-    flight?.flightStatus == STATE.IN_REVIEW
-  ) {
+  if (flight?.flightStatus == STATE.IN_PROCESS) {
     logger.info(
       `FS: Will delete flight ${flight.externalId} which has same takeoff site and time but is still in process state`
     );
