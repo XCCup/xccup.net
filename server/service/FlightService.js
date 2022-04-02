@@ -257,7 +257,7 @@ const flightService = {
 
   acceptViolation: async (flight) => {
     flight.violationAccepted = true;
-    flight.flightStatus = calcFlightStatus(
+    flight.flightStatus = await calcFlightStatus(
       flight.takeoffTime,
       flight.flightPoints,
       flight.onlyLogbook
