@@ -1,7 +1,7 @@
 import { ref, readonly } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
-const DEFAULT_LIMIT = 50;
+const DEFAULT_LIMIT = 10;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 const instances = {};
@@ -25,7 +25,7 @@ function createInstance(viewComponentName) {
   const limitCache = ref(DEFAULT_LIMIT);
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
-  const currentRange = ref({ start: 0, end: 0 });
+  const currentRange = ref({ start: 1, end: DEFAULT_LIMIT });
   const errorMessage = ref(null);
   const noDataFlag = ref(false);
   const dataConstants = ref(null);
