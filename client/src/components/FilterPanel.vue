@@ -487,7 +487,6 @@ const anyFilterOptionSet = computed(
 // This seems hacky but is better than nothing…
 // The whole component could need some refactoring.
 const onClearOneFilter = async (key) => {
-  console.log(key);
   await clearOneFilter(key);
   resetSelectFromKey(key);
 };
