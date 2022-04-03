@@ -16,6 +16,7 @@ describe("check flight upload page", () => {
   it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const flightReport = "This is a flight report.";
+    const photoCaption = `Super tolles "Bild" 🚀`;
     const airspaceComment = "Alles offen, kein Problem 🤪";
 
     const photo1 = "bremm.jpg";
@@ -90,6 +91,8 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
 
     cy.get("[data-cy=text-editor-textarea]").type(flightReport);
+    cy.get("[data-cy=photo-caption-0]").type(photoCaption);
+
     cy.get("#hikeAndFlyCheckbox").click();
     cy.get("#logbookCheckbox").click();
 
@@ -119,6 +122,7 @@ describe("check flight upload page", () => {
         expect($img[0].naturalWidth).to.equal(310);
       });
 
+    cy.get("[data-cy=photo-caption-0]").should("have.text", photoCaption);
     cy.get("#photo-0").click();
 
     cy.get("#glightbox-slider").within(() => {
