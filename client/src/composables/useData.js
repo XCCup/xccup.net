@@ -47,9 +47,9 @@ function createInstance(viewComponentName) {
   const filterActive = ref(false);
 
   // Mutations
-  const clearOneFilter = (key) => {
+  const clearOneFilter = async (key) => {
     delete queryCache.value[key];
-    fetchData();
+    await fetchData();
   };
 
   const sortDataBy = async (sortOptions) => {
