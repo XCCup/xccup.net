@@ -100,8 +100,9 @@ describe("check flight upload page", () => {
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
     // Expect to be redirected to flight view after submitting
-
-    cy.get("#cyFlightDetailsTable1").find("td").contains(expectedUserName);
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
 
