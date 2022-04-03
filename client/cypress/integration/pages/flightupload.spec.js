@@ -16,7 +16,9 @@ describe("check flight upload page", () => {
   it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const flightReport = "This is a flight report.";
-    const photoCaption = `Super tolles "Bild" 🚀`;
+    const photoCaption = `Super tolles "Bild" 🚀 <a href=""'>foo</a>`;
+    const photoCaptionExpected = `Super tolles "Bild" 🚀 foo`;
+
     const airspaceComment = "Alles offen, kein Problem 🤪";
 
     const photo1 = "bremm.jpg";
@@ -122,7 +124,10 @@ describe("check flight upload page", () => {
         expect($img[0].naturalWidth).to.equal(310);
       });
 
-    cy.get("[data-cy=photo-caption-0]").should("have.text", photoCaption);
+    cy.get("[data-cy=photo-caption-0]").should(
+      "have.text",
+      photoCaptionExpected
+    );
     cy.get("#photo-0").click();
 
     cy.get("#glightbox-slider").within(() => {
