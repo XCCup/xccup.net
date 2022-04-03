@@ -24,10 +24,9 @@
           <button
             id="shareButton"
             type="button"
-            class="col btn btn-outline-primary btn-sm"
+            class="col btn btn-outline-primary btn-sm mb-3"
             @click="onShareButtonClicked"
           >
-            Filter teilen
             <i class="bi bi-share" data-cy="filter-icon"></i>
           </button>
         </li>
@@ -465,7 +464,7 @@ const onClear = () => {
 };
 
 const onShareButtonClicked = async () => {
-  const { showSuccessAlert } = useSwal();
+  const { showSuccessToast } = useSwal();
 
   let baseUrl = window.location.href;
   baseUrl =
@@ -475,10 +474,9 @@ const onShareButtonClicked = async () => {
     .join("&");
   const filterUrl = baseUrl + "?" + filterString;
 
-  // This works only on https sites???
   navigator.clipboard.writeText(filterUrl);
 
-  await showSuccessAlert(filterUrl);
+  showSuccessToast("Filter-Link in die Zwischenablage kopiert");
 };
 
 const filterDescription = (key, filter) => {

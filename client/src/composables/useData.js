@@ -1,7 +1,7 @@
 import { ref, readonly } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
-const DEFAULT_LIMIT = 50;
+const DEFAULT_LIMIT = 10;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
 
 const instances = {};
