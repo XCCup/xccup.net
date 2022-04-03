@@ -233,7 +233,7 @@ async function findAirspacesWithinPolygon(points) {
     ))).geom AS "intersectionPolygon"
     FROM "Airspaces"
     WHERE season=date_part('year',now()) 
-    AND NOT (class='RMZ' OR class='Q' OR class='W'))
+    AND NOT class='W')
   AS "intersectionEntry"
   `;
 
