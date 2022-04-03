@@ -7,19 +7,8 @@
         <table id="cyFlightDetailsTable1" class="table table-sm">
           <tbody>
             <tr>
-              <th>Team</th>
-              <td>
-                <router-link
-                  :to="{
-                    name: 'FlightsAll',
-                    query: { teamId: flight.team?.id },
-                  }"
-                >
-                  <div>
-                    {{ flight.team?.name }}
-                  </div>
-                </router-link>
-              </td>
+              <th>Gerät</th>
+              <td>{{ flight.glider?.brand }} {{ flight.glider?.model }}</td>
             </tr>
             <tr>
               <th>Geräteklasse</th>

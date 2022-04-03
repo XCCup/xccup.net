@@ -15,7 +15,18 @@
       <a href="#"
         ><h6>{{ flight.club?.name }}</h6></a
       >
-      <p>{{ flight.glider?.brand }} {{ flight.glider?.model }}</p>
+      <p>
+        <router-link
+          :to="{
+            name: 'FlightsAll',
+            query: { teamId: flight.team?.id },
+          }"
+        >
+          <div>
+            {{ flight.team?.name }}
+          </div>
+        </router-link>
+      </p>
     </div>
 
     <div class="ms-auto"></div>
