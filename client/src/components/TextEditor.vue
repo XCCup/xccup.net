@@ -56,7 +56,7 @@ const props = defineProps({
 // Sanitize textarea from male boomer-speech
 const onInput = (text) => {
   let sanitizedText = text;
-  if (getGender.value != "M")
+  if (getGender.value != "F")
     sanitizedText = text.replace(/hausfrau/gi, "Hausmann");
 
   emit("update:modelValue", sanitizedText);
