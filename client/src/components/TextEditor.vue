@@ -26,7 +26,7 @@
       :style="$attrs.style"
       :rows="4"
       data-cy="text-editor-textarea"
-      @input="$emit('update:modelValue', $event.target.value), $emit('change')"
+      @input="onInput($event.target.value)"
     ></textarea>
     <label v-if="$attrs.placeholder?.length" for="textarea">{{
       $attrs.placeholder
@@ -37,6 +37,9 @@
 <script setup>
 import { ref } from "vue";
 import { VuemojiPicker } from "vuemoji-picker";
+import useUser from "@/composables/useUser";
+
+const { getGender } = useUser();
 
 // Exclude emoji picker in ci build because in causes test errors in cypress
 const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER;
@@ -49,6 +52,16 @@ const props = defineProps({
     required: true,
   },
 });
+
+// Sanitize textarea from male boomer-speech
+const onInput = (text) => {
+  let sanitizedText = text;
+  if (getGender.value != "M")
+    sanitizedText = text.replace(/hausfrau/gi, "Hausmann");
+
+  emit("update:modelValue", sanitizedText);
+  emit("change");
+};
 
 // Emoji Picker
 const ta = ref(null);
