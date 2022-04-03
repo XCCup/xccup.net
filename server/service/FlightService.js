@@ -21,6 +21,7 @@ const { hasAirspaceViolation } = require("./AirspaceService");
 const {
   sendAirspaceViolationMail,
   sendAirspaceViolationAcceptedMail,
+  sendNewAdminTask,
 } = require("./MailService");
 
 const { isNoWorkday } = require("../helper/HolidayCalculator");
@@ -397,6 +398,7 @@ const flightService = {
       flight.flightStatus = STATE.IN_REVIEW;
       flight.save();
       if (sendMail) sendAirspaceViolationMail(flight);
+      sendNewAdminTask();
     }
 
     return violationResult;
