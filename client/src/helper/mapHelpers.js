@@ -12,26 +12,24 @@ export function convertMapBoundsToQueryString(data) {
 }
 
 export function createAirspacePopupContent(airspace) {
-  const ceilingInMeters = addRepresentationInMeters(airspace.ceiling);
-  const floorInMeters = addRepresentationInMeters(airspace.floor);
-  const content = `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${ceilingInMeters}<br>Floor: ${airspace.floor}${floorInMeters}`;
-  return content;
+  const upperLimitInMeters = tryToConvertToMeters(airspace.ceiling);
+  const lowerLimitInMeters = tryToConvertToMeters(airspace.floor);
+  return `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${upperLimitInMeters}<br>Floor: ${airspace.floor}${lowerLimitInMeters}`;
 }
 
-function addRepresentationInMeters(value) {
-  const valueInMeters = convertHeightStringToMetersValue(value);
-  return valueInMeters ? ` / ${valueInMeters} m` : "";
-}
-
-function convertHeightStringToMetersValue(value) {
+function tryToConvertToMeters(value) {
   const FACTOR_FT_TO_M = 0.3048;
 
-  if (value == "GND") return 0;
-  //FL is calculated in relation to a local pressure value we don't know. Therefore we will return undefined.
-  if (value.includes("FL")) return undefined;
-  // if (value.includes("FL")) return Math.round(parseInt(value.substring(2, value.length)) * FACTOR_FT_TO_M * 100);
-  if (value.includes("ft"))
-    return Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
+  if (value == "GND") return "";
+
+  if (value.includes("FL")) return "";
+
+  if (value.includes("ft")) {
+    const meters = Math.round(parseInt(value.substring(0, 5)) * FACTOR_FT_TO_M);
+    return ` / ${meters} m`;
+  }
+
+  return "";
 }
 
 function createTrackLog(flight) {

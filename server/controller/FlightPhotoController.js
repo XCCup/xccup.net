@@ -15,8 +15,8 @@ const { query } = require("express-validator");
 const {
   checkIsUuidObject,
   checkParamIsUuid,
-  checkStringObject,
   validationHasErrors,
+  checkStringObjectNoEscaping,
 } = require("./Validation");
 const multer = require("multer");
 
@@ -158,11 +158,10 @@ router.put(
   "/:id",
   authToken,
   checkParamIsUuid("id"),
-  checkStringObject("description"),
+  checkStringObjectNoEscaping("description"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-
     try {
       const media = await service.getById(id);
 
