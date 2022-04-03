@@ -35,7 +35,7 @@ describe("check edit flight page", () => {
     cy.get("button").contains("Flug bearbeiten").should("not.exist");
   });
 
-  it.only("check edit flight details", () => {
+  it("check edit flight details", () => {
     cy.loginNormalUser();
     cy.visit(`/flug/${editableFlightId}`);
 
