@@ -37,7 +37,7 @@ const auth = (req, res, next) => {
     next(error);
   }
 };
-
+// TODO: Is this description correct?
 /**
  * Creates a access token around a provided userId.
  * @param {*} userId The id of the user for which the token is created.
@@ -50,6 +50,7 @@ const create = (user) => {
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
+      gender: user.gender,
     },
     config.get("jwtLogin"),
     {
@@ -66,6 +67,7 @@ const createRefresh = (user) => {
       firstName: user.firstName,
       lastName: user.lastName,
       role: user.role,
+      gender: user.gender,
     },
     config.get("jwtRefresh")
   );
