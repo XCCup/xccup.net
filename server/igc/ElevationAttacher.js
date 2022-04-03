@@ -1,9 +1,10 @@
 const debounce = require("lodash/debounce");
 const config = require("../config/env-config");
 const logger = require("../config/logger");
+const { Client } = require("@googlemaps/google-maps-services-js");
 
 const numberOfFixesPerApiRequest = 500;
-let client;
+const client = new Client({});
 
 const elevationAttacher = {
   execute: (fixes, callback) => {
@@ -63,6 +64,7 @@ const getElevationData = async (fix) => {
   resolveStack();
   return promise;
 };
+
 /**
  *
  * @param {object} fixes
@@ -70,8 +72,6 @@ const getElevationData = async (fix) => {
  */
 const getFixesWithElevation = async (fixes, callback) => {
   const _fixesWithElevation = [];
-  const { Client } = require("@googlemaps/google-maps-services-js");
-  client = new Client({});
 
   logger.info(
     "Will request elevation data in bunches of " + numberOfFixesPerApiRequest
