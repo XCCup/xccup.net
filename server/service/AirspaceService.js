@@ -3,14 +3,7 @@ const Airspace = require("../config/postgres")["Airspace"];
 const { Op } = require("sequelize");
 const logger = require("../config/logger");
 
-// const XCCUP_REGION_OUTLINE = {
-//   NW: "6.01,51.49",
-//   NO: "10.39,51.49",
-//   SO: "10.39,49.98",
-//   SW: "6.01,49.98",
-// };
-
-// let cacheAirspacesInRegion;
+const FEET_IN_METER = 0.3048;
 
 const service = {
   getById: async (id) => {
@@ -66,13 +59,34 @@ const service = {
     return findAirspacesWithinPolygon(points);
   },
 
+  /**
+   * Checks for any airspace violation of the given flight track.
+   * This is done in 3 steps.
+   * 1. Check if any fix of the track exceeds the general altitude limitation of FL100
+   * 2. Check within PostGIS if the flight track intersects with any airspace polygon in the 2D plain.
+   * 3. Check for every found intersection if any of these points is within the vertical (3D) boundaries of the intersecting airspace.
+   *
+   * We will use the GPS data of a track. This is not 100% corrected (especially when checking against FL).
+   * But some trackers don't offer baro data and we don't want to give any advantages to particular tracker setups.
+   *
+   * Because some airspace boundaries are defined in relation to the surface (e.g. 2000 ft AGL) it's necessary that the data of the flight track also contains the related elevation data.
+   *
+   * @param {Array} fixesWithElevation The fixes of a flight track attached with there corresponding elevation data.
+   * @returns A airspaceViolation object with lat,long, elevation data of the first fix with a airspace violation and also a line of the whole flighttrack.
+   */
   hasAirspaceViolation: async (fixesWithElevation) => {
     const startTime = new Date();
-    const intersections2D = await find2dIntersection(fixesWithElevation.id);
 
-    const line = FlightFixes.mergeData(fixesWithElevation);
+    const flightTrackLine = FlightFixes.mergeData(fixesWithElevation);
 
-    let violationFound = false;
+    const fl100Violation = findViolationOfFL100(flightTrackLine);
+    if (fl100Violation) return fl100Violation;
+
+    const intersections2D = await findHorizontalIntersection(
+      fixesWithElevation.id
+    );
+
+    let violationFound = null;
     for (let rI = 0; rI < intersections2D.length && !violationFound; rI++) {
       const intersection = intersections2D[rI];
 
@@ -83,41 +97,13 @@ const service = {
         cI++
       ) {
         const coordinate = intersection.intersectionLine.coordinates[cI];
-        const long = coordinate[0];
-        const lat = coordinate[1];
 
-        line.forEach((fix) => {
-          if (fix.longitude == long && fix.latitude == lat) {
-            const floorInMeter = convertToMeterMSL(
-              intersection.floor,
-              fix.elevation
-            );
-            const ceilingInMeter = convertToMeterMSL(
-              intersection.ceiling,
-              fix.elevation
-            );
-
-            if (
-              floorInMeter <= fix.pressureAltitude &&
-              fix.pressureAltitude <= ceilingInMeter
-            ) {
-              logger.warn(
-                "AS: Found airspace violation at LAT/LONG: " +
-                  lat +
-                  "/" +
-                  long +
-                  " Baro:" +
-                  fix.pressureAltitude +
-                  " F/C: " +
-                  floorInMeter +
-                  "/" +
-                  ceilingInMeter
-              );
-              violationFound = true;
-              return;
-            }
-          }
-        });
+        violationFound = findVerticalIntersection(
+          flightTrackLine,
+          coordinate,
+          intersection,
+          violationFound
+        );
       }
     }
 
@@ -134,7 +120,83 @@ const service = {
   },
 };
 
-async function find2dIntersection(fixesId) {
+function findVerticalIntersection(
+  flightTrackLine,
+  coordinate,
+  intersection,
+  violationFound
+) {
+  const long = coordinate[0];
+  const lat = coordinate[1];
+
+  flightTrackLine.forEach((fix) => {
+    if (fix.longitude == long && fix.latitude == lat) {
+      const lowerLimit = convertVerticalLimitToMeterMSL(
+        intersection.floor,
+        fix.elevation
+      );
+      const upperLimit = convertVerticalLimitToMeterMSL(
+        intersection.ceiling,
+        fix.elevation
+      );
+      if (lowerLimit <= fix.gpsAltitude && fix.gpsAltitude <= upperLimit) {
+        logger.warn(
+          "AS: Found airspace violation at LAT/LONG: " +
+            lat +
+            "/" +
+            long +
+            " Altitude:" +
+            fix.gpsAltitude +
+            " F/C: " +
+            lowerLimit +
+            "/" +
+            upperLimit
+        );
+
+        return (violationFound = {
+          lat,
+          long,
+          altitude: fix.gpsAltitude,
+          lowerLimit,
+          upperLimit,
+          timestamp: fix.timestamp,
+          line: flightTrackLine,
+        });
+      }
+    }
+  });
+  return violationFound;
+}
+
+function findViolationOfFL100(fixesWithElevation) {
+  const fl100InMeters = FEET_IN_METER * 10_000;
+
+  let violationFound = null;
+
+  fixesWithElevation.forEach((fix) => {
+    if (fix.gpsAltitude >= fl100InMeters) {
+      logger.warn(
+        "AS: Found violation of FL100 at LAT/LONG: " +
+          fix.latitude +
+          "/" +
+          fix.longitude +
+          " Altitude:" +
+          fix.gpsAltitude
+      );
+
+      return (violationFound = {
+        lat: fix.latitude,
+        long: fix.longitude,
+        altitude: fix.gpsAltitude,
+        timestamp: fix.timestamp,
+        line: fixesWithElevation,
+      });
+    }
+  });
+  return violationFound;
+}
+
+async function findHorizontalIntersection(fixesId) {
   const query = `
   SELECT id, class, name, floor, ceiling, "intersectionLine" FROM(
     SELECT *, (ST_Dump(ST_Intersection(
@@ -159,7 +221,7 @@ async function find2dIntersection(fixesId) {
 
 async function findAirspacesWithinPolygon(points) {
   const polygonPoints = points.map((e) => e.replace(",", " "));
-  //Close polygon and add first entry again as last entry
+  // Close polygon and add first entry again as last entry
   polygonPoints.push(polygonPoints[0]);
   const polygonPointsAsLinestring = polygonPoints.join(",");
 
@@ -195,30 +257,44 @@ async function findAirspacesWithinPolygon(points) {
   return result;
 }
 
-function convertToMeterMSL(heightValue, elevation) {
-  if (heightValue.includes("GND")) {
-    return 0;
+/**
+ * Converts a vertical airspace limit (GND/MSL/AGL/FL) to MSL (in meter)
+ * @param {string} verticalLimit
+ * @param {number} elevation
+ * @returns
+ */
+function convertVerticalLimitToMeterMSL(verticalLimit, elevation) {
+  if (verticalLimit.includes("GND")) {
+    return elevation ?? 0;
   }
-  if (heightValue.includes("AGL")) {
+
+  if (verticalLimit.includes("AGL")) {
     const regex = /(\d+)(F|ft) AGL/;
-    const matchingResult = heightValue.match(regex);
-    return convertFeetToMeter(matchingResult[1]) + elevation;
+    const matchingResult = verticalLimit.match(regex);
+    return convertFeetToMeter(matchingResult[1]) + elevation ?? 0;
   }
-  if (heightValue.includes("MSL")) {
+
+  if (verticalLimit.includes("MSL")) {
     const regex = /(\d+)(F|ft) MSL/;
-    const matchingResult = heightValue.match(regex);
+    const matchingResult = verticalLimit.match(regex);
     return convertFeetToMeter(matchingResult[1]);
   }
-  if (heightValue.includes("FL")) {
+
+  /**
+   * This is actually not the correct way to convert a FL to a MSL altitude. On high pressure
+   * days the result will to low. But it's the only practical way for the moment because not
+   * every flightlog includes the pressure altitude…
+   */
+  if (verticalLimit.includes("FL")) {
     const regex = /FL\s?(\d+)/;
-    const matchingResult = heightValue.match(regex);
+    const matchingResult = verticalLimit.match(regex);
     return convertFeetToMeter(matchingResult[1] * 100);
   }
-  logger.warn("AS: No parsable height value found: " + heightValue);
+  logger.warn("AS: No parsable height value found: " + verticalLimit);
 }
 
 function convertFeetToMeter(feet) {
-  return feet * 0.3048;
+  return feet * FEET_IN_METER;
 }
 
 module.exports = service;
