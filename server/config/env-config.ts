@@ -74,12 +74,6 @@ const config = convict({
     default: "https://next.xccup.net/dicebear/",
     env: "DICEBEAR_URL",
   },
-  elevationUrl: {
-    doc: "The URL to the elevation api (if googles elevation api is not used)",
-    format: noEmptyString,
-    default: "a.elevation-service.net",
-    env: "ELEVATION_URL",
-  },
 
   jwtLogin: {
     doc: "The login token for the jwt authentication mechanism",
@@ -207,6 +201,12 @@ const config = convict({
     format: String,
     default: "qwertz12345",
     env: "GOOGLE_MAPS_API_KEY",
+  },
+  disableGCheck: {
+    doc: "Disables the G-Record check of igc files",
+    format: Boolean,
+    default: false,
+    env: "DISABLE_G_CHECK",
   },
 
   postgresUser: {

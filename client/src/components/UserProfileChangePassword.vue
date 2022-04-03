@@ -47,6 +47,7 @@ import BaseSpinner from "./BaseSpinner.vue";
 import BaseError from "./BaseError.vue";
 import { isStrongPassword } from "../helper/utils";
 import useSwal from "../composables/useSwal";
+import { GENERIC_ERROR } from "@/common/Constants";
 
 const { showSuccessToast } = useSwal();
 const password = ref("");
@@ -65,7 +66,7 @@ const onSave = async () => {
     passwordConfirmation.value = "";
   } catch (error) {
     console.error(error);
-    errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";
+    errorMessage.value = GENERIC_ERROR;
   } finally {
     showSpinner.value = false;
   }

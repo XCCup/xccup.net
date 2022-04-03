@@ -20,6 +20,7 @@ import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { setWindowName } from "../helper/utils";
 import useFlight from "@/composables/useFlight";
+import useAirbuddies from "@/composables/useAirbuddies";
 
 const route = useRoute();
 const router = useRouter();
@@ -46,7 +47,6 @@ try {
 
 // TODO: This is a workaround to trigger a re-render of the barogramm.
 // One day i will find out how to do this from the baro component itself…
-import useAirbuddies from "@/composables/useAirbuddies";
 const { checkedAirbuddyFlightIds } = useAirbuddies();
 const baroDataUpdated = ref(0);
 watch(checkedAirbuddyFlightIds, () => baroDataUpdated.value++);

@@ -122,7 +122,7 @@
 <script setup>
 import ApiService from "@/services/ApiService.js";
 
-import { computed, ref, watch } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { VueAvatar } from "vue-avatar-editor-improved";
 import { convertRemoteImageToDataUrl } from "../helper/utils";
 
@@ -147,21 +147,22 @@ const errorMessage = ref(null);
 const presetImage = ref("");
 const deleteRequest = ref(false);
 
-watch(
-  () => props.avatarUrl,
-  () => {
-    // SVG is not supported by this editor
-    if (props.avatarUrl && !props.avatarUrl.includes(".svg")) {
-      convertRemoteImageToDataUrl(
-        props.avatarUrl.replace("?thumb=true", ""),
-        (dataUrl) => (presetImage.value = dataUrl)
-      );
-    }
+const isDefaultImage = ref(true);
+
+watchEffect(() => {
+  if (props.avatarUrl) {
+    const imageUrl = props.avatarUrl
+      .replace("?size=thumb", "")
+      .replace(/&\?timestamp=\d+/, "");
+    convertRemoteImageToDataUrl(imageUrl, (dataUrl, mimeType) => {
+      presetImage.value = dataUrl;
+      isDefaultImage.value = mimeType.includes("svg");
+    });
   }
-);
+});
 
 const deleteButtonIsEnabled = computed(() => {
-  return props.avatarUrl && !props.avatarUrl.includes(".svg");
+  return props.avatarUrl && !isDefaultImage.value;
 });
 
 const onImageReady = () => {
@@ -178,7 +179,7 @@ const onSave = async () => {
 };
 
 function uploadAvatar() {
-  const img = vueavatar.value.getImageScaled();
+  const img = vueavatar.value.getImage();
   img.toBlob(async function (blob) {
     try {
       const formData = new FormData();

@@ -33,6 +33,7 @@ import BaseError from "./BaseError.vue";
 import { isEmail } from "../helper/utils";
 import useUserProfile from "@/composables/useUserProfile";
 import useSwal from "../composables/useSwal";
+import { GENERIC_ERROR } from "@/common/Constants";
 
 const { showSuccessAlert } = useSwal();
 const { modifiedUserData, emailHasChanged } = useUserProfile();
@@ -55,7 +56,7 @@ const onSave = async () => {
       return (errorMessage.value = "Dies ist keine gültige E-Mail Adresse");
 
     console.error(error);
-    errorMessage.value = "Hoppla, da ist leider was schief gelaufen…";
+    errorMessage.value = GENERIC_ERROR;
   } finally {
     showSpinner.value = false;
   }

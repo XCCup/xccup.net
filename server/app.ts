@@ -7,10 +7,10 @@ global.__basedir = __dirname;
 import config from "./config/env-config";
 import express from "express";
 import logger from "./config/logger";
+import expressLogger from "./config/express-logger";
 // @ts-ignore
 import { handleError } from "./helper/ErrorHandler";
 import compression from "compression";
-import { morganLogger } from "./config/logger";
 import { Request, Response } from "express";
 
 //Set timezone of node server
@@ -26,7 +26,7 @@ import "./cron/CleanIgcStore";
 import "./cron/DailyWinnerEMail";
 
 //Logging
-app.use(morganLogger);
+app.use(expressLogger);
 
 //Compression
 app.use(

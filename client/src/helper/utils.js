@@ -59,12 +59,18 @@ export async function asyncForEach(array, callback) {
   }
 }
 
+/**
+ * Transforms a URL to a DataURL.
+ *
+ * @param {String} url The URL which will be called.
+ * @param {Function} callback The callback function. Will be called with two parameters. First parameter is the plain data result. The second parameter is the mime-type.
+ */
 export function convertRemoteImageToDataUrl(url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
     var reader = new FileReader();
     reader.onloadend = function () {
-      callback(reader.result);
+      callback(reader.result, xhr.response.type);
     };
     reader.readAsDataURL(xhr.response);
   };

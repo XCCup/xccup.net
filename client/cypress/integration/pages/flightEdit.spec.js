@@ -72,8 +72,6 @@ describe("check edit flight page", () => {
     cy.get("#hikeAndFlyCheckbox").should("not.be.checked").check();
     cy.get("#logbookCheckbox").should("not.be.checked").check();
 
-    // TODO: Check photos
-
     cy.get("[data-cy=save-flight-edit]").contains("Speichern").click();
     cy.url().should("include", `/flug/${editableFlightId}`);
 

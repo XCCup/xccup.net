@@ -15,22 +15,21 @@ const { query } = require("express-validator");
 const {
   checkIsUuidObject,
   checkParamIsUuid,
-  checkStringObject,
   validationHasErrors,
+  checkStringObjectNoEscaping,
 } = require("./Validation");
 const multer = require("multer");
 
 const {
-  createThumbnail,
+  createImageVersions,
   deleteImages,
-  resizeImage,
+  retrieveFilePath,
+  IMAGE_SIZES,
 } = require("../helper/ImageUtils");
 const logger = require("../config/logger").default;
 
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
-const THUMBNAIL_IMAGE_HEIGHT = 310;
 const MAX_PHOTOS = 8;
-const IMAGE_DIMENSION_LIMIT = 4_000;
 
 const imageUpload = multer({
   dest: IMAGE_STORE,
@@ -71,21 +70,19 @@ router.post(
             logger.error(err);
           }
         });
+        // TODO: is this really the best http code for photo limit reached?
         return res.sendStatus(TOO_MANY_REQUESTS);
       }
 
       const userId = req.user.id;
 
-      const pathThumb = await createThumbnail(path, THUMBNAIL_IMAGE_HEIGHT);
-      logger.info("FPC: Resizing photo");
-      await resizeImage(path, IMAGE_DIMENSION_LIMIT);
+      await createImageVersions(path, { forceJpeg: true });
 
       const media = await service.create({
         originalname,
         mimetype,
         size,
         path,
-        pathThumb,
         flightId,
         userId,
         timestamp,
@@ -104,20 +101,20 @@ router.post(
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  query("thumb").optional().isBoolean(),
+  query("size")
+    .optional()
+    .isIn(Object.values(IMAGE_SIZES).map((f) => f.name)),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const thumb = req.query.thumb;
+    const size = req.query.size;
 
     try {
       const media = await service.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
-      const fullfilepath = thumb
-        ? pathLib.join(pathLib.resolve(), media.pathThumb)
-        : pathLib.join(pathLib.resolve(), media.path);
+      const fullfilepath = retrieveFilePath(media.path, size);
 
       return res.type(media.mimetype).sendFile(fullfilepath);
     } catch (error) {
@@ -125,25 +122,6 @@ router.get(
     }
   }
 );
-
-// @desc Gets the meta-data to a flight photo
-// @route GET /flights/photos/meta/:id
-// TODO Is this endpoint of any interest?
-
-router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
-  if (validationHasErrors(req, res)) return;
-  const id = req.params.id;
-
-  try {
-    const media = await service.getById(id);
-
-    if (!media) return res.sendStatus(NOT_FOUND);
-
-    return res.json(media);
-  } catch (error) {
-    next(error);
-  }
-});
 
 // @desc Toggles (assigns or removes) the "like" to a flight photo from the requester
 // @route GET /photos/like/:id
@@ -180,11 +158,10 @@ router.put(
   "/:id",
   authToken,
   checkParamIsUuid("id"),
-  checkStringObject("description"),
+  checkStringObjectNoEscaping("description"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-
     try {
       const media = await service.getById(id);
 

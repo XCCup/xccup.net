@@ -255,8 +255,10 @@ export const Routes = [
     component: () => import("../views/UserConfirmMail.vue"),
   },
   {
-    path: "/sandbox/",
-    name: "TheSandbox",
+    path: "/sandbox/:flightId",
+    name: "Sandbox",
+    beforeEnter: validateRouteParamFlightId,
+    meta: { toTop: true },
     component: () => import("../views/TheSandbox.vue"),
   },
   {

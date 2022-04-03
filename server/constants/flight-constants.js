@@ -3,6 +3,7 @@ module.exports.STATE = {
   NOT_IN_RANKING: "Nicht in Wertung",
   FLIGHTBOOK: "Flugbuch",
   IN_PROCESS: "In Bearbeitung",
+  IN_REVIEW: "In Prüfung",
 };
 
 module.exports.TYPE = {
@@ -21,5 +22,3 @@ module.exports.REGIONS = [
 ];
 
 module.exports.IGC_STORE = "/igc";
-
-module.exports.DAYS_FLIGHT_CHANGEABLE = 14;

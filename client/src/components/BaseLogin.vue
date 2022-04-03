@@ -108,4 +108,8 @@ const handleSubmit = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+form {
+  max-width: 500px;
+}
+</style>
