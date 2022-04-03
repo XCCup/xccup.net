@@ -75,7 +75,7 @@ describe("check edit flight page", () => {
     cy.get("[data-cy=save-flight-edit]").contains("Speichern").click();
     cy.url().should("include", `/flug/${editableFlightId}`);
 
-    cy.get("[data-cy=flight-details-pilot]").contains("p", "U-Turn Bodyguard");
+    cy.get("#cyFlightDetailsTable1").contains("p", "U-Turn Bodyguard");
     cy.get("#cyFlightDetailsTable1").contains("td", "270m Höhenunterschied");
 
     cy.get("#flightDetailsButton").contains("Details anzeigen").click();
