@@ -1,55 +1,13 @@
 <template>
   <section id="flight-details" class="container">
+    <FlightDetailsPilot />
     <h3>Flugeigenschaften</h3>
     <div class="row">
       <div class="col-md-6 col-12 my-1">
         <table id="cyFlightDetailsTable1" class="table table-sm">
           <tbody>
             <tr>
-              <th>Pilot</th>
-              <td>
-                <router-link
-                  :to="{
-                    name: 'FlightsAll',
-                    query: { userId: flight.user?.id },
-                  }"
-                >
-                  {{ flight.user?.firstName + " " + flight.user?.lastName }}
-                </router-link>
-              </td>
-            </tr>
-            <tr>
-              <th>Verein</th>
-              <td>
-                <router-link
-                  :to="{
-                    name: 'FlightsAll',
-                    query: { clubId: flight.club?.id },
-                  }"
-                >
-                  <div>
-                    {{ flight.club?.name }}
-                  </div>
-                </router-link>
-              </td>
-            </tr>
-            <tr>
-              <th>Team</th>
-              <td>
-                <router-link
-                  :to="{
-                    name: 'FlightsAll',
-                    query: { teamId: flight.team?.id },
-                  }"
-                >
-                  <div>
-                    {{ flight.team?.name }}
-                  </div>
-                </router-link>
-              </td>
-            </tr>
-            <tr>
-              <th>Fluggerät</th>
+              <th>Gerät</th>
               <td>{{ flight.glider?.brand }} {{ flight.glider?.model }}</td>
             </tr>
             <tr>
@@ -70,6 +28,16 @@
                   Höhenunterschied
                 </div>
                 <div v-else>-</div>
+              </td>
+            </tr>
+            <tr>
+              <th>Uhrzeit</th>
+              <td v-if="true">
+                <i class="bi bi-arrow-up"></i>
+                <BaseDate :timestamp="flight.takeoffTime" date-format="HH:mm" />
+                Uhr <i class="bi bi-arrow-down"></i>
+                <BaseDate :timestamp="flight.landingTime" date-format="HH:mm" />
+                Uhr
               </td>
             </tr>
           </tbody>
@@ -110,16 +78,6 @@
                 >
                   {{ flight.takeoff.name }} {{ flight.takeoff.direction }}
                 </router-link>
-              </td>
-            </tr>
-            <tr>
-              <th>Uhrzeit</th>
-              <td v-if="true">
-                <i class="bi bi-arrow-up"></i>
-                <BaseDate :timestamp="flight.takeoffTime" date-format="HH:mm" />
-                Uhr <i class="bi bi-arrow-down"></i>
-                <BaseDate :timestamp="flight.landingTime" date-format="HH:mm" />
-                Uhr
               </td>
             </tr>
           </tbody>
