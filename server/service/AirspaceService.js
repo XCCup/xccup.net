@@ -59,12 +59,27 @@ const service = {
     return findAirspacesWithinPolygon(points);
   },
 
+  /**
+   * Checks for any airspace violation of the given flight track.
+   * This is done in 3 steps.
+   * 1. Check if any fix of the track exceeds the general altitude limitation of FL100
+   * 2. Check within PostGIS if the flight track intersects with any airspace polygon in the 2D plain.
+   * 3. Check for every found intersection if any of these points is within the vertical (3D) boundaries of the intersecting airspace.
+   *
+   * We will use the GPS data of a track. This is not 100% corrected (especially when checking against FL).
+   * But some trackers don't offer baro data and we don't want to give any advantages to particular tracker setups.
+   *
+   * Because some airspace boundaries are defined in relation to the surface (e.g. 2000 ft AGL) it's necessary that the data of the flight track also contains the related elevation data.
+   *
+   * @param {Array} fixesWithElevation The fixes of a flight track attached with there corresponding elevation data.
+   * @returns A airspaceViolation object with lat,long, elevation data of the first fix with a airspace violation and also a line of the whole flighttrack.
+   */
   hasAirspaceViolation: async (fixesWithElevation) => {
     const startTime = new Date();
 
-    const line = FlightFixes.mergeData(fixesWithElevation);
+    const flightTrackLine = FlightFixes.mergeData(fixesWithElevation);
 
-    const fl100Violation = findViolationOfFL100(line);
+    const fl100Violation = findViolationOfFL100(flightTrackLine);
     if (fl100Violation) return fl100Violation;
 
     const intersections2D = await findHorizontalIntersection(
@@ -84,7 +99,7 @@ const service = {
         const coordinate = intersection.intersectionLine.coordinates[cI];
 
         violationFound = findVerticalIntersection(
-          line,
+          flightTrackLine,
           coordinate,
           intersection,
           violationFound
@@ -106,7 +121,7 @@ const service = {
 };
 
 function findVerticalIntersection(
-  line,
+  flightTrackLine,
   coordinate,
   intersection,
   violationFound
@@ -114,7 +129,7 @@ function findVerticalIntersection(
   const long = coordinate[0];
   const lat = coordinate[1];
 
-  line.forEach((fix) => {
+  flightTrackLine.forEach((fix) => {
     if (fix.longitude == long && fix.latitude == lat) {
       const lowerLimit = convertVerticalLimitToMeterMSL(
         intersection.floor,
@@ -145,7 +160,7 @@ function findVerticalIntersection(
           lowerLimit,
           upperLimit,
           timestamp: fix.timestamp,
-          line,
+          line: flightTrackLine,
         });
       }
     }
