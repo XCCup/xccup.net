@@ -20,10 +20,13 @@
         <li v-if="!disableSeasonSelect" class="nav-item me-1 mb-3">
           <SelectSeason :allow-all-seasons="allowAllSeasons" />
         </li>
-        <li v-if="anyFilterOptionSet" class="nav-item">
+        <li v-show="showFilterShareButton" class="nav-item">
           <button
             id="shareButton"
             type="button"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Link kopieren"
             class="col btn btn-outline-primary btn-sm mb-3"
             @click="onShareButtonClicked"
           >
@@ -38,7 +41,7 @@
         v-for="(filter, key) in activeFilters"
         :key="key"
         :data-cy="`filter-badge-${key}`"
-        class="badge rounded-pill bg-primary mx-1 p-2 position-relative"
+        class="badge rounded-pill bg-primary m-1 p-2 position-relative"
       >
         {{ filterDescription(key, filter) }}
         <span
@@ -47,7 +50,7 @@
           <i
             class="bi bi-x clickable text-danger fs-6"
             :data-cy="`filter-clear-one-button`"
-            @click="clearOneFilter(key)"
+            @click="onClearOneFilter(key)"
           ></i>
         </span>
       </span>
@@ -294,7 +297,7 @@
 <script setup>
 import useData from "../composables/useData";
 import ApiService from "@/services/ApiService.js";
-import { ref, reactive, computed, onUnmounted } from "vue";
+import { ref, reactive, computed, onUnmounted, onMounted } from "vue";
 import {
   checkIfAnyValueOfObjectIsDefined,
   findKeyByValue,
@@ -302,6 +305,7 @@ import {
 import { FLIGHT_TYPES } from "../common/Constants";
 import { format } from "date-fns";
 import useSwal from "../composables/useSwal";
+import { Tooltip } from "bootstrap";
 
 defineProps({
   // TODO: Selecting the modal body like this not effective and not idiot save
@@ -383,6 +387,23 @@ try {
   console.log(error);
 }
 
+const resetSelectFromKey = (key) => {
+  if (key == "siteId") selects.site = "";
+  if (key == "clubId") selects.club = "";
+  if (key == "rankingClass") selects.ranking = "";
+  if (key == "gender") selects.gender = "";
+  if (key == "siteRegion") selects.region = "";
+  if (key == "homeStateOfUser") selects.homeStateOfUser = "";
+  if (key == "teamId") selects.team = "";
+  if (key == "flightType") selects.flightType = "";
+  if (key == "userId") selects.user = "";
+  if (key == "userIds") selects.name = "";
+
+  if (key == "isWeekend") weekend.value = null;
+  if (key == "isHikeAndFly") hikeAndFly.value = null;
+  if (key == "startDate") fromDate.value = null;
+  if (key == "endDate") tillDate.value = null;
+};
 const selectedFilters = computed(() => {
   return {
     siteId: findIdByName(selects.site, siteData),
@@ -404,6 +425,14 @@ const selectedFilters = computed(() => {
   };
 });
 
+onMounted(() => {
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new Tooltip(tooltipTriggerEl);
+  });
+});
 const onActivate = async () => {
   filterDataBy(selectedFilters.value);
 };
@@ -455,6 +484,14 @@ const anyFilterOptionSet = computed(
     tillDate.value
 );
 
+// This seems hacky but is better than nothing…
+// The whole component could need some refactoring.
+const onClearOneFilter = async (key) => {
+  console.log(key);
+  await clearOneFilter(key);
+  resetSelectFromKey(key);
+};
+
 const onClear = () => {
   Object.keys(selects).forEach((key) => (selects[key] = ""));
   weekend.value = false;
@@ -462,6 +499,10 @@ const onClear = () => {
   fromDate.value = null;
   tillDate.value = null;
 };
+
+const showFilterShareButton = computed(
+  () => anyFilterOptionSet.value && !!navigator.clipboard
+);
 
 const onShareButtonClicked = async () => {
   const { showSuccessToast } = useSwal();
@@ -474,9 +515,12 @@ const onShareButtonClicked = async () => {
     .join("&");
   const filterUrl = baseUrl + "?" + filterString;
 
-  navigator.clipboard.writeText(filterUrl);
-
-  showSuccessToast("Filter-Link in die Zwischenablage kopiert");
+  try {
+    await navigator.clipboard.writeText(filterUrl);
+    showSuccessToast("Filter-Link in die Zwischenablage kopiert");
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const filterDescription = (key, filter) => {
