@@ -12,9 +12,15 @@
       >
         <h4>{{ flight.user?.firstName + " " + flight.user?.lastName }}</h4>
       </router-link>
-      <a href="#"
-        ><h6>{{ flight.club?.name }}</h6></a
+      <router-link
+        :to="{
+          name: 'FlightsAll',
+          query: { clubId: flight.club?.id },
+        }"
       >
+        <h6>{{ flight.club?.name }}</h6>
+      </router-link>
+
       <p>
         <router-link
           :to="{
