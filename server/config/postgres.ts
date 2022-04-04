@@ -15,7 +15,7 @@ const failProcess = config.get("dbConnectFailProcess");
 
 const db = {};
 
-const sequelize = new Sequelize(
+export const sequelize = new Sequelize(
   `postgres://${user}:${pw}@${host}:${port}/${postDb}`,
   {
     logging: (msg) => logger.debug(msg),
