@@ -8,10 +8,11 @@ import config from "./config/env-config";
 import express from "express";
 import logger from "./config/logger";
 import expressLogger from "./config/express-logger";
-// @ts-ignore
 import { handleError } from "./helper/ErrorHandler";
 import compression from "compression";
 import { Request, Response } from "express";
+import cors from "cors";
+import routes from "./routes";
 
 //Set timezone of node server
 process.env.TZ = config.get("timezone");
@@ -36,55 +37,32 @@ app.use(
         // don't compress responses with this request header
         return false;
       }
-
       /**
        * This compression reduces the size of a JSON by roughly 4.5 times.
        * It has no effect on images.
        */
-
       return compression.filter(req, res);
     },
   })
 );
 
-//Development Tools
+// Development Tools
 if (config.get("env") !== "production") {
   // https://expressjs.com/en/resources/middleware/cors.html
   // https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
-  var cors = require("cors");
   app.use(cors());
 }
 
 app.use(express.urlencoded({ extended: false }));
-//The default size limit for a request body is 100kb
-//IGC-Files can easily exceed this limit
+// The default size limit for a request body is 100kb
+// IGC-Files can easily exceed this limit
 app.use(express.json({ limit: "5mb" }));
 
-app.get("/api", (request: Request, response: Response) =>
+// Routes
+app.get("/api", (_request: Request, response: Response) =>
   response.json({ info: "Welcome to the XCCup API" })
 );
-
-import NewsController from "./controller/NewsController";
-app.use("/api/users", require("./controller/UserController.js"));
-app.use("/api/flights", require("./controller/FlightController.js"));
-app.use("/api/comments", require("./controller/CommentController.js"));
-app.use("/api/seasons", require("./controller/SeasonController"));
-app.use("/api/clubs", require("./controller/ClubController"));
-app.use("/api/teams", require("./controller/TeamController"));
-app.use("/api/airspaces", require("./controller/AirspaceController"));
-app.use("/api/results", require("./controller/ResultController"));
-app.use("/api/home", require("./controller/HomeController"));
-app.use("/api/news", NewsController);
-app.use("/api/sponsors", require("./controller/SponsorController"));
-app.use("/api/media", require("./controller/MediaController"));
-app.use("/api/general", require("./controller/GeneralController"));
-app.use("/api/mail", require("./controller/MailController"));
-app.use("/api/sites", require("./controller/SiteController"));
-app.use("/api/cache", require("./controller/CacheController"));
-if (config.get("env") !== "production" || config.get("overruleActive")) {
-  app.use("/api/testdata", require("./controller/TestDataController"));
-  app.use("/api/importdata", require("./controller/ImportDataController"));
-}
+app.use("/api", routes);
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 app.use(handleError);
