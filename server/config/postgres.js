@@ -1,8 +1,8 @@
-import { Sequelize } from "sequelize";
-import { loadModels } from "../model/ModelLoader";
-import logger from "./logger";
-import { sleep } from "../helper/Utils";
-import config from "./env-config";
+const { Sequelize } = require("sequelize");
+const { loadModels } = require("../model/ModelLoader");
+const logger = require("./logger").default;
+const { sleep } = require("../helper/Utils");
+const config = require("./env-config").default;
 
 const port = config.get("postgresPort");
 const user = config.get("postgresUser");
@@ -12,7 +12,6 @@ const host = config.get("postgresHost");
 const maxNumberOfRetries = config.get("dbConnectMaxAttempts");
 const reconnectTimeout = config.get("dbConnectTimeout");
 const failProcess = config.get("dbConnectFailProcess");
-
 const db = {};
 
 const sequelize = new Sequelize(
@@ -32,7 +31,7 @@ loadModels(db, sequelize);
 
 dbConnectionTest().then(async () => {
   if (
-    config.get("dbSyncForce") == true
+    config.get("dbSyncForce") == "true"
     // && config.get("env") === "development"
   ) {
     logger.info("P: Will create DB Tables");
@@ -54,7 +53,7 @@ async function dbConnectionTest(numberOfRetry = 0) {
       error
     );
     if (numberOfRetry == maxNumberOfRetries) {
-      if (failProcess == true) {
+      if (failProcess == "true") {
         logger.error(
           `P: Unable to connect to the database after ${maxNumberOfRetries} attempts. Will terminate process.`
         );
@@ -68,5 +67,6 @@ async function dbConnectionTest(numberOfRetry = 0) {
 }
 
 db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;

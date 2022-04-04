@@ -23,7 +23,7 @@ process.env.TZ = config.get("timezone");
 const app = express();
 
 //Setup DB
-import "./config/postgres.js";
+import "./config/postgres";
 
 //Start Cron Jobs
 import "./cron/CleanIgcStore";
