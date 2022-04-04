@@ -1,4 +1,3 @@
-import { defaultUrl } from "@googlemaps/google-maps-services-js/dist/directions";
 import morgan from "morgan";
 import config from "./env-config";
 import logger from "./logger";

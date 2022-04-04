@@ -36,11 +36,9 @@ const createProdLogger = createLogger({
     new transports.File({
       filename: `${dataPath}/${logsPath}/error_log.log`,
       level: "error",
-      // colorize: false,
     }),
     new transports.File({
       filename: `${dataPath}/${logsPath}/log.log`,
-      // colorize: false,
     }),
   ],
 });
