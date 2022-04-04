@@ -44,7 +44,7 @@ jobs:
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
       - name: Install cypress
-        run: npx cypress@9.5.2 install
+        run: npx cypress install
         # TODO: Fix cypress caching issue and remove the addional install
       - name: Cypress run
         uses: cypress-io/github-action@v2
