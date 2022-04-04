@@ -5,14 +5,17 @@ global.__basedir = __dirname;
 
 // Load server config
 import config from "./config/env-config";
+
 import express from "express";
+import { Request, Response } from "express";
+import routes from "./routes";
+
 import logger from "./config/logger";
 import expressLogger from "./config/express-logger";
 import { handleError } from "./helper/ErrorHandler";
+
 import compression from "compression";
-import { Request, Response } from "express";
 import cors from "cors";
-import routes from "./routes";
 
 //Set timezone of node server
 process.env.TZ = config.get("timezone");

@@ -1,7 +1,8 @@
 const FlightPhoto = require("../config/postgres")["FlightPhoto"];
 const Flight = require("../config/postgres")["Flight"];
 const User = require("../config/postgres")["User"];
-const { Sequelize, sequelize } = require("../config/postgres");
+const { sequelize } = require("../config/postgres");
+const Sequelize = require("sequelize");
 
 const service = {
   getById: async (id) => {
