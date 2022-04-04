@@ -3,7 +3,6 @@ const User = require("../config/postgres")["User"];
 const Flight = require("../config/postgres")["Flight"];
 const Club = require("../config/postgres")["Club"];
 const Team = require("../config/postgres")["Team"];
-
 const Result = require("../config/postgres")["Result"];
 
 const seasonService = require("./SeasonService");
@@ -169,8 +168,6 @@ const service = {
 
   getTeam: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
-    console.log("****************");
-    console.log(seasonDetail);
 
     if (year < 2022) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.TEAM);
@@ -220,6 +217,7 @@ const service = {
     );
 
     sortDescendingByTotalPoints(teamsOfSeason);
+
     return addConstantInformationToResult(
       teamsOfSeason,
       {
