@@ -116,10 +116,10 @@ export function initFlight(sequelize: Sequelize) {
         name: "siteId",
       },
     });
-    Flight.belongsTo(models.Flight, {
-      as: "Flight",
+    Flight.belongsTo(models.Club, {
+      as: "club",
       foreignKey: {
-        name: "FlightId",
+        name: "clubId",
       },
     });
     Flight.belongsTo(models.Team, {
@@ -160,16 +160,16 @@ export function initFlight(sequelize: Sequelize) {
     });
   };
 
-  // FIXME: Was this missing before?
-  Flight.associate = (model) => {
-    Flight.belongsTo(model.Club, {
-      as: "flight",
-      foreignKey: {
-        name: "flightId",
-      },
-      hooks: true,
-    });
-  };
+  // // FIXME: Was this missing before?
+  // Flight.associate = (model) => {
+  //   Flight.belongsTo(model.Club, {
+  //     as: "flight",
+  //     foreignKey: {
+  //       name: "flightId",
+  //     },
+  //     hooks: true,
+  //   });
+  // };
 
   return Flight;
 }
