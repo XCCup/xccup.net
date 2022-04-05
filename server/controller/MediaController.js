@@ -6,9 +6,9 @@ const router = express.Router();
 // import Logo from "../db/models/Logo";
 // import ProfilePicture from "../db/models/ProfilePicture";
 
-const FlightPhoto = require("../db/models/FlightPhoto");
-const Logo = require("../db");
-const ProfilePicture = require("../db");
+const FlightPhoto = require("../db")["FlightPhoto"];
+const Logo = require("../db")["Logo"];
+const ProfilePicture = require("../db")["ProfilePicture"];
 
 const _ = require("lodash");
 const { NOT_FOUND } = require("../constants/http-status-constants");

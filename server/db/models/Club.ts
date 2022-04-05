@@ -41,18 +41,14 @@ export function initClub(sequelize: Sequelize) {
         name: "clubId",
       },
     });
-  };
 
-  Club.associate = (model) => {
     Club.hasMany(model.FlyingSite, {
       as: "sites",
       foreignKey: {
         name: "clubId",
       },
     });
-  };
 
-  Club.associate = (model) => {
     Club.hasOne(model.Logo, {
       as: "logo",
       foreignKey: {
@@ -62,11 +58,9 @@ export function initClub(sequelize: Sequelize) {
       onDelete: "CASCADE",
       hooks: true,
     });
-  };
 
   // FIXME: Was this missing before?
 
-  Club.associate = (model) => {
     Club.hasMany(model.Flight, {
       as: "flights",
       foreignKey: {

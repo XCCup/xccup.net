@@ -32,14 +32,12 @@ export function initLogo(sequelize: Sequelize) {
         name: "sponsorId",
       },
     });
-  };
-
-  Logo.associate = (models) => {
     Logo.belongsTo(models.Sponsor, {
       foreignKey: {
         name: "brandId",
       },
     });
   };
+  
   return Logo;
 }

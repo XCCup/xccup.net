@@ -48,8 +48,6 @@ export function initFlightPhoto(sequelize: Sequelize) {
         name: "userId",
       },
     });
-  };
-  FlightPhoto.associate = (models) => {
     FlightPhoto.belongsTo(models.Flight, {
       as: "flight",
       foreignKey: {
