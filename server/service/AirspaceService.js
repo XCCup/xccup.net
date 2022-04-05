@@ -1,5 +1,5 @@
-const FlightFixes = require("../config/postgres")["FlightFixes"];
-const Airspace = require("../config/postgres")["Airspace"];
+const FlightFixes = require("../db")["FlightFixes"];
+const Airspace = require("../db")["Airspace"];
 const { Op } = require("sequelize");
 const logger = require("../config/logger").default;
 

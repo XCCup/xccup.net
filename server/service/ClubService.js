@@ -1,6 +1,6 @@
-const Club = require("../config/postgres")["Club"];
-const User = require("../config/postgres")["User"];
-const Logo = require("../config/postgres")["Logo"];
+const Club = require("../db")["Club"];
+const User = require("../db")["User"];
+const Logo = require("../db")["Logo"];
 const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");

@@ -1,7 +1,7 @@
-const FlightPhoto = require("../config/postgres")["FlightPhoto"];
-const Flight = require("../config/postgres")["Flight"];
-const User = require("../config/postgres")["User"];
-const { sequelize } = require("../config/postgres");
+const FlightPhoto = require("../db")["FlightPhoto"];
+const Flight = require("../db")["Flight"];
+const User = require("../db")["User"];
+const { sequelize } = require("../db");
 const Sequelize = require("sequelize");
 
 const service = {

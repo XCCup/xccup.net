@@ -6,8 +6,11 @@ global.__basedir = __dirname;
 // Load server config
 import config from "./config/env-config";
 
-import express from "express";
-import { Request, Response } from "express";
+//Setup DB
+// import "./config/postgres";
+import "./db";
+
+import express, { Application, Request, Response } from "express";
 import routes from "./routes";
 
 import logger from "./config/logger";
@@ -20,10 +23,7 @@ import cors from "cors";
 //Set timezone of node server
 process.env.TZ = config.get("timezone");
 
-const app = express();
-
-//Setup DB
-import "./config/postgres";
+const app: Application = express();
 
 //Start Cron Jobs
 import "./cron/CleanIgcStore";
@@ -62,8 +62,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ limit: "5mb" }));
 
 // Routes
-app.get("/api", (_request: Request, response: Response) =>
-  response.json({ info: "Welcome to the XCCup API" })
+app.get(
+  "/api",
+  (_req: Request, res: Response): Response =>
+    res.json({ info: "Welcome to the XCCup API" })
 );
 app.use("/api", routes);
 

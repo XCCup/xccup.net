@@ -1,8 +1,9 @@
-const NewsModel = require("../config/postgres")["News"];
+import db from "../db";
+
+const News = db.News;
 
 import moment from "moment";
 import { Op } from "sequelize";
-import type News from "../types/News";
 
 // TODO: Is this the best way?
 interface Options {
@@ -10,7 +11,7 @@ interface Options {
 }
 const service = {
   getById: async (id: string) => {
-    return NewsModel.findByPk(id);
+    return News.findByPk(id);
   },
 
   getAll: async (options: Options) => {
@@ -22,7 +23,7 @@ const service = {
           },
         };
 
-    return NewsModel.findAll({
+    return News.findAll({
       where: whereStatement,
       order: [
         ["from", "DESC"],
@@ -32,7 +33,7 @@ const service = {
   },
 
   getActive: async () => {
-    return NewsModel.findAll({
+    return News.findAll({
       where: {
         from: {
           [Op.lte]: moment(),
@@ -48,16 +49,16 @@ const service = {
     });
   },
 
-  create: async (news: News) => {
-    return NewsModel.create(news);
+  create: async (news) => {
+    return News.create(news);
   },
 
-  update: async (news: News) => {
-    return NewsModel.save();
+  update: async (news) => {
+    return News.save();
   },
 
   delete: async (id: String) => {
-    const numberOfDestroyedRows = NewsModel.destroy({
+    const numberOfDestroyedRows = News.destroy({
       where: { id },
     });
     return numberOfDestroyedRows;

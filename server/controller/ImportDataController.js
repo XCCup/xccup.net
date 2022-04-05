@@ -31,7 +31,7 @@ router.get(
         "Will try to import data from " + fileName + " to model " + modelName
       );
 
-      const model = require("../config/postgres")[modelName];
+      const model = require("../db.ts")[modelName];
       if (!model) return res.status(NOT_FOUND).send("Model not found");
 
       if (modelName == "FlightFixes") {
@@ -68,7 +68,7 @@ router.get(
 
       logger.info("Will truncate all data of model " + modelName);
 
-      const model = require("../config/postgres")[modelName];
+      const model = require("../db.ts")[modelName];
       if (!model) return res.status(NOT_FOUND).send("Model not found");
 
       await model.destroy({
@@ -121,10 +121,9 @@ async function addAllFlightFixes(year) {
   for (let i = 0; i < fixesFileNames.length; i++) {
     const file = fixesFileNames[i];
     const fixes = require(fixesDir + "/" + file);
-    const importErrors = await addDataset(
-      require("../config/postgres")["FlightFixes"],
-      [fixes]
-    );
+    const importErrors = await addDataset(require("../db.ts")["FlightFixes"], [
+      fixes,
+    ]);
     errors.push(importErrors);
   }
   return errors;

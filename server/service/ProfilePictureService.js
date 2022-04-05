@@ -1,4 +1,4 @@
-const ProfilePicture = require("../config/postgres")["ProfilePicture"];
+const ProfilePicture = require("../db")["ProfilePicture"];
 
 const { deleteImages, createImageVersions } = require("../helper/ImageUtils");
 

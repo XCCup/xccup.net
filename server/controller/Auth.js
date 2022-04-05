@@ -1,3 +1,5 @@
+// TODO: Why is there a model reference in the controller?
+const Token = require("../db")["Token"];
 const jwt = require("jsonwebtoken");
 const {
   UNAUTHORIZED,
@@ -5,7 +7,7 @@ const {
 } = require("../constants/http-status-constants");
 const userService = require("../service/UserService");
 require("../service/UserService");
-const Token = require("../config/postgres")["Token"];
+
 const logger = require("../config/logger").default;
 const config = require("../config/env-config").default;
 

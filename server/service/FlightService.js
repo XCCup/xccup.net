@@ -1,13 +1,13 @@
 const sequelize = require("sequelize");
-const FlightComment = require("../config/postgres")["FlightComment"];
-const Flight = require("../config/postgres")["Flight"];
-const User = require("../config/postgres")["User"];
-const Team = require("../config/postgres")["Team"];
-const Club = require("../config/postgres")["Club"];
-const Brand = require("../config/postgres")["Brand"];
-const FlightPhoto = require("../config/postgres")["FlightPhoto"];
-const FlyingSite = require("../config/postgres")["FlyingSite"];
-const FlightFixes = require("../config/postgres")["FlightFixes"];
+const FlightComment = require("../db")["FlightComment"];
+const Flight = require("../db")["Flight"];
+const User = require("../db")["User"];
+const Team = require("../db")["Team"];
+const Club = require("../db")["Club"];
+const Brand = require("../db")["Brand"];
+const FlightPhoto = require("../db")["FlightPhoto"];
+const FlyingSite = require("../db")["FlyingSite"];
+const FlightFixes = require("../db")["FlightFixes"];
 
 const moment = require("moment");
 

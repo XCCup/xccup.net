@@ -13,7 +13,7 @@ router.get("/seed", async (req, res, next) => {
     deleteCache(["all"]);
 
     if (Flight) {
-      const model = require("../config/postgres")["Flight"];
+      const model = require("../db")["Flight"];
       try {
         await model.destroy({
           truncate: { cascade: true },
@@ -23,7 +23,7 @@ router.get("/seed", async (req, res, next) => {
       }
       await require("../test/DbTestDataLoader").addFlights();
     } else {
-      const { sequelize } = require("../config/postgres");
+      const { sequelize } = require("../db");
       await sequelize.sync({ force: true });
       await require("../test/DbTestDataLoader").addTestData();
     }

@@ -4,7 +4,7 @@ const cron = require("node-cron");
 const logger = require("../config/logger").default;
 const { deleteIgcFile } = require("../helper/igc-file-utils");
 const { Op } = require("sequelize");
-const Flight = require("../config/postgres")["Flight"];
+const Flight = require("../db")["Flight"];
 const { STATE } = require("../constants/flight-constants");
 
 // Run the job every day at 02:00

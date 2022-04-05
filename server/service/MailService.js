@@ -26,9 +26,9 @@ const {
   NEW_ADMIN_TASK_TITLE,
   NEW_ADMIN_TASK_TEXT,
 } = require("../constants/email-message-constants");
-const User = require("../config/postgres")["User"];
-const Flight = require("../config/postgres")["Flight"];
-const Comment = require("../config/postgres")["FlightComment"];
+const User = require("../db")["User"];
+const Flight = require("../db")["Flight"];
+const Comment = require("../db")["FlightComment"];
 
 const clientUrl = config.get("clientUrl");
 const userActivateLink = config.get("clientActivateProfil");

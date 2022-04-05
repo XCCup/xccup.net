@@ -1,5 +1,5 @@
-const Sponsor = require("../config/postgres")["Sponsor"];
-const Logo = require("../config/postgres")["Logo"];
+const Sponsor = require("../db")["Sponsor"];
+const Logo = require("../db")["Logo"];
 const { Op } = require("sequelize");
 
 const { getCurrentYear } = require("../helper/Utils");

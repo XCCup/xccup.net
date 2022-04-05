@@ -1,10 +1,10 @@
-const User = require("../config/postgres")["User"];
-const Club = require("../config/postgres")["Club"];
-const Team = require("../config/postgres")["Team"];
-const Flight = require("../config/postgres")["Flight"];
+const User = require("../db")["User"];
+const Club = require("../db")["Club"];
+const Team = require("../db")["Team"];
+const Flight = require("../db")["Flight"];
 const flightService = require("../service/FlightService");
 const mailService = require("../service/MailService");
-const ProfilePicture = require("../config/postgres")["ProfilePicture"];
+const ProfilePicture = require("../db")["ProfilePicture"];
 const { ROLE } = require("../constants/user-constants");
 const { TYPE, STATE } = require("../constants/flight-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");

@@ -1,9 +1,9 @@
-const FlyingSite = require("../config/postgres")["FlyingSite"];
-const User = require("../config/postgres")["User"];
-const Flight = require("../config/postgres")["Flight"];
-const Club = require("../config/postgres")["Club"];
-const Team = require("../config/postgres")["Team"];
-const Result = require("../config/postgres")["Result"];
+const FlyingSite = require("../db")["FlyingSite"];
+const User = require("../db")["User"];
+const Flight = require("../db")["Flight"];
+const Club = require("../db")["Club"];
+const Team = require("../db")["Team"];
+const Result = require("../db")["Result"];
 
 const seasonService = require("./SeasonService");
 const teamService = require("./TeamService");

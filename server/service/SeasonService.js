@@ -1,4 +1,5 @@
-const SeasonDetail = require("../config/postgres")["SeasonDetail"];
+const SeasonDetail = require("../db")["SeasonDetail"];
+console.log("SeasonDetail");
 const { getCurrentYear } = require("../helper/Utils");
 const logger = require("../config/logger").default;
 const { XccupHttpError } = require("../helper/ErrorHandler");

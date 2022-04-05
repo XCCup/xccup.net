@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const FlightPhoto = require("../config/postgres")["FlightPhoto"];
-const Logo = require("../config/postgres")["Logo"];
-const ProfilePicture = require("../config/postgres")["ProfilePicture"];
+
+// TODO: Model reference in controller? why?
+// import FlightPhoto from "../db/models/FlightPhoto";
+// import Logo from "../db/models/Logo";
+// import ProfilePicture from "../db/models/ProfilePicture";
+
+const FlightPhoto = require("../db/models/FlightPhoto");
+const Logo = require("../db");
+const ProfilePicture = require("../db");
+
 const _ = require("lodash");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
