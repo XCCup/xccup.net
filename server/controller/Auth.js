@@ -64,10 +64,10 @@ const createRefresh = (user) => {
   const token = jwt.sign(
     {
       id: user.id,
-      // firstName: user.firstName,
-      // lastName: user.lastName,
-      // role: user.role,
-      // gender: user.gender,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+      gender: user.gender,
     },
     config.get("jwtRefresh")
   );
