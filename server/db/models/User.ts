@@ -118,14 +118,6 @@ export function initUser(sequelize: Sequelize) {
     return currentYear - birthYear;
   };
 
-  const getNames = async () => {
-    return User.findAll({
-      attributes: ["name"],
-    });
-  };
-
-  User.getNames = getNames;
-
   User.associate = (models) => {
     User.hasMany(models.Flight, {
       as: "flights",
