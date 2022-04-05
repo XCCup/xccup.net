@@ -63,7 +63,7 @@ const create = (user) => {
  * @returns A refresh token.
  */
 const createRefresh = (user) => {
-  const token = jwt.sign(user, config.get("jwtRefresh"));
+  const token = jwt.sign(createUserTokenObject(user), config.get("jwtRefresh"));
   Token.create({ token });
   return token;
 };
