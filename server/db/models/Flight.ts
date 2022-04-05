@@ -160,16 +160,5 @@ export function initFlight(sequelize: Sequelize) {
     });
   };
 
-  // // FIXME: Was this missing before?
-  // Flight.associate = (model) => {
-  //   Flight.belongsTo(model.Club, {
-  //     as: "flight",
-  //     foreignKey: {
-  //       name: "flightId",
-  //     },
-  //     hooks: true,
-  //   });
-  // };
-
   return Flight;
 }
