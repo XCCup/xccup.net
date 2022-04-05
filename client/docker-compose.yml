@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   client:
-    image: node:16.13.2-alpine3.15
+    image: node:17.8.0-alpine3.15
     working_dir: /home/node/app
     volumes:
       - .:/home/node/app
@@ -12,9 +12,9 @@ services:
     command: ["dev"]
 
   yarn:
-    image: node:16.13.2-alpine3.15
+    image: node:17.8.0-alpine3.15
     working_dir: /home/node/app
-    profiles: ['cli']
+    profiles: ["cli"]
     volumes:
       - ../.yarn-cache:/yarn-cache:rw
       - .:/home/node/app

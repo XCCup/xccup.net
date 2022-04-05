@@ -21,6 +21,7 @@ const state = reactive({
     firstName: "",
     lastName: "",
     role: "",
+    gender: "",
   },
   loginStatus: "",
 });
@@ -30,6 +31,7 @@ export default () => {
 
   const loggedIn = computed(() => state.loginStatus === LOGIN_STATE_SUCCESS);
   const getUserId = computed(() => state.authData.userId);
+  const getGender = computed(() => state.authData.gender);
   const hasElevatedRole = computed(() => {
     return loggedIn.value && state.authData.role !== USER_ROLE_NONE;
   });
@@ -49,6 +51,7 @@ export default () => {
       firstName: payload.value.firstName,
       lastName: payload.value.lastName,
       role: payload.value.role,
+      gender: payload.value.gender,
     };
     state.authData = newTokenData;
     state.loginStatus = LOGIN_STATE_SUCCESS;
@@ -67,6 +70,7 @@ export default () => {
       firstName: "",
       lastName: "",
       role: "",
+      gender: "",
     };
   };
 
@@ -122,6 +126,7 @@ export default () => {
     hasElevatedRole,
     ...toRefs(readonly(state)),
     getUserId,
+    getGender,
     isTokenActive,
     login,
     logout,
