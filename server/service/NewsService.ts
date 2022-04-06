@@ -1,17 +1,15 @@
 import db from "../db";
-
-const News = db.News;
-
-import moment from "moment";
 import { Op } from "sequelize";
+import type { NewsInstance } from "../db/models/News";
+import type News from "../types/News";
 
-// TODO: Is this the best way?
 interface Options {
   includeFutureNews?: boolean;
 }
+
 const service = {
   getById: async (id: string) => {
-    return News.findByPk(id);
+    return db.News.findByPk(id);
   },
 
   getAll: async (options: Options) => {
@@ -19,11 +17,11 @@ const service = {
       ? {}
       : {
           from: {
-            [Op.lte]: moment(),
+            [Op.lte]: Date(), // TODO: Why is moment() not failing here in TS?
           },
         };
 
-    return News.findAll({
+    return db.News.findAll({
       where: whereStatement,
       order: [
         ["from", "DESC"],
@@ -33,13 +31,13 @@ const service = {
   },
 
   getActive: async () => {
-    return News.findAll({
+    return db.News.findAll({
       where: {
         from: {
-          [Op.lte]: moment(),
+          [Op.lte]: Date(),
         },
         till: {
-          [Op.gte]: moment(),
+          [Op.gte]: Date(),
         },
       },
       order: [
@@ -49,16 +47,16 @@ const service = {
     });
   },
 
-  create: async (news) => {
-    return News.create(news);
+  create: async (news: News) => {
+    return db.News.create(news);
   },
 
-  update: async (news) => {
-    return News.save();
+  update: async (news: NewsInstance) => {
+    return news.save();
   },
 
-  delete: async (id: String) => {
-    const numberOfDestroyedRows = News.destroy({
+  delete: async (id: string) => {
+    const numberOfDestroyedRows = db.News.destroy({
       where: { id },
     });
     return numberOfDestroyedRows;

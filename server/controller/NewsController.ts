@@ -113,6 +113,9 @@ router.put(
 
       const news = await service.getById(id);
 
+      // TODO: Is this the best way?
+      if (!news) throw Error;
+
       news.title = title;
       news.icon = icon;
       news.message = message;
@@ -144,11 +147,11 @@ router.delete(
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
-      const user = await service.delete(id);
-      if (!user) return res.sendStatus(NOT_FOUND);
+      const news = await service.delete(id);
+      if (!news) return res.sendStatus(NOT_FOUND);
       deleteCache(CACHE_RELEVANT_KEYS);
 
-      res.json(user);
+      res.json(news);
     } catch (error) {
       next(error);
     }

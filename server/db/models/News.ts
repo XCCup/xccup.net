@@ -1,7 +1,26 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface NewsAttributes {
+  id: string;
+  title: string;
+  message: string;
+  icon: string;
+  from?: string;
+  till?: string;
+  meta?: object; // TODO: What to do with this?
+}
+
+interface NewsCreationAttributes extends Optional<NewsAttributes, "id"> {}
+
+export interface NewsInstance
+  extends Model<NewsAttributes, NewsCreationAttributes>,
+    NewsAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initNews(sequelize: Sequelize) {
-  const News = sequelize.define("News", {
+  const News = sequelize.define<NewsInstance>("News", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
