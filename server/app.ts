@@ -19,19 +19,19 @@ import { handleError } from "./helper/ErrorHandler";
 import compression from "compression";
 import cors from "cors";
 
-//Set timezone of node server
+// Set timezone of node server
 process.env.TZ = config.get("timezone");
 
 const app: Application = express();
 
-//Start Cron Jobs
+// Start Cron Jobs
 import "./cron/CleanIgcStore";
 import "./cron/DailyWinnerEMail";
 
-//Logging
+// Logging
 app.use(expressLogger);
 
-//Compression
+// Compression
 app.use(
   compression({
     filter: (req, res) => {

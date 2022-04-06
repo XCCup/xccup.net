@@ -1,6 +1,6 @@
-const rateLimit = require("express-rate-limit");
+import rateLimit from "express-rate-limit";
 
-function createLimiter(windowMinutes, maxRequestsInWindow) {
+function createLimiter(windowMinutes: number, maxRequestsInWindow: number) {
   return rateLimit({
     windowMs: windowMinutes * 60 * 1000,
     max:
