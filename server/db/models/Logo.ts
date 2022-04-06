@@ -1,7 +1,26 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface LogoAttributes {
+  id: string;
+  path: string;
+  // TODO: Are those optionals correct?
+  pathThumb?: string;
+  originalname?: string;
+  mimetype?: string;
+  size?: number;
+}
+
+interface LogoCreationAttributes extends Optional<LogoAttributes, "id"> {}
+
+export interface LogoInstance
+  extends Model<LogoAttributes, LogoCreationAttributes>,
+    LogoAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initLogo(sequelize: Sequelize) {
-  const Logo = sequelize.define("Logo", {
+  const Logo = sequelize.define<LogoInstance>("Logo", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -38,6 +57,6 @@ export function initLogo(sequelize: Sequelize) {
       },
     });
   };
-  
+
   return Logo;
 }

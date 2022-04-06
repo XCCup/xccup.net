@@ -1,7 +1,23 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import type { LogoInstance } from "./Logo";
+
+interface BrandAttributes {
+  id: string;
+  name: string;
+  website: string;
+}
+
+interface BrandCreationAttributes extends Optional<BrandAttributes, "id"> {}
+
+interface BrandInstance
+  extends Model<BrandAttributes, BrandCreationAttributes>,
+    BrandAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 
 export function initBrand(sequelize: Sequelize) {
-  const Brand = sequelize.define("Brand", {
+  const Brand = sequelize.define<BrandInstance>("Brand", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -18,7 +34,7 @@ export function initBrand(sequelize: Sequelize) {
     },
   });
 
-  Brand.associate = ({ Logo }) => {
+  Brand.associate = ({ Logo }: { Logo: LogoInstance }) => {
     Brand.hasOne(Logo, {
       as: "logo",
       foreignKey: {

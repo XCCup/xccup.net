@@ -1,7 +1,27 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface AirspaceAttributes {
+  id: string;
+  season: number;
+  class: string;
+  name: string;
+  floor: string;
+  ceiling: string;
+  polygon: string; // TODO: Is this the right type?
+}
+
+interface AirspaceCreationAttributes
+  extends Optional<AirspaceAttributes, "id"> {}
+
+interface AirspaceInstance
+  extends Model<AirspaceAttributes, AirspaceCreationAttributes>,
+    AirspaceAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initAirspace(sequelize: Sequelize) {
-  const attributes = {
+  const Airspace = sequelize.define<AirspaceInstance>("Airspace", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -32,8 +52,7 @@ export function initAirspace(sequelize: Sequelize) {
       type: DataTypes.GEOMETRY(),
       allowNull: false,
     },
-  };
+  });
 
-  const Airspace = sequelize.define("Airspace", attributes);
   return Airspace;
 }
