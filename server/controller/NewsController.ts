@@ -112,9 +112,7 @@ router.put(
       if (await requesterIsNotModerator(req, res)) return;
 
       const news = await service.getById(id);
-
-      // TODO: Is this the best way?
-      if (!news) throw Error;
+      if (!news) return res.sendStatus(NOT_FOUND);
 
       news.title = title;
       news.icon = icon;

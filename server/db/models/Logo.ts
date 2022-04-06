@@ -3,8 +3,7 @@ import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 interface LogoAttributes {
   id: string;
   path: string;
-  // TODO: Are those optionals correct?
-  pathThumb?: string;
+  pathThumb?: string; // TODO: This is unused! Remove it?
   originalname?: string;
   mimetype?: string;
   size?: number;
@@ -31,6 +30,7 @@ export function initLogo(sequelize: Sequelize) {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    // TODO: This is unused! Remove it?
     pathThumb: {
       type: DataTypes.STRING,
     },

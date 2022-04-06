@@ -17,7 +17,7 @@ const service = {
       ? {}
       : {
           from: {
-            [Op.lte]: Date(), // TODO: Why is moment() not failing here in TS?
+            [Op.lte]: new Date(), // TODO: Why is moment() not failing here in TS?
           },
         };
 
@@ -34,10 +34,10 @@ const service = {
     return db.News.findAll({
       where: {
         from: {
-          [Op.lte]: Date(),
+          [Op.lte]: new Date(),
         },
         till: {
-          [Op.gte]: Date(),
+          [Op.gte]: Date(), // TODO: Which way?
         },
       },
       order: [

@@ -28,7 +28,7 @@ const {
 } = require("../constants/email-message-constants");
 const User = require("../db")["User"];
 const Flight = require("../db")["Flight"];
-const Comment = require("../db")["FlightComment"];
+import db from "../db";
 
 const clientUrl = config.get("clientUrl");
 const userActivateLink = config.get("clientActivateProfil");
@@ -36,8 +36,27 @@ const userPasswordLostLink = config.get("clientPasswordLost");
 const confirmMailChangeLink = config.get("clientConfirmEmail");
 const flightLink = config.get("clientFlight");
 
+interface MailContent {
+  title: string;
+  text: string;
+}
+
+// TODO: Place this somehwere else and complete it
+interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 const service = {
-  sendMailSingle: async (fromUserId, toUserId, content) => {
+  sendMailSingle: async (
+    fromUserId: string,
+    toUserId: string,
+    content: MailContent
+  ) => {
+    console.log(content);
+
     const [fromUser, toUser] = await Promise.all([
       User.findByPk(fromUserId),
       User.findByPk(toUserId),
@@ -45,6 +64,7 @@ const service = {
 
     logger.debug(`MS: ${fromUserId} requested to send an email`);
 
+    // TODO: .role?
     const isXccupOffical = fromUserId.role != "Keine";
 
     const toMail = toUser.email;
@@ -58,7 +78,7 @@ const service = {
     return sendMail(toMail, content, fromMail);
   },
 
-  sendActivationMail: async (user) => {
+  sendActivationMail: async (user: User) => {
     logger.info(`MS: Send activation mail to ${user.email}`);
 
     const activationLink = `${clientUrl}${userActivateLink}?userId=${user.id}&token=${user.token}`;
@@ -71,7 +91,7 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendNewPasswordMail: async (user, password) => {
+  sendNewPasswordMail: async (user: User, password: string) => {
     logger.info(`MS: Send new password to ${user.email}`);
 
     const content = {
@@ -82,7 +102,7 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendRequestNewPasswordMail: async (user) => {
+  sendRequestNewPasswordMail: async (user: User) => {
     logger.info(`MS: Send new password request to ${user.email}`);
 
     const resetLink = `${clientUrl}${userPasswordLostLink}?confirm=true&userId=${user.id}&token=${user.token}`;
@@ -95,7 +115,7 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendConfirmChangeEmailAddressMail: async (user, newEmail) => {
+  sendConfirmChangeEmailAddressMail: async (user: User, newEmail: string) => {
     logger.info(
       `MS: Send confirm new email for user ${user.firstName} ${user.lastName} to ${newEmail}`
     );
@@ -114,7 +134,7 @@ const service = {
     return sendMail(newEmail, content);
   },
 
-  sendNewEmailAddressMailNotification: async (user, newEmail) => {
+  sendNewEmailAddressMailNotification: async (user: User, newEmail: string) => {
     logger.info(
       `MS: Send notificatione mail for user ${user.firstName} ${user.lastName} to ${user.email}`
     );
@@ -174,7 +194,7 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendAddedToTeamMail: async (teamName, memberIds) => {
+  sendAddedToTeamMail: async (teamName: string, memberIds) => {
     const users = await User.findAll({
       where: {
         id: memberIds,
@@ -200,7 +220,7 @@ const service = {
       Flight.findByPk(comment.flightId),
     ];
     if (comment.relatedTo) {
-      queries.push(Comment.findByPk(comment.relatedTo));
+      queries.push(db.FlightComment.findByPk(comment.relatedTo));
     }
 
     const [fromUser, flight, relatedComment] = await Promise.all(queries);
@@ -233,7 +253,7 @@ const service = {
     return sendMail(toUser.email, content);
   },
 
-  sendMailAll: async (user, content) => {
+  sendMailAll: async (user: User, content: MailContent) => {
     logger.info(`MS: ${user.id} requested to send an email to all users`);
 
     const query = {
@@ -248,5 +268,4 @@ const service = {
     return sendMail(mailAddresses, content);
   },
 };
-
 module.exports = service;

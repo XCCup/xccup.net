@@ -1,4 +1,4 @@
-const express = require("express");
+import express, { Request, Response } from "express";
 const router = express.Router();
 const service = require("../service/MailService");
 const { authToken, requesterIsNotModerator } = require("./Auth");
@@ -18,12 +18,13 @@ router.post(
   checkStringObjectNotEmptyNoEscaping("content.title"),
   checkStringObjectNotEmptyNoEscaping("content.text"),
   checkIsUuidObject("toUserId"),
-  async (req, res, next) => {
+  async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     const { toUserId, content } = req.body;
 
     try {
       const result = await service.sendMailSingle(
+        // TODO: Where to add this to the interface?
         req.user.id,
         toUserId,
         content

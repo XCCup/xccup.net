@@ -7,7 +7,17 @@ interface NewsAttributes {
   icon: string;
   from?: string;
   till?: string;
-  meta?: object; // TODO: What to do with this?
+  meta?: Meta;
+}
+
+interface Meta {
+  links: [
+    {
+      title: string;
+      value: string;
+      internal: boolean;
+    }
+  ];
 }
 
 interface NewsCreationAttributes extends Optional<NewsAttributes, "id"> {}
