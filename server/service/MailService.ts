@@ -64,9 +64,7 @@ const service = {
 
     logger.debug(`MS: ${fromUserId} requested to send an email`);
 
-    // TODO: .role?
-    const isXccupOffical = fromUserId.role != "Keine";
-
+    const isXccupOffical = fromUser.role != "Keine";
     const toMail = toUser.email;
     const fromMail = fromUser.email;
     const fromName = `${fromUser.firstName} ${fromUser.lastName}`;
@@ -194,15 +192,16 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendAddedToTeamMail: async (teamName: string, memberIds) => {
+  sendAddedToTeamMail: async (teamName: string, memberIds: string[]) => {
     const users = await User.findAll({
       where: {
         id: memberIds,
       },
     });
-    const userMails = users.map((u) => u.email);
+    const userMails = users.map((u: User) => u.email);
 
-    users.forEach((u) => {
+    // TODO: Do we have to type this?
+    users.forEach((u: User) => {
       logger.info(`MS: Send "Added to team mail" to user ${u.id}`);
     });
 
