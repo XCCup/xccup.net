@@ -4,8 +4,44 @@ import { ROLE } from "../../constants/user-constants";
 
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface UserAttributes {
+  id: string;
+  firstName?: string;
+  lastName?: string;
+  birthday?: Date; // TODO: DB is DATEONLY. Is this correct?
+  role?: string;
+  gender?: string;
+  tshirtSize?: string;
+  defaultGlider?: string;
+  gliders?: glider[];
+  emailInformIfComment?: boolean;
+  emailNewsletter?: boolean;
+  emailTeamSearch?: boolean;
+  address?: object; // TODO: Type this stricter
+  email: string;
+  rankingNumber?: number;
+  password?: string;
+  token?: string;
+}
+
+interface glider {
+  id: string;
+  brand: string;
+  model: string;
+  gliderClass: string;
+}
+
+interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
+
+interface UserInstance
+  extends Model<UserAttributes, UserCreationAttributes>,
+    UserAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initUser(sequelize: Sequelize) {
-  const User = sequelize.define(
+  const User = sequelize.define<UserInstance>(
     "User",
     {
       id: {
@@ -67,10 +103,10 @@ export function initUser(sequelize: Sequelize) {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true, //Constrain on DB
+        unique: true, // Constrain on DB
         validate: {
-          //Validation will be performed before any sql interaction happens
-          notEmpty: true, //No empty string allowed
+          // Validation will be performed before any sql interaction happens
+          notEmpty: true, // No empty string allowed
         },
       },
       rankingNumber: {
@@ -118,14 +154,21 @@ export function initUser(sequelize: Sequelize) {
     return currentYear - birthYear;
   };
 
-  User.associate = (models) => {
-    User.hasMany(models.Flight, {
+  User.associate = ({
+    Flight,
+    FlightComment,
+    ProfilePicture,
+    FlightPhoto,
+    Club,
+    Team,
+  }) => {
+    User.hasMany(Flight, {
       as: "flights",
       foreignKey: {
         name: "userId",
       },
     });
-    User.hasMany(models.FlightComment, {
+    User.hasMany(FlightComment, {
       as: "comments",
       foreignKey: {
         name: "userId",
@@ -135,7 +178,7 @@ export function initUser(sequelize: Sequelize) {
       onDelete: "CASCADE",
       hooks: true,
     });
-    User.hasOne(models.ProfilePicture, {
+    User.hasOne(ProfilePicture, {
       as: "picture",
       foreignKey: {
         name: "userId",
@@ -145,7 +188,7 @@ export function initUser(sequelize: Sequelize) {
       onDelete: "CASCADE",
       hooks: true,
     });
-    User.hasMany(models.FlightPhoto, {
+    User.hasMany(FlightPhoto, {
       as: "photos",
       foreignKey: {
         name: "userId",
@@ -155,13 +198,13 @@ export function initUser(sequelize: Sequelize) {
       onDelete: "CASCADE",
       hooks: true,
     });
-    User.belongsTo(models.Club, {
+    User.belongsTo(Club, {
       as: "club",
       foreignKey: {
         name: "clubId",
       },
     });
-    User.belongsTo(models.Team, {
+    User.belongsTo(Team, {
       as: "team",
       foreignKey: {
         name: "teamId",

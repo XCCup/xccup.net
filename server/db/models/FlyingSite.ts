@@ -1,7 +1,32 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface FlyingSiteAttributes {
+  id: string;
+  locationData?: object; // TODO: Type this stricter
+  name: string;
+  shortName?: string;
+  direction: string;
+  point: DataTypes.GeometryDataType;
+  type?: string;
+  image?: string;
+  heightDifference?: number;
+  state?: "active" | "inactive" | "proposal";
+  website?: string;
+  submitter?: object; // TODO: Type this stricter
+}
+
+interface FlyingSiteCreationAttributes
+  extends Optional<FlyingSiteAttributes, "id"> {}
+
+interface FlyingSiteInstance
+  extends Model<FlyingSiteAttributes, FlyingSiteCreationAttributes>,
+    FlyingSiteAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initFlyingSite(sequelize: Sequelize) {
-  const FlyingSite = sequelize.define("FlyingSite", {
+  const FlyingSite = sequelize.define<FlyingSiteInstance>("FlyingSite", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,

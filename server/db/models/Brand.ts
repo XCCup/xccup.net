@@ -33,7 +33,6 @@ export function initBrand(sequelize: Sequelize) {
       type: DataTypes.STRING,
     },
   });
-
   Brand.associate = ({ Logo }: { Logo: LogoInstance }) => {
     Brand.hasOne(Logo, {
       as: "logo",

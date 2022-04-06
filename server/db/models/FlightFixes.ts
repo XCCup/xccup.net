@@ -1,7 +1,24 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface FlightFixesAttributes {
+  id: string;
+  geom: DataTypes.GeometryDataType;
+  timeAndHeights: object[]; // TODO: Type this stricter
+  stats?: object[]; // TODO: Type this stricter
+}
+
+interface FlightFixesCreationAttributes
+  extends Optional<FlightFixesAttributes, "id"> {}
+
+interface FlightFixesInstance
+  extends Model<FlightFixesAttributes, FlightFixesCreationAttributes>,
+    FlightFixesAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initFlightFixes(sequelize: Sequelize) {
-  const FlightFixes = sequelize.define("FlightFixes", {
+  const FlightFixes = sequelize.define<FlightFixesInstance>("FlightFixes", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,

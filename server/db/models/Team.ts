@@ -1,7 +1,23 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface TeamAttributes {
+  id: string;
+  name: string;
+  season?: number;
+  members?: string[];
+}
+
+interface TeamCreationAttributes extends Optional<TeamAttributes, "id"> {}
+
+interface TeamInstance
+  extends Model<TeamAttributes, TeamCreationAttributes>,
+    TeamAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initTeam(sequelize: Sequelize) {
-  const Team = sequelize.define("Team", {
+  const Team = sequelize.define<TeamInstance>("Team", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,

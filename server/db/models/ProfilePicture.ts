@@ -1,34 +1,56 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
-export function initProfilePicture(sequelize: Sequelize) {
-  const ProfilePicture = sequelize.define("ProfilePicture", {
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      allowNull: false,
-      primaryKey: true,
-    },
-    path: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    pathThumb: {
-      type: DataTypes.STRING,
-    },
-    originalname: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    mimetype: {
-      type: DataTypes.STRING,
-    },
-    size: {
-      type: DataTypes.BIGINT,
-    },
-  });
+interface ProfilePictureAttributes {
+  id: string;
+  path: string;
+  pathThumb?: string; // TODO: This is unused! Remove it?
+  originalname: string;
+  mimetype?: string;
+  size?: number;
+}
 
-  ProfilePicture.associate = (models) => {
-    ProfilePicture.belongsTo(models.User, {
+interface ProfilePictureCreationAttributes
+  extends Optional<ProfilePictureAttributes, "id"> {}
+
+interface ProfilePictureInstance
+  extends Model<ProfilePictureAttributes, ProfilePictureCreationAttributes>,
+    ProfilePictureAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export function initProfilePicture(sequelize: Sequelize) {
+  const ProfilePicture = sequelize.define<ProfilePictureInstance>(
+    "ProfilePicture",
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
+      path: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      pathThumb: {
+        type: DataTypes.STRING,
+      },
+      originalname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      mimetype: {
+        type: DataTypes.STRING,
+      },
+      size: {
+        type: DataTypes.BIGINT,
+      },
+    }
+  );
+
+  ProfilePicture.associate = ({ User }) => {
+    ProfilePicture.belongsTo(User, {
       foreignKey: {
         name: "userId",
       },

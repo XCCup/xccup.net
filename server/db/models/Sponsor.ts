@@ -1,7 +1,27 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface SponsorAttributes {
+  id: string;
+  name: string;
+  type: "MANUFACTURER" | "SCHOOL" | "HOLIDAY" | "OTHER";
+  website?: string;
+  tagline?: string;
+  isGoldSponsor: boolean;
+  sponsorInSeasons?: number[];
+  contacts?: object; // TODO: Type this stricter
+}
+
+interface SponsorCreationAttributes extends Optional<SponsorAttributes, "id"> {}
+
+interface SponsorInstance
+  extends Model<SponsorAttributes, SponsorCreationAttributes>,
+    SponsorAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initSponsor(sequelize: Sequelize) {
-  const Sponsor = sequelize.define("Sponsor", {
+  const Sponsor = sequelize.define<SponsorInstance>("Sponsor", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -36,8 +56,8 @@ export function initSponsor(sequelize: Sequelize) {
     },
   });
 
-  Sponsor.associate = (models) => {
-    Sponsor.hasOne(models.Logo, {
+  Sponsor.associate = ({ Logo }) => {
+    Sponsor.hasOne(Logo, {
       as: "logo",
       foreignKey: {
         name: "sponsorId",

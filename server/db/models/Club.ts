@@ -1,7 +1,27 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface ClubAttributes {
+  id: string;
+  name: string;
+  shortName: string;
+  website?: string;
+  urlLogo?: string;
+  mapPosition: object; //TODO: type this stricter
+  participantInSeasons: number[];
+  contacts: object[]; //TODO: type this stricter
+}
+
+interface ClubCreationAttributes extends Optional<ClubAttributes, "id"> {}
+
+interface ClubInstance
+  extends Model<ClubAttributes, ClubCreationAttributes>,
+    ClubAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initClub(sequelize: Sequelize) {
-  const Club = sequelize.define("Club", {
+  const Club = sequelize.define<ClubInstance>("Club", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -34,22 +54,22 @@ export function initClub(sequelize: Sequelize) {
     },
   });
 
-  Club.associate = (model) => {
-    Club.hasMany(model.User, {
+  Club.associate = ({ User, FlyingSite, Logo, Flight }) => {
+    Club.hasMany(User, {
       as: "members",
       foreignKey: {
         name: "clubId",
       },
     });
 
-    Club.hasMany(model.FlyingSite, {
+    Club.hasMany(FlyingSite, {
       as: "sites",
       foreignKey: {
         name: "clubId",
       },
     });
 
-    Club.hasOne(model.Logo, {
+    Club.hasOne(Logo, {
       as: "logo",
       foreignKey: {
         name: "clubId",
@@ -59,9 +79,9 @@ export function initClub(sequelize: Sequelize) {
       hooks: true,
     });
 
-  // FIXME: Was this missing before?
+    // FIXME: Was this missing before?
 
-    Club.hasMany(model.Flight, {
+    Club.hasMany(Flight, {
       as: "flights",
       foreignKey: {
         name: "flightId",
@@ -73,25 +93,3 @@ export function initClub(sequelize: Sequelize) {
 
   return Club;
 }
-
-// Types
-
-// interface ClubAttributes {
-//   id: number;
-//   name: string;
-//   shortName: string;
-//   website: string;
-//   urlLogo: string;
-//   mapPosition: JSON;
-//   participantInSeasons: number[];
-//   contacts: JSON;
-// }
-
-// interface ClubCreationAttributes extends Optional<ClubAttributes, "id"> {}
-
-// interface ClubInstance
-//   extends Model<ClubAttributes, ClubCreationAttributes>,
-//     ClubAttributes {
-//   createdAt?: Date;
-//   updatedAt?: Date;
-// }

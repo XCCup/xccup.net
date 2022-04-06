@@ -1,7 +1,45 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface SeasonDetailAttributes {
+  year: number;
+  startDate: Date;
+  endDate: Date;
+  isPaused: boolean;
+  pointThresholdForFlight: number;
+  numberOfFlightsForShirt: number;
+  gliderClasses: object; // TODO: Type this stricter
+  flightTypeFactors: object; // TODO: Type this stricter
+  rankingClasses: object; // TODO: Type this stricter
+  seniorStartAge: number;
+  seniorBonusPerAge: number;
+  activeRankings: RankingTypes[];
+  misc?: object; // TODO: Type this stricter
+}
+
+type RankingTypes =
+  | "overall"
+  | "ladies"
+  | "club"
+  | "team"
+  | "seniors"
+  | "newcomer"
+  | "fun"
+  | "sundays"
+  | "RP"
+  | "LUX"
+  | "earlyBird"
+  | "lateBird";
+
+interface SeasonDetailInstance
+  extends Model<SeasonDetailAttributes>,
+    SeasonDetailAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initSeasonDetail(sequelize: Sequelize) {
-  const SeasonDetail = sequelize.define("SeasonDetail", {
+  // TODO: No id?
+  const SeasonDetail = sequelize.define<SeasonDetailInstance>("SeasonDetail", {
     year: {
       type: DataTypes.INTEGER,
       allowNull: false,

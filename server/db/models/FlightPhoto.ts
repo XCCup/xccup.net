@@ -1,7 +1,30 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface FlightPhotoAttributes {
+  id: string;
+  path: string;
+  pathThumb?: string;
+  originalname?: string;
+  description?: string;
+  timestamp?: Date; // TODO: Is this correct?
+  mimetype?: string;
+  size?: number;
+  isExternalLink?: boolean;
+  likers?: string[];
+}
+
+interface FlightPhotoCreationAttributes
+  extends Optional<FlightPhotoAttributes, "id"> {}
+
+interface FlightPhotoInstance
+  extends Model<FlightPhotoAttributes, FlightPhotoCreationAttributes>,
+    FlightPhotoAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initFlightPhoto(sequelize: Sequelize) {
-  const FlightPhoto = sequelize.define("FlightPhoto", {
+  const FlightPhoto = sequelize.define<FlightPhotoInstance>("FlightPhoto", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,

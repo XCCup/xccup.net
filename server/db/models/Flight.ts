@@ -1,7 +1,50 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
+interface FlightAttributes {
+  id: string;
+  externalId?: number;
+  landing?: string;
+  report?: string;
+  airspaceComment?: string;
+  flightPoints?: number;
+  flightDistance?: number;
+  flightDistanceFree?: number;
+  flightDistanceFlat?: number;
+  flightDistanceFAI?: number;
+  flightType?: "FREE" | "FLAT" | "FAI";
+  flightStatus?:
+    | "Nicht in Wertung"
+    | "In Wertung"
+    | "Flugbuch"
+    | "In Bearbeitung";
+  flightTurnpoints?: object; // TODO: Define this stricter
+  airtime?: number;
+  takeoffTime?: number;
+  landingTime?: number;
+  igcPath?: string;
+  glider?: object; // TODO: Define this stricter
+  airspaceViolation?: boolean;
+  uncheckedGRecord?: boolean;
+  violationAccepted?: boolean;
+  hikeAndFly?: number;
+  isWeekend?: boolean;
+  region?: string;
+  ageOfUser: number;
+  homeStateOfUser?: string;
+  flightStats?: object; // TODO: Define this stricter
+}
+
+interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
+
+interface FlightInstance
+  extends Model<FlightAttributes, FlightCreationAttributes>,
+    FlightAttributes {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 export function initFlight(sequelize: Sequelize) {
-  const Flight = sequelize.define("Flight", {
+  const Flight = sequelize.define<FlightInstance>("Flight", {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -103,32 +146,32 @@ export function initFlight(sequelize: Sequelize) {
     },
   });
 
-  Flight.associate = (models) => {
-    Flight.belongsTo(models.User, {
+  Flight.associate = ({ User, FlyingSite, Club, Team, FlightComment }) => {
+    Flight.belongsTo(User, {
       as: "user",
       foreignKey: {
         name: "userId",
       },
     });
-    Flight.belongsTo(models.FlyingSite, {
+    Flight.belongsTo(FlyingSite, {
       as: "takeoff",
       foreignKey: {
         name: "siteId",
       },
     });
-    Flight.belongsTo(models.Club, {
+    Flight.belongsTo(Club, {
       as: "club",
       foreignKey: {
         name: "clubId",
       },
     });
-    Flight.belongsTo(models.Team, {
+    Flight.belongsTo(Team, {
       as: "team",
       foreignKey: {
         name: "teamId",
       },
     });
-    Flight.hasMany(models.FlightComment, {
+    Flight.hasMany(FlightComment, {
       as: "comments",
       foreignKey: {
         name: "flightId",
