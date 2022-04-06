@@ -6,8 +6,7 @@ global.__basedir = __dirname;
 // Load server config
 import config from "./config/env-config";
 
-//Setup DB
-// import "./config/postgres";
+// Setup DB
 import "./db";
 
 import express, { Application, Request, Response } from "express";
