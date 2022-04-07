@@ -47,6 +47,9 @@ jobs:
         run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
 
