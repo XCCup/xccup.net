@@ -11,10 +11,8 @@
 @import "@/styles/rankingClasses";
 @import "@/styles/dialogBackground";
 
-@import "nprogress/nprogress.css";
-
+// nProgress bar color
 #nprogress .bar {
-  // TODO: Is there a better color option?
   background: #f0faf6;
 }
 
