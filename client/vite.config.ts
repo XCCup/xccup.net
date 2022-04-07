@@ -5,7 +5,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 import { fileURLToPath, URL } from "url";
 
 // https://vueschool.io/articles/vuejs-tutorials/import-aliases-in-vite/
-const path = require("path");
+// const path = require("path");
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -37,8 +37,8 @@ export default defineConfig({
     },
   },
   build: {
-    rollupOptions: {
-      plugins: [visualizer()],
-    },
+    // rollupOptions: {
+    //   plugins: [visualizer()],
+    // },
   },
 });
