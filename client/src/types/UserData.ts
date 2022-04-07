@@ -21,4 +21,4 @@ export interface UserData {
   picture?: string;
 }
 
-export type CreateUserData = Omit<UserData, "id">;
+export interface CreateUserData extends Omit<UserData, "id"> {}
