@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "CI") {
   require("dotenv").config({ path: "./.env.ci" });
 }
 
-const rootDirPath = resolve(__dirname,"..");
+const rootDirPath = resolve(__dirname, "..");
 
 const config = convict({
   env: {
@@ -251,7 +251,6 @@ const config = convict({
 
 config.validate({ allowed: "strict" });
 
-export default config;
 function check128Hex(val: string) {
   if (!/^[a-fA-F0-9]{128}$/.test(val)) {
     throw new Error("must be a 128 character hex key");
@@ -263,3 +262,5 @@ function noEmptyString(val: string) {
     throw new Error("must be a non empty string");
   }
 }
+
+export default config;
