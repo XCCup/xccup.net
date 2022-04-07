@@ -56,8 +56,10 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env:
+          DEBUG: "@cypress/github-action"
         with:
-          start: ls && docker-compose run --service-ports --rm client serve
+          start: docker-compose run --service-ports --rm client serve
           wait-on: "http://localhost:4173"
           working-directory: client
           config: baseUrl=http://localhost:4173
