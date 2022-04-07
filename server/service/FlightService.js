@@ -398,7 +398,7 @@ const flightService = {
       flight.flightStatus = STATE.IN_REVIEW;
       flight.save();
       if (sendMail) sendAirspaceViolationMail(flight);
-      sendNewAdminTask();
+      if (config.get("env") === "production") sendNewAdminTask();
     }
 
     return violationResult;
