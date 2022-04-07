@@ -21,7 +21,7 @@ const {
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
   checkStringObjectNoEscaping,

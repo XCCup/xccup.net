@@ -1,4 +1,4 @@
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 
 /**
  * The time frame in which speed and climb will be calculated

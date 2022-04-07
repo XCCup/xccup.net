@@ -1,5 +1,5 @@
 const FlyingSite = require("../db")["FlyingSite"];
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const Club = require("../db")["Club"];
 const User = require("../db")["User"];

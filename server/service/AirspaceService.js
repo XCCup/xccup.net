@@ -1,7 +1,7 @@
 const FlightFixes = require("../db")["FlightFixes"];
 const Airspace = require("../db")["Airspace"];
 const { Op } = require("sequelize");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 
 const FEET_IN_METER = 0.3048;
 

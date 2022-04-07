@@ -1,5 +1,5 @@
 const cron = require("node-cron");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 const { STATE } = require("../constants/flight-constants");
 const flightService = require("../service/FlightService");
 const moment = require("moment");

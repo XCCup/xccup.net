@@ -1,5 +1,5 @@
 const axios = require("axios");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 
 const isApiDisabled = process.env.USE_GOOGLE_API === "false";
 

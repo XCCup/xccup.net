@@ -8,7 +8,7 @@ const {
 const userService = require("../service/UserService");
 require("../service/UserService");
 
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 const config = require("../config/env-config").default;
 
 /**

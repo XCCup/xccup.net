@@ -1,5 +1,5 @@
 const bcrypt = require("bcryptjs");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 const { ROLE } = require("../constants/user-constants");
 
 module.exports = (sequelize, DataTypes) => {

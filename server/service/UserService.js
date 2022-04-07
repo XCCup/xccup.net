@@ -14,7 +14,7 @@ const sequelize = require("sequelize");
 const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 const { arrayRemove, generateRandomString } = require("../helper/Utils");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 
 const userService = {
   getAll: async ({ records, limit, offset, userIds, clubId, teamId } = {}) => {

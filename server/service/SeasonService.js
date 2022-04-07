@@ -1,6 +1,6 @@
 const SeasonDetail = require("../db")["SeasonDetail"];
 const { getCurrentYear } = require("../helper/Utils");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 const { XccupHttpError } = require("../helper/ErrorHandler");
 const { getCache, setCache } = require("../controller/CacheManager");
 

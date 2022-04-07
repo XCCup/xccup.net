@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const basename = path.basename(__filename);
 const Sequelize = require("sequelize");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 
 const load = (db, sequelize) => {
   fs.readdirSync(__dirname)

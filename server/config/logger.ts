@@ -47,3 +47,4 @@ const logger =
   config.get("env") === "development" ? createDevLogger : createProdLogger;
 
 export default logger;
+module.exports = logger;

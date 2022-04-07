@@ -1,7 +1,7 @@
 const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 const config = require("../config/env-config").default;
 
 const igcValidator = {

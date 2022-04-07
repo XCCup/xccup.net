@@ -13,7 +13,7 @@ const Sponsor = require("../db")["Sponsor"];
 const Brand = require("../db")["Brand"];
 const Logo = require("../db")["Logo"];
 const AirspaceService = require("../service/AirspaceService");
-const logger = require("../config/logger").default;
+const logger = require("../config/logger");
 const config = require("../config/env-config").default;
 
 const dbTestData = {
