@@ -22,6 +22,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - uses: actions/checkout@v2
+          - name: Setup tmate session
+            if: ${{ failure() }}
+            uses: mxschmitt/action-tmate@v3
+
       - name: Install backend
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
@@ -46,9 +51,6 @@ jobs:
       - name: Install and build frontend
         run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
 
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
