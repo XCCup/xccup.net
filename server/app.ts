@@ -1,8 +1,3 @@
-// Set global base dir
-// TODO: A config with export may be more elegant => config/path.ts
-// @ts-ignore
-global.__basedir = __dirname;
-
 // Load server config
 import config from "./config/env-config";
 
