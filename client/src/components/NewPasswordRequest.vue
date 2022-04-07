@@ -56,7 +56,7 @@ const buttonIsEnabled = computed(() => isEmail(email.value));
 const onSubmit = async () => {
   showSpinner.value = true;
   try {
-    const res = await ApiService.requestNewPassword({ email: email.value });
+    const res = await ApiService.requestNewPassword(email.value);
     mailSent.value = true;
     // TODO: Anscheinend fliegt der Fehler schon vorher und die nachfolgende Zeile wird garnicht erreicht
     if (res.status != 200 && res.status != 404) throw res.statusText;

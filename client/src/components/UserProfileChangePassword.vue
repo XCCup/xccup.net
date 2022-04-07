@@ -60,7 +60,7 @@ const errorMessage = ref(null);
 const onSave = async () => {
   try {
     showSpinner.value = true;
-    await ApiService.changePassword({ password: password.value });
+    await ApiService.changePassword(password.value);
     showSuccessToast("Passwort geändert");
     password.value = "";
     passwordConfirmation.value = "";

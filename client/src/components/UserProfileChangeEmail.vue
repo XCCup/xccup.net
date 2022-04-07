@@ -46,7 +46,7 @@ const emailFieldIsDisabled = ref(false);
 const onSave = async () => {
   try {
     showSpinner.value = true;
-    await ApiService.changeEmail({ email: modifiedUserData.value.email });
+    await ApiService.changeEmail(modifiedUserData.value.email);
     showSuccessAlert(
       "Um die Änderung deiner E-Mail-Addresse zu bestätigen öffne bitte den Link den wir dir gerade per Email geschickt haben."
     );

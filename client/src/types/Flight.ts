@@ -1,3 +1,5 @@
+import type { Glider } from "./Glider";
+
 export interface Flight {
   id: string;
   externalId: number;
@@ -91,18 +93,6 @@ export interface FlightTurnpoint {
   time: string;
   lat: number;
   long: number;
-}
-
-export interface Glider {
-  id: string;
-  brand: string;
-  model: string;
-  gliderClass: GliderClass;
-}
-
-export interface GliderClass {
-  key: string;
-  shortDescription: string;
 }
 
 export interface Takeoff {

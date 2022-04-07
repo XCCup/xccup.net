@@ -3,6 +3,15 @@ import jwtInterceptor from "@/helper/jwtInterceptor";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import router from "@/router/";
 
+import type { FilterParams } from "@/types/FilterParams";
+import type { ModifiedFlightData } from "@/types/ModifiedFlightData";
+import type { CreateComment, EditComment } from "@/types/Comment";
+import type { CreateUserData, UserData } from "@/types/UserData";
+import type { Glider } from "@/types/Glider";
+import type { Mail } from "@/types/Mail";
+import type { CreateNews, News } from "@/types/News";
+import type { FlyingSite } from "@/types/FlyingSite";
+
 const baseURL = getbaseURL();
 
 const apiClient = axios.create({
@@ -29,47 +38,49 @@ apiClient.interceptors.response.use(
 );
 
 export default {
-  getFlights(params) {
+  getFlights(params: FilterParams) {
+    console.log(JSON.stringify(params));
+
     return apiClient.get("flights", { params });
   },
-  getFlight(flightId) {
+  getFlight(flightId: string) {
     return apiClient.get("flights/" + flightId);
   },
-  deleteFlight(externalId) {
+  deleteFlight(externalId: string) {
     return jwtInterceptor.delete(baseURL + "flights/" + externalId);
   },
-  uploadIgc(data) {
+  uploadIgc(data: FormData) {
     return jwtInterceptor.post(baseURL + "flights/", data);
   },
-  editFlightDetails(flightId, data) {
+  editFlightDetails(flightId: string, data: ModifiedFlightData) {
     return jwtInterceptor.put(baseURL + "flights/" + flightId, data);
   },
 
   // Photos
-  uploadPhotos(data) {
+  uploadPhotos(data: FormData) {
     return jwtInterceptor.post(baseURL + "flights/photos/", data);
   },
-  editPhoto(id, data) {
+  editPhoto(id: string, data: string) {
     return jwtInterceptor.put(baseURL + "flights/photos/" + id, data);
   },
   getInitialData() {
     return apiClient.get("home");
   },
-  deletePhoto(id) {
+  deletePhoto(id: string) {
     return jwtInterceptor.delete(baseURL + "flights/photos/" + id);
   },
   // Flight comments
 
-  addComment(comment) {
+  addComment(comment: CreateComment) {
     return jwtInterceptor.post(baseURL + "comments", comment);
   },
-  deleteComment(commentId) {
+  deleteComment(commentId: string) {
     return jwtInterceptor.delete(baseURL + "comments/" + commentId);
   },
-  editComment(comment) {
+  editComment(comment: EditComment) {
     return jwtInterceptor.put(baseURL + "comments/" + comment.id, comment);
   },
-  getCommentsOfFlight(flightId) {
+  getCommentsOfFlight(flightId: string) {
     return apiClient.get("comments/flight/" + flightId);
   },
 
@@ -78,24 +89,24 @@ export default {
   getUserDetails() {
     return jwtInterceptor.get(baseURL + "users/");
   },
-  updateUserProfile(userProfile) {
+  updateUserProfile(userProfile: UserData) {
     return jwtInterceptor.put(baseURL + "users/", userProfile);
   },
-  getGliders(userId) {
+  getGliders(userId: string) {
     return userId
       ? jwtInterceptor.get(baseURL + "users/gliders/get/" + userId)
       : jwtInterceptor.get(baseURL + "users/gliders/get");
   },
-  setDefaultGlider(gliderId) {
+  setDefaultGlider(gliderId: string) {
     return jwtInterceptor.put(baseURL + "users/gliders/default/" + gliderId);
   },
-  addGlider(glider) {
+  addGlider(glider: Glider) {
     return jwtInterceptor.post(baseURL + "users/gliders/add", glider);
   },
-  removeGlider(gliderId) {
+  removeGlider(gliderId: string) {
     return jwtInterceptor.delete(baseURL + "users/gliders/remove/" + gliderId);
   },
-  uploadUserPicture(data) {
+  uploadUserPicture(data: FormData) {
     return jwtInterceptor.post(baseURL + "users/picture/", data);
   },
   deleteUserPicture() {
@@ -104,10 +115,11 @@ export default {
 
   // Mail
 
-  sendMailToAll(mail) {
-    return jwtInterceptor.post(baseURL + "mail/all", mail);
-  },
-  sendMailToSingleUser(mail) {
+  // sendMailToAll(mail) {
+  //   return jwtInterceptor.post(baseURL + "mail/all", mail);
+  // },
+
+  sendMailToSingleUser(mail: Mail) {
     return jwtInterceptor.post(baseURL + "mail/single", mail);
   },
 
@@ -119,13 +131,13 @@ export default {
   getTShirtList(year = new Date().getFullYear()) {
     return jwtInterceptor.get(baseURL + "users/tshirts/" + year);
   },
-  getUserEmails(includeAll) {
+  getUserEmails(includeAll: boolean) {
     return jwtInterceptor.get(baseURL + "users/emails/" + includeAll);
   },
   getCacheStats() {
     return jwtInterceptor.get(baseURL + "cache/stats");
   },
-  deleteCache(key) {
+  deleteCache(key: string) {
     return jwtInterceptor.get(baseURL + "cache/clear/" + key);
   },
   getFlightViolations() {
@@ -134,7 +146,7 @@ export default {
   getFlightsSelf() {
     return jwtInterceptor.get(baseURL + "flights/self");
   },
-  acceptFlightViolations(flightId) {
+  acceptFlightViolations(flightId: string) {
     return jwtInterceptor.put(baseURL + "flights/acceptViolation/" + flightId);
   },
   getAllNews() {
@@ -143,64 +155,64 @@ export default {
   getPublicNews() {
     return apiClient.get(baseURL + "news/public/");
   },
-  addNews(news) {
+  addNews(news: CreateNews) {
     return jwtInterceptor.post(baseURL + "news/", news);
   },
-  editNews(news) {
+  editNews(news: News) {
     return jwtInterceptor.put(baseURL + "news/" + news.id, news);
   },
-  deleteNews(newsId) {
+  deleteNews(newsId: string) {
     return jwtInterceptor.delete(baseURL + "news/" + newsId);
   },
 
   // Results
 
-  getResultsOverall(params) {
+  getResultsOverall(params: FilterParams) {
     return apiClient.get("results/", {
       params,
     });
   },
-  getResultsNewcomer(params) {
+  getResultsNewcomer(params: FilterParams) {
     return apiClient.get("results/newcomer", {
       params,
     });
   },
-  getResultsSeniors(params) {
+  getResultsSeniors(params: FilterParams) {
     return apiClient.get("results/seniors", {
       params,
     });
   },
-  getResultsLadies(params) {
+  getResultsLadies(params: FilterParams) {
     return apiClient.get("results/?gender=F", {
       params,
     });
   },
-  getResultsLux(params) {
+  getResultsLux(params: FilterParams) {
     return apiClient.get("results/state/LUX", {
       params,
     });
   },
-  getResultsRlp(params) {
+  getResultsRlp(params: FilterParams) {
     return apiClient.get("results/state/RP", {
       params,
     });
   },
-  getResultsTeams(params) {
+  getResultsTeams(params: FilterParams) {
     return apiClient.get("results/teams", {
       params,
     });
   },
-  getResultsClubs(params) {
+  getResultsClubs(params: FilterParams) {
     return apiClient.get("results/clubs", {
       params,
     });
   },
-  getResultsEarlybird(params) {
+  getResultsEarlybird(params: FilterParams) {
     return apiClient.get("results/earlybird", {
       params,
     });
   },
-  getResultsLatebird(params) {
+  getResultsLatebird(params: FilterParams) {
     return apiClient.get("results/latebird", {
       params,
     });
@@ -215,41 +227,43 @@ export default {
     return apiClient.get("users/names/");
   },
 
-  register(userData) {
+  register(userData: CreateUserData) {
     return apiClient.post(baseURL + "users/", userData);
   },
 
-  getUsers(params) {
+  getUsers(params: FilterParams) {
     return apiClient.get("users/public/", { params });
   },
 
-  getUser(userId) {
+  getUser(userId: string) {
     return jwtInterceptor.get("users/public/" + userId);
   },
 
-  activate(userId, token) {
+  activate(userId: string, token: string) {
     return apiClient.get(`users/activate?userId=${userId}&token=${token}`);
   },
 
-  requestNewPassword(email) {
-    return apiClient.post(`users/request-new-password`, email);
+  requestNewPassword(email: string) {
+    return apiClient.post(`users/request-new-password`, { email: email });
   },
 
-  changePassword(password) {
-    return jwtInterceptor.put(baseURL + "users/change-password", password);
+  changePassword(password: string) {
+    return jwtInterceptor.put(baseURL + "users/change-password", {
+      password: password,
+    });
   },
 
-  confirmNewPassword(userId, token) {
+  confirmNewPassword(userId: string, token: string) {
     return apiClient.get(
       `users/renew-password?userId=${userId}&token=${token}`
     );
   },
 
-  changeEmail(email) {
-    return jwtInterceptor.put(baseURL + "users/change-email", email);
+  changeEmail(email: string) {
+    return jwtInterceptor.put(baseURL + "users/change-email", { email: email });
   },
 
-  confirmMailChange(userId, token, email) {
+  confirmMailChange(userId: string, token: string, email: string) {
     return apiClient.get(
       `users/confirm-mail-change?userId=${userId}&token=${token}&email=${email}`
     );
@@ -261,7 +275,7 @@ export default {
    * @param {Boolean} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
    * @returns An array with sponsor objects.
    */
-  getSponsors(retrieveAll) {
+  getSponsors(retrieveAll: boolean) {
     return retrieveAll
       ? jwtInterceptor.get(baseURL + "/sponsors")
       : apiClient.get("/sponsors/public");
@@ -277,7 +291,7 @@ export default {
    * @param {Boolean} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
    * @returns An array with club objects.
    */
-  getClubs(retrieveAll) {
+  getClubs(retrieveAll: boolean) {
     return retrieveAll
       ? jwtInterceptor.get(baseURL + "/clubs")
       : apiClient.get("/clubs/public");
@@ -289,7 +303,7 @@ export default {
     return apiClient.get("teams/names/");
   },
 
-  getTeams(params) {
+  getTeams(params: FilterParams) {
     return apiClient.get("teams/", { params });
   },
 
@@ -297,13 +311,13 @@ export default {
     return apiClient.get("teams/availableUsers/");
   },
 
-  addTeam(data) {
+  addTeam(data: { name: string; memberIds: string[] }) {
     return jwtInterceptor.post(baseURL + "teams/", data);
   },
 
   // FlyingSites
 
-  addSite(data) {
+  addSite(data: FlyingSite) {
     return jwtInterceptor.post(baseURL + "sites/", data);
   },
 
@@ -319,11 +333,11 @@ export default {
     return jwtInterceptor.get(baseURL + "sites/proposed");
   },
 
-  acceptSite(id) {
+  acceptSite(id: string) {
     return jwtInterceptor.put(baseURL + "sites/accept/" + id);
   },
 
-  deleteSite(id) {
+  deleteSite(id: string) {
     return jwtInterceptor.delete(baseURL + "sites/" + id);
   },
 
@@ -340,7 +354,7 @@ export default {
   getRankingClasses() {
     return apiClient.get(baseURL + "general/rankingClasses");
   },
-  getAirspaces(query) {
+  getAirspaces(query: string) {
     return apiClient.get(baseURL + "airspaces/relevant", {
       params: { p: query },
     });
