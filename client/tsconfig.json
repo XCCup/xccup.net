@@ -4,6 +4,7 @@
   "exclude": ["cypress/**/*"],
   "compilerOptions": {
     "allowJs": true,
+    "checkJs": false,
     "resolveJsonModule": true,
     "composite": true,
     "rootDir": "src",
