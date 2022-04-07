@@ -15,8 +15,10 @@ const mailClient = nodemailer.createTransport({
  *
  * @param {*} mailAddresses A single email address of type string oder multiple addresses as an array of strings.
  * @param {*} content A object containing a "title" and a "text" property of type string.
+ * @param {string} [replyTo]
  * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
  */
+
 const sendMail = async (mailAddresses, content, replyTo) => {
   if (
     !content.title ||
