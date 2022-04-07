@@ -1,7 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "vue-global-props.d.ts", "src/**/*", "src/**/*.vue"],
-  "exclude": ["cypress/**/*"],
+  "exclude": ["cypress"],
   "compilerOptions": {
     "allowJs": true,
     "checkJs": false,
