@@ -1,12 +1,13 @@
 import express, { Request, Response } from "express";
-const router = express.Router();
-const service = require("../service/MailService");
-const { authToken, requesterIsNotModerator } = require("./Auth");
-const {
+import service from "../service/MailService";
+import { authToken, requesterIsNotModerator } from "./Auth";
+import {
   checkIsUuidObject,
   validationHasErrors,
   checkStringObjectNotEmptyNoEscaping,
-} = require("./Validation");
+} from "./Validation";
+
+const router = express.Router();
 
 // @desc Send a mail to a single user
 // @route POST /mail/single
