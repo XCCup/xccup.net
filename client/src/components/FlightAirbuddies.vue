@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { TRACK_COLORS } from "@/common/Constants";
 import useFlight from "@/composables/useFlight";
 import useAirbuddy from "@/composables/useAirbuddies";

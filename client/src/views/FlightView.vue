@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 // TODO: Note to my future self:
 // The connection between Airbuddies, FlightBarogramm and Map needs refactoring.
 // It's to ineffective and you can do better now.
