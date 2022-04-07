@@ -23,9 +23,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - uses: actions/checkout@v2
-          - name: Setup tmate session
-            if: ${{ failure() }}
-            uses: mxschmitt/action-tmate@v3
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
 
       - name: Install backend
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
