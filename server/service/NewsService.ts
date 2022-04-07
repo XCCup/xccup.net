@@ -36,7 +36,7 @@ const service = {
           [Op.lte]: new Date(),
         },
         till: {
-          [Op.gte]: Date(), // TODO: Which way?
+          [Op.gte]: new Date(),
         },
       },
       order: [
