@@ -17,12 +17,12 @@ interface FlightAttributes {
     | "In Wertung"
     | "Flugbuch"
     | "In Bearbeitung";
-  flightTurnpoints?: object; // TODO: Define this stricter
+  flightTurnpoints?: FlightTurnpoint[];
   airtime?: number;
   takeoffTime?: number;
   landingTime?: number;
   igcPath?: string;
-  glider?: object; // TODO: Define this stricter
+  glider?: Glider;
   airspaceViolation?: boolean;
   uncheckedGRecord?: boolean;
   violationAccepted?: boolean;
@@ -31,7 +31,34 @@ interface FlightAttributes {
   region?: string;
   ageOfUser: number;
   homeStateOfUser?: string;
-  flightStats?: object; // TODO: Define this stricter
+  flightStats?: FlightStats;
+}
+
+interface FlightTurnpoint {
+  time: string;
+  lat: number;
+  long: number;
+}
+
+interface Glider {
+  id: string;
+  brand: string;
+  model: string;
+  gliderClass: {
+    key: string; //TODO: Make this an union type?
+    shortDescription: string;
+  };
+}
+
+interface FlightStats {
+  minHeightBaro?: number;
+  maxHeightBaro?: number;
+  minHeightGps?: number;
+  maxHeightGps?: number;
+  maxSink?: number;
+  maxClimb?: number;
+  maxSpeed?: number;
+  taskSpeed?: number;
 }
 
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
