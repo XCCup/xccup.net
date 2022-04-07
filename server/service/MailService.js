@@ -129,6 +129,8 @@ const service = {
   sendNewAdminTask: async () => {
     logger.info(`MS: Send new admin task mail`);
 
+    if (config.get("env") !== "production") return;
+
     const content = {
       title: NEW_ADMIN_TASK_TITLE,
       text: NEW_ADMIN_TASK_TEXT,
