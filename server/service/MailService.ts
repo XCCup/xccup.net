@@ -160,7 +160,13 @@ const service = {
 
   sendAirspaceViolationMail: async (flight: FlightOutputAttributes) => {
     const user = await db.User.findByPk(flight.userId);
-    if (!user) return; //TODO: What to do?
+    if (!user) {
+      logger.error(
+        `MS: Send violation mail failed because user with ID ${flight.userId} wasn't found`
+      );
+      return;
+    }
+
     logger.info(
       `MS: Send airspace violation mail for flight ${flight.externalId}`
     );
@@ -177,7 +183,12 @@ const service = {
 
   sendAirspaceViolationAcceptedMail: async (flight: FlightOutputAttributes) => {
     const user = await db.User.findByPk(flight.userId);
-    if (!user) return; //TODO: What to do?
+    if (!user) {
+      logger.error(
+        `MS: Send violation accpted mail failed because user with ID ${flight.userId} wasn't found`
+      );
+      return;
+    }
 
     logger.info(
       `MS: Send airspace violation accepted mail for flight ${flight.externalId}`
@@ -232,6 +243,12 @@ const service = {
     if (comment.userId == toUserId) return;
 
     const toUser = await db.User.findByPk(toUserId);
+    if (!toUser) {
+      logger.error(
+        `MS: Send new flight comment mail failed because user with ID ${toUserId} wasn't found`
+      );
+      return;
+    }
 
     logger.info(`MS: Send new flight comment mail to user ${toUser.id}`);
 
