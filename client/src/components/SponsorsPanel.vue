@@ -15,7 +15,7 @@
             <div class="p-2 bg-light mb-4 p-4 box filter">
               <img
                 class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
-                :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
+                :src="baseURL + `media/` + sponsor.logo.id + `?size=thumb`"
               />
             </div>
           </a>
@@ -38,7 +38,7 @@
           <div class="p-2 bg-light mb-4 p-4 box filter">
             <img
               class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
-              :src="baseURL + `media/` + sponsor.logo.id + `?thumb=true`"
+              :src="baseURL + `media/` + sponsor.logo.id + `?size=thumb`"
             />
           </div>
         </a>

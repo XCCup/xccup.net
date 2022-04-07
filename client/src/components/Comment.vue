@@ -153,7 +153,9 @@ const commentWithLinks = computed(() =>
   activateHtmlLinks(props.comment?.message)
 );
 
-const avatarUrl = createUserPictureUrl(props.comment?.user?.id);
+const avatarUrl = createUserPictureUrl(props.comment?.user?.id, {
+  size: "thumb",
+});
 
 // Find a way to make this reactive
 const userPrefersDark = ref(

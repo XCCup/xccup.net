@@ -2,7 +2,7 @@
   <div v-if="flight">
     <FlightSubnav />
     <FlightMap />
-    <!-- <FlightBarogramm /> -->
+    <FlightBarogrammCrosshair />
     <FlightAirbuddies v-if="flight.airbuddies.length > 0" />
     <FlightDetails />
     <FlightReport />
@@ -21,6 +21,7 @@ import { useRouter, useRoute } from "vue-router";
 import { setWindowName } from "../helper/utils";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
+import FlightBarogrammCrosshair from "../components/FlightBarogrammCrosshair.vue";
 
 const route = useRoute();
 const router = useRouter();

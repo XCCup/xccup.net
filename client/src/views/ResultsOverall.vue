@@ -1,6 +1,6 @@
 <template>
-  <div v-once class="container-lg">
-    <h3>{{ title }} {{ route.params?.year }}</h3>
+  <div class="container-lg">
+    <h3 v-once>{{ title }} {{ route.params?.year }}</h3>
 
     <div v-if="results">
       <p v-if="remark">Hinweis: {{ remark }}</p>
@@ -41,6 +41,7 @@ await initData(ApiService.getResultsOverall, {
   queryParameters: {
     ...route.query,
     ...params,
+    limit: 500, // Overwrites the default limit to display more/all results
   },
 });
 </script>

@@ -153,15 +153,7 @@ const service = {
       text: AIRSPACE_VIOLATION_TEXT(user.firstName, flightLinkUrl),
     };
 
-    const adminMail = config.get("mailServiceFromEmail");
-    const mailReceivers = [adminMail];
-
-    // Only send an email to the user if he hasn't already submitted an airspace comment
-    if (!(flight.airspaceComment && flight.airspaceComment.length > 10)) {
-      mailReceivers.push(user.email);
-    }
-
-    return sendMail(mailReceivers, content);
+    return sendMail(user.email, content);
   },
 
   sendAirspaceViolationAcceptedMail: async (flight) => {

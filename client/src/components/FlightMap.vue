@@ -203,13 +203,14 @@ const drawTracks = (tracklogs) => {
         );
 
         // Create Photomarkers
-        const roundBy = 10000; // Approximate values of GPS fix and photo timestamp
+        const roundBy = 5000; // Approximate values of GPS fix and photo timestamp
         const photoTimestamps = flight.value.photos.map((e) => {
           return { time: getTime(parseISO(e.timestamp)), id: e.id };
         });
 
         // Find matching GPS and photo timestamps
         photoTimestamps.forEach((photo) => {
+          // fix is an array [lat, long, timestamp]
           const location = track.find((fix) => {
             const minuteOfFix = Math.floor(fix[2] / roundBy);
             const minuteOfPhoto = Math.floor(photo.time / roundBy);

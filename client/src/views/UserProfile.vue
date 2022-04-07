@@ -166,7 +166,7 @@ onMounted(() => {
 
 const avatarUrl = computed(
   () =>
-    createUserPictureUrl(userData.value.id, true) +
+    createUserPictureUrl(userData.value.id, { size: "thumb" }) +
     `&?timestamp=${avatarTimestamp.value}`
 );
 

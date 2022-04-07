@@ -14,9 +14,10 @@
           class="carousel-item"
           :class="index === 0 ? 'active' : ''"
         >
-          <!-- TODO: Serve viewport dependent image size to save data on mobiles -->
           <img
             :src="baseURL + `media/` + photo.id"
+            :srcset="createImageSrcSet(photo.id)"
+            sizes="100vw"
             class="d-block w-100 carousel"
             :alt="photo.description"
           />
@@ -63,9 +64,10 @@
 </template>
 
 <script setup>
+import { createImageSrcSet } from "@/helper/imageHelper";
 import { getbaseURL } from "@/helper/baseUrlHelper";
-
 const baseURL = getbaseURL();
+
 defineProps({
   photos: {
     type: Array,

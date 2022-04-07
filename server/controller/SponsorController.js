@@ -17,10 +17,11 @@ const { getCurrentYear } = require("../helper/Utils");
 const {
   defineFileDestination,
   defineImageFileNameWithCurrentDateAsPrefix,
+  IMAGE_SIZES,
+  retrieveFilePath,
 } = require("../helper/ImageUtils");
 
 const multer = require("multer");
-const path = require("path");
 
 const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/sponsors";
 
@@ -63,20 +64,20 @@ router.get("/public", async (req, res, next) => {
 router.get(
   "/logo/:id",
   checkParamIsUuid("id"),
-  query("thumb").optional().isBoolean(),
+  query("size")
+    .optional()
+    .isIn(Object.values(IMAGE_SIZES).map((f) => f.name)),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const thumb = req.query.thumb;
+    const size = req.query.size;
 
     try {
       const logo = await logoService.getById(id);
 
       if (!logo) return res.sendStatus(NOT_FOUND);
 
-      const fullfilepath = thumb
-        ? path.join(path.resolve(), logo.pathThumb)
-        : path.join(path.resolve(), logo.path);
+      const fullfilepath = retrieveFilePath(logo.path, size);
 
       res.set("Cache-control", "public, max-age=172800, immutable");
       return res.type(logo.mimetype).sendFile(fullfilepath);
@@ -99,10 +100,7 @@ router.post(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const originalname = req.file.originalname;
-      const mimetype = req.file.mimetype;
-      const size = req.file.size;
-      const path = req.file.path;
+      const { originalname, mimetype, size, path } = req.file;
       const sponsorId = req.body.sponsorId;
 
       const sponsor = await service.getById(sponsorId);

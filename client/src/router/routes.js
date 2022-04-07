@@ -254,11 +254,6 @@ export const Routes = [
     props: (route) => ({ confirm: route.query.confirm }),
     component: () => import("../views/UserConfirmMail.vue"),
   },
-  // {
-  //   path: "/sandbox/",
-  //   name: "TheSandbox",
-  //   component: () => import("../views/TheSandbox.vue"),
-  // },
   {
     path: "/sandbox/:flightId",
     name: "Sandbox",

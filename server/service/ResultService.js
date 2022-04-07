@@ -19,7 +19,8 @@ const {
   NEWCOMER_MAX_RANKING_CLASS,
 } = require("../config/result-determination-config");
 const moment = require("moment");
-const { XccupRestrictionError } = require("../helper/ErrorHandler");
+const { XccupHttpError } = require("../helper/ErrorHandler");
+const { NOT_FOUND } = require("../constants/http-status-constants");
 
 const cacheNonNewcomer = [];
 const RANKINGS = {
@@ -29,6 +30,8 @@ const RANKINGS = {
   TEAM: "team",
   SENIORS: "seniors",
   NEWCOMER: "newcomer",
+  LUX: "LUX",
+  RP: "RP",
 };
 
 const service = {
@@ -94,7 +97,7 @@ const service = {
         );
     }
 
-    const where = createDefaultWhereForFlight(seasonDetail, isSenior);
+    const where = createDefaultWhereForFlight({ seasonDetail, isSenior });
     if (rankingClass) {
       const gliderClasses =
         seasonDetail.rankingClasses[rankingClass].gliderClasses ?? [];
@@ -148,7 +151,7 @@ const service = {
         );
     }
 
-    const where = createDefaultWhereForFlight(seasonDetail);
+    const where = createDefaultWhereForFlight({ seasonDetail });
     const resultQuery = await queryDb({ where });
 
     const resultOverUser = aggreateFlightsOverUser(resultQuery);
@@ -190,7 +193,7 @@ const service = {
       teamsOfSeason.map(async (team) => {
         await Promise.all(
           team.members.map(async (member) => {
-            const where = createDefaultWhereForFlight(seasonDetail);
+            const where = createDefaultWhereForFlight({ seasonDetail });
             where.userId = member.id;
             member.flights = (
               await queryDb({
@@ -246,7 +249,7 @@ const service = {
         );
     }
 
-    const where = createDefaultWhereForFlight(seasonDetail, true);
+    const where = createDefaultWhereForFlight({ seasonDetail, isSenior: true });
     const resultQuery = await queryDb({ where, siteRegion });
 
     const result = aggreateFlightsOverUser(resultQuery);
@@ -267,19 +270,18 @@ const service = {
   },
 
   /**
-   * Calculate the results for a country or state cup.
+   * Calculate the results for rlp cup.
    *
    * @param {*} year The year to calculate the ranking for
-   * @param {*} isoCode The isoCode of the country (3-Letter-Code) or state (2-Letter-Code)
    * @param {*} limit The limit of results to retrieve
-   * @returns The results of the ranking for this country or state of the provided year
+   * @returns The results of the ranking  of the provided year
    */
-  getCountryOrState: async (year, isoCode, limit) => {
+  getRhineland: async (year, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < 2022) {
-      checkIfRankingWasPresent(seasonDetail, isoCode);
-      const oldResult = await findOldResult(year, isoCode);
+      checkIfRankingWasPresent(seasonDetail, RANKINGS.RP);
+      const oldResult = await findOldResult(year, RANKINGS.RP);
       if (oldResult)
         return addConstantInformationToResult(
           oldResult,
@@ -291,13 +293,10 @@ const service = {
         );
     }
 
-    const where = createDefaultWhereForFlight(seasonDetail);
-    where.homeStateOfUser = isoCode;
+    const where = createDefaultWhereForFlight({ seasonDetail });
+    where.homeStateOfUser = RANKINGS.RP;
 
-    const siteCountry = isoCode?.length == 3 ? isoCode : undefined;
-    const siteState = isoCode?.length == 2 ? isoCode : undefined;
-
-    const resultQuery = await queryDb({ where, siteCountry, siteState });
+    const resultQuery = await queryDb({ where, siteState: RANKINGS.RP });
 
     const result = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
@@ -313,12 +312,61 @@ const service = {
     );
   },
 
+  /**
+   * Calculate the results for luxemburg ranking.
+   *
+   * @param {*} year The year to calculate the ranking for
+   * @param {*} limit The limit of results to retrieve
+   * @returns The results of the ranking of the provided year
+   */
+  getLuxemburg: async (year, limit) => {
+    const NUMBER_OF_SCORED_FLIGHTS_LUX = 6;
+
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    if (year < 2022) {
+      checkIfRankingWasPresent(seasonDetail, RANKINGS.LUX);
+      const oldResult = await findOldResult(year, RANKINGS.LUX);
+      if (oldResult)
+        return addConstantInformationToResult(
+          oldResult,
+          {
+            NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_LUX,
+            REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
+          },
+          limit
+        );
+    }
+
+    const where = createDefaultWhereForFlight({
+      seasonDetail,
+      flightStatus: [STATE.IN_RANKING, STATE.NOT_IN_RANKING],
+    });
+    where.homeStateOfUser = RANKINGS.LUX;
+
+    const resultQuery = await queryDb({ where, siteCountry: RANKINGS.LUX });
+
+    const result = aggreateFlightsOverUser(resultQuery);
+    limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS_LUX);
+    sortDescendingByTotalPoints(result);
+
+    return addConstantInformationToResult(
+      result,
+      {
+        NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_LUX,
+        REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
+      },
+      limit
+    );
+  },
+
   getEarlyBird: async (year, siteRegion) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const startDate = seasonDetail.startDate;
     const endDate = moment(startDate).add(3, "months");
-    const where = createDefaultWhereForFlight({ startDate, endDate });
+    const dates = { startDate, endDate };
+    const where = createDefaultWhereForFlight({ seasonDetail: dates });
     const sortOrder = ["takeoffTime"];
 
     const resultQuery = await queryDb({ where, siteRegion, sortOrder });
@@ -339,7 +387,8 @@ const service = {
 
     const endDate = seasonDetail.endDate;
     const startDate = moment(endDate).subtract(2, "months");
-    const where = createDefaultWhereForFlight({ startDate, endDate });
+    const dates = { startDate, endDate };
+    const where = createDefaultWhereForFlight({ seasonDetail: dates });
     const sortOrder = [["landingTime", "DESC"]];
 
     const resultQuery = await queryDb({ where, siteRegion, sortOrder });
@@ -372,7 +421,7 @@ const service = {
         );
     }
 
-    const where = createDefaultWhereForFlight(seasonDetail);
+    const where = createDefaultWhereForFlight({ seasonDetail });
     const rankingClass =
       seasonDetail.rankingClasses[NEWCOMER_MAX_RANKING_CLASS];
     const gliderClasses = rankingClass.gliderClasses ?? [];
@@ -649,12 +698,18 @@ function cretaIncludeStatementClub(club, clubId) {
   return clubInclude;
 }
 
-function createDefaultWhereForFlight(seasonDetail, isSenior) {
+function createDefaultWhereForFlight({
+  seasonDetail,
+  isSenior,
+  flightStatus = [STATE.IN_RANKING],
+} = {}) {
   const where = {
     takeoffTime: {
       [sequelize.Op.between]: [seasonDetail?.startDate, seasonDetail?.endDate],
     },
-    flightStatus: STATE.IN_RANKING,
+    flightStatus: {
+      [sequelize.Op.in]: flightStatus,
+    },
     [sequelize.Op.or]: [
       { violationAccepted: true },
       {
@@ -879,7 +934,8 @@ async function calcSeniorBonusForFlightResult(result) {
  */
 function checkIfRankingWasPresent(seasonDetail, rankingType) {
   if (!seasonDetail.activeRankings?.includes(rankingType)) {
-    throw new XccupRestrictionError(
+    throw new XccupHttpError(
+      NOT_FOUND,
       `The ranking ${rankingType} was not present within the season ${seasonDetail.year}`
     );
   }

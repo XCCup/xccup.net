@@ -1,9 +1,7 @@
 import { isInSeason } from "../../support/utils";
 
 describe("check landing page", () => {
-  before(() => {
-    cy.seedDb();
-  });
+  before(() => {});
 
   beforeEach(() => {
     cy.visit("/");
@@ -153,6 +151,20 @@ describe("check landing page", () => {
         .and("include.text", "Stüppel")
         .and("include.text", "74 km")
         .and("include.text", "212 P");
+    });
+  });
+
+  it("test class ranking", () => {
+    cy.get("[data-cy=class-results]").within(() => {
+      cy.get("[data-cy=class-results-gsSport]")
+        .find("tr")
+        .its("length")
+        .should("eq", 3);
+      cy.get("[data-cy=class-results-gsSport]")
+        .find("tr")
+        .first()
+        .should("include.text", "Lois White")
+        .and("include.text", "530 P");
     });
   });
 
