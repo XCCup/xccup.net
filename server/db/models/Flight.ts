@@ -146,7 +146,15 @@ export function initFlight(sequelize: Sequelize) {
     },
   });
 
-  Flight.associate = ({ User, FlyingSite, Club, Team, FlightComment }) => {
+  Flight.associate = ({
+    User,
+    FlyingSite,
+    Club,
+    Team,
+    FlightComment,
+    FlightPhoto,
+    FlightFixes,
+  }) => {
     Flight.belongsTo(User, {
       as: "user",
       foreignKey: {
@@ -181,7 +189,7 @@ export function initFlight(sequelize: Sequelize) {
       onDelete: "CASCADE",
       hooks: true,
     });
-    Flight.hasMany(models.FlightPhoto, {
+    Flight.hasMany(FlightPhoto, {
       as: "photos",
       foreignKey: {
         name: "flightId",
@@ -191,7 +199,7 @@ export function initFlight(sequelize: Sequelize) {
       onDelete: "CASCADE",
       hooks: true,
     });
-    Flight.hasOne(models.FlightFixes, {
+    Flight.hasOne(FlightFixes, {
       as: "fixes",
       foreignKey: {
         name: "flightId",
