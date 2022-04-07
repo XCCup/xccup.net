@@ -4,7 +4,7 @@ import { ROLE } from "../../constants/user-constants";
 
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
-interface UserAttributes {
+export interface UserAttributes {
   id: string;
   firstName?: string;
   lastName?: string;

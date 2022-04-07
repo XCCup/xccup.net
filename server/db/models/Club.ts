@@ -6,9 +6,14 @@ interface ClubAttributes {
   shortName: string;
   website?: string;
   urlLogo?: string;
-  mapPosition: object; //TODO: type this stricter
-  participantInSeasons: number[];
-  contacts: object[]; //TODO: type this stricter
+  mapPosition?: Position;
+  participantInSeasons?: number[];
+  contacts?: object[]; //TODO: type this stricter (Though it's not correct JSON in the DB currently)
+}
+
+interface Position {
+  lat: string;
+  long: string;
 }
 
 interface ClubCreationAttributes extends Optional<ClubAttributes, "id"> {}

@@ -1,6 +1,6 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
-interface NewsAttributes {
+export interface NewsAttributes {
   id: string;
   title: string;
   message: string;
@@ -20,7 +20,8 @@ interface Meta {
   ];
 }
 
-interface NewsCreationAttributes extends Optional<NewsAttributes, "id"> {}
+export interface NewsCreationAttributes
+  extends Optional<NewsAttributes, "id"> {}
 
 export interface NewsInstance
   extends Model<NewsAttributes, NewsCreationAttributes>,

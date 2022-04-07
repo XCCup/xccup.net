@@ -1,6 +1,6 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
-interface FlightAttributes {
+export interface FlightAttributes {
   id: string;
   externalId?: number;
   landing?: string;
@@ -11,12 +11,8 @@ interface FlightAttributes {
   flightDistanceFree?: number;
   flightDistanceFlat?: number;
   flightDistanceFAI?: number;
-  flightType?: "FREE" | "FLAT" | "FAI";
-  flightStatus?:
-    | "Nicht in Wertung"
-    | "In Wertung"
-    | "Flugbuch"
-    | "In Bearbeitung";
+  flightType?: FlightType;
+  flightStatus?: FlightStatus;
   flightTurnpoints?: FlightTurnpoint[];
   airtime?: number;
   takeoffTime?: number;
@@ -39,6 +35,13 @@ interface FlightTurnpoint {
   lat: number;
   long: number;
 }
+type FlightStatus =
+  | "Nicht in Wertung"
+  | "In Wertung"
+  | "Flugbuch"
+  | "In Bearbeitung";
+
+type FlightType = "FREE" | "FLAT" | "FAI";
 
 interface Glider {
   id: string;
@@ -62,6 +65,15 @@ interface FlightStats {
 }
 
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
+
+export interface FlightOutputAttributes extends FlightAttributes {
+  // TODO: Check the optionals
+  flightId?: string;
+  userId?: string;
+  siteId?: string;
+  clubId?: string;
+  teamId?: string;
+}
 
 interface FlightInstance
   extends Model<FlightAttributes, FlightCreationAttributes>,
@@ -210,7 +222,7 @@ export function initFlight(sequelize: Sequelize) {
       as: "comments",
       foreignKey: {
         name: "flightId",
-        //Through this constrain it's realized that every comment, will be delete if the flight will be deleted
+        // Through this constrain it's realized that every comment, will be delete if the flight will be deleted
         allowNull: false,
       },
       onDelete: "CASCADE",

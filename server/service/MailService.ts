@@ -1,8 +1,8 @@
-const sendMail = require("../config/email");
-const logger = require("../config/logger").default;
-const config = require("../config/env-config").default;
+import sendMail from "../config/email";
+import logger from "../config/logger";
+import config from "../config/env-config";
 
-const {
+import {
   MAIL_MESSAGE_PREFIX,
   REGISTRATION_TEXT,
   REGISTRATION_TITLE,
@@ -25,10 +25,12 @@ const {
   AIRSPACE_VIOLATION_ACCEPTED_TITLE,
   NEW_ADMIN_TASK_TITLE,
   NEW_ADMIN_TASK_TEXT,
-} = require("../constants/email-message-constants");
-const User = require("../db")["User"];
-const Flight = require("../db")["Flight"];
+} from "../constants/email-message-constants";
+
 import db from "../db";
+import type { UserAttributes } from "../db/models/User";
+import type { FlightOutputAttributes } from "../db/models/Flight";
+import type { Comment } from "../types/Comment";
 
 const clientUrl = config.get("clientUrl");
 const userActivateLink = config.get("clientActivateProfil");
@@ -41,14 +43,6 @@ interface MailContent {
   text: string;
 }
 
-// TODO: Place this somehwere else and complete it
-interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-}
-
 const service = {
   sendMailSingle: async (
     fromUserId: string,
@@ -58,16 +52,16 @@ const service = {
     console.log(content);
 
     const [fromUser, toUser] = await Promise.all([
-      User.findByPk(fromUserId),
-      User.findByPk(toUserId),
+      db.User.findByPk(fromUserId),
+      db.User.findByPk(toUserId),
     ]);
 
     logger.debug(`MS: ${fromUserId} requested to send an email`);
 
-    const isXccupOffical = fromUser.role != "Keine";
-    const toMail = toUser.email;
-    const fromMail = fromUser.email;
-    const fromName = `${fromUser.firstName} ${fromUser.lastName}`;
+    const isXccupOffical = fromUser?.role != "Keine";
+    const toMail = toUser?.email;
+    const fromMail = fromUser?.email;
+    const fromName = `${fromUser?.firstName} ${fromUser?.lastName}`;
 
     if (!isXccupOffical) {
       content.text = MAIL_MESSAGE_PREFIX(fromName) + content.text;
@@ -76,7 +70,7 @@ const service = {
     return sendMail(toMail, content, fromMail);
   },
 
-  sendActivationMail: async (user: User) => {
+  sendActivationMail: async (user: UserAttributes) => {
     logger.info(`MS: Send activation mail to ${user.email}`);
 
     const activationLink = `${clientUrl}${userActivateLink}?userId=${user.id}&token=${user.token}`;
@@ -89,7 +83,7 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendNewPasswordMail: async (user: User, password: string) => {
+  sendNewPasswordMail: async (user: UserAttributes, password: string) => {
     logger.info(`MS: Send new password to ${user.email}`);
 
     const content = {
@@ -100,7 +94,7 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendRequestNewPasswordMail: async (user: User) => {
+  sendRequestNewPasswordMail: async (user: UserAttributes) => {
     logger.info(`MS: Send new password request to ${user.email}`);
 
     const resetLink = `${clientUrl}${userPasswordLostLink}?confirm=true&userId=${user.id}&token=${user.token}`;
@@ -113,7 +107,10 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendConfirmChangeEmailAddressMail: async (user: User, newEmail: string) => {
+  sendConfirmChangeEmailAddressMail: async (
+    user: UserAttributes,
+    newEmail: string
+  ) => {
     logger.info(
       `MS: Send confirm new email for user ${user.firstName} ${user.lastName} to ${newEmail}`
     );
@@ -132,7 +129,10 @@ const service = {
     return sendMail(newEmail, content);
   },
 
-  sendNewEmailAddressMailNotification: async (user: User, newEmail: string) => {
+  sendNewEmailAddressMailNotification: async (
+    user: UserAttributes,
+    newEmail: string
+  ) => {
     logger.info(
       `MS: Send notificatione mail for user ${user.firstName} ${user.lastName} to ${user.email}`
     );
@@ -158,9 +158,9 @@ const service = {
     return sendMail(adminMail, content);
   },
 
-  sendAirspaceViolationMail: async (flight) => {
-    const user = await User.findByPk(flight.userId);
-
+  sendAirspaceViolationMail: async (flight: FlightOutputAttributes) => {
+    const user = await db.User.findByPk(flight.userId);
+    if (!user) return; //TODO: What to do?
     logger.info(
       `MS: Send airspace violation mail for flight ${flight.externalId}`
     );
@@ -175,8 +175,9 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendAirspaceViolationAcceptedMail: async (flight) => {
-    const user = await User.findByPk(flight.userId);
+  sendAirspaceViolationAcceptedMail: async (flight: FlightOutputAttributes) => {
+    const user = await db.User.findByPk(flight.userId);
+    if (!user) return; //TODO: What to do?
 
     logger.info(
       `MS: Send airspace violation accepted mail for flight ${flight.externalId}`
@@ -193,15 +194,15 @@ const service = {
   },
 
   sendAddedToTeamMail: async (teamName: string, memberIds: string[]) => {
-    const users = await User.findAll({
+    const users = await db.User.findAll({
       where: {
         id: memberIds,
       },
     });
-    const userMails = users.map((u: User) => u.email);
+    const userMails = users.map((u: UserAttributes) => u.email);
 
     // TODO: Do we have to type this?
-    users.forEach((u: User) => {
+    users.forEach((u: UserAttributes) => {
       logger.info(`MS: Send "Added to team mail" to user ${u.id}`);
     });
 
@@ -213,12 +214,13 @@ const service = {
     return sendMail(userMails, content);
   },
 
-  sendNewFlightCommentMail: async (comment) => {
+  sendNewFlightCommentMail: async (comment: Comment) => {
     const queries = [
-      User.findByPk(comment.userId),
-      Flight.findByPk(comment.flightId),
+      db.User.findByPk(comment.userId), // TODO: Why?
+      db.Flight.findByPk(comment.flightId),
     ];
     if (comment.relatedTo) {
+      // @ts-ignore TODO: How to type the queries array?
       queries.push(db.FlightComment.findByPk(comment.relatedTo));
     }
 
@@ -229,7 +231,7 @@ const service = {
     // Don't sent any email if commenter is the same person as the owner of the flight
     if (comment.userId == toUserId) return;
 
-    const toUser = await User.findByPk(toUserId);
+    const toUser = await db.User.findByPk(toUserId);
 
     logger.info(`MS: Send new flight comment mail to user ${toUser.id}`);
 
@@ -252,7 +254,7 @@ const service = {
     return sendMail(toUser.email, content);
   },
 
-  sendMailAll: async (user: User, content: MailContent) => {
+  sendMailAll: async (user: UserAttributes, content: MailContent) => {
     logger.info(`MS: ${user.id} requested to send an email to all users`);
 
     const query = {
@@ -262,9 +264,10 @@ const service = {
       },
     };
 
-    const mailAddresses = await User.findAll(query);
+    const mailAddresses = await db.User.findAll(query);
 
     return sendMail(mailAddresses, content);
   },
 };
 module.exports = service;
+export default service;

@@ -1,7 +1,6 @@
 import db from "../db";
 import { Op } from "sequelize";
-import type { NewsInstance } from "../db/models/News";
-import type News from "../types/News";
+import type { NewsInstance, NewsCreationAttributes } from "../db/models/News";
 
 interface Options {
   includeFutureNews?: boolean;
@@ -47,7 +46,7 @@ const service = {
     });
   },
 
-  create: async (news: News) => {
+  create: async (news: NewsCreationAttributes) => {
     return db.News.create(news);
   },
 

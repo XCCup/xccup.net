@@ -11,9 +11,10 @@ interface SponsorAttributes {
   contacts?: object; // TODO: Type this stricter
 }
 
-interface SponsorCreationAttributes extends Optional<SponsorAttributes, "id"> {}
+export interface SponsorCreationAttributes
+  extends Optional<SponsorAttributes, "id"> {}
 
-interface SponsorInstance
+export interface SponsorInstance
   extends Model<SponsorAttributes, SponsorCreationAttributes>,
     SponsorAttributes {
   createdAt?: Date;
