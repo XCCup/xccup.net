@@ -6,6 +6,7 @@ const { deleteIgcFile } = require("../helper/igc-file-utils");
 const { Op } = require("sequelize");
 const Flight = require("../db")["Flight"];
 const { STATE } = require("../constants/flight-constants");
+const config = require("../config/env-config").default;
 
 // Run the job every day at 02:00
 const task = cron.schedule("0 2 * * *", cleanIgcStore);
@@ -43,7 +44,7 @@ async function cleanIgcStore() {
 
     logger.info("CIS: Will clean igc temp folder");
     const igcTempPath = path.join(
-      global.__basedir,
+      config.get("rootDir"),
       process.env.SERVER_DATA_PATH,
       "igc",
       "temp"

@@ -1,10 +1,13 @@
 import convict from "convict";
 import { isString } from "lodash";
+import { resolve } from "path";
 
 if (process.env.NODE_ENV === "CI") {
   // Load a different env file when running in CI; By default .env will always be loaded
   require("dotenv").config({ path: "./.env.ci" });
 }
+
+const rootDirPath = resolve(__dirname,"..");
 
 const config = convict({
   env: {
@@ -36,6 +39,11 @@ const config = convict({
     format: noEmptyString,
     default: "./data",
     env: "SERVER_DATA_PATH",
+  },
+  rootDir: {
+    doc: "The path to the root folder of the project",
+    format: noEmptyString,
+    default: rootDirPath,
   },
 
   clientActivateProfil: {

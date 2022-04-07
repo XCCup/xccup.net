@@ -114,7 +114,7 @@ function sliceIntoChunks(arr, chunkSize) {
 
 async function addAllFlightFixes(year) {
   const fs = require("fs");
-  const fixesDir = `${global.__basedir}/import/fixes/${year}`;
+  const fixesDir = `${config.get("rootDir")}/import/fixes/${year}`;
   const fixesFileNames = fs.readdirSync(fixesDir);
   console.log("FOUND FIXES: ", fixesFileNames);
   const errors = [];
@@ -130,7 +130,7 @@ async function addAllFlightFixes(year) {
 }
 function findAllFlightFixes(year) {
   const fs = require("fs");
-  const fixesDir = `${global.__basedir}/import/fixes/${year}`;
+  const fixesDir = `${config.get("rootDir")}/import/fixes/${year}`;
   const fixesFileNames = fs.readdirSync(fixesDir);
   console.log("FOUND FIXES: ", fixesFileNames);
   const fixesAsOneArray = fixesFileNames.map((file) =>
