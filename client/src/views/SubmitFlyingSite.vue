@@ -54,7 +54,7 @@
   </slot-dialog>
 </template>
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { ref, computed, reactive } from "vue";
 import { isCoordinate, isDirection, isInt } from "../helper/utils";
 import useSwal from "../composables/useSwal";

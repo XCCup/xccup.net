@@ -84,7 +84,7 @@
   </div>
 </template>
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { round } from "lodash-es";

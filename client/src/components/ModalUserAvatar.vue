@@ -120,7 +120,7 @@
   </div>
 </template>
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 
 import { computed, ref, watchEffect } from "vue";
 import { VueAvatar } from "vue-avatar-editor-improved";

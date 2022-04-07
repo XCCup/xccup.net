@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute, useRouter } from "vue-router";

@@ -41,7 +41,7 @@
   </div>
 </template>
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { ref, computed } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
 import BaseError from "./BaseError.vue";

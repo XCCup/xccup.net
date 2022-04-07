@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";

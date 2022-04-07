@@ -76,7 +76,7 @@
   </div>
 </template>
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { ref, computed, reactive, onMounted } from "vue";
 import { Modal } from "bootstrap";
 

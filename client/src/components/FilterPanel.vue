@@ -296,7 +296,7 @@
 
 <script setup>
 import useData from "../composables/useData";
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { ref, reactive, computed, onUnmounted, onMounted } from "vue";
 import {
   checkIfAnyValueOfObjectIsDefined,
