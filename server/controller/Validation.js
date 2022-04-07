@@ -276,17 +276,13 @@ function checkOptionalStringObjectNotEmpty(field) {
  * @param {*} modelName The name of the Model to check against.
  * @returns A ValidationChain object for the checked parameter.
  */
-// FIXME: How to do this?
 function queryOptionalColumnExistsInModel(field, modelName) {
   return query(field)
     .optional()
     .custom((value) => {
-      console.log(modelName);
-
-      // const Model = require("../db")[modelName];
-      // const columnExists = Object.keys(Model.rawAttributes).includes(value);
-      // return columnExists;
-      return true;
+      const Model = require("../db")[modelName];
+      const columnExists = Object.keys(Model.rawAttributes).includes(value);
+      return columnExists;
     });
 }
 /**
