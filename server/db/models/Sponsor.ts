@@ -8,7 +8,7 @@ interface SponsorAttributes {
   tagline?: string;
   isGoldSponsor: boolean;
   sponsorInSeasons?: number[];
-  contacts?: object; // TODO: Type this stricter
+  contacts?: { adress: String; email: String; phone: String; phone2: String };
 }
 
 export interface SponsorCreationAttributes
