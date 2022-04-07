@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
 import { visualizer } from "rollup-plugin-visualizer";
+import { fileURLToPath, URL } from "url";
 
 // https://vueschool.io/articles/vuejs-tutorials/import-aliases-in-vite/
 const path = require("path");
@@ -21,7 +22,8 @@ export default defineConfig({
   // https://vueschool.io/articles/vuejs-tutorials/import-aliases-in-vite/
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      // "@": path.resolve(__dirname, "./src"),
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
     dedupe: ["vue"],
   },

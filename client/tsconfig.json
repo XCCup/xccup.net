@@ -1,8 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "vue-global-props.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
     "allowJs": true,
+    "rootDir": "src",
     "noImplicitAny": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
