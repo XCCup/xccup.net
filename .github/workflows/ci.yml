@@ -46,11 +46,11 @@ jobs:
         working-directory: ./client
 
       - name: Print current server log before testing (just for debugging)
-        working-directory: client
-        run: rm tsonfig.json
+        run: docker logs server
 
       - name: Remove tsconfig
-        run: docker logs server
+        working-directory: client
+        run: rm tsconfig.json
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
