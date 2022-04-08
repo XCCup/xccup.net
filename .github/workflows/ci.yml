@@ -49,7 +49,7 @@ jobs:
         env:
           DEBUG: "@cypress/github-action"
         with:
-          start: client dev
+          start: yarn dev
           # wait-on: "http://localhost:4173"
           wait-on: "http://localhost:8000"
           working-directory: client
