@@ -1,16 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "vue-global-props.d.ts", "src/**/*", "src/**/*.vue"],
-  "exclude": ["cypress"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": false,
-    "resolveJsonModule": true,
-    "composite": true,
-    "rootDir": "src",
-    "noImplicitAny": true,
-    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "allowJs": true,
     "paths": {
       "@/*": ["./src/*"]
     }

@@ -50,6 +50,10 @@ jobs:
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
 
+      - name: Remove tsconfig
+        working-directory: ./client
+        run: rm tsconfig.json
+
       - name: Install cypress
         run: npx cypress install
         # TODO: Fix cypress caching issue and remove the addional install
