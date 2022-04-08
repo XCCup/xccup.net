@@ -4,9 +4,6 @@ import Components from "unplugin-vue-components/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { fileURLToPath, URL } from "url";
 
-// https://vueschool.io/articles/vuejs-tutorials/import-aliases-in-vite/
-// const path = require("path");
-
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -19,10 +16,8 @@ export default defineConfig({
     port: 8000,
   },
 
-  // https://vueschool.io/articles/vuejs-tutorials/import-aliases-in-vite/
   resolve: {
     alias: {
-      // "@": path.resolve(__dirname, "./src"),
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
     dedupe: ["vue"],
@@ -37,8 +32,8 @@ export default defineConfig({
     },
   },
   build: {
-    // rollupOptions: {
-    //   plugins: [visualizer()],
-    // },
+    rollupOptions: {
+      plugins: [visualizer()],
+    },
   },
 });
