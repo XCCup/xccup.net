@@ -1,0 +1,91 @@
+name: XCCup E2E CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [17.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      # - uses: actions/checkout@v2
+      # - name: Setup tmate session
+      #   if: ${{ failure() }}
+      #   uses: mxschmitt/action-tmate@v3
+      # - name: Install backend
+      #   run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
+      #   working-directory: ./server
+      # - name: Test backend
+      #   run: docker-compose -f docker-compose-ci.yml run --rm yarn test
+      #   working-directory: ./server
+      # - name: Start Docker Backend Environment
+      #   run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
+      #   working-directory: ./server
+      # - name: List all databases (just for debugging)
+      #   run: sleep 10 && docker exec db psql -U xccup_user -l
+      # - name: Setup DB (enable PostGIS and set correct timezone)
+      #   run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
+      #   # It looks like that it's no longer necessary to activate the postgis extension
+      #   # run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
+      #   working-directory: ./server
+      # - name: Install and build frontend
+      #   run: docker-compose run --rm yarn install #&& docker-compose run --rm yarn build-local
+      #   working-directory: ./client
+      # - name: Print current server log before testing (just for debugging)
+      #   run: docker logs server
+
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install # will run `yarn install` command
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build # will run `yarn build` command
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: test # will run `yarn test` command
+
+      - name: Install cypress
+        run: npx cypress install
+        # TODO: Fix cypress caching issue and remove the addional install
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          DEBUG: "@cypress/github-action"
+        with:
+          # start: docker-compose run --service-ports --rm client serve
+          #start: docker-compose run --service-ports --rm client dev
+          # wait-on: "http://localhost:4173"
+          #wait-on: "http://localhost:8000"
+          working-directory: client
+          #config: baseUrl=http://localhost:8000
+          # config: baseUrl=http://localhost:4173
+          browser: chrome
+
+      - name: Store artefacts of test failures
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: ./client/cypress/screenshots
+
+      - name: Store artefacts of server logs
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: server-logs
+          path: ./server/data/logs
