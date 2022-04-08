@@ -37,7 +37,6 @@ jobs:
 
        - name: Install and build frontend
          run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
-         run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local && ls
          working-directory: ./client
 
        - name: Print current server log before testing (just for debugging)
