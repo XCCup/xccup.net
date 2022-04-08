@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [17.8.0]
+        node-version: [17.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: Checkout repo
@@ -23,11 +23,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install backend
-        run: chmod -R 777 . && yarn install
+        run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
 
       - name: Test backend
-        run: yarn test
+        run: docker-compose -f docker-compose-ci.yml run --rm yarn test
         working-directory: ./server
 
       - name: Start Docker Backend Environment
@@ -42,27 +42,29 @@ jobs:
         working-directory: ./server
 
       - name: Install and build frontend
-        run: yarn install #build-local
+        run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
 
       - name: Print current server log before testing (just for debugging)
         run: docker logs server
 
-      - name: Remove tsconfig
+      - name: Remove tsconfig.json
         working-directory: client
         run: rm tsconfig.json
+
+      - name: Install cypress
+        run: npx cypress install
+        # TODO: Fix cypress caching issue and remove the addional install
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
           DEBUG: "@cypress/github-action"
         with:
-          start: yarn dev
-          # wait-on: "http://localhost:4173"
-          wait-on: "http://localhost:8000"
+          start: docker-compose run --service-ports --rm client serve
+          wait-on: "http://localhost:4173"
           working-directory: client
-          config: baseUrl=http://localhost:8000
-          # config: baseUrl=http://localhost:4173
+          config: baseUrl=http://localhost:4173
           browser: chrome
 
       - name: Store artefacts of test failures
