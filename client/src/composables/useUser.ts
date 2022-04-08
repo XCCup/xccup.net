@@ -3,6 +3,36 @@ import axios from "axios";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { useJwt } from "@vueuse/integrations/useJwt";
 
+import type { JwtPayload } from "jwt-decode";
+import type { ComputedRef } from "vue-demi";
+
+interface Payload extends JwtPayload {
+  id?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
+  gender?: string;
+}
+
+interface State {
+  authData: {
+    token?: string;
+    refreshToken?: string;
+    tokenExp?: number;
+    userId?: string;
+    firstName?: string;
+    lastName?: string;
+    role?: string;
+    gender?: string;
+  };
+  loginStatus: string;
+}
+
+interface TokenData {
+  accessToken: string;
+  refreshToken: string;
+}
+
 const ACCESS_TOKEN = "accessToken";
 const REFRESH_TOKEN = "refreshToken";
 const LOGIN_STATE_SUCCESS = "success";
@@ -12,11 +42,11 @@ const USER_ROLE_NONE = "Keine";
 const DEBUG = false;
 
 const baseURL = getbaseURL();
-const state = reactive({
+const state = reactive<State>({
   authData: {
-    // token: "",
+    token: "",
     // refreshToken: "",
-    tokenExp: "",
+    tokenExp: undefined,
     userId: "",
     firstName: "",
     lastName: "",
@@ -28,7 +58,6 @@ const state = reactive({
 
 export default () => {
   // Getters
-
   const loggedIn = computed(() => state.loginStatus === LOGIN_STATE_SUCCESS);
   const getUserId = computed(() => state.authData.userId);
   const getGender = computed(() => state.authData.gender);
@@ -37,12 +66,15 @@ export default () => {
   });
 
   // Mutations
-
-  const saveTokenData = (data) => {
+  const saveTokenData = (data: TokenData) => {
     if (DEBUG) console.log("Save token data…");
     localStorage.setItem(ACCESS_TOKEN, data.accessToken);
     localStorage.setItem(REFRESH_TOKEN, data.refreshToken);
-    const { payload } = useJwt(data.accessToken);
+    const { payload }: { payload: ComputedRef<Payload> } = useJwt(
+      data.accessToken
+    );
+
+    if (!payload.value) return;
     const newTokenData = {
       token: data.accessToken,
       refreshToken: data.refreshToken,
@@ -65,7 +97,7 @@ export default () => {
     state.authData = {
       token: "",
       refreshToken: "",
-      tokenExp: "",
+      tokenExp: undefined,
       userId: "",
       firstName: "",
       lastName: "",
@@ -82,8 +114,11 @@ export default () => {
     return Date.now() <= state.authData.tokenExp * 1000;
   };
 
-  const login = async (credentials) => {
-    const response = await axios.post(baseURL + "users/login", credentials);
+  const login = async (email: string, password: string) => {
+    const response = await axios.post(baseURL + "users/login", {
+      email,
+      password,
+    });
     saveTokenData(response.data);
     return response;
   };
@@ -108,7 +143,7 @@ export default () => {
         });
         saveTokenData({
           accessToken: refreshResponse.data.accessToken,
-          refreshToken: localStorage.getItem(REFRESH_TOKEN),
+          refreshToken: localStorage.getItem(REFRESH_TOKEN) ?? "",
         });
         state.loginStatus = LOGIN_STATE_SUCCESS;
         if (DEBUG) console.log("…tokens:", authData);
