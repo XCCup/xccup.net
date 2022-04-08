@@ -1,13 +1,15 @@
-export interface Comment {
+import type { UserData } from "./UserData";
+
+export interface NewComment {
   message: string;
   userId: string;
   relatedTo?: string;
-}
-
-export interface CreateComment extends Comment {
   flightId: string;
 }
 
-export interface EditComment extends Comment {
+export interface Comment extends NewComment {
   id: string;
+  createdAt: string;
+  updatedAt: string;
+  user?: UserData;
 }

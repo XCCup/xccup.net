@@ -44,12 +44,8 @@ const message = ref("");
 const sendButtonIsDisabled = computed(() => !message.value.trim().length);
 
 const onSubmitComment = async () => {
-  const comment = {
-    message: message.value,
-    userId: getUserId.value,
-  };
   try {
-    const res = await submitComment(comment);
+    const res = await submitComment(message.value, getUserId.value);
     if (res.status != 200) throw res.statusText;
     clearCommentEditorInput();
   } catch (error) {

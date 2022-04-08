@@ -1,6 +1,11 @@
 import { computed } from "vue";
 import ApiService from "@/services/ApiService";
 import useFlight from "@/composables/useFlight";
+import type { Comment } from "@/types/Comment";
+
+interface ExtendedComment extends Comment {
+  replies?: Comment[];
+}
 
 const { flight, updateComments } = useFlight();
 export default () => {
@@ -8,50 +13,54 @@ export default () => {
 
   // Create a structured comments array with replies
   const commentsWithReplies = computed(() => {
-    const repliesMap = new Map();
+    const comments = flight.value?.comments;
+    const repliesMap = new Map<string, ExtendedComment[]>();
 
-    const requireReplies = (id) => {
+    const requireReplies = (id: string) => {
       if (!repliesMap.has(id)) {
         repliesMap.set(id, []);
       }
       return repliesMap.get(id);
     };
 
-    return flight.value.comments.reduce((extendedComments, comment) => {
-      const extendedComment = {
-        ...comment,
-        replies: requireReplies(comment.id),
+    return comments?.reduce((prev: ExtendedComment[], cur) => {
+      const extendedComment: ExtendedComment = {
+        ...cur,
+        replies: requireReplies(cur.id),
       };
-      if (comment.relatedTo) {
-        requireReplies(comment.relatedTo).push(extendedComment);
+
+      if (cur.relatedTo) {
+        requireReplies(cur.relatedTo)?.push(extendedComment);
       } else {
-        extendedComments.push(extendedComment);
+        prev.push(extendedComment);
       }
-      return extendedComments;
+      return prev;
     }, []);
   });
 
   // Mutations
 
   // Actions
-  const submitComment = async (comment) => {
+  const submitComment = async (message: string, userId: string) => {
+    if (!flight.value) return;
     const res = await ApiService.addComment({
       flightId: flight.value.id,
-      ...comment,
+      message,
+      userId,
     });
     if (res.status != 200) throw res.statusText;
     updateComments();
     return res;
   };
 
-  const deleteComment = async (id) => {
+  const deleteComment = async (id: string) => {
     const res = await ApiService.deleteComment(id);
     if (res.status != 200) throw res.statusText;
     await updateComments();
     return res;
   };
 
-  const editComment = async (comment) => {
+  const editComment = async (comment: Comment) => {
     const res = await ApiService.editComment(comment);
     if (res.status != 200) throw res.statusText;
     await updateComments();

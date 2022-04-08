@@ -1,4 +1,6 @@
 import type { Glider } from "./Glider";
+import type { UserData } from "./UserData";
+import type { Comment } from "./Comment";
 
 export interface Flight {
   id: string;
@@ -35,7 +37,7 @@ export interface Flight {
   clubId: string;
   teamId: string;
   fixes?: Fix[];
-  user: User;
+  user: UserData;
   takeoff?: Takeoff;
   club?: Club;
   team?: Club;
@@ -47,23 +49,6 @@ export interface Flight {
 export interface Club {
   id: string;
   name: string;
-}
-
-export interface Comment {
-  id: string;
-  message: string;
-  relatedTo: null | string;
-  createdAt: Date;
-  updatedAt: Date;
-  flightId: string;
-  userId: string;
-  user: User;
-}
-
-export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
 }
 
 export interface Fix {

@@ -5,7 +5,7 @@ import router from "@/router/";
 
 import type { FilterParams } from "@/types/FilterParams";
 import type { ModifiedFlightData } from "@/types/ModifiedFlightData";
-import type { CreateComment, EditComment } from "@/types/Comment";
+import type { NewComment, Comment } from "@/types/Comment";
 import type { CreateUserData, UserData } from "@/types/UserData";
 import type { Glider } from "@/types/Glider";
 import type { Mail } from "@/types/Mail";
@@ -71,13 +71,13 @@ export default {
   },
   // Flight comments
 
-  addComment(comment: CreateComment) {
+  addComment(comment: NewComment) {
     return jwtInterceptor.post(baseURL + "comments", comment);
   },
   deleteComment(commentId: string) {
     return jwtInterceptor.delete(baseURL + "comments/" + commentId);
   },
-  editComment(comment: EditComment) {
+  editComment(comment: Comment) {
     return jwtInterceptor.put(baseURL + "comments/" + comment.id, comment);
   },
   getCommentsOfFlight(flightId: string) {
