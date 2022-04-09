@@ -84,17 +84,6 @@ export function initClub(sequelize: Sequelize): Models["Club"] {
       onDelete: "CASCADE",
       hooks: true,
     });
-
-    // FIXME: Was this missing before?
-
-    Club.hasMany(Flight, {
-      as: "flights",
-      foreignKey: {
-        name: "flightId",
-        allowNull: true,
-      },
-      hooks: true,
-    });
   };
 
   return Club;
