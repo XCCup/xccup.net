@@ -1,5 +1,4 @@
-// TODO: Why is there a model reference in the controller?
-const Token = require("../db")["Token"];
+const Token = require("../db")["Token"]; // TODO: Delegate token access to the service tier
 const jwt = require("jsonwebtoken");
 const {
   UNAUTHORIZED,
