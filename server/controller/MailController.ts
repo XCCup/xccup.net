@@ -25,8 +25,7 @@ router.post(
 
     try {
       const result = await service.sendMailSingle(
-        // TODO: Where to add this to the interface?
-        req.user.id,
+        req.user?.id ?? "",
         toUserId,
         content
       );
@@ -55,7 +54,7 @@ router.post(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const result = await service.sendMailAll(req.user.id, content);
+      const result = await service.sendMailAll(req.user?.id ?? "", content);
 
       result ? res.sendStatus(200) : res.sendStatus(500);
     } catch (error) {
