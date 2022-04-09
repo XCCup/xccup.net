@@ -9,7 +9,7 @@ export interface UserAttributes {
   id: string;
   firstName?: string;
   lastName?: string;
-  birthday?: Date; // TODO: DB is DATEONLY. Is this correct?
+  birthday?: Date;
   role?: string;
   gender?: string;
   tshirtSize?: string;
@@ -75,14 +75,6 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       },
       gliders: {
         type: DataTypes.ARRAY(DataTypes.JSON),
-        /*
-        glider: {
-          id: UUID
-          brand: String,
-          model: String
-          gliderClass: String
-        }
-        */
         defaultValue: [],
       },
       emailInformIfComment: {
