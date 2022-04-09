@@ -47,17 +47,3 @@ export function initBrand(sequelize: Sequelize): Models["Brand"] {
   };
   return Brand;
 }
-
-// FIXME: Was this messed up in the js version?
-
-// Sponsor.associate = (models) => {
-//   Sponsor.hasOne(models.Logo, {
-//     as: "logo",
-//     foreignKey: {
-//       name: "brandId",
-//       allowNull: true,
-//     },
-//     onDelete: "CASCADE",
-//     hooks: true,
-//   });
-// };
