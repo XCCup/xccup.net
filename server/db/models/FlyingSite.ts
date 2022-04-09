@@ -13,7 +13,7 @@ interface FlyingSiteAttributes {
   heightDifference?: number;
   state?: "active" | "inactive" | "proposal";
   website?: string;
-  submitter?: object; // TODO: Type this stricter
+  submitter?: string;
 }
 
 interface FlyingSiteCreationAttributes
@@ -69,14 +69,13 @@ export function initFlyingSite(sequelize: Sequelize): Models["FlyingSite"] {
     },
     state: {
       type: DataTypes.STRING,
-      // active, inactive, proposal
       defaultValue: "active",
     },
     website: {
       type: DataTypes.STRING,
     },
     submitter: {
-      type: DataTypes.JSON,
+      type: DataTypes.STRING,
     },
   }) as Models["FlyingSite"];
 

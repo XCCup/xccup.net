@@ -7,7 +7,7 @@ interface FlightPhotoAttributes {
   pathThumb?: string;
   originalname?: string;
   description?: string;
-  timestamp?: string; // TODO: Is this correct?
+  timestamp?: Number;
   mimetype?: string;
   size?: number;
   isExternalLink?: boolean;
