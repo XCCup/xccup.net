@@ -59,17 +59,6 @@ export function initNews(sequelize: Sequelize): Models["News"] {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW,
     },
-    // This column should support features like links
-    // e.g.:
-    // meta : {
-    //   links: [
-    //     {
-    //       title: "title",
-    //       value: "/flug/9",
-    //       internal: true
-    //     }
-    //   ]
-    // }
     meta: {
       type: DataTypes.JSON,
       defaultValue: {},

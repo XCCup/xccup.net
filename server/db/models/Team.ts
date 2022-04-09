@@ -28,7 +28,7 @@ export function initTeam(sequelize: Sequelize): Models["Team"] {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: false, // It's allowed that the same name can appear in two different years
+      unique: false, // It's allowed that the same name can be reused in different seasons
     },
     season: {
       type: DataTypes.INTEGER,
@@ -40,15 +40,10 @@ export function initTeam(sequelize: Sequelize): Models["Team"] {
     },
   });
 
-  // // ??? Don't make this association because a user can change his association in a later season ???
-  // Team.associate = (models) => {
-  //   Team.hasMany(models.User, {
-  //     as: "members",
-  //     foreignKey: {
-  //       name: "teamId",
-  //     },
-  //   });
-  // };
+  /**
+   * Don't create a Team.hasMany(User) association.
+   * A team is only valid for one season. After a season the user will loosen his association with this team.
+   */
 
   return Team;
 }

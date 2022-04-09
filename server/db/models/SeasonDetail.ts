@@ -39,7 +39,6 @@ export interface SeasonDetailInstance
 }
 
 export function initSeasonDetail(sequelize: Sequelize): Models["SeasonDetail"] {
-  // TODO: No id?
   const SeasonDetail = sequelize.define<SeasonDetailInstance>("SeasonDetail", {
     year: {
       type: DataTypes.INTEGER,
@@ -89,7 +88,6 @@ export function initSeasonDetail(sequelize: Sequelize): Models["SeasonDetail"] {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
       defaultValue: ["overall", "ladies", "club", "team"],
-      // All current options: ["overall", "ladies", "club", "team","seniors","newcomer","fun","sundays","RP","LUX","earlyBird","lateBird"]
     },
     misc: {
       type: DataTypes.JSON,

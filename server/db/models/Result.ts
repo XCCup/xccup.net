@@ -15,14 +15,13 @@ export interface ResultInstance
 }
 
 export function initResult(sequelize: Sequelize): Models["Result"] {
-  // TODO: No id?
   const Result = sequelize.define<ResultInstance>("Result", {
     season: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     type: {
-      type: DataTypes.STRING, //newcomer
+      type: DataTypes.STRING, //e.g. newcomer
       allowNull: false,
     },
     result: {

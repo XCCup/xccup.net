@@ -39,7 +39,7 @@ export function initSponsor(sequelize: Sequelize): Models["Sponsor"] {
     type: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "OTHER", //MANUFACTURER, SCHOOL, HOLIDAY
+      defaultValue: "OTHER",
     },
     website: {
       type: DataTypes.STRING,
