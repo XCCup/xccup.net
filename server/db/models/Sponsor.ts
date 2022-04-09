@@ -1,4 +1,10 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
+
+import type { LogoInstance } from "./Logo";
+
+interface Sponsor extends ModelStatic<SponsorInstance> {
+  associate: (props: { Logo: ModelStatic<LogoInstance> }) => void;
+}
 
 interface SponsorAttributes {
   id: string;
@@ -55,7 +61,7 @@ export function initSponsor(sequelize: Sequelize) {
     contacts: {
       type: DataTypes.JSON,
     },
-  });
+  }) as Sponsor;
 
   Sponsor.associate = ({ Logo }) => {
     Sponsor.hasOne(Logo, {

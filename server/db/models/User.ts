@@ -2,7 +2,13 @@ import bcrypt from "bcryptjs";
 import logger from "../../config/logger";
 import { ROLE } from "../../constants/user-constants";
 
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
+
+import type { FlightInstance } from "./Flight";
+import type { FlightCommentInstance } from "./FlightComment";
+import type { FlightPhotoInstance } from "./FlightPhoto";
+import type { ClubInstance } from "./Club";
+import type { TeamInstance } from "./Team";
 
 export interface UserAttributes {
   id: string;
@@ -33,11 +39,22 @@ interface glider {
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 
-interface UserInstance
+export interface UserInstance
   extends Model<UserAttributes, UserCreationAttributes>,
     UserAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+interface User extends ModelStatic<UserInstance> {
+  associate: (props: {
+    FlightComment: ModelStatic<FlightCommentInstance>;
+    ProfilePicture: ModelStatic<FlightCommentInstance>;
+    FlightPhoto: ModelStatic<FlightPhotoInstance>;
+    Club: ModelStatic<ClubInstance>;
+    Team: ModelStatic<TeamInstance>;
+    Flight: ModelStatic<FlightInstance>;
+  }) => void;
 }
 
 export function initUser(sequelize: Sequelize) {
@@ -138,7 +155,7 @@ export function initUser(sequelize: Sequelize) {
         },
       },
     }
-  );
+  ) as User;
 
   // Define instance level methods for user
   User.prototype.validPassword = function (password: string) {
@@ -146,6 +163,7 @@ export function initUser(sequelize: Sequelize) {
       bcrypt.compareSync(password, this.password) && this.role != ROLE.INACTIVE
     );
   };
+
   User.prototype.getAge = function () {
     if (!this.birthday) return 0;
 

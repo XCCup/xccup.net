@@ -9,7 +9,7 @@ interface TeamAttributes {
 
 interface TeamCreationAttributes extends Optional<TeamAttributes, "id"> {}
 
-interface TeamInstance
+export interface TeamInstance
   extends Model<TeamAttributes, TeamCreationAttributes>,
     TeamAttributes {
   createdAt?: Date;

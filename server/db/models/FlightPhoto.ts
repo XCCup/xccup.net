@@ -1,4 +1,7 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
+
+import type { UserInstance } from "./User";
+import type { FlightInstance } from "./Flight";
 
 interface FlightPhotoAttributes {
   id: string;
@@ -6,7 +9,7 @@ interface FlightPhotoAttributes {
   pathThumb?: string;
   originalname?: string;
   description?: string;
-  timestamp?: Date; // TODO: Is this correct?
+  timestamp?: string; // TODO: Is this correct?
   mimetype?: string;
   size?: number;
   isExternalLink?: boolean;
@@ -16,11 +19,17 @@ interface FlightPhotoAttributes {
 interface FlightPhotoCreationAttributes
   extends Optional<FlightPhotoAttributes, "id"> {}
 
-interface FlightPhotoInstance
+export interface FlightPhotoInstance
   extends Model<FlightPhotoAttributes, FlightPhotoCreationAttributes>,
     FlightPhotoAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+}
+interface FlightPhoto extends ModelStatic<FlightPhotoInstance> {
+  associate: (props: {
+    User: ModelStatic<UserInstance>;
+    Flight: ModelStatic<FlightInstance>;
+  }) => void;
 }
 
 export function initFlightPhoto(sequelize: Sequelize) {
@@ -62,16 +71,16 @@ export function initFlightPhoto(sequelize: Sequelize) {
       type: DataTypes.ARRAY(DataTypes.UUID),
       defaultValue: [],
     },
-  });
+  }) as FlightPhoto;
 
-  FlightPhoto.associate = (models) => {
-    FlightPhoto.belongsTo(models.User, {
+  FlightPhoto.associate = ({ User, Flight }) => {
+    FlightPhoto.belongsTo(User, {
       as: "user",
       foreignKey: {
         name: "userId",
       },
     });
-    FlightPhoto.belongsTo(models.Flight, {
+    FlightPhoto.belongsTo(Flight, {
       as: "flight",
       foreignKey: {
         name: "flightId",

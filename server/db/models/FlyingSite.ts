@@ -1,5 +1,7 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
 
+import type { ClubInstance } from "./Club";
+import type { FlightInstance } from "./Flight";
 interface FlyingSiteAttributes {
   id: string;
   locationData?: object; // TODO: Type this stricter
@@ -18,11 +20,17 @@ interface FlyingSiteAttributes {
 interface FlyingSiteCreationAttributes
   extends Optional<FlyingSiteAttributes, "id"> {}
 
-interface FlyingSiteInstance
+export interface FlyingSiteInstance
   extends Model<FlyingSiteAttributes, FlyingSiteCreationAttributes>,
     FlyingSiteAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+}
+interface FlyingSite extends ModelStatic<FlyingSiteInstance> {
+  associate: (props: {
+    Club: ModelStatic<ClubInstance>;
+    Flight: ModelStatic<FlightInstance>;
+  }) => void;
 }
 
 export function initFlyingSite(sequelize: Sequelize) {
@@ -77,17 +85,17 @@ export function initFlyingSite(sequelize: Sequelize) {
     submitter: {
       type: DataTypes.JSON,
     },
-  });
+  }) as FlyingSite;
 
-  FlyingSite.associate = (models) => {
-    FlyingSite.hasMany(models.Flight, {
+  FlyingSite.associate = ({ Flight, Club }) => {
+    FlyingSite.hasMany(Flight, {
       as: "flights",
       foreignKey: {
         name: "siteId",
       },
     });
 
-    FlyingSite.belongsTo(models.Club, {
+    FlyingSite.belongsTo(Club, {
       as: "club",
       foreignKey: {
         name: "clubId",

@@ -1,4 +1,6 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
+
+import type { UserInstance } from "./User";
 
 interface FlightCommentAttributes {
   id: string;
@@ -9,11 +11,15 @@ interface FlightCommentAttributes {
 interface FlightCommentCreationAttributes
   extends Optional<FlightCommentAttributes, "id"> {}
 
-interface FlightCommentInstance
+export interface FlightCommentInstance
   extends Model<FlightCommentAttributes, FlightCommentCreationAttributes>,
     FlightCommentAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+interface FlightComment extends ModelStatic<FlightCommentInstance> {
+  associate: (props: { User: ModelStatic<UserInstance> }) => void;
 }
 
 export function initFlightComment(sequelize: Sequelize) {
@@ -34,7 +40,7 @@ export function initFlightComment(sequelize: Sequelize) {
         type: DataTypes.UUID,
       },
     }
-  );
+  ) as FlightComment;
 
   FlightComment.associate = ({ User }) => {
     FlightComment.belongsTo(User, {

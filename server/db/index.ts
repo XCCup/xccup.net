@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { ModelStatic, Sequelize, Model } from "sequelize";
 import logger from "../config/logger";
 import config from "../config/env-config";
 import { sleep } from "../helper/Utils";
@@ -44,8 +44,7 @@ const sequelize = new Sequelize(url, {
   },
 });
 
-const db = {
-  sequelize,
+const models = {
   Airspace: initAirspace(sequelize),
   Brand: initBrand(sequelize),
   Club: initClub(sequelize),
@@ -65,11 +64,27 @@ const db = {
   User: initUser(sequelize),
 };
 
-Object.values(db).forEach((model: any) => {
-  if (model.associate) {
-    model.associate(db);
-  }
-});
+interface extendedModel<M extends Model<any, any>> extends ModelStatic<M> {
+  associate?: (props: typeof models) => void;
+}
+
+const db = {
+  sequelize,
+  ...models,
+};
+
+// TODO: Eslint : void
+function associateModels(
+  modelsToAssociate: Record<string, extendedModel<any>>
+): void {
+  Object.values(modelsToAssociate).forEach((model) => {
+    if (model.associate) {
+      model.associate(models);
+    }
+  });
+}
+
+associateModels(models);
 
 dbConnectionTest().then(async () => {
   if (

@@ -1,4 +1,12 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
+
+import type { UserInstance } from "./User";
+import type { FlightCommentInstance } from "./FlightComment";
+import type { FlightPhotoInstance } from "./FlightPhoto";
+import type { ClubInstance } from "./Club";
+import type { FlyingSiteInstance } from "./FlyingSite";
+import type { FlightFixesInstance } from "./FlightFixes";
+import type { TeamInstance } from "./Team";
 
 export interface FlightAttributes {
   id: string;
@@ -73,11 +81,23 @@ export interface FlightOutputAttributes extends FlightAttributes {
   teamId?: string;
 }
 
-interface FlightInstance
+export interface FlightInstance
   extends Model<FlightAttributes, FlightCreationAttributes>,
     FlightAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+interface Flight extends ModelStatic<FlightInstance> {
+  associate: (props: {
+    FlightComment: ModelStatic<FlightCommentInstance>;
+    User: ModelStatic<UserInstance>;
+    FlyingSite: ModelStatic<FlyingSiteInstance>;
+    FlightPhoto: ModelStatic<FlightPhotoInstance>;
+    Club: ModelStatic<ClubInstance>;
+    Team: ModelStatic<TeamInstance>;
+    FlightFixes: ModelStatic<FlightFixesInstance>;
+  }) => void;
 }
 
 export function initFlight(sequelize: Sequelize) {
@@ -181,7 +201,7 @@ export function initFlight(sequelize: Sequelize) {
     flightStats: {
       type: DataTypes.JSON,
     },
-  });
+  }) as Flight;
 
   Flight.associate = ({
     User,

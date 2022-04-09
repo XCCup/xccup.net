@@ -1,4 +1,6 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
+
+import type { SponsorInstance } from "./Sponsor";
 
 interface LogoAttributes {
   id: string;
@@ -16,6 +18,10 @@ export interface LogoInstance
     LogoAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+interface Logo extends ModelStatic<LogoInstance> {
+  associate: (props: { Sponsor: ModelStatic<SponsorInstance> }) => void;
 }
 
 export function initLogo(sequelize: Sequelize) {
@@ -43,15 +49,15 @@ export function initLogo(sequelize: Sequelize) {
     size: {
       type: DataTypes.BIGINT,
     },
-  });
+  }) as Logo;
 
-  Logo.associate = (models) => {
-    Logo.belongsTo(models.Sponsor, {
+  Logo.associate = ({ Sponsor }) => {
+    Logo.belongsTo(Sponsor, {
       foreignKey: {
         name: "sponsorId",
       },
     });
-    Logo.belongsTo(models.Sponsor, {
+    Logo.belongsTo(Sponsor, {
       foreignKey: {
         name: "brandId",
       },

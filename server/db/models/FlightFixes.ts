@@ -10,7 +10,7 @@ interface FlightFixesAttributes {
 interface FlightFixesCreationAttributes
   extends Optional<FlightFixesAttributes, "id"> {}
 
-interface FlightFixesInstance
+export interface FlightFixesInstance
   extends Model<FlightFixesAttributes, FlightFixesCreationAttributes>,
     FlightFixesAttributes {
   createdAt?: Date;
