@@ -69,21 +69,21 @@ export function initFlightFixes(sequelize: Sequelize) {
     };
   };
 
-  FlightFixes.extractTimeAndHeights = function (fixes) {
-    const times = [];
-    fixes.forEach((fix: Object) => {
-      times.push({
+  FlightFixes.extractTimeAndHeights = function (
+    fixes: Object[]
+  ): FlightFixTimeAndHeights[] {
+    return fixes.map((fix: Object) => {
+      return {
         timestamp: fix.timestamp,
         time: fix.time,
         pressureAltitude: fix.pressureAltitude,
         gpsAltitude: fix.gpsAltitude,
         elevation: fix.elevation,
-      });
+      };
     });
-    return times;
   };
 
-  FlightFixes.mergeData = function (fixes) {
+  FlightFixes.mergeData = function (fixes: FlightFixesAttributes) {
     if (!fixes) return [];
 
     const coordinates = fixes.geom.coordinates;
