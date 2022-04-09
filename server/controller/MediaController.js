@@ -1,14 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-// TODO: Model reference in controller? why?
-// import FlightPhoto from "../db/models/FlightPhoto";
-// import Logo from "../db/models/Logo";
-// import ProfilePicture from "../db/models/ProfilePicture";
-
-const FlightPhoto = require("../db")["FlightPhoto"];
-const Logo = require("../db")["Logo"];
-const ProfilePicture = require("../db")["ProfilePicture"];
+const FlightPhotoService = require("../service/FlightPhotoService");
+const LogoService = require("../service/LogoService");
+const ProfilePictureService = require("../service/ProfilePictureService");
 
 const _ = require("lodash");
 const { NOT_FOUND } = require("../constants/http-status-constants");
@@ -37,9 +32,9 @@ router.get(
       if (value) return res.type(value.mimetype).sendFile(value.fullfilepath);
 
       const results = await Promise.all([
-        FlightPhoto.findByPk(id),
-        Logo.findByPk(id),
-        ProfilePicture.findByPk(id),
+        FlightPhotoService.getById(id),
+        LogoService.getById(id),
+        ProfilePictureService.getById(id),
       ]);
       const media = results.find((e) => e);
 
@@ -64,9 +59,9 @@ router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
 
   try {
     const results = await Promise.all([
-      FlightPhoto.findByPk(id),
-      Logo.findByPk(id),
-      ProfilePicture.findByPk(id),
+      FlightPhotoService.getById(id),
+      LogoService.getById(id),
+      ProfilePictureService.getById(id),
     ]);
     const mediaDbObject = results.find((e) => e);
 

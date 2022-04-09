@@ -3,6 +3,10 @@ const ProfilePicture = require("../db")["ProfilePicture"];
 const { deleteImages, createImageVersions } = require("../helper/ImageUtils");
 
 const service = {
+  getById: async (id) => {
+    return ProfilePicture.findByPk(id);
+  },
+
   getByUserId: async (userId) => {
     return ProfilePicture.findOne({
       where: { userId },
