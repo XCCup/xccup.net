@@ -16,7 +16,7 @@ const service = {
       ? {}
       : {
           from: {
-            [Op.lte]: new Date(), // TODO: Why is moment() not failing here in TS?
+            [Op.lte]: new Date(),
           },
         };
 
