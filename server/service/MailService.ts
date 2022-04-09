@@ -201,8 +201,7 @@ const service = {
     });
     const userMails = users.map((u: UserAttributes) => u.email);
 
-    // TODO: Do we have to type this?
-    users.forEach((u: UserAttributes) => {
+    users.forEach((u) => {
       logger.info(`MS: Send "Added to team mail" to user ${u.id}`);
     });
 
