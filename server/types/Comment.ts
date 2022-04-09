@@ -1,6 +1,6 @@
 export interface Comment {
-  message?: String;
-  flightId?: String;
-  userId: String;
-  relatedTo?: String;
+  message?: string;
+  flightId?: string;
+  userId: string;
+  relatedTo?: string;
 }

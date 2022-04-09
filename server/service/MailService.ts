@@ -229,11 +229,10 @@ const service = {
 
   sendNewFlightCommentMail: async (comment: Comment) => {
     const queries = [
-      db.User.findByPk(comment.userId), // TODO: Why? Is this correct?
+      db.User.findByPk(comment.userId),
       db.Flight.findByPk(comment.flightId),
     ];
     if (comment.relatedTo) {
-      // TODO: How to type the queries array?
       queries.push(db.FlightComment.findByPk(comment.relatedTo));
     }
 
