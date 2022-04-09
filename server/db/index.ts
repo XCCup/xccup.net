@@ -23,8 +23,6 @@ import { initToken } from "./models/Token";
 import { initUser } from "./models/User";
 import { Models } from "../types/Models";
 
-// import Models
-
 // Config
 const port = config.get("postgresPort");
 const user = config.get("postgresUser");
