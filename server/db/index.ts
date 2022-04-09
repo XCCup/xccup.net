@@ -78,9 +78,6 @@ Object.values(models).forEach((model) => {
   }
 });
 
-function fn(x: string) {
-  console.log("Hello, " + x.toLowerCase());
-}
 dbConnectionTest().then(async () => {
   if (
     config.get("dbSyncForce") == true &&
