@@ -145,8 +145,10 @@ router.delete(
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
+
       const news = await service.delete(id);
       if (!news) return res.sendStatus(NOT_FOUND);
+
       deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(news);
