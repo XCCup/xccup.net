@@ -9,7 +9,7 @@ interface SponsorAttributes {
   tagline?: string;
   isGoldSponsor: boolean;
   sponsorInSeasons?: number[];
-  contacts?: { adress: String; email: String; phone: String; phone2: String };
+  contacts?: { adress: string; email: string; phone: string; phone2: string };
 }
 
 export interface SponsorCreationAttributes
