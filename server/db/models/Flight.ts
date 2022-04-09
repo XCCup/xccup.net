@@ -49,7 +49,7 @@ interface Glider {
   brand: string;
   model: string;
   gliderClass: {
-    key: string; //TODO: Make this an union type?
+    key: string;
     shortDescription: string;
   };
 }
@@ -122,11 +122,9 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     },
     flightType: {
       type: DataTypes.STRING,
-      // values: ["FREE", "FLAT", "FAI"],
     },
     flightStatus: {
       type: DataTypes.STRING,
-      // values: ["Nicht in Wertung", "In Wertung", "Flugbuch", "In Bearbeitung"],
     },
     flightTurnpoints: {
       type: DataTypes.JSON,

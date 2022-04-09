@@ -7,7 +7,7 @@ interface AirspaceAttributes {
   name: string;
   floor: string;
   ceiling: string;
-  polygon: DataTypes.GeometryDataType; // Is this the correct type?
+  polygon: Object; //GeoJSON
 }
 
 interface AirspaceCreationAttributes
