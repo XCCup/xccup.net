@@ -10,6 +10,7 @@
     "dev": "ts-node-dev --respawn --pretty --transpile-only app.ts",
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "test": "jest"
   },
   "dependencies": {
