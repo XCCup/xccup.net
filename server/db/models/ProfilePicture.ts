@@ -1,6 +1,6 @@
-import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Models } from "../../types/Models";
 
-import type { UserInstance } from "./User";
 interface ProfilePictureAttributes {
   id: string;
   path: string;
@@ -19,10 +19,10 @@ export interface ProfilePictureInstance
   createdAt?: Date;
   updatedAt?: Date;
 }
-interface ProfilePicture extends ModelStatic<ProfilePictureInstance> {
-  associate: (props: { User: ModelStatic<UserInstance> }) => void;
-}
-export function initProfilePicture(sequelize: Sequelize) {
+
+export function initProfilePicture(
+  sequelize: Sequelize
+): Models["ProfilePicture"] {
   const ProfilePicture = sequelize.define<ProfilePictureInstance>(
     "ProfilePicture",
     {
@@ -50,7 +50,7 @@ export function initProfilePicture(sequelize: Sequelize) {
         type: DataTypes.BIGINT,
       },
     }
-  ) as ProfilePicture;
+  ) as Models["ProfilePicture"];
 
   ProfilePicture.associate = ({ User }) => {
     ProfilePicture.belongsTo(User, {

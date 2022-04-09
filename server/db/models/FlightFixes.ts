@@ -45,6 +45,7 @@ export function initFlightFixes(sequelize: Sequelize) {
   });
 
   FlightFixes.createGeometry = function (fixes) {
+    // TODO: Where to find the postgis sequelize types?
     const coordinates = [];
     fixes.forEach((fix) => {
       coordinates.push([fix.longitude, fix.latitude]);

@@ -1,4 +1,5 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Models } from "../../types/Models";
 
 export interface NewsAttributes {
   id: string;
@@ -30,7 +31,7 @@ export interface NewsInstance
   updatedAt?: Date;
 }
 
-export function initNews(sequelize: Sequelize) {
+export function initNews(sequelize: Sequelize): Models["News"] {
   const News = sequelize.define<NewsInstance>("News", {
     id: {
       type: DataTypes.UUID,

@@ -13,7 +13,7 @@ interface AirspaceAttributes {
 interface AirspaceCreationAttributes
   extends Optional<AirspaceAttributes, "id"> {}
 
-interface AirspaceInstance
+export interface AirspaceInstance
   extends Model<AirspaceAttributes, AirspaceCreationAttributes>,
     AirspaceAttributes {
   createdAt?: Date;

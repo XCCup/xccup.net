@@ -1,8 +1,5 @@
-import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
-import type { LogoInstance } from "./Logo";
-import type { UserInstance } from "./User";
-import type { FlyingSiteInstance } from "./FlyingSite";
-import type { FlightInstance } from "./Flight";
+import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Models } from "../../types/Models";
 
 interface ClubAttributes {
   id: string;
@@ -28,16 +25,8 @@ export interface ClubInstance
   createdAt?: Date;
   updatedAt?: Date;
 }
-interface Club extends ModelStatic<ClubInstance> {
-  associate: (props: {
-    User: ModelStatic<UserInstance>;
-    Logo: ModelStatic<LogoInstance>;
-    FlyingSite: ModelStatic<FlyingSiteInstance>;
-    Flight: ModelStatic<FlightInstance>;
-  }) => void;
-}
 
-export function initClub(sequelize: Sequelize): Club {
+export function initClub(sequelize: Sequelize): Models["Club"] {
   const Club = sequelize.define<ClubInstance>("Club", {
     id: {
       type: DataTypes.UUID,
@@ -69,7 +58,7 @@ export function initClub(sequelize: Sequelize): Club {
     contacts: {
       type: DataTypes.ARRAY(DataTypes.JSON),
     },
-  }) as Club;
+  }) as Models["Club"];
 
   Club.associate = ({ User, FlyingSite, Logo, Flight }) => {
     Club.hasMany(User, {

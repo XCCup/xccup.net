@@ -1,5 +1,5 @@
 import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
-import type { LogoInstance } from "./Logo";
+import { Models } from "../../types/Models";
 
 interface BrandAttributes {
   id: string;
@@ -9,18 +9,14 @@ interface BrandAttributes {
 
 interface BrandCreationAttributes extends Optional<BrandAttributes, "id"> {}
 
-interface BrandInstance
+export interface BrandInstance
   extends Model<BrandAttributes, BrandCreationAttributes>,
     BrandAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-interface Brand extends ModelStatic<BrandInstance> {
-  associate: (props: { Logo: ModelStatic<LogoInstance> }) => void;
-}
-
-export function initBrand(sequelize: Sequelize): Brand {
+export function initBrand(sequelize: Sequelize): Models["Brand"] {
   const Brand = sequelize.define<BrandInstance>("Brand", {
     id: {
       type: DataTypes.UUID,
@@ -36,7 +32,7 @@ export function initBrand(sequelize: Sequelize): Brand {
     website: {
       type: DataTypes.STRING,
     },
-  }) as Brand;
+  }) as Models["Brand"];
 
   Brand.associate = ({ Logo }) => {
     Brand.hasOne(Logo, {

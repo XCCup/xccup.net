@@ -1,4 +1,5 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes } from "sequelize";
+import { Models } from "../../types/Models";
 
 interface SeasonDetailAttributes {
   year: number;
@@ -30,14 +31,14 @@ type RankingTypes =
   | "earlyBird"
   | "lateBird";
 
-interface SeasonDetailInstance
+export interface SeasonDetailInstance
   extends Model<SeasonDetailAttributes>,
     SeasonDetailAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export function initSeasonDetail(sequelize: Sequelize) {
+export function initSeasonDetail(sequelize: Sequelize): Models["SeasonDetail"] {
   // TODO: No id?
   const SeasonDetail = sequelize.define<SeasonDetailInstance>("SeasonDetail", {
     year: {

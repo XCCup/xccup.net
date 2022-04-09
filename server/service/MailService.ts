@@ -63,6 +63,7 @@ const service = {
     const fromMail = fromUser?.email;
     const fromName = `${fromUser?.firstName} ${fromUser?.lastName}`;
 
+    if (!toMail) return;
     if (!isXccupOffical) {
       content.text = MAIL_MESSAGE_PREFIX(fromName) + content.text;
     }
@@ -228,11 +229,11 @@ const service = {
 
   sendNewFlightCommentMail: async (comment: Comment) => {
     const queries = [
-      db.User.findByPk(comment.userId), // TODO: Why?
+      db.User.findByPk(comment.userId), // TODO: Why? Is this correct?
       db.Flight.findByPk(comment.flightId),
     ];
     if (comment.relatedTo) {
-      // @ts-ignore TODO: How to type the queries array?
+      // TODO: How to type the queries array?
       queries.push(db.FlightComment.findByPk(comment.relatedTo));
     }
 
@@ -272,8 +273,8 @@ const service = {
     return sendMail(toUser.email, content);
   },
 
-  sendMailAll: async (user: UserAttributes, content: MailContent) => {
-    logger.info(`MS: ${user.id} requested to send an email to all users`);
+  sendMailAll: async (userId: string, content: MailContent) => {
+    logger.info(`MS: ${userId} requested to send an email to all users`);
 
     const query = {
       attributes: ["email"],

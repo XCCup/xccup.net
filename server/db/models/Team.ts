@@ -1,4 +1,5 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Models } from "../../types/Models";
 
 interface TeamAttributes {
   id: string;
@@ -16,7 +17,7 @@ export interface TeamInstance
   updatedAt?: Date;
 }
 
-export function initTeam(sequelize: Sequelize) {
+export function initTeam(sequelize: Sequelize): Models["Team"] {
   const Team = sequelize.define<TeamInstance>("Team", {
     id: {
       type: DataTypes.UUID,

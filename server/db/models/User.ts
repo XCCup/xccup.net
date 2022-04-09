@@ -2,13 +2,8 @@ import bcrypt from "bcryptjs";
 import logger from "../../config/logger";
 import { ROLE } from "../../constants/user-constants";
 
-import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
-
-import type { FlightInstance } from "./Flight";
-import type { FlightCommentInstance } from "./FlightComment";
-import type { FlightPhotoInstance } from "./FlightPhoto";
-import type { ClubInstance } from "./Club";
-import type { TeamInstance } from "./Team";
+import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Models } from "../../types/Models";
 
 export interface UserAttributes {
   id: string;
@@ -46,18 +41,7 @@ export interface UserInstance
   updatedAt?: Date;
 }
 
-interface User extends ModelStatic<UserInstance> {
-  associate: (props: {
-    FlightComment: ModelStatic<FlightCommentInstance>;
-    ProfilePicture: ModelStatic<FlightCommentInstance>;
-    FlightPhoto: ModelStatic<FlightPhotoInstance>;
-    Club: ModelStatic<ClubInstance>;
-    Team: ModelStatic<TeamInstance>;
-    Flight: ModelStatic<FlightInstance>;
-  }) => void;
-}
-
-export function initUser(sequelize: Sequelize) {
+export function initUser(sequelize: Sequelize): Models["User"] {
   const User = sequelize.define<UserInstance>(
     "User",
     {
@@ -155,7 +139,7 @@ export function initUser(sequelize: Sequelize) {
         },
       },
     }
-  ) as User;
+  ) as Models["User"];
 
   // Define instance level methods for user
   User.prototype.validPassword = function (password: string) {

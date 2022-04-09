@@ -1,4 +1,5 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Sequelize, Model, DataTypes } from "sequelize";
+import { Models } from "../../types/Models";
 
 interface ResultAttributes {
   season: number;
@@ -6,12 +7,14 @@ interface ResultAttributes {
   result: object; // TODO: Type this stricter
 }
 
-interface ResultInstance extends Model<ResultAttributes>, ResultAttributes {
+export interface ResultInstance
+  extends Model<ResultAttributes>,
+    ResultAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export function initResult(sequelize: Sequelize) {
+export function initResult(sequelize: Sequelize): Models["Result"] {
   // TODO: No id?
   const Result = sequelize.define<ResultInstance>("Result", {
     season: {

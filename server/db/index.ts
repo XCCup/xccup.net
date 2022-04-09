@@ -1,9 +1,9 @@
-import { ModelStatic, Sequelize, Model } from "sequelize";
+import { Sequelize } from "sequelize";
 import logger from "../config/logger";
 import config from "../config/env-config";
 import { sleep } from "../helper/Utils";
 
-// Import Model init functions
+// Import Model init
 import { initAirspace } from "./models/Airspace";
 import { initBrand } from "./models/Brand";
 import { initClub } from "./models/Club";
@@ -21,6 +21,9 @@ import { initSponsor } from "./models/Sponsor";
 import { initTeam } from "./models/Team";
 import { initToken } from "./models/Token";
 import { initUser } from "./models/User";
+import { Models } from "../types/Models";
+
+// import Models
 
 // Config
 const port = config.get("postgresPort");
@@ -44,7 +47,7 @@ const sequelize = new Sequelize(url, {
   },
 });
 
-const models = {
+const models: Models = {
   Airspace: initAirspace(sequelize),
   Brand: initBrand(sequelize),
   Club: initClub(sequelize),
@@ -64,28 +67,22 @@ const models = {
   User: initUser(sequelize),
 };
 
-interface extendedModel<M extends Model<any, any>> extends ModelStatic<M> {
-  associate?: (props: typeof models) => void;
-}
-
 const db = {
   sequelize,
   ...models,
 };
 
 // TODO: Eslint : void
-function associateModels(
-  modelsToAssociate: Record<string, extendedModel<any>>
-): void {
-  Object.values(modelsToAssociate).forEach((model) => {
-    if (model.associate) {
-      model.associate(models);
-    }
-  });
+
+Object.values(models).forEach((model) => {
+  if (model.associate) {
+    model.associate(models);
+  }
+});
+
+function fn(x: string) {
+  console.log("Hello, " + x.toLowerCase());
 }
-
-associateModels(models);
-
 dbConnectionTest().then(async () => {
   if (
     config.get("dbSyncForce") == true &&

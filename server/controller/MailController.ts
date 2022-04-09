@@ -53,8 +53,9 @@ router.post(
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
+      if (!req.user?.id) return res.sendStatus(500);
 
-      const result = await service.sendMailAll(req.user?.id ?? "", content);
+      const result = await service.sendMailAll(req.user.id, content);
 
       result ? res.sendStatus(200) : res.sendStatus(500);
     } catch (error) {
