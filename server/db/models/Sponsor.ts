@@ -1,4 +1,5 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Contact } from "../../types/Contact";
 import { Models } from "../../types/Models";
 
 interface SponsorAttributes {
@@ -9,7 +10,7 @@ interface SponsorAttributes {
   tagline?: string;
   isGoldSponsor: boolean;
   sponsorInSeasons?: number[];
-  contacts?: { adress: string; email: string; phone: string; phone2: string };
+  contacts?: Contact;
 }
 
 export interface SponsorCreationAttributes

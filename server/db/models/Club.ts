@@ -1,4 +1,5 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { Contact } from "../../types/Contact";
 import { Models } from "../../types/Models";
 
 interface ClubAttributes {
@@ -9,7 +10,7 @@ interface ClubAttributes {
   urlLogo?: string;
   mapPosition?: Position;
   participantInSeasons?: number[];
-  contacts?: object[]; //TODO: type this stricter (Though it's not correct JSON in the DB currently)
+  contacts?: Contact[];
 }
 
 interface Position {
