@@ -106,7 +106,7 @@ const userService = {
         {
           model: ProfilePicture,
           as: "picture",
-          attributes: ["id", "path", "pathThumb"],
+          attributes: ["id", "path"],
         },
         createBasicInclude(Club, "club"),
       ],

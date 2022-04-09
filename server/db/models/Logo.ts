@@ -4,7 +4,6 @@ import { Models } from "../../types/Models";
 interface LogoAttributes {
   id: string;
   path: string;
-  pathThumb?: string; // TODO: This is unused! Remove it?
   originalname?: string;
   mimetype?: string;
   size?: number;
@@ -30,10 +29,6 @@ export function initLogo(sequelize: Sequelize): Models["Logo"] {
     path: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    // TODO: This is unused! Remove it?
-    pathThumb: {
-      type: DataTypes.STRING,
     },
     originalname: {
       type: DataTypes.STRING,

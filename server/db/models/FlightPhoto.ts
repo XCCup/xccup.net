@@ -4,7 +4,6 @@ import { Models } from "../../types/Models";
 interface FlightPhotoAttributes {
   id: string;
   path: string;
-  pathThumb?: string;
   originalname?: string;
   description?: string;
   timestamp?: Number;
@@ -35,9 +34,6 @@ export function initFlightPhoto(sequelize: Sequelize): Models["FlightPhoto"] {
     path: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    pathThumb: {
-      type: DataTypes.STRING,
     },
     originalname: {
       type: DataTypes.STRING,

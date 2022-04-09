@@ -4,7 +4,6 @@ import { Models } from "../../types/Models";
 interface ProfilePictureAttributes {
   id: string;
   path: string;
-  pathThumb?: string; // TODO: This is unused! Remove it?
   originalname: string;
   mimetype?: string;
   size?: number;
@@ -35,9 +34,6 @@ export function initProfilePicture(
       path: {
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      pathThumb: {
-        type: DataTypes.STRING,
       },
       originalname: {
         type: DataTypes.STRING,

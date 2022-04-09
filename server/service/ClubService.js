@@ -98,7 +98,7 @@ function createLogoInclude() {
   return {
     model: Logo,
     as: "logo",
-    attributes: ["id", "path", "pathThumb"],
+    attributes: ["id", "path"],
   };
 }
 
