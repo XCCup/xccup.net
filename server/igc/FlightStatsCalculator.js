@@ -91,9 +91,11 @@ function gpsHeightDifference(current, precessor) {
   return current.gpsAltitude - precessor.gpsAltitude;
 }
 
-function FixStat(climb, speed) {
-  this.climb = climb;
-  this.speed = speed;
+class FixStat {
+  constructor(climb, speed) {
+    this.climb = climb;
+    this.speed = speed;
+  }
 }
 
 /**

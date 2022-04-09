@@ -3,8 +3,21 @@ import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 interface FlightFixesAttributes {
   id: string;
   geom: DataTypes.GeometryDataType;
-  timeAndHeights: object[]; // TODO: Type this stricter
-  stats?: object[]; // TODO: Type this stricter
+  timeAndHeights: FlightFixTimeAndHeights;
+  stats?: FlightFixStat;
+}
+
+interface FlightFixStat {
+  speed: Number;
+  climb: Number;
+}
+
+interface FlightFixTimeAndHeights {
+  timestamp: Number;
+  time: String;
+  pressureAltitude: null | Number;
+  gpsAltitude: Number;
+  elevation?: number;
 }
 
 interface FlightFixesCreationAttributes
@@ -58,7 +71,7 @@ export function initFlightFixes(sequelize: Sequelize) {
 
   FlightFixes.extractTimeAndHeights = function (fixes) {
     const times = [];
-    fixes.forEach((fix) => {
+    fixes.forEach((fix: Object) => {
       times.push({
         timestamp: fix.timestamp,
         time: fix.time,

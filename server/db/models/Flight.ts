@@ -1,4 +1,5 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { FlightStats } from "../../types/FlightStats";
 import { Models } from "../../types/Models";
 
 export interface FlightAttributes {
@@ -52,17 +53,6 @@ interface Glider {
     key: string;
     shortDescription: string;
   };
-}
-
-interface FlightStats {
-  minHeightBaro?: number;
-  maxHeightBaro?: number;
-  minHeightGps?: number;
-  maxHeightGps?: number;
-  maxSink?: number;
-  maxClimb?: number;
-  maxSpeed?: number;
-  taskSpeed?: number;
 }
 
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
