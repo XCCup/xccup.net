@@ -9,15 +9,15 @@ interface FlightFixesAttributes {
 }
 
 interface FlightFixStat {
-  speed: Number;
-  climb: Number;
+  speed: number;
+  climb: number;
 }
 
 interface FlightFixTimeAndHeights {
-  timestamp: Number;
+  timestamp: number;
   time: String;
-  pressureAltitude: null | Number;
-  gpsAltitude: Number;
+  pressureAltitude: null | number;
+  gpsAltitude: number;
   elevation?: number;
 }
 
