@@ -6,8 +6,8 @@ export interface NewsAttributes {
   title: string;
   message: string;
   icon: string;
-  from?: string;
-  till?: string;
+  from?: Date;
+  till?: Date;
   meta?: Meta;
 }
 
