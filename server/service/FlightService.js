@@ -35,6 +35,11 @@ const logger = require("../config/logger");
 const config = require("../config/env-config").default;
 
 const { deleteCache } = require("../controller/CacheManager");
+const {
+  createGeometry,
+  extractTimeAndHeights,
+  combineFixesProperties,
+} = require("../helper/FlightFixUtils");
 
 const flightService = {
   getAll: async ({
@@ -203,7 +208,7 @@ const flightService = {
       const flight = flightDbObject.toJSON();
       //TODO: Merge directly when model is retrieved?
 
-      flight.fixes = FlightFixes.mergeData(flight.fixes);
+      flight.fixes = combineFixesProperties(flight.fixes);
       flight.airbuddies = await findAirbuddies(flight);
 
       return flight;
@@ -372,7 +377,7 @@ const flightService = {
     // eslint-disable-next-line no-unused-vars
     await new Promise(function (resolve, reject) {
       ElevationAttacher.execute(
-        FlightFixes.mergeData(fixes),
+        combineFixesProperties(fixes),
         async (fixesWithElevation) => {
           // TODO: Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
           for (let i = 0; i < fixes.timeAndHeights.length; i++) {
@@ -477,8 +482,8 @@ const flightService = {
 async function storeFixesToDB(flight, fixes, fixesStats) {
   await FlightFixes.create({
     flightId: flight.id,
-    geom: FlightFixes.createGeometry(fixes),
-    timeAndHeights: FlightFixes.extractTimeAndHeights(fixes),
+    geom: createGeometry(fixes),
+    timeAndHeights: extractTimeAndHeights(fixes),
     stats: fixesStats,
   });
 }
