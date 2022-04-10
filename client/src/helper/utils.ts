@@ -1,76 +1,79 @@
 import { isString, isInteger } from "lodash-es";
 import { utcToZonedTime } from "date-fns-tz";
 
-export function isIsoDateWithoutTime(string) {
+export function isIsoDateWithoutTime(string: string) {
   const regex = /^\d{4}-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/g;
   return string?.match(regex) != null;
 }
 
-export function setWindowName(namePostfix) {
+export function setWindowName(namePostfix: string) {
   document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}${namePostfix}`;
 }
-export function retrieveDateOnly(isoDate) {
+export function retrieveDateOnly(isoDate: string) {
   return isoDate.substring(0, 10);
 }
-export function dayAfter(date) {
+export function dayAfter(date: Date) {
   const dateObject = new Date(date);
   dateObject.setDate(dateObject.getDate() + 1);
   return retrieveDateOnly(dateObject.toISOString());
 }
 
-export function adjustDateToLocal(originalDate) {
+export function adjustDateToLocal(originalDate: string) {
   const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
   return utcToZonedTime(new Date(originalDate).getTime(), tz);
 }
 
-export function isEmail(value) {
-  if (!isString(value)) return;
+export function isEmail(value: string) {
+  if (!isString(value)) return; // TODO: Can be removed if all files use TS
   return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
 }
 
-export function isInt(value) {
+export function isInt(value: string) {
   return isInteger(parseInt(value));
 }
-
-export function findKeyByValue(object, value) {
+// TODO: How to do this in properly in TS?
+export function findKeyByValue<T1, T2>(object: T1, value: T2) {
+  // @ts-ignore
   return Object.keys(object).find((k) => object[k] == value);
 }
 
-export function isCoordinate(value) {
-  if (!isString(value)) return;
+export function isCoordinate(value: string) {
+  if (!isString(value)) return; // Can be removed if all files use TS
   return value.match(/^-?\d{0,3}.\d{4,16}$/);
 }
 
-export function isDirection(value) {
-  if (!isString(value)) return;
+export function isDirection(value: string) {
+  if (!isString(value)) return; // Can be removed if all files use TS
   return value.match(/^[NSOWnsow]{1,3}[-/,]?[NSOWnsow]{0,3}$/);
 }
 
-export function isStrongPassword(value) {
-  if (!isString(value)) return;
+export function isStrongPassword(value: string) {
+  if (!isString(value)) return; // Can be removed if all files use TS
   const regex =
     /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%/=?^&*()<>\-__+.]){1,}).{8,}$/;
   return value.match(regex);
 }
 
-export async function asyncForEach(array, callback) {
+export async function asyncForEach<T1>(
+  array: T1[],
+  callback: { (arg: T1): void }
+) {
   for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
+    callback(array[index]);
   }
 }
 
-/**
- * Transforms a URL to a DataURL.
- *
- * @param {String} url The URL which will be called.
- * @param {Function} callback The callback function. Will be called with two parameters. First parameter is the plain data result. The second parameter is the mime-type.
- */
-export function convertRemoteImageToDataUrl(url, callback) {
+// Transforms a URL to a DataURL.
+export function convertRemoteImageToDataUrl(
+  url: string,
+  callback: { (arg1: string, arg2: string): void }
+) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
     var reader = new FileReader();
     reader.onloadend = function () {
-      callback(reader.result, xhr.response.type);
+      if (!reader?.result?.toString()) return;
+      callback(reader.result.toString(), xhr.response.type);
     };
     reader.readAsDataURL(xhr.response);
   };
@@ -79,16 +82,19 @@ export function convertRemoteImageToDataUrl(url, callback) {
   xhr.send();
 }
 
-export function checkIfAnyValueOfObjectIsDefined(object) {
+export function checkIfAnyValueOfObjectIsDefined(object: object) {
   return object && Object.values(object).find((v) => !!v) ? true : false;
 }
 
-export function checkIfDateIsDaysBeforeToday(date, daysBeforeToday) {
+export function checkIfDateIsDaysBeforeToday(
+  date: Date,
+  daysBeforeToday: number
+) {
   const daysDifference =
     (new Date().getTime() - new Date(date).getTime()) / 1000 / 60 / 60 / 24;
   return daysDifference < daysBeforeToday;
 }
-export function activateHtmlLinks(message) {
+export function activateHtmlLinks(message: string) {
   // Create clickable links from link text
 
   const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
@@ -97,7 +103,7 @@ export function activateHtmlLinks(message) {
   // const urlRegex =
   //   /(?:(?:https):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?/g;
 
-  const html = message.replace(urlRegex, (url) => {
+  const html = message.replace(urlRegex, (url: string) => {
     let hyperlink = url;
 
     if (!hyperlink.match("^https?://")) {
