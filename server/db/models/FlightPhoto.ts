@@ -6,7 +6,7 @@ interface FlightPhotoAttributes {
   path: string;
   originalname?: string;
   description?: string;
-  timestamp?: Number;
+  timestamp?: Date; // TODO: Change the DB column name to date?
   mimetype?: string;
   size?: number;
   isExternalLink?: boolean;

@@ -1,3 +1,4 @@
+import { Point, Polygon } from "geojson";
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
 interface AirspaceAttributes {
@@ -7,7 +8,7 @@ interface AirspaceAttributes {
   name: string;
   floor: string;
   ceiling: string;
-  polygon: Object; //GeoJSON
+  polygon: Polygon; //GeoJSON
 }
 
 interface AirspaceCreationAttributes

@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes, Optional, ModelStatic } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { Models } from "../../types/Models";
 
 interface BrandAttributes {

@@ -6,17 +6,17 @@ export interface NewsAttributes {
   title: string;
   message: string;
   icon: string;
-  from?: string;
-  till?: string;
+  from?: Date;
+  till?: Date;
   meta?: Meta;
 }
 
 interface Meta {
-  links: [
+  links?: [
     {
-      title: string;
-      value: string;
-      internal: boolean;
+      title?: string;
+      value?: string;
+      internal?: boolean;
     }
   ];
 }
