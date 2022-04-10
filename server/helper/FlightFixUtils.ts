@@ -39,7 +39,6 @@ export function extractTimeAndHeights(
       time: fix.time,
       pressureAltitude: fix.pressureAltitude,
       gpsAltitude: fix.gpsAltitude,
-      // elevation: fix.elevation,
     };
   });
 }
