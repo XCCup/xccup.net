@@ -12,11 +12,11 @@ export interface NewsAttributes {
 }
 
 interface Meta {
-  links: [
+  links?: [
     {
-      title: string;
-      value: string;
-      internal: boolean;
+      title?: string;
+      value?: string;
+      internal?: boolean;
     }
   ];
 }
