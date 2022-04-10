@@ -1,6 +1,7 @@
 export function getbaseURL() {
+  // TODO: Why does TS not recognize this type?
+  // @ts-ignore
   if (process.env.NODE_ENV == "production")
-    // TODO: Why?
     return `${location.protocol}//${location.hostname}/api/`;
 
   if (import.meta.env.VITE_BASE_USE_LIVE_API == "true")
