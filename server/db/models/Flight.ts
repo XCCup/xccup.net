@@ -37,6 +37,7 @@ interface FlightTurnpoint {
   lat: number;
   long: number;
 }
+// TODO: Get this from constants?
 type FlightStatus =
   | "Nicht in Wertung"
   | "In Wertung"
