@@ -1,20 +1,20 @@
-const User = require("../config/postgres")["User"];
-const Flight = require("../config/postgres")["Flight"];
-const FlightComment = require("../config/postgres")["FlightComment"];
-const Club = require("../config/postgres")["Club"];
-const Team = require("../config/postgres")["Team"];
-const FlyingSite = require("../config/postgres")["FlyingSite"];
-const FlightFixes = require("../config/postgres")["FlightFixes"];
-const FlightPhoto = require("../config/postgres")["FlightPhoto"];
-const SeasonDetail = require("../config/postgres")["SeasonDetail"];
-const Airspace = require("../config/postgres")["Airspace"];
-const News = require("../config/postgres")["News"];
-const Sponsor = require("../config/postgres")["Sponsor"];
-const Brand = require("../config/postgres")["Brand"];
-const Logo = require("../config/postgres")["Logo"];
+const User = require("../db")["User"];
+const Flight = require("../db")["Flight"];
+const FlightComment = require("../db")["FlightComment"];
+const Club = require("../db")["Club"];
+const Team = require("../db")["Team"];
+const FlyingSite = require("../db")["FlyingSite"];
+const FlightFixes = require("../db")["FlightFixes"];
+const FlightPhoto = require("../db")["FlightPhoto"];
+const SeasonDetail = require("../db")["SeasonDetail"];
+const Airspace = require("../db")["Airspace"];
+const News = require("../db")["News"];
+const Sponsor = require("../db")["Sponsor"];
+const Brand = require("../db")["Brand"];
+const Logo = require("../db")["Logo"];
 const AirspaceService = require("../service/AirspaceService");
 const logger = require("../config/logger");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
 
 const dbTestData = {
   addFlights: async () => {
@@ -169,7 +169,8 @@ function adjustYearOfEveryFlight(flights) {
 
 function findAllFlightFixes(year) {
   const fs = require("fs");
-  const fixesDir = `${global.__basedir}/import/fixes/${year}`;
+
+  const fixesDir = `${config.get("rootDir")}/import/fixes/${year}`;
   const fixesFileNames = fs.readdirSync(fixesDir);
   console.log("FOUND FIXES: ", fixesFileNames);
   const fixesAsOneArray = fixesFileNames.map((file) =>

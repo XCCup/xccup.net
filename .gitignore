@@ -1,3 +1,6 @@
+.DS_Store
+
+
 # Compiled class file
 *.class
 
@@ -27,7 +30,6 @@ XCCup_DB_Schema/
 client/cypress/videos/
 client/cypress/screenshots/
 server/data/
-server/igc/
 server/import/
 
 .yarn-cache
@@ -35,3 +37,4 @@ server/import/
 *Import.json
 server/fixes/
 archiv/
+

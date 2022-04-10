@@ -1,5 +1,5 @@
-const FlightComment = require("../config/postgres")["FlightComment"];
-const User = require("../config/postgres")["User"];
+const FlightComment = require("../db")["FlightComment"];
+const User = require("../db")["User"];
 
 const _ = require("lodash");
 
