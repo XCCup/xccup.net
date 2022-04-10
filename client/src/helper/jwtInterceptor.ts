@@ -10,8 +10,8 @@ jwtInterceptor.interceptors.request.use((config: AxiosRequestConfig) => {
   if (localStorage.getItem("accessToken") == null) {
     return config;
   }
-
-  jwtInterceptor.defaults.headers.common["Authorization"] =
+  // @ts-ignore
+  config.headers.common["Authorization"] =
     "Bearer " + localStorage.getItem("accessToken");
 
   return config;
