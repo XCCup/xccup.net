@@ -1,8 +1,9 @@
+import { LineString } from "geojson";
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
 interface FlightFixesAttributes {
   id: string;
-  geom: DataTypes.GeometryDataType;
+  geom: LineString;
   timeAndHeights: FlightFixTimeAndHeights;
   stats?: FlightFixStat;
 }
@@ -38,6 +39,7 @@ export function initFlightFixes(sequelize: Sequelize) {
       allowNull: false,
       primaryKey: true,
     },
+    // TODO: Change thii to geometry?
     geom: {
       type: DataTypes.GEOMETRY("LINESTRING"),
       //Stores the lat/long information of the track
