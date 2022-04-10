@@ -1,19 +1,19 @@
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
 import useUser from "@/composables/useUser";
 import router from "@/router/";
 
 const { updateTokens } = useUser();
 
 const jwtInterceptor = axios.create({});
-
-jwtInterceptor.interceptors.request.use((config) => {
-  // if (authData.value == null) {
+// TODO: Merge with apiClient
+jwtInterceptor.interceptors.request.use((config: AxiosRequestConfig) => {
   if (localStorage.getItem("accessToken") == null) {
     return config;
   }
-  // config.headers.common["Authorization"] = `Bearer ${authData.value.token}`;
-  config.headers.common["Authorization"] =
+
+  jwtInterceptor.defaults.headers.common["Authorization"] =
     "Bearer " + localStorage.getItem("accessToken");
+
   return config;
 });
 jwtInterceptor.interceptors.response.use(
