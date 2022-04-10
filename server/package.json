@@ -5,11 +5,6 @@
   "private": true,
   "license": "GNU GPLv3",
   "main": "app.js",
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/test/setup-tests.js"
-    ]
-  },
   "scripts": {
     "start": "ts-node --transpile-only app.ts",
     "dev": "ts-node-dev --respawn --pretty --transpile-only app.ts",
