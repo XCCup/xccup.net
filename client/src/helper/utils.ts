@@ -13,7 +13,8 @@ export function retrieveDateOnly(isoDate?: string) {
   if (!isoDate) return "";
   return isoDate.substring(0, 10);
 }
-export function dayAfter(date: Date) {
+export function dayAfter(date?: string) {
+  if (!date) return "";
   const dateObject = new Date(date);
   dateObject.setDate(dateObject.getDate() + 1);
   return retrieveDateOnly(dateObject.toISOString());
