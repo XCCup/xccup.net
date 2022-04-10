@@ -75,7 +75,7 @@ export function initFlyingSite(sequelize: Sequelize): Models["FlyingSite"] {
       type: DataTypes.STRING,
     },
     submitter: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
     },
   }) as Models["FlyingSite"];
 
