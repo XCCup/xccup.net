@@ -6,7 +6,7 @@ interface FlightPhotoAttributes {
   path: string;
   originalname?: string;
   description?: string;
-  timestamp?: Number;
+  timestamp?: number;
   mimetype?: string;
   size?: number;
   isExternalLink?: boolean;
