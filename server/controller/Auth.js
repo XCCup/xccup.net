@@ -1,3 +1,4 @@
+const Token = require("../db")["Token"]; // TODO: Delegate token access to the service tier
 const jwt = require("jsonwebtoken");
 const {
   UNAUTHORIZED,
@@ -5,9 +6,9 @@ const {
 } = require("../constants/http-status-constants");
 const userService = require("../service/UserService");
 require("../service/UserService");
-const Token = require("../config/postgres")["Token"];
+
 const logger = require("../config/logger");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
 
 /**
  * The authentication middleware for the request. If any error within authentication happens the request will be terminated here.

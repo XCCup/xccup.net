@@ -1,5 +1,5 @@
-const Team = require("../config/postgres")["Team"];
-const User = require("../config/postgres")["User"];
+const Team = require("../db")["Team"];
+const User = require("../db")["User"];
 const flightService = require("./FlightService");
 const { Op } = require("sequelize");
 

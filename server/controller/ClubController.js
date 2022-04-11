@@ -13,10 +13,11 @@ const {
   validationHasErrors,
 } = require("./Validation");
 const multer = require("multer");
-const path = require("path");
 const {
   defineFileDestination,
   defineImageFileNameWithCurrentDateAsPrefix,
+  retrieveFilePath,
+  IMAGE_SIZES,
 } = require("../helper/ImageUtils");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const CACHE_RELEVANT_KEYS = ["home", "clubs", "filterOptions"];
@@ -217,20 +218,20 @@ router.put(
 router.get(
   "/logo/:id",
   checkParamIsUuid("id"),
-  query("thumb").optional().isBoolean(),
+  query("size")
+    .optional()
+    .isIn(Object.values(IMAGE_SIZES).map((f) => f.name)),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
-    const thumb = req.query.thumb;
+    const size = req.query.size;
 
     try {
       const logo = await logoService.getById(id);
 
       if (!logo) return res.sendStatus(NOT_FOUND);
 
-      const fullfilepath = thumb
-        ? path.join(path.resolve(), logo.pathThumb)
-        : path.join(path.resolve(), logo.path);
+      const fullfilepath = retrieveFilePath(logo.path, size);
 
       return res.type(logo.mimetype).sendFile(fullfilepath);
     } catch (error) {
