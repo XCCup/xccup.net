@@ -32,7 +32,6 @@ import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import TextEditor from "./TextEditor.vue";
 
 const { getUserId, loggedIn } = useUser();
 const { submitComment } = useComments();
@@ -62,9 +61,10 @@ const clearCommentEditorInput = () => {
   removeMessageFromLocalStorage();
 };
 
+const newLocal = "commentMessage";
 const saveMessageToLocalStorage = () => {
   localStorage.setItem(
-    "commentMessage",
+    newLocal,
     JSON.stringify({
       message: message.value,
       flightId: route.params.flightId,
