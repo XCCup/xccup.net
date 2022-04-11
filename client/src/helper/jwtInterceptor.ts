@@ -7,12 +7,13 @@ const { updateTokens } = useUser();
 const jwtInterceptor = axios.create({});
 // TODO: Merge with apiClient
 jwtInterceptor.interceptors.request.use((config: AxiosRequestConfig) => {
-  if (localStorage.getItem("accessToken") == null) {
+  const token = localStorage.getItem("accessToken");
+
+  if (token == null || !config.headers) {
     return config;
   }
-  // @ts-ignore
-  config.headers.common["Authorization"] =
-    "Bearer " + localStorage.getItem("accessToken");
+
+  config.headers["Authorization"] = "Bearer " + token;
 
   return config;
 });
