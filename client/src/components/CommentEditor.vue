@@ -38,6 +38,8 @@ const { submitComment } = useComments();
 
 const route = useRoute();
 
+const LOCAL_STORAGE_COMMENT_ITEM_KEY = "commentMessage";
+
 // Submit comment
 const message = ref("");
 const sendButtonIsDisabled = computed(() => !message.value.trim().length);
@@ -61,10 +63,9 @@ const clearCommentEditorInput = () => {
   removeMessageFromLocalStorage();
 };
 
-const newLocal = "commentMessage";
 const saveMessageToLocalStorage = () => {
   localStorage.setItem(
-    newLocal,
+    LOCAL_STORAGE_COMMENT_ITEM_KEY,
     JSON.stringify({
       message: message.value,
       flightId: route.params.flightId,
@@ -72,14 +73,14 @@ const saveMessageToLocalStorage = () => {
   );
 };
 const removeMessageFromLocalStorage = () => {
-  localStorage.removeItem("commentMessage");
+  localStorage.removeItem(LOCAL_STORAGE_COMMENT_ITEM_KEY);
 };
 const getMessageFromLocalStorage = () => {
-  if (localStorage.getItem("commentMessage") === null) {
+  if (localStorage.getItem(LOCAL_STORAGE_COMMENT_ITEM_KEY) === null) {
     return "";
   } else {
     const { message, flightId } = JSON.parse(
-      localStorage.getItem("commentMessage")
+      localStorage.getItem(LOCAL_STORAGE_COMMENT_ITEM_KEY)
     );
     // Check if the comment in local storage belongs to this flight
     if (flightId === route.params.flightId) {
