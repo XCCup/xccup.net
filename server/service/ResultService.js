@@ -46,7 +46,7 @@ const service = {
     siteShortName,
     siteId,
     siteRegion,
-    club,
+    clubShortName,
     clubId,
     limit,
   }) => {
@@ -122,7 +122,7 @@ const service = {
       siteShortName,
       siteId,
       siteRegion,
-      club,
+      clubShortName,
       clubId,
     });
 
@@ -622,7 +622,7 @@ async function queryDb({
   limit,
   siteShortName,
   siteId,
-  club,
+  clubShortName,
   clubId,
   useIncludes = ["user", "site", "club", "team"],
   siteRegion,
@@ -644,7 +644,7 @@ async function queryDb({
       })
     );
   if (useIncludes.includes("club"))
-    include.push(cretaIncludeStatementClub(club, clubId));
+    include.push(cretaIncludeStatementClub(clubShortName, clubId));
   if (useIncludes.includes("team")) include.push(createIncludeStatementTeam());
 
   const queryObject = {
@@ -679,20 +679,20 @@ function createIncludeStatementTeam() {
   };
 }
 
-function cretaIncludeStatementClub(club, clubId) {
+function cretaIncludeStatementClub(shortName, id) {
   const clubInclude = {
     model: Club,
     as: "club",
     attributes: ["name", "shortName", "id"],
   };
-  if (club) {
+  if (shortName) {
     clubInclude.where = {
-      shortName: club,
+      shortName,
     };
   }
-  if (clubId) {
+  if (id) {
     clubInclude.where = {
-      id: clubId,
+      id,
     };
   }
   return clubInclude;

@@ -28,7 +28,7 @@ router.get(
     query("siteShortName").optional().not().isEmpty().trim().escape(),
     query("siteId").optional().isUUID(),
     query("siteRegion").optional().not().isEmpty().trim().escape(),
-    query("club").optional().not().isEmpty().trim().escape(),
+    query("clubShortName").optional().not().isEmpty().trim().escape(),
     query("clubId").optional().isUUID(),
   ],
   async (req, res, next) => {
@@ -45,7 +45,7 @@ router.get(
       siteShortName,
       siteId,
       siteRegion,
-      club,
+      clubShortName,
       clubId,
     } = req.query;
 
@@ -65,7 +65,7 @@ router.get(
         siteShortName,
         siteId,
         siteRegion,
-        club,
+        clubShortName,
         clubId,
       });
 
