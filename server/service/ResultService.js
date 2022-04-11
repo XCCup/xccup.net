@@ -43,7 +43,7 @@ const service = {
     isSenior,
     isWeekend,
     isHikeAndFly,
-    site,
+    siteShortName,
     siteId,
     siteRegion,
     club,
@@ -119,7 +119,7 @@ const service = {
     const resultQuery = await queryDb({
       where,
       gender,
-      site,
+      siteShortName,
       siteId,
       siteRegion,
       club,
@@ -620,7 +620,7 @@ async function queryDb({
   where,
   gender,
   limit,
-  site,
+  siteShortName,
   siteId,
   club,
   clubId,
@@ -636,7 +636,7 @@ async function queryDb({
   if (useIncludes.includes("site"))
     include.push(
       createIncludeStatementSite({
-        site,
+        siteShortName,
         siteId,
         region: siteRegion,
         state: siteState,
