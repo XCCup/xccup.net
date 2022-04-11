@@ -592,6 +592,13 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
+axios-jwt@^1.7.6:
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/axios-jwt/-/axios-jwt-1.7.6.tgz#a4141f3f94ba6d382fc3251abea7c9760e99ff99"
+  integrity sha512-T4/wbfC9wSJjyk4nECPvlMCVZgjIRxZUyxySeFvyXzI7D40YCgrH+31kT8z8HeQ0zDWwHNiDks0OzYXHdCkx/Q==
+  dependencies:
+    jwt-decode "^3.1.2"
+
 axios@^0.26.1:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.26.1.tgz#1ede41c51fcf51bbbd6fd43669caaa4f0495aaa9"

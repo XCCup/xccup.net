@@ -3,6 +3,15 @@ import axios from "axios";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { useJwt } from "@vueuse/integrations/useJwt";
 
+import {
+  isLoggedIn,
+  setAuthTokens,
+  clearAuthTokens,
+  getAccessToken,
+  getRefreshToken,
+} from "axios-jwt";
+import { apiClient } from "../services/ApiService";
+
 import type { JwtPayload } from "jwt-decode";
 import type { ComputedRef } from "vue-demi";
 
@@ -91,8 +100,8 @@ export default () => {
 
   const logoutUser = () => {
     if (DEBUG) console.log("Logout user…");
-    localStorage.removeItem(ACCESS_TOKEN);
-    localStorage.removeItem(REFRESH_TOKEN);
+    // localStorage.removeItem(ACCESS_TOKEN);
+    // localStorage.removeItem(REFRESH_TOKEN);
     state.loginStatus = "";
     state.authData = {
       token: "",
@@ -114,22 +123,36 @@ export default () => {
     return Date.now() <= state.authData.tokenExp * 1000;
   };
 
+  // const login = async (email: string, password: string) => {
+  //   const response = await axios.post(baseURL + "users/login", {
+  //     email,
+  //     password,
+  //   });
+  //   saveTokenData(response.data);
+  //   return response;
+  // };
+
   const login = async (email: string, password: string) => {
-    const response = await axios.post(baseURL + "users/login", {
+    const response = await apiClient.post("/auth/login", {
       email,
       password,
     });
-    saveTokenData(response.data);
-    return response;
+
+    // save tokens to storage
+    setAuthTokens({
+      accessToken: response.data.access_token,
+      refreshToken: response.data.refresh_token,
+    });
   };
 
   const logout = async () => {
-    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-    await axios
+    const refreshToken = getRefreshToken();
+    await apiClient
       .post(baseURL + "users/logout", { token: refreshToken })
       .catch((err) => {
         console.log(err);
       });
+    clearAuthTokens();
     logoutUser();
   };
 
