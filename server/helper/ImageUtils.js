@@ -123,7 +123,7 @@ function createSizePath(basePath, size) {
 }
 
 /**
- * Deletes the images to the corresponding imageObject properties path and pathThumb
+ * Deletes the images to the corresponding imageObject property path
  * @param {Object} imageObject The imageObject from the db.
  * @returns A promise of the delete operations
  */

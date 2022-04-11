@@ -17,7 +17,7 @@ export interface Flight {
   flightStatus: string;
   flightTurnpoints: FlightTurnpoint[];
   airtime: number;
-  takeoffTime: Date;
+  takeoffTime: Date; // TODO: Maybe better use string?
   landingTime: Date;
   igcPath: string;
   glider: Glider;

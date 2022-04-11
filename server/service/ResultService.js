@@ -1,9 +1,9 @@
-const FlyingSite = require("../config/postgres")["FlyingSite"];
-const User = require("../config/postgres")["User"];
-const Flight = require("../config/postgres")["Flight"];
-const Club = require("../config/postgres")["Club"];
-const Team = require("../config/postgres")["Team"];
-const Result = require("../config/postgres")["Result"];
+const FlyingSite = require("../db")["FlyingSite"];
+const User = require("../db")["User"];
+const Flight = require("../db")["Flight"];
+const Club = require("../db")["Club"];
+const Team = require("../db")["Team"];
+const Result = require("../db")["Result"];
 
 const seasonService = require("./SeasonService");
 const teamService = require("./TeamService");
@@ -100,7 +100,7 @@ const service = {
     const where = createDefaultWhereForFlight({ seasonDetail, isSenior });
     if (rankingClass) {
       const gliderClasses =
-        seasonDetail.rankingClasses[rankingClass].gliderClasses ?? [];
+        seasonDetail?.rankingClasses[rankingClass].gliderClasses ?? [];
       where.glider = {
         gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
       };
@@ -179,7 +179,7 @@ const service = {
             NUMBER_OF_SCORED_FLIGHTS,
             TEAM_DISMISSES,
             TEAM_SIZE,
-            REMARKS: seasonDetail.misc?.textMessages?.resultsTeam,
+            REMARKS: seasonDetail?.misc?.textMessages?.resultsTeam,
           },
           limit
         );
@@ -224,7 +224,7 @@ const service = {
         NUMBER_OF_SCORED_FLIGHTS,
         TEAM_DISMISSES,
         TEAM_SIZE,
-        REMARKS: seasonDetail.misc?.textMessages?.resultsTeams,
+        REMARKS: seasonDetail?.misc?.textMessages?.resultsTeams,
       },
       limit
     );
@@ -241,9 +241,9 @@ const service = {
           oldResult,
           {
             NUMBER_OF_SCORED_FLIGHTS,
-            SENIOR_START_AGE: seasonDetail.seniorStartAge,
-            SENIOR_BONUS_PER_AGE: seasonDetail.seniorBonusPerAge,
-            REMARKS: seasonDetail.misc?.textMessages?.resultsSeniors,
+            SENIOR_START_AGE: seasonDetail?.seniorStartAge,
+            SENIOR_BONUS_PER_AGE: seasonDetail?.seniorBonusPerAge,
+            REMARKS: seasonDetail?.misc?.textMessages?.resultsSeniors,
           },
           limit
         );
@@ -261,9 +261,9 @@ const service = {
       result,
       {
         NUMBER_OF_SCORED_FLIGHTS,
-        SENIOR_START_AGE: seasonDetail.seniorStartAge,
-        SENIOR_BONUS_PER_AGE: seasonDetail.seniorBonusPerAge,
-        REMARKS: seasonDetail.misc?.textMessages?.resultsSeniors,
+        SENIOR_START_AGE: seasonDetail?.seniorStartAge,
+        SENIOR_BONUS_PER_AGE: seasonDetail?.seniorBonusPerAge,
+        REMARKS: seasonDetail?.misc?.textMessages?.resultsSeniors,
       },
       limit
     );
@@ -287,7 +287,7 @@ const service = {
           oldResult,
           {
             NUMBER_OF_SCORED_FLIGHTS,
-            REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
+            REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
           },
           limit
         );
@@ -306,7 +306,7 @@ const service = {
       result,
       {
         NUMBER_OF_SCORED_FLIGHTS,
-        REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
+        REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
       },
       limit
     );
@@ -332,7 +332,7 @@ const service = {
           oldResult,
           {
             NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_LUX,
-            REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
+            REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
           },
           limit
         );
@@ -354,7 +354,7 @@ const service = {
       result,
       {
         NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_LUX,
-        REMARKS_STATE: seasonDetail.misc?.textMessages?.resultsState,
+        REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
       },
       limit
     );
@@ -363,7 +363,7 @@ const service = {
   getEarlyBird: async (year, siteRegion) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const startDate = seasonDetail.startDate;
+    const startDate = seasonDetail?.startDate;
     const endDate = moment(startDate).add(3, "months");
     const dates = { startDate, endDate };
     const where = createDefaultWhereForFlight({ seasonDetail: dates });
@@ -376,7 +376,7 @@ const service = {
     return addConstantInformationToResult(
       resultSingleUserEntries,
       {
-        REMARKS: seasonDetail.misc?.textMessages?.resultsEarlybird,
+        REMARKS: seasonDetail?.misc?.textMessages?.resultsEarlybird,
       },
       20
     );
@@ -385,7 +385,7 @@ const service = {
   getLateBird: async (year, siteRegion) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const endDate = seasonDetail.endDate;
+    const endDate = seasonDetail?.endDate;
     const startDate = moment(endDate).subtract(2, "months");
     const dates = { startDate, endDate };
     const where = createDefaultWhereForFlight({ seasonDetail: dates });
@@ -398,7 +398,7 @@ const service = {
     return addConstantInformationToResult(
       resultSingleUserEntries,
       {
-        REMARKS: seasonDetail.misc?.textMessages?.resultsLatebird,
+        REMARKS: seasonDetail?.misc?.textMessages?.resultsLatebird,
       },
       20
     );
@@ -415,7 +415,7 @@ const service = {
           oldResult,
           {
             NUMBER_OF_SCORED_FLIGHTS,
-            REMARKS: seasonDetail.misc?.textMessages?.resultsNewcomer,
+            REMARKS: seasonDetail?.misc?.textMessages?.resultsNewcomer,
           },
           limit
         );
@@ -423,7 +423,7 @@ const service = {
 
     const where = createDefaultWhereForFlight({ seasonDetail });
     const rankingClass =
-      seasonDetail.rankingClasses[NEWCOMER_MAX_RANKING_CLASS];
+      seasonDetail?.rankingClasses[NEWCOMER_MAX_RANKING_CLASS];
     const gliderClasses = rankingClass.gliderClasses ?? [];
     where.glider = {
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
@@ -442,7 +442,7 @@ const service = {
       {
         NUMBER_OF_SCORED_FLIGHTS,
         NEWCOMER_MAX_RANKING_CLASS: rankingClass.description,
-        REMARKS: seasonDetail.misc?.textMessages?.resultsNewcomer,
+        REMARKS: seasonDetail?.misc?.textMessages?.resultsNewcomer,
       },
       limit
     );
@@ -723,7 +723,7 @@ function createDefaultWhereForFlight({
 
   if (isSenior) {
     where.ageOfUser = {
-      [sequelize.Op.gte]: seasonDetail.seniorStartAge,
+      [sequelize.Op.gte]: seasonDetail?.seniorStartAge,
     };
   }
 
@@ -900,8 +900,8 @@ async function retrieveSeasonDetails(year) {
 //TODO: Calc bonus in regards of seasonDetails for year xxxx
 async function calcSeniorBonusForFlight(age) {
   const seasonDetail = await seasonService.getCurrentActive();
-  const bonusPerYear = seasonDetail.seniorBonusPerAge;
-  const startAge = seasonDetail.seniorStartAge;
+  const bonusPerYear = seasonDetail?.seniorBonusPerAge;
+  const startAge = seasonDetail?.seniorStartAge;
 
   return age > startAge ? bonusPerYear * (age - startAge) : 0;
 }
@@ -933,10 +933,10 @@ async function calcSeniorBonusForFlightResult(result) {
  * @throws An XccupRestrictionError if the rankingType was no active in the season
  */
 function checkIfRankingWasPresent(seasonDetail, rankingType) {
-  if (!seasonDetail.activeRankings?.includes(rankingType)) {
+  if (!seasonDetail?.activeRankings?.includes(rankingType)) {
     throw new XccupHttpError(
       NOT_FOUND,
-      `The ranking ${rankingType} was not present within the season ${seasonDetail.year}`
+      `The ranking ${rankingType} was not present within the season ${seasonDetail?.year}`
     );
   }
 }

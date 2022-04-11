@@ -39,8 +39,6 @@ apiClient.interceptors.response.use(
 
 export default {
   getFlights(params: FilterParams) {
-    console.log(JSON.stringify(params));
-
     return apiClient.get("flights", { params });
   },
   getFlight(flightId: string) {

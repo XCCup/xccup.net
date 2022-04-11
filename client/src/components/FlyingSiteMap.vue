@@ -11,7 +11,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import { tileOptions, tileOptionsSatellite } from "@/config/mapbox.js";
+import { tileOptions, tileOptionsSatellite } from "@/config/mapbox";
 import { ref, onMounted } from "vue";
 
 // Fix for default marker image paths

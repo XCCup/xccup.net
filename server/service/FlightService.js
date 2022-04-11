@@ -1,13 +1,13 @@
 const sequelize = require("sequelize");
-const FlightComment = require("../config/postgres")["FlightComment"];
-const Flight = require("../config/postgres")["Flight"];
-const User = require("../config/postgres")["User"];
-const Team = require("../config/postgres")["Team"];
-const Club = require("../config/postgres")["Club"];
-const Brand = require("../config/postgres")["Brand"];
-const FlightPhoto = require("../config/postgres")["FlightPhoto"];
-const FlyingSite = require("../config/postgres")["FlyingSite"];
-const FlightFixes = require("../config/postgres")["FlightFixes"];
+const FlightComment = require("../db")["FlightComment"];
+const Flight = require("../db")["Flight"];
+const User = require("../db")["User"];
+const Team = require("../db")["Team"];
+const Club = require("../db")["Club"];
+const Brand = require("../db")["Brand"];
+const FlightPhoto = require("../db")["FlightPhoto"];
+const FlyingSite = require("../db")["FlyingSite"];
+const FlightFixes = require("../db")["FlightFixes"];
 
 const moment = require("moment");
 
@@ -32,8 +32,14 @@ const { COUNTRY, STATE: USER_STATE } = require("../constants/user-constants");
 const { STATE } = require("../constants/flight-constants");
 
 const logger = require("../config/logger");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
+
 const { deleteCache } = require("../controller/CacheManager");
+const {
+  createGeometry,
+  extractTimeAndHeights,
+  combineFixesProperties,
+} = require("../helper/FlightFixUtils");
 
 const flightService = {
   getAll: async ({
@@ -202,7 +208,7 @@ const flightService = {
       const flight = flightDbObject.toJSON();
       //TODO: Merge directly when model is retrieved?
 
-      flight.fixes = FlightFixes.mergeData(flight.fixes);
+      flight.fixes = combineFixesProperties(flight.fixes);
       flight.airbuddies = await findAirbuddies(flight);
 
       return flight;
@@ -371,7 +377,7 @@ const flightService = {
     // eslint-disable-next-line no-unused-vars
     await new Promise(function (resolve, reject) {
       ElevationAttacher.execute(
-        FlightFixes.mergeData(fixes),
+        combineFixesProperties(fixes),
         async (fixesWithElevation) => {
           // TODO: Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
           for (let i = 0; i < fixes.timeAndHeights.length; i++) {
@@ -398,7 +404,7 @@ const flightService = {
       flight.flightStatus = STATE.IN_REVIEW;
       flight.save();
       if (sendMail) sendAirspaceViolationMail(flight);
-      if (config.get("env") === "production") sendNewAdminTask();
+      sendNewAdminTask();
     }
 
     return violationResult;
@@ -476,8 +482,8 @@ const flightService = {
 async function storeFixesToDB(flight, fixes, fixesStats) {
   await FlightFixes.create({
     flightId: flight.id,
-    geom: FlightFixes.createGeometry(fixes),
-    timeAndHeights: FlightFixes.extractTimeAndHeights(fixes),
+    geom: createGeometry(fixes),
+    timeAndHeights: extractTimeAndHeights(fixes),
     stats: fixesStats,
   });
 }

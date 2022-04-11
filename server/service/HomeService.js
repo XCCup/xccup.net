@@ -5,7 +5,7 @@ const clubService = require("./ClubService");
 const flightService = require("./FlightService");
 const seasonService = require("./SeasonService");
 const sponsorService = require("./SponsorService");
-const newsService = require("./NewsService");
+const newsService = require("./NewsService").default;
 const flightPhotoService = require("./FlightPhotoService");
 const { STATE } = require("../constants/flight-constants");
 

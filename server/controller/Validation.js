@@ -280,7 +280,7 @@ function queryOptionalColumnExistsInModel(field, modelName) {
   return query(field)
     .optional()
     .custom((value) => {
-      const Model = require("../config/postgres")[modelName];
+      const Model = require("../db")[modelName];
       const columnExists = Object.keys(Model.rawAttributes).includes(value);
       return columnExists;
     });

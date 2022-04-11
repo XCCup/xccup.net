@@ -1,7 +1,8 @@
-const FlightFixes = require("../config/postgres")["FlightFixes"];
-const Airspace = require("../config/postgres")["Airspace"];
+const FlightFixes = require("../db")["FlightFixes"];
+const Airspace = require("../db")["Airspace"];
 const { Op } = require("sequelize");
 const logger = require("../config/logger");
+const { combineFixesProperties } = require("../helper/FlightFixUtils");
 
 const FEET_IN_METER = 0.3048;
 
@@ -77,7 +78,7 @@ const service = {
   hasAirspaceViolation: async (fixesWithElevation) => {
     const startTime = new Date();
 
-    const flightTrackLine = FlightFixes.mergeData(fixesWithElevation);
+    const flightTrackLine = combineFixesProperties(fixesWithElevation);
 
     const fl100Violation = findViolationOfFL100(flightTrackLine);
     if (fl100Violation) return fl100Violation;

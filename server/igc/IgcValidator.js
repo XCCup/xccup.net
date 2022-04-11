@@ -2,7 +2,7 @@ const fs = require("fs");
 const axios = require("axios");
 const FormData = require("form-data");
 const logger = require("../config/logger");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
 
 const igcValidator = {
   G_RECORD_PASSED: "PASSED",

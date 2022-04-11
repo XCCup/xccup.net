@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@types/leaflet": "^1.7.9",
+    "@types/lodash-es": "^4.17.6",
     "@types/node": "^17.0.23",
     "@vitejs/plugin-vue": "^2.3.1",
     "@vue/eslint-config-typescript": "^10.0.0",
@@ -51,7 +52,7 @@
     "autoprefixer": "^10.4.4",
     "cypress": "^9.5.3",
     "cypress-file-upload": "^5.0.8",
-    "eslint": "^8.12.0",
+    "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.0.0",
@@ -60,7 +61,7 @@
     "rollup-plugin-visualizer": "^5.6.0",
     "sass": "^1.49.11",
     "typescript": "^4.6.3",
-    "unplugin-vue-components": "^0.18.5",
+    "unplugin-vue-components": "^0.19.2",
     "vite": "^2.9.1",
     "vue-tsc": "^0.33.9"
   }

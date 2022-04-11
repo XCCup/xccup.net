@@ -2,7 +2,7 @@
 // We suggest you to commit this file into source control
 // Read more: https://github.com/vuejs/vue-next/pull/3399
 
-declare module 'vue' {
+declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AdminCache: typeof import('./src/components/admin/AdminCache.vue')['default']
     AdminFlights: typeof import('./src/components/admin/AdminFlights.vue')['default']
@@ -74,6 +74,8 @@ declare module 'vue' {
     ResultsTableGeneric: typeof import('./src/components/ResultsTableGeneric.vue')['default']
     ResultsTableOverall: typeof import('./src/components/ResultsTableOverall.vue')['default']
     ResultsTableTeams: typeof import('./src/components/ResultsTableTeams.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     SelectSeason: typeof import('./src/components/SelectSeason.vue')['default']
     SiteRecord: typeof import('./src/components/SiteRecord.vue')['default']
     SlotDialog: typeof import('./src/components/SlotDialog.vue')['default']
