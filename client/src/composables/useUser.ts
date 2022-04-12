@@ -133,7 +133,7 @@ export default () => {
   // };
 
   const login = async (email: string, password: string) => {
-    const response = await apiClient.post("/auth/login", {
+    const response = await apiClient.post("users/login", {
       email,
       password,
     });
