@@ -10,7 +10,7 @@ interface Payload extends JwtPayload {
   id?: string;
   firstName?: string;
   lastName?: string;
-  role?: string;
+  role?: "Administrator" | "Moderator" | "Keine" | "Inaktiv";
   gender?: string;
 }
 
