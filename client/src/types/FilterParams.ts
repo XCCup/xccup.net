@@ -1,18 +1,21 @@
 export interface FilterParams {
   clubId?: string;
-  endDate?: string;
+  endDate?: Date;
   flightType?: string;
   gender?: string;
   homeStateOfUser?: string;
   isHikeAndFly?: string;
   isWeekend?: string;
-  limit?: string;
+  limit?: number;
+  offset?: number;
   rankingClass?: string;
+  site?: string;
   siteId?: string;
   siteRegion?: string;
-  startDate?: string;
+  startDate?: Date;
   teamId?: string;
   userId?: string;
   userIds?: string;
-  year?: string;
+  year?: number;
+  sortOder: "desc" | "asc";
 }
