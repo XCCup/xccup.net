@@ -68,7 +68,7 @@ export async function asyncForEach<T1>(
 // Transforms a URL to a DataURL.
 export function convertRemoteImageToDataUrl(
   url: string,
-  callback: { (arg1: string, arg2: string): void }
+  callback: { (dataUrl: string, mimeType: string): void }
 ) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
