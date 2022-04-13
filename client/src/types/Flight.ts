@@ -42,7 +42,7 @@ export interface Flight {
   club?: Club;
   team?: Club;
   comments?: Comment[];
-  photos?: any[];
+  photos?: any[]; // TODO: Type this
   airbuddies?: Flight[];
 }
 
