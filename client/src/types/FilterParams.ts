@@ -1,11 +1,13 @@
+import type { FlightType } from "./FlightType";
+
 export interface FilterParams {
   clubId?: string;
   endDate?: string;
-  flightType?: string;
+  flightType?: FlightType;
   gender?: string;
   homeStateOfUser?: string;
-  isHikeAndFly?: string;
-  isWeekend?: string;
+  isHikeAndFly?: boolean;
+  isWeekend?: boolean;
   limit?: number;
   offset?: number;
   rankingClass?: string;
