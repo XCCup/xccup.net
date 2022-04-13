@@ -15,7 +15,7 @@ export interface FilterParams {
   startDate?: string;
   teamId?: string;
   userId?: string;
-  userIds?: string;
+  userIds?: string[];
   year?: number;
   sortOder: "desc" | "asc";
 }

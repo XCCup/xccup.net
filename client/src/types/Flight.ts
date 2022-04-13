@@ -9,9 +9,9 @@ export interface Flight {
   airspaceComment: null;
   flightPoints: number;
   flightDistance: number;
-  flightDistanceFree: null;
-  flightDistanceFlat: null;
-  flightDistanceFAI: null;
+  flightDistanceFree?: number;
+  flightDistanceFlat?: number;
+  flightDistanceFAI?: number;
   flightType: string;
   flightStatus: string;
   flightTurnpoints: FlightTurnpoint[];
