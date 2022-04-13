@@ -1,5 +1,4 @@
 import type { Glider } from "./Glider";
-import type { UserData } from "./UserData";
 import type { Comment } from "./Comment";
 
 export interface Flight {
@@ -37,7 +36,7 @@ export interface Flight {
   clubId: string;
   teamId: string;
   fixes?: Fix[];
-  user: UserData;
+  user: FlightUserData;
   takeoff?: Takeoff;
   club?: Club;
   team?: Team;
@@ -89,4 +88,10 @@ export interface Takeoff {
   shortName: string;
   name: string;
   direction: string;
+}
+
+export interface FlightUserData {
+  id: string;
+  firstName: string;
+  lastName: string;
 }
