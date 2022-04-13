@@ -40,7 +40,7 @@ export interface Flight {
   user: UserData;
   takeoff?: Takeoff;
   club?: Club;
-  team?: Club;
+  team?: Team;
   comments?: Comment[];
   photos?: any[]; // TODO: Type this
   airbuddies?: Flight[];
@@ -51,6 +51,10 @@ export interface Club {
   name: string;
 }
 
+export interface Team {
+  id: string;
+  name: string;
+}
 export interface Fix {
   timestamp: number;
   time: string;
