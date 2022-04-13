@@ -17,8 +17,8 @@ export interface Flight {
   flightStatus: string;
   flightTurnpoints: FlightTurnpoint[];
   airtime: number;
-  takeoffTime: Date; // TODO: Maybe better use string?
-  landingTime: Date;
+  takeoffTime: string;
+  landingTime: string;
   igcPath: string;
   glider: Glider;
   airspaceViolation: boolean;
@@ -30,8 +30,8 @@ export interface Flight {
   ageOfUser: number;
   homeStateOfUser: string;
   flightStats: FlightStats;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   userId: string;
   siteId: string;
   clubId: string;

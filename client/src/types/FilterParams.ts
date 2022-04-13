@@ -1,6 +1,6 @@
 export interface FilterParams {
   clubId?: string;
-  endDate?: Date;
+  endDate?: string;
   flightType?: string;
   gender?: string;
   homeStateOfUser?: string;
@@ -12,7 +12,7 @@ export interface FilterParams {
   site?: string;
   siteId?: string;
   siteRegion?: string;
-  startDate?: Date;
+  startDate?: string;
   teamId?: string;
   userId?: string;
   userIds?: string;
