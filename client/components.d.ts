@@ -74,6 +74,8 @@ declare module 'vue' {
     ResultsTableGeneric: typeof import('./src/components/ResultsTableGeneric.vue')['default']
     ResultsTableOverall: typeof import('./src/components/ResultsTableOverall.vue')['default']
     ResultsTableTeams: typeof import('./src/components/ResultsTableTeams.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     SelectSeason: typeof import('./src/components/SelectSeason.vue')['default']
     SiteRecord: typeof import('./src/components/SiteRecord.vue')['default']
     SlotDialog: typeof import('./src/components/SlotDialog.vue')['default']
