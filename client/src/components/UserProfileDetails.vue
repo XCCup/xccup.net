@@ -157,7 +157,7 @@
   </div>
 </template>
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { ref, computed } from "vue";
 import useUserProfile from "@/composables/useUserProfile";
 import BaseSpinner from "./BaseSpinner.vue";

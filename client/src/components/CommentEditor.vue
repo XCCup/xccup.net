@@ -32,24 +32,21 @@ import useUser from "@/composables/useUser";
 import useComments from "@/composables/useComments";
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
-import TextEditor from "./TextEditor.vue";
 
 const { getUserId, loggedIn } = useUser();
 const { submitComment } = useComments();
 
 const route = useRoute();
 
+const LOCAL_STORAGE_COMMENT_ITEM_KEY = "commentMessage";
+
 // Submit comment
 const message = ref("");
 const sendButtonIsDisabled = computed(() => !message.value.trim().length);
 
 const onSubmitComment = async () => {
-  const comment = {
-    message: message.value,
-    userId: getUserId.value,
-  };
   try {
-    const res = await submitComment(comment);
+    const res = await submitComment(message.value, getUserId.value);
     if (res.status != 200) throw res.statusText;
     clearCommentEditorInput();
   } catch (error) {
@@ -68,7 +65,7 @@ const clearCommentEditorInput = () => {
 
 const saveMessageToLocalStorage = () => {
   localStorage.setItem(
-    "commentMessage",
+    LOCAL_STORAGE_COMMENT_ITEM_KEY,
     JSON.stringify({
       message: message.value,
       flightId: route.params.flightId,
@@ -76,14 +73,14 @@ const saveMessageToLocalStorage = () => {
   );
 };
 const removeMessageFromLocalStorage = () => {
-  localStorage.removeItem("commentMessage");
+  localStorage.removeItem(LOCAL_STORAGE_COMMENT_ITEM_KEY);
 };
 const getMessageFromLocalStorage = () => {
-  if (localStorage.getItem("commentMessage") === null) {
+  if (localStorage.getItem(LOCAL_STORAGE_COMMENT_ITEM_KEY) === null) {
     return "";
   } else {
     const { message, flightId } = JSON.parse(
-      localStorage.getItem("commentMessage")
+      localStorage.getItem(LOCAL_STORAGE_COMMENT_ITEM_KEY)
     );
     // Check if the comment in local storage belongs to this flight
     if (flightId === route.params.flightId) {

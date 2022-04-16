@@ -74,10 +74,7 @@ const showSpinner = ref(false);
 const handleSubmit = async () => {
   try {
     showSpinner.value = true;
-    const response = await login({
-      email: email.value,
-      password: password.value,
-    });
+    const response = await login(email.value, password.value);
     // Redirect after login
     // Alternativly redirect in router config
     if (response?.status === 200 && !props.preventRedirect) {

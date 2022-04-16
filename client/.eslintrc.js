@@ -5,7 +5,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:vue/vue3-recommended",
-    "prettier",
+    "@vue/eslint-config-prettier",
     "plugin:cypress/recommended",
   ],
   rules: {

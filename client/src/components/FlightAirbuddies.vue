@@ -29,13 +29,13 @@
         >
           <h5 class="ms-2">
             <input
-              :id="index"
+              :id="index.toString()"
               v-model="checkedFlights"
               class="form-check-input"
               type="checkbox"
               :value="airbuddy.id"
             />
-            <label class="form-check-label" :for="index">
+            <label class="form-check-label" :for="index.toString()">
               <span
                 class="badge"
                 :style="{ backgroundColor: trackColors[index + 1] }"
@@ -78,6 +78,7 @@ watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
 
 const onShowAirbuddies = async () => {
   try {
+    if (!flight.value?.airbuddies) return;
     await fetchAll(flight.value.airbuddies);
     loaded.value = true;
   } catch (error) {

@@ -69,7 +69,7 @@
 </template>
 
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import BaseDate from "../BaseDate.vue";
 import { Modal } from "bootstrap";
 import { computed, onMounted, ref } from "vue";

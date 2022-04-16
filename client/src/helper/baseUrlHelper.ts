@@ -1,5 +1,5 @@
 export function getbaseURL() {
-  if (process.env.NODE_ENV == "production")
+  if (import.meta.env.MODE == "production")
     return `${location.protocol}//${location.hostname}/api/`;
 
   if (import.meta.env.VITE_BASE_USE_LIVE_API == "true")
