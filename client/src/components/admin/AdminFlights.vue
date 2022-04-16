@@ -102,7 +102,7 @@
 </template>
 
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { useRouter } from "vue-router";
 import BaseDate from "../BaseDate.vue";
 import { Modal } from "bootstrap";

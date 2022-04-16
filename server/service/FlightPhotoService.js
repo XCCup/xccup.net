@@ -1,7 +1,7 @@
-const FlightPhoto = require("../config/postgres")["FlightPhoto"];
-const Flight = require("../config/postgres")["Flight"];
-const User = require("../config/postgres")["User"];
-const { Sequelize, sequelize } = require("../config/postgres");
+const FlightPhoto = require("../db")["FlightPhoto"];
+const Flight = require("../db")["Flight"];
+const User = require("../db")["User"];
+const Sequelize = require("sequelize");
 
 const service = {
   getById: async (id) => {
@@ -11,11 +11,11 @@ const service = {
   getRandomCurrentYear: async (count) => {
     const randomPhotos = await FlightPhoto.findAll({
       where: {
-        andOp: sequelize.where(
-          sequelize.fn(
+        andOp: Sequelize.where(
+          Sequelize.fn(
             "date_part",
             "year",
-            sequelize.col("FlightPhoto.createdAt")
+            Sequelize.col("FlightPhoto.createdAt")
           ),
           new Date().getFullYear()
         ),

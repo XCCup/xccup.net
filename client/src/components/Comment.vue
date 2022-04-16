@@ -248,7 +248,7 @@ const closeReplyEditor = () => {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/styles/style";
+@import "@/styles";
 // Not yet perfect, but we're getting there…
 .dark-reply {
   background-color: tint-color($primary, 5);

@@ -70,7 +70,7 @@
   </div>
 </template>
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 
 import { computed, ref } from "vue";
 

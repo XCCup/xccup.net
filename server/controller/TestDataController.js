@@ -2,6 +2,7 @@ const express = require("express");
 const logger = require("../config/logger");
 const { deleteCache } = require("./CacheManager");
 const router = express.Router();
+const { sequelize } = require("../db");
 
 // @desc Seeds the DB with the testdatasets
 // @route GET /testdata/seed
@@ -13,7 +14,7 @@ router.get("/seed", async (req, res, next) => {
     deleteCache(["all"]);
 
     if (Flight) {
-      const model = require("../config/postgres")["Flight"];
+      const model = require("../db")["Flight"];
       try {
         await model.destroy({
           truncate: { cascade: true },
@@ -23,7 +24,6 @@ router.get("/seed", async (req, res, next) => {
       }
       await require("../test/DbTestDataLoader").addFlights();
     } else {
-      const { sequelize } = require("../config/postgres");
       await sequelize.sync({ force: true });
       await require("../test/DbTestDataLoader").addTestData();
     }
@@ -46,13 +46,12 @@ router.get("/clear", async (req, res, next) => {
     if (queryParams.length > 0) {
       for (let index = 0; index < queryParams.length; index++) {
         const element = queryParams[index];
-        const model = require("../config/postgres")[element];
+        const model = require("../db")[element];
         await model.destroy({
           truncate: { cascade: true },
         });
       }
     } else {
-      const { sequelize } = require("../config/postgres");
       await sequelize.sync({ force: true });
     }
 

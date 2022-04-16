@@ -1,5 +1,5 @@
 import { ref, computed } from "@vue/reactivity";
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 
 const notifications = ref(0);
 

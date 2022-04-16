@@ -34,13 +34,13 @@
   <TheFooter />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onErrorCaptured } from "vue";
 import { useNProgress } from "@vueuse/integrations/useNProgress";
-
+import "nprogress/nprogress.css";
 const { start, done } = useNProgress(null, { showSpinner: false });
 
-const error = ref(null);
+const error = ref<Error | null>(null);
 onErrorCaptured((e) => {
   error.value = e;
   console.log(e);
@@ -49,5 +49,5 @@ onErrorCaptured((e) => {
 </script>
 
 <style lang="scss">
-@import "@/styles/style";
+@import "@/styles";
 </style>

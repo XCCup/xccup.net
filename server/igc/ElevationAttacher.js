@@ -1,6 +1,8 @@
 const debounce = require("lodash/debounce");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
+
 const logger = require("../config/logger");
+
 const { Client } = require("@googlemaps/google-maps-services-js");
 
 const numberOfFixesPerApiRequest = 500;

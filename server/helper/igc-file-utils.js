@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const logger = require("../config/logger");
 const { getCurrentYear } = require("./Utils");
+const config = require("../config/env-config").default;
 
 function createFileName(
   externalId,
@@ -36,8 +37,7 @@ function createFileName(
 function deleteIgcFile(igcPath) {
   if (!igcPath)
     return logger.warn("IFU: Should delete igc file but path prop was empty");
-
-  const fullfilepath = path.join(global.__basedir, igcPath);
+  const fullfilepath = path.join(config.get("rootDir"), igcPath);
   logger.debug("IFU: Will delete igc " + fullfilepath);
   fs.unlink(fullfilepath, (err) => {
     if (err) {

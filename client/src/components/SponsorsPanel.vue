@@ -72,7 +72,7 @@ const regularSponsors = computed(() => {
 
 <style lang="scss" scoped>
 // This import is needed to use variables
-@import "@/styles/style";
+@import "@/styles";
 
 .box {
   border: 1px solid $gray-400;
