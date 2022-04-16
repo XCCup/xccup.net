@@ -63,6 +63,12 @@ export function isStrongPassword(value: string) {
   return value.match(regex) != null;
 }
 
+/**
+ * Accepts an array and an async callback and runs the callback in a foreach loop on that array.
+ *
+ * @param array The array we iterate on.
+ * @param callback The async callback which will be called on every entry of the array.
+ */
 export async function asyncForEach<T1>(
   array: T1[],
   callback: { (arg: T1): void }
