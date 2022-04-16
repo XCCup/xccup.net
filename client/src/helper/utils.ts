@@ -46,8 +46,8 @@ export function findKeyByValue<T1, T2>(object: T1, value: T2) {
  * @param value That will be checked.
  * @returns A true or false.
  */
-export function isCoordinate(value: string) {
-  if (!isString(value)) return; // Can be removed if all files use TS
+export function isCoordinate(value: string): boolean {
+  if (!isString(value)) return false; // Can be removed if all files use TS
   return value.match(/^-?\d{0,3}.\d{4,16}$/) != null;
 }
 
