@@ -79,12 +79,10 @@ const newSite = reactive({
 const clubs = ref(null);
 const clubData = ref(null);
 
-const latIsValid = computed(() => (isCoordinate(newSite.lat) ? true : false));
-const longIsValid = computed(() => (isCoordinate(newSite.long) ? true : false));
+const latIsValid = computed(() => isCoordinate(newSite.lat));
+const longIsValid = computed(() => isCoordinate(newSite.long));
 const heightIsInt = computed(() => isInt(newSite.heightDifference));
-const directionIsValid = computed(() =>
-  isDirection(newSite.direction) ? true : false
-);
+const directionIsValid = computed(() => isDirection(newSite.direction));
 
 try {
   clubData.value = (await ApiService.getClubNames()).data;

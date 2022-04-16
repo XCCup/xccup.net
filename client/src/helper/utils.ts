@@ -27,33 +27,40 @@ export function adjustDateToLocal(originalDate: string) {
 
 export function isEmail(value: string) {
   if (!isString(value)) return; // TODO: Can be removed if all files use TS
-  return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) != null;
 }
 
 export function isInt(value: string) {
   return isInteger(parseInt(value));
 }
+
 // TODO: How to do this in properly in TS?
 export function findKeyByValue<T1, T2>(object: T1, value: T2) {
   // @ts-ignore
   return Object.keys(object).find((k) => object[k] == value);
 }
 
+/**
+ * Checks if a string has the format of an coordinate in decimal degrees. It's required that the value has at least 4 but max 16 decimals.
+ *
+ * @param value That will be checked.
+ * @returns A true or false.
+ */
 export function isCoordinate(value: string) {
   if (!isString(value)) return; // Can be removed if all files use TS
-  return value.match(/^-?\d{0,3}.\d{4,16}$/);
+  return value.match(/^-?\d{0,3}.\d{4,16}$/) != null;
 }
 
 export function isDirection(value: string) {
   if (!isString(value)) return; // Can be removed if all files use TS
-  return value.match(/^[NSOWnsow]{1,3}[-/,]?[NSOWnsow]{0,3}$/);
+  return value.match(/^[NSOWnsow]{1,3}[-/,]?[NSOWnsow]{0,3}$/) != null;
 }
 
 export function isStrongPassword(value: string) {
   if (!isString(value)) return; // Can be removed if all files use TS
   const regex =
     /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%/=?^&*()<>\-__+.]){1,}).{8,}$/;
-  return value.match(regex);
+  return value.match(regex) != null;
 }
 
 export async function asyncForEach<T1>(
@@ -65,7 +72,12 @@ export async function asyncForEach<T1>(
   }
 }
 
-// Transforms a URL to a DataURL.
+/**
+ * Transforms a URL to a DataURL.
+ *
+ * @param url The URL to a remote image which will be converted to a dataURL.
+ * @param callback The cb which will be called when the transformation is completed. Will receive a dataUrl as and the mimeType as parameters.
+ */
 export function convertRemoteImageToDataUrl(
   url: string,
   callback: { (dataUrl: string, mimeType: string): void }
