@@ -25,6 +25,8 @@ describe("check edit flight page", () => {
 
     cy.get("#flight-details");
     cy.get("button").contains("Flug bearbeiten").should("not.exist");
+    cy.get("button").contains("Admin").should("not.exist");
+    cy.get("button").contains("Neuberechnen").should("not.exist");
   });
 
   it("Check that flight edit is only possible within 14 days", () => {
@@ -40,6 +42,11 @@ describe("check edit flight page", () => {
     cy.visit(`/flug/${editableFlightId}`);
 
     cy.get("#flight-details");
+
+    // Check that admin functionalities are not visible
+    cy.get("button").contains("Admin").should("not.exist");
+    cy.get("button").contains("Neuberechnen").should("not.exist");
+
     cy.get("button").contains("Flug bearbeiten").click();
 
     const oldGliderId = "cd25b974-1e30-4969-ba46-34990461990d";
@@ -95,6 +102,10 @@ describe("check edit flight page", () => {
     cy.visit(`/flug/${nonEditableFlightId}`);
 
     cy.get("#flight-details");
+
+    // Check that the rerun button is also visible
+    cy.get("button").contains("Neuberechnen");
+
     cy.get("button").contains("Admin").click();
     cy.url().should("include", `/flug/${nonEditableFlightId}/bearbeiten`);
   });
