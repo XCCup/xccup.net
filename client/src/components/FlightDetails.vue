@@ -106,6 +106,7 @@
       <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
+
       <button
         v-if="!showEditButton && showAdminEditButton"
         class="btn btn-outline-danger btn-sm ms-2"
@@ -113,6 +114,14 @@
         <i class="bi bi-pencil-square mx-1"></i>Admin
       </button>
     </router-link>
+    <button
+      v-if="!showEditButton && showAdminEditButton"
+      class="btn btn-outline-danger btn-sm ms-2"
+      @click="onRedoCalculation"
+    >
+      <i class="bi bi-calculator mx-1"></i>Neuberechnen
+      <BaseSpinner v-if="isCalculated" />
+    </button>
     <div id="flightDetailsCollapse" class="collapse mt-2">
       <div class="row">
         <div class="col-md-6 col-12">
@@ -176,15 +185,38 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import useUser from "@/composables/useUser";
 import useFlight from "@/composables/useFlight";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
+import ApiService from "@/services/ApiService";
+import useSwal from "@/composables/useSwal";
 
 const { getUserId, hasElevatedRole } = useUser();
 const { flight } = useFlight();
+const { showSuccessToast, showSuccessAlert, showFailedToast } = useSwal();
+
+const isCalculated = ref(false);
+
+const onRedoCalculation = async () => {
+  try {
+    isCalculated.value = true;
+    const res = await ApiService.rerunFlightCalculation(flight.value.id);
+    const hasViolation = res.data.airspaceViolation;
+    hasViolation
+      ? showSuccessAlert(
+          "Flug erfolgreich neu berechnet. Allerdings wurde eine Luftraumverletzung entdeckt."
+        )
+      : showSuccessToast("Flug erfolgreich neu berechnet.");
+  } catch (error) {
+    console.error(error);
+    showFailedToast("Flug Berechnung gescheitert!");
+  } finally {
+    isCalculated.value = false;
+  }
+};
 
 const showEditButton = computed(() => {
   const isAuthor = flight.value.userId === getUserId.value;
