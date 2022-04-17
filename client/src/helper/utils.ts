@@ -1,7 +1,7 @@
 import { isString, isInteger } from "lodash-es";
 import { utcToZonedTime } from "date-fns-tz";
 
-export function isIsoDateWithoutTime(string: string) {
+export function isIsoDateWithoutTime(string: string): boolean {
   const regex = /^\d{4}-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/g;
   return string?.match(regex) != null;
 }
@@ -25,8 +25,8 @@ export function adjustDateToLocal(originalDate: string) {
   return utcToZonedTime(new Date(originalDate).getTime(), tz);
 }
 
-export function isEmail(value: string) {
-  if (!isString(value)) return; // TODO: Can be removed if all files use TS
+export function isEmail(value: string): boolean {
+  if (!isString(value)) return false; // TODO: Can be removed if all files use TS
   return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) != null;
 }
 
@@ -46,18 +46,18 @@ export function findKeyByValue<T1, T2>(object: T1, value: T2) {
  * @param value That will be checked.
  * @returns A true or false.
  */
-export function isCoordinate(value: string) {
-  if (!isString(value)) return; // Can be removed if all files use TS
+export function isCoordinate(value: string): boolean {
+  if (!isString(value)) return false; // Can be removed if all files use TS
   return value.match(/^-?\d{0,3}.\d{4,16}$/) != null;
 }
 
-export function isDirection(value: string) {
-  if (!isString(value)) return; // Can be removed if all files use TS
+export function isDirection(value: string): boolean {
+  if (!isString(value)) return false; // Can be removed if all files use TS
   return value.match(/^[NSOWnsow]{1,3}[-/,]?[NSOWnsow]{0,3}$/) != null;
 }
 
-export function isStrongPassword(value: string) {
-  if (!isString(value)) return; // Can be removed if all files use TS
+export function isStrongPassword(value: string): boolean {
+  if (!isString(value)) return false; // Can be removed if all files use TS
   const regex =
     /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%/=?^&*()<>\-__+.]){1,}).{8,}$/;
   return value.match(regex) != null;
