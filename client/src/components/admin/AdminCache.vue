@@ -1,5 +1,5 @@
 <template>
-  <div id="adminCachePanel" class="container py-3">
+  <div id="adminCachePanel" class="container pb-3">
     <div class="col-6 col">
       <div>
         <h5>Cache bereinigen</h5>
