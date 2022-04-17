@@ -141,4 +141,40 @@ describe("check admin page", () => {
         "Zur Zeit haben sich 10 Piloten für ein T-Shirt qualifiziert. Dies teilt sich wie folgt auf."
       );
   });
+
+  it.only("test admin flight upload list", () => {
+    const expectedPilotName = "Adam Bayer";
+    const igcFileName = "73320_LA9ChMu1.igc";
+    const expectedTakeoff = "Laubenheim";
+    const expectedAirtime = "1:23h";
+
+    cy.get("#nav-flight-upload-tab").click();
+
+    // Check that button is disabled
+    cy.get("button").contains("Flug absenden").should("be.disabled");
+
+    cy.get("#select-pilot").type(expectedPilotName);
+
+    // Check that button is still disabled
+    cy.get("button").contains("Flug absenden").should("be.disabled");
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    cy.get("button").contains("Flug absenden").click();
+
+    // Expect to be redirected to flight view after submitting
+    cy.url({ timeout: 10000 }).should("include", "/flug");
+
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedPilotName);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+  });
 });

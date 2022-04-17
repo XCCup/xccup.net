@@ -47,14 +47,13 @@
 
 <script setup lang="ts">
 import ApiService from "@/services/ApiService";
-import { computed, ref, watch, watchEffect } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import type { NameUserData } from "@/types/UserData";
 import type { Ref } from "vue";
-import useSwal from "@/composables/useSwal";
+import { DAYS_FLIGHT_CHANGEABLE } from "@/common/Constants";
 
 const router = useRouter();
-const { showSuccessToast } = useSwal();
 
 const userNames: Ref<string[]> = ref([]);
 const users: Ref<NameUserData[]> = ref([]);
@@ -95,24 +94,41 @@ async function onSubmit() {
   try {
     showSpinner.value = true;
     if (formData) {
-      const userId = formData.append("userId", selectedUserObject.id);
-      await ApiService.uploadIgcAdmin(formData);
-      showSuccessToast("Flug Upload erfolgreich");
+      formData.append("userId", selectedUserObject.id);
+      const data = (await ApiService.uploadIgcAdmin(formData)).data;
+
+      redirectToFlight(data.externalId);
     }
-  } catch (error) {
+  } catch (error: any) {
+    console.log(error.response);
+    if (
+      error?.response?.status === 400 &&
+      error.response.data == "Invalid G-Record"
+    )
+      return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html).`);
+    if (
+      error?.response?.status === 403 &&
+      error.response.data.includes("already present")
+    )
+      return (errorMessage.value = `Dieser Flug ist bereits vorhanden.`);
+    if (
+      error?.response?.status === 403 &&
+      error.response.data.includes("not possible to change")
+    )
+      return (errorMessage.value = `Dieser Flug ist älter als ${DAYS_FLIGHT_CHANGEABLE} Tage.`);
+
+    if (
+      error?.response?.status === 403 &&
+      error.response.data.includes("Found no takeoff")
+    )
+      return (errorMessage.value = `Dieser Flug liegt ausserhalb des XCCup Gebiets. `);
+
+    errorMessage.value = "Da ist leider was schief gelaufen";
     console.log(error);
   } finally {
     showSpinner.value = false;
   }
 }
-
-// // IGC
-// async function sendIgc(file) {
-//   const formData = new FormData();
-//   formData.append("igcFile", file.target.files[0], file.target.files[0].name);
-//   const response = await ApiService.uploadIgc(formData);
-//   return response;
-// }
 
 const igcSelected = async (file: any) => {
   try {
@@ -128,5 +144,14 @@ const igcSelected = async (file: any) => {
 
 function createFullname(u: NameUserData) {
   return u.firstName + " " + u.lastName;
+}
+
+function redirectToFlight(id: number) {
+  router.push({
+    name: "Flight",
+    params: {
+      flightId: id,
+    },
+  });
 }
 </script>
