@@ -91,6 +91,21 @@
         >
           Newsletter
         </button>
+        <button
+          v-if="
+            authData.role == 'Moderator' || authData.role == 'Administrator'
+          "
+          id="nav-flight-upload-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-flight-upload"
+          type="button"
+          role="tab"
+          aria-controls="nav-flight-upload"
+          aria-selected="false"
+        >
+          Flug Upload
+        </button>
       </div>
     </nav>
     <div id="nav-tabContent" class="tab-content">
@@ -143,6 +158,15 @@
         aria-labelledby="nav-newsletter-tab"
       >
         <AdminNewsletter />
+      </div>
+      <div
+        v-if="authData.role == 'Moderator' || authData.role == 'Administrator'"
+        id="nav-flight-upload"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-flight-upload-tab"
+      >
+        <AdminFlightUpload />
       </div>
     </div>
   </div>

@@ -6,8 +6,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     AdminCache: typeof import('./src/components/admin/AdminCache.vue')['default']
     AdminFlights: typeof import('./src/components/admin/AdminFlights.vue')['default']
+    AdminFlightUpload: typeof import('./src/components/admin/AdminFlightUpload.vue')['default']
     AdminNews: typeof import('./src/components/admin/AdminNews.vue')['default']
     AdminNewsletter: typeof import('./src/components/admin/AdminNewsletter.vue')['default']
+    'AdminNewsletter copy': typeof import('./src/components/admin/AdminNewsletter copy.vue')['default']
     AdminSites: typeof import('./src/components/admin/AdminSites.vue')['default']
     AdminTShirt: typeof import('./src/components/admin/AdminTShirt.vue')['default']
     AirspaceViolationMap: typeof import('./src/components/AirspaceViolationMap.vue')['default']
