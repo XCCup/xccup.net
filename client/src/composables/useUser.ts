@@ -48,7 +48,7 @@ const LOGIN_STATE_SUCCESS = "success";
 const USER_ROLE_NONE = "Keine";
 
 // Enables helpfull logs to understand auth
-const DEBUG = false;
+const DEBUG = import.meta.env.MODE === "development";
 
 const baseURL = getbaseURL();
 const state = reactive<State>({
@@ -67,7 +67,8 @@ const state = reactive<State>({
 
 export default () => {
   // Getters
-  const loggedIn = computed(() => state.loginStatus === LOGIN_STATE_SUCCESS);
+  const loggedIn = computed(() => isLoggedIn());
+  // const loggedIn = computed(() => state.loginStatus === LOGIN_STATE_SUCCESS);
   const getUserId = computed(() => state.authData.userId);
   const getGender = computed(() => state.authData.gender);
   const hasElevatedRole = computed(() => {
@@ -95,7 +96,36 @@ export default () => {
       gender: payload.value.gender,
     };
     state.authData = newTokenData;
+
     state.loginStatus = LOGIN_STATE_SUCCESS;
+  };
+
+  const authData = computed(() => {
+    useJwt(getAccessToken() ?? "");
+  });
+
+  const updateAuthState = (data: TokenData) => {
+    if (DEBUG) console.log("Save token data…");
+
+    const { payload }: { payload: ComputedRef<Payload> } = useJwt(
+      data.accessToken
+    );
+
+    if (!payload.value) return;
+    console.log("foo");
+
+    const newTokenData = {
+      tokenExp: payload.value.exp,
+      userId: payload.value.id,
+      firstName: payload.value.firstName,
+      lastName: payload.value.lastName,
+      role: payload.value.role,
+      gender: payload.value.gender,
+    };
+    state.authData = newTokenData;
+    console.log(state.authData);
+
+    // state.loginStatus = LOGIN_STATE_SUCCESS;
   };
 
   const logoutUser = () => {
@@ -140,44 +170,48 @@ export default () => {
 
     // save tokens to storage
     setAuthTokens({
-      accessToken: response.data.access_token,
-      refreshToken: response.data.refresh_token,
+      accessToken: response.data.accessToken,
+      refreshToken: response.data.refreshToken,
     });
+    updateAuthState(response.data);
+
+    return response;
   };
 
   const logout = async () => {
-    const refreshToken = getRefreshToken();
-    await apiClient
-      .post(baseURL + "users/logout", { token: refreshToken })
-      .catch((err) => {
-        console.log(err);
-      });
+    // const refreshToken = getRefreshToken();
+    // await apiClient
+    //   .post(baseURL + "users/logout", { token: refreshToken })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+    // clearAuthTokens();
     clearAuthTokens();
     logoutUser();
   };
 
-  const updateTokens = async () => {
-    if (DEBUG) console.log("Update tokens…");
-    const authData = state.authData;
-    if (localStorage.getItem(ACCESS_TOKEN)) {
-      try {
-        const refreshResponse = await axios.post(baseURL + "users/token", {
-          token: localStorage.getItem(REFRESH_TOKEN),
-        });
-        saveTokenData({
-          accessToken: refreshResponse.data.accessToken,
-          refreshToken: localStorage.getItem(REFRESH_TOKEN) ?? "",
-        });
-        state.loginStatus = LOGIN_STATE_SUCCESS;
-        if (DEBUG) console.log("…tokens:", authData);
-      } catch (error) {
-        logoutUser();
-        console.log(error);
-      }
-    } else {
-      logoutUser();
-    }
-  };
+  // const updateTokens = async () => {
+  //   if (DEBUG) console.log("Update tokens…");
+  //   const authData = state.authData;
+  //   if (localStorage.getItem(ACCESS_TOKEN)) {
+  //     try {
+  //       const refreshResponse = await axios.post(baseURL + "users/token", {
+  //         token: localStorage.getItem(REFRESH_TOKEN),
+  //       });
+  //       saveTokenData({
+  //         accessToken: refreshResponse.data.accessToken,
+  //         refreshToken: localStorage.getItem(REFRESH_TOKEN) ?? "",
+  //       });
+  //       state.loginStatus = LOGIN_STATE_SUCCESS;
+  //       if (DEBUG) console.log("…tokens:", authData);
+  //     } catch (error) {
+  //       logoutUser();
+  //       console.log(error);
+  //     }
+  //   } else {
+  //     logoutUser();
+  //   }
+  // };
 
   return {
     loggedIn,
@@ -189,6 +223,6 @@ export default () => {
     login,
     logout,
     saveTokenData,
-    updateTokens,
+    // updateTokens,
   };
 };

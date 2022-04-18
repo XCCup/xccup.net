@@ -32,31 +32,31 @@ router.beforeEach(async (to, from, next) => {
 
   // Check if there is token information in local storage.
   // If not => logout user if loggedIn is still true
-  if (
-    !localStorage.getItem("accessToken") &&
-    !localStorage.getItem("refreshToken") &&
-    loggedIn.value
-  ) {
-    logout();
-    if (to.meta.requiredAuth) {
-      return next({ path: "/login", query: { redirect: to.fullPath } });
-    } else {
-      return next();
-    }
-  }
+  // if (
+  //   !localStorage.getItem("accessToken") &&
+  //   !localStorage.getItem("refreshToken") &&
+  //   loggedIn.value
+  // ) {
+  //   logout();
+  //   if (to.meta.requiredAuth) {
+  //     return next({ path: "/login", query: { redirect: to.fullPath } });
+  //   } else {
+  //     return next();
+  //   }
+  // }
 
   // If no token is present in state check if there is token information in local storage
   // TODO: Make this a method of useUser or leave it here?
-  if (!authData.value.token) {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
+  // if (!authData.value.token) {
+  //   const accessToken = localStorage.getItem("accessToken");
+  //   const refreshToken = localStorage.getItem("refreshToken");
 
-    // If there was token information in local storage => update state
-    if (accessToken && refreshToken)
-      saveTokenData({ accessToken, refreshToken });
-  }
-  // Refresh if token is expired and refresh token existent
-  if (!isTokenActive() && authData.value.refreshToken) await updateTokens();
+  //   // If there was token information in local storage => update state
+  //   if (accessToken && refreshToken)
+  //     saveTokenData({ accessToken, refreshToken });
+  // }
+  // // Refresh if token is expired and refresh token existent
+  // if (!isTokenActive() && authData.value.refreshToken) await updateTokens();
 
   // Always allow to go to home
   if (to.fullPath == "/") return next();

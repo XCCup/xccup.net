@@ -269,7 +269,7 @@
             class="btn btn-outline-light btn-sm m-1 dropdown-toggle position-relative"
             data-bs-toggle="dropdown"
           >
-            <i class="bi bi-person me-1"></i>{{ authData.firstName }}
+            <i class="bi bi-person me-1"></i>{{ getAuthData.firstName }}
             <span
               v-if="getNotifications > 0"
               class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger"
@@ -324,14 +324,14 @@
 </template>
 
 <script setup>
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 import useNotifications from "@/composables/useNotifications";
 
 import { computed, watchEffect } from "vue";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 
-const { authData, loggedIn, logout, hasElevatedRole } = useUser();
+const { getAuthData, loggedIn, logout, hasElevatedRole } = useAuth();
 const { getNotifications, refreshNotifications } = useNotifications();
 
 // TODO: Current year should actually be current season

@@ -35,7 +35,7 @@ const requestRefresh: TokenRefreshRequest = async (
   //  refreshToken: response.data.refresh_token
   //}
 
-  return response.data.access_token;
+  return response.data.accessToken;
 };
 
 applyAuthTokenInterceptor(apiClient, {
