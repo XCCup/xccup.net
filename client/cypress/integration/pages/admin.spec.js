@@ -142,7 +142,7 @@ describe("check admin page", () => {
       );
   });
 
-  it.only("test admin flight upload list", () => {
+  it("test admin flight upload list", () => {
     const expectedPilotName = "Adam Bayer";
     const igcFileName = "73320_LA9ChMu1.igc";
     const expectedTakeoff = "Laubenheim";

@@ -1,5 +1,7 @@
 import { isInSeason } from "../../support/utils";
 
+process.env.TZ = "Europe/Berlin";
+
 describe("check landing page", () => {
   before(() => {});
 
@@ -82,9 +84,11 @@ describe("check landing page", () => {
 
       cy.get("table").find("tr").its("length").should("gte", 5);
 
-      const isNextDailyRanking =
-        new Date().getHours() >= 15 - new Date().getTimezoneOffset();
-      new Date().getTimezoneOffset;
+      const hours = new Date().getHours();
+      console.log("TZ: ", process.env.TZ);
+      console.log("STUNDEN: ", hours);
+
+      const isNextDailyRanking = new Date().getHours() >= 15;
       const anyRow1 = isNextDailyRanking
         ? ["Leo Altenwerth", "Stüppel", "74 km", "212 P"]
         : ["Ms. Laurie", "Burgen", "12 km", "75 P"];
