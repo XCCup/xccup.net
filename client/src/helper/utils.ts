@@ -1,7 +1,7 @@
 import { isString, isInteger } from "lodash-es";
 import { utcToZonedTime } from "date-fns-tz";
 
-export function isIsoDateWithoutTime(string: string) {
+export function isIsoDateWithoutTime(string: string): boolean {
   const regex = /^\d{4}-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/g;
   return string?.match(regex) != null;
 }
@@ -25,37 +25,50 @@ export function adjustDateToLocal(originalDate: string) {
   return utcToZonedTime(new Date(originalDate).getTime(), tz);
 }
 
-export function isEmail(value: string) {
-  if (!isString(value)) return; // TODO: Can be removed if all files use TS
-  return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+export function isEmail(value: string): boolean {
+  if (!isString(value)) return false; // TODO: Can be removed if all files use TS
+  return value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) != null;
 }
 
 export function isInt(value: string) {
   return isInteger(parseInt(value));
 }
+
 // TODO: How to do this in properly in TS?
 export function findKeyByValue<T1, T2>(object: T1, value: T2) {
   // @ts-ignore
   return Object.keys(object).find((k) => object[k] == value);
 }
 
-export function isCoordinate(value: string) {
-  if (!isString(value)) return; // Can be removed if all files use TS
-  return value.match(/^-?\d{0,3}.\d{4,16}$/);
+/**
+ * Checks if a string has the format of an coordinate in decimal degrees. It's required that the value has at least 4 but max 16 decimals.
+ *
+ * @param value That will be checked.
+ * @returns A true or false.
+ */
+export function isCoordinate(value: string): boolean {
+  if (!isString(value)) return false; // Can be removed if all files use TS
+  return value.match(/^-?\d{0,3}.\d{4,16}$/) != null;
 }
 
-export function isDirection(value: string) {
-  if (!isString(value)) return; // Can be removed if all files use TS
-  return value.match(/^[NSOWnsow]{1,3}[-/,]?[NSOWnsow]{0,3}$/);
+export function isDirection(value: string): boolean {
+  if (!isString(value)) return false; // Can be removed if all files use TS
+  return value.match(/^[NSOWnsow]{1,3}[-/,]?[NSOWnsow]{0,3}$/) != null;
 }
 
-export function isStrongPassword(value: string) {
-  if (!isString(value)) return; // Can be removed if all files use TS
+export function isStrongPassword(value: string): boolean {
+  if (!isString(value)) return false; // Can be removed if all files use TS
   const regex =
     /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%/=?^&*()<>\-__+.]){1,}).{8,}$/;
-  return value.match(regex);
+  return value.match(regex) != null;
 }
 
+/**
+ * Accepts an array and an async callback and runs the callback in a foreach loop on that array.
+ *
+ * @param array The array we iterate on.
+ * @param callback The async callback which will be called on every entry of the array.
+ */
 export async function asyncForEach<T1>(
   array: T1[],
   callback: { (arg: T1): void }
@@ -65,10 +78,15 @@ export async function asyncForEach<T1>(
   }
 }
 
-// Transforms a URL to a DataURL.
+/**
+ * Transforms a URL to a DataURL.
+ *
+ * @param url The URL to a remote image which will be converted to a dataURL.
+ * @param callback The cb which will be called when the transformation is completed. Will receive a dataUrl as and the mimeType as parameters.
+ */
 export function convertRemoteImageToDataUrl(
   url: string,
-  callback: { (arg1: string, arg2: string): void }
+  callback: { (dataUrl: string, mimeType: string): void }
 ) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {

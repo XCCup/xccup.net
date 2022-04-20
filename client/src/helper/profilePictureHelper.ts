@@ -5,6 +5,6 @@ export function createUserPictureUrl(
   options?: { size: string }
 ) {
   if (!userId) return;
-  const size = options?.size ? `?size=${options?.size}` : "";
+  const size = options?.size ? `?size=${options.size}` : "";
   return `${getbaseURL()}users/picture/${userId}${size}`;
 }

@@ -19,8 +19,8 @@
         :to="{
           name: 'FlightsAll',
           query: {
-            startDate: retrieveDateOnly(flight?.takeoffTime.toString()),
-            endDate: dayAfter(flight?.takeoffTime.toString()),
+            startDate: retrieveDateOnly(flight?.takeoffTime),
+            endDate: dayAfter(flight?.takeoffTime),
           },
         }"
         class="link-light"

@@ -25,10 +25,10 @@ router.get(
     query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("gender").optional().not().isEmpty().trim().escape(),
     query("homeStateOfUser").optional().not().isEmpty().trim().escape(),
-    query("site").optional().not().isEmpty().trim().escape(),
+    query("siteShortName").optional().not().isEmpty().trim().escape(),
     query("siteId").optional().isUUID(),
     query("siteRegion").optional().not().isEmpty().trim().escape(),
-    query("club").optional().not().isEmpty().trim().escape(),
+    query("clubShortName").optional().not().isEmpty().trim().escape(),
     query("clubId").optional().isUUID(),
   ],
   async (req, res, next) => {
@@ -42,10 +42,10 @@ router.get(
       isHikeAndFly,
       isSenior,
       limit,
-      site,
+      siteShortName,
       siteId,
       siteRegion,
-      club,
+      clubShortName,
       clubId,
     } = req.query;
 
@@ -62,10 +62,10 @@ router.get(
         isHikeAndFly,
         isSenior,
         limit,
-        site,
+        siteShortName,
         siteId,
         siteRegion,
-        club,
+        clubShortName,
         clubId,
       });
 
@@ -149,7 +149,7 @@ router.get(
   "/seniors",
   [
     query("year").optional().isInt(),
-    query("region").optional().not().isEmpty().trim().escape(),
+    query("siteRegion").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
   ],
   async (req, res, next) => {

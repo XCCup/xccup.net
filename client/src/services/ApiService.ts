@@ -1,7 +1,21 @@
 import axios from "axios";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 
-import type { FilterParams } from "@/types/FilterParams";
+import type {
+  ClubsFilterParams,
+  FlightsFilterParams,
+  LuxFilterParams,
+  NewcomerFilterParams,
+  OverallFilterParams,
+  OverallLadiesFilterParams,
+  ResultsEarlyBirdFilterParams,
+  ResultsLateBirdFilterParams,
+  ResultsTeamsFilterParams,
+  RlpFilterParams,
+  SeniorsFilterParams,
+  TeamsFilterParams,
+  UserFilterParams,
+} from "@/types/FilterParams";
 import type { ModifiedFlightData } from "@/types/ModifiedFlightData";
 import type { NewComment, Comment } from "@/types/Comment";
 import type { CreateUserData, UserData } from "@/types/UserData";
@@ -43,7 +57,7 @@ applyAuthTokenInterceptor(apiClient, {
 });
 
 export default {
-  getFlights(params: FilterParams) {
+  getFlights(params: FlightsFilterParams) {
     return apiClient.get("flights", { params });
   },
   getFlight(flightId: string) {
@@ -170,52 +184,52 @@ export default {
 
   // Results
 
-  getResultsOverall(params: FilterParams) {
+  getResultsOverall(params: OverallFilterParams) {
     return apiClient.get("results/", {
       params,
     });
   },
-  getResultsNewcomer(params: FilterParams) {
+  getResultsNewcomer(params: NewcomerFilterParams) {
     return apiClient.get("results/newcomer", {
       params,
     });
   },
-  getResultsSeniors(params: FilterParams) {
+  getResultsSeniors(params: SeniorsFilterParams) {
     return apiClient.get("results/seniors", {
       params,
     });
   },
-  getResultsLadies(params: FilterParams) {
+  getResultsLadies(params: OverallLadiesFilterParams) {
     return apiClient.get("results/?gender=F", {
       params,
     });
   },
-  getResultsLux(params: FilterParams) {
+  getResultsLux(params: LuxFilterParams) {
     return apiClient.get("results/state/LUX", {
       params,
     });
   },
-  getResultsRlp(params: FilterParams) {
+  getResultsRlp(params: RlpFilterParams) {
     return apiClient.get("results/state/RP", {
       params,
     });
   },
-  getResultsTeams(params: FilterParams) {
+  getResultsTeams(params: ResultsTeamsFilterParams) {
     return apiClient.get("results/teams", {
       params,
     });
   },
-  getResultsClubs(params: FilterParams) {
+  getResultsClubs(params: ClubsFilterParams) {
     return apiClient.get("results/clubs", {
       params,
     });
   },
-  getResultsEarlybird(params: FilterParams) {
+  getResultsEarlybird(params: ResultsEarlyBirdFilterParams) {
     return apiClient.get("results/earlybird", {
       params,
     });
   },
-  getResultsLatebird(params: FilterParams) {
+  getResultsLatebird(params: ResultsLateBirdFilterParams) {
     return apiClient.get("results/latebird", {
       params,
     });
@@ -234,7 +248,7 @@ export default {
     return apiClient.post("users/", userData);
   },
 
-  getUsers(params: FilterParams) {
+  getUsers(params: UserFilterParams) {
     return apiClient.get("users/public/", { params });
   },
 
@@ -308,7 +322,7 @@ export default {
     return apiClient.get("teams/names/");
   },
 
-  getTeams(params: FilterParams) {
+  getTeams(params: TeamsFilterParams) {
     return apiClient.get("teams/", { params });
   },
 

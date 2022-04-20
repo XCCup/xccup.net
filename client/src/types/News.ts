@@ -9,3 +9,4 @@ export interface CreateNews {
 export interface News extends CreateNews {
   id: string;
 }
+// TODO: Add meta types

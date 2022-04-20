@@ -1,5 +1,4 @@
 import type { Glider } from "./Glider";
-import type { UserData } from "./UserData";
 import type { Comment } from "./Comment";
 
 export interface Flight {
@@ -10,15 +9,15 @@ export interface Flight {
   airspaceComment: null;
   flightPoints: number;
   flightDistance: number;
-  flightDistanceFree: null;
-  flightDistanceFlat: null;
-  flightDistanceFAI: null;
+  flightDistanceFree?: number;
+  flightDistanceFlat?: number;
+  flightDistanceFAI?: number;
   flightType: string;
   flightStatus: string;
   flightTurnpoints: FlightTurnpoint[];
   airtime: number;
-  takeoffTime: Date; // TODO: Maybe better use string?
-  landingTime: Date;
+  takeoffTime: string;
+  landingTime: string;
   igcPath: string;
   glider: Glider;
   airspaceViolation: boolean;
@@ -26,23 +25,23 @@ export interface Flight {
   violationAccepted: boolean;
   hikeAndFly: number;
   isWeekend: boolean;
-  region: null;
+  region?: string;
   ageOfUser: number;
   homeStateOfUser: string;
   flightStats: FlightStats;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   userId: string;
   siteId: string;
   clubId: string;
   teamId: string;
   fixes?: Fix[];
-  user: UserData;
+  user: FlightUserData;
   takeoff?: Takeoff;
   club?: Club;
-  team?: Club;
+  team?: Team;
   comments?: Comment[];
-  photos?: any[];
+  photos?: any[]; // TODO: Type this
   airbuddies?: Flight[];
 }
 
@@ -51,6 +50,10 @@ export interface Club {
   name: string;
 }
 
+export interface Team {
+  id: string;
+  name: string;
+}
 export interface Fix {
   timestamp: number;
   time: string;
@@ -85,4 +88,10 @@ export interface Takeoff {
   shortName: string;
   name: string;
   direction: string;
+}
+
+export interface FlightUserData {
+  id: string;
+  firstName: string;
+  lastName: string;
 }

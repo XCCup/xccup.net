@@ -3,7 +3,7 @@ export interface FlyingSite {
   direction: string;
   website: string;
   club: string;
-  heightDifference: string;
-  lat: string;
-  long: string;
+  heightDifference: number;
+  lat: number;
+  long: number;
 }
