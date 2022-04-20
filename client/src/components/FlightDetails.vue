@@ -177,13 +177,13 @@
 
 <script setup>
 import { computed } from "vue";
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 import useFlight from "@/composables/useFlight";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 
-const { getUserId, hasElevatedRole } = useUser();
+const { getUserId, hasElevatedRole } = useAuth();
 const { flight } = useFlight();
 
 const showEditButton = computed(() => {

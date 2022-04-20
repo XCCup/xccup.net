@@ -9,6 +9,7 @@
       "@/*": ["./src/*"]
     }
   },
+  "exclude": ["./dist/**/*"],
 
   "references": [
     {

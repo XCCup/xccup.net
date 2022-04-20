@@ -216,7 +216,7 @@
 import { ref, computed, watchEffect, onMounted } from "vue";
 import ApiService from "@/services/ApiService";
 import { isStrongPassword, setWindowName } from "../helper/utils";
-import useUserSignup from "@/composables/useUserSignup";
+import useAuthSignup from "@/composables/useAuthSignup";
 import { Modal } from "bootstrap";
 import BaseSlotModal from "../components/BaseSlotModal.vue";
 import PrivacyPolicy from "../components/PrivacyPolicy.vue";
@@ -225,7 +225,7 @@ import useSwal from "../composables/useSwal";
 
 const { showSuccessAlert } = useSwal();
 const router = useRouter();
-const { userData, initialDate } = useUserSignup();
+const { userData, initialDate } = useAuthSignup();
 
 setWindowName("Registrieren");
 

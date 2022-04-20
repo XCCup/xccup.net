@@ -66,7 +66,7 @@
           T-Shirts
         </button>
         <button
-          v-if="authData.role == 'Administrator'"
+          v-if="getAuthData.role == 'Administrator'"
           id="nav-cache-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -79,7 +79,7 @@
           Cache
         </button>
         <button
-          v-if="authData.role == 'Administrator'"
+          v-if="getAuthData.role == 'Administrator'"
           id="nav-newsletter-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -127,7 +127,7 @@
         <AdminTShirt />
       </div>
       <div
-        v-if="authData.role == 'Administrator'"
+        v-if="getAuthData.role == 'Administrator'"
         id="nav-cache"
         class="tab-pane fade"
         role="tabpanel"
@@ -136,7 +136,7 @@
         <AdminCache />
       </div>
       <div
-        v-if="authData.role == 'Administrator'"
+        v-if="getAuthData.role == 'Administrator'"
         id="nav-newsletter"
         class="tab-pane fade"
         role="tabpanel"
@@ -151,9 +151,9 @@
 <script setup>
 import { setWindowName } from "../helper/utils";
 import { ref } from "vue";
-import useUser from "../composables/useUser";
+import useAuth from "../composables/useAuth";
 
-const { authData } = useUser();
+const { getAuthData } = useAuth();
 
 setWindowName("Admin");
 

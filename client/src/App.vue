@@ -1,7 +1,7 @@
 <template>
   <TheNavbar />
   <main class="flex-shrink-0 flex-grow-1 position-relative">
-    <GenericError v-if="error" :error="error" />
+    <GenericError v-if="error" />
     <router-view v-else v-slot="{ Component }">
       <template v-if="Component">
         <suspense timeout="500" @pending="start" @resolve="done">

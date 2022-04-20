@@ -37,9 +37,9 @@
 <script setup>
 import { ref } from "vue";
 import { VuemojiPicker } from "vuemoji-picker";
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 
-const { getGender } = useUser();
+const { getAuthData } = useAuth();
 
 // Exclude emoji picker in ci build because in causes test errors in cypress
 const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER;
@@ -56,7 +56,7 @@ const props = defineProps({
 // Sanitize textarea from male boomer-speech
 const onInput = (text) => {
   let sanitizedText = text;
-  if (getGender.value != "F")
+  if (getAuthData.value.gender != "F")
     sanitizedText = text.replace(/hausfrau/gi, "Hausmann");
 
   emit("update:modelValue", sanitizedText);

@@ -37,9 +37,9 @@
 import useFlight from "@/composables/useFlight";
 import { computed } from "vue";
 import { activateHtmlLinks } from "../helper/utils";
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 
-const { getUserId } = useUser();
+const { getUserId } = useAuth();
 
 const { flight } = useFlight();
 const reportWithLinks = computed(() => activateHtmlLinks(flight.value.report));
