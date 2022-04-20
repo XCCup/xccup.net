@@ -120,7 +120,7 @@
       @click="onRedoCalculation"
     >
       <i class="bi bi-calculator mx-1"></i>Neuberechnen
-      <BaseSpinner v-if="isCalculated" />
+      <BaseSpinner v-if="isCalculating" />
     </button>
     <div id="flightDetailsCollapse" class="collapse mt-2">
       <div class="row">
@@ -198,11 +198,11 @@ const { getUserId, hasElevatedRole } = useUser();
 const { flight } = useFlight();
 const { showSuccessToast, showSuccessAlert, showFailedToast } = useSwal();
 
-const isCalculated = ref(false);
+const isCalculating = ref(false);
 
 const onRedoCalculation = async () => {
   try {
-    isCalculated.value = true;
+    isCalculating.value = true;
     const res = await ApiService.rerunFlightCalculation(flight.value.id);
     const hasViolation = res.data.airspaceViolation;
     hasViolation
@@ -214,7 +214,7 @@ const onRedoCalculation = async () => {
     console.error(error);
     showFailedToast("Flug Berechnung gescheitert!");
   } finally {
-    isCalculated.value = false;
+    isCalculating.value = false;
   }
 };
 
