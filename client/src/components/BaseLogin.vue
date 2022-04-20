@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loggedIn">
+  <div v-once v-if="!loggedIn">
     <form @submit.prevent="handleSubmit">
       <div class="my-3">
         <label for="email" class="form-label">E-Mail</label>
