@@ -109,29 +109,31 @@
   </slot-dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
+import type { UserDataEssential } from "@/types/UserData";
 import useAuth from "../composables/useAuth";
 import ApiService from "../services/ApiService";
 
-const { authData, getUserId } = useAuth();
-const { router } = useRouter();
+const { getAuthData, getUserId } = useAuth();
+const router = useRouter();
 
-const submitterName = authData.value.firstName + " " + authData.value.lastName;
+const submitterName =
+  getAuthData.value.firstName + " " + getAuthData.value.lastName;
 const submitterId = getUserId.value;
 
 const newTeamName = ref("");
-const newTeamMembers = ref([]);
+const newTeamMembers = ref<string[]>([]);
 const selectedUser = ref("");
 
-const teamNames = ref([]);
-const userNamesWithoutTeam = ref([]);
-const usersWithoutTeamData = ref([]);
+const teamNames = ref<string[]>([]);
+const userNamesWithoutTeam = ref<string[]>([]);
+const usersWithoutTeamData = ref<UserDataEssential[]>([]);
 
 const showSpinner = ref(false);
 const submitSuccessful = ref(false);
-const errorMessage = ref(null);
+const errorMessage = ref<string | null>(null);
 
 try {
   const [teamNamesRes, usersWithoutTeamRes] = await Promise.all([
@@ -139,10 +141,10 @@ try {
     ApiService.getUserWithoutTeam(),
   ]);
 
-  teamNames.value = teamNamesRes.data.map((t) => t.name);
+  teamNames.value = teamNamesRes.data.map((t: { name?: string }) => t.name); // TODO: Type this better?
   usersWithoutTeamData.value = usersWithoutTeamRes.data;
   userNamesWithoutTeam.value = usersWithoutTeamRes.data.map(
-    (u) => u.firstName + " " + u.lastName
+    (u: UserDataEssential) => u.firstName + " " + u.lastName
   );
   userNamesWithoutTeam.value = userNamesWithoutTeam.value.filter(
     (item) => item !== submitterName
@@ -162,7 +164,7 @@ const onAddMember = () => {
   selectedUser.value = "";
 };
 
-const onRemoveMember = (member) => {
+const onRemoveMember = (member: string) => {
   newTeamMembers.value = newTeamMembers.value.filter((item) => item !== member);
   userNamesWithoutTeam.value.push(member);
 };
@@ -176,7 +178,7 @@ const onSubmit = async () => {
     });
     if (res.status != 200) throw res.statusText;
     submitSuccessful.value = true;
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
     errorMessage.value = "Da ist leider was schief gelaufen.";
   } finally {
@@ -184,15 +186,18 @@ const onSubmit = async () => {
   }
 };
 
-function retrieveIdsOfMembers() {
+function retrieveIdsOfMembers(): string[] {
   const memberIds = newTeamMembers.value.map((memberFullname) => {
     const found = usersWithoutTeamData.value.find(
       (user) => user.firstName + " " + user.lastName == memberFullname
     );
-    if (!found)
-      return console.error("No ID found for member " + memberFullname);
+    if (!found) {
+      console.error("No ID found for member " + memberFullname);
+      return "";
+    }
     return found.id;
   });
+  if (!submitterId) return [];
   memberIds.push(submitterId);
   return memberIds;
 }
