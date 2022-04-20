@@ -1,59 +1,54 @@
 <template>
-  <div v-if="!loggedIn">
-    <form @submit.prevent="handleSubmit">
-      <div class="my-3">
-        <label for="email" class="form-label">E-Mail</label>
-        <input
-          id="email"
-          v-model="email"
-          type="email"
-          class="form-control"
-          placeholder="E-Mail"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="password" class="form-label">Passwort</label>
-        <input
-          id="password"
-          v-model="password"
-          type="password"
-          class="form-control"
-          placeholder="Passwort"
-        />
-      </div>
-      <div>
-        <BaseError
-          id="loginErrorMessage"
-          :error-message="errorMessage"
-          class="my-2"
-        />
-      </div>
-      <!-- TODO: Enter key should submit -->
-      <button type="submit" class="btn btn-primary">
-        Anmelden <BaseSpinner v-if="showSpinner" />
-      </button>
-      <p class="mt-3">
-        <strong
-          >Vor dem ersten Login auf der neuen Seite musst du auf "Passwort
-          vergessen" klicken und ein neues Passwort anfordern. Verwende dazu
-          bitte deine im alten XCCup benutzte E-Mail-Adresse.</strong
-        >
-      </p>
-    </form>
-
+  <form @submit.prevent="handleSubmit">
     <div class="my-3">
-      <div>
-        <router-link :to="{ name: 'PasswordLost' }"
-          >Password vergessen?</router-link
-        >
-      </div>
-      <div>
-        <router-link :to="{ name: 'Register' }">Registrieren</router-link>
-      </div>
+      <label for="email" class="form-label">E-Mail</label>
+      <input
+        id="email"
+        v-model="email"
+        type="email"
+        class="form-control"
+        placeholder="E-Mail"
+      />
     </div>
-  </div>
-  <div v-else>
-    <p>Du bist bereits angemeldet</p>
+    <div class="mb-3">
+      <label for="password" class="form-label">Passwort</label>
+      <input
+        id="password"
+        v-model="password"
+        type="password"
+        class="form-control"
+        placeholder="Passwort"
+      />
+    </div>
+    <div>
+      <BaseError
+        id="loginErrorMessage"
+        :error-message="errorMessage"
+        class="my-2"
+      />
+    </div>
+    <!-- TODO: Enter key should submit -->
+    <button type="submit" class="btn btn-primary">
+      Anmelden <BaseSpinner v-if="showSpinner" />
+    </button>
+    <p class="mt-3">
+      <strong
+        >Vor dem ersten Login auf der neuen Seite musst du auf "Passwort
+        vergessen" klicken und ein neues Passwort anfordern. Verwende dazu bitte
+        deine im alten XCCup benutzte E-Mail-Adresse.</strong
+      >
+    </p>
+  </form>
+
+  <div class="my-3">
+    <div>
+      <router-link :to="{ name: 'PasswordLost' }"
+        >Password vergessen?</router-link
+      >
+    </div>
+    <div>
+      <router-link :to="{ name: 'Register' }">Registrieren</router-link>
+    </div>
   </div>
 </template>
 
@@ -62,7 +57,7 @@ import useAuth from "@/composables/useAuth";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
-const { login, loggedIn } = useAuth();
+const { login } = useAuth();
 const router = useRouter();
 
 const props = defineProps({
