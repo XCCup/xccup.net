@@ -2,13 +2,7 @@ import { computed } from "@vue/reactivity";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { useJwt } from "@vueuse/integrations/useJwt";
 
-import {
-  isLoggedIn,
-  setAuthTokens,
-  clearAuthTokens,
-  getAccessToken,
-  getRefreshToken,
-} from "@/composables/useAxiosJwt";
+import useAxiosJwt from "@/composables/useAxiosJwt";
 
 import { apiClient } from "../services/ApiService";
 
@@ -22,6 +16,14 @@ interface AuthData extends JwtPayload {
   role?: string;
   gender?: string;
 }
+
+const {
+  isLoggedIn,
+  getAccessToken,
+  getRefreshToken,
+  setAuthTokens,
+  clearAuthTokens,
+} = useAxiosJwt();
 
 const ADMIN_ROLE = "Administrator";
 const MODERATOR_ROLE = "Moderator";

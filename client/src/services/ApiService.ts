@@ -10,11 +10,12 @@ import type { Mail } from "@/types/Mail";
 import type { CreateNews, News } from "@/types/News";
 import type { FlyingSite } from "@/types/FlyingSite";
 
-import {
+import useAxiosJwt, {
   type IAuthTokens,
   type TokenRefreshRequest,
-  applyAuthTokenInterceptor,
 } from "@/composables/useAxiosJwt";
+
+const { applyAuthTokenInterceptor } = useAxiosJwt();
 
 const BASE_URL = getbaseURL();
 
