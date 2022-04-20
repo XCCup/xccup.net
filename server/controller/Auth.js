@@ -22,13 +22,13 @@ const auth = (req, res, next) => {
     jwt.verify(token, config.get("jwtLogin"), (error, user) => {
       if (error) {
         if (error.toString().includes("jwt expired")) {
-          return res.status(FORBIDDEN).send("EXPIRED");
+          return res.status(UNAUTHORIZED).send("EXPIRED"); // See: https://stackoverflow.com/questions/45153773/correct-http-code-for-authentication-token-expiry-401-or-403
         }
         logger.warn(
           `Verify authentication for user ${user?.firstName} ${user?.lastName} failed: ` +
             error
         );
-        return res.sendStatus(FORBIDDEN);
+        return res.sendStatus(UNAUTHORIZED);
       }
       req.user = user;
       next();
@@ -51,7 +51,7 @@ const auth = (req, res, next) => {
  */
 const create = (user) => {
   const token = jwt.sign(createUserTokenObject(user), config.get("jwtLogin"), {
-    expiresIn: "200s",
+    expiresIn: "5s",
   });
   return token;
 };
