@@ -23,8 +23,8 @@
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import ApiService from "../services/ApiService";
-import useUser from "@/composables/useUser";
-const { saveTokenData } = useUser();
+import useAuth from "@/composables/useAuth";
+const { saveTokenData } = useAuth();
 
 const route = useRoute();
 const router = useRouter();

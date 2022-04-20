@@ -1,5 +1,4 @@
 import axios from "axios";
-// import jwtInterceptor from "@/helper/jwtInterceptor";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 
 import type { FilterParams } from "@/types/FilterParams";
@@ -15,8 +14,7 @@ import {
   type IAuthTokens,
   type TokenRefreshRequest,
   applyAuthTokenInterceptor,
-} from "axios-jwt";
-// import router from "@/router/";
+} from "@/composables/useAxiosJwt";
 
 const BASE_URL = getbaseURL();
 
@@ -25,7 +23,7 @@ export const apiClient = axios.create({ baseURL: BASE_URL });
 const requestRefresh: TokenRefreshRequest = async (
   refreshToken: string
 ): Promise<IAuthTokens | string> => {
-  const response = await axios.post(`${BASE_URL}/users/token`, {
+  const response = await axios.post(`${BASE_URL}users/token`, {
     token: refreshToken,
   });
 
@@ -42,29 +40,6 @@ applyAuthTokenInterceptor(apiClient, {
   requestRefresh,
   headerPrefix: "Bearer ", // header value prefix
 });
-
-// const apiClient = axios.create({
-//   BASE_URL: BASE_URL,
-//   withCredentials: false,
-//   headers: {
-//     Accept: "application/json",
-//     "Content-Type": "application/json",
-//   },
-// });
-
-// apiClient.interceptors.response.use(
-//   (response) => response,
-//   (error) => {
-//     //  Only route to network error page if it's a get request.
-//     if (error.message === "Network Error" && error.config.method === "get") {
-//       console.log("Network error");
-//       router.push({
-//         name: "NetworkError",
-//       });
-//     }
-//     return Promise.reject(error);
-//   }
-// );
 
 export default {
   getFlights(params: FilterParams) {

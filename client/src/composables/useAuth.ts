@@ -8,14 +8,14 @@ import {
   clearAuthTokens,
   getAccessToken,
   getRefreshToken,
-} from "axios-jwt";
+} from "@/composables/useAxiosJwt";
 
 import { apiClient } from "../services/ApiService";
 
 import type { JwtPayload } from "jwt-decode";
 import type { ComputedRef } from "vue-demi";
 
-interface Payload extends JwtPayload {
+interface AuthData extends JwtPayload {
   id?: string;
   firstName?: string;
   lastName?: string;
@@ -23,36 +23,25 @@ interface Payload extends JwtPayload {
   gender?: string;
 }
 
-interface TokenData {
-  accessToken: string;
-  refreshToken: string;
-}
-
-const ACCESS_TOKEN = "accessToken";
-const REFRESH_TOKEN = "refreshToken";
-const LOGIN_STATE_SUCCESS = "success";
-
 const ADMIN_ROLE = "Administrator";
 const MODERATOR_ROLE = "Moderator";
-
-// Enables helpfull logs to understand auth
-const DEBUG = import.meta.env.MODE === "development";
 
 const baseURL = getbaseURL();
 
 export default () => {
   // Getters
-  const loggedIn = computed(() => isLoggedIn());
-  const getAuthData = computed(() => decodeJwt());
-  const hasElevatedRole = computed(() => {
-    const role = decodeJwt().role;
+  const loggedIn = computed((): boolean => isLoggedIn.value);
+  const getUserId = computed((): string | undefined => getAuthData.value.id);
+  const getAuthData = computed((): AuthData => decodeJwt(getAccessToken.value));
+
+  const hasElevatedRole = computed((): boolean => {
+    const role = getAuthData.value.role;
     return role === ADMIN_ROLE || role === MODERATOR_ROLE;
   });
 
-  const decodeJwt = () => {
-    const token = getAccessToken();
+  const decodeJwt = (token?: string): AuthData => {
     if (!token) return {};
-    const { payload }: { payload: ComputedRef<Payload> } = useJwt(token);
+    const { payload }: { payload: ComputedRef<AuthData> } = useJwt(token);
     return payload.value;
   };
 
@@ -62,7 +51,6 @@ export default () => {
       password,
     });
 
-    // save tokens to storage
     setAuthTokens({
       accessToken: response.data.accessToken,
       refreshToken: response.data.refreshToken,
@@ -72,12 +60,12 @@ export default () => {
   };
 
   const logout = async () => {
-    // const refreshToken = getRefreshToken();
-    // await apiClient
-    //   .post(baseURL + "users/logout", { token: refreshToken })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    const refreshToken = getRefreshToken.value;
+    await apiClient
+      .post(baseURL + "users/logout", { token: refreshToken })
+      .catch((err) => {
+        console.log(err);
+      });
     clearAuthTokens();
   };
 
@@ -85,6 +73,7 @@ export default () => {
     loggedIn,
     hasElevatedRole,
     getAuthData,
+    getUserId,
     login,
     logout,
   };

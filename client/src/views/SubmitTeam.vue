@@ -112,10 +112,10 @@
 <script setup>
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
-import useUser from "../composables/useUser";
+import useAuth from "../composables/useAuth";
 import ApiService from "../services/ApiService";
 
-const { authData, getUserId } = useUser();
+const { authData, getUserId } = useAuth();
 const { router } = useRouter();
 
 const submitterName = authData.value.firstName + " " + authData.value.lastName;

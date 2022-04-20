@@ -28,13 +28,13 @@
 </template>
 
 <script setup>
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 import useComments from "@/composables/useComments";
 import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import TextEditor from "./TextEditor.vue";
 
-const { getUserId, loggedIn } = useUser();
+const { getUserId, loggedIn } = useAuth();
 const { submitComment } = useComments();
 
 const route = useRoute();
