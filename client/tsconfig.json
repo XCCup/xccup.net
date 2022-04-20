@@ -15,6 +15,5 @@
     {
       "path": "./tsconfig.vite-config.json"
     }
-  ],
-  "exclude": ["./dist/**/*"]
+  ]
 }

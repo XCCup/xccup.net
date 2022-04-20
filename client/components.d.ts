@@ -2,7 +2,7 @@
 // We suggest you to commit this file into source control
 // Read more: https://github.com/vuejs/vue-next/pull/3399
 
-declare module 'vue' {
+declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AdminCache: typeof import('./src/components/admin/AdminCache.vue')['default']
     AdminFlights: typeof import('./src/components/admin/AdminFlights.vue')['default']
