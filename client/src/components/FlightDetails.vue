@@ -84,7 +84,7 @@
         </table>
       </div>
     </div>
-    <!-- Details -->
+    <!-- Details Button -->
     <button
       id="flightDetailsButton"
       class="btn btn-primary btn-sm me-2 dropdown-toggle"
@@ -94,34 +94,49 @@
     >
       Details anzeigen
     </button>
+    <!-- Download .igc -->
     <a :href="igcDownloadUrl"
       ><button type="button" class="btn btn-sm btn-outline-primary">
         <i class="bi bi-cloud-download"></i> .igc
       </button></a
     >
-
+    <!-- Edit Flight -->
     <router-link
       :to="{ name: 'FlightEdit', params: { id: flight.externalId } }"
     >
       <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
-
-      <button
-        v-if="!showEditButton && showAdminEditButton"
-        class="btn btn-outline-danger btn-sm ms-2"
-      >
-        <i class="bi bi-pencil-square mx-1"></i>Admin
-      </button>
     </router-link>
-    <button
-      v-if="!showEditButton && showAdminEditButton"
-      class="btn btn-outline-danger btn-sm ms-2"
-      @click="onRedoCalculation"
-    >
-      <i class="bi bi-calculator mx-1"></i>Neuberechnen
-      <BaseSpinner v-if="isCalculating" />
-    </button>
+    <!-- Admin Dropdown -->
+    <span v-if="hasElevatedRole" class="dropdown ms-2">
+      <button
+        class="btn btn-sm btn-outline-danger dropdown-toggle"
+        type="button"
+        id="admin-options-dropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="bi bi-speedometer2 me-1"></i>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="admin-options-dropdown">
+        <li>
+          <router-link
+            class="dropdown-item"
+            :to="{ name: 'FlightEdit', params: { id: flight.externalId } }"
+            ><i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
+          </router-link>
+        </li>
+
+        <li>
+          <a class="dropdown-item" href="#" @click.prevent="onRedoCalculation">
+            <i class="bi bi-calculator mx-1"></i>Neuberechnen
+            <BaseSpinner v-if="isCalculating" />
+          </a>
+        </li>
+      </ul>
+    </span>
+    <!-- Flight Details Collapse -->
     <div id="flightDetailsCollapse" class="collapse mt-2">
       <div class="row">
         <div class="col-md-6 col-12">
@@ -184,7 +199,7 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 import useUser from "@/composables/useUser";
 import useFlight from "@/composables/useFlight";
@@ -203,6 +218,7 @@ const isCalculating = ref(false);
 const onRedoCalculation = async () => {
   try {
     isCalculating.value = true;
+    if (!flight.value?.id) throw Error("No flight id");
     const res = await ApiService.rerunFlightCalculation(flight.value.id);
     const hasViolation = res.data.airspaceViolation;
     hasViolation
@@ -219,35 +235,36 @@ const onRedoCalculation = async () => {
 };
 
 const showEditButton = computed(() => {
-  const isAuthor = flight.value.userId === getUserId.value;
-
-  return (
-    isAuthor &&
-    checkIfDateIsDaysBeforeToday(
-      flight.value.takeoffTime,
-      DAYS_FLIGHT_CHANGEABLE
-    )
+  if (!flight.value) return false;
+  const isAuthor = flight.value?.userId === getUserId.value;
+  const flightIsEditable = checkIfDateIsDaysBeforeToday(
+    flight.value.takeoffTime,
+    DAYS_FLIGHT_CHANGEABLE
   );
+  return isAuthor && flightIsEditable;
 });
-
-const showAdminEditButton = computed(() => hasElevatedRole.value);
 
 const igcDownloadUrl = computed(() => {
   const baseURL = getbaseURL();
-  return baseURL + "flights/igc/" + flight.value.id;
+  return baseURL + "flights/igc/" + flight.value?.id;
 });
 
-const calcFlightDuration = (duration) => {
+const calcFlightDuration = (duration: number): string => {
   if (!duration) return "";
   const ms = duration * 60 * 1000;
   // let seconds = parseInt((ms / 1000) % 60);
+
   let minutes = parseInt((ms / (1000 * 60)) % 60);
   let hours = parseInt((ms / (1000 * 60 * 60)) % 24);
   minutes = minutes < 10 ? "0" + minutes : minutes;
+
   // seconds = seconds < 10 ? "0" + seconds : seconds;
   return hours + ":" + minutes + "h";
 };
-const isHikeAndFly = computed(() => flight.value.hikeAndFly > 0);
+const isHikeAndFly = computed((): boolean => {
+  if (!flight.value?.hikeAndFly) return false;
+  return flight.value?.hikeAndFly > 0;
+});
 </script>
 
 <style scoped></style>
