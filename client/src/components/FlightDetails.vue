@@ -254,7 +254,10 @@ const calcFlightDuration = (duration: number): string => {
   const ms = duration * 60 * 1000;
   // let seconds = parseInt((ms / 1000) % 60);
 
-  let minutes = parseInt((ms / (1000 * 60)) % 60);
+  //@ts-expect-error
+  let minutes: number | string = parseInt((ms / (1000 * 60)) % 60);
+
+  //@ts-expect-error
   let hours = parseInt((ms / (1000 * 60 * 60)) % 24);
   minutes = minutes < 10 ? "0" + minutes : minutes;
 
