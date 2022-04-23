@@ -8,13 +8,13 @@
           <tbody>
             <tr>
               <th>Gerät</th>
-              <td>{{ flight.glider?.brand }} {{ flight.glider?.model }}</td>
+              <td>{{ flight?.glider?.brand }} {{ flight?.glider?.model }}</td>
             </tr>
             <tr>
               <th>Geräteklasse</th>
               <td>
                 <RankingClass
-                  :ranking-class="flight.glider?.gliderClass"
+                  :ranking-class="flight?.glider?.gliderClass"
                   :short="true"
                   :show-description="true"
                 />
@@ -24,7 +24,7 @@
               <th>Hike & Fly</th>
               <td>
                 <div v-if="isHikeAndFly">
-                  <i class="bi bi-signpost-2 me-1"></i>{{ flight.hikeAndFly }}m
+                  <i class="bi bi-signpost-2 me-1"></i>{{ flight?.hikeAndFly }}m
                   Höhenunterschied
                 </div>
                 <div v-else>-</div>
@@ -34,9 +34,15 @@
               <th>Uhrzeit</th>
               <td v-if="true">
                 <i class="bi bi-arrow-up"></i>
-                <BaseDate :timestamp="flight.takeoffTime" date-format="HH:mm" />
+                <BaseDate
+                  :timestamp="flight?.takeoffTime"
+                  date-format="HH:mm"
+                />
                 Uhr <i class="bi bi-arrow-down"></i>
-                <BaseDate :timestamp="flight.landingTime" date-format="HH:mm" />
+                <BaseDate
+                  :timestamp="flight?.landingTime"
+                  date-format="HH:mm"
+                />
                 Uhr
               </td>
             </tr>
@@ -50,20 +56,20 @@
             <tr>
               <th>Flugzeit</th>
               <td>
-                {{ calcFlightDuration(flight.airtime) }}
+                {{ calcFlightDuration(flight?.airtime) }}
               </td>
             </tr>
             <tr>
               <th>Strecke</th>
-              <td v-if="flight.flightDistance">
-                {{ flight.flightDistance.toFixed(2) }} km
-                <FlightTypeIcon :flight-type="flight.flightType" />
+              <td v-if="flight?.flightDistance">
+                {{ flight?.flightDistance.toFixed(2) }} km
+                <FlightTypeIcon :flight-type="flight?.flightType" />
               </td>
               <td v-else><i class="bi bi-hourglass-split"></i></td>
             </tr>
             <tr>
               <th>Punkte</th>
-              <td v-if="flight.flightPoints">{{ flight.flightPoints }}</td>
+              <td v-if="flight?.flightPoints">{{ flight?.flightPoints }}</td>
               <td v-else><i class="bi bi-hourglass-split"></i></td>
             </tr>
 
@@ -73,10 +79,10 @@
                 <router-link
                   :to="{
                     name: 'FlightsAll',
-                    query: { siteId: flight.takeoff?.id },
+                    query: { siteId: flight?.takeoff?.id },
                   }"
                 >
-                  {{ flight.takeoff.name }} {{ flight.takeoff.direction }}
+                  {{ flight?.takeoff?.name }} {{ flight?.takeoff?.direction }}
                 </router-link>
               </td>
             </tr>
@@ -102,7 +108,7 @@
     >
     <!-- Edit Flight -->
     <router-link
-      :to="{ name: 'FlightEdit', params: { id: flight.externalId } }"
+      :to="{ name: 'FlightEdit', params: { id: flight?.externalId } }"
     >
       <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
@@ -123,7 +129,7 @@
         <li>
           <router-link
             class="dropdown-item"
-            :to="{ name: 'FlightEdit', params: { id: flight.externalId } }"
+            :to="{ name: 'FlightEdit', params: { id: flight?.externalId } }"
             ><i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
           </router-link>
         </li>
@@ -145,24 +151,24 @@
               <tr>
                 <th>Flugstatus</th>
                 <td>
-                  {{ flight.flightStatus }}
-                  <FlightState :flight-state="flight.flightStatus" />
+                  {{ flight?.flightStatus }}
+                  <FlightState :flight-state="flight?.flightStatus" />
                 </td>
               </tr>
               <tr>
                 <th>Höhe min/max (GPS)</th>
                 <td>
-                  {{ flight.flightStats.minHeightGps }}m /
-                  {{ flight.flightStats.maxHeightGps }}m
+                  {{ flight?.flightStats.minHeightGps }}m /
+                  {{ flight?.flightStats.maxHeightGps }}m
                 </td>
               </tr>
               <tr>
                 <th>Max. Steigen</th>
-                <td>{{ flight.flightStats.maxClimb }} m/s</td>
+                <td>{{ flight?.flightStats.maxClimb }} m/s</td>
               </tr>
               <tr>
                 <th>Max. Sinken</th>
-                <td>{{ flight.flightStats.maxSink }} m/s</td>
+                <td>{{ flight?.flightStats.maxSink }} m/s</td>
               </tr>
             </tbody>
           </table>
@@ -172,21 +178,23 @@
             <tbody>
               <tr>
                 <th>Landeplatz</th>
-                <td>{{ flight.landing }}</td>
+                <td>{{ flight?.landing }}</td>
               </tr>
               <tr>
                 <th>Geschwindigkeit max</th>
-                <td>{{ Math.floor(flight.flightStats.maxSpeed) }} km/h</td>
+                <td>
+                  {{ Math.floor(flight?.flightStats.maxSpeed ?? 0) }} km/h
+                </td>
               </tr>
               <tr>
                 <th>Aufgaben-Geschwindigkeit</th>
-                <td>{{ flight.flightStats.taskSpeed ?? "?" }} km/h</td>
+                <td>{{ flight?.flightStats.taskSpeed ?? "?" }} km/h</td>
               </tr>
               <tr>
                 <th>Eingereicht am</th>
                 <td>
                   <BaseDate
-                    :timestamp="flight.createdAt"
+                    :timestamp="flight?.createdAt"
                     date-format="dd.MM.yyyy HH:mm"
                   />
                 </td>
@@ -249,7 +257,7 @@ const igcDownloadUrl = computed(() => {
   return baseURL + "flights/igc/" + flight.value?.id;
 });
 
-const calcFlightDuration = (duration: number): string => {
+const calcFlightDuration = (duration: number | null): string => {
   if (!duration) return "";
   const ms = duration * 60 * 1000;
   // let seconds = parseInt((ms / 1000) % 60);
