@@ -66,7 +66,7 @@
           T-Shirts
         </button>
         <button
-          v-if="getAuthData.role == 'Administrator'"
+          v-if="getAuthData.role == ADMIN_ROLE"
           id="nav-cache-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -79,7 +79,7 @@
           Cache
         </button>
         <button
-          v-if="getAuthData.role == 'Administrator'"
+          v-if="getAuthData.role == ADMIN_ROLE"
           id="nav-newsletter-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -92,7 +92,7 @@
           Newsletter
         </button>
         <button
-          v-if="authData.role == 'Administrator'"
+          v-if="authData.role == ADMIN_ROLE"
           id="nav-flight-upload-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -140,7 +140,7 @@
         <AdminTShirt />
       </div>
       <div
-        v-if="getAuthData.role == 'Administrator'"
+        v-if="getAuthData.role == ADMIN_ROLE"
         id="nav-cache"
         class="tab-pane fade"
         role="tabpanel"
@@ -149,7 +149,7 @@
         <AdminCache />
       </div>
       <div
-        v-if="getAuthData.role == 'Administrator'"
+        v-if="getAuthData.role == ADMIN_ROLE"
         id="nav-newsletter"
         class="tab-pane fade"
         role="tabpanel"
@@ -158,7 +158,7 @@
         <AdminNewsletter />
       </div>
       <div
-        v-if="authData.role == 'Administrator'"
+        v-if="authData.role == ADMIN_ROLE"
         id="nav-flight-upload"
         class="tab-pane fade"
         role="tabpanel"
@@ -175,7 +175,7 @@ import { setWindowName } from "../helper/utils";
 import { ref } from "vue";
 import useAuth from "../composables/useAuth";
 
-const { getAuthData } = useAuth();
+const { getAuthData, ADMIN_ROLE } = useAuth();
 
 setWindowName("Admin");
 

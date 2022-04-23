@@ -76,7 +76,7 @@ export default () => {
     hasElevatedRole,
     getAuthData,
     getUserId,
-    login,
-    logout,
+    ADMIN_ROLE,
+    MODERATOR_ROLE,
   };
 };
