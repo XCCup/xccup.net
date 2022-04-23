@@ -107,7 +107,7 @@ export function checkIfAnyValueOfObjectIsDefined(object: object) {
 }
 
 export function checkIfDateIsDaysBeforeToday(
-  date: Date,
+  date: Date | string,
   daysBeforeToday: number
 ) {
   const daysDifference =

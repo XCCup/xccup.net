@@ -1,5 +1,5 @@
 <template>
-  <div id="adminNewsPanel" class="py-3">
+  <div id="adminNewsPanel" class="pb-3">
     <div class="table-responsive">
       <h5>Nachrichten auf der Startseite</h5>
       <table class="table table-striped table-hover text-sm">

@@ -1,5 +1,7 @@
 import { isInSeason } from "../../support/utils";
 
+process.env.TZ = "Europe/Berlin";
+
 describe("check landing page", () => {
   before(() => {});
 
@@ -81,6 +83,10 @@ describe("check landing page", () => {
       cy.get(".leaflet-container");
 
       cy.get("table").find("tr").its("length").should("gte", 5);
+
+      const hours = new Date().getHours();
+      console.log("TZ: ", process.env.TZ);
+      console.log("STUNDEN: ", hours);
 
       const isNextDailyRanking = new Date().getHours() >= 15;
       const anyRow1 = isNextDailyRanking

@@ -1,7 +1,4 @@
-export interface UserData {
-  id: string;
-  firstName: string;
-  lastName: string;
+export interface UserData extends NameUserData {
   birthday: string;
   gender: "M" | "W" | "D";
   clubId: string;
@@ -19,6 +16,12 @@ export interface UserData {
   emailInformIfComment: boolean;
   emailTeamSearch: boolean;
   picture?: string;
+}
+
+export interface NameUserData {
+  id: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface CreateUserData extends Omit<UserData, "id"> {}

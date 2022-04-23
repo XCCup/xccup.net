@@ -1,7 +1,7 @@
 <template>
-  <div id="adminNewsletterPanel" class="py-3">
+  <div id="adminNewsletterPanel" class="pb-3">
     <h5>Newsletter</h5>
-    <div class="form-check m-1">
+    <div class="form-check mt-3">
       <input
         id="flexCheckDefault"
         v-model="includeAllUserEmails"
@@ -14,7 +14,7 @@
       </label>
     </div>
     <a
-      class="btn btn-outline-primary btn-sm"
+      class="btn btn-outline-primary btn-sm mt-3"
       :class="disableNewsLetter ? 'disabled' : 'bi bi-envelope'"
       :href="`mailto:?bcc=${userEmails.join(',')}&amp;subject=XCCup Newsletter`"
     >
