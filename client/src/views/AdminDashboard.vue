@@ -158,7 +158,7 @@
         <AdminNewsletter />
       </div>
       <div
-        v-if="authData.role == ADMIN_ROLE"
+        v-if="getAuthData.role == ADMIN_ROLE"
         id="nav-flight-upload"
         class="tab-pane fade"
         role="tabpanel"
