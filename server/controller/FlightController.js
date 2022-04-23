@@ -18,6 +18,7 @@ const {
   authToken,
   requesterIsNotOwner,
   requesterIsNotModerator,
+  requesterIsNotAdmin,
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
@@ -40,6 +41,7 @@ const config = require("../config/env-config").default;
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const multer = require("multer");
 const { getCurrentYear } = require("../helper/Utils");
+const userService = require("../service/UserService");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -260,6 +262,105 @@ router.post(
   }
 );
 
+// @desc Allows a admin to upload a flight for a user; Admins are also able to upload older flights.
+// @route POST /flights/admin/upload
+// @access Only moderators and admins
+
+const igcAdminFileUpload = createMulterIgcUploadHandler({ parts: 2 });
+router.post(
+  "/admin/upload",
+  igcAdminFileUpload.single("igcFile"),
+  checkIsUuidObject("userId"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotAdmin(req, res)) return;
+
+      const userId = req.body.userId;
+      const userGliders = await userService.getGlidersById(userId);
+      if (!userGliders) return res.sendStatus(NOT_FOUND);
+
+      const validationResult = await igcValidator.execute(req.file);
+      if (isGRecordResultInvalid(res, validationResult)) return;
+
+      const flightDbObject = await service.create({
+        userId,
+        igcPath: req.file.path,
+        externalId: req.externalId,
+        validationResult,
+      });
+
+      const fixes = IgcAnalyzer.extractFixes(flightDbObject);
+
+      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+
+      const takeoffName =
+        await service.storeFixesAndAddFurtherInformationToFlight(
+          flightDbObject,
+          fixes
+        );
+
+      const result = await service.update(flightDbObject);
+
+      service.startResultCalculation(flightDbObject);
+
+      const glider = userGliders.gliders.find(
+        (g) => g.id == userGliders.defaultGlider
+      );
+      if (!glider)
+        return res
+          .status(BAD_REQUEST)
+          .send("No default glider configured in profile");
+
+      service.finalizeFlightSubmission({ flight: flightDbObject, glider });
+
+      const airspaceViolation =
+        await service.attachElevationDataAndCheckForAirspaceViolations(
+          flightDbObject
+        );
+
+      res.json({
+        flightId: flightDbObject.id,
+        externalId: flightDbObject.externalId,
+        airspaceViolation,
+        takeoff: takeoffName,
+        landing: result.landing,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Allows a admin to rerun a flight calculation; Which includes also the location and elevation requests
+// @route POST /flights/admin/rerun
+// @access Only moderators and admins
+
+router.get(
+  "/admin/rerun/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      const flight = await service.getById(req.params.id);
+      if (!flight) return res.sendStatus(NOT_FOUND);
+
+      service.startResultCalculation(flight);
+
+      const airspaceViolation =
+        await service.attachElevationDataAndCheckForAirspaceViolations(flight);
+
+      res.json({
+        airspaceViolation,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // @desc Allows to upload a flight via the leonardo format directly from a tracker
 // @route POST /flights/leonardo
 
@@ -440,7 +541,7 @@ function paramIdIsLeonardo(req, res) {
   `);
 }
 
-function createMulterIgcUploadHandler() {
+function createMulterIgcUploadHandler({ parts = 1 } = {}) {
   const igcStorage = multer.diskStorage({
     destination: path
       .join(
@@ -461,7 +562,7 @@ function createMulterIgcUploadHandler() {
     limits: {
       fileSize: 2097152,
       files: 1,
-      parts: 1,
+      parts,
     },
   });
 }

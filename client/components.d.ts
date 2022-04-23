@@ -6,6 +6,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AdminCache: typeof import('./src/components/admin/AdminCache.vue')['default']
     AdminFlights: typeof import('./src/components/admin/AdminFlights.vue')['default']
+    AdminFlightUpload: typeof import('./src/components/admin/AdminFlightUpload.vue')['default']
     AdminNews: typeof import('./src/components/admin/AdminNews.vue')['default']
     AdminNewsletter: typeof import('./src/components/admin/AdminNewsletter.vue')['default']
     AdminSites: typeof import('./src/components/admin/AdminSites.vue')['default']

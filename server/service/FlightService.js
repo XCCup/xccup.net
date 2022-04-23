@@ -379,7 +379,6 @@ const flightService = {
       ElevationAttacher.execute(
         combineFixesProperties(fixes),
         async (fixesWithElevation) => {
-          // TODO: Nach Umstellung von DB Model (fixes -> geom & timeAndHeights) ist das hier nur noch Chaos! Vereinfachen!!!
           for (let i = 0; i < fixes.timeAndHeights.length; i++) {
             fixes.timeAndHeights[i].elevation = fixesWithElevation[i].elevation;
           }

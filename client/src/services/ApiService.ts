@@ -18,7 +18,7 @@ import type {
 } from "@/types/FilterParams";
 import type { ModifiedFlightData } from "@/types/ModifiedFlightData";
 import type { NewComment, Comment } from "@/types/Comment";
-import type { CreateUserData, UserData } from "@/types/UserData";
+import type { CreateUserData, UserData, NameUserData } from "@/types/UserData";
 import type { Glider } from "@/types/Glider";
 import type { Mail } from "@/types/Mail";
 import type { CreateNews, News } from "@/types/News";
@@ -65,6 +65,12 @@ export default {
   },
   deleteFlight(externalId: string) {
     return apiClient.delete("flights/" + externalId);
+  },
+  rerunFlightCalculation(flightId: string) {
+    return jwtInterceptor.get(baseURL + "flights/admin/rerun/" + flightId);
+  },
+  uploadIgcAdmin(data: FormData) {
+    return jwtInterceptor.post(baseURL + "flights/admin/upload/", data);
   },
   uploadIgc(data: FormData) {
     return apiClient.post("flights/", data);
