@@ -95,7 +95,7 @@ describe("check edit flight page", () => {
       .should("have.text", newAirspaceComment);
   });
 
-  it.only("Check that admin is always able to edit flight", () => {
+  it("Check that admin is always able to edit flight", () => {
     cy.loginAdminUser();
     cy.visit(`/flug/${nonEditableFlightId}`);
 
