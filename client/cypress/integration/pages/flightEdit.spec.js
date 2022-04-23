@@ -25,8 +25,7 @@ describe("check edit flight page", () => {
 
     cy.get("#flight-details");
     cy.get("button").contains("Flug bearbeiten").should("not.exist");
-    cy.get("button").contains("Admin").should("not.exist");
-    cy.get("button").contains("Neuberechnen").should("not.exist");
+    cy.get("#admin-options-dropdown").should("not.exist");
   });
 
   it("Check that flight edit is only possible within 14 days", () => {
@@ -44,8 +43,7 @@ describe("check edit flight page", () => {
     cy.get("#flight-details");
 
     // Check that admin functionalities are not visible
-    cy.get("button").contains("Admin").should("not.exist");
-    cy.get("button").contains("Neuberechnen").should("not.exist");
+    cy.get("#admin-options-dropdown").should("not.exist");
 
     cy.get("button").contains("Flug bearbeiten").click();
 
@@ -97,16 +95,23 @@ describe("check edit flight page", () => {
       .should("have.text", newAirspaceComment);
   });
 
-  it("Check that admin is always able to edit flight", () => {
+  it.only("Check that admin is always able to edit flight", () => {
     cy.loginAdminUser();
     cy.visit(`/flug/${nonEditableFlightId}`);
 
     cy.get("#flight-details");
 
-    // Check that the rerun button is also visible
-    cy.get("button").contains("Neuberechnen");
+    cy.get("#admin-options-dropdown").click();
 
-    cy.get("button").contains("Admin").click();
+    // Check that the rerun button is also visible
+    cy.get("[data-cy=admin-flight-options]")
+      .find("li")
+      .contains("Neuberechnen");
+
+    cy.get("[data-cy=admin-flight-options]")
+      .find("li")
+      .contains("Flug bearbeiten")
+      .click();
     cy.url().should("include", `/flug/${nonEditableFlightId}/bearbeiten`);
   });
 
@@ -115,7 +120,11 @@ describe("check edit flight page", () => {
     cy.visit(`/flug/${nonEditableFlightId}`);
 
     cy.get("#flight-details");
-    cy.get("button").contains("Admin").click();
+    cy.get("#admin-options-dropdown").click();
+    cy.get("[data-cy=admin-flight-options]")
+      .find("li")
+      .contains("Flug bearbeiten")
+      .click();
     cy.url().should("include", `/flug/${nonEditableFlightId}/bearbeiten`);
 
     cy.get("#cyFlightDeleteButton").click();
