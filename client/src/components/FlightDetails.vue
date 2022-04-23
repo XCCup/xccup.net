@@ -257,7 +257,7 @@ const igcDownloadUrl = computed(() => {
   return baseURL + "flights/igc/" + flight.value?.id;
 });
 
-const calcFlightDuration = (duration: number | null): string => {
+const calcFlightDuration = (duration: number | undefined): string => {
   if (!duration) return "";
   const ms = duration * 60 * 1000;
   // let seconds = parseInt((ms / 1000) % 60);
