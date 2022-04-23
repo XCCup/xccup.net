@@ -1,5 +1,5 @@
 <template>
-  <div id="adminNewsletterPanel" class="pb-3">
+  <div id="adminFlightUploadPanel" class="pb-3">
     <div class="mb-3">
       <h5>Flug Upload</h5>
       <p>
@@ -51,7 +51,6 @@ import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import type { NameUserData } from "@/types/UserData";
 import type { Ref } from "vue";
-import { DAYS_FLIGHT_CHANGEABLE } from "@/common/Constants";
 
 const router = useRouter();
 
@@ -111,12 +110,6 @@ async function onSubmit() {
       error.response.data.includes("already present")
     )
       return (errorMessage.value = `Dieser Flug ist bereits vorhanden.`);
-    if (
-      error?.response?.status === 403 &&
-      error.response.data.includes("not possible to change")
-    )
-      return (errorMessage.value = `Dieser Flug ist älter als ${DAYS_FLIGHT_CHANGEABLE} Tage.`);
-
     if (
       error?.response?.status === 403 &&
       error.response.data.includes("Found no takeoff")

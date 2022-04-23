@@ -92,9 +92,7 @@
           Newsletter
         </button>
         <button
-          v-if="
-            authData.role == 'Moderator' || authData.role == 'Administrator'
-          "
+          v-if="authData.role == 'Administrator'"
           id="nav-flight-upload-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -160,7 +158,7 @@
         <AdminNewsletter />
       </div>
       <div
-        v-if="authData.role == 'Moderator' || authData.role == 'Administrator'"
+        v-if="authData.role == 'Administrator'"
         id="nav-flight-upload"
         class="tab-pane fade"
         role="tabpanel"

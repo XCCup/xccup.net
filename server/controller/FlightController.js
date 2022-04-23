@@ -18,6 +18,7 @@ const {
   authToken,
   requesterIsNotOwner,
   requesterIsNotModerator,
+  requesterIsNotAdmin,
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
@@ -273,7 +274,7 @@ router.post(
   authToken,
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
+      if (await requesterIsNotAdmin(req, res)) return;
 
       const userId = req.body.userId;
       const userGliders = await userService.getGlidersById(userId);
@@ -302,8 +303,6 @@ router.post(
       const result = await service.update(flightDbObject);
 
       service.startResultCalculation(flightDbObject);
-
-      console.log(JSON.stringify(userGliders, null, 2));
 
       const glider = userGliders.gliders.find(
         (g) => g.id == userGliders.defaultGlider

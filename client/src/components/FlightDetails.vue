@@ -117,7 +117,7 @@
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <i class="bi bi-speedometer2 me-1"></i>
+        <i class="bi bi-speedometer2 me-1"></i> Admin
       </button>
       <ul class="dropdown-menu" aria-labelledby="admin-options-dropdown">
         <li>
