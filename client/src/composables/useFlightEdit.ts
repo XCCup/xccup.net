@@ -22,6 +22,7 @@ export default () => {
   // Actions
   const resetState = () => {
     modifiedFlightData.value = {
+      externalId: null,
       glider: { id: "" },
       report: "",
       airspaceComment: "",
