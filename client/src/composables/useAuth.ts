@@ -40,6 +40,12 @@ export default () => {
     const role = getAuthData.value.role;
     return role === ADMIN_ROLE || role === MODERATOR_ROLE;
   });
+  const isAdmin = computed((): boolean => {
+    return getAuthData.value.role === ADMIN_ROLE;
+  });
+  const isModerator = computed((): boolean => {
+    return getAuthData.value.role === MODERATOR_ROLE;
+  });
 
   const decodeJwt = (token?: string): AuthData => {
     if (!token) return {};
@@ -73,10 +79,10 @@ export default () => {
 
   return {
     loggedIn,
-    hasElevatedRole,
     getAuthData,
     getUserId,
-    ADMIN_ROLE,
-    MODERATOR_ROLE,
+    hasElevatedRole,
+    isAdmin,
+    isModerator,
   };
 };
