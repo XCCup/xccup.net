@@ -2,11 +2,17 @@ import { createRouter, createWebHistory } from "vue-router";
 import { Routes } from "./routes";
 import useAuth from "@/composables/useAuth";
 
+interface Scroll {
+  selector?: string;
+  top?: number;
+  behavior?: "smooth";
+}
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHistory(),
   routes: Routes,
   scrollBehavior(to) {
-    const scroll = {};
+    const scroll: Scroll = {};
 
     if (to.hash) scroll.selector = to.hash;
     if (to.meta.toTop) scroll.top = 0;

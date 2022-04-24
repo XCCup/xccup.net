@@ -3,10 +3,6 @@
 interface ImportMetaEnv {
   readonly VITE_BASE_TZ: string;
 }
-interface ImportMetaEnv {
-  readonly VITE_BASE_URL: string;
-}
-
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
