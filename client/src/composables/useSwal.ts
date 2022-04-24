@@ -29,7 +29,7 @@ export default () => {
     });
   };
 
-  const showSuccessAlert = async (text) => {
+  const showSuccessAlert = async (text: string) => {
     await Swal.fire({
       icon: "success",
       confirmButtonColor: DEFAULT_CONFIRM_COLOR,

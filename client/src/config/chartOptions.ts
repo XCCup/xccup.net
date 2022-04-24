@@ -1,4 +1,8 @@
 import { ref } from "vue";
+import useMapPosition from "@/composables/useMapPosition";
+import type { ChartOptions, TooltipItem } from "chart.js";
+const { updatePosition } = useMapPosition();
+
 const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
 
 // Find a way to make this reactive
@@ -6,7 +10,7 @@ const userPrefersDark = ref(
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
 );
 
-export const options = (cb) => ({
+export const options = (cb: Function): ChartOptions<"line"> => ({
   responsive: true,
   onClick: () => {
     // Center map at current position
@@ -22,6 +26,7 @@ export const options = (cb) => ({
     legend: {
       display: false,
     },
+    // @ts-ignore
     crosshair: {
       line: {
         color: userPrefersDark.value ? "darkgrey" : "#GGG",
@@ -39,19 +44,12 @@ export const options = (cb) => ({
       // even if the tooltip is disabled
       external: function () {},
       callbacks: {
-        label: (context) => {
-          // Skip GND dataset
-          if (context.datasetIndex === 0) return;
-
-          // Update marker position on map view event listener
-          const event = new CustomEvent("markerPositionUpdated", {
-            detail: {
-              dataIndex: context.dataIndex,
-              datasetIndex: context.datasetIndex,
-            },
-          });
-          document.dispatchEvent(event);
+        label: (context: TooltipItem<"line">) => {
+          // Skip GND dataset and make track 1 => index 0
+          if (context.datasetIndex === 0) return "";
+          updatePosition(context.datasetIndex - 1, context.dataIndex);
           cb(context);
+          return "";
         },
       },
     },
@@ -81,7 +79,7 @@ export const options = (cb) => ({
       },
       beginAtZero: true,
       ticks: {
-        callback: function (value) {
+        callback: function (value: string | number) {
           return value + "m";
         },
       },
@@ -93,8 +91,8 @@ export const options = (cb) => ({
       tension: 1,
     },
     point: {
-      pointBorderWidth: 0,
-      pointRadius: 0,
+      borderWidth: 0,
+      radius: 0,
     },
   },
 });
