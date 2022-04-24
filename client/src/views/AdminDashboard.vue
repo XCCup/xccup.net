@@ -170,17 +170,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { setWindowName } from "../helper/utils";
 import { ref } from "vue";
 import useAuth from "../composables/useAuth";
+import type AdminFlightsVue from "@/components/admin/AdminFlights.vue";
+import type AdminSitesVue from "@/components/admin/AdminSites.vue";
 
 const { isAdmin } = useAuth();
 
 setWindowName("Admin");
 
-const adminFlights = ref(null);
-const adminSites = ref(null);
+const adminFlights = ref<InstanceType<typeof AdminFlightsVue> | null>(null);
+const adminSites = ref<InstanceType<typeof AdminSitesVue> | null>(null);
 </script>
 
 <style scoped></style>
