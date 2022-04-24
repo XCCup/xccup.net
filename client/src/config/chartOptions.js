@@ -1,4 +1,7 @@
 import { ref } from "vue";
+import useMapPosition from "@/composables/useMapPosition";
+const { updatePosition } = useMapPosition();
+
 const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
 
 // Find a way to make this reactive
@@ -40,17 +43,9 @@ export const options = (cb) => ({
       external: function () {},
       callbacks: {
         label: (context) => {
-          // Skip GND dataset
+          // Skip GND dataset and make track 1 => index 0
           if (context.datasetIndex === 0) return;
-
-          // Update marker position on map view event listener
-          const event = new CustomEvent("markerPositionUpdated", {
-            detail: {
-              dataIndex: context.dataIndex,
-              datasetIndex: context.datasetIndex,
-            },
-          });
-          document.dispatchEvent(event);
+          updatePosition(context.datasetIndex - 1, context.dataIndex);
           cb(context);
         },
       },

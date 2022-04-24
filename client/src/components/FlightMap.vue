@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
@@ -25,6 +25,8 @@ import {
 
 import { watch, onMounted, onBeforeUnmount, ref, computed } from "vue";
 
+import type { SimpleFix } from "@/helper/mapHelpers";
+
 // Fix for default marker image paths
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
 import iconUrl from "leaflet/dist/images/marker-icon.png?url";
@@ -38,6 +40,11 @@ import landingIconUrl from "@/assets/images/landing-marker.png?url";
 import photoIconRetinaUrl from "@/assets/images/photo-marker-2x.png?url";
 import photoIconUrl from "@/assets/images/photo-marker.png?url";
 import { tileOptionsSatellite, tileOptions } from "../config/mapbox";
+import type { Airspace } from "@/types/Airspace";
+import type { FlightTurnpoint } from "@/types/Flight";
+
+import useMapPosition from "@/composables/useMapPosition";
+const { getPositions } = useMapPosition();
 
 let landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,
@@ -69,16 +76,19 @@ const userPrefersDark = ref(
 );
 
 // Leaflet objects
-const map = ref(null);
+
+let map: L.Map;
 const trackLines = ref();
-const positionMarkers = ref([]);
-const takeoffAndLandingMarkers = ref([]);
-const photoMarkers = ref([]);
+const positionMarkers = ref<L.CircleMarker[]>([]);
+const takeoffAndLandingMarkers = ref<L.Marker[]>([]);
+const photoMarkers = ref<L.Marker[]>([]);
 
 // All tracklogs that shall be drawn on map
-const tracklogs = computed(() =>
-  processTracklogs(flight.value, activeAirbuddyFlights.value)
-);
+const tracklogs = computed(() => {
+  if (!flight.value) return [];
+  // @ts-expect-error TODO: Check how to type the readonly refs
+  return processTracklogs(flight.value, activeAirbuddyFlights.value);
+});
 
 onMounted(() => {
   // Setup leaflet
@@ -105,16 +115,18 @@ onMounted(() => {
    * See: https://stackoverflow.com/questions/65981712/uncaught-typeerror-this-map-is-null-vue-js-3-leaflet
    * TODO: Reevaluated with error is still present in future versions (2022-01-31)
    */
-  map.value = L.map("mapContainer", {
+  map = L.map("mapContainer", {
+    // @ts-expect-error
     gestureHandling: true,
     zoomAnimation: false,
   });
 
-  terrain.addTo(map.value);
-  L.control.layers(baseMaps).addTo(map.value);
-  map.value.setView([50.143, 7.146], 8);
+  terrain.addTo(map);
+  L.control.layers(baseMaps).addTo(map);
+  map.setView([50.143, 7.146], 8);
 
   // Fix for default marker image paths
+  // @ts-expect-error
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.imagePath = "/";
   L.Icon.Default.mergeOptions({
@@ -122,10 +134,13 @@ onMounted(() => {
     iconUrl: iconUrl,
     shadowUrl: shadowUrl,
   });
-
   // Draw tracklogs and Airspaces
-  drawTracks(tracklogs.value);
-  drawTurnpoints(flight.value.flightTurnpoints);
+  // @ts-expect-error TODO: Check how to type the readonly refs
+  drawTurnpoints(flight.value?.flightTurnpoints);
+
+  if (tracklogs.value) {
+    drawTracks(tracklogs.value);
+  }
   drawAirspaces(convertMapBoundsToQueryString(trackLines.value[0]));
 
   // Watch the tracklogs for updated content like airbuddy flights
@@ -133,29 +148,25 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  // Remove the map position update listener
-  document.removeEventListener(
-    "markerPositionUpdated",
-    markerPositionUpdateListener
-  );
   // Remove the center map on click listener
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
 });
 
 // Airspaces
-const drawAirspaces = async (bounds) => {
+const drawAirspaces = async (bounds: string) => {
   try {
     const res = await ApiService.getAirspaces(bounds);
     const airspaceData = res.data;
-    const options = {
+    const options: L.GeoJSONOptions = {
+      // @ts-expect-error
       opacity: 0.1,
       fillOpacity: 0.08,
       color: "red",
     };
-    airspaceData.forEach((airspace) => {
+    airspaceData.forEach((airspace: Airspace) => {
       L.geoJSON(airspace.polygon, options)
         .bindPopup(createAirspacePopupContent(airspace))
-        .addTo(map.value);
+        .addTo(map);
     });
   } catch (error) {
     console.log(error);
@@ -163,9 +174,9 @@ const drawAirspaces = async (bounds) => {
 };
 
 // Update map
-const drawTracks = (tracklogs) => {
-  let lines = [];
-  let tmpPositionMarkers = [];
+const drawTracks = (tracklogs: SimpleFix[][]) => {
+  let lines: L.Polyline[] = [];
+  let tmpPositionMarkers: L.CircleMarker[] = [];
 
   // Remove all trackLines & position markers to prevet orphaned ones
   if (positionMarkers.value.length > 0) {
@@ -176,44 +187,47 @@ const drawTracks = (tracklogs) => {
   }
 
   tracklogs.forEach((track, index) => {
+    if (!map) return;
     // Check if a previously drawn track is removed
     if (track.length > 0) {
       // Create a line for every track
-      lines[index] = L.polyline(track, {
-        color: trackColors[index],
-      }).addTo(map.value);
+      lines[index] = L.polyline(
+        track.map((u) => u.position),
+        {
+          color: trackColors[index],
+        }
+      ).addTo(map);
 
       // Only for main tracklog:
       if (index === 0) {
         // Center map view on first track
-        map.value.fitBounds(lines[0].getBounds());
+        map.fitBounds(lines[0].getBounds());
 
         // Create takeoff & landing markers
         takeoffAndLandingMarkers.value.push(
-          L.marker(track[0], { title: "Start" }).addTo(map.value),
-          L.marker(track[track.length - 1], {
+          L.marker(track[0].position, { title: "Start" }).addTo(map),
+          L.marker(track[track.length - 1].position, {
             title: "Landeplatz",
             icon: landingMarker,
-          }).addTo(map.value)
+          }).addTo(map)
         );
 
         // Create Photomarkers
         const roundBy = 5000; // Approximate values of GPS fix and photo timestamp
-        const photoTimestamps = flight.value.photos.map((e) => {
+        const photoTimestamps = flight.value?.photos?.map((e) => {
           return { time: getTime(parseISO(e.timestamp)), id: e.id };
         });
-
+        if (!photoTimestamps) return;
         // Find matching GPS and photo timestamps
         photoTimestamps.forEach((photo) => {
-          // fix is an array [lat, long, timestamp]
           const location = track.find((fix) => {
-            const minuteOfFix = Math.floor(fix[2] / roundBy);
+            const minuteOfFix = Math.floor(fix.timestamp / roundBy);
             const minuteOfPhoto = Math.floor(photo.time / roundBy);
             return minuteOfFix === minuteOfPhoto;
           });
           if (!location) return;
           photoMarkers.value.push(
-            L.marker(location, { title: "Photo", icon: photoMarker })
+            L.marker(location.position, { title: "Photo", icon: photoMarker })
               .on("click", () => {
                 // TODO: There may be a smarter way to do this
                 const el = document.getElementById(photo.id);
@@ -221,19 +235,19 @@ const drawTracks = (tracklogs) => {
                 if (!el) return;
                 el.click();
               })
-              .addTo(map.value)
+              .addTo(map)
           );
         });
       }
       // Create position markers for every track
-      tmpPositionMarkers[index] = L.circleMarker(track[0], {
+      tmpPositionMarkers[index] = L.circleMarker(track[0].position, {
         color: "#fff",
         fillColor: trackColors[index],
         fillOpacity: 0.8,
         radius: 8,
         weight: 2,
         stroke: true,
-      }).addTo(map.value);
+      }).addTo(map);
     }
   });
 
@@ -242,47 +256,42 @@ const drawTracks = (tracklogs) => {
   positionMarkers.value = tmpPositionMarkers;
 };
 // Turnpoints of the scored flight
-const drawTurnpoints = (turnpointData) => {
-  if (!turnpointData) return;
-  let turnpoints = [];
+const drawTurnpoints = (turnpointData: FlightTurnpoint[]) => {
+  // if (!turnpointData) return;
+  const turnpoints: L.LatLngTuple[] = [];
   turnpointData.forEach((tp) => {
     turnpoints.push([tp.lat, tp.long]);
   });
   L.polyline(turnpoints, {
     color: "grey",
-  }).addTo(map.value);
+  }).addTo(map);
 };
 
 // Center map on baro click listener
 const centerMapOnClickListener = () => {
-  map.value.setView(positionMarkers.value[0].getLatLng());
+  if (!map) return;
+  map.setView(positionMarkers.value[0].getLatLng());
 };
 document.addEventListener("centerMapOnClick", centerMapOnClickListener);
 
-// Event listener for updating pilot marker positions. Input comes from the barogramm component
-let markerPositionUpdateListener = (event) => {
-  updateMarkerPosition(event.detail);
-};
-document.addEventListener(
-  "markerPositionUpdated",
-  markerPositionUpdateListener
-);
+const updateMarkerPosition = (position: number[]) => {
+  if (!map) return;
+  position.forEach((pos, index) => {
+    const setIndex = index;
+    const trackLog = tracklogs.value[setIndex];
+    const marker = positionMarkers.value[setIndex];
 
-const updateMarkerPosition = (position) => {
-  // Index - 1 because first dataset is GND and we need to skip that one
-  const setIndex = position.datasetIndex - 1;
-  const trackLog = tracklogs.value[setIndex];
-  const logPosition = trackLog[position.dataIndex];
-  const marker = positionMarkers.value[setIndex];
-  if (logPosition && marker) {
-    marker.setLatLng(logPosition);
-  }
-
-  // Center map on pilot - currently too CPU intense. Needs refactoring
-  // if (positions.datasetIndex === 1) {
-  //   map.setView(tracklogs[0][positions.dataIndex]);
-  // }
+    if (!trackLog) return;
+    const logPosition = trackLog[pos];
+    if (logPosition && marker) {
+      marker.setLatLng(logPosition.position);
+    }
+  });
 };
+
+watch(getPositions, () => updateMarkerPosition(getPositions.value), {
+  deep: true,
+});
 </script>
 
 <style scoped>
