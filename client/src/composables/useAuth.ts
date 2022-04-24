@@ -78,6 +78,8 @@ export default () => {
   };
 
   return {
+    login,
+    logout,
     loggedIn,
     getAuthData,
     getUserId,
