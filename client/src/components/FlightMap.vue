@@ -81,11 +81,6 @@ const tracklogs = computed(() =>
 );
 
 onMounted(() => {
-  // TODO:
-  // Whenever using anything based on OpenStreetMap, an attribution is obligatory as per the copyright notice.
-  // Most other tile providers (such as Mapbox, Stamen or Thunderforest) require an attribution as well.
-  // Make sure to give credit where credit is due.
-
   // Setup leaflet
   L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
