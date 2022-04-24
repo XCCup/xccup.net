@@ -152,7 +152,7 @@ router.post("/token", async (req, res, next) => {
   const token = req.body.token;
   try {
     const accessToken = await refreshToken(token);
-    if (!accessToken) return res.sendStatus(FORBIDDEN);
+    if (!accessToken) return res.sendStatus(UNAUTHORIZED);
 
     res.json({
       accessToken,

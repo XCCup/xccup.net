@@ -124,12 +124,12 @@ import router from "../router";
 import { asyncForEach } from "../helper/utils";
 import { Modal } from "bootstrap";
 import useSwal from "../composables/useSwal";
-import useUser from "../composables/useUser";
+import useAuth from "../composables/useAuth";
 
 const { showSuccessAlert } = useSwal();
 const route = useRoute();
 const { flight, fetchOne } = useFlight();
-const { hasElevatedRole } = useUser();
+const { hasElevatedRole } = useAuth();
 const { modifiedFlightData, unmodifiedFlightData, resetState } =
   useFlightEdit();
 

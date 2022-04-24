@@ -9,11 +9,11 @@
       "@/*": ["./src/*"]
     }
   },
+  "exclude": ["./dist/**/*"],
 
   "references": [
     {
       "path": "./tsconfig.vite-config.json"
     }
-  ],
-  "exclude": ["./dist/**/*"]
+  ]
 }

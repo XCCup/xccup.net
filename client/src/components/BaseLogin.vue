@@ -53,11 +53,11 @@
 </template>
 
 <script setup>
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
-const { login } = useUser();
+const { login } = useAuth();
 const router = useRouter();
 
 const props = defineProps({

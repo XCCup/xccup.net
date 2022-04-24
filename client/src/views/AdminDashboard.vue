@@ -66,7 +66,7 @@
           T-Shirts
         </button>
         <button
-          v-if="authData.role == 'Administrator'"
+          v-if="isAdmin"
           id="nav-cache-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -79,7 +79,7 @@
           Cache
         </button>
         <button
-          v-if="authData.role == 'Administrator'"
+          v-if="isAdmin"
           id="nav-newsletter-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -92,7 +92,7 @@
           Newsletter
         </button>
         <button
-          v-if="authData.role == 'Administrator'"
+          v-if="isAdmin"
           id="nav-flight-upload-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -140,7 +140,7 @@
         <AdminTShirt />
       </div>
       <div
-        v-if="authData.role == 'Administrator'"
+        v-if="isAdmin"
         id="nav-cache"
         class="tab-pane fade"
         role="tabpanel"
@@ -149,7 +149,7 @@
         <AdminCache />
       </div>
       <div
-        v-if="authData.role == 'Administrator'"
+        v-if="isAdmin"
         id="nav-newsletter"
         class="tab-pane fade"
         role="tabpanel"
@@ -158,7 +158,7 @@
         <AdminNewsletter />
       </div>
       <div
-        v-if="authData.role == 'Administrator'"
+        v-if="isAdmin"
         id="nav-flight-upload"
         class="tab-pane fade"
         role="tabpanel"
@@ -170,17 +170,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { setWindowName } from "../helper/utils";
 import { ref } from "vue";
-import useUser from "../composables/useUser";
+import useAuth from "../composables/useAuth";
+import type AdminFlightsVue from "@/components/admin/AdminFlights.vue";
+import type AdminSitesVue from "@/components/admin/AdminSites.vue";
 
-const { authData } = useUser();
+const { isAdmin } = useAuth();
 
 setWindowName("Admin");
 
-const adminFlights = ref(null);
-const adminSites = ref(null);
+const adminFlights = ref<InstanceType<typeof AdminFlightsVue> | null>(null);
+const adminSites = ref<InstanceType<typeof AdminSitesVue> | null>(null);
 </script>
 
 <style scoped></style>

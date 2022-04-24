@@ -49,13 +49,13 @@
 import ApiService from "@/services/ApiService";
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
-import type { NameUserData } from "@/types/UserData";
+import type { UserDataEssential } from "@/types/UserData";
 import type { Ref } from "vue";
 
 const router = useRouter();
 
 const userNames: Ref<string[]> = ref([]);
-const users: Ref<NameUserData[]> = ref([]);
+const users: Ref<UserDataEssential[]> = ref([]);
 const selectedUserName = ref("");
 const errorMessage = ref("");
 const showSpinner = ref(false);
@@ -63,7 +63,7 @@ const fileLoaded = ref(false);
 const properUserSet = ref(false);
 
 let formData: FormData | null = null;
-let selectedUserObject: NameUserData;
+let selectedUserObject: UserDataEssential;
 
 watch(
   () => selectedUserName.value,
@@ -135,7 +135,7 @@ const igcSelected = async (file: any) => {
   }
 };
 
-function createFullname(u: NameUserData) {
+function createFullname(u: UserDataEssential) {
   return u.firstName + " " + u.lastName;
 }
 
