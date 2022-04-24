@@ -7,7 +7,6 @@ const {
 } = require("../constants/http-status-constants");
 const { validationHasErrors } = require("./Validation");
 const { query } = require("express-validator");
-const { sleep } = require("../helper/Utils");
 const config = require("../config/env-config").default;
 
 const router = express.Router();
@@ -31,7 +30,7 @@ router.get(
         "Will try to import data from " + fileName + " to model " + modelName
       );
 
-      const model = require("../db.ts")[modelName];
+      const model = require("../db")[modelName];
       if (!model) return res.status(NOT_FOUND).send("Model not found");
 
       if (modelName == "FlightFixes") {
@@ -68,7 +67,7 @@ router.get(
 
       logger.info("Will truncate all data of model " + modelName);
 
-      const model = require("../db.ts")[modelName];
+      const model = require("../db")[modelName];
       if (!model) return res.status(NOT_FOUND).send("Model not found");
 
       await model.destroy({
@@ -121,7 +120,7 @@ async function addAllFlightFixes(year) {
   for (let i = 0; i < fixesFileNames.length; i++) {
     const file = fixesFileNames[i];
     const fixes = require(fixesDir + "/" + file);
-    const importErrors = await addDataset(require("../db.ts")["FlightFixes"], [
+    const importErrors = await addDataset(require("../db")["FlightFixes"], [
       fixes,
     ]);
     errors.push(importErrors);
