@@ -1,4 +1,5 @@
-import type { Flight, Fix } from "@/types/Flight";
+import type { Flight } from "@/types/Flight";
+import type { BuddyTrack } from "@/types/BuddyTrack";
 import type { Airspace } from "../types/Airspace";
 import type L from "leaflet";
 
@@ -48,12 +49,6 @@ function createTrackLog(flight: Flight | BuddyTrack): SimpleFix[] | undefined {
       timestamp,
     };
   });
-}
-interface BuddyTrack {
-  buddyFlightId: string;
-  buddyName: string;
-  fixes: Fix[];
-  isActive: boolean;
 }
 
 type Tracklog = SimpleFix[];

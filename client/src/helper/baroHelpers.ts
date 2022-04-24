@@ -1,11 +1,22 @@
 import { TRACK_COLORS } from "@/common/Constants";
+import type { BuddyTrack } from "@/types/BuddyTrack";
+import type { Flight } from "@/types/Flight";
+import type { ChartDataset } from "chart.js";
+
+interface Options {
+  usePressureAlt: boolean;
+}
 
 // Process tracklog data for barogramm
-export function processBaroData(flight, buddyTracks, options) {
+export function processBaroData(
+  flight: Flight,
+  buddyTracks: BuddyTrack[],
+  options: Options
+): ChartDataset<"line">[] {
   const chartData = [];
   const baroData = [];
   const elevation = [];
-  if (!flight) return null;
+  if (!flight || !flight.fixes) return [];
   for (var i = 0; i < flight.fixes.length; i++) {
     elevation.push({
       x: flight.fixes[i].timestamp,
