@@ -16,6 +16,7 @@
       <VuemojiPicker @emoji-click="handleEmojiClick" />
     </div>
   </div>
+  <div v-else><h5 class="text-danger">Emoji Picker disabled</h5></div>
   <div :class="$attrs.placeholder?.length ? 'form-floating' : ''">
     <textarea
       id="textarea"
