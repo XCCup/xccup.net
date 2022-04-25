@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const IGCParser = require("igc-parser");
 const parseDMS = require("parse-dms");
-
+const { uniq } = require("lodash");
 const { TYPE } = require("../constants/flight-constants");
 const {
   FIXES_AROUND_TURNPOINT,
@@ -284,6 +284,11 @@ function stripByFactor(factor, input) {
 }
 
 function stripAroundTurnpoints(input, turnpoints) {
+  console.log(
+    "IA: Strip around turnpoints: ",
+    JSON.stringify(turnpoints, null, 2)
+  );
+
   const lines = input.split("\n");
   let lineIndexes = [];
   let tpIndex = 0;
@@ -291,12 +296,19 @@ function stripAroundTurnpoints(input, turnpoints) {
     let timeToFind = turnpoints[tpIndex].time.replace(/:/g, "");
     if (lines[i].includes("B" + timeToFind)) {
       lineIndexes.push(i);
+      logger.debug("IA: Will aggregate fixes around linenumber: " + i);
       tpIndex++;
+      // Decrease the index because the next turnpoint could be same as previous one (e.g takeoff is also a turnpoint on a triangle)
+      i--;
       if (tpIndex == turnpoints.length) {
+        logger.debug("IA: End of igc file reached");
         break;
       }
     }
   }
+
+  // Remove duplicated indexes
+  lineIndexes = uniq(lineIndexes);
 
   let reducedLines = [];
   let lineIndexesIndex = 0;
