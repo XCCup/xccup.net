@@ -1,8 +1,32 @@
 .dialog-bg-image {
-  background-image: url("@/assets/images/rachtig.jpg");
+  background-image: url("@/assets/images/header/rachtig.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+}
+
+@media (max-width: 2000px) {
+  .dialog-bg-image {
+    background-image: url("../assets/images/header/rachtig-regular.jpg");
+  }
+}
+
+@media (max-width: 1100px) {
+  .dialog-bg-image {
+    background-image: url("../assets/images/header/rachtig-small.jpg");
+  }
+}
+
+@media (max-width: 620px) {
+  .dialog-bg-image {
+    background-image: url("../assets/images/header/rachtig-xsmall.jpg");
+  }
+}
+
+@media (max-width: 310px) {
+  .dialog-bg-image {
+    background-image: url("../assets/images/header/rachtig-thumb.jpg");
+  }
 }
 
 $gradient-color-1: rgba(132, 250, 176, 0.7);
