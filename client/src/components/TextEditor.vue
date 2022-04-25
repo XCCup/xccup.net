@@ -44,7 +44,7 @@ import useAuth from "@/composables/useAuth";
 const { getAuthData } = useAuth();
 
 // Exclude emoji picker in ci build because in causes test errors in cypress
-const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER;
+const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER === "true";
 
 const emit = defineEmits(["update:modelValue", "change"]);
 
