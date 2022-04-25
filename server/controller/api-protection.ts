@@ -9,3 +9,4 @@ function createLimiter(windowMinutes: number, maxRequestsInWindow: number) {
 }
 
 exports.createRateLimiter = createLimiter;
+export default createLimiter;

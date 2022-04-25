@@ -1,11 +1,20 @@
-const fs = require("fs");
-const axios = require("axios");
-const axiosRetry = require("axios-retry");
-const FormData = require("form-data");
-const logger = require("../config/logger");
-const config = require("../config/env-config").default;
+import fs from "fs";
+import axios from "axios";
+import axiosRetry from "axios-retry";
+import FormData from "form-data";
+import logger from "../config/logger";
+import config from "../config/env-config";
 
 axiosRetry(axios, { retries: 2 });
+
+interface Options {
+  disableGCheck?: boolean;
+}
+
+interface File extends Express.Multer.File {
+  body?: Buffer;
+  name?: string;
+}
 
 const igcValidator = {
   G_RECORD_PASSED: "PASSED",
@@ -15,10 +24,9 @@ const igcValidator = {
    * Checks with the FAI API if a IGC file has a valid G record.
    *
    * @param {Object} igc An object which contains the path to or the content of the IGC file as also the IGC filename.
-   * @param {Boolean} options Options: { disableGCheck }
-   * @returns
    */
-  execute: async (igc, options) => {
+
+  execute: async (igc: File, options?: Options) => {
     // Skip igc validation if disabled in .env or method options
     if (config.get("disableGCheck") || options?.disableGCheck) {
       logger.info("Skipping igc G-Record validation");
@@ -32,9 +40,16 @@ const igcValidator = {
       const formData = new FormData();
 
       // Differenciate between IGC upload via file transfer (normal) or via stream (leonardo)
-      const buffer = igc.path
-        ? fs.readFileSync(igc.path)
-        : Buffer.from(igc.body);
+      // TODO: 🧐🍝
+      let buffer: Buffer;
+      if (igc.path) {
+        buffer = fs.readFileSync(igc.path);
+      } else if (igc.body) {
+        buffer = Buffer.from(igc.body);
+      } else {
+        return;
+      }
+
       const filename = igc.filename ?? igc.name;
 
       formData.append("igcfile", buffer, {
@@ -63,3 +78,4 @@ const igcValidator = {
 };
 
 module.exports = igcValidator;
+export default igcValidator;
