@@ -257,7 +257,7 @@ const drawTracks = (tracklogs: SimpleFix[][]) => {
 };
 // Turnpoints of the scored flight
 const drawTurnpoints = (turnpointData: FlightTurnpoint[]) => {
-  // if (!turnpointData) return;
+  if (!turnpointData) return;
   const turnpoints: L.LatLngTuple[] = [];
   turnpointData.forEach((tp) => {
     turnpoints.push([tp.lat, tp.long]);
