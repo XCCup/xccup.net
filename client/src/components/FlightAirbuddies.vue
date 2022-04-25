@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import { TRACK_COLORS } from "@/common/Constants";
+import useFlight from "@/composables/useFlight";
+import useAirbuddy from "@/composables/useAirbuddies";
+
+import { ref, watchEffect } from "vue";
+
+const { flight } = useFlight();
+const { fetchAll, airbuddiesFlightData, updateCheckedAirbuddies } =
+  useAirbuddy();
+
+const checkedFlights = ref<string[]>([]);
+const loaded = ref(false);
+
+const trackColors = TRACK_COLORS;
+
+watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
+
+const onShowAirbuddies = async () => {
+  try {
+    if (!flight.value?.airbuddies) return;
+    // @ts-ignore TODO: readonly refs…
+    await fetchAll(flight.value.airbuddies);
+    loaded.value = true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+</script>
+
 <template>
   <!-- Airbuddy Checkboxes -->
   <div id="flight-airbuddies" class="container">
@@ -57,32 +87,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { TRACK_COLORS } from "@/common/Constants";
-import useFlight from "@/composables/useFlight";
-import useAirbuddy from "@/composables/useAirbuddies";
-
-import { ref, watchEffect } from "vue";
-
-const { flight } = useFlight();
-const { fetchAll, airbuddiesFlightData, updateCheckedAirbuddies } =
-  useAirbuddy();
-
-const checkedFlights = ref([]);
-const loaded = ref(false);
-
-const trackColors = TRACK_COLORS;
-
-watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
-
-const onShowAirbuddies = async () => {
-  try {
-    if (!flight.value?.airbuddies) return;
-    await fetchAll(flight.value.airbuddies);
-    loaded.value = true;
-  } catch (error) {
-    console.log(error);
-  }
-};
-</script>
