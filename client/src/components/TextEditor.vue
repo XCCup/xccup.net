@@ -64,13 +64,13 @@ const onInput = (text: string) => {
 // Emoji Picker
 const ta = ref<HTMLInputElement | null>(null);
 const handleEmojiClick = (detail: EmojiClickEventDetail) => {
-  if (!detail.unicode || !ta.value || !ta.value.selectionEnd) return;
+  if (!detail.unicode || !ta.value) return;
   try {
     ta.value.focus();
     const newValue =
       props.modelValue.substring(0, ta.value.selectionStart ?? undefined) +
       detail.unicode +
-      props.modelValue.substring(ta.value.selectionEnd);
+      props.modelValue.substring(ta.value.selectionEnd ?? 0);
     emit("update:modelValue", newValue);
   } catch (error) {
     console.log(error);
