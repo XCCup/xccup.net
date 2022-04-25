@@ -1,8 +1,11 @@
 const fs = require("fs");
 const axios = require("axios");
+const axiosRetry = require("axios-retry");
 const FormData = require("form-data");
 const logger = require("../config/logger");
 const config = require("../config/env-config").default;
+
+axiosRetry(axios, { retries: 2 });
 
 const igcValidator = {
   G_RECORD_PASSED: "PASSED",
@@ -45,6 +48,7 @@ const igcValidator = {
             "multipart/form-data; boundary=" + formData.getBoundary(),
           "Content-length": formData.getLengthSync(),
         },
+        timeout: 20000,
       };
       const res = await axios.post(url, formData, config);
 

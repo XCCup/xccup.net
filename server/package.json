@@ -16,6 +16,7 @@
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.3.12",
     "axios": "^0.26.1",
+    "axios-retry": "^3.2.4",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "convict": "^6.2.2",
