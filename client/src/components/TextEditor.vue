@@ -23,21 +23,22 @@
       ref="ta"
       :value="modelValue"
       class="form-control mb-2"
-      :placeholder="$attrs.placeholder"
-      :style="$attrs.style"
+      :placeholder="$attrs.placeholder as string"
+      :style="$attrs.style as string"
       :rows="4"
       data-cy="text-editor-textarea"
-      @input="onInput($event.target.value)"
-    ></textarea>
+      @input="onInput(($event.target as HTMLInputElement).value)"
+    >
+    </textarea>
     <label v-if="$attrs.placeholder?.length" for="textarea">{{
       $attrs.placeholder
     }}</label>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
-import { VuemojiPicker } from "vuemoji-picker";
+import { VuemojiPicker, type EmojiClickEventDetail } from "vuemoji-picker";
 import useAuth from "@/composables/useAuth";
 
 const { getAuthData } = useAuth();
@@ -47,15 +48,10 @@ const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER;
 
 const emit = defineEmits(["update:modelValue", "change"]);
 
-const props = defineProps({
-  modelValue: {
-    type: [String, Number],
-    required: true,
-  },
-});
+const props = defineProps<{ modelValue: string }>();
 
 // Sanitize textarea from male boomer-speech
-const onInput = (text) => {
+const onInput = (text: string) => {
   let sanitizedText = text;
   if (getAuthData.value.gender != "F")
     sanitizedText = text.replace(/hausfrau/gi, "Hausmann");
@@ -65,13 +61,13 @@ const onInput = (text) => {
 };
 
 // Emoji Picker
-const ta = ref(null);
-const handleEmojiClick = (detail) => {
-  if (!detail.unicode) return;
+const ta = ref<HTMLInputElement | null>(null);
+const handleEmojiClick = (detail: EmojiClickEventDetail) => {
+  if (!detail.unicode || !ta.value || !ta.value.selectionEnd) return;
   try {
     ta.value.focus();
     const newValue =
-      props.modelValue.substring(0, ta.value.selectionStart) +
+      props.modelValue.substring(0, ta.value.selectionStart ?? undefined) +
       detail.unicode +
       props.modelValue.substring(ta.value.selectionEnd);
     emit("update:modelValue", newValue);
