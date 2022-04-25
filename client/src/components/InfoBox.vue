@@ -35,6 +35,39 @@ export default {
 </script>
 
 <style scoped>
+/* TODO: Pick a nicer image */
+.header-image {
+  background-image: url("../assets/images/header/rachtig.jpg");
+  height: 22vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+@media (max-width: 2000px) {
+  .header-image {
+    background-image: url("../assets/images/header/rachtig-regular.jpg");
+  }
+}
+
+@media (max-width: 1100px) {
+  .header-image {
+    background-image: url("../assets/images/header/rachtig-small.jpg");
+  }
+}
+
+@media (max-width: 620px) {
+  .header-image {
+    background-image: url("../assets/images/header/rachtig-xsmall.jpg");
+  }
+}
+
+@media (max-width: 310px) {
+  .header-image {
+    background-image: url("../assets/images/header/rachtig-thumb.jpg");
+  }
+}
+
 /* .header-image-gradient {
   background-image: linear-gradient(
       to left,
@@ -43,14 +76,6 @@ export default {
     ),
     url("../assets/images/rachtig.jpg");
 } */
-.header-image {
-  background-image: url("../assets/images/rachtig.jpg");
-  height: 22vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-}
-
 /* .header-image-parent {
   mask-image: linear-gradient(
     to bottom,
