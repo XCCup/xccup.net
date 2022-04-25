@@ -1,10 +1,12 @@
+// The whole "composable" is a bit messy and TS not bombproof. It may need a refactor at some point.
+
 import { ref, readonly } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter, useRoute, type RouteRecordName } from "vue-router";
 
 const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
 
-const instances = {};
+const instances: any = {};
 
 export default () => {
   const route = useRoute();
@@ -12,16 +14,22 @@ export default () => {
   const viewComponentName = route.name;
   if (!viewComponentName)
     throw "There was an error assigning the route name to this useData instance";
-
   if (!instances[viewComponentName])
     instances[viewComponentName] = createInstance(viewComponentName);
 
   return instances[viewComponentName];
 };
 
-function createInstance(viewComponentName) {
-  const data = ref(null);
-  const queryCache = ref({});
+interface QueryCache {
+  limit?: number;
+  offset?: number;
+  sortCol?: string;
+  sortOrder?: string;
+}
+
+function createInstance(viewComponentName: RouteRecordName) {
+  const data = ref<any>(null);
+  const queryCache = ref<QueryCache>({});
   const limitCache = ref(DEFAULT_LIMIT);
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
@@ -29,7 +37,7 @@ function createInstance(viewComponentName) {
   const errorMessage = ref(null);
   const noDataFlag = ref(false);
   const dataConstants = ref(null);
-  let apiEndpoint = null;
+  let apiEndpoint: Function | null = null;
 
   const router = useRouter();
 
@@ -43,22 +51,28 @@ function createInstance(viewComponentName) {
   ];
   // We tried to implement activeFilters/filterActive as computed values. But due to some nested (?) stuff the update doesn't work as expected.
   // The calculation of these values was therefore moved to the fetchData function.
-  const activeFilters = ref([]);
+  const activeFilters = ref<object>([]);
   const filterActive = ref(false);
 
   // Mutations
-  const clearOneFilter = async (key) => {
+  const clearOneFilter = async (key: string) => {
+    // @ts-ignore
     delete queryCache.value[key];
     await fetchData();
   };
 
-  const sortDataBy = async (sortOptions) => {
+  interface SortOptions {
+    sortCol: string;
+    sortOrder: string;
+  }
+
+  const sortDataBy = async (sortOptions: SortOptions) => {
     queryCache.value.sortCol = sortOptions.sortCol;
     queryCache.value.sortOrder = sortOptions.sortOrder;
     fetchData();
   };
 
-  const selectSeason = async (year) => {
+  const selectSeason = async (year: number) => {
     // This call reloads the view and which leads to a new initData call. The year param will then be stored in queryCache again.
     router.push({
       name: viewComponentName,
@@ -66,7 +80,7 @@ function createInstance(viewComponentName) {
     });
   };
 
-  const filterDataBy = (filterOptions) => {
+  const filterDataBy = (filterOptions: any) => {
     queryCache.value = {
       ...queryCache.value,
       ...filterOptions,
@@ -74,15 +88,17 @@ function createInstance(viewComponentName) {
     fetchData();
   };
 
-  const paginateBy = async (limit, offset) => {
-    queryCache.value.limit = parseInt(limit);
-    queryCache.value.offset = offset > 0 ? parseInt(offset) : 0;
+  const paginateBy = async (limit: number, offset: number) => {
+    queryCache.value.limit = limit;
+    queryCache.value.offset = offset > 0 ? offset : 0;
     calcRanges();
-
     fetchData();
   };
   // Actions
-  const initData = async (apiEndpointFunction, { queryParameters } = {}) => {
+  const initData = async (
+    apiEndpointFunction: Function,
+    { queryParameters }: any = {}
+  ) => {
     queryCache.value = queryParameters;
     // Add default limit if none is present
     if (!queryParameters.limit) queryCache.value.limit = DEFAULT_LIMIT;
@@ -91,9 +107,10 @@ function createInstance(viewComponentName) {
   };
 
   // Actions
-  const fetchData = async () => {
+  const fetchData = async (): Promise<void> => {
     try {
       isLoading.value = true;
+      if (!apiEndpoint) throw Error;
       const res = await apiEndpoint(queryCache.value);
       calcFilterActive();
       calcActiveFilters();
@@ -112,7 +129,7 @@ function createInstance(viewComponentName) {
         dataConstants.value = res.data.constants;
       }
       noDataFlag.value = false;
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       if (error?.response?.status === 422 || error?.response?.status === 404) {
         // Mimic empty response
@@ -127,7 +144,8 @@ function createInstance(viewComponentName) {
   };
 
   const calcRanges = () => {
-    currentRange.value.start = queryCache.value.offset + 1;
+    const offset = queryCache.value.offset;
+    currentRange.value.start = offset ? offset + 1 : 1;
     currentRange.value.end =
       currentRange.value.start + limitCache.value - 1 >=
       numberOfTotalEntries.value
@@ -138,14 +156,17 @@ function createInstance(viewComponentName) {
   function calcFilterActive() {
     filterActive.value =
       Object.keys(queryCache.value)
+        // @ts-ignore
         .filter((k) => queryCache.value[k] != undefined)
         .filter((k) => !filterBlackList.includes(k)).length > 0;
   }
 
   function calcActiveFilters() {
     activeFilters.value = Object.keys(queryCache.value)
+      // @ts-ignore
       .filter((k) => queryCache.value[k] != undefined)
       .filter((k) => !filterBlackList.includes(k))
+      // @ts-ignore
       .reduce((a, k) => ({ ...a, [k]: queryCache.value[k] }), {});
   }
 

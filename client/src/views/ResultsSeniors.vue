@@ -1,22 +1,4 @@
-<template>
-  <div class="container-lg">
-    <h3 v-once>{{ title }} {{ route.params?.year }}</h3>
-
-    <div v-if="results">
-      <p v-if="remark">Hinweis: {{ remark }}</p>
-      <div class="my-2"><SelectSeason /></div>
-
-      <ResultsTableGeneric
-        :results="results"
-        :no-data-flag="noDataFlag"
-        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
-      />
-    </div>
-    <GenericError v-else />
-  </div>
-</template>
-
-<script setup>
+<script setup lang="ts">
 import ApiService from "@/services/ApiService";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
@@ -42,3 +24,30 @@ await initData(ApiService.getResultsSeniors, {
 
 const remark = ref(dataConstants.value?.REMARKS);
 </script>
+
+<!-- Neceessary for <keep-alive> -->
+<script lang="ts">
+export default {
+  name: "ResultsSeniors",
+  inheritAttrs: false,
+  customOptions: {},
+};
+</script>
+
+<template>
+  <div class="container-lg">
+    <h3 v-once>{{ title }} {{ route.params?.year }}</h3>
+
+    <div v-if="results">
+      <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div class="my-2"><SelectSeason /></div>
+
+      <ResultsTableGeneric
+        :results="results"
+        :no-data-flag="noDataFlag"
+        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
+      />
+    </div>
+    <GenericError v-else />
+  </div>
+</template>

@@ -1,23 +1,12 @@
-<template>
-  <div class="container-xl mb-3">
-    <h3 v-once>Streckenmeldungen {{ route.params.year }}</h3>
+<script lang="ts">
+export default {
+  name: "FlightsAll",
+  inheritAttrs: false,
+  customOptions: {},
+};
+</script>
 
-    <!-- TODO: Add filter spinner when loading -->
-
-    <div class="row">
-      <div class="col-6">
-        <FilterPanel :flight-options="true" :allow-all-seasons="true" />
-      </div>
-      <div class="col-6">
-        <PaginationPanel entry-name="Flüge" />
-      </div>
-    </div>
-    <BaseError :error-message="errorMessage" />
-    <ResultsTableOverall />
-  </div>
-</template>
-
-<script setup>
+<script setup lang="ts">
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import useData from "@/composables/useData";
@@ -39,3 +28,22 @@ await initData(ApiService.getFlights, {
   },
 });
 </script>
+
+<template>
+  <div class="container-xl mb-3">
+    <h3 v-once>Streckenmeldungen {{ route.params.year }}</h3>
+
+    <!-- TODO: Add filter spinner when loading -->
+
+    <div class="row">
+      <div class="col-6">
+        <FilterPanel :flight-options="true" :allow-all-seasons="true" />
+      </div>
+      <div class="col-6">
+        <PaginationPanel entry-name="Flüge" />
+      </div>
+    </div>
+    <BaseError :error-message="errorMessage" />
+    <ResultsTableOverall />
+  </div>
+</template>

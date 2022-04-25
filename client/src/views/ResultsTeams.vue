@@ -1,3 +1,38 @@
+<script setup lang="ts">
+import ApiService from "@/services/ApiService";
+import { ref } from "vue";
+import { setWindowName } from "../helper/utils";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const results = ref<any>(null);
+const remark = ref<string | null>(null);
+
+setWindowName("Teamwertung");
+
+try {
+  const res = await ApiService.getResultsTeams({ ...route.params });
+  if (res.status != 200) throw res.status;
+  results.value = res.data;
+  // @ts-ignore
+  remark.value = results?.value?.constants?.REMARKS;
+} catch (error: any) {
+  if (error?.response?.status === 422) {
+    // TODO: Is there a smarter way?
+    results.value = { values: [], noDataFlag: true };
+  }
+}
+</script>
+
+<!-- Neceessary for <keep-alive> -->
+<script lang="ts">
+export default {
+  name: "ResultsTeams",
+  inheritAttrs: false,
+  customOptions: {},
+};
+</script>
+
 <template>
   <div class="container-lg">
     <div v-if="results">
@@ -9,28 +44,3 @@
     <GenericError v-else />
   </div>
 </template>
-
-<script setup>
-import ApiService from "@/services/ApiService";
-import { ref } from "vue";
-import { setWindowName } from "../helper/utils";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
-const results = ref(null);
-const remark = ref(null);
-
-setWindowName("Teamwertung");
-
-try {
-  const res = await ApiService.getResultsTeams({ ...route.params });
-  if (res.status != 200) throw res.status.text;
-  results.value = res.data;
-  remark.value = results?.value?.constants?.REMARKS;
-} catch (error) {
-  if (error?.response?.status === 422) {
-    // TODO: Is there a smarter way?
-    results.value = { values: [], noDataFlag: true };
-  }
-}
-</script>
