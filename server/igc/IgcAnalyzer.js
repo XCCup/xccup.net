@@ -56,7 +56,8 @@ const IgcAnalyzer = {
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
     const currentResolutionInSeconds = getResolution(igcAsJson);
     const durationInMinutes = getDuration(igcAsJson);
-    const requiredResolution = getResolutionForDuration(durationInMinutes);
+    const requiredResolution =
+      calculateResolutionForStripIteration(durationInMinutes);
     const stripFactor = Math.ceil(
       requiredResolution / currentResolutionInSeconds
     );
@@ -111,6 +112,11 @@ function readIgcFile(flight) {
   return fs.readFileSync(flight.igcPath.toString(), "utf8");
 }
 
+/**
+ * Starts the secondd ("turnpoint") iteration.
+ *
+ * @param {*} resultStripIteration The results from the previous iteration.
+ */
 function runTurnpointIteration(resultStripIteration) {
   const igcAsPlainText = readIgcFile(resultStripIteration);
   let igcWithReducedFixes = stripAroundTurnpoints(
@@ -124,6 +130,10 @@ function runTurnpointIteration(resultStripIteration) {
   );
   writeStream.end(() => runOlc(pathToFile, resultStripIteration, true));
 }
+
+/**
+ * Determines the OLC Binary which will be uses. Depends on OS and architecture.
+ */
 function determineOlcBinary() {
   const os = require("os");
   const platform = os.platform();
@@ -139,6 +149,13 @@ function determineOlcBinary() {
   }
 }
 
+/**
+ * Runs the OLC binary.
+ *
+ * @param {string} filePath
+ * @param {Object} flightDataObject
+ * @param {boolean} isTurnpointIteration
+ */
 function runOlc(filePath, flightDataObject, isTurnpointIteration) {
   const { exec } = require("child_process");
   logger.info("IA: Start OLC analysis " + filePath);
@@ -236,6 +253,11 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
   }
 }
 
+/**
+ * Creates an turnpoint object from a response line of the OLC binary.
+ *
+ * @param {string} turnpoint A line with turnpoint information
+ */
 function extractTurnpointData(turnpoint) {
   let result = {};
   const IGC_FIX_REGEX =
@@ -251,12 +273,19 @@ function extractTurnpointData(turnpoint) {
   return result;
 }
 
-function writeFile(flightExternalId, fileLines, stripFactor) {
+/**
+ * Writes the lines of an igc file to a new file.
+ *
+ * @param {number} flightExternalId
+ * @param {string[]} igcFileLines
+ * @param {number} stripFactor
+ */
+function writeFile(flightExternalId, igcFileLines, stripFactor) {
   const pathToFile = createFileName(flightExternalId, null, true, stripFactor);
 
   logger.debug(`IA: Will start writing content to ${pathToFile}`);
   const writeStream = fs.createWriteStream(pathToFile);
-  fileLines.forEach((value) => writeStream.write(`${value}\n`));
+  igcFileLines.forEach((value) => writeStream.write(`${value}\n`));
 
   writeStream.on("finish", () => {
     logger.debug(`IA: wrote all content to file ${pathToFile}`);
@@ -270,8 +299,17 @@ function writeFile(flightExternalId, fileLines, stripFactor) {
   return { writeStream, pathToFile };
 }
 
-function stripByFactor(factor, input) {
-  const lines = input.split("\n");
+/**
+ * Splits the content of an igc file into lines and reduces the amount of B records (location fixes) of the given igc content.
+ * B records will be reduced evenly by a factor.
+ *
+ * Will return the lines of a minified igc file.
+ *
+ * @param {*} factor The factor by which the location fixes will be reduced
+ * @param {string} igcAsPlainText The whole content of an igc file as a string
+ */
+function stripByFactor(factor, igcAsPlainText) {
+  const lines = igcAsPlainText.split("\n");
   const stripFactor = factor ? factor : 1;
   let reducedLines = [];
   for (let i = 0; i < lines.length; i++) {
@@ -283,13 +321,17 @@ function stripByFactor(factor, input) {
   return reducedLines;
 }
 
-function stripAroundTurnpoints(input, turnpoints) {
-  console.log(
-    "IA: Strip around turnpoints: ",
-    JSON.stringify(turnpoints, null, 2)
-  );
-
-  const lines = input.split("\n");
+/**
+ * Splits the content of an igc file into lines and reduces the amount of B records (location fixes) of the given igc content.
+ * B records will only be aggregate around the turnpoints from the previous iteration.
+ *
+ * Will return the lines of a minified igc file.
+ *
+ * @param {string} igcAsPlainText The whole content of an igc file as a string
+ * @param {Object[]} turnpoints An array of turnpoints from the previous "strip" iteration
+ */
+function stripAroundTurnpoints(igcAsPlainText, turnpoints) {
+  const lines = igcAsPlainText.split("\n");
   let lineIndexes = [];
   let tpIndex = 0;
   for (let i = 0; i < lines.length; i++) {
@@ -334,6 +376,11 @@ function stripAroundTurnpoints(input, turnpoints) {
   return reducedLines;
 }
 
+/**
+ * Determines the time resolution (in seconds) of the fixes in an igc file.
+ *
+ * @param {Object} igcAsJson The igc content parsed by the IgcParser.
+ */
 function getResolution(igcAsJson) {
   /**
    * Start with the second timestamp.
@@ -349,7 +396,6 @@ function getResolution(igcAsJson) {
    * This is not supported by the igc definition. All these timestamps will have the same value.
    * To counter this we will search for the next timestamp which has a different value.
    */
-
   if (currentResolution == 0) {
     const startIndex = 3;
     // Just search in the first 20 fixes to fail fast
@@ -368,7 +414,13 @@ function getResolution(igcAsJson) {
   return currentResolution;
 }
 
-function getResolutionForDuration(durationInMinutes) {
+/**
+ * Calculates the comparable resolution by which the igc content will be striped in the first iteration.
+ * This value is calculated by the flight duration and a constant factor defined in {@link RESOLUTION_FACTOR}.
+ *
+ * @param {number} durationInMinutes The duration of the flight.
+ */
+function calculateResolutionForStripIteration(durationInMinutes) {
   //For every hour decrease resolution by factor of seconds
   const resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
   logger.debug(
@@ -377,6 +429,11 @@ function getResolutionForDuration(durationInMinutes) {
   return resolution;
 }
 
+/**
+ * Determines the duration of a flight.
+ *
+ * @param {Object} igcAsJson The igc content parsed by the IgcParser.
+ */
 function getDuration(igcAsJson) {
   const sizeOfFixes = igcAsJson.fixes.length;
   const durationInMillis =
