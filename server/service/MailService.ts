@@ -28,9 +28,13 @@ import {
 } from "../constants/email-message-constants";
 
 import db from "../db";
-import type { UserAttributes } from "../db/models/User";
-import type { FlightOutputAttributes } from "../db/models/Flight";
+import type { UserAttributes, UserInstance } from "../db/models/User";
+import type {
+  FlightInstance,
+  FlightOutputAttributes,
+} from "../db/models/Flight";
 import type { Comment } from "../types/Comment";
+import { FlightCommentInstance } from "../db/models/FlightComment";
 
 const clientUrl = config.get("clientUrl");
 const userActivateLink = config.get("clientActivateProfil");
@@ -42,6 +46,11 @@ interface MailContent {
   title: string;
   text: string;
 }
+
+type Queries =
+  | Promise<UserInstance | null>
+  | Promise<FlightInstance | null>
+  | Promise<FlightCommentInstance | null>;
 
 const service = {
   sendMailSingle: async (
@@ -228,7 +237,7 @@ const service = {
   },
 
   sendNewFlightCommentMail: async (comment: Comment) => {
-    const queries = [
+    const queries: Queries[] = [
       db.User.findByPk(comment.userId),
       db.Flight.findByPk(comment.flightId),
     ];
@@ -240,7 +249,7 @@ const service = {
 
     const toUserId = relatedComment ? relatedComment.userId : flight.userId;
 
-    // Don't sent any email if commenter is the same person as the owner of the flight
+    // Don't sent any email if author is the same person as the owner of the flight
     if (comment.userId == toUserId) return;
 
     const toUser = await db.User.findByPk(toUserId);
