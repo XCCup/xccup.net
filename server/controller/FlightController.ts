@@ -626,6 +626,7 @@ async function checkIfFlightIsModifiable(flight, userId: string) {
  * @param {*} validationResult The result to check
  * @returns true if the result is invalid otherwise undefined
  */
+// TODO: Why check if the outcome of a checking function is correct? 🍝🍝🍝
 function isGRecordResultInvalid(res: Response, validationResult: string) {
   if (!validationResult) {
     logger.warn("FC: G-Record Validation returned undefined");
