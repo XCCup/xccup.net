@@ -58,6 +58,7 @@ interface Glider {
 
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
 
+// TODO: Is this obsolete?
 export interface FlightOutputAttributes extends FlightAttributes {
   userId: string;
   siteId: string;
@@ -70,6 +71,10 @@ export interface FlightInstance
     FlightAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+  userId: string;
+  siteId: string;
+  clubId: string;
+  teamId?: string;
 }
 
 export function initFlight(sequelize: Sequelize): Models["Flight"] {
