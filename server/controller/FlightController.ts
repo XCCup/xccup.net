@@ -138,7 +138,7 @@ router.get(
   "/:id",
   checkParamIsInt("id"),
   async (req: Request, res: Response, next) => {
-    if (validationHasErrors(req, res) || paramIdIsLeonardo(req, res)) return;
+    if (idEqualsLeonardo(req, res) || validationHasErrors(req, res)) return;
 
     const flight = await service.getByExternalId(req.params?.id);
     if (!flight) return res.sendStatus(NOT_FOUND);
@@ -532,8 +532,14 @@ router.put(
     }
   }
 );
-// TODO: function name implies it would return a boolean
-function paramIdIsLeonardo(req: Request, res: Response) {
+
+/**
+ * Checks if a user wanted to call the leonardo endpoint but used the HTTP GET method instead of the POST method.
+ * If so the request will be terminated and the user will receive a plain html text message on how to make the correct call.
+ *
+ * This check has to be performed before the check of the normal validation result.
+ */
+function idEqualsLeonardo(req: Request, res: Response) {
   if (
     !(
       typeof req.params?.id == "string" &&
@@ -584,7 +590,13 @@ function createMulterIgcUploadHandler({ parts = 1 } = {}) {
     },
   });
 }
-// TODO: Description
+
+/**
+ * Persist a igc file from a requests. Target will be determined by externalId of the corresponding flight object.
+ *
+ * @param externalId
+ * @param igcFile
+ */
 async function persistIgcFile(externalId: number, igcFile) {
   const pathToFile = createFileName(externalId, igcFile.name);
 
