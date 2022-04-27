@@ -39,6 +39,7 @@ import { createFileName } from "../helper/igc-file-utils";
 import multer from "multer";
 import { getCurrentYear } from "../helper/Utils";
 import userService from "../service/UserService";
+import { Glider } from "../db/models/User";
 
 const router = express.Router();
 
@@ -153,31 +154,35 @@ router.get(
 // @desc Retrieve the igc file of a flight
 // @route GET /flights/igc/:id
 
-router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
-  if (validationHasErrors(req, res)) return;
-  const id = req.params?.id;
+router.get(
+  "/igc/:id",
+  checkParamIsUuid("id"),
+  async (req: Request, res: Response, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params?.id;
 
-  try {
-    const flight = await service.getById(id, true);
+    try {
+      const flight = await service.getById(id, true);
 
-    if (!flight) return res.sendStatus(NOT_FOUND);
+      if (!flight) return res.sendStatus(NOT_FOUND);
 
-    const fullfilepath = path.join(path.resolve(), flight.igcPath);
+      const fullfilepath = path.join(path.resolve(), flight.igcPath);
 
-    return res.download(fullfilepath, (err) => {
-      if (err) {
-        if (!res.headersSent)
-          res.status(NOT_FOUND).send("The file you requested was deleted");
-        logger.error(
-          "FC: An igc file was requested but seems to be deleted. igcPath: " +
-            flight.igcPath
-        );
-      }
-    });
-  } catch (error) {
-    next(error);
+      return res.download(fullfilepath, (err) => {
+        if (err) {
+          if (!res.headersSent)
+            res.status(NOT_FOUND).send("The file you requested was deleted");
+          logger.error(
+            "FC: An igc file was requested but seems to be deleted. igcPath: " +
+              flight.igcPath
+          );
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Deletes a flight by id
 // @route DELETE /flights/:id
@@ -187,9 +192,9 @@ router.delete(
   "/:id",
   checkParamIsInt("id"),
   authToken,
-  async (req, res, next) => {
+  async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
-    const flightId = req.params?.id;
+    const flightId = req.params.id;
 
     const flight = await service.getByExternalId(flightId);
     if (!flight) return res.sendStatus(NOT_FOUND);
@@ -288,7 +293,10 @@ router.post(
       if (await requesterIsNotAdmin(req, res)) return;
 
       const userId = req.body.userId;
-      const userGliders = await userService.getGlidersById(userId);
+      const userGliders: {
+        gliders: Glider[];
+        defaultGlider: string;
+      } = await userService.getGlidersById(userId);
       if (!userGliders) return res.sendStatus(NOT_FOUND);
 
       const validationResult = await igcValidator.execute(req.file);
@@ -324,7 +332,6 @@ router.post(
           .send("No default glider configured in profile");
 
       service.finalizeFlightSubmission({ flight: flightDbObject, glider });
-
       const airspaceViolation =
         await service.attachElevationDataAndCheckForAirspaceViolations(
           flightDbObject
@@ -627,7 +634,10 @@ async function checkIfFlightIsModifiable(flight, userId: string) {
  * @returns true if the result is invalid otherwise undefined
  */
 // TODO: Why check if the outcome of a checking function is correct? 🍝🍝🍝
-function isGRecordResultInvalid(res: Response, validationResult: string) {
+function isGRecordResultInvalid(
+  res: Response,
+  validationResult: string | undefined
+) {
   if (!validationResult) {
     logger.warn("FC: G-Record Validation returned undefined");
   } else if (validationResult != igcValidator.G_RECORD_PASSED) {
