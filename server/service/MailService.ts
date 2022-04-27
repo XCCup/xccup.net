@@ -47,11 +47,6 @@ interface MailContent {
   text: string;
 }
 
-type Queries =
-  | Promise<UserInstance | null>
-  | Promise<FlightInstance | null>
-  | Promise<FlightCommentInstance | null>;
-
 const service = {
   sendMailSingle: async (
     fromUserId: string,
@@ -237,7 +232,11 @@ const service = {
   },
 
   sendNewFlightCommentMail: async (comment: Comment) => {
-    const queries: Queries[] = [
+    const queries: [
+      Promise<UserInstance | null>,
+      Promise<FlightInstance | null>,
+      Promise<FlightCommentInstance | null>?
+    ] = [
       db.User.findByPk(comment.userId),
       db.Flight.findByPk(comment.flightId),
     ];
@@ -246,6 +245,19 @@ const service = {
     }
 
     const [fromUser, flight, relatedComment] = await Promise.all(queries);
+
+    if (!fromUser) {
+      logger.error(
+        `MS: Send new flight comment mail failed because user with ID ${comment.userId} wasn't found`
+      );
+      return;
+    }
+    if (!flight) {
+      logger.error(
+        `MS: Send new flight comment mail failed because flight with ID ${comment.flightId} wasn't found`
+      );
+      return;
+    }
 
     const toUserId = relatedComment ? relatedComment.userId : flight.userId;
 
