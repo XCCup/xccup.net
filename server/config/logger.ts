@@ -44,7 +44,7 @@ const createProdLogger = createLogger({
 });
 
 const logger =
-  config.get("env") === "development" ? createDevLogger : createProdLogger;
+  config.get("env") === "production" ? createProdLogger : createDevLogger;
 
 export default logger;
 module.exports = logger;

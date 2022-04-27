@@ -124,6 +124,40 @@ test("Validate an igc-File which should result to a free flight", (done) => {
   }
 });
 
+test("Validate an igc-File were two turnpoints match", (done) => {
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
+  const filePath =
+    "demo_igcs/user/73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
+
+  const flightToAnaylze = {
+    externalId: "user",
+    igcPath: path.join(__dirname, "../igc", filePath),
+  };
+
+  const expectedFlight = {
+    externalId: "user",
+    type: "FAI",
+    dist: "16.511",
+    igcPath: filePath,
+  };
+
+  try {
+    IgcAnalyzer.startCalculation(
+      flightToAnaylze,
+      flightTypeFactors,
+      (result) => {
+        expect(result.type).toBe(expectedFlight.type);
+        expect(result.dist).toBe(expectedFlight.dist);
+        expect(result.id).toBe(expectedFlight.id);
+        expect(result.igcPath).toContain(expectedFlight.igcPath);
+        done();
+      }
+    );
+  } catch (error) {
+    done(error);
+  }
+});
+
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s => Reducion by factor 5)", () => {
   process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_free/free_79km35_4h8m.igc";
