@@ -1,12 +1,17 @@
-const axios = require("axios");
-const axiosRetry = require("axios-retry");
-const logger = require("../config/logger");
+import axios, { AxiosResponse } from "axios";
+import axiosRetry from "axios-retry";
+import logger from "../config/logger";
 
 const isApiDisabled = process.env.USE_GOOGLE_API === "false";
 
+interface Fix {
+  latitude: number;
+  longitude: number;
+}
 axiosRetry(axios, { retries: 2 });
 
-const byLatLong = async (location) => {
+// Exports
+export const byLatLong = async (location: string) => {
   if (isApiDisabled) {
     logger.warn("LF: Usage of Google API is disabled");
     return "API Disabled";
@@ -27,12 +32,12 @@ const byLatLong = async (location) => {
   }
 };
 
-const findLanding = async (landingFix) => {
+export const findLanding = async (landingFix: Fix) => {
   logger.info("LF: Will retrieve landing name from Google API");
   return await byLatLong(createRequestString(landingFix));
 };
 
-function retrieveNameFromResponse(result) {
+function retrieveNameFromResponse(result: AxiosResponse): string {
   const longName = result.data.results[0]?.address_components[0]?.long_name;
   if (longName) return longName;
 
@@ -47,7 +52,7 @@ function retrieveNameFromResponse(result) {
   return "Nicht verfügbar";
 }
 
-function createRequestString(fix) {
+function createRequestString(fix: Fix): string {
   return fix.latitude + "," + fix.longitude;
 }
 
