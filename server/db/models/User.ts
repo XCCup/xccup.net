@@ -14,7 +14,7 @@ export interface UserAttributes {
   gender?: string;
   tshirtSize?: string;
   defaultGlider?: string;
-  gliders?: glider[];
+  gliders?: Glider[];
   emailInformIfComment?: boolean;
   emailNewsletter?: boolean;
   emailTeamSearch?: boolean;
@@ -25,7 +25,7 @@ export interface UserAttributes {
   token?: string;
 }
 
-interface glider {
+export interface Glider {
   id: string;
   brand: string;
   model: string;
