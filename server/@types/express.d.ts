@@ -1,6 +1,12 @@
-// TODO: Check this out.
 declare namespace Express {
   export interface Request {
-    user?: { firstName: string; id: string };
+    user?: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      role: string;
+      gender: string;
+    };
+    externalId?: number;
   }
 }
