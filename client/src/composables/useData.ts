@@ -3,6 +3,18 @@
 import { ref, readonly } from "vue";
 import { useRouter, useRoute, type RouteRecordName } from "vue-router";
 
+interface QueryCache {
+  limit?: number;
+  offset?: number;
+  sortCol?: string;
+  sortOrder?: string;
+}
+
+interface SortOptions {
+  sortCol: string;
+  sortOrder: string;
+}
+
 const DEFAULT_LIMIT = 50;
 const LIMIT_OPTIONS = [10, 25, 50, 100];
 
@@ -19,13 +31,6 @@ export default () => {
 
   return instances[viewComponentName];
 };
-
-interface QueryCache {
-  limit?: number;
-  offset?: number;
-  sortCol?: string;
-  sortOrder?: string;
-}
 
 function createInstance(viewComponentName: RouteRecordName) {
   const data = ref<any>(null);
@@ -60,11 +65,6 @@ function createInstance(viewComponentName: RouteRecordName) {
     delete queryCache.value[key];
     await fetchData();
   };
-
-  interface SortOptions {
-    sortCol: string;
-    sortOrder: string;
-  }
 
   const sortDataBy = async (sortOptions: SortOptions) => {
     queryCache.value.sortCol = sortOptions.sortCol;
