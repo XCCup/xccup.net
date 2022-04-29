@@ -9,7 +9,7 @@ const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
 const userPrefersDark = ref(
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
 );
-
+// TODO: Type "Function" as it is safer
 export const options = (cb: Function): ChartOptions<"line"> => ({
   responsive: true,
   onClick: () => {
