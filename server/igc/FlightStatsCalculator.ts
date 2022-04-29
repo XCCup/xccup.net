@@ -1,6 +1,5 @@
 import type { BRecord } from "igc-parser";
 import logger from "../config/logger";
-import { FlightFixesAttributes } from "../types/FlightFixesTypes";
 
 /**
  * The time frame in which speed and climb will be calculated
@@ -26,8 +25,6 @@ function execute(fixes: BRecord[]) {
   let maxClimb = 0.0;
   let maxSpeed = 0.0;
   const fixesStats = [new FixStat(0, 0)];
-
-  // TODO: Aren't we only using GPD alt now?
 
   // It's possible that some igc files have no baro data.
   // Baro data is the preferred option because of accurracy.
