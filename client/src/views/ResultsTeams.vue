@@ -24,7 +24,7 @@ try {
 }
 </script>
 
-<!-- Neceessary for <keep-alive> -->
+<!-- Necessary for <keep-alive> -->
 <script lang="ts">
 export default {
   name: "ResultsTeams",

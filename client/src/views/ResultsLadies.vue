@@ -25,7 +25,7 @@ await initData(ApiService.getResultsLadies, {
 const remark = ref(dataConstants.value?.REMARKS);
 </script>
 
-<!-- Neceessary for <keep-alive> -->
+<!-- Necessary for <keep-alive> -->
 <script lang="ts">
 export default {
   name: "ResultsLadies",
