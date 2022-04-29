@@ -93,12 +93,14 @@ function prepare(fixes: ExtendedBRecord[]) {
       end++
     );
     const maSegment = fixes.slice(start, end + 1);
+
     fixes[i].hma =
-      // @ts-ignore
-      maSegment.reduce((sum, x) => sum + x.hspeed, 0) / maSegment.length;
+      maSegment.reduce(
+        (sum, x) => (fixes[i].hma = x.hspeed ? sum + x.hspeed : 0),
+        0
+      ) / maSegment.length;
     fixes[i].vma =
-      // @ts-ignore
-      maSegment.reduce((sum, x) => sum + Math.abs(x.vspeed), 0) /
+      maSegment.reduce((sum, x) => sum + Math.abs(x.vspeed ?? 0), 0) /
       maSegment.length;
   }
 }
@@ -108,18 +110,14 @@ function detectFlight(fixes: ExtendedBRecord[]) {
   for (let i = 0; i < fixes.length - 1; i++) {
     if (
       start === undefined &&
-      // @ts-ignore
-      fixes[i].hma > definitionFlight.xt &&
-      // @ts-ignore
-      fixes[i].vma > definitionFlight.zt
+      fixes[i].hma! > definitionFlight.xt &&
+      fixes[i].vma! > definitionFlight.zt
     )
       start = i;
     if (start !== undefined)
       if (
-        // @ts-ignore
-        fixes[i].hma > definitionFlight.x0 &&
-        // @ts-ignore
-        fixes[i].vma > definitionFlight.z0
+        fixes[i].hma! > definitionFlight.x0 &&
+        fixes[i].vma! > definitionFlight.z0
       ) {
         if (
           fixes[i].timestamp >
@@ -137,18 +135,14 @@ function detectGround(fixes: ExtendedBRecord[]) {
   for (let i = 0; i < fixes.length - 1; i++) {
     if (
       start === undefined &&
-      // @ts-ignore
-      fixes[i].hma < definitionGround.xmax &&
-      // @ts-ignore
-      fixes[i].vma < definitionGround.zmax
+      fixes[i].hma! < definitionGround.xmax &&
+      fixes[i].vma! < definitionGround.zmax
     )
       start = i;
     if (start !== undefined)
       if (
-        // @ts-ignore
-        fixes[i].hma < definitionGround.xmax &&
-        // @ts-ignore
-        fixes[i].vma < definitionGround.zmax
+        fixes[i].hma! < definitionGround.xmax &&
+        fixes[i].vma! < definitionGround.zmax
       ) {
         if (
           fixes[i].timestamp >
