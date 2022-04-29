@@ -1,14 +1,11 @@
 import { Response, RequestHandler, Request } from "express";
-
-const Token = require("../db")["Token"]; // TODO: Delegate token access to the service tier
-import jwt from "jsonwebtoken";
+import db from "../db"; // TODO: Delegate token access to the service tier
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import { UNAUTHORIZED, FORBIDDEN } from "../constants/http-status-constants";
 import userService from "../service/UserService";
-require("../service/UserService");
-import { JwtPayload } from "jsonwebtoken";
-
+require("../service/UserService"); // TODO: Why?
 import logger from "../config/logger";
-const config = require("../config/env-config").default;
+import config from "../config/env-config";
 
 interface AuthData extends JwtPayload {
   id: string;
@@ -21,22 +18,28 @@ interface AuthData extends JwtPayload {
 /**
  * The authentication middleware for the request. If any error within authentication happens the request will be terminated here.
  */
-const authToken: RequestHandler = (req, res, next) => {
+const authToken: RequestHandler = (req: Request, res: Response, next) => {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) return res.sendStatus(UNAUTHORIZED);
 
-    jwt.verify(token, config.get("jwtLogin"), (error: any, user) => {
+    jwt.verify(token, config.get("jwtLogin"), (error, payload): void => {
+      if (!(typeof payload === "object")) return;
+
+      const user = payload as AuthData;
+
       if (error) {
         if (error.toString().includes("jwt expired")) {
-          return res.status(UNAUTHORIZED).send("EXPIRED"); // See: https://stackoverflow.com/questions/45153773/correct-http-code-for-authentication-token-expiry-401-or-403
+          res.status(UNAUTHORIZED).send("EXPIRED"); // See: https://stackoverflow.com/questions/45153773/correct-http-code-for-authentication-token-expiry-401-or-403
+          return;
         }
         logger.warn(
           `Verify authentication for user ${user?.firstName} ${user?.lastName} failed: ` +
             error
         );
-        return res.sendStatus(UNAUTHORIZED);
+        res.sendStatus(UNAUTHORIZED);
+        return;
       }
       req.user = user;
       next();
@@ -59,7 +62,7 @@ const authToken: RequestHandler = (req, res, next) => {
  */
 const createToken = (user: AuthData) => {
   const token = jwt.sign(createUserTokenObject(user), config.get("jwtLogin"), {
-    expiresIn: "5s",
+    expiresIn: "5s", // TODO: Really that short?
   });
   return token;
 };
@@ -73,7 +76,7 @@ const createToken = (user: AuthData) => {
  */
 const createRefreshToken = (user: AuthData) => {
   const token = jwt.sign(createUserTokenObject(user), config.get("jwtRefresh"));
-  Token.create({ token });
+  db.Token.create({ token });
   return token;
 };
 
@@ -84,7 +87,7 @@ const createRefreshToken = (user: AuthData) => {
  * @returns The amount of tokens that where deleted.
  */
 const logoutToken = async (token: string) => {
-  return Token.destroy({
+  return db.Token.destroy({
     where: { token },
   });
 };
@@ -99,11 +102,13 @@ const logoutToken = async (token: string) => {
 const refreshToken = async (token: string) => {
   if (!token) return;
 
-  const found = await Token.findOne({
+  const found = await db.Token.findOne({
     where: { token },
   });
   if (!found) return;
-  return jwt.verify(token, config.get("jwtRefresh"), (error: any, user) => {
+  return jwt.verify(token, config.get("jwtRefresh"), (error, payload) => {
+    const user = payload as AuthData;
+
     if (error) {
       logger.warn(
         `Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,
@@ -146,7 +151,7 @@ const requesterIsNotOwner = async (
  * @param res The response to the request. Will send FORBIDDEN if ids don't match.
  * @returns True if requester has role administrator. Otherwise false.
  */
-const requesterIsNotAdmin: RequestHandler = async (req, res) => {
+const requesterIsNotAdmin = async (req: Request, res: Response) => {
   if (!(await userService.isAdmin(req.user?.id))) {
     logger.debug("auth: requester is not admin");
     return res.sendStatus(FORBIDDEN);
@@ -160,7 +165,8 @@ const requesterIsNotAdmin: RequestHandler = async (req, res) => {
  * @param res The response to the request. Will send FORBIDDEN if ids don't match.
  * @returns True if requester has role moderator or higher. Otherwise false.
  */
-const requesterIsNotModerator: RequestHandler = async (req, res) => {
+// TODO: JSDoc says it return boolean but actually it doesn't.
+const requesterIsNotModerator = async (req: Request, res: Response) => {
   if (!(await userService.isModerator(req.user?.id))) {
     logger.debug("auth: requester is not moderator");
     return res.sendStatus(FORBIDDEN);

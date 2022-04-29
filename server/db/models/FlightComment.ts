@@ -15,6 +15,7 @@ export interface FlightCommentInstance
     FlightCommentAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+  userId: string;
 }
 
 export function initFlightComment(

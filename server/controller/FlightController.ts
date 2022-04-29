@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import service from "../service/FlightService";
+import flightService from "../service/FlightService";
 import { isAdmin, validate } from "../service/UserService";
 import igcValidator from "../igc/IgcValidator";
 import IgcAnalyzer from "../igc/IgcAnalyzer";
@@ -79,7 +79,7 @@ router.get(
       const value = getCache(req);
       if (value) return res.json(value);
       // @ts-ignore TODO: Type this stronger
-      const flights = await service.getAll({
+      const flights = await flightService.getAll({
         ...req.query,
         sort: [req.query.sortCol, req.query.sortOrder],
       });
@@ -102,7 +102,7 @@ router.get("/violations", authToken, async (req, res, next) => {
 
   try {
     // @ts-ignore TODO: Type this stronger
-    const flights = await service.getAll({
+    const flights = await flightService.getAll({
       onlyUnchecked: true,
     });
 
@@ -119,7 +119,7 @@ router.get("/violations", authToken, async (req, res, next) => {
 router.get("/self", authToken, async (req, res, next) => {
   try {
     // @ts-ignore TODO: Type this stronger
-    const flights = await service.getAll({
+    const flights = await flightService.getAll({
       includeUnchecked: true,
       userId: req.user?.id,
       sort: [req.query.sortCol, req.query.sortOrder],
@@ -140,7 +140,7 @@ router.get(
   async (req: Request, res: Response, next) => {
     if (idEqualsLeonardo(req, res) || validationHasErrors(req, res)) return;
 
-    const flight = await service.getByExternalId(req.params?.id);
+    const flight = await flightService.getByExternalId(req.params?.id);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
@@ -162,7 +162,7 @@ router.get(
     const id = req.params?.id;
 
     try {
-      const flight = await service.getById(id, true);
+      const flight = await flightService.getById(id, true);
 
       if (!flight) return res.sendStatus(NOT_FOUND);
 
@@ -196,7 +196,7 @@ router.delete(
     if (validationHasErrors(req, res)) return;
     const flightId = req.params.id;
 
-    const flight = await service.getByExternalId(flightId);
+    const flight = await flightService.getByExternalId(flightId);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
@@ -205,7 +205,7 @@ router.delete(
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      const numberOfDestroyedRows = await service.delete(flight);
+      const numberOfDestroyedRows = await flightService.delete(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -235,7 +235,7 @@ router.post(
       const validationResult = await igcValidator.execute(req.file);
       if (isGRecordResultInvalid(res, validationResult)) return;
 
-      const flightDbObject = await service.create({
+      const flightDbObject = await flightService.create({
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
@@ -244,22 +244,22 @@ router.post(
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+      flightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, userId);
 
       const takeoffName =
-        await service.storeFixesAndAddFurtherInformationToFlight(
+        await flightService.storeFixesAndAddFurtherInformationToFlight(
           flightDbObject,
           fixes
         );
 
-      const result = await service.update(flightDbObject);
+      const result = await flightService.update(flightDbObject);
 
-      service.startResultCalculation(flightDbObject);
+      flightService.startResultCalculation(flightDbObject);
 
       const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(
+        await flightService.attachElevationDataAndCheckForAirspaceViolations(
           flightDbObject
         );
 
@@ -302,7 +302,7 @@ router.post(
       const validationResult = await igcValidator.execute(req.file);
       if (isGRecordResultInvalid(res, validationResult)) return;
 
-      const flightDbObject = await service.create({
+      const flightDbObject = await flightService.create({
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
@@ -311,17 +311,17 @@ router.post(
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+      flightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       const takeoffName =
-        await service.storeFixesAndAddFurtherInformationToFlight(
+        await flightService.storeFixesAndAddFurtherInformationToFlight(
           flightDbObject,
           fixes
         );
 
-      const result = await service.update(flightDbObject);
+      const result = await flightService.update(flightDbObject);
 
-      service.startResultCalculation(flightDbObject);
+      flightService.startResultCalculation(flightDbObject);
 
       const glider = userGliders.gliders.find(
         (g) => g.id == userGliders.defaultGlider
@@ -331,9 +331,12 @@ router.post(
           .status(BAD_REQUEST)
           .send("No default glider configured in profile");
 
-      service.finalizeFlightSubmission({ flight: flightDbObject, glider });
+      flightService.finalizeFlightSubmission({
+        flight: flightDbObject,
+        glider,
+      });
       const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(
+        await flightService.attachElevationDataAndCheckForAirspaceViolations(
           flightDbObject
         );
 
@@ -362,13 +365,15 @@ router.get(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const flight = await service.getById(req.params?.id);
+      const flight = await flightService.getById(req.params?.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
 
-      service.startResultCalculation(flight);
+      flightService.startResultCalculation(flight);
 
       const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(flight);
+        await flightService.attachElevationDataAndCheckForAirspaceViolations(
+          flight
+        );
 
       res.json({
         airspaceViolation,
@@ -409,9 +414,9 @@ router.post(
       // const validationResult = await igcValidator.execute(igc);
       // if (isGRecordResultInvalid(res, validationResult)) return;
 
-      const flightDbObject = await service.create({
+      const flightDbObject = await flightService.create({
         userId: user.id,
-        externalId: await service.createExternalId(),
+        externalId: await flightService.createExternalId(),
         validationResult: false,
       });
 
@@ -421,22 +426,25 @@ router.post(
       );
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+      flightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, user.id);
 
-      await service.storeFixesAndAddFurtherInformationToFlight(
+      await flightService.storeFixesAndAddFurtherInformationToFlight(
         flightDbObject,
         fixes
       );
 
-      service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject, {
-        sendMail: true,
-      });
+      flightService.attachElevationDataAndCheckForAirspaceViolations(
+        flightDbObject,
+        {
+          sendMail: true,
+        }
+      );
 
-      service.startResultCalculation(flightDbObject);
+      flightService.startResultCalculation(flightDbObject);
 
-      await service.finalizeFlightSubmission({
+      await flightService.finalizeFlightSubmission({
         flight: flightDbObject,
         glider,
       });
@@ -474,7 +482,7 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const flight = await service.getById(req.params?.id, true);
+    const flight = await flightService.getById(req.params?.id, true);
 
     if (!flight) return res.sendStatus(NOT_FOUND);
 
@@ -487,7 +495,7 @@ router.put(
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      await service.finalizeFlightSubmission({
+      await flightService.finalizeFlightSubmission({
         flight,
         report,
         airspaceComment,
@@ -516,13 +524,13 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const flight = await service.getById(req.params?.id, true);
+    const flight = await flightService.getById(req.params?.id, true);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      await service.acceptViolation(flight);
+      await flightService.acceptViolation(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -575,7 +583,7 @@ function createMulterIgcUploadHandler({ parts = 1 } = {}) {
       .join(dataPath, IGC_STORE, getCurrentYear().toString())
       .toString(),
     filename: function (req: Request, file, cb) {
-      service.createExternalId().then((externalId) => {
+      flightService.createExternalId().then((externalId) => {
         req.externalId = externalId;
         cb(null, externalId + "_" + file.originalname);
       });
@@ -662,3 +670,4 @@ function isGRecordResultInvalid(
 }
 
 module.exports = router;
+export default router;

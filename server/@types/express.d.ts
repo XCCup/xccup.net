@@ -4,8 +4,8 @@ declare namespace Express {
       id: string;
       firstName: string;
       lastName: string;
-      role: string;
-      gender: string;
+      role?: string;
+      gender?: string;
     };
     externalId?: number;
   }
