@@ -1,11 +1,3 @@
-<script lang="ts">
-export default {
-  name: "FlightsAll",
-  inheritAttrs: false,
-  customOptions: {},
-};
-</script>
-
 <script setup lang="ts">
 import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
@@ -27,6 +19,15 @@ await initData(ApiService.getFlights, {
     ...params,
   },
 });
+</script>
+
+<!-- Neceessary for <keep-alive> -->
+<script lang="ts">
+export default {
+  name: "FlightsAll",
+  inheritAttrs: false,
+  customOptions: {},
+};
 </script>
 
 <template>
