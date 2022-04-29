@@ -1,5 +1,6 @@
 import type { BRecord } from "igc-parser";
 import logger from "../config/logger";
+import { FlightFixesAttributes } from "../types/FlightFixesTypes";
 
 /**
  * The time frame in which speed and climb will be calculated
@@ -141,23 +142,6 @@ export function calculateSpeed(
     ) / 100
   );
 }
-// TODO: What is this for?
-function executeOnFlightFixes(flightFixes) {
-  const fixes = [];
-
-  for (let index = 0; index < flightFixes.geom.coordinates.length; index++) {
-    fixes.push({
-      pressureAltitude: flightFixes.timeAndHeights[index].pressureAltitude,
-      gpsAltitude: flightFixes.timeAndHeights[index].gpsAltitude,
-      timestamp: flightFixes.timeAndHeights[index].timestamp,
-      latitude: flightFixes.geom.coordinates[index][1],
-      longitude: flightFixes.geom.coordinates[index][0],
-    });
-  }
-
-  return execute(fixes);
-}
 
 exports.execute = execute;
-exports.executeOnFlightFixes = executeOnFlightFixes;
 exports.calculateSpeed = calculateSpeed;
