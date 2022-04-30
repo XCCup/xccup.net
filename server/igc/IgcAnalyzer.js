@@ -355,27 +355,34 @@ function stripByFactor(factor, igcAsPlainText, launch, landing) {
   return reducedLines;
 }
 
+/**
+ * This is a workaround to remove non flight fixes in plain igc files
+ * @param {string[]} lines
+ * @param {number} launch
+ * @param {number} landing
+ * @returns {string[]}
+ */
+
 function removeNonFlightIgcLines(lines, launch, landing) {
   let firstLineWithBRecord = null;
-
-  const foo = [];
+  let offset = 0;
+  const newLines = [];
   for (let i = 0; i < lines.length; i++) {
     if (lines[i] && lines[i].startsWith("B")) {
       if (!firstLineWithBRecord) {
         firstLineWithBRecord = i;
       }
-      if (
-        firstLineWithBRecord &&
-        firstLineWithBRecord + i > launch &&
-        firstLineWithBRecord + i < landing
-      ) {
-        foo.push(lines[i]);
+      const index = i - firstLineWithBRecord;
+      if (index > launch && index < landing + offset) {
+        newLines.push(lines[i]);
       }
     } else {
-      foo.push(lines[i]);
+      newLines.push(lines[i]);
+      // Detect non B-Records inbetween B-Records and increase offset to compensate
+      if (firstLineWithBRecord && !lines[i].startsWith("B")) offset += 1;
     }
   }
-  return foo;
+  return newLines;
 }
 
 /**
