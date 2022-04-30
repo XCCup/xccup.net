@@ -402,7 +402,6 @@ function stripAroundTurnpoints(
   const rawLines = igcAsPlainText.split("\n");
 
   const lines = removeNonFlightIgcLines(rawLines, launchIndex, landingIndex);
-  console.log("******", rawLines.length, lines.length);
   let lineIndexes = [];
   let tpIndex = 0;
   for (let i = 0; i < lines.length; i++) {
