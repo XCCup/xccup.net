@@ -1,24 +1,37 @@
-const fs = require("fs");
-const axios = require("axios");
-const axiosRetry = require("axios-retry");
-const FormData = require("form-data");
-const logger = require("../config/logger");
-const config = require("../config/env-config").default;
+import fs from "fs";
+import axios from "axios";
+import axiosRetry from "axios-retry";
+import FormData from "form-data";
+import logger from "../config/logger";
+import config from "../config/env-config";
 
 axiosRetry(axios, { retries: 2 });
 
+interface Options {
+  disableGCheck?: boolean;
+}
+
+interface File {
+  body: Buffer;
+  name: string;
+}
+
+type ValidationResult = "PASSED" | "FAILED";
+
 const igcValidator = {
-  G_RECORD_PASSED: "PASSED",
-  G_RECORD_FAILED: "FAILED",
+  G_RECORD_PASSED: "PASSED" as const,
+  G_RECORD_FAILED: "FAILED" as const,
 
   /**
    * Checks with the FAI API if a IGC file has a valid G record.
    *
    * @param {Object} igc An object which contains the path to or the content of the IGC file as also the IGC filename.
-   * @param {Boolean} options Options: { disableGCheck }
-   * @returns
    */
-  execute: async (igc, options) => {
+  // TODO: Why not return boolean
+  execute: async (
+    igc: File | Express.Multer.File,
+    options?: Options
+  ): Promise<ValidationResult | undefined> => {
     // Skip igc validation if disabled in .env or method options
     if (config.get("disableGCheck") || options?.disableGCheck) {
       logger.info("Skipping igc G-Record validation");
@@ -32,10 +45,18 @@ const igcValidator = {
       const formData = new FormData();
 
       // Differenciate between IGC upload via file transfer (normal) or via stream (leonardo)
-      const buffer = igc.path
-        ? fs.readFileSync(igc.path)
-        : Buffer.from(igc.body);
-      const filename = igc.filename ?? igc.name;
+      let buffer: Buffer;
+      let filename: string;
+
+      // If "path" exists on the igc object it means it's of type Express.Multer.File
+      // Otherwise it's of type File
+      if ("path" in igc) {
+        buffer = fs.readFileSync(igc.path);
+        filename = igc.filename;
+      } else {
+        buffer = Buffer.from(igc.body);
+        filename = igc.name;
+      }
 
       formData.append("igcfile", buffer, {
         filename,
@@ -63,3 +84,4 @@ const igcValidator = {
 };
 
 module.exports = igcValidator;
+export default igcValidator;

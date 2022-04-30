@@ -1,29 +1,28 @@
-const express = require("express");
-const router = express.Router();
-const service = require("../service/FlightService");
-const { isAdmin, validate } = require("../service/UserService");
-const igcValidator = require("../igc/IgcValidator");
-const IgcAnalyzer = require("../igc/IgcAnalyzer");
-const path = require("path");
-const moment = require("moment");
-const fs = require("fs");
-const {
+import express, { NextFunction, Request, Response } from "express";
+import flightService from "../service/FlightService";
+import { isAdmin, validate } from "../service/UserService";
+import igcValidator from "../igc/IgcValidator";
+import IgcAnalyzer from "../igc/IgcAnalyzer";
+import path from "path";
+import moment from "moment";
+import fs from "fs";
+import {
   NOT_FOUND,
   OK,
   BAD_REQUEST,
   UNAUTHORIZED,
-} = require("../constants/http-status-constants");
-const { STATE, IGC_STORE } = require("../constants/flight-constants");
-const {
+} from "../constants/http-status-constants";
+import { STATE, IGC_STORE } from "../constants/flight-constants";
+import {
   authToken,
   requesterIsNotOwner,
   requesterIsNotModerator,
   requesterIsNotAdmin,
-} = require("./Auth");
-const { createRateLimiter } = require("./api-protection");
-const { query } = require("express-validator");
-const logger = require("../config/logger");
-const {
+} from "./Auth";
+import createRateLimiter from "./api-protection";
+import { query } from "express-validator";
+import logger from "../config/logger";
+import {
   checkStringObjectNotEmpty,
   checkStringObjectNoEscaping,
   checkParamIsInt,
@@ -33,16 +32,20 @@ const {
   checkOptionalIsBoolean,
   queryOptionalColumnExistsInModel,
   checkStringObjectNotEmptyNoEscaping,
-} = require("./Validation");
-const { getCache, setCache, deleteCache } = require("./CacheManager");
-const { createFileName } = require("../helper/igc-file-utils");
+} from "./Validation";
+import { getCache, setCache, deleteCache } from "./CacheManager";
+import { createFileName } from "../helper/igc-file-utils";
+
+import multer from "multer";
+import { getCurrentYear } from "../helper/Utils";
+import userService from "../service/UserService";
+import { Glider } from "../db/models/User";
+
+const router = express.Router();
+
 const config = require("../config/env-config").default;
 
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
-const multer = require("multer");
-const { getCurrentYear } = require("../helper/Utils");
-const userService = require("../service/UserService");
-
 const uploadLimiter = createRateLimiter(60, 10);
 
 // All requests to /flights/photos will be rerouted
@@ -69,14 +72,14 @@ router.get(
     query("sortOrder").optional().isIn(["desc", "DESC", "asc", "ASC"]),
     queryOptionalColumnExistsInModel("sortCol", "Flight"),
   ],
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     try {
       const value = getCache(req);
       if (value) return res.json(value);
-
-      const flights = await service.getAll({
+      // @ts-ignore TODO: Type this stronger
+      const flights = await flightService.getAll({
         ...req.query,
         sort: [req.query.sortCol, req.query.sortOrder],
       });
@@ -98,7 +101,8 @@ router.get("/violations", authToken, async (req, res, next) => {
   if (await requesterIsNotModerator(req, res)) return;
 
   try {
-    const flights = await service.getAll({
+    // @ts-ignore TODO: Type this stronger
+    const flights = await flightService.getAll({
       onlyUnchecked: true,
     });
 
@@ -114,9 +118,10 @@ router.get("/violations", authToken, async (req, res, next) => {
 
 router.get("/self", authToken, async (req, res, next) => {
   try {
-    const flights = await service.getAll({
+    // @ts-ignore TODO: Type this stronger
+    const flights = await flightService.getAll({
       includeUnchecked: true,
-      userId: req.user.id,
+      userId: req.user?.id,
       sort: [req.query.sortCol, req.query.sortOrder],
     });
 
@@ -129,49 +134,55 @@ router.get("/self", authToken, async (req, res, next) => {
 // @desc Retrieve a flight by id
 // @route GET /flights/:id
 
-router.get("/:id", checkParamIsInt("id"), async (req, res, next) => {
-  if (paramIdIsLeonardo(req, res)) return;
+router.get(
+  "/:id",
+  checkParamIsInt("id"),
+  async (req: Request, res: Response, next) => {
+    if (idEqualsLeonardo(req, res) || validationHasErrors(req, res)) return;
 
-  if (validationHasErrors(req, res)) return;
+    const flight = await flightService.getByExternalId(req.params?.id);
+    if (!flight) return res.sendStatus(NOT_FOUND);
 
-  const flight = await service.getByExternalId(req.params.id);
-  if (!flight) return res.sendStatus(NOT_FOUND);
-
-  try {
-    res.json(flight);
-  } catch (error) {
-    next(error);
+    try {
+      res.json(flight);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Retrieve the igc file of a flight
 // @route GET /flights/igc/:id
 
-router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
-  if (validationHasErrors(req, res)) return;
-  const id = req.params.id;
+router.get(
+  "/igc/:id",
+  checkParamIsUuid("id"),
+  async (req: Request, res: Response, next) => {
+    if (validationHasErrors(req, res)) return;
+    const id = req.params?.id;
 
-  try {
-    const flight = await service.getById(id, true);
+    try {
+      const flight = await flightService.getById(id, true);
 
-    if (!flight) return res.sendStatus(NOT_FOUND);
+      if (!flight) return res.sendStatus(NOT_FOUND);
 
-    const fullfilepath = path.join(path.resolve(), flight.igcPath);
+      const fullfilepath = path.join(path.resolve(), flight.igcPath);
 
-    return res.download(fullfilepath, (err) => {
-      if (err) {
-        if (!res.headersSent)
-          res.status(NOT_FOUND).send("The file you requested was deleted");
-        logger.error(
-          "FC: An igc file was requested but seems to be deleted. igcPath: " +
-            flight.igcPath
-        );
-      }
-    });
-  } catch (error) {
-    next(error);
+      return res.download(fullfilepath, (err) => {
+        if (err) {
+          if (!res.headersSent)
+            res.status(NOT_FOUND).send("The file you requested was deleted");
+          logger.error(
+            "FC: An igc file was requested but seems to be deleted. igcPath: " +
+              flight.igcPath
+          );
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Deletes a flight by id
 // @route DELETE /flights/:id
@@ -181,19 +192,20 @@ router.delete(
   "/:id",
   checkParamIsInt("id"),
   authToken,
-  async (req, res, next) => {
+  async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     const flightId = req.params.id;
 
-    const flight = await service.getByExternalId(flightId);
+    const flight = await flightService.getByExternalId(flightId);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
-      if (await requesterIsNotOwner(req, res, flight.userId)) return;
+      if ((await requesterIsNotOwner(req, res, flight.userId)) || !req.user?.id)
+        return;
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      const numberOfDestroyedRows = await service.delete(flight);
+      const numberOfDestroyedRows = await flightService.delete(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -215,13 +227,15 @@ router.post(
   igcFileUpload.single("igcFile"),
   authToken,
   async (req, res, next) => {
+    if (!req.user?.id) return;
     const userId = req.user.id;
 
     try {
+      if (!req.file) return;
       const validationResult = await igcValidator.execute(req.file);
       if (isGRecordResultInvalid(res, validationResult)) return;
 
-      const flightDbObject = await service.create({
+      const flightDbObject = await flightService.create({
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
@@ -230,22 +244,22 @@ router.post(
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+      flightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, userId);
 
       const takeoffName =
-        await service.storeFixesAndAddFurtherInformationToFlight(
+        await flightService.storeFixesAndAddFurtherInformationToFlight(
           flightDbObject,
           fixes
         );
 
-      const result = await service.update(flightDbObject);
+      const result = await flightService.update(flightDbObject);
 
-      service.startResultCalculation(flightDbObject);
+      flightService.startResultCalculation(flightDbObject);
 
       const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(
+        await flightService.attachElevationDataAndCheckForAirspaceViolations(
           flightDbObject
         );
 
@@ -274,16 +288,21 @@ router.post(
   authToken,
   async (req, res, next) => {
     try {
+      if (!req.file) return;
+
       if (await requesterIsNotAdmin(req, res)) return;
 
       const userId = req.body.userId;
-      const userGliders = await userService.getGlidersById(userId);
+      const userGliders: {
+        gliders: Glider[];
+        defaultGlider: string;
+      } = await userService.getGlidersById(userId);
       if (!userGliders) return res.sendStatus(NOT_FOUND);
 
       const validationResult = await igcValidator.execute(req.file);
       if (isGRecordResultInvalid(res, validationResult)) return;
 
-      const flightDbObject = await service.create({
+      const flightDbObject = await flightService.create({
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
@@ -292,17 +311,17 @@ router.post(
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+      flightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       const takeoffName =
-        await service.storeFixesAndAddFurtherInformationToFlight(
+        await flightService.storeFixesAndAddFurtherInformationToFlight(
           flightDbObject,
           fixes
         );
 
-      const result = await service.update(flightDbObject);
+      const result = await flightService.update(flightDbObject);
 
-      service.startResultCalculation(flightDbObject);
+      flightService.startResultCalculation(flightDbObject);
 
       const glider = userGliders.gliders.find(
         (g) => g.id == userGliders.defaultGlider
@@ -312,10 +331,12 @@ router.post(
           .status(BAD_REQUEST)
           .send("No default glider configured in profile");
 
-      service.finalizeFlightSubmission({ flight: flightDbObject, glider });
-
+      flightService.finalizeFlightSubmission({
+        flight: flightDbObject,
+        glider,
+      });
       const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(
+        await flightService.attachElevationDataAndCheckForAirspaceViolations(
           flightDbObject
         );
 
@@ -344,13 +365,15 @@ router.get(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const flight = await service.getById(req.params.id);
+      const flight = await flightService.getById(req.params?.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
 
-      service.startResultCalculation(flight);
+      flightService.startResultCalculation(flight);
 
       const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(flight);
+        await flightService.attachElevationDataAndCheckForAirspaceViolations(
+          flight
+        );
 
       res.json({
         airspaceViolation,
@@ -391,9 +414,9 @@ router.post(
       // const validationResult = await igcValidator.execute(igc);
       // if (isGRecordResultInvalid(res, validationResult)) return;
 
-      const flightDbObject = await service.create({
+      const flightDbObject = await flightService.create({
         userId: user.id,
-        externalId: await service.createExternalId(),
+        externalId: await flightService.createExternalId(),
         validationResult: false,
       });
 
@@ -403,22 +426,25 @@ router.post(
       );
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+      flightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, user.id);
 
-      await service.storeFixesAndAddFurtherInformationToFlight(
+      await flightService.storeFixesAndAddFurtherInformationToFlight(
         flightDbObject,
         fixes
       );
 
-      service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject, {
-        sendMail: true,
-      });
+      flightService.attachElevationDataAndCheckForAirspaceViolations(
+        flightDbObject,
+        {
+          sendMail: true,
+        }
+      );
 
-      service.startResultCalculation(flightDbObject);
+      flightService.startResultCalculation(flightDbObject);
 
-      await service.finalizeFlightSubmission({
+      await flightService.finalizeFlightSubmission({
         flight: flightDbObject,
         glider,
       });
@@ -456,7 +482,7 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const flight = await service.getById(req.params.id, true);
+    const flight = await flightService.getById(req.params?.id, true);
 
     if (!flight) return res.sendStatus(NOT_FOUND);
 
@@ -464,11 +490,12 @@ router.put(
       req.body;
 
     try {
-      if (await requesterIsNotOwner(req, res, flight.userId)) return;
+      if ((await requesterIsNotOwner(req, res, flight.userId)) || !req.user?.id)
+        return;
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      await service.finalizeFlightSubmission({
+      await flightService.finalizeFlightSubmission({
         flight,
         report,
         airspaceComment,
@@ -497,13 +524,13 @@ router.put(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const flight = await service.getById(req.params.id, true);
+    const flight = await flightService.getById(req.params?.id, true);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      await service.acceptViolation(flight);
+      await flightService.acceptViolation(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -514,11 +541,17 @@ router.put(
   }
 );
 
-function paramIdIsLeonardo(req, res) {
+/**
+ * Checks if a user wanted to call the leonardo endpoint but used the HTTP GET method instead of the POST method.
+ * If so the request will be terminated and the user will receive a plain html text message on how to make the correct call.
+ *
+ * This check has to be performed before the check of the normal validation result.
+ */
+function idEqualsLeonardo(req: Request, res: Response) {
   if (
     !(
-      typeof req.params.id == "string" &&
-      req.params.id.toLowerCase() == "leonardo"
+      typeof req.params?.id == "string" &&
+      req.params?.id.toLowerCase() == "leonardo"
     )
   )
     return;
@@ -542,16 +575,15 @@ function paramIdIsLeonardo(req, res) {
 }
 
 function createMulterIgcUploadHandler({ parts = 1 } = {}) {
+  const dataPath = process.env.SERVER_DATA_PATH;
+  if (!dataPath) throw new Error("SERVER_DATA_PATH not set");
+
   const igcStorage = multer.diskStorage({
     destination: path
-      .join(
-        process.env.SERVER_DATA_PATH,
-        IGC_STORE,
-        getCurrentYear().toString()
-      )
+      .join(dataPath, IGC_STORE, getCurrentYear().toString())
       .toString(),
-    filename: function (req, file, cb) {
-      service.createExternalId().then((externalId) => {
+    filename: function (req: Request, file, cb) {
+      flightService.createExternalId().then((externalId) => {
         req.externalId = externalId;
         cb(null, externalId + "_" + file.originalname);
       });
@@ -567,7 +599,13 @@ function createMulterIgcUploadHandler({ parts = 1 } = {}) {
   });
 }
 
-async function persistIgcFile(externalId, igcFile) {
+/**
+ * Persist a igc file from a requests. Target will be determined by externalId of the corresponding flight object.
+ *
+ * @param externalId
+ * @param igcFile
+ */
+async function persistIgcFile(externalId: number, igcFile) {
   const pathToFile = createFileName(externalId, igcFile.name);
 
   const fsPromises = fs.promises;
@@ -587,7 +625,7 @@ async function persistIgcFile(externalId, igcFile) {
  * @param {*} userId The id of the user who initiated the request
  * @throws A XccupRestrictionError if the requirements are not meet.
  */
-async function checkIfFlightIsModifiable(flight, userId) {
+async function checkIfFlightIsModifiable(flight, userId: string) {
   const { XccupRestrictionError } = require("../helper/ErrorHandler");
   const daysFlightEditable = config.get("daysFlightEditable");
   // Allow flight uploads which are older than X days when not in production (Needed for testing)
@@ -615,7 +653,11 @@ async function checkIfFlightIsModifiable(flight, userId) {
  * @param {*} validationResult The result to check
  * @returns true if the result is invalid otherwise undefined
  */
-function isGRecordResultInvalid(res, validationResult) {
+// TODO: Why check if the outcome of a checking function is correct? 🍝🍝🍝
+function isGRecordResultInvalid(
+  res: Response,
+  validationResult: string | undefined
+) {
   if (!validationResult) {
     logger.warn("FC: G-Record Validation returned undefined");
   } else if (validationResult != igcValidator.G_RECORD_PASSED) {
@@ -628,3 +670,4 @@ function isGRecordResultInvalid(res, validationResult) {
 }
 
 module.exports = router;
+export default router;
