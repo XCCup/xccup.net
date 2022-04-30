@@ -1,6 +1,5 @@
 .DS_Store
 
-
 # Compiled class file
 *.class
 
@@ -35,6 +34,5 @@ server/import/
 .yarn-cache
 *convertTo*.json
 *Import.json
-server/fixes/
 archiv/
 
