@@ -49,7 +49,7 @@ function execute(fixes: BRecord[]) {
     const timeDeltaInSeconds = (current.timestamp - precessor.timestamp) / 1000;
 
     const climb =
-      Math.round((climbedHeight ?? 0 / timeDeltaInSeconds) * 10) / 10;
+      Math.round(((climbedHeight ?? 0) / timeDeltaInSeconds) * 10) / 10;
     const speed = calculateSpeed(current, precessor, timeDeltaInSeconds);
 
     fixesStats.push(new FixStat(climb, speed));
