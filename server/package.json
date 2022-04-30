@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@googlemaps/google-maps-services-js": "^3.3.12",
+    "@googlemaps/google-maps-services-js": "^3.3.13",
     "axios": "^0.26.1",
     "axios-retry": "^3.2.4",
     "bcryptjs": "^2.4.3",

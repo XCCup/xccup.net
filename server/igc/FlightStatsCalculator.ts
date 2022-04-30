@@ -1,11 +1,12 @@
-const logger = require("../config/logger");
+import type { BRecord } from "igc-parser";
+import logger from "../config/logger";
 
 /**
  * The time frame in which speed and climb will be calculated
  */
 const TIME_FRAME = 45;
 
-function execute(fixes) {
+function execute(fixes: BRecord[]) {
   logger.debug("FSC: Start flight stats calculation");
 
   if (!fixes[0] || !fixes[1]) {
@@ -26,7 +27,7 @@ function execute(fixes) {
   const fixesStats = [new FixStat(0, 0)];
 
   // It's possible that some igc files have no baro data.
-  // Baro data is the preferred option because of accurrucy.
+  // Baro data is the preferred option because of accurracy.
   // If no baro data is available switch to gps data.
   const hasBaro =
     fixes[0].pressureAltitude && fixes[fixes.length - 1].pressureAltitude;
@@ -47,7 +48,8 @@ function execute(fixes) {
     const climbedHeight = heightDifferenceFunction(current, precessor);
     const timeDeltaInSeconds = (current.timestamp - precessor.timestamp) / 1000;
 
-    const climb = Math.round((climbedHeight / timeDeltaInSeconds) * 10) / 10;
+    const climb =
+      Math.round(((climbedHeight ?? 0) / timeDeltaInSeconds) * 10) / 10;
     const speed = calculateSpeed(current, precessor, timeDeltaInSeconds);
 
     fixesStats.push(new FixStat(climb, speed));
@@ -83,16 +85,22 @@ function execute(fixes) {
   };
 }
 
-function pressureHeightDifference(current, precessor) {
-  return current.pressureAltitude - precessor.pressureAltitude;
+function pressureHeightDifference(current: BRecord, precessor: BRecord) {
+  if (current.pressureAltitude && precessor.pressureAltitude) {
+    return current.pressureAltitude - precessor.pressureAltitude;
+  }
 }
 
-function gpsHeightDifference(current, precessor) {
-  return current.gpsAltitude - precessor.gpsAltitude;
+function gpsHeightDifference(current: BRecord, precessor: BRecord) {
+  if (current.gpsAltitude && precessor.gpsAltitude) {
+    return current.gpsAltitude - precessor.gpsAltitude;
+  }
 }
 
 class FixStat {
-  constructor(climb, speed) {
+  climb: number;
+  speed: number;
+  constructor(climb: number, speed: number) {
     this.climb = climb;
     this.speed = speed;
   }
@@ -111,7 +119,7 @@ const DEGREE_DIST = 95_000;
  * @param {*} fix2
  * @returns The distance in meters between the two coordinates.
  */
-function calculateDistance(fix1, fix2) {
+function calculateDistance(fix1: BRecord, fix2: BRecord) {
   const y = fix2.longitude - fix1.longitude;
   const x = fix2.latitude - fix1.latitude;
 
@@ -120,7 +128,11 @@ function calculateDistance(fix1, fix2) {
   return distanceInDegree * DEGREE_DIST;
 }
 
-function calculateSpeed(current, precessor, timeDeltaInSeconds) {
+export function calculateSpeed(
+  current: BRecord,
+  precessor: BRecord,
+  timeDeltaInSeconds: number
+) {
   return (
     Math.round(
       (calculateDistance(current, precessor) / timeDeltaInSeconds) * 360
@@ -128,21 +140,5 @@ function calculateSpeed(current, precessor, timeDeltaInSeconds) {
   );
 }
 
-function executeOnFlightFixes(flightFixes) {
-  const fixes = [];
-
-  for (let index = 0; index < flightFixes.geom.coordinates.length; index++) {
-    fixes.push({
-      pressureAltitude: flightFixes.timeAndHeights[index].pressureAltitude,
-      gpsAltitude: flightFixes.timeAndHeights[index].gpsAltitude,
-      timestamp: flightFixes.timeAndHeights[index].timestamp,
-      latitude: flightFixes.geom.coordinates[index][1],
-      longitude: flightFixes.geom.coordinates[index][0],
-    });
-  }
-
-  return execute(fixes);
-}
-
 exports.execute = execute;
-exports.executeOnFlightFixes = executeOnFlightFixes;
+exports.calculateSpeed = calculateSpeed;

@@ -1,4 +1,5 @@
 const path = require("path");
+const logger = require("../config/logger");
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 
 const flightTypeFactors = {
@@ -6,6 +7,12 @@ const flightTypeFactors = {
   FLAT: 1.5,
   FREE: 1,
 };
+
+beforeEach(() => {
+  // Supress logging to console
+  jest.spyOn(logger, "debug").mockImplementation(() => {});
+  jest.spyOn(logger, "info").mockImplementation(() => {});
+});
 
 test("Validate an igc-File which should result to a FAI triangle", (done) => {
   process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
@@ -58,7 +65,7 @@ test("Validate an igc-File which should result to a FLAT triangle", (done) => {
   const expectedFlight = {
     externalId: "kai_flat",
     type: "FLAT",
-    dist: "97.107",
+    dist: "97.154",
     turnpoints: {
       time: "14:13:06",
       lat: 49.78081666666667,
@@ -166,7 +173,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s =>
     externalId: "kai_free",
     igcPath: path.join(__dirname, "../igc", filePath),
   };
-  const numberOfFixes = 2979;
+  const numberOfFixes = 2978;
   const fixNr2345 = {
     time: "13:13:26",
     timestamp: 1595078006000,
@@ -215,7 +222,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s =
     igcPath: path.join(__dirname, "../igc", filePath),
   };
 
-  const numberOfFixes = 1809;
+  const numberOfFixes = 1807;
   const fixNr234 = {
     time: "10:24:43",
     timestamp: 1595067883000,
