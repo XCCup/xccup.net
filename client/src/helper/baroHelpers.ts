@@ -65,8 +65,8 @@ export function processBaroData(
   if (buddyTracks) {
     buddyTracks.forEach((element, index) => {
       const buddyBaro = [];
-      // Check if this track is activated
-      if (element.isActive) {
+      // Check if this track is activated and has fixes
+      if (element.isActive && element.fixes) {
         for (var i = 0; i < element.fixes.length; i++) {
           buddyBaro.push({
             x: element.fixes[i].timestamp,
