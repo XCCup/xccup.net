@@ -11,7 +11,7 @@ const {
 } = require("../config/igc-analyzer-config");
 const logger = require("../config/logger");
 const { createFileName } = require("../helper/igc-file-utils");
-const { findLaunchAndLanding } = require("./IgcHelper");
+const { findLaunchAndLandingIndexes } = require("./IgcHelper");
 
 let flightTypeFactors;
 let callback;
@@ -57,10 +57,10 @@ const IgcAnalyzer = {
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
     // Remove non flight fixes
-    const launchAndLanding = findLaunchAndLanding(igcAsJson);
+    const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
     igcAsJson.fixes = igcAsJson.fixes.slice(
-      launchAndLanding[0].launch,
-      launchAndLanding[0].landing
+      launchAndLandingIndexes.launch,
+      launchAndLandingIndexes.landing
     );
 
     const currentResolutionInSeconds = getResolution(igcAsJson);
@@ -74,8 +74,8 @@ const IgcAnalyzer = {
     let igcWithReducedFixes = stripByFactor(
       stripFactor,
       igcAsPlainText,
-      launchAndLanding[0].launch,
-      launchAndLanding[0].landing
+      launchAndLandingIndexes.launch,
+      launchAndLandingIndexes.landing
     );
 
     const { writeStream, pathToFile } = writeFile(
@@ -93,10 +93,10 @@ const IgcAnalyzer = {
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
     // Remove non flight fixes
-    const launchAndLanding = findLaunchAndLanding(igcAsJson);
+    const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
     igcAsJson.fixes = igcAsJson.fixes.slice(
-      launchAndLanding[0].launch,
-      launchAndLanding[0].landing
+      launchAndLandingIndexes.launch,
+      launchAndLandingIndexes.landing
     );
     logger.debug(`IA: Finished parsing`);
 
@@ -146,13 +146,13 @@ function runTurnpointIteration(resultStripIteration) {
   const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
   // Remove non flight fixes
-  const launchAndLanding = findLaunchAndLanding(igcAsJson);
+  const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
 
   let igcWithReducedFixes = stripAroundTurnpoints(
     igcAsPlainText,
     resultStripIteration.turnpoints,
-    launchAndLanding[0].launch,
-    launchAndLanding[0].landing
+    launchAndLandingIndexes.launch,
+    launchAndLandingIndexes.landing
   );
   const { writeStream, pathToFile } = writeFile(
     resultStripIteration.externalId,
@@ -358,12 +358,11 @@ function stripByFactor(factor, igcAsPlainText, launch, landing) {
 /**
  * This is a workaround to remove non flight fixes in plain igc files
  * @param {string[]} lines
- * @param {number} launch
- * @param {number} landing
+ * @param {number} launchIndex
+ * @param {number} landingIndex
  * @returns {string[]}
  */
-
-function removeNonFlightIgcLines(lines, launch, landing) {
+function removeNonFlightIgcLines(lines, launchIndex, landingIndex) {
   let firstLineWithBRecord = null;
   let offset = 0;
   const newLines = [];
@@ -373,7 +372,7 @@ function removeNonFlightIgcLines(lines, launch, landing) {
         firstLineWithBRecord = i;
       }
       const index = i - firstLineWithBRecord;
-      if (index > launch && index < landing + offset) {
+      if (index > launchIndex && index < landingIndex + offset) {
         newLines.push(lines[i]);
       }
     } else {
@@ -394,11 +393,15 @@ function removeNonFlightIgcLines(lines, launch, landing) {
  * @param {string} igcAsPlainText The whole content of an igc file as a string
  * @param {Object[]} turnpoints An array of turnpoints from the previous "strip" iteration
  */
-function stripAroundTurnpoints(igcAsPlainText, turnpoints, launch, landing) {
+function stripAroundTurnpoints(
+  igcAsPlainText,
+  turnpoints,
+  launchIndex,
+  landingIndex
+) {
   const rawLines = igcAsPlainText.split("\n");
 
-  const lines = removeNonFlightIgcLines(rawLines, launch, landing);
-
+  const lines = removeNonFlightIgcLines(rawLines, launchIndex, landingIndex);
   console.log("******", rawLines.length, lines.length);
   let lineIndexes = [];
   let tpIndex = 0;

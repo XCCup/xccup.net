@@ -156,7 +156,6 @@ function detectGround(fixes: ExtendedBRecord[]) {
 }
 
 export function detectLaunchLanding(fixes: ExtendedBRecord[]) {
-  let ll = [];
   for (let i = 0; i < fixes.length - 1; i++) {
     if (fixes[i].stateFlight) {
       let j;
@@ -164,19 +163,18 @@ export function detectLaunchLanding(fixes: ExtendedBRecord[]) {
       const launch = j;
       for (j = i; j < fixes.length - 2 && !fixes[j].stateGround; j++);
       const landing = j;
-      i = j;
-      ll.push({ launch, landing });
+
+      return { launch, landing: j };
     }
   }
-  if (ll.length == 0) ll.push({ launch: 0, landing: fixes.length - 1 });
-  return ll;
+  return { launch: 0, landing: fixes.length - 1 };
 }
 
-export function findLaunchAndLanding(flight: IGCFile) {
+export function findLaunchAndLandingIndexes(flight: IGCFile) {
   prepare(flight.fixes);
   detectFlight(flight.fixes);
   detectGround(flight.fixes);
   return detectLaunchLanding(flight.fixes);
 }
 
-exports.findLaunchAndLanding = findLaunchAndLanding;
+exports.findLaunchAndLandingIndexes = findLaunchAndLandingIndexes;
