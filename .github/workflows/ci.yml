@@ -64,6 +64,7 @@ jobs:
           working-directory: ./client
           config: baseUrl=http://localhost:4173
           browser: chrome
+          env: TZ=Europe/Berlin
 
       - name: 😩 Store artefacts of test failures
         uses: actions/upload-artifact@v1
