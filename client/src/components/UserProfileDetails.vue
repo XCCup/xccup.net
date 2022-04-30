@@ -157,19 +157,19 @@
   </div>
 </template>
 <script setup>
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import { ref, computed } from "vue";
 import useUserProfile from "@/composables/useUserProfile";
 import BaseSpinner from "./BaseSpinner.vue";
 import useSwal from "../composables/useSwal";
 import { retrieveDateOnly } from "../helper/utils";
-import useUser from "../composables/useUser";
+import useAuth from "../composables/useAuth";
 import { GENERIC_ERROR } from "@/common/Constants";
 
 const { showSuccessToast } = useSwal();
 const { modifiedUserData, updateProfile, profileDataHasChanged } =
   useUserProfile();
-const { getUserId } = useUser();
+const { getUserId } = useAuth();
 
 // Fetched data
 const listOfCountries = ref(null);

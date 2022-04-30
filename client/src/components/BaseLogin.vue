@@ -53,11 +53,11 @@
 </template>
 
 <script setup>
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import BaseSpinner from "./BaseSpinner.vue";
-const { login } = useUser();
+const { login } = useAuth();
 const router = useRouter();
 
 const props = defineProps({
@@ -74,10 +74,7 @@ const showSpinner = ref(false);
 const handleSubmit = async () => {
   try {
     showSpinner.value = true;
-    const response = await login({
-      email: email.value,
-      password: password.value,
-    });
+    const response = await login(email.value, password.value);
     // Redirect after login
     // Alternativly redirect in router config
     if (response?.status === 200 && !props.preventRedirect) {
@@ -108,4 +105,8 @@ const handleSubmit = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+form {
+  max-width: 500px;
+}
+</style>

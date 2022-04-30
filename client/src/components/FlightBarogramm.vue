@@ -53,7 +53,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 //  This helps:
 // https://medium.com/risan/vue-chart-component-with-chart-js-db85a2d21288
 // https://dev.to/23subbhashit/fetching-and-visualizing-data-in-vue-using-axios-and-chart-js-k2h
@@ -71,6 +71,8 @@ import {
   Legend,
   Title,
   Tooltip,
+  type TooltipItem,
+  type ChartConfiguration,
   // Interaction,
 } from "chart.js";
 
@@ -114,6 +116,7 @@ const pressureAltToggle = ref(false);
 
 // Only show pressure alt switch if pressure alt is present in flight fixes
 const showPressureAltSwitch = computed(() =>
+  // @ts-expect-error TODO: Redaonly refs…
   flight.value.fixes[0].pressureAltitude ? true : false
 );
 
@@ -134,27 +137,31 @@ const altitudeToShow = computed(() => {
 
 // Chart data
 const chartData = computed(() =>
+  // @ts-ignore TODO: Readonly refs…
   processBaroData(flight.value, activeAirbuddyFlights.value, {
     usePressureAlt: usePressureAlt.value,
   })
 );
 
 // Collapse setup
-let positionDetailsCollapse = null;
-let altSwitchCollapse = null;
+let positionDetailsCollapse: Collapse;
+let altSwitchCollapse: Collapse;
 
 onMounted(() => {
   const positionDetailsCollapseEl = document.getElementById(
     "positionDetailsCollapse"
   );
-  positionDetailsCollapse = new Collapse(positionDetailsCollapseEl, {
-    toggle: true,
-  });
-
+  if (positionDetailsCollapseEl) {
+    positionDetailsCollapse = new Collapse(positionDetailsCollapseEl, {
+      toggle: true,
+    });
+  }
   const altSwitchCollapseEl = document.getElementById("altSwitchCollapse");
-  altSwitchCollapse = new Collapse(altSwitchCollapseEl, {
-    toggle: showPressureAltSwitch.value,
-  });
+  if (altSwitchCollapseEl) {
+    altSwitchCollapse = new Collapse(altSwitchCollapseEl, {
+      toggle: true,
+    });
+  }
 });
 
 // Determine what to show (baro switch / position details)
@@ -171,9 +178,27 @@ watchEffect(() => {
   }
 });
 
+interface PositionDetails {
+  gpsAltitude?: number;
+  pressureAltitude?: number;
+  speed?: number;
+  time?: string;
+  climb?: number;
+  name?: string;
+}
+
+interface BaroTooltipItem extends TooltipItem<"line"> {
+  raw: {
+    speed?: number;
+    gpsAltitude?: number;
+    pressureAltitude?: number;
+    climb?: number;
+  };
+}
+
 // Position details
-const positionDetails = ref([{}]);
-const updatePositionDetails = (context) => {
+const positionDetails = ref<PositionDetails[]>([]);
+const updatePositionDetails = (context: BaroTooltipItem) => {
   positionDetails.value[context.datasetIndex] = {
     speed: context.raw.speed,
     gpsAltitude: context.raw.gpsAltitude,
@@ -185,12 +210,12 @@ const updatePositionDetails = (context) => {
 };
 
 // Chart setup
-const chart = shallowRef(null);
+const chart = shallowRef<Chart<"line">>();
 const ctx = ref(null);
 
 // Watch and update the chart
 watchEffect(() => {
-  if (chart.value) {
+  if (chart.value && chartData.value && chart.value.options?.scales?.y?.title) {
     chart.value.data.datasets = chartData.value;
     chart.value.options.scales.y.title.text = usePressureAlt.value
       ? "Baro Höhe"
@@ -201,7 +226,7 @@ watchEffect(() => {
 
 onMounted(() => {
   // Create a new chart
-  if (ctx.value) chart.value = new Chart(ctx.value, config);
+  if (ctx.value) chart.value = new Chart<"line">(ctx.value, config);
 });
 
 onBeforeUnmount(() => {
@@ -210,7 +235,7 @@ onBeforeUnmount(() => {
   }
 });
 
-const config = {
+const config: ChartConfiguration<"line"> = {
   type: "line",
   data: {
     datasets: chartData.value,

@@ -11,42 +11,52 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [17.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-      - name: Checkout repo
+      - name: 👀 Checkout repo
         uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+
+      - name: 🕸 Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          # cache: "npm" Does't work when project is not in default directory
-          # working-directory doesn't work in conjunction with "uses"
-      - name: Install backend
+
+      - name: 🖥 Install backend
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
-      - name: Test backend
+
+      - name: 🧪 Test backend
         run: docker-compose -f docker-compose-ci.yml run --rm yarn test
         working-directory: ./server
-      - name: Start Docker Backend Environment
+
+      - name: 🐳 Start Docker Backend Environment
         run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
         working-directory: ./server
-      - name: List all databases (just for debugging)
+
+      - name: 📝 List all databases (just for debugging)
         run: sleep 10 && docker exec db psql -U xccup_user -l
-      - name: Setup DB (enable PostGIS and set correct timezone)
+
+      - name: 🛠 Setup DB (enable PostGIS and set correct timezone)
         run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
-        # It looks like that it's no longer necessary to activate the postgis extension
-        # run: docker exec db psql -U xccup_user xccup_db -c "create extension postgis;" -c "set timezone='Europe/Berlin'"
         working-directory: ./server
-      - name: Install and build frontend
+
+      - name: 💻 Install and build frontend
         run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
         working-directory: ./client
-      - name: Print current server log before testing (just for debugging)
+
+      - name: 🖨 Print current server log before testing (just for debugging)
         run: docker logs server
-      - name: Install cypress
+
+      - name: 🩹 Remove tsconfig.json from ./client # or cypress will fail… TODO: Why 🤷‍♂️
+        working-directory: ./client
+        run: rm tsconfig.json
+
+      - name: 🧪 Install cypress
         run: npx cypress install
         # TODO: Fix cypress caching issue and remove the addional install
-      - name: Cypress run
+
+      - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v2
         with:
           start: docker-compose run --service-ports --rm client serve
@@ -54,13 +64,15 @@ jobs:
           working-directory: ./client
           config: baseUrl=http://localhost:4173
           browser: chrome
-      - name: Store artefacts of test failures
+
+      - name: 😩 Store artefacts of test failures
         uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: cypress-screenshots
           path: ./client/cypress/screenshots
-      - name: Store artefacts of server logs
+
+      - name: 🤨 Store artefacts of server logs
         uses: actions/upload-artifact@v1
         if: always()
         with:

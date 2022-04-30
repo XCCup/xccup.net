@@ -128,7 +128,7 @@
 </template>
 
 <script setup>
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 import useComments from "@/composables/useComments";
 import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
@@ -136,7 +136,7 @@ import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import { activateHtmlLinks } from "../helper/utils";
 import { GENERIC_ERROR } from "@/common/Constants";
 
-const { getUserId, hasElevatedRole } = useUser();
+const { getUserId, hasElevatedRole } = useAuth();
 const { deleteComment, editComment, submitComment } = useComments();
 
 const props = defineProps({
@@ -248,7 +248,7 @@ const closeReplyEditor = () => {
 };
 </script>
 <style lang="scss" scoped>
-@import "@/styles/style";
+@import "@/styles";
 // Not yet perfect, but we're getting there…
 .dark-reply {
   background-color: tint-color($primary, 5);

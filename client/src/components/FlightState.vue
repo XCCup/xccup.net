@@ -27,6 +27,13 @@
     data-bs-placement="top"
     :title="flightState"
   ></i>
+  <i
+    v-if="flightState === `In Prüfung`"
+    ref="icon"
+    class="bi bi-search"
+    data-bs-placement="top"
+    :title="flightState"
+  ></i>
 </template>
 
 <script setup>

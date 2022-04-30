@@ -56,7 +56,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
-import ApiService from "@/services/ApiService.js";
+import ApiService from "@/services/ApiService";
 import useSwal from "../composables/useSwal";
 
 const { showSuccessToast, showFailedToast } = useSwal();

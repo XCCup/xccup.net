@@ -7,7 +7,7 @@ echo "Starting the API server..."
 # "exec" is here to replace the current bash script's process with the node's process.
 # Otherwise interupts like SIGINT might not make it through to the node process.
 if [ $NODE_ENV == "development" ]; then
-    exec yarn run dev
+    exec yarn dev
 else
-    exec node app.js
+    exec yarn start
 fi

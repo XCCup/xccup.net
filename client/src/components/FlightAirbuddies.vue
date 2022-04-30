@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import { TRACK_COLORS } from "@/common/Constants";
+import useFlight from "@/composables/useFlight";
+import useAirbuddy from "@/composables/useAirbuddies";
+
+import { ref, watchEffect } from "vue";
+
+const { flight } = useFlight();
+const { fetchAll, airbuddiesFlightData, updateCheckedAirbuddies } =
+  useAirbuddy();
+
+const checkedFlights = ref<string[]>([]);
+const loaded = ref(false);
+
+const trackColors = TRACK_COLORS;
+
+watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
+
+const onShowAirbuddies = async () => {
+  try {
+    if (!flight.value?.airbuddies) return;
+    // @ts-ignore TODO: readonly refs…
+    await fetchAll(flight.value.airbuddies);
+    loaded.value = true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+</script>
+
 <template>
   <!-- Airbuddy Checkboxes -->
   <div id="flight-airbuddies" class="container">
@@ -29,13 +59,13 @@
         >
           <h5 class="ms-2">
             <input
-              :id="index"
+              :id="index.toString()"
               v-model="checkedFlights"
               class="form-check-input"
               type="checkbox"
               :value="airbuddy.id"
             />
-            <label class="form-check-label" :for="index">
+            <label class="form-check-label" :for="index.toString()">
               <span
                 class="badge"
                 :style="{ backgroundColor: trackColors[index + 1] }"
@@ -57,31 +87,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { TRACK_COLORS } from "@/common/Constants";
-import useFlight from "@/composables/useFlight";
-import useAirbuddy from "@/composables/useAirbuddies";
-
-import { ref, watchEffect } from "vue";
-
-const { flight } = useFlight();
-const { fetchAll, airbuddiesFlightData, updateCheckedAirbuddies } =
-  useAirbuddy();
-
-const checkedFlights = ref([]);
-const loaded = ref(false);
-
-const trackColors = TRACK_COLORS;
-
-watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
-
-const onShowAirbuddies = async () => {
-  try {
-    await fetchAll(flight.value.airbuddies);
-    loaded.value = true;
-  } catch (error) {
-    console.log(error);
-  }
-};
-</script>

@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const FlightPhoto = require("../config/postgres")["FlightPhoto"];
-const Logo = require("../config/postgres")["Logo"];
-const ProfilePicture = require("../config/postgres")["ProfilePicture"];
+
+const FlightPhotoService = require("../service/FlightPhotoService");
+const LogoService = require("../service/LogoService");
+const ProfilePictureService = require("../service/ProfilePictureService");
+
 const _ = require("lodash");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
@@ -30,9 +32,9 @@ router.get(
       if (value) return res.type(value.mimetype).sendFile(value.fullfilepath);
 
       const results = await Promise.all([
-        FlightPhoto.findByPk(id),
-        Logo.findByPk(id),
-        ProfilePicture.findByPk(id),
+        FlightPhotoService.getById(id),
+        LogoService.getById(id),
+        ProfilePictureService.getById(id),
       ]);
       const media = results.find((e) => e);
 
@@ -57,9 +59,9 @@ router.get("/meta/:id", checkParamIsUuid("id"), async (req, res, next) => {
 
   try {
     const results = await Promise.all([
-      FlightPhoto.findByPk(id),
-      Logo.findByPk(id),
-      ProfilePicture.findByPk(id),
+      FlightPhotoService.getById(id),
+      LogoService.getById(id),
+      ProfilePictureService.getById(id),
     ]);
     const mediaDbObject = results.find((e) => e);
 

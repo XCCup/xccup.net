@@ -25,6 +25,7 @@ describe("check edit flight page", () => {
 
     cy.get("#flight-details");
     cy.get("button").contains("Flug bearbeiten").should("not.exist");
+    cy.get("#admin-options-dropdown").should("not.exist");
   });
 
   it("Check that flight edit is only possible within 14 days", () => {
@@ -40,6 +41,10 @@ describe("check edit flight page", () => {
     cy.visit(`/flug/${editableFlightId}`);
 
     cy.get("#flight-details");
+
+    // Check that admin functionalities are not visible
+    cy.get("#admin-options-dropdown").should("not.exist");
+
     cy.get("button").contains("Flug bearbeiten").click();
 
     const oldGliderId = "cd25b974-1e30-4969-ba46-34990461990d";
@@ -72,8 +77,6 @@ describe("check edit flight page", () => {
     cy.get("#hikeAndFlyCheckbox").should("not.be.checked").check();
     cy.get("#logbookCheckbox").should("not.be.checked").check();
 
-    // TODO: Check photos
-
     cy.get("[data-cy=save-flight-edit]").contains("Speichern").click();
     cy.url().should("include", `/flug/${editableFlightId}`);
 
@@ -97,7 +100,18 @@ describe("check edit flight page", () => {
     cy.visit(`/flug/${nonEditableFlightId}`);
 
     cy.get("#flight-details");
-    cy.get("button").contains("Admin").click();
+
+    cy.get("#admin-options-dropdown").click();
+
+    // Check that the rerun button is also visible
+    cy.get("[data-cy=admin-flight-options]")
+      .find("li")
+      .contains("Neuberechnen");
+
+    cy.get("[data-cy=admin-flight-options]")
+      .find("li")
+      .contains("Flug bearbeiten")
+      .click();
     cy.url().should("include", `/flug/${nonEditableFlightId}/bearbeiten`);
   });
 
@@ -106,7 +120,11 @@ describe("check edit flight page", () => {
     cy.visit(`/flug/${nonEditableFlightId}`);
 
     cy.get("#flight-details");
-    cy.get("button").contains("Admin").click();
+    cy.get("#admin-options-dropdown").click();
+    cy.get("[data-cy=admin-flight-options]")
+      .find("li")
+      .contains("Flug bearbeiten")
+      .click();
     cy.url().should("include", `/flug/${nonEditableFlightId}/bearbeiten`);
 
     cy.get("#cyFlightDeleteButton").click();

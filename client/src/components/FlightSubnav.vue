@@ -8,30 +8,30 @@
       <router-link
         :to="{
           name: 'FlightsAll',
-          query: { userId: flight.user?.id },
+          query: { userId: flight?.user?.id },
         }"
         class="link-light"
       >
-        {{ flight.user?.firstName + " " + flight.user?.lastName }}
+        {{ flight?.user?.firstName + " " + flight?.user?.lastName }}
       </router-link>
       am
       <router-link
         :to="{
           name: 'FlightsAll',
           query: {
-            startDate: retrieveDateOnly(flight.takeoffTime),
-            endDate: dayAfter(flight.takeoffTime),
+            startDate: retrieveDateOnly(flight?.takeoffTime),
+            endDate: dayAfter(flight?.takeoffTime),
           },
         }"
         class="link-light"
       >
-        <BaseDate :timestamp="flight.takeoffTime" />
+        <BaseDate :timestamp="flight?.takeoffTime" />
       </router-link>
     </p>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import useFlight from "@/composables/useFlight";
 import { retrieveDateOnly, dayAfter } from "../helper/utils";
 const { flight } = useFlight();

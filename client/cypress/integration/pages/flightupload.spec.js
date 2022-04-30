@@ -16,6 +16,9 @@ describe("check flight upload page", () => {
   it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const flightReport = "This is a flight report.";
+    const photoCaption = `Super tolles "Bild" 🚀 <a href=""'>foo</a>`;
+    const photoCaptionExpected = `Super tolles "Bild" 🚀 foo`;
+
     const airspaceComment = "Alles offen, kein Problem 🤪";
 
     const photo1 = "bremm.jpg";
@@ -39,7 +42,7 @@ describe("check flight upload page", () => {
 
     // Increase timeout because calclation takes some time
     cy.get('input[type="text"]', {
-      timeout: 20000,
+      timeout: 40000,
     }).should("have.value", expectedTakeoff);
 
     // Add photos
@@ -90,6 +93,8 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
 
     cy.get("[data-cy=text-editor-textarea]").type(flightReport);
+    cy.get("[data-cy=photo-caption-0]").type(photoCaption);
+
     cy.get("#hikeAndFlyCheckbox").click();
     cy.get("#logbookCheckbox").click();
 
@@ -100,8 +105,9 @@ describe("check flight upload page", () => {
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
     // Expect to be redirected to flight view after submitting
-
-    cy.get("#cyFlightDetailsTable1").find("td").contains(expectedUserName);
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
 
@@ -119,6 +125,10 @@ describe("check flight upload page", () => {
         expect($img[0].naturalWidth).to.equal(310);
       });
 
+    cy.get("[data-cy=photo-caption-0]").should(
+      "have.text",
+      photoCaptionExpected
+    );
     cy.get("#photo-0").click();
 
     cy.get("#glightbox-slider").within(() => {
@@ -132,6 +142,7 @@ describe("check flight upload page", () => {
 
   it("test upload flight twice", () => {
     const igcFileName = "47188_J3USaNi1.igc";
+    const airspaceComment = "CTR Büchel inaktiv";
     const expectedError =
       "Dieser Flug ist bereits vorhanden. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an info@xccup.net";
 
@@ -149,10 +160,14 @@ describe("check flight upload page", () => {
 
     // Increase timeout because calclation takes some time
     cy.get('input[type="text"]', {
-      timeout: 20000,
+      timeout: 40000,
     }).should("have.value", "Serrig");
 
     cy.get("#acceptTermsCheckbox").check();
+
+    // This flight contains a airspace violation. Unless the user has explained this violation the commit button should be disabled.
+    cy.get("Button").contains("Streckenmeldung absenden").should("be.disabled");
+    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
@@ -163,6 +178,7 @@ describe("check flight upload page", () => {
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
 
+    // Try to upload the same flight a second time
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm').attachFile({
         fileContent: fileContent.toString(),

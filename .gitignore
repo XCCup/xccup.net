@@ -1,5 +1,9 @@
 .DS_Store
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 # Compiled class file
 *.class
 
@@ -28,8 +32,14 @@ XCCup_DB_Schema/
 
 client/cypress/videos/
 client/cypress/screenshots/
+<<<<<<< HEAD
+=======
+server/data/
+server/import/
+>>>>>>> main
 
 .yarn-cache
 *convertTo*.json
 *Import.json
 archiv/
+

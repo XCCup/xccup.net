@@ -1,26 +1,5 @@
-<template>
-  <div class="container-lg">
-    <h3 v-once>{{ title }} {{ route.params?.year }}</h3>
-
-    <div v-if="results">
-      <p v-if="remark">Hinweis: {{ remark }}</p>
-      <div class="row">
-        <div class="col-6">
-          <FilterPanel />
-        </div>
-      </div>
-      <ResultsTableGeneric
-        :results="results"
-        :no-data-flag="noDataFlag"
-        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
-      />
-    </div>
-    <GenericError v-else />
-  </div>
-</template>
-
-<script setup>
-import ApiService from "@/services/ApiService.js";
+<script setup lang="ts">
+import ApiService from "@/services/ApiService";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
@@ -45,3 +24,33 @@ await initData(ApiService.getResultsOverall, {
   },
 });
 </script>
+
+<!-- Necessary for <keep-alive> -->
+<script lang="ts">
+export default {
+  name: "ResultsOverall",
+  inheritAttrs: false,
+  customOptions: {},
+};
+</script>
+
+<template>
+  <div class="container-lg">
+    <h3 v-once>{{ title }} {{ route.params?.year }}</h3>
+
+    <div v-if="results">
+      <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div class="row">
+        <div class="col-6">
+          <FilterPanel />
+        </div>
+      </div>
+      <ResultsTableGeneric
+        :results="results"
+        :no-data-flag="noDataFlag"
+        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
+      />
+    </div>
+    <GenericError v-else />
+  </div>
+</template>

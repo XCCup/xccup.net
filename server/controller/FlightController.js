@@ -13,15 +13,12 @@ const {
   BAD_REQUEST,
   UNAUTHORIZED,
 } = require("../constants/http-status-constants");
-const {
-  STATE,
-  DAYS_FLIGHT_CHANGEABLE,
-  IGC_STORE,
-} = require("../constants/flight-constants");
+const { STATE, IGC_STORE } = require("../constants/flight-constants");
 const {
   authToken,
   requesterIsNotOwner,
   requesterIsNotModerator,
+  requesterIsNotAdmin,
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
@@ -39,10 +36,12 @@ const {
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
-const config = require("../config/env-config");
+const config = require("../config/env-config").default;
+
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const multer = require("multer");
 const { getCurrentYear } = require("../helper/Utils");
+const userService = require("../service/UserService");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -226,12 +225,12 @@ router.post(
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
-        uncheckedGRecord: validationResult == undefined ? true : false,
-        flightStatus: STATE.IN_PROCESS,
+        validationResult,
       });
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-      service.attachFixRelatedTimeData(flightDbObject, fixes);
+
+      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, userId);
 
@@ -241,17 +240,120 @@ router.post(
           fixes
         );
 
-      service.startResultCalculation(flightDbObject);
-
       const result = await service.update(flightDbObject);
 
-      deleteCache(CACHE_RELEVANT_KEYS);
+      service.startResultCalculation(flightDbObject);
+
+      const airspaceViolation =
+        await service.attachElevationDataAndCheckForAirspaceViolations(
+          flightDbObject
+        );
 
       res.json({
         flightId: flightDbObject.id,
         externalId: flightDbObject.externalId,
+        airspaceViolation,
         takeoff: takeoffName,
         landing: result.landing,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Allows a admin to upload a flight for a user; Admins are also able to upload older flights.
+// @route POST /flights/admin/upload
+// @access Only moderators and admins
+
+const igcAdminFileUpload = createMulterIgcUploadHandler({ parts: 2 });
+router.post(
+  "/admin/upload",
+  igcAdminFileUpload.single("igcFile"),
+  checkIsUuidObject("userId"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotAdmin(req, res)) return;
+
+      const userId = req.body.userId;
+      const userGliders = await userService.getGlidersById(userId);
+      if (!userGliders) return res.sendStatus(NOT_FOUND);
+
+      const validationResult = await igcValidator.execute(req.file);
+      if (isGRecordResultInvalid(res, validationResult)) return;
+
+      const flightDbObject = await service.create({
+        userId,
+        igcPath: req.file.path,
+        externalId: req.externalId,
+        validationResult,
+      });
+
+      const fixes = IgcAnalyzer.extractFixes(flightDbObject);
+
+      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+
+      const takeoffName =
+        await service.storeFixesAndAddFurtherInformationToFlight(
+          flightDbObject,
+          fixes
+        );
+
+      const result = await service.update(flightDbObject);
+
+      service.startResultCalculation(flightDbObject);
+
+      const glider = userGliders.gliders.find(
+        (g) => g.id == userGliders.defaultGlider
+      );
+      if (!glider)
+        return res
+          .status(BAD_REQUEST)
+          .send("No default glider configured in profile");
+
+      service.finalizeFlightSubmission({ flight: flightDbObject, glider });
+
+      const airspaceViolation =
+        await service.attachElevationDataAndCheckForAirspaceViolations(
+          flightDbObject
+        );
+
+      res.json({
+        flightId: flightDbObject.id,
+        externalId: flightDbObject.externalId,
+        airspaceViolation,
+        takeoff: takeoffName,
+        landing: result.landing,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Allows a admin to rerun a flight calculation; Which includes also the location and elevation requests
+// @route POST /flights/admin/rerun
+// @access Only moderators and admins
+
+router.get(
+  "/admin/rerun/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      const flight = await service.getById(req.params.id);
+      if (!flight) return res.sendStatus(NOT_FOUND);
+
+      service.startResultCalculation(flight);
+
+      const airspaceViolation =
+        await service.attachElevationDataAndCheckForAirspaceViolations(flight);
+
+      res.json({
+        airspaceViolation,
       });
     } catch (error) {
       next(error);
@@ -279,20 +381,20 @@ router.post(
     try {
       const user = await validate(req.body.user, req.body.pass);
       if (!user) return res.sendStatus(UNAUTHORIZED);
+
       const glider = user.gliders.find((g) => g.id == user.defaultGlider);
       if (!glider)
         return res
           .status(BAD_REQUEST)
           .send("No default glider configured in profile");
 
-      const validationResult = await igcValidator.execute(igc);
-      if (isGRecordResultInvalid(res, validationResult)) return;
+      // const validationResult = await igcValidator.execute(igc);
+      // if (isGRecordResultInvalid(res, validationResult)) return;
 
       const flightDbObject = await service.create({
         userId: user.id,
         externalId: await service.createExternalId(),
-        uncheckedGRecord: validationResult == undefined ? true : false,
-        flightStatus: STATE.IN_PROCESS,
+        validationResult: false,
       });
 
       flightDbObject.igcPath = await persistIgcFile(
@@ -301,7 +403,7 @@ router.post(
       );
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-      service.attachFixRelatedTimeData(flightDbObject, fixes);
+      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, user.id);
 
@@ -310,8 +412,11 @@ router.post(
         fixes
       );
 
+      service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject, {
+        sendMail: true,
+      });
+
       service.startResultCalculation(flightDbObject);
-      await service.update(flightDbObject);
 
       await service.finalizeFlightSubmission({
         flight: flightDbObject,
@@ -363,7 +468,7 @@ router.put(
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      const result = await service.finalizeFlightSubmission({
+      await service.finalizeFlightSubmission({
         flight,
         report,
         airspaceComment,
@@ -374,10 +479,7 @@ router.put(
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
-      res.json({
-        flightPoints: result[1][0].flightPoints,
-        flightStatus: result[1][0].flightStatus,
-      });
+      res.sendStatus(OK);
     } catch (error) {
       next(error);
     }
@@ -439,7 +541,7 @@ function paramIdIsLeonardo(req, res) {
   `);
 }
 
-function createMulterIgcUploadHandler() {
+function createMulterIgcUploadHandler({ parts = 1 } = {}) {
   const igcStorage = multer.diskStorage({
     destination: path
       .join(
@@ -460,7 +562,7 @@ function createMulterIgcUploadHandler() {
     limits: {
       fileSize: 2097152,
       files: 1,
-      parts: 1,
+      parts,
     },
   });
 }
@@ -474,16 +576,28 @@ async function persistIgcFile(externalId, igcFile) {
   return pathToFile;
 }
 
+/**
+ * Flight upload or modifactions to an already processed flight are only allowed within the first X days after takeoff.
+ * There are some exceptions from this rule:
+ * - If system is not in production
+ * - If the user is an admin
+ * - If the env var "overruleActive" was set to true
+ *
+ * @param {*} flight The flight db object
+ * @param {*} userId The id of the user who initiated the request
+ * @throws A XccupRestrictionError if the requirements are not meet.
+ */
 async function checkIfFlightIsModifiable(flight, userId) {
   const { XccupRestrictionError } = require("../helper/ErrorHandler");
-  // Allow flight uploads which are older than 14 days when not in production (Needed for testing)
+  const daysFlightEditable = config.get("daysFlightEditable");
+  // Allow flight uploads which are older than X days when not in production (Needed for testing)
   const overwriteIfInProcessAndNotProduction =
     (flight.flightStatus == STATE.IN_PROCESS &&
       config.get("env") !== "production") ||
     config.get("overruleActive");
 
   const flightIsYoungerThanThreshold = moment(flight.takeoffTime)
-    .add(config.get("daysFlightEditable"), "days")
+    .add(daysFlightEditable, "days")
     .isAfter(moment());
 
   if (overwriteIfInProcessAndNotProduction) return;
@@ -491,7 +605,7 @@ async function checkIfFlightIsModifiable(flight, userId) {
   if (await isAdmin(userId)) return;
 
   throw new XccupRestrictionError(
-    `It's not possible to change a flight later than ${DAYS_FLIGHT_CHANGEABLE} days after takeoff`
+    `It's not possible to change a flight later than ${daysFlightEditable} days after takeoff`
   );
 }
 

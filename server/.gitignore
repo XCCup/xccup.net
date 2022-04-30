@@ -3,6 +3,7 @@ node_modules
 
 dist
 
+<<<<<<< HEAD
 
 data/
 igc/flights
@@ -10,6 +11,11 @@ igc/demo_igcs/temp
 
 import/
 fixes
+=======
+/igc/flights
+/igc/demo_igcs/igc
+/data/images
+>>>>>>> main
 
 # local env files
 .env

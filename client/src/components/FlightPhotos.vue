@@ -69,14 +69,18 @@
               alt=""
             />
           </a>
-          <figcaption v-if="!flightId" class="figure-caption text-center">
+          <figcaption
+            v-if="!flightId"
+            :data-cy="`photo-caption-${index}`"
+            class="figure-caption text-center"
+          >
             {{ photo.description ? photo.description : "" }}
           </figcaption>
           <div class="p-1">
             <input
               v-if="flightId"
-              :id="`add-description-photo-${index}`"
               v-model="photo.description"
+              :data-cy="`photo-caption-${index}`"
               class="form-control form-control-sm"
               type="text"
               placeholder="Beschreibung"
@@ -122,7 +126,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { getbaseURL } from "@/helper/baseUrlHelper";
-import useUser from "@/composables/useUser";
+import useAuth from "@/composables/useAuth";
 import ApiService from "@/services/ApiService";
 import { v4 as uuidv4 } from "uuid";
 import { remove, last } from "lodash-es";
@@ -135,7 +139,7 @@ import "glightbox/dist/css/glightbox.css";
 
 // TODO: Backend allows to upload more and sometimes less in rare cases
 
-const { getUserId } = useUser();
+const { getUserId } = useAuth();
 const baseURL = getbaseURL();
 
 const props = defineProps({
