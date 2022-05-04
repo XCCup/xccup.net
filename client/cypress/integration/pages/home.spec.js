@@ -1,7 +1,5 @@
 import { isInSeason } from "../../support/utils";
 
-process.env.TZ = "Europe/Berlin";
-
 describe("check landing page", () => {
   before(() => {});
 

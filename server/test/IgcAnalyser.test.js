@@ -165,6 +165,39 @@ test("Validate an igc-File were two turnpoints match", (done) => {
   }
 });
 
+test("Validate that the landing is detected (even when igc has more fixes)", (done) => {
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
+  const filePath = "demo_igcs/flight_with_car_drive/flight_with_car_drive.igc";
+
+  const flightToAnaylze = {
+    externalId: "flight_with_car_drive",
+    igcPath: path.join(__dirname, "../igc", filePath),
+  };
+
+  const expectedFlight = {
+    externalId: "flight_with_car_drive",
+    type: "FREE",
+    dist: "2.351",
+    igcPath: filePath,
+  };
+
+  try {
+    IgcAnalyzer.startCalculation(
+      flightToAnaylze,
+      flightTypeFactors,
+      (result) => {
+        expect(result.type).toBe(expectedFlight.type);
+        expect(result.dist).toBe(expectedFlight.dist);
+        expect(result.id).toBe(expectedFlight.id);
+        expect(result.igcPath).toContain(expectedFlight.igcPath);
+        done();
+      }
+    );
+  } catch (error) {
+    done(error);
+  }
+});
+
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s => Reducion by factor 5)", () => {
   process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_free/free_79km35_4h8m.igc";
