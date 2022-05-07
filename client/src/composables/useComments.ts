@@ -41,12 +41,17 @@ export default () => {
   // Mutations
 
   // Actions
-  const submitComment = async (message: string, userId: string) => {
+  const submitComment = async (
+    message: string,
+    userId: string,
+    relatedTo?: string
+  ) => {
     if (!flight.value) return;
     const res = await ApiService.addComment({
       flightId: flight.value.id,
       message,
       userId,
+      relatedTo,
     });
     if (res.status != 200) throw res.statusText;
     updateComments();

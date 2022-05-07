@@ -38,7 +38,7 @@ router.get(
 
 // @desc Adds a comment
 // @route POST /comments/
-// @access Only owner
+// @access All logged-in users
 
 router.post(
   "/",

@@ -8,6 +8,7 @@
       class="btn btn-primary me-2"
       :disabled="saveButtonIsDisabled"
       @click.prevent="onSaveMessage"
+      data-cy="save-comment-button"
     >
       {{ useEditLabels ? "Speichern" : "Senden" }}
       <BaseSpinner v-if="showSpinner" />
