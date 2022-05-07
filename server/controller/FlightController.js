@@ -230,6 +230,12 @@ router.post(
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
+      if (typeof fixes === "string") {
+        if (fixes === "manipulated")
+          res.status(BAD_REQUEST).send("Manipulated IGC-File");
+        return;
+      }
+
       service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, userId);
@@ -384,9 +390,12 @@ router.post(
 
       const glider = user.gliders.find((g) => g.id == user.defaultGlider);
       if (!glider)
-        return res
-          .status(BAD_REQUEST)
-          .send("No default glider configured in profile");
+        return (
+          res
+            .status(BAD_REQUEST)
+            // TODO: Should this be in german as it's shown to the user?
+            .send("No default glider configured in profile")
+        );
 
       // const validationResult = await igcValidator.execute(igc);
       // if (isGRecordResultInvalid(res, validationResult)) return;
@@ -401,6 +410,15 @@ router.post(
       });
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
+
+      if (typeof fixes === "string") {
+        if (fixes === "manipulated")
+          // TODO: Should this be in german as it's shown to the user?
+
+          res.status(BAD_REQUEST).send("Manipulated IGC-File");
+        return;
+      }
+
       service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, user.id);

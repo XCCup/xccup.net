@@ -92,6 +92,9 @@ const IgcAnalyzer = {
     logger.debug(`IA: start parsing`);
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
+    // Detect manipulated igc files
+    if (igcIsManipulated(igcAsJson)) return "manipulated";
+
     // Remove non flight fixes
     const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
     igcAsJson.fixes = igcAsJson.fixes.slice(
@@ -118,6 +121,19 @@ const IgcAnalyzer = {
     return reducedFixes;
   },
 };
+
+// Checks if an igc files was manipulated by "MaxPunkte"
+
+function igcIsManipulated(igc) {
+  let manipulated = false;
+
+  if (!igc.commentRecords) return false;
+  igc.commentRecords.forEach((el) => {
+    if (el.code === "XMP" && el.message.includes("removed by user"))
+      manipulated = true;
+  });
+  return manipulated;
+}
 
 function extractOnlyDefinedFieldsFromFix(fix) {
   return {
