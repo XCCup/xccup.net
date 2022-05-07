@@ -323,7 +323,7 @@ describe("check flight upload page", () => {
     });
   });
 
-  it.only("Test upload manipulated file with leonardo interface", () => {
+  it("Test upload manipulated file with leonardo interface", () => {
     const igcFileName = "MaxPunkte_manipulated.igc";
     const expectApiRespone = "Manipulated IGC-File";
     cy.fixture(igcFileName).then(async (fileContent) => {

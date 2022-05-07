@@ -229,7 +229,8 @@ router.post(
       });
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-
+      // TODO: Is there a better way to do this?
+      // Also: This is used two times in the code
       if (typeof fixes === "string") {
         if (fixes === "manipulated")
           res.status(BAD_REQUEST).send("Manipulated IGC-File");
