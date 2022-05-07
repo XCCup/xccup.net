@@ -35,7 +35,7 @@
     </div>
     <button
       type="button"
-      class="btn btn-outline-primary"
+      class="btn btn-outline-primary mb-2"
       :disabled="!properUserSet || !fileLoaded"
       @click="onSubmit"
     >

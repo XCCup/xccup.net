@@ -27,7 +27,7 @@
     "express": "^4.18.1",
     "express-rate-limit": "^6.4.0",
     "express-validator": "^6.12.1",
-    "igc-parser": "^1.0.0",
+    "igc-parser": "XCCup/igc-parser",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
