@@ -1,7 +1,9 @@
 import { isInSeason } from "../../support/utils";
 
 describe("check landing page", () => {
-  before(() => {});
+  before(() => {
+    cy.seedFlightDb();
+  });
 
   beforeEach(() => {
     cy.visit("/");
