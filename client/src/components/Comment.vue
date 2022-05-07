@@ -71,7 +71,7 @@
           :class="userPrefersDark ? 'link-light' : ''"
           @click.prevent="openReplyEditor"
         >
-          <i class="bi bi-reply"></i> Antworten
+          <i class="bi bi-reply" data-cy="reply-comment-button"></i> Antworten
         </a>
       </div>
       <!-- Show edit btns to the author of a comment -->
@@ -102,14 +102,15 @@
         class="text-secondary text-end"
       >
         <a href="#" class="text-danger" @click.prevent="onEditComment"
-          ><i class="bi bi-pencil-square mx-1"></i>(Admin)
+          ><i class="bi bi-pencil-square mx-1" data-cy="admin-edit-comment"></i
+          >(Admin)
         </a>
         <a
           href="#"
           class="text-danger"
           @click.prevent="deleteCommentModal.show()"
         >
-          <i class="bi bi-trash mx-1"></i>(Admin)
+          <i class="bi bi-trash mx-1" data-cy="admin-delete-comment"></i>(Admin)
         </a>
       </div>
     </div>
@@ -223,14 +224,9 @@ const showReplyEditor = ref(false);
 const openReplyEditor = () => (showReplyEditor.value = true);
 
 const onSubmitReplyMessage = async (message) => {
-  const comment = {
-    message: message,
-    userId: getUserId.value,
-    relatedTo: props.comment.id,
-  };
   try {
     showSpinner.value = true;
-    const res = await submitComment(comment);
+    const res = await submitComment(message, getUserId.value, props.comment.id);
     if (res.status != 200) throw res.statusText;
     closeReplyEditor();
     errorMessage.value = null;

@@ -80,6 +80,7 @@ export default {
   },
 
   // Photos
+
   uploadPhotos(data: FormData) {
     return apiClient.post("flights/photos/", data);
   },
@@ -92,6 +93,7 @@ export default {
   deletePhoto(id: string) {
     return apiClient.delete("flights/photos/" + id);
   },
+
   // Flight comments
 
   addComment(comment: NewComment) {

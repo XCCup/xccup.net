@@ -1,3 +1,5 @@
+import axios from "axios";
+
 describe("check flight upload page", () => {
   before(() => {
     cy.seedFlightDb();
@@ -260,6 +262,43 @@ describe("check flight upload page", () => {
     cy.get("#upload-error", {
       timeout: 10000,
     }).should("include.text", expectedError);
+  });
+
+  it("Test upload with leonardo interface", () => {
+    const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
+    const expectedTakeoff = "Donnersberg";
+    const expectedUserName = "Melinda Tremblay";
+    const expectedAirtime = "1:43h";
+    const expectApiRespone =
+      "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
+
+    cy.fixture(igcFileName).then(async (fileContent) => {
+      const payload = {
+        user: "blackhole+melinda@xccup.net",
+        pass: "PW_MelindaTremblay",
+        IGCigcIGC: fileContent.toString(),
+        igcfn: igcFileName,
+      };
+      const data = (
+        await axios.post("http://localhost:3000/api/flights/leonardo", payload)
+      ).data;
+
+      // Test the response message from the API
+      expect(data).to.include(expectApiRespone);
+
+      const regex = /.*\/flug\/(\d+)./;
+      const flightId = data.match(regex)[1];
+
+      // Wait till flight was fully calculated
+      cy.wait(5000);
+      cy.visit(`/flug/${flightId}`);
+
+      cy.get("[data-cy=flight-details-pilot]")
+        .find("a")
+        .contains(expectedUserName);
+      cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
+      cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+    });
   });
 
   // // This test works only if the overwrite in FlightController:checkIfFlightIsModifiable is disabled/removed

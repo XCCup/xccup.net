@@ -390,17 +390,15 @@ router.post(
 
       // const validationResult = await igcValidator.execute(igc);
       // if (isGRecordResultInvalid(res, validationResult)) return;
+      const externalId = await service.createExternalId();
+      const igcPath = await persistIgcFile(externalId, igc);
 
       const flightDbObject = await service.create({
         userId: user.id,
-        externalId: await service.createExternalId(),
+        igcPath,
+        externalId,
         validationResult: false,
       });
-
-      flightDbObject.igcPath = await persistIgcFile(
-        flightDbObject.externalId,
-        igc
-      );
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
       service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
@@ -412,9 +410,15 @@ router.post(
         fixes
       );
 
-      service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject, {
-        sendMail: true,
-      });
+      await service.update(flightDbObject);
+
+      const airspaceViolation =
+        await service.attachElevationDataAndCheckForAirspaceViolations(
+          flightDbObject,
+          {
+            sendMail: true,
+          }
+        );
 
       service.startResultCalculation(flightDbObject);
 
@@ -425,11 +429,17 @@ router.post(
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
-      res
-        .status(OK)
-        .send(
-          `Der Flug wurde mit dem Gerät ${glider.brand} ${glider.model} eingereicht`
-        );
+      let message = `Der Flug wurde mit dem Gerät ${glider.brand} ${
+        glider.model
+      } eingereicht. Du findest deinen Flug unter ${config.get(
+        "clientUrl"
+      )}${config.get("clientFlight")}/${flightDbObject.externalId}.`;
+
+      if (airspaceViolation)
+        message +=
+          "\nDein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
+
+      res.status(OK).send(message);
     } catch (error) {
       next(error);
     }
