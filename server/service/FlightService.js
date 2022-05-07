@@ -549,6 +549,7 @@ function createOrderStatement(sort) {
 }
 
 function calculateTaskSpeed(result, flight) {
+  if (!flight.flightStats) return;
   flight.flightStats.taskSpeed =
     Math.round((result.dist / flight.airtime) * 600) / 10;
   flight.changed("flightStats", true);
