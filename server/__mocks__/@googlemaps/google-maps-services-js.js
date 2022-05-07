@@ -23,8 +23,8 @@ class Client {
 
       response.data.results = locations.map((fix) => {
         let elevation = 42;
-        if (fix.lat == 50.1068 && fix.lng == 7.1148) elevation = 356;
-        if (fix.lat == 50.1068 && fix.lng == 7.1148) elevation = 355;
+        if (fix.lat == 50.10681 && fix.lng == 7.11481) elevation = 356;
+        if (fix.lat == 50.10681 && fix.lng == 7.11483) elevation = 355;
 
         return {
           ...fix,
