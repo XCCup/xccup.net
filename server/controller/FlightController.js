@@ -437,7 +437,7 @@ router.post(
 
       if (airspaceViolation)
         message +=
-          "\nDein Flug hatte eine Luftraumverletzung. Wir prüfen diese so schnell wie möglich.";
+          "\nDein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
 
       res.status(OK).send(message);
     } catch (error) {
