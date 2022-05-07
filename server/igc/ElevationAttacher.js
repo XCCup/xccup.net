@@ -6,6 +6,7 @@ const logger = require("../config/logger");
 const { Client } = require("@googlemaps/google-maps-services-js");
 
 const numberOfFixesPerApiRequest = 500;
+const MAX_FIX_DECIMALS = 5;
 const client = new Client();
 
 const elevationAttacher = {
@@ -23,11 +24,18 @@ function createPromise() {
   return [promise, resolve, reject];
 }
 
+function maxDecimals(number, maxDecimals) {
+  return Number.parseFloat(number).toFixed(maxDecimals);
+}
+
 function executeRequestGoogle(stack) {
   logger.debug("Request Elevation Data from Google");
 
   const locations = stack.map(({ fix }) => {
-    return { lat: fix.latitude, lng: fix.longitude };
+    return {
+      lat: maxDecimals(fix.latitude, MAX_FIX_DECIMALS),
+      lng: maxDecimals(fix.longitude, MAX_FIX_DECIMALS),
+    };
   });
 
   return client.elevation({
@@ -49,6 +57,7 @@ const resolveStack = debounce(async () => {
       resolve(Math.round(GND));
     });
   } catch (error) {
+    // TODO: Notify admins
     logger.error("EA: Error while fetching elevation data: " + error);
     stack.forEach(({ resolve }) => {
       resolve(null);
