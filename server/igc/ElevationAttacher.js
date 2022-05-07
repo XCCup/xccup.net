@@ -6,7 +6,7 @@ const logger = require("../config/logger");
 const { Client } = require("@googlemaps/google-maps-services-js");
 
 const numberOfFixesPerApiRequest = 500;
-const MAX_FIX_DECIMALS = 4;
+const MAX_FIX_DECIMALS = 5;
 const client = new Client();
 
 const elevationAttacher = {
