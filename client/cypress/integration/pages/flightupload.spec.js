@@ -264,7 +264,7 @@ describe("check flight upload page", () => {
     }).should("include.text", expectedError);
   });
 
-  it("Test upload manipulated valid igc file (FAI passed response)", () => {
+  it("Test upload by MaxPunkte manipulated valid igc file", () => {
     const igcFileName = "MaxPunkte_manipulated.igc";
     const expectedError = "Diese IGC-File wurde manipuliert.";
 
@@ -323,7 +323,7 @@ describe("check flight upload page", () => {
     });
   });
 
-  it("Test upload manipulated file with leonardo interface", () => {
+  it("Test upload by MaxPunkte manipulated valid igc file with leonardo interface", () => {
     const igcFileName = "MaxPunkte_manipulated.igc";
     const expectApiRespone = "Manipulated IGC-File";
     cy.fixture(igcFileName).then(async (fileContent) => {
