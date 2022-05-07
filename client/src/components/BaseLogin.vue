@@ -31,13 +31,6 @@
     <button type="submit" class="btn btn-primary">
       Anmelden <BaseSpinner v-if="showSpinner" />
     </button>
-    <p class="mt-3">
-      <strong
-        >Vor dem ersten Login auf der neuen Seite musst du auf "Passwort
-        vergessen" klicken und ein neues Passwort anfordern. Verwende dazu bitte
-        deine im alten XCCup benutzte E-Mail-Adresse.</strong
-      >
-    </p>
   </form>
 
   <div class="my-3">
