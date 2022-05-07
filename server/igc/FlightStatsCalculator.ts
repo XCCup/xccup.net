@@ -1,4 +1,4 @@
-import type { BRecord } from "igc-parser";
+import type { BRecord } from "../helper/igc-parser";
 import logger from "../config/logger";
 
 /**

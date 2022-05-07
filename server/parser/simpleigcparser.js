@@ -3,7 +3,7 @@ const fs = require("fs");
 const igcPath = process.argv[2];
 console.log("Will parse ", igcPath);
 
-const IGCParser = require("igc-parser");
+const IGCParser = require("../helper/igc-parser");
 
 const igcAsPlainText = fs.readFileSync(igcPath, "utf8");
 

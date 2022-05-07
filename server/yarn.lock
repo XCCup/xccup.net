@@ -2881,9 +2881,10 @@ ieee754@^1.1.13:
   resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
 
-igc-parser@XCCup/igc-parser:
+igc-parser@^1.1.0:
   version "1.1.0"
-  resolved "https://codeload.github.com/XCCup/igc-parser/tar.gz/9851a2bcdf08396f19bf768332433a7e58c15262"
+  resolved "https://registry.yarnpkg.com/igc-parser/-/igc-parser-1.1.0.tgz#29546737b27110f78ab44e174780f60d59b63072"
+  integrity sha512-CJGWiCcCCxNSI3Pt0zbllHNekEp2NOVCgDysg5/7FuW/uXUUDiW+AcZWSwRwvtRQxnYf+Sn7mQmYKLWQfVSATA==
   dependencies:
     flight-recorder-manufacturers "^2.0.0"
 

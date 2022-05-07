@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const IGCParser = require("igc-parser");
+const IGCParser = require("../helper/igc-parser");
 const parseDMS = require("parse-dms");
 const { uniq } = require("lodash");
 const { TYPE } = require("../constants/flight-constants");
