@@ -177,4 +177,48 @@ describe("check admin page", () => {
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
   });
+
+  it.only("test admin flight upload of manipulated igc file", () => {
+    const expectedPilotName = "Adam Bayer";
+    const igcFileName = "removed_line_20to22.igc";
+    const expectedTakeoff = "Zeltingen-Rachtig O";
+    const expectedAirtime = "3:53h";
+
+    cy.get("#nav-flight-upload-tab").click();
+
+    // Check that button is disabled
+    cy.get("button").contains("Flug absenden").should("be.disabled");
+
+    cy.get("#select-pilot").type(expectedPilotName);
+
+    // Check that button is still disabled
+    cy.get("button").contains("Flug absenden").should("be.disabled");
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    cy.get("button").contains("Flug absenden").click();
+
+    cy.get("#upload-error").contains(
+      "Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html)."
+    );
+
+    cy.get("#flexSwitchCheckChecked").check();
+
+    cy.get("button").contains("Flug absenden").click();
+
+    // Expect to be redirected to flight view after submitting
+    cy.url({ timeout: 10000 }).should("include", "/flug");
+
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedPilotName);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+  });
 });
