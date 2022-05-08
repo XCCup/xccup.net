@@ -125,6 +125,11 @@ async function onSubmit() {
     )
       return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html).`);
     if (
+      error?.response?.status === 400 &&
+      error.response.data == "No default glider configured in profile"
+    )
+      return (errorMessage.value = `Der Nutzer hat kein Standard-Gerät in seinem Profil definiert.`);
+    if (
       error?.response?.status === 403 &&
       error.response.data.includes("already present")
     )
@@ -133,9 +138,9 @@ async function onSubmit() {
       error?.response?.status === 403 &&
       error.response.data.includes("Found no takeoff")
     )
-      return (errorMessage.value = `Dieser Flug liegt ausserhalb des XCCup Gebiets. `);
+      return (errorMessage.value = `Dieser Flug liegt ausserhalb des XCCup Gebiets.`);
 
-    errorMessage.value = "Da ist leider was schief gelaufen";
+    errorMessage.value = "Da ist leider was schief gelaufen.";
     console.log(error);
   } finally {
     showSpinner.value = false;
