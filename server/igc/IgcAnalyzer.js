@@ -122,16 +122,17 @@ const IgcAnalyzer = {
   },
 };
 
-// Checks if an igc files was manipulated by "MaxPunkte"
-
+/**
+ * Checks if an igc files was manipulated by "MaxPunkte"
+ */
 function igcIsManipulated(igc) {
-  let manipulated = false;
-
   if (!igc.commentRecords) return false;
+  let manipulated = false;
   igc.commentRecords.forEach((el) => {
     if (el.code === "XMP" && el.message.includes("removed by user"))
-      manipulated = true;
+      return (manipulated = true);
   });
+
   return manipulated;
 }
 
