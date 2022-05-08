@@ -2573,7 +2573,7 @@ flatted@^3.1.0:
 
 flight-recorder-manufacturers@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.npmjs.org/flight-recorder-manufacturers/-/flight-recorder-manufacturers-2.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/flight-recorder-manufacturers/-/flight-recorder-manufacturers-2.0.0.tgz#b396a40ffcf3323572cae2289cce9793c999cc5d"
   integrity sha512-FhSY7XslPkhYGdBBVRLLExoKqiLWbKuxPEx3O3a443hp8VOrcvE+ibibigVplQbaNipVG3pSPTZPTFJPIfcO8Q==
 
 fn.name@1.x.x:
@@ -2881,9 +2881,9 @@ ieee754@^1.1.13:
   resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
 
-igc-parser@^1.0.0:
+igc-parser@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.npmjs.org/igc-parser/-/igc-parser-1.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/igc-parser/-/igc-parser-1.1.0.tgz#29546737b27110f78ab44e174780f60d59b63072"
   integrity sha512-CJGWiCcCCxNSI3Pt0zbllHNekEp2NOVCgDysg5/7FuW/uXUUDiW+AcZWSwRwvtRQxnYf+Sn7mQmYKLWQfVSATA==
   dependencies:
     flight-recorder-manufacturers "^2.0.0"

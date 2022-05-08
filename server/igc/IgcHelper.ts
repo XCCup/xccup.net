@@ -17,7 +17,7 @@
  * cross the detection threshold for t seconds
  */
 
-import type { IGCFile, BRecord } from "igc-parser";
+import type { IGCFile, BRecord } from "../helper/igc-parser";
 import { calculateSpeed } from "./FlightStatsCalculator";
 
 interface ExtendedBRecord extends BRecord {

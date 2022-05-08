@@ -292,7 +292,13 @@ const igcSelected = async (file) => {
       error?.response?.status === 400 &&
       error.response.data == "Invalid G-Record"
     )
-      return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html). Bitte prüfe ob die Datei unverändert ist. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
+      return (errorMessage.value = `Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html). Bitte prüfe ob die Datei unverändert ist. Wenn du denkst, dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
+    if (
+      error?.response?.status === 400 &&
+      error.response.data == "Manipulated IGC-File"
+    )
+      return (errorMessage.value = `Diese IGC-File wurde manipuliert. Wenn du denkst, dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
+
     if (
       error?.response?.status === 403 &&
       error.response.data.includes("already present")

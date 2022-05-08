@@ -37,7 +37,10 @@ const {
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
 const config = require("../config/env-config").default;
-
+const {
+  XccupRestrictionError,
+  XccupHttpError,
+} = require("../helper/ErrorHandler");
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const multer = require("multer");
 const { getCurrentYear } = require("../helper/Utils");
@@ -230,6 +233,8 @@ router.post(
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
+      checkIfFlightIsManipulated(fixes);
+
       service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, userId);
@@ -384,9 +389,12 @@ router.post(
 
       const glider = user.gliders.find((g) => g.id == user.defaultGlider);
       if (!glider)
-        return res
-          .status(BAD_REQUEST)
-          .send("No default glider configured in profile");
+        return (
+          res
+            .status(BAD_REQUEST)
+            // TODO: Should this be in german as it's shown to the user?
+            .send("No default glider configured in profile")
+        );
 
       // const validationResult = await igcValidator.execute(igc);
       // if (isGRecordResultInvalid(res, validationResult)) return;
@@ -401,6 +409,9 @@ router.post(
       });
 
       const fixes = IgcAnalyzer.extractFixes(flightDbObject);
+
+      checkIfFlightIsManipulated(fixes);
+
       service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
       await checkIfFlightIsModifiable(flightDbObject, user.id);
@@ -598,7 +609,6 @@ async function persistIgcFile(externalId, igcFile) {
  * @throws A XccupRestrictionError if the requirements are not meet.
  */
 async function checkIfFlightIsModifiable(flight, userId) {
-  const { XccupRestrictionError } = require("../helper/ErrorHandler");
   const daysFlightEditable = config.get("daysFlightEditable");
   // Allow flight uploads which are older than X days when not in production (Needed for testing)
   const overwriteIfInProcessAndNotProduction =
@@ -620,9 +630,23 @@ async function checkIfFlightIsModifiable(flight, userId) {
 }
 
 /**
+ * Checks if the igc parser marked a result as manipulated and throws an error if it was manipulated.
+ *
+ * @param {string | Array} resultOfIgcParser The result of the igc parser
+ */
+function checkIfFlightIsManipulated(resultOfIgcParser) {
+  const errorMessage = "Manipulated IGC-File";
+  if (
+    typeof resultOfIgcParser === "string" &&
+    resultOfIgcParser === "manipulated"
+  )
+    throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+}
+
+/**
  * Checks if the validation result is defined and if the result is != PASSED sends a BAD_REQUEST response to the user.
- * @param {*} res The response object of the current request
- * @param {*} validationResult The result to check
+ * @param {Response} res The response object of the current request
+ * @param {boolean} validationResult The result to check
  * @returns true if the result is invalid otherwise undefined
  */
 function isGRecordResultInvalid(res, validationResult) {
@@ -635,6 +659,7 @@ function isGRecordResultInvalid(res, validationResult) {
     res.status(BAD_REQUEST).send("Invalid G-Record");
     return true;
   }
+  return false;
 }
 
 module.exports = router;

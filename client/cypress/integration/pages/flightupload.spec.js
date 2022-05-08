@@ -264,6 +264,28 @@ describe("check flight upload page", () => {
     }).should("include.text", expectedError);
   });
 
+  it("Test upload by MaxPunkte manipulated valid igc file", () => {
+    const igcFileName = "MaxPunkte_manipulated.igc";
+    const expectedError = "Diese IGC-File wurde manipuliert.";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because processing takes some time
+    cy.get("#upload-error", {
+      timeout: 10000,
+    }).should("include.text", expectedError);
+  });
+
   it("Test upload with leonardo interface", () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectedTakeoff = "Donnersberg";
@@ -298,6 +320,24 @@ describe("check flight upload page", () => {
         .contains(expectedUserName);
       cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
       cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+    });
+  });
+
+  it("Test upload by MaxPunkte manipulated valid igc file with leonardo interface", () => {
+    const igcFileName = "MaxPunkte_manipulated.igc";
+    const expectApiRespone = "Manipulated IGC-File";
+    cy.fixture(igcFileName).then(async (fileContent) => {
+      const payload = {
+        user: "blackhole+melinda@xccup.net",
+        pass: "PW_MelindaTremblay",
+        IGCigcIGC: fileContent.toString(),
+        igcfn: igcFileName,
+      };
+      try {
+        await axios.post("http://localhost:3000/api/flights/leonardo", payload);
+      } catch (error) {
+        expect(error.response.data).to.include(expectApiRespone);
+      }
     });
   });
 

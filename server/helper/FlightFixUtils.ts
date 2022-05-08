@@ -4,7 +4,7 @@ import {
   FlightFixesCombined,
 } from "../types/FlightFixesTypes";
 import { LineString } from "geojson";
-import IGCParser from "igc-parser";
+import IGCParser from "../helper/igc-parser";
 
 /**
  * This method creates and GeoJSON LineString representation from the B records.

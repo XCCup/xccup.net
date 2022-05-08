@@ -1,5 +1,5 @@
 import { LineString } from "geojson";
-import IGCParser from "igc-parser";
+import IGCParser from "../helper/igc-parser";
 
 export interface FlightFixesAttributes {
   id: string;

@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const IGCParser = require("igc-parser");
+const IGCParser = require("../helper/igc-parser");
 const parseDMS = require("parse-dms");
 const { uniq } = require("lodash");
 const { TYPE } = require("../constants/flight-constants");
@@ -92,6 +92,9 @@ const IgcAnalyzer = {
     logger.debug(`IA: start parsing`);
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
+    // Detect manipulated igc files
+    if (igcIsManipulated(igcAsJson)) return "manipulated";
+
     // Remove non flight fixes
     const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
     igcAsJson.fixes = igcAsJson.fixes.slice(
@@ -118,6 +121,20 @@ const IgcAnalyzer = {
     return reducedFixes;
   },
 };
+
+/**
+ * Checks if an igc files was manipulated by "MaxPunkte"
+ */
+function igcIsManipulated(igc) {
+  if (!igc.commentRecords) return false;
+  let manipulated = false;
+  igc.commentRecords.forEach((el) => {
+    if (el.code === "XMP" && el.message.includes("removed by user"))
+      return (manipulated = true);
+  });
+
+  return manipulated;
+}
 
 function extractOnlyDefinedFieldsFromFix(fix) {
   return {
