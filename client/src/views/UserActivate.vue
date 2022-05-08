@@ -3,16 +3,21 @@
     <!-- TODO: Prevent short display of the heading before redirecting -->
     <div class="container mb-3">
       <h3>Nutzerprofilaktivierung</h3>
-      <div v-if="state != 'incompleted' && state != 'fail'">
-        Dein Konto wurde aktiviert.
-      </div>
+      <div v-if="state == 'success'">Dein Konto wurde aktiviert.</div>
       <div v-if="state == 'incompleted'">
-        Es wurde kein Konto zur Aktivierung gefunden…
+        Es wurde kein Konto zur Aktivierung gefunden.
       </div>
       <div v-if="state == 'fail'">
         <p>
           Es gab leider ein Problem mit der Aktivierung. <br />
           Probiere es erneut oder wende Dich bitte an einen <BaseAdmin />
+        </p>
+      </div>
+      <div v-if="state == 'already_activated'">
+        <p>
+          Dein Konto wurde bereits aktiviert.<br />
+          Versuche dich bitte mit deinen Zugangsdaten einzuloggen.<br />
+          Falls dies nicht möglich ist wende Dich bitte an einen <BaseAdmin />
         </p>
       </div>
     </div>
@@ -41,15 +46,20 @@ if (!(userId && token)) {
     if (res.status != 200 && res.status != 404) throw res.statusText;
 
     if (res.status == 200) {
+      state.value = "success";
       saveTokenData(res.data);
       router.push({ name: "Profile" });
     }
-
-    if (res.status == 404) {
+  } catch (error) {
+    if (
+      error?.response?.status == 400 &&
+      error.response.data.includes("User already activated")
+    ) {
+      state.value = "already_activated";
+    }
+    if (error?.response?.status == 404) {
       state.value = "fail";
     }
-  } catch (error) {
-    state.value = "fail";
     console.error(error);
   }
 }
