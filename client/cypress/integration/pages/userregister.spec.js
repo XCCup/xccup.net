@@ -101,4 +101,34 @@ describe("check users register page", () => {
 
     cy.get("#errorMessageText").contains("Diese E-Mail existiert bereits");
   });
+
+  it("Activate previous registered user and check if second attempt to activate not possible", () => {
+    const userId = "343c8082-daba-124a-a60c-33d4e0eab4f7";
+    const userToken = "23dsd23kskd23";
+
+    cy.visit(`/profil/aktivieren?userId=${userId}&token=${userToken}`);
+
+    cy.get("h3").should("contain.text", "Nutzerprofilaktivierung");
+    cy.get("[data-cy=user-reg-success-indicator]").should("be.visible");
+    cy.get("[data-cy=user-reg-activated-indicator]").should("not.exist");
+    cy.get("[data-cy=user-reg-fail-indicator]").should("not.exist");
+
+    cy.visit(`/profil/aktivieren?userId=${userId}&token=${userToken}`);
+
+    cy.get("h3").should("contain.text", "Nutzerprofilaktivierung");
+    cy.get("[data-cy=user-reg-activated-indicator]").should("be.visible");
+    cy.get("[data-cy=user-reg-success-indicator]").should("not.exist");
+    cy.get("[data-cy=user-reg-fail-indicator]").should("not.exist");
+  });
+
+  it("Try to activate non registered user (show fail message)", () => {
+    const userId = "343c8082-1111-124a-a60c-33d4e0eab4f7";
+    const userToken = "23dsd23kskd23";
+
+    cy.visit(`/profil/aktivieren?userId=${userId}&token=${userToken}`);
+
+    cy.get("h3").should("contain.text", "Nutzerprofilaktivierung");
+    cy.get("[data-cy=user-reg-fail-indicator]").should("be.visible");
+    cy.get("[data-cy=user-reg-success-indicator]").should("not.exist");
+  });
 });

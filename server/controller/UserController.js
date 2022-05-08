@@ -213,16 +213,13 @@ router.get(
     const { userId, token } = req.query;
 
     try {
+      const foundUser = await service.getById(userId);
+      if (!foundUser) return res.sendStatus(NOT_FOUND);
+
+      if (foundUser.role !== ROLE.INACTIVE)
+        return res.status(BAD_REQUEST).send("User already activated");
+
       const user = await service.activateUser(userId, token);
-
-      if (!user) {
-        const userIsActivated =
-          (await service.getById(userId)).role !== ROLE.INACTIVE;
-        if (userIsActivated)
-          return res.status(BAD_REQUEST).send("User already activated");
-
-        return res.sendStatus(NOT_FOUND);
-      }
 
       const accessToken = createToken(user);
       const refreshToken = createRefreshToken(user);

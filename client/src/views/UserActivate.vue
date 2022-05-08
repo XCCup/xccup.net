@@ -3,17 +3,25 @@
     <!-- TODO: Prevent short display of the heading before redirecting -->
     <div class="container mb-3">
       <h3>Nutzerprofilaktivierung</h3>
-      <div v-if="state == 'success'">Dein Konto wurde aktiviert.</div>
-      <div v-if="state == 'incompleted'">
+      <div v-if="state == 'success'" data-cy="user-reg-success-indicator">
+        Dein Konto wurde aktiviert.
+      </div>
+      <div
+        v-if="state == 'incompleted'"
+        data-cy="user-reg-incomplete-indicator"
+      >
         Es wurde kein Konto zur Aktivierung gefunden.
       </div>
-      <div v-if="state == 'fail'">
+      <div v-if="state == 'fail'" data-cy="user-reg-fail-indicator">
         <p>
           Es gab leider ein Problem mit der Aktivierung. <br />
           Probiere es erneut oder wende Dich bitte an einen <BaseAdmin />
         </p>
       </div>
-      <div v-if="state == 'already_activated'">
+      <div
+        v-if="state == 'already_activated'"
+        data-cy="user-reg-activated-indicator"
+      >
         <p>
           Dein Konto wurde bereits aktiviert.<br />
           Versuche dich bitte mit deinen Zugangsdaten einzuloggen.<br />
