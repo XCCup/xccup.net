@@ -75,11 +75,8 @@ import {
   Legend,
   Title,
   Tooltip,
-  type TooltipItem,
-  type ChartConfiguration,
   // Interaction,
 } from "chart.js";
-
 import {
   ref,
   onMounted,
@@ -97,6 +94,25 @@ import { Collapse } from "bootstrap";
 import { options } from "@/config/chartOptions";
 
 // import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
+
+import type { TooltipItem, ChartConfiguration } from "chart.js";
+interface PositionDetails {
+  gpsAltitude?: number;
+  pressureAltitude?: number;
+  speed?: number;
+  time?: string;
+  climb?: number;
+  name?: string;
+}
+
+interface BaroTooltipItem extends TooltipItem<"line"> {
+  raw: {
+    speed?: number;
+    gpsAltitude?: number;
+    pressureAltitude?: number;
+    climb?: number;
+  };
+}
 
 Chart.register(
   LineElement,
@@ -183,24 +199,6 @@ watchEffect(() => {
   }
 });
 
-interface PositionDetails {
-  gpsAltitude?: number;
-  pressureAltitude?: number;
-  speed?: number;
-  time?: string;
-  climb?: number;
-  name?: string;
-}
-
-interface BaroTooltipItem extends TooltipItem<"line"> {
-  raw: {
-    speed?: number;
-    gpsAltitude?: number;
-    pressureAltitude?: number;
-    climb?: number;
-  };
-}
-
 // Position details
 const positionDetails = ref<PositionDetails[]>([]);
 const updatePositionDetails = (context: BaroTooltipItem) => {
@@ -215,7 +213,8 @@ const updatePositionDetails = (context: BaroTooltipItem) => {
 };
 
 // Chart setup
-const chart = shallowRef<Chart<"line">>();
+type ChartType = "line";
+const chart = shallowRef<Chart<ChartType>>();
 const ctx = ref(null);
 
 // Watch and update the chart
@@ -231,7 +230,7 @@ watchEffect(() => {
 
 onMounted(() => {
   // Create a new chart
-  if (ctx.value) chart.value = new Chart<"line">(ctx.value, config);
+  if (ctx.value) chart.value = new Chart<ChartType>(ctx.value, config);
 });
 
 onBeforeUnmount(() => {
@@ -240,7 +239,7 @@ onBeforeUnmount(() => {
   }
 });
 
-const config: ChartConfiguration<"line"> = {
+const config: ChartConfiguration<ChartType> = {
   type: "line",
   data: {
     datasets: chartData.value,
