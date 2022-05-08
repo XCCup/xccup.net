@@ -8,15 +8,16 @@ const {
   OK,
   CREATED,
   NOT_FOUND,
-  FORBIDDEN,
   UNAUTHORIZED,
   CONFLICT,
+  BAD_REQUEST,
 } = require("../constants/http-status-constants");
 const {
   TSHIRT_SIZES,
   GENDER,
   COUNTRY,
   STATE,
+  ROLE,
 } = require("../constants/user-constants");
 const router = express.Router();
 const {
@@ -212,9 +213,13 @@ router.get(
     const { userId, token } = req.query;
 
     try {
-      const user = await service.activateUser(userId, token);
+      const foundUser = await service.getById(userId);
+      if (!foundUser) return res.sendStatus(NOT_FOUND);
 
-      if (!user) return res.sendStatus(NOT_FOUND);
+      if (foundUser.role !== ROLE.INACTIVE)
+        return res.status(BAD_REQUEST).send("User already activated");
+
+      const user = await service.activateUser(userId, token);
 
       const accessToken = createToken(user);
       const refreshToken = createRefreshToken(user);

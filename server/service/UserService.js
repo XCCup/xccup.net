@@ -227,7 +227,8 @@ const userService = {
 
     user.role = ROLE.NONE;
     user.token = "";
-    return await user.save();
+    await user.save();
+    return user;
   },
   confirmMailChange: async (id, token, email) => {
     const user = await User.findOne({

@@ -3,16 +3,29 @@
     <!-- TODO: Prevent short display of the heading before redirecting -->
     <div class="container mb-3">
       <h3>Nutzerprofilaktivierung</h3>
-      <div v-if="state != 'incompleted' && state != 'fail'">
+      <div v-if="state == 'success'" data-cy="user-reg-success-indicator">
         Dein Konto wurde aktiviert.
       </div>
-      <div v-if="state == 'incompleted'">
-        Es wurde kein Konto zur Aktivierung gefunden…
+      <div
+        v-if="state == 'incompleted'"
+        data-cy="user-reg-incomplete-indicator"
+      >
+        Es wurde kein Konto zur Aktivierung gefunden.
       </div>
-      <div v-if="state == 'fail'">
+      <div v-if="state == 'fail'" data-cy="user-reg-fail-indicator">
         <p>
           Es gab leider ein Problem mit der Aktivierung. <br />
           Probiere es erneut oder wende Dich bitte an einen <BaseAdmin />
+        </p>
+      </div>
+      <div
+        v-if="state == 'already_activated'"
+        data-cy="user-reg-activated-indicator"
+      >
+        <p>
+          Dein Konto wurde bereits aktiviert.<br />
+          Versuche dich bitte mit deinen Zugangsdaten einzuloggen.<br />
+          Falls dies nicht möglich ist wende Dich bitte an einen <BaseAdmin />
         </p>
       </div>
     </div>
@@ -38,18 +51,19 @@ if (!(userId && token)) {
 } else {
   try {
     const res = await ApiService.activate(userId, token);
-    if (res.status != 200 && res.status != 404) throw res.statusText;
-
-    if (res.status == 200) {
-      saveTokenData(res.data);
-      router.push({ name: "Profile" });
+    state.value = "success";
+    saveTokenData(res.data);
+    router.push({ name: "Profile" });
+  } catch (error) {
+    if (
+      error?.response?.status == 400 &&
+      error.response.data.includes("User already activated")
+    ) {
+      state.value = "already_activated";
     }
-
-    if (res.status == 404) {
+    if (error?.response?.status == 404) {
       state.value = "fail";
     }
-  } catch (error) {
-    state.value = "fail";
     console.error(error);
   }
 }
