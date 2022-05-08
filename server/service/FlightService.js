@@ -451,12 +451,24 @@ const flightService = {
    * @param {Array} fixes An array of fixes of the related flight
    * @returns The name of the takeoff site
    */
-  storeFixesAndAddFurtherInformationToFlight: async (flight, fixes) => {
+  storeFixesAndAddStats: async (flight, fixes) => {
     const fixesStats = attachFlightStats(flight, fixes);
-
     await storeFixesToDB(flight, fixes, fixesStats);
+  },
 
-    return attachTakeoffAndLanding(flight, fixes);
+  attachTakeoffAndLanding: async (flight, fixes) => {
+    const requests = [findClosestTakeoff(fixes[0])];
+    if (config.get("useGoogleApi")) {
+      requests.push(findLanding(fixes[fixes.length - 1]));
+    }
+    const results = await Promise.all(requests);
+    const flyingSite = results[0];
+
+    flight.siteId = flyingSite.id;
+    flight.region = flyingSite.region;
+    flight.landing = results.length > 1 ? results[1] : "API Disabled";
+
+    return flyingSite.name;
   },
 
   /**
@@ -515,21 +527,6 @@ async function storeFixesToDB(flight, fixes, fixesStats) {
     timeAndHeights: extractTimeAndHeights(fixes),
     stats: fixesStats,
   });
-}
-
-async function attachTakeoffAndLanding(flight, fixes) {
-  const requests = [findClosestTakeoff(fixes[0])];
-  if (config.get("useGoogleApi")) {
-    requests.push(findLanding(fixes[fixes.length - 1]));
-  }
-  const results = await Promise.all(requests);
-  const flyingSite = results[0];
-
-  flight.siteId = flyingSite.id;
-  flight.region = flyingSite.region;
-  flight.landing = results.length > 1 ? results[1] : "API Disabled";
-
-  return flyingSite.name;
 }
 
 function attachFlightStats(flight, fixes) {

@@ -232,29 +232,8 @@ router.post(
         validationResult,
       });
 
-      const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-
-      checkIfFlightIsManipulated(fixes);
-
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
-
-      await checkIfFlightIsModifiable(flightDbObject, userId);
-
-      await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
-      const takeoffName =
-        await service.storeFixesAndAddFurtherInformationToFlight(
-          flightDbObject,
-          fixes
-        );
-
-      const result = await service.update(flightDbObject);
-
-      service.startResultCalculation(flightDbObject);
-
-      const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(
-          flightDbObject
-        );
+      const { takeoffName, result, airspaceViolation } =
+        await runChecksStartCalculationsStoreFixes(flightDbObject, userId);
 
       res.json({
         flightId: flightDbObject.id,
@@ -310,20 +289,8 @@ router.post(
         validationResult,
       });
 
-      const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
-
-      await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
-      const takeoffName =
-        await service.storeFixesAndAddFurtherInformationToFlight(
-          flightDbObject,
-          fixes
-        );
-
-      const result = await service.update(flightDbObject);
-
-      service.startResultCalculation(flightDbObject);
+      const { takeoffName, result, airspaceViolation } =
+        await runChecksStartCalculationsStoreFixes(flightDbObject, userId);
 
       const glider = userGliders.gliders.find(
         (g) => g.id == userGliders.defaultGlider
@@ -334,11 +301,6 @@ router.post(
           .send("No default glider configured in profile");
 
       service.finalizeFlightSubmission({ flight: flightDbObject, glider });
-
-      const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(
-          flightDbObject
-        );
 
       res.json({
         flightId: flightDbObject.id,
@@ -424,31 +386,10 @@ router.post(
         validationResult: false,
       });
 
-      const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-
-      checkIfFlightIsManipulated(fixes);
-
-      service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
-
-      await checkIfFlightIsModifiable(flightDbObject, user.id);
-
-      await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
-      await service.storeFixesAndAddFurtherInformationToFlight(
+      const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flightDbObject,
-        fixes
+        user.id
       );
-
-      await service.update(flightDbObject);
-
-      const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(
-          flightDbObject,
-          {
-            sendMail: true,
-          }
-        );
-
-      service.startResultCalculation(flightDbObject);
 
       await service.finalizeFlightSubmission({
         flight: flightDbObject,
@@ -551,6 +492,51 @@ router.put(
     }
   }
 );
+
+/**
+ * This functions checks if a flight
+ * - was not maniplulated
+ * - is modifiable (<= X days or admin)
+ * - was not uploaded before
+ * - has an airspace violation
+ *
+ * calculates the following values
+ * - takeoff and landing
+ * - times (e.g. takeoff, duration)
+ * - fixes stats
+ * - fixes elevation data
+ *
+ * stores the flight fixes to the DB and starts the OLC algorithm
+ */
+async function runChecksStartCalculationsStoreFixes(
+  flightDbObject,
+  userId,
+  { skipChecks = false } = {}
+) {
+  const fixes = IgcAnalyzer.extractFixes(flightDbObject);
+
+  if (!skipChecks) checkIfFlightIsManipulated(fixes);
+  service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
+  if (!skipChecks) await checkIfFlightIsModifiable(flightDbObject, userId);
+  await service.attachTakeoffAndLanding(flightDbObject, fixes);
+  await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
+  const takeoffName = await service.storeFixesAndAddStats(
+    flightDbObject,
+    fixes
+  );
+
+  const result = await service.update(flightDbObject);
+
+  // Run in parallel
+  const [airspaceViolation] = await Promise.all([
+    service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject, {
+      sendMail: true,
+    }),
+    service.startResultCalculation(flightDbObject),
+  ]);
+
+  return { takeoffName, result, airspaceViolation };
+}
 
 function paramIdIsLeonardo(req, res) {
   if (
