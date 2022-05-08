@@ -575,6 +575,7 @@ function idEqualsLeonardo(req: Request, res: Response) {
 }
 
 function createMulterIgcUploadHandler({ parts = 1 } = {}) {
+  // TODO: Change to convict config
   const dataPath = process.env.SERVER_DATA_PATH;
   if (!dataPath) throw new Error("SERVER_DATA_PATH not set");
 
