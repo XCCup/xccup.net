@@ -263,9 +263,9 @@ router.post(
   }
 );
 
-// @desc Allows a admin to upload a flight for a user; Admins are also able to upload older flights.
+// @desc Allows a admin to upload a flight for a user and bypass certain checks.
 // @route POST /flights/admin/upload
-// @access Only moderators and admins
+// @access Only admins
 
 const igcAdminFileUpload = createMulterIgcUploadHandler({ parts: 3 });
 router.post(
@@ -284,12 +284,12 @@ router.post(
 
       const validationResult = await igcValidator.execute(req.file);
 
-      /** A non igc file will now throw a 500 vecause the parsing will
+      /** A non igc file will now throw a 500 because the parsing will
        * fail and parsing is currently not in a try/catch block.
        * This can only happen to admins because all files with valid G-Record
        * are pretty sure valid igc files.
-       * So live with the 500 error or refacor the code to make it more robust.
-       * */
+       * So live with the 500 error or refactor the code to make it more robust.
+       */
 
       if (req.body.skipGCheck === "true") {
         logger.info("FC: Skipping G-Check for admin upload");
