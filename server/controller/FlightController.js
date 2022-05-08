@@ -240,6 +240,7 @@ router.post(
 
       await checkIfFlightIsModifiable(flightDbObject, userId);
 
+      await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
       const takeoffName =
         await service.storeFixesAndAddFurtherInformationToFlight(
           flightDbObject,
@@ -313,6 +314,7 @@ router.post(
 
       service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
 
+      await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
       const takeoffName =
         await service.storeFixesAndAddFurtherInformationToFlight(
           flightDbObject,
@@ -430,6 +432,7 @@ router.post(
 
       await checkIfFlightIsModifiable(flightDbObject, user.id);
 
+      await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
       await service.storeFixesAndAddFurtherInformationToFlight(
         flightDbObject,
         fixes
