@@ -35,7 +35,11 @@
     <div class="container mt-3">
       <canvas ref="ctx"></canvas>
     </div>
-    <div id="altSwitchCollapse" class="collapse container">
+    <div
+      v-if="flight?.fixes[0].pressureAltitude"
+      id="altSwitchCollapse"
+      class="collapse container"
+    >
       <div class="form-check form-switch mb-3">
         <input
           id="flexSwitchCheckChecked"
@@ -45,9 +49,9 @@
           role="switch"
           :disabled="airbuddiesInUse"
         />
-        <label class="form-check-label" for="flexSwitchCheckChecked"
-          >Barometrische Höhe anzeigen (ISA)</label
-        >
+        <label class="form-check-label" for="flexSwitchCheckChecked">
+          Barometrische Höhe anzeigen (ISA)
+        </label>
       </div>
     </div>
   </div>
@@ -144,8 +148,9 @@ const chartData = computed(() =>
 );
 
 // Collapse setup
-let positionDetailsCollapse: Collapse;
-let altSwitchCollapse: Collapse;
+// TODO: TS - Why isn't this of type Collapse | undefined literally?
+let positionDetailsCollapse: Collapse | undefined;
+let altSwitchCollapse: Collapse | undefined;
 
 onMounted(() => {
   const positionDetailsCollapseEl = document.getElementById(
@@ -168,12 +173,12 @@ onMounted(() => {
 watchEffect(() => {
   if (airbuddiesInUse.value) {
     pressureAltToggle.value = false;
-    positionDetailsCollapse.hide();
-    altSwitchCollapse.hide();
+    positionDetailsCollapse?.hide();
+    altSwitchCollapse?.hide();
   } else {
     if (positionDetailsCollapse) {
       positionDetailsCollapse.show();
-      if (showPressureAltSwitch.value) altSwitchCollapse.show();
+      if (showPressureAltSwitch.value) altSwitchCollapse?.show();
     }
   }
 });
