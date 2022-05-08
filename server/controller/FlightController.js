@@ -518,12 +518,12 @@ async function runChecksStartCalculationsStoreFixes(
   if (!skipChecks) checkIfFlightIsManipulated(fixes);
   service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
   if (!skipChecks) await checkIfFlightIsModifiable(flightDbObject, userId);
-  await service.attachTakeoffAndLanding(flightDbObject, fixes);
-  await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
-  const takeoffName = await service.storeFixesAndAddStats(
+  const takeoffName = await service.attachTakeoffAndLanding(
     flightDbObject,
     fixes
   );
+  await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
+  await service.storeFixesAndAddStats(flightDbObject, fixes);
 
   const result = await service.update(flightDbObject);
 
