@@ -33,6 +33,7 @@ const {
   checkOptionalIsBoolean,
   queryOptionalColumnExistsInModel,
   checkStringObjectNotEmptyNoEscaping,
+  checkIsBoolean,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
@@ -266,11 +267,12 @@ router.post(
 // @route POST /flights/admin/upload
 // @access Only moderators and admins
 
-const igcAdminFileUpload = createMulterIgcUploadHandler({ parts: 2 });
+const igcAdminFileUpload = createMulterIgcUploadHandler({ parts: 3 });
 router.post(
   "/admin/upload",
   igcAdminFileUpload.single("igcFile"),
   checkIsUuidObject("userId"),
+  checkIsBoolean("skipGCheck"),
   authToken,
   async (req, res, next) => {
     try {
@@ -281,7 +283,19 @@ router.post(
       if (!userGliders) return res.sendStatus(NOT_FOUND);
 
       const validationResult = await igcValidator.execute(req.file);
-      if (isGRecordResultInvalid(res, validationResult)) return;
+
+      /** A non igc file will now throw a 500 vecause the parsing will
+       * fail and parsing is currently not in a try/catch block.
+       * This can only happen to admins because all files with valid G-Record
+       * are pretty sure valid igc files.
+       * So live with the 500 error or refacor the code to make it more robust.
+       * */
+
+      if (req.body.skipGCheck === "true") {
+        logger.info("FC: Skipping G-Check for admin upload");
+      } else {
+        if (isGRecordResultInvalid(res, validationResult)) return;
+      }
 
       const flightDbObject = await service.create({
         userId,

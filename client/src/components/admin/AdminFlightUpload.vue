@@ -33,9 +33,22 @@
         @change="igcSelected"
       />
     </div>
+    <div class="form-check form-switch mb-3">
+      <input
+        id="flexSwitchCheckChecked"
+        v-model="skipGCheck"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+      />
+      <label class="form-check-label" for="flexSwitchCheckChecked"
+        >G-Check ignorieren</label
+      >
+    </div>
+
     <button
       type="button"
-      class="btn btn-outline-primary"
+      class="btn btn-outline-primary mb-2"
       :disabled="!properUserSet || !fileLoaded"
       @click="onSubmit"
     >
@@ -61,6 +74,7 @@ const errorMessage = ref("");
 const showSpinner = ref(false);
 const fileLoaded = ref(false);
 const properUserSet = ref(false);
+const skipGCheck = ref(false);
 
 let formData: FormData | null = null;
 let selectedUserObject: UserDataEssential;
@@ -94,12 +108,17 @@ async function onSubmit() {
     showSpinner.value = true;
     if (formData) {
       formData.append("userId", selectedUserObject.id);
+      if (skipGCheck.value)
+        formData.append("skipGCheck", skipGCheck.value.toString());
+
       const data = (await ApiService.uploadIgcAdmin(formData)).data;
 
       redirectToFlight(data.externalId);
     }
   } catch (error: any) {
     console.log(error.response);
+    formData?.delete("skipGCheck");
+    formData?.delete("userId");
     if (
       error?.response?.status === 400 &&
       error.response.data == "Invalid G-Record"
