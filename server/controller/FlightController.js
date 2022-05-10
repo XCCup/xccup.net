@@ -330,10 +330,11 @@ router.get(
       const flight = await service.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
 
-      service.startResultCalculation(flight);
-
-      const airspaceViolation =
-        await service.attachElevationDataAndCheckForAirspaceViolations(flight);
+      const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
+        flight,
+        null,
+        { skipChecks: true }
+      );
 
       res.json({
         airspaceViolation,
