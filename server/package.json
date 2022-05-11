@@ -27,7 +27,7 @@
     "express": "^4.18.1",
     "express-rate-limit": "^6.4.0",
     "express-validator": "^6.12.1",
-    "igc-parser": "^1.1.0",
+    "flight-recorder-manufacturers": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
@@ -63,7 +63,7 @@
     "jest": "^28.1.0",
     "nodemon": "^2.0.16",
     "tabletojson": "^2.0.7",
-    "ts-jest": "^28.0.1",
+    "ts-jest": "^28.0.2",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.4"
   }

@@ -6,6 +6,10 @@
  *
  * maPeriod is the number of seconds for the moving average
  *
+ * Launch detection requires that the horizontal and vertical moving averages
+ * raise above xt/zt and then stay above x0/z0 for at least t seconds - the launch
+ * is considered to have happened at the xt/zt.
+ *
  * t is the number of seconds that the conditions must be true
  * (the event is still assigned to the start of the period)
  *
@@ -18,7 +22,7 @@
  */
 
 import type { IGCFile, BRecord } from "../helper/igc-parser";
-import { calculateSpeed } from "./FlightStatsCalculator";
+import { Point } from "./igc-score/foundation";
 
 interface ExtendedBRecord extends BRecord {
   hspeed?: number;
@@ -30,8 +34,6 @@ interface ExtendedBRecord extends BRecord {
 }
 
 const maPeriod = 10;
-
-// TODO: Still needs tuning
 const definitionFlight = {
   t: 60,
   x0: 1.5,
@@ -45,28 +47,26 @@ const definitionGround = {
   xmax: 2.5,
   zmax: 0.1,
 };
-// Attaches horizontal and vertical speed to each fix
+// Attach horizontal and vertical speed to each fix
 function prepare(fixes: ExtendedBRecord[]) {
   for (let i = 0; i < fixes.length; i++) {
     if (i > 0) {
       const deltaTimestamp = fixes[i].timestamp - fixes[i - 1].timestamp;
       if (deltaTimestamp > 0) {
-        fixes[i].hspeed = calculateSpeed(
-          fixes[i],
-          fixes[i - 1],
-          deltaTimestamp / 1000
-        );
+        fixes[i].hspeed =
+          ((new Point(fixes, i - 1).distanceEarth(new Point(fixes, i)) * 1000) /
+            deltaTimestamp) *
+          1000;
 
-        const alt1 = fixes[i].gpsAltitude;
-        const alt2 = fixes[i - 1].gpsAltitude;
+        /** Prefer pressure altitude over gps altitude for calculation of vertical movement.
+         * This may have mixed pressure references when only one fix
+         * has undefined pressure alt. But it's very unlikely to happen… */
 
-        if (alt1 && alt2) {
-          const deltaAltitude = alt1 - alt2;
+        const alt1 = fixes[i].pressureAltitude ?? fixes[i].gpsAltitude;
+        const alt2 = fixes[i - 1].pressureAltitude ?? fixes[i - 1].gpsAltitude;
 
-          fixes[i].vspeed = (deltaAltitude / deltaTimestamp) * 1000;
-        } else {
-          fixes[i].vspeed = 0;
-        }
+        if (alt1 && alt2)
+          fixes[i].vspeed = ((alt1 - alt2) / deltaTimestamp) * 1000;
       } else {
         fixes[i].hspeed = fixes[i - 1].hspeed;
         fixes[i].vspeed = fixes[i - 1].vspeed;

@@ -17,10 +17,10 @@ function execute(fixes: BRecord[]) {
   const resolution = (fixes[1].timestamp - fixes[0].timestamp) / 1000;
   const step = Math.ceil(TIME_FRAME / resolution);
 
-  let minHeightBaro = fixes[0].pressureAltitude ? fixes[0].pressureAltitude : 0;
-  let maxHeightBaro = fixes[0].pressureAltitude ? fixes[0].pressureAltitude : 0;
-  let minHeightGps = fixes[0].gpsAltitude ? fixes[0].gpsAltitude : 0;
-  let maxHeightGps = fixes[0].gpsAltitude ? fixes[0].gpsAltitude : 0;
+  let minHeightBaro = fixes[0].pressureAltitude ?? 0;
+  let maxHeightBaro = fixes[0].pressureAltitude ?? 0;
+  let minHeightGps = fixes[0].gpsAltitude ?? 0;
+  let maxHeightGps = fixes[0].gpsAltitude ?? 0;
   let maxSink = 0.0;
   let maxClimb = 0.0;
   let maxSpeed = 0.0;
@@ -128,7 +128,10 @@ function calculateDistance(fix1: BRecord, fix2: BRecord) {
   return distanceInDegree * DEGREE_DIST;
 }
 
-export function calculateSpeed(
+/** TODO: Replace the use of this function with the speed and climb
+ * already calculated by DetectLaunchAndLanding
+ */
+function calculateSpeed(
   current: BRecord,
   precessor: BRecord,
   timeDeltaInSeconds: number
@@ -141,4 +144,3 @@ export function calculateSpeed(
 }
 
 exports.execute = execute;
-exports.calculateSpeed = calculateSpeed;
