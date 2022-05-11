@@ -49,8 +49,6 @@ const service = {
     toUserId: string,
     content: MailContent
   ) => {
-    console.log(content);
-
     const [fromUser, toUser] = await Promise.all([
       db.User.findByPk(fromUserId),
       db.User.findByPk(toUserId),
