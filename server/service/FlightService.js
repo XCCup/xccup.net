@@ -123,13 +123,29 @@ const flightService = {
      * */
     queryObject.distinct = true;
 
+    /** Sorts flights of the same day by points.
+     * Somehow sequelize is not able to do it.
+     * Only sorts if no sort query is present.
+     */
+
     const flights = await Flight.findAndCountAll(queryObject);
+    if (!sort[0]) {
+      flights.rows.sort((a, b) => {
+        const prepare = (time) => time.toISOString().substring(0, 10);
+
+        const ta = prepare(a.takeoffTime);
+        const tb = prepare(b.takeoffTime);
+
+        return tb > ta || b.flightPoints - a.flightPoints;
+      });
+    }
 
     /**
      * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
      * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
      * See also: https://github.com/pvorb/clone/issues/106
      */
+
     flights.rows = flights.rows.map((v) => v.toJSON());
 
     countRelatedObjects(flights.rows, "photos");
