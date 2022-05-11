@@ -486,16 +486,16 @@ const flightService = {
  * Somehow sequelize is not able to do it by itself.
  *
  * @param {Array} sort An external sort query which might be present.
- * @param {Array} flights The array of flights which will be sorted.
+ * @param {Object} flights An object with properties ofcount and rows. Rows contains an array of flights.
  */
 function sortFlightOnSameDayByPoints(sort, flights) {
   if (sort && !sort[0]) {
     flights.rows.sort((a, b) => {
-      const removeTimeValues = (takeoffTime) =>
+      const removeTimePart = (takeoffTime) =>
         takeoffTime.toISOString().substring(0, 10);
 
-      const dayA = removeTimeValues(a.takeoffTime);
-      const dayB = removeTimeValues(b.takeoffTime);
+      const dayA = removeTimePart(a.takeoffTime);
+      const dayB = removeTimePart(b.takeoffTime);
 
       return dayB > dayA || b.flightPoints - a.flightPoints;
     });
