@@ -129,7 +129,8 @@ const flightService = {
      */
 
     const flights = await Flight.findAndCountAll(queryObject);
-    if (!sort[0]) {
+    console.log("*****", sort);
+    if (sort && !sort[0]) {
       flights.rows.sort((a, b) => {
         const prepare = (time) => time.toISOString().substring(0, 10);
 
