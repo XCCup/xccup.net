@@ -323,6 +323,53 @@ describe("check flight upload page", () => {
     });
   });
 
+  it("Test upload with leonardo interface (wrong content)", async () => {
+    const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
+    const expectApiRespone = "Error parsing IGC File";
+    const expectedStatus = 400;
+
+    const payload = {
+      user: "blackhole+melinda@xccup.net",
+      pass: "PW_MelindaTremblay",
+      IGCigcIGC: "just any plain text",
+      igcfn: igcFileName,
+    };
+    try {
+      const data = (
+        await axios.post("http://localhost:3000/api/flights/leonardo", payload)
+      ).data;
+    } catch (error) {
+      // Test the response message from the API
+      expect(error.response.status).to.equal(expectedStatus);
+      expect(error.response.data).to.include(expectApiRespone);
+    }
+  });
+
+  it("Test upload with leonardo interface (wrong credentials)", () => {
+    const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
+    const expectedStatus = 401;
+
+    cy.fixture(igcFileName).then(async (fileContent) => {
+      const payload = {
+        user: "blackhole+melinda@xccup.net",
+        pass: "WrongPassword",
+        IGCigcIGC: fileContent.toString(),
+        igcfn: igcFileName,
+      };
+      try {
+        const data = (
+          await axios.post(
+            "http://localhost:3000/api/flights/leonardo",
+            payload
+          )
+        ).data;
+      } catch (error) {
+        // Test the response message from the API
+        expect(error.response.status).to.equal(expectedStatus);
+      }
+    });
+  });
+
   it("Test upload by MaxPunkte manipulated valid igc file with leonardo interface", () => {
     const igcFileName = "MaxPunkte_manipulated.igc";
     const expectApiRespone = "Manipulated IGC-File";

@@ -112,7 +112,7 @@ async function onSubmit() {
         formData.append("skipGCheck", skipGCheck.value.toString());
 
       const data = (await ApiService.uploadIgcAdmin(formData)).data;
-
+      errorMessage.value = "";
       redirectToFlight(data.externalId);
     }
   } catch (error: any) {

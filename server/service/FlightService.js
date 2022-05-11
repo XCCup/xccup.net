@@ -125,11 +125,14 @@ const flightService = {
 
     const flights = await Flight.findAndCountAll(queryObject);
 
+    sortFlightOnSameDayByPoints(sort, flights);
+
     /**
      * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
      * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
      * See also: https://github.com/pvorb/clone/issues/106
      */
+
     flights.rows = flights.rows.map((v) => v.toJSON());
 
     countRelatedObjects(flights.rows, "photos");
@@ -451,16 +454,61 @@ const flightService = {
    * @param {Array} fixes An array of fixes of the related flight
    * @returns The name of the takeoff site
    */
-  storeFixesAndAddFurtherInformationToFlight: async (flight, fixes) => {
+  storeFixesAndAddStats: async (flight, fixes) => {
     const fixesStats = attachFlightStats(flight, fixes);
-
     await storeFixesToDB(flight, fixes, fixesStats);
+  },
 
-    const takeoffName = await attachTakeoffAndLanding(flight, fixes);
+  attachTakeoffAndLanding: async (flight, fixes) => {
+    const requests = [findClosestTakeoff(fixes[0])];
+    if (config.get("useGoogleApi")) {
+      requests.push(findLanding(fixes[fixes.length - 1]));
+    }
+    const results = await Promise.all(requests);
+    const flyingSite = results[0];
 
-    await checkIfFlightWasNotUploadedBefore(flight.siteId, flight.takeoffTime);
+    flight.siteId = flyingSite.id;
+    flight.region = flyingSite.region;
+    flight.landing = results.length > 1 ? results[1] : "API Disabled";
 
-    return takeoffName;
+    return flyingSite.name;
+  },
+
+  /**
+   * Checks if an flight was uploaded before.
+   * The check is done by searching the db for a flight from the same takeoff at the same takeoffTime.
+   * If a flight was found an XccupRestrictionError will be thrown.
+   *
+   * @param {*} siteId The id of the takeoff of the current flight.
+   * @param {*} takeoffTime The takeoffTime of the current flight.
+   * @throws An XccupRestrictionError if an flight was found.
+   */
+  checkIfFlightWasNotUploadedBefore: async (flight) => {
+    const { XccupRestrictionError } = require("../helper/ErrorHandler");
+
+    const result = await Flight.findOne({
+      where: {
+        siteId: flight.siteId,
+        takeoffTime: flight.takeoffTime,
+      },
+    });
+
+    // Exit if no result or flight has the same id (possible when recalculating the flight)
+    if (!result || flight.id == result.id) return;
+
+    if (result.flightStatus == STATE.IN_PROCESS) {
+      logger.info(
+        `FS: Will delete flight ${result.externalId} which has same takeoff site and time but is still in process state`
+      );
+      result.destroy();
+      logger.debug("FS: flight deleted");
+      return;
+    }
+
+    if (result)
+      throw new XccupRestrictionError(
+        `A flight with same takeoff site and time is already present. See Flight with ID ${result.externalId}`
+      );
   },
 
   /**
@@ -478,6 +526,27 @@ const flightService = {
   },
 };
 
+/**
+ * Sorts flights of the same day by points. If no external sort query is present.
+ * Somehow sequelize is not able to do it by itself.
+ *
+ * @param {Array} sort An external sort query which might be present.
+ * @param {Object} flights An object with properties ofcount and rows. Rows contains an array of flights.
+ */
+function sortFlightOnSameDayByPoints(sort, flights) {
+  if (sort && !sort[0]) {
+    flights.rows.sort((a, b) => {
+      const removeTimePart = (takeoffTime) =>
+        takeoffTime.toISOString().substring(0, 10);
+
+      const dayA = removeTimePart(a.takeoffTime);
+      const dayB = removeTimePart(b.takeoffTime);
+
+      return dayB > dayA || b.flightPoints - a.flightPoints;
+    });
+  }
+}
+
 async function storeFixesToDB(flight, fixes, fixesStats) {
   await FlightFixes.create({
     flightId: flight.id,
@@ -485,21 +554,6 @@ async function storeFixesToDB(flight, fixes, fixesStats) {
     timeAndHeights: extractTimeAndHeights(fixes),
     stats: fixesStats,
   });
-}
-
-async function attachTakeoffAndLanding(flight, fixes) {
-  const requests = [findClosestTakeoff(fixes[0])];
-  if (config.get("useGoogleApi")) {
-    requests.push(findLanding(fixes[fixes.length - 1]));
-  }
-  const results = await Promise.all(requests);
-  const flyingSite = results[0];
-
-  flight.siteId = flyingSite.id;
-  flight.region = flyingSite.region;
-  flight.landing = results.length > 1 ? results[1] : "API Disabled";
-
-  return flyingSite.name;
 }
 
 function attachFlightStats(flight, fixes) {
@@ -891,40 +945,6 @@ function createTeamInclude(id) {
     };
   }
   return include;
-}
-
-/**
- * Checks if an flight was uploaded before.
- * The check is done by searching the db for a flight from the same takeoff at the same takeoffTime.
- * If a flight was found an XccupRestrictionError will be thrown.
- *
- * @param {*} siteId The id of the takeoff of the current flight.
- * @param {*} takeoffTime The takeoffTime of the current flight.
- * @throws An XccupRestrictionError if an flight was found.
- */
-async function checkIfFlightWasNotUploadedBefore(siteId, takeoffTime) {
-  const { XccupRestrictionError } = require("../helper/ErrorHandler");
-
-  const flight = await Flight.findOne({
-    where: {
-      siteId,
-      takeoffTime,
-    },
-  });
-
-  if (flight?.flightStatus == STATE.IN_PROCESS) {
-    logger.info(
-      `FS: Will delete flight ${flight.externalId} which has same takeoff site and time but is still in process state`
-    );
-    flight.destroy();
-    logger.debug("FS: flight deleted");
-    return;
-  }
-
-  if (flight)
-    throw new XccupRestrictionError(
-      `A flight with same takeoff site and time is already present. See Flight with ID ${flight.externalId}`
-    );
 }
 
 module.exports = flightService;

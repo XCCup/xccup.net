@@ -12,6 +12,8 @@ const {
 const logger = require("../config/logger");
 const { createFileName } = require("../helper/igc-file-utils");
 const { findLaunchAndLandingIndexes } = require("./FindLaunchAndLanding");
+const { XccupHttpError } = require("../helper/ErrorHandler");
+const { BAD_REQUEST } = require("../constants/http-status-constants");
 
 let flightTypeFactors;
 let callback;
@@ -90,35 +92,40 @@ const IgcAnalyzer = {
     logger.debug(`IA: read file from ${flight.igcPath}`);
     const igcAsPlainText = readIgcFile(flight);
     logger.debug(`IA: start parsing`);
-    const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
+    try {
+      const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
-    // Detect manipulated igc files
-    if (igcIsManipulated(igcAsJson)) return "manipulated";
+      // Detect manipulated igc files
+      if (igcIsManipulated(igcAsJson)) return "manipulated";
 
-    // Remove non flight fixes
-    const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
-    igcAsJson.fixes = igcAsJson.fixes.slice(
-      launchAndLandingIndexes.launch,
-      launchAndLandingIndexes.landing
-    );
-    logger.debug(`IA: Finished parsing`);
+      // Remove non flight fixes
+      const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
+      igcAsJson.fixes = igcAsJson.fixes.slice(
+        launchAndLandingIndexes.launch,
+        launchAndLandingIndexes.landing
+      );
+      logger.debug(`IA: Finished parsing`);
 
-    const currentResolution = getResolution(igcAsJson);
+      const currentResolution = getResolution(igcAsJson);
 
-    let shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
+      let shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
 
-    logger.debug(
-      `IA: Will shrink extracted fixes by factor ${shrinkingFactor}`
-    );
+      logger.debug(
+        `IA: Will shrink extracted fixes by factor ${shrinkingFactor}`
+      );
 
-    //Prevent endless loop for negative numbers
-    if (shrinkingFactor < 1) shrinkingFactor = 1;
+      //Prevent endless loop for negative numbers
+      if (shrinkingFactor < 1) shrinkingFactor = 1;
 
-    const reducedFixes = [];
-    for (let i = 0; i < igcAsJson.fixes.length; i += shrinkingFactor) {
-      reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
+      const reducedFixes = [];
+      for (let i = 0; i < igcAsJson.fixes.length; i += shrinkingFactor) {
+        reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
+      }
+      return reducedFixes;
+    } catch (error) {
+      const errorMessage = "Error parsing IGC File " + error.message;
+      throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
     }
-    return reducedFixes;
   },
 };
 
