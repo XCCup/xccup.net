@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 const Helper = require("./IgcTestHelper");
-const IGCParser = require("igc-parser");
+const IGCParser = require("../helper/igc-parser");
 
 function retrieveIgcFixes(folder, file) {
   const igcAsPlainText = Helper.readIgcFile(folder, file);

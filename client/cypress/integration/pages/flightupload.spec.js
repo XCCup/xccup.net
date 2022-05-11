@@ -290,7 +290,7 @@ describe("check flight upload page", () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectedTakeoff = "Donnersberg";
     const expectedUserName = "Melinda Tremblay";
-    const expectedAirtime = "1:43h";
+    const expectedAirtime = "1:42h";
     const expectApiRespone =
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
 

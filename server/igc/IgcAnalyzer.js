@@ -11,7 +11,7 @@ const {
 } = require("../config/igc-analyzer-config");
 const logger = require("../config/logger");
 const { createFileName } = require("../helper/igc-file-utils");
-const { findLaunchAndLandingIndexes } = require("./IgcHelper");
+const { findLaunchAndLandingIndexes } = require("./FindLaunchAndLanding");
 const { XccupHttpError } = require("../helper/ErrorHandler");
 const { BAD_REQUEST } = require("../constants/http-status-constants");
 
