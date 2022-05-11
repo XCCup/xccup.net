@@ -178,7 +178,7 @@ describe("check admin page", () => {
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
   });
 
-  it.only("test admin flight upload of manipulated igc file", () => {
+  it("test admin flight upload of manipulated igc file", () => {
     const expectedPilotName = "Adam Bayer";
     const igcFileName = "removed_line_20to22.igc";
     const expectedTakeoff = "Zeltingen-Rachtig O";
