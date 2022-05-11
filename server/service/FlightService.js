@@ -123,22 +123,9 @@ const flightService = {
      * */
     queryObject.distinct = true;
 
-    /** Sorts flights of the same day by points.
-     * Somehow sequelize is not able to do it.
-     * Only sorts if no sort query is present.
-     */
-
     const flights = await Flight.findAndCountAll(queryObject);
-    if (sort && !sort[0]) {
-      flights.rows.sort((a, b) => {
-        const prepare = (time) => time.toISOString().substring(0, 10);
 
-        const ta = prepare(a.takeoffTime);
-        const tb = prepare(b.takeoffTime);
-
-        return tb > ta || b.flightPoints - a.flightPoints;
-      });
-    }
+    sortFlightOnSameDayByPoints(sort, flights);
 
     /**
      * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
@@ -493,6 +480,27 @@ const flightService = {
     return externalId;
   },
 };
+
+/**
+ * Sorts flights of the same day by points. If no external sort query is present.
+ * Somehow sequelize is not able to do it by itself.
+ *
+ * @param {Array} sort An external sort query which might be present.
+ * @param {Array} flights The array of flights which will be sorted.
+ */
+function sortFlightOnSameDayByPoints(sort, flights) {
+  if (sort && !sort[0]) {
+    flights.rows.sort((a, b) => {
+      const removeTimeValues = (takeoffTime) =>
+        takeoffTime.toISOString().substring(0, 10);
+
+      const dayA = removeTimeValues(a.takeoffTime);
+      const dayB = removeTimeValues(b.takeoffTime);
+
+      return dayB > dayA || b.flightPoints - a.flightPoints;
+    });
+  }
+}
 
 async function storeFixesToDB(flight, fixes, fixesStats) {
   await FlightFixes.create({
