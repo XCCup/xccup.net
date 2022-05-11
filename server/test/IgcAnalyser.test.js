@@ -177,7 +177,7 @@ test("Validate that the landing is detected (even when igc has more fixes)", (do
   const expectedFlight = {
     externalId: "flight_with_car_drive",
     type: "FREE",
-    dist: "2.351",
+    dist: "2.345",
     igcPath: filePath,
   };
 

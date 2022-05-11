@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 const Helper = require("./IgcTestHelper");
-const IGCParser = require("igc-parser");
+const IGCParser = require("../helper/igc-parser");
 const ElevationAttacher = require("../igc/ElevationAttacher");
 
 function retrieveIgcFixes(folder, file) {
