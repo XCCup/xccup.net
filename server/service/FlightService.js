@@ -490,7 +490,10 @@ const flightService = {
       },
     });
 
-    if (result?.flightStatus == STATE.IN_PROCESS) {
+    // Exit if no result or flight has the same id (possible when recalculating the flight)
+    if (!result || flight.id == result.id) return;
+
+    if (result.flightStatus == STATE.IN_PROCESS) {
       logger.info(
         `FS: Will delete flight ${result.externalId} which has same takeoff site and time but is still in process state`
       );
