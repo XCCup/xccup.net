@@ -1,23 +1,23 @@
 const logger = require("../config/logger");
 
-function handleSequelizeUniqueError(error, req, res) {
+function handleSequelizeUniqueError(error, res) {
   if (error.name?.includes("SequelizeUniqueConstraintError")) {
-    logger.warn(error.errors[0].message, createMetaDataFromReq(req));
-    return res.status(500).send("Internal Server Error"); //Do not return internal errors to the client
+    logger.warn(error.errors[0].message);
+    return res.status(500).send("Internal Server Error");
   }
 }
 
-function handleXccupRestrictionError(error, req, res) {
+function handleXccupRestrictionError(error, res) {
   if (error.name?.includes("XccupRestrictionError")) {
-    logger.warn(error, createMetaDataFromReq(req));
+    logger.warn(error);
     return res.status(403).send(error.message);
   }
 }
 
-function handleXccupHttpError(error, req, res) {
+function handleXccupHttpError(error, res) {
   if (error.name === "XccupHttpError") {
-    logger.warn(error, createMetaDataFromReq(req));
-    return res.status(error.statusCode).send(error.clientMessage); //do not expose error messages in general to the client!
+    logger.warn(error);
+    return res.status(error.statusCode).send(error.clientMessage);
   }
 }
 
@@ -27,7 +27,7 @@ function handleGeneralError(error, req, res) {
       originalUrl: req.originalUrl,
       params: req.params,
       query: req.query,
-      body: req.body.igc ? { name: req.body.igc.name } : req.body,
+      body: req.body,
     },
   });
   res
@@ -56,26 +56,23 @@ class XccupHttpError extends Error {
   }
 }
 
-function createMetaDataFromReq(req) {
+function sanitizeRequestBeforeLogging(req) {
   if (Object.keys(req.body).length == 0) return;
-
-  // Prevent storage of whole igc file in error log
-  if (req?.body?.igc?.body) delete req.body.igc.body;
-
-  return {
-    meta: {
-      body: req.body,
-    },
-  };
+  // Delete these params before logging because of security or size
+  const blacklist = ["pw", "password", "pass", "token", "IGCigcIGC"];
+  blacklist.forEach((e) => {
+    if (req.body[e]) delete req.body[e];
+  });
 }
 
 // Don't change the signatur of this function. Even when "next" is not used, if "next" is missing, express won't use this middleware.
 // TODO: Find a more elegant solution for the "next" problem
 // eslint-disable-next-line no-unused-vars
 function handleError(err, req, res, next) {
-  handleSequelizeUniqueError(err, req, res) ||
-    handleXccupRestrictionError(err, req, res) ||
-    handleXccupHttpError(err, req, res) ||
+  sanitizeRequestBeforeLogging(req);
+  handleSequelizeUniqueError(err, res) ||
+    handleXccupRestrictionError(err, res) ||
+    handleXccupHttpError(err, res) ||
     handleGeneralError(err, req, res);
 }
 
