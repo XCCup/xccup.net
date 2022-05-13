@@ -28,9 +28,13 @@ import {
 } from "../constants/email-message-constants";
 
 import db from "../db";
-import type { UserAttributes } from "../db/models/User";
-import type { FlightOutputAttributes } from "../db/models/Flight";
+import type { UserAttributes, UserInstance } from "../db/models/User";
+import type {
+  FlightInstance,
+  FlightOutputAttributes,
+} from "../db/models/Flight";
 import type { Comment } from "../types/Comment";
+import { FlightCommentInstance } from "../db/models/FlightComment";
 
 const clientUrl = config.get("clientUrl");
 const userActivateLink = config.get("clientActivateProfil");
@@ -226,7 +230,11 @@ const service = {
   },
 
   sendNewFlightCommentMail: async (comment: Comment) => {
-    const queries = [
+    const queries: [
+      Promise<UserInstance | null>,
+      Promise<FlightInstance | null>,
+      Promise<FlightCommentInstance | null>?
+    ] = [
       db.User.findByPk(comment.userId),
       db.Flight.findByPk(comment.flightId),
     ];
@@ -236,38 +244,34 @@ const service = {
 
     const [fromUser, flight, relatedComment] = await Promise.all(queries);
 
-    const toUserId = relatedComment ? relatedComment.userId : flight.userId;
+    if (!flight) return;
 
-    // Don't sent any email if commenter is the same person as the owner of the flight
-    if (comment.userId == toUserId) return;
+    // @ts-ignore
+    const flightOwnerId = flight.userId;
+    // @ts-ignore
+    const replyCommentOwnerId = relatedComment ? relatedComment.userId : null;
 
-    const toUser = await db.User.findByPk(toUserId);
-    if (!toUser) {
-      logger.error(
-        `MS: Send new flight comment mail failed because user with ID ${toUserId} wasn't found`
+    // Only send reply email if author isn't owner of the reply comment
+    if (replyCommentOwnerId && replyCommentOwnerId != comment.userId) {
+      sendCommentMail(
+        replyCommentOwnerId,
+        flight.externalId ?? 0,
+        <UserAttributes>fromUser,
+        comment,
+        true
       );
-      return;
     }
 
-    logger.info(`MS: Send new flight comment mail to user ${toUser.id}`);
-
-    const flightLinkUrl = `${clientUrl}${flightLink}/${flight.externalId}`;
-
-    const textFunction = relatedComment
-      ? NEW_FLIGHT_COMMENT_RESPONSE_TEXT
-      : NEW_FLIGHT_COMMENT_TEXT;
-
-    const content = {
-      title: NEW_FLIGHT_COMMENT_TITLE,
-      text: textFunction(
-        toUser.firstName,
-        `${fromUser.firstName} ${fromUser.lastName} `,
-        comment.message,
-        flightLinkUrl
-      ),
-    };
-
-    return sendMail(toUser.email, content);
+    // Only send email if author isn't owner of the flight
+    if (flightOwnerId != comment.userId) {
+      sendCommentMail(
+        flightOwnerId,
+        flight.externalId ?? 0,
+        <UserAttributes>fromUser,
+        comment,
+        false
+      );
+    }
   },
 
   sendMailAll: async (userId: string, content: MailContent) => {
@@ -285,5 +289,42 @@ const service = {
     return sendMail(mailAddresses, content);
   },
 };
+
+async function sendCommentMail(
+  toUserId: string,
+  flightId: number,
+  fromUser: UserAttributes,
+  comment: Comment,
+  isRelatedComment: boolean
+) {
+  const toUser = await db.User.findByPk(toUserId);
+  if (!toUser) {
+    logger.error(
+      `MS: Send new flight comment mail failed because user with ID ${toUserId} wasn't found`
+    );
+    return;
+  }
+
+  logger.info(`MS: Send new flight comment mail to user ${toUserId}`);
+
+  const flightLinkUrl = `${clientUrl}${flightLink}/${flightId}`;
+
+  const textFunction = isRelatedComment
+    ? NEW_FLIGHT_COMMENT_RESPONSE_TEXT
+    : NEW_FLIGHT_COMMENT_TEXT;
+
+  const content = {
+    title: NEW_FLIGHT_COMMENT_TITLE,
+    text: textFunction(
+      toUser.firstName,
+      `${fromUser.firstName} ${fromUser.lastName} `,
+      comment.message,
+      flightLinkUrl
+    ),
+  };
+
+  return sendMail(toUser.email, content);
+}
+
 module.exports = service;
 export default service;
