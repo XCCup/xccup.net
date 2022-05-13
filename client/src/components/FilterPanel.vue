@@ -410,7 +410,7 @@ const selectedFilters = computed(() => {
     clubId: findIdByName(selects.club, clubData),
     rankingClass: findKeyOfRankingClass(selects.team, teamData),
     siteRegion: selects.region ? selects.region : undefined,
-    isWeekend: hikeAndFly.value ? true : undefined,
+    isWeekend: weekend.value ? true : undefined,
     isHikeAndFly: hikeAndFly.value ? true : undefined,
     gender: selects.gender ? selects.gender : undefined,
     homeStateOfUser: selects.homeStateOfUser
