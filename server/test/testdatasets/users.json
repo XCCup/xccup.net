@@ -849,7 +849,7 @@
     "id": "1c3c8082-d82a-4c4a-a60c-80d4e089b4f7",
     "names": ["Lois", "White"],
     "firstName": "Lois",
-    "lastName": "Whiteee",
+    "lastName": "White",
     "birthday": "1976-01-01",
     "gender": "F",
     "tshirtSize": "M",
@@ -877,7 +877,7 @@
     "emailInformIfComment": true,
     "emailNewsletter": true,
     "emailTeamSearch": true,
-    "email": "kai@xccup.net",
+    "email": "blackhole+lois@xccup.net",
     "password": "PW_LoisWhite",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
     "address": {
