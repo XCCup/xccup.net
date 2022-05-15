@@ -51,7 +51,7 @@ const auth = (req, res, next) => {
  */
 const create = (user) => {
   const token = jwt.sign(createUserTokenObject(user), config.get("jwtLogin"), {
-    expiresIn: "5s",
+    expiresIn: "50s",
   });
   return token;
 };
