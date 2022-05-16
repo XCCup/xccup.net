@@ -16,6 +16,18 @@ export const TRACK_COLORS = [
   "SpringGreen",
   "Chocolate",
   "RosyBrown",
+  "mediumorchid",
+  "cornflowerblue",
+  "cadetblue",
+  "peachpuff",
+  "mediumturquoise",
+  "deeppink",
+  "gold",
+  "gray",
+  "peru",
+  "limegreen",
+  "crimson",
+  "paleturquoise",
 ];
 export const MAX_PHOTOS = 8;
 export const DAYS_FLIGHT_CHANGEABLE = 14;
