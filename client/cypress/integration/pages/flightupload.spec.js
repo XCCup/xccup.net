@@ -323,6 +323,65 @@ describe("check flight upload page", () => {
     });
   });
 
+  it("Test upload airspace violation with leonardo interface", () => {
+    const igcFileName = "airspace_violation_2022.igc";
+
+    const expectApiRespone =
+      "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
+
+    const expectApiRespone2 =
+      "Dein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
+    const expectState = "In Prüfung";
+
+    cy.fixture(igcFileName).then(async (fileContent) => {
+      const payload = {
+        user: "blackhole+melinda@xccup.net",
+        pass: "PW_MelindaTremblay",
+        IGCigcIGC: fileContent.toString(),
+        igcfn: igcFileName,
+      };
+      const data = (
+        await axios.post("http://localhost:3000/api/flights/leonardo", payload)
+      ).data;
+
+      // Test the response message from the API
+      expect(data).to.include(expectApiRespone);
+      expect(data).to.include(expectApiRespone2);
+
+      const regex = /.*\/flug\/(\d+)./;
+      const flightId = data.match(regex)[1];
+
+      // Wait till flight was fully calculated
+      cy.wait(5000);
+      cy.login(payload.user, payload.pass);
+
+      cy.visit(`/flug/${flightId}`);
+
+      cy.get("#moreFlightDetailsTable").find("td").contains(expectState);
+
+      cy.get("button").contains("Flug bearbeiten").click();
+
+      const oldAirspaceComment = "";
+      const newAirspaceComment = "Upsi voll rein geknattert.";
+
+      cy.get("[data-cy=airspace-comment-textarea]", {
+        timeout: 10000,
+      })
+        .should("have.text", oldAirspaceComment)
+        .clear()
+        .type(newAirspaceComment);
+
+      cy.get("[data-cy=save-flight-edit]").contains("Speichern").click();
+      cy.url().should("include", `/flug/${flightId}`);
+
+      cy.get("[data-cy=airspace-comment]")
+        .find("p")
+        .should("have.text", newAirspaceComment);
+
+      // cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+    });
+  });
+
   it("Test upload with leonardo interface (wrong content)", async () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectApiRespone = "Error parsing IGC File";
