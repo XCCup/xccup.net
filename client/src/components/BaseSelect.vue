@@ -14,6 +14,7 @@
   >
     <option v-if="!showLabel" disabled value="" selected>{{ label }}</option>
     <option v-if="showLabel && addEmptyOption" value="" selected></option>
+    <!-- TODO: Safari selects the first item even if selected is "false". Evaluate! -->
     <option
       v-for="option in options"
       :key="option"

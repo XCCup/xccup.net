@@ -5,18 +5,22 @@ import { reactive } from "@vue/reactivity";
 const initialDate = new Date();
 initialDate.setFullYear(initialDate.getFullYear() - 16);
 
+/**
+ * TODO: Defaults for gender & shirt size are a workaround for the safari
+ * selects bug in BaseSelect.vue
+ */
 const state = reactive({
   firstName: "",
   lastName: "",
   birthday: null,
-  gender: "",
+  gender: "M",
   password: "",
   passwordConfirm: "",
   clubId: "",
   email: "",
   address: { country: "Deutschland", state: "" },
   emailNewsletter: true,
-  tshirtSize: "",
+  tshirtSize: "L",
   emailInformIfComment: true,
   emailTeamSearch: false,
 });
