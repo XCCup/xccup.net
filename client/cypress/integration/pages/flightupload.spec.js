@@ -325,7 +325,7 @@ describe("check flight upload page", () => {
 
   it.only("Test upload airspace violation with leonardo interface", () => {
     const igcFileName = "airspace_violation_2022.igc";
-    const expectedTakeoff = "Bremm";
+    const expectedTakeoff = "Kreuzberg";
     const expectState = "In Prüfung";
     const expectApiRespone =
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
