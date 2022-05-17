@@ -323,7 +323,7 @@ describe("check flight upload page", () => {
     });
   });
 
-  it.only("Test upload airspace violation with leonardo interface", () => {
+  it("Test upload airspace violation with leonardo interface", () => {
     const igcFileName = "airspace_violation_2022.igc";
     const expectedTakeoff = "Kreuzberg";
     const expectState = "In Prüfung";
