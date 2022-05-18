@@ -764,6 +764,7 @@ async function findAirbuddies(flight) {
   const timeOffsetValue = 2;
   const timeOffsetUnit = "h";
   const pointThreshold = 30;
+  const maxNumberOfBuddies = 10;
 
   const from = moment(flight.takeoffTime).subtract(
     timeOffsetValue,
@@ -788,6 +789,8 @@ async function findAirbuddies(flight) {
       as: "user",
       attributes: ["id", "firstName", "lastName"],
     },
+    limit: maxNumberOfBuddies,
+    order: [["flightPoints", "DESC"]],
   });
 }
 
