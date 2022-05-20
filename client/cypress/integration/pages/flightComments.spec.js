@@ -57,8 +57,9 @@ describe("check flight comments", () => {
       .should("not.exist");
   });
 
-  it("add new flight comment", () => {
+  it.only("add new flight comment", () => {
     const expectedComment = "This is a test :-D";
+    const expectedMailReceipient = "blackhole+ron@xccup.net";
 
     cy.login("blackhole+lois@xccup.net", "PW_LoisWhite");
     cy.visit("/flug/9");
@@ -73,6 +74,9 @@ describe("check flight comments", () => {
     // Check that comment is also present after reload
     cy.visit("/flug/9");
     cy.get("#flight-comments").contains(expectedComment);
+
+    // Check that owner of flight received an email
+    cy.receipentReceivedEmailWithText(expectedMailReceipient, expectedComment);
   });
 
   it("reply to other flight comment", () => {

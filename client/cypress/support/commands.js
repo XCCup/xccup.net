@@ -1,4 +1,6 @@
 import "cypress-file-upload";
+import axios from "axios";
+
 Cypress.Commands.add("clearIndexedDB", async () => {
   const databases = await window.indexedDB.databases();
 
@@ -113,3 +115,20 @@ Cypress.Commands.add("logout", () => {
 Cypress.Commands.add("textareaIncludes", function (selector, text) {
   cy.get(selector).invoke("val").should("contains", text);
 });
+
+/**
+ * A command to check if a receipent received an email which includes a text.
+ */
+Cypress.Commands.add(
+  "receipentReceivedEmailWithText",
+  function (receipentMail, text) {
+    cy.wrap(null).then(async () => {
+      const data = (
+        await axios.get(
+          `http://localhost:3000/api/testdata/email/${receipentMail}`
+        )
+      ).data;
+      expect(data.message).to.include(text);
+    });
+  }
+);
