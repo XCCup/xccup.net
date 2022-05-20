@@ -57,7 +57,7 @@ describe("check flight comments", () => {
       .should("not.exist");
   });
 
-  it.only("add new flight comment", () => {
+  it("add new flight comment", () => {
     const expectedComment = "This is a test :-D";
     const expectedMailReceipient = "blackhole+ron@xccup.net";
 
