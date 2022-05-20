@@ -10,23 +10,19 @@ async function retrieveTestMail(url) {
 
   return {
     message: root.querySelector(".message-plaintext").text,
-    subject: parseMessageHeader(root, 0),
-    from: parseMessageHeader(root, 1),
-    to: parseMessageHeader(root, 2),
-    time: parseMessageHeader(root, 3),
-    messageId: parseMessageHeader(root, 4),
+    subject: parseMessageHeader(root, "Subject"),
+    from: parseMessageHeader(root, "From"),
+    to: parseMessageHeader(root, "To"),
+    time: parseMessageHeader(root, "Time"),
+    messageId: parseMessageHeader(root, "Message-ID"),
   };
 }
 
-function parseMessageHeader(root, elementNumber) {
-  return (
-    root
-      .querySelector("#message-header")
-      .querySelectorAll("div")
-      // eslint-disable-next-line no-unexpected-multiline
-      [elementNumber].querySelector("span")
-      .text.trim()
-  );
+function parseMessageHeader(root, element) {
+  const divs = root.querySelector("#message-header").querySelectorAll("div");
+
+  const found = divs.find((d) => d.text.includes(element));
+  if (found) return found.querySelector("span").text.trim();
 }
 
 module.exports = retrieveTestMail;

@@ -65,6 +65,7 @@ const sendMail = async (mailAddresses, content, replyTo) => {
     if (config.get("env") !== "production") {
       logger.info("E: Check sent email in test smtp service");
       const previewUrl = nodemailer.getTestMessageUrl(info);
+      logger.info("E: Preview URL: " + previewUrl);
       const receivedMail = await retrieveTestMail(previewUrl);
       const testEmailCache = require("../test/testEmailCache");
       testEmailCache.push(receivedMail);

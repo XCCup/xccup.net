@@ -43,6 +43,7 @@
     "sequelize": "^6.19.0",
     "sharp": "^0.30.4",
     "uuid": "^8.3.2",
+    "node-html-parser": "^5.3.3",
     "winston": "^3.7.2"
   },
   "devDependencies": {
@@ -61,7 +62,6 @@
     "csv-parser": "^3.0.0",
     "eslint": "^8.15.0",
     "jest": "^28.1.0",
-    "node-html-parser": "^5.3.3",
     "nodemon": "^2.0.16",
     "tabletojson": "^2.0.7",
     "ts-jest": "^28.0.1",

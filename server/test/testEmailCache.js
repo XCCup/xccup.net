@@ -7,5 +7,5 @@ exports.push = (email) => {
 };
 
 exports.findLatestForToUser = (toUserEmail) => {
-  return findLast(cache, (e) => e.to.includes(toUserEmail));
+  return findLast(cache, (e) => e.to?.includes(toUserEmail));
 };
