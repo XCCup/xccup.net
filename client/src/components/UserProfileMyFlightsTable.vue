@@ -1,7 +1,10 @@
 <template>
   <section class="pb-3">
     <div v-if="flights?.length > 0" class="table-responsive">
-      <table class="table table-striped table-hover text-sm">
+      <table
+        class="table table-striped table-hover text-sm"
+        data-cy="my-flights-table"
+      >
         <thead>
           <TableSortHead
             content="Datum"

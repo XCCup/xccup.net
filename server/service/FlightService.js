@@ -19,7 +19,6 @@ const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
 const {
-  sendAirspaceViolationMail,
   sendAirspaceViolationAcceptedMail,
   sendNewAdminTask,
 } = require("./MailService");
@@ -288,7 +287,7 @@ const flightService = {
   } = {}) => {
     const columnsToUpdate = {};
 
-    // Set report when value is defined or emptry
+    // Set report when value is defined or empty
     if (report || report == "") {
       columnsToUpdate.report = report;
     }
@@ -320,6 +319,10 @@ const flightService = {
         );
         columnsToUpdate.flightStatus = flightStatus;
       }
+    }
+
+    if (flight.airspaceViolation) {
+      sendNewAdminTask();
     }
 
     return Flight.update(columnsToUpdate, {
@@ -371,10 +374,7 @@ const flightService = {
     deleteCache(["home", "flights", "results"]);
   },
 
-  attachElevationDataAndCheckForAirspaceViolations: async (
-    flight,
-    { sendMail } = {}
-  ) => {
+  attachElevationDataAndCheckForAirspaceViolations: async (flight) => {
     const fixes = await retrieveDbObjectOfFlightFixes(flight.id);
 
     // eslint-disable-next-line no-unused-vars
@@ -405,8 +405,6 @@ const flightService = {
       flight.airspaceViolation = true;
       flight.flightStatus = STATE.IN_REVIEW;
       flight.save();
-      if (sendMail) sendAirspaceViolationMail(flight);
-      sendNewAdminTask();
     }
 
     return violationResult;
@@ -833,6 +831,8 @@ async function createWhereStatement(
         { uncheckedGRecord: true },
       ],
       violationAccepted: false,
+      // Don't include unfinalized flights (e.g. glider is missing)
+      glider: { [sequelize.Op.not]: null },
     };
   } else if (!includeUnchecked) {
     whereStatement = {
@@ -845,7 +845,10 @@ async function createWhereStatement(
       ],
     };
   } else {
-    whereStatement = {};
+    whereStatement = {
+      // Don't include unfinalized flights (e.g. glider is missing)
+      glider: { [sequelize.Op.not]: null },
+    };
   }
   if (flightType) {
     whereStatement.flightType = flightType;
