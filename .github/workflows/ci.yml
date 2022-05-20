@@ -31,7 +31,7 @@ jobs:
         working-directory: ./server
 
       - name: 🧪 Test secrets
-        run: echo hallo von ${{ secrets.ETHERNAL_MAIL_USER }}
+        run: echo "hallo von ${{ secrets.ETHERNAL_MAIL_USER }}"
         working-directory: ./server
 
       - name: 🐳 Start Docker Backend Environment
