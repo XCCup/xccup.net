@@ -24,6 +24,8 @@ const prodSmtp = {
 
 if (config.get("env") !== "production") {
   logger.info("E: Use test smtp server");
+  logger.info("E: U: ", auth.user.substring(0, 3));
+  logger.info("E: P: ", auth.pass.substring(0, 3));
   mailClient = nodemailer.createTransport(testSmtp);
 } else {
   logger.info("E: Use production smtp server");

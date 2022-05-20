@@ -128,6 +128,7 @@ Cypress.Commands.add(
           `http://localhost:3000/api/testdata/email/${receipentMail}`
         )
       ).data;
+      expect(data.message, `No message for ${receipentMail} found`).to.exist;
       expect(data.message).to.include(text);
     });
   }
