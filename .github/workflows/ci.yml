@@ -30,14 +30,9 @@ jobs:
         run: docker-compose -f docker-compose-ci.yml run --rm yarn test
         working-directory: ./server
 
-      - name: 🧪 Test secrets
-        run: echo "hallo von ${{ secrets.ETHERNAL_MAIL_USER }}"
-        working-directory: ./server
-
       - name: 🐳 Start Docker Backend Environment
-        env:
-          MAIL_SERVICE_USER: ${{ secrets.ETHERNAL_MAIL_USER }}
-          MAIL_SERVICE_PASSWORD: ${{ secrets.ETHERNAL_MAIL_PASS }}
+        run: echo "MAIL_SERVICE_USER=${{ secrets.ETHERNAL_MAIL_USER }}" >> ./.env.ci
+        run: echo "MAIL_SERVICE_PASSWORD=${{ secrets.ETHERNAL_MAIL_PASS }}" >> ./.env.ci
         run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
         working-directory: ./server
 
