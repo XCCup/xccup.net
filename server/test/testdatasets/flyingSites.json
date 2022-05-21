@@ -16,7 +16,8 @@
     },
     "id": "b45f5791-299b-4c07-97de-dbc1c373df3b",
     "shortName": "PETERSBERG",
-    "direction": "SW-W"
+    "direction": "SW-W",
+    "elevation": 210
   },
   {
     "name": "Nur ein Vorschlag",
@@ -35,7 +36,8 @@
     "id": "adb1e986-e8b5-4594-a9e4-c27a013ffeea",
     "direction": "W-O",
     "state": "proposal",
-    "submitter": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae"
+    "submitter": "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
+    "elevation": 65
   },
   {
     "name": "Heppenheim UL-Schlepp",
@@ -52,7 +54,8 @@
     },
     "id": "0ae5b34c-8418-4fac-bb9a-1093802dc83e",
     "shortName": "HEPPENHEIM_UL",
-    "direction": ""
+    "direction": "",
+    "elevation": 96
   },
   {
     "name": "Bürstadt UL-Schlepp",
@@ -69,7 +72,8 @@
     },
     "id": "bd645aaf-918b-4f9d-a63c-bf468e8a67fa",
     "shortName": "BUERSTADT_UL",
-    "direction": ""
+    "direction": "",
+    "elevation": 90
   },
   {
     "name": "Gangelsberg",
@@ -88,7 +92,8 @@
     },
     "id": "cc10ea36-f184-41e0-be61-172dd29cfdbe",
     "shortName": "GANGELSBERG",
-    "direction": "O"
+    "direction": "O",
+    "elevation": 303
   },
   {
     "name": "Duchroth",
@@ -107,7 +112,8 @@
     },
     "id": "3584522a-e86e-4049-b588-93395e55f9af",
     "shortName": "DUCHROTH",
-    "direction": "N"
+    "direction": "N",
+    "elevation": 262
   },
   {
     "name": "Offenbach-Hundheim",
@@ -126,7 +132,8 @@
     },
     "id": "732fe644-c0f4-4b23-9a13-9cd5b1523294",
     "shortName": "HUNDHEIM",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 294
   },
   {
     "name": "Halde Ensorf",
@@ -145,7 +152,8 @@
     },
     "id": "07d4335a-52b9-4a2a-be6e-9c348834344a",
     "shortName": "HALDE_ENSDORF",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 316
   },
   {
     "name": "Urphar NO",
@@ -164,7 +172,8 @@
     },
     "id": "a6fdb989-4165-4d98-99f1-f7c9d2b5a9c3",
     "shortName": "URPHAR_NO",
-    "direction": "NO"
+    "direction": "NO",
+    "elevation": 217
   },
   {
     "name": "Urphar NW",
@@ -183,7 +192,8 @@
     },
     "id": "ade6170b-313c-47b5-bbf1-01d946de42b2",
     "shortName": "URPHAR_NW",
-    "direction": "NW"
+    "direction": "NW",
+    "elevation": 226
   },
   {
     "name": "Adolzfurt",
@@ -199,7 +209,8 @@
     },
     "id": "39290227-2a68-4c0a-b80e-d4ccf48fd202",
     "shortName": "ADOLZFURT",
-    "direction": "W"
+    "direction": "W",
+    "elevation": 322
   },
   {
     "name": "Schoden",
@@ -235,7 +246,8 @@
     },
     "id": "8e9c0913-486c-470b-b025-3b0702253398",
     "shortName": "MONTABAUR_SEGELFLUG",
-    "direction": ""
+    "direction": "",
+    "elevation": 276
   },
   {
     "name": "Lauterbach UL-Schlepp",
@@ -252,7 +264,8 @@
     },
     "id": "886825a7-8f76-491a-bb0f-c3b77af5a31a",
     "shortName": "LAUTERBACH_UL",
-    "direction": ""
+    "direction": "",
+    "elevation": 362
   },
   {
     "name": "Donnersberg Moltkefelsen",
@@ -271,7 +284,8 @@
     },
     "id": "e727cae1-4945-4aab-ab94-26bbd5ebdabb",
     "shortName": "MOLTKEFELSEN",
-    "direction": "SO"
+    "direction": "SO",
+    "elevation": 523
   },
   {
     "name": "Vockrather Acker",
@@ -288,7 +302,8 @@
     },
     "id": "b2f94426-5230-46d0-9064-003735519c79",
     "shortName": "HOLZHEIM",
-    "direction": ""
+    "direction": "",
+    "elevation": 65
   },
   {
     "name": "Halde Norddeutschland",
@@ -323,7 +338,8 @@
     },
     "id": "a72bccde-5700-4321-b727-fb5a430ce71c",
     "shortName": "ROSENBERG",
-    "direction": "SW-SO"
+    "direction": "SW-SO",
+    "elevation": 225
   },
   {
     "name": "Hochstetten-Dhaun/Strüther Wald ",
@@ -342,7 +358,8 @@
     },
     "id": "106264b9-7c56-4aa9-b4e0-e9bf8a8f5aa2",
     "shortName": "HOCHSTETTEN",
-    "direction": "NNW-NNO"
+    "direction": "NNW-NNO",
+    "elevation": 263
   },
   {
     "name": "Gringlay",
@@ -361,7 +378,8 @@
     },
     "id": "272ac938-c17f-4ad9-b664-30a7e462b5fa",
     "shortName": "GRINGLAY",
-    "direction": "SW"
+    "direction": "SW",
+    "elevation": 406
   },
   {
     "name": "Saarburg-Kreuzberg",
@@ -380,7 +398,8 @@
     },
     "id": "0196cb63-c25d-4e4a-954c-3e52454bb951",
     "shortName": "SAARBURG",
-    "direction": "SO"
+    "direction": "SO",
+    "elevation": 278
   },
   {
     "name": "Pfeffelbach",
@@ -399,7 +418,8 @@
     },
     "id": "3cd15aa1-8b9c-4b14-b2aa-9e3731cf0846",
     "shortName": "PFEFFELBACH",
-    "direction": "SO"
+    "direction": "SO",
+    "elevation": 544
   },
   {
     "name": "Serrig",
@@ -416,7 +436,6 @@
       "type": "Point",
       "coordinates": [6.615483333333333, 49.568933333333334]
     },
-
     "id": "b9a05268-a802-423e-8981-b1c01dafc754",
     "shortName": "SERRIG",
     "direction": "SW-W"
@@ -435,7 +454,8 @@
     },
     "id": "7508381f-f6db-4126-803d-ea8b5fe26642",
     "shortName": "LINDENFELDS",
-    "direction": "S-SW"
+    "direction": "S-SW",
+    "elevation": 294
   },
   {
     "name": "Neumagen",
@@ -454,7 +474,8 @@
     },
     "id": "76386969-edae-4bfc-9461-fcef7c5f2843",
     "shortName": "NEUMAGEN",
-    "direction": "NO-SO"
+    "direction": "NO-SO",
+    "elevation": 378
   },
   {
     "name": "Ockfen",
@@ -473,7 +494,8 @@
     },
     "id": "3f37d5f1-f66f-40b1-adad-c9d189e57fa4",
     "shortName": "OCKFEN",
-    "direction": "SW"
+    "direction": "SW",
+    "elevation": 323
   },
   {
     "name": "Wustweiler Segelflugplatz",
@@ -491,7 +513,8 @@
     },
     "id": "440a8d9f-952b-49e8-a4fd-0fd736ac3985",
     "shortName": "WUSTWEILER",
-    "direction": ""
+    "direction": "",
+    "elevation": 360
   },
   {
     "name": "Zeltingen-Rachtig",
@@ -510,7 +533,8 @@
     },
     "id": "4c81a555-fcba-4c79-8127-ece934e5b9b1",
     "shortName": "ZELTINGEN",
-    "direction": "O"
+    "direction": "O",
+    "elevation": 254
   },
   {
     "name": "Dreiser Weiher",
@@ -530,7 +554,8 @@
     "id": "6a2b4405-2dfc-402a-abe3-d4b2b63127b5",
     "shortName": "DREISERWEIHER",
     "direction": "NW-NNO",
-    "state": "inactive"
+    "state": "inactive",
+    "elevation": 505
   },
   {
     "name": "Obermaubach",
@@ -547,7 +572,8 @@
     },
     "id": "5b1b3596-2dfc-591b-abe3-e4b2b64126b6",
     "shortName": "OBERMAUBACH",
-    "direction": "NNW"
+    "direction": "NNW",
+    "elevation": 260
   },
   {
     "name": "Lasserg/Küppchen",
@@ -566,7 +592,8 @@
     },
     "id": "9268835e-e375-4c1f-837a-5f0c32206cfe",
     "shortName": "LASSERG",
-    "direction": "O-SO"
+    "direction": "O-SO",
+    "elevation": 226
   },
   {
     "name": "Bremm",
@@ -585,7 +612,8 @@
     },
     "id": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "shortName": "BREMM",
-    "direction": "SSO-SSW"
+    "direction": "SSO-SSW",
+    "elevation": 311
   },
   {
     "name": "Schöneberg Schlepp",
@@ -603,7 +631,8 @@
     },
     "id": "ca900130-e3bc-443a-8407-d5f391f8a540",
     "shortName": "SCHOENEBERG",
-    "direction": "O,W"
+    "direction": "O,W",
+    "elevation": 267
   },
   {
     "name": "Arnoldshain",
@@ -619,7 +648,8 @@
     },
     "id": "57798d95-cb65-4a39-8609-e9517246dd63",
     "shortName": "ARNOLDSHAIN",
-    "direction": "NO"
+    "direction": "NO",
+    "elevation": 522
   },
   {
     "name": "Eichen Schlepp",
@@ -637,7 +667,8 @@
     },
     "id": "b57ad153-9489-4e96-b57f-0684d46fb4f9",
     "shortName": "EICHEN",
-    "direction": "N,S"
+    "direction": "N,S",
+    "elevation": 264
   },
   {
     "name": "Gollershoben Schlepp",
@@ -655,7 +686,8 @@
     },
     "id": "3ac171d2-ff2e-4719-99d8-070dfa286ebf",
     "shortName": "GOLLERSHOBEN",
-    "direction": "O,W"
+    "direction": "O,W",
+    "elevation": 269
   },
   {
     "name": "Schnellmannshausen Schlepp",
@@ -673,7 +705,8 @@
     },
     "id": "72b6b4a9-3838-43bd-b8f4-58db545287fd",
     "shortName": "SCHNELLMANNSHAUSEN",
-    "direction": "NO,SW"
+    "direction": "NO,SW",
+    "elevation": 255
   },
   {
     "name": "Wanfried-Aue",
@@ -692,7 +725,8 @@
     },
     "id": "eb98406c-7c12-4ba8-886c-56e0c1954072",
     "shortName": "WANFRIED_AUE",
-    "direction": "NW-N"
+    "direction": "NW-N",
+    "elevation": 321
   },
   {
     "name": "Kella Schlepp",
@@ -710,7 +744,8 @@
     },
     "id": "20d43bc4-f1fb-4779-830d-621d91c52e92",
     "shortName": "KELLA_SCHLEPP",
-    "direction": "NO,SW"
+    "direction": "NO,SW",
+    "elevation": 388
   },
   {
     "name": "Kella-Berg",
@@ -729,7 +764,8 @@
     },
     "id": "65089c2d-a94f-4414-ae1d-430c8e2f602c",
     "shortName": "KELLA_BERG",
-    "direction": "O-SO"
+    "direction": "O-SO",
+    "elevation": 453
   },
   {
     "name": "Hahnberg",
@@ -748,7 +784,8 @@
     },
     "id": "2b7a95f5-bd1b-4d70-9fd3-77d5f640eaa3",
     "shortName": "HAHNBERG",
-    "direction": "NNW"
+    "direction": "NNW",
+    "elevation": 465
   },
   {
     "name": "Hoher Meissner Uengsterode",
@@ -767,7 +804,8 @@
     },
     "id": "7ce1f70f-9508-47e3-b3d8-01aba0a06915",
     "shortName": "HOHER_MEISSNER",
-    "direction": "W"
+    "direction": "W",
+    "elevation": 490
   },
   {
     "name": "Wenholthausen",
@@ -786,7 +824,8 @@
     },
     "id": "32c190ff-4408-4bca-b3cc-aaa23c1533fc",
     "shortName": "WENHOLTHAUSEN",
-    "direction": "S-SW"
+    "direction": "S-SW",
+    "elevation": 557
   },
   {
     "name": "Wirminghausen",
@@ -804,7 +843,8 @@
     },
     "id": "13c910ff-4508-3bca-b4cc-def23c4711ab",
     "shortName": "WIRMINGHAUSEN",
-    "direction": "NW/N/W"
+    "direction": "NW/N/W",
+    "elevation": 445
   },
   {
     "name": "Abtsrodaer Kuppe",
@@ -823,7 +863,8 @@
     },
     "id": "32547e9c-dfed-4098-92f0-1f433d995ded",
     "shortName": "ABTSRODAER_KUPPE",
-    "direction": "N-NO"
+    "direction": "N-NO",
+    "elevation": 915
   },
   {
     "name": "Pferdskopf",
@@ -842,7 +883,8 @@
     },
     "id": "d6489b22-33f0-46cd-8d9b-83d712a8e133",
     "shortName": "PFERDSKOPF",
-    "direction": "NW"
+    "direction": "NW",
+    "elevation": 774
   },
   {
     "name": "Ofentaler Berg",
@@ -861,7 +903,8 @@
     },
     "id": "e93f109e-392d-4274-bba8-d2cc094b085f",
     "shortName": "OFENTALER",
-    "direction": "SO"
+    "direction": "SO",
+    "elevation": 233
   },
   {
     "name": "Wasserkuppe Westhang",
@@ -898,7 +941,8 @@
     },
     "id": "ff923958-be10-4873-8037-46fc2e2956be",
     "shortName": "WASSERKUPPE_SUEDHANG",
-    "direction": "SO-SW"
+    "direction": "SO-SW",
+    "elevation": 923
   },
   {
     "name": "Weiherkuppe",
@@ -916,7 +960,8 @@
     },
     "id": "4efe4b7c-1700-3991-9dcc-bb89d9d2ca13",
     "shortName": "WEIHERKUPPE",
-    "direction": "SW"
+    "direction": "SW",
+    "elevation": 679
   },
   {
     "name": "Kreuzberg NO",
@@ -935,7 +980,8 @@
     },
     "id": "93577549-c2f9-4fdf-920f-78a57b57a8ec",
     "shortName": "KREUZBERG_NO",
-    "direction": "N-NO"
+    "direction": "N-NO",
+    "elevation": 856
   },
   {
     "name": "Kreuzberg SO",
@@ -954,7 +1000,8 @@
     },
     "id": "5861e576-5a08-41f7-b2c3-9804727c0679",
     "shortName": "KREUZBERG_SO",
-    "direction": "SO"
+    "direction": "SO",
+    "elevation": 863
   },
   {
     "name": "Oberhövels Schlepp",
@@ -972,7 +1019,8 @@
     },
     "id": "f4e1ab81-ed98-471a-af38-3c7c5e58a0b1",
     "shortName": "OBERHEOVELS",
-    "direction": "N,S"
+    "direction": "N,S",
+    "elevation": 211
   },
   {
     "name": "Asslar Schlepp",
@@ -990,7 +1038,8 @@
     },
     "id": "8c3326f4-75d5-4f77-a37c-5dc23aabcb31",
     "shortName": "ASSLAR",
-    "direction": "S,N"
+    "direction": "S,N",
+    "elevation": 222
   },
   {
     "name": "Herborn Schlepp",
@@ -1000,7 +1049,8 @@
     },
     "id": "18e36ff6-433e-44b0-820e-57c56326bdeb",
     "shortName": "HERBORN",
-    "direction": "ONO,WSW"
+    "direction": "ONO,WSW",
+    "elevation": 322
   },
   {
     "name": "Uelhof Schlepp",
@@ -1074,7 +1124,8 @@
     },
     "id": "95e590b0-57fb-480b-96e4-7ed459a37532",
     "shortName": "MUDERSBACH",
-    "direction": "W-O"
+    "direction": "W-O",
+    "elevation": 288
   },
   {
     "name": "Hockenheim Schlepp",
@@ -1089,7 +1140,8 @@
     },
     "id": "f82bb338-383a-4248-89cb-7f9d4d8098bf",
     "shortName": "HOCKENHEIM",
-    "direction": "NW,SO"
+    "direction": "NW,SO",
+    "elevation": 95
   },
   {
     "name": "Bruchhauser Steine S",
@@ -1108,7 +1160,8 @@
     },
     "id": "6d860b6f-38c3-42fa-9045-82079a816f74",
     "shortName": "BRUCHHAUSER_STEINE_S",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 692
   },
   {
     "name": "Bruchhauser Steine SW",
@@ -1127,7 +1180,8 @@
     },
     "id": "9f281345-45e6-4675-85bd-88146bb7d4cc",
     "shortName": "BRUCHHAUSER_STEINE_SW",
-    "direction": "S-W"
+    "direction": "S-W",
+    "elevation": 689
   },
   {
     "name": "Wershofen",
@@ -1145,7 +1199,8 @@
     },
     "id": "7625b6d0-b837-4a18-ac86-459310621dd1",
     "shortName": "WERSHOFEN",
-    "direction": ""
+    "direction": "",
+    "elevation": 475
   },
   {
     "name": "Harsberg",
@@ -1164,7 +1219,8 @@
     },
     "id": "026fec57-99bd-47bf-9585-1c563ed54c66",
     "shortName": "HARSBERG",
-    "direction": "SW"
+    "direction": "SW",
+    "elevation": 365
   },
   {
     "name": "Altena-Hegenscheid Schlepp",
@@ -1201,7 +1257,8 @@
     },
     "id": "7b499782-e8b8-404f-a62f-f4ca45a6ad80",
     "shortName": "EISENBERG",
-    "direction": "W"
+    "direction": "W",
+    "elevation": 433
   },
   {
     "name": "Eisenberg Windenschlepp",
@@ -1219,7 +1276,8 @@
     },
     "id": "0733ac89-ef29-4ac9-8511-82649484ca32",
     "shortName": "EISENBERG_WINDE",
-    "direction": ""
+    "direction": "",
+    "elevation": 310
   },
   {
     "name": "Niederzissen/Bausenberg",
@@ -1238,7 +1296,8 @@
     },
     "id": "e7671837-d78a-4586-9e8a-0d174d8e7758",
     "shortName": "BAUSENBERG",
-    "direction": "SO-S"
+    "direction": "SO-S",
+    "elevation": 303
   },
   {
     "name": "Willingen-Ettelsberg",
@@ -1257,7 +1316,8 @@
     },
     "id": "22564a5b-eca9-49d9-9732-9f7f4634523f",
     "shortName": "WILLINGEN",
-    "direction": "N"
+    "direction": "N",
+    "elevation": 789
   },
   {
     "name": "Düdinghausen",
@@ -1275,7 +1335,8 @@
     },
     "id": "11564a5b-bca9-1234-9732-9e7e4634523e",
     "shortName": "DUEDINGHAUSEN",
-    "direction": "SO"
+    "direction": "SO",
+    "elevation": 727
   },
   {
     "name": "Reichenhausen",
@@ -1294,7 +1355,8 @@
     },
     "id": "1ca18e0c-1e32-44c1-9228-30f77e6a96dd",
     "shortName": "REICHENHAUSEN",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 556
   },
   {
     "name": "Maring-Noviand SO",
@@ -1306,7 +1368,6 @@
       "type": "Point",
       "coordinates": [6.990755555555555, 49.94385]
     },
-
     "locationData": {
       "country": "GER",
       "state": "RP",
@@ -1314,7 +1375,8 @@
     },
     "id": "a6606392-22de-4395-86fb-5162c8f37a9b",
     "shortName": "MARING_SO",
-    "direction": "SO"
+    "direction": "SO",
+    "elevation": 294
   },
   {
     "name": "Martinsthal",
@@ -1339,7 +1401,6 @@
     "name": "Kautenbach",
     "heightDifference": "133",
     "image": "",
-
     "locationData": {
       "country": "LUX",
       "state": "",
@@ -1359,7 +1420,6 @@
     "name": "Michaelau",
     "heightDifference": "401",
     "image": "",
-
     "locationData": {
       "country": "LUX",
       "state": "",
@@ -1447,7 +1507,8 @@
     },
     "id": "802ab91e-01b3-485d-b50f-8b16f1a11b40",
     "shortName": "ELPE",
-    "direction": "NO-OSO"
+    "direction": "NO-OSO",
+    "elevation": 659
   },
   {
     "name": "Mellbeck",
@@ -1458,7 +1519,8 @@
     },
     "id": "45c0b209-bbee-4405-934a-92379f0946c0",
     "shortName": "MELLBECK",
-    "direction": "NW-N"
+    "direction": "NW-N",
+    "elevation": 274
   },
   {
     "name": "Bergstein Schlepp",
@@ -1468,7 +1530,8 @@
     },
     "id": "cf3bc974-d8b3-4c6d-93fb-85f31783114a",
     "shortName": "BERGSTEIN",
-    "direction": "NO/SW"
+    "direction": "NO/SW",
+    "elevation": 341
   },
   {
     "name": "Willingen Sonnenhang",
@@ -1487,7 +1550,8 @@
     },
     "id": "16cb4cb3-e1b2-4dde-bdc3-dabb9621ed5b",
     "shortName": "SONNENHANG",
-    "direction": "O"
+    "direction": "O",
+    "elevation": 755
   },
   {
     "name": "Dolberg",
@@ -1505,7 +1569,8 @@
     },
     "id": "61bc4bc3-b2e1-4dde-bdc3-dacc9634ed6c",
     "shortName": "DOLBERG",
-    "direction": "N-NNO"
+    "direction": "N-NNO",
+    "elevation": 600
   },
   {
     "name": "Hohe Geba",
@@ -1524,7 +1589,8 @@
     },
     "id": "ea1cab1a-a1e7-47e5-a21f-235577e62c3b",
     "shortName": "GEBA_SW",
-    "direction": "SW"
+    "direction": "SW",
+    "elevation": 545
   },
   {
     "name": "Kanfen",
@@ -1562,7 +1628,8 @@
     },
     "id": "a56c560a-1199-4abc-b79d-07aa60b65167",
     "shortName": "SPIELBERG",
-    "direction": "O"
+    "direction": "O",
+    "elevation": 513
   },
   {
     "name": "Mehring",
@@ -1581,7 +1648,8 @@
     },
     "id": "82d09f76-6adf-4aca-9135-3a02b41f9006",
     "shortName": "MEHRING",
-    "direction": "N"
+    "direction": "N",
+    "elevation": 401
   },
   {
     "name": "Hinterweiler UL-Schlepp",
@@ -1597,7 +1665,8 @@
     },
     "id": "8c7ba6ac-9ee8-490b-b866-b959f3930906",
     "shortName": "HINTERWEILER",
-    "direction": ""
+    "direction": "",
+    "elevation": 597
   },
   {
     "name": "Offenbach Schlepp",
@@ -1613,7 +1682,8 @@
     },
     "id": "381e6f93-095d-4b08-a8dd-7f0b601b5cb3",
     "shortName": "OFFENBACH",
-    "direction": ""
+    "direction": "",
+    "elevation": 149
   },
   {
     "name": "Ürzig-Erden SO",
@@ -1632,7 +1702,8 @@
     },
     "id": "e33e251a-960e-4dc3-b898-35131dd18aa2",
     "shortName": "UERZIG",
-    "direction": "SO"
+    "direction": "SO",
+    "elevation": 312
   },
   {
     "name": "Klüsserath",
@@ -1651,7 +1722,8 @@
     },
     "id": "aa9b4b1e-24e1-4c31-ba2e-aee945a88941",
     "shortName": "KLUESSEARTH",
-    "direction": "S-W"
+    "direction": "S-W",
+    "elevation": 287
   },
   {
     "name": "Rivenich",
@@ -1670,7 +1742,8 @@
     },
     "id": "728370dc-425e-4074-a96a-622824a786bf",
     "shortName": "RIVENICH",
-    "direction": "W"
+    "direction": "W",
+    "elevation": 283
   },
   {
     "name": "St. Katharinen Mergesfeld Schlepp",
@@ -1798,7 +1871,8 @@
     },
     "id": "5c25d450-eca2-4a0a-9de3-7e0f082f0967",
     "shortName": "WALLERTHEIM",
-    "direction": ""
+    "direction": "",
+    "elevation": 135
   },
   {
     "name": "St. Katharinen Schlepp",
@@ -1816,7 +1890,8 @@
     },
     "id": "90e401a6-020e-4d93-83ee-08d2e99e938a",
     "shortName": "KATHARINEN_SCHLEPP",
-    "direction": "N,S"
+    "direction": "N,S",
+    "elevation": 181
   },
   {
     "name": "Raumbach",
@@ -1835,7 +1910,8 @@
     },
     "id": "e8d6e2ce-b899-4a7d-b09c-ca3a134cb78f",
     "shortName": "RAUMBACH_HANG",
-    "direction": "SO-S"
+    "direction": "SO-S",
+    "elevation": 301
   },
   {
     "name": "Losheim am See/Scheid Schlepp",
@@ -1853,7 +1929,8 @@
     },
     "id": "9ba2ed9a-ab38-42fa-80d5-1aed219e4b10",
     "shortName": "LOSHEIM_SCHEID",
-    "direction": "N,O,S,W"
+    "direction": "N,O,S,W",
+    "elevation": 356
   },
   {
     "name": "Meerfelder Maar",
@@ -1872,7 +1949,8 @@
     },
     "id": "3fe092e3-6a38-4cd7-8b4a-5b612f3dd600",
     "shortName": "MEERFELDER_MAAR_SUED",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 490
   },
   {
     "name": "Orensberg",
@@ -1891,7 +1969,8 @@
     },
     "id": "f195bdfd-97db-4e16-bfb9-a82413319395",
     "shortName": "ORENSBERG",
-    "direction": "SSW-W"
+    "direction": "SSW-W",
+    "elevation": 531
   },
   {
     "name": "Adelberg",
@@ -1929,7 +2008,8 @@
     },
     "id": "8c011833-f1df-49e8-846a-9fa2f20356bc",
     "shortName": "FOERLENBERG",
-    "direction": "NNO-ONO"
+    "direction": "NNO-ONO",
+    "elevation": 478
   },
   {
     "name": "Höllenberg",
@@ -1948,7 +2028,8 @@
     },
     "id": "84d665e8-7881-43cd-9885-37bbf0e05338",
     "shortName": "HOELLENBERG",
-    "direction": "SSW-NW"
+    "direction": "SSW-NW",
+    "elevation": 354
   },
   {
     "name": "Maring-Noviand SW",
@@ -1967,7 +2048,8 @@
     },
     "id": "790161fe-40b0-4ee8-bebe-a9cebc12d736",
     "shortName": "MARING",
-    "direction": "SW-S"
+    "direction": "SW-S",
+    "elevation": 273
   },
   {
     "name": "Hohenberg",
@@ -1986,7 +2068,8 @@
     },
     "id": "c24f64b5-5367-491a-9c93-de686121ae57",
     "shortName": "HOHENBERG",
-    "direction": "S-W"
+    "direction": "S-W",
+    "elevation": 452
   },
   {
     "name": "Boppard",
@@ -2005,7 +2088,8 @@
     },
     "id": "5991b282-9a45-49e8-b385-2e4a0a843002",
     "shortName": "BOPPARD",
-    "direction": "NO-SO"
+    "direction": "NO-SO",
+    "elevation": 253
   },
   {
     "name": "Nannhausen Schlepp",
@@ -2021,7 +2105,8 @@
     },
     "id": "6a79741d-7917-4189-8a65-e646fd52249a",
     "shortName": "NANNHAUSEN",
-    "direction": "NO/SW"
+    "direction": "NO/SW",
+    "elevation": 376
   },
   {
     "name": "Losheim am See/Am See Schlepp",
@@ -2038,7 +2123,8 @@
     },
     "id": "908dc4b0-90a7-4f71-bfed-1c6b9e653a8a",
     "shortName": "LOSHEIM_AM_SEE",
-    "direction": "NW,SO"
+    "direction": "NW,SO",
+    "elevation": 337
   },
   {
     "name": "Losheim am See/Hungerberg Schlepp",
@@ -2166,7 +2252,8 @@
     },
     "id": "4be067e9-4397-4fb3-a53c-1da62f54dd8f",
     "shortName": "SASSENROTH",
-    "direction": "NW"
+    "direction": "NW",
+    "elevation": 354
   },
   {
     "name": "Hassloch Windenschlepp",
@@ -2183,7 +2270,8 @@
     },
     "id": "2794ccff-f869-407e-9e63-c1fc4b964661",
     "shortName": "HASSLOCH",
-    "direction": ""
+    "direction": "",
+    "elevation": 111
   },
   {
     "name": "Odernheim",
@@ -2202,7 +2290,8 @@
     },
     "id": "26971115-7003-462c-85c3-a228cfda1302",
     "shortName": "ODERNHEIM",
-    "direction": "SW-NW"
+    "direction": "SW-NW",
+    "elevation": 198
   },
   {
     "name": "Obergailbach Schlepp",
@@ -2219,7 +2308,8 @@
     },
     "id": "d5d5fbf9-bb7a-42b2-a657-5b2828094932",
     "shortName": "OBERGAILBACH",
-    "direction": "O-W"
+    "direction": "O-W",
+    "elevation": 359
   },
   {
     "name": "Herbitzheim Schlepp",
@@ -2236,7 +2326,8 @@
     },
     "id": "003ea8a3-1883-4f3c-a4f5-8ec11482e198",
     "shortName": "HERBITZHEIM",
-    "direction": "NO-SW"
+    "direction": "NO-SW",
+    "elevation": 287
   },
   {
     "name": "Krausberg",
@@ -2255,7 +2346,8 @@
     },
     "id": "9dc5f076-2fa3-41f8-9cf8-8b3c7ccb82c8",
     "shortName": "KRAUSBERG",
-    "direction": "N"
+    "direction": "N",
+    "elevation": 338
   },
   {
     "name": "Hönningen O",
@@ -2293,7 +2385,8 @@
     },
     "id": "c588601c-8494-47fb-b099-4ca7a2122452",
     "shortName": "HOENNINGEN_SUED",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 368
   },
   {
     "name": "Schriesheim-Ölberg",
@@ -2312,7 +2405,8 @@
     },
     "id": "700dd217-5f5c-4323-89e0-9554bbb61c54",
     "shortName": "SCHRIESHEIM",
-    "direction": "SW-W"
+    "direction": "SW-W",
+    "elevation": 370
   },
   {
     "name": "Michelstadt UL-Schlepp",
@@ -2329,7 +2423,8 @@
     },
     "id": "d9226048-e5fd-4608-a5f5-a87900ef60e2",
     "shortName": "MICHELSTADT_UL",
-    "direction": ""
+    "direction": "",
+    "elevation": 340
   },
   {
     "name": "Hohen Unkel Schlepp",
@@ -2346,7 +2441,8 @@
     },
     "id": "f4eb8622-c045-4cb3-9dd7-db77b7133d2e",
     "shortName": "UNKEL",
-    "direction": "N,O,S,W"
+    "direction": "N,O,S,W",
+    "elevation": 183
   },
   {
     "name": "Haardskopf",
@@ -2365,7 +2461,8 @@
     },
     "id": "37c664ad-e98f-4b41-ad3f-2b467210fd33",
     "shortName": "HAARDSKOPF",
-    "direction": "SW-W"
+    "direction": "SW-W",
+    "elevation": 277
   },
   {
     "name": "Finkenberg",
@@ -2384,7 +2481,8 @@
     },
     "id": "18b36aaa-a7f9-447c-9c68-6ac0de8c9733",
     "shortName": "FINKENBERG",
-    "direction": "S-SW"
+    "direction": "S-SW",
+    "elevation": 290
   },
   {
     "name": "Melibokus",
@@ -2403,7 +2501,8 @@
     },
     "id": "a1c78485-4b52-49f3-9cb2-4826ced63742",
     "shortName": "MELIBOKUS",
-    "direction": "W-NW"
+    "direction": "W-NW",
+    "elevation": 482
   },
   {
     "name": "Hasloch-Heckenkopf",
@@ -2513,7 +2612,8 @@
     },
     "id": "a2b63873-32c1-42d2-bc1d-554d86427f1c",
     "shortName": "WUERZBERG",
-    "direction": "SW/NO"
+    "direction": "SW/NO",
+    "elevation": 527
   },
   {
     "name": "Großer Kopf/Römerturm",
@@ -2532,7 +2632,8 @@
     },
     "id": "49ddf684-a4b6-4a06-a9c2-0d9580b30e65",
     "shortName": "GROSSER_KOPF",
-    "direction": "W-NW"
+    "direction": "W-NW",
+    "elevation": 387
   },
   {
     "name": "Erlau",
@@ -2551,7 +2652,8 @@
     },
     "id": "e62c52e1-2ac4-4180-a90b-5c072cb9d71c",
     "shortName": "ERLAU",
-    "direction": "O-SO"
+    "direction": "O-SO",
+    "elevation": 359
   },
   {
     "name": "Blättersberg",
@@ -2570,7 +2672,8 @@
     },
     "id": "29806e5b-7ef5-4ca3-9d05-87b90122bd4c",
     "shortName": "BLAETTERSBERG",
-    "direction": "OSO-SSW"
+    "direction": "OSO-SSW",
+    "elevation": 487
   },
   {
     "name": "Ronneburg",
@@ -2589,7 +2692,8 @@
     },
     "id": "c0d6bf82-4a0b-4734-972f-37688eb3a266",
     "shortName": "RONNEBURG",
-    "direction": "NW"
+    "direction": "NW",
+    "elevation": 200
   },
   {
     "name": "Königstuhl",
@@ -2608,7 +2712,8 @@
     },
     "id": "8ff0d86a-ccdf-495f-950b-8f7d4b5b062c",
     "shortName": "KOENIGSTUHL",
-    "direction": "W"
+    "direction": "W",
+    "elevation": 537
   },
   {
     "name": "Morsbach",
@@ -2644,7 +2749,8 @@
     },
     "id": "ebe0c810-a5bc-4f1e-a5d6-20ea06fe6072",
     "shortName": "ROXHEIM",
-    "direction": ""
+    "direction": "",
+    "elevation": 286
   },
   {
     "name": "Mosbach/Finkenhof",
@@ -2663,7 +2769,8 @@
     },
     "id": "430f9dfe-276b-4f65-8267-aa35265c28f6",
     "shortName": "MOSBACH",
-    "direction": "NO-O"
+    "direction": "NO-O",
+    "elevation": 313
   },
   {
     "name": "Odernheim-Neuberg ",
@@ -2682,7 +2789,8 @@
     },
     "id": "056ad63a-bada-495e-89e7-2212e6f2b9f6",
     "shortName": "ODERNHEIM_NEUBERG_OST",
-    "direction": "O"
+    "direction": "O",
+    "elevation": 253
   },
   {
     "name": "Busigberg/Großheubach ",
@@ -2701,7 +2809,8 @@
     },
     "id": "d043257e-a021-4b23-9cb5-4ced05442ae2",
     "shortName": "BUSIGBERG",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 247
   },
   {
     "name": "Weilerkopf",
@@ -2720,7 +2829,8 @@
     },
     "id": "ca314c5a-a2db-4a91-af24-77378a04a892",
     "shortName": "WEILERKOPF",
-    "direction": "W"
+    "direction": "W",
+    "elevation": 299
   },
   {
     "name": "Longuich",
@@ -2739,7 +2849,8 @@
     },
     "id": "1db6043e-3fcc-4551-9a6a-37e2ea881c78",
     "shortName": "LONGUICH",
-    "direction": ""
+    "direction": "",
+    "elevation": 289
   },
   {
     "name": "Staudernheim",
@@ -2758,7 +2869,8 @@
     },
     "id": "9a2c58e3-ddfb-4cf7-8c5f-1553fa1f2710",
     "shortName": "STAUDERNHEIM",
-    "direction": "SSW"
+    "direction": "SSW",
+    "elevation": 200
   },
   {
     "name": "Rheinstetten Forchheim UL-Schlepp",
@@ -2887,7 +2999,8 @@
     },
     "id": "97ed11c9-74d3-467b-ac22-e69e2efebb31",
     "shortName": "WIDDERN",
-    "direction": ""
+    "direction": "",
+    "elevation": 254
   },
   {
     "name": "Nordhelle Startplatz",
@@ -2906,7 +3019,8 @@
     },
     "id": "7c3b3f6d-e687-4503-a452-224877e28e0f",
     "shortName": "NORDHELLE",
-    "direction": ""
+    "direction": "",
+    "elevation": 581
   },
   {
     "name": "Boxberg Schlepp",
@@ -2923,7 +3037,8 @@
     },
     "id": "59bd6d5b-e7b5-4cdc-ad1e-b6a812e941a1",
     "shortName": "BOXBERG",
-    "direction": ""
+    "direction": "",
+    "elevation": 357
   },
   {
     "name": "Osterberg Schlepp",
@@ -2939,7 +3054,8 @@
     },
     "id": "2d1b898a-16d7-4524-9a62-b5d19aeb03ac",
     "shortName": "OSTERBERG",
-    "direction": "OSO,WNW"
+    "direction": "OSO,WNW",
+    "elevation": 349
   },
   {
     "name": "Heinsheim",
@@ -2958,7 +3074,8 @@
     },
     "id": "2020c949-89bc-438b-8a9b-38cb0a4bb46d",
     "shortName": "HEINSHEIM",
-    "direction": "O"
+    "direction": "O",
+    "elevation": 205
   },
   {
     "name": "Kesten Startplatz",
@@ -3013,7 +3130,8 @@
     },
     "id": "b5995b83-393c-48fd-894c-6200406933ad",
     "shortName": "LAUBENHEIM",
-    "direction": "O"
+    "direction": "O",
+    "elevation": 159
   },
   {
     "name": "Entenberg",
@@ -3032,7 +3150,8 @@
     },
     "id": "20347e54-0310-4a60-a23c-f9c85c7457e5",
     "shortName": "ENTENBERG",
-    "direction": "N-O"
+    "direction": "N-O",
+    "elevation": 493
   },
   {
     "name": "Neumagen Segelflugplatz",
@@ -3050,7 +3169,8 @@
     },
     "id": "1a03ecb0-b2f0-491c-b9a5-e2f5018ff98f",
     "shortName": "NEUMAGEN_SEGEL",
-    "direction": ""
+    "direction": "",
+    "elevation": 267
   },
   {
     "name": "Bürgstadt",
@@ -3069,7 +3189,8 @@
     },
     "id": "4649ed62-e56f-4bd0-9a10-48596209ddb8",
     "shortName": "BUERGSTADT",
-    "direction": "W"
+    "direction": "W",
+    "elevation": 402
   },
   {
     "name": "Stolzenberg/Steckweiler",
@@ -3088,7 +3209,8 @@
     },
     "id": "8010c617-a2c8-4260-aad9-2e3f770b0e27",
     "shortName": "STOLZENBERG",
-    "direction": "SW"
+    "direction": "SW",
+    "elevation": 316
   },
   {
     "name": "Stachelhardt",
@@ -3107,7 +3229,8 @@
     },
     "id": "652f8227-0f1c-42b4-9d46-28f2b158bfbc",
     "shortName": "STACHELHARDT",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 175
   },
   {
     "name": "Schönbrunn Schlepp",
@@ -3125,7 +3248,8 @@
     },
     "id": "aba62a95-365e-4085-88c8-1027a703da27",
     "shortName": "SCHOENBRUNN",
-    "direction": "SO,NW"
+    "direction": "SO,NW",
+    "elevation": 409
   },
   {
     "name": "Meerfelder Maar O",
@@ -3252,7 +3376,8 @@
     },
     "id": "579a881f-861b-4d59-973e-135bbdfd8159",
     "shortName": "KERKEN_UL",
-    "direction": ""
+    "direction": "",
+    "elevation": 35
   },
   {
     "name": "Sevelen Schlepp",
@@ -3269,7 +3394,8 @@
     },
     "id": "d9c90336-8f1b-4b88-9e81-5fbaa5ab6607",
     "shortName": "SEVELEN",
-    "direction": "O,W"
+    "direction": "O,W",
+    "elevation": 33
   },
   {
     "name": "Flugplatz Alsfeld Schlepp",
@@ -3286,7 +3412,8 @@
     },
     "id": "353f5143-7f54-448c-873e-091ebb48db4c",
     "shortName": "FLUGPLATZ_ALSFELD",
-    "direction": "ONO,WSW"
+    "direction": "ONO,WSW",
+    "elevation": 290
   },
   {
     "name": "Dauborn Schlepp",
@@ -3301,7 +3428,8 @@
     },
     "id": "1ecf6573-2955-41ee-96dd-85046637e5bd",
     "shortName": "DAUBORN",
-    "direction": "NW,SO"
+    "direction": "NW,SO",
+    "elevation": 162
   },
   {
     "name": "Alpenrod Schlepp",
@@ -3316,7 +3444,8 @@
     },
     "id": "f925756b-ca75-4c4c-9b56-0e52884a3eaa",
     "shortName": "ALPENROD",
-    "direction": "N"
+    "direction": "N",
+    "elevation": 394
   },
   {
     "name": "Edermünde Schlepp",
@@ -3364,7 +3493,8 @@
     },
     "id": "d07ba46e-342c-4417-83ef-50fad95e375c",
     "shortName": "ANSPACH",
-    "direction": "SO,NW"
+    "direction": "SO,NW",
+    "elevation": 339
   },
   {
     "name": "Brilon-Poppenberg",
@@ -3383,7 +3513,8 @@
     },
     "id": "1f0bf6ca-b0cb-4a44-831e-bde2f8928af1",
     "shortName": "POPPENPERG",
-    "direction": "N"
+    "direction": "N",
+    "elevation": 586
   },
   {
     "name": "Niederkleen Schlepp",
@@ -3400,7 +3531,8 @@
     },
     "id": "f631845b-e337-418b-8d66-3760d0453774",
     "shortName": "NIEDERKLEEN",
-    "direction": ""
+    "direction": "",
+    "elevation": 221
   },
   {
     "name": "Wixberg W",
@@ -3419,7 +3551,8 @@
     },
     "id": "8c71800d-eddc-461f-8a96-981552f559a5",
     "shortName": "WIXBERG_W",
-    "direction": "W"
+    "direction": "W",
+    "elevation": 420
   },
   {
     "name": "Wixberg S",
@@ -3438,7 +3571,8 @@
     },
     "id": "d00ca4a8-a294-4e1c-b52b-f392fe02641c",
     "shortName": "WIXBERG_S",
-    "direction": "S"
+    "direction": "S",
+    "elevation": 400
   },
   {
     "name": "Kronenberg",
@@ -3457,7 +3591,8 @@
     },
     "id": "c34265aa-29f6-41ec-91a7-65cbc6318168",
     "shortName": "KRONENBERG",
-    "direction": "W-WNW"
+    "direction": "W-WNW",
+    "elevation": 204
   },
   {
     "name": "Ailertchen UL-Schlepp",
@@ -3474,7 +3609,8 @@
     },
     "id": "2e00ca00-0ed8-41d6-9c85-3158b342a2dd",
     "shortName": "AILERTCHEN_UL",
-    "direction": ""
+    "direction": "",
+    "elevation": 466
   },
   {
     "name": "Stüppel",
