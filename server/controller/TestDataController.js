@@ -61,4 +61,20 @@ router.get("/clear", async (req, res, next) => {
   }
 });
 
+// @desc Retrieves the last email which was sent to an user.
+// @route GET /testdata/email/:toUserEmail
+
+router.get("/email/:toUserEmail", async (req, res, next) => {
+  try {
+    const testEmailCache = require("../test/testEmailCache");
+    const lastEmail = testEmailCache.findLatestForToUser(
+      req.params.toUserEmail
+    );
+
+    res.json(lastEmail);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

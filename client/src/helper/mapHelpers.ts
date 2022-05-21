@@ -13,7 +13,7 @@ export function convertMapBoundsToQueryString(data: L.Polyline): string {
   bounds.push(area.getNorthWest());
   bounds.push(area.getSouthWest());
   bounds.push(area.getSouthEast());
-  return bounds.map((x) => [x.lng, x.lat]).join("|");
+  return bounds.map((x) => [x.lng.toFixed(3), x.lat.toFixed(3)]).join("|");
 }
 
 export function createAirspacePopupContent(airspace: Airspace): string {

@@ -45,7 +45,7 @@ async function cleanIgcStore() {
     logger.info("CIS: Will clean igc temp folder");
     const igcTempPath = path.join(
       config.get("rootDir"),
-      process.env.SERVER_DATA_PATH,
+      config.get("dataPath"),
       "igc",
       "temp"
     );

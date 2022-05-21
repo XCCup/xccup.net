@@ -8,8 +8,9 @@ const { authToken } = require("./Auth");
 const { checkParamIsUuid, validationHasErrors } = require("./Validation");
 const multer = require("multer");
 const { IMAGE_SIZES, retrieveFilePath } = require("../helper/ImageUtils");
+const { default: config } = require("../config/env-config");
 
-const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/users";
+const IMAGE_STORE = config.get("dataPath") + "/images/users";
 
 const imageUpload = multer({
   dest: IMAGE_STORE,
@@ -118,8 +119,8 @@ router.post(
 function grabImageFromDicebear(user) {
   const { seed, initals } = generateDicebearSeed(user);
   const diceBearUrl =
-    process.env.NODE_ENV === "production"
-      ? `${process.env.DICEBEAR_URL}api/initials/${seed}${initals}.svg`
+    config.get("env") === "production"
+      ? `${config.get("dicebearUrl")}api/initials/${seed}${initals}.svg`
       : `https://avatars.dicebear.com/api/initials/${seed}${initals}.svg`;
 
   return diceBearUrl;

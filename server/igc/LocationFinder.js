@@ -1,8 +1,9 @@
 const axios = require("axios");
 const axiosRetry = require("axios-retry");
+const { default: config } = require("../config/env-config");
 const logger = require("../config/logger");
 
-const isApiDisabled = process.env.USE_GOOGLE_API === "false";
+const isApiDisabled = config.get("useGoogleApi") == false;
 
 axiosRetry(axios, { retries: 2 });
 
@@ -13,7 +14,9 @@ const byLatLong = async (location) => {
   }
   try {
     // const location = "50.20524528622611,7.064103332484184";
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&language=de&result_type=locality&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location}&language=de&result_type=locality&key=${config.get(
+      "googleMapsApiKey"
+    )}`;
     logger.debug("LF: Request location with ", url);
     const result = await axios.get(url, { timeout: 10000 });
     // ZipCode TownName, CountryName

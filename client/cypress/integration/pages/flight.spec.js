@@ -1,5 +1,6 @@
 describe("check flight page", () => {
   before(() => {
+    cy.seedDb();
     cy.visit("/flug/9");
   });
 

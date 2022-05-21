@@ -1,4 +1,6 @@
 import "cypress-file-upload";
+import axios from "axios";
+
 Cypress.Commands.add("clearIndexedDB", async () => {
   const databases = await window.indexedDB.databases();
 
@@ -113,3 +115,32 @@ Cypress.Commands.add("logout", () => {
 Cypress.Commands.add("textareaIncludes", function (selector, text) {
   cy.get(selector).invoke("val").should("contains", text);
 });
+
+/**
+ * A command to check if a receipent received an email which includes a text.
+ */
+Cypress.Commands.add(
+  "recipientReceivedEmailWithText",
+  function (receipentMail, text) {
+    cy.wrap(null).then(async () => {
+      let data;
+      // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
+      for (let index = 0; index < 3; index++) {
+        data = (
+          await axios.get(
+            `http://localhost:3000/api/testdata/email/${receipentMail}`
+          )
+        ).data;
+        if (data.message && data.message.includes(text)) break;
+        await delay(1000);
+      }
+
+      expect(data.message, `No message for ${receipentMail} found`).to.exist;
+      expect(data.message).to.include(text);
+    });
+  }
+);
+
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}

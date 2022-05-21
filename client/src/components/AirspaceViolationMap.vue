@@ -66,19 +66,19 @@ const drawAirspaces = async (airspaceViolation) => {
       Number.parseFloat(airspaceViolation.long) -
         0.01 +
         "," +
-        (Number.parseFloat(airspaceViolation.lat) + 0.01) +
+        (Number.parseFloat(airspaceViolation.lat) + 0.01).toFixed(3) +
         "|" +
-        (Number.parseFloat(airspaceViolation.long) + 0.01) +
+        (Number.parseFloat(airspaceViolation.long) + 0.01).toFixed(3) +
         "," +
-        (Number.parseFloat(airspaceViolation.lat) + 0.01) +
+        (Number.parseFloat(airspaceViolation.lat) + 0.01).toFixed(3) +
         "|" +
-        (Number.parseFloat(airspaceViolation.long) + 0.01) +
+        (Number.parseFloat(airspaceViolation.long) + 0.01).toFixed(3) +
         "," +
-        (Number.parseFloat(airspaceViolation.lat) - 0.01) +
+        (Number.parseFloat(airspaceViolation.lat) - 0.01).toFixed(3) +
         "|" +
-        (Number.parseFloat(airspaceViolation.long) - 0.01) +
+        (Number.parseFloat(airspaceViolation.long) - 0.01).toFixed(3) +
         "," +
-        (Number.parseFloat(airspaceViolation.lat) - 0.01)
+        (Number.parseFloat(airspaceViolation.lat) - 0.01).toFixed(3)
     );
     const airspaceData = res.data;
     const options = {

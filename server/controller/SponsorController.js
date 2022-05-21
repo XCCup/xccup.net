@@ -20,10 +20,10 @@ const {
   IMAGE_SIZES,
   retrieveFilePath,
 } = require("../helper/ImageUtils");
-
+const { default: config } = require("../config/env-config");
 const multer = require("multer");
 
-const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/sponsors";
+const IMAGE_STORE = config.get("dataPath") + "/images/sponsors";
 
 const storage = multer.diskStorage({
   destination: defineFileDestination(IMAGE_STORE),

@@ -570,13 +570,10 @@ function paramIdIsLeonardo(req, res) {
 }
 
 function createMulterIgcUploadHandler({ parts = 1 } = {}) {
+  const dataPath = config.get("dataPath");
   const igcStorage = multer.diskStorage({
     destination: path
-      .join(
-        process.env.SERVER_DATA_PATH,
-        IGC_STORE,
-        getCurrentYear().toString()
-      )
+      .join(dataPath, IGC_STORE, getCurrentYear().toString())
       .toString(),
     filename: function (req, file, cb) {
       service.createExternalId().then((externalId) => {

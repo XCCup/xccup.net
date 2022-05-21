@@ -63,7 +63,7 @@
     <div data-cy="comment-footer">
       <!-- Don't show the reply button if it's a reply -->
       <div
-        v-if="getUserId && comment.userId != getUserId && !comment?.relatedTo"
+        v-if="getUserId && !comment?.relatedTo"
         class="text-secondary text-end"
       >
         <a
