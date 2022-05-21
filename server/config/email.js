@@ -98,6 +98,7 @@ function createMessage(from, toAddresses, content, replyTo) {
     subject: content.title,
     text: content.text,
     replyTo,
+    attachments: content.attachments,
   };
 }
 

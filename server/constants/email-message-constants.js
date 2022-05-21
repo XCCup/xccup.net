@@ -106,6 +106,8 @@ Dein XCCup Team
     
 `;
 
+module.exports.NEW_AIRSPACE_VIOLATION_TITLE = "Neuer Flug mit LRV";
+
 module.exports.NEW_ADMIN_TASK_TITLE = "Neue Admin Aufgabe";
 
 module.exports.NEW_ADMIN_TASK_TEXT = `Hallo Admins!
