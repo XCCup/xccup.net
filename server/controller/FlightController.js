@@ -639,12 +639,20 @@ async function checkIfFlightIsModifiable(flight, userId) {
  * @param {string | Array} resultOfIgcParser The result of the igc parser
  */
 function checkIfFlightIsManipulated(resultOfIgcParser) {
-  const errorMessage = "Manipulated IGC-File";
+  let errorMessage = "Manipulated IGC-File";
   if (
     typeof resultOfIgcParser === "string" &&
     resultOfIgcParser === "manipulated"
   )
     throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+
+  if (
+    typeof resultOfIgcParser === "string" &&
+    resultOfIgcParser === "startsMidFlight"
+  ) {
+    errorMessage = "Flight starts in the middle of a flight";
+    throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+  }
 }
 
 /**
