@@ -52,8 +52,8 @@ const sendMail = async (mailAddresses, content, replyTo) => {
 
   const message = createMessage(
     {
-      name: process.env.MAIL_SERVICE_FROM_NAME,
-      address: process.env.MAIL_SERVICE_FROM_EMAIL,
+      name: config.get("mailServiceFromName"),
+      address: config.get("mailServiceFromEmail"),
     },
     mailAddresses,
     content,

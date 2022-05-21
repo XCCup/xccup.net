@@ -27,8 +27,9 @@ const {
   IMAGE_SIZES,
 } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
+const { default: config } = require("../config/env-config");
 
-const IMAGE_STORE = process.env.SERVER_DATA_PATH + "/images/flights";
+const IMAGE_STORE = config.get("dataPath") + "/images/flights";
 const MAX_PHOTOS = 8;
 
 const imageUpload = multer({
