@@ -49,10 +49,9 @@ if (config.get("env") !== "production") {
   // https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
   app.use(cors());
 }
-
-app.use(express.urlencoded({ extended: false }));
 // The default size limit for a request body is 100kb
 // IGC-Files can easily exceed this limit
+app.use(express.urlencoded({ limit: "5mb" }));
 app.use(express.json({ limit: "5mb" }));
 
 // Routes
