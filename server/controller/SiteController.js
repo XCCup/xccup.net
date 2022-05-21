@@ -55,17 +55,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-//TODO: REMOVE AFTER UPDATE
-router.get("/startElevation", async (req, res, next) => {
-  try {
-    await service.attachElevation();
-
-    res.sendStatus(OK);
-  } catch (error) {
-    next(error);
-  }
-});
-
 // @desc Gets all proposed sites
 // @route GET /sites/proposed
 
