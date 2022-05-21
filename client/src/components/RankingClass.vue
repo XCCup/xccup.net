@@ -2,7 +2,8 @@
   <span v-if="rankingClass">
     <i
       ref="icon"
-      :class="cssClasses"
+      class="bi bi-trophy"
+      :class="rankingClass?.key"
       data-bs-placement="top"
       :title="rankingClass?.description ?? rankingClass?.shortDescription"
     ></i>
@@ -36,14 +37,6 @@ const displayedDescription = computed(() =>
     ? props.rankingClass.shortDescription
     : props.rankingClass.description
 );
-
-const cssClasses = computed(() => {
-  console.log(props.rankingClass?.key);
-  if (props.rankingClass?.key.includes("hg")) {
-    return "bi bi-triangle " + props.rankingClass?.key;
-  }
-  return "bi bi-trophy " + props.rankingClass?.key;
-});
 
 onMounted(() => {
   // Activate popper tooltips
