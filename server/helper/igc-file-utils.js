@@ -12,7 +12,7 @@ function createFileName(
   stripFactor,
   year = getCurrentYear().toString()
 ) {
-  const dataPath = process.env.SERVER_DATA_PATH;
+  const dataPath = config.get("dataPath");
   const store = IGC_STORE;
   const pathToFolder = isTemp
     ? path.join(dataPath, store, "temp", externalId.toString(), year)
