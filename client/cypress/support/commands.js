@@ -123,13 +123,25 @@ Cypress.Commands.add(
   "receipentReceivedEmailWithText",
   function (receipentMail, text) {
     cy.wrap(null).then(async () => {
-      const data = (
-        await axios.get(
-          `http://localhost:3000/api/testdata/email/${receipentMail}`
-        )
-      ).data;
+      let data;
+      for (let index = 0; index < 3; index++) {
+        data = (
+          await axios.get(
+            `http://localhost:3000/api/testdata/email/${receipentMail}`
+          )
+        ).data;
+        if (data.message && data.message.includes(text)) break;
+        console.log("not found will sleep");
+        await delay(2000);
+        console.log("sleep over");
+      }
+
       expect(data.message, `No message for ${receipentMail} found`).to.exist;
       expect(data.message).to.include(text);
     });
   }
 );
+
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
