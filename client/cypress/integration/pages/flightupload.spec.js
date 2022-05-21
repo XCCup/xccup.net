@@ -286,7 +286,7 @@ describe("check flight upload page", () => {
     }).should("include.text", expectedError);
   });
 
-  it.only("Test upload with leonardo interface", () => {
+  it("Test upload with leonardo interface", () => {
     const form = new FormData();
 
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
