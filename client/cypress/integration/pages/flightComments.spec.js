@@ -82,6 +82,8 @@ describe("check flight comments", () => {
   it("reply to other flight comment", () => {
     const expectedComment = "Hello there";
     const expectedUsername = "Clinton Hettinger";
+    const expectedFlightMailReceipient = "blackhole+ron@xccup.net";
+    const expectedReplyMailReceipient = "blackhole+lois@xccup.net";
 
     cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
     cy.visit("/flug/9");
@@ -102,6 +104,16 @@ describe("check flight comments", () => {
     cy.visit("/flug/9");
     cy.get("#flight-comments").contains(expectedComment);
     cy.get("#flight-comments").contains(expectedUsername);
+
+    // Check that owner of flight and owner of reply comment received an email
+    cy.receipentReceivedEmailWithText(
+      expectedFlightMailReceipient,
+      expectedComment
+    );
+    cy.receipentReceivedEmailWithText(
+      expectedReplyMailReceipient,
+      expectedComment
+    );
   });
 
   it("edit existing flight comment", () => {
