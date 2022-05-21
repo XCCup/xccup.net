@@ -44,9 +44,6 @@ describe("check flyingsites page", () => {
 
     cy.get("button").contains("Vorschlagen").click();
 
-    // Wait for a little bit, because the proposal must be processed by the backend
-    cy.wait(5000);
-
     // Find the proposed site
     cy.visit("/admin");
     cy.get("#nav-sites-tab").click();

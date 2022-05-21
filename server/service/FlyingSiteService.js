@@ -104,7 +104,7 @@ const siteService = {
         region,
       },
       heightDifference,
-      elevation: elevationResult.elevation,
+      elevation: elevationResult?.elevation,
       state: STATES.PROPOSAL,
       submitter: submitter.id,
       point: {
