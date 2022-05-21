@@ -120,7 +120,7 @@ Cypress.Commands.add("textareaIncludes", function (selector, text) {
  * A command to check if a receipent received an email which includes a text.
  */
 Cypress.Commands.add(
-  "receipentReceivedEmailWithText",
+  "recipientReceivedEmailWithText",
   function (receipentMail, text) {
     cy.wrap(null).then(async () => {
       let data;

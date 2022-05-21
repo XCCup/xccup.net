@@ -76,7 +76,7 @@ describe("check flight comments", () => {
     cy.get("#flight-comments").contains(expectedComment);
 
     // Check that owner of flight received an email
-    cy.receipentReceivedEmailWithText(expectedMailReceipient, expectedComment);
+    cy.recipientReceivedEmailWithText(expectedMailReceipient, expectedComment);
   });
 
   it("reply to other flight comment", () => {
@@ -106,11 +106,11 @@ describe("check flight comments", () => {
     cy.get("#flight-comments").contains(expectedUsername);
 
     // Check that owner of flight and owner of reply comment received an email
-    cy.receipentReceivedEmailWithText(
+    cy.recipientReceivedEmailWithText(
       expectedFlightMailReceipient,
       expectedComment
     );
-    cy.receipentReceivedEmailWithText(
+    cy.recipientReceivedEmailWithText(
       expectedReplyMailReceipient,
       expectedComment
     );
