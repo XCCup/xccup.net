@@ -286,7 +286,9 @@ describe("check flight upload page", () => {
     }).should("include.text", expectedError);
   });
 
-  it("Test upload with leonardo interface", () => {
+  it.only("Test upload with leonardo interface", () => {
+    const form = new FormData();
+
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectedTakeoff = "Donnersberg";
     const expectedUserName = "Melinda Tremblay";
@@ -295,14 +297,13 @@ describe("check flight upload page", () => {
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
 
     cy.fixture(igcFileName).then(async (fileContent) => {
-      const payload = {
-        user: "blackhole+melinda@xccup.net",
-        pass: "PW_MelindaTremblay",
-        IGCigcIGC: fileContent.toString(),
-        igcfn: igcFileName,
-      };
+      form.append("user", "blackhole+melinda@xccup.net");
+      form.append("pass", "PW_MelindaTremblay");
+      form.append("IGCigcIGC", fileContent.toString());
+      form.append("igcfn", igcFileName);
+
       const data = (
-        await axios.post("http://localhost:3000/api/flights/leonardo", payload)
+        await axios.post("http://localhost:3000/api/flights/leonardo", form)
       ).data;
 
       // Test the response message from the API
