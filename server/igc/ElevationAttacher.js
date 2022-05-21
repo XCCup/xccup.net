@@ -13,6 +13,18 @@ const elevationAttacher = {
   execute: (fixes, callback) => {
     getFixesWithElevation(fixes, callback);
   },
+
+  executeWithPromise: (fixes) => {
+    return new Promise((resolve, reject) => {
+      try {
+        elevationAttacher.execute(fixes, (fixesWithElevation) => {
+          resolve(fixesWithElevation);
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  },
 };
 
 function createPromise() {
