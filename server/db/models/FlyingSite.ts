@@ -11,6 +11,7 @@ interface FlyingSiteAttributes {
   type?: string;
   image?: string;
   heightDifference?: number;
+  elevation: number;
   state?: "active" | "inactive" | "proposal";
   website?: string;
   submitter?: string;
@@ -66,6 +67,11 @@ export function initFlyingSite(sequelize: Sequelize): Models["FlyingSite"] {
     },
     heightDifference: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    elevation: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
     },
     state: {
       type: DataTypes.STRING,

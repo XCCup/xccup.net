@@ -1,6 +1,7 @@
 const FlyingSite = require("../db")["FlyingSite"];
 const logger = require("../config/logger");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
+const elevationAttacher = require("../igc/ElevationAttacher");
 const Club = require("../db")["Club"];
 const User = require("../db")["User"];
 
@@ -87,6 +88,13 @@ const siteService = {
     heightDifference,
     submitter,
   }) => {
+    const elevationResult = await elevationAttacher.executeWithPromise([
+      {
+        latitude: lat,
+        longitude: long,
+      },
+    ])[0];
+
     const site = {
       name,
       direction,
@@ -96,6 +104,7 @@ const siteService = {
         region,
       },
       heightDifference,
+      elevation: elevationResult?.elevation,
       state: STATES.PROPOSAL,
       submitter: submitter.id,
       point: {
@@ -119,6 +128,46 @@ const siteService = {
   delete: async (id) => {
     return FlyingSite.destroy({
       where: { id },
+    });
+  },
+
+  //TODO: REMOVE AFTER UPDATE
+  attachElevation: async () => {
+    const sites = await FlyingSite.findAll();
+    const points = sites.map((s) => {
+      return {
+        latitude: s.point.coordinates[1],
+        longitude: s.point.coordinates[0],
+        siteId: s.id,
+      };
+    });
+
+    elevationAttacher.execute(points, (pointsElevation) => {
+      // const testSites = require("../test/testdatasets/flyingSites-bu.json");
+      // const fs = require("fs");
+      pointsElevation.forEach((element) => {
+        console.log("Element: ", element);
+
+        //   const found = testSites.find((s) => s.id == element.siteId);
+        //   found.elevation = element.elevation;
+        //   fs.writeFile(
+        //     "testSitesElevation.json",
+        //     JSON.stringify(testSites, null, 2),
+        //     "utf8",
+        //     (err) => {
+        //       console.log(err);
+        //     }
+        //   );
+
+        FlyingSite.update(
+          { elevation: element.elevation },
+          {
+            where: {
+              id: element.siteId,
+            },
+          }
+        );
+      });
     });
   },
 
