@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const logger = require("./logger");
 const { default: config } = require("./env-config");
-const retrieveTestMail = require("../parser/ethernalMailParser");
+const retrieveTestMail = require("../parser/etherealMailParser");
 
 let mailClient;
 
