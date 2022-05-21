@@ -38,9 +38,8 @@ const displayedDescription = computed(() =>
 );
 
 const cssClasses = computed(() => {
-  console.log(props.rankingClass?.key);
-  if (props.rankingClass?.key.includes("hg")) {
-    return "bi bi-triangle " + props.rankingClass?.key;
+  if (props.rankingClass?.key.toLowerCase().includes("hg")) {
+    return "bi bi-trophy-fill " + props.rankingClass?.key;
   }
   return "bi bi-trophy " + props.rankingClass?.key;
 });
