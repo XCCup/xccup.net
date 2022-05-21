@@ -4,8 +4,6 @@ const HTMLParser = require("node-html-parser");
 async function retrieveTestMail(url) {
   const res = await axios.get(url);
 
-  // console.log(res.data);
-
   let root = HTMLParser.parse(res.data);
 
   return {
