@@ -46,6 +46,7 @@ const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const multer = require("multer");
 const { getCurrentYear } = require("../helper/Utils");
 const userService = require("../service/UserService");
+const { sendAirspaceViolationMail } = require("../service/MailService");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -405,9 +406,11 @@ router.post(
         "clientUrl"
       )}${config.get("clientFlight")}/${flightDbObject.externalId}.`;
 
-      if (airspaceViolation)
+      if (airspaceViolation) {
         message +=
           "\nDein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
+        sendAirspaceViolationMail(flightDbObject);
+      }
 
       res.status(OK).send(message);
     } catch (error) {
@@ -567,13 +570,10 @@ function paramIdIsLeonardo(req, res) {
 }
 
 function createMulterIgcUploadHandler({ parts = 1 } = {}) {
+  const dataPath = config.get("dataPath");
   const igcStorage = multer.diskStorage({
     destination: path
-      .join(
-        process.env.SERVER_DATA_PATH,
-        IGC_STORE,
-        getCurrentYear().toString()
-      )
+      .join(dataPath, IGC_STORE, getCurrentYear().toString())
       .toString(),
     filename: function (req, file, cb) {
       service.createExternalId().then((externalId) => {

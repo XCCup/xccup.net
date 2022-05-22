@@ -1,15 +1,37 @@
 const nodemailer = require("nodemailer");
 const logger = require("./logger");
+const { default: config } = require("./env-config");
+const retrieveTestMail = require("../parser/ethernalMailParser");
 
-// TODO: Shall we use "pool true" to send newsletters etc?
-const mailClient = nodemailer.createTransport({
-  host: process.env.MAIL_SERVICE,
+let mailClient;
+
+const auth = {
+  user: config.get("mailServiceUser"),
+  pass: config.get("mailServicePassword"),
+};
+
+const testSmtp = {
+  host: "smtp.ethereal.email",
+  secure: false, // true for 465, false for other ports
+  auth,
+};
+
+const prodSmtp = {
+  host: config.get("mailServiceUrl"),
   secure: true,
-  auth: {
-    user: process.env.MAIL_SERVICE_USER,
-    pass: process.env.MAIL_SERVICE_PASSWORD,
-  },
-});
+  auth,
+};
+
+if (config.get("env") !== "production") {
+  logger.info("E: Use test smtp server");
+  logger.info("E: U: " + auth.user.substring(0, 3));
+  logger.info("E: P: " + auth.pass.substring(0, 3));
+  mailClient = nodemailer.createTransport(testSmtp);
+} else {
+  logger.info("E: Use production smtp server");
+  // TODO: Shall we use "pool true" to send newsletters etc?
+  mailClient = nodemailer.createTransport(prodSmtp);
+}
 
 /**
  * Sends an e-mail to a single recipent or multiple recipents.
@@ -30,8 +52,8 @@ const sendMail = async (mailAddresses, content, replyTo) => {
 
   const message = createMessage(
     {
-      name: process.env.MAIL_SERVICE_FROM_NAME,
-      address: process.env.MAIL_SERVICE_FROM_EMAIL,
+      name: config.get("mailServiceFromName"),
+      address: config.get("mailServiceFromEmail"),
     },
     mailAddresses,
     content,
@@ -39,6 +61,19 @@ const sendMail = async (mailAddresses, content, replyTo) => {
   );
   try {
     const info = await mailClient.sendMail(message);
+
+    if (config.get("env") !== "production") {
+      logger.info("E: Check sent email in test smtp service");
+      const previewUrl = nodemailer.getTestMessageUrl(info);
+      logger.info("E: Preview URL: " + previewUrl);
+      const receivedMail = await retrieveTestMail(previewUrl);
+      const testEmailCache = require("../test/testEmailCache");
+      testEmailCache.push(receivedMail);
+      logger.info(
+        "E: Sent email found in test smtp: " + JSON.stringify(receivedMail)
+      );
+    }
+
     logger.debug("E: Message sent: " + info.messageId);
   } catch (error) {
     // Message failed: 451 4.3.0 pymilter: untrapped exception in pythonfilter

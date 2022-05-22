@@ -1,10 +1,10 @@
 import rateLimit from "express-rate-limit";
+import config from "../config/env-config";
 
 function createLimiter(windowMinutes: number, maxRequestsInWindow: number) {
   return rateLimit({
     windowMs: windowMinutes * 60 * 1000,
-    max:
-      process.env.DISABLE_API_PROTECTION === "true" ? 0 : maxRequestsInWindow,
+    max: config.get("disableApiProtection") ? 0 : maxRequestsInWindow,
   });
 }
 

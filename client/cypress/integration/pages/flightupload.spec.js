@@ -287,6 +287,8 @@ describe("check flight upload page", () => {
   });
 
   it("Test upload with leonardo interface", () => {
+    const form = new FormData();
+
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectedTakeoff = "Donnersberg";
     const expectedUserName = "Melinda Tremblay";
@@ -295,14 +297,13 @@ describe("check flight upload page", () => {
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
 
     cy.fixture(igcFileName).then(async (fileContent) => {
-      const payload = {
-        user: "blackhole+melinda@xccup.net",
-        pass: "PW_MelindaTremblay",
-        IGCigcIGC: fileContent.toString(),
-        igcfn: igcFileName,
-      };
+      form.append("user", "blackhole+melinda@xccup.net");
+      form.append("pass", "PW_MelindaTremblay");
+      form.append("IGCigcIGC", fileContent.toString());
+      form.append("igcfn", igcFileName);
+
       const data = (
-        await axios.post("http://localhost:3000/api/flights/leonardo", payload)
+        await axios.post("http://localhost:3000/api/flights/leonardo", form)
       ).data;
 
       // Test the response message from the API
@@ -325,13 +326,12 @@ describe("check flight upload page", () => {
 
   it("Test upload airspace violation with leonardo interface", () => {
     const igcFileName = "airspace_violation_2022.igc";
-
+    const expectedTakeoff = "Kreuzberg";
+    const expectState = "In Prüfung";
     const expectApiRespone =
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
-
     const expectApiRespone2 =
       "Dein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
-    const expectState = "In Prüfung";
 
     cy.fixture(igcFileName).then(async (fileContent) => {
       const payload = {
@@ -355,30 +355,16 @@ describe("check flight upload page", () => {
       cy.wait(5000);
       cy.login(payload.user, payload.pass);
 
+      // Check if flight link is valid
       cy.visit(`/flug/${flightId}`);
-
       cy.get("#moreFlightDetailsTable").find("td").contains(expectState);
 
-      cy.get("button").contains("Flug bearbeiten").click();
-
-      const oldAirspaceComment = "";
-      const newAirspaceComment = "Upsi voll rein geknattert.";
-
-      cy.get("[data-cy=airspace-comment-textarea]", {
-        timeout: 10000,
-      })
-        .should("have.text", oldAirspaceComment)
-        .clear()
-        .type(newAirspaceComment);
-
-      cy.get("[data-cy=save-flight-edit]").contains("Speichern").click();
-      cy.url().should("include", `/flug/${flightId}`);
-
-      cy.get("[data-cy=airspace-comment]")
-        .find("p")
-        .should("have.text", newAirspaceComment);
-
-      // cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+      // Check if flight is listed under "My Flights"
+      cy.visit(`/profil/`);
+      // Wait till table was loaded (even if no visible) and than click the button
+      cy.get("[data-cy=my-flights-table]");
+      cy.get("button").contains("Meine Flüge").click();
+      cy.get("[data-cy=my-flights-table]").find("td").contains(expectedTakeoff);
     });
   });
 

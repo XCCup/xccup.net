@@ -59,6 +59,7 @@ describe("check flight comments", () => {
 
   it("add new flight comment", () => {
     const expectedComment = "This is a test :-D";
+    const expectedMailReceipient = "blackhole+ron@xccup.net";
 
     cy.login("blackhole+lois@xccup.net", "PW_LoisWhite");
     cy.visit("/flug/9");
@@ -73,11 +74,16 @@ describe("check flight comments", () => {
     // Check that comment is also present after reload
     cy.visit("/flug/9");
     cy.get("#flight-comments").contains(expectedComment);
+
+    // Check that owner of flight received an email
+    cy.recipientReceivedEmailWithText(expectedMailReceipient, expectedComment);
   });
 
   it("reply to other flight comment", () => {
     const expectedComment = "Hello there";
     const expectedUsername = "Clinton Hettinger";
+    const expectedFlightMailReceipient = "blackhole+ron@xccup.net";
+    const expectedReplyMailReceipient = "blackhole+lois@xccup.net";
 
     cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
     cy.visit("/flug/9");
@@ -98,6 +104,16 @@ describe("check flight comments", () => {
     cy.visit("/flug/9");
     cy.get("#flight-comments").contains(expectedComment);
     cy.get("#flight-comments").contains(expectedUsername);
+
+    // Check that owner of flight and owner of reply comment received an email
+    cy.recipientReceivedEmailWithText(
+      expectedFlightMailReceipient,
+      expectedComment
+    );
+    cy.recipientReceivedEmailWithText(
+      expectedReplyMailReceipient,
+      expectedComment
+    );
   });
 
   it("edit existing flight comment", () => {
