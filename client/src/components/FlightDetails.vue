@@ -102,7 +102,7 @@
     </button>
     <!-- Download .igc -->
     <a :href="igcDownloadUrl"
-      ><button type="button" class="btn btn-sm btn-outline-primary">
+      ><button type="button" class="btn btn-sm btn-outline-primary me-2">
         <i class="bi bi-cloud-download"></i> .igc
       </button></a
     >
@@ -110,14 +110,14 @@
     <router-link
       :to="{ name: 'FlightEdit', params: { id: flight?.externalId } }"
     >
-      <button v-if="showEditButton" class="btn btn-outline-primary btn-sm ms-2">
+      <button v-if="showEditButton" class="btn btn-outline-primary btn-sm me-2">
         <i class="bi bi-pencil-square mx-1"></i>Flug bearbeiten
       </button>
     </router-link>
     <!-- Admin Dropdown -->
-    <span v-if="hasElevatedRole" class="dropdown ms-2">
+    <span v-if="hasElevatedRole" class="dropdown">
       <button
-        class="btn btn-sm btn-outline-danger dropdown-toggle"
+        class="btn btn-sm btn-outline-danger dropdown-toggle mt-2"
         type="button"
         id="admin-options-dropdown"
         data-bs-toggle="dropdown"
