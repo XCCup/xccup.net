@@ -6,6 +6,7 @@ describe("check flight upload page", () => {
   });
 
   beforeEach(() => {
+    cy.seedFlightDb();
     cy.visit("/");
   });
 
@@ -142,12 +143,13 @@ describe("check flight upload page", () => {
     });
   });
 
-  it("test upload flight twice", () => {
+  it.only("test upload flight twice", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError =
       "Dieser Flug ist bereits vorhanden. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an info@xccup.net";
 
+    const expectedAirtime = "1:54h";
     cy.loginNormalUser();
 
     cy.get("button").contains("Flug hochladen").click();
@@ -175,7 +177,24 @@ describe("check flight upload page", () => {
 
     // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How to do an retry on cy.visit or cy.request?
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(5000);
+
+    // Expect to be redirected to flight view after submitting
+
+    cy.get("button").then(($btn) => {
+      if ($btn.hasClass("active")) {
+        // do something if it's active
+      } else {
+        // do something else
+      }
+    });
+
+    const foo = cy
+      .get("#cyFlightDetailsTable2")
+      .find("td")
+      .contains(expectedAirtime);
+    console.log(foo);
+
+    // cy.wait(5000);
 
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
