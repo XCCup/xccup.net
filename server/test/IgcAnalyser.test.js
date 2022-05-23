@@ -247,7 +247,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s =>
   expect(reducedFixes[2345]).toStrictEqual(fixNr2345);
 });
 
-test.only("Validate that a flight igc does not start mid flight", () => {
+test.skip("Validate that a flight igc does not start mid flight", () => {
   // TODO: Test me!
 });
 
