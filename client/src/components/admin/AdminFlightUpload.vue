@@ -42,7 +42,7 @@
         role="switch"
       />
       <label class="form-check-label" for="flexSwitchCheckChecked"
-        >Alle checks ignorieren</label
+        >Alle Checks ignorieren</label
       >
     </div>
 
