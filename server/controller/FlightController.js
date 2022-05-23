@@ -239,9 +239,6 @@ router.post(
       const { takeoffName, result, airspaceViolation } =
         await runChecksStartCalculationsStoreFixes(flightDbObject, userId);
 
-      if (airspaceViolation)
-        sendAirspaceViolationAdminMail(userId, req.file.path);
-
       res.json({
         flightId: flightDbObject.id,
         externalId: flightDbObject.externalId,
@@ -542,6 +539,8 @@ async function runChecksStartCalculationsStoreFixes(
     service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject),
     service.startResultCalculation(flightDbObject),
   ]);
+
+  if (airspaceViolation) sendAirspaceViolationAdminMail(userId, flightDbObject);
 
   return { takeoffName, result, airspaceViolation };
 }

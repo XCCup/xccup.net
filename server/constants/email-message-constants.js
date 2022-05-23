@@ -108,6 +108,21 @@ Dein XCCup Team
 
 module.exports.NEW_AIRSPACE_VIOLATION_TITLE = "Neuer Flug mit LRV";
 
+module.exports.NEW_AIRSPACE_VIOLATION_TEXT = (
+  flightExternalId,
+  fistName,
+  lastName
+) => `Hallo Admins!
+
+Es wurde versucht einen Flug mit einer Luftraumverletzung hochzuladen.
+
+Flug ID: ${flightExternalId}
+Pilot: ${fistName} ${lastName}
+
+Euer Server-Knecht
+    
+`;
+
 module.exports.NEW_ADMIN_TASK_TITLE = "Neue Admin Aufgabe";
 
 module.exports.NEW_ADMIN_TASK_TEXT = `Hallo Admins!
