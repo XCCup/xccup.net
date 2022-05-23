@@ -51,7 +51,7 @@ if (config.get("env") !== "production") {
 }
 // The default size limit for a request body is 100kb
 // IGC-Files can easily exceed this limit
-app.use(express.urlencoded({ limit: "5mb" }));
+app.use(express.urlencoded({ limit: "5mb", extended: true }));
 app.use(express.json({ limit: "5mb" }));
 
 // Routes
