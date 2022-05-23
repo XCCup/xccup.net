@@ -46,7 +46,10 @@ const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const multer = require("multer");
 const { getCurrentYear } = require("../helper/Utils");
 const userService = require("../service/UserService");
-const { sendAirspaceViolationMail } = require("../service/MailService");
+const {
+  sendAirspaceViolationMail,
+  sendAirspaceViolationAdminMail,
+} = require("../service/MailService");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -535,11 +538,12 @@ async function runChecksStartCalculationsStoreFixes(
 
   // Run in parallel
   const [airspaceViolation] = await Promise.all([
-    service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject, {
-      sendMail: true,
-    }),
+    service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject),
     service.startResultCalculation(flightDbObject),
   ]);
+
+
+  if (airspaceViolation) sendAirspaceViolationAdminMail(userId, flightDbObject);
 
   return { takeoffName: takeoff.name, result, airspaceViolation };
 }

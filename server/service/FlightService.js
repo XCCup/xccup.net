@@ -124,8 +124,6 @@ const flightService = {
 
     const flights = await Flight.findAndCountAll(queryObject);
 
-    sortFlightOnSameDayByPoints(sort, flights);
-
     /**
      * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
      * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
@@ -524,27 +522,6 @@ const flightService = {
   },
 };
 
-/**
- * Sorts flights of the same day by points. If no external sort query is present.
- * Somehow sequelize is not able to do it by itself.
- *
- * @param {Array} sort An external sort query which might be present.
- * @param {Object} flights An object with properties ofcount and rows. Rows contains an array of flights.
- */
-function sortFlightOnSameDayByPoints(sort, flights) {
-  if (sort && !sort[0]) {
-    flights.rows.sort((a, b) => {
-      const removeTimePart = (takeoffTime) =>
-        takeoffTime.toISOString().substring(0, 10);
-
-      const dayA = removeTimePart(a.takeoffTime);
-      const dayB = removeTimePart(b.takeoffTime);
-
-      return dayB > dayA || b.flightPoints - a.flightPoints;
-    });
-  }
-}
-
 async function storeFixesToDB(flight, fixes, fixesStats) {
   await FlightFixes.create({
     flightId: flight.id,
@@ -585,10 +562,14 @@ function createFixesInclude(attributes) {
   };
 }
 
+/**
+ * Sorts flights of the same day by points. If no external sort query is present.
+ */
 function createOrderStatement(sort) {
   if (!(sort && sort[0])) {
     return [
-      ["takeoffTime", "DESC"],
+      // Uses the PostgreSQL date_trunc function to truncate the timestamp to a precision of day.
+      [sequelize.fn("date_trunc", "day", sequelize.col("takeoffTime")), "DESC"],
       ["flightPoints", "DESC"],
     ];
   }

@@ -25,6 +25,8 @@ import {
   AIRSPACE_VIOLATION_ACCEPTED_TITLE,
   NEW_ADMIN_TASK_TITLE,
   NEW_ADMIN_TASK_TEXT,
+  NEW_AIRSPACE_VIOLATION_TITLE,
+  NEW_AIRSPACE_VIOLATION_TEXT,
 } from "../constants/email-message-constants";
 
 import db from "../db";
@@ -156,6 +158,31 @@ const service = {
     const content = {
       title: NEW_ADMIN_TASK_TITLE,
       text: NEW_ADMIN_TASK_TEXT,
+    };
+
+    const adminMail = config.get("mailServiceFromEmail");
+
+    return sendMail(adminMail, content);
+  },
+
+  sendAirspaceViolationAdminMail: async (
+    userId: string,
+    flight: FlightOutputAttributes
+  ) => {
+    logger.info(`MS: Send airspace violation mail with igc to admins`);
+    if (!userId || !flight.igcPath) return;
+    const user = await db.User.findByPk(userId);
+
+    if (!user) return;
+
+    const content = {
+      title: NEW_AIRSPACE_VIOLATION_TITLE,
+      text: NEW_AIRSPACE_VIOLATION_TEXT(
+        flight.externalId,
+        user.firstName,
+        user.lastName
+      ),
+      attachments: [{ path: flight.igcPath }],
     };
 
     const adminMail = config.get("mailServiceFromEmail");
