@@ -456,7 +456,7 @@ const flightService = {
     const fixesStats = attachFlightStats(flight, fixes);
     await storeFixesToDB(flight, fixes, fixesStats);
   },
-
+  // TODO: It's confusing that the method returns the takeoff…
   attachTakeoffAndLanding: async (flight, fixes) => {
     const requests = [findClosestTakeoff(fixes[0])];
     if (config.get("useGoogleApi")) {
@@ -469,7 +469,7 @@ const flightService = {
     flight.region = flyingSite.region;
     flight.landing = results.length > 1 ? results[1] : "API Disabled";
 
-    return flyingSite.name;
+    return flyingSite;
   },
 
   /**

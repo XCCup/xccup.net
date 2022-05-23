@@ -98,9 +98,6 @@ const IgcAnalyzer = {
       // Detect manipulated igc files
       if (igcIsManipulated(igcAsJson)) return "manipulated";
 
-      // Detect mid flight start of igc files
-      if (igcStartsMidFLight(igcAsJson)) return "startsMidFlight";
-
       // Remove non flight fixes
       const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
       igcAsJson.fixes = igcAsJson.fixes.slice(
@@ -144,20 +141,6 @@ function igcIsManipulated(igc) {
   });
 
   return manipulated;
-}
-
-/**
- * Checks if an igc file starts mid flight
- */
-function igcStartsMidFLight(igc) {
-  /**
-   * If a the first fix of an igc exceeds 950m MSL it is assumed that the
-   * igc started mid flight. (Highest XCCup takeoff is around 923m MSL - Wasserkuppe)
-   * TODO: This is a simple way to detect obvoius mid flight starts. To be more precise perform
-   * a check accounting the detected takeoff and compare the first fix to the elevation of the takeoff.
-   */
-  if (igc?.fixes[0]?.gpsAltitude > 950) return true;
-  return false;
 }
 
 function extractOnlyDefinedFieldsFromFix(fix) {
