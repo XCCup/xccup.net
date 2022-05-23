@@ -108,6 +108,7 @@ async function onSubmit() {
     showSpinner.value = true;
     if (formData) {
       formData.append("userId", selectedUserObject.id);
+      // TODO: Should other checks be allowed to be skipped as well? e.g. mid-flight and manipulation detection?
       if (skipGCheck.value)
         formData.append("skipGCheck", skipGCheck.value.toString());
 
