@@ -334,6 +334,8 @@ router.get(
       const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flight,
         null,
+
+        // TODO: Should the recalculation really always skip all checks?
         { skipChecks: true }
       );
 
@@ -515,6 +517,7 @@ router.put(
 async function runChecksStartCalculationsStoreFixes(
   flightDbObject,
   userId,
+  // TODO: Why like this?
   { skipChecks = false } = {}
 ) {
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
