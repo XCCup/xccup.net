@@ -524,7 +524,7 @@ async function runChecksStartCalculationsStoreFixes(
   if (!skipChecks) await checkIfFlightIsModifiable(flightDbObject, userId);
   const takeoff = await service.attachTakeoffAndLanding(flightDbObject, fixes);
 
-  detectMidFlightIgcStart(takeoff, fixes);
+  if (!skipChecks) detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
 
