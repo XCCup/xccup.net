@@ -1,3 +1,29 @@
+<script setup>
+import useAuth from "@/composables/useAuth";
+import useNotifications from "@/composables/useNotifications";
+
+import { computed, watchEffect } from "vue";
+import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
+
+const { getAuthData, loggedIn, logout, hasElevatedRole } = useAuth();
+const { getNotifications, refreshNotifications } = useNotifications();
+
+// TODO: Current year should actually be current season
+const currentYear = computed(() => new Date().getFullYear());
+
+const router = useRouter();
+const route = useRoute();
+
+watchEffect(async () => {
+  if (route.path && hasElevatedRole.value) await refreshNotifications();
+});
+
+const handleLogout = async () => {
+  await logout();
+  router.push({ name: "Home" });
+};
+</script>
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-primary bg-gradient">
     <div class="container-fluid">
@@ -322,30 +348,3 @@
     </div>
   </nav>
 </template>
-
-<script setup>
-import useAuth from "@/composables/useAuth";
-import useNotifications from "@/composables/useNotifications";
-
-import { computed, watchEffect } from "vue";
-import { useRouter } from "vue-router";
-import { useRoute } from "vue-router";
-
-const { getAuthData, loggedIn, logout, hasElevatedRole } = useAuth();
-const { getNotifications, refreshNotifications } = useNotifications();
-
-// TODO: Current year should actually be current season
-const currentYear = computed(() => new Date().getFullYear());
-
-const router = useRouter();
-const route = useRoute();
-
-watchEffect(async () => {
-  if (route.path && hasElevatedRole.value) await refreshNotifications();
-});
-
-const handleLogout = async () => {
-  await logout();
-  router.push({ name: "Home" });
-};
-</script>
