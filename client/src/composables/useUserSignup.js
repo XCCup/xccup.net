@@ -1,4 +1,4 @@
-import { reactive } from "@vue/reactivity";
+import { reactive } from "vue";
 
 // This is a simple state with no actions/getters as it's only used by one component. (Signup)
 
