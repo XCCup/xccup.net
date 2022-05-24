@@ -431,6 +431,7 @@
       "region": "Mosel"
     },
     "type": "HGPGSTA",
+    "elevation": 308,
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
@@ -2892,6 +2893,7 @@
   {
     "name": "Donnersberg",
     "heightDifference": "230",
+    "elevation": 470,
     "image": "DonnersbergStart01.jpg",
     "type": "HGPGSTA",
     "website": "http://www.pdgfc.de",

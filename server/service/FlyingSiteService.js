@@ -134,7 +134,7 @@ const siteService = {
   findClosestTakeoff: async (location) => {
     const query = `
     SELECT
-    "id","name", ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
+    "id","name", "elevation", ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
     FROM
     "FlyingSites"
     WHERE

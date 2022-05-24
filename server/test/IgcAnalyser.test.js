@@ -247,6 +247,10 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s =>
   expect(reducedFixes[2345]).toStrictEqual(fixNr2345);
 });
 
+test.skip("Validate that a flight igc does not start mid flight", () => {
+  // TODO: Test me!
+});
+
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s => No Reducion)", () => {
   const filePath = "demo_igcs/kai_free_res10/kai_free_res10.igc";
 
