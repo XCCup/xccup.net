@@ -1,4 +1,4 @@
-import { computed } from "@vue/reactivity";
+import { computed } from "vue";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { useJwt } from "@vueuse/integrations/useJwt";
 
