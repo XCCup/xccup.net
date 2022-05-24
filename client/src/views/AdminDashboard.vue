@@ -19,7 +19,7 @@
         >
           Flüge
           <span
-            v-if="adminFlights?.count > 0"
+            v-if="adminFlights && adminFlights?.count > 0"
             class="badge rounded-pill bg-danger"
             >{{ adminFlights?.count }}</span
           >
@@ -36,7 +36,7 @@
         >
           Fluggebiete
           <span
-            v-if="adminSites?.count > 0"
+            v-if="adminSites && adminSites?.count > 0"
             class="badge rounded-pill bg-danger"
             >{{ adminSites?.count }}</span
           >
