@@ -132,8 +132,10 @@ const userService = {
   },
   getTShirtList: async (year) => {
     const allUsers = await User.findAll({
-      role: {
-        [Op.not]: ROLE.INACTIVE,
+      where: {
+        role: {
+          [Op.not]: ROLE.INACTIVE,
+        },
       },
       attributes: [
         "id",
