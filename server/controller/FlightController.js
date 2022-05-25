@@ -520,7 +520,6 @@ router.put(
 async function runChecksStartCalculationsStoreFixes(
   flightDbObject,
   userId,
-  // TODO: Why like this?
   { skipChecks = false } = {}
 ) {
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
@@ -541,7 +540,6 @@ async function runChecksStartCalculationsStoreFixes(
     service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject),
     service.startResultCalculation(flightDbObject),
   ]);
-
 
   if (airspaceViolation) sendAirspaceViolationAdminMail(userId, flightDbObject);
 
@@ -657,7 +655,7 @@ function checkIfFlightIsManipulated(resultOfIgcParser) {
  * Checks if an igc file starts mid flight.
  * If the first fix of an igc file is 250m above takeoff elevation it is
  * considered to be a mid flight start.
- * Throws an error  and sends a BAD_REQUEST ase response if a mid flight
+ * Throws an error and sends a BAD_REQUEST as response if a mid flight
  * start is detected.
  * @param {object} takeoff The takeoff object
  * @param {object} fixes The flights fixes
