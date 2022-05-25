@@ -130,7 +130,7 @@ const IgcAnalyzer = {
 };
 
 /**
- * Checks if an igc files was manipulated by "MaxPunkte"
+ * Checks if an igc file was manipulated by "MaxPunkte"
  */
 function igcIsManipulated(igc) {
   if (!igc.commentRecords) return false;

@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   db:
-    image: postgis/postgis:13-3.1
+    image: odidev/postgis:13-3.1
     container_name: db
     restart: always
     env_file: .env
@@ -12,7 +12,7 @@ services:
       - xccup-network
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:6.9
     container_name: db-admin
     restart: always
     env_file: .env

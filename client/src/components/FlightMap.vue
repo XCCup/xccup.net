@@ -80,8 +80,8 @@ const userPrefersDark = ref(
 let map: L.Map;
 const trackLines = ref();
 const positionMarkers = ref<L.CircleMarker[]>([]);
-const takeoffAndLandingMarkers = ref<L.Marker[]>([]);
-const photoMarkers = ref<L.Marker[]>([]);
+const takeoffAndLandingMarkers: L.Marker[] = [];
+const photoMarkers: L.Marker[] = [];
 
 // All tracklogs that shall be drawn on map
 const tracklogs = computed(() => {
@@ -204,7 +204,7 @@ const drawTracks = (tracklogs: SimpleFix[][]) => {
         map.fitBounds(lines[0].getBounds());
 
         // Create takeoff & landing markers
-        takeoffAndLandingMarkers.value.push(
+        takeoffAndLandingMarkers.push(
           L.marker(track[0].position, { title: "Start" }).addTo(map),
           L.marker(track[track.length - 1].position, {
             title: "Landeplatz",
@@ -226,7 +226,7 @@ const drawTracks = (tracklogs: SimpleFix[][]) => {
             return minuteOfFix === minuteOfPhoto;
           });
           if (!location) return;
-          photoMarkers.value.push(
+          photoMarkers.push(
             L.marker(location.position, { title: "Photo", icon: photoMarker })
               .on("click", () => {
                 // TODO: There may be a smarter way to do this

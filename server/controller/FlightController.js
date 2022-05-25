@@ -337,6 +337,8 @@ router.get(
       const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flight,
         null,
+
+        // TODO: Should the recalculation really always skip all checks?
         { skipChecks: true }
       );
 
@@ -525,10 +527,9 @@ async function runChecksStartCalculationsStoreFixes(
   if (!skipChecks) checkIfFlightIsManipulated(fixes);
   service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
   if (!skipChecks) await checkIfFlightIsModifiable(flightDbObject, userId);
-  const takeoffName = await service.attachTakeoffAndLanding(
-    flightDbObject,
-    fixes
-  );
+  const takeoff = await service.attachTakeoffAndLanding(flightDbObject, fixes);
+
+  if (!skipChecks) detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
 
@@ -542,7 +543,7 @@ async function runChecksStartCalculationsStoreFixes(
 
   if (airspaceViolation) sendAirspaceViolationAdminMail(userId, flightDbObject);
 
-  return { takeoffName, result, airspaceViolation };
+  return { takeoffName: takeoff.name, result, airspaceViolation };
 }
 
 function paramIdIsLeonardo(req, res) {
@@ -642,12 +643,31 @@ async function checkIfFlightIsModifiable(flight, userId) {
  * @param {string | Array} resultOfIgcParser The result of the igc parser
  */
 function checkIfFlightIsManipulated(resultOfIgcParser) {
-  const errorMessage = "Manipulated IGC-File";
+  let errorMessage = "Manipulated IGC-File";
   if (
     typeof resultOfIgcParser === "string" &&
     resultOfIgcParser === "manipulated"
   )
     throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+}
+
+/**
+ * Checks if an igc file starts mid flight.
+ * If the first fix of an igc file is 250m above takeoff elevation it is
+ * considered to be a mid flight start.
+ * Throws an error and sends a BAD_REQUEST as response if a mid flight
+ * start is detected.
+ * @param {object} takeoff The takeoff object
+ * @param {object} fixes The flights fixes
+ */
+function detectMidFlightIgcStart(takeoff, fixes) {
+  const MAX_START_ALT_OVER_TAKEOFF = 250;
+
+  if (fixes[0]?.gpsAltitude > takeoff.elevation + MAX_START_ALT_OVER_TAKEOFF) {
+    let errorMessage = "Flight starts in the middle of a flight";
+
+    throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+  }
 }
 
 /**

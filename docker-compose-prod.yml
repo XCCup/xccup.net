@@ -54,7 +54,7 @@ services:
       - xccup-db:/var/lib/postgresql/data
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:6.9
     container_name: xccup-db-admin
     restart: always
     env_file: ./server/.env
@@ -92,7 +92,7 @@ services:
       traefik.http.routers.http-catchall.rule: HostRegexp(`{host:(www\.)?.+}`)
       traefik.http.routers.http-catchall.entrypoints: web
       traefik.http.routers.http-catchall.middlewares: wwwtohttps
-      
+
       # Global redirection: https (www.) to https
       traefik.http.routers.wwwsecure-catchall.rule: HostRegexp(`{host:(www\.).+}`)
       traefik.http.routers.wwwsecure-catchall.entrypoints: websecure
@@ -114,6 +114,7 @@ services:
 volumes:
   xccup-db:
   pgadmin-data:
+
 
 networks:
   default:

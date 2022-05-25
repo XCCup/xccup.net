@@ -443,31 +443,39 @@ const flightService = {
   },
 
   /**
-   * Searches for takeoff and landing.
-   * It's necessary to call the save method of the object to persist the data.
+   * Starts the calculation of the flight stats and attaches the results to the flight object .
+   * It's necessary to call the save method of the flight object to persist the data.
+   * The save method will not be called in this method to prevent multiple updates to the same flight in the database.
    *
    * @param {Object} flight The db object of the flight
    * @param {Array} fixes An array of fixes of the related flight
-   * @returns The name of the takeoff site
    */
   storeFixesAndAddStats: async (flight, fixes) => {
     const fixesStats = attachFlightStats(flight, fixes);
     await storeFixesToDB(flight, fixes, fixesStats);
   },
 
+  /**
+   * Searches for takeoff and landing and attaches them to the flight.
+   * It's necessary to call the save method of the flight object to persist the data.
+   * The save method will not be called in this method to prevent multiple updates to the same flight in the database.
+   *
+   * @param {Object} flight The db object of the flight
+   * @param {Array} fixes An array of fixes of the related flight
+   * @returns The name of the takeoff site
+   */
   attachTakeoffAndLanding: async (flight, fixes) => {
     const requests = [findClosestTakeoff(fixes[0])];
     if (config.get("useGoogleApi")) {
       requests.push(findLanding(fixes[fixes.length - 1]));
     }
-    const results = await Promise.all(requests);
-    const flyingSite = results[0];
+    const [takeoff, landing] = await Promise.all(requests);
 
-    flight.siteId = flyingSite.id;
-    flight.region = flyingSite.region;
-    flight.landing = results.length > 1 ? results[1] : "API Disabled";
+    flight.siteId = takeoff.id;
+    flight.region = takeoff.region;
+    flight.landing = landing ?? "API Disabled";
 
-    return flyingSite.name;
+    return takeoff;
   },
 
   /**
