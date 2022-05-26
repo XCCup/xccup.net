@@ -15,7 +15,7 @@ services:
       traefik.http.routers.xccup-test.rule: "Host(`test.xccup.net`)"
       traefik.http.routers.xccup-test.entrypoints: websecure
       traefik.http.routers.xccup-test.tls.certresolver: myresolver
-      traefik.http.routers.xccup-test.priority: 200
+      traefik.http.routers.xccup-test.priority: 150
       traefik.docker.network: traefik
 
 networks:
