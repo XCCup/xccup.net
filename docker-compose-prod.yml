@@ -37,7 +37,7 @@ services:
       - db
     labels:
       traefik.enable: true
-      traefik.http.routers.xccup-api.rule: "Host(`xccup.net`) && PathPrefix(`/api`)"
+      traefik.http.routers.xccup-api.rule: "Host(`xccup.net`) && PathPrefix(`/api`) || Host(`test.xccup.net`) && PathPrefix(`/api`)"
       traefik.http.routers.xccup-api.entrypoints: websecure
       traefik.http.routers.xccup-api.tls.certresolver: myresolver
       traefik.http.services.xccup-api.loadbalancer.server.port: 65090
@@ -70,7 +70,7 @@ services:
       traefik.docker.network: traefik
 
   traefik:
-    image: traefik:2.6.1
+    image: traefik:2.7.0
     restart: unless-stopped
     container_name: traefik
     command:
