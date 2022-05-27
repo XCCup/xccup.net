@@ -10,6 +10,7 @@ const { getCache, setCache } = require("./CacheManager");
 const { STATE, COUNTRY } = require("../constants/user-constants");
 const { XccupHttpError } = require("../helper/ErrorHandler");
 const { NOT_FOUND } = require("../constants/http-status-constants");
+const { getSiteRecords } = require("../service/SiteRecordCache");
 
 // @desc Gets the overall result
 // @route GET /results
@@ -315,7 +316,7 @@ router.get("/siteRecords", async (req, res, next) => {
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const result = await service.getSiteRecords();
+    const result = await getSiteRecords();
 
     setCache(req, result);
 
