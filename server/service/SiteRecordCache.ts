@@ -1,6 +1,5 @@
 import { FlightOutputAttributes } from "../db/models/Flight";
 import service from "./ResultService";
-import userService from "./UserService";
 import db from "../db";
 import { logger } from "bs-logger";
 
