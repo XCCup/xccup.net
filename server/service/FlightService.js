@@ -39,6 +39,7 @@ const {
   extractTimeAndHeights,
   combineFixesProperties,
 } = require("../helper/FlightFixUtils");
+const { checkSiteRecordsAndUpdate } = require("./SiteRecordCache");
 
 const flightService = {
   getAll: async ({
@@ -283,31 +284,29 @@ const flightService = {
     glider,
     hikeAndFly,
   } = {}) => {
-    const columnsToUpdate = {};
-
     // Set report when value is defined or empty
     if (report || report == "") {
-      columnsToUpdate.report = report;
+      flight.report = report;
     }
     if (airspaceComment || airspaceComment == "") {
-      columnsToUpdate.airspaceComment = airspaceComment;
+      flight.airspaceComment = airspaceComment;
     }
 
     if (hikeAndFly) {
       const site = await FlyingSite.findByPk(flight.siteId, {
         attributes: ["heightDifference"],
       });
-      columnsToUpdate.hikeAndFly = site.heightDifference;
+      flight.hikeAndFly = site.heightDifference;
     }
     if (hikeAndFly == 0) {
-      columnsToUpdate.hikeAndFly = 0;
+      flight.hikeAndFly = 0;
     }
 
     if (glider) {
-      await createGliderObject(columnsToUpdate, glider);
+      await createGliderObject(flight, glider);
 
       const flightPoints = await calcFlightPoints(flight, glider);
-      columnsToUpdate.flightPoints = flightPoints;
+      flight.flightPoints = flightPoints;
 
       if (flight.flightStatus != STATE.IN_REVIEW) {
         const flightStatus = await calcFlightStatus(
@@ -315,7 +314,7 @@ const flightService = {
           flightPoints,
           onlyLogbook
         );
-        columnsToUpdate.flightStatus = flightStatus;
+        flight.flightStatus = flightStatus;
       }
     }
 
@@ -323,12 +322,9 @@ const flightService = {
       sendNewAdminTask();
     }
 
-    return Flight.update(columnsToUpdate, {
-      where: {
-        id: flight.id,
-      },
-      returning: true,
-    });
+    const updatedColumns = await flight.save();
+    checkSiteRecordsAndUpdate(flight);
+    return updatedColumns;
   },
 
   delete: async (flight) => {
@@ -369,6 +365,7 @@ const flightService = {
     }
 
     flight.save();
+    checkSiteRecordsAndUpdate(flight);
     deleteCache(["home", "flights", "results"]);
   },
 
@@ -675,11 +672,11 @@ async function calcFlightStatus(takeoffTime, flightPoints, onlyLogbook) {
   return flightStatus;
 }
 
-async function createGliderObject(columnsToUpdate, glider) {
+async function createGliderObject(flight, glider) {
   const currentSeason = await getCurrentActive();
   const gliderClassDB = currentSeason.gliderClasses[glider.gliderClass.key];
 
-  columnsToUpdate.glider = {
+  flight.glider = {
     ...glider,
     gliderClass: {
       key: glider.gliderClass.key,
