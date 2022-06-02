@@ -100,6 +100,17 @@
     >
       Details anzeigen
     </button>
+    <!-- METAR Button -->
+    <button
+      v-if="flight?.flightMetarData"
+      id="metarButton"
+      class="btn btn-primary btn-sm me-2 dropdown-toggle mt-1"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#metarDetailsCollapse"
+    >
+      METAR anzeigen
+    </button>
     <!-- Download .igc -->
     <a :href="igcDownloadUrl"
       ><button type="button" class="btn btn-sm btn-outline-primary me-2 mt-1">
@@ -149,6 +160,35 @@
         </li>
       </ul>
     </span>
+    <!-- METAR Collapse -->
+    <div
+      v-if="flight?.flightMetarData"
+      id="metarDetailsCollapse"
+      class="collapse mt-2"
+    >
+      <div class="row">
+        <div class="col-12">
+          <p>
+            <i class="bi bi-info-circle"> Beta Funktion: </i><br />
+            Zeigt die METAR Daten der nächstgelegenen Flughäfen über den Verlauf
+            des Fluges an. So bekommt man ein ungefähres Bild der tatsächlichen
+            meteorologischen Verhältnisse. In Zukunft werden diese noch besser
+            aufbereitet.
+            <a href="https://de.wikipedia.org/wiki/METAR" target="_blank"
+              >METAR erklärt (Wikipedia)</a
+            >
+          </p>
+
+          <table id="metarDetailsTable" class="table table-sm">
+            <tbody>
+              <tr v-for="metar in flight?.flightMetarData">
+                <td>{{ metar }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <!-- Flight Details Collapse -->
     <div id="flightDetailsCollapse" class="collapse mt-2">
       <div class="row">

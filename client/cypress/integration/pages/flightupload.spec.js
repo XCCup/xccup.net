@@ -433,6 +433,38 @@ describe("check flight upload page", () => {
     });
   });
 
+  it("test upload flight and get metar data", () => {
+    const igcFileName = "104km.igc";
+    const expectedTakeoff = "Hoher Meissner Uengsterode";
+    const expectedMetar =
+      "METAR EDVK 221050Z 35006KT 320V030 9999 SCT041 17/08 Q1016";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calclation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    // Expect to be redirected to flight view after submitting
+
+    cy.get("#metarDetailsTable").find("td").contains(expectedMetar);
+  });
+
   // // This test works only if the overwrite in FlightController:checkIfFlightIsModifiable is disabled/removed
   // it("Test upload flight to old", () => {
   //   const igcFileName = "73320_LA9ChMu1.igc";

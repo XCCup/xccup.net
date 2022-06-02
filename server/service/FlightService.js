@@ -8,6 +8,7 @@ const Brand = require("../db")["Brand"];
 const FlightPhoto = require("../db")["FlightPhoto"];
 const FlyingSite = require("../db")["FlyingSite"];
 const FlightFixes = require("../db")["FlightFixes"];
+const axios = require("axios");
 
 const moment = require("moment");
 
@@ -450,6 +451,61 @@ const flightService = {
   storeFixesAndAddStats: async (flight, fixes) => {
     const fixesStats = attachFlightStats(flight, fixes);
     await storeFixesToDB(flight, fixes, fixesStats);
+  },
+
+  getMetarData: async (flight, fixes) => {
+    try {
+      const axiosPromises = [];
+      const METAR_URL = config.get("metarUrl");
+      const METAR_API_KEY = config.get("metarApiKey");
+
+      // Get METAR data once for every hour of the flight
+      const interval = 60 * 60 * 1000; // 1 hour
+      let i = 0;
+      const lastFix = fixes.length - 1;
+
+      const takeOffTime = new Date(fixes[0].timestamp).valueOf();
+      const landingTime = new Date(fixes[lastFix].timestamp).valueOf();
+
+      fixes.forEach((fix) => {
+        const fixTime = new Date(fix.timestamp).valueOf();
+        if (fixTime > takeOffTime + i && fixTime < landingTime) {
+          axiosPromises.push(
+            axios.get(METAR_URL, {
+              params: {
+                lat: fix.latitude,
+                long: fix.longitude,
+                date: new Date(fix.timestamp).toISOString(),
+              },
+              headers: { "API-Key": METAR_API_KEY },
+            })
+          );
+          i += interval;
+        }
+      });
+
+      // Last fix (landing)
+      axiosPromises.push(
+        axios.get(METAR_URL, {
+          params: {
+            lat: fixes[lastFix].latitude,
+            long: fixes[lastFix].longitude,
+            date: new Date(fixes[lastFix].timestamp).toISOString(),
+          },
+          headers: { "API-Key": METAR_API_KEY },
+        })
+      );
+
+      const res = await axios.all(axiosPromises);
+      // TODO: Check for empty responses
+      const metarData = res.map((el) => {
+        return el.data.data[0];
+      });
+      flight.flightMetarData = metarData;
+      await flight.save();
+    } catch (error) {
+      console.log(error);
+    }
   },
 
   /**
