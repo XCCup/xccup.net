@@ -459,8 +459,8 @@ const flightService = {
       const METAR_URL = config.get("metarUrl");
       const METAR_API_KEY = config.get("metarApiKey");
 
-      // Get METAR data once for every hour of the flight
-      const interval = 60 * 60 * 1000; // 1 hour
+      // Get METAR data for every 30 minutes of the flight
+      const interval = 60 * 30 * 1000; // 1 hour
       let i = 0;
       const lastFix = fixes.length - 1;
 
