@@ -34,6 +34,7 @@
     "leaflet-gesture-handling": "^1.2.2",
     "lodash-es": "^4.17.21",
     "luxon": "^2.4.0",
+    "metar-parser": "^1.0.1",
     "nprogress": "^0.2.0",
     "sweetalert2": "^11.4.16",
     "uuid": "^8.3.2",

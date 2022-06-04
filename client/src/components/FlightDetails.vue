@@ -182,7 +182,7 @@
           <table id="metarDetailsTable" class="table table-sm">
             <tbody>
               <tr v-for="metar in flight?.flightMetarData">
-                <td>{{ metar }}</td>
+                <td>{{ decodeMetar(metar) }}</td>
               </tr>
             </tbody>
           </table>
@@ -263,6 +263,7 @@ import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 import ApiService from "@/services/ApiService";
 import useSwal from "@/composables/useSwal";
+import metarParser from "metar-parser";
 
 const { getUserId, hasElevatedRole } = useAuth();
 const { flight } = useFlight();
@@ -323,6 +324,26 @@ const isHikeAndFly = computed((): boolean => {
   if (!flight.value?.hikeAndFly) return false;
   return flight.value?.hikeAndFly > 0;
 });
+
+const decodeMetar = (metar) => {
+  const decoded = metarParser(metar);
+  const time = decoded.time;
+  const wind = decoded.wind;
+  const altimeter = decoded.altimeter;
+  // return decoded;
+  return (
+    time.hour +
+    ":" +
+    time.minute +
+    "h Wind: " +
+    wind.direction +
+    " " +
+    wind.speedKt * 3.6 +
+    " km/h" +
+    " QNH: " +
+    altimeter.millibars
+  );
+};
 </script>
 
 <style scoped></style>
