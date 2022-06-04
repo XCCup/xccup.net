@@ -453,6 +453,13 @@ const flightService = {
     await storeFixesToDB(flight, fixes, fixesStats);
   },
 
+  /**
+   * Fetches METAR data for every 30 minutes of the flight from the nearest
+   * METAR station for the given fix and saves it to the db.
+   *
+   * @param {Object} flight The db object of the flight
+   * @param {Array} fixes
+   */
   getMetarData: async (flight, fixes) => {
     try {
       const axiosPromises = [];
@@ -497,13 +504,14 @@ const flightService = {
       );
 
       const res = await axios.all(axiosPromises);
-      // TODO: Check for empty responses
       const metarData = res.map((el) => {
+        if (!el.data || el.data.data.length == 0) return;
         return el.data.data[0];
       });
       flight.flightMetarData = metarData;
       await flight.save();
     } catch (error) {
+      // TODO: Do somethig? Like a notification?
       console.log(error);
     }
   },
