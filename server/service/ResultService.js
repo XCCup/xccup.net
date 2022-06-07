@@ -606,6 +606,15 @@ async function findSiteRecordOfType(type) {
           flightPoints: {
             [sequelize.Op.not]: null,
           },
+          [sequelize.Op.or]: [
+            { violationAccepted: true },
+            {
+              [sequelize.Op.and]: [
+                { uncheckedGRecord: false },
+                { airspaceViolation: false },
+              ],
+            },
+          ],
         },
         order: [["flightDistance", "DESC"]],
         limit: 1,
