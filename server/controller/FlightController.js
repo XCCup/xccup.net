@@ -294,7 +294,9 @@ router.post(
       });
 
       const { takeoffName, result, airspaceViolation } =
-        await runChecksStartCalculationsStoreFixes(flightDbObject, userId);
+        await runChecksStartCalculationsStoreFixes(flightDbObject, userId, {
+          skipModifiableCheck: true,
+        });
 
       const glider = userGliders.gliders.find(
         (g) => g.id == userGliders.defaultGlider
@@ -520,16 +522,23 @@ router.put(
 async function runChecksStartCalculationsStoreFixes(
   flightDbObject,
   userId,
-  { skipChecks = false } = {}
+  {
+    skipAllChecks = false,
+    skipModifiableCheck = false,
+    skipManipulatedCheck = false,
+    skipMidflightCheck = false,
+  } = {}
 ) {
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
-  if (!skipChecks) checkIfFlightIsManipulated(fixes);
+  if (!skipAllChecks || !skipManipulatedCheck)
+    checkIfFlightIsManipulated(fixes);
   service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
-  if (!skipChecks) await checkIfFlightIsModifiable(flightDbObject, userId);
+  if (!skipAllChecks || !skipModifiableCheck)
+    await checkIfFlightIsModifiable(flightDbObject, userId);
   const takeoff = await service.attachTakeoffAndLanding(flightDbObject, fixes);
-
-  if (!skipChecks) detectMidFlightIgcStart(takeoff, fixes);
+  if (!skipAllChecks || !skipMidflightCheck)
+    detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
 
