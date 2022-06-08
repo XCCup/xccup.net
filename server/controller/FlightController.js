@@ -531,13 +531,13 @@ async function runChecksStartCalculationsStoreFixes(
 ) {
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
-  if (!skipAllChecks || !skipManipulatedCheck)
+  if (!skipAllChecks && !skipManipulatedCheck)
     checkIfFlightIsManipulated(fixes);
   service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
-  if (!skipAllChecks || !skipModifiableCheck)
+  if (!skipAllChecks && !skipModifiableCheck)
     await checkIfFlightIsModifiable(flightDbObject, userId);
   const takeoff = await service.attachTakeoffAndLanding(flightDbObject, fixes);
-  if (!skipAllChecks || !skipMidflightCheck)
+  if (!skipAllChecks && !skipMidflightCheck)
     detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
