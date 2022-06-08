@@ -157,6 +157,11 @@ const service = {
     const resultOverUser = aggreateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(resultOverUser, NUMBER_OF_SCORED_FLIGHTS);
     const resultOverClub = aggreateOverClubAndCalcTotals(resultOverUser);
+
+    resultOverClub.forEach((club) => {
+      // Sort also members in club by totalPoints
+      sortDescendingByTotalPoints(club.members);
+    });
     sortDescendingByTotalPoints(resultOverClub);
 
     return addConstantInformationToResult(
@@ -601,6 +606,15 @@ async function findSiteRecordOfType(type) {
           flightPoints: {
             [sequelize.Op.not]: null,
           },
+          [sequelize.Op.or]: [
+            { violationAccepted: true },
+            {
+              [sequelize.Op.and]: [
+                { uncheckedGRecord: false },
+                { airspaceViolation: false },
+              ],
+            },
+          ],
         },
         order: [["flightDistance", "DESC"]],
         limit: 1,
@@ -876,7 +890,9 @@ function aggreateFlightsOverUser(resultQuery) {
  * @param {*} resultArray The result array to be sorted.
  */
 function sortDescendingByTotalPoints(resultArray) {
-  resultArray.sort((a, b) => b.totalPoints - a.totalPoints);
+  resultArray.sort((a, b) => {
+    return b.totalPoints - a.totalPoints;
+  });
 }
 
 function removeMultipleEntriesForUsers(resultsWithMultipleEntriesForUser) {
