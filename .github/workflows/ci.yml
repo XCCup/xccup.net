@@ -57,7 +57,7 @@ jobs:
         run: rm tsconfig.json
 
       - name: 🧪 Install cypress
-        run: yarn cypress@latest install
+        run: yarn install cypress@latest
         working-directory: ./client
         #TODO: Fix cypress caching issue and remove the addional install
 
