@@ -36,7 +36,7 @@ import { options } from "@/config/chartOptions";
 
 // import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
 
-import type { TooltipItem, ChartConfiguration } from "chart.js";
+import type { ChartConfiguration } from "chart.js";
 interface PositionDetails {
   gpsAltitude?: number;
   pressureAltitude?: number;
@@ -44,15 +44,6 @@ interface PositionDetails {
   time?: string;
   climb?: number;
   name?: string;
-}
-
-interface BaroTooltipItem extends TooltipItem<"line"> {
-  raw: {
-    speed?: number;
-    gpsAltitude?: number;
-    pressureAltitude?: number;
-    climb?: number;
-  };
 }
 
 Chart.register(
@@ -142,16 +133,6 @@ watchEffect(() => {
 
 // Position details
 const positionDetails = ref<PositionDetails[]>([]);
-const updatePositionDetails = (context: BaroTooltipItem) => {
-  positionDetails.value[context.datasetIndex] = {
-    speed: context.raw.speed,
-    gpsAltitude: context.raw.gpsAltitude,
-    pressureAltitude: context.raw.pressureAltitude,
-    climb: context.raw.climb,
-    name: context.dataset.label,
-    time: context.label,
-  };
-};
 
 // Chart setup
 type ChartType = "line";
@@ -185,7 +166,7 @@ const config: ChartConfiguration<ChartType> = {
   data: {
     datasets: chartData.value,
   },
-  options: options(updatePositionDetails),
+  options: options,
 };
 </script>
 <template>

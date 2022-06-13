@@ -10,7 +10,7 @@ const userPrefersDark = ref(
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
 );
 
-export const options = (cb: Function): ChartOptions<"line"> => ({
+export const options: ChartOptions<"line"> = {
   responsive: true,
   onClick: () => {
     // Center map at current position
@@ -52,7 +52,6 @@ export const options = (cb: Function): ChartOptions<"line"> => ({
             context.dataIndex,
             context.parsed.x
           );
-          cb(context);
           return "";
         },
       },
@@ -99,4 +98,4 @@ export const options = (cb: Function): ChartOptions<"line"> => ({
       radius: 0,
     },
   },
-});
+};
