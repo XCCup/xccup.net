@@ -53,9 +53,8 @@ jobs:
         run: rm tsconfig.json
 
       - name: 🧪 Install cypress
-        run: yarn add cypress@latest
-        working-directory: ./client
-      #TODO: Fix cypress caching issue and remove the addional install
+        run: npx cypress install
+      # TODO: Fix cypress caching issue and remove the addional install
 
       - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v2
