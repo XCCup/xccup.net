@@ -45,10 +45,6 @@ jobs:
         run: yarn install --frozen-lockfile && yarn build-local
         working-directory: ./client
 
-      # - name: 🧪 Clear cypress cache
-      #   run: npx cypress cache clear
-      #   working-directory: ./client
-
       - name: 🖨 Print current server log before testing (just for debugging)
         run: docker logs server
 
