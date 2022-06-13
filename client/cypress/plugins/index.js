@@ -20,10 +20,5 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 
-  //TODO: Just needed to exclude example tests from running
-  config.ignoreTestFiles = [
-    "**/integration/1-getting-started/*",
-    "**/integration/2-advanced-examples/*",
-  ];
   return config;
 };
