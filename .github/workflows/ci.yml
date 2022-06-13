@@ -42,7 +42,7 @@ jobs:
         working-directory: ./server
 
       - name: 💻 Install and build frontend
-        run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
+        run: yarn install--frozen-lockfile && yarn build-local
         working-directory: ./client
 
       - name: 🖨 Print current server log before testing (just for debugging)
@@ -52,12 +52,9 @@ jobs:
         working-directory: ./client
         run: rm tsconfig.json
 
-      - name: 🧪 Clear cypress cache
-        run: npx cypress cache clear
-
-      - name: 🧪 Install cypress
-        run: npx cypress@latest install
-        # TODO: Fix cypress caching issue and remove the addional install
+      # - name: 🧪 Install cypress
+      #  run: npx cypress@latest install
+      # TODO: Fix cypress caching issue and remove the addional install
 
       - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v2
