@@ -13,9 +13,10 @@ describe("check results overall page", () => {
   });
 
   it("test first flight is listed not most points", () => {
-    // It's missing two entries for Olive Emmerich and Everett Gislason because their flights are from july and we only consider the first three months of the season.
-    // EarlyBird flights only count within the first three months; Therefore the manipulation of flights for the daily ranking has only effect within the first 3 months of the season (June == 5).
-    const expectedLength = isInSeason() && new Date().getMonth() < 5 ? 17 : 16;
+    /**
+     * It's missing two entries for Olive Emmerich and Everett Gislason because their flights are from july and we only consider the first three months of the season.
+     */
+    const expectedLength = isInSeason() ? 17 : 16;
 
     cy.get("table").find("tr").its("length").should("eq", expectedLength);
 
