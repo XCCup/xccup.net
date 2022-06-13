@@ -454,7 +454,7 @@ describe("check flight upload page", () => {
     // cy.get("#acceptTermsCheckbox").check();
     // cy.get("Button").contains("Streckenmeldung absenden").click();
     // // Expect to be redirected to flight view after submitting
-    // cy.get("#metarDetailsTable").find("td").contains(expectedMetar);
+    // cy.get("#metarDetailsTable").find("td").contains(expectedMetar);yarn o
   });
 
   // // This test works only if the overwrite in FlightController:checkIfFlightIsModifiable is disabled/removed
