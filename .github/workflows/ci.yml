@@ -45,9 +45,9 @@ jobs:
         run: yarn install --frozen-lockfile && yarn build-local
         working-directory: ./client
 
-      - name: 🧪 Clear cypress cache
-        run: npx cypress cache clear
-        working-directory: ./client
+      # - name: 🧪 Clear cypress cache
+      #   run: npx cypress cache clear
+      #   working-directory: ./client
 
       - name: 🖨 Print current server log before testing (just for debugging)
         run: docker logs server
@@ -56,9 +56,9 @@ jobs:
         working-directory: ./client
         run: rm tsconfig.json
 
-      # - name: 🧪 Install cypress
-      #   run: yarn install cypress@latest
-      #   working-directory: ./client
+      - name: 🧪 Install cypress
+        run: yarn add cypress@latest
+        working-directory: ./client
       #TODO: Fix cypress caching issue and remove the addional install
 
       - name: 🏃‍♀️ Cypress run
