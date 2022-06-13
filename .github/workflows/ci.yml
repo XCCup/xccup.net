@@ -49,8 +49,8 @@ jobs:
         run: npx cypress cache clear
         working-directory: ./client
 
-      - name: 🖨 Print current server log before testing (just for debugging)
-        run: docker logs server
+      # - name: 🖨 Print current server log before testing (just for debugging)
+      #   run: docker logs server
 
       - name: 🩹 Remove tsconfig.json from ./client # or cypress will fail… TODO: Why 🤷‍♂️
         working-directory: ./client
