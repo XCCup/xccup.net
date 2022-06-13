@@ -1,62 +1,3 @@
-<template>
-  <!-- Position details -->
-  <div>
-    <div id="positionDetailsCollapse" class="collapse container">
-      <div class="row row-cols-2 row-cols-md-4 my-2">
-        <div class="col">
-          <i class="bi bi-cloud-upload"></i>
-          {{ altitudeToShow }} m
-        </div>
-        <div class="col">
-          <i class="bi bi-arrows-expand"></i>
-          {{
-            positionDetails[1]?.speed
-              ? Math.round(positionDetails[1]?.climb * 10) / 10
-              : "0"
-          }}
-          m/s
-        </div>
-        <div class="col">
-          <i class="bi bi-speedometer2"></i>
-          {{
-            positionDetails[1]?.speed
-              ? Math.floor(positionDetails[1]?.speed)
-              : "0"
-          }}
-          km/h
-        </div>
-        <div class="col">
-          <i class="bi bi-clock"></i> {{ positionDetails[1]?.time }}
-        </div>
-      </div>
-    </div>
-
-    <!-- Baro -->
-    <div class="container mt-3">
-      <canvas ref="ctx"></canvas>
-    </div>
-    <div
-      v-if="flight?.fixes[0].pressureAltitude"
-      id="altSwitchCollapse"
-      class="collapse container"
-    >
-      <div class="form-check form-switch mb-3">
-        <input
-          id="flexSwitchCheckChecked"
-          v-model="pressureAltToggle"
-          class="form-check-input"
-          type="checkbox"
-          role="switch"
-          :disabled="airbuddiesInUse"
-        />
-        <label class="form-check-label" for="flexSwitchCheckChecked">
-          Barometrische Höhe anzeigen (ISA)
-        </label>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 //  This helps:
 // https://medium.com/risan/vue-chart-component-with-chart-js-db85a2d21288
@@ -247,5 +188,66 @@ const config: ChartConfiguration<ChartType> = {
   options: options(updatePositionDetails),
 };
 </script>
+<template>
+  <!-- Position details -->
+  <div>
+    <div id="positionDetailsCollapse" class="collapse container">
+      <div class="row row-cols-2 row-cols-md-4 my-2">
+        <div class="col">
+          <i class="bi bi-cloud-upload"></i>
+          {{ altitudeToShow }} m
+        </div>
+        <div class="col">
+          <i class="bi bi-arrows-expand"></i>
+          {{
+            positionDetails[1]?.speed
+              ? Math.round(positionDetails[1]?.climb ?? 0 * 10) / 10
+              : "0"
+          }}
+          m/s
+        </div>
+        <div class="col">
+          <i class="bi bi-speedometer2"></i>
+          {{
+            positionDetails[1]?.speed
+              ? Math.floor(positionDetails[1]?.speed)
+              : "0"
+          }}
+          km/h
+        </div>
+        <div class="col">
+          <i class="bi bi-clock"></i> {{ positionDetails[1]?.time }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Baro -->
+    <div class="container mt-3">
+      <canvas ref="ctx"></canvas>
+    </div>
+    <!-- Baro Switch -->
+    <div
+      v-if="flight?.fixes && flight?.fixes[0].pressureAltitude"
+      id="altSwitchCollapse"
+      class="collapse container"
+    >
+      <div class="form-check form-switch mb-3">
+        <input
+          id="flexSwitchCheckChecked"
+          v-model="pressureAltToggle"
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          :disabled="airbuddiesInUse"
+        />
+        <label class="form-check-label" for="flexSwitchCheckChecked">
+          Barometrische Höhe anzeigen (ISA)
+        </label>
+      </div>
+    </div>
+    <!-- METAR -->
+    <div class="container"><FlightMetarStats /></div>
+  </div>
+</template>
 
 <style scoped></style>

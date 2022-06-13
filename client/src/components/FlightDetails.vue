@@ -160,35 +160,7 @@
         </li>
       </ul>
     </span>
-    <!-- METAR Collapse -->
-    <div
-      v-if="flight?.flightMetarData"
-      id="metarDetailsCollapse"
-      class="collapse mt-2"
-    >
-      <div class="row">
-        <div class="col-12">
-          <p>
-            <i class="bi bi-info-circle"> Beta Funktion: </i><br />
-            Zeigt die METAR Daten der nächstgelegenen Flughäfen über den Verlauf
-            des Fluges an. So bekommt man ein ungefähres Bild der tatsächlichen
-            meteorologischen Verhältnisse. In Zukunft werden diese noch besser
-            aufbereitet.
-            <a href="https://de.wikipedia.org/wiki/METAR" target="_blank"
-              >METAR erklärt (Wikipedia)</a
-            >
-          </p>
 
-          <table id="metarDetailsTable" class="table table-sm">
-            <tbody>
-              <tr v-for="metar in flight?.flightMetarData">
-                <td>{{ decodeMetar(metar) }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
     <!-- Flight Details Collapse -->
     <div id="flightDetailsCollapse" class="collapse mt-2">
       <div class="row">
@@ -251,6 +223,14 @@
         </div>
       </div>
     </div>
+    <!-- METAR Collapse -->
+    <div
+      v-if="flight?.flightMetarData"
+      id="metarDetailsCollapse"
+      class="collapse mt-2"
+    >
+      <code v-for="metar in flight.flightMetarData">{{ metar }}<br /></code>
+    </div>
   </section>
 </template>
 
@@ -263,7 +243,6 @@ import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 import ApiService from "@/services/ApiService";
 import useSwal from "@/composables/useSwal";
-import metarParser from "metar-parser";
 
 const { getUserId, hasElevatedRole } = useAuth();
 const { flight } = useFlight();
@@ -324,26 +303,6 @@ const isHikeAndFly = computed((): boolean => {
   if (!flight.value?.hikeAndFly) return false;
   return flight.value?.hikeAndFly > 0;
 });
-
-const decodeMetar = (metar) => {
-  const decoded = metarParser(metar);
-  const time = decoded.time;
-  const wind = decoded.wind;
-  const altimeter = decoded.altimeter;
-  // return decoded;
-  return (
-    time.hour +
-    ":" +
-    time.minute +
-    "h Wind: " +
-    wind.direction +
-    " " +
-    wind.speedKt * 3.6 +
-    " km/h" +
-    " QNH: " +
-    altimeter.millibars
-  );
-};
 </script>
 
 <style scoped></style>

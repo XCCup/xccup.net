@@ -47,7 +47,11 @@ export const options = (cb: Function): ChartOptions<"line"> => ({
         label: (context: TooltipItem<"line">) => {
           // Skip GND dataset and make track 1 => index 0
           if (context.datasetIndex === 0) return "";
-          updatePosition(context.datasetIndex - 1, context.dataIndex);
+          updatePosition(
+            context.datasetIndex - 1,
+            context.dataIndex,
+            context.parsed.x
+          );
           cb(context);
           return "";
         },

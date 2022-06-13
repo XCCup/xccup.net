@@ -43,7 +43,7 @@ import { tileOptionsSatellite, tileOptions } from "../config/mapbox";
 import type { Airspace } from "@/types/Airspace";
 import type { FlightTurnpoint } from "@/types/Flight";
 
-import useMapPosition from "@/composables/useMapPosition";
+import useMapPosition, { type MapPosition } from "@/composables/useMapPosition";
 const { getPositions } = useMapPosition();
 
 let landingMarker = L.icon({
@@ -274,7 +274,7 @@ const centerMapOnClickListener = () => {
 };
 document.addEventListener("centerMapOnClick", centerMapOnClickListener);
 
-const updateMarkerPosition = (position: number[]) => {
+const updateMarkerPosition = (position: MapPosition[]) => {
   if (!map) return;
   position.forEach((pos, index) => {
     const setIndex = index;
@@ -282,7 +282,7 @@ const updateMarkerPosition = (position: number[]) => {
     const marker = positionMarkers.value[setIndex];
 
     if (!trackLog) return;
-    const logPosition = trackLog[pos];
+    const logPosition = trackLog[pos.position];
     if (logPosition && marker) {
       marker.setLatLng(logPosition.position);
     }
