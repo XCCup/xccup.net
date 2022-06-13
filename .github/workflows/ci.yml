@@ -58,6 +58,7 @@ jobs:
 
       - name: 🧪 Install cypress
         run: yarn cypress@latest install
+        working-directory: ./client
         #TODO: Fix cypress caching issue and remove the addional install
 
       - name: 🏃‍♀️ Cypress run
