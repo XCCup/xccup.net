@@ -41,11 +41,12 @@ jobs:
         run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
         working-directory: ./server
 
-      - name: "Clear cypress cache"
-        run: npx cypress cache clear
-
       - name: 💻 Install and build frontend
         run: yarn install --frozen-lockfile && yarn build-local
+        working-directory: ./client
+
+      - name: "Clear cypress cache"
+        run: npx cypress cache clear
         working-directory: ./client
 
       - name: 🖨 Print current server log before testing (just for debugging)
