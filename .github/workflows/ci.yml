@@ -52,8 +52,11 @@ jobs:
         working-directory: ./client
         run: rm tsconfig.json
 
+      - name: 🧪 Clear cypress cache
+        run: npx cypress cache clear
+
       - name: 🧪 Install cypress
-        run: npx cypress install
+        run: npx cypress@latest install
         # TODO: Fix cypress caching issue and remove the addional install
 
       - name: 🏃‍♀️ Cypress run
