@@ -57,7 +57,7 @@ jobs:
       # TODO: Fix cypress caching issue and remove the addional install
 
       - name: 🏃‍♀️ Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           start: docker-compose run --service-ports --rm client serve
           config-file: cypress.config.js
