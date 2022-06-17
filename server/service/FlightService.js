@@ -454,7 +454,7 @@ const flightService = {
   },
 
   /**
-   * Fetches METAR data for every 30 minutes of the flight from the nearest
+   * Fetches METAR data for every 20 minutes of the flight from the nearest
    * METAR station for the given fix and saves it to the db.
    *
    * @param {Object} flight The db object of the flight
@@ -466,8 +466,7 @@ const flightService = {
       const METAR_URL = config.get("metarUrl");
       const METAR_API_KEY = config.get("metarApiKey");
 
-      // Get METAR data for every 30 minutes of the flight
-      const interval = 60 * 30 * 1000; // 1 hour
+      const interval = 60 * 20 * 1000; // 20 minutes
       let i = 0;
       const lastFix = fixes.length - 1;
 
@@ -505,7 +504,8 @@ const flightService = {
 
       const res = await axios.all(axiosPromises);
       const metarData = res.map((el) => {
-        if (!el.data || el.data.data.length == 0) return;
+        if (!el.data || el.data.data.length == 0)
+          throw new Error("METAR request returned null");
         return el.data.data[0];
       });
       flight.flightMetarData = metarData;
