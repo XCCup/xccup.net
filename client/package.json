@@ -8,8 +8,8 @@
     "build": "vue-tsc --noEmit && vite build",
     "build-local": "vue-tsc --noEmit && vite build --mode staging",
     "serve": "vite preview --host",
-    "cypress-gui": "cypress open --config-file=cypress.config.js",
-    "cypress-headless": "cypress run --config-file=cypress.config.js",
+    "cypress-gui": "cypress open",
+    "cypress-headless": "cypress run",
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix src",
     "typecheck": "vue-tsc --noEmit",
     "format": "prettier .  --write"
