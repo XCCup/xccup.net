@@ -20,9 +20,14 @@ const decodedMetars = computed(() => {
 });
 
 function decodeMetars(data: string[]): METAR[] {
-  return data.map((metar): METAR => {
-    return metarParser(metar);
-  });
+  try {
+    return data.map((metar): METAR => {
+      return metarParser(metar);
+    });
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }
 
 const currentMetar = computed(() => {
