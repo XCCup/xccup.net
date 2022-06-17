@@ -1,3 +1,4 @@
+// Why do we use "require" instead of "import": https://github.com/cypress-io/cypress/issues/22038
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
