@@ -15,7 +15,7 @@ describe("check flight upload page", () => {
     cy.location("pathname").should("eq", "/login");
   });
 
-  it("test upload flight", () => {
+  it.only("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const flightReport = "This is a flight report.";
     const photoCaption = `Super tolles "Bild" 🚀 <a href=""'>foo</a>`;
@@ -119,6 +119,9 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=flight-report]")
       .find("p")
       .should("have.text", flightReport);
+
+    cy.get("[data-cy=METAR-Stats]").should("not.exist");
+    cy.get("#metarButton").should("not.exist");
 
     cy.get("#photo-0")
       .find("img")
@@ -434,27 +437,37 @@ describe("check flight upload page", () => {
   });
 
   it("test upload flight and get metar data", () => {
-    // const igcFileName = "104km.igc";
-    // const expectedTakeoff = "Hoher Meissner Uengsterode";
-    // const expectedMetar =
-    //   "METAR EDVK 221050Z 35006KT 320V030 9999 SCT041 17/08 Q1016";
-    // cy.loginNormalUser();
-    // cy.get("button").contains("Flug hochladen").click();
-    // cy.fixture(igcFileName).then((fileContent) => {
-    //   cy.get('input[type="file"]#igcUploadForm').attachFile({
-    //     fileContent: fileContent.toString(),
-    //     fileName: igcFileName,
-    //     mimeType: "text/plain",
-    //   });
-    // });
-    // // Increase timeout because calclation takes some time
-    // cy.get('input[type="text"]', {
-    //   timeout: 40000,
-    // }).should("have.value", expectedTakeoff);
-    // cy.get("#acceptTermsCheckbox").check();
-    // cy.get("Button").contains("Streckenmeldung absenden").click();
-    // // Expect to be redirected to flight view after submitting
-    // cy.get("#metarDetailsTable").find("td").contains(expectedMetar);yarn o
+    const igcFileName = "104km.igc";
+    const expectedTakeoff = "Hoher Meissner Uengsterode";
+    const expectedFirstMetar =
+      "METAR EDVK 221050Z 35006KT 320V030 9999 SCT041 17/08 Q1016";
+    const expectedLastMetar =
+      "METAR EDVK 221550Z VRB03KT 9999 FEW048 20/08 Q1014";
+    cy.loginNormalUser();
+    cy.get("button").contains("Flug hochladen").click();
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+    // Increase timeout because calclation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff);
+    cy.get("#acceptTermsCheckbox").check();
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+    // Expect to be redirected to flight view after submitting
+
+    cy.get("[data-cy=METAR-Stats]").contains("Wetter (Beta)");
+    cy.get("#metarButton").click();
+    cy.get("#metarDetailsCollapse > :nth-child(1)").contains(
+      expectedFirstMetar
+    );
+    cy.get("#metarDetailsCollapse > :nth-child(19)").contains(
+      expectedLastMetar
+    );
   });
 
   // // This test works only if the overwrite in FlightController:checkIfFlightIsModifiable is disabled/removed
