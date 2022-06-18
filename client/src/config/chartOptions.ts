@@ -1,6 +1,8 @@
 import { ref } from "vue";
 import useMapPosition from "@/composables/useMapPosition";
 import type { ChartOptions, TooltipItem } from "chart.js";
+import type { BaroTooltipItem } from "@/composables/useMapPosition";
+
 const { updatePosition } = useMapPosition();
 
 const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
@@ -44,14 +46,9 @@ export const options: ChartOptions<"line"> = {
       // even if the tooltip is disabled
       external: function () {},
       callbacks: {
-        label: (context: TooltipItem<"line">) => {
-          // Skip GND dataset and make track 1 => index 0
+        label: (context: BaroTooltipItem) => {
           if (context.datasetIndex === 0) return "";
-          updatePosition(
-            context.datasetIndex - 1,
-            context.dataIndex,
-            context.parsed.x
-          );
+          updatePosition(context);
           return "";
         },
       },

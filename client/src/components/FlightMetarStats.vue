@@ -100,7 +100,11 @@ function findClosestMetar(
 }
 </script>
 <template>
-  <div v-if="decodedMetars?.length" class="row row-cols-2 row-cols-md-4 my-2">
+  <div
+    v-if="decodedMetars?.length"
+    class="row row-cols-2 row-cols-md-4 my-2"
+    data-cy="METAR-Stats"
+  >
     <div class="col">
       <a
         href="#"
@@ -128,6 +132,5 @@ function findClosestMetar(
       {{ decodeClouds(currentMetar?.clouds[0]?.code) }}
     </div>
   </div>
-  {{ currentMetar }}
 </template>
 <style></style>

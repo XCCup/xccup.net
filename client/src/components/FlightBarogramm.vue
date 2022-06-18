@@ -33,18 +33,11 @@ import useAirbuddies from "@/composables/useAirbuddies";
 import "chartjs-adapter-luxon";
 import { Collapse } from "bootstrap";
 import { options } from "@/config/chartOptions";
+import useMapPosition from "@/composables/useMapPosition";
 
 // import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
 
 import type { ChartConfiguration } from "chart.js";
-interface PositionDetails {
-  gpsAltitude?: number;
-  pressureAltitude?: number;
-  speed?: number;
-  time?: string;
-  climb?: number;
-  name?: string;
-}
 
 Chart.register(
   LineElement,
@@ -62,6 +55,7 @@ Chart.register(
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
+const { getPositions } = useMapPosition();
 
 // UI Elements
 const pressureAltToggle = ref(false);
@@ -78,12 +72,12 @@ const usePressureAlt = computed(() =>
 
 const altitudeToShow = computed(() => {
   if (usePressureAlt.value && !airbuddiesInUse.value)
-    return positionDetails.value[1]?.pressureAltitude
-      ? Math.floor(positionDetails.value[1]?.pressureAltitude)
+    return getPositions.value[0]?.positionDetails?.pressureAltitude
+      ? Math.floor(getPositions.value[0]?.positionDetails?.pressureAltitude)
       : 0;
 
-  return positionDetails.value[1]?.gpsAltitude
-    ? Math.floor(positionDetails.value[1]?.gpsAltitude)
+  return getPositions.value[0]?.positionDetails?.gpsAltitude
+    ? Math.floor(getPositions.value[0]?.positionDetails?.gpsAltitude)
     : 0;
 });
 
@@ -130,9 +124,6 @@ watchEffect(() => {
     }
   }
 });
-
-// Position details
-const positionDetails = ref<PositionDetails[]>([]);
 
 // Chart setup
 type ChartType = "line";
@@ -181,8 +172,9 @@ const config: ChartConfiguration<ChartType> = {
         <div class="col">
           <i class="bi bi-arrows-expand"></i>
           {{
-            positionDetails[1]?.speed
-              ? Math.round(positionDetails[1]?.climb ?? 0 * 10) / 10
+            getPositions[0]?.positionDetails?.speed
+              ? Math.round(getPositions[0]?.positionDetails?.climb ?? 0 * 10) /
+                10
               : "0"
           }}
           m/s
@@ -190,14 +182,15 @@ const config: ChartConfiguration<ChartType> = {
         <div class="col">
           <i class="bi bi-speedometer2"></i>
           {{
-            positionDetails[1]?.speed
-              ? Math.floor(positionDetails[1]?.speed)
+            getPositions[0]?.positionDetails?.speed
+              ? Math.floor(getPositions[0]?.positionDetails?.speed)
               : "0"
           }}
           km/h
         </div>
         <div class="col">
-          <i class="bi bi-clock"></i> {{ positionDetails[1]?.time }}
+          <i class="bi bi-clock"></i>
+          {{ getPositions[0]?.positionDetails?.time }}
         </div>
       </div>
     </div>
