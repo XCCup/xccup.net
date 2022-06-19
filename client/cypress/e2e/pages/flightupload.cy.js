@@ -227,7 +227,9 @@ describe("check flight upload page", () => {
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
     // Expect to be redirected to flight view after submitting
-    cy.get("[data-cy=airspace-comment]")
+    cy.get("[data-cy=airspace-comment]", {
+      timeout: 10000,
+    })
       .find("p")
       .should("have.text", airspaceComment);
   });
