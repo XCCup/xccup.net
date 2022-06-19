@@ -82,7 +82,18 @@ const config = convict({
     default: "https://next.xccup.net/dicebear/",
     env: "DICEBEAR_URL",
   },
-
+  metarUrl: {
+    doc: "The URL to the METAR data API",
+    format: noEmptyString,
+    default: "https://metar.lurb.org/metar",
+    env: "METAR_URL",
+  },
+  metarApiKey: {
+    doc: "The API Key to the METAR data API",
+    format: String,
+    default: "qwertz12345",
+    env: "METAR_API_KEY",
+  },
   jwtLogin: {
     doc: "The login token for the jwt authentication mechanism",
     format: check128Hex,

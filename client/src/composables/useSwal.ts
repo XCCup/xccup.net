@@ -37,9 +37,19 @@ export default () => {
     });
   };
 
+  const showInfoBox = async (text: string, title?: string, footer?: string) => {
+    await Swal.fire({
+      icon: "question",
+      title,
+      text,
+      footer,
+    });
+  };
+
   return {
     showSuccessToast,
     showFailedToast,
     showSuccessAlert,
+    showInfoBox,
   };
 };

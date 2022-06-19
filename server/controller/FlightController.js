@@ -541,6 +541,7 @@ async function runChecksStartCalculationsStoreFixes(
     detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
+  await service.getMetarData(flightDbObject, fixes);
 
   const result = await service.update(flightDbObject);
 

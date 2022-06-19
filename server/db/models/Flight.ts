@@ -13,6 +13,7 @@ export interface FlightAttributes {
   flightDistanceFree?: number;
   flightDistanceFlat?: number;
   flightDistanceFAI?: number;
+  flightMetarData?: string[];
   flightType?: FlightType;
   flightStatus?: FlightStatus;
   flightTurnpoints?: FlightTurnpoint[];
@@ -118,6 +119,9 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
       type: DataTypes.STRING,
     },
     flightTurnpoints: {
+      type: DataTypes.JSON,
+    },
+    flightMetarData: {
       type: DataTypes.JSON,
     },
     airtime: {

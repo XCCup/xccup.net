@@ -1,62 +1,3 @@
-<template>
-  <!-- Position details -->
-  <div>
-    <div id="positionDetailsCollapse" class="collapse container">
-      <div class="row row-cols-2 row-cols-md-4 my-2">
-        <div class="col">
-          <i class="bi bi-cloud-upload"></i>
-          {{ altitudeToShow }} m
-        </div>
-        <div class="col">
-          <i class="bi bi-arrows-expand"></i>
-          {{
-            positionDetails[1]?.speed
-              ? Math.round(positionDetails[1]?.climb * 10) / 10
-              : "0"
-          }}
-          m/s
-        </div>
-        <div class="col">
-          <i class="bi bi-speedometer2"></i>
-          {{
-            positionDetails[1]?.speed
-              ? Math.floor(positionDetails[1]?.speed)
-              : "0"
-          }}
-          km/h
-        </div>
-        <div class="col">
-          <i class="bi bi-clock"></i> {{ positionDetails[1]?.time }}
-        </div>
-      </div>
-    </div>
-
-    <!-- Baro -->
-    <div class="container mt-3">
-      <canvas ref="ctx"></canvas>
-    </div>
-    <div
-      v-if="flight?.fixes[0].pressureAltitude"
-      id="altSwitchCollapse"
-      class="collapse container"
-    >
-      <div class="form-check form-switch mb-3">
-        <input
-          id="flexSwitchCheckChecked"
-          v-model="pressureAltToggle"
-          class="form-check-input"
-          type="checkbox"
-          role="switch"
-          :disabled="airbuddiesInUse"
-        />
-        <label class="form-check-label" for="flexSwitchCheckChecked">
-          Barometrische Höhe anzeigen (ISA)
-        </label>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 //  This helps:
 // https://medium.com/risan/vue-chart-component-with-chart-js-db85a2d21288
@@ -92,27 +33,11 @@ import useAirbuddies from "@/composables/useAirbuddies";
 import "chartjs-adapter-luxon";
 import { Collapse } from "bootstrap";
 import { options } from "@/config/chartOptions";
+import useMapPosition from "@/composables/useMapPosition";
 
 // import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
 
-import type { TooltipItem, ChartConfiguration } from "chart.js";
-interface PositionDetails {
-  gpsAltitude?: number;
-  pressureAltitude?: number;
-  speed?: number;
-  time?: string;
-  climb?: number;
-  name?: string;
-}
-
-interface BaroTooltipItem extends TooltipItem<"line"> {
-  raw: {
-    speed?: number;
-    gpsAltitude?: number;
-    pressureAltitude?: number;
-    climb?: number;
-  };
-}
+import type { ChartConfiguration } from "chart.js";
 
 Chart.register(
   LineElement,
@@ -130,6 +55,7 @@ Chart.register(
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
+const { getPositions } = useMapPosition();
 
 // UI Elements
 const pressureAltToggle = ref(false);
@@ -146,12 +72,12 @@ const usePressureAlt = computed(() =>
 
 const altitudeToShow = computed(() => {
   if (usePressureAlt.value && !airbuddiesInUse.value)
-    return positionDetails.value[1]?.pressureAltitude
-      ? Math.floor(positionDetails.value[1]?.pressureAltitude)
+    return getPositions.value[0]?.positionDetails?.pressureAltitude
+      ? Math.floor(getPositions.value[0]?.positionDetails?.pressureAltitude)
       : 0;
 
-  return positionDetails.value[1]?.gpsAltitude
-    ? Math.floor(positionDetails.value[1]?.gpsAltitude)
+  return getPositions.value[0]?.positionDetails?.gpsAltitude
+    ? Math.floor(getPositions.value[0]?.positionDetails?.gpsAltitude)
     : 0;
 });
 
@@ -199,19 +125,6 @@ watchEffect(() => {
   }
 });
 
-// Position details
-const positionDetails = ref<PositionDetails[]>([]);
-const updatePositionDetails = (context: BaroTooltipItem) => {
-  positionDetails.value[context.datasetIndex] = {
-    speed: context.raw.speed,
-    gpsAltitude: context.raw.gpsAltitude,
-    pressureAltitude: context.raw.pressureAltitude,
-    climb: context.raw.climb,
-    name: context.dataset.label,
-    time: context.label,
-  };
-};
-
 // Chart setup
 type ChartType = "line";
 const chart = shallowRef<Chart<ChartType>>();
@@ -244,8 +157,72 @@ const config: ChartConfiguration<ChartType> = {
   data: {
     datasets: chartData.value,
   },
-  options: options(updatePositionDetails),
+  options: options,
 };
 </script>
+<template>
+  <!-- TODO: Load initial values for time, height, windspeed, air pressure when loading site -->
+  <!-- Position details -->
+  <div>
+    <div id="positionDetailsCollapse" class="collapse container">
+      <div class="row row-cols-2 row-cols-md-4 my-2">
+        <div class="col">
+          <i class="bi bi-cloud-upload"></i>
+          {{ altitudeToShow }} m
+        </div>
+        <div class="col">
+          <i class="bi bi-arrows-expand"></i>
+          {{
+            getPositions[0]?.positionDetails?.speed
+              ? Math.round(getPositions[0]?.positionDetails?.climb ?? 0 * 10) /
+                10
+              : "0"
+          }}
+          m/s
+        </div>
+        <div class="col">
+          <i class="bi bi-speedometer2"></i>
+          {{
+            getPositions[0]?.positionDetails?.speed
+              ? Math.floor(getPositions[0]?.positionDetails?.speed)
+              : "0"
+          }}
+          km/h
+        </div>
+        <div class="col">
+          <i class="bi bi-clock"></i>
+          {{ getPositions[0]?.positionDetails?.time }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Baro -->
+    <div class="container mt-3">
+      <canvas ref="ctx"></canvas>
+    </div>
+    <!-- Baro Switch -->
+    <div
+      v-if="flight?.fixes && flight?.fixes[0].pressureAltitude"
+      id="altSwitchCollapse"
+      class="collapse container"
+    >
+      <div class="form-check form-switch mb-3">
+        <input
+          id="flexSwitchCheckChecked"
+          v-model="pressureAltToggle"
+          class="form-check-input"
+          type="checkbox"
+          role="switch"
+          :disabled="airbuddiesInUse"
+        />
+        <label class="form-check-label" for="flexSwitchCheckChecked">
+          Barometrische Höhe anzeigen (ISA)
+        </label>
+      </div>
+    </div>
+    <!-- METAR -->
+    <div class="container"><FlightMetarStats /></div>
+  </div>
+</template>
 
 <style scoped></style>

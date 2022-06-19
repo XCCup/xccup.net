@@ -41,6 +41,7 @@ declare module '@vue/runtime-core' {
     FlightDetailsPilot: typeof import('./src/components/FlightDetailsPilot.vue')['default']
     FlightInfoIcons: typeof import('./src/components/FlightInfoIcons.vue')['default']
     FlightMap: typeof import('./src/components/FlightMap.vue')['default']
+    FlightMetarStats: typeof import('./src/components/FlightMetarStats.vue')['default']
     FlightPhotos: typeof import('./src/components/FlightPhotos.vue')['default']
     FlightReport: typeof import('./src/components/FlightReport.vue')['default']
     FlightShortSummary: typeof import('./src/components/FlightShortSummary.vue')['default']

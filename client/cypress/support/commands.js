@@ -132,7 +132,7 @@ Cypress.Commands.add(
           )
         ).data;
         if (data.message && data.message.includes(text)) break;
-        await delay(1500);
+        await delay(2000);
       }
 
       expect(data.message, `No message for ${receipentMail} found`).to.exist;

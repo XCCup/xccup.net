@@ -17,7 +17,7 @@
     </div>
   </div>
   <div v-else><h5 class="text-danger">Emoji Picker disabled</h5></div>
-  <div :class="$attrs.placeholder?.length ? 'form-floating' : ''">
+  <div :class="placeholderIsSet ? 'form-floating' : ''">
     <textarea
       id="textarea"
       ref="ta"
@@ -30,14 +30,14 @@
       @input="onInput(($event.target as HTMLInputElement).value)"
     >
     </textarea>
-    <label v-if="$attrs.placeholder?.length" for="textarea">{{
+    <label v-if="placeholderIsSet" for="textarea">{{
       $attrs.placeholder
     }}</label>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, useAttrs, computed } from "vue";
 import { VuemojiPicker } from "vuemoji-picker";
 import useAuth from "@/composables/useAuth";
 import type { EmojiClickEventDetail } from "vuemoji-picker";
@@ -50,6 +50,13 @@ const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER === "true";
 const emit = defineEmits(["update:modelValue", "change"]);
 
 const props = defineProps<{ modelValue: string }>();
+const attrs = useAttrs();
+
+const placeholderIsSet = computed(() => {
+  if (typeof attrs.placeholder == "string" && attrs.placeholder.length)
+    return true;
+  return false;
+});
 
 // Sanitize textarea from male boomer-speech
 const onInput = (text: string) => {
