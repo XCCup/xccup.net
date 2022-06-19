@@ -28,6 +28,10 @@ export interface BaroTooltipItem extends TooltipItem<"line"> {
   };
 }
 
+/** Updates the map position state and extracts the needed data from the
+ * context of the baro hover callback. GND dataset (index: 0) is skipped as
+ * is it not needed. IGC track 1 becomes index: 0 (context.datasetIndex - 1)
+ */
 const update = throttle((context: BaroTooltipItem) => {
   state.value[context.datasetIndex - 1] = {
     position: context.dataIndex,
@@ -47,7 +51,6 @@ export default () => {
   const getPositions = computed(() => state.value);
 
   const updatePosition = (context: BaroTooltipItem) => {
-    // Skip GND dataset and make track 1 => index 0 (context.datasetIndex - 1)
     update(context);
   };
 
