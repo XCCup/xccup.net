@@ -100,6 +100,17 @@
     >
       Details anzeigen
     </button>
+    <!-- METAR Button -->
+    <button
+      v-if="flight?.flightMetarData"
+      id="metarButton"
+      class="btn btn-primary btn-sm me-2 dropdown-toggle mt-1"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#metarDetailsCollapse"
+    >
+      METAR anzeigen
+    </button>
     <!-- Download .igc -->
     <a :href="igcDownloadUrl"
       ><button type="button" class="btn btn-sm btn-outline-primary me-2 mt-1">
@@ -149,6 +160,7 @@
         </li>
       </ul>
     </span>
+
     <!-- Flight Details Collapse -->
     <div id="flightDetailsCollapse" class="collapse mt-2">
       <div class="row">
@@ -210,6 +222,14 @@
           </table>
         </div>
       </div>
+    </div>
+    <!-- METAR Collapse -->
+    <div
+      v-if="flight?.flightMetarData"
+      id="metarDetailsCollapse"
+      class="collapse mt-2"
+    >
+      <code v-for="metar in flight.flightMetarData">{{ metar }}<br /></code>
     </div>
   </section>
 </template>

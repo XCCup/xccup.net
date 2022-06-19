@@ -15,6 +15,7 @@ export interface Flight {
   flightType: string;
   flightStatus: string;
   flightTurnpoints: FlightTurnpoint[];
+  flightMetarData?: string[];
   airtime: number;
   takeoffTime: string;
   landingTime: string;

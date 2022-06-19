@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [17.x]
+        node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: 👀 Checkout repo
@@ -30,8 +30,15 @@ jobs:
         run: docker-compose -f docker-compose-ci.yml run --rm yarn test
         working-directory: ./server
 
+      - name: 🕵️ Add secrets to ENV
+        run: >
+          echo "MAIL_SERVICE_USER=${{ secrets.ETHERNAL_MAIL_USER }}" >> ./.env.ci && 
+          echo "MAIL_SERVICE_PASSWORD=${{ secrets.ETHERNAL_MAIL_PASS }}" >> ./.env.ci &&
+          echo "METAR_API_KEY=${{ secrets.METAR_API_KEY }}" >> ./.env.ci
+        working-directory: ./server
+
       - name: 🐳 Start Docker Backend Environment
-        run: echo "MAIL_SERVICE_USER=${{ secrets.ETHERNAL_MAIL_USER }}" >> ./.env.ci && echo "MAIL_SERVICE_PASSWORD=${{ secrets.ETHERNAL_MAIL_PASS }}" >> ./.env.ci && docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
+        run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
         working-directory: ./server
 
       - name: 📝 List all databases (just for debugging)
@@ -54,10 +61,10 @@ jobs:
 
       - name: 🧪 Install cypress
         run: npx cypress install
-        # TODO: Fix cypress caching issue and remove the addional install
+      # TODO: Fix cypress caching issue and remove the addional install
 
       - name: 🏃‍♀️ Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           start: docker-compose run --service-ports --rm client serve
           wait-on: http://localhost:4173
