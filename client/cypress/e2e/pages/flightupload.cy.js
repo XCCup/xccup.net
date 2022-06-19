@@ -173,7 +173,9 @@ describe("check flight upload page", () => {
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
     // Wait till redirection has happend
-    cy.get("[data-cy=flight-details-pilot]");
+    cy.get("[data-cy=flight-details-pilot]", {
+      timeout: 10000,
+    });
 
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
