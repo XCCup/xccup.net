@@ -161,6 +161,7 @@ const config: ChartConfiguration<ChartType> = {
 };
 </script>
 <template>
+  <!-- TODO: Load initial values for time, height, windspeed, air pressure when loading site -->
   <!-- Position details -->
   <div>
     <div id="positionDetailsCollapse" class="collapse container">

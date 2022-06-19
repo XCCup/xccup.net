@@ -454,6 +454,8 @@ const flightService = {
   },
 
   /**
+   * TODO: Extract to own file and aggreate maybe all "flight utils" in own directory
+   *
    * Fetches METAR data for every 20 minutes of the flight from the nearest
    * METAR station for the given fix and saves it to the db.
    *
@@ -512,7 +514,7 @@ const flightService = {
       await flight.save();
     } catch (error) {
       // TODO: Do somethig? Like a notification?
-      logger.debug("FS: METAR query error: " + error);
+      logger.error("FS: METAR query error: " + error);
     }
   },
 
