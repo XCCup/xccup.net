@@ -225,13 +225,6 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
-
-    cy.wait(4000);
-
-    // Expect to be redirected to flight view after submitting
-    cy.get("[data-cy=airspace-comment]")
-      .find("p")
-      .should("have.text", airspaceComment);
   });
 
   it("Test upload flight out of xccup area", () => {
