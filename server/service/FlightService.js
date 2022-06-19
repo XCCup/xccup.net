@@ -512,7 +512,7 @@ const flightService = {
       await flight.save();
     } catch (error) {
       // TODO: Do somethig? Like a notification?
-      console.log(error);
+      logger.debug("FS: METAR query error: " + error);
     }
   },
 
