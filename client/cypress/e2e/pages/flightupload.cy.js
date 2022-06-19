@@ -146,10 +146,10 @@ describe("check flight upload page", () => {
   });
 
   it("test upload flight twice", () => {
-    const igcFileName = "47188_J3USaNi1.igc";
-    const airspaceComment = "CTR Büchel inaktiv";
+    const igcFileName = "74931_2022-06-18_14.11_Kluesserath.igc";
     const expectedError =
       "Dieser Flug ist bereits vorhanden. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an info@xccup.net";
+    const expectedLanding = "Klüsserath";
 
     cy.loginNormalUser();
 
@@ -166,19 +166,14 @@ describe("check flight upload page", () => {
     // Increase timeout because calclation takes some time
     cy.get('input[type="text"]', {
       timeout: 40000,
-    }).should("have.value", "Serrig");
+    }).should("have.value", expectedLanding);
 
     cy.get("#acceptTermsCheckbox").check();
 
-    // This flight contains a airspace violation. Unless the user has explained this violation the commit button should be disabled.
-    cy.get("Button").contains("Streckenmeldung absenden").should("be.disabled");
-    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
-
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
-    // TODO: This wait is far from perfect. We can't be sure that that the calculation has really finished. Problem: How to do an retry on cy.visit or cy.request?
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(5000);
+    // Wait till redirection has happend
+    cy.get("[data-cy=flight-details-pilot]");
 
     // Add same flight again
     cy.get("button").contains("Flug hochladen").click();
@@ -196,6 +191,43 @@ describe("check flight upload page", () => {
     cy.get("#upload-error", {
       timeout: 10000,
     }).should("have.text", expectedError);
+  });
+
+  it("test upload flight with airspace violation", () => {
+    const igcFileName = "47188_J3USaNi1.igc";
+    const airspaceComment = "CTR Büchel inaktiv";
+    const expectedError = "Dieser Flug enthält eine Luftraumverletzung";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calclation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", "Serrig");
+    cy.get("p.text-danger").should("contain.text", expectedError);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    // This flight contains a airspace violation. Unless the user has explained this violation the commit button should be disabled.
+    cy.get("Button").contains("Streckenmeldung absenden").should("be.disabled");
+    cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
+
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=airspace-comment]")
+      .find("p")
+      .should("have.text", airspaceComment);
   });
 
   it("Test upload flight out of xccup area", () => {
@@ -336,7 +368,7 @@ describe("check flight upload page", () => {
     const expectApiRespone2 =
       "Dein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
 
-    cy.fixture(igcFileName).then(async (fileContent) => {
+    cy.fixture(igcFileName).then({ timeout: 10000 }, async (fileContent) => {
       const payload = {
         user: "blackhole+melinda@xccup.net",
         pass: "PW_MelindaTremblay",
@@ -397,7 +429,7 @@ describe("check flight upload page", () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectedStatus = 401;
 
-    cy.fixture(igcFileName).then(async (fileContent) => {
+    cy.fixture(igcFileName).then({ timeout: 10000 }, async (fileContent) => {
       const payload = {
         user: "blackhole+melinda@xccup.net",
         pass: "WrongPassword",
@@ -421,7 +453,7 @@ describe("check flight upload page", () => {
   it("Test upload by MaxPunkte manipulated valid igc file with leonardo interface", () => {
     const igcFileName = "MaxPunkte_manipulated.igc";
     const expectApiRespone = "Manipulated IGC-File";
-    cy.fixture(igcFileName).then(async (fileContent) => {
+    cy.fixture(igcFileName).then({ timeout: 10000 }, async (fileContent) => {
       const payload = {
         user: "blackhole+melinda@xccup.net",
         pass: "PW_MelindaTremblay",

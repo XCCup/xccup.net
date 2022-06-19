@@ -122,7 +122,7 @@ Cypress.Commands.add("textareaIncludes", function (selector, text) {
 Cypress.Commands.add(
   "recipientReceivedEmailWithText",
   function (receipentMail, text) {
-    cy.wrap(null).then(async () => {
+    cy.wrap(null).then({ timeout: 7000 }, async () => {
       let data;
       // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
       for (let index = 0; index < 3; index++) {
