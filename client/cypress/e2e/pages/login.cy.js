@@ -3,7 +3,7 @@ describe("check login options", () => {
     cy.visit("/");
   });
 
-  it("login/logout normal user", () => {
+  it.only("login/logout normal user", () => {
     cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
 
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
