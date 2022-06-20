@@ -22,38 +22,42 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: 🖥 Install backend
-        run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
-        working-directory: ./server
+      # - name: 🖥 Install backend
+      #   run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
+      #   working-directory: ./server
 
-      - name: 🧪 Test backend
-        run: docker-compose -f docker-compose-ci.yml run --rm yarn test
-        working-directory: ./server
+      # - name: 🧪 Test backend
+      #   run: docker-compose -f docker-compose-ci.yml run --rm yarn test
+      #   working-directory: ./server
 
-      - name: 🕵️ Add secrets to ENV
-        run: >
-          echo "MAIL_SERVICE_USER=${{ secrets.ETHERNAL_MAIL_USER }}" >> ./.env.ci && 
-          echo "MAIL_SERVICE_PASSWORD=${{ secrets.ETHERNAL_MAIL_PASS }}" >> ./.env.ci &&
-          echo "METAR_API_KEY=${{ secrets.METAR_API_KEY }}" >> ./.env.ci
-        working-directory: ./server
+      # - name: 🕵️ Add secrets to ENV
+      #   run: >
+      #     echo "MAIL_SERVICE_USER=${{ secrets.ETHERNAL_MAIL_USER }}" >> ./.env.ci && 
+      #     echo "MAIL_SERVICE_PASSWORD=${{ secrets.ETHERNAL_MAIL_PASS }}" >> ./.env.ci &&
+      #     echo "METAR_API_KEY=${{ secrets.METAR_API_KEY }}" >> ./.env.ci
+      #   working-directory: ./server
 
-      - name: 🐳 Start Docker Backend Environment
-        run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
-        working-directory: ./server
+      # - name: 🐳 Start Docker Backend Environment
+      #   run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
+      #   working-directory: ./server
 
-      - name: 📝 List all databases (just for debugging)
-        run: sleep 10 && docker exec db psql -U xccup_user -l
+      # - name: 📝 List all databases (just for debugging)
+      #   run: sleep 10 && docker exec db psql -U xccup_user -l
 
-      - name: 🛠 Setup DB (enable PostGIS and set correct timezone)
-        run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
-        working-directory: ./server
+      # - name: 🛠 Setup DB (enable PostGIS and set correct timezone)
+      #   run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
+      #   working-directory: ./server
 
-      - name: 💻 Install and build frontend
-        run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
-        working-directory: ./client
+      # - name: 💻 Install and build frontend
+      #   run: docker-compose run --rm yarn install && docker-compose run --rm yarn build-local
+      #   working-directory: ./client
 
-      - name: 🖨 Print current server log before testing (just for debugging)
-        run: docker logs server
+      # - name: 🖨 Print current server log before testing (just for debugging)
+      #   run: docker logs server
+
+      - name: Check for "it.only" in test files
+        working-directory: ./client/cypress/e2e
+        run: grep -r "it.only" .
 
       - name: 🩹 Remove tsconfig.json from ./client # or cypress will fail… TODO: Why 🤷‍♂️
         working-directory: ./client
