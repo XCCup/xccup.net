@@ -57,7 +57,7 @@ jobs:
 
       - name: Check for "it.only" in test files
         working-directory: ./client/cypress/e2e
-        run: grep -r "it.only" .
+        run: ! grep -r "it.only" .
 
       - name: 🩹 Remove tsconfig.json from ./client # or cypress will fail… TODO: Why 🤷‍♂️
         working-directory: ./client
