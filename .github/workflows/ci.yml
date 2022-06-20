@@ -55,6 +55,13 @@ jobs:
       - name: 🖨 Print current server log before testing (just for debugging)
         run: docker logs server
 
+      - name: ☑️ Check for "it.only" in test files
+        working-directory: ./client/cypress/e2e
+        # Grep will exit with 1 if no matching line in any file was found
+        # Therefore we will invert the result of grep
+        # Exit codes !0 will fail the whole workflow
+        run: (! grep -r "it.only" .)
+
       - name: 🩹 Remove tsconfig.json from ./client # or cypress will fail… TODO: Why 🤷‍♂️
         working-directory: ./client
         run: rm tsconfig.json
