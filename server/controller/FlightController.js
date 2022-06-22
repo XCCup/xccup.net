@@ -12,6 +12,7 @@ const {
   OK,
   BAD_REQUEST,
   UNAUTHORIZED,
+  NO_CONTENT,
 } = require("../constants/http-status-constants");
 const { STATE, IGC_STORE } = require("../constants/flight-constants");
 const {
@@ -22,6 +23,7 @@ const {
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
+const { getMetarData } = require("../helper/METAR");
 const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
@@ -35,6 +37,7 @@ const {
   checkStringObjectNotEmptyNoEscaping,
   checkIsBoolean,
 } = require("./Validation");
+const { combineFixesProperties } = require("../helper/FlightFixUtils");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
 const config = require("../config/env-config").default;
@@ -353,6 +356,32 @@ router.get(
   }
 );
 
+// @desc Allows a admin to (re)fetch METAR data for a flight
+// @route POST /flights/admin/fetch-metar
+// @access Only moderators and admins
+router.get(
+  "/admin/fetch-metar/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+      const flight = await service.getById(req.params.id);
+      if (!flight) return res.sendStatus(NOT_FOUND);
+      // TODO: Why is it so complicated to get the fixes?
+      const fixes = combineFixesProperties(flight.fixes);
+
+      const data = await getMetarData(flight, fixes);
+
+      if (!data) return res.sendStatus(NO_CONTENT);
+      res.sendStatus(OK);
+    } catch (error) {
+      logger.error("FS: METAR query error: " + error);
+      next(error);
+    }
+  }
+);
+
 // @desc Allows to upload a flight via the leonardo format directly from a tracker
 // @route POST /flights/leonardo
 
@@ -541,7 +570,12 @@ async function runChecksStartCalculationsStoreFixes(
     detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
-  await service.getMetarData(flightDbObject, fixes);
+
+  try {
+    await getMetarData(flightDbObject, fixes);
+  } catch (error) {
+    logger.error("FS: METAR query error: " + error);
+  }
 
   const result = await service.update(flightDbObject);
 

@@ -1,5 +1,5 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
-import { FlightFixesAttributes } from "../../types/FlightFixesTypes";
+import { FlightFixesAttributes } from "../../types/FlightFixes";
 
 interface FlightFixesCreationAttributes
   extends Optional<FlightFixesAttributes, "id"> {}

@@ -69,6 +69,9 @@ export default {
   rerunFlightCalculation(flightId: string) {
     return apiClient.get("flights/admin/rerun/" + flightId);
   },
+  fetchMetar(flightId: string) {
+    return apiClient.get("flights/admin/fetch-metar/" + flightId);
+  },
   uploadIgcAdmin(data: FormData) {
     return apiClient.post("flights/admin/upload/", data);
   },

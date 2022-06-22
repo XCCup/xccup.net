@@ -2,7 +2,7 @@ import {
   FlightFixTimeAndHeights,
   FlightFixesAttributes,
   FlightFixesCombined,
-} from "../types/FlightFixesTypes";
+} from "../types/FlightFixes";
 import { LineString } from "geojson";
 import IGCParser from "../helper/igc-parser";
 

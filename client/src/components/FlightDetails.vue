@@ -158,6 +158,12 @@
             <BaseSpinner v-if="isCalculating" />
           </a>
         </li>
+        <li>
+          <a class="dropdown-item" href="#" @click.prevent="onReloadMetar">
+            <i class="bi bi-cloud mx-1"></i>METAR reload
+            <BaseSpinner v-if="isFetchingMetar" />
+          </a>
+        </li>
       </ul>
     </span>
 
@@ -248,8 +254,8 @@ const { getUserId, hasElevatedRole } = useAuth();
 const { flight } = useFlight();
 const { showSuccessToast, showSuccessAlert, showFailedToast } = useSwal();
 
+// Recalc flight
 const isCalculating = ref(false);
-
 const onRedoCalculation = async () => {
   try {
     isCalculating.value = true;
@@ -266,6 +272,26 @@ const onRedoCalculation = async () => {
     showFailedToast("Flug Berechnung gescheitert!");
   } finally {
     isCalculating.value = false;
+  }
+};
+
+// METAR
+const isFetchingMetar = ref(false);
+const onReloadMetar = async () => {
+  try {
+    isFetchingMetar.value = true;
+    if (!flight.value?.id) throw Error("No flight id");
+    const res = await ApiService.fetchMetar(flight.value.id);
+
+    if (res.status == 204) return showFailedToast("Keine METAR Daten gefunden");
+
+    if (res.status != 200) throw res.statusText;
+    showSuccessToast("METAR Daten erfolgreich abgefragt");
+  } catch (error) {
+    console.error(error);
+    showFailedToast("METAR Abfrage gescheitert! " + error);
+  } finally {
+    isFetchingMetar.value = false;
   }
 };
 
