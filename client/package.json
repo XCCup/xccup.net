@@ -20,7 +20,7 @@
     "@vueuse/integrations": "^8.7.5",
     "axios": "^0.27.2",
     "axios-jwt": "^1.8.0",
-    "bootstrap": "^5.1.3",
+    "bootstrap": "5.2.0-beta1",
     "bootstrap-dark-5": "^1.1.3",
     "bootstrap-icons": "^1.8.3",
     "chart.js": "^3.8.0",
