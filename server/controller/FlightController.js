@@ -255,7 +255,7 @@ router.post(
   }
 );
 
-// @desc Allows a admin to upload a flight for a user and bypass certain checks.
+// @desc Allows an admin to upload a flight for a user and bypass certain checks.
 // @route POST /flights/admin/upload
 // @access Only admins
 
@@ -324,7 +324,7 @@ router.post(
   }
 );
 
-// @desc Allows a admin to rerun a flight calculation; Which includes also the location and elevation requests
+// @desc Allows an admin to rerun a flight calculation; Which includes also the location and elevation requests
 // @route POST /flights/admin/rerun
 // @access Only moderators and admins
 
@@ -356,7 +356,7 @@ router.get(
   }
 );
 
-// @desc Allows a admin to (re)fetch METAR data for a flight
+// @desc Allows an admin to (re)fetch METAR data for a flight
 // @route POST /flights/admin/fetch-metar
 // @access Only moderators and admins
 router.get(
