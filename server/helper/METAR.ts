@@ -1,7 +1,7 @@
 import config from "../config/env-config";
 import axios from "axios";
 import type { FlightInstance } from "../db/models/Flight";
-import type { FlightFixesCombined } from "../types/FlightFixes";
+import type { FlightFixCombined } from "../types/FlightFixes";
 
 /** *
  * Fetches METAR data for every 20 minutes of the flight from the nearest
@@ -12,7 +12,7 @@ import type { FlightFixesCombined } from "../types/FlightFixes";
  */
 export async function getMetarData(
   flight: FlightInstance,
-  fixes?: FlightFixesCombined[]
+  fixes?: FlightFixCombined[]
 ) {
   const axiosPromises = [];
   const METAR_URL = config.get("metarUrl");
@@ -27,34 +27,27 @@ export async function getMetarData(
   const takeOffTime = new Date(fixes[0].timestamp).valueOf();
   const landingTime = new Date(fixes[lastFix].timestamp).valueOf();
 
+  function createMetarAxiosRequest(fix: FlightFixCombined) {
+    return axios.get(METAR_URL, {
+      params: {
+        lat: fix.latitude,
+        long: fix.longitude,
+        date: new Date(fix.timestamp).toISOString(),
+      },
+      headers: { "API-Key": METAR_API_KEY },
+    });
+  }
+
   fixes.forEach((fix) => {
     const fixTime = new Date(fix.timestamp).valueOf();
     if (fixTime > takeOffTime + i && fixTime < landingTime) {
-      axiosPromises.push(
-        axios.get(METAR_URL, {
-          params: {
-            lat: fix.latitude,
-            long: fix.longitude,
-            date: new Date(fix.timestamp).toISOString(),
-          },
-          headers: { "API-Key": METAR_API_KEY },
-        })
-      );
+      axiosPromises.push(createMetarAxiosRequest(fix));
       i += interval;
     }
   });
 
   // Last fix (landing)
-  axiosPromises.push(
-    axios.get(METAR_URL, {
-      params: {
-        lat: fixes[lastFix].latitude,
-        long: fixes[lastFix].longitude,
-        date: new Date(fixes[lastFix].timestamp).toISOString(),
-      },
-      headers: { "API-Key": METAR_API_KEY },
-    })
-  );
+  axiosPromises.push(createMetarAxiosRequest(fixes[lastFix]));
 
   const res = await axios.all(axiosPromises);
   try {
