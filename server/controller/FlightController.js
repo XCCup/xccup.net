@@ -343,7 +343,7 @@ router.get(
         flight,
         null,
         // TODO: Should the recalculation really always skip all checks?
-        { skipChecks: true }
+        { skipAllChecks: true }
       );
 
       res.json({
@@ -558,8 +558,8 @@ async function runChecksStartCalculationsStoreFixes(
     skipMidflightCheck = false,
   } = {}
 ) {
+  console.log(skipAllChecks, skipModifiableCheck);
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-
   // TODO: This is getting too complicated. Maybe add an extra service for the rerun calculation instead of all the ifs?
   if (!skipAllChecks && !skipManipulatedCheck)
     checkIfFlightIsManipulated(fixes);
@@ -572,13 +572,14 @@ async function runChecksStartCalculationsStoreFixes(
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
 
-  if (!skipAllChecks) {
-    try {
-      await getMetarData(flightDbObject, fixes);
-    } catch (error) {
-      logger.error("FS: METAR query error: " + error);
-    }
+  // if (!skipAllChecks) {
+  try {
+    console.log("METAR *************************");
+    await getMetarData(flightDbObject, fixes);
+  } catch (error) {
+    logger.error("FS: METAR query error: " + error);
   }
+  // }
 
   const result = await service.update(flightDbObject);
 
