@@ -2,6 +2,7 @@ import config from "../config/env-config";
 import axios from "axios";
 import type { FlightInstance } from "../db/models/Flight";
 import type { FlightFixCombined } from "../types/FlightFixes";
+import logger from "../config/logger";
 
 /** *
  * Fetches METAR data for every 20 minutes of the flight from the nearest
@@ -51,14 +52,16 @@ export async function getMetarData(
 
   const res = await axios.all(axiosPromises);
   try {
-    const metarData = res.map((el) => {
+    const metarData: string[] = res.map((el) => {
       if (!el.data || el.data.data.length == 0)
         throw new Error("METAR request returned null");
       return el.data.data[0];
     });
     flight.flightMetarData = metarData;
     await flight.save();
-  } catch {
+    return metarData;
+  } catch (error) {
+    logger.error("FS: METAR query error: " + error);
     return null;
   }
 }

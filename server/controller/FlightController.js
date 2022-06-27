@@ -342,7 +342,6 @@ router.get(
       const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flight,
         null,
-
         // TODO: Should the recalculation really always skip all checks?
         { skipChecks: true }
       );
@@ -368,11 +367,12 @@ router.get(
       if (await requesterIsNotModerator(req, res)) return;
       const flight = await service.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
-      // TODO: Why is it so complicated to get the fixes?
+      // TODO: Should there be a service that attaches the fixes directly
+      // to the flight as you would expect it to happen if you query a flight?
+      // e.g. getFlightWithFixes(flightId)
       const fixes = combineFixesProperties(flight.fixes);
-
       const data = await getMetarData(flight, fixes);
-
+      console.log(data);
       if (!data) return res.sendStatus(NO_CONTENT);
       res.sendStatus(OK);
     } catch (error) {
@@ -560,6 +560,7 @@ async function runChecksStartCalculationsStoreFixes(
 ) {
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
 
+  // TODO: This is getting too complicated. Maybe add an extra service for the rerun calculation instead of all the ifs?
   if (!skipAllChecks && !skipManipulatedCheck)
     checkIfFlightIsManipulated(fixes);
   service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
@@ -571,10 +572,12 @@ async function runChecksStartCalculationsStoreFixes(
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
 
-  try {
-    await getMetarData(flightDbObject, fixes);
-  } catch (error) {
-    logger.error("FS: METAR query error: " + error);
+  if (!skipAllChecks) {
+    try {
+      await getMetarData(flightDbObject, fixes);
+    } catch (error) {
+      logger.error("FS: METAR query error: " + error);
+    }
   }
 
   const result = await service.update(flightDbObject);
