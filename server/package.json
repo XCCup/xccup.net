@@ -16,7 +16,7 @@
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.3.16",
     "axios": "^0.27.2",
-    "axios-retry": "^3.2.5",
+    "axios-retry": "^3.3.0",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "convict": "^6.2.3",
@@ -41,7 +41,7 @@
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "sanitize-html": "^2.7.0",
-    "sequelize": "^6.21.1",
+    "sequelize": "^6.21.2",
     "sharp": "^0.30.7",
     "uuid": "^8.3.2",
     "winston": "^3.8.0"
@@ -61,7 +61,7 @@
     "cross-env": "^7.0.3",
     "csv-parser": "^3.0.0",
     "eslint": "^8.18.0",
-    "jest": "^28.1.1",
+    "jest": "^28.1.2",
     "nodemon": "^2.0.18",
     "tabletojson": "^2.0.7",
     "ts-jest": "^28.0.5",
