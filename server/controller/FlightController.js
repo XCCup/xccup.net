@@ -12,6 +12,7 @@ const {
   OK,
   BAD_REQUEST,
   UNAUTHORIZED,
+  NO_CONTENT,
 } = require("../constants/http-status-constants");
 const { STATE, IGC_STORE } = require("../constants/flight-constants");
 const {
@@ -22,6 +23,7 @@ const {
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
+const { getMetarData } = require("../helper/METAR");
 const logger = require("../config/logger");
 const {
   checkStringObjectNotEmpty,
@@ -35,6 +37,7 @@ const {
   checkStringObjectNotEmptyNoEscaping,
   checkIsBoolean,
 } = require("./Validation");
+const { combineFixesProperties } = require("../helper/FlightFixUtils");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createFileName } = require("../helper/igc-file-utils");
 const config = require("../config/env-config").default;
@@ -252,7 +255,7 @@ router.post(
   }
 );
 
-// @desc Allows a admin to upload a flight for a user and bypass certain checks.
+// @desc Allows an admin to upload a flight for a user and bypass certain checks.
 // @route POST /flights/admin/upload
 // @access Only admins
 
@@ -321,7 +324,7 @@ router.post(
   }
 );
 
-// @desc Allows a admin to rerun a flight calculation; Which includes also the location and elevation requests
+// @desc Allows an admin to rerun a flight calculation; Which includes also the location and elevation requests
 // @route POST /flights/admin/rerun
 // @access Only moderators and admins
 
@@ -339,15 +342,40 @@ router.get(
       const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flight,
         null,
-
         // TODO: Should the recalculation really always skip all checks?
-        { skipChecks: true }
+        { skipAllChecks: true }
       );
 
       res.json({
         airspaceViolation,
       });
     } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Allows an admin to (re)fetch METAR data for a flight
+// @route POST /flights/admin/fetch-metar
+// @access Only moderators and admins
+router.get(
+  "/admin/fetch-metar/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+      const flight = await service.getById(req.params.id);
+      if (!flight) return res.sendStatus(NOT_FOUND);
+      // TODO: Should there be a service that attaches the fixes directly
+      // to the flight as you would expect it to happen if you query a flight?
+      // e.g. getFlightWithFixes(flightId)
+      const fixes = combineFixesProperties(flight.fixes);
+      const data = await getMetarData(flight, fixes);
+      if (!data) return res.sendStatus(NO_CONTENT);
+      res.sendStatus(OK);
+    } catch (error) {
+      logger.error("FS: METAR query error: " + error);
       next(error);
     }
   }
@@ -530,7 +558,7 @@ async function runChecksStartCalculationsStoreFixes(
   } = {}
 ) {
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
-
+  // TODO: This is getting too complicated. Maybe add an extra service for the rerun calculation instead of all the ifs?
   if (!skipAllChecks && !skipManipulatedCheck)
     checkIfFlightIsManipulated(fixes);
   service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
@@ -541,7 +569,14 @@ async function runChecksStartCalculationsStoreFixes(
     detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
   await service.storeFixesAndAddStats(flightDbObject, fixes);
-  await service.getMetarData(flightDbObject, fixes);
+
+  if (!skipAllChecks) {
+    try {
+      await getMetarData(flightDbObject, fixes);
+    } catch (error) {
+      logger.error("FS: METAR query error: " + error);
+    }
+  }
 
   const result = await service.update(flightDbObject);
 

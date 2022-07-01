@@ -1,8 +1,8 @@
 import {
   FlightFixTimeAndHeights,
   FlightFixesAttributes,
-  FlightFixesCombined,
-} from "../types/FlightFixesTypes";
+  FlightFixCombined,
+} from "../types/FlightFixes";
 import { LineString } from "geojson";
 import IGCParser from "../helper/igc-parser";
 
@@ -47,11 +47,11 @@ export function extractTimeAndHeights(
  * Combines all properties from the flight fixes database object into a single property to synchronize the access via index on these different arrays.
  *
  * @param fixes The fixes object from the database
- * @returns An array of FlightFixesCombined objects
+ * @returns An array of FlightFixCombined objects
  */
 export function combineFixesProperties(
   fixes: FlightFixesAttributes
-): FlightFixesCombined[] {
+): FlightFixCombined[] {
   if (!fixes) return [];
 
   const coordinates = fixes.geom.coordinates;
@@ -59,7 +59,7 @@ export function combineFixesProperties(
   const stats = fixes.stats;
 
   // @ts-ignore
-  const newOb: FlightFixesCombined[] = [...timeAndHeights];
+  const newOb: FlightFixCombined[] = [...timeAndHeights];
 
   for (let i = 0; i < timeAndHeights.length; i++) {
     newOb[i].longitude = coordinates[i][0];

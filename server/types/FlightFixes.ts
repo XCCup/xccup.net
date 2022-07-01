@@ -25,7 +25,7 @@ export interface BRecordElevation extends IGCParser.BRecord {
   elevation?: number;
 }
 
-export interface FlightFixesCombined extends FlightFixTimeAndHeights {
+export interface FlightFixCombined extends FlightFixTimeAndHeights {
   longitude: number;
   latitude: number;
   speed?: number;

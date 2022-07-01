@@ -296,7 +296,7 @@ const userService = {
   },
   isAdmin: async (id) => {
     const user = await userService.getById(id);
-    return user.role == ROLE.ADMIN;
+    return user?.role == ROLE.ADMIN;
   },
   isModerator: async (id) => {
     const user = await userService.getById(id);
