@@ -131,10 +131,25 @@ const userService = {
     });
   },
   getTShirtList: async (year) => {
-    const allUsers = await User.findAll({
+    const flightsOfYear = await Flight.findAll({
       where: {
-        role: {
-          [Op.not]: ROLE.INACTIVE,
+        flightStatus: STATE.IN_RANKING,
+        andOp: sequelize.where(
+          sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
+          year
+        ),
+      },
+      attributes: [
+        "userId",
+      ]
+    })
+
+    const userIds = filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear);
+
+    const usersWithEnoughFlights = await User.findAll({
+      where: {
+        id: {
+          [Op.in]: userIds,
         },
       },
       attributes: [
@@ -147,29 +162,17 @@ const userService = {
         "gender",
       ],
       include: [
-        {
-          model: Flight,
-          as: "flights",
-          attributes: ["flightStatus", "takeoffTime"],
-          limit: 2,
-          where: {
-            flightStatus: STATE.IN_RANKING,
-            andOp: sequelize.where(
-              sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
-              year
-            ),
-          },
-        },
         createBasicInclude(Club, "club"),
       ],
     });
-    const onlyUsersWithEnoughFlights = allUsers
-      .filter((u) => u.flights.length == 2)
+    const usersWithEnoughFlightsJSON = usersWithEnoughFlights
       .map((u) => u.toJSON());
-    onlyUsersWithEnoughFlights.sort((a, b) => {
-      a.club?.name < b.club?.name;
+
+    usersWithEnoughFlightsJSON.sort((a, b) => {
+      return a.club?.name?.localeCompare(b.club?.name);
     });
-    return onlyUsersWithEnoughFlights;
+
+    return usersWithEnoughFlightsJSON;
   },
   /**
    * Retrieves e-mail-addresses of active users.
@@ -399,6 +402,20 @@ const userService = {
     };
   },
 };
+
+function filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear) {
+  const flightsPerUser = new Map();
+  flightsOfYear.forEach(flight => {
+    if (flightsPerUser.get(flight.userId)) {
+      flightsPerUser.set(flight.userId, flightsPerUser.get(flight.userId) + 1);
+    } else {
+      flightsPerUser.set(flight.userId, 1);
+    }
+  });
+  const usersWithEnoughFlights = [...flightsPerUser]
+    .filter(([k, v]) => v >= 2).map(([k, v]) => k);
+  return usersWithEnoughFlights;
+}
 
 function createBasicInclude(model, as, id) {
   const include = {
