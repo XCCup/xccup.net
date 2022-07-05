@@ -53,6 +53,7 @@ const {
   sendAirspaceViolationMail,
   sendAirspaceViolationAdminMail,
 } = require("../service/MailService");
+const sendMail = require("../config/email");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -411,8 +412,8 @@ router.post(
             .send("No default glider configured in profile")
         );
 
-      // const validationResult = await igcValidator.execute(igc);
-      // if (isGRecordResultInvalid(res, validationResult)) return;
+      const validationResult = await igcValidator.execute(igc);
+      if (isGRecordResultInvalid(res, validationResult)) return;
       const externalId = await service.createExternalId();
       const igcPath = await persistIgcFile(externalId, igc);
 
