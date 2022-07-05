@@ -52,6 +52,7 @@ const userService = require("../service/UserService");
 const {
   sendAirspaceViolationMail,
   sendAirspaceViolationAdminMail,
+  sendGCheckInvalidAdminMail,
 } = require("../service/MailService");
 
 const uploadLimiter = createRateLimiter(60, 10);
@@ -230,7 +231,10 @@ router.post(
 
     try {
       const validationResult = await igcValidator.execute(req.file);
-      if (isGRecordResultInvalid(res, validationResult)) return;
+      if (isGRecordResultInvalid(res, validationResult)) {
+        sendGCheckInvalidAdminMail(userId, req.file.path);
+        return;
+      }
 
       const flightDbObject = await service.create({
         userId,
@@ -409,7 +413,10 @@ router.post(
           .send("Kein Standardgerät im Profil definiert");
 
       const validationResult = await igcValidator.execute(igc);
-      if (isGRecordResultInvalid(res, validationResult)) return;
+      if (isGRecordResultInvalid(res, validationResult)) {
+        sendGCheckInvalidAdminMail(user.id, req.file.path);
+        return;
+      }
       const externalId = await service.createExternalId();
       const igcPath = await persistIgcFile(externalId, igc);
 

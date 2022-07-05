@@ -192,12 +192,9 @@ const service = {
     return sendMail(adminMail, content);
   },
 
-  sendGCheckInvalidAdminMail: async (
-    userId: string,
-    flight: FlightOutputAttributes
-  ) => {
+  sendGCheckInvalidAdminMail: async (userId: string, igcPath: string) => {
     logger.info(`MS: Send G-Check violation mail with igc to admins`);
-    if (!userId || !flight.igcPath) return;
+    if (!userId || !igcPath) return;
     const user = await db.User.findByPk(userId);
 
     if (!user) return;
@@ -205,7 +202,7 @@ const service = {
     const content = {
       title: NEW_G_CHECK_INVALID_TITLE,
       text: NEW_G_CHECK_INVALID_TEXT(user.firstName, user.lastName),
-      attachments: [{ path: flight.igcPath }],
+      attachments: [{ path: igcPath }],
     };
 
     const adminMail = config.get("mailServiceFromEmail");
