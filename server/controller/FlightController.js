@@ -53,7 +53,6 @@ const {
   sendAirspaceViolationMail,
   sendAirspaceViolationAdminMail,
 } = require("../service/MailService");
-const sendMail = require("../config/email");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -405,12 +404,9 @@ router.post(
 
       const glider = user.gliders.find((g) => g.id == user.defaultGlider);
       if (!glider)
-        return (
-          res
-            .status(BAD_REQUEST)
-            // TODO: Should this be in german as it's shown to the user?
-            .send("No default glider configured in profile")
-        );
+        return res
+          .status(BAD_REQUEST)
+          .send("Kein Standardgerät im Profil definiert");
 
       const validationResult = await igcValidator.execute(igc);
       if (isGRecordResultInvalid(res, validationResult)) return;
