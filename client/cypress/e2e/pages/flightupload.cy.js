@@ -402,7 +402,7 @@ describe("check flight upload page", () => {
 
   it("Test upload with leonardo interface (wrong content)", async () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
-    const expectApiRespone = "Error parsing IGC File";
+    const expectApiRespone = "Invalid G-Record";
     const expectedStatus = 400;
 
     const payload = {
@@ -412,9 +412,7 @@ describe("check flight upload page", () => {
       igcfn: igcFileName,
     };
     try {
-      const data = (
-        await axios.post("http://localhost:3000/api/flights/leonardo", payload)
-      ).data;
+      await axios.post("http://localhost:3000/api/flights/leonardo", payload);
     } catch (error) {
       // Test the response message from the API
       expect(error.response.status).to.equal(expectedStatus);
