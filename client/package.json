@@ -17,7 +17,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.4",
     "@vue-leaflet/vue-leaflet": "^0.6.1",
-    "@vueuse/integrations": "^8.7.5",
+    "@vueuse/integrations": "^8.8.0",
     "axios": "^0.27.2",
     "axios-jwt": "^1.8.0",
     "bootstrap": "5.2.0-beta1",
@@ -49,7 +49,7 @@
     "@types/geojson": "^7946.0.8",
     "@types/leaflet": "^1.7.11",
     "@types/lodash-es": "^4.17.6",
-    "@types/node": "^18.0.1",
+    "@types/node": "^18.0.3",
     "@vitejs/plugin-vue": "^2.3.3",
     "@vue/eslint-config-typescript": "^11.0.0",
     "@vue/tsconfig": "^0.1.3",
@@ -60,12 +60,12 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.1.1",
+    "eslint-plugin-vue": "^9.2.0",
     "prettier": "^2.7.1",
     "rollup-plugin-visualizer": "^5.6.0",
     "sass": "^1.53.0",
     "typescript": "^4.7.4",
-    "unplugin-vue-components": "^0.21.0",
+    "unplugin-vue-components": "^0.21.1",
     "vite": "^2.9.13",
     "vue-tsc": "^0.38.2"
   }
