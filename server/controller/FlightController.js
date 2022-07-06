@@ -216,7 +216,7 @@ router.delete(
   }
 );
 
-// @desc Performs a check on the G-Record of a provided IGC-File and if valid persists the IGC-File and starts the result calculation
+// @desc Performs a check on the G-Record of a provided IGC-File and if valid saves the IGC-File and starts the result calculation
 // @route POST /flights/
 // @access All logged-in users
 
@@ -230,12 +230,15 @@ router.post(
     const userId = req.user.id;
 
     try {
+      // G-Check
       const validationResult = await igcValidator.execute(req.file);
-      if (isGRecordResultInvalid(res, validationResult)) {
+      const validGRecord = !isGRecordResultInvalid(res, validationResult);
+      if (!validGRecord) {
         sendGCheckInvalidAdminMail(userId, req.file.path);
         return;
       }
 
+      // DB Object
       const flightDbObject = await service.create({
         userId,
         igcPath: req.file.path,
@@ -243,6 +246,7 @@ router.post(
         validationResult,
       });
 
+      // Airspace check / takeoff name / result calculation
       const { takeoffName, result, airspaceViolation } =
         await runChecksStartCalculationsStoreFixes(flightDbObject, userId);
 
@@ -406,41 +410,50 @@ router.post(
       const user = await validate(req.body.user, req.body.pass);
       if (!user) return res.sendStatus(UNAUTHORIZED);
 
+      // Check for users default glider
       const glider = user.gliders.find((g) => g.id == user.defaultGlider);
       if (!glider)
         return res
           .status(BAD_REQUEST)
           .send("Kein Standardgerät im Profil definiert");
 
+      // Vars
+      const userId = req.user.id;
       const externalId = await service.createExternalId();
       const igcPath = await persistIgcFile(externalId, igc);
 
+      // G-Check
       const validationResult = await igcValidator.execute(igc);
-
-      if (isGRecordResultInvalid(res, validationResult)) {
-        sendGCheckInvalidAdminMail(user.id, igcPath);
+      const validGRecord = !isGRecordResultInvalid(res, validationResult);
+      if (!validGRecord) {
+        sendGCheckInvalidAdminMail(userId, igcPath);
         return;
       }
 
+      // DB Object
       const flightDbObject = await service.create({
-        userId: user.id,
+        userId,
         igcPath,
         externalId,
         validationResult: false,
       });
 
+      // Airspace check
       const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flightDbObject,
-        user.id
+        userId
       );
 
+      // DB
       await service.finalizeFlightSubmission({
         flight: flightDbObject,
         glider,
       });
 
+      // Cache
       deleteCache(CACHE_RELEVANT_KEYS);
 
+      // User feedback
       let message = `Der Flug wurde mit dem Gerät ${glider.brand} ${
         glider.model
       } eingereicht. Du findest deinen Flug unter ${config.get(
