@@ -194,7 +194,7 @@ const service = {
 
   sendGCheckInvalidAdminMail: async (userId: string, igcPath: string) => {
     logger.info(`MS: Send G-Check violation mail with igc to admins`);
-    if (!userId || !igcPath) return;
+    if (!userId) return;
     const user = await db.User.findByPk(userId);
 
     if (!user) return;
