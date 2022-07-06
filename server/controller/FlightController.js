@@ -412,13 +412,15 @@ router.post(
           .status(BAD_REQUEST)
           .send("Kein Standardgerät im Profil definiert");
 
-      const validationResult = await igcValidator.execute(igc);
-      if (isGRecordResultInvalid(res, validationResult)) {
-        sendGCheckInvalidAdminMail(user.id, req.file.path);
-        return;
-      }
       const externalId = await service.createExternalId();
       const igcPath = await persistIgcFile(externalId, igc);
+
+      const validationResult = await igcValidator.execute(igc);
+
+      if (isGRecordResultInvalid(res, validationResult)) {
+        sendGCheckInvalidAdminMail(user.id, igcPath);
+        return;
+      }
 
       const flightDbObject = await service.create({
         userId: user.id,
