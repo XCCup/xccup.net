@@ -418,7 +418,7 @@ router.post(
           .send("Kein Standardgerät im Profil definiert");
 
       // Vars
-      const userId = req.user.id;
+      const userId = user.id;
       const externalId = await service.createExternalId();
       const igcPath = await persistIgcFile(externalId, igc);
 
