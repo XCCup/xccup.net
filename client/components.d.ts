@@ -98,5 +98,4 @@ declare module '@vue/runtime-core' {
     UserProfileMyFlights: typeof import('./src/components/UserProfileMyFlights.vue')['default']
     UserProfileMyFlightsTable: typeof import('./src/components/UserProfileMyFlightsTable.vue')['default']
   }
-
 }
