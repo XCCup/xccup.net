@@ -774,7 +774,7 @@ async function findAirbuddies(flight) {
     include: {
       model: User,
       as: "user",
-      attributes: ["id", "firstName", "lastName"],
+      attributes: ["id", "firstName", "lastName", "fullName"],
     },
     limit: maxNumberOfBuddies,
     order: [["flightPoints", "DESC"]],
@@ -909,7 +909,7 @@ function createUserInclude() {
   const include = {
     model: User,
     as: "user",
-    attributes: ["id", "firstName", "lastName"],
+    attributes: ["id", "firstName", "lastName", "fullName"],
   };
   return include;
 }

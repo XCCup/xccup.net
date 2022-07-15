@@ -2,6 +2,7 @@ export interface UserDataEssential {
   id: string;
   firstName: string;
   lastName: string;
+  fullName: string;
 }
 
 export interface CreateUserData extends Omit<UserData, "id"> {}

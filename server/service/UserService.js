@@ -20,7 +20,14 @@ const userService = {
   getAll: async ({ records, limit, offset, userIds, clubId, teamId } = {}) => {
     const users = await User.findAndCountAll({
       where: createUserWhereStatement(userIds),
-      attributes: ["id", "firstName", "lastName", "gender", "gliders"],
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "fullName",
+        "gender",
+        "gliders",
+      ],
       include: [
         {
           model: ProfilePicture,
@@ -91,7 +98,7 @@ const userService = {
         },
       },
       order: [["firstName", "asc"]],
-      attributes: ["id", "firstName", "lastName"],
+      attributes: ["id", "firstName", "lastName", "fullName"],
     });
 
     return users;
@@ -139,10 +146,8 @@ const userService = {
           year
         ),
       },
-      attributes: [
-        "userId",
-      ]
-    })
+      attributes: ["userId"],
+    });
 
     const userIds = filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear);
 
@@ -156,17 +161,17 @@ const userService = {
         "id",
         "firstName",
         "lastName",
+        "fullName",
         "tshirtSize",
         "address",
         "email",
         "gender",
       ],
-      include: [
-        createBasicInclude(Club, "club"),
-      ],
+      include: [createBasicInclude(Club, "club")],
     });
-    const usersWithEnoughFlightsJSON = usersWithEnoughFlights
-      .map((u) => u.toJSON());
+    const usersWithEnoughFlightsJSON = usersWithEnoughFlights.map((u) =>
+      u.toJSON()
+    );
 
     usersWithEnoughFlightsJSON.sort((a, b) => {
       return a.club?.name?.localeCompare(b.club?.name);
@@ -199,7 +204,14 @@ const userService = {
   getByIdPublic: async (id) => {
     const userQuery = User.findOne({
       where: { id },
-      attributes: ["id", "firstName", "lastName", "gender", "gliders"],
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "fullName",
+        "gender",
+        "gliders",
+      ],
       include: [
         {
           model: ProfilePicture,
@@ -405,7 +417,7 @@ const userService = {
 
 function filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear) {
   const flightsPerUser = new Map();
-  flightsOfYear.forEach(flight => {
+  flightsOfYear.forEach((flight) => {
     if (flightsPerUser.get(flight.userId)) {
       flightsPerUser.set(flight.userId, flightsPerUser.get(flight.userId) + 1);
     } else {
@@ -413,7 +425,8 @@ function filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear) {
     }
   });
   const usersWithEnoughFlights = [...flightsPerUser]
-    .filter(([k, v]) => v >= 2).map(([k, v]) => k);
+    .filter(([k, v]) => v >= 2)
+    .map(([k, v]) => k);
   return usersWithEnoughFlights;
 }
 
