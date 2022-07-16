@@ -410,9 +410,8 @@ function filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear) {
     }
   });
   const usersWithEnoughFlights = [...flightsPerUser]
-    // TODO: This line gives unused variable warning
-    .filter(([k, v]) => v >= 2)
-    .map(([k, v]) => k);
+    .filter(([, v]) => v >= 2)
+    .map(([k]) => k);
   return usersWithEnoughFlights;
 }
 
