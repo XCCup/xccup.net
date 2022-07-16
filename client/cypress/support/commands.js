@@ -117,25 +117,25 @@ Cypress.Commands.add("textareaIncludes", function (selector, text) {
 });
 
 /**
- * A command to check if a receipent received an email which includes a text.
+ * A command to check if a recipient received an email which includes a text.
  */
 Cypress.Commands.add(
   "recipientReceivedEmailWithText",
-  function (receipentMail, text) {
+  function (recipientMail, text) {
     cy.wrap(null).then({ timeout: 7000 }, async () => {
       let data;
       // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
       for (let index = 0; index < 3; index++) {
         data = (
           await axios.get(
-            `http://localhost:3000/api/testdata/email/${receipentMail}`
+            `http://localhost:3000/api/testdata/email/${recipientMail}`
           )
         ).data;
         if (data.message && data.message.includes(text)) break;
         await delay(2000);
       }
 
-      expect(data.message, `No message for ${receipentMail} found`).to.exist;
+      expect(data.message, `No message for ${recipientMail} found`).to.exist;
       expect(data.message).to.include(text);
     });
   }

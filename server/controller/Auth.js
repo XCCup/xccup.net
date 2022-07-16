@@ -41,7 +41,7 @@ const auth = (req, res, next) => {
 /**
  * Creates an access token around a provided user object. And stores the following user related data into the token:
  * - id
- * - fistname
+ * - firstName
  * - lastname
  * - role
  * - gender

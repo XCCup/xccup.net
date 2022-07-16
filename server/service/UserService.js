@@ -139,10 +139,8 @@ const userService = {
           year
         ),
       },
-      attributes: [
-        "userId",
-      ]
-    })
+      attributes: ["userId"],
+    });
 
     const userIds = filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear);
 
@@ -161,12 +159,11 @@ const userService = {
         "email",
         "gender",
       ],
-      include: [
-        createBasicInclude(Club, "club"),
-      ],
+      include: [createBasicInclude(Club, "club")],
     });
-    const usersWithEnoughFlightsJSON = usersWithEnoughFlights
-      .map((u) => u.toJSON());
+    const usersWithEnoughFlightsJSON = usersWithEnoughFlights.map((u) =>
+      u.toJSON()
+    );
 
     usersWithEnoughFlightsJSON.sort((a, b) => {
       return a.club?.name?.localeCompare(b.club?.name);
@@ -405,7 +402,7 @@ const userService = {
 
 function filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear) {
   const flightsPerUser = new Map();
-  flightsOfYear.forEach(flight => {
+  flightsOfYear.forEach((flight) => {
     if (flightsPerUser.get(flight.userId)) {
       flightsPerUser.set(flight.userId, flightsPerUser.get(flight.userId) + 1);
     } else {
@@ -413,7 +410,8 @@ function filterUsersWithEnoughFlightsForTshirtForIds(flightsOfYear) {
     }
   });
   const usersWithEnoughFlights = [...flightsPerUser]
-    .filter(([k, v]) => v >= 2).map(([k, v]) => k);
+    .filter(([, v]) => v >= 2)
+    .map(([k]) => k);
   return usersWithEnoughFlights;
 }
 
