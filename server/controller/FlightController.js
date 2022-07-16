@@ -423,8 +423,7 @@ router.post(
 
       // G-Check
       const validationResult = await igcValidator.execute(igc);
-      const validGRecord = !isGRecordResultInvalid(res, validationResult);
-      if (!validGRecord) {
+      if (isGRecordResultInvalid(res, validationResult)) {
         sendGCheckInvalidAdminMail(userId, igcPath);
         return;
       }
