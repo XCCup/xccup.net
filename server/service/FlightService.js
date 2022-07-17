@@ -771,11 +771,7 @@ async function findAirbuddies(flight) {
         [sequelize.Op.gte]: pointThreshold,
       },
     },
-    include: {
-      model: User,
-      as: "user",
-      attributes: ["id", "firstName", "lastName", "fullName"],
-    },
+    include: createUserInclude(),
     limit: maxNumberOfBuddies,
     order: [["flightPoints", "DESC"]],
   });
