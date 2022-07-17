@@ -3,6 +3,7 @@
 </template>
 
 <script setup>
+import { getXccupTimezone } from "@/helper/utils";
 import { formatInTimeZone } from "date-fns-tz";
 import { computed } from "vue";
 const props = defineProps({
@@ -16,9 +17,7 @@ const props = defineProps({
   },
 });
 
-const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
-
 const formatedDate = computed(() => {
-  return formatInTimeZone(new Date(props.timestamp), tz, props.dateFormat);
+  return formatInTimeZone(new Date(props.timestamp), getXccupTimezone(), props.dateFormat);
 });
 </script>
