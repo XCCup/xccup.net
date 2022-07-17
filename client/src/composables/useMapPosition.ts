@@ -1,4 +1,4 @@
-import { throttle } from "lodash";
+import { throttle } from "lodash-es";
 import { computed, ref } from "vue";
 import type { TooltipItem } from "chart.js";
 
