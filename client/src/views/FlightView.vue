@@ -18,7 +18,7 @@
 
 import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { setWindowName } from "../helper/utils";
+import { getXccupTimezone, setWindowName } from "../helper/utils";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
 import { formatFlightDuration } from "@/helper/formatFlightDuration";
@@ -28,17 +28,15 @@ const route = useRoute();
 const router = useRouter();
 const { fetchOne, flight } = useFlight();
 
-const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
-
 try {
   // @ts-ignore
   // TODO: Evaluate
   await fetchOne(route.params.flightId);
   setWindowName(
     "Flug von " +
-      flight.value?.user?.firstName +
-      " " +
-      flight.value?.user?.lastName
+    flight.value?.user?.firstName +
+    " " +
+    flight.value?.user?.lastName
   );
   // Set meta tags
   function addMetaTag(tag: string, content: string) {
@@ -56,16 +54,14 @@ try {
 
   const formattedDate = formatInTimeZone(
     flight.value?.takeoffTime ?? "",
-    tz,
+    getXccupTimezone(),
     "dd.MM.yyyy"
   );
 
   addMetaTag(
     "og:title",
-    `${flight.value?.user.firstName} ${
-      flight.value?.user.lastName
-    } • ${formattedDate} • ${flightTypeToString(flight.value?.flightType)}${
-      flight.value?.flightDistance
+    `${flight.value?.user.firstName} ${flight.value?.user.lastName
+    } • ${formattedDate} • ${flightTypeToString(flight.value?.flightType)}${flight.value?.flightDistance
     } km`
   );
 } catch (error) {
