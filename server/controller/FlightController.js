@@ -708,13 +708,12 @@ function checkIfFlightIsManipulated(resultOfIgcParser) {
  */
 function detectMidFlightIgcStart(takeoff, fixes) {
   const MAX_START_ALT_OVER_TAKEOFF = 250;
-  console.log(takeoff);
-  // if (fixes[0]?.gpsAltitude > takeoff.elevation + MAX_START_ALT_OVER_TAKEOFF) {
-  //   const errorMessage = `Flight starts in the middle of a flight: First fix ${fixes[0]?.gpsAltitude}m, takeoff elevation ${takeoff.elevation}m`;
-  //   const clientMessage = `Flight starts in the middle of a flight`;
+  if (fixes[0]?.gpsAltitude > takeoff.elevation + MAX_START_ALT_OVER_TAKEOFF) {
+    const errorMessage = `Flight starts in the middle of a flight: First fix ${fixes[0]?.gpsAltitude}m, takeoff elevation ${takeoff.elevation}m`;
+    const clientMessage = `Flight starts in the middle of a flight`;
 
-  //   throw new XccupHttpError(BAD_REQUEST, errorMessage, clientMessage);
-  // }
+    throw new XccupHttpError(BAD_REQUEST, errorMessage, clientMessage);
+  }
 }
 
 /**
