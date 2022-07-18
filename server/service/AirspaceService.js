@@ -157,9 +157,11 @@ function findVerticalIntersection(
         return (violationFound = {
           lat,
           long,
-          altitude: fix.gpsAltitude,
+          gpsAltitude: fix.gpsAltitude,
+          pressureAltitude: fix.pressureAltitude,
           lowerLimit,
           upperLimit,
+          // TODO: Add airspace name etc
           timestamp: fix.timestamp,
           line: flightTrackLine,
         });
@@ -188,7 +190,8 @@ function findViolationOfFL100(fixesWithElevation) {
       return (violationFound = {
         lat: fix.latitude,
         long: fix.longitude,
-        altitude: fix.gpsAltitude,
+        gpsAltitude: fix.gpsAltitude,
+        pressureAltitude: fix.pressureAltitude,
         timestamp: fix.timestamp,
         line: fixesWithElevation,
       });

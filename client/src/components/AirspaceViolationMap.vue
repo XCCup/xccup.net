@@ -97,6 +97,7 @@ const drawAirspaces = async (airspaceViolation) => {
 };
 
 const drawTrack = (track) => {
+  if (!track.length) return;
   let linePoints = [];
   track.forEach((point) => {
     linePoints.push([point.latitude, point.longitude]);

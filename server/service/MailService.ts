@@ -49,6 +49,17 @@ interface MailContent {
   text: string;
 }
 
+interface AirspaceViolation {
+  lat: number;
+  long: number;
+  gpsAltitude: number;
+  pressureAltitude: number;
+  lowerLimit: number;
+  upperLimit: number;
+  timestamp: number;
+  line: any; //TODO: Correct it when really needed
+}
+
 const service = {
   sendMailSingle: async (
     fromUserId: string,
@@ -167,21 +178,18 @@ const service = {
 
   sendAirspaceViolationAdminMail: async (
     userId: string,
-    flight: FlightOutputAttributes
+    flight: FlightOutputAttributes,
+    airspaceViolation: AirspaceViolation
   ) => {
     logger.info(`MS: Send airspace violation mail with igc to admins`);
     if (!userId || !flight.igcPath) return;
     const user = await db.User.findByPk(userId);
 
     if (!user) return;
-
+    delete airspaceViolation.line;
     const content = {
       title: NEW_AIRSPACE_VIOLATION_TITLE,
-      text: NEW_AIRSPACE_VIOLATION_TEXT(
-        flight.externalId,
-        user.firstName,
-        user.lastName
-      ),
+      text: NEW_AIRSPACE_VIOLATION_TEXT(flight, user, airspaceViolation),
       attachments: [{ path: flight.igcPath }],
     };
 
