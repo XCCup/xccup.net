@@ -15,7 +15,7 @@ const service = {
         {
           model: User,
           as: "user",
-          attributes: ["id", "firstName", "lastName"],
+          attributes: ["id", "firstName", "lastName", "fullName"],
         },
       ],
       order: [["createdAt", "ASC"]],

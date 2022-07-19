@@ -20,7 +20,14 @@ const userService = {
   getAll: async ({ records, limit, offset, userIds, clubId, teamId } = {}) => {
     const users = await User.findAndCountAll({
       where: createUserWhereStatement(userIds),
-      attributes: ["id", "firstName", "lastName", "gender", "gliders"],
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "fullName",
+        "gender",
+        "gliders",
+      ],
       include: [
         {
           model: ProfilePicture,
@@ -91,7 +98,7 @@ const userService = {
         },
       },
       order: [["firstName", "asc"]],
-      attributes: ["id", "firstName", "lastName"],
+      attributes: ["id", "firstName", "lastName", "fullName"],
     });
 
     return users;
@@ -154,6 +161,7 @@ const userService = {
         "id",
         "firstName",
         "lastName",
+        "fullName",
         "tshirtSize",
         "address",
         "email",
@@ -196,7 +204,14 @@ const userService = {
   getByIdPublic: async (id) => {
     const userQuery = User.findOne({
       where: { id },
-      attributes: ["id", "firstName", "lastName", "gender", "gliders"],
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "fullName",
+        "gender",
+        "gliders",
+      ],
       include: [
         {
           model: ProfilePicture,

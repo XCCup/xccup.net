@@ -10,6 +10,7 @@ const userData = ref({
   id: "",
   firstName: "",
   lastName: "",
+  fullName: "",
   birthday: null,
   gender: "",
   clubId: "",

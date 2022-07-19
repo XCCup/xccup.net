@@ -95,4 +95,5 @@ export interface FlightUserData {
   id: string;
   firstName: string;
   lastName: string;
+  fullName: string;
 }

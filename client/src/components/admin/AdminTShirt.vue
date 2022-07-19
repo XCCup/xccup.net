@@ -48,7 +48,7 @@
           <tbody>
             <tr v-for="entry in entries" :key="entry.id" :item="entry">
               <td>{{ entry.club?.name }}</td>
-              <td>{{ entry.firstName }} {{ entry.lastName }}</td>
+              <td>{{ entry.fullName }}</td>
               <td>{{ entry.tshirtSize }}</td>
               <td>{{ entry.gender }}</td>
               <td>
