@@ -23,6 +23,7 @@ import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
 import { formatFlightDuration } from "@/helper/formatFlightDuration";
 import { formatInTimeZone } from "date-fns-tz";
+import { addMetaTag } from "@/helper/addHtmlMetaTag";
 
 const route = useRoute();
 const router = useRouter();
@@ -34,20 +35,14 @@ try {
   await fetchOne(route.params.flightId);
   setWindowName(
     "Flug von " +
-    flight.value?.user?.firstName +
-    " " +
-    flight.value?.user?.lastName
+      flight.value?.user?.firstName +
+      " " +
+      flight.value?.user?.lastName
   );
   // Set meta tags
-  function addMetaTag(tag: string, content: string) {
-    var meta = document.createElement("meta");
-    meta.setAttribute(tag, content);
-    document.getElementsByTagName("head")[0].appendChild(meta);
-  }
-
   addMetaTag(
     "og:description",
-    `📍 ${flight.value?.takeoff?.name} ⌛ ${formatFlightDuration(
+    `📍 ${flight.value?.takeoff?.name} ⏱ ${formatFlightDuration(
       flight.value?.airtime
     )} 🌪 ø ${flight.value?.flightStats.taskSpeed} km/h`
   );
@@ -60,13 +55,15 @@ try {
 
   addMetaTag(
     "og:title",
-    `${flight.value?.user.firstName} ${flight.value?.user.lastName
-    } • ${formattedDate} • ${flightTypeToString(flight.value?.flightType)}${flight.value?.flightDistance
+    `${flight.value?.user.firstName} ${
+      flight.value?.user.lastName
+    } • ${formattedDate} • ${flightTypeToString(flight.value?.flightType)}${
+      flight.value?.flightDistance
     } km`
   );
 } catch (error) {
   // @ts-ignore
-  // TODO: Evaluate
+  // TODO: Evaluate the TS error
   if (error.response?.status == 404) {
     router.push({
       name: "404Resource",
@@ -80,6 +77,7 @@ try {
 function flightTypeToString(flightType: string | undefined) {
   if (flightType === "FAI") return "△ ";
   if (flightType === "FLAT") return "▻ ";
+  if (flightType === "FREE") return "⎯ ";
   return "";
 }
 
