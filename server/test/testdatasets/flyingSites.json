@@ -12,7 +12,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.141794444444445, 50.094613888888894]
+      "coordinates": [
+        7.141794444444445,
+        50.094613888888894
+      ]
     },
     "id": "b45f5791-299b-4c07-97de-dbc1c373df3b",
     "shortName": "PETERSBERG",
@@ -31,7 +34,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.60644938, 50.364990508]
+      "coordinates": [
+        7.60644938,
+        50.364990508
+      ]
     },
     "id": "adb1e986-e8b5-4594-a9e4-c27a013ffeea",
     "direction": "W-O",
@@ -50,7 +56,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [8.613088888888889, 49.62085555555556]
+      "coordinates": [
+        8.613088888888889,
+        49.62085555555556
+      ]
     },
     "id": "0ae5b34c-8418-4fac-bb9a-1093802dc83e",
     "shortName": "HEPPENHEIM_UL",
@@ -68,7 +77,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [8.474555555555556, 49.65577777777778]
+      "coordinates": [
+        8.474555555555556,
+        49.65577777777778
+      ]
     },
     "id": "bd645aaf-918b-4f9d-a63c-bf468e8a67fa",
     "shortName": "BUERSTADT_UL",
@@ -88,7 +100,10 @@
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
-      "coordinates": [7.740575, 49.79244444444444]
+      "coordinates": [
+        7.740575,
+        49.79244444444444
+      ]
     },
     "id": "cc10ea36-f184-41e0-be61-172dd29cfdbe",
     "shortName": "GANGELSBERG",
@@ -108,7 +123,10 @@
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
-      "coordinates": [7.722530555555555, 49.77610833333333]
+      "coordinates": [
+        7.722530555555555,
+        49.77610833333333
+      ]
     },
     "id": "3584522a-e86e-4049-b588-93395e55f9af",
     "shortName": "DUCHROTH",
@@ -128,7 +146,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.533175, 49.624497222222224]
+      "coordinates": [
+        7.533175,
+        49.624497222222224
+      ]
     },
     "id": "732fe644-c0f4-4b23-9a13-9cd5b1523294",
     "shortName": "HUNDHEIM",
@@ -148,7 +169,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [6.783822222222222, 49.31749166666667]
+      "coordinates": [
+        6.783822222222222,
+        49.31749166666667
+      ]
     },
     "id": "07d4335a-52b9-4a2a-be6e-9c348834344a",
     "shortName": "HALDE_ENSDORF",
@@ -168,7 +192,10 @@
     "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.549330555555555, 49.75289444444444]
+      "coordinates": [
+        9.549330555555555,
+        49.75289444444444
+      ]
     },
     "id": "a6fdb989-4165-4d98-99f1-f7c9d2b5a9c3",
     "shortName": "URPHAR_NO",
@@ -188,7 +215,10 @@
     "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.570513888888888, 49.74339166666667]
+      "coordinates": [
+        9.570513888888888,
+        49.74339166666667
+      ]
     },
     "id": "ade6170b-313c-47b5-bbf1-01d946de42b2",
     "shortName": "URPHAR_NW",
@@ -205,7 +235,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [9.4706845552, 49.1606082571]
+      "coordinates": [
+        9.4706845552,
+        49.1606082571
+      ]
     },
     "id": "39290227-2a68-4c0a-b80e-d4ccf48fd202",
     "shortName": "ADOLZFURT",
@@ -225,7 +258,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.593613888888888, 49.640008333333334]
+      "coordinates": [
+        6.593613888888888,
+        49.640008333333334
+      ]
     },
     "id": "28b733fa-a0a8-4c04-9ad8-cacec864f2e6",
     "shortName": "SCHODEN",
@@ -242,7 +278,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.824344444444444, 50.42107222222222]
+      "coordinates": [
+        7.824344444444444,
+        50.42107222222222
+      ]
     },
     "id": "8e9c0913-486c-470b-b025-3b0702253398",
     "shortName": "MONTABAUR_SEGELFLUG",
@@ -260,7 +299,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [9.410261111111112, 50.68335277777778]
+      "coordinates": [
+        9.410261111111112,
+        50.68335277777778
+      ]
     },
     "id": "886825a7-8f76-491a-bb0f-c3b77af5a31a",
     "shortName": "LAUTERBACH_UL",
@@ -280,7 +322,10 @@
     "website": "http://www.pdgfc.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.9413888888888895, 49.620555555555555]
+      "coordinates": [
+        7.9413888888888895,
+        49.620555555555555
+      ]
     },
     "id": "e727cae1-4945-4aab-ab94-26bbd5ebdabb",
     "shortName": "MOLTKEFELSEN",
@@ -298,7 +343,10 @@
     "website": "http://www.skyteam-neuss.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.629472222222223, 51.14335]
+      "coordinates": [
+        6.629472222222223,
+        51.14335
+      ]
     },
     "id": "b2f94426-5230-46d0-9064-003735519c79",
     "shortName": "HOLZHEIM",
@@ -315,7 +363,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [6.569476514, 51.472255]
+      "coordinates": [
+        6.569476514,
+        51.472255
+      ]
     },
     "id": "e2fa44d6-ff30-16de-8153-b03735519c71",
     "shortName": "HALDE_NORDDEUTSCHLAND",
@@ -334,7 +385,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.461388888888889, 50.31777777777778]
+      "coordinates": [
+        7.461388888888889,
+        50.31777777777778
+      ]
     },
     "id": "a72bccde-5700-4321-b727-fb5a430ce71c",
     "shortName": "ROSENBERG",
@@ -354,7 +408,10 @@
     "website": "http://www.gleitschirmverein-nahe-glan.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.512222222222222, 49.79281111111111]
+      "coordinates": [
+        7.512222222222222,
+        49.79281111111111
+      ]
     },
     "id": "106264b9-7c56-4aa9-b4e0-e9bf8a8f5aa2",
     "shortName": "HOCHSTETTEN",
@@ -374,7 +431,10 @@
     "website": "http://www.cumulux.lu",
     "point": {
       "type": "Point",
-      "coordinates": [6.091497222222222, 49.91557777777778]
+      "coordinates": [
+        6.091497222222222,
+        49.91557777777778
+      ]
     },
     "id": "272ac938-c17f-4ad9-b664-30a7e462b5fa",
     "shortName": "GRINGLAY",
@@ -394,7 +454,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [6.556894444444445, 49.620602777777776]
+      "coordinates": [
+        6.556894444444445,
+        49.620602777777776
+      ]
     },
     "id": "0196cb63-c25d-4e4a-954c-3e52454bb951",
     "shortName": "SAARBURG",
@@ -414,7 +477,10 @@
     "website": "http://www.dfc-saar.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.308222222222222, 49.549499999999995]
+      "coordinates": [
+        7.308222222222222,
+        49.549499999999995
+      ]
     },
     "id": "3cd15aa1-8b9c-4b14-b2aa-9e3731cf0846",
     "shortName": "PFEFFELBACH",
@@ -435,7 +501,10 @@
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
-      "coordinates": [6.615483333333333, 49.568933333333334]
+      "coordinates": [
+        6.615483333333333,
+        49.568933333333334
+      ]
     },
     "id": "b9a05268-a802-423e-8981-b1c01dafc754",
     "shortName": "SERRIG",
@@ -446,7 +515,10 @@
     "heightDifference": "255",
     "point": {
       "type": "Point",
-      "coordinates": [8.7683954493525, 49.68794910818]
+      "coordinates": [
+        8.7683954493525,
+        49.68794910818
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -466,7 +538,10 @@
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
-      "coordinates": [6.887555555555555, 49.87738888888889]
+      "coordinates": [
+        6.887555555555555,
+        49.87738888888889
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -491,7 +566,10 @@
     "website": "http://www.dfc-saar.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.594588888888889, 49.624230555555556]
+      "coordinates": [
+        6.594588888888889,
+        49.624230555555556
+      ]
     },
     "id": "3f37d5f1-f66f-40b1-adad-c9d189e57fa4",
     "shortName": "OCKFEN",
@@ -510,7 +588,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [7.052861111111111, 49.409]
+      "coordinates": [
+        7.052861111111111,
+        49.409
+      ]
     },
     "id": "440a8d9f-952b-49e8-a4fd-0fd736ac3985",
     "shortName": "WUSTWEILER",
@@ -525,7 +606,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.99335, 49.961600000000004]
+      "coordinates": [
+        6.99335,
+        49.961600000000004
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -550,7 +634,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [6.781111111111111, 50.25861111111111]
+      "coordinates": [
+        6.781111111111111,
+        50.25861111111111
+      ]
     },
     "id": "6a2b4405-2dfc-402a-abe3-d4b2b63127b5",
     "shortName": "DREISERWEIHER",
@@ -564,7 +651,10 @@
     "website": "http://www.ostwindfreunde.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.451108, 50.714028]
+      "coordinates": [
+        6.451108,
+        50.714028
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -584,7 +674,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.385000000000001, 50.2175]
+      "coordinates": [
+        7.385000000000001,
+        50.2175
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -609,7 +702,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.114758333333333, 50.10680833333333]
+      "coordinates": [
+        7.114758333333333,
+        50.10680833333333
+      ]
     },
     "id": "01afbf01-032a-444d-b8bd-8121b6e343ea",
     "shortName": "BREMM",
@@ -628,7 +724,10 @@
     "website": "http://www.fun-gliders-westerwald.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.600608333333333, 50.65656111111111]
+      "coordinates": [
+        7.600608333333333,
+        50.65656111111111
+      ]
     },
     "id": "ca900130-e3bc-443a-8407-d5f391f8a540",
     "shortName": "SCHOENEBERG",
@@ -640,7 +739,10 @@
     "heightDifference": "90",
     "point": {
       "type": "Point",
-      "coordinates": [8.449224235, 50.25675651]
+      "coordinates": [
+        8.449224235,
+        50.25675651
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -664,7 +766,10 @@
     "website": "http://www.fun-gliders-westerwald.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.532072222222222, 50.63138888888889]
+      "coordinates": [
+        7.532072222222222,
+        50.63138888888889
+      ]
     },
     "id": "b57ad153-9489-4e96-b57f-0684d46fb4f9",
     "shortName": "EICHEN",
@@ -683,7 +788,10 @@
     "website": "http://www.fun-gliders-westerwald.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.534166666666667, 50.63944444444444]
+      "coordinates": [
+        7.534166666666667,
+        50.63944444444444
+      ]
     },
     "id": "3ac171d2-ff2e-4719-99d8-070dfa286ebf",
     "shortName": "GOLLERSHOBEN",
@@ -702,7 +810,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [10.231405555555556, 51.11572777777778]
+      "coordinates": [
+        10.231405555555556,
+        51.11572777777778
+      ]
     },
     "id": "72b6b4a9-3838-43bd-b8f4-58db545287fd",
     "shortName": "SCHNELLMANNSHAUSEN",
@@ -722,7 +833,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [10.130125, 51.1722]
+      "coordinates": [
+        10.130125,
+        51.1722
+      ]
     },
     "id": "eb98406c-7c12-4ba8-886c-56e0c1954072",
     "shortName": "WANFRIED_AUE",
@@ -741,7 +855,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [10.07793888888889, 51.23714722222223]
+      "coordinates": [
+        10.07793888888889,
+        51.23714722222223
+      ]
     },
     "id": "20d43bc4-f1fb-4779-830d-621d91c52e92",
     "shortName": "KELLA_SCHLEPP",
@@ -761,7 +878,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [10.08038611111111, 51.24319444444445]
+      "coordinates": [
+        10.08038611111111,
+        51.24319444444445
+      ]
     },
     "id": "65089c2d-a94f-4414-ae1d-430c8e2f602c",
     "shortName": "KELLA_BERG",
@@ -781,7 +901,10 @@
     "website": "http://www.afs-flugschule.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.062261111111113, 51.10391111111111]
+      "coordinates": [
+        9.062261111111113,
+        51.10391111111111
+      ]
     },
     "id": "2b7a95f5-bd1b-4d70-9fd3-77d5f640eaa3",
     "shortName": "HAHNBERG",
@@ -801,7 +924,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [9.846333333333334, 51.24563888888889]
+      "coordinates": [
+        9.846333333333334,
+        51.24563888888889
+      ]
     },
     "id": "7ce1f70f-9508-47e3-b3d8-01aba0a06915",
     "shortName": "HOHER_MEISSNER",
@@ -821,7 +947,10 @@
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.189727777777778, 51.302836111111105]
+      "coordinates": [
+        8.189727777777778,
+        51.302836111111105
+      ]
     },
     "id": "32c190ff-4408-4bca-b3cc-aaa23c1533fc",
     "shortName": "WENHOLTHAUSEN",
@@ -840,7 +969,10 @@
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.830304, 51.351107]
+      "coordinates": [
+        8.830304,
+        51.351107
+      ]
     },
     "id": "13c910ff-4508-3bca-b4cc-def23c4711ab",
     "shortName": "WIRMINGHAUSEN",
@@ -860,7 +992,10 @@
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.939797222222223, 50.50008888888889]
+      "coordinates": [
+        9.939797222222223,
+        50.50008888888889
+      ]
     },
     "id": "32547e9c-dfed-4098-92f0-1f433d995ded",
     "shortName": "ABTSRODAER_KUPPE",
@@ -880,7 +1015,10 @@
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.920958333333333, 50.490855555555555]
+      "coordinates": [
+        9.920958333333333,
+        50.490855555555555
+      ]
     },
     "id": "d6489b22-33f0-46cd-8d9b-83d712a8e133",
     "shortName": "PFERDSKOPF",
@@ -900,7 +1038,10 @@
     "website": "http://saaleflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.916533333333334, 50.128433333333334]
+      "coordinates": [
+        9.916533333333334,
+        50.128433333333334
+      ]
     },
     "id": "e93f109e-392d-4274-bba8-d2cc094b085f",
     "shortName": "OFENTALER",
@@ -920,7 +1061,10 @@
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.935052777777779, 50.49571944444445]
+      "coordinates": [
+        9.935052777777779,
+        50.49571944444445
+      ]
     },
     "id": "8dad4b7c-4844-4002-9dcc-1a89d9d2ca22",
     "shortName": "WASSERKUPPE_WESTHANG",
@@ -938,7 +1082,10 @@
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.93808, 50.49734]
+      "coordinates": [
+        9.93808,
+        50.49734
+      ]
     },
     "id": "ff923958-be10-4873-8037-46fc2e2956be",
     "shortName": "WASSERKUPPE_SUEDHANG",
@@ -957,7 +1104,10 @@
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.913833, 50.511167]
+      "coordinates": [
+        9.913833,
+        50.511167
+      ]
     },
     "id": "4efe4b7c-1700-3991-9dcc-bb89d9d2ca13",
     "shortName": "WEIHERKUPPE",
@@ -977,7 +1127,10 @@
     "website": "http://www.kreuzbergflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.984427777777777, 50.376125]
+      "coordinates": [
+        9.984427777777777,
+        50.376125
+      ]
     },
     "id": "93577549-c2f9-4fdf-920f-78a57b57a8ec",
     "shortName": "KREUZBERG_NO",
@@ -997,7 +1150,10 @@
     "website": "http://www.kreuzbergflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.98108888888889, 50.36464166666667]
+      "coordinates": [
+        9.98108888888889,
+        50.36464166666667
+      ]
     },
     "id": "5861e576-5a08-41f7-b2c3-9804727c0679",
     "shortName": "KREUZBERG_SO",
@@ -1016,7 +1172,10 @@
     "website": "http://www.paragliding-westerwald.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.785, 50.794999999999995]
+      "coordinates": [
+        7.785,
+        50.794999999999995
+      ]
     },
     "id": "f4e1ab81-ed98-471a-af38-3c7c5e58a0b1",
     "shortName": "OBERHEOVELS",
@@ -1035,7 +1194,10 @@
     "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.444722222222222, 50.59916666666667]
+      "coordinates": [
+        8.444722222222222,
+        50.59916666666667
+      ]
     },
     "id": "8c3326f4-75d5-4f77-a37c-5dc23aabcb31",
     "shortName": "ASSLAR",
@@ -1043,10 +1205,33 @@
     "elevation": 222
   },
   {
+    "name": "Limbach Schlepp",
+    "image": "",
+    "locationData": {
+      "country": "GER",
+      "state": "RLP",
+      "region": ""
+    },
+    "point": {
+      "type": "Point",
+      "coordinates": [
+        7.81775,
+        50.70246
+      ]
+    },
+    "id": "8c3326f4-75d5-4f77-a37c-5dc23aaeeb31",
+    "shortName": "LIMBACH",
+    "direction": "S,N",
+    "elevation": 359
+  },
+  {
     "name": "Herborn Schlepp",
     "point": {
       "type": "Point",
-      "coordinates": [8.260103367011, 50.6682682676]
+      "coordinates": [
+        8.260103367011,
+        50.6682682676
+      ]
     },
     "id": "18e36ff6-433e-44b0-820e-57c56326bdeb",
     "shortName": "HERBORN",
@@ -1057,7 +1242,10 @@
     "name": "Uelhof Schlepp",
     "point": {
       "type": "Point",
-      "coordinates": [7.83114964631, 51.085215998101]
+      "coordinates": [
+        7.83114964631,
+        51.085215998101
+      ]
     },
     "id": "c833ae6c-e740-4fb5-b371-9cbed93cba47",
     "shortName": "UELHOF",
@@ -1067,7 +1255,10 @@
     "name": "Tollhausen Schlepp",
     "point": {
       "type": "Point",
-      "coordinates": [6.520912969, 50.946642821]
+      "coordinates": [
+        6.520912969,
+        50.946642821
+      ]
     },
     "id": "b16912c2-367d-4661-9759-8014374be41b",
     "shortName": "TOLLHAUSEN",
@@ -1078,7 +1269,10 @@
     "name": "Heppendorf Schlepp",
     "point": {
       "type": "Point",
-      "coordinates": [6.63404, 50.920656]
+      "coordinates": [
+        6.63404,
+        50.920656
+      ]
     },
     "id": "0c30586f-1970-47b8-adc5-5b92f18a49e1",
     "shortName": "HEPPENDORF",
@@ -1088,7 +1282,10 @@
     "name": "Holzbronn Schlepp",
     "point": {
       "type": "Point",
-      "coordinates": [9.81840048634, 49.51937768108]
+      "coordinates": [
+        9.81840048634,
+        49.51937768108
+      ]
     },
     "id": "5516cd7b-94ea-4b9f-a41f-488c70114495",
     "shortName": "HOLZBRONN",
@@ -1099,7 +1296,10 @@
     "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.392188965, 50.787966049]
+      "coordinates": [
+        8.392188965,
+        50.787966049
+      ]
     },
     "id": "679c1c09-8916-4ed4-8264-26544c0df256",
     "shortName": "HIRZENHAIN",
@@ -1110,7 +1310,10 @@
     "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.521922487, 50.6529424]
+      "coordinates": [
+        8.521922487,
+        50.6529424
+      ]
     },
     "id": "086d4756-0af0-41d3-84c7-0ae36b5e93e2",
     "shortName": "HOHENSOLMS",
@@ -1121,7 +1324,10 @@
     "website": "http://www.asslarergleitschirmflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.49396036, 50.693054837]
+      "coordinates": [
+        8.49396036,
+        50.693054837
+      ]
     },
     "id": "95e590b0-57fb-480b-96e4-7ed459a37532",
     "shortName": "MUDERSBACH",
@@ -1137,7 +1343,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [8.52699964, 49.32578722]
+      "coordinates": [
+        8.52699964,
+        49.32578722
+      ]
     },
     "id": "f82bb338-383a-4248-89cb-7f9d4d8098bf",
     "shortName": "HOCKENHEIM",
@@ -1157,7 +1366,10 @@
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.54496111111111, 51.31816666666667]
+      "coordinates": [
+        8.54496111111111,
+        51.31816666666667
+      ]
     },
     "id": "6d860b6f-38c3-42fa-9045-82079a816f74",
     "shortName": "BRUCHHAUSER_STEINE_S",
@@ -1177,7 +1389,10 @@
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.548136111111111, 51.316088888888885]
+      "coordinates": [
+        8.548136111111111,
+        51.316088888888885
+      ]
     },
     "id": "9f281345-45e6-4675-85bd-88146bb7d4cc",
     "shortName": "BRUCHHAUSER_STEINE_SW",
@@ -1196,7 +1411,10 @@
     "website": "http://www.sfg-wershofen.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.786888888888889, 50.45186944444445]
+      "coordinates": [
+        6.786888888888889,
+        50.45186944444445
+      ]
     },
     "id": "7625b6d0-b837-4a18-ac86-459310621dd1",
     "shortName": "WERSHOFEN",
@@ -1216,7 +1434,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [10.372616666666667, 51.07446388888889]
+      "coordinates": [
+        10.372616666666667,
+        51.07446388888889
+      ]
     },
     "id": "026fec57-99bd-47bf-9585-1c563ed54c66",
     "shortName": "HARSBERG",
@@ -1235,7 +1456,10 @@
     "website": "http://www.air-hegenscheid.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.7022305555555555, 51.312305555555554]
+      "coordinates": [
+        7.7022305555555555,
+        51.312305555555554
+      ]
     },
     "id": "7f031c57-e2de-4d3d-aa05-2adabb324632",
     "shortName": "HEGENSCHEID",
@@ -1254,7 +1478,10 @@
     "website": "https://www.dgc-battenberg.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.619886111111112, 51.01584722222222]
+      "coordinates": [
+        8.619886111111112,
+        51.01584722222222
+      ]
     },
     "id": "7b499782-e8b8-404f-a62f-f4ca45a6ad80",
     "shortName": "EISENBERG",
@@ -1273,7 +1500,10 @@
     "website": "https://www.dgc-battenberg.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.607955555555556, 51.01787222222222]
+      "coordinates": [
+        8.607955555555556,
+        51.01787222222222
+      ]
     },
     "id": "0733ac89-ef29-4ac9-8511-82649484ca32",
     "shortName": "EISENBERG_WINDE",
@@ -1293,7 +1523,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.222427777777778, 50.46478611111112]
+      "coordinates": [
+        7.222427777777778,
+        50.46478611111112
+      ]
     },
     "id": "e7671837-d78a-4586-9e8a-0d174d8e7758",
     "shortName": "BAUSENBERG",
@@ -1313,7 +1546,10 @@
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.599386111111112, 51.282016666666664]
+      "coordinates": [
+        8.599386111111112,
+        51.282016666666664
+      ]
     },
     "id": "22564a5b-eca9-49d9-9732-9f7f4634523f",
     "shortName": "WILLINGEN",
@@ -1332,7 +1568,10 @@
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.672129, 51.261767]
+      "coordinates": [
+        8.672129,
+        51.261767
+      ]
     },
     "id": "11564a5b-bca9-1234-9732-9e7e4634523e",
     "shortName": "DUEDINGHAUSEN",
@@ -1352,7 +1591,10 @@
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [10.126841666666667, 50.588658333333335]
+      "coordinates": [
+        10.126841666666667,
+        50.588658333333335
+      ]
     },
     "id": "1ca18e0c-1e32-44c1-9228-30f77e6a96dd",
     "shortName": "REICHENHAUSEN",
@@ -1367,7 +1609,10 @@
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
-      "coordinates": [6.990755555555555, 49.94385]
+      "coordinates": [
+        6.990755555555555,
+        49.94385
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -1392,7 +1637,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [8.13428611111111, 50.05439722222222]
+      "coordinates": [
+        8.13428611111111,
+        50.05439722222222
+      ]
     },
     "id": "daa62b09-8e80-43f2-b665-7781e2341b29",
     "shortName": "MARTINSTHAL",
@@ -1411,7 +1659,10 @@
     "website": "http://cumulux.lu",
     "point": {
       "type": "Point",
-      "coordinates": [6.030788888888889, 49.95192222222222]
+      "coordinates": [
+        6.030788888888889,
+        49.95192222222222
+      ]
     },
     "id": "8ece39f2-fe83-4c77-bd65-758e2c2f2b2e",
     "shortName": "KAUTENBACH",
@@ -1430,7 +1681,10 @@
     "website": "http://cumulux.lu",
     "point": {
       "type": "Point",
-      "coordinates": [6.0800777777777775, 49.899883333333335]
+      "coordinates": [
+        6.0800777777777775,
+        49.899883333333335
+      ]
     },
     "id": "96a49b5d-8e24-487a-815e-fd7e121d0b85",
     "shortName": "MICHAELAU",
@@ -1448,7 +1702,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [8.729077777777778, 50.531930555555554]
+      "coordinates": [
+        8.729077777777778,
+        50.531930555555554
+      ]
     },
     "id": "5e699986-ae27-4e99-ac4f-e97db2529a9c",
     "shortName": "POHLHEIM",
@@ -1467,7 +1724,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.803705555555555, 50.30577777777778]
+      "coordinates": [
+        7.803705555555555,
+        50.30577777777778
+      ]
     },
     "id": "019485c5-adc2-43bb-b3ab-a73adda37dd8",
     "shortName": "NASSAU",
@@ -1485,7 +1745,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [9.149272222222221, 51.09737777777778]
+      "coordinates": [
+        9.149272222222221,
+        51.09737777777778
+      ]
     },
     "id": "da293e8f-51bc-497c-804e-f51a9db4da76",
     "shortName": "SCHAUFEL",
@@ -1504,7 +1767,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [8.43207222222222, 51.26938611111111]
+      "coordinates": [
+        8.43207222222222,
+        51.26938611111111
+      ]
     },
     "id": "802ab91e-01b3-485d-b50f-8b16f1a11b40",
     "shortName": "ELPE",
@@ -1516,7 +1782,10 @@
     "heightDifference": "50",
     "point": {
       "type": "Point",
-      "coordinates": [7.1910924, 51.314676]
+      "coordinates": [
+        7.1910924,
+        51.314676
+      ]
     },
     "id": "45c0b209-bbee-4405-934a-92379f0946c0",
     "shortName": "MELLBECK",
@@ -1527,7 +1796,10 @@
     "name": "Bergstein Schlepp",
     "point": {
       "type": "Point",
-      "coordinates": [6.41570169, 50.69251151]
+      "coordinates": [
+        6.41570169,
+        50.69251151
+      ]
     },
     "id": "cf3bc974-d8b3-4c6d-93fb-85f31783114a",
     "shortName": "BERGSTEIN",
@@ -1547,7 +1819,10 @@
     "website": "https://www.sauerlandair.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.581388888888888, 51.29194444444444]
+      "coordinates": [
+        8.581388888888888,
+        51.29194444444444
+      ]
     },
     "id": "16cb4cb3-e1b2-4dde-bdc3-dabb9621ed5b",
     "shortName": "SONNENHANG",
@@ -1566,7 +1841,10 @@
     "type": "HGPGSTA",
     "point": {
       "type": "Point",
-      "coordinates": [8.16520841421272, 51.13120995764818]
+      "coordinates": [
+        8.16520841421272,
+        51.13120995764818
+      ]
     },
     "id": "61bc4bc3-b2e1-4dde-bdc3-dacc9634ed6c",
     "shortName": "DOLBERG",
@@ -1586,7 +1864,10 @@
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [10.255, 50.56916666666667]
+      "coordinates": [
+        10.255,
+        50.56916666666667
+      ]
     },
     "id": "ea1cab1a-a1e7-47e5-a21f-235577e62c3b",
     "shortName": "GEBA_SW",
@@ -1606,7 +1887,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [6.09965, 49.44676666666666]
+      "coordinates": [
+        6.09965,
+        49.44676666666666
+      ]
     },
     "id": "f63e1a67-81bb-4af1-87e2-4c0a412853be",
     "shortName": "KANFEN",
@@ -1625,7 +1909,10 @@
     "website": "http://www.rdg-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [10.22375, 50.659702777777774]
+      "coordinates": [
+        10.22375,
+        50.659702777777774
+      ]
     },
     "id": "a56c560a-1199-4abc-b79d-07aa60b65167",
     "shortName": "SPIELBERG",
@@ -1645,7 +1932,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [6.837580555555555, 49.78123055555555]
+      "coordinates": [
+        6.837580555555555,
+        49.78123055555555
+      ]
     },
     "id": "82d09f76-6adf-4aca-9135-3a02b41f9006",
     "shortName": "MEHRING",
@@ -1662,7 +1952,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [6.755833333333333, 50.24518611111111]
+      "coordinates": [
+        6.755833333333333,
+        50.24518611111111
+      ]
     },
     "id": "8c7ba6ac-9ee8-490b-b866-b959f3930906",
     "shortName": "HINTERWEILER",
@@ -1679,7 +1972,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [8.17611111111111, 49.16888888888889]
+      "coordinates": [
+        8.17611111111111,
+        49.16888888888889
+      ]
     },
     "id": "381e6f93-095d-4b08-a8dd-7f0b601b5cb3",
     "shortName": "OFFENBACH",
@@ -1694,7 +1990,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.030005555555555, 49.98511111111111]
+      "coordinates": [
+        7.030005555555555,
+        49.98511111111111
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -1714,7 +2013,10 @@
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
-      "coordinates": [6.870833333333334, 49.84777777777778]
+      "coordinates": [
+        6.870833333333334,
+        49.84777777777778
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -1739,7 +2041,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.85781111111111, 49.87016111111111]
+      "coordinates": [
+        6.85781111111111,
+        49.87016111111111
+      ]
     },
     "id": "728370dc-425e-4074-a96a-622824a786bf",
     "shortName": "RIVENICH",
@@ -1756,7 +2061,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [7.771944444444444, 49.87388888888889]
+      "coordinates": [
+        7.771944444444444,
+        49.87388888888889
+      ]
     },
     "id": "559f91bd-2c3b-4d72-bc95-f69a2d41aa0b",
     "shortName": "KATHARINEN_AUF_UNTEREM_MERGESFELD_SCHLEPP",
@@ -1775,7 +2083,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.787222222222222, 49.871944444444445]
+      "coordinates": [
+        7.787222222222222,
+        49.871944444444445
+      ]
     },
     "id": "3033447d-3017-41de-8f3c-ecb156cabe1f",
     "shortName": "KATHARINEN_HANG",
@@ -1794,7 +2105,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [6.468758333333334, 50.942338888888884]
+      "coordinates": [
+        6.468758333333334,
+        50.942338888888884
+      ]
     },
     "id": "43a48b6a-8d32-4865-8788-bf0cb1d602eb",
     "shortName": "SOPHIENHOEHE",
@@ -1813,7 +2127,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.015544444444444, 49.984500000000004]
+      "coordinates": [
+        7.015544444444444,
+        49.984500000000004
+      ]
     },
     "id": "a47011e0-be04-4668-80ff-0311a6eb784f",
     "shortName": "UERZIG_SW",
@@ -1827,7 +2144,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.018825, 49.876847222222224]
+      "coordinates": [
+        7.018825,
+        49.876847222222224
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -1849,7 +2169,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [7.783333333333333, 50.21666666666667]
+      "coordinates": [
+        7.783333333333333,
+        50.21666666666667
+      ]
     },
     "id": "3e83e194-5479-41af-ad23-450561683b9a",
     "shortName": "HIMMIGHOFEN",
@@ -1868,7 +2191,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [8.043683333333334, 49.82311666666667]
+      "coordinates": [
+        8.043683333333334,
+        49.82311666666667
+      ]
     },
     "id": "5c25d450-eca2-4a0a-9de3-7e0f082f0967",
     "shortName": "WALLERTHEIM",
@@ -1887,7 +2213,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.787222222222222, 49.865833333333335]
+      "coordinates": [
+        7.787222222222222,
+        49.865833333333335
+      ]
     },
     "id": "90e401a6-020e-4d93-83ee-08d2e99e938a",
     "shortName": "KATHARINEN_SCHLEPP",
@@ -1907,7 +2236,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [7.658333333333334, 49.727222222222224]
+      "coordinates": [
+        7.658333333333334,
+        49.727222222222224
+      ]
     },
     "id": "e8d6e2ce-b899-4a7d-b09c-ca3a134cb78f",
     "shortName": "RAUMBACH_HANG",
@@ -1926,7 +2258,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [6.743261111111111, 49.46886111111111]
+      "coordinates": [
+        6.743261111111111,
+        49.46886111111111
+      ]
     },
     "id": "9ba2ed9a-ab38-42fa-80d5-1aed219e4b10",
     "shortName": "LOSHEIM_SCHEID",
@@ -1941,7 +2276,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.755991666666667, 50.10613055555556]
+      "coordinates": [
+        6.755991666666667,
+        50.10613055555556
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -1966,7 +2304,10 @@
     "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.026222222222223, 49.240363888888886]
+      "coordinates": [
+        8.026222222222223,
+        49.240363888888886
+      ]
     },
     "id": "f195bdfd-97db-4e16-bfb9-a82413319395",
     "shortName": "ORENSBERG",
@@ -1986,7 +2327,10 @@
     "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.9602611111111115, 49.216797222222226]
+      "coordinates": [
+        7.9602611111111115,
+        49.216797222222226
+      ]
     },
     "id": "0466eb59-726f-4c98-bb42-a854e21edbe2",
     "shortName": "ADELBERG",
@@ -2005,7 +2349,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [8.003069444444444, 49.19216944444444]
+      "coordinates": [
+        8.003069444444444,
+        49.19216944444444
+      ]
     },
     "id": "8c011833-f1df-49e8-846a-9fa2f20356bc",
     "shortName": "FOERLENBERG",
@@ -2025,7 +2372,10 @@
     "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.886749999999999, 49.190305555555554]
+      "coordinates": [
+        7.886749999999999,
+        49.190305555555554
+      ]
     },
     "id": "84d665e8-7881-43cd-9885-37bbf0e05338",
     "shortName": "HOELLENBERG",
@@ -2040,7 +2390,10 @@
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
-      "coordinates": [7.003611111111111, 49.94583333333333]
+      "coordinates": [
+        7.003611111111111,
+        49.94583333333333
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -2060,7 +2413,10 @@
     "website": "http://www.pdgfc.de/",
     "point": {
       "type": "Point",
-      "coordinates": [8.003055555555555, 49.20027777777778]
+      "coordinates": [
+        8.003055555555555,
+        49.20027777777778
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -2085,7 +2441,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.572930555555556, 50.243788888888886]
+      "coordinates": [
+        7.572930555555556,
+        50.243788888888886
+      ]
     },
     "id": "5991b282-9a45-49e8-b385-2e4a0a843002",
     "shortName": "BOPPARD",
@@ -2102,7 +2461,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.479167, 49.97]
+      "coordinates": [
+        7.479167,
+        49.97
+      ]
     },
     "id": "6a79741d-7917-4189-8a65-e646fd52249a",
     "shortName": "NANNHAUSEN",
@@ -2120,7 +2482,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [6.740886111111111, 49.52296666666667]
+      "coordinates": [
+        6.740886111111111,
+        49.52296666666667
+      ]
     },
     "id": "908dc4b0-90a7-4f71-bfed-1c6b9e653a8a",
     "shortName": "LOSHEIM_AM_SEE",
@@ -2138,7 +2503,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [6.719727777777778, 49.46907222222222]
+      "coordinates": [
+        6.719727777777778,
+        49.46907222222222
+      ]
     },
     "id": "6202d87b-1080-42e6-8db1-1d346815649b",
     "shortName": "HUNGERBERG",
@@ -2157,7 +2525,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [7.009861111111111, 49.578361111111114]
+      "coordinates": [
+        7.009861111111111,
+        49.578361111111114
+      ]
     },
     "id": "f63852b3-3bd4-4dbc-b042-26b7c6285d59",
     "shortName": "PETERBERG",
@@ -2171,7 +2542,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.058827777777777, 49.94427222222222]
+      "coordinates": [
+        7.058827777777777,
+        49.94427222222222
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -2193,7 +2567,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [6.7495972222222225, 49.495308333333334]
+      "coordinates": [
+        6.7495972222222225,
+        49.495308333333334
+      ]
     },
     "id": "3b982d09-b68a-4aee-8b5f-f69758373aed",
     "shortName": "KERZENBERG",
@@ -2211,7 +2588,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [6.736291666666666, 49.50226388888889]
+      "coordinates": [
+        6.736291666666666,
+        49.50226388888889
+      ]
     },
     "id": "696f129a-ee79-4984-aec2-8054b4c80ea6",
     "shortName": "GALGENBERG",
@@ -2230,7 +2610,10 @@
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
-      "coordinates": [6.7998722222222225, 49.781277777777774]
+      "coordinates": [
+        6.7998722222222225,
+        49.781277777777774
+      ]
     },
     "id": "dd469912-75d8-4952-a46c-afe41832a0ff",
     "shortName": "RIOL",
@@ -2249,7 +2632,10 @@
     "website": "http://www.dgfhellertal.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.929208333333333, 50.769888888888886]
+      "coordinates": [
+        7.929208333333333,
+        50.769888888888886
+      ]
     },
     "id": "4be067e9-4397-4fb3-a53c-1da62f54dd8f",
     "shortName": "SASSENROTH",
@@ -2267,7 +2653,10 @@
     "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.28361111111111, 49.35416666666667]
+      "coordinates": [
+        8.28361111111111,
+        49.35416666666667
+      ]
     },
     "id": "2794ccff-f869-407e-9e63-c1fc4b964661",
     "shortName": "HASSLOCH",
@@ -2287,7 +2676,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.710555555555556, 49.765]
+      "coordinates": [
+        7.710555555555556,
+        49.765
+      ]
     },
     "id": "26971115-7003-462c-85c3-a228cfda1302",
     "shortName": "ODERNHEIM",
@@ -2305,7 +2697,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [7.2339166666666666, 49.102111111111114]
+      "coordinates": [
+        7.2339166666666666,
+        49.102111111111114
+      ]
     },
     "id": "d5d5fbf9-bb7a-42b2-a657-5b2828094932",
     "shortName": "OBERGAILBACH",
@@ -2323,7 +2718,10 @@
     "website": "http://pski.errror.org",
     "point": {
       "type": "Point",
-      "coordinates": [7.225555555555555, 49.16138888888889]
+      "coordinates": [
+        7.225555555555555,
+        49.16138888888889
+      ]
     },
     "id": "003ea8a3-1883-4f3c-a4f5-8ec11482e198",
     "shortName": "HERBITZHEIM",
@@ -2343,7 +2741,10 @@
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
-      "coordinates": [7.052611111111111, 50.528663888888886]
+      "coordinates": [
+        7.052611111111111,
+        50.528663888888886
+      ]
     },
     "id": "9dc5f076-2fa3-41f8-9cf8-8b3c7ccb82c8",
     "shortName": "KRAUSBERG",
@@ -2363,7 +2764,10 @@
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
-      "coordinates": [6.941663888888889, 50.470508333333335]
+      "coordinates": [
+        6.941663888888889,
+        50.470508333333335
+      ]
     },
     "id": "5fc76333-898c-44db-a722-746fcbac426d",
     "shortName": "HOENNINGEN_OST",
@@ -2382,7 +2786,10 @@
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
-      "coordinates": [6.94705, 50.47857777777778]
+      "coordinates": [
+        6.94705,
+        50.47857777777778
+      ]
     },
     "id": "c588601c-8494-47fb-b099-4ca7a2122452",
     "shortName": "HOENNINGEN_SUED",
@@ -2402,7 +2809,10 @@
     "website": "http://www.bergstraessler-drachenflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.678888888888888, 49.46527777777778]
+      "coordinates": [
+        8.678888888888888,
+        49.46527777777778
+      ]
     },
     "id": "700dd217-5f5c-4323-89e0-9554bbb61c54",
     "shortName": "SCHRIESHEIM",
@@ -2420,7 +2830,10 @@
     "website": "http://www.flugplatz-michelstadt.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.972016666666667, 49.67851944444444]
+      "coordinates": [
+        8.972016666666667,
+        49.67851944444444
+      ]
     },
     "id": "d9226048-e5fd-4608-a5f5-a87900ef60e2",
     "shortName": "MICHELSTADT_UL",
@@ -2438,7 +2851,10 @@
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
-      "coordinates": [7.234002777777778, 50.60306944444444]
+      "coordinates": [
+        7.234002777777778,
+        50.60306944444444
+      ]
     },
     "id": "f4eb8622-c045-4cb3-9dd7-db77b7133d2e",
     "shortName": "UNKEL",
@@ -2458,7 +2874,10 @@
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
-      "coordinates": [7.434655555555556, 50.558375]
+      "coordinates": [
+        7.434655555555556,
+        50.558375
+      ]
     },
     "id": "37c664ad-e98f-4b41-ad3f-2b467210fd33",
     "shortName": "HAARDSKOPF",
@@ -2478,7 +2897,10 @@
     "website": "http://www.dgc-siebengebirge.com",
     "point": {
       "type": "Point",
-      "coordinates": [7.411508333333334, 50.58224444444445]
+      "coordinates": [
+        7.411508333333334,
+        50.58224444444445
+      ]
     },
     "id": "18b36aaa-a7f9-447c-9c68-6ac0de8c9733",
     "shortName": "FINKENBERG",
@@ -2498,7 +2920,10 @@
     "website": "http://www.ersterodc.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.635833333333332, 49.724444444444444]
+      "coordinates": [
+        8.635833333333332,
+        49.724444444444444
+      ]
     },
     "id": "a1c78485-4b52-49f3-9cb2-4826ced63742",
     "shortName": "MELIBOKUS",
@@ -2518,7 +2943,10 @@
     "website": "http://www.lilienthal-gleiter.de/suedost.html",
     "point": {
       "type": "Point",
-      "coordinates": [9.46936111111111, 49.78680555555555]
+      "coordinates": [
+        9.46936111111111,
+        49.78680555555555
+      ]
     },
     "id": "7f33e27a-859e-4251-bb5f-28487ec31b43",
     "shortName": "HECKENKOPF",
@@ -2533,7 +2961,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [8.983333, 50.02]
+      "coordinates": [
+        8.983333,
+        50.02
+      ]
     },
     "id": "d5da33ab-134e-4bde-82a5-7c773b253972",
     "shortName": "ZELLHAUSEN",
@@ -2548,7 +2979,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [6.64620667562, 50.96445080952]
+      "coordinates": [
+        6.64620667562,
+        50.96445080952
+      ]
     },
     "id": "41edc418-fddf-4104-a2d3-796fd021446e",
     "shortName": "FORTUNAWEG",
@@ -2563,7 +2997,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [9.1263303, 49.957696]
+      "coordinates": [
+        9.1263303,
+        49.957696
+      ]
     },
     "id": "377c4648-482d-4fc6-9b24-f01139449591",
     "shortName": "NILKHEIM",
@@ -2578,7 +3015,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [9.49575179, 49.86039182]
+      "coordinates": [
+        9.49575179,
+        49.86039182
+      ]
     },
     "id": "d65cd3c7-630b-4fec-b3e1-012f065484d0",
     "shortName": "BISCHBRUNN",
@@ -2594,7 +3034,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [8.431985939969, 50.2935292726602]
+      "coordinates": [
+        8.431985939969,
+        50.2935292726602
+      ]
     },
     "id": "1db07dec-6d56-4599-aa7d-e18cce5d01cc",
     "shortName": "TREISBERG",
@@ -2609,7 +3052,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [9.07247438, 49.658227193]
+      "coordinates": [
+        9.07247438,
+        49.658227193
+      ]
     },
     "id": "a2b63873-32c1-42d2-bc1d-554d86427f1c",
     "shortName": "WUERZBERG",
@@ -2629,7 +3075,10 @@
     "website": "http://www.freiflieger-arzbach.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.756388888888889, 50.36972222222222]
+      "coordinates": [
+        7.756388888888889,
+        50.36972222222222
+      ]
     },
     "id": "49ddf684-a4b6-4a06-a9c2-0d9580b30e65",
     "shortName": "GROSSER_KOPF",
@@ -2649,7 +3098,10 @@
     "website": "http://www.ersterodc.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.82236111111111, 49.74297222222222]
+      "coordinates": [
+        8.82236111111111,
+        49.74297222222222
+      ]
     },
     "id": "e62c52e1-2ac4-4180-a90b-5c072cb9d71c",
     "shortName": "ERLAU",
@@ -2669,7 +3121,10 @@
     "website": "http://www.duddefliecher.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.070416666666667, 49.26569444444444]
+      "coordinates": [
+        8.070416666666667,
+        49.26569444444444
+      ]
     },
     "id": "29806e5b-7ef5-4ca3-9d05-87b90122bd4c",
     "shortName": "BLAETTERSBERG",
@@ -2689,7 +3144,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [9.063472222222224, 50.239333333333335]
+      "coordinates": [
+        9.063472222222224,
+        50.239333333333335
+      ]
     },
     "id": "c0d6bf82-4a0b-4734-972f-37688eb3a266",
     "shortName": "RONNEBURG",
@@ -2704,7 +3162,10 @@
     "website": "http://www.kurpfaelzer-gleitschirmflieger.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.727172222222222, 49.40387222222222]
+      "coordinates": [
+        8.727172222222222,
+        49.40387222222222
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -2729,7 +3190,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.723055555555556, 50.861666666666665]
+      "coordinates": [
+        7.723055555555556,
+        50.861666666666665
+      ]
     },
     "id": "e6ad5180-3056-4d19-9723-78b3750c9f27",
     "shortName": "MORSBACH",
@@ -2746,7 +3210,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.708333333333334, 49.83861111111111]
+      "coordinates": [
+        7.708333333333334,
+        49.83861111111111
+      ]
     },
     "id": "ebe0c810-a5bc-4f1e-a5d6-20ea06fe6072",
     "shortName": "ROXHEIM",
@@ -2766,7 +3233,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [9.09138888888889, 49.33388888888889]
+      "coordinates": [
+        9.09138888888889,
+        49.33388888888889
+      ]
     },
     "id": "430f9dfe-276b-4f65-8267-aa35265c28f6",
     "shortName": "MOSBACH",
@@ -2786,7 +3256,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.691944444444444, 49.76777777777777]
+      "coordinates": [
+        7.691944444444444,
+        49.76777777777777
+      ]
     },
     "id": "056ad63a-bada-495e-89e7-2212e6f2b9f6",
     "shortName": "ODERNHEIM_NEUBERG_OST",
@@ -2806,7 +3279,10 @@
     "website": "http://www.lilienthal-gleiter.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.2075, 49.73361111111111]
+      "coordinates": [
+        9.2075,
+        49.73361111111111
+      ]
     },
     "id": "d043257e-a021-4b23-9cb5-4ced05442ae2",
     "shortName": "BUSIGBERG",
@@ -2826,7 +3302,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.719166666666667, 49.77055555555555]
+      "coordinates": [
+        7.719166666666667,
+        49.77055555555555
+      ]
     },
     "id": "ca314c5a-a2db-4a91-af24-77378a04a892",
     "shortName": "WEILERKOPF",
@@ -2846,7 +3325,10 @@
     "website": "http://www.dfc-trier.com",
     "point": {
       "type": "Point",
-      "coordinates": [6.780141666666666, 49.81263055555555]
+      "coordinates": [
+        6.780141666666666,
+        49.81263055555555
+      ]
     },
     "id": "1db6043e-3fcc-4551-9a6a-37e2ea881c78",
     "shortName": "LONGUICH",
@@ -2866,7 +3348,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.7011111111111115, 49.788333333333334]
+      "coordinates": [
+        7.7011111111111115,
+        49.788333333333334
+      ]
     },
     "id": "9a2c58e3-ddfb-4cf7-8c5f-1553fa1f2710",
     "shortName": "STAUDERNHEIM",
@@ -2884,7 +3369,10 @@
     "website": "NULL",
     "point": {
       "type": "Point",
-      "coordinates": [8.343722222222222, 48.98097222222222]
+      "coordinates": [
+        8.343722222222222,
+        48.98097222222222
+      ]
     },
     "id": "2b717777-73d5-4430-a5b6-6dfae7632b35",
     "shortName": "RHEINSTETTEN_UL",
@@ -2899,7 +3387,10 @@
     "website": "http://www.pdgfc.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.9325277777777785, 49.635527777777774]
+      "coordinates": [
+        7.9325277777777785,
+        49.635527777777774
+      ]
     },
     "locationData": {
       "country": "GER",
@@ -2921,7 +3412,10 @@
     "website": "https://www.dhv.de/db2/details.php?qi=glp_details&popup=1&item=658",
     "point": {
       "type": "Point",
-      "coordinates": [9.7243166, 49.9896976]
+      "coordinates": [
+        9.7243166,
+        49.9896976
+      ]
     },
     "id": "2b6a86d9-0d70-406d-af2a-68e2c4ce6fe4",
     "shortName": "MAEUSBERG",
@@ -2940,7 +3434,10 @@
     "website": "http://www.lilienthal-gleiter.de/suedwest.html",
     "point": {
       "type": "Point",
-      "coordinates": [9.506305555555555, 49.79087222222222]
+      "coordinates": [
+        9.506305555555555,
+        49.79087222222222
+      ]
     },
     "id": "908ff967-192d-4828-a944-93773c856e5c",
     "shortName": "ROTTBERG",
@@ -2959,7 +3456,10 @@
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
-      "coordinates": [7.822958333333333, 49.806036111111105]
+      "coordinates": [
+        7.822958333333333,
+        49.806036111111105
+      ]
     },
     "id": "b448b5c3-a1de-46e6-b443-5eb97b77417e",
     "shortName": "NORHEIM",
@@ -2978,7 +3478,10 @@
     "website": "http://www.para-now.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.107394444444443, 49.36037777777778]
+      "coordinates": [
+        9.107394444444443,
+        49.36037777777778
+      ]
     },
     "id": "6a6f3af6-e33e-4af4-bef5-ebde69060c77",
     "shortName": "SCHRECKHOF",
@@ -2997,7 +3500,10 @@
     "website": "http://www.para-now.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.399969444444444, 49.32455277777778]
+      "coordinates": [
+        9.399969444444444,
+        49.32455277777778
+      ]
     },
     "id": "97ed11c9-74d3-467b-ac22-e69e2efebb31",
     "shortName": "WIDDERN",
@@ -3017,7 +3523,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.754991666666666, 51.15215277777778]
+      "coordinates": [
+        7.754991666666666,
+        51.15215277777778
+      ]
     },
     "id": "7c3b3f6d-e687-4503-a452-224877e28e0f",
     "shortName": "NORDHELLE",
@@ -3035,7 +3544,10 @@
     "website": "http://www.gleitschirmfreunde-taubertal.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.646483333333332, 49.47018333333334]
+      "coordinates": [
+        9.646483333333332,
+        49.47018333333334
+      ]
     },
     "id": "59bd6d5b-e7b5-4cdc-ad1e-b6a812e941a1",
     "shortName": "BOXBERG",
@@ -3052,7 +3564,10 @@
     "website": "https://www.dhv.de/db2/details.php?qi=glp_details&item=970",
     "point": {
       "type": "Point",
-      "coordinates": [7.895335, 50.915694]
+      "coordinates": [
+        7.895335,
+        50.915694
+      ]
     },
     "id": "2d1b898a-16d7-4524-9a62-b5d19aeb03ac",
     "shortName": "OSTERBERG",
@@ -3072,7 +3587,10 @@
     "website": "http://www.para-now.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.149177777777778, 49.25286388888889]
+      "coordinates": [
+        9.149177777777778,
+        49.25286388888889
+      ]
     },
     "id": "2020c949-89bc-438b-8a9b-38cb0a4bb46d",
     "shortName": "HEINSHEIM",
@@ -3091,7 +3609,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [6.949038888888889, 49.903238888888886]
+      "coordinates": [
+        6.949038888888889,
+        49.903238888888886
+      ]
     },
     "id": "a21a0275-e960-43dd-80fd-f6aebd6b8f33",
     "shortName": "KESTEN",
@@ -3109,7 +3630,10 @@
     "website": "http://www.para-now.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.083172222222222, 49.39222777777778]
+      "coordinates": [
+        9.083172222222222,
+        49.39222777777778
+      ]
     },
     "id": "91825d7a-2a1a-4c6c-8dd9-ef9e83777d6b",
     "shortName": "NECKARGERACH",
@@ -3128,7 +3652,10 @@
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
-      "coordinates": [7.892672222222222, 49.92782222222222]
+      "coordinates": [
+        7.892672222222222,
+        49.92782222222222
+      ]
     },
     "id": "b5995b83-393c-48fd-894c-6200406933ad",
     "shortName": "LAUBENHEIM",
@@ -3148,7 +3675,10 @@
     "website": "http://www.entenberg.eu",
     "point": {
       "type": "Point",
-      "coordinates": [8.43378888888889, 50.91853888888889]
+      "coordinates": [
+        8.43378888888889,
+        50.91853888888889
+      ]
     },
     "id": "20347e54-0310-4a60-a23c-f9c85c7457e5",
     "shortName": "ENTENBERG",
@@ -3167,7 +3697,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [6.917736111111111, 49.84278333333334]
+      "coordinates": [
+        6.917736111111111,
+        49.84278333333334
+      ]
     },
     "id": "1a03ecb0-b2f0-491c-b9a5-e2f5018ff98f",
     "shortName": "NEUMAGEN_SEGEL",
@@ -3187,7 +3720,10 @@
     "website": "http://lilienthal-gleiter.de",
     "point": {
       "type": "Point",
-      "coordinates": [9.288211111111112, 49.721250000000005]
+      "coordinates": [
+        9.288211111111112,
+        49.721250000000005
+      ]
     },
     "id": "4649ed62-e56f-4bd0-9a10-48596209ddb8",
     "shortName": "BUERGSTADT",
@@ -3207,7 +3743,10 @@
     "website": "http://www.pfaelzergleitschirmclub.info",
     "point": {
       "type": "Point",
-      "coordinates": [7.808888888888888, 49.67972222222222]
+      "coordinates": [
+        7.808888888888888,
+        49.67972222222222
+      ]
     },
     "id": "8010c617-a2c8-4260-aad9-2e3f770b0e27",
     "shortName": "STOLZENBERG",
@@ -3227,7 +3766,10 @@
     "website": "http://www.deltaclub.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.376772222222222, 50.78089722222222]
+      "coordinates": [
+        7.376772222222222,
+        50.78089722222222
+      ]
     },
     "id": "652f8227-0f1c-42b4-9d46-28f2b158bfbc",
     "shortName": "STACHELHARDT",
@@ -3246,7 +3788,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [8.926488888888889, 49.40376666666666]
+      "coordinates": [
+        8.926488888888889,
+        49.40376666666666
+      ]
     },
     "id": "aba62a95-365e-4085-88c8-1027a703da27",
     "shortName": "SCHOENBRUNN",
@@ -3266,7 +3811,10 @@
     "website": "http://www.moselfalken.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.746722222222222, 50.093411111111116]
+      "coordinates": [
+        6.746722222222222,
+        50.093411111111116
+      ]
     },
     "id": "f7f2ba51-134c-4423-9f56-194e23f7533c",
     "shortName": "MEERFELD_OST",
@@ -3283,7 +3831,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [6.3379666666666665, 50.96293333333334]
+      "coordinates": [
+        6.3379666666666665,
+        50.96293333333334
+      ]
     },
     "id": "a2bb31c8-5558-4f24-9a89-1f4f4dffaf73",
     "shortName": "LINNICH_UL",
@@ -3301,7 +3852,10 @@
     "website": "http://www.gleitschirmverein-nahe-glan.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.621388888888889, 49.624722222222225]
+      "coordinates": [
+        7.621388888888889,
+        49.624722222222225
+      ]
     },
     "id": "e0f68961-3544-4ae0-b125-8d333756207f",
     "shortName": "HOHENOELLEN",
@@ -3320,7 +3874,10 @@
     "website": "http://www.thermik4u.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.615241666666666, 50.19385833333333]
+      "coordinates": [
+        7.615241666666666,
+        50.19385833333333
+      ]
     },
     "id": "8a4eaf9d-0520-4d58-a0b0-6ad1917be158",
     "shortName": "B_WEILER",
@@ -3339,7 +3896,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [8.523652777777778, 50.353950000000005]
+      "coordinates": [
+        8.523652777777778,
+        50.353950000000005
+      ]
     },
     "id": "00fd6bbd-b7de-4d33-ac7e-f99542c7af9d",
     "shortName": "ESCHBACH",
@@ -3356,7 +3916,10 @@
     "website": "http://www.ostwindfreunde.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.470775, 51.02428333333333]
+      "coordinates": [
+        6.470775,
+        51.02428333333333
+      ]
     },
     "id": "3ebd513e-050f-4547-9774-e4904b347f52",
     "shortName": "KAISKORB",
@@ -3374,7 +3937,10 @@
     "website": "http://www.ul-kerken.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.445555555555556, 51.43888888888888]
+      "coordinates": [
+        6.445555555555556,
+        51.43888888888888
+      ]
     },
     "id": "579a881f-861b-4d59-973e-135bbdfd8159",
     "shortName": "KERKEN_UL",
@@ -3392,7 +3958,10 @@
     "website": "http://www.freiflieger-niederrhein.de",
     "point": {
       "type": "Point",
-      "coordinates": [6.428244444444445, 51.48574722222222]
+      "coordinates": [
+        6.428244444444445,
+        51.48574722222222
+      ]
     },
     "id": "d9c90336-8f1b-4b88-9e81-5fbaa5ab6607",
     "shortName": "SEVELEN",
@@ -3410,7 +3979,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [9.24266111111111, 50.749050000000004]
+      "coordinates": [
+        9.24266111111111,
+        50.749050000000004
+      ]
     },
     "id": "353f5143-7f54-448c-873e-091ebb48db4c",
     "shortName": "FLUGPLATZ_ALSFELD",
@@ -3426,7 +3998,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [8.19288724473, 50.32201690999]
+      "coordinates": [
+        8.19288724473,
+        50.32201690999
+      ]
     },
     "id": "1ecf6573-2955-41ee-96dd-85046637e5bd",
     "shortName": "DAUBORN",
@@ -3442,7 +4017,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [7.8799148754635, 50.6409108739]
+      "coordinates": [
+        7.8799148754635,
+        50.6409108739
+      ]
     },
     "id": "f925756b-ca75-4c4c-9b56-0e52884a3eaa",
     "shortName": "ALPENROD",
@@ -3458,7 +4036,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [9.4500757859, 51.2223806331]
+      "coordinates": [
+        9.4500757859,
+        51.2223806331
+      ]
     },
     "id": "834786a9-9f14-4e96-9156-37fea4f870cb",
     "shortName": "EDERMUENDE",
@@ -3473,7 +4054,10 @@
     },
     "point": {
       "type": "Point",
-      "coordinates": [6.72, 50.2725]
+      "coordinates": [
+        6.72,
+        50.2725
+      ]
     },
     "id": "5b0d8a54-deac-4b14-95a4-d1195e9d0cf3",
     "shortName": "WALSDORF",
@@ -3491,7 +4075,10 @@
     "website": "http://www.gf-wehrheim.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.53038888888889, 50.28665]
+      "coordinates": [
+        8.53038888888889,
+        50.28665
+      ]
     },
     "id": "d07ba46e-342c-4417-83ef-50fad95e375c",
     "shortName": "ANSPACH",
@@ -3511,7 +4098,10 @@
     "website": "http://www.airwalker-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.568238888888889, 51.377830555555555]
+      "coordinates": [
+        8.568238888888889,
+        51.377830555555555
+      ]
     },
     "id": "1f0bf6ca-b0cb-4a44-831e-bde2f8928af1",
     "shortName": "POPPENPERG",
@@ -3529,7 +4119,10 @@
     "website": "http://www.himmelsstuermerlahn.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.59748888888889, 50.48328888888889]
+      "coordinates": [
+        8.59748888888889,
+        50.48328888888889
+      ]
     },
     "id": "f631845b-e337-418b-8d66-3760d0453774",
     "shortName": "NIEDERKLEEN",
@@ -3549,7 +4142,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.663391666666667, 51.326750000000004]
+      "coordinates": [
+        7.663391666666667,
+        51.326750000000004
+      ]
     },
     "id": "8c71800d-eddc-461f-8a96-981552f559a5",
     "shortName": "WIXBERG_W",
@@ -3569,7 +4165,10 @@
     "website": "",
     "point": {
       "type": "Point",
-      "coordinates": [7.66615, 51.31861111111112]
+      "coordinates": [
+        7.66615,
+        51.31861111111112
+      ]
     },
     "id": "d00ca4a8-a294-4e1c-b52b-f392fe02641c",
     "shortName": "WIXBERG_S",
@@ -3589,7 +4188,10 @@
     "website": "http://www.dgcn.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.830886111111111, 49.85563055555556]
+      "coordinates": [
+        7.830886111111111,
+        49.85563055555556
+      ]
     },
     "id": "c34265aa-29f6-41ec-91a7-65cbc6318168",
     "shortName": "KRONENBERG",
@@ -3607,7 +4209,10 @@
     "website": "http://www.flyranch-ww.de/",
     "point": {
       "type": "Point",
-      "coordinates": [7.945, 50.59316666666667]
+      "coordinates": [
+        7.945,
+        50.59316666666667
+      ]
     },
     "id": "2e00ca00-0ed8-41d6-9c85-3158b342a2dd",
     "shortName": "AILERTCHEN_UL",
@@ -3627,7 +4232,10 @@
     "website": "http://www.sauerlandair.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.42948611111111, 51.31431111111111]
+      "coordinates": [
+        8.42948611111111,
+        51.31431111111111
+      ]
     },
     "id": "172f7441-d16e-472e-a8f4-1fec9c83f681",
     "shortName": "STUEPPEL",
@@ -3644,7 +4252,10 @@
     "website": "http://www.gleitschirmclub-kraichtal.de",
     "point": {
       "type": "Point",
-      "coordinates": [8.716325, 49.100833333333334]
+      "coordinates": [
+        8.716325,
+        49.100833333333334
+      ]
     },
     "id": "a043e78b-5fb3-4f55-9b07-101bfc59da90",
     "shortName": "OBERACKER",
@@ -3663,7 +4274,10 @@
     "website": "http://www.airwalker-ev.de",
     "point": {
       "type": "Point",
-      "coordinates": [7.748, 51.247]
+      "coordinates": [
+        7.748,
+        51.247
+      ]
     },
     "id": "134c035d-2f1e-4a32-9023-60c23df26080",
     "shortName": "WERDOHL",
