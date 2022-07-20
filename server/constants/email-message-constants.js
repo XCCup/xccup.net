@@ -127,8 +127,11 @@ module.exports.NEW_G_CHECK_INVALID_TEXT = (
   firstName,
   lastName
 ) => `Hallo Admins!
+
 Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
+
 Pilot: ${firstName} ${lastName}
+
 Euer Server-Knecht
     
 `;
