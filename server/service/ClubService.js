@@ -51,6 +51,7 @@ const clubService = {
         "name",
         "firstName",
         "lastName",
+        "fullName",
         "urlProfilPicture",
         "gender",
         "gliders",

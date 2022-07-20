@@ -75,7 +75,7 @@ function createInstance(viewComponentName: RouteRecordName) {
   const selectSeason = async (year: number) => {
     // This call reloads the view and which leads to a new initData call. The year param will then be stored in queryCache again.
     router.push({
-      name: viewComponentName,
+      name: viewComponentName.toString(),
       params: { year },
     });
   };

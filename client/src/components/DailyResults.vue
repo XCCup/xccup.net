@@ -28,9 +28,7 @@
                     @mouseleave="updateHighlightedFlight(null)"
                   >
                     <td scope="row" class="hide-on-sm">{{ index + 1 }}</td>
-                    <td>
-                      {{ flight.user.firstName + " " + flight.user.lastName }}
-                    </td>
+                    <td>{{ flight.user.fullName }}</td>
                     <td>{{ flight.takeoff.name }}</td>
                     <td class="no-line-break">
                       {{ Math.floor(flight.flightDistance) }} km

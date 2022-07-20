@@ -9,6 +9,7 @@ export interface UserAttributes {
   id: string;
   firstName?: string;
   lastName?: string;
+  fullName?: string;
   birthday?: Date;
   role?: string;
   gender?: string;
@@ -56,6 +57,15 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       },
       lastName: {
         type: DataTypes.STRING,
+      },
+      fullName: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+        set(_) {
+          throw new Error("This is a virtual field. Do not try to set it.");
+        },
       },
       birthday: {
         type: DataTypes.DATEONLY,

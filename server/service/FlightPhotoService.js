@@ -30,7 +30,8 @@ const service = {
           include: {
             model: User,
             as: "user",
-            attributes: ["firstName", "lastName"],
+            // Nested includes do not allow include virtual fields: https://github.com/sequelize/sequelize/issues/10552
+            attributes: ["id", "firstName", "lastName"],
           },
         },
         // FIXME: Direct include fails with "EagerLoadingError [SequelizeEagerLoadingError]: User is not associated to FlightPhoto!"

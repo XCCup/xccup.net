@@ -70,7 +70,7 @@ const onShowAirbuddies = async () => {
                 class="badge"
                 :style="{ backgroundColor: trackColors[index + 1] }"
               >
-                {{ airbuddy.user.firstName + " " + airbuddy.user.lastName }}
+                {{ airbuddy.user.fullName }}
                 <router-link
                   :to="{
                     name: 'Flight',

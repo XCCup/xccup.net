@@ -9,7 +9,7 @@
           query: { userId: comment?.user?.id },
         }"
       >
-        {{ comment.user.firstName + " " + comment.user.lastName }}
+        {{ comment.user.fullName }}
       </router-link>
 
       <span
@@ -173,6 +173,7 @@ onMounted(() => {
 // Delete comment
 const onDeleteComment = async () => {
   try {
+    if (!deleteCommentModal.value) return;
     showSpinner.value = true;
     const res = await deleteComment(props.comment.id);
     if (res.status != 200) throw res.statusText;

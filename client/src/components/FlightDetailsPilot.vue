@@ -10,7 +10,7 @@
           query: { userId: flight.user?.id },
         }"
       >
-        <h4>{{ flight.user?.firstName + " " + flight.user?.lastName }}</h4>
+        <h4>{{ flight.user?.fullName }}</h4>
       </router-link>
       <router-link
         :to="{

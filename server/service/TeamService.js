@@ -121,7 +121,7 @@ const service = {
           role: ROLE.INACTIVE,
         },
       },
-      attributes: ["firstName", "lastName", "id"],
+      attributes: ["firstName", "lastName", "fullName", "id"],
       order: [["firstName", "asc"]],
     });
     return users;
@@ -154,7 +154,7 @@ async function retrieveMembers(team) {
         [Op.in]: team.members,
       },
     },
-    attributes: ["firstName", "lastName", "id"],
+    attributes: ["firstName", "lastName", "fullName", "id"],
   });
   return members.map((m) => m.toJSON());
 }

@@ -56,7 +56,7 @@
             <tr>
               <th>Flugzeit</th>
               <td>
-                {{ calcFlightDuration(flight?.airtime) }}
+                {{ formatFlightDuration(flight?.airtime) }}
               </td>
             </tr>
             <tr>
@@ -249,6 +249,7 @@ import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 import ApiService from "@/services/ApiService";
 import useSwal from "@/composables/useSwal";
+import { formatFlightDuration } from "@/helper/formatFlightDuration";
 
 const { getUserId, hasElevatedRole } = useAuth();
 const { flight } = useFlight();
@@ -274,7 +275,6 @@ const onRedoCalculation = async () => {
     isCalculating.value = false;
   }
 };
-
 // METAR
 const isFetchingMetar = ref(false);
 const onReloadMetar = async () => {
@@ -310,21 +310,6 @@ const igcDownloadUrl = computed(() => {
   return baseURL + "flights/igc/" + flight.value?.id;
 });
 
-const calcFlightDuration = (duration: number | undefined): string => {
-  if (!duration) return "";
-  const ms = duration * 60 * 1000;
-  // let seconds = parseInt((ms / 1000) % 60);
-
-  //@ts-expect-error
-  let minutes: number | string = parseInt((ms / (1000 * 60)) % 60);
-
-  //@ts-expect-error
-  let hours = parseInt((ms / (1000 * 60 * 60)) % 24);
-  minutes = minutes < 10 ? "0" + minutes : minutes;
-
-  // seconds = seconds < 10 ? "0" + seconds : seconds;
-  return hours + ":" + minutes + "h";
-};
 const isHikeAndFly = computed((): boolean => {
   if (!flight.value?.hikeAndFly) return false;
   return flight.value?.hikeAndFly > 0;

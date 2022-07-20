@@ -88,12 +88,12 @@ const siteService = {
     heightDifference,
     submitter,
   }) => {
-    const elevationResult = await elevationAttacher.executeWithPromise([
+    const elevationResult = (await elevationAttacher.executeWithPromise([
       {
         latitude: lat,
         longitude: long,
       },
-    ])[0];
+    ]))[0];
 
     const site = {
       name,

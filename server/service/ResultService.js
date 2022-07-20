@@ -621,7 +621,7 @@ async function findSiteRecordOfType(type) {
         include: {
           model: User,
           as: "user",
-          attributes: ["firstName", "lastName", "id"],
+          attributes: ["firstName", "lastName", "fullName", "id"],
         },
       },
     ],
@@ -748,7 +748,14 @@ function createIncludeStatementUser(gender) {
   const userInclude = {
     model: User,
     as: "user",
-    attributes: ["firstName", "lastName", "id", "gender", "birthday"],
+    attributes: [
+      "firstName",
+      "lastName",
+      "fullName",
+      "id",
+      "gender",
+      "birthday",
+    ],
   };
   if (gender) {
     userInclude.where = {

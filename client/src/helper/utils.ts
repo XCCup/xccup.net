@@ -20,9 +20,12 @@ export function dayAfter(date?: string) {
   return retrieveDateOnly(dateObject.toISOString());
 }
 
+export function getXccupTimezone() {
+  return import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
+}
+
 export function adjustDateToLocal(originalDate: string) {
-  const tz = import.meta.env.VITE_BASE_TZ || "Europe/Berlin";
-  return utcToZonedTime(new Date(originalDate).getTime(), tz);
+  return utcToZonedTime(new Date(originalDate).getTime(), getXccupTimezone());
 }
 
 export function isEmail(value: string): boolean {

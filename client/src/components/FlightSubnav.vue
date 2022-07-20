@@ -12,7 +12,7 @@
         }"
         class="link-light"
       >
-        {{ flight?.user?.firstName + " " + flight?.user?.lastName }}
+        {{ flight?.user?.fullName }}
       </router-link>
       am
       <router-link
