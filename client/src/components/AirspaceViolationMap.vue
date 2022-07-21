@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="mapContainer"
-    :class="userPrefersDark ? 'darken-map' : ''"
-    class="mb-3"
-  ></div>
+  <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''" class="mb-3"></div>
 </template>
 
 <script setup>
@@ -64,21 +60,21 @@ const drawAirspaces = async (airspaceViolation) => {
   try {
     const res = await ApiService.getAirspaces(
       Number.parseFloat(airspaceViolation.long) -
-        0.01 +
-        "," +
-        (Number.parseFloat(airspaceViolation.lat) + 0.01).toFixed(3) +
-        "|" +
-        (Number.parseFloat(airspaceViolation.long) + 0.01).toFixed(3) +
-        "," +
-        (Number.parseFloat(airspaceViolation.lat) + 0.01).toFixed(3) +
-        "|" +
-        (Number.parseFloat(airspaceViolation.long) + 0.01).toFixed(3) +
-        "," +
-        (Number.parseFloat(airspaceViolation.lat) - 0.01).toFixed(3) +
-        "|" +
-        (Number.parseFloat(airspaceViolation.long) - 0.01).toFixed(3) +
-        "," +
-        (Number.parseFloat(airspaceViolation.lat) - 0.01).toFixed(3)
+      0.01 +
+      "," +
+      (Number.parseFloat(airspaceViolation.lat) + 0.01).toFixed(3) +
+      "|" +
+      (Number.parseFloat(airspaceViolation.long) + 0.01).toFixed(3) +
+      "," +
+      (Number.parseFloat(airspaceViolation.lat) + 0.01).toFixed(3) +
+      "|" +
+      (Number.parseFloat(airspaceViolation.long) + 0.01).toFixed(3) +
+      "," +
+      (Number.parseFloat(airspaceViolation.lat) - 0.01).toFixed(3) +
+      "|" +
+      (Number.parseFloat(airspaceViolation.long) - 0.01).toFixed(3) +
+      "," +
+      (Number.parseFloat(airspaceViolation.lat) - 0.01).toFixed(3)
     );
     const airspaceData = res.data;
     const options = {
@@ -97,6 +93,7 @@ const drawAirspaces = async (airspaceViolation) => {
 };
 
 const drawTrack = (track) => {
+  if (!track.length) return;
   let linePoints = [];
   track.forEach((point) => {
     linePoints.push([point.latitude, point.longitude]);
@@ -116,7 +113,7 @@ const drawViolation = (violation) => {
 };
 
 const createPopupContent = (violation) => {
-  return "Höhe: " + violation.altitude + "m MSL";
+  return "GPS Höhe: " + violation.gpsAltitude + "m MSL";
 };
 </script>
 

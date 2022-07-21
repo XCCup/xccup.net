@@ -112,9 +112,9 @@ const service = {
 
     logger.debug(
       "AS: It took " +
-        (endTime.getTime() -
-          startTime.getTime() +
-          "ms to scan for airspace violations")
+      (endTime.getTime() -
+        startTime.getTime() +
+        "ms to scan for airspace violations")
     );
 
     return violationFound;
@@ -143,23 +143,25 @@ function findVerticalIntersection(
       if (lowerLimit <= fix.gpsAltitude && fix.gpsAltitude <= upperLimit) {
         logger.warn(
           "AS: Found airspace violation at LAT/LONG: " +
-            lat +
-            "/" +
-            long +
-            " Altitude:" +
-            fix.gpsAltitude +
-            " F/C: " +
-            lowerLimit +
-            "/" +
-            upperLimit
+          lat +
+          "/" +
+          long +
+          " Altitude:" +
+          fix.gpsAltitude +
+          " F/C: " +
+          lowerLimit +
+          "/" +
+          upperLimit
         );
 
         return (violationFound = {
           lat,
           long,
-          altitude: fix.gpsAltitude,
+          gpsAltitude: fix.gpsAltitude,
+          pressureAltitude: fix.pressureAltitude,
           lowerLimit,
           upperLimit,
+          airspaceName: intersection.name,
           timestamp: fix.timestamp,
           line: flightTrackLine,
         });
@@ -178,17 +180,18 @@ function findViolationOfFL100(fixesWithElevation) {
     if (fix.gpsAltitude >= fl100InMeters) {
       logger.warn(
         "AS: Found violation of FL100 at LAT/LONG: " +
-          fix.latitude +
-          "/" +
-          fix.longitude +
-          " Altitude:" +
-          fix.gpsAltitude
+        fix.latitude +
+        "/" +
+        fix.longitude +
+        " Altitude:" +
+        fix.gpsAltitude
       );
 
       return (violationFound = {
         lat: fix.latitude,
         long: fix.longitude,
-        altitude: fix.gpsAltitude,
+        gpsAltitude: fix.gpsAltitude,
+        pressureAltitude: fix.pressureAltitude,
         timestamp: fix.timestamp,
         line: fixesWithElevation,
       });

@@ -603,7 +603,8 @@ async function runChecksStartCalculationsStoreFixes(
     service.startResultCalculation(flightDbObject),
   ]);
 
-  if (airspaceViolation) sendAirspaceViolationAdminMail(userId, flightDbObject);
+  if (airspaceViolation)
+    sendAirspaceViolationAdminMail(userId, flightDbObject, airspaceViolation);
 
   return { takeoffName: takeoff.name, result, airspaceViolation };
 }
@@ -724,11 +725,11 @@ function checkIfFlightIsManipulated(resultOfIgcParser) {
  */
 function detectMidFlightIgcStart(takeoff, fixes) {
   const MAX_START_ALT_OVER_TAKEOFF = 250;
-
   if (fixes[0]?.gpsAltitude > takeoff.elevation + MAX_START_ALT_OVER_TAKEOFF) {
-    let errorMessage = "Flight starts in the middle of a flight";
+    const errorMessage = `Flight starts in the middle of a flight: First fix ${fixes[0]?.gpsAltitude}m, takeoff elevation ${takeoff.elevation}m`;
+    const clientMessage = `Flight starts in the middle of a flight`;
 
-    throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+    throw new XccupHttpError(BAD_REQUEST, errorMessage, clientMessage);
   }
 }
 

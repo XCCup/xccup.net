@@ -51,6 +51,18 @@ interface MailContent {
   text: string;
 }
 
+interface AirspaceViolation {
+  lat: number;
+  long: number;
+  gpsAltitude: number;
+  pressureAltitude: number;
+  airspaceName: string;
+  lowerLimit: number;
+  upperLimit: number;
+  timestamp: number;
+  line: any; //TODO: Correct it when really needed
+}
+
 const service = {
   sendMailSingle: async (
     fromUserId: string,
@@ -169,21 +181,26 @@ const service = {
 
   sendAirspaceViolationAdminMail: async (
     userId: string,
-    flight: FlightOutputAttributes
+    flight: FlightOutputAttributes,
+    airspaceViolation: AirspaceViolation
   ) => {
     logger.info(`MS: Send airspace violation mail with igc to admins`);
     if (!userId || !flight.igcPath) return;
     const user = await db.User.findByPk(userId);
 
     if (!user) return;
-
     const content = {
       title: NEW_AIRSPACE_VIOLATION_TITLE,
-      text: NEW_AIRSPACE_VIOLATION_TEXT(
-        flight.externalId,
-        user.firstName,
-        user.lastName
-      ),
+      text: NEW_AIRSPACE_VIOLATION_TEXT(flight, user, {
+        lat: airspaceViolation.lat,
+        long: airspaceViolation.long,
+        gpsAltitude: airspaceViolation.gpsAltitude,
+        pressureAltitude: airspaceViolation.pressureAltitude,
+        airspaceName: airspaceViolation.airspaceName,
+        lowerLimit: airspaceViolation.lowerLimit,
+        upperLimit: airspaceViolation.upperLimit,
+        timestamp: airspaceViolation.timestamp
+      }),
       attachments: [{ path: flight.igcPath }],
     };
 
@@ -282,9 +299,9 @@ const service = {
       Promise<FlightInstance | null>,
       Promise<FlightCommentInstance | null>?
     ] = [
-      db.User.findByPk(comment.userId),
-      db.Flight.findByPk(comment.flightId),
-    ];
+        db.User.findByPk(comment.userId),
+        db.Flight.findByPk(comment.flightId),
+      ];
     if (comment.relatedTo) {
       queries.push(db.FlightComment.findByPk(comment.relatedTo));
     }

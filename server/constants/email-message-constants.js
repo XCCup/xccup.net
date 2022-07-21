@@ -109,16 +109,14 @@ Dein XCCup Team
 module.exports.NEW_AIRSPACE_VIOLATION_TITLE = "Neuer Flug mit LRV";
 
 module.exports.NEW_AIRSPACE_VIOLATION_TEXT = (
-  flightExternalId,
-  firstName,
-  lastName
+  flight,
+  user,
+  airspaceViolation
 ) => `Hallo Admins!
-
 Es wurde versucht einen Flug mit einer Luftraumverletzung hochzuladen.
-
-Flug ID: ${flightExternalId}
-Pilot: ${firstName} ${lastName}
-
+Flug ID: ${flight.externalId}
+Pilot: ${user.firstName} ${user.lastName}
+Luftraumverletzung: ${JSON.stringify(airspaceViolation)}
 Euer Server-Knecht
     
 `;
