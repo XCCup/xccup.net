@@ -56,6 +56,7 @@ interface AirspaceViolation {
   long: number;
   gpsAltitude: number;
   pressureAltitude: number;
+  airspaceName: string;
   lowerLimit: number;
   upperLimit: number;
   timestamp: number;
@@ -190,7 +191,16 @@ const service = {
     if (!user) return;
     const content = {
       title: NEW_AIRSPACE_VIOLATION_TITLE,
-      text: NEW_AIRSPACE_VIOLATION_TEXT(flight, user, airspaceViolation),
+      text: NEW_AIRSPACE_VIOLATION_TEXT(flight, user, {
+        lat: airspaceViolation.lat,
+        long: airspaceViolation.long,
+        gpsAltitude: airspaceViolation.gpsAltitude,
+        pressureAltitude: airspaceViolation.pressureAltitude,
+        airspaceName: airspaceViolation.airspaceName,
+        lowerLimit: airspaceViolation.lowerLimit,
+        upperLimit: airspaceViolation.upperLimit,
+        timestamp: airspaceViolation.timestamp
+      }),
       attachments: [{ path: flight.igcPath }],
     };
 
