@@ -188,7 +188,6 @@ const service = {
     const user = await db.User.findByPk(userId);
 
     if (!user) return;
-    delete airspaceViolation.line;
     const content = {
       title: NEW_AIRSPACE_VIOLATION_TITLE,
       text: NEW_AIRSPACE_VIOLATION_TEXT(flight, user, airspaceViolation),
@@ -290,9 +289,9 @@ const service = {
       Promise<FlightInstance | null>,
       Promise<FlightCommentInstance | null>?
     ] = [
-      db.User.findByPk(comment.userId),
-      db.Flight.findByPk(comment.flightId),
-    ];
+        db.User.findByPk(comment.userId),
+        db.Flight.findByPk(comment.flightId),
+      ];
     if (comment.relatedTo) {
       queries.push(db.FlightComment.findByPk(comment.relatedTo));
     }
