@@ -10,27 +10,23 @@
   </span>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, computed, ref, onUnmounted } from "vue";
 import { Tooltip } from "bootstrap";
 
 const icon = ref(null);
-let tooltip = null;
+let tooltip: Tooltip | null = null;
 
-const props = defineProps({
+const props = defineProps<{
   rankingClass: {
-    type: Object,
-    required: true,
-  },
-  short: {
-    type: Boolean,
-    default: false,
-  },
-  showDescription: {
-    type: Boolean,
-    default: false,
-  },
-});
+    key?: string;
+    shortDescription?: string;
+    description?: string;
+  };
+  short?: Boolean;
+  showDescription?: Boolean;
+}>();
+
 const displayedDescription = computed(() =>
   props.short
     ? props.rankingClass.shortDescription
