@@ -17,7 +17,7 @@ export function processBaroData(
   const baroData = [];
   const elevation = [];
   if (!flight || !flight.fixes) return [];
-  for (var i = 0; i < flight.fixes.length; i++) {
+  for (let i = 0; i < flight.fixes.length; i++) {
     elevation.push({
       x: flight.fixes[i].timestamp,
       y: flight.fixes[i].elevation,
@@ -67,7 +67,7 @@ export function processBaroData(
       const buddyBaro = [];
       // Check if this track is activated and has fixes
       if (element.isActive && element.fixes) {
-        for (var i = 0; i < element.fixes.length; i++) {
+        for (let i = 0; i < element.fixes.length; i++) {
           buddyBaro.push({
             x: element.fixes[i].timestamp,
             y: element.fixes[i].gpsAltitude,

@@ -5,12 +5,14 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:vue/vue3-recommended",
-    "@vue/eslint-config-prettier",
+    "@vue/eslint-config-typescript",
     "plugin:cypress/recommended",
+    "prettier",
   ],
   rules: {
     // override/add rules settings here, such as:
     // 'vue/no-unused-vars': 'error'
+    "vue/multi-word-component-names": "off",
   },
   globals: {
     defineProps: "readonly",

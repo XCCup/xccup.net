@@ -9,7 +9,7 @@ const checkedAirbuddyFlightIds = ref<string[]>([]);
 export default () => {
   // Getters
   const activeAirbuddyFlights = computed((): BuddyTrack[] => {
-    let buddyTracks: BuddyTrack[] = [];
+    const buddyTracks: BuddyTrack[] = [];
     airbuddiesFlightData.value.forEach((element) => {
       buddyTracks.push({
         buddyName: element.user.firstName,

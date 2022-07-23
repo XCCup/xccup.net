@@ -131,9 +131,9 @@
     <!-- Admin Dropdown -->
     <span v-if="hasElevatedRole" class="dropdown">
       <button
+        id="admin-options-dropdown"
         class="btn btn-sm btn-outline-danger dropdown-toggle mt-1"
         type="button"
-        id="admin-options-dropdown"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
@@ -235,7 +235,9 @@
       id="metarDetailsCollapse"
       class="collapse mt-2"
     >
-      <code v-for="metar in flight.flightMetarData">{{ metar }}<br /></code>
+      <code v-for="(metar, index) in flight.flightMetarData" :key="index"
+        >{{ metar }}<br
+      /></code>
     </div>
   </section>
 </template>

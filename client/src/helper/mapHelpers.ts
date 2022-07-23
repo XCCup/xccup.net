@@ -5,7 +5,7 @@ import type L from "leaflet";
 
 export function convertMapBoundsToQueryString(data: L.Polyline): string {
   if (!data) return "";
-  let bounds: L.LatLng[] = [];
+  const bounds: L.LatLng[] = [];
   // Expand boundary by pad factor
   const pad = 0.4;
   const area = data.getBounds().pad(pad);

@@ -118,6 +118,12 @@ const showSpinner = ref(false);
 const errorMessage = ref("");
 const selectedFlight = ref(null);
 
+// Count and expose open flight tickets
+const count = computed(() => flights.value.length);
+defineExpose({
+  count,
+});
+
 const fetchFlightsWithViolations = async () => {
   const res = await ApiService.getFlightViolations();
   flights.value = res.data.rows;
@@ -132,12 +138,6 @@ try {
     name: "NetworkError",
   });
 }
-
-// Count and expose open flight tickets
-const count = computed(() => flights.value.length);
-defineExpose({
-  count,
-});
 
 // Modals
 const deleteFlightModal = ref(null);

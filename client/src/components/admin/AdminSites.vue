@@ -95,13 +95,13 @@ onMounted(() => {
   confirmModal.value = new Modal(document.getElementById(confirmModalId.value));
 });
 
-await fetchProposedSites();
-
 // Count and expose open flight tickets
 const count = computed(() => sites.value.length);
 defineExpose({
   count,
 });
+
+await fetchProposedSites();
 
 async function fetchProposedSites() {
   try {
