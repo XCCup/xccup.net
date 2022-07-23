@@ -6,7 +6,7 @@ export function formatFlightDuration(duration: number | undefined): string {
   let minutes: number | string = parseInt((ms / (1000 * 60)) % 60);
 
   //@ts-expect-error
-  let hours = parseInt((ms / (1000 * 60 * 60)) % 24);
+  const hours = parseInt((ms / (1000 * 60 * 60)) % 24);
   minutes = minutes < 10 ? "0" + minutes : minutes;
 
   return hours + ":" + minutes + "h";

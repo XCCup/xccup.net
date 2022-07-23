@@ -131,9 +131,9 @@
     <!-- Admin Dropdown -->
     <span v-if="hasElevatedRole" class="dropdown">
       <button
+        id="admin-options-dropdown"
         class="btn btn-sm btn-outline-danger dropdown-toggle mt-1"
         type="button"
-        id="admin-options-dropdown"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >

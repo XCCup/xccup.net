@@ -12,7 +12,7 @@ const modifiedFlightData = ref({
   photos: [],
 });
 
-let unmodifiedFlightData = ref(null);
+const unmodifiedFlightData = ref(null);
 
 export default () => {
   // Getters

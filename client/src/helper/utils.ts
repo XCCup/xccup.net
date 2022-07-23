@@ -91,9 +91,9 @@ export function convertRemoteImageToDataUrl(
   url: string,
   callback: { (dataUrl: string, mimeType: string): void }
 ) {
-  var xhr = new XMLHttpRequest();
+  const xhr = new XMLHttpRequest();
   xhr.onload = function () {
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onloadend = function () {
       if (!reader?.result?.toString()) return;
       callback(reader.result.toString(), xhr.response.type);
