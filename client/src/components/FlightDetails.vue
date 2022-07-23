@@ -235,7 +235,9 @@
       id="metarDetailsCollapse"
       class="collapse mt-2"
     >
-      <code v-for="metar in flight.flightMetarData">{{ metar }}<br /></code>
+      <code v-for="(metar, index) in flight.flightMetarData" :key="index"
+        >{{ metar }}<br
+      /></code>
     </div>
   </section>
 </template>
