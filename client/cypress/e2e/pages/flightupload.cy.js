@@ -334,6 +334,7 @@ describe("check flight upload page", () => {
       form.append("pass", "PW_MelindaTremblay");
       form.append("IGCigcIGC", fileContent.toString());
       form.append("igcfn", igcFileName);
+      form.append("report", expectedReport);
 
       const data = (
         await axios.post("http://localhost:3000/api/flights/leonardo", form)
