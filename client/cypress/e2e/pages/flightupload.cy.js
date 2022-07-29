@@ -355,7 +355,9 @@ describe("check flight upload page", () => {
         .contains(expectedUserName);
       cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
       cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
-      cy.get("[data-cy=text-editor-textarea]").type(expectedReport);
+      cy.get("[data-cy=flight-report]")
+        .find("p")
+        .should("have.text", expectedReport);
     });
   });
 
