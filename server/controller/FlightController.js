@@ -36,6 +36,7 @@ const {
   queryOptionalColumnExistsInModel,
   checkStringObjectNotEmptyNoEscaping,
   checkIsBoolean,
+  checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
 const { combineFixesProperties } = require("../helper/FlightFixUtils");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
@@ -176,7 +177,7 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
           res.status(NOT_FOUND).send("The file you requested was deleted");
         logger.error(
           "FC: An igc file was requested but seems to be deleted. igcPath: " +
-            flight.igcPath
+          flight.igcPath
         );
       }
     });
@@ -400,6 +401,7 @@ router.post(
   checkStringObjectNotEmptyNoEscaping("pass"),
   checkStringObjectNotEmptyNoEscaping("IGCigcIGC"),
   checkStringObjectNotEmptyNoEscaping("igcfn"),
+  checkOptionalStringObjectNotEmpty("report"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
@@ -444,6 +446,7 @@ router.post(
 
       // DB
       await service.finalizeFlightSubmission({
+        report: req.body.report,
         flight: flightDbObject,
         glider,
       });
@@ -452,11 +455,10 @@ router.post(
       deleteCache(CACHE_RELEVANT_KEYS);
 
       // User feedback
-      let message = `Der Flug wurde mit dem Gerät ${glider.brand} ${
-        glider.model
-      } eingereicht. Du findest deinen Flug unter ${config.get(
-        "clientUrl"
-      )}${config.get("clientFlight")}/${flightDbObject.externalId}.`;
+      let message = `Der Flug wurde mit dem Gerät ${glider.brand} ${glider.model
+        } eingereicht. Du findest deinen Flug unter ${config.get(
+          "clientUrl"
+        )}${config.get("clientFlight")}/${flightDbObject.externalId}.`;
 
       if (airspaceViolation) {
         message +=
@@ -629,6 +631,7 @@ function paramIdIsLeonardo(req, res) {
   * pass: Dein Login Passwort<br/>
   * IGCigcIGC: Der Inhalt der IGC-Datei (plain-text)<br/>
   * igcfn: Der Name der IGC-Datei<br/>
+  * report: Einen Flugbericht den Du zusammen mit deinem Flug hochladen möchtest (optional)<br/>
   <br/>
   Bemerkung:<br/>
   Zur Berechnung der Punkte wird das Fluggerät, welches im Nutzerprofil als Standart definiert wurde, herangezogen. 
