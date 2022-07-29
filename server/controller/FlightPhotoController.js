@@ -9,7 +9,7 @@ const {
   OK,
   TOO_MANY_REQUESTS,
 } = require("../constants/http-status-constants");
-const { authToken, requesterIsNotOwner } = require("./Auth");
+const { authToken, requesterIsNotOwner, requesterIsNotModerator } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
 const {
@@ -17,6 +17,7 @@ const {
   checkParamIsUuid,
   validationHasErrors,
   checkStringObjectNoEscaping,
+  checkParamIsInt,
 } = require("./Validation");
 const multer = require("multer");
 
@@ -137,6 +138,35 @@ router.get(
     const id = req.params.id;
 
     try {
+      const media = await service.getById(id);
+
+      if (!media) return res.sendStatus(NOT_FOUND);
+
+      const requesterId = req.user.id;
+      await service.toggleLike(media, requesterId);
+
+      return res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Downloads all photos of a specific season
+// @route GET /photos/download/:year
+// @access Only moderator
+
+router.get(
+  "/download",
+  checkParamIsInt("year"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const year = req.params.year;
+
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
       const media = await service.getById(id);
 
       if (!media) return res.sendStatus(NOT_FOUND);
