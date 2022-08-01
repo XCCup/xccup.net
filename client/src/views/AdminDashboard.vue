@@ -66,6 +66,18 @@
           T-Shirts
         </button>
         <button
+          id="nav-photos-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-photos"
+          type="button"
+          role="tab"
+          aria-controls="nav-photos"
+          aria-selected="false"
+        >
+          Foto Download
+        </button>
+        <button
           v-if="isAdmin"
           id="nav-cache-tab"
           class="nav-link"
@@ -140,6 +152,14 @@
         <AdminTShirt />
       </div>
       <div
+        id="nav-photos"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-photos-tab"
+      >
+        <AdminPhotos />
+      </div>
+      <div
         v-if="isAdmin"
         id="nav-cache"
         class="tab-pane fade"
@@ -176,6 +196,7 @@ import { ref } from "vue";
 import useAuth from "../composables/useAuth";
 import type AdminFlightsVue from "@/components/admin/AdminFlights.vue";
 import type AdminSitesVue from "@/components/admin/AdminSites.vue";
+import AdminPhotos from "../components/admin/AdminPhotos.vue";
 
 const { isAdmin } = useAuth();
 

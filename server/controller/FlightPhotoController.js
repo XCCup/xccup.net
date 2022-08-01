@@ -22,6 +22,7 @@ const {
   validationHasErrors,
   checkStringObjectNoEscaping,
   checkParamIsInt,
+  checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
 const multer = require("multer");
 
@@ -33,6 +34,7 @@ const {
 } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 const { default: config } = require("../config/env-config");
+const path = require("path");
 
 const IMAGE_STORE = config.get("dataPath") + "/images/flights";
 const MAX_PHOTOS = 8;
@@ -156,12 +158,12 @@ router.get(
   }
 );
 
-// @desc Downloads all photos of a specific season
-// @route GET /photos/download/:year
+// @desc Creates a zip archiv for all photos of a specific year
+// @route GET /photos/create-archiv/:year
 // @access Only moderator
 
 router.get(
-  "/download",
+  "/create-archiv/:year",
   checkParamIsInt("year"),
   authToken,
   async (req, res, next) => {
@@ -171,14 +173,39 @@ router.get(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const media = await service.getById(id);
+      const archivPath = await service.createArchivForYear(year);
 
-      if (!media) return res.sendStatus(NOT_FOUND);
+      if (!archivPath) return res.sendStatus(NOT_FOUND);
 
-      const requesterId = req.user.id;
-      await service.toggleLike(media, requesterId);
+      return res.json(archivPath);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
-      return res.sendStatus(OK);
+// @desc Downloads the given photos archiv
+// @route GET /photos/download/:path
+
+router.get(
+  "/download/:path",
+  checkOptionalStringObjectNotEmpty("path"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const archivPath = req.params.path.replaceAll("&#x2F;", "/");
+    try {
+      const fullfilepath = path.join(path.resolve(), archivPath);
+
+      return res.download(fullfilepath, (err) => {
+        if (err) {
+          if (!res.headersSent)
+            res.status(NOT_FOUND).send("The file you requested was deleted");
+          logger.error(
+            "FC: An photo archiv was requested but wasn't found. Path: " +
+              archivPath
+          );
+        }
+      });
     } catch (error) {
       next(error);
     }

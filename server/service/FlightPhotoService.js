@@ -2,6 +2,9 @@ const FlightPhoto = require("../db")["FlightPhoto"];
 const Flight = require("../db")["Flight"];
 const User = require("../db")["User"];
 const Sequelize = require("sequelize");
+const logger = require("../config/logger");
+const AdmZip = require("adm-zip");
+const { default: config } = require("../config/env-config");
 
 const service = {
   getById: async (id) => {
@@ -51,6 +54,51 @@ const service = {
       delete p.flight.user;
       return p;
     });
+  },
+
+  createArchivForYear: async (year) => {
+    const photosOfYear = await FlightPhoto.findAll({
+      where: {
+        andOp: Sequelize.where(
+          Sequelize.fn(
+            "date_part",
+            "year",
+            Sequelize.col("FlightPhoto.createdAt")
+          ),
+          year
+        ),
+      },
+      include: [
+        {
+          model: Flight,
+          as: "flight",
+          attributes: ["externalId"],
+        },
+      ],
+      attributes: ["path"],
+    });
+
+    const archivPath =
+      config.get("dataPath") + "/flight_photos_" + year + ".zip";
+
+    logger.info(
+      "FPS: Will create photo archiv of " +
+        photosOfYear.length +
+        " entries and write it to " +
+        archivPath
+    );
+
+    const archiv = new AdmZip();
+    photosOfYear.forEach((p) => {
+      const photoMeta = p.toJSON();
+      archiv.addLocalFile(
+        photoMeta.path,
+        /* store photos in folders in zip archiv */ photoMeta.flight.externalId.toString()
+      );
+    });
+    archiv.writeZip(archivPath);
+
+    return archivPath;
   },
 
   create: async (media) => {
