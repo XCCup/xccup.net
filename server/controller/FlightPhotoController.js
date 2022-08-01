@@ -9,7 +9,11 @@ const {
   OK,
   TOO_MANY_REQUESTS,
 } = require("../constants/http-status-constants");
-const { authToken, requesterIsNotOwner, requesterIsNotModerator } = require("./Auth");
+const {
+  authToken,
+  requesterIsNotOwner,
+  requesterIsNotModerator,
+} = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
 const {
@@ -34,7 +38,7 @@ const IMAGE_STORE = config.get("dataPath") + "/images/flights";
 const MAX_PHOTOS = 8;
 
 const imageUpload = multer({
-  dest: IMAGE_STORE,
+  dest: IMAGE_STORE + "/" + new Date().getFullYear(),
 });
 
 const uploadLimiter = createRateLimiter(60, 30);
