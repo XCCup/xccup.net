@@ -56,7 +56,7 @@ const service = {
     });
   },
 
-  createArchivForYear: async (year) => {
+  createArchiveForYear: async (year) => {
     const photosOfYear = await FlightPhoto.findAll({
       where: {
         andOp: Sequelize.where(
@@ -78,27 +78,27 @@ const service = {
       attributes: ["path"],
     });
 
-    const archivPath =
+    const archivePath =
       config.get("dataPath") + "/flight_photos_" + year + ".zip";
 
     logger.info(
-      "FPS: Will create photo archiv of " +
+      "FPS: Will create photo archive of " +
         photosOfYear.length +
         " entries and write it to " +
-        archivPath
+        archivePath
     );
 
-    const archiv = new AdmZip();
+    const archive = new AdmZip();
     photosOfYear.forEach((p) => {
       const photoMeta = p.toJSON();
-      archiv.addLocalFile(
+      archive.addLocalFile(
         photoMeta.path,
-        /* store photos in folders in zip archiv */ photoMeta.flight.externalId.toString()
+        /* store photos in folders in zip archive */ photoMeta.flight.externalId.toString()
       );
     });
-    archiv.writeZip(archivPath);
+    archive.writeZip(archivePath);
 
-    return archivPath;
+    return archivePath;
   },
 
   create: async (media) => {
