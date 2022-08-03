@@ -100,7 +100,7 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
       //Default is VARCHAR(255)
     },
     airspaceComment: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1024),
     },
     flightPoints: {
       type: DataTypes.INTEGER,
