@@ -405,11 +405,18 @@ const flightService = {
     return violationResult;
   },
 
-  create: async ({ userId, igcPath, externalId, validationResult }) => {
+  create: async ({
+    userId,
+    igcPath,
+    externalId,
+    flightUploadEndpoint,
+    validationResult,
+  }) => {
     const flight = {
       userId,
       igcPath,
       externalId,
+      flightUploadEndpoint,
       uncheckedGRecord: validationResult == undefined ? true : false,
       flightStatus: STATE.IN_PROCESS,
     };
