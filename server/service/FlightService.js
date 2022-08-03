@@ -409,14 +409,14 @@ const flightService = {
     userId,
     igcPath,
     externalId,
-    flightUploadEndpoint,
+    uploadEndpoint,
     validationResult,
   }) => {
     const flight = {
       userId,
       igcPath,
       externalId,
-      flightUploadEndpoint,
+      uploadEndpoint,
       uncheckedGRecord: validationResult == undefined ? true : false,
       flightStatus: STATE.IN_PROCESS,
     };
