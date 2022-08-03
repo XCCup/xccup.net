@@ -158,12 +158,12 @@ router.get(
   }
 );
 
-// @desc Creates a zip archiv for all photos of a specific year
-// @route GET /photos/create-archiv/:year
+// @desc Creates a zip archive for all photos of a specific year
+// @route GET /photos/create-archive/:year
 // @access Only moderator
 
 router.get(
-  "/create-archiv/:year",
+  "/create-archive/:year",
   checkParamIsInt("year"),
   authToken,
   async (req, res, next) => {
@@ -173,18 +173,18 @@ router.get(
     try {
       if (await requesterIsNotModerator(req, res)) return;
 
-      const archivPath = await service.createArchivForYear(year);
+      const archivePath = await service.createArchiveForYear(year);
 
-      if (!archivPath) return res.sendStatus(NOT_FOUND);
+      if (!archivePath) return res.sendStatus(NOT_FOUND);
 
-      return res.json(archivPath);
+      return res.json(archivePath);
     } catch (error) {
       next(error);
     }
   }
 );
 
-// @desc Downloads the given photos archiv
+// @desc Downloads the given photos archive
 // @route GET /photos/download/:path
 
 router.get(
@@ -192,17 +192,17 @@ router.get(
   checkOptionalStringObjectNotEmpty("path"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const archivPath = req.params.path.replaceAll("&#x2F;", "/");
+    const archivePath = req.params.path.replaceAll("&#x2F;", "/");
     try {
-      const fullfilepath = path.join(path.resolve(), archivPath);
+      const fullfilepath = path.join(path.resolve(), archivePath);
 
       return res.download(fullfilepath, (err) => {
         if (err) {
           if (!res.headersSent)
             res.status(NOT_FOUND).send("The file you requested was deleted");
           logger.error(
-            "FC: An photo archiv was requested but wasn't found. Path: " +
-              archivPath
+            "FC: An photo archive was requested but wasn't found. Path: " +
+              archivePath
           );
         }
       });
