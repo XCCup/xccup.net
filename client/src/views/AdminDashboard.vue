@@ -75,7 +75,7 @@
           aria-controls="nav-photos"
           aria-selected="false"
         >
-          Foto Download
+          Fotos
         </button>
         <button
           v-if="isAdmin"
