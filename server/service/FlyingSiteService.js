@@ -88,12 +88,14 @@ const siteService = {
     heightDifference,
     submitter,
   }) => {
-    const elevationResult = (await elevationAttacher.executeWithPromise([
-      {
-        latitude: lat,
-        longitude: long,
-      },
-    ]))[0];
+    const elevationResult = (
+      await elevationAttacher.executeWithPromise([
+        {
+          latitude: lat,
+          longitude: long,
+        },
+      ])
+    )[0];
 
     const site = {
       name,
@@ -139,6 +141,8 @@ const siteService = {
     "FlyingSites"
     WHERE
     ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") < ${MAX_DIST_TO_SEARCH}
+    AND
+    "state" = 'active'
     ORDER BY 
     distance
     LIMIT 1
