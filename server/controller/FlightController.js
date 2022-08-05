@@ -55,6 +55,7 @@ const {
   sendAirspaceViolationAdminMail,
   sendGCheckInvalidAdminMail,
 } = require("../service/MailService");
+const { findAirbuddies } = require("../igc/AirbuddyFinder");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -591,14 +592,17 @@ async function runChecksStartCalculationsStoreFixes(
   if (!skipAllChecks && !skipMidflightCheck)
     detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
-  await service.storeFixesAndAddStats(flightDbObject, fixes);
+  const fixesDbObject = await service.storeFixesAndAddStats(
+    flightDbObject,
+    fixes
+  );
 
-  if (!skipAllChecks) {
-    try {
-      await getMetarData(flightDbObject, fixes);
-    } catch (error) {
-      logger.error("FS: METAR query error: " + error);
-    }
+  findAirbuddies(flightDbObject, fixesDbObject);
+
+  try {
+    await getMetarData(flightDbObject, fixes);
+  } catch (error) {
+    logger.error("FS: METAR query error: " + error);
   }
 
   const result = await service.update(flightDbObject);

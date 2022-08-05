@@ -32,6 +32,15 @@ export interface FlightAttributes {
   ageOfUser: number;
   homeStateOfUser?: string;
   flightStats?: FlightStats;
+  airbuddies?: Airbuddy[];
+}
+
+interface Airbuddy {
+  externalId: number;
+  percentage: number;
+  userFirstName: string;
+  userLastName: string;
+  userId: string;
 }
 
 interface FlightTurnpoint {
@@ -180,6 +189,9 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     },
     flightStats: {
       type: DataTypes.JSON,
+    },
+    airbuddies: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
     },
   }) as Models["Flight"];
 

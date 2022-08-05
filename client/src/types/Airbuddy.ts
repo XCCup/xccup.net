@@ -6,3 +6,11 @@ export interface BuddyTrack {
   fixes?: Fix[];
   isActive: boolean;
 }
+
+export interface Airbuddy {
+  externalId: number;
+  percentage: number;
+  userFirstName: string;
+  userLastName: string;
+  userId: string;
+}

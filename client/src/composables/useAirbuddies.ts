@@ -1,5 +1,5 @@
 import { readonly, ref, computed } from "vue";
-import type { BuddyTrack } from "@/types/BuddyTrack";
+import type { Airbuddy, BuddyTrack } from "@/types/Airbuddy";
 import ApiService from "@/services/ApiService";
 import type { Flight } from "@/types/Flight";
 
@@ -31,7 +31,7 @@ export default () => {
   };
 
   // Actions
-  const fetchAll = async (airbuddies: Flight[]): Promise<void> => {
+  const fetchAll = async (airbuddies: Airbuddy[]): Promise<void> => {
     if (airbuddiesFlightData.value.length > 0) return;
 
     airbuddiesFlightData.value = (
@@ -41,6 +41,13 @@ export default () => {
         )
       )
     ).map(({ data }) => data);
+    airbuddies.forEach((b) => {
+      const found = airbuddiesFlightData.value.find(
+        (f) => f.externalId == b.externalId
+      );
+      // @ts-ignore
+      if (found) found.percentage = b.percentage;
+    });
   };
 
   const resetAirbuddyData = (): void => {

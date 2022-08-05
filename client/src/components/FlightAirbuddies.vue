@@ -26,6 +26,14 @@ const onShowAirbuddies = async () => {
     console.log(error);
   }
 };
+
+// @ts-ignore
+function calculatePercentage(airbuddy) {
+  if (!airbuddy?.percentage || typeof airbuddy.percentage != "number")
+    return "";
+
+  return Math.round(airbuddy.percentage) + "%";
+}
 </script>
 
 <template>
@@ -71,6 +79,7 @@ const onShowAirbuddies = async () => {
                 :style="{ backgroundColor: trackColors[index + 1] }"
               >
                 {{ airbuddy.user.fullName }}
+                {{ calculatePercentage(airbuddy) }}
                 <router-link
                   :to="{
                     name: 'Flight',

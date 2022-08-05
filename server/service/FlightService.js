@@ -208,9 +208,10 @@ const flightService = {
     if (flightDbObject) {
       const flight = flightDbObject.toJSON();
       //TODO: Merge directly when model is retrieved?
-
       flight.fixes = combineFixesProperties(flight.fixes);
-      flight.airbuddies = await findAirbuddies(flight);
+
+      // Even though we have now a better airbuddy algo this is still here to support older flights with airbuddies
+      if (!flight.airbuddies) flight.airbuddies = await findAirbuddies(flight);
 
       return flight;
     }
@@ -456,7 +457,7 @@ const flightService = {
    */
   storeFixesAndAddStats: async (flight, fixes) => {
     const fixesStats = attachFlightStats(flight, fixes);
-    await storeFixesToDB(flight, fixes, fixesStats);
+    return storeFixesToDB(flight, fixes, fixesStats);
   },
 
   /**
@@ -538,7 +539,7 @@ const flightService = {
 };
 
 async function storeFixesToDB(flight, fixes, fixesStats) {
-  await FlightFixes.create({
+  return FlightFixes.create({
     flightId: flight.id,
     geom: createGeometry(fixes),
     timeAndHeights: extractTimeAndHeights(fixes),
@@ -765,7 +766,7 @@ async function findAirbuddies(flight) {
     timeOffsetUnit
   );
   const till = moment(flight.takeoffTime).add(timeOffsetValue, timeOffsetUnit);
-  return Flight.findAll({
+  const flights = await Flight.findAll({
     where: {
       id: {
         [sequelize.Op.not]: flight.id,
@@ -781,6 +782,15 @@ async function findAirbuddies(flight) {
     include: createUserInclude(),
     limit: maxNumberOfBuddies,
     order: [["flightPoints", "DESC"]],
+  });
+  return flights.map((f) => {
+    return {
+      externalId: f.externalId,
+      percentage: "n/a",
+      userFirstName: f.user.firstName,
+      userLastName: f.user.lastName,
+      userId: f.user.id,
+    };
   });
 }
 

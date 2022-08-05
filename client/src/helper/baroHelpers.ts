@@ -1,5 +1,5 @@
 import { TRACK_COLORS } from "@/common/Constants";
-import type { BuddyTrack } from "@/types/BuddyTrack";
+import type { BuddyTrack } from "@/types/Airbuddy";
 import type { Flight } from "@/types/Flight";
 import type { ChartDataset } from "chart.js";
 

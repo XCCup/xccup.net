@@ -1,5 +1,5 @@
 import type { Flight } from "@/types/Flight";
-import type { BuddyTrack } from "@/types/BuddyTrack";
+import type { BuddyTrack } from "@/types/Airbuddy";
 import type { Airspace } from "../types/Airspace";
 import type L from "leaflet";
 
