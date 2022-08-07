@@ -9,7 +9,11 @@ const {
   OK,
   TOO_MANY_REQUESTS,
 } = require("../constants/http-status-constants");
-const { authToken, requesterIsNotOwner } = require("./Auth");
+const {
+  authToken,
+  requesterIsNotOwner,
+  requesterIsNotModerator,
+} = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
 const {
@@ -17,6 +21,8 @@ const {
   checkParamIsUuid,
   validationHasErrors,
   checkStringObjectNoEscaping,
+  checkParamIsInt,
+  checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
 const multer = require("multer");
 
@@ -28,12 +34,13 @@ const {
 } = require("../helper/ImageUtils");
 const logger = require("../config/logger");
 const { default: config } = require("../config/env-config");
+const path = require("path");
 
 const IMAGE_STORE = config.get("dataPath") + "/images/flights";
 const MAX_PHOTOS = 8;
 
 const imageUpload = multer({
-  dest: IMAGE_STORE,
+  dest: IMAGE_STORE + "/" + new Date().getFullYear(),
 });
 
 const uploadLimiter = createRateLimiter(60, 30);
@@ -145,6 +152,60 @@ router.get(
       await service.toggleLike(media, requesterId);
 
       return res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Creates a zip archive for all photos of a specific year
+// @route GET /photos/create-archive/:year
+// @access Only moderator
+
+router.get(
+  "/create-archive/:year",
+  checkParamIsInt("year"),
+  authToken,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const year = req.params.year;
+
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      const archivePath = await service.createArchiveForYear(year);
+
+      if (!archivePath) return res.sendStatus(NOT_FOUND);
+
+      return res.json(archivePath);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Downloads the given photos archive
+// @route GET /photos/download/:path
+
+router.get(
+  "/download/:path",
+  checkOptionalStringObjectNotEmpty("path"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    const archivePath = req.params.path.replaceAll("&#x2F;", "/");
+    try {
+      const fullfilepath = path.join(path.resolve(), archivePath);
+
+      return res.download(fullfilepath, (err) => {
+        if (err) {
+          if (!res.headersSent)
+            res.status(NOT_FOUND).send("The file you requested was deleted");
+          logger.error(
+            "FC: An photo archive was requested but wasn't found. Path: " +
+              archivePath
+          );
+        }
+      });
     } catch (error) {
       next(error);
     }
