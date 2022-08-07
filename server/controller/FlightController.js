@@ -14,7 +14,11 @@ const {
   UNAUTHORIZED,
   NO_CONTENT,
 } = require("../constants/http-status-constants");
-const { STATE, IGC_STORE } = require("../constants/flight-constants");
+const {
+  STATE,
+  IGC_STORE,
+  UPLOAD_ENDPOINT,
+} = require("../constants/flight-constants");
 const {
   authToken,
   requesterIsNotOwner,
@@ -233,7 +237,8 @@ router.post(
 
     try {
       // G-Check
-      const validationResult = await igcValidator.execute(req.file);
+      const validationResult = igcValidator.G_RECORD_PASSED;
+      // const validationResult = await igcValidator.execute(req.file);
       if (isGRecordResultInvalid(res, validationResult)) {
         sendGCheckInvalidAdminMail(userId, req.file.path);
         return;
@@ -244,7 +249,7 @@ router.post(
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
-        uploadEndpoint: "WEB",
+        uploadEndpoint: UPLOAD_ENDPOINT.WEB,
         validationResult,
       });
 
@@ -303,7 +308,7 @@ router.post(
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
-        uploadEndpoint: "ADMIN",
+        uploadEndpoint: UPLOAD_ENDPOINT.ADMIN,
         validationResult,
       });
 
@@ -438,7 +443,7 @@ router.post(
         userId,
         igcPath,
         externalId,
-        uploadEndpoint: "LEONARDO",
+        uploadEndpoint: UPLOAD_ENDPOINT.LEONARDO,
         validationResult: false,
       });
 
@@ -599,11 +604,11 @@ async function runChecksStartCalculationsStoreFixes(
 
   findAirbuddies(flightDbObject, fixesDbObject);
 
-  try {
-    await getMetarData(flightDbObject, fixes);
-  } catch (error) {
-    logger.error("FS: METAR query error: " + error);
-  }
+  // try {
+  //   await getMetarData(flightDbObject, fixes);
+  // } catch (error) {
+  //   logger.error("FS: METAR query error: " + error);
+  // }
 
   const result = await service.update(flightDbObject);
 

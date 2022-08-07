@@ -185,8 +185,8 @@ async function findFlightsAndTracksWhichWereUpAtSameTime(
         },
         {
           // Flight starts inside and ends after timeframe
-          takeoffTime: { [Op.gte]: flight.landingTime },
-          landingTime: { [Op.lte]: flight.landingTime },
+          takeoffTime: { [Op.lte]: flight.landingTime },
+          landingTime: { [Op.gte]: flight.takeoffTime },
         },
         {
           // Flight starts before and ends inside timeframe
@@ -194,6 +194,11 @@ async function findFlightsAndTracksWhichWereUpAtSameTime(
           landingTime: { [Op.gte]: flight.takeoffTime },
         },
       ],
+      [Op.not]: {
+        // Exclude any flight w the exact same takeoff and landing time
+        takeoffTime: flight.takeoffTime,
+        landingTime: flight.landingTime,
+      },
     },
     attributes: ["id", "externalId", "airbuddies"],
     include: {
@@ -203,12 +208,17 @@ async function findFlightsAndTracksWhichWereUpAtSameTime(
     },
   })) as FlightInstanceUserInclude[];
 
+  console.log("++++++++++++++++++++++++++++++++++");
+  console.log(otherFlights);
+
   const flightIds = otherFlights.map((f) => f.id);
   const flightExIds = otherFlights.map((f) => f.externalId);
 
   logger.debug(
     "AF: Found these flights which were up at the same time: " + flightExIds
   );
+
+  if (flightIds.length == 0) return { otherFlights, otherTracks: [] };
 
   const otherTracks = (await db.FlightFixes.findAll({
     where: {
