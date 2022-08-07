@@ -1,9 +1,8 @@
 import { readonly, ref, computed } from "vue";
-import type { Airbuddy, BuddyTrack } from "@/types/Airbuddy";
+import type { Airbuddy, BuddyTrack, AirbuddyFlight } from "@/types/Airbuddy";
 import ApiService from "@/services/ApiService";
-import type { Flight } from "@/types/Flight";
 
-const airbuddiesFlightData = ref<Flight[]>([]);
+const airbuddiesFlightData = ref<AirbuddyFlight[]>([]);
 const checkedAirbuddyFlightIds = ref<string[]>([]);
 
 export default () => {
@@ -45,8 +44,7 @@ export default () => {
       const found = airbuddiesFlightData.value.find(
         (f) => f.externalId == b.externalId
       );
-      // @ts-ignore
-      if (found) found.percentage = b.percentage;
+      if (found) found.correlationPercentage = b.correlationPercentage;
     });
   };
 

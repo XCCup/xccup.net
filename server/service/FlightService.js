@@ -211,7 +211,8 @@ const flightService = {
       flight.fixes = combineFixesProperties(flight.fixes);
 
       // Even though we have now a better airbuddy algo this is still here to support older flights with airbuddies
-      if (!flight.airbuddies) flight.airbuddies = await findAirbuddies(flight);
+      if (!flight.airbuddies)
+        flight.airbuddies = await findAirbuddiesLegacy(flight);
 
       return flight;
     }
@@ -740,7 +741,7 @@ function stripFlightFixesForTodayRanking(flightDbObjects) {
 }
 
 /**
- * This function will find flights with are related to a provided flight.
+ * This function will find flights with are related to a provided flight. This function was replaced by {@link AirbuddyFinder}.
  * A flight is related if,
  * * it was lunched from the same takeoff,
  * * within a timeframe of +- 2h to the provided flight
@@ -752,10 +753,7 @@ function stripFlightFixesForTodayRanking(flightDbObjects) {
  *
  * @param {*} flight The flight to which airBuddies should be found.
  */
-async function findAirbuddies(flight) {
-  //TODO Is it possible to join airBuddiesfor to the provided flight directly with the first query to the db?
-  //Problem how can i back reference in an include statement (takeoffTime, siteId)
-
+async function findAirbuddiesLegacy(flight) {
   const timeOffsetValue = 2;
   const timeOffsetUnit = "h";
   const pointThreshold = 30;

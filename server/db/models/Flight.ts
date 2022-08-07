@@ -1,6 +1,7 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { FlightStats } from "../../types/FlightStats";
 import { Models } from "../../types/Models";
+import { UserAttributes } from "./User";
 
 export interface FlightAttributes {
   id: string;
@@ -37,7 +38,7 @@ export interface FlightAttributes {
 
 interface Airbuddy {
   externalId: number;
-  percentage: number;
+  correlationPercentage: number;
   userFirstName: string;
   userLastName: string;
   userId: string;
@@ -53,6 +54,7 @@ type FlightStatus =
   | "Nicht in Wertung"
   | "In Wertung"
   | "Flugbuch"
+  | "In Prüfung"
   | "In Bearbeitung";
 
 type FlightType = "FREE" | "FLAT" | "FAI";
@@ -80,9 +82,13 @@ export interface FlightOutputAttributes extends FlightAttributes {
 
 export interface FlightInstance
   extends Model<FlightAttributes, FlightCreationAttributes>,
-    FlightAttributes {
+    FlightOutputAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface FlightInstanceUserInclude extends FlightInstance {
+  user: UserAttributes;
 }
 
 export function initFlight(sequelize: Sequelize): Models["Flight"] {

@@ -1,5 +1,9 @@
 import logger from "../config/logger";
-import { FlightAttributes, FlightInstance } from "../db/models/Flight";
+import {
+  FlightAttributes,
+  FlightInstance,
+  FlightInstanceUserInclude,
+} from "../db/models/Flight";
 import { FlightFixesInstance } from "../db/models/FlightFixes";
 import { combineFixesProperties } from "../helper/FlightFixUtils";
 import db from "../db";
@@ -28,7 +32,6 @@ export async function findAirbuddies(
   const { otherFlights, otherTracks } =
     await findFlightsAndTracksWhichWereUpAtSameTime(flight);
 
-  // @ts-ignore
   const user = await db.User.findByPk(flight.userId);
   if (!user) {
     logger.error("AF: No user was found for flight " + flight.id);
@@ -51,7 +54,7 @@ export async function findAirbuddies(
 
     addMissingValues(minimizedFixes, matchedLocationPoints, percentages);
 
-    logger.debug("AF: Result of percentages: " + percentages);
+    logger.debug("AF: Result of correlation percentages: " + percentages);
 
     // Calculate mean percentage value
     const meanValue = mean(percentages);
@@ -62,10 +65,9 @@ export async function findAirbuddies(
 
     if (meanValue == 0) return;
     saveAirbuddyValueOnOtherFlight(otherFlight, flight, meanValue, user);
-    results.push({ otherFlight, percentage: meanValue });
+    results.push({ otherFlight, correlationPercentage: meanValue });
   }
 
-  // @ts-ignore
   saveAirbuddyValueOnFlight(flight, results);
 
   const endTime = new Date();
@@ -73,7 +75,7 @@ export async function findAirbuddies(
     "AF: It took " +
       (endTime.getTime() -
         startTime.getTime() +
-        "ms to calc the airbuddy percentage")
+        "ms to calc the airbuddy correlation percentage")
   );
 }
 
@@ -91,15 +93,14 @@ function minimizeFixesOfFlight(fixes: FlightFixesInstance) {
 function saveAirbuddyValueOnOtherFlight(
   otherFlight: FlightInstance,
   flight: FlightInstance,
-  percentage: number,
+  correlationPercentage: number,
   user: UserInstance
 ) {
   if (!flight.externalId) return;
 
   const airbuddy = {
     externalId: flight.externalId,
-    percentage,
-    // @ts-ignore
+    correlationPercentage,
     userFirstName: user.firstName as string,
     userLastName: user.lastName as string,
     userId: user.id,
@@ -116,7 +117,7 @@ function saveAirbuddyValueOnOtherFlight(
 
     if (userIsAlreadyAirbuddy) {
       logger.debug("AF: Update airbuddy entry on otherFlight");
-      userIsAlreadyAirbuddy.percentage = percentage;
+      userIsAlreadyAirbuddy.correlationPercentage = correlationPercentage;
       userIsAlreadyAirbuddy.externalId = flight.externalId;
     } else {
       logger.debug("AF: Append airbuddy entry on otherFlight");
@@ -131,18 +132,18 @@ function saveAirbuddyValueOnOtherFlight(
 
 function saveAirbuddyValueOnFlight(
   flight: FlightInstance,
-  results: [{ otherFlight: FlightInstance; percentage: number }]
+  results: {
+    otherFlight: FlightInstanceUserInclude;
+    correlationPercentage: number;
+  }[]
 ) {
   results.forEach((r) => {
     if (!r.otherFlight.externalId) return;
     const airbuddy = {
       externalId: r.otherFlight.externalId,
-      percentage: r.percentage,
-      // @ts-ignore
+      correlationPercentage: r.correlationPercentage,
       userFirstName: r.otherFlight.user.firstName as string,
-      // @ts-ignore
       userLastName: r.otherFlight.user.lastName as string,
-      // @ts-ignore
       userId: r.otherFlight.user.id as string,
     };
 
@@ -152,13 +153,12 @@ function saveAirbuddyValueOnFlight(
     } else {
       // This should prevent reuploads to occure multiple times within airbuddies
       const userIsAlreadyAirbuddy = flight.airbuddies.find(
-        // @ts-ignore
         (a) => a.userId == r.otherFlight.user.id
       );
 
       if (userIsAlreadyAirbuddy) {
         logger.debug("AF: Update airbuddy entry on flight");
-        userIsAlreadyAirbuddy.percentage = r.percentage;
+        userIsAlreadyAirbuddy.correlationPercentage = r.correlationPercentage;
         userIsAlreadyAirbuddy.externalId = r.otherFlight.externalId;
       } else {
         logger.debug("AF: Append airbuddy entry on flight");
@@ -175,7 +175,7 @@ function saveAirbuddyValueOnFlight(
 async function findFlightsAndTracksWhichWereUpAtSameTime(
   flight: FlightAttributes
 ) {
-  const otherFlights = await db.Flight.findAll({
+  const otherFlights = (await db.Flight.findAll({
     where: {
       [Op.or]: [
         {
@@ -201,7 +201,7 @@ async function findFlightsAndTracksWhichWereUpAtSameTime(
       as: "user",
       attributes: ["id", "firstName", "lastName", "fullName"],
     },
-  });
+  })) as FlightInstanceUserInclude[];
 
   const flightIds = otherFlights.map((f) => f.id);
   const flightExIds = otherFlights.map((f) => f.externalId);
@@ -218,6 +218,7 @@ async function findFlightsAndTracksWhichWereUpAtSameTime(
       },
     },
   })) as FlightFixesInstance[];
+
   return { otherFlights, otherTracks };
 }
 
@@ -274,7 +275,7 @@ async function calcPercentageValuesForLocations(
 }
 
 function addMissingValues(
-  minimizedFixes: any[],
+  minimizedFixes: FlightFixCombined[],
   otherTrackTimeRelatedFixes: {
     original: FlightFixCombined;
     other: FlightFixCombined;

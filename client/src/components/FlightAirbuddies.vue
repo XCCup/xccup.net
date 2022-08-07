@@ -4,6 +4,7 @@ import useFlight from "@/composables/useFlight";
 import useAirbuddy from "@/composables/useAirbuddies";
 
 import { ref, watchEffect } from "vue";
+import type { AirbuddyFlight } from "@/types/Airbuddy.js";
 
 const { flight } = useFlight();
 const { fetchAll, airbuddiesFlightData, updateCheckedAirbuddies } =
@@ -20,6 +21,7 @@ const onShowAirbuddies = async () => {
   try {
     if (!flight.value?.airbuddies) return;
     // @ts-ignore TODO: readonly refs…
+    // TODO: Dont fetch all flights when we only want to show the entries! The airbuddies are located in the host flight.airbuddies prop
     await fetchAll(flight.value.airbuddies);
     loaded.value = true;
   } catch (error) {
@@ -27,12 +29,14 @@ const onShowAirbuddies = async () => {
   }
 };
 
-// @ts-ignore
-function calculatePercentage(airbuddy) {
-  if (!airbuddy?.percentage || typeof airbuddy.percentage != "number")
+function createAirbuddyPercentageString(airbuddyFlight: AirbuddyFlight) {
+  if (
+    !airbuddyFlight?.correlationPercentage ||
+    typeof airbuddyFlight.correlationPercentage != "number"
+  )
     return "";
 
-  return Math.round(airbuddy.percentage) + "%";
+  return Math.round(airbuddyFlight.correlationPercentage) + "%";
 }
 </script>
 
@@ -79,7 +83,7 @@ function calculatePercentage(airbuddy) {
                 :style="{ backgroundColor: trackColors[index + 1] }"
               >
                 {{ airbuddy.user.fullName }}
-                {{ calculatePercentage(airbuddy) }}
+                {{ createAirbuddyPercentageString(airbuddy) }}
                 <router-link
                   :to="{
                     name: 'Flight',

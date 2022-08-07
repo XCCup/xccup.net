@@ -1,4 +1,4 @@
-import type { Fix } from "@/types/Flight";
+import type { Fix, Flight } from "@/types/Flight";
 
 export interface BuddyTrack {
   buddyFlightId: string;
@@ -9,8 +9,12 @@ export interface BuddyTrack {
 
 export interface Airbuddy {
   externalId: number;
-  percentage: number;
+  correlationPercentage: number;
   userFirstName: string;
   userLastName: string;
   userId: string;
+}
+
+export interface AirbuddyFlight extends Flight {
+  correlationPercentage?: number;
 }
