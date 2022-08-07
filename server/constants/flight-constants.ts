@@ -12,6 +12,13 @@ export const enum TYPE {
   FAI = "FAI",
 }
 
+// TODO: Remove this hack when IgcAnalyzer is refactored to TS
+module.exports.TYPE = {
+  FREE: TYPE.FREE,
+  FLAT: TYPE.FLAT,
+  FAI: TYPE.FAI,
+};
+
 export const enum UPLOAD_ENDPOINT {
   WEB = "WEB",
   LEONARDO = "LEONARDO",
