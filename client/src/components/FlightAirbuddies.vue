@@ -29,13 +29,12 @@ const onShowAirbuddies = async () => {
   }
 };
 
-function createAirbuddyPercentageString(airbuddyFlight: AirbuddyFlight) {
+function createAirbuddyPercentageString(airbuddyFlight: AirbuddyFlight | any) {
   if (
     !airbuddyFlight?.correlationPercentage ||
     typeof airbuddyFlight.correlationPercentage != "number"
   )
     return "";
-
   return Math.round(airbuddyFlight.correlationPercentage) + "%";
 }
 </script>
