@@ -237,8 +237,7 @@ router.post(
 
     try {
       // G-Check
-      const validationResult = igcValidator.G_RECORD_PASSED;
-      // const validationResult = await igcValidator.execute(req.file);
+      const validationResult = await igcValidator.execute(req.file);
       if (isGRecordResultInvalid(res, validationResult)) {
         sendGCheckInvalidAdminMail(userId, req.file.path);
         return;
@@ -604,11 +603,11 @@ async function runChecksStartCalculationsStoreFixes(
 
   findAirbuddies(flightDbObject, fixesDbObject);
 
-  // try {
-  //   await getMetarData(flightDbObject, fixes);
-  // } catch (error) {
-  //   logger.error("FS: METAR query error: " + error);
-  // }
+  try {
+    await getMetarData(flightDbObject, fixes);
+  } catch (error) {
+    logger.error("FS: METAR query error: " + error);
+  }
 
   const result = await service.update(flightDbObject);
 

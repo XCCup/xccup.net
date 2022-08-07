@@ -208,9 +208,6 @@ async function findFlightsAndTracksWhichWereUpAtSameTime(
     },
   })) as FlightInstanceUserInclude[];
 
-  console.log("++++++++++++++++++++++++++++++++++");
-  console.log(otherFlights);
-
   const flightIds = otherFlights.map((f) => f.id);
   const flightExIds = otherFlights.map((f) => f.externalId);
 
