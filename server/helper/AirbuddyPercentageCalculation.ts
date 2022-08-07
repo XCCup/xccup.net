@@ -17,5 +17,8 @@ export function calcSingleAirbuddyPercentage(distance: number) {
 }
 
 function calcInBetweenValue(distance: number) {
-  return Math.abs((distance / END_DISTANCE - 0.1) * 100 - 100);
+  return Math.abs(
+    (distance / END_DISTANCE - MAX_PERCENTAGE_DISTANCE / END_DISTANCE) * 100 -
+      100
+  );
 }
