@@ -5,6 +5,7 @@ import { Models } from "../../types/Models";
 export interface FlightAttributes {
   id: string;
   externalId?: number;
+  uploadEndpoint: UploadEndpoint;
   landing?: string;
   report?: string;
   airspaceComment?: string;
@@ -47,6 +48,8 @@ type FlightStatus =
 
 type FlightType = "FREE" | "FLAT" | "FAI";
 
+type UploadEndpoint = "WEB" | "LEONARDO" | "ADMIN";
+
 interface Glider {
   id: string;
   brand: string;
@@ -86,6 +89,9 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
       // autoIncrement: true, // Not supported on non PK column in Postgres
       unique: true,
     },
+    uploadEndpoint: {
+      type: DataTypes.STRING,
+    },
     landing: {
       type: DataTypes.STRING,
     },
@@ -94,7 +100,7 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
       //Default is VARCHAR(255)
     },
     airspaceComment: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1024),
     },
     flightPoints: {
       type: DataTypes.INTEGER,

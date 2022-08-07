@@ -36,6 +36,7 @@ const {
   queryOptionalColumnExistsInModel,
   checkStringObjectNotEmptyNoEscaping,
   checkIsBoolean,
+  checkOptionalStringObjectNotEmpty,
 } = require("./Validation");
 const { combineFixesProperties } = require("../helper/FlightFixUtils");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
@@ -242,6 +243,7 @@ router.post(
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
+        uploadEndpoint: "WEB",
         validationResult,
       });
 
@@ -300,6 +302,7 @@ router.post(
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
+        uploadEndpoint: "ADMIN",
         validationResult,
       });
 
@@ -400,6 +403,7 @@ router.post(
   checkStringObjectNotEmptyNoEscaping("pass"),
   checkStringObjectNotEmptyNoEscaping("IGCigcIGC"),
   checkStringObjectNotEmptyNoEscaping("igcfn"),
+  checkOptionalStringObjectNotEmpty("report"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
@@ -433,6 +437,7 @@ router.post(
         userId,
         igcPath,
         externalId,
+        uploadEndpoint: "LEONARDO",
         validationResult: false,
       });
 
@@ -444,6 +449,7 @@ router.post(
 
       // DB
       await service.finalizeFlightSubmission({
+        report: req.body.report,
         flight: flightDbObject,
         glider,
       });
@@ -629,6 +635,7 @@ function paramIdIsLeonardo(req, res) {
   * pass: Dein Login Passwort<br/>
   * IGCigcIGC: Der Inhalt der IGC-Datei (plain-text)<br/>
   * igcfn: Der Name der IGC-Datei<br/>
+  * report: Einen Flugbericht den Du zusammen mit deinem Flug hochladen möchtest (optional)<br/>
   <br/>
   Bemerkung:<br/>
   Zur Berechnung der Punkte wird das Fluggerät, welches im Nutzerprofil als Standart definiert wurde, herangezogen. 

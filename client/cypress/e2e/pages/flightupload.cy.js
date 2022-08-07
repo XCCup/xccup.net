@@ -325,6 +325,7 @@ describe("check flight upload page", () => {
     const expectedTakeoff = "Donnersberg";
     const expectedUserName = "Melinda Tremblay";
     const expectedAirtime = "1:42h";
+    const expectedReport = "Das ist ein Upload über die Leonardo Schnittstelle";
     const expectApiRespone =
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
 
@@ -333,6 +334,7 @@ describe("check flight upload page", () => {
       form.append("pass", "PW_MelindaTremblay");
       form.append("IGCigcIGC", fileContent.toString());
       form.append("igcfn", igcFileName);
+      form.append("report", expectedReport);
 
       const data = (
         await axios.post("http://localhost:3000/api/flights/leonardo", form)
@@ -345,6 +347,7 @@ describe("check flight upload page", () => {
       const flightId = data.match(regex)[1];
 
       // Wait till flight was fully calculated
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(5000);
       cy.visit(`/flug/${flightId}`);
 
@@ -353,6 +356,9 @@ describe("check flight upload page", () => {
         .contains(expectedUserName);
       cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
       cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+      cy.get("[data-cy=flight-report]")
+        .find("p")
+        .should("have.text", expectedReport);
     });
   });
 
@@ -384,6 +390,7 @@ describe("check flight upload page", () => {
       const flightId = data.match(regex)[1];
 
       // Wait till flight was fully calculated
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(5000);
       cy.login(payload.user, payload.pass);
 
@@ -400,6 +407,7 @@ describe("check flight upload page", () => {
     });
   });
 
+  // eslint-disable-next-line cypress/no-async-tests
   it("Test upload with leonardo interface (wrong content)", async () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectApiRespone = "Invalid G-Record";
@@ -445,12 +453,10 @@ describe("check flight upload page", () => {
         igcfn: igcFileName,
       };
       try {
-        const data = (
-          await axios.post(
-            "http://localhost:3000/api/flights/leonardo",
-            payload
-          )
-        ).data;
+        await axios.post(
+          "http://localhost:3000/api/flights/leonardo",
+          payload
+        )
       } catch (error) {
         // Test the response message from the API
         expect(error.response.status).to.equal(expectedStatus);
