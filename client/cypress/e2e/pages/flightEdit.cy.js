@@ -136,7 +136,7 @@ describe("check edit flight page", () => {
     cy.url().should("include", `/404/`);
   });
 
-  it.only("Check that admin is able to claim airspace violation", () => {
+  it("Check that admin is able to claim airspace violation", () => {
     const flightId = 7;
     // There is only 1 flight from Sevelen Schlepp in all of the test flights
     const expectedTakeoff = "Sevelen Schlepp";
