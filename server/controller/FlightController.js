@@ -603,10 +603,14 @@ async function runChecksStartCalculationsStoreFixes(
 
   findAirbuddies(flightDbObject, fixesDbObject);
 
-  try {
-    await getMetarData(flightDbObject, fixes);
-  } catch (error) {
-    logger.error("FS: METAR query error: " + error);
+  // TODO: Evaluate if skipAllChecks is really requiered for getMetarData
+  // Steph: intention was that an admin can upload a flight even if there are problems with the METAR Api
+  if (!skipAllChecks) {
+    try {
+      await getMetarData(flightDbObject, fixes);
+    } catch (error) {
+      logger.error("FS: METAR query error: " + error);
+    }
   }
 
   const result = await service.update(flightDbObject);
