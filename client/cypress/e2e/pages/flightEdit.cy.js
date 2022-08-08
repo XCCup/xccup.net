@@ -136,21 +136,16 @@ describe("check edit flight page", () => {
     cy.url().should("include", `/404/`);
   });
 
-  it("Check that admin is able to claim airspace violation", () => {
-    const flightId = 43;
-    const expectedTakeoff = "Roxheim-Windenschlepp";
-    const expectedGlider = "Sky Apollo";
-    const expectedPoints = "109";
+  it.only("Check that admin is able to claim airspace violation", () => {
+    const flightId = 7;
+    // There is only 1 flight from Sevelen Schlepp in all of the test flights
+    const expectedTakeoff = "Sevelen Schlepp";
 
     cy.loginAdminUser();
 
     // Check that flight is visible
     cy.visit(`${new Date().getFullYear()}/fluege/`);
-    cy.get("table")
-      .find("tr")
-      .should("include.text", expectedTakeoff)
-      .and("include.text", expectedGlider)
-      .and("include.text", expectedPoints);
+    cy.get("table").find("tr").should("include.text", expectedTakeoff);
 
     // Claim airspace violation
     cy.visit(`/flug/${flightId}`);
@@ -163,10 +158,6 @@ describe("check edit flight page", () => {
 
     // Flight shouldn't be visible anymore
     cy.visit(`${new Date().getFullYear()}/fluege/`);
-    cy.get("table")
-      .find("tr")
-      .should("not.include.text", expectedTakeoff)
-      .and("not.include.text", expectedGlider)
-      .and("not.include.text", expectedPoints);
+    cy.get("table").find("tr").should("not.include.text", expectedTakeoff);
   });
 });
