@@ -11,3 +11,14 @@ export interface Airspace {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface AirspaceViolation {
+  lat: number;
+  long: number;
+  gpsAltitude: number;
+  pressureAltitude: number;
+  lowerLimit: number;
+  upperLimit: number;
+  airspaceName: string;
+  timestamp: number;
+}
