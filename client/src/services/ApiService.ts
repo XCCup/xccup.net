@@ -72,6 +72,9 @@ export default {
   fetchMetar(flightId: string) {
     return apiClient.get("flights/admin/fetch-metar/" + flightId);
   },
+  changeFlightProps(flightId: string, flightProps: Object) {
+    return apiClient.put("flights/admin/change-prop/" + flightId, flightProps);
+  },
   uploadIgcAdmin(data: FormData) {
     return apiClient.post("flights/admin/upload/", data);
   },

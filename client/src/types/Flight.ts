@@ -13,7 +13,7 @@ export interface Flight {
   flightDistanceFlat?: number;
   flightDistanceFAI?: number;
   flightType: string;
-  flightStatus: string;
+  flightStatus: FLIGHT_STATUS;
   flightTurnpoints: FlightTurnpoint[];
   flightMetarData?: string[];
   airtime: number;
@@ -44,6 +44,14 @@ export interface Flight {
   comments?: Comment[];
   photos?: any[]; // TODO: Type this
   airbuddies?: Flight[];
+}
+
+export const enum FLIGHT_STATUS {
+  IN_RANKING = "In Wertung",
+  NOT_IN_RANKING = "Nicht in Wertung",
+  FLIGHTBOOK = "Flugbuch",
+  IN_PROCESS = "In Bearbeitung",
+  IN_REVIEW = "In Prüfung",
 }
 
 export interface Club {
