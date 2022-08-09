@@ -23,6 +23,7 @@ import type { Glider } from "@/types/Glider";
 import type { Mail } from "@/types/Mail";
 import type { CreateNews, News } from "@/types/News";
 import type { FlyingSite } from "@/types/FlyingSite";
+import type { Flight } from "@/types/Flight";
 
 import useAxiosJwt, {
   type IAuthTokens,
@@ -72,7 +73,7 @@ export default {
   fetchMetar(flightId: string) {
     return apiClient.get("flights/admin/fetch-metar/" + flightId);
   },
-  changeFlightProps(flightId: string, flightProps: Object) {
+  changeFlightProps(flightId: string, flightProps: Partial<Flight>) {
     return apiClient.put("flights/admin/change-prop/" + flightId, flightProps);
   },
   uploadIgcAdmin(data: FormData) {
