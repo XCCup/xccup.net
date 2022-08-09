@@ -1,6 +1,8 @@
 import type { Glider } from "./Glider";
 import type { Comment } from "./Comment";
 
+type Values<T> = T[keyof T];
+
 export interface Flight {
   id: string;
   externalId: number;
@@ -13,7 +15,7 @@ export interface Flight {
   flightDistanceFlat?: number;
   flightDistanceFAI?: number;
   flightType: string;
-  flightStatus: FLIGHT_STATUS;
+  flightStatus: Values<typeof FLIGHT_STATUS>;
   flightTurnpoints: FlightTurnpoint[];
   flightMetarData?: string[];
   airtime: number;
@@ -46,13 +48,13 @@ export interface Flight {
   airbuddies?: Flight[];
 }
 
-export const enum FLIGHT_STATUS {
-  IN_RANKING = "In Wertung",
-  NOT_IN_RANKING = "Nicht in Wertung",
-  FLIGHTBOOK = "Flugbuch",
-  IN_PROCESS = "In Bearbeitung",
-  IN_REVIEW = "In Prüfung",
-}
+export const FLIGHT_STATUS = {
+  IN_RANKING: "In Wertung",
+  NOT_IN_RANKING: "Nicht in Wertung",
+  FLIGHTBOOK: "Flugbuch",
+  IN_PROCESS: "In Bearbeitung",
+  IN_REVIEW: "In Prüfung",
+} as const;
 
 export interface Club {
   id: string;
