@@ -146,7 +146,7 @@ onMounted(() => {
   drawAirspaces(map, convertMapBoundsToQueryString(trackLines.value[0]));
 
   if (isAdmin.value) {
-    // @ts-ignore
+    // @ts-expect-error TODO: readonly refs…
     drawViolations(map, flight.value?.airspaceViolations);
   }
 
