@@ -1,7 +1,8 @@
 import type { Flight } from "@/types/Flight";
 import type { BuddyTrack } from "@/types/BuddyTrack";
-import type { Airspace } from "../types/Airspace";
-import type L from "leaflet";
+import type { Airspace, AirspaceViolation } from "../types/Airspace";
+import L from "leaflet";
+import ApiService from "@/services/ApiService";
 
 export function convertMapBoundsToQueryString(data: L.Polyline): string {
   if (!data) return "";
@@ -66,4 +67,41 @@ export function processTracklogs(flight: Flight, buddyTracks: BuddyTrack[]) {
     });
   }
   return tracklogs;
+}
+
+export async function drawAirspaces(map: L.Map, bounds: string) {
+  try {
+    const res = await ApiService.getAirspaces(bounds);
+    const airspaceData = res.data;
+    const options: L.GeoJSONOptions = {
+      // @ts-expect-error
+      opacity: 0.1,
+      fillOpacity: 0.08,
+      color: "red",
+    };
+    airspaceData.forEach((airspace: Airspace) => {
+      L.geoJSON(airspace.polygon, options)
+        .bindPopup(createAirspacePopupContent(airspace))
+        .addTo(map);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function drawViolations(map: L.Map, violations: AirspaceViolation[]) {
+  if (!violations || !violations.length) return;
+  violations.forEach((violation: any) => {
+    const violationMarker = L.marker([violation.lat, violation.long], {
+      riseOnHover: true,
+    }).bindPopup(createViolationPopupContent(violation));
+    map.addLayer(violationMarker);
+  });
+}
+
+function createViolationPopupContent(violation: AirspaceViolation) {
+  return `GPS Höhe:  ${violation.gpsAltitude} m
+  <br>ISA Höhe:  ${violation.pressureAltitude} m
+  <br>Untergrenze:  ${Math.round(violation.lowerLimit)} m
+  <br>Obergrenze:  ${Math.round(violation.upperLimit)} m`;
 }

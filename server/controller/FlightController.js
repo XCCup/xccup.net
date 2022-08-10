@@ -581,6 +581,7 @@ async function runChecksStartCalculationsStoreFixes(
   } = {}
 ) {
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
+
   // TODO: This is getting too complicated. Maybe add an extra service for the rerun calculation instead of all the ifs?
   if (!skipAllChecks && !skipManipulatedCheck)
     checkIfFlightIsManipulated(fixes);

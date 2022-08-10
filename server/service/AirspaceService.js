@@ -80,30 +80,29 @@ const service = {
 
     const flightTrackLine = combineFixesProperties(fixesWithElevation);
 
-    const fl100Violation = findViolationOfFL100(flightTrackLine);
-    if (fl100Violation) return fl100Violation;
+    const airspaceViolations = [];
+
+    findViolationOfFL100(flightTrackLine, airspaceViolations);
 
     const intersections2D = await findHorizontalIntersection(
       fixesWithElevation.id
     );
 
-    let violationFound = null;
-    for (let rI = 0; rI < intersections2D.length && !violationFound; rI++) {
+    for (let rI = 0; rI < intersections2D.length; rI++) {
       const intersection = intersections2D[rI];
 
       for (
         let cI = 0;
-        cI < intersection.intersectionLine.coordinates.length &&
-        !violationFound;
+        cI < intersection.intersectionLine.coordinates.length;
         cI++
       ) {
         const coordinate = intersection.intersectionLine.coordinates[cI];
 
-        violationFound = findVerticalIntersection(
+        findVerticalIntersection(
           flightTrackLine,
           coordinate,
           intersection,
-          violationFound
+          airspaceViolations
         );
       }
     }
@@ -112,12 +111,13 @@ const service = {
 
     logger.debug(
       "AS: It took " +
-      (endTime.getTime() -
-        startTime.getTime() +
-        "ms to scan for airspace violations")
+        (endTime.getTime() -
+          startTime.getTime() +
+          "ms to scan for airspace violations")
     );
 
-    return violationFound;
+    if (airspaceViolations.length > 0)
+      return { flightTrackLine, airspaceViolations };
   },
 };
 
@@ -125,7 +125,7 @@ function findVerticalIntersection(
   flightTrackLine,
   coordinate,
   intersection,
-  violationFound
+  airspaceViolations
 ) {
   const long = coordinate[0];
   const lat = coordinate[1];
@@ -141,63 +141,64 @@ function findVerticalIntersection(
         fix.elevation
       );
       if (lowerLimit <= fix.gpsAltitude && fix.gpsAltitude <= upperLimit) {
-        logger.warn(
+        logger.debug(
           "AS: Found airspace violation at LAT/LONG: " +
-          lat +
-          "/" +
-          long +
-          " Altitude:" +
-          fix.gpsAltitude +
-          " F/C: " +
-          lowerLimit +
-          "/" +
-          upperLimit
+            lat +
+            "/" +
+            long +
+            " Altitude:" +
+            fix.gpsAltitude +
+            " F/C: " +
+            lowerLimit +
+            "/" +
+            upperLimit
         );
 
-        return (violationFound = {
-          lat,
-          long,
-          gpsAltitude: fix.gpsAltitude,
-          pressureAltitude: fix.pressureAltitude,
-          lowerLimit,
-          upperLimit,
-          airspaceName: intersection.name,
-          timestamp: fix.timestamp,
-          line: flightTrackLine,
-        });
+        airspaceViolations.push(
+          createViolationEntry(fix, intersection.name, lowerLimit, upperLimit)
+        );
       }
     }
   });
-  return violationFound;
 }
 
-function findViolationOfFL100(fixesWithElevation) {
+function findViolationOfFL100(fixesWithElevation, airspaceViolations) {
   const fl100InMeters = FEET_IN_METER * 10_000;
-
-  let violationFound = null;
 
   fixesWithElevation.forEach((fix) => {
     if (fix.gpsAltitude >= fl100InMeters) {
-      logger.warn(
+      logger.debug(
         "AS: Found violation of FL100 at LAT/LONG: " +
-        fix.latitude +
-        "/" +
-        fix.longitude +
-        " Altitude:" +
-        fix.gpsAltitude
+          fix.latitude +
+          "/" +
+          fix.longitude +
+          " Altitude:" +
+          fix.gpsAltitude
       );
 
-      return (violationFound = {
-        lat: fix.latitude,
-        long: fix.longitude,
-        gpsAltitude: fix.gpsAltitude,
-        pressureAltitude: fix.pressureAltitude,
-        timestamp: fix.timestamp,
-        line: fixesWithElevation,
-      });
+      const violationFound = createViolationEntry(
+        fix,
+        "FL100",
+        fl100InMeters,
+        99999
+      );
+
+      airspaceViolations.push(violationFound);
     }
   });
-  return violationFound;
+}
+
+function createViolationEntry(fix, airspaceName, lowerLimit, upperLimit) {
+  return {
+    lat: fix.latitude,
+    long: fix.longitude,
+    gpsAltitude: fix.gpsAltitude,
+    pressureAltitude: fix.pressureAltitude,
+    lowerLimit,
+    upperLimit,
+    airspaceName,
+    timestamp: fix.timestamp,
+  };
 }
 
 async function findHorizontalIntersection(fixesId) {

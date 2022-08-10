@@ -399,6 +399,7 @@ const flightService = {
     if (violationResult) {
       flight.airspaceViolation = true;
       flight.flightStatus = STATE.IN_REVIEW;
+      flight.airspaceViolations = violationResult.airspaceViolations;
       flight.save();
     }
 
