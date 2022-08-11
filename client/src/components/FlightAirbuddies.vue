@@ -19,7 +19,6 @@ watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
 const onShowAirbuddies = async () => {
   try {
     if (!flight.value?.airbuddies) return;
-    // @ts-ignore TODO: readonly refs…
     await fetchAll(flight.value.airbuddies);
     loaded.value = true;
   } catch (error) {

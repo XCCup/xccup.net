@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// @ts-expect-error
+// @ts-expect-error No types available
 import metarParser from "metar-parser";
-import { computed } from "vue";
+import { computed, type DeepReadonly } from "vue";
 import type { METAR } from "@/types/METAR";
 import useMapPosition from "@/composables/useMapPosition";
 import useFlight from "@/composables/useFlight";
@@ -15,11 +15,10 @@ const decodedMetars = computed(() => {
   if (!flight.value?.flightMetarData) {
     return [];
   }
-  // @ts-expect-error TODO: Readonly ref…
   return decodeMetars(flight.value?.flightMetarData);
 });
 
-function decodeMetars(data: string[]): METAR[] {
+function decodeMetars(data: DeepReadonly<string[]>): METAR[] {
   try {
     return data.map((metar): METAR => {
       return metarParser(metar);

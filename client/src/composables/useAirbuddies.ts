@@ -2,6 +2,7 @@ import { readonly, ref, computed } from "vue";
 import type { BuddyTrack } from "@/types/BuddyTrack";
 import ApiService from "@/services/ApiService";
 import type { Flight } from "@/types/Flight";
+import type { DeepReadonly } from "vue";
 
 const airbuddiesFlightData = ref<Flight[]>([]);
 const checkedAirbuddyFlightIds = ref<string[]>([]);
@@ -31,7 +32,9 @@ export default () => {
   };
 
   // Actions
-  const fetchAll = async (airbuddies: Flight[]): Promise<void> => {
+  const fetchAll = async (
+    airbuddies: DeepReadonly<Flight[]>
+  ): Promise<void> => {
     if (airbuddiesFlightData.value.length > 0) return;
 
     airbuddiesFlightData.value = (

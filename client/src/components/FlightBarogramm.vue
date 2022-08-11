@@ -61,10 +61,10 @@ const { getPositions } = useMapPosition();
 const pressureAltToggle = ref(false);
 
 // Only show pressure alt switch if pressure alt is present in flight fixes
-const showPressureAltSwitch = computed(() =>
-  // @ts-expect-error TODO: Redaonly refs…
-  flight.value.fixes[0].pressureAltitude ? true : false
-);
+const showPressureAltSwitch = computed(() => {
+  if (!flight.value?.fixes?.length) return false;
+  return flight.value.fixes[0].pressureAltitude ? true : false;
+});
 
 const usePressureAlt = computed(() =>
   airbuddiesInUse.value ? false : pressureAltToggle.value
@@ -82,12 +82,13 @@ const altitudeToShow = computed(() => {
 });
 
 // Chart data
-const chartData = computed(() =>
-  // @ts-ignore TODO: Readonly refs…
-  processBaroData(flight.value, activeAirbuddyFlights.value, {
+const chartData = computed(() => {
+  if (!flight.value) return [];
+  // @ts-expect-error TODO: Evaluate this type error
+  return processBaroData(flight.value, activeAirbuddyFlights.value, {
     usePressureAlt: usePressureAlt.value,
-  })
-);
+  });
+});
 
 // Collapse setup
 // TODO: TS - Why isn't this of type Collapse | undefined literally?
