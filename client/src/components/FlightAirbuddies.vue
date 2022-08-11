@@ -3,7 +3,7 @@ import { TRACK_COLORS } from "@/common/Constants";
 import useFlight from "@/composables/useFlight";
 import useAirbuddy from "@/composables/useAirbuddies";
 
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, type DeepReadonly } from "vue";
 import type { AirbuddyFlight } from "@/types/Airbuddy.js";
 
 const { flight } = useFlight();
@@ -29,7 +29,9 @@ const onShowAirbuddies = async () => {
   }
 };
 
-function createAirbuddyPercentageString(airbuddyFlight: AirbuddyFlight | any) {
+function createAirbuddyPercentageString(
+  airbuddyFlight: DeepReadonly<AirbuddyFlight>
+) {
   if (
     !airbuddyFlight?.correlationPercentage ||
     typeof airbuddyFlight.correlationPercentage != "number"
