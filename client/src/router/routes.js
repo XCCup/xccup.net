@@ -178,6 +178,12 @@ export const Routes = [
     component: () => import("../views/ListRules.vue"),
   },
   {
+    path: "/info-luftraeume",
+    name: "InfoAirspaces",
+    meta: { smoothScroll: true },
+    component: () => import("../views/InfoAirspaces.vue"),
+  },
+  {
     path: "/vereine",
     name: "Clubs",
     component: () => import("../views/ListClubs.vue"),
