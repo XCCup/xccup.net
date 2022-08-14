@@ -92,10 +92,11 @@ export async function drawAirspaces(map: L.Map, bounds: string) {
 export function drawViolations(map: L.Map, violations: AirspaceViolation[]) {
   if (!violations || !violations.length) return;
   violations.forEach((violation: any) => {
-    const violationMarker = L.marker([violation.lat, violation.long], {
+    L.marker([violation.lat, violation.long], {
       riseOnHover: true,
-    }).bindPopup(createViolationPopupContent(violation));
-    map.addLayer(violationMarker);
+    })
+      .bindPopup(createViolationPopupContent(violation))
+      .addTo(map);
   });
 }
 
