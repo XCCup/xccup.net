@@ -153,7 +153,7 @@ function findVerticalIntersection(
             "/" +
             upperLimit
         );
-
+        // TODO: Add original limits to show if it's MSL, GND or FL.
         airspaceViolations.push(
           createViolationEntry(fix, intersection.name, lowerLimit, upperLimit)
         );
