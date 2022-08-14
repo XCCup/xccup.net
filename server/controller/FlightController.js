@@ -442,7 +442,7 @@ router.post(
       });
 
       // Airspace check
-      const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
+      const { airspaceViolations } = await runChecksStartCalculationsStoreFixes(
         flightDbObject,
         userId
       );
@@ -463,7 +463,7 @@ router.post(
           "clientUrl"
         )}${config.get("clientFlight")}/${flightDbObject.externalId}.`;
 
-      if (airspaceViolation) {
+      if (airspaceViolations) {
         message +=
           "\nDein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
         sendAirspaceViolationMail(flightDbObject);
