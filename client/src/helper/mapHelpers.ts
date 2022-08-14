@@ -102,7 +102,7 @@ export function drawViolations(map: L.Map, violations: AirspaceViolation[]) {
 
 function createViolationPopupContent(violation: AirspaceViolation) {
   return `GPS Höhe:  ${violation.gpsAltitude} m
-  <br>ISA Höhe:  ${violation.pressureAltitude} m
+  <br>ISA Höhe:  ${violation.pressureAltitude ?? "N/A"} m
   <br>Untergrenze:  ${Math.round(violation.lowerLimit)} m
   <br>Obergrenze:  ${Math.round(violation.upperLimit)} m`;
 }
