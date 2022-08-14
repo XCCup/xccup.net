@@ -111,9 +111,9 @@ const service = {
 
     logger.debug(
       "AS: It took " +
-        (endTime.getTime() -
-          startTime.getTime() +
-          "ms to scan for airspace violations")
+      (endTime.getTime() -
+        startTime.getTime() +
+        "ms to scan for airspace violations")
     );
 
     if (airspaceViolations.length > 0)
@@ -143,19 +143,18 @@ function findVerticalIntersection(
       if (lowerLimit <= fix.gpsAltitude && fix.gpsAltitude <= upperLimit) {
         logger.debug(
           "AS: Found airspace violation at LAT/LONG: " +
-            lat +
-            "/" +
-            long +
-            " Altitude:" +
-            fix.gpsAltitude +
-            " F/C: " +
-            lowerLimit +
-            "/" +
-            upperLimit
+          lat +
+          "/" +
+          long +
+          " Altitude:" +
+          fix.gpsAltitude +
+          " F/C: " +
+          lowerLimit +
+          "/" +
+          upperLimit
         );
-        // TODO: Add original limits to show if it's MSL, GND or FL.
         airspaceViolations.push(
-          createViolationEntry(fix, intersection.name, lowerLimit, upperLimit)
+          createViolationEntry(fix, intersection.name, lowerLimit, upperLimit, intersection.floor, intersection.ceiling)
         );
       }
     }
@@ -169,17 +168,19 @@ function findViolationOfFL100(fixesWithElevation, airspaceViolations) {
     if (fix.gpsAltitude >= fl100InMeters) {
       logger.debug(
         "AS: Found violation of FL100 at LAT/LONG: " +
-          fix.latitude +
-          "/" +
-          fix.longitude +
-          " Altitude:" +
-          fix.gpsAltitude
+        fix.latitude +
+        "/" +
+        fix.longitude +
+        " Altitude:" +
+        fix.gpsAltitude
       );
 
       const violationFound = createViolationEntry(
         fix,
         "FL100",
         fl100InMeters,
+        99999,
+        "FL100",
         99999
       );
 
@@ -188,14 +189,16 @@ function findViolationOfFL100(fixesWithElevation, airspaceViolations) {
   });
 }
 
-function createViolationEntry(fix, airspaceName, lowerLimit, upperLimit) {
+function createViolationEntry(fix, airspaceName, lowerLimitMeter, upperLimitMeter, lowerLimitOrginal, upperLimitOriginal) {
   return {
     lat: fix.latitude,
     long: fix.longitude,
     gpsAltitude: fix.gpsAltitude,
     pressureAltitude: fix.pressureAltitude,
-    lowerLimit,
-    upperLimit,
+    lowerLimitMeter,
+    upperLimitMeter,
+    lowerLimitOrginal,
+    upperLimitOriginal,
     airspaceName,
     timestamp: fix.timestamp,
   };

@@ -177,7 +177,7 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
           res.status(NOT_FOUND).send("The file you requested was deleted");
         logger.error(
           "FC: An igc file was requested but seems to be deleted. igcPath: " +
-            flight.igcPath
+          flight.igcPath
         );
       }
     });
@@ -458,11 +458,10 @@ router.post(
       deleteCache(CACHE_RELEVANT_KEYS);
 
       // User feedback
-      let message = `Der Flug wurde mit dem Gerät ${glider.brand} ${
-        glider.model
-      } eingereicht. Du findest deinen Flug unter ${config.get(
-        "clientUrl"
-      )}${config.get("clientFlight")}/${flightDbObject.externalId}.`;
+      let message = `Der Flug wurde mit dem Gerät ${glider.brand} ${glider.model
+        } eingereicht. Du findest deinen Flug unter ${config.get(
+          "clientUrl"
+        )}${config.get("clientFlight")}/${flightDbObject.externalId}.`;
 
       if (airspaceViolation) {
         message +=
@@ -624,7 +623,7 @@ async function runChecksStartCalculationsStoreFixes(
   return {
     takeoffName: takeoff.name,
     result,
-    airspaceViolation: airspaceViolations,
+    airspaceViolations,
   };
 }
 

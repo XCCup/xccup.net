@@ -57,10 +57,11 @@ interface AirspaceViolation {
   gpsAltitude: number;
   pressureAltitude: number;
   airspaceName: string;
-  lowerLimit: number;
-  upperLimit: number;
+  lowerLimitMeter: number;
+  upperLimitMeter: number;
+  lowerLimitOriginal: number;
+  upperLimitOriginal: number;
   timestamp: number;
-  line?: any; //TODO: Correct it when really needed
 }
 
 const service = {
@@ -200,8 +201,10 @@ const service = {
           gpsAltitude: airspaceViolation.gpsAltitude,
           pressureAltitude: airspaceViolation.pressureAltitude,
           airspaceName: airspaceViolation.airspaceName,
-          lowerLimit: airspaceViolation.lowerLimit,
-          upperLimit: airspaceViolation.upperLimit,
+          lowerLimitMeter: airspaceViolation.lowerLimitMeter,
+          upperLimitMeter: airspaceViolation.upperLimitMeter,
+          lowerLimitOriginal: airspaceViolation.lowerLimitOriginal,
+          upperLimitOriginal: airspaceViolation.upperLimitOriginal,
           timestamp: airspaceViolation.timestamp,
         })
       );
@@ -312,9 +315,9 @@ const service = {
       Promise<FlightInstance | null>,
       Promise<FlightCommentInstance | null>?
     ] = [
-      db.User.findByPk(comment.userId),
-      db.Flight.findByPk(comment.flightId),
-    ];
+        db.User.findByPk(comment.userId),
+        db.Flight.findByPk(comment.flightId),
+      ];
     if (comment.relatedTo) {
       queries.push(db.FlightComment.findByPk(comment.relatedTo));
     }

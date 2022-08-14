@@ -17,8 +17,10 @@ export interface AirspaceViolation {
   long: number;
   gpsAltitude: number;
   pressureAltitude: number;
-  lowerLimit: number;
-  upperLimit: number;
+  lowerLimitMeter: number;
+  upperLimitMeter: number;
+  lowerLimitOriginal: string;
+  upperLimitOrignal: string;
   airspaceName: string;
   timestamp: number;
 }
