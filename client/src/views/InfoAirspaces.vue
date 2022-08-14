@@ -88,11 +88,12 @@
       Flugfl&auml;chen kann man perfekt per Standard Druckh&ouml;he messen, da
       diese sich an dieser orientieren. An Hochdrucktagen liegt die
       tats&auml;chliche H&ouml;he des Flightlevel also etwas h&ouml;her und an
-      Tiefdrucktagen etwas tiefer. (Wer sich damit besch&auml;ftigen m&ouml;chte
+      Tiefdrucktagen etwas tiefer.
+      <!-- (Wer sich damit besch&auml;ftigen m&ouml;chte
       findet hier einen Rechner, den ich mir mal zum Rumspielen gebaut habe:
       <a href="https://fl.stephanschoepe.de" target="_blank"
         >https://fl.stephanschoepe.de</a
-      >)
+      >) -->
     </p>
 
     <p>
