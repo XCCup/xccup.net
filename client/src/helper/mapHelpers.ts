@@ -89,7 +89,10 @@ export async function drawAirspaces(map: L.Map, bounds: string) {
   }
 }
 
-export function drawViolations(map: L.Map, violations: AirspaceViolation[]) {
+export function drawAirspaceViolationMarkers(
+  map: L.Map,
+  violations: AirspaceViolation[]
+) {
   if (!violations || !violations.length) return;
   violations.forEach((violation: any) => {
     const violationMarker = L.marker([violation.lat, violation.long], {
@@ -102,6 +105,10 @@ export function drawViolations(map: L.Map, violations: AirspaceViolation[]) {
 function createViolationPopupContent(violation: AirspaceViolation) {
   return `GPS Höhe:  ${violation.gpsAltitude} m
   <br>ISA Höhe:  ${violation.pressureAltitude} m
-  <br>Untergrenze:  ${violation.lowerLimitOriginal} / ${Math.round(violation.lowerLimitMeter)} m
-  <br>Obergrenze:  ${violation.upperLimitOrignal} / ${Math.round(violation.upperLimitMeter)} m`
+  <br>Untergrenze:  ${violation.lowerLimitOriginal} / ${Math.round(
+    violation.lowerLimitMeter
+  )} m
+  <br>Obergrenze:  ${violation.upperLimitOrignal} / ${Math.round(
+    violation.upperLimitMeter
+  )} m`;
 }
