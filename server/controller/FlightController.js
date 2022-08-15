@@ -605,15 +605,27 @@ async function runChecksStartCalculationsStoreFixes(
   const result = await service.update(flightDbObject);
 
   // Run in parallel
-  const [airspaceViolation] = await Promise.all([
+  /** TODO: Actually airspaceViolations now contains the trackline
+   * and an array of violations. Maybe check if the variable name still fits.
+   * And type or JSDoc it.
+   */
+  const [airspaceViolations] = await Promise.all([
     service.attachElevationDataAndCheckForAirspaceViolations(flightDbObject),
     service.startResultCalculation(flightDbObject),
   ]);
 
-  if (airspaceViolation)
-    sendAirspaceViolationAdminMail(userId, flightDbObject, airspaceViolation);
+  if (airspaceViolations)
+    sendAirspaceViolationAdminMail(
+      userId,
+      flightDbObject,
+      airspaceViolations.airspaceViolations
+    );
 
-  return { takeoffName: takeoff.name, result, airspaceViolation };
+  return {
+    takeoffName: takeoff.name,
+    result,
+    airspaceViolation: airspaceViolations,
+  };
 }
 
 function paramIdIsLeonardo(req, res) {

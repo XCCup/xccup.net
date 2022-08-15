@@ -116,7 +116,8 @@ module.exports.NEW_AIRSPACE_VIOLATION_TEXT = (
 Es wurde versucht einen Flug mit einer Luftraumverletzung hochzuladen.
 Flug ID: ${flight.externalId}
 Pilot: ${user.firstName} ${user.lastName}
-Luftraumverletzung: ${JSON.stringify(airspaceViolation)}
+Luftraumverletzung: 
+${airspaceViolation}
 Euer Server-Knecht
     
 `;
