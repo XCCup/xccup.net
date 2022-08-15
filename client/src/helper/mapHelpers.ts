@@ -108,7 +108,7 @@ function createViolationPopupContent(violation: AirspaceViolation) {
   <br>Untergrenze:  ${violation.lowerLimitOriginal} / ${Math.round(
     violation.lowerLimitMeter
   )} m
-  <br>Obergrenze:  ${violation.upperLimitOrignal} / ${Math.round(
+  <br>Obergrenze:  ${violation.upperLimitOriginal} / ${Math.round(
     violation.upperLimitMeter
   )} m`;
 }

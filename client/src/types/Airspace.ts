@@ -20,7 +20,7 @@ export interface AirspaceViolation {
   lowerLimitMeter: number;
   upperLimitMeter: number;
   lowerLimitOriginal: string;
-  upperLimitOrignal: string;
+  upperLimitOriginal: string;
   airspaceName: string;
   timestamp: number;
 }
