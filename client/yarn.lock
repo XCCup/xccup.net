@@ -173,10 +173,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.12.tgz#0d4557fd3b94497d793efd4e7d92df2f83b4ef24"
   integrity sha512-q4jlIR71hUpWTnGhXWcakgkZeHa3CCjcQcnuzU8M891BAWA2jHiziiWEPEkdS5pFsz7H9HJiy8BrK7tBRNrY7A==
 
-"@types/node@^18.7.4":
-  version "18.7.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.4.tgz#95baa50846ae112a7376869d49fec23b2506c69d"
-  integrity sha512-RzRcw8c0B8LzryWOR4Wj7YOTFXvdYKwvrb6xQQyuDfnlTxwYXGCV5RZ/TEbq5L5kn+w3rliHAUyRcG1RtbmTFg==
+"@types/node@^18.7.6":
+  version "18.7.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.6.tgz#31743bc5772b6ac223845e18c3fc26f042713c83"
+  integrity sha512-EdxgKRXgYsNITy5mjjXjVE/CS8YENSdhiagGrLqjG0pvA2owgJ6i4l7wy/PFZGC0B1/H20lWKN7ONVDNYDZm7A==
 
 "@types/sinonjs__fake-timers@8.1.1":
   version "8.1.1"
@@ -280,10 +280,10 @@
     "@typescript-eslint/types" "5.18.0"
     eslint-visitor-keys "^3.0.0"
 
-"@vitejs/plugin-vue@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-3.0.1.tgz#b6af8f782485374bbb5fe09edf067a845bf4caae"
-  integrity sha512-Ll9JgxG7ONIz/XZv3dssfoMUDu9qAnlJ+km+pBA0teYSXzwPCIzS/e1bmwNYl5dcQGs677D21amgfYAnzMl17A==
+"@vitejs/plugin-vue@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-3.0.3.tgz#7e3e401ccb30b4380d2279d9849281413f1791ef"
+  integrity sha512-U4zNBlz9mg+TA+i+5QPc3N5lQvdUXENZLO2h0Wdzp56gI1MWhqJOv+6R+d4kOzoaSSq6TnGPBdZAXKOe4lXy6g==
 
 "@volar/code-gen@0.40.1":
   version "0.40.1"
@@ -903,10 +903,10 @@ cypress-file-upload@^5.0.8:
   resolved "https://registry.yarnpkg.com/cypress-file-upload/-/cypress-file-upload-5.0.8.tgz#d8824cbeaab798e44be8009769f9a6c9daa1b4a1"
   integrity sha512-+8VzNabRk3zG6x8f8BWArF/xA/W0VK4IZNx3MV0jFWrJS/qKn8eHfa5nU73P9fOQAgwHFJx7zjg4lwOnljMO8g==
 
-cypress@^10.4.0:
-  version "10.4.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.4.0.tgz#bb5b3b6588ad49eff172fecf5778cc0da2980e4e"
-  integrity sha512-OM7F8MRE01SHQRVVzunid1ZK1m90XTxYnl+7uZfIrB4CYqUDCrZEeSyCXzIbsS6qcaijVCAhqDL60SxG8N6hew==
+cypress@^10.5.0:
+  version "10.5.0"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-10.5.0.tgz#8d0354ac47d1570fb7d9881aec1cf8e0c3e8bfc8"
+  integrity sha512-m1oP/2Au+81moyHGg6Mxro8wo5F5rXjtea9SPXn7ezUT3qNHk43bif3K/6Wz7nuaNUiN9/UM+B4c03kCp8vniw==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
@@ -2748,10 +2748,10 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-vite@^3.0.7:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.7.tgz#f1e379857e9c5d652126f8b20d371e1365eb700f"
-  integrity sha512-dILhvKba1mbP1wCezVQx/qhEK7/+jVn9ciadEcyKMMhZpsuAi/eWZfJRMkmYlkSFG7Qq9NvJbgFq4XOBxugJsA==
+vite@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-3.0.8.tgz#aa095ad8e3e5da46d9ec7e878f262678965d6531"
+  integrity sha512-AOZ4eN7mrkJiOLuw8IA7piS4IdOQyQCA81GxGsAQvAZzMRi9ZwGB3TOaYsj4uLAWK46T5L4AfQ6InNGlxX30IQ==
   dependencies:
     esbuild "^0.14.47"
     postcss "^8.4.16"
