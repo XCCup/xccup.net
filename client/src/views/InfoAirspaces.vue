@@ -5,4 +5,7 @@
 <script setup lang="ts">
 import { marked } from "marked";
 import markdown from "@/blog/airspace-info.md?raw";
+import { setWindowName } from "../helper/utils";
+
+setWindowName("Von Lufträumen, Höhenmessungen und Standardatmospähren");
 </script>

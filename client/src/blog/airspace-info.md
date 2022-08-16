@@ -1,6 +1,6 @@
 ### Von Lufträumen, Höhenmessungen und Standardatmospähren
 
-<figcaption class="blockquote-footer mt-2">Stephan Schöpe</figcaption>
+<figcaption class="blockquote-footer">Stephan Schöpe</figcaption>
 
 In letzter Zeit mehren sich vertikale Luftraumverletzungen und uns erreichen viele Fragen dazu. Ich versuche daher in diesem Artikel zu erläutern, wie Lufträume im XCCup überprüft werden und an welcher Stelle Verwirrungen auftreten können.
 
