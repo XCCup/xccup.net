@@ -15,13 +15,13 @@ Um dies zu nachvollziehen zu können, muss man die Unterschiede zwischen folgend
 Die vom GPS ermittelte Höhe wird mit zunehmender Höhe unter Umständen sehr ungenau. Daher wird in der Luftfahrt der Luftdruck zur Höhenmessung eingesetzt.
 
 ###### Barometrische Höhe
-Wer sich noch an seine B-Schein Theorie erinnert weiß, dass sich der Luftdruck leider regelmäßig ändert. Die meisten modernen Geräte checken vor dem Start die aktuelle GPS Höhe und kalibrieren damit die barometrische Höhenmessung. Manche Geräte beziehen den aktuellen QNH vom nächsten Flugplatz oder entnehmen die Höhe des aktuellen Standortes einer Höhendatenbank<sup>1</sup>. Alternativ kann man auch am Startplatz manuell die Höhe, oder den aktuellen örtlichen QNH einstellen. Alle drei Varianten führen bei sachgerechter Umsetzung zum gleichen Ergebnis: einem korrekt eingestellten Höhenmesser.
+Wer sich noch an seine B-Schein Theorie erinnert weiß, dass sich der Luftdruck leider regelmäßig ändert. Die meisten modernen Geräte checken vor dem Start die aktuelle GPS Höhe und kalibrieren damit die barometrische Höhenmessung. Manche Geräte beziehen den aktuellen [QNH](https://www.dwd.de/DE/service/lexikon/Functions/glossar.html?lv3=102126&lv2=102116) vom nächsten Flugplatz oder entnehmen die Höhe des aktuellen Standortes einer Höhendatenbank<sup>1</sup>. Alternativ kann man auch am Startplatz manuell die Höhe, oder den aktuellen örtlichen QNH einstellen. Alle drei Varianten führen bei sachgerechter Umsetzung zum gleichen Ergebnis: einem korrekt eingestellten Höhenmesser.
 
 ###### Flugfläche (FL / Flightlevel)
-Bei Lufträumen, die als Flugflächen angegeben sind (z. B.: FL100) ist der Höhenmesser hingegen auf ICAO Standardatmosphäre einzustellen (1013,25 hPa). Einige moderne Geräte bieten die Möglichkeit beides (QNH Höhe + ISA Höhe) gleichzeitig anzuzeigen.
+Bei Lufträumen, die als Flugflächen angegeben sind (z. B.: FL100) ist der Höhenmesser hingegen auf ICAO Standard Atmosphäre einzustellen ([ISA](https://www.dwd.de/DE/service/lexikon/begriffe/S/Standardatmosphaere_pdf.pdf?__blob=publicationFile&v=3) - 1013,25 hPa). Einige moderne Geräte bieten die Möglichkeit beides (QNH Höhe + Flugfläche) gleichzeitig anzuzeigen.
 
 ##### Was steht im IGC-File?
-Laut IGC-Spezifikation wird in einem IGC-File für jede Position die GPS Höhe und die Höhe nach ICAO Standard Atmosphäre gespeichert (ISA - 1013,25 hPa). Die korrekt eingestellte barometrische Höhe im Gerät sieht also nur der Pilot während des Fluges. Sie ist aber zumindest bei Lufträumen, die in MSL angegeben sind die einzige aussagekräftige Höhenmessung. (MSL = Mean Sea Level / Normal Null)
+Laut IGC-Spezifikation wird in einem IGC-File für jede Position die GPS Höhe und die Höhe nach ICAO Standard Atmosphäre gespeichert. Die korrekt eingestellte barometrische Höhe im Gerät sieht also nur der Pilot während des Fluges. Sie ist aber zumindest bei Lufträumen, die in MSL angegeben sind die einzige aussagekräftige Höhenmessung. (MSL = Mean Sea Level / Normal Null)
 
 ##### Und jetzt?
 Praktisch bedeutet dies, dass sich zur Überprüfung auf Luftraumverletzungen nur die GPS Höhe eignet. Dies hat zwei Gründe:

@@ -1,7 +1,6 @@
 <template>
-  <div class="container py-2">
-    <div v-html="marked(markdown)"></div>
-  </div>
+  <!-- eslint-disable-next-line vue/no-v-html -->
+  <div class="container py-2" v-html="marked(markdown)"></div>
 </template>
 <script setup lang="ts">
 import { marked } from "marked";
