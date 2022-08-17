@@ -35,13 +35,14 @@ Im XCCup verwenden wir also nur die GPS-Höhe aus dem IGC-File, um Lufträume zu
 Auch bei extremen Tiefdrucklagen mit hoher Basis haben wir einen Blick auf die maximale Höhe (Siehe oben - die generelle Höhenbegrenzung im XCCup Gebiet von FL100 sinkt in der tatsächlichen Höhe ab). Im Zweifel entscheiden wir immer zugunsten des Piloten.
 
 Ob dies die beste Vorgehensweise ist, kann man natürlich infrage stellen. In der laufenden Saison können wir sie aber nicht mehr ändern. Im Zweifel lohnt es sich aber generell vertikal Abstand zu Lufträumen zu halten, falls es doch unbeabsichtigter Weise noch steigt. Nicht nur, damit der Flug eingereicht werden kann, sondern um generell keine Luftraumverletzungen zu provozieren. Dann braucht man auch keine Toleranzen und auf 50 Meter kommt es meistens nicht an. Die meisten weiten Flüge im XCCup kamen ohne große Annäherung an einen Luftraum aus. (Davon abgesehen empfiehlt die Deutsche Flugsicherung generell nur bis FL95 zu steigen um, den IFR Verkehr besser vom VFR Verkehr zu trennen: https://www.dhv.de/piloteninfos/gelaende-luftraum-natur/luftraumluftrecht/dfs-trennflaeche-fl-95/) 
+
 Auch hilft es, wenn die Luftraumdaten aktuell sind. Wir verwenden diese Quelle: https://www.daec.de/fachbereiche/luftraum-flugsicherheit-flugbetrieb/luftraumdaten/
 
 
 ##### Andere online Wettbewerbe
 Manchmal werden wir darauf hingewiesen, dass ein Flug in einem anderen Online-Wettbewerb keine Luftraumverletzung hätte. Das kann gut sein. Vielleicht gibt es dort Toleranzen, ältere Luftraumdaten oder andere Interpretationen in der Umsetzung. Wir haben da leider keine Einsicht in den Prozess<sup>4</sup>. Falls jemand allerdings einen Fehler in der Umsetzung im XCCup finden sollte, freuen wir uns über Hinweise dazu und korrigieren diesen natürlich.
 
-Für Verbesserungsvorschläge sind wir offen. Auch wenn in der laufenden Saison natürlich nichts verändert werden kann. In einer optimalen Welt hätte jedes IGC-File GPS und Druckhöhe und wir hätten von jedem Flug den zugehörigen QNH (Den haben wir seit Kurzem, befindet sich aber noch in der Testphase). So könnten wir für FL Lufträume die ISA Höhe und für MSL die angenäherte barometrische Höhe verwenden.
+Für Verbesserungsvorschläge sind wir immer offen (info@xccup.net). Auch wenn in der laufenden Saison natürlich nichts verändert werden kann. In einer optimalen Welt hätte jedes IGC-File GPS und Druckhöhe und wir hätten von jedem Flug den zugehörigen QNH (Den haben wir seit Kurzem, befindet sich aber noch in der Testphase). So könnten wir für FL Lufträume die ISA Höhe und für MSL die angenäherte barometrische Höhe verwenden.
 Oder man hält einfach entsprechenden Abstand und es wird für alle Beteiligten stressfreier 😜
 
 ***
