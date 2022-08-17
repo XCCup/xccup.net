@@ -37,8 +37,18 @@ const { default: config } = require("../config/env-config");
 const path = require("path");
 
 const IMAGE_STORE = config.get("dataPath") + "/images/flights";
-const MAX_PHOTOS = 8;
 
+/**
+ * Allow double the number of photos per flight as intended.
+ * Otherwise it's not possible to upload a new photo if there were already
+ * nine photos present but x were deleted. This is because the actual delete process
+ * only takes place after the user clicked the "save" button.
+ * The downside is that it's not possible to upload more than nine photos if you know
+ * how to do it.
+ * Frontend will only allow nine. Or refacor this and change the complete process…
+ */
+
+const MAX_PHOTOS = 9 * 2;
 const imageUpload = multer({
   dest: IMAGE_STORE + "/" + new Date().getFullYear(),
 });
