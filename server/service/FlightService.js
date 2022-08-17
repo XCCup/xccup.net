@@ -276,6 +276,17 @@ const flightService = {
     return result;
   },
 
+  /**
+   * Updates one or serveral properties of a flight model.
+   *
+   * @param {*} id The ID of the flight to update
+   * @param {*} props The properties of the flight model which should be updated
+   * @return 1 if an entry was updated; 0 when no entry was updated
+   */
+  changeFlightProps: async (id, props = {}) => {
+    return (await Flight.update(props, { where: { id } }))[0];
+  },
+
   finalizeFlightSubmission: async ({
     flight,
     report,

@@ -164,6 +164,15 @@
             <BaseSpinner v-if="isFetchingMetar" />
           </a>
         </li>
+        <li>
+          <a
+            class="dropdown-item"
+            href="#"
+            @click.prevent="onClaimAirspaceViolation"
+          >
+            <i class="bi bi-exclamation-circle mx-1"></i>LVR reklamieren
+          </a>
+        </li>
       </ul>
     </span>
 
@@ -252,6 +261,7 @@ import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 import ApiService from "@/services/ApiService";
 import useSwal from "@/composables/useSwal";
 import { formatFlightDuration } from "@/helper/formatFlightDuration";
+import { FLIGHT_STATUS } from "@/types/Flight";
 
 const { getUserId, hasElevatedRole } = useAuth();
 const { flight } = useFlight();
@@ -294,6 +304,24 @@ const onReloadMetar = async () => {
     showFailedToast("METAR Abfrage gescheitert! " + error);
   } finally {
     isFetchingMetar.value = false;
+  }
+};
+// RECLAIM AIRSPACE VIOLATION
+const onClaimAirspaceViolation = async () => {
+  try {
+    if (!flight.value?.id) throw Error("No flight id");
+    const res = await ApiService.changeFlightProps(flight.value.id, {
+      flightStatus: FLIGHT_STATUS.IN_REVIEW,
+      airspaceViolation: true,
+    });
+
+    if (res.status != 200) throw res.statusText;
+    showSuccessToast(
+      `Der Status wurde erfolgreich auf "${FLIGHT_STATUS.IN_REVIEW}" geändert`
+    );
+  } catch (error) {
+    console.error(error);
+    showFailedToast("Statusänderung gescheitert! " + error);
   }
 };
 

@@ -365,6 +365,33 @@ router.get(
   }
 );
 
+// @desc Allows an admin to change any property of any flight
+// @route PUT /flights/admin/change-prop/
+// @access Only admins
+
+router.put(
+  "/admin/change-prop/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotAdmin(req, res)) return;
+
+      const flightStatus = await service.changeFlightProps(
+        req.params.id,
+        req.body
+      );
+
+      if (!flightStatus) return res.sendStatus(NOT_FOUND);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // @desc Allows an admin to (re)fetch METAR data for a flight
 // @route POST /flights/admin/fetch-metar
 // @access Only moderators and admins
