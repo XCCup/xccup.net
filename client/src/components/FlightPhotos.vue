@@ -1,4 +1,9 @@
 <template>
+  <div v-if="isAdmin" class="text-warning">
+    <!-- TODO: Find a nice way to prevent mixing up user ids when uploading for a user or simply do not upload for a user… -->
+    Admins should not upload photos for a user!
+  </div>
+
   <div class="container mt-3">
     <input
       id="photo-input"
@@ -141,7 +146,7 @@ import { createImageSrcSet } from "@/helper/imageHelper";
 
 import "glightbox/dist/css/glightbox.css";
 
-const { getUserId } = useAuth();
+const { getUserId, isAdmin } = useAuth();
 const baseURL = getbaseURL();
 
 const props = defineProps({
@@ -251,7 +256,6 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     const formData = new FormData();
     formData.append("image", item.photo, item.photo.name);
     formData.append("flightId", props.flightId);
-    // TODO: If an admin uploads a picture the admins userId will be attached. Fix this, or remove the admin ability to upload a picture?
     formData.append("userId", getUserId);
 
     const res = await ApiService.uploadPhotos(formData);
