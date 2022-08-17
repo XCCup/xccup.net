@@ -14,7 +14,6 @@ try {
   const res = await ApiService.getResultsTeams({ ...route.params });
   if (res.status != 200) throw res.status;
   results.value = res.data;
-  // @ts-ignore
   remark.value = results?.value?.constants?.REMARKS;
 } catch (error: any) {
   if (error?.response?.status === 422) {

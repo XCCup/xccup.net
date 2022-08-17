@@ -20,7 +20,6 @@ watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
 const onShowAirbuddies = async () => {
   try {
     if (!flight.value?.airbuddies) return;
-    // @ts-ignore TODO: readonly refs…
     // TODO: Dont fetch all flights when we only want to show the entries! The airbuddies are located in the host flight.airbuddies prop
     await fetchAll(flight.value.airbuddies);
     loaded.value = true;

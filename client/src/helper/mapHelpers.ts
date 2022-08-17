@@ -1,7 +1,9 @@
 import type { Flight } from "@/types/Flight";
-import type { BuddyTrack } from "@/types/Airbuddy";
+import type { BuddyTrack } from "@/types/BuddyTrack";
 import type { Airspace } from "../types/Airspace";
 import type L from "leaflet";
+import ApiService from "@/services/ApiService";
+import type { DeepReadonly } from "vue";
 
 export function convertMapBoundsToQueryString(data: L.Polyline): string {
   if (!data) return "";
@@ -42,7 +44,9 @@ export interface SimpleFix {
   timestamp: number;
 }
 
-function createTrackLog(flight: Flight | BuddyTrack): SimpleFix[] | undefined {
+function createTrackLog(
+  flight: DeepReadonly<Flight | BuddyTrack>
+): SimpleFix[] | undefined {
   return flight.fixes?.map(({ latitude, longitude, timestamp }) => {
     return {
       position: [latitude, longitude],
@@ -53,7 +57,10 @@ function createTrackLog(flight: Flight | BuddyTrack): SimpleFix[] | undefined {
 
 type Tracklog = SimpleFix[];
 
-export function processTracklogs(flight: Flight, buddyTracks: BuddyTrack[]) {
+export function processTracklogs(
+  flight: DeepReadonly<Flight>,
+  buddyTracks: BuddyTrack[]
+) {
   const tracklogs: Tracklog[] = [];
   tracklogs.push(createTrackLog(flight) ?? []);
 
@@ -66,4 +73,48 @@ export function processTracklogs(flight: Flight, buddyTracks: BuddyTrack[]) {
     });
   }
   return tracklogs;
+}
+
+export async function drawAirspaces(map: L.Map, bounds: string) {
+  try {
+    const res = await ApiService.getAirspaces(bounds);
+    const airspaceData = res.data;
+    const options: L.GeoJSONOptions = {
+      // @ts-expect-error
+      opacity: 0.1,
+      fillOpacity: 0.08,
+      color: "red",
+    };
+    airspaceData.forEach((airspace: Airspace) => {
+      L.geoJSON(airspace.polygon, options)
+        .bindPopup(createAirspacePopupContent(airspace))
+        .addTo(map);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function drawAirspaceViolationMarkers(
+  map: L.Map,
+  violations: DeepReadonly<AirspaceViolation[]>
+) {
+  if (!violations || !violations.length) return;
+  violations.forEach((violation: any) => {
+    const violationMarker = L.marker([violation.lat, violation.long], {
+      riseOnHover: true,
+    }).bindPopup(createViolationPopupContent(violation));
+    map.addLayer(violationMarker);
+  });
+}
+
+function createViolationPopupContent(violation: AirspaceViolation) {
+  return `GPS Höhe:  ${violation.gpsAltitude} m
+  <br>ISA Höhe:  ${violation.pressureAltitude} m
+  <br>Untergrenze:  ${violation.lowerLimitOriginal} / ${Math.round(
+    violation.lowerLimitMeter
+  )} m
+  <br>Obergrenze:  ${violation.upperLimitOriginal} / ${Math.round(
+    violation.upperLimitMeter
+  )} m`;
 }

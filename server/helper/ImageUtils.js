@@ -172,13 +172,13 @@ function defineImageFileNameWithCurrentDateAsPrefix() {
   };
 }
 
-function retrieveFilePath(orginalPath, size) {
-  const fileName = size ? createSizePath(orginalPath, size) : orginalPath;
+function retrieveFilePath(originalPath, size) {
+  const fileName = size ? createSizePath(originalPath, size) : originalPath;
   const filePath = path.join(path.resolve(), fileName);
 
   return fs.existsSync(filePath)
     ? filePath
-    : path.join(path.resolve(), orginalPath);
+    : path.join(path.resolve(), originalPath);
 }
 
 exports.retrieveFilePath = retrieveFilePath;

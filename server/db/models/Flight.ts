@@ -26,6 +26,7 @@ export interface FlightAttributes {
   igcPath?: string;
   glider?: Glider;
   airspaceViolation?: boolean;
+  airspaceViolations?: AirspaceViolation[];
   uncheckedGRecord?: boolean;
   violationAccepted?: boolean;
   hikeAndFly?: number;
@@ -59,6 +60,17 @@ interface Glider {
     key: string;
     shortDescription: string;
   };
+}
+
+interface AirspaceViolation {
+  lat: number;
+  long: number;
+  gpsAltitude: number;
+  pressureAltitude: number;
+  lowerLimit: number;
+  upperLimit: number;
+  airspaceName: string;
+  timestamp: number;
 }
 
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
@@ -154,6 +166,9 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     airspaceViolation: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
+    },
+    airspaceViolations: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
     },
     uncheckedGRecord: {
       type: DataTypes.BOOLEAN,
