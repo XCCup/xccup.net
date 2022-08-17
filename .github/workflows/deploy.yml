@@ -5,7 +5,7 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using password
+      - name: Login via SSH, pull changes from "main", build docker images and check afterwards the log
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -16,3 +16,5 @@ jobs:
             cd ~/xccup.net
             git pull
             docker-compose -f docker-compose-prod.yml up -d --force-recreate --build
+            docker logs -n 10 xccup-server
+            docker logs -n 10 xccup-client
