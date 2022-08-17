@@ -9,6 +9,7 @@
     <button
       type="button"
       class="col-2 btn btn-outline-primary bi bi-file-earmark-arrow-down btn-sm"
+      :disabled="entries.length == 0"
       @click="onExport"
     >
       Liste exportieren
@@ -81,6 +82,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import type { Ref } from "vue";
 import type { UserData } from "@/types/UserData";
+import { format } from "date-fns";
 
 interface TShirtStat {
   tshirtSize: string;
@@ -107,7 +109,11 @@ const onExport = () => {
   const csvArray = entries.value.map((e) => {
     const row = propsToExport.map((p) => {
       if (p == "club") return e[p].name;
-      if (p == "address") return JSON.stringify(e[p]);
+      if (p == "address") {
+        const entries = Object.values(e[p]);
+        // In case of Deutschland only the state will be shown
+        return entries.join(" ").replace("Deutschland ", "");
+      }
       // @ts-ignore
       return e[p];
     });
@@ -122,7 +128,13 @@ const onExport = () => {
   // Header
   csvArray.unshift(propsToExport);
 
-  window.open(dataToCsvURI(csvArray));
+  // Create download
+  const hiddenElement = document.createElement("a");
+  hiddenElement.href = dataToCsvURI(csvArray);
+
+  hiddenElement.download =
+    format(new Date(), "yyyy-MM-dd") + "_XCCup_T-Shirts" + ".csv";
+  hiddenElement.click();
 };
 
 const onFetch = async () => {
