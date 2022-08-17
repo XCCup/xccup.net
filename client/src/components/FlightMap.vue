@@ -20,7 +20,7 @@ import { getTime, parseISO } from "date-fns";
 import {
   convertMapBoundsToQueryString,
   drawAirspaces,
-  drawViolations,
+  drawAirspaceViolationMarkers,
   processTracklogs,
 } from "@/helper/mapHelpers";
 
@@ -152,7 +152,7 @@ onMounted(() => {
   drawAirspaces(map, convertMapBoundsToQueryString(trackLines.value[0]));
 
   if (isAdmin.value && flight.value?.airspaceViolations) {
-    drawViolations(map, flight.value?.airspaceViolations);
+    drawAirspaceViolationMarkers(map, flight.value?.airspaceViolations);
   }
 
   // Watch the tracklogs for updated content like airbuddy flights

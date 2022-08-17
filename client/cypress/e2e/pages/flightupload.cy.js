@@ -225,6 +225,7 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
+    // TODO: Check if admin info email contains all important information
   });
 
   it("Test upload flight out of xccup area", () => {
@@ -453,10 +454,7 @@ describe("check flight upload page", () => {
         igcfn: igcFileName,
       };
       try {
-        await axios.post(
-          "http://localhost:3000/api/flights/leonardo",
-          payload
-        )
+        await axios.post("http://localhost:3000/api/flights/leonardo", payload);
       } catch (error) {
         // Test the response message from the API
         expect(error.response.status).to.equal(expectedStatus);

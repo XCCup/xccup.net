@@ -9,6 +9,7 @@
     <button
       type="button"
       class="col-2 btn btn-outline-primary bi bi-file-earmark-arrow-down btn-sm"
+      :disabled="entries.length == 0"
       @click="onExport"
     >
       Liste exportieren
@@ -26,7 +27,11 @@
           <th>Anzahl</th>
         </thead>
         <tbody>
-          <tr v-for="stat in stats" :key="stat" :item="stat">
+          <tr
+            v-for="stat in stats"
+            :key="stat.tshirtSize + stat.gender"
+            :item="stat"
+          >
             <td>{{ stat.tshirtSize }}</td>
             <td>{{ stat.gender }}</td>
             <td>{{ stat.amount }}</td>
@@ -71,21 +76,65 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ApiService from "@/services/ApiService";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import type { Ref } from "vue";
+import type { UserData } from "@/types/UserData";
+import { format } from "date-fns";
+
+interface TShirtStat {
+  tshirtSize: string;
+  gender: string;
+  amount: number;
+}
 
 const router = useRouter();
 
-const entries = ref([]);
-const stats = ref([]);
+const entries: Ref<UserData[]> = ref([]);
+const stats: Ref<TShirtStat[]> = ref([]);
 
 const onExport = () => {
-  //TODO: Implement an CSV export
-  alert(
-    "Diese Funktion ist noch nicht implementiert! Wir sollten zuerst absprechen, welche Daten wirklich alle benötigt werden"
+  const propsToExport = [
+    "club",
+    "fullName",
+    "tshirtSize",
+    "gender",
+    "email",
+    "address",
+  ];
+
+  // Rows
+  const csvArray = entries.value.map((e) => {
+    const row = propsToExport.map((p) => {
+      if (p == "club") return e[p].name;
+      if (p == "address") {
+        const entries = Object.values(e[p]);
+        // In case of Deutschland only the state will be shown
+        return entries.join(" ").replace("Deutschland ", "");
+      }
+      // @ts-ignore
+      return e[p];
+    });
+    return row;
+  });
+  // Sort by club and name
+  csvArray.sort((a, b) =>
+    a[0].localeCompare(b[0]) == 0
+      ? a[1].localeCompare(b[1])
+      : a[0].localeCompare(b[0])
   );
+  // Header
+  csvArray.unshift(propsToExport);
+
+  // Create download
+  const hiddenElement = document.createElement("a");
+  hiddenElement.href = dataToCsvURI(csvArray);
+
+  hiddenElement.download =
+    format(new Date(), "yyyy-MM-dd") + "_XCCup_T-Shirts" + ".csv";
+  hiddenElement.click();
 };
 
 const onFetch = async () => {
@@ -116,6 +165,15 @@ function calcStats() {
       });
     }
   });
-  stats.value.sort((a, b) => a.amount < b.amount);
+  stats.value.sort((a, b) => b.amount - a.amount);
 }
+
+const dataToCsvURI = (data: string[][]) => {
+  const SEPERATOR = ";";
+  return encodeURI(
+    `data:text/csv;charset=utf-8,${data
+      .map((row) => row.join(SEPERATOR))
+      .join(`\n`)}`
+  );
+};
 </script>
