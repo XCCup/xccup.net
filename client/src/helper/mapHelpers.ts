@@ -1,7 +1,7 @@
 import type { Flight } from "@/types/Flight";
-import type { BuddyTrack } from "@/types/BuddyTrack";
-import type { Airspace } from "../types/Airspace";
-import type L from "leaflet";
+import type { BuddyTrack } from "@/types/Airbuddy";
+import type { Airspace, AirspaceViolation } from "../types/Airspace";
+import L from "leaflet";
 import ApiService from "@/services/ApiService";
 import type { DeepReadonly } from "vue";
 
