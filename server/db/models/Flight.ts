@@ -1,11 +1,13 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import { STATE, TYPE, UPLOAD_ENDPOINT } from "../../constants/flight-constants";
 import { FlightStats } from "../../types/FlightStats";
 import { Models } from "../../types/Models";
+import { UserAttributes } from "./User";
 
 export interface FlightAttributes {
   id: string;
   externalId?: number;
-  uploadEndpoint: UploadEndpoint;
+  uploadEndpoint: UPLOAD_ENDPOINT;
   landing?: string;
   report?: string;
   airspaceComment?: string;
@@ -15,8 +17,8 @@ export interface FlightAttributes {
   flightDistanceFlat?: number;
   flightDistanceFAI?: number;
   flightMetarData?: string[];
-  flightType?: FlightType;
-  flightStatus?: FlightStatus;
+  flightType?: TYPE;
+  flightStatus?: STATE;
   flightTurnpoints?: FlightTurnpoint[];
   airtime?: number;
   takeoffTime?: number;
@@ -33,6 +35,15 @@ export interface FlightAttributes {
   ageOfUser: number;
   homeStateOfUser?: string;
   flightStats?: FlightStats;
+  airbuddies?: Airbuddy[];
+}
+
+interface Airbuddy {
+  externalId: number;
+  correlationPercentage: number;
+  userFirstName: string;
+  userLastName: string;
+  userId: string;
 }
 
 interface FlightTurnpoint {
@@ -40,16 +51,6 @@ interface FlightTurnpoint {
   lat: number;
   long: number;
 }
-// TODO: Get this from constants?
-type FlightStatus =
-  | "Nicht in Wertung"
-  | "In Wertung"
-  | "Flugbuch"
-  | "In Bearbeitung";
-
-type FlightType = "FREE" | "FLAT" | "FAI";
-
-type UploadEndpoint = "WEB" | "LEONARDO" | "ADMIN";
 
 interface Glider {
   id: string;
@@ -83,9 +84,13 @@ export interface FlightOutputAttributes extends FlightAttributes {
 
 export interface FlightInstance
   extends Model<FlightAttributes, FlightCreationAttributes>,
-    FlightAttributes {
+    FlightOutputAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface FlightInstanceUserInclude extends FlightInstance {
+  user: UserAttributes;
 }
 
 export function initFlight(sequelize: Sequelize): Models["Flight"] {
@@ -195,6 +200,9 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     },
     flightStats: {
       type: DataTypes.JSON,
+    },
+    airbuddies: {
+      type: DataTypes.ARRAY(DataTypes.JSONB),
     },
   }) as Models["Flight"];
 
