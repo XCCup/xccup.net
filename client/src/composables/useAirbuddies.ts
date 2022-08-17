@@ -33,7 +33,7 @@ export default () => {
 
   // Actions
   const fetchAll = async (
-    airbuddies: DeepReadonly<Flight[]>
+    airbuddies: DeepReadonly<AirbuddyFlight[]>
   ): Promise<void> => {
     if (airbuddiesFlightData.value.length > 0) return;
 
