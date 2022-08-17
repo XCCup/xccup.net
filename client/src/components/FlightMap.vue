@@ -20,11 +20,18 @@ import { getTime, parseISO } from "date-fns";
 import {
   convertMapBoundsToQueryString,
   drawAirspaces,
-  drawViolations,
+  drawAirspaceViolationMarkers,
   processTracklogs,
 } from "@/helper/mapHelpers";
 
-import { watch, onMounted, onBeforeUnmount, ref, computed } from "vue";
+import {
+  watch,
+  onMounted,
+  onBeforeUnmount,
+  ref,
+  computed,
+  type DeepReadonly,
+} from "vue";
 
 import type { SimpleFix } from "@/helper/mapHelpers";
 
@@ -88,7 +95,6 @@ const photoMarkers: L.Marker[] = [];
 // All tracklogs that shall be drawn on map
 const tracklogs = computed(() => {
   if (!flight.value) return [];
-  // @ts-expect-error TODO: Check how to type the readonly refs
   return processTracklogs(flight.value, activeAirbuddyFlights.value);
 });
 
@@ -137,17 +143,16 @@ onMounted(() => {
     shadowUrl: shadowUrl,
   });
   // Draw tracklogs and Airspaces
-  // @ts-expect-error TODO: Check how to type the readonly refs
-  drawTurnpoints(flight.value?.flightTurnpoints);
+  if (flight.value?.flightTurnpoints)
+    drawTurnpoints(flight.value?.flightTurnpoints);
 
   if (tracklogs.value) {
     drawTracks(tracklogs.value);
   }
   drawAirspaces(map, convertMapBoundsToQueryString(trackLines.value[0]));
 
-  if (isAdmin.value) {
-    // @ts-expect-error TODO: readonly refs…
-    drawViolations(map, flight.value?.airspaceViolations);
+  if (isAdmin.value && flight.value?.airspaceViolations) {
+    drawAirspaceViolationMarkers(map, flight.value?.airspaceViolations);
   }
 
   // Watch the tracklogs for updated content like airbuddy flights
@@ -242,7 +247,7 @@ const drawTracks = (tracklogs: SimpleFix[][]) => {
   positionMarkers.value = tmpPositionMarkers;
 };
 // Turnpoints of the scored flight
-const drawTurnpoints = (turnpointData: FlightTurnpoint[]) => {
+const drawTurnpoints = (turnpointData: DeepReadonly<FlightTurnpoint[]>) => {
   if (!turnpointData) return;
   const turnpoints: L.LatLngTuple[] = [];
   turnpointData.forEach((tp) => {

@@ -9,7 +9,7 @@ interface Options {
 
 // Process tracklog data for barogramm
 export function processBaroData(
-  flight: Flight,
+  flight: Flight | null,
   buddyTracks: BuddyTrack[],
   options: Options
 ): ChartDataset<"line">[] {

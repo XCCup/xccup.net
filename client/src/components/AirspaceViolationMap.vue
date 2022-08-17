@@ -17,7 +17,10 @@ import { onMounted, ref } from "vue";
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
 import iconUrl from "leaflet/dist/images/marker-icon.png?url";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
-import { drawAirspaces, drawViolations } from "../helper/mapHelpers";
+import {
+  drawAirspaces,
+  drawAirspaceViolationMarkers,
+} from "../helper/mapHelpers";
 import type { AirspaceViolation } from "@/types/Airspace";
 
 const props = defineProps({
@@ -61,7 +64,8 @@ onMounted(() => {
     iconUrl: iconUrl,
     shadowUrl: shadowUrl,
   });
-  drawViolations(map, props.airspaceViolation.airspaceViolations);
+  // TODO: This hurts my eyes. Lets find a better naming scheme for this.
+  drawAirspaceViolationMarkers(map, props.airspaceViolation.airspaceViolations);
   drawTrack(props.airspaceViolation.flightTrackLine);
   drawAirspacesAroundCenter(centerViolation);
 });

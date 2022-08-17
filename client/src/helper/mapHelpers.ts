@@ -3,6 +3,7 @@ import type { BuddyTrack } from "@/types/BuddyTrack";
 import type { Airspace, AirspaceViolation } from "../types/Airspace";
 import L from "leaflet";
 import ApiService from "@/services/ApiService";
+import type { DeepReadonly } from "vue";
 
 export function convertMapBoundsToQueryString(data: L.Polyline): string {
   if (!data) return "";
@@ -43,7 +44,9 @@ export interface SimpleFix {
   timestamp: number;
 }
 
-function createTrackLog(flight: Flight | BuddyTrack): SimpleFix[] | undefined {
+function createTrackLog(
+  flight: DeepReadonly<Flight | BuddyTrack>
+): SimpleFix[] | undefined {
   return flight.fixes?.map(({ latitude, longitude, timestamp }) => {
     return {
       position: [latitude, longitude],
@@ -54,7 +57,10 @@ function createTrackLog(flight: Flight | BuddyTrack): SimpleFix[] | undefined {
 
 type Tracklog = SimpleFix[];
 
-export function processTracklogs(flight: Flight, buddyTracks: BuddyTrack[]) {
+export function processTracklogs(
+  flight: DeepReadonly<Flight>,
+  buddyTracks: BuddyTrack[]
+) {
   const tracklogs: Tracklog[] = [];
   tracklogs.push(createTrackLog(flight) ?? []);
 
@@ -89,7 +95,10 @@ export async function drawAirspaces(map: L.Map, bounds: string) {
   }
 }
 
-export function drawViolations(map: L.Map, violations: AirspaceViolation[]) {
+export function drawAirspaceViolationMarkers(
+  map: L.Map,
+  violations: DeepReadonly<AirspaceViolation[]>
+) {
   if (!violations || !violations.length) return;
   violations.forEach((violation: any) => {
     L.marker([violation.lat, violation.long], {
@@ -103,6 +112,10 @@ export function drawViolations(map: L.Map, violations: AirspaceViolation[]) {
 function createViolationPopupContent(violation: AirspaceViolation) {
   return `GPS Höhe:  ${violation.gpsAltitude} m
   <br>ISA Höhe:  ${violation.pressureAltitude ?? "N/A"} m
-  <br>Untergrenze:  ${Math.round(violation.lowerLimit)} m
-  <br>Obergrenze:  ${Math.round(violation.upperLimit)} m`;
+  <br>Untergrenze:  ${violation.lowerLimitOriginal} / ${Math.round(
+    violation.lowerLimitMeter
+  )} m
+  <br>Obergrenze:  ${violation.upperLimitOriginal} / ${Math.round(
+    violation.upperLimitMeter
+  )} m`;
 }

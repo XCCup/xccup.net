@@ -56,6 +56,7 @@ declare module '@vue/runtime-core' {
     FlyingSiteMap: typeof import('./src/components/FlyingSiteMap.vue')['default']
     GenericError: typeof import('./src/components/GenericError.vue')['default']
     GliderSelect: typeof import('./src/components/GliderSelect.vue')['default']
+    InfoAirspaces: typeof import('./src/components/InfoAirspaces.vue')['default']
     InfoBox: typeof import('./src/components/InfoBox.vue')['default']
     InlineAlert: typeof import('./src/components/InlineAlert.vue')['default']
     ModalAddEditNews: typeof import('./src/components/admin/ModalAddEditNews.vue')['default']

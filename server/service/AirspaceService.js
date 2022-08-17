@@ -153,9 +153,15 @@ function findVerticalIntersection(
             "/" +
             upperLimit
         );
-
         airspaceViolations.push(
-          createViolationEntry(fix, intersection.name, lowerLimit, upperLimit)
+          createViolationEntry(
+            fix,
+            intersection.name,
+            lowerLimit,
+            upperLimit,
+            intersection.floor,
+            intersection.ceiling
+          )
         );
       }
     }
@@ -180,6 +186,8 @@ function findViolationOfFL100(fixesWithElevation, airspaceViolations) {
         fix,
         "FL100",
         fl100InMeters,
+        99999,
+        "FL100",
         99999
       );
 
@@ -188,14 +196,23 @@ function findViolationOfFL100(fixesWithElevation, airspaceViolations) {
   });
 }
 
-function createViolationEntry(fix, airspaceName, lowerLimit, upperLimit) {
+function createViolationEntry(
+  fix,
+  airspaceName,
+  lowerLimitMeter,
+  upperLimitMeter,
+  lowerLimitOriginal,
+  upperLimitOriginal
+) {
   return {
     lat: fix.latitude,
     long: fix.longitude,
     gpsAltitude: fix.gpsAltitude,
     pressureAltitude: fix.pressureAltitude,
-    lowerLimit,
-    upperLimit,
+    lowerLimitMeter,
+    upperLimitMeter,
+    lowerLimitOriginal,
+    upperLimitOriginal,
     airspaceName,
     timestamp: fix.timestamp,
   };

@@ -240,6 +240,13 @@ const handleLogout = async () => {
                 >
               </li>
               <li>
+                <router-link
+                  :to="{ name: 'InfoAirspaces' }"
+                  class="dropdown-item"
+                  >Luftr&auml;ume</router-link
+                >
+              </li>
+              <li>
                 <router-link :to="{ name: 'Rules' }" class="dropdown-item"
                   >Ausschreibung 2022</router-link
                 >
