@@ -12,14 +12,15 @@ import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { TRACK_COLORS } from "@/common/Constants";
-import ApiService from "@/services/ApiService";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
+import useAuth from "@/composables/useAuth";
 import { getTime, parseISO } from "date-fns";
 
 import {
   convertMapBoundsToQueryString,
-  createAirspacePopupContent,
+  drawAirspaces,
+  drawAirspaceViolationMarkers,
   processTracklogs,
 } from "@/helper/mapHelpers";
 
@@ -40,7 +41,6 @@ import landingIconUrl from "@/assets/images/landing-marker.png?url";
 import photoIconRetinaUrl from "@/assets/images/photo-marker-2x.png?url";
 import photoIconUrl from "@/assets/images/photo-marker.png?url";
 import { tileOptionsSatellite, tileOptions } from "../config/mapbox";
-import type { Airspace } from "@/types/Airspace";
 import type { FlightTurnpoint } from "@/types/Flight";
 
 import useMapPosition, { type MapPosition } from "@/composables/useMapPosition";
@@ -68,6 +68,8 @@ let photoMarker = L.icon({
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights } = useAirbuddies();
+const { isAdmin } = useAuth();
+
 const trackColors = TRACK_COLORS;
 
 // Find a way to make this reactive
@@ -141,7 +143,12 @@ onMounted(() => {
   if (tracklogs.value) {
     drawTracks(tracklogs.value);
   }
-  drawAirspaces(convertMapBoundsToQueryString(trackLines.value[0]));
+  drawAirspaces(map, convertMapBoundsToQueryString(trackLines.value[0]));
+
+  if (isAdmin.value) {
+    // @ts-expect-error TODO: readonly refs…
+    drawAirspaceViolationMarkers(map, flight.value?.airspaceViolations);
+  }
 
   // Watch the tracklogs for updated content like airbuddy flights
   watch(tracklogs, () => drawTracks(tracklogs.value));
@@ -151,27 +158,6 @@ onBeforeUnmount(() => {
   // Remove the center map on click listener
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
 });
-
-// Airspaces
-const drawAirspaces = async (bounds: string) => {
-  try {
-    const res = await ApiService.getAirspaces(bounds);
-    const airspaceData = res.data;
-    const options: L.GeoJSONOptions = {
-      // @ts-expect-error
-      opacity: 0.1,
-      fillOpacity: 0.08,
-      color: "red",
-    };
-    airspaceData.forEach((airspace: Airspace) => {
-      L.geoJSON(airspace.polygon, options)
-        .bindPopup(createAirspacePopupContent(airspace))
-        .addTo(map);
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 // Update map
 const drawTracks = (tracklogs: SimpleFix[][]) => {

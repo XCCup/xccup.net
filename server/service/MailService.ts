@@ -57,10 +57,11 @@ interface AirspaceViolation {
   gpsAltitude: number;
   pressureAltitude: number;
   airspaceName: string;
-  lowerLimit: number;
-  upperLimit: number;
+  lowerLimitMeter: number;
+  upperLimitMeter: number;
+  lowerLimitOriginal: number;
+  upperLimitOriginal: number;
   timestamp: number;
-  line: any; //TODO: Correct it when really needed
 }
 
 const service = {
@@ -182,25 +183,40 @@ const service = {
   sendAirspaceViolationAdminMail: async (
     userId: string,
     flight: FlightOutputAttributes,
-    airspaceViolation: AirspaceViolation
+    airspaceViolations: AirspaceViolation[]
   ) => {
     logger.info(`MS: Send airspace violation mail with igc to admins`);
     if (!userId || !flight.igcPath) return;
     const user = await db.User.findByPk(userId);
 
     if (!user) return;
+
+    const listOfAirspaceViolations: string[] = [];
+    // TODO: Beautify the email output
+    airspaceViolations.map((airspaceViolation) => {
+      listOfAirspaceViolations.push(
+        JSON.stringify({
+          lat: airspaceViolation.lat,
+          long: airspaceViolation.long,
+          gpsAltitude: airspaceViolation.gpsAltitude,
+          pressureAltitude: airspaceViolation.pressureAltitude,
+          airspaceName: airspaceViolation.airspaceName,
+          lowerLimitMeter: airspaceViolation.lowerLimitMeter,
+          upperLimitMeter: airspaceViolation.upperLimitMeter,
+          lowerLimitOriginal: airspaceViolation.lowerLimitOriginal,
+          upperLimitOriginal: airspaceViolation.upperLimitOriginal,
+          timestamp: airspaceViolation.timestamp,
+        })
+      );
+    });
+
     const content = {
       title: NEW_AIRSPACE_VIOLATION_TITLE,
-      text: NEW_AIRSPACE_VIOLATION_TEXT(flight, user, {
-        lat: airspaceViolation.lat,
-        long: airspaceViolation.long,
-        gpsAltitude: airspaceViolation.gpsAltitude,
-        pressureAltitude: airspaceViolation.pressureAltitude,
-        airspaceName: airspaceViolation.airspaceName,
-        lowerLimit: airspaceViolation.lowerLimit,
-        upperLimit: airspaceViolation.upperLimit,
-        timestamp: airspaceViolation.timestamp
-      }),
+      text: NEW_AIRSPACE_VIOLATION_TEXT(
+        flight,
+        user,
+        listOfAirspaceViolations.join("\n")
+      ),
       attachments: [{ path: flight.igcPath }],
     };
 
