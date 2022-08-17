@@ -60,8 +60,7 @@ function createInstance(viewComponentName: RouteRecordName) {
   const filterActive = ref(false);
 
   // Mutations
-  const clearOneFilter = async (key: string) => {
-    // @ts-ignore
+  const clearOneFilter = async (key: keyof QueryCache) => {
     delete queryCache.value[key];
     await fetchData();
   };
