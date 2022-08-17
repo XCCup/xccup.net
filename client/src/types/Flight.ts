@@ -1,5 +1,6 @@
 import type { Glider } from "./Glider";
 import type { Comment } from "./Comment";
+import type { AirspaceViolation } from "./Airspace";
 
 type Values<T> = T[keyof T];
 
@@ -24,6 +25,7 @@ export interface Flight {
   igcPath: string;
   glider: Glider;
   airspaceViolation: boolean;
+  airspaceViolations?: AirspaceViolation[];
   uncheckedGRecord: boolean;
   violationAccepted: boolean;
   hikeAndFly: number;
