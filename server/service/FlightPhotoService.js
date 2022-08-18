@@ -57,6 +57,7 @@ const service = {
   },
 
   createArchiveForYear: async (year) => {
+    logger.info("FPS: Create photo archiv for year: " + year);
     const photosOfYear = await FlightPhoto.findAll({
       where: {
         andOp: Sequelize.where(

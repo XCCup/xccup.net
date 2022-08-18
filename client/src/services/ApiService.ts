@@ -164,7 +164,7 @@ export default {
     return apiClient.get("users/tshirts/" + year);
   },
   createPhotoArchivOfYear(year = new Date().getFullYear()) {
-    return apiClient.get("flights/photos/create-archiv/" + year);
+    return apiClient.get("flights/photos/create-archive/" + year);
   },
   getUserEmails(includeAll: boolean) {
     return apiClient.get("users/emails/" + includeAll);
