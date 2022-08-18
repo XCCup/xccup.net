@@ -552,6 +552,17 @@ const flightService = {
 };
 
 async function storeFixesToDB(flight, fixes, fixesStats) {
+  // If a flight was already uploaded before (e.g. this is a rerun) delete the old fixes
+  const oldFixesOfFlight = await FlightFixes.findOne({
+    where: {
+      flightId: flight.id,
+    },
+  });
+  if (oldFixesOfFlight) {
+    logger.debug("FS: Delete old fixes of flight: " + flight.externalId);
+    oldFixesOfFlight.destroy();
+  }
+
   return FlightFixes.create({
     flightId: flight.id,
     geom: createGeometry(fixes),
