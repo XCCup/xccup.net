@@ -1,4 +1,4 @@
-name: XCCup E2E Deployment
+name: XCCup Deployment
 on: workflow_dispatch
 jobs:
   build:
