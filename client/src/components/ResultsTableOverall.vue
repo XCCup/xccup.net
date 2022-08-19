@@ -41,6 +41,18 @@
             <td>
               <table>
                 <tr>
+                  <td class="hide-on-md px-0">
+                    <router-link
+                      :to="{
+                        name: 'Flight',
+                        params: { flightId: flight.externalId },
+                      }"
+                      target="_blank"
+                      @click.stop
+                    >
+                      <i class="bi bi-arrow-up-right-square me-3"></i
+                    ></router-link>
+                  </td>
                   <td>
                     <BaseDate
                       :timestamp="flight.takeoffTime"
