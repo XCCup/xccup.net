@@ -16,7 +16,7 @@ export const TRACK_COLORS = [
   "SpringGreen",
   "Chocolate",
 ];
-export const MAX_PHOTOS = 8;
+export const MAX_PHOTOS = 9;
 export const DAYS_FLIGHT_CHANGEABLE = 14;
 export const MAX_NEWS_CHARACTERS = 250;
 export const GENERIC_ERROR = "Hoppla, da ist leider was schief gelaufen…";

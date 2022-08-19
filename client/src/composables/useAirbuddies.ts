@@ -1,10 +1,10 @@
 import { readonly, ref, computed } from "vue";
-import type { BuddyTrack } from "@/types/BuddyTrack";
+import type { Airbuddy, BuddyTrack, AirbuddyFlight } from "@/types/Airbuddy";
 import ApiService from "@/services/ApiService";
 import type { Flight } from "@/types/Flight";
 import type { DeepReadonly } from "vue";
 
-const airbuddiesFlightData = ref<Flight[]>([]);
+const airbuddiesFlightData = ref<AirbuddyFlight[]>([]);
 const checkedAirbuddyFlightIds = ref<string[]>([]);
 
 export default () => {
@@ -33,7 +33,7 @@ export default () => {
 
   // Actions
   const fetchAll = async (
-    airbuddies: DeepReadonly<Flight[]>
+    airbuddies: DeepReadonly<AirbuddyFlight[]>
   ): Promise<void> => {
     if (airbuddiesFlightData.value.length > 0) return;
 
@@ -44,6 +44,12 @@ export default () => {
         )
       )
     ).map(({ data }) => data);
+    airbuddies.forEach((b) => {
+      const found = airbuddiesFlightData.value.find(
+        (f) => f.externalId == b.externalId
+      );
+      if (found) found.correlationPercentage = b.correlationPercentage;
+    });
   };
 
   const resetAirbuddyData = (): void => {

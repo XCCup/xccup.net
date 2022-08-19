@@ -3,7 +3,8 @@ import { TRACK_COLORS } from "@/common/Constants";
 import useFlight from "@/composables/useFlight";
 import useAirbuddy from "@/composables/useAirbuddies";
 
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, type DeepReadonly } from "vue";
+import type { AirbuddyFlight } from "@/types/Airbuddy.js";
 
 const { flight } = useFlight();
 const { fetchAll, airbuddiesFlightData, updateCheckedAirbuddies } =
@@ -19,12 +20,24 @@ watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
 const onShowAirbuddies = async () => {
   try {
     if (!flight.value?.airbuddies) return;
+    // TODO: Dont fetch all flights when we only want to show the entries! The airbuddies are located in the host flight.airbuddies prop
     await fetchAll(flight.value.airbuddies);
     loaded.value = true;
   } catch (error) {
     console.log(error);
   }
 };
+
+function createAirbuddyPercentageString(
+  airbuddyFlight: DeepReadonly<AirbuddyFlight>
+) {
+  if (
+    !airbuddyFlight?.correlationPercentage ||
+    typeof airbuddyFlight.correlationPercentage != "number"
+  )
+    return "";
+  return Math.round(airbuddyFlight.correlationPercentage) + "%";
+}
 </script>
 
 <template>
@@ -70,6 +83,7 @@ const onShowAirbuddies = async () => {
                 :style="{ backgroundColor: trackColors[index + 1] }"
               >
                 {{ airbuddy.user.fullName }}
+                {{ createAirbuddyPercentageString(airbuddy) }}
                 <router-link
                   :to="{
                     name: 'Flight',

@@ -208,9 +208,11 @@ const flightService = {
     if (flightDbObject) {
       const flight = flightDbObject.toJSON();
       //TODO: Merge directly when model is retrieved?
-
       flight.fixes = combineFixesProperties(flight.fixes);
-      flight.airbuddies = await findAirbuddies(flight);
+
+      // Even though we have now a better airbuddy algo this is still here to support older flights with airbuddies
+      if (!flight.airbuddies)
+        flight.airbuddies = await findAirbuddiesLegacy(flight);
 
       return flight;
     }
@@ -274,6 +276,17 @@ const flightService = {
     const result = await flight.save();
     sendAirspaceViolationAcceptedMail(flight);
     return result;
+  },
+
+  /**
+   * Updates one or serveral properties of a flight model.
+   *
+   * @param {*} id The ID of the flight to update
+   * @param {*} props The properties of the flight model which should be updated
+   * @return 1 if an entry was updated; 0 when no entry was updated
+   */
+  changeFlightProps: async (id, props = {}) => {
+    return (await Flight.update(props, { where: { id } }))[0];
   },
 
   finalizeFlightSubmission: async ({
@@ -398,6 +411,7 @@ const flightService = {
     const violationResult = await hasAirspaceViolation(fixes);
     if (violationResult) {
       flight.airspaceViolation = true;
+      flight.violationAccepted = false;
       flight.flightStatus = STATE.IN_REVIEW;
       flight.airspaceViolations = violationResult.airspaceViolations;
       flight.save();
@@ -457,7 +471,7 @@ const flightService = {
    */
   storeFixesAndAddStats: async (flight, fixes) => {
     const fixesStats = attachFlightStats(flight, fixes);
-    await storeFixesToDB(flight, fixes, fixesStats);
+    return storeFixesToDB(flight, fixes, fixesStats);
   },
 
   /**
@@ -539,7 +553,18 @@ const flightService = {
 };
 
 async function storeFixesToDB(flight, fixes, fixesStats) {
-  await FlightFixes.create({
+  // If a flight was already uploaded before (e.g. this is a rerun) delete the old fixes
+  const oldFixesOfFlight = await FlightFixes.findOne({
+    where: {
+      flightId: flight.id,
+    },
+  });
+  if (oldFixesOfFlight) {
+    logger.debug("FS: Delete old fixes of flight: " + flight.externalId);
+    oldFixesOfFlight.destroy();
+  }
+
+  return FlightFixes.create({
     flightId: flight.id,
     geom: createGeometry(fixes),
     timeAndHeights: extractTimeAndHeights(fixes),
@@ -740,7 +765,7 @@ function stripFlightFixesForTodayRanking(flightDbObjects) {
 }
 
 /**
- * This function will find flights with are related to a provided flight.
+ * This function will find flights with are related to a provided flight. This function was replaced by {@link AirbuddyFinder}.
  * A flight is related if,
  * * it was lunched from the same takeoff,
  * * within a timeframe of +- 2h to the provided flight
@@ -752,10 +777,7 @@ function stripFlightFixesForTodayRanking(flightDbObjects) {
  *
  * @param {*} flight The flight to which airBuddies should be found.
  */
-async function findAirbuddies(flight) {
-  //TODO Is it possible to join airBuddiesfor to the provided flight directly with the first query to the db?
-  //Problem how can i back reference in an include statement (takeoffTime, siteId)
-
+async function findAirbuddiesLegacy(flight) {
   const timeOffsetValue = 2;
   const timeOffsetUnit = "h";
   const pointThreshold = 30;
@@ -766,7 +788,7 @@ async function findAirbuddies(flight) {
     timeOffsetUnit
   );
   const till = moment(flight.takeoffTime).add(timeOffsetValue, timeOffsetUnit);
-  return Flight.findAll({
+  const flights = await Flight.findAll({
     where: {
       id: {
         [sequelize.Op.not]: flight.id,
@@ -782,6 +804,15 @@ async function findAirbuddies(flight) {
     include: createUserInclude(),
     limit: maxNumberOfBuddies,
     order: [["flightPoints", "DESC"]],
+  });
+  return flights.map((f) => {
+    return {
+      externalId: f.externalId,
+      percentage: "n/a",
+      userFirstName: f.user.firstName,
+      userLastName: f.user.lastName,
+      userId: f.user.id,
+    };
   });
 }
 
@@ -820,12 +851,17 @@ async function createWhereStatement(
   if (onlyUnchecked) {
     whereStatement = {
       [sequelize.Op.or]: [
-        { airspaceViolation: true },
-        { uncheckedGRecord: true },
+        {
+          [sequelize.Op.or]: [
+            { airspaceViolation: true },
+            { uncheckedGRecord: true },
+          ],
+          violationAccepted: false,
+          // Don't include unfinalized flights (e.g. glider is missing)
+          glider: { [sequelize.Op.not]: null },
+        },
+        { flightStatus: STATE.IN_REVIEW },
       ],
-      violationAccepted: false,
-      // Don't include unfinalized flights (e.g. glider is missing)
-      glider: { [sequelize.Op.not]: null },
     };
   } else if (!includeUnchecked) {
     whereStatement = {

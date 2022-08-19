@@ -300,10 +300,15 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
   result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex + 4]));
 
   if (isTurnpointsIteration) {
-    logger.debug("IA: IGC Result from turnpoint iteration: " + result);
+    logger.debug(
+      "IA: IGC Result from turnpoint iteration: ",
+      JSON.stringify(result)
+    );
     callback(result);
   } else {
-    logger.debug("IA: IGC Result from strip iteration: " + result);
+    logger.debug(
+      "IA: IGC Result from strip iteration: " + JSON.stringify(result)
+    );
     runTurnpointIteration(result);
   }
 }

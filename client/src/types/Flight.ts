@@ -2,6 +2,8 @@ import type { Glider } from "./Glider";
 import type { Comment } from "./Comment";
 import type { AirspaceViolation } from "./Airspace";
 
+type Values<T> = T[keyof T];
+
 export interface Flight {
   id: string;
   externalId: number;
@@ -14,7 +16,7 @@ export interface Flight {
   flightDistanceFlat?: number;
   flightDistanceFAI?: number;
   flightType: string;
-  flightStatus: string;
+  flightStatus: Values<typeof FLIGHT_STATUS>;
   flightTurnpoints: FlightTurnpoint[];
   flightMetarData?: string[];
   airtime: number;
@@ -47,6 +49,14 @@ export interface Flight {
   photos?: any[]; // TODO: Type this
   airbuddies?: Flight[];
 }
+
+export const FLIGHT_STATUS = {
+  IN_RANKING: "In Wertung",
+  NOT_IN_RANKING: "Nicht in Wertung",
+  FLIGHTBOOK: "Flugbuch",
+  IN_PROCESS: "In Bearbeitung",
+  IN_REVIEW: "In Prüfung",
+} as const;
 
 export interface Club {
   id: string;

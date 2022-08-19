@@ -37,8 +37,18 @@ const { default: config } = require("../config/env-config");
 const path = require("path");
 
 const IMAGE_STORE = config.get("dataPath") + "/images/flights";
-const MAX_PHOTOS = 8;
 
+/**
+ * Allow double the number of photos per flight as intended.
+ * Otherwise it's not possible to upload a new photo if there were already
+ * nine photos present but x were deleted. This is because the actual delete process
+ * only takes place after the user clicked the "save" button.
+ * The downside is that it's not possible to upload more than nine photos if you know
+ * how to do it.
+ * Frontend will only allow nine. Or refacor this and change the complete process…
+ */
+
+const MAX_PHOTOS = 9 * 2;
 const imageUpload = multer({
   dest: IMAGE_STORE + "/" + new Date().getFullYear(),
 });
@@ -132,7 +142,7 @@ router.get(
 );
 
 // @desc Toggles (assigns or removes) the "like" to a flight photo from the requester
-// @route GET /photos/like/:id
+// @route GET /flights/photos/like/:id
 // @access All logged-in users
 
 router.get(
@@ -159,7 +169,7 @@ router.get(
 );
 
 // @desc Creates a zip archive for all photos of a specific year
-// @route GET /photos/create-archive/:year
+// @route GET /flights/photos/create-archive/:year
 // @access Only moderator
 
 router.get(
@@ -172,7 +182,6 @@ router.get(
 
     try {
       if (await requesterIsNotModerator(req, res)) return;
-
       const archivePath = await service.createArchiveForYear(year);
 
       if (!archivePath) return res.sendStatus(NOT_FOUND);
@@ -185,7 +194,7 @@ router.get(
 );
 
 // @desc Downloads the given photos archive
-// @route GET /photos/download/:path
+// @route GET /flights/photos/download/:path
 
 router.get(
   "/download/:path",
@@ -240,7 +249,7 @@ router.put(
 );
 
 // @desc Deletes a flight image by id
-// @route DELETE /photos/:id
+// @route DELETE /flights/photos/:id
 // @access Only owner
 
 router.delete(

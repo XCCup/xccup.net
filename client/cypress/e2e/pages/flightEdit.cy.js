@@ -135,4 +135,29 @@ describe("check edit flight page", () => {
 
     cy.url().should("include", `/404/`);
   });
+
+  it("Check that admin is able to claim airspace violation", () => {
+    const flightId = 7;
+    // There is only 1 flight from Sevelen Schlepp in all of the test flights
+    const expectedTakeoff = "Sevelen Schlepp";
+
+    cy.loginAdminUser();
+
+    // Check that flight is visible
+    cy.visit(`${new Date().getFullYear()}/fluege/`);
+    cy.get("table").find("tr").should("include.text", expectedTakeoff);
+
+    // Claim airspace violation
+    cy.visit(`/flug/${flightId}`);
+    cy.get("#flight-details");
+    cy.get("#admin-options-dropdown").click();
+    cy.get("[data-cy=admin-flight-options]")
+      .find("li")
+      .contains("LVR reklamieren")
+      .click();
+
+    // Flight shouldn't be visible anymore
+    cy.visit(`${new Date().getFullYear()}/fluege/`);
+    cy.get("table").find("tr").should("not.include.text", expectedTakeoff);
+  });
 });

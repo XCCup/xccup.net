@@ -1,5 +1,5 @@
 import type { Flight } from "@/types/Flight";
-import type { BuddyTrack } from "@/types/BuddyTrack";
+import type { BuddyTrack } from "@/types/Airbuddy";
 import type { Airspace, AirspaceViolation } from "../types/Airspace";
 import L from "leaflet";
 import ApiService from "@/services/ApiService";
@@ -101,16 +101,17 @@ export function drawAirspaceViolationMarkers(
 ) {
   if (!violations || !violations.length) return;
   violations.forEach((violation: any) => {
-    const violationMarker = L.marker([violation.lat, violation.long], {
+    L.marker([violation.lat, violation.long], {
       riseOnHover: true,
-    }).bindPopup(createViolationPopupContent(violation));
-    map.addLayer(violationMarker);
+    })
+      .bindPopup(createViolationPopupContent(violation))
+      .addTo(map);
   });
 }
 
 function createViolationPopupContent(violation: AirspaceViolation) {
   return `GPS Höhe:  ${violation.gpsAltitude} m
-  <br>ISA Höhe:  ${violation.pressureAltitude} m
+  <br>ISA Höhe:  ${violation.pressureAltitude ?? "N/A"} m
   <br>Untergrenze:  ${violation.lowerLimitOriginal} / ${Math.round(
     violation.lowerLimitMeter
   )} m

@@ -155,7 +155,7 @@ function adjustYearOfEveryFlight(flights) {
   flights[lastEntryIndex].takeoffTime = takeoffDate.toISOString();
   const landingDate = new Date(flights[lastEntryIndex].landingTime);
   landingDate.setFullYear(today.getFullYear() - 1);
-  flights[lastEntryIndex].landingDate = landingDate.toISOString();
+  flights[lastEntryIndex].landingTime = landingDate.toISOString();
 }
 
 // function sliceIntoChunks(arr, chunkSize) {

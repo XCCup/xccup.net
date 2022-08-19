@@ -20,6 +20,7 @@ describe("check flight upload page", () => {
     const flightReport = "This is a flight report.";
     const photoCaption = `Super tolles "Bild" 🚀 <a href=""'>foo</a>`;
     const photoCaptionExpected = `Super tolles "Bild" 🚀 foo`;
+    const expectedMaxPhotosMessage = "Du kannst maximal neun Photos hochladen";
 
     const airspaceComment = "Alles offen, kein Problem 🤪";
 
@@ -84,6 +85,37 @@ describe("check flight upload page", () => {
     cy.get("#add-photo", {
       timeout: 10000,
     }).should("exist");
+
+    // Upload 7 more
+    for (let i = 0; i < 7; i++) {
+      cy.fixture(photo2)
+        .then(Cypress.Blob.base64StringToBlob)
+        .then((fileContent) => {
+          cy.get('input[type="file"]#photo-input').attachFile({
+            fileContent,
+            fileName: photo2,
+            mimeType: "image/jpg",
+          });
+        });
+    }
+
+    cy.get("#add-photo", {
+      timeout: 10000,
+    }).should("not.exist");
+
+    cy.get("[data-cy=error-message]").should("not.exist");
+
+    //  Try one more time (should fail)
+    cy.fixture(photo2)
+      .then(Cypress.Blob.base64StringToBlob)
+      .then((fileContent) => {
+        cy.get('input[type="file"]#photo-input').attachFile({
+          fileContent,
+          fileName: photo2,
+          mimeType: "image/jpg",
+        });
+      });
+    cy.get("[data-cy=error-message]").contains(expectedMaxPhotosMessage);
 
     // Add data to differnt inputs
 

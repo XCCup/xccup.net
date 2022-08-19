@@ -14,7 +14,11 @@ const {
   UNAUTHORIZED,
   NO_CONTENT,
 } = require("../constants/http-status-constants");
-const { STATE, IGC_STORE } = require("../constants/flight-constants");
+const {
+  STATE,
+  IGC_STORE,
+  UPLOAD_ENDPOINT,
+} = require("../constants/flight-constants");
 const {
   authToken,
   requesterIsNotOwner,
@@ -55,6 +59,7 @@ const {
   sendAirspaceViolationAdminMail,
   sendGCheckInvalidAdminMail,
 } = require("../service/MailService");
+const { findAirbuddies } = require("../igc/AirbuddyFinder");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -243,7 +248,7 @@ router.post(
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
-        uploadEndpoint: "WEB",
+        uploadEndpoint: UPLOAD_ENDPOINT.WEB,
         validationResult,
       });
 
@@ -302,7 +307,7 @@ router.post(
         userId,
         igcPath: req.file.path,
         externalId: req.externalId,
-        uploadEndpoint: "ADMIN",
+        uploadEndpoint: UPLOAD_ENDPOINT.ADMIN,
         validationResult,
       });
 
@@ -359,6 +364,33 @@ router.get(
       res.json({
         airspaceViolation,
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Allows an admin to change any property of any flight
+// @route PUT /flights/admin/change-prop/
+// @access Only admins
+
+router.put(
+  "/admin/change-prop/:id",
+  checkParamIsUuid("id"),
+  authToken,
+  async (req, res, next) => {
+    try {
+      if (await requesterIsNotAdmin(req, res)) return;
+
+      const flightStatus = await service.changeFlightProps(
+        req.params.id,
+        req.body
+      );
+
+      if (!flightStatus) return res.sendStatus(NOT_FOUND);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+      res.sendStatus(OK);
     } catch (error) {
       next(error);
     }
@@ -437,7 +469,7 @@ router.post(
         userId,
         igcPath,
         externalId,
-        uploadEndpoint: "LEONARDO",
+        uploadEndpoint: UPLOAD_ENDPOINT.LEONARDO,
         validationResult: false,
       });
 
@@ -592,8 +624,15 @@ async function runChecksStartCalculationsStoreFixes(
   if (!skipAllChecks && !skipMidflightCheck)
     detectMidFlightIgcStart(takeoff, fixes);
   await service.checkIfFlightWasNotUploadedBefore(flightDbObject);
-  await service.storeFixesAndAddStats(flightDbObject, fixes);
+  const fixesDbObject = await service.storeFixesAndAddStats(
+    flightDbObject,
+    fixes
+  );
 
+  findAirbuddies(flightDbObject, fixesDbObject);
+
+  // TODO: Evaluate if skipAllChecks is really requiered for getMetarData
+  // Steph: intention was that an admin can upload a flight even if there are problems with the METAR Api
   if (!skipAllChecks) {
     try {
       await getMetarData(flightDbObject, fixes);

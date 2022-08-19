@@ -6,7 +6,7 @@
   ></div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
@@ -21,6 +21,7 @@ import {
   drawAirspaces,
   drawAirspaceViolationMarkers,
 } from "../helper/mapHelpers";
+import type { AirspaceViolation } from "@/types/Airspace";
 
 const props = defineProps({
   airspaceViolation: {
@@ -28,8 +29,8 @@ const props = defineProps({
     required: true,
   },
 });
-const map = ref(null);
 
+let map: L.Map;
 // Find a way to make this reactive
 const userPrefersDark = ref(
   window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -40,21 +41,22 @@ onMounted(() => {
   L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
   // Centerpoint for map
-  const centerViolation =
+  const centerViolation: AirspaceViolation =
     props.airspaceViolation.airspaceViolations[
       Math.floor(props.airspaceViolation.airspaceViolations.length / 2)
     ];
 
-  map.value = L.map("mapContainer", {
+  map = L.map("mapContainer", {
+    // @ts-expect-error
     gestureHandling: true,
   }).setView([centerViolation.lat, centerViolation.long], 10);
-
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptions
-  ).addTo(map.value);
+  ).addTo(map);
 
   // Fix for default marker image paths
+  // @ts-expect-error
   delete L.Icon.Default.prototype._getIconUrl;
   L.Icon.Default.imagePath = "/";
   L.Icon.Default.mergeOptions({
@@ -63,46 +65,50 @@ onMounted(() => {
     shadowUrl: shadowUrl,
   });
   // TODO: This hurts my eyes. Lets find a better naming scheme for this.
-  drawAirspaceViolationMarkers(
-    map.value,
-    props.airspaceViolation.airspaceViolations
-  );
+  drawAirspaceViolationMarkers(map, props.airspaceViolation.airspaceViolations);
   drawTrack(props.airspaceViolation.flightTrackLine);
   drawAirspacesAroundCenter(centerViolation);
 });
 
-const drawAirspacesAroundCenter = async (centerViolation) => {
+const drawAirspacesAroundCenter = async (
+  centerViolation: AirspaceViolation
+) => {
   const bounds =
-    Number.parseFloat(centerViolation.long) -
+    Number.parseFloat(centerViolation.long.toString()) -
     0.01 +
     "," +
-    (Number.parseFloat(centerViolation.lat) + 0.01).toFixed(3) +
+    (Number.parseFloat(centerViolation.lat.toString()) + 0.01).toFixed(3) +
     "|" +
-    (Number.parseFloat(centerViolation.long) + 0.01).toFixed(3) +
+    (Number.parseFloat(centerViolation.long.toString()) + 0.01).toFixed(3) +
     "," +
-    (Number.parseFloat(centerViolation.lat) + 0.01).toFixed(3) +
+    (Number.parseFloat(centerViolation.lat.toString()) + 0.01).toFixed(3) +
     "|" +
-    (Number.parseFloat(centerViolation.long) + 0.01).toFixed(3) +
+    (Number.parseFloat(centerViolation.long.toString()) + 0.01).toFixed(3) +
     "," +
-    (Number.parseFloat(centerViolation.lat) - 0.01).toFixed(3) +
+    (Number.parseFloat(centerViolation.lat.toString()) - 0.01).toFixed(3) +
     "|" +
-    (Number.parseFloat(centerViolation.long) - 0.01).toFixed(3) +
+    (Number.parseFloat(centerViolation.long.toString()) - 0.01).toFixed(3) +
     "," +
-    (Number.parseFloat(centerViolation.lat) - 0.01).toFixed(3);
-  drawAirspaces(map.value, bounds);
+    (Number.parseFloat(centerViolation.lat.toString()) - 0.01).toFixed(3);
+  drawAirspaces(map, bounds);
 };
 
-const drawTrack = (track) => {
+interface TrackPoint {
+  latitude: number;
+  longitude: number;
+}
+
+const drawTrack = (track: TrackPoint[]) => {
   if (!track.length) return;
-  let linePoints = [];
+  let linePoints: L.LatLngExpression[] = [];
   track.forEach((point) => {
     linePoints.push([point.latitude, point.longitude]);
   });
   const line = L.polyline(linePoints, {
     color: "green",
   });
-  map.value.addLayer(line);
-  map.value.fitBounds(line.getBounds());
+  map.addLayer(line);
+  map.fitBounds(line.getBounds());
 };
 </script>
 

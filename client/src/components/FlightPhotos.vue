@@ -1,5 +1,10 @@
 <template>
   <div class="container mt-3">
+    <div v-if="isAdmin" class="text-warning">
+      <!-- TODO: Find a nice way to prevent mixing up user ids when uploading for a user or simply do not upload for a user… -->
+      Admins should not upload photos for a user!
+    </div>
+
     <input
       id="photo-input"
       type="file"
@@ -118,7 +123,11 @@
           </button>
         </figure>
       </div>
-      <BaseError class="mb-3" :error-message="errorMessage" />
+      <BaseError
+        class="mb-3"
+        :error-message="errorMessage"
+        data-cy="error-message"
+      />
     </div>
   </div>
 </template>
@@ -137,9 +146,7 @@ import { createImageSrcSet } from "@/helper/imageHelper";
 
 import "glightbox/dist/css/glightbox.css";
 
-// TODO: Backend allows to upload more and sometimes less in rare cases
-
-const { getUserId } = useAuth();
+const { getUserId, isAdmin } = useAuth();
 const baseURL = getbaseURL();
 
 const props = defineProps({
@@ -160,6 +167,8 @@ const _photos = ref([]);
 const photosRemoved = ref([]);
 const photosAdded = ref([]);
 const errorMessage = ref(null);
+
+const MAX_PHOTO_MESSAGE = "Du kannst maximal neun Photos hochladen";
 
 // Copy all photos from props to the local array with only mandatory properties
 props.photos.forEach((e) =>
@@ -211,10 +220,9 @@ const onAddPhoto = () => photoInput.value.click();
 // Put selected photos in an upload cue and upload them
 const photoUploadQueue = ref([]);
 const onPhotoSelected = (event) => {
-  // Check files count
-  // TODO: Detect how many photos are already attached subtract them from allowed constant
-  if (event.target.files.length > 8) {
-    errorMessage.value = "Du kannst maximal acht Photos hochladen";
+  // Check files count and substract alredy uploaded photos
+  if (event.target.files.length > MAX_PHOTOS - _photos.value.length) {
+    errorMessage.value = MAX_PHOTO_MESSAGE;
     return;
   }
   errorMessage.value = null;
@@ -248,7 +256,6 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     const formData = new FormData();
     formData.append("image", item.photo, item.photo.name);
     formData.append("flightId", props.flightId);
-    // TODO: If an admin uploads a picture the admins userId will be attached. Fix this, or remove the admin ability to upload a picture?
     formData.append("userId", getUserId);
 
     const res = await ApiService.uploadPhotos(formData);
@@ -265,8 +272,7 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     // Inform the parent about edits
     photosChanged();
   } catch (error) {
-    if (error?.response?.status == 429)
-      errorMessage.value = "Du kannst maximal acht Photos hochladen";
+    if (error?.response?.status == 429) errorMessage.value = MAX_PHOTO_MESSAGE;
 
     console.log(error);
     // Trigger the retry button
@@ -281,4 +287,3 @@ const onRetry = (options) => {
   uploadPhoto(retryItem, { retryIndex: options.index });
 };
 </script>
-<style scoped></style>
