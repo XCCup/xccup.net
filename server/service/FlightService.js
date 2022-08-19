@@ -411,6 +411,7 @@ const flightService = {
     const violationResult = await hasAirspaceViolation(fixes);
     if (violationResult) {
       flight.airspaceViolation = true;
+      flight.violationAccepted = false;
       flight.flightStatus = STATE.IN_REVIEW;
       flight.airspaceViolations = violationResult.airspaceViolations;
       flight.save();
@@ -839,12 +840,17 @@ async function createWhereStatement(
   if (onlyUnchecked) {
     whereStatement = {
       [sequelize.Op.or]: [
-        { airspaceViolation: true },
-        { uncheckedGRecord: true },
+        {
+          [sequelize.Op.or]: [
+            { airspaceViolation: true },
+            { uncheckedGRecord: true },
+          ],
+          violationAccepted: false,
+          // Don't include unfinalized flights (e.g. glider is missing)
+          glider: { [sequelize.Op.not]: null },
+        },
+        { flightStatus: STATE.IN_REVIEW },
       ],
-      violationAccepted: false,
-      // Don't include unfinalized flights (e.g. glider is missing)
-      glider: { [sequelize.Op.not]: null },
     };
   } else if (!includeUnchecked) {
     whereStatement = {
