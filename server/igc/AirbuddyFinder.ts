@@ -195,9 +195,8 @@ async function findFlightsAndTracksWhichWereUpAtSameTime(
         },
       ],
       [Op.not]: {
-        // Exclude any flight w the exact same takeoff and landing time
-        takeoffTime: flight.takeoffTime,
-        landingTime: flight.landingTime,
+        // Exclude oneself from results
+        id: flight.id,
       },
     },
     attributes: ["id", "externalId", "airbuddies"],
