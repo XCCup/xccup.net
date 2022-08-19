@@ -65,7 +65,7 @@ export default {
     return apiClient.get("flights/" + flightId);
   },
   deleteFlight(externalId: string, message?: string) {
-    return apiClient.put("flights/delete/" + externalId, message);
+    return apiClient.put("flights/delete/" + externalId, { message });
   },
   rerunFlightCalculation(flightId: string) {
     return apiClient.get("flights/admin/rerun/" + flightId);
