@@ -29,6 +29,8 @@ import {
   NEW_AIRSPACE_VIOLATION_TEXT,
   NEW_G_CHECK_INVALID_TITLE,
   NEW_G_CHECK_INVALID_TEXT,
+  AIRSPACE_VIOLATION_DECLINED_TEXT,
+  AIRSPACE_VIOLATION_DECLINED_TITLE,
 } from "../constants/email-message-constants";
 
 import db from "../db";
@@ -289,6 +291,30 @@ const service = {
     return sendMail(user.email, content);
   },
 
+  sendAirspaceViolationDeclinedMail: async (
+    flight: FlightOutputAttributes,
+    message: string
+  ) => {
+    const user = await db.User.findByPk(flight.userId);
+    if (!user) {
+      logger.error(
+        `MS: Send violation declined mail failed because user with ID ${flight.userId} wasn't found`
+      );
+      return;
+    }
+
+    logger.info(
+      `MS: Send airspace violation declined mail for flight ${flight.externalId}`
+    );
+
+    const content = {
+      title: AIRSPACE_VIOLATION_DECLINED_TITLE,
+      text: AIRSPACE_VIOLATION_DECLINED_TEXT(user.firstName, message),
+    };
+
+    return sendMail(user.email, content);
+  },
+
   sendAddedToTeamMail: async (teamName: string, memberIds: string[]) => {
     const users = await db.User.findAll({
       where: {
@@ -315,9 +341,9 @@ const service = {
       Promise<FlightInstance | null>,
       Promise<FlightCommentInstance | null>?
     ] = [
-        db.User.findByPk(comment.userId),
-        db.Flight.findByPk(comment.flightId),
-      ];
+      db.User.findByPk(comment.userId),
+      db.Flight.findByPk(comment.flightId),
+    ];
     if (comment.relatedTo) {
       queries.push(db.FlightComment.findByPk(comment.relatedTo));
     }

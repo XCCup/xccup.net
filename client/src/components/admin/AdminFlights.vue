@@ -76,6 +76,7 @@
     <div v-else><h5>Keine ausstehenden Flugprüfungen</h5></div>
   </section>
   <BaseModal
+    v-model="deleteReason"
     modal-title="Flug löschen?"
     modal-body="Dies kann nicht rückgängig gemacht werden"
     confirm-button-text="Löschen"
@@ -84,6 +85,8 @@
     :is-dangerous-action="true"
     :show-spinner="showSpinner"
     :error-message="errorMessage"
+    modal-textarea-label="Begründung"
+    :disable-confirm="deleteReason.length < 10"
   />
   <BaseModal
     modal-title="Flug akzeptieren?"
@@ -117,6 +120,8 @@ const flights = ref([]);
 const showSpinner = ref(false);
 const errorMessage = ref("");
 const selectedFlight = ref(null);
+
+const deleteReason = ref("");
 
 // Count and expose open flight tickets
 const count = computed(() => flights.value.length);
@@ -164,7 +169,10 @@ const onDeleteFlight = (flight) => {
 const deleteFlight = async () => {
   showSpinner.value = true;
   try {
-    await ApiService.deleteFlight(selectedFlight.value.externalId);
+    await ApiService.deleteFlight(
+      selectedFlight.value.externalId,
+      deleteReason.value
+    );
     await fetchFlightsWithViolations();
     deleteFlightModal.value.hide();
   } catch (error) {

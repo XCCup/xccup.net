@@ -57,6 +57,7 @@ const userService = require("../service/UserService");
 const {
   sendAirspaceViolationMail,
   sendAirspaceViolationAdminMail,
+  sendAirspaceViolationDeclinedMail,
   sendGCheckInvalidAdminMail,
 } = require("../service/MailService");
 const { findAirbuddies } = require("../igc/AirbuddyFinder");
@@ -192,12 +193,13 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
 });
 
 // @desc Deletes a flight by id
-// @route DELETE /flights/:id
+// @route PUT /flights/delete/:id
 // @access Only owner
 
-router.delete(
-  "/:id",
+router.put(
+  "/delete/:id",
   checkParamIsInt("id"),
+  checkOptionalStringObjectNotEmpty("message"),
   authToken,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -209,6 +211,7 @@ router.delete(
     try {
       if (await requesterIsNotOwner(req, res, flight.userId)) return;
 
+      sendAirspaceViolationDeclinedMail(flight, req.body.message);
       await checkIfFlightIsModifiable(flight, req.user.id);
 
       const numberOfDestroyedRows = await service.delete(flight);

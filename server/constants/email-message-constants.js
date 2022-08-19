@@ -106,6 +106,21 @@ Dein XCCup Team
     
 `;
 
+module.exports.AIRSPACE_VIOLATION_DECLINED_TITLE =
+  "Luftraumverletzung Akzeptiert";
+
+module.exports.AIRSPACE_VIOLATION_DECLINED_TEXT = (firstName, message) =>
+  `Hallo ${firstName}!
+
+Deine Luftraumverletzung wurde geprüft und der Flug abgelehnt. 
+
+Begründung:
+${message}
+
+Dein XCCup Team
+    
+`;
+
 module.exports.NEW_AIRSPACE_VIOLATION_TITLE = "Neuer Flug mit LRV";
 
 module.exports.NEW_AIRSPACE_VIOLATION_TEXT = (
