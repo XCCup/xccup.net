@@ -1,4 +1,4 @@
-name: XCCup E2E CI
+name: XCCup CI
 
 on:
   push:
