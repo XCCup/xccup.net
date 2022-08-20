@@ -66,8 +66,8 @@ const onSort = () => {
 
 function emitSortChange() {
   emit("head-sort-changed", {
-    order: sortOrder,
-    key: sortOrder ? props.columnObjectKey : null,
+    sortOrder,
+    sortCol: sortOrder ? props.columnObjectKey : null,
   });
 }
 </script>

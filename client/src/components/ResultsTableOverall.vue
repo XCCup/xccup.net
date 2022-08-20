@@ -29,6 +29,7 @@
             @head-sort-changed="handleSortChange"
           />
           <th class="hide-on-xs">Status</th>
+          <th class="hide-on-md"></th>
         </thead>
         <tbody>
           <tr
@@ -117,6 +118,23 @@
             <td class="hide-on-xs">
               <FlightState :flight-state="flight.flightStatus" />
             </td>
+            <td class="hide-on-md px-0">
+              <router-link
+                :to="{
+                  name: 'Flight',
+                  params: { flightId: flight.externalId },
+                }"
+                target="_blank"
+                alt="In neuem Tab öffnen"
+                @click.stop
+              >
+                <i
+                  class="bi bi-box-arrow-up-right me-3"
+                  data-bs-toggle="tooltip"
+                  data-bs-title="In neuem Fenster öffnen"
+                ></i
+              ></router-link>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -127,19 +145,17 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-
 import useData from "../composables/useData";
 import FlightInfoIcons from "./FlightInfoIcons.vue";
+import type { SortOptions } from "../composables/useData";
 
 const { data: flights, sortDataBy } = useData();
 const router = useRouter();
 
-const currentSortColumnKey = ref(null);
-
-const routeToFlight = (flightId) => {
+const routeToFlight = (flightId: number) => {
   router.push({
     name: "Flight",
     params: {
@@ -148,11 +164,13 @@ const routeToFlight = (flightId) => {
   });
 };
 
-const handleSortChange = (value) => {
-  currentSortColumnKey.value = value.key;
+const currentSortColumnKey = ref<string | null>(null);
+
+const handleSortChange = (value: SortOptions) => {
+  currentSortColumnKey.value = value.sortCol;
   sortDataBy({
     sortCol: currentSortColumnKey.value,
-    sortOrder: value.order,
+    sortOrder: value.sortOrder,
   });
 };
 </script>
