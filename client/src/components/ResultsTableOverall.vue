@@ -29,6 +29,7 @@
             @head-sort-changed="handleSortChange"
           />
           <th class="hide-on-xs">Status</th>
+          <th class="hide-on-xs"></th>
         </thead>
         <tbody>
           <tr
@@ -41,18 +42,6 @@
             <td>
               <table>
                 <tr>
-                  <td class="hide-on-md px-0">
-                    <router-link
-                      :to="{
-                        name: 'Flight',
-                        params: { flightId: flight.externalId },
-                      }"
-                      target="_blank"
-                      @click.stop
-                    >
-                      <i class="bi bi-arrow-up-right-square me-3"></i
-                    ></router-link>
-                  </td>
                   <td>
                     <BaseDate
                       :timestamp="flight.takeoffTime"
@@ -129,6 +118,23 @@
             <td class="hide-on-xs">
               <FlightState :flight-state="flight.flightStatus" />
             </td>
+            <td class="hide-on-md px-0">
+              <router-link
+                :to="{
+                  name: 'Flight',
+                  params: { flightId: flight.externalId },
+                }"
+                target="_blank"
+                alt="In neuem Tab öffnen"
+                @click.stop
+              >
+                <i
+                  class="bi bi-box-arrow-up-right me-3"
+                  data-bs-toggle="tooltip"
+                  data-bs-title="In neuem Fenster öffnen"
+                ></i
+              ></router-link>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -139,19 +145,16 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-
 import useData from "../composables/useData";
 import FlightInfoIcons from "./FlightInfoIcons.vue";
 
 const { data: flights, sortDataBy } = useData();
 const router = useRouter();
 
-const currentSortColumnKey = ref(null);
-
-const routeToFlight = (flightId) => {
+const routeToFlight = (flightId: number) => {
   router.push({
     name: "Flight",
     params: {
@@ -160,7 +163,16 @@ const routeToFlight = (flightId) => {
   });
 };
 
-const handleSortChange = (value) => {
+interface SortOptions {
+  order: string;
+  key: string;
+}
+
+const currentSortColumnKey = ref<string | null>(null);
+
+const handleSortChange = (value: SortOptions) => {
+  console.log(value);
+
   currentSortColumnKey.value = value.key;
   sortDataBy({
     sortCol: currentSortColumnKey.value,
