@@ -9,7 +9,7 @@
             :current-sort-column-key="currentSortColumnKey"
             @head-sort-changed="handleSortChange"
           />
-          <th class="hide-on-md"></th>
+          <th class="hide-on-xs"></th>
           <th>Name</th>
           <th scope="col" class="hide-on-md">Verein</th>
           <th scope="col" class="hide-on-sm">Team</th>
@@ -29,7 +29,7 @@
             @head-sort-changed="handleSortChange"
           />
           <th class="hide-on-xs">Status</th>
-          <th class="hide-on-xs"></th>
+          <th class="hide-on-md"></th>
         </thead>
         <tbody>
           <tr
