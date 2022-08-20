@@ -10,7 +10,7 @@ interface QueryCache {
   sortOrder?: string;
 }
 
-interface SortOptions {
+export interface SortOptions {
   sortCol: string;
   sortOrder: string;
 }

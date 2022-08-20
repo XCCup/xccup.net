@@ -9,7 +9,7 @@
             :current-sort-column-key="currentSortColumnKey"
             @head-sort-changed="handleSortChange"
           />
-          <th class="hide-on-xs"></th>
+          <th class="hide-on-md"></th>
           <th>Name</th>
           <th scope="col" class="hide-on-md">Verein</th>
           <th scope="col" class="hide-on-sm">Team</th>
@@ -150,6 +150,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import useData from "../composables/useData";
 import FlightInfoIcons from "./FlightInfoIcons.vue";
+import type { SortOptions } from "../composables/useData";
 
 const { data: flights, sortDataBy } = useData();
 const router = useRouter();
@@ -163,20 +164,13 @@ const routeToFlight = (flightId: number) => {
   });
 };
 
-interface SortOptions {
-  order: string;
-  key: string;
-}
-
 const currentSortColumnKey = ref<string | null>(null);
 
 const handleSortChange = (value: SortOptions) => {
-  console.log(value);
-
-  currentSortColumnKey.value = value.key;
+  currentSortColumnKey.value = value.sortCol;
   sortDataBy({
     sortCol: currentSortColumnKey.value,
-    sortOrder: value.order,
+    sortOrder: value.sortOrder,
   });
 };
 </script>
