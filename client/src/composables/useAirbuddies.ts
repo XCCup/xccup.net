@@ -1,7 +1,6 @@
 import { readonly, ref, computed } from "vue";
-import type { Airbuddy, BuddyTrack, AirbuddyFlight } from "@/types/Airbuddy";
+import type { BuddyTrack, AirbuddyFlight } from "@/types/Airbuddy";
 import ApiService from "@/services/ApiService";
-import type { Flight } from "@/types/Flight";
 import type { DeepReadonly } from "vue";
 
 const airbuddiesFlightData = ref<AirbuddyFlight[]>([]);

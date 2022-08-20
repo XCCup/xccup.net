@@ -32,7 +32,8 @@ export interface BaroTooltipItem extends TooltipItem<"line"> {
  * context of the baro hover callback. GND dataset (index: 0) is skipped as
  * is it not needed. IGC track 1 becomes index: 0 (context.datasetIndex - 1)
  */
-const update = throttle((context: BaroTooltipItem) => {
+
+const throttled = throttle((context: BaroTooltipItem) => {
   state.value[context.datasetIndex - 1] = {
     position: context.dataIndex,
     time: context.parsed.x,
@@ -46,6 +47,20 @@ const update = throttle((context: BaroTooltipItem) => {
     },
   };
 }, 15);
+
+/** Reset throttle cache when datasetIndex changes.
+ * Otherwise airbuddy tracks may not get updated because of
+ * the throttleling of the main flight.
+ * TODO: Find a way to still prevent to frequent updates of the same
+ * index even if there was an update of another track inbetween
+ */
+let throttleDatasetIndexCache: number | null = null;
+const update = (context: BaroTooltipItem) => {
+  if (context.datasetIndex != throttleDatasetIndexCache) throttled.cancel();
+
+  throttled(context);
+  throttleDatasetIndexCache = context.datasetIndex;
+};
 
 export default () => {
   const getPositions = computed(() => state.value);
