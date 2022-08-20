@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <div v-if="isAdmin" class="text-warning">
+    <div v-if="isAdmin && flightId" class="text-warning mb-4">
       <!-- TODO: Find a nice way to prevent mixing up user ids when uploading for a user or simply do not upload for a user… -->
       Admins should not upload photos for a user!
     </div>
