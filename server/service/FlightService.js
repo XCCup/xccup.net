@@ -20,6 +20,7 @@ const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
 const {
   sendAirspaceViolationAcceptedMail,
+  sendAirspaceViolationDeclinedMail,
   sendNewAdminTask,
 } = require("./MailService");
 
@@ -340,7 +341,10 @@ const flightService = {
     return updatedColumns;
   },
 
-  delete: async (flight) => {
+  delete: async (flight, { message }) => {
+    if (flight.airspaceViolation && !flight.violationAccepted)
+      sendAirspaceViolationDeclinedMail(flight, message);
+
     deleteIgcFile(flight.igcPath);
     return Flight.destroy({ where: { id: flight.id } });
   },
