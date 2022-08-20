@@ -51,7 +51,7 @@ const throttled = throttle((context: BaroTooltipItem) => {
 /** Reset throttle cache when datasetIndex changes.
  * Otherwise airbuddy tracks may not get updated because of
  * the throttling of the main flight.
- * TODO: Find a way to still prevent to frequent updates of the same
+ * TODO: Find a way to still prevent too frequent updates of the same
  * index even if there was an update of another track inbetween
  */
 let throttleDatasetIndexCache: number | null = null;
