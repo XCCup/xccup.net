@@ -3,16 +3,14 @@
 import { ref, readonly } from "vue";
 import { useRouter, useRoute, type RouteRecordName } from "vue-router";
 
-interface QueryCache {
-  limit?: number;
-  offset?: number;
-  sortCol?: string;
-  sortOrder?: string;
-}
-
 export interface SortOptions {
   sortCol: string;
   sortOrder: string;
+}
+
+interface QueryCache extends Partial<SortOptions> {
+  limit?: number;
+  offset?: number;
 }
 
 const DEFAULT_LIMIT = 50;
