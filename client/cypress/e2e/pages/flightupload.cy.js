@@ -136,6 +136,10 @@ describe("check flight upload page", () => {
     cy.get("Button").contains("Streckenmeldung absenden").should("be.disabled");
     cy.get("#acceptTermsCheckbox").check();
 
+    // Wait till all photos are uploaded
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000);
+
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
     // Expect to be redirected to flight view after submitting
