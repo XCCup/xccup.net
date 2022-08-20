@@ -1142,10 +1142,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/lodash@^4.14.184":
-  version "4.14.184"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.184.tgz#23f96cd2a21a28e106dc24d825d4aa966de7a9fe"
-  integrity sha512-RoZphVtHbxPZizt4IcILciSWiC6dcn+eZ8oX9IWEYfDMcocdd42f7NPI6fQj+6zI8y4E0L7gu2pcZKLGTRaV9Q==
+"@types/lodash@^4.14.183":
+  version "4.14.183"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.183.tgz#1173e843e858cff5b997c234df2789a4a54c2374"
+  integrity sha512-UXavyuxzXKMqJPEpFPri6Ku5F9af6ZJXUneHhvQJxavrEjuHkFp2YnDWHcxJiG7hk8ZkWqjcyNeW1s/smZv5cw==
 
 "@types/mime@^1":
   version "1.3.2"
@@ -1169,10 +1169,10 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-16.11.12.tgz"
   integrity sha512-+2Iggwg7PxoO5Kyhvsq9VarmPbIelXP070HMImEpbtGCoyWNINQj4wzjbQCXzdHTRXnqufutJb5KAURZANNBAw==
 
-"@types/node@^18.7.8":
-  version "18.7.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.8.tgz#6bbf2be6fbf9c187a5040d4277d24a06a18957a1"
-  integrity sha512-/YP55EMK2341JkODUb8DM9O0x1SIz2aBvyF33Uf1c76St3VpsMXEIW0nxuKkq/5cxnbz0RD9cfwNZHEAZQD3ag==
+"@types/node@^18.7.6":
+  version "18.7.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.6.tgz#31743bc5772b6ac223845e18c3fc26f042713c83"
+  integrity sha512-EdxgKRXgYsNITy5mjjXjVE/CS8YENSdhiagGrLqjG0pvA2owgJ6i4l7wy/PFZGC0B1/H20lWKN7ONVDNYDZm7A==
 
 "@types/prettier@^2.1.5":
   version "2.4.3"
@@ -4613,10 +4613,10 @@ sequelize-pool@^7.1.0:
   resolved "https://registry.npmjs.org/sequelize-pool/-/sequelize-pool-7.1.0.tgz"
   integrity sha512-G9c0qlIWQSK29pR/5U2JF5dDQeqqHRragoyahj/Nx4KOOQ3CPPfzxnfqFPCSB7x5UgjOgnZ61nSxz+fjDpRlJg==
 
-sequelize@^6.21.4:
-  version "6.21.4"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.21.4.tgz#8f5cb248d7cfc86ca9bf7e1f8306ac4bd83167de"
-  integrity sha512-5A0+giRhGHerTDRMsZ54TYRB8oQPWxeVscbc4USG9wRtw2Eqik0Vk0p2EVDrhoq7tmNBh2nHpd9YMfvGdwPEJw==
+sequelize@^6.21.3:
+  version "6.21.3"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-6.21.3.tgz#6026b088b5327f8cc0501b0e7e5a8de1bf0346ce"
+  integrity sha512-cJPrTTVCofUxaaNKoIETiXCYh2xJ+OFq5jMHJQqftp34M4kNoLpTfUMPSwYtRUeTcSh1/5HodfJXIBi7troIFA==
   dependencies:
     "@types/debug" "^4.1.7"
     "@types/validator" "^13.7.1"
