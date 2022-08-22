@@ -292,7 +292,7 @@ router.post(
       const userGliders = await userService.getGlidersById(userId);
       if (!userGliders) return res.sendStatus(NOT_FOUND);
 
-      const validationResult = igcValidator.G_RECORD_PASSED;
+      const validationResult = await igcValidator.execute(req.file);
 
       /** A non igc file will now throw a 500 because the parsing will
        * fail and parsing is currently not in a try/catch block.
@@ -643,7 +643,7 @@ async function runChecksStartCalculationsStoreFixes(
 
   if (!skipAllChecks && !skipMeta) {
     try {
-      // await getMetarData(flightDbObject, fixes);
+      await getMetarData(flightDbObject, fixes);
     } catch (error) {
       logger.error("FS: METAR query error: " + error);
     }
