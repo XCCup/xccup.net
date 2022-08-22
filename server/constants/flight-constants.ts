@@ -35,3 +35,4 @@ export const REGIONS = [
 ];
 
 export const IGC_STORE = "/igc";
+export const IGC_MAX_SIZE = 3000000; // 3MB

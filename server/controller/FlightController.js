@@ -18,6 +18,7 @@ const {
   STATE,
   IGC_STORE,
   UPLOAD_ENDPOINT,
+  IGC_MAX_SIZE,
 } = require("../constants/flight-constants");
 const {
   authToken,
@@ -426,7 +427,9 @@ router.get(
 // @desc Allows to upload a flight via the leonardo format directly from a tracker
 // @route POST /flights/leonardo
 
-const leonardoUpload = multer();
+const leonardoUpload = multer({
+  limits: { fieldSize: IGC_MAX_SIZE },
+});
 router.post(
   "/leonardo",
   uploadLimiter,
@@ -711,7 +714,7 @@ function createMulterIgcUploadHandler({ parts = 1 } = {}) {
   return multer({
     storage: igcStorage,
     limits: {
-      fileSize: 2097152,
+      fileSize: IGC_MAX_SIZE,
       files: 1,
       parts,
     },
