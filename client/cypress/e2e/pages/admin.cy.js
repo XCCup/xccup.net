@@ -208,7 +208,7 @@ describe("check admin page", () => {
       "Dieser Flug resultiert gem. FAI in einem negativen G-Check (http://vali.fai-civl.org/validation.html)."
     );
 
-    cy.get("#flexSwitchCheckChecked").check();
+    cy.get("#flexSwitchGCheck").check();
 
     cy.get("button").contains("Flug absenden").click();
 

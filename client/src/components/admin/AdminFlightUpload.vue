@@ -35,13 +35,13 @@
     </div>
     <div class="form-check form-switch mb-3">
       <input
-        id="flexSwitchCheckGCheck"
+        id="flexSwitchGCheck"
         v-model="skipGCheck"
         class="form-check-input"
         type="checkbox"
         role="switch"
       />
-      <label class="form-check-label" for="flexSwitchCheckGCheck"
+      <label class="form-check-label" for="flexSwitchGCheck"
         >G-Check ignorieren</label
       >
     </div>
