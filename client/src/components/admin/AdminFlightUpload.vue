@@ -35,49 +35,49 @@
     </div>
     <div class="form-check form-switch mb-3">
       <input
-        id="flexSwitchCheckChecked"
+        id="flexSwitchCheckGCheck"
         v-model="skipGCheck"
         class="form-check-input"
         type="checkbox"
         role="switch"
       />
-      <label class="form-check-label" for="flexSwitchCheckChecked"
+      <label class="form-check-label" for="flexSwitchCheckGCheck"
         >G-Check ignorieren</label
       >
     </div>
     <div class="form-check form-switch mb-3">
       <input
-        id="flexSwitchCheckChecked"
+        id="flexSwitchCheckMidflight"
         v-model="skipMidflight"
         class="form-check-input"
         type="checkbox"
         role="switch"
       />
-      <label class="form-check-label" for="flexSwitchCheckChecked"
+      <label class="form-check-label" for="flexSwitchCheckMidflight"
         >Luftstart ignorieren</label
       >
     </div>
     <div class="form-check form-switch mb-3">
       <input
-        id="flexSwitchCheckChecked"
+        id="flexSwitchCheckManipulation"
         v-model="skipManipulated"
         class="form-check-input"
         type="checkbox"
         role="switch"
       />
-      <label class="form-check-label" for="flexSwitchCheckChecked"
+      <label class="form-check-label" for="flexSwitchCheckManipulation"
         >Manipulation ignorieren</label
       >
     </div>
     <div class="form-check form-switch mb-3">
       <input
-        id="flexSwitchCheckChecked"
+        id="flexSwitchMetar"
         v-model="skipMeta"
         class="form-check-input"
         type="checkbox"
         role="switch"
       />
-      <label class="form-check-label" for="flexSwitchCheckChecked"
+      <label class="form-check-label" for="flexSwitchMetar"
         >METAR nicht beziehen</label
       >
     </div>
