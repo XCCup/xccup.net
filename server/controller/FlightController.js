@@ -280,6 +280,9 @@ router.post(
   igcAdminFileUpload.single("igcFile"),
   checkIsUuidObject("userId"),
   checkIsBoolean("skipGCheck"),
+  checkIsBoolean("skipManipulated"),
+  checkIsBoolean("skipMidflight"),
+  checkIsBoolean("skipMeta"),
   authToken,
   async (req, res, next) => {
     try {
@@ -315,6 +318,9 @@ router.post(
       const { takeoffName, result, airspaceViolation } =
         await runChecksStartCalculationsStoreFixes(flightDbObject, userId, {
           skipModifiableCheck: true,
+          skipManipulatedCheck: req.body.skipManipulated === "true",
+          skipMidflightCheck: req.body.skipMidflight === "true",
+          skipMeta: req.body.skipMeta === "true",
         });
 
       const glider = userGliders.gliders.find(
@@ -613,6 +619,7 @@ async function runChecksStartCalculationsStoreFixes(
     skipModifiableCheck = false,
     skipManipulatedCheck = false,
     skipMidflightCheck = false,
+    skipMeta = false,
   } = {}
 ) {
   const fixes = IgcAnalyzer.extractFixes(flightDbObject);
@@ -634,9 +641,7 @@ async function runChecksStartCalculationsStoreFixes(
 
   findAirbuddies(flightDbObject, fixesDbObject);
 
-  // TODO: Evaluate if skipAllChecks is really requiered for getMetarData
-  // Steph: intention was that an admin can upload a flight even if there are problems with the METAR Api
-  if (!skipAllChecks) {
+  if (!skipAllChecks && !skipMeta) {
     try {
       await getMetarData(flightDbObject, fixes);
     } catch (error) {
