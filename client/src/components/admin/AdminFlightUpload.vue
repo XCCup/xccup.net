@@ -45,6 +45,42 @@
         >G-Check ignorieren</label
       >
     </div>
+    <div class="form-check form-switch mb-3">
+      <input
+        id="flexSwitchCheckChecked"
+        v-model="skipMidflight"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+      />
+      <label class="form-check-label" for="flexSwitchCheckChecked"
+        >Luftstart ignorieren</label
+      >
+    </div>
+    <div class="form-check form-switch mb-3">
+      <input
+        id="flexSwitchCheckChecked"
+        v-model="skipManipulated"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+      />
+      <label class="form-check-label" for="flexSwitchCheckChecked"
+        >Manipulation ignorieren</label
+      >
+    </div>
+    <div class="form-check form-switch mb-3">
+      <input
+        id="flexSwitchCheckChecked"
+        v-model="skipMeta"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+      />
+      <label class="form-check-label" for="flexSwitchCheckChecked"
+        >METAR nicht beziehen</label
+      >
+    </div>
 
     <button
       type="button"
@@ -75,6 +111,9 @@ const showSpinner = ref(false);
 const fileLoaded = ref(false);
 const properUserSet = ref(false);
 const skipGCheck = ref(false);
+const skipManipulated = ref(false);
+const skipMidflight = ref(false);
+const skipMeta = ref(false);
 
 let formData: FormData | null = null;
 let selectedUserObject: UserDataEssential;
@@ -108,9 +147,14 @@ async function onSubmit() {
     showSpinner.value = true;
     if (formData) {
       formData.append("userId", selectedUserObject.id);
-      // TODO: Should other checks be allowed to be skipped as well? e.g. mid-flight and manipulation detection?
       if (skipGCheck.value)
         formData.append("skipGCheck", skipGCheck.value.toString());
+      if (skipManipulated.value)
+        formData.append("skipManipulated", skipManipulated.value.toString());
+      if (skipMidflight.value)
+        formData.append("skipMidflight", skipMidflight.value.toString());
+      if (skipMeta.value)
+        formData.append("skipMeta", skipMidflight.value.toString());
 
       const data = (await ApiService.uploadIgcAdmin(formData)).data;
       errorMessage.value = "";
@@ -119,6 +163,9 @@ async function onSubmit() {
   } catch (error: any) {
     console.log(error.response);
     formData?.delete("skipGCheck");
+    formData?.delete("skipManipulated");
+    formData?.delete("skipMidflight");
+    formData?.delete("skipMeta");
     formData?.delete("userId");
     if (
       error?.response?.status === 400 &&
