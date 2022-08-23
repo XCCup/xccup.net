@@ -58,7 +58,7 @@
     "@types/jest": "^28.1.7",
     "@types/lodash": "^4.14.184",
     "@types/morgan": "^1.9.3",
-    "@types/node": "^18.7.8",
+    "@types/node": "^18.7.11",
     "cross-env": "^7.0.3",
     "csv-parser": "^3.0.0",
     "eslint": "^8.22.0",
