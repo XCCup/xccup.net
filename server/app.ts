@@ -8,7 +8,7 @@ import express, { Application, Request, Response } from "express";
 import routes from "./routes";
 
 import logger from "./config/logger";
-import expressLogger from "./config/express-logger";
+import requestLogger from "./config/request-logger";
 import { handleError } from "./helper/ErrorHandler";
 
 import compression from "compression";
@@ -24,7 +24,7 @@ import "./cron/CleanIgcStore";
 import "./cron/DailyWinnerEMail";
 
 // Logging
-app.use(expressLogger);
+app.use(requestLogger);
 
 // Compression
 app.use(
