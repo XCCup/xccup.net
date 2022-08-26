@@ -94,7 +94,7 @@ Dein XCCup Team
 `;
 
 module.exports.AIRSPACE_VIOLATION_ACCEPTED_TITLE =
-  "Luftraumverletzung Akzeptiert";
+  "Luftraumprüfung abgeschlossen (Akzeptiert)";
 
 module.exports.AIRSPACE_VIOLATION_ACCEPTED_TEXT = (firstName, flightLink) =>
   `Hallo ${firstName}!
@@ -107,7 +107,7 @@ Dein XCCup Team
 `;
 
 module.exports.AIRSPACE_VIOLATION_DECLINED_TITLE =
-  "Luftraumverletzung Abgelehnt";
+  "Luftraumprüfung abgeschlossen (Abgelehnt)";
 
 module.exports.AIRSPACE_VIOLATION_DECLINED_TEXT = (firstName, message) =>
   `Hallo ${firstName}!
