@@ -4,7 +4,7 @@ const service = require("../service/SponsorService");
 const logoService = require("../service/LogoService");
 const { NOT_FOUND, OK } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
-const { authToken, requesterIsNotModerator } = require("./Auth");
+const { requesterMustBeModerator } = require("./Auth");
 const {
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
@@ -35,10 +35,8 @@ const imageUpload = multer({ storage });
 // @route GET /sponsors/
 // @access Only moderator
 
-router.get("/", authToken, async (req, res, next) => {
+router.get("/", requesterMustBeModerator, async (req, res, next) => {
   try {
-    if (await requesterIsNotModerator(req, res)) return;
-
     const sponsors = await service.getAll();
     res.json(sponsors);
   } catch (error) {
@@ -93,13 +91,11 @@ router.get(
 
 router.post(
   "/logo",
-  authToken,
+  requesterMustBeModerator,
   imageUpload.single("image"),
   checkIsUuidObject("sponsorId"),
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const { originalname, mimetype, size, path } = req.file;
       const sponsorId = req.body.sponsorId;
 
@@ -131,7 +127,7 @@ router.post(
 
 router.post(
   "/",
-  authToken,
+  requesterMustBeModerator,
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("type"),
   checkOptionalStringObjectNotEmpty("website"),
@@ -150,8 +146,6 @@ router.post(
       const sponsorInSeasons = req.body.isCurrentSponsor
         ? [getCurrentYear()]
         : [];
-
-      if (await requesterIsNotModerator(req, res)) return;
 
       const result = await service.create({
         name,
@@ -174,7 +168,7 @@ router.post(
 
 router.put(
   "/:id",
-  authToken,
+  requesterMustBeModerator,
   checkParamIsUuid("id"),
   checkOptionalStringObjectNotEmpty("name"),
   checkOptionalStringObjectNotEmpty("type"),
@@ -187,8 +181,6 @@ router.put(
     const id = req.params.id;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const sponsor = await service.getById(id);
 
       sponsor.name = req.body.name ?? sponsor.name;
@@ -234,14 +226,12 @@ router.put(
 router.delete(
   "/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const sponsor = await service.getById(id);
 
       if (!sponsor) return res.sendStatus(NOT_FOUND);

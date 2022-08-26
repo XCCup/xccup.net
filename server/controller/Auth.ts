@@ -2,8 +2,8 @@ import { UserAttributes } from "../db/models/User";
 import db from "../db"; // TODO: Delegate token access to the service tier
 import { FORBIDDEN, UNAUTHORIZED } from "../constants/http-status-constants";
 import { Request, Response } from "express";
+import { ROLE } from "../constants/user-constants";
 const jwt = require("jsonwebtoken");
-const userService = require("../service/UserService");
 const logger = require("../config/logger");
 const config = require("../config/env-config").default;
 
@@ -16,7 +16,7 @@ interface TokenUserObject {
 }
 
 enum AuthTokenStatus {
-  NO_AUTH = "NO_AUTH",
+  NO_LOG_IN = "NO_AUTH",
   EXPIRED = "EXPIRED",
   INVALID = "INVALID",
 }
@@ -28,13 +28,12 @@ export function authToken(req: Request, res: Response, next: CallableFunction) {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
-    console.log("++++++++NO AUTH++++++++");
-    if (!token) return res.sendStatus(UNAUTHORIZED);
-    // if (!token) {
-    //   req.authStatus = AuthTokenStatus.NO_AUTH;
-    //   next();
-    //   return;
-    // }
+    if (!token) {
+      console.log("++++++++NO AUTH++++++++");
+      req.authStatus = AuthTokenStatus.NO_LOG_IN;
+      next();
+      return;
+    }
 
     jwt.verify(
       token,
@@ -43,14 +42,14 @@ export function authToken(req: Request, res: Response, next: CallableFunction) {
         if (error) {
           if (error.toString().includes("jwt expired")) {
             // See: https://stackoverflow.com/questions/45153773/correct-http-code-for-authentication-token-expiry-401-or-403
-            // console.log("++++++++EXPIRED++++++++");
+            console.log("++++++++EXPIRED++++++++");
             return res.status(UNAUTHORIZED).send("EXPIRED");
           }
           logger.warn(
             `Verify authentication for user ${user?.firstName} ${user?.lastName} failed: ` +
               error
           );
-          // console.log("++++++++UNAUTHORIZED++++++++");
+          console.log("++++++++UNAUTHORIZED++++++++");
           return res.sendStatus(UNAUTHORIZED);
         }
         req.user = user;
@@ -145,14 +144,14 @@ export async function refreshToken(token: string) {
  * @param {*} otherId The provided id which will be checked against.
  * @returns True if the ids are different. Otherwise false.
  */
-export async function requesterIsNotOwner(
-  req: Express.Request,
+export function requesterIsNotOwner(
+  req: Request,
   res: Response,
   otherId: string
 ) {
   if (
     otherId !== req.user?.id &&
-    !(await userService.isModerator(req.user?.id))
+    !(req.user?.role == ROLE.MODERATOR || req.user?.role == ROLE.ADMIN)
   ) {
     logger.debug("auth: requester is not owner");
     res.sendStatus(FORBIDDEN);
@@ -168,11 +167,16 @@ export async function requesterIsNotOwner(
  * @param {*} res The response to the request. Will send FORBIDDEN if ids don't match.
  * @returns True if requester has role administrator. Otherwise false.
  */
-export async function requesterIsNotAdmin(req: Express.Request, res: Response) {
-  if (!(await userService.isAdmin(req.user?.id))) {
+export function requesterMustBeAdmin(
+  req: Request,
+  res: Response,
+  next: CallableFunction
+) {
+  if (!(req.user?.role == ROLE.ADMIN)) {
     logger.debug("auth: requester is not admin");
     return res.sendStatus(FORBIDDEN);
   }
+  next();
 }
 
 /**
@@ -182,14 +186,32 @@ export async function requesterIsNotAdmin(req: Express.Request, res: Response) {
  * @param {*} res The response to the request. Will send FORBIDDEN if ids don't match.
  * @returns True if requester has role moderator or higher. Otherwise false.
  */
-export async function requesterIsNotModerator(
-  req: Express.Request,
-  res: Response
+export function requesterMustBeModerator(
+  req: Request,
+  res: Response,
+  next: CallableFunction
 ) {
-  if (!(await userService.isModerator(req.user?.id))) {
+  if (!userHasElevatedRole(req.user)) {
     logger.debug("auth: requester is not moderator");
     return res.sendStatus(FORBIDDEN);
   }
+  next();
+}
+
+export function requesterMustBeLoggedIn(
+  req: Request,
+  res: Response,
+  next: CallableFunction
+) {
+  if (req.authStatus == AuthTokenStatus.NO_LOG_IN) {
+    logger.debug("auth: requester is not logged in");
+    return res.sendStatus(FORBIDDEN);
+  }
+  next();
+}
+
+export function userHasElevatedRole(user: TokenUserObject | undefined) {
+  return user?.role == ROLE.MODERATOR || user?.role == ROLE.ADMIN;
 }
 
 function createUserTokenObject(

@@ -4,7 +4,7 @@ const service = require("../service/ClubService");
 const logoService = require("../service/LogoService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { query } = require("express-validator");
-const { authToken, requesterIsNotModerator } = require("./Auth");
+const { requesterMustBeModerator } = require("./Auth");
 const {
   checkStringObjectNotEmpty,
   checkParamIsUuid,
@@ -76,9 +76,8 @@ router.get("/names", async (req, res, next) => {
 // @route GET /clubs/
 // @access Only moderator
 
-router.get("/", authToken, async (req, res, next) => {
+router.get("/", requesterMustBeModerator, async (req, res, next) => {
   try {
-    if (await requesterIsNotModerator(req, res)) return;
     const clubs = await service.getAll();
     res.json(clubs);
   } catch (error) {
@@ -107,11 +106,9 @@ router.get("/:shortName/member", async (req, res, next) => {
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const clubId = req.params.id;
 
       const retrievedClub = await service.getById(clubId);
@@ -130,7 +127,7 @@ router.get(
 
 router.post(
   "/",
-  authToken,
+  requesterMustBeModerator,
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("shortName"),
   checkStringObjectNotEmpty("website"),
@@ -142,8 +139,6 @@ router.post(
       req.body;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const club = {
         name,
         shortName,
@@ -171,7 +166,7 @@ router.post(
 
 router.put(
   "/:id",
-  authToken,
+  requesterMustBeModerator,
   checkParamIsUuid("id"),
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("shortName"),
@@ -185,8 +180,6 @@ router.put(
       req.body;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const club = await service.getById(clubId);
       if (!club) return res.sendStatus(NOT_FOUND);
 
@@ -246,13 +239,11 @@ router.get(
 
 router.post(
   "/logo",
-  authToken,
+  requesterMustBeModerator,
   imageUpload.single("image"),
   checkIsUuidObject("clubId"),
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const { originalname, mimetype, size, path } = req.file;
 
       const clubId = req.body.clubId;
@@ -286,14 +277,12 @@ router.post(
 router.delete(
   "/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const clubId = req.params.id;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const club = await service.getById(clubId);
       if (!club) return res.sendStatus(NOT_FOUND);
 

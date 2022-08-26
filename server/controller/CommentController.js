@@ -4,7 +4,7 @@ const service = require("../service/CommentService");
 const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 
-const { authToken, requesterIsNotOwner } = require("./Auth");
+const { requesterMustBeLoggedIn, requesterIsNotOwner } = require("./Auth");
 const {
   checkIsUuidObject,
   checkOptionalUuidObject,
@@ -42,7 +42,7 @@ router.get(
 
 router.post(
   "/",
-  authToken,
+  requesterMustBeLoggedIn,
   checkStringObjectNotEmptyNoEscaping("message"),
   checkIsUuidObject("flightId"),
   checkOptionalUuidObject("relatedTo"),
@@ -75,7 +75,7 @@ router.post(
 
 router.put(
   "/:id",
-  authToken,
+  requesterMustBeLoggedIn,
   checkStringObjectNotEmptyNoEscaping("message"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -101,7 +101,7 @@ router.put(
 // @route DELETE /comments/:id
 // @access Only owner
 
-router.delete("/:id", authToken, async (req, res, next) => {
+router.delete("/:id", requesterMustBeLoggedIn, async (req, res, next) => {
   const commentId = req.params.id;
   try {
     const comment = await service.getById(commentId);

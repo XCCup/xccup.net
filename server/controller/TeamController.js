@@ -3,7 +3,7 @@ const router = express.Router();
 const service = require("../service/TeamService");
 const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
-const { authToken, requesterIsNotModerator } = require("./Auth");
+const { requesterMustBeLoggedIn, requesterMustBeModerator } = require("./Auth");
 const {
   checkStringObjectNotEmpty,
   checkIsArray,
@@ -89,7 +89,7 @@ router.get("/availableUsers", async (req, res, next) => {
 
 router.post(
   "/",
-  authToken,
+  requesterMustBeLoggedIn,
   checkStringObjectNotEmpty("name"),
   checkIsArray("memberIds", 5),
   async (req, res, next) => {
@@ -119,13 +119,11 @@ router.post(
 router.delete(
   "/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const numberOfDestroyedRows = await service.delete(req.team.id);
 
       deleteCache(CACHE_RELEVANT_KEYS);

@@ -21,10 +21,11 @@ const {
   IGC_MAX_SIZE,
 } = require("../constants/flight-constants");
 const {
-  authToken,
+  requesterMustBeLoggedIn,
   requesterIsNotOwner,
-  requesterIsNotModerator,
-  requesterIsNotAdmin,
+  requesterMustBeAdmin,
+  requesterMustBeModerator,
+  userHasElevatedRole,
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
@@ -61,6 +62,9 @@ const {
   sendGCheckInvalidAdminMail,
 } = require("../service/MailService");
 const { findAirbuddies } = require("../igc/AirbuddyFinder");
+const {
+  LEONARDO_ENDPOINT_MESSAGE,
+} = require("../constants/leonardo-endpoint-message");
 
 const uploadLimiter = createRateLimiter(60, 10);
 
@@ -113,9 +117,7 @@ router.get(
 // @route GET /flights/violations
 // @access Only moderator
 
-router.get("/violations", authToken, async (req, res, next) => {
-  if (await requesterIsNotModerator(req, res)) return;
-
+router.get("/violations", requesterMustBeModerator, async (req, res, next) => {
   try {
     const flights = await service.getAll({
       onlyUnchecked: true,
@@ -131,7 +133,7 @@ router.get("/violations", authToken, async (req, res, next) => {
 // @route GET /flights/violations
 // @access Only owner
 
-router.get("/self", authToken, async (req, res, next) => {
+router.get("/self", requesterMustBeLoggedIn, async (req, res, next) => {
   try {
     const flights = await service.getAll({
       includeUnchecked: true,
@@ -153,7 +155,9 @@ router.get("/:id", checkParamIsInt("id"), async (req, res, next) => {
 
   if (validationHasErrors(req, res)) return;
 
-  const flight = await service.getByExternalId(req.params.id);
+  const flight = await service.getByExternalId(req.params.id, {
+    excludeSecrets: !userHasElevatedRole(req.user),
+  });
   if (!flight) return res.sendStatus(NOT_FOUND);
 
   try {
@@ -199,7 +203,7 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
 router.delete(
   "/:id",
   checkParamIsInt("id"),
-  authToken,
+  requesterMustBeLoggedIn,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const flightId = req.params.id;
@@ -232,7 +236,7 @@ router.post(
   "/",
   uploadLimiter,
   igcFileUpload.single("igcFile"),
-  authToken,
+  requesterMustBeLoggedIn,
   async (req, res, next) => {
     const userId = req.user.id;
 
@@ -283,11 +287,9 @@ router.post(
   checkIsBoolean("skipManipulated"),
   checkIsBoolean("skipMidflight"),
   checkIsBoolean("skipMeta"),
-  authToken,
+  requesterMustBeAdmin,
   async (req, res, next) => {
     try {
-      if (await requesterIsNotAdmin(req, res)) return;
-
       const userId = req.body.userId;
       const userGliders = await userService.getGlidersById(userId);
       if (!userGliders) return res.sendStatus(NOT_FOUND);
@@ -353,11 +355,9 @@ router.post(
 router.get(
   "/admin/rerun/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const flight = await service.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
 
@@ -384,11 +384,9 @@ router.get(
 router.put(
   "/admin/change-prop/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeAdmin,
   async (req, res, next) => {
     try {
-      if (await requesterIsNotAdmin(req, res)) return;
-
       const flightStatus = await service.changeFlightProps(
         req.params.id,
         req.body
@@ -410,10 +408,9 @@ router.put(
 router.get(
   "/admin/fetch-metar/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
       const flight = await service.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
       // TODO: Should there be a service that attaches the fixes directly
@@ -525,7 +522,7 @@ router.post(
 router.put(
   "/:id",
   uploadLimiter,
-  authToken,
+  requesterMustBeLoggedIn,
   checkParamIsUuid("id"),
   checkStringObjectNoEscaping("report"),
   checkStringObjectNoEscaping("airspaceComment"),
@@ -574,7 +571,7 @@ router.put(
 
 router.put(
   "/acceptViolation/:id",
-  authToken,
+  requesterMustBeModerator,
   checkParamIsUuid("id"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -583,8 +580,6 @@ router.put(
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       await service.acceptViolation(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
@@ -684,23 +679,7 @@ function paramIdIsLeonardo(req, res) {
   )
     return;
 
-  return res.status(BAD_REQUEST).send(`Zur Nutzung des Leonardo Endpunktes:<br/>
-  <br/>
-  URL: https://xccup.net/api/flights/leonardo<br/>
-  HTTP-Method: POST<br/>
-  Content-Type: multipart/form-data<br/>
-  <br/>
-  Fields:<br/>
-  * user: Deine Login E-Mail<br/>
-  * pass: Dein Login Passwort<br/>
-  * IGCigcIGC: Der Inhalt der IGC-Datei (plain-text)<br/>
-  * igcfn: Der Name der IGC-Datei<br/>
-  * report: Einen Flugbericht den Du zusammen mit deinem Flug hochladen möchtest (optional)<br/>
-  <br/>
-  Bemerkung:<br/>
-  Zur Berechnung der Punkte wird das Fluggerät, welches im Nutzerprofil als Standart definiert wurde, herangezogen. 
-
-  `);
+  return res.status(BAD_REQUEST).send(LEONARDO_ENDPOINT_MESSAGE);
 }
 
 function createMulterIgcUploadHandler({ parts = 1 } = {}) {

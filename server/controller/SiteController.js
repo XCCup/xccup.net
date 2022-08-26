@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/FlyingSiteService");
 const mailService = require("../service/MailService");
-const { authToken, requesterIsNotModerator } = require("./Auth");
+const { requesterMustBeLoggedIn, requesterMustBeModerator } = require("./Auth");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const { createRateLimiter } = require("./api-protection");
 const { OK, NOT_FOUND } = require("../constants/http-status-constants");
@@ -58,10 +58,8 @@ router.get("/", async (req, res, next) => {
 // @desc Gets all proposed sites
 // @route GET /sites/proposed
 
-router.get("/proposed", authToken, async (req, res, next) => {
+router.get("/proposed", requesterMustBeModerator, async (req, res, next) => {
   try {
-    if (await requesterIsNotModerator(req, res)) return;
-
     const sites = await service.getAll({ state: "proposal" });
     res.json(sites);
   } catch (error) {
@@ -76,7 +74,7 @@ router.get("/proposed", authToken, async (req, res, next) => {
 router.post(
   "/",
   postLimiter,
-  authToken,
+  requesterMustBeLoggedIn,
   checkStringObjectNotEmptyNoEscaping("name"),
   checkStringObjectNotEmptyNoEscaping("direction"),
   checkIsFloat("lat"),
@@ -110,14 +108,12 @@ router.post(
 router.put(
   "/accept/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const siteId = req.params.id;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const site = await service.getById(siteId);
       if (!site) return res.sendStatus(NOT_FOUND);
 
@@ -138,14 +134,12 @@ router.put(
 router.delete(
   "/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const siteId = req.params.id;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const site = await service.getById(siteId);
       if (!site) return res.sendStatus(NOT_FOUND);
 

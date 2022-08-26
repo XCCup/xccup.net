@@ -13,6 +13,7 @@ import { handleError } from "./helper/ErrorHandler";
 
 import compression from "compression";
 import cors from "cors";
+import { authToken } from "./controller/Auth";
 
 // Set timezone of node server
 process.env.TZ = config.get("timezone");
@@ -25,6 +26,9 @@ import "./cron/DailyWinnerEMail";
 
 // Logging
 app.use(expressLogger);
+
+// Basic auth check
+app.use(authToken);
 
 // Compression
 app.use(
