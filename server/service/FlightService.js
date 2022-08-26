@@ -279,6 +279,11 @@ const flightService = {
     return result;
   },
 
+  rejectViolation: async (flight, { message }) => {
+    sendAirspaceViolationDeclinedMail(flight, message);
+    flightService.delete(flight);
+  },
+
   /**
    * Updates one or serveral properties of a flight model.
    *
@@ -341,10 +346,7 @@ const flightService = {
     return updatedColumns;
   },
 
-  delete: async (flight, { message }) => {
-    if (flight.airspaceViolation && !flight.violationAccepted)
-      sendAirspaceViolationDeclinedMail(flight, message);
-
+  delete: async (flight) => {
     deleteIgcFile(flight.igcPath);
     return Flight.destroy({ where: { id: flight.id } });
   },

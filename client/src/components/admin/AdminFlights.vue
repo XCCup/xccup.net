@@ -169,7 +169,7 @@ const onDeleteFlight = (flight) => {
 const deleteFlight = async () => {
   showSpinner.value = true;
   try {
-    await ApiService.deleteFlight(
+    await ApiService.rejectFlightViolations(
       selectedFlight.value.externalId,
       deleteReason.value
     );

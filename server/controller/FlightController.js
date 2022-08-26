@@ -192,11 +192,11 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
 });
 
 // @desc Deletes a flight by id
-// @route PUT /flights/delete/:id
+// @route DELETE /flights/:id
 // @access Only owner
 
-router.put(
-  "/delete/:id",
+router.delete(
+  "/:id",
   checkParamIsInt("id"),
   checkOptionalStringObjectNotEmpty("message"),
   authToken,
@@ -212,7 +212,7 @@ router.put(
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
-      const numberOfDestroyedRows = await service.delete(flight, req.body);
+      const numberOfDestroyedRows = await service.delete(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -578,6 +578,34 @@ router.put(
       if (await requesterIsNotModerator(req, res)) return;
 
       await service.acceptViolation(flight);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Rejects and deletes a flight with violations
+// @route PUT /flights/rejectViolation/:id
+// @access Only moderator
+
+router.put(
+  "/rejectViolation/:id",
+  authToken,
+  checkParamIsUuid("id"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const flight = await service.getById(req.params.id, true);
+    if (!flight) return res.sendStatus(NOT_FOUND);
+
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      await service.rejectViolation(flight, req.body);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 

@@ -64,8 +64,8 @@ export default {
   getFlight(flightId: string) {
     return apiClient.get("flights/" + flightId);
   },
-  deleteFlight(externalId: string, message?: string) {
-    return apiClient.put("flights/delete/" + externalId, { message });
+  deleteFlight(externalId: string) {
+    return apiClient.delete("flights/" + externalId);
   },
   rerunFlightCalculation(flightId: string) {
     return apiClient.get("flights/admin/rerun/" + flightId);
@@ -183,6 +183,9 @@ export default {
   },
   acceptFlightViolations(flightId: string) {
     return apiClient.put("flights/acceptViolation/" + flightId);
+  },
+  rejectFlightViolations(externalId: string, message?: string) {
+    return apiClient.put("flights/delete/" + externalId, { message });
   },
   getAllNews() {
     return apiClient.get("news/");
