@@ -595,11 +595,11 @@ router.put(
 router.put(
   "/rejectViolation/:id",
   authToken,
-  checkParamIsUuid("id"),
+  checkParamIsInt("id"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
-    const flight = await service.getById(req.params.id, true);
+    const flight = await service.getByExternalId(req.params.id);
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
