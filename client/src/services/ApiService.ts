@@ -184,6 +184,9 @@ export default {
   acceptFlightViolations(flightId: string) {
     return apiClient.put("flights/acceptViolation/" + flightId);
   },
+  rejectFlightViolations(externalId: string, message?: string) {
+    return apiClient.put("flights/rejectViolation/" + externalId, { message });
+  },
   getAllNews() {
     return apiClient.get("news/");
   },

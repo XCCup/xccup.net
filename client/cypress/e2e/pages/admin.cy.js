@@ -66,6 +66,10 @@ describe("check admin page", () => {
         .click();
     });
 
+    cy.typeTextareaInModal(
+      "#deleteFlightModal",
+      "Du warst 42 m innerhalb der CTR."
+    );
     cy.clickButtonInModal("#deleteFlightModal", "Löschen");
 
     cy.get("#adminFlightsPanel")

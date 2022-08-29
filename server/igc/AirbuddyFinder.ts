@@ -63,7 +63,8 @@ export async function findAirbuddies(
       `AF: The flight ${flight.externalId} matches by ${meanValue}% with the flight ${otherFlight.externalId}`
     );
 
-    if (meanValue == 0) return;
+    // Filter out flights with less than 5% correlation
+    if (meanValue < 5) return;
     saveAirbuddyValueOnOtherFlight(otherFlight, flight, meanValue, user);
     results.push({ otherFlight, correlationPercentage: meanValue });
   }
@@ -193,6 +194,7 @@ async function findFlightsAndTracksWhichWereUpAtSameTime(
           takeoffTime: { [Op.lte]: flight.takeoffTime },
           landingTime: { [Op.gte]: flight.takeoffTime },
         },
+        //TODO: Flight starts before and ends after???
       ],
       [Op.not]: {
         // Exclude oneself from results

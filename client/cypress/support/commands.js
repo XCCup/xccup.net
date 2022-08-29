@@ -51,6 +51,16 @@ Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
   cy.wait(500);
   cy.get(modalSelector).find("button").contains(buttonText).click();
 });
+/**
+ * Unfornually the bootstrap modal takes some time to load all its functionality.
+ * Use this command to a add a wait() before typing.
+ */
+Cypress.Commands.add("typeTextareaInModal", (modalSelector, text) => {
+  // TODO: Find a better solution without a hard coded wait.
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(500);
+  cy.get(modalSelector).find("textarea").type(text);
+});
 
 /**
  * Logs in a user with a role of "Administrator" (Camille Schaden).

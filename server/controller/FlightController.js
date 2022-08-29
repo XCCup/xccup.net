@@ -199,6 +199,7 @@ router.get("/igc/:id", checkParamIsUuid("id"), async (req, res, next) => {
 router.delete(
   "/:id",
   checkParamIsInt("id"),
+  checkOptionalStringObjectNotEmpty("message"),
   authToken,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -586,6 +587,34 @@ router.put(
       if (await requesterIsNotModerator(req, res)) return;
 
       await service.acceptViolation(flight);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Rejects and deletes a flight with violations
+// @route PUT /flights/rejectViolation/:id
+// @access Only moderator
+
+router.put(
+  "/rejectViolation/:id",
+  authToken,
+  checkParamIsInt("id"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const flight = await service.getByExternalId(req.params.id);
+    if (!flight) return res.sendStatus(NOT_FOUND);
+
+    try {
+      if (await requesterIsNotModerator(req, res)) return;
+
+      await service.rejectViolation(flight, req.body);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 

@@ -24,7 +24,8 @@ defineProps({
   },
   modelValue: {
     type: [String, Number],
-    required: true,
+    required: false,
+    default: "",
   },
   isDisabled: {
     type: Boolean,
