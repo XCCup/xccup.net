@@ -425,7 +425,9 @@ router.get(
       if (!data) return res.sendStatus(NO_CONTENT);
       res.sendStatus(OK);
     } catch (error) {
-      logger.error("FS: METAR query error: " + error);
+      logger.error(
+        "FS: METAR query error for flight " + req.params.id + ": " + error
+      );
       next(error);
     }
   }
@@ -674,7 +676,12 @@ async function runChecksStartCalculationsStoreFixes(
     try {
       await getMetarData(flightDbObject, fixes);
     } catch (error) {
-      logger.error("FS: METAR query error: " + error);
+      logger.error(
+        "FS: METAR query error for flight " +
+          fixesDbObject.externalId +
+          ": " +
+          error
+      );
     }
   }
 
