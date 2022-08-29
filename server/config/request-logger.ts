@@ -6,7 +6,7 @@ import logger from "./logger";
 const morganLogFormat = config.get("env") === "development" ? "dev" : "tiny";
 
 interface BlackListRoute {
-  method: string;
+  method: "GET" | "POST"; // Add more when needed
   path: string;
 }
 
