@@ -182,7 +182,7 @@ const flightService = {
     });
   },
 
-  getByExternalId: async (externalId, { excludeSecrets }) => {
+  getByExternalId: async (externalId, { excludeSecrets } = {}) => {
     const blackListedDataAttributes = [
       "airspaceViolations",
       "airspaceViolation",
