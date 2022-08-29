@@ -43,7 +43,7 @@ services:
       - db
 
   yarn:
-    image: node:18.4.0-alpine3.16
+    image: node:18.8.0-alpine3.16
     working_dir: /home/node/app
     profiles: ["cli"]
     volumes:
