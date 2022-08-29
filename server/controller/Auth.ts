@@ -29,7 +29,6 @@ export function authToken(req: Request, res: Response, next: CallableFunction) {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) {
-      console.log("++++++++NO AUTH++++++++");
       req.authStatus = AuthTokenStatus.NO_LOG_IN;
       next();
       return;
@@ -42,14 +41,12 @@ export function authToken(req: Request, res: Response, next: CallableFunction) {
         if (error) {
           if (error.toString().includes("jwt expired")) {
             // See: https://stackoverflow.com/questions/45153773/correct-http-code-for-authentication-token-expiry-401-or-403
-            console.log("++++++++EXPIRED++++++++");
             return res.status(UNAUTHORIZED).send("EXPIRED");
           }
           logger.warn(
             `Verify authentication for user ${user?.firstName} ${user?.lastName} failed: ` +
               error
           );
-          console.log("++++++++UNAUTHORIZED++++++++");
           return res.sendStatus(UNAUTHORIZED);
         }
         req.user = user;
@@ -149,10 +146,7 @@ export function requesterIsNotOwner(
   res: Response,
   otherId: string
 ) {
-  if (
-    otherId !== req.user?.id &&
-    !(req.user?.role == ROLE.MODERATOR || req.user?.role == ROLE.ADMIN)
-  ) {
+  if (otherId !== req.user?.id && !userHasElevatedRole(req.user)) {
     logger.debug("auth: requester is not owner");
     res.sendStatus(FORBIDDEN);
     return true;

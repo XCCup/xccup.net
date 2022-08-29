@@ -1,4 +1,3 @@
-// TODO: Check this out.
 declare namespace Express {
   export interface Request {
     user?: {
