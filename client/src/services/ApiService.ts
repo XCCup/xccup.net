@@ -124,7 +124,7 @@ export default {
   updateUserProfile(userProfile: UserData) {
     return apiClient.put("users/", userProfile);
   },
-  getGliders(userId: string) {
+  getGliders(userId?: string) {
     return userId
       ? apiClient.get("users/gliders/get/" + userId)
       : apiClient.get("users/gliders/get");
