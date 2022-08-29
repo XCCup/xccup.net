@@ -43,6 +43,8 @@ export default () => {
         )
       )
     ).map(({ data }) => data);
+    // Map fetched buddy flight with displayed flight
+    // Should be obsolet when we refactor the component
     airbuddies.forEach((b) => {
       const found = airbuddiesFlightData.value.find(
         (f) => f.externalId == b.externalId

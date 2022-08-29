@@ -421,7 +421,9 @@ router.get(
       if (!data) return res.sendStatus(NO_CONTENT);
       res.sendStatus(OK);
     } catch (error) {
-      logger.error("FS: METAR query error: " + error);
+      logger.error(
+        "FS: METAR query error for flight " + req.params.id + ": " + error
+      );
       next(error);
     }
   }
@@ -591,6 +593,32 @@ router.put(
   }
 );
 
+// @desc Rejects and deletes a flight with violations
+// @route PUT /flights/rejectViolation/:id
+// @access Only moderator
+
+router.put(
+  "/rejectViolation/:id",
+  requesterMustBeModerator,
+  checkParamIsInt("id"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    const flight = await service.getByExternalId(req.params.id);
+    if (!flight) return res.sendStatus(NOT_FOUND);
+
+    try {
+      await service.acceptViolation(flight);
+
+      deleteCache(CACHE_RELEVANT_KEYS);
+
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 /**
  * This functions checks if a flight
  * - was not maniplulated
@@ -640,7 +668,12 @@ async function runChecksStartCalculationsStoreFixes(
     try {
       await getMetarData(flightDbObject, fixes);
     } catch (error) {
-      logger.error("FS: METAR query error: " + error);
+      logger.error(
+        "FS: METAR query error for flight " +
+          fixesDbObject.externalId +
+          ": " +
+          error
+      );
     }
   }
 

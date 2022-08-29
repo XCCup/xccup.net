@@ -12,14 +12,19 @@
         </div>
         <div v-if="modalBody" class="modal-body">
           <p>{{ modalBody }}</p>
+          <BaseTextarea
+            v-if="modalTextareaLabel.length > 0"
+            :label="modalTextareaLabel"
+            @input="$emit('update:modelValue', $event.target.value)"
+          />
         </div>
         <div class="modal-footer">
           <BaseError :error-message="errorMessage" />
-
           <button
             type="button"
             class="btn"
             :class="isDangerousAction ? 'btn-danger' : 'btn-primary'"
+            :disabled="disableConfirm"
             @click="confirmAction"
           >
             {{ confirmButtonText }}
@@ -58,6 +63,11 @@ defineProps({
     required: false,
     default: null,
   },
+  modalTextareaLabel: {
+    type: String,
+    required: false,
+    default: "",
+  },
   showSpinner: {
     type: Boolean,
     default: false,
@@ -78,5 +88,11 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  disableConfirm: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+defineEmits(["update:modelValue"]);
 </script>
