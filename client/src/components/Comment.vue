@@ -244,12 +244,14 @@ const closeReplyEditor = () => {
   replyMessage.value = "";
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/styles";
 // Not yet perfect, but we're getting there…
 .dark-reply {
   background-color: tint-color($primary, 5);
 }
+</style>
+<style lang="scss" scoped>
 .rounded-circle {
   margin-right: 6px;
   height: 24px;
