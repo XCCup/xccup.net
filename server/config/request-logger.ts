@@ -18,7 +18,7 @@ const morganLogger = morgan(morganLogFormat, {
     if (config.get("logLevel") == "debug") return false;
 
     const found = blackListedRoutes.find(
-      // @ts-ignore
+      // @ts-ignore req.originalURL is there…
       (r) => r.method == req.method && req.originalUrl.includes(r.path)
     );
     // Don't log if entry is found on black list and status code is < 400
