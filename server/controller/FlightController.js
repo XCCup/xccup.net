@@ -608,7 +608,7 @@ router.put(
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
-      await service.acceptViolation(flight);
+      await service.rejectViolation(flight, req.body);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
