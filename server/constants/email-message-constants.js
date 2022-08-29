@@ -106,10 +106,10 @@ Dein XCCup Team
     
 `;
 
-module.exports.AIRSPACE_VIOLATION_DECLINED_TITLE =
+module.exports.AIRSPACE_VIOLATION_REJECTED_TITLE =
   "Luftraumprüfung abgeschlossen (Abgelehnt)";
 
-module.exports.AIRSPACE_VIOLATION_DECLINED_TEXT = (firstName, message) =>
+module.exports.AIRSPACE_VIOLATION_REJECTED_TEXT = (firstName, message) =>
   `Hallo ${firstName}!
 
 Deine Luftraumverletzung wurde geprüft und der Flug abgelehnt. 

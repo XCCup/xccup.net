@@ -29,8 +29,8 @@ import {
   NEW_AIRSPACE_VIOLATION_TEXT,
   NEW_G_CHECK_INVALID_TITLE,
   NEW_G_CHECK_INVALID_TEXT,
-  AIRSPACE_VIOLATION_DECLINED_TEXT,
-  AIRSPACE_VIOLATION_DECLINED_TITLE,
+  AIRSPACE_VIOLATION_REJECTED_TEXT,
+  AIRSPACE_VIOLATION_REJECTED_TITLE,
 } from "../constants/email-message-constants";
 
 import db from "../db";
@@ -291,25 +291,25 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendAirspaceViolationDeclinedMail: async (
+  sendAirspaceViolationRejectedMail: async (
     flight: FlightOutputAttributes,
     message: string
   ) => {
     const user = await db.User.findByPk(flight.userId);
     if (!user) {
       logger.error(
-        `MS: Send violation declined mail failed because user with ID ${flight.userId} wasn't found`
+        `MS: Send violation rejected mail failed because user with ID ${flight.userId} wasn't found`
       );
       return;
     }
 
     logger.info(
-      `MS: Send airspace violation declined mail for flight ${flight.externalId}`
+      `MS: Send airspace violation rejected mail for flight ${flight.externalId}`
     );
 
     const content = {
-      title: AIRSPACE_VIOLATION_DECLINED_TITLE,
-      text: AIRSPACE_VIOLATION_DECLINED_TEXT(user.firstName, message),
+      title: AIRSPACE_VIOLATION_REJECTED_TITLE,
+      text: AIRSPACE_VIOLATION_REJECTED_TEXT(user.firstName, message),
     };
 
     return sendMail(user.email, content);

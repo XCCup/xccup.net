@@ -20,7 +20,7 @@ const { findClosestTakeoff } = require("./FlyingSiteService");
 const { hasAirspaceViolation } = require("./AirspaceService");
 const {
   sendAirspaceViolationAcceptedMail,
-  sendAirspaceViolationDeclinedMail,
+  sendAirspaceViolationRejectedMail,
   sendNewAdminTask,
 } = require("./MailService");
 
@@ -280,7 +280,7 @@ const flightService = {
   },
 
   rejectViolation: async (flight, { message }) => {
-    sendAirspaceViolationDeclinedMail(flight, message);
+    sendAirspaceViolationRejectedMail(flight, message);
     flightService.delete(flight);
   },
 
