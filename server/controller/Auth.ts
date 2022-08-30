@@ -3,11 +3,11 @@ import db from "../db"; // TODO: Delegate token access to the service tier
 import { FORBIDDEN, UNAUTHORIZED } from "../constants/http-status-constants";
 import { Request, Response } from "express";
 import { ROLE } from "../constants/user-constants";
-const jwt = require("jsonwebtoken");
-const logger = require("../config/logger");
-const config = require("../config/env-config").default;
+import jwt, { JwtPayload } from "jsonwebtoken";
+import logger from "../config/logger";
+import config from "../config/env-config";
 
-interface TokenUserObject {
+interface TokenUserObject extends JwtPayload {
   id: string;
   firstName: string;
   lastName: string;
@@ -24,7 +24,11 @@ enum AuthTokenStatus {
 /**
  * The authentication middleware for the request. If any error within authentication happens the request will be terminated here.
  */
-export function authToken(req: Request, res: Response, next: CallableFunction) {
+export async function authToken(
+  req: Request,
+  res: Response,
+  next: CallableFunction
+) {
   try {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
@@ -34,25 +38,22 @@ export function authToken(req: Request, res: Response, next: CallableFunction) {
       return;
     }
 
-    jwt.verify(
-      token,
-      config.get("jwtLogin"),
-      (error: Error, user: TokenUserObject) => {
-        if (error) {
-          if (error.toString().includes("jwt expired")) {
-            // See: https://stackoverflow.com/questions/45153773/correct-http-code-for-authentication-token-expiry-401-or-403
-            return res.status(UNAUTHORIZED).send("EXPIRED");
-          }
-          logger.warn(
-            `Verify authentication for user ${user?.firstName} ${user?.lastName} failed: ` +
-              error
-          );
-          return res.sendStatus(UNAUTHORIZED);
+    jwt.verify(token, config.get("jwtLogin"), (error, data) => {
+      const user = data as TokenUserObject;
+      if (error) {
+        if (error.toString().includes("jwt expired")) {
+          // See: https://stackoverflow.com/questions/45153773/correct-http-code-for-authentication-token-expiry-401-or-403
+          return res.status(UNAUTHORIZED).send("EXPIRED");
         }
-        req.user = user;
-        next();
+        logger.warn(
+          `Verify authentication for user ${user?.firstName} ${user?.lastName} failed: ` +
+            error
+        );
+        return res.sendStatus(UNAUTHORIZED);
       }
-    );
+      req.user = user;
+      next();
+    });
   } catch (error) {
     next(error);
   }
@@ -65,11 +66,11 @@ export function authToken(req: Request, res: Response, next: CallableFunction) {
  * - lastname
  * - role
  * - gender
- *
- * @param {Object} user The user object for which a token will be created.
  * @returns A access token.
  */
-export function createToken(user: Required<UserAttributes> | TokenUserObject) {
+export function createToken(
+  user: Required<UserAttributes> | TokenUserObject
+): string {
   const token = jwt.sign(createUserTokenObject(user), config.get("jwtLogin"), {
     expiresIn: "50s",
   });
@@ -80,12 +81,11 @@ export function createToken(user: Required<UserAttributes> | TokenUserObject) {
  * Creates a refresh token around a provided user object.
  * The user will be stored directly into the refresh token to save a follow up call to the user table of the db when refreshing the access token.
  *
- * @param {Object} user The user object for which a token will be created.
  * @returns A refresh token.
  */
 export function createRefreshToken(
   user: Required<UserAttributes> | TokenUserObject
-) {
+): string {
   const token = jwt.sign(createUserTokenObject(user), config.get("jwtRefresh"));
   db.Token.create({ token });
   return token;
@@ -95,10 +95,10 @@ export function createRefreshToken(
  * Deletes the refresh token of a user from the db and therefore logs a user out of the service (when his access token expires).
  *
  * @param {Object} token The refresh token that should be deleted
- * @returns The amount of tokens that where deleted.
+ * @returns The amount of tokens that where deleted. (Promise)
  */
-export function logoutToken(token: string) {
-  return db.Token.destroy({
+export async function logoutToken(token: string): Promise<number> {
+  return await db.Token.destroy({
     where: { token },
   });
 }
@@ -108,7 +108,7 @@ export function logoutToken(token: string) {
  * The new access token will again be populated by user related data like firstname, role, gender.
  *
  * @param {Object} token The refresh token of an user.
- * @returns A new access token.
+ * @returns A new access token (Promise!) or undefined.
  */
 export async function refreshToken(token: string) {
   if (!token) return;
@@ -117,20 +117,17 @@ export async function refreshToken(token: string) {
     where: { token },
   });
   if (!found) return;
-  return jwt.verify(
-    token,
-    config.get("jwtRefresh"),
-    (error: Error, user: TokenUserObject) => {
-      if (error) {
-        logger.warn(
-          `Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,
-          error
-        );
-        return;
-      }
-      return createToken(user);
+  return jwt.verify(token, config.get("jwtRefresh"), (error, data) => {
+    const user = data as TokenUserObject;
+    if (error) {
+      logger.warn(
+        `Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,
+        error
+      );
+      return;
     }
-  );
+    return createToken(user);
+  });
 }
 
 /**
@@ -138,14 +135,14 @@ export async function refreshToken(token: string) {
  *
  * @param {*} req The request that will be checked for the token and the embedded id.
  * @param {*} res The response to the request. Will send FORBIDDEN if ids don't match.
- * @param {*} otherId The provided id which will be checked against.
+ * @param {string} otherId The provided id which will be checked against.
  * @returns True if the ids are different. Otherwise false.
  */
 export function requesterIsNotOwner(
   req: Request,
   res: Response,
   otherId: string
-) {
+): boolean {
   if (otherId !== req.user?.id && !userHasElevatedRole(req.user)) {
     logger.debug("auth: requester is not owner");
     res.sendStatus(FORBIDDEN);
@@ -156,10 +153,6 @@ export function requesterIsNotOwner(
 
 /**
  * Checks if the the userId in the request token belongs to a user of role "administrator".
- *
- * @param {*} req The request that will be checked for the token and the embedded id.
- * @param {*} res The response to the request. Will send FORBIDDEN if ids don't match.
- * @returns True if requester has role administrator. Otherwise false.
  */
 export function requesterMustBeAdmin(
   req: Request,
@@ -175,10 +168,6 @@ export function requesterMustBeAdmin(
 
 /**
  * Checks if the the userId in the request token belongs to a user of role "moderator".
- *
- * @param {*} req The request that will be checked for the token and the embedded id.
- * @param {*} res The response to the request. Will send FORBIDDEN if ids don't match.
- * @returns True if requester has role moderator or higher. Otherwise false.
  */
 export function requesterMustBeModerator(
   req: Request,
