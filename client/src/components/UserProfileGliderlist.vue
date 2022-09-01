@@ -114,7 +114,6 @@ onMounted(() => {
 });
 
 const onRemove = (glider: Glider) => {
-  // selectedGlider.value = glider;
   gliderToRemove.value = glider;
   removeGliderErrorMessage.value = null;
   removeGliderModal.value?.show();
