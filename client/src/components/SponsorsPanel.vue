@@ -71,9 +71,9 @@ const regularSponsors = computed(() => {
 </script>
 
 <style lang="scss">
-// This import is needed to use variables
 @import "@/styles";
-
+// We put the import out of the scoped block to ensure that all similar imports are merged to one global import to reduce bundle size
+// TODO: Should be obsolote when proper dark mode was introduced to bootstrap
 .sponsor-box {
   border: 1px solid $gray-400;
   height: 120px;
