@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import service from "../service/NewsService";
 import { NOT_FOUND } from "../constants/http-status-constants";
-import { authToken, requesterIsNotModerator } from "./Auth";
+import { requesterMustBeModerator } from "./Auth";
 import { getCache, setCache, deleteCache } from "./CacheManager";
 
 import {
@@ -20,21 +20,23 @@ const CACHE_RELEVANT_KEYS = ["home", "news"];
 // @route GET /news
 // @access Only moderator
 
-router.get("/", authToken, async (req: Request, res: Response, next) => {
-  try {
-    if (await requesterIsNotModerator(req, res)) return;
+router.get(
+  "/",
+  requesterMustBeModerator,
+  async (req: Request, res: Response, next) => {
+    try {
+      const value = getCache(req);
+      if (value) return res.json(value);
 
-    const value = getCache(req);
-    if (value) return res.json(value);
+      const news = await service.getAll({ includeFutureNews: true });
 
-    const news = await service.getAll({ includeFutureNews: true });
-
-    setCache(req, news);
-    res.json(news);
-  } catch (error) {
-    next(error);
+      setCache(req, news);
+      res.json(news);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Gets all news (excl. news which will become active in the future)
 // @route GET /news/public
@@ -59,7 +61,7 @@ router.get("/public", async (req: Request, res: Response, next) => {
 
 router.post(
   "/",
-  authToken,
+  requesterMustBeModerator,
   checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmptyNoEscaping("message"),
   checkStringObjectNotEmpty("icon"),
@@ -68,8 +70,6 @@ router.post(
   async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const { title, icon, message, from, till, meta } = req.body;
 
       const news = await service.create({
@@ -96,7 +96,7 @@ router.post(
 
 router.put(
   "/:id",
-  authToken,
+  requesterMustBeModerator,
   checkParamIsUuid("id"),
   checkStringObjectNotEmpty("title"),
   checkStringObjectNotEmpty("icon"),
@@ -109,8 +109,6 @@ router.put(
     const { title, icon, message, from, till, meta } = req.body;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const news = await service.getById(id);
       if (!news) return res.sendStatus(NOT_FOUND);
 
@@ -138,14 +136,12 @@ router.put(
 router.delete(
   "/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeModerator,
   async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       const news = await service.delete(id);
       if (!news) return res.sendStatus(NOT_FOUND);
 

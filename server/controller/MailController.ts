@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import service from "../service/MailService";
-import { authToken, requesterIsNotModerator } from "./Auth";
+import { requesterMustBeLoggedIn, requesterMustBeModerator } from "./Auth";
 import {
   checkIsUuidObject,
   validationHasErrors,
@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post(
   "/single",
-  authToken,
+  requesterMustBeLoggedIn,
   checkStringObjectNotEmptyNoEscaping("content.title"),
   checkStringObjectNotEmptyNoEscaping("content.text"),
   checkIsUuidObject("toUserId"),
@@ -43,7 +43,7 @@ router.post(
 
 router.post(
   "/all",
-  authToken,
+  requesterMustBeModerator,
   checkStringObjectNotEmptyNoEscaping("content.title"),
   checkStringObjectNotEmptyNoEscaping("content.text"),
   async (req, res, next) => {
@@ -52,7 +52,6 @@ router.post(
     const { content } = req.body;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
       if (!req.user?.id) return res.sendStatus(500);
 
       const result = await service.sendMailAll(req.user.id, content);

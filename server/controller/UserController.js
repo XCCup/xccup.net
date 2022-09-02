@@ -21,13 +21,13 @@ const {
 } = require("../constants/user-constants");
 const router = express.Router();
 const {
-  authToken,
+  requesterMustBeLoggedIn,
   createToken,
   createRefreshToken,
   logoutToken,
   refreshToken,
-  requesterIsNotModerator,
-  requesterIsNotAdmin,
+  requesterMustBeModerator,
+  requesterMustBeAdmin,
 } = require("./Auth");
 const { query } = require("express-validator");
 const { createRateLimiter } = require("./api-protection");
@@ -183,7 +183,7 @@ router.post("/logout", async (req, res, next) => {
 router.get(
   "/public/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeLoggedIn,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
@@ -322,7 +322,7 @@ router.post(
 // @route GET /users
 // @access Only owner
 
-router.get("/", authToken, async (req, res, next) => {
+router.get("/", requesterMustBeLoggedIn, async (req, res, next) => {
   const id = req.user.id;
 
   try {
@@ -339,7 +339,7 @@ router.get("/", authToken, async (req, res, next) => {
 // @route DELETE /users/
 // @access Only owner
 
-router.delete("/", authToken, async (req, res, next) => {
+router.delete("/", requesterMustBeLoggedIn, async (req, res, next) => {
   const id = req.user.id;
 
   try {
@@ -432,7 +432,7 @@ router.post(
 // @access Only owner
 router.put(
   "/",
-  authToken,
+  requesterMustBeLoggedIn,
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
   checkIsISO8601("birthday"),
@@ -499,7 +499,7 @@ router.put(
 // @access Only owner
 router.put(
   "/change-email",
-  authToken,
+  requesterMustBeLoggedIn,
   checkIsEmail("email"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -529,7 +529,7 @@ router.put(
 
 router.put(
   "/change-password",
-  authToken,
+  requesterMustBeLoggedIn,
   checkStrongPassword("password"),
 
   async (req, res, next) => {
@@ -556,7 +556,7 @@ router.put(
 
 router.post(
   "/gliders/add",
-  authToken,
+  requesterMustBeLoggedIn,
   checkStringObjectNotEmpty("brand"),
   checkStringObjectNotEmpty("model"),
   checkStringObjectNotEmpty("gliderClass"),
@@ -589,7 +589,7 @@ router.post(
 
 router.delete(
   "/gliders/remove/:id",
-  authToken,
+  requesterMustBeLoggedIn,
   checkParamIsUuid("id"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
@@ -611,17 +611,21 @@ router.delete(
 // @route PUT /users/gliders/default/:id
 // Only owner
 
-router.put("/gliders/default/:id", authToken, async (req, res, next) => {
-  const userId = req.user.id;
-  const gliderId = req.params.id;
+router.put(
+  "/gliders/default/:id",
+  requesterMustBeLoggedIn,
+  async (req, res, next) => {
+    const userId = req.user.id;
+    const gliderId = req.params.id;
 
-  try {
-    const result = await service.setDefaultGlider(userId, gliderId);
-    res.json(result);
-  } catch (error) {
-    next(error);
+    try {
+      const result = await service.setDefaultGlider(userId, gliderId);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Retrieves the gliders of an user.
 // @route GET /users/gliders/:userId
@@ -629,12 +633,10 @@ router.put("/gliders/default/:id", authToken, async (req, res, next) => {
 
 router.get(
   "/gliders/get/:userId",
-  authToken,
+  requesterMustBeModerator,
   checkParamIsUuid("userId"),
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       if (validationHasErrors(req, res)) return;
       const userId = req.params.userId;
 
@@ -651,12 +653,10 @@ router.get(
 
 router.get(
   "/tshirts/:year",
-  authToken,
+  requesterMustBeModerator,
   checkParamIsInt("year"),
   async (req, res, next) => {
     try {
-      if (await requesterIsNotModerator(req, res)) return;
-
       if (validationHasErrors(req, res)) return;
       const year = req.params.year;
 
@@ -673,12 +673,10 @@ router.get(
 
 router.get(
   "/emails/:includeAll",
-  authToken,
+  requesterMustBeAdmin,
   checkParamIsBoolean("includeAll"),
   async (req, res, next) => {
     try {
-      if (await requesterIsNotAdmin(req, res)) return;
-
       if (validationHasErrors(req, res)) return;
 
       const includeAll = req.params.includeAll.toLowerCase() === "true";
@@ -694,7 +692,7 @@ router.get(
 // @route GET /users/gliders/
 // Only owner
 
-router.get("/gliders/get", authToken, async (req, res, next) => {
+router.get("/gliders/get", requesterMustBeLoggedIn, async (req, res, next) => {
   const userId = req.user.id;
 
   try {
@@ -708,18 +706,21 @@ router.get("/gliders/get", authToken, async (req, res, next) => {
 // @desc Gets the admin panel notifications
 // @route GET /users/adminNotifications
 
-router.get("/adminNotifications", authToken, async (req, res, next) => {
-  try {
-    if (await requesterIsNotModerator(req, res)) return;
-    const flights = await flightService.getAll({
-      onlyUnchecked: true,
-    });
-    const sites = await siteService.getAll({ state: "proposal" });
-    res.json(sites.length + flights.count);
-  } catch (error) {
-    next(error);
+router.get(
+  "/adminNotifications",
+  requesterMustBeModerator,
+  async (req, res, next) => {
+    try {
+      const flights = await flightService.getAll({
+        onlyUnchecked: true,
+      });
+      const sites = await siteService.getAll({ state: "proposal" });
+      res.json(sites.length + flights.count);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 async function checkGliderClassAndAddGliderDescription(glider) {
   const { XccupRestrictionError } = require("../helper/ErrorHandler");

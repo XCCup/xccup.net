@@ -10,9 +10,9 @@ const {
   TOO_MANY_REQUESTS,
 } = require("../constants/http-status-constants");
 const {
-  authToken,
+  requesterMustBeLoggedIn,
   requesterIsNotOwner,
-  requesterIsNotModerator,
+  requesterMustBeModerator,
 } = require("./Auth");
 const { createRateLimiter } = require("./api-protection");
 const { query } = require("express-validator");
@@ -61,7 +61,7 @@ const uploadLimiter = createRateLimiter(60, 30);
 
 router.post(
   "/",
-  authToken,
+  requesterMustBeLoggedIn,
   uploadLimiter,
   imageUpload.single("image"),
   checkIsUuidObject("flightId"),
@@ -148,7 +148,7 @@ router.get(
 router.get(
   "/like/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeLoggedIn,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
@@ -175,13 +175,12 @@ router.get(
 router.get(
   "/create-archive/:year",
   checkParamIsInt("year"),
-  authToken,
+  requesterMustBeModerator,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const year = req.params.year;
 
     try {
-      if (await requesterIsNotModerator(req, res)) return;
       const archivePath = await service.createArchiveForYear(year);
 
       if (!archivePath) return res.sendStatus(NOT_FOUND);
@@ -227,7 +226,7 @@ router.get(
 
 router.put(
   "/:id",
-  authToken,
+  requesterMustBeLoggedIn,
   checkParamIsUuid("id"),
   checkStringObjectNoEscaping("description"),
   async (req, res, next) => {
@@ -255,7 +254,7 @@ router.put(
 router.delete(
   "/:id",
   checkParamIsUuid("id"),
-  authToken,
+  requesterMustBeLoggedIn,
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;

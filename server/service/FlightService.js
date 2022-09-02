@@ -182,7 +182,14 @@ const flightService = {
     });
   },
 
-  getByExternalId: async (externalId) => {
+  getByExternalId: async (externalId, { excludeSecrets } = {}) => {
+    const blackListedDataAttributes = [
+      "airspaceViolations",
+      "airspaceViolation",
+      "violationAccepted",
+    ];
+    const exclude = excludeSecrets ? blackListedDataAttributes : null;
+
     const flightDbObject = await Flight.findOne({
       where: { externalId },
       include: [
@@ -201,6 +208,7 @@ const flightService = {
           as: "photos",
         },
       ],
+      attributes: { exclude },
       order: [
         [{ model: FlightComment, as: "comments" }, "createdAt", "ASC"],
         [{ model: FlightPhoto, as: "photos" }, "createdAt", "ASC"],
