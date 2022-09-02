@@ -4,7 +4,7 @@ const userService = require("../service/UserService");
 const { query } = require("express-validator");
 const { NOT_FOUND, OK } = require("../constants/http-status-constants");
 const router = express.Router();
-const { authToken } = require("./Auth");
+const { requesterMustBeLoggedIn } = require("./Auth");
 const { checkParamIsUuid, validationHasErrors } = require("./Validation");
 const multer = require("multer");
 const { IMAGE_SIZES, retrieveFilePath } = require("../helper/ImageUtils");
@@ -56,7 +56,7 @@ router.get(
 // @route DELETE /users/picture/
 // @access Only owner
 
-router.delete("/", authToken, async (req, res, next) => {
+router.delete("/", requesterMustBeLoggedIn, async (req, res, next) => {
   const id = req.user.id;
 
   try {
@@ -77,7 +77,7 @@ router.delete("/", authToken, async (req, res, next) => {
 
 router.post(
   "/",
-  authToken,
+  requesterMustBeLoggedIn,
   imageUpload.single("image"),
   async (req, res, next) => {
     try {
