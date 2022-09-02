@@ -77,8 +77,9 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-$carousel-caption-padding-y: 0.5rem;
-@import "@/styles";
+.carousel-caption {
+  padding: 0.5rem;
+}
 
 img {
   height: 100%;

@@ -53,11 +53,12 @@
   />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
 import { Modal } from "bootstrap";
 import ApiService from "@/services/ApiService";
 import useSwal from "../composables/useSwal";
+import type { Glider } from "@/types/Glider";
 
 const { showSuccessToast, showFailedToast } = useSwal();
 
@@ -69,23 +70,19 @@ defineProps({
 });
 const emit = defineEmits(["gliders-changed"]);
 
-const selectedGlider = ref(null);
+const selectedGlider = ref<string | null>(null);
 const initialGlider = ref(null);
 
-const listOfGliders = ref(null);
+const listOfGliders = ref<Glider[]>([]);
 
-const addModal = ref(null);
+const addModal = ref<Modal | null>(null);
 const showAddGliderSpinner = ref(false);
 const showSpinner = ref(false);
 
-const addGliderErrorMessage = ref(null);
+const addGliderErrorMessage = ref<string | null>(null);
 
-const removeMessage = computed(() => {
-  return `${selectedGlider.value?.brand} ${selectedGlider.value?.model} aus der Liste entfernen`;
-});
-
-// // Update local copy of glider data
-const updateGliderData = async (data) => {
+// Update local copy of glider data
+const updateGliderData = (data: any) => {
   selectedGlider.value = data.defaultGlider;
   initialGlider.value = data.defaultGlider;
   listOfGliders.value = data.gliders;
@@ -95,58 +92,61 @@ const updateGliderData = async (data) => {
 try {
   const res = await ApiService.getGliders();
   if (res.status != 200) throw res.statusText;
-  await updateGliderData(res.data);
+  updateGliderData(res.data);
 } catch (error) {
   console.log(error);
 }
 
 // Remove Glider
 const showRemoveGliderSpinner = ref(false);
-const removeGliderErrorMessage = ref(null);
+const removeGliderErrorMessage = ref<string | null>();
+const gliderToRemove = ref<Glider | null>(null);
 
-const removeGliderModal = ref(null);
+const removeMessage = computed(() => {
+  return `${gliderToRemove.value?.brand} ${gliderToRemove.value?.model} aus der Liste entfernen`;
+});
+
+const removeGliderModal = ref<Modal>();
 
 onMounted(() => {
-  removeGliderModal.value = new Modal(
-    document.getElementById("removeGliderModal")
-  );
+  const el = document.getElementById("removeGliderModal");
+  if (el) removeGliderModal.value = new Modal(el);
 });
-const onRemove = (glider) => {
-  selectedGlider.value = glider;
+
+const onRemove = (glider: Glider) => {
+  gliderToRemove.value = glider;
   removeGliderErrorMessage.value = null;
-  removeGliderModal.value.show();
+  removeGliderModal.value?.show();
 };
 
-const removeGlider = async (result) => {
-  if (result) {
-    try {
-      showRemoveGliderSpinner.value = true;
-      const res = await ApiService.removeGlider(selectedGlider.value.id);
-      if (res.status != 200) throw res.statusText;
-      await updateGliderData(res.data);
-      showRemoveGliderSpinner.value = false;
-      removeGliderModal.value.hide();
-    } catch (error) {
-      console.error(error);
-      removeGliderErrorMessage.value = "Da ist leider was schief gelaufen";
-
-      showRemoveGliderSpinner.value = false;
-    }
+const removeGlider = async () => {
+  try {
+    if (!gliderToRemove.value?.id) throw new Error("No glider ID specified");
+    showRemoveGliderSpinner.value = true;
+    const res = await ApiService.removeGlider(gliderToRemove.value.id);
+    if (res.status != 200) throw res.statusText;
+    updateGliderData(res.data);
+    showRemoveGliderSpinner.value = false;
+    removeGliderModal.value?.hide();
+  } catch (error) {
+    console.error(error);
+    removeGliderErrorMessage.value = "Da ist leider was schief gelaufen";
+    showRemoveGliderSpinner.value = false;
   }
 };
 
 // Add glider
 const onAdd = () => {
-  addModal.value.show();
+  addModal.value?.show();
 };
-const addGlider = async (glider) => {
+const addGlider = async (glider: Glider) => {
   try {
     showAddGliderSpinner.value = true;
     const res = await ApiService.addGlider(glider);
     if (res.status != 200) throw res.statusText;
-    await updateGliderData(res.data);
+    updateGliderData(res.data);
     addGliderErrorMessage.value = null;
-    addModal.value.hide();
+    addModal.value?.hide();
     emit("gliders-changed");
   } catch (error) {
     addGliderErrorMessage.value = "Da ist leider was schief gelaufen";
@@ -159,6 +159,7 @@ const addGlider = async (glider) => {
 // Update default glider
 const updateDefaultGlider = async () => {
   try {
+    if (!selectedGlider.value) throw new Error("No glider id specified");
     showSpinner.value = true;
     const res = await ApiService.setDefaultGlider(selectedGlider.value);
     if (res.status != 200) throw res.statusText;
@@ -173,7 +174,7 @@ const updateDefaultGlider = async () => {
   }
 };
 
-const formatGliderName = (glider) =>
+const formatGliderName = (glider: Glider) =>
   glider.brand +
   " " +
   glider.model +

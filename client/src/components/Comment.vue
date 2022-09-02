@@ -244,12 +244,15 @@ const closeReplyEditor = () => {
   replyMessage.value = "";
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/styles";
-// Not yet perfect, but we're getting there…
+// We put the import out of the scoped block to ensure that all similar imports are merged to one global import to reduce bundle size
+// TODO: Should be obsolote when proper dark mode was introduced to bootstrap
 .dark-reply {
   background-color: tint-color($primary, 5);
 }
+</style>
+<style lang="scss" scoped>
 .rounded-circle {
   margin-right: 6px;
   height: 24px;

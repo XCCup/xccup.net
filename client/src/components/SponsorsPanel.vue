@@ -12,7 +12,7 @@
           class="col cy-sponsor"
         >
           <a :href="sponsor.website" target="_blank">
-            <div class="p-2 bg-light mb-4 p-4 box filter">
+            <div class="p-2 bg-light mb-4 p-4 sponsor-box filter">
               <img
                 class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
                 :src="baseURL + `media/` + sponsor.logo.id + `?size=thumb`"
@@ -35,7 +35,7 @@
         class="col cy-sponsor"
       >
         <a :href="sponsor.website" target="_blank">
-          <div class="p-2 bg-light mb-4 p-4 box filter">
+          <div class="p-2 bg-light mb-4 p-4 sponsor-box filter">
             <img
               class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
               :src="baseURL + `media/` + sponsor.logo.id + `?size=thumb`"
@@ -70,18 +70,20 @@ const regularSponsors = computed(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-// This import is needed to use variables
+<style lang="scss">
 @import "@/styles";
-
-.box {
+// We put the import out of the scoped block to ensure that all similar imports are merged to one global import to reduce bundle size
+// TODO: Should be obsolote when proper dark mode was introduced to bootstrap
+.sponsor-box {
   border: 1px solid $gray-400;
   height: 120px;
 }
-.box:hover {
+.sponsor-box:hover {
   border: 1px solid $primary;
 }
+</style>
 
+<style lang="scss" scoped>
 .filter {
   filter: grayscale(100%);
   transition: all 0.3s;
