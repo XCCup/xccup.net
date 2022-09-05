@@ -1,5 +1,6 @@
 <template>
   <div class="container mt-3">
+    foo: {{ flightId }}
     <div v-if="isAdmin && flightId" class="text-warning mb-4">
       <!-- TODO: Find a nice way to prevent mixing up user ids when uploading for a user or simply do not upload for a user… -->
       Admins should not upload photos for a user!
@@ -31,7 +32,7 @@
           />
           <button
             class="btn btn-lg btn-outline-primary position-absolute top-50 start-50 translate-middle"
-            @click.prevent="onRetry({ index: index, cueId: photo.uploadCue })"
+            @click.prevent="onRetry(photo.uploadCue, index)"
           >
             <span class="align-middle">
               <i class="bi bi-arrow-clockwise"></i>
@@ -94,7 +95,7 @@
             />
           </div>
           <i
-            v-if="flightId"
+            v-if="flightId && photo.id"
             class="bi bi-x-circle text-danger fs-3 clickable position-absolute top-0 start-100 translate-middle"
             @click="onDeletePhoto(photo.id)"
           ></i>
@@ -132,7 +133,8 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// import { ref, onMounted, type DeepReadonly } from "vue";
 import { ref, onMounted } from "vue";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import useAuth from "@/composables/useAuth";
@@ -141,41 +143,45 @@ import { v4 as uuidv4 } from "uuid";
 import { remove, last } from "lodash-es";
 import BaseError from "./BaseError.vue";
 import { MAX_PHOTOS } from "@/common/Constants";
+// @ts-expect-error - no types available
 import GLightbox from "glightbox";
 import { createImageSrcSet } from "@/helper/imageHelper";
 
 import "glightbox/dist/css/glightbox.css";
 
+import type { Photo } from "@/types/Photo";
+
 const { getUserId, isAdmin } = useAuth();
 const baseURL = getbaseURL();
 
-const props = defineProps({
-  photos: {
-    type: Array,
-    default: () => [],
-  },
-  // Edit mode is enabled when a flight id is passed
-  flightId: {
-    type: String,
-    default: null,
-  },
-});
+interface NewPhoto {
+  id?: string;
+  description?: string;
+  uploadCue?: string;
+}
+
+interface Props {
+  photos?: Photo[];
+  flightId?: string;
+}
+
+const props = defineProps<Props>();
 
 const emit = defineEmits(["photos-updated"]);
 
-const _photos = ref([]);
-const photosRemoved = ref([]);
-const photosAdded = ref([]);
-const errorMessage = ref(null);
+const _photos = ref<NewPhoto[]>([]);
+const photosRemoved = ref<string[]>([]);
+const photosAdded = ref<string[]>([]);
+const errorMessage = ref<string | null>(null);
 
 const MAX_PHOTO_MESSAGE = "Du kannst maximal neun Photos hochladen";
 
 // Copy all photos from props to the local array with only mandatory properties
-props.photos.forEach((e) =>
+props.photos?.forEach((e) =>
   _photos.value.push({
     id: e.id,
     description: e.description,
-    uploadCue: null,
+    // uploadCue: null,
   })
 );
 
@@ -185,12 +191,13 @@ onMounted(() => {
 });
 
 // Find the input dialog in template
-const photoInput = ref(null);
+const photoInput = ref<HTMLElement | null>(null);
 onMounted(() => {
   photoInput.value = document.getElementById("photo-input");
 });
 
-const onDeletePhoto = (id) => {
+const onDeletePhoto = (id?: string) => {
+  if (!id) return;
   // Add the photo to the array of photos that the parent component has to delete
   photosRemoved.value.push(id);
   // Remove photo from local list for preview
@@ -199,7 +206,7 @@ const onDeletePhoto = (id) => {
 
   photosChanged();
 };
-const onCancelUpload = (photo) => {
+const onCancelUpload = (photo: NewPhoto) => {
   remove(photoUploadQueue.value, (e) => e.id === photo.uploadCue);
   // Remove photo from local list for preview
   const index = _photos.value.findIndex((e) => e.id === photo.id);
@@ -215,48 +222,67 @@ const photosChanged = () =>
   });
 
 // Show the file input dialog
-const onAddPhoto = () => photoInput.value.click();
+const onAddPhoto = () => photoInput.value?.click();
+interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
 
 // Put selected photos in an upload cue and upload them
-const photoUploadQueue = ref([]);
-const onPhotoSelected = (event) => {
+
+interface UploadCueItem {
+  id: string;
+  photo: File;
+  status: "pending";
+}
+const photoUploadQueue = ref<UploadCueItem[]>([]);
+const onPhotoSelected = (e: Event) => {
+  const event = e as HTMLInputEvent;
+  if (!event.target.files?.length) return;
   // Check files count and substract alredy uploaded photos
   if (event.target.files.length > MAX_PHOTOS - _photos.value.length) {
     errorMessage.value = MAX_PHOTO_MESSAGE;
     return;
   }
   errorMessage.value = null;
-  [...event.target.files].slice(0, MAX_PHOTOS).forEach((photo) => {
+  // @ts-expect-error
+  const array = [...event.target.files];
+  array.slice(0, MAX_PHOTOS).forEach((photo) => {
     photoUploadQueue.value.push({
       id: uuidv4(),
       photo: photo,
       status: "pending",
     });
-    uploadPhoto(last(photoUploadQueue.value));
+    const lastItem = last(photoUploadQueue.value);
+    if (!lastItem) return;
+    uploadPhoto(lastItem);
   });
 };
 
-const uploadPhoto = async (item, { retryIndex = null } = {}) => {
-  let index = null;
+const uploadPhoto = async (item: UploadCueItem, retryIndex?: number) => {
+  let index: number | undefined = undefined;
   // Skip if this is a retry attempt
-  if (retryIndex === null) {
+  if (!retryIndex) {
     // Create a photo object and add it to the local photos list
     index = _photos.value.length;
-    const _phototmp = { id: null, description: "", uploadCue: item.id };
+    const _phototmp: NewPhoto = {
+      id: undefined,
+      description: "",
+      uploadCue: item.id,
+    };
     _photos.value[index] = _phototmp;
   } else {
     index = retryIndex;
 
     // Reset photo status
-    _photos.value[index].id = null;
+    _photos.value[index].id = undefined;
   }
-
   // Upload it
   try {
+    if (!getUserId.value || isNaN(index) || !props.flightId) return;
     const formData = new FormData();
     formData.append("image", item.photo, item.photo.name);
     formData.append("flightId", props.flightId);
-    formData.append("userId", getUserId);
+    formData.append("userId", getUserId.value); // Why did this work withput value?
 
     const res = await ApiService.uploadPhotos(formData);
 
@@ -272,6 +298,7 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
     // Inform the parent about edits
     photosChanged();
   } catch (error) {
+    // @ts-expect-error: We know that this response could be there
     if (error?.response?.status == 429) errorMessage.value = MAX_PHOTO_MESSAGE;
 
     console.log(error);
@@ -280,10 +307,12 @@ const uploadPhoto = async (item, { retryIndex = null } = {}) => {
   }
 };
 
-const onRetry = (options) => {
+const onRetry = (cueId: string | undefined, index: number) => {
+  if (!cueId) return;
   // Item from upload cue
-  const retryItem = photoUploadQueue.value.find((e) => e.id === options.cueId);
+  const retryItem = photoUploadQueue.value.find((e) => e.id === cueId);
+  if (!retryItem) return;
   // Upload again and mark as retry attempt by passing the index
-  uploadPhoto(retryItem, { retryIndex: options.index });
+  uploadPhoto(retryItem, index);
 };
 </script>

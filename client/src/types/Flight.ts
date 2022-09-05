@@ -1,6 +1,7 @@
 import type { Glider } from "./Glider";
 import type { Comment } from "./Comment";
 import type { AirspaceViolation } from "./Airspace";
+import type { Photo } from "@/types/Photo";
 
 type Values<T> = T[keyof T];
 
@@ -46,7 +47,7 @@ export interface Flight {
   club?: Club;
   team?: Team;
   comments?: Comment[];
-  photos?: any[]; // TODO: Type this
+  photos?: Photo[];
   airbuddies?: Flight[];
 }
 
