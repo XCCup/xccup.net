@@ -1,6 +1,5 @@
 <template>
   <div class="container mt-3">
-    foo: {{ flightId }}
     <div v-if="isAdmin && flightId" class="text-warning mb-4">
       <!-- TODO: Find a nice way to prevent mixing up user ids when uploading for a user or simply do not upload for a user… -->
       Admins should not upload photos for a user!
@@ -146,6 +145,7 @@ import { MAX_PHOTOS } from "@/common/Constants";
 // @ts-expect-error - no types available
 import GLightbox from "glightbox";
 import { createImageSrcSet } from "@/helper/imageHelper";
+import type { DeepReadonly } from "vue";
 
 import "glightbox/dist/css/glightbox.css";
 
@@ -161,8 +161,8 @@ interface NewPhoto {
 }
 
 interface Props {
-  photos?: Photo[];
-  flightId?: string;
+  photos?: DeepReadonly<Photo[]>;
+  flightId?: DeepReadonly<string>;
 }
 
 const props = defineProps<Props>();
