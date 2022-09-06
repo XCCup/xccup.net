@@ -45,12 +45,12 @@
               </td>
 
               <td>
-                <button
+                <a
                   class="btn btn-outline-primary btn-sm"
-                  @click="onMessagePilot(flight)"
+                  :href="`mailto:${flight.user.email}?subject=Klärung mögliche Luftraumverletzung`"
                 >
                   <i class="bi bi-envelope"></i>
-                </button>
+                </a>
               </td>
               <td>
                 <button
@@ -98,10 +98,6 @@
     :show-spinner="showSpinner"
     :error-message="errorMessage"
   />
-  <!-- TODO: When using this modal the reply-to email address will be the 
-  one of the admin account used and not info@xccup.net 
-  Is that the way we want it to be? -->
-  <ModalSendMail modal-id="messagePilotModal" :user="selectedUser" />
 </template>
 
 <script setup>
@@ -147,16 +143,12 @@ try {
 // Modals
 const deleteFlightModal = ref(null);
 const acceptFlightModal = ref(null);
-const messagePilotModal = ref(null);
 onMounted(() => {
   deleteFlightModal.value = new Modal(
     document.getElementById("deleteFlightModal")
   );
   acceptFlightModal.value = new Modal(
     document.getElementById("acceptFlightModal")
-  );
-  messagePilotModal.value = new Modal(
-    document.getElementById("messagePilotModal")
   );
 });
 
@@ -203,13 +195,6 @@ const acceptFlight = async () => {
     selectedFlight.value = null;
     showSpinner.value = false;
   }
-};
-
-// Message pilot
-const selectedUser = ref(null);
-const onMessagePilot = (flight) => {
-  selectedUser.value = flight.user;
-  messagePilotModal.value.show();
 };
 </script>
 

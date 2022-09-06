@@ -62,12 +62,13 @@ const flightService = {
     includeUnchecked,
     sort,
     minimumData,
+    isAdminRequest,
   } = {}) => {
     const orderStatement = createOrderStatement(sort);
 
     const queryObject = {
       include: [
-        createUserInclude(),
+        createUserInclude(isAdminRequest),
         createSiteInclude(site, siteId),
         createTeamInclude(teamId),
         createClubInclude(clubId),
@@ -959,11 +960,15 @@ function createSiteInclude(shortName, id) {
   return include;
 }
 
-function createUserInclude() {
+function createUserInclude(isAdminRequest) {
+  const attributes = ["id", "firstName", "lastName", "fullName"];
+
+  if (isAdminRequest) attributes.push("email");
+
   const include = {
     model: User,
     as: "user",
-    attributes: ["id", "firstName", "lastName", "fullName"],
+    attributes,
   };
   return include;
 }
