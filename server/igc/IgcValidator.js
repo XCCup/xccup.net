@@ -21,7 +21,7 @@ const igcValidator = {
   execute: async (igc, options) => {
     // Skip igc validation if disabled in .env or method options
     if (config.get("disableGCheck") || options?.disableGCheck) {
-      logger.info("Skipping igc G-Record validation");
+      logger.info("IV: Skipping igc G-Record validation");
       return igcValidator.G_RECORD_PASSED;
     }
 
@@ -31,8 +31,9 @@ const igcValidator = {
       const url = "http://vali.fai-civl.org/api/vali/json";
       const formData = new FormData();
 
-      // Differenciate between IGC upload via file transfer (normal) or via stream (leonardo)
-      const buffer = igc.path
+      // Differenciate between IGC upload via file transfer (normal/website) or via stream (leonardo)
+      const igcWasUploadedViaWebsite = igc.path != undefined;
+      const buffer = igcWasUploadedViaWebsite
         ? fs.readFileSync(igc.path)
         : Buffer.from(igc.body);
       const filename = igc.filename ?? igc.name;
@@ -53,7 +54,18 @@ const igcValidator = {
       const res = await axios.post(url, formData, config);
 
       const result = res.data.result;
-      logger.debug("Validation result: " + result);
+      logger.debug("IV: Validation result: " + result);
+
+      if (result != this.G_RECORD_PASSED) {
+        logger.info(
+          "IV: IGC vaildation finished with not passed. Result is: " + result
+        );
+        logger.info(
+          `IV: IGC file was uploaded via ${
+            igcWasUploadedViaWebsite ? "website" : "leonardo"
+          }`
+        );
+      }
 
       return result;
     } catch (error) {
