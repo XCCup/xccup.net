@@ -56,7 +56,7 @@ const igcValidator = {
       const result = res.data.result;
       logger.debug("IV: Validation result: " + result);
 
-      if (result != this.G_RECORD_PASSED) {
+      if (result != igcValidator.G_RECORD_PASSED) {
         logger.info(
           "IV: IGC vaildation finished with not passed. Result is: " + result
         );
