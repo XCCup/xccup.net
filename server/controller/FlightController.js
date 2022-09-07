@@ -121,6 +121,7 @@ router.get("/violations", requesterMustBeModerator, async (req, res, next) => {
   try {
     const flights = await service.getAll({
       onlyUnchecked: true,
+      isAdminRequest: true,
     });
 
     res.json(flights);
