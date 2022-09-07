@@ -14,7 +14,7 @@
       @change="onPhotoSelected"
     />
 
-    <div v-if="photos" class="row">
+    <div class="row">
       <div
         v-for="(photo, index) in _photos"
         :id="`photo-${index}`"
