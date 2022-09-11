@@ -181,7 +181,6 @@ props.photos?.forEach((e) =>
   _photos.value.push({
     id: e.id,
     description: e.description,
-    // uploadCue: null,
   })
 );
 
