@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     // Auto import components
     // https://github.com/antfu/unplugin-vue-components
-    Components({ dts: true }),
+    Components(),
   ],
   server: {
     port: 8000,
