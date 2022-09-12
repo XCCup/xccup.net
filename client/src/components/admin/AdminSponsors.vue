@@ -24,9 +24,9 @@
     </div>
   </section>
   <BaseModal
-    :modal-title="confirmModalTitle"
+    modal-title="Sponsoreneintrag löschen?"
     :modal-body="confirmMessage"
-    :confirm-button-text="confirmModalButtonText"
+    confirm-button-text="Löschen"
     :modal-id="confirmModalId"
     :confirm-action="processConfirmResult"
     :is-dangerous-action="true"
@@ -53,23 +53,21 @@ const sponsors: Ref<Sponsor[]> = ref([]);
 const activeSponsors: Ref<Sponsor[]> = ref([]);
 const furtherSponsors: Ref<Sponsor[]> = ref([]);
 
+const selectedSponsor: Ref<Sponsor> = ref(createNewSponsorObject());
+
 const confirmModal = ref(null);
 const confirmMessage = ref("");
 const confirmModalId = "modalSponsorConfirm";
-const confirmModalTitle = ref("");
-const confirmModalButtonText = ref("");
-
-const selectedSponsor: Ref<Sponsor> = ref(createNewSponsorObject());
 
 const showSpinner = ref(false);
 const errorMessage = ref("");
 
 const addEditSponsorModal = ref(null);
 onMounted(() => {
-  confirmModal.value = new Modal(document.getElementById(confirmModalId));
   addEditSponsorModal.value = new Modal(
     document.getElementById("addEditSponsorModal")
   );
+  confirmModal.value = new Modal(document.getElementById(confirmModalId));
 });
 
 async function fetchSponsors() {
@@ -100,9 +98,7 @@ function onEdit(sponsor: Sponsor) {
 }
 
 function onDelete(sponsor: Sponsor) {
-  confirmModalTitle.value = " Sponsoreneintrag löschen?";
   confirmMessage.value = `Willst du den Eintrag ${sponsor.name} wirklich löschen?`;
-  confirmModalButtonText.value = "Löschen";
   selectedSponsor.value = sponsor;
   confirmModal.value.show();
 }

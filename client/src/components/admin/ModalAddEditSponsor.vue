@@ -51,6 +51,7 @@
           <BaseInput v-model="sponsor.contacts.email" label="E-Mail" />
           <BaseInput v-model="sponsor.contacts.phone" label="Tel." />
           <BaseInput v-model="sponsor.contacts.phone2" label="Tel. (2)" />
+          <SimpleImageHandler :logo-id="sponsor.logo?.id" />
         </div>
         <div class="modal-footer">
           <BaseError :error-message="errorMessage" />
@@ -134,3 +135,10 @@ const onSaveSponsor = () => {
   emit("save-sponsor", sponsor.value);
 };
 </script>
+
+<style scoped>
+.sponsor-box {
+  border: 1px;
+  height: 120px;
+}
+</style>

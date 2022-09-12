@@ -16,7 +16,6 @@ const {
   checkStringObject,
   checkStringObjectNoEscaping,
 } = require("./Validation");
-const { getCurrentYear } = require("../helper/Utils");
 const {
   defineFileDestination,
   defineImageFileNameWithCurrentDateAsPrefix,

@@ -13,7 +13,9 @@ const service = {
   },
 
   getAll: async () => {
-    return db.Sponsor.findAll();
+    return db.Sponsor.findAll({
+      include: createLogoInclude(),
+    });
   },
 
   getAllActive: async () => {

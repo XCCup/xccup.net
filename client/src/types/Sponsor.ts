@@ -7,6 +7,8 @@ export interface Sponsor {
   sponsorInSeasons: number[];
   contacts: Contact;
   updatedAt?: Date;
+  createdAt?: Date;
+  logo?: Logo;
 }
 
 export interface Contact {
@@ -14,4 +16,8 @@ export interface Contact {
   email: string;
   phone: string;
   phone2: string;
+}
+
+export interface Logo {
+  id: string;
 }
