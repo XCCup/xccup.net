@@ -1,9 +1,6 @@
 import db from "../db";
 import { Op } from "sequelize";
-import type {
-  SponsorCreationAttributes,
-  SponsorInstance,
-} from "../db/models/Sponsor";
+import type { SponsorCreationAttributes } from "../db/models/Sponsor";
 
 const { getCurrentYear } = require("../helper/Utils");
 
@@ -37,8 +34,15 @@ const service = {
     return db.Sponsor.create(sponsor);
   },
 
-  update: async (sponsor: SponsorInstance) => {
-    return sponsor.save();
+  update: async (sponsor: SponsorCreationAttributes) => {
+    console.log("UP: ", sponsor);
+
+    return db.Sponsor.update(sponsor, {
+      where: {
+        id: sponsor.id,
+      },
+    });
+    // return sponsor.save();
   },
 
   delete: async (id: string) => {

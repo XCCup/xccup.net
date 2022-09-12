@@ -29,6 +29,7 @@ import useAxiosJwt, {
   type IAuthTokens,
   type TokenRefreshRequest,
 } from "@/composables/useAxiosJwt";
+import type { Sponsor } from "@/types/Sponsor";
 
 const { applyAuthTokenInterceptor } = useAxiosJwt();
 
@@ -319,6 +320,18 @@ export default {
     return retrieveAll
       ? apiClient.get("/sponsors")
       : apiClient.get("/sponsors/public");
+  },
+
+  addSponsor(sponsor: Sponsor) {
+    return apiClient.post("/sponsors/", sponsor);
+  },
+
+  editSponsor(sponsor: Sponsor) {
+    return apiClient.put("/sponsors/" + sponsor.id, sponsor);
+  },
+
+  deleteSponsor(id: string) {
+    return apiClient.delete("/sponsors/" + id);
   },
 
   // Clubs

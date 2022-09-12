@@ -12,6 +12,9 @@ const {
   checkIsUuidObject,
   checkParamIsUuid,
   validationHasErrors,
+  checkIsArray,
+  checkStringObject,
+  checkStringObjectNoEscaping,
 } = require("./Validation");
 const { getCurrentYear } = require("../helper/Utils");
 const {
@@ -35,7 +38,7 @@ const imageUpload = multer({ storage });
 // @route GET /sponsors/
 // @access Only moderator
 
-router.get("/", requesterMustBeModerator, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const sponsors = await service.getAll();
     res.json(sponsors);
@@ -129,32 +132,19 @@ router.post(
   "/",
   requesterMustBeModerator,
   checkStringObjectNotEmpty("name"),
-  checkStringObjectNotEmpty("type"),
+  // checkStringObjectNotEmpty("type"),
   checkOptionalStringObjectNotEmpty("website"),
-  checkOptionalStringObjectNotEmpty("contacts"),
-  checkOptionalIsBoolean("isCurrentSponsor"),
+  checkStringObjectNoEscaping("contacts.address"),
+  checkStringObjectNoEscaping("contacts.email"),
+  checkStringObject("contacts.phone"),
+  checkStringObject("contacts.phone2"),
+  checkIsArray("sponsorInSeasons"),
   checkOptionalIsBoolean("isGoldSponsor"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     try {
-      const name = req.body.name;
-      const type = req.body.type;
-      const website = req.body.website;
-      const contacts = req.body.contacts;
-      const isGoldSponsor = req.body.isGoldSponsor;
-      const sponsorInSeasons = req.body.isCurrentSponsor
-        ? [getCurrentYear()]
-        : [];
-
-      const result = await service.create({
-        name,
-        type,
-        website,
-        contacts,
-        isGoldSponsor,
-        sponsorInSeasons,
-      });
+      const result = await service.create(req.body);
       res.json(result);
     } catch (error) {
       next(error);
@@ -171,46 +161,18 @@ router.put(
   requesterMustBeModerator,
   checkParamIsUuid("id"),
   checkOptionalStringObjectNotEmpty("name"),
-  checkOptionalStringObjectNotEmpty("type"),
-  checkOptionalStringObjectNotEmpty("website"),
-  checkOptionalStringObjectNotEmpty("contacts"),
-  checkOptionalIsBoolean("isCurrentSponsor"),
+  checkStringObjectNoEscaping("website"),
+  checkStringObject("contacts.address"),
+  checkStringObject("contacts.email"),
+  checkStringObject("contacts.phone"),
+  checkStringObject("contacts.phone2"),
+  checkIsArray("sponsorInSeasons"),
   checkOptionalIsBoolean("isGoldSponsor"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const id = req.params.id;
 
     try {
-      const sponsor = await service.getById(id);
-
-      sponsor.name = req.body.name ?? sponsor.name;
-      sponsor.type = req.body.type ?? sponsor.type;
-      sponsor.website = req.body.website ?? sponsor.website;
-      sponsor.contacts = req.body.contacts ?? sponsor.contacts;
-      const isCurrentSponsor = req.body.isCurrentSponsor;
-      const currentYear = getCurrentYear();
-      if (isCurrentSponsor != undefined) {
-        if (
-          isCurrentSponsor &&
-          !sponsor.sponsorInSeasons.includes(currentYear)
-        ) {
-          sponsor.sponsorInSeasons.push(currentYear);
-        }
-        if (
-          !isCurrentSponsor &&
-          sponsor.sponsorInSeasons.includes(currentYear)
-        ) {
-          sponsor.sponsorInSeasons.splice(
-            sponsor.sponsorInSeasons.indexOf(currentYear)
-          );
-        }
-      }
-      const isGoldSponsor = req.body.isGoldSponsor;
-      if (isCurrentSponsor != undefined) {
-        sponsor.isGoldSponsor = isGoldSponsor;
-      }
-
-      await service.update(sponsor);
+      await service.update(req.body);
 
       res.sendStatus(OK);
     } catch (error) {
