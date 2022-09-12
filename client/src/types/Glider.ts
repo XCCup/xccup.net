@@ -7,5 +7,6 @@ export interface Glider {
 
 export interface GliderClass {
   key: string;
+  description: string;
   shortDescription: string;
 }

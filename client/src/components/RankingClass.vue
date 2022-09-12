@@ -18,7 +18,7 @@ const icon = ref(null);
 let tooltip: Tooltip | null = null;
 
 const props = defineProps<{
-  rankingClass: {
+  rankingClass?: {
     key?: string;
     shortDescription?: string;
     description?: string;
@@ -29,8 +29,8 @@ const props = defineProps<{
 
 const displayedDescription = computed(() =>
   props.short
-    ? props.rankingClass.shortDescription
-    : props.rankingClass.description
+    ? props.rankingClass?.shortDescription
+    : props.rankingClass?.description
 );
 
 const cssClasses = computed(() => {

@@ -206,11 +206,13 @@ const drawTracks = (tracklogs: SimpleFix[][]) => {
         // Create Photomarkers
         const roundBy = 5000; // Approximate values of GPS fix and photo timestamp
         const photoTimestamps = flight.value?.photos?.map((e) => {
-          return { time: getTime(parseISO(e.timestamp)), id: e.id };
+          if (!e.timestamp) return;
+          return { time: getTime(parseISO(e.timestamp.toString())), id: e.id };
         });
         if (!photoTimestamps) return;
         // Find matching GPS and photo timestamps
         photoTimestamps.forEach((photo) => {
+          if (!photo) return;
           const location = track.find((fix) => {
             const minuteOfFix = Math.floor(fix.timestamp / roundBy);
             const minuteOfPhoto = Math.floor(photo.time / roundBy);

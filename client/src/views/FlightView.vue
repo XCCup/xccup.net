@@ -32,7 +32,7 @@ const { fetchOne, flight } = useFlight();
 
 try {
   // @ts-ignore
-  // TODO: Evaluate
+  // TODO: Evaluate array issue
   await fetchOne(route.params.flightId);
   setWindowName(
     "Flug von " +
