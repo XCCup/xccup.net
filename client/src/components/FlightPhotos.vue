@@ -181,7 +181,6 @@ props.photos?.forEach((e) =>
   _photos.value.push({
     id: e.id,
     description: e.description,
-    // uploadCue: null,
   })
 );
 
@@ -282,7 +281,7 @@ const uploadPhoto = async (item: UploadCueItem, retryIndex?: number) => {
     const formData = new FormData();
     formData.append("image", item.photo, item.photo.name);
     formData.append("flightId", props.flightId);
-    formData.append("userId", getUserId.value); // Why did this work withput value?
+    formData.append("userId", getUserId.value);
 
     const res = await ApiService.uploadPhotos(formData);
 
