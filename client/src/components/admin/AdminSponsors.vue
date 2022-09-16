@@ -55,24 +55,23 @@ const furtherSponsors: Ref<Sponsor[]> = ref([]);
 
 const selectedSponsor: Ref<Sponsor> = ref(createNewSponsorObject());
 
-const confirmModal = ref(null);
 const confirmMessage = ref("");
 const confirmModalId = "modalSponsorConfirm";
 
 const showSpinner = ref(false);
 const errorMessage = ref("");
 
-const addEditSponsorModal = ref(null);
+const confirmModal = ref<Modal>();
+const addEditSponsorModal = ref<Modal>();
 onMounted(() => {
-  addEditSponsorModal.value = new Modal(
-    document.getElementById("addEditSponsorModal")
-  );
-  confirmModal.value = new Modal(document.getElementById(confirmModalId));
+  const addEditModalElement = document.getElementById("addEditSponsorModal");
+  if (addEditModalElement)
+    addEditSponsorModal.value = new Modal(addEditModalElement);
+  const confirmModalElement = document.getElementById(confirmModalId);
+  if (confirmModalElement) confirmModal.value = new Modal(confirmModalElement);
 });
 
 async function fetchSponsors() {
-  console.log("FETCH");
-
   try {
     const res = await ApiService.getSponsors(true);
     sponsors.value = res.data;
@@ -87,7 +86,7 @@ fetchSponsors();
 function onNew() {
   errorMessage.value = "";
   selectedSponsor.value = createNewSponsorObject();
-  addEditSponsorModal.value.show();
+  addEditSponsorModal.value?.show();
 }
 
 function onEdit(sponsor: Sponsor) {
@@ -96,20 +95,20 @@ function onEdit(sponsor: Sponsor) {
 
   errorMessage.value = "";
   selectedSponsor.value = sponsor;
-  addEditSponsorModal.value.show();
+  addEditSponsorModal.value?.show();
 }
 
 function onDelete(sponsor: Sponsor) {
   confirmMessage.value = `Willst du den Eintrag ${sponsor.name} wirklich löschen?`;
   selectedSponsor.value = sponsor;
-  confirmModal.value.show();
+  confirmModal.value?.show();
 }
 
 async function processConfirmResult() {
   if (!selectedSponsor.value?.id) return;
   await ApiService.deleteSponsor(selectedSponsor.value.id);
   await fetchSponsors();
-  confirmModal.value.hide();
+  confirmModal.value?.hide();
 }
 
 async function onSave(sponsor: Sponsor) {
@@ -121,7 +120,7 @@ async function onSave(sponsor: Sponsor) {
       ApiService.addSponsor(sponsor);
     }
     await fetchSponsors();
-    addEditSponsorModal.value.hide();
+    addEditSponsorModal.value?.hide();
   } catch (error) {
     console.error(error);
     errorMessage.value = GENERIC_ERROR;

@@ -75,6 +75,7 @@ async function onLogoSelected(e: Event) {
     formData.append(referenceIdName, props.referenceId);
     const result = (await apiCall(formData)).data;
     localLogoId.value = result.id;
+    emit("logo-updated", "add-logo");
   } catch (error) {
     errorMessage.value = "Der Upload des Logo war nicht erfolgreich";
   }
@@ -85,7 +86,7 @@ async function onDeleteImage() {
     if (!props.referenceId) return;
 
     await ApiService.deleteSponsorLogo(props.referenceId);
-    emit("logo-updated");
+    emit("logo-updated", "delete-logo");
     localLogoId.value = "";
   } catch (error) {
     console.error(error);
@@ -94,6 +95,7 @@ async function onDeleteImage() {
 </script>
 
 <template>
+  <!-- Support only PNG because of supported alpha channel? -->
   <input
     id="photo-input-logo"
     type="file"
@@ -120,6 +122,7 @@ async function onDeleteImage() {
     <button
       v-if="!localLogoId"
       class="btn block w-100 bi bi-plus-square fs-1 text-primary"
+      :data-cy="'logoAddButton' + referenceType"
       @click.prevent="onAddPhoto"
     ></button>
   </div>

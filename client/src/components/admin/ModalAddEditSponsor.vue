@@ -20,9 +20,21 @@
           ></button>
         </div>
         <div class="modal-body">
-          <BaseInput v-model="sponsor.name" label="Name" />
-          <BaseInput v-model="sponsor.website" label="Website" />
-          <BaseInput v-model="sponsor.tagline" label="Tagline" />
+          <BaseInput
+            v-model="sponsor.name"
+            label="Name"
+            data-cy="inputSponsorName"
+          />
+          <BaseInput
+            v-model="sponsor.website"
+            label="Website"
+            data-cy="inputSponsorWebsite"
+          />
+          <BaseInput
+            v-model="sponsor.tagline"
+            label="Tagline"
+            data-cy="inputSponsorTagline"
+          />
           <div class="form-check mb-3">
             <input
               id="currentSponsorCheck"
@@ -30,6 +42,7 @@
               class="form-check-input"
               type="checkbox"
               value=""
+              data-cy="checkSponsorCurrentSeason"
             />
             <label class="form-check-label" for="currentSponsorCheck">
               Sponsor aktuelle Saison
@@ -42,6 +55,7 @@
               class="form-check-input"
               type="checkbox"
               value=""
+              data-cy="checkSponsorGold"
             />
             <label class="form-check-label" for="goldSponsorCheck">
               Goldsponsor
@@ -52,11 +66,16 @@
           <BaseInput v-model="sponsor.contacts.phone" label="Tel." />
           <BaseInput v-model="sponsor.contacts.phone2" label="Tel. (2)" />
           <LogoHandler
+            v-if="sponsor.id"
             :logo-id="sponsor.logo?.id"
             :reference-id="sponsor.id"
             reference-type="Sponsor"
             @logo-updated="onLogoUpdated"
           />
+          <p v-else>
+            Du musst zuerst den Eintrag speichern, bevor du ein Logo hinzufügen
+            kannst
+          </p>
         </div>
         <div class="modal-footer">
           <BaseError :error-message="errorMessage" />
@@ -87,19 +106,14 @@ import type { Sponsor } from "@/types/Sponsor";
 import { cloneDeep } from "lodash";
 import { computed, ref, watch, watchEffect, type Ref } from "vue";
 
-const props = defineProps({
-  sponsorObject: {
-    type: Object,
-    required: true,
-  },
-  showSpinner: {
-    type: Boolean,
-    default: false,
-  },
-  errorMessage: {
-    type: [String, null],
-    default: null,
-  },
+interface Props {
+  sponsorObject: Sponsor;
+  showSpinner: boolean;
+  errorMessage: string;
+}
+const props = withDefaults(defineProps<Props>(), {
+  showSpinner: false,
+  errorMessage: "",
 });
 
 const emit = defineEmits(["save-sponsor", "logo-updated"]);
@@ -113,8 +127,6 @@ const isActiveSponsor = ref(
 watch(
   () => props.sponsorObject,
   () => {
-    console.log("SPO Changed");
-
     sponsor.value = cloneDeep(props.sponsorObject);
     isActiveSponsor.value =
       sponsor.value.sponsorInSeasons.includes(currentYear);
@@ -142,10 +154,8 @@ const onSaveSponsor = () => {
   emit("save-sponsor", sponsor.value);
 };
 
-const onLogoUpdated = () => {
-  console.log("ON LOGO UPDATED");
-
-  emit("logo-updated");
+const onLogoUpdated = (type: string) => {
+  emit("logo-updated", type);
 };
 </script>
 
