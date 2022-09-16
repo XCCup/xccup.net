@@ -71,6 +71,8 @@ onMounted(() => {
 });
 
 async function fetchSponsors() {
+  console.log("FETCH");
+
   try {
     const res = await ApiService.getSponsors(true);
     sponsors.value = res.data;

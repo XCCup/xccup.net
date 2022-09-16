@@ -51,7 +51,11 @@
           <BaseInput v-model="sponsor.contacts.email" label="E-Mail" />
           <BaseInput v-model="sponsor.contacts.phone" label="Tel." />
           <BaseInput v-model="sponsor.contacts.phone2" label="Tel. (2)" />
-          <SimpleImageHandler :logo-id="sponsor.logo?.id" />
+          <LogoHandler
+            :logo-id="sponsor.logo?.id"
+            :reference-id="sponsor.id"
+            @logo-updated="onLogoUpdated"
+          />
         </div>
         <div class="modal-footer">
           <BaseError :error-message="errorMessage" />
@@ -97,6 +101,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["save-sponsor", "logo-updated"]);
+
 const currentYear = new Date().getFullYear();
 const sponsor: Ref<Sponsor> = ref(cloneDeep(props.sponsorObject));
 const isActiveSponsor = ref(
@@ -106,6 +112,8 @@ const isActiveSponsor = ref(
 watch(
   () => props.sponsorObject,
   () => {
+    console.log("SPO Changed");
+
     sponsor.value = cloneDeep(props.sponsorObject);
     isActiveSponsor.value =
       sponsor.value.sponsorInSeasons.includes(currentYear);
@@ -125,14 +133,18 @@ watchEffect(() => {
   }
 });
 
-const emit = defineEmits(["save-sponsor"]);
-
 const saveButtonIsEnabled = computed(() => {
   return sponsor.value.name.length > 1 && sponsor.value.website.length > 1;
 });
 
 const onSaveSponsor = () => {
   emit("save-sponsor", sponsor.value);
+};
+
+const onLogoUpdated = () => {
+  console.log("ON LOGO UPDATED");
+
+  emit("logo-updated");
 };
 </script>
 

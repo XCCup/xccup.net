@@ -334,6 +334,14 @@ export default {
     return apiClient.delete("/sponsors/" + id);
   },
 
+  addSponsorLogo(data: FormData) {
+    return apiClient.post("/sponsors/logo/", data);
+  },
+
+  deleteSponsorLogo(id: string) {
+    return apiClient.delete("/sponsors/logo/" + id);
+  },
+
   // Clubs
 
   getClubNames() {

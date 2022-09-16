@@ -61,7 +61,7 @@ export function initClub(sequelize: Sequelize): Models["Club"] {
     },
   }) as Models["Club"];
 
-  Club.associate = ({ User, FlyingSite, Logo, Flight }) => {
+  Club.associate = ({ User, FlyingSite, Logo }) => {
     Club.hasMany(User, {
       as: "members",
       foreignKey: {

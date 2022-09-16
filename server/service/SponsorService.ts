@@ -37,14 +37,11 @@ const service = {
   },
 
   update: async (sponsor: SponsorCreationAttributes) => {
-    console.log("UP: ", sponsor);
-
     return db.Sponsor.update(sponsor, {
       where: {
         id: sponsor.id,
       },
     });
-    // return sponsor.save();
   },
 
   delete: async (id: string) => {

@@ -88,15 +88,15 @@ router.get(
 );
 
 // @desc Uploads a new logo for a sponsor
-// @route POST /sponsors/logo
+// @route POST /sponsors/logo/
 // @access Only moderator
 
 router.post(
-  "/logo",
+  "/logo/",
   requesterMustBeModerator,
   imageUpload.single("image"),
-  checkIsUuidObject("sponsorId"),
   async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
     try {
       const { originalname, mimetype, size, path } = req.file;
       const sponsorId = req.body.sponsorId;
@@ -117,6 +117,33 @@ router.post(
       });
 
       res.json(logo);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Deletes a logo for a sponsor
+// @route DELETE /sponsors/logo/:id
+// @access Only moderator
+
+router.delete(
+  "/logo/:id",
+  requesterMustBeModerator,
+  checkParamIsUuid("id"),
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+    try {
+      console.log("ID: ", req.params.id);
+
+      const sponsor = await service.getById(req.params.id);
+      if (!sponsor) return res.sendStatus(NOT_FOUND);
+
+      if (sponsor.logo) {
+        logoService.deleteOldLogo(sponsor);
+      }
+
+      res.sendStatus(OK);
     } catch (error) {
       next(error);
     }
