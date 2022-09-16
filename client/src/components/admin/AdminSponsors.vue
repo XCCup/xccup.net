@@ -11,12 +11,14 @@
         <h5>Aktive Sponsoren</h5>
         <AdminSponsorsTable
           :sponsors="activeSponsors"
+          data-cy="currentSponsorTable"
           @edit-sponsor="onEdit"
           @delete-sponsor="onDelete"
         />
         <h5>Weitere Sponsoren</h5>
         <AdminSponsorsTable
           :sponsors="furtherSponsors"
+          data-cy="furtherSponsorTable"
           @edit-sponsor="onEdit"
           @delete-sponsor="onDelete"
         />

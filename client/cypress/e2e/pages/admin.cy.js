@@ -146,6 +146,36 @@ describe("check admin page", () => {
       );
   });
 
+  it.only("test add new sponsor", () => {
+    const expectedName = "Ein Sponsor";
+    const expectedWebiste = "www.bester-sponsor.de";
+    const expectedTagline = "Der beste Sponsor";
+
+    cy.get("#nav-sponsors-tab").click();
+
+    cy.get("#adminSponsorPanel")
+      .find("button")
+      .contains("Neuer Sponsor")
+      .click();
+
+    // Wait till modal was fully loaded
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
+    cy.get("[data-cy=inputSponsorName").type(expectedName);
+    cy.get("[data-cy=inputSponsorWebsite").type(expectedWebiste);
+    cy.get("[data-cy=inputSponsorTagline").type(expectedTagline);
+    cy.get("[data-cy=checkSponsorCurrentSeason").check();
+    cy.get("[data-cy=checkSponsorGold").check();
+    cy.get("Button").filter(":visible").contains("Speichern").click();
+
+    // Wait will table was fetched again
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
+    cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedName);
+    cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedWebiste);
+    cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedTagline);
+  });
+
   it("test admin flight upload list", () => {
     const expectedPilotName = "Adam Bayer";
     const igcFileName = "73320_LA9ChMu1.igc";
