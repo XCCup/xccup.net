@@ -35,7 +35,10 @@
         class="col cy-sponsor"
       >
         <a :href="sponsor.website" target="_blank">
-          <div class="p-2 bg-light mb-4 p-4 sponsor-box filter">
+          <div
+            v-if="sponsor.logo?.id"
+            class="p-2 bg-light mb-4 p-4 sponsor-box filter"
+          >
             <img
               class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
               :src="baseURL + `media/` + sponsor.logo.id + `?size=thumb`"

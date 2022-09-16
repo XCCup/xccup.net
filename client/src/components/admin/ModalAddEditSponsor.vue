@@ -54,6 +54,7 @@
           <LogoHandler
             :logo-id="sponsor.logo?.id"
             :reference-id="sponsor.id"
+            reference-type="Sponsor"
             @logo-updated="onLogoUpdated"
           />
         </div>
