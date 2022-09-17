@@ -36,7 +36,7 @@
       >
         <a :href="sponsor.website" target="_blank">
           <div
-            v-if="sponsor.logo?.id"
+            v-if="sponsor.logo.id"
             class="p-2 bg-light mb-4 p-4 sponsor-box filter"
           >
             <img
@@ -65,11 +65,19 @@ const props = defineProps({
 });
 
 const goldSponsors = computed(() => {
-  return shuffle(props.sponsors.filter((sponsor) => sponsor.isGoldSponsor));
+  return shuffle(
+    props.sponsors.filter(
+      (sponsor) => sponsor.isGoldSponsor && sponsor.logo?.id != undefined
+    )
+  );
 });
 
 const regularSponsors = computed(() => {
-  return shuffle(props.sponsors.filter((sponsor) => !sponsor.isGoldSponsor));
+  return shuffle(
+    props.sponsors.filter(
+      (sponsor) => !sponsor.isGoldSponsor && sponsor.logo?.id != undefined
+    )
+  );
 });
 </script>
 
