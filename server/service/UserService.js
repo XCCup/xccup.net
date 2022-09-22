@@ -180,14 +180,17 @@ const userService = {
     return usersWithEnoughFlightsJSON;
   },
   /**
-   * Retrieves e-mail-addresses of active users.
+   * Retrieves e-mail-addresses of active users. Does not return e-mail-adresses of developer accounts.
    * @param {boolean} includeAll If set to true all e-mail addresses will be retrieved. Otherwise only the e-mail-addresses of users which subscribed to the newsletter will be retrieved.
    * @returns An array of e-mail-addresses
    */
   getEmails: async (includeAll) => {
     const where = {
       role: {
-        [Op.not]: ROLE.INACTIVE,
+        [Op.or]: {
+          [Op.not]: ROLE.INACTIVE,
+          [Op.not]: ROLE.DEVELOPER,
+        },
       },
     };
 

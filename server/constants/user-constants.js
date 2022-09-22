@@ -35,9 +35,11 @@ module.exports.GENDER = {
 
 module.exports.TSHIRT_SIZES = ["S", "M", "L", "XL", "XXL"];
 
+// Why are those in german?
 module.exports.ROLE = {
   ADMIN: "Administrator",
   MODERATOR: "Moderator",
   NONE: "Keine",
   INACTIVE: "Inaktiv",
+  DEVELOPER: "Entwickler",
 };
