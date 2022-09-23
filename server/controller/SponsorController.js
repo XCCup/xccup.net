@@ -104,7 +104,7 @@ router.post(
       const sponsor = await service.getById(sponsorId);
       if (!sponsor) return res.sendStatus(NOT_FOUND);
 
-      if (sponsor.Logo) {
+      if (sponsor.logo) {
         logoService.deleteOldLogo(sponsor);
       }
 
@@ -116,6 +116,7 @@ router.post(
         sponsorId,
       });
 
+      deleteCache([sponsor.logo?.id]);
       res.json(logo);
     } catch (error) {
       next(error);
