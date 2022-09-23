@@ -9,7 +9,6 @@ const {
   checkStringObjectNotEmpty,
   checkOptionalStringObjectNotEmpty,
   checkOptionalIsBoolean,
-  checkIsUuidObject,
   checkParamIsUuid,
   validationHasErrors,
   checkIsArray,

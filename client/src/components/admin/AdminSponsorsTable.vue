@@ -5,7 +5,7 @@
       <th>Website</th>
       <th>Tagline</th>
       <th>Kontakt</th>
-      <th>Gold</th>
+      <th></th>
       <th>Sponsor in</th>
       <th>Letzte Änderung</th>
       <th></th>
@@ -13,7 +13,9 @@
     <tbody>
       <tr v-for="sponsor in props.sponsors" :key="sponsor.id" :item="sponsor">
         <td>{{ sponsor.name }}</td>
-        <td>{{ sponsor.website }}</td>
+        <td style="max-width: 15vw; word-wrap: break-word">
+          {{ sponsor.website }}
+        </td>
         <td>{{ sponsor.tagline }}</td>
         <td>
           <p
@@ -27,7 +29,7 @@
         <td>
           <i
             v-if="sponsor.isGoldSponsor"
-            class="bi bi-check-circle text-success"
+            class="bi bi bi-coin text-warning"
           ></i>
         </td>
         <td>{{ beautifySeasonsForTable(sponsor.sponsorInSeasons) }}</td>
