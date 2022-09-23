@@ -17,7 +17,7 @@
         <td>{{ sponsor.tagline }}</td>
         <td>
           <p
-            v-for="line in beautifyContactForTable(sponsor.contacts)"
+            v-for="line in beautifyContactForTable(sponsor.contact)"
             :key="line"
             :value="line"
           >

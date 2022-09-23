@@ -138,7 +138,7 @@ function createNewSponsorObject() {
     tagline: "",
     isGoldSponsor: false,
     sponsorInSeasons: [],
-    contacts: { address: "", email: "", phone: "", phone2: "" },
+    contact: { address: "", email: "", phone: "", phone2: "" },
   };
 }
 

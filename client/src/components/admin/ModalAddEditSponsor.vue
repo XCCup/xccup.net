@@ -61,10 +61,10 @@
               Goldsponsor
             </label>
           </div>
-          <BaseInput v-model="sponsor.contacts.address" label="Adresse" />
-          <BaseInput v-model="sponsor.contacts.email" label="E-Mail" />
-          <BaseInput v-model="sponsor.contacts.phone" label="Tel." />
-          <BaseInput v-model="sponsor.contacts.phone2" label="Tel. (2)" />
+          <BaseInput v-model="sponsor.contact.address" label="Adresse" />
+          <BaseInput v-model="sponsor.contact.email" label="E-Mail" />
+          <BaseInput v-model="sponsor.contact.phone" label="Tel." />
+          <BaseInput v-model="sponsor.contact.phone2" label="Tel. (2)" />
           <LogoHandler
             v-if="sponsor.id"
             :logo-id="sponsor.logo?.id"

@@ -5,7 +5,7 @@ export interface Sponsor {
   tagline: string;
   isGoldSponsor: boolean;
   sponsorInSeasons: number[];
-  contacts: Contact;
+  contact: Contact;
   updatedAt?: Date;
   createdAt?: Date;
   logo?: Logo;
