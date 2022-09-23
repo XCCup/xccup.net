@@ -23,6 +23,7 @@ const {
 } = require("../helper/ImageUtils");
 const { default: config } = require("../config/env-config");
 const multer = require("multer");
+const { deleteCache } = require("./CacheManager");
 
 const IMAGE_STORE = config.get("dataPath") + "/images/sponsors";
 
@@ -133,8 +134,6 @@ router.delete(
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     try {
-      console.log("ID: ", req.params.id);
-
       const sponsor = await service.getById(req.params.id);
       if (!sponsor) return res.sendStatus(NOT_FOUND);
 
@@ -142,6 +141,7 @@ router.delete(
         logoService.deleteOldLogo(sponsor);
       }
 
+      deleteCache([sponsor.logo.id]);
       res.sendStatus(OK);
     } catch (error) {
       next(error);
