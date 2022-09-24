@@ -49,9 +49,7 @@ const IMAGE_STORE = config.get("dataPath") + "/images/flights";
  */
 
 const MAX_PHOTOS = 9 * 2;
-const imageUpload = multer({
-  dest: IMAGE_STORE + "/" + new Date().getFullYear(),
-});
+const imageUpload = createMulterFlightPhotoUploadHandler();
 
 const uploadLimiter = createRateLimiter(60, 30);
 
@@ -273,5 +271,24 @@ router.delete(
     }
   }
 );
+
+function createMulterFlightPhotoUploadHandler() {
+  const storage = multer.diskStorage({
+    destination: IMAGE_STORE + "/" + new Date().getFullYear(),
+    filename: function (req, file, cb) {
+      const userName = req.user?.firstName + "_" + req.user?.lastName;
+      const newFileName =
+        userName + "_" + req.body.flightId + "_" + file.originalname;
+      cb(null, newFileName);
+    },
+  });
+
+  return multer({
+    storage,
+    limits: {
+      files: MAX_PHOTOS,
+    },
+  });
+}
 
 module.exports = router;

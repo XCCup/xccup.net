@@ -279,9 +279,11 @@ const uploadPhoto = async (item: UploadCueItem, retryIndex?: number) => {
   try {
     if (!getUserId.value || isNaN(index) || !props.flightId) return;
     const formData = new FormData();
-    formData.append("image", item.photo, item.photo.name);
     formData.append("flightId", props.flightId);
     formData.append("userId", getUserId.value);
+    // Send file always as last part
+    // Otherwise we can't access the text parts in multer in the backend before processing the image
+    formData.append("image", item.photo, item.photo.name);
 
     const res = await ApiService.uploadPhotos(formData);
 
