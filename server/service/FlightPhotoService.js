@@ -75,6 +75,11 @@ const service = {
           as: "flight",
           attributes: ["externalId"],
         },
+        {
+          model: User,
+          as: "user",
+          attributes: ["firstName", "lastName"],
+        },
       ],
       attributes: ["path"],
     });
@@ -94,7 +99,11 @@ const service = {
       const photoMeta = p.toJSON();
       archive.addLocalFile(
         photoMeta.path,
-        /* store photos in folders in zip archive */ photoMeta.flight.externalId.toString()
+        /* store photos in folders in zip archive */ photoMeta.user.firstName +
+          "_" +
+          photoMeta.user.lastName +
+          "/" +
+          photoMeta.flight.externalId.toString()
       );
     });
     archive.writeZip(archivePath);
