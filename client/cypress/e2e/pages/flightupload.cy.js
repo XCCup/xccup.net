@@ -15,7 +15,7 @@ describe("check flight upload page", () => {
     cy.location("pathname").should("eq", "/login");
   });
 
-  it.only("test upload flight", () => {
+  it("test upload flight", () => {
     const igcFileName = "73320_LA9ChMu1.igc";
     const flightReport = "This is a flight report.";
     const photoCaption = `Super tolles "Bild" 🚀 <a href=""'>foo</a>`;
