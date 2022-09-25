@@ -276,10 +276,27 @@ function createMulterFlightPhotoUploadHandler() {
   const storage = multer.diskStorage({
     destination: IMAGE_STORE + "/" + new Date().getFullYear(),
     filename: function (req, file, cb) {
-      const userName = req.user?.firstName + "_" + req.user?.lastName;
-      const newFileName =
-        userName + "_" + req.body.flightId + "_" + file.originalname;
+      const parts = [
+        req.user?.firstName,
+        req.user?.lastName,
+        req.body.flightId,
+        new Date().getMilliseconds(),
+        file.originalname,
+      ];
+      const newFileName = parts.join("_");
+
       cb(null, newFileName);
+
+      // Check this out if we want to decline multiple upload of the same image
+
+      // const fs = require("fs");
+      // fs.access(newFileName, fs.constants.F_OK, (err) => {
+      //   logger.debug(
+      //     `FPC: ${newFileName} ${err ? "does not exist" : "exists"}`
+      //   );
+
+      //   err ? cb(null, newFileName) : cb(err);
+      // });
     },
   });
 
