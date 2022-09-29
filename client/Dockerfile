@@ -1,5 +1,5 @@
 # Build Stage
-FROM node:18.8.0-alpine3.16 AS build-stage
+FROM node:18.10.0-alpine3.16 AS build-stage
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
