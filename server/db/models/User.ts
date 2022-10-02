@@ -32,8 +32,7 @@ type UserRole =
   | "Moderator"
   | "Keine"
   | "Inaktiv"
-  | "Entwickler"
-  | undefined;
+  | "Entwickler";
 
 interface glider {
   id: string;
