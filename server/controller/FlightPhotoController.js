@@ -49,9 +49,7 @@ const IMAGE_STORE = config.get("dataPath") + "/images/flights";
  */
 
 const MAX_PHOTOS = 9 * 2;
-const imageUpload = multer({
-  dest: IMAGE_STORE + "/" + new Date().getFullYear(),
-});
+const imageUpload = createMulterFlightPhotoUploadHandler();
 
 const uploadLimiter = createRateLimiter(60, 30);
 
@@ -273,5 +271,41 @@ router.delete(
     }
   }
 );
+
+function createMulterFlightPhotoUploadHandler() {
+  const storage = multer.diskStorage({
+    destination: IMAGE_STORE + "/" + new Date().getFullYear(),
+    filename: function (req, file, cb) {
+      const parts = [
+        req.user?.firstName,
+        req.user?.lastName,
+        req.body.flightId,
+        new Date().getMilliseconds(),
+        file.originalname,
+      ];
+      const newFileName = parts.join("_");
+
+      cb(null, newFileName);
+
+      // Check this out if we want to decline multiple upload of the same image
+
+      // const fs = require("fs");
+      // fs.access(newFileName, fs.constants.F_OK, (err) => {
+      //   logger.debug(
+      //     `FPC: ${newFileName} ${err ? "does not exist" : "exists"}`
+      //   );
+
+      //   err ? cb(null, newFileName) : cb(err);
+      // });
+    },
+  });
+
+  return multer({
+    storage,
+    limits: {
+      files: MAX_PHOTOS,
+    },
+  });
+}
 
 module.exports = router;
