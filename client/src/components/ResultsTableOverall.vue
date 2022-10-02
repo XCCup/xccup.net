@@ -28,8 +28,7 @@
             class="hide-on-sm"
             @head-sort-changed="handleSortChange"
           />
-          <th class="hide-on-xs">Status</th>
-          <th class="hide-on-md"></th>
+          <th class="hide-on-xs"></th>
         </thead>
         <tbody>
           <tr
@@ -116,9 +115,9 @@
               {{ flight.flightPoints }} P
             </td>
             <td class="hide-on-xs">
-              <FlightState :flight-state="flight.flightStatus" />
-            </td>
-            <td class="hide-on-md px-0">
+              <span class="me-3">
+                <FlightState :flight-state="flight.flightStatus"
+              /></span>
               <router-link
                 :to="{
                   name: 'Flight',
@@ -129,7 +128,7 @@
                 @click.stop
               >
                 <i
-                  class="bi bi-box-arrow-up-right me-3"
+                  class="bi bi-box-arrow-up-right"
                   data-bs-toggle="tooltip"
                   data-bs-title="In neuem Fenster öffnen"
                 ></i
