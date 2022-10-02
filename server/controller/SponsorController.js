@@ -116,7 +116,7 @@ router.post(
         sponsorId,
       });
 
-      deleteCache([sponsor.logo?.id]);
+      deleteCache([sponsor.logo?.id, "home"]);
       res.json(logo);
     } catch (error) {
       next(error);
