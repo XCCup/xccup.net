@@ -667,7 +667,7 @@ router.get(
     }
   }
 );
-// @desc Retrieves all user e-mails
+// @desc Retrieves all user e-mails (No developer accounts)
 // @route GET /users/emails/:includeAll
 // Only moderator
 
