@@ -30,30 +30,17 @@ const service = {
           model: Flight,
           as: "flight",
           attributes: ["externalId"],
-          include: {
-            model: User,
-            as: "user",
-            // Nested includes do not allow include virtual fields: https://github.com/sequelize/sequelize/issues/10552
-            attributes: ["id", "firstName", "lastName"],
-          },
         },
-        // FIXME: Direct include fails with "EagerLoadingError [SequelizeEagerLoadingError]: User is not associated to FlightPhoto!"
-        // {
-        //   model: User,
-        //   as: "user",
-        //   attributes: ["firstName", "lastName"],
-        // },
+        {
+          model: User,
+          as: "user",
+          // Nested includes do not allow include virtual fields: https://github.com/sequelize/sequelize/issues/10552
+          attributes: ["firstName", "lastName"],
+        },
       ],
       attributes: ["id", "description", "createdAt"],
-      raw: true,
-      // Nest: true is necessary. See https://github.com/sequelize/sequelize/issues/4291. Can be removed if FIXME was solved.
-      nest: true,
     });
-    return randomPhotos.map((p) => {
-      p.user = p.flight.user;
-      delete p.flight.user;
-      return p;
-    });
+    return randomPhotos.map((p) => p.toJSON());
   },
 
   createArchiveForYear: async (year) => {
@@ -89,9 +76,9 @@ const service = {
 
     logger.info(
       "FPS: Will create photo archive of " +
-      photosOfYear.length +
-      " entries and write it to " +
-      archivePath
+        photosOfYear.length +
+        " entries and write it to " +
+        archivePath
     );
 
     const archive = new AdmZip();
@@ -100,10 +87,10 @@ const service = {
       archive.addLocalFile(
         photoMeta.path,
         /* store photos in folders in zip archive */ photoMeta.user.firstName +
-        "_" +
-        photoMeta.user.lastName +
-        "/Flight_" +
-        photoMeta.flight.externalId.toString()
+          "_" +
+          photoMeta.user.lastName +
+          "/Flight_" +
+          photoMeta.flight.externalId.toString()
       );
     });
     archive.writeZip(archivePath);
