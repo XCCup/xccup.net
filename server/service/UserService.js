@@ -187,10 +187,7 @@ const userService = {
   getEmails: async (includeAll) => {
     const where = {
       role: {
-        [Op.or]: {
-          [Op.not]: ROLE.INACTIVE,
-          [Op.not]: ROLE.DEVELOPER,
-        },
+        [Op.notIn]: [ROLE.INACTIVE, ROLE.DEVELOPER],
       },
     };
 
