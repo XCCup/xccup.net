@@ -28,7 +28,8 @@
             class="hide-on-sm"
             @head-sort-changed="handleSortChange"
           />
-          <th class="hide-on-xs"></th>
+          <th class="hide-on-xs">Status</th>
+          <th class="hide-on-md"></th>
         </thead>
         <tbody>
           <tr
@@ -115,9 +116,9 @@
               {{ flight.flightPoints }} P
             </td>
             <td class="hide-on-xs">
-              <span class="me-3">
-                <FlightState :flight-state="flight.flightStatus"
-              /></span>
+              <FlightState :flight-state="flight.flightStatus" />
+            </td>
+            <td class="hide-on-md">
               <router-link
                 :to="{
                   name: 'Flight',
