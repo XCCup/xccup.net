@@ -12,7 +12,6 @@
           class="col cy-sponsor"
         >
           <a :href="sponsor.website" target="_blank">
-            foo
             <div class="p-2 bg-light mb-4 p-4 sponsor-container">
               <img
                 class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
