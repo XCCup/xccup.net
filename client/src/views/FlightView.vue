@@ -24,7 +24,7 @@ import useAirbuddies from "@/composables/useAirbuddies";
 import { formatFlightDuration } from "@/helper/formatFlightDuration";
 import { formatInTimeZone } from "date-fns-tz";
 import { addMetaTag } from "@/helper/addHtmlMetaTag";
-import { AxiosError } from "axios";
+import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -63,7 +63,7 @@ try {
     } km`
   );
 } catch (error) {
-  if (error instanceof AxiosError && error.response?.status == 404) {
+  if (axios.isAxiosError(error) && error.response?.status == 404) {
     router.push({
       name: "404Resource",
       params: { resource: "Dieser Flug existiert nicht." },

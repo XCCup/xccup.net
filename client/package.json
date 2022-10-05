@@ -20,7 +20,7 @@
     "@popperjs/core": "^2.11.6",
     "@vue-leaflet/vue-leaflet": "^0.6.1",
     "@vueuse/integrations": "^9.3.0",
-    "axios": "^0.27.2",
+    "axios": "^1.0.0",
     "axios-jwt": "^2.0.1",
     "bootstrap": "^5.2.2",
     "bootstrap-dark-5": "^1.1.3",
