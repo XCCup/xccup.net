@@ -47,7 +47,6 @@ const createPopupContent = (club) => {
   return lines.join("");
 };
 
-// TODO: Make this retina friendly
 const addClubMarker = (clubs) => {
   if (clubs.length === 0) return;
 
