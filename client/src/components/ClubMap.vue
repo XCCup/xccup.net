@@ -36,22 +36,17 @@ const userPrefersDark = ref(
 );
 
 const createPopupContent = (club) => {
-  const baseURL = getbaseURL();
   const lines = [];
-  lines.push(`<strong>${club.name}</strong>`);
+  lines.push(`<strong>${club.name}</strong><br>`);
   lines.push(
     `Anzahl Teilnahmen seit 2011: ${club.participantInSeasons.length}`
   );
-  // It was also considered to add the total number of participants. But due to concerns that some clubs will stay absent when there are only a few participants, this idea is for now postponed.
-  // lines.push(`Mitglieder im XCCup: 42`);
+  lines.push("<br>");
   lines.push(
-    `<a href=${club.website} target="_blank" rel="noreferrer noopener">${club.website}</a>`
-  );
-  lines.push(
-    `<a href=${club.website} target="_blank" rel="noreferrer noopener"><img src="${baseURL}clubs/logo/${club.logo.id}?size=thumb" height="50" max-width="150"></a>`
+    `<a href=${club.website} target="_blank" rel="noreferrer noopener">Webseite</a>`
   );
 
-  return lines.join("<br>");
+  return lines.join("");
 };
 
 // TODO: Make this retina friendly
