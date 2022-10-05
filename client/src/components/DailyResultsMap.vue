@@ -9,10 +9,11 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { tileOptions } from "@/config/mapbox";
 import { watchEffect, onMounted, ref } from "vue";
+
+import { leafletMarkerRetinaFix } from "@/helper/leafletRetinaMarkerFix";
+
 // Fix for default marker image paths
-import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
-import iconUrl from "leaflet/dist/images/marker-icon.png?url";
-import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
+leafletMarkerRetinaFix();
 
 const props = defineProps({
   tracks: {
@@ -44,15 +45,6 @@ onMounted(() => {
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptions
   ).addTo(map.value);
-
-  // Fix for default marker image paths
-  delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.imagePath = "/";
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: iconRetinaUrl,
-    iconUrl: iconUrl,
-    shadowUrl: shadowUrl,
-  });
 
   watchEffect(() => highlightTrack(props.highlightedFlight));
 

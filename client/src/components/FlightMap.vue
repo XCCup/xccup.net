@@ -36,8 +36,6 @@ import {
 import type { SimpleFix } from "@/helper/mapHelpers";
 
 // Fix for default marker image paths
-import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
-import iconUrl from "leaflet/dist/images/marker-icon.png?url";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
 
 // Landing marker
@@ -51,6 +49,12 @@ import { tileOptionsSatellite, tileOptions } from "../config/mapbox";
 import type { FlightTurnpoint } from "@/types/Flight";
 
 import useMapPosition, { type MapPosition } from "@/composables/useMapPosition";
+
+import { leafletMarkerRetinaFix } from "@/helper/leafletRetinaMarkerFix";
+
+// Fix for default marker image paths
+leafletMarkerRetinaFix();
+
 const { getPositions } = useMapPosition();
 
 let landingMarker = L.icon({
@@ -133,15 +137,6 @@ onMounted(() => {
   L.control.layers(baseMaps).addTo(map);
   map.setView([50.143, 7.146], 8);
 
-  // Fix for default marker image paths
-  // @ts-expect-error
-  delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.imagePath = "/";
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: iconRetinaUrl,
-    iconUrl: iconUrl,
-    shadowUrl: shadowUrl,
-  });
   // Draw tracklogs and Airspaces
   if (flight.value?.flightTurnpoints)
     drawTurnpoints(flight.value?.flightTurnpoints);
