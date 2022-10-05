@@ -11,7 +11,7 @@ export interface UserAttributes {
   lastName?: string;
   fullName?: string;
   birthday?: Date;
-  role?: string;
+  role?: UserRole;
   gender?: string;
   tshirtSize?: string;
   defaultGlider?: string;
@@ -25,6 +25,14 @@ export interface UserAttributes {
   password?: string;
   token?: string;
 }
+
+// Why are those german?
+type UserRole =
+  | "Administrator"
+  | "Moderator"
+  | "Keine"
+  | "Inaktiv"
+  | "Entwickler";
 
 interface glider {
   id: string;

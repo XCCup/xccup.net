@@ -59,7 +59,9 @@ async function resizeImage(sourcePath, targetPath, maxWidth, options) {
   // Sharp cannot read and write to the same location at the same time.
   // Therefore we create a temporary name for the resized image and change it back later.
   const replaceOriginal = targetPath == sourcePath;
-  const target = replaceOriginal ? sourcePath + "_resize" : targetPath;
+  const target = replaceOriginal
+    ? createTempResizeName(sourcePath)
+    : targetPath;
 
   const image = sharp(sourcePath);
   const metadata = await sharp(sourcePath).metadata();
@@ -100,6 +102,12 @@ async function resizeImage(sourcePath, targetPath, maxWidth, options) {
   fs.rename(target, sourcePath, (err) => {
     if (err) logger.error("IU: " + err);
   });
+}
+
+function createTempResizeName(sourcePath) {
+  const RESIZE_POSTFIX = "_resize";
+  const index = sourcePath.lastIndexOf(".");
+  return sourcePath.slice(0, index) + RESIZE_POSTFIX + sourcePath.slice(index);
 }
 
 /**

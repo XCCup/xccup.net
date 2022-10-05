@@ -75,6 +75,11 @@ const service = {
           as: "flight",
           attributes: ["externalId"],
         },
+        {
+          model: User,
+          as: "user",
+          attributes: ["firstName", "lastName"],
+        },
       ],
       attributes: ["path"],
     });
@@ -84,9 +89,9 @@ const service = {
 
     logger.info(
       "FPS: Will create photo archive of " +
-        photosOfYear.length +
-        " entries and write it to " +
-        archivePath
+      photosOfYear.length +
+      " entries and write it to " +
+      archivePath
     );
 
     const archive = new AdmZip();
@@ -94,7 +99,11 @@ const service = {
       const photoMeta = p.toJSON();
       archive.addLocalFile(
         photoMeta.path,
-        /* store photos in folders in zip archive */ photoMeta.flight.externalId.toString()
+        /* store photos in folders in zip archive */ photoMeta.user.firstName +
+        "_" +
+        photoMeta.user.lastName +
+        "/Flight_" +
+        photoMeta.flight.externalId.toString()
       );
     });
     archive.writeZip(archivePath);

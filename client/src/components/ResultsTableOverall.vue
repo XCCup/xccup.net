@@ -118,7 +118,7 @@
             <td class="hide-on-xs">
               <FlightState :flight-state="flight.flightStatus" />
             </td>
-            <td class="hide-on-md px-0">
+            <td class="hide-on-md">
               <router-link
                 :to="{
                   name: 'Flight',
@@ -129,7 +129,7 @@
                 @click.stop
               >
                 <i
-                  class="bi bi-box-arrow-up-right me-3"
+                  class="bi bi-box-arrow-up-right"
                   data-bs-toggle="tooltip"
                   data-bs-title="In neuem Fenster öffnen"
                 ></i
