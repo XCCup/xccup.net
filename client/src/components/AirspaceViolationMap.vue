@@ -73,23 +73,25 @@ onMounted(() => {
 const drawAirspacesAroundCenter = async (
   centerViolation: AirspaceViolation
 ) => {
+  const formatPoint = (point: number, offset: number) =>
+    (point + offset).toFixed(3);
+
   const bounds =
-    Number.parseFloat(centerViolation.long.toString()) -
-    0.01 +
+    formatPoint(centerViolation.long, -0.01) +
     "," +
-    (Number.parseFloat(centerViolation.lat.toString()) + 0.01).toFixed(3) +
+    formatPoint(centerViolation.lat, 0.01) +
     "|" +
-    (Number.parseFloat(centerViolation.long.toString()) + 0.01).toFixed(3) +
+    formatPoint(centerViolation.long, 0.01) +
     "," +
-    (Number.parseFloat(centerViolation.lat.toString()) + 0.01).toFixed(3) +
+    formatPoint(centerViolation.lat, 0.01) +
     "|" +
-    (Number.parseFloat(centerViolation.long.toString()) + 0.01).toFixed(3) +
+    formatPoint(centerViolation.long, 0.01) +
     "," +
-    (Number.parseFloat(centerViolation.lat.toString()) - 0.01).toFixed(3) +
+    formatPoint(centerViolation.lat, -0.01) +
     "|" +
-    (Number.parseFloat(centerViolation.long.toString()) - 0.01).toFixed(3) +
+    formatPoint(centerViolation.long, -0.01) +
     "," +
-    (Number.parseFloat(centerViolation.lat.toString()) - 0.01).toFixed(3);
+    formatPoint(centerViolation.lat, -0.01);
   drawAirspaces(map, bounds);
 };
 
