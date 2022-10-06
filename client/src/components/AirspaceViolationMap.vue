@@ -13,15 +13,17 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { tileOptions } from "@/config/mapbox";
 import { onMounted, ref } from "vue";
-// Fix for default marker image paths
-import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
-import iconUrl from "leaflet/dist/images/marker-icon.png?url";
-import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
+
 import {
   drawAirspaces,
   drawAirspaceViolationMarkers,
 } from "../helper/mapHelpers";
 import type { AirspaceViolation } from "@/types/Airspace";
+
+import { leafletMarkerRetinaFix } from "@/helper/leafletRetinaMarkerFix";
+
+// Fix for default marker image paths
+leafletMarkerRetinaFix();
 
 const props = defineProps({
   airspaceViolation: {
@@ -55,15 +57,6 @@ onMounted(() => {
     tileOptions
   ).addTo(map);
 
-  // Fix for default marker image paths
-  // @ts-expect-error
-  delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.imagePath = "/";
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: iconRetinaUrl,
-    iconUrl: iconUrl,
-    shadowUrl: shadowUrl,
-  });
   // TODO: This hurts my eyes. Lets find a better naming scheme for this.
   drawAirspaceViolationMarkers(map, props.airspaceViolation.airspaceViolations);
   drawTrack(props.airspaceViolation.flightTrackLine);
@@ -73,23 +66,25 @@ onMounted(() => {
 const drawAirspacesAroundCenter = async (
   centerViolation: AirspaceViolation
 ) => {
+  const formatPoint = (point: number, offset: number) =>
+    (point + offset).toFixed(3);
+
   const bounds =
-    Number.parseFloat(centerViolation.long.toString()) -
-    0.01 +
+    formatPoint(centerViolation.long, -0.01) +
     "," +
-    (Number.parseFloat(centerViolation.lat.toString()) + 0.01).toFixed(3) +
+    formatPoint(centerViolation.lat, 0.01) +
     "|" +
-    (Number.parseFloat(centerViolation.long.toString()) + 0.01).toFixed(3) +
+    formatPoint(centerViolation.long, 0.01) +
     "," +
-    (Number.parseFloat(centerViolation.lat.toString()) + 0.01).toFixed(3) +
+    formatPoint(centerViolation.lat, 0.01) +
     "|" +
-    (Number.parseFloat(centerViolation.long.toString()) + 0.01).toFixed(3) +
+    formatPoint(centerViolation.long, 0.01) +
     "," +
-    (Number.parseFloat(centerViolation.lat.toString()) - 0.01).toFixed(3) +
+    formatPoint(centerViolation.lat, -0.01) +
     "|" +
-    (Number.parseFloat(centerViolation.long.toString()) - 0.01).toFixed(3) +
+    formatPoint(centerViolation.long, -0.01) +
     "," +
-    (Number.parseFloat(centerViolation.lat.toString()) - 0.01).toFixed(3);
+    formatPoint(centerViolation.lat, -0.01);
   drawAirspaces(map, bounds);
 };
 

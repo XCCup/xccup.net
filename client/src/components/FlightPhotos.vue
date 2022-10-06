@@ -146,6 +146,7 @@ import { MAX_PHOTOS } from "@/common/Constants";
 import GLightbox from "glightbox";
 import { createImageSrcSet } from "@/helper/imageHelper";
 import type { DeepReadonly } from "vue";
+import axios from "axios";
 
 import "glightbox/dist/css/glightbox.css";
 
@@ -299,12 +300,13 @@ const uploadPhoto = async (item: UploadCueItem, retryIndex?: number) => {
     // Inform the parent about edits
     photosChanged();
   } catch (error) {
-    // @ts-expect-error: We know that this response could be there
-    if (error?.response?.status == 429) errorMessage.value = MAX_PHOTO_MESSAGE;
-
-    console.log(error);
-    // Trigger the retry button
-    _photos.value[index].id = "failed";
+    if (axios.isAxiosError(error) && error.response?.status == 429) {
+      errorMessage.value = MAX_PHOTO_MESSAGE;
+      // Trigger the retry button
+      _photos.value[index].id = "failed";
+    } else {
+      console.log(error);
+    }
   }
 };
 

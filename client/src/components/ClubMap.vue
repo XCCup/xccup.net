@@ -13,12 +13,10 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { tileOptions } from "@/config/mapbox";
 import { ref, onMounted } from "vue";
-import { getbaseURL } from "@/helper/baseUrlHelper";
+import { leafletMarkerRetinaFix } from "@/helper/leafletRetinaMarkerFix";
 
 // Fix for default marker image paths
-import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png?url";
-import iconUrl from "leaflet/dist/images/marker-icon.png?url";
-import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
+leafletMarkerRetinaFix();
 
 const map = ref(null);
 const logos = ref([]);
@@ -36,25 +34,18 @@ const userPrefersDark = ref(
 );
 
 const createPopupContent = (club) => {
-  const baseURL = getbaseURL();
   const lines = [];
   lines.push(`<strong>${club.name}</strong>`);
   lines.push(
     `Anzahl Teilnahmen seit 2011: ${club.participantInSeasons.length}`
   );
-  // It was also considered to add the total number of participants. But due to concerns that some clubs will stay absent when there are only a few participants, this idea is for now postponed.
-  // lines.push(`Mitglieder im XCCup: 42`);
   lines.push(
-    `<a href=${club.website} target="_blank" rel="noreferrer noopener">${club.website}</a>`
-  );
-  lines.push(
-    `<a href=${club.website} target="_blank" rel="noreferrer noopener"><img src="${baseURL}clubs/logo/${club.logo.id}?size=thumb" height="50" max-width="150"></a>`
+    `<a href=${club.website} target="_blank" rel="noreferrer noopener">Webseite</a>`
   );
 
   return lines.join("<br>");
 };
 
-// TODO: Make this retina friendly
 const addClubMarker = (clubs) => {
   if (clubs.length === 0) return;
 
@@ -92,15 +83,6 @@ onMounted(() => {
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptions
   ).addTo(map.value);
-
-  // Fix for default marker image paths
-  delete L.Icon.Default.prototype._getIconUrl;
-  L.Icon.Default.imagePath = "/";
-  L.Icon.Default.mergeOptions({
-    iconRetinaUrl: iconRetinaUrl,
-    iconUrl: iconUrl,
-    shadowUrl: shadowUrl,
-  });
 
   addClubMarker(props.clubs);
 });
