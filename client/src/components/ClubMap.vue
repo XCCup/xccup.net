@@ -35,16 +35,15 @@ const userPrefersDark = ref(
 
 const createPopupContent = (club) => {
   const lines = [];
-  lines.push(`<strong>${club.name}</strong><br>`);
+  lines.push(`<strong>${club.name}</strong>`);
   lines.push(
     `Anzahl Teilnahmen seit 2011: ${club.participantInSeasons.length}`
   );
-  lines.push("<br>");
   lines.push(
     `<a href=${club.website} target="_blank" rel="noreferrer noopener">Webseite</a>`
   );
 
-  return lines.join("");
+  return lines.join("<br>");
 };
 
 const addClubMarker = (clubs) => {
