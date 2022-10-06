@@ -7,7 +7,7 @@ const { getCurrentYear } = require("../helper/Utils");
 
 const clubService = {
   getAllActive: async () => {
-    return await Club.findAll({
+    return Club.findAll({
       where: {
         participantInSeasons: {
           [Op.contains]: [getCurrentYear()],
@@ -18,7 +18,7 @@ const clubService = {
     });
   },
   getAllNames: async () => {
-    const clubs = await Club.findAll({
+    return Club.findAll({
       where: {
         participantInSeasons: {
           [Op.contains]: [getCurrentYear()],
@@ -27,26 +27,25 @@ const clubService = {
       attributes: ["id", "name"],
       order: [["name", "asc"]],
     });
-    return clubs;
   },
   getAll: async () => {
-    return await Club.findAll();
+    return Club.findAll();
   },
 
   getById: async (id) => {
-    return await Club.findByPk(id, {
+    return Club.findByPk(id, {
       include: createLogoInclude(),
     });
   },
 
   getByShortName: async (shortName) => {
-    return await Club.findOne({
+    return Club.findOne({
       where: { shortName },
     });
   },
 
   getAllMemberOfClub: async (shortName) => {
-    return await User.findAll({
+    return User.findAll({
       attributes: [
         "name",
         "firstName",
@@ -80,11 +79,11 @@ const clubService = {
   },
 
   create: async (club) => {
-    return await Club.create(club);
+    return Club.create(club);
   },
 
   update: async (club) => {
-    return await club.save();
+    return club.save();
   },
 
   delete: async (id) => {

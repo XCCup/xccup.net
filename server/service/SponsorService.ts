@@ -1,9 +1,6 @@
 import db from "../db";
 import { Op } from "sequelize";
-import type {
-  SponsorCreationAttributes,
-  SponsorInstance,
-} from "../db/models/Sponsor";
+import type { SponsorCreationAttributes } from "../db/models/Sponsor";
 
 const { getCurrentYear } = require("../helper/Utils");
 
@@ -16,7 +13,9 @@ const service = {
   },
 
   getAll: async () => {
-    return db.Sponsor.findAll();
+    return db.Sponsor.findAll({
+      include: createLogoInclude(),
+    });
   },
 
   getAllActive: async () => {
@@ -27,7 +26,7 @@ const service = {
         },
       },
       attributes: {
-        exclude: ["sponsorInSeasons", "contacts", "createdAt", "updatedAt"],
+        exclude: ["sponsorInSeasons", "contact", "createdAt", "updatedAt"],
       },
       include: createLogoInclude(),
     });
@@ -37,8 +36,12 @@ const service = {
     return db.Sponsor.create(sponsor);
   },
 
-  update: async (sponsor: SponsorInstance) => {
-    return sponsor.save();
+  update: async (sponsor: SponsorCreationAttributes) => {
+    return db.Sponsor.update(sponsor, {
+      where: {
+        id: sponsor.id,
+      },
+    });
   },
 
   delete: async (id: string) => {

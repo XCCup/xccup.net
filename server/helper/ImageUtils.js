@@ -32,7 +32,7 @@ const IMAGE_SIZES = {
  *
  * @param {String} path The path of the image to which a smaller versions should be created.
  */
-async function createImageVersions(path, options) {
+async function createImageVersions(path, options = {}) {
   if (!path) return logger.error("IU: Missing arguments");
 
   const resizingCalls = Object.values(IMAGE_SIZES).map((format) => {

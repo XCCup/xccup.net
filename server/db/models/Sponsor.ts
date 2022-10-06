@@ -10,7 +10,7 @@ interface SponsorAttributes {
   tagline?: string;
   isGoldSponsor: boolean;
   sponsorInSeasons?: number[];
-  contacts?: Contact;
+  contact?: Contact;
 }
 
 export interface SponsorCreationAttributes
@@ -54,7 +54,7 @@ export function initSponsor(sequelize: Sequelize): Models["Sponsor"] {
     sponsorInSeasons: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
     },
-    contacts: {
+    contact: {
       type: DataTypes.JSON,
     },
   }) as Models["Sponsor"];

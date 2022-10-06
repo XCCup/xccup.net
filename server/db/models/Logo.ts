@@ -1,7 +1,7 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { Models } from "../../types/Models";
 
-interface LogoAttributes {
+export interface LogoAttributes {
   id: string;
   path: string;
   originalname?: string;

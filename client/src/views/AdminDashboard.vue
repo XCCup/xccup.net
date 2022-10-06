@@ -66,6 +66,18 @@
           T-Shirts
         </button>
         <button
+          id="nav-sponsors-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-sponsors"
+          type="button"
+          role="tab"
+          aria-controls="nav-sponsors"
+          aria-selected="false"
+        >
+          Sponsoren
+        </button>
+        <button
           id="nav-photos-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -152,6 +164,14 @@
         <AdminTShirt />
       </div>
       <div
+        id="nav-sponsors"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-sponsors-tab"
+      >
+        <AdminSponsors />
+      </div>
+      <div
         id="nav-photos"
         class="tab-pane fade"
         role="tabpanel"
@@ -197,6 +217,7 @@ import useAuth from "../composables/useAuth";
 import type AdminFlightsVue from "@/components/admin/AdminFlights.vue";
 import type AdminSitesVue from "@/components/admin/AdminSites.vue";
 import AdminPhotos from "../components/admin/AdminPhotos.vue";
+import AdminSponsors from "../components/admin/AdminSponsors.vue";
 
 const { isAdmin } = useAuth();
 

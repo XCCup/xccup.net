@@ -62,11 +62,19 @@ const props = defineProps({
 });
 
 const goldSponsors = computed(() => {
-  return shuffle(props.sponsors.filter((sponsor) => sponsor.isGoldSponsor));
+  return shuffle(
+    props.sponsors.filter(
+      (sponsor) => sponsor.isGoldSponsor && sponsor.logo?.id != undefined
+    )
+  );
 });
 
 const regularSponsors = computed(() => {
-  return shuffle(props.sponsors.filter((sponsor) => !sponsor.isGoldSponsor));
+  return shuffle(
+    props.sponsors.filter(
+      (sponsor) => !sponsor.isGoldSponsor && sponsor.logo?.id != undefined
+    )
+  );
 });
 </script>
 

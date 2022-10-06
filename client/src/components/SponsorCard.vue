@@ -9,7 +9,10 @@
           >Zur Webseite</a
         >
       </div>
-      <div class="col-xl-5 col-md-4 col-sm-6 col-12 text-end">
+      <div
+        v-if="sponsor.logo?.id"
+        class="col-xl-5 col-md-4 col-sm-6 col-12 text-end"
+      >
         <a :href="sponsor.website" target="_blank" class="square-holder">
           <img :src="baseURL + `media/` + sponsor.logo?.id" />
         </a>
