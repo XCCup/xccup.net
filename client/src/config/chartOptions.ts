@@ -1,15 +1,9 @@
-import { ref } from "vue";
 import useMapPosition from "@/composables/useMapPosition";
-import type { ChartOptions, TooltipItem } from "chart.js";
+import type { ChartOptions } from "chart.js";
 import type { BaroTooltipItem } from "@/composables/useMapPosition";
 import { getXccupTimezone } from "@/helper/utils";
 
 const { updatePosition } = useMapPosition();
-
-// Find a way to make this reactive
-const userPrefersDark = ref(
-  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-);
 
 export const options: ChartOptions<"line"> = {
   responsive: true,
@@ -27,13 +21,6 @@ export const options: ChartOptions<"line"> = {
     legend: {
       display: false,
     },
-    // @ts-ignore
-    crosshair: {
-      line: {
-        color: userPrefersDark.value ? "darkgrey" : "#GGG",
-        width: 1,
-      },
-    },
     tooltip: {
       enabled: false,
       mode: "x",
@@ -43,7 +30,7 @@ export const options: ChartOptions<"line"> = {
       },
       // This does nothing but it is needed to trigger the callback
       // even if the tooltip is disabled
-      external: function () { },
+      external: function () {},
       callbacks: {
         label: (context: BaroTooltipItem) => {
           if (context.datasetIndex === 0) return "";
