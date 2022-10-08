@@ -35,8 +35,6 @@ import { Collapse } from "bootstrap";
 import { options } from "@/config/chartOptions";
 import useMapPosition from "@/composables/useMapPosition";
 
-// import { CrosshairPlugin, Interpolate } from "chartjs-plugin-crosshair";
-
 import type { ChartConfiguration } from "chart.js";
 
 Chart.register(
@@ -49,7 +47,6 @@ Chart.register(
   Legend,
   Title,
   Tooltip
-  // CrosshairPlugin
 );
 // Interaction.modes.interpolate = Interpolate;
 
