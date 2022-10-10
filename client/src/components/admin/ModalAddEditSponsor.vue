@@ -115,7 +115,7 @@
 </template>
 <script setup lang="ts">
 import type { Sponsor } from "@/types/Sponsor";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "lodash-es";
 import { computed, ref, watch, watchEffect, type Ref } from "vue";
 
 interface Props {
