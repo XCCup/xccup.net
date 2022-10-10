@@ -126,11 +126,11 @@ const removeGlider = async () => {
     const res = await ApiService.removeGlider(gliderToRemove.value.id);
     if (res.status != 200) throw res.statusText;
     updateGliderData(res.data);
-    showRemoveGliderSpinner.value = false;
     removeGliderModal.value?.hide();
   } catch (error) {
     console.error(error);
     removeGliderErrorMessage.value = "Da ist leider was schief gelaufen";
+  } finally {
     showRemoveGliderSpinner.value = false;
   }
 };

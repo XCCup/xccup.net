@@ -61,10 +61,22 @@
               Goldsponsor
             </label>
           </div>
-          <BaseInput v-model="sponsor.contact.address" label="Adresse" />
-          <BaseInput v-model="sponsor.contact.email" label="E-Mail" />
-          <BaseInput v-model="sponsor.contact.phone" label="Tel." />
-          <BaseInput v-model="sponsor.contact.phone2" label="Tel. (2)" />
+          <!--  This prevents the client from crashing if the contact field does not contain an object.
+                Updating then is not possible, as there is no object to bind to. Instead it is obligatory to 
+                delete the sponsor and add it again. This seems counterintuitive but will only happen on badly imported sponsors.
+                It could be handled more elegant but with much more code. And again: This is very unlikely 
+          -->
+          <div v-if="sponsor.contact">
+            <BaseInput v-model="sponsor.contact.address" label="Adresse" />
+            <BaseInput v-model="sponsor.contact.email" label="E-Mail" />
+            <BaseInput v-model="sponsor.contact.phone" label="Tel." />
+            <BaseInput v-model="sponsor.contact.phone2" label="Tel. (2)" />
+          </div>
+          <div v-else class="text-danger">
+            Der Eintrag dieses Sponsors ist fehlerhaft und muss neu angelegt
+            werden.
+          </div>
+
           <LogoHandler
             v-if="sponsor.id"
             :logo-id="sponsor.logo?.id"
@@ -103,7 +115,7 @@
 </template>
 <script setup lang="ts">
 import type { Sponsor } from "@/types/Sponsor";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "lodash-es";
 import { computed, ref, watch, watchEffect, type Ref } from "vue";
 
 interface Props {
@@ -121,7 +133,7 @@ const emit = defineEmits(["save-sponsor", "logo-updated"]);
 const currentYear = new Date().getFullYear();
 const sponsor: Ref<Sponsor> = ref(cloneDeep(props.sponsorObject));
 const isActiveSponsor = ref(
-  sponsor.value.sponsorInSeasons.includes(currentYear)
+  sponsor.value.sponsorInSeasons?.includes(currentYear)
 );
 
 watch(
@@ -129,24 +141,25 @@ watch(
   () => {
     sponsor.value = cloneDeep(props.sponsorObject);
     isActiveSponsor.value =
-      sponsor.value.sponsorInSeasons.includes(currentYear);
+      sponsor.value.sponsorInSeasons?.includes(currentYear);
   }
 );
 
 watchEffect(() => {
   if (
     isActiveSponsor.value &&
-    !sponsor.value.sponsorInSeasons.includes(currentYear)
+    !sponsor.value.sponsorInSeasons?.includes(currentYear)
   ) {
-    sponsor.value.sponsorInSeasons.push(new Date().getFullYear());
+    sponsor.value.sponsorInSeasons?.push(new Date().getFullYear());
   } else if (!isActiveSponsor.value) {
-    sponsor.value.sponsorInSeasons = sponsor.value.sponsorInSeasons.filter(
+    sponsor.value.sponsorInSeasons = sponsor.value.sponsorInSeasons?.filter(
       (y) => !(y == currentYear)
     );
   }
 });
 
 const saveButtonIsEnabled = computed(() => {
+  if (!sponsor.value.website) return false;
   return sponsor.value.name.length > 1 && sponsor.value.website.length > 1;
 });
 

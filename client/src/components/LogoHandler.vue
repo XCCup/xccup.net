@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import ApiService from "@/services/ApiService";
+import { Modal } from "bootstrap";
 import { watch } from "vue";
 import { onMounted, ref } from "vue";
 
@@ -38,8 +39,11 @@ onMounted(() => {
   photoInput.value = document.getElementById("photo-input-logo");
 });
 
-const errorMessage = ref("");
+const errorMessage = ref<string | null>(null);
+const errorMessageDelete = ref<string | null>(null);
+const showSpinnerDelete = ref(false);
 const localLogoId = ref(props.logoId);
+
 watch(
   () => props.logoId,
   () => (localLogoId.value = props.logoId)
@@ -81,15 +85,32 @@ async function onLogoSelected(e: Event) {
   }
 }
 
+const removeLogoModal = ref<Modal>();
+
+onMounted(() => {
+  const el = document.getElementById("removeLogoModal");
+  if (el) removeLogoModal.value = new Modal(el);
+});
+
 async function onDeleteImage() {
+  if (!props.referenceId) return;
+  errorMessageDelete.value = null;
+  removeLogoModal.value?.show();
+}
+
+async function confirmDeleteImage() {
   try {
     if (!props.referenceId) return;
-
+    showSpinnerDelete.value = true;
     await ApiService.deleteSponsorLogo(props.referenceId);
     emit("logo-updated", "delete-logo");
     localLogoId.value = "";
+    removeLogoModal.value?.hide();
   } catch (error) {
+    errorMessageDelete.value = "Da ist leider was schief gelaufen";
     console.error(error);
+  } finally {
+    showSpinnerDelete.value = false;
   }
 }
 </script>
@@ -104,21 +125,9 @@ async function onDeleteImage() {
     multiple
     @change="onLogoSelected"
   />
+  <div class="bg-light my-2 mx-0 wrapper">
+    <img v-if="localLogoId" :src="getbaseURL() + `media/` + localLogoId" />
 
-  <div class="p-2 bg-light mb-4 p-4 sponsor-box filter position-relative">
-    <img
-      v-if="localLogoId"
-      class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
-      :src="getbaseURL() + `media/` + localLogoId"
-    />
-    <span
-      v-if="localLogoId"
-      class="shadow position-absolute translate-middle clickable badge rounded-pill bg-danger"
-      style="top: 20px; right: -10px"
-      @click.prevent="onDeleteImage"
-    >
-      <i class="bi bi-trash fs-6"></i>
-    </span>
     <button
       v-if="!localLogoId"
       class="btn block w-100 bi bi-plus-square fs-1 text-primary"
@@ -126,9 +135,47 @@ async function onDeleteImage() {
       @click.prevent="onAddPhoto"
     ></button>
   </div>
+  <p>
+    <!-- It's actually counterintuitive that you can press "delete logo" and if you then hit cancel, the logo ist gone anyway.
+    But hey it's only the admin panel 😬 -->
+    <a
+      v-if="localLogoId"
+      href="#"
+      class="text-danger mt-2"
+      @click.prevent="onDeleteImage"
+    >
+      <i class="bi bi-trash fs-6"></i> Logo entfernen</a
+    >
+  </p>
+
   <BaseError
     class="mb-3"
     :error-message="errorMessage"
     data-cy="error-message"
   />
+
+  <BaseModal
+    modal-title="Bist du sicher?"
+    modal-body="Das Logo wird final gelöscht"
+    confirm-button-text="OK"
+    modal-id="removeLogoModal"
+    :confirm-action="confirmDeleteImage"
+    :error-message="errorMessageDelete"
+    :show-spinner="showSpinnerDelete"
+  />
 </template>
+<style>
+.wrapper {
+  display: inline-block;
+  max-height: 100vh;
+  padding: 5px;
+  margin: 5px;
+  background: darkgrey;
+}
+
+.wrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+</style>

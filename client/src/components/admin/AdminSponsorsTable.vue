@@ -62,13 +62,14 @@ const props = withDefaults(defineProps<Props>(), {});
 
 defineEmits(["editSponsor", "deleteSponsor"]);
 
-function beautifyContactForTable(contact: Contact) {
-  if (Object.keys(contact).length == 0) return "";
+function beautifyContactForTable(contact?: Contact) {
+  if (!contact || Object.keys(contact).length == 0) return "";
   const nonEmptyValues = Object.values(contact).filter((v) => v?.length > 0);
   return nonEmptyValues;
 }
 
-function beautifySeasonsForTable(seasons: number[]) {
+function beautifySeasonsForTable(seasons?: number[]) {
+  if (!seasons) return "";
   return seasons.join(", ");
 }
 </script>

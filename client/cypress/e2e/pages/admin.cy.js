@@ -170,7 +170,7 @@ describe("check admin page", () => {
 
     // Wait will table was fetched again
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait(2000);
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedName);
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedWebiste);
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedTagline);
