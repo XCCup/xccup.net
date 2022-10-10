@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import ApiService from "@/services/ApiService";
+import { Modal } from "bootstrap";
 import { watch } from "vue";
 import { onMounted, ref } from "vue";
 
@@ -38,8 +39,11 @@ onMounted(() => {
   photoInput.value = document.getElementById("photo-input-logo");
 });
 
-const errorMessage = ref("");
+const errorMessage = ref<string | null>(null);
+const errorMessageDelete = ref<string | null>(null);
+const showSpinnerDelete = ref(false);
 const localLogoId = ref(props.logoId);
+
 watch(
   () => props.logoId,
   () => (localLogoId.value = props.logoId)
@@ -81,15 +85,32 @@ async function onLogoSelected(e: Event) {
   }
 }
 
+const removeLogoModal = ref<Modal>();
+
+onMounted(() => {
+  const el = document.getElementById("removeLogoModal");
+  if (el) removeLogoModal.value = new Modal(el);
+});
+
 async function onDeleteImage() {
+  if (!props.referenceId) return;
+  errorMessageDelete.value = null;
+  removeLogoModal.value?.show();
+}
+
+async function confirmDeleteImage() {
   try {
     if (!props.referenceId) return;
-
+    showSpinnerDelete.value = true;
     await ApiService.deleteSponsorLogo(props.referenceId);
     emit("logo-updated", "delete-logo");
     localLogoId.value = "";
+    removeLogoModal.value?.hide();
   } catch (error) {
+    errorMessageDelete.value = "Da ist leider was schief gelaufen";
     console.error(error);
+  } finally {
+    showSpinnerDelete.value = false;
   }
 }
 </script>
@@ -105,11 +126,7 @@ async function onDeleteImage() {
     @change="onLogoSelected"
   />
   <div class="bg-light my-2 mx-0 wrapper">
-    <img
-      v-if="localLogoId"
-      class=""
-      :src="getbaseURL() + `media/` + localLogoId"
-    />
+    <img v-if="localLogoId" :src="getbaseURL() + `media/` + localLogoId" />
 
     <button
       v-if="!localLogoId"
@@ -135,6 +152,16 @@ async function onDeleteImage() {
     class="mb-3"
     :error-message="errorMessage"
     data-cy="error-message"
+  />
+
+  <BaseModal
+    modal-title="Bist du sicher?"
+    modal-body="Das Logo wird final gelöscht"
+    confirm-button-text="OK"
+    modal-id="removeLogoModal"
+    :confirm-action="confirmDeleteImage"
+    :error-message="errorMessageDelete"
+    :show-spinner="showSpinnerDelete"
   />
 </template>
 <style>
