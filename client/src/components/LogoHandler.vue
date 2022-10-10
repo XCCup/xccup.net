@@ -104,21 +104,13 @@ async function onDeleteImage() {
     multiple
     @change="onLogoSelected"
   />
-
-  <div class="p-2 bg-light mb-4 p-4 sponsor-box filter position-relative">
+  <div class="bg-light my-2 mx-0 wrapper">
     <img
       v-if="localLogoId"
-      class="mw-100 mh-100 position-relative top-50 start-50 translate-middle"
+      class=""
       :src="getbaseURL() + `media/` + localLogoId"
     />
-    <span
-      v-if="localLogoId"
-      class="shadow position-absolute translate-middle clickable badge rounded-pill bg-danger"
-      style="top: 20px; right: -10px"
-      @click.prevent="onDeleteImage"
-    >
-      <i class="bi bi-trash fs-6"></i>
-    </span>
+
     <button
       v-if="!localLogoId"
       class="btn block w-100 bi bi-plus-square fs-1 text-primary"
@@ -126,9 +118,37 @@ async function onDeleteImage() {
       @click.prevent="onAddPhoto"
     ></button>
   </div>
+  <p>
+    <!-- It's actually counterintuitive that you can press "delete logo" and if you then hit cancel, the logo ist gone anyway.
+    But hey it's only the admin panel 😬 -->
+    <a
+      v-if="localLogoId"
+      href="#"
+      class="text-danger mt-2"
+      @click.prevent="onDeleteImage"
+    >
+      <i class="bi bi-trash fs-6"></i> Logo entfernen</a
+    >
+  </p>
+
   <BaseError
     class="mb-3"
     :error-message="errorMessage"
     data-cy="error-message"
   />
 </template>
+<style>
+.wrapper {
+  display: inline-block;
+  max-height: 100vh;
+  padding: 5px;
+  margin: 5px;
+  background: darkgrey;
+}
+
+.wrapper img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+</style>
