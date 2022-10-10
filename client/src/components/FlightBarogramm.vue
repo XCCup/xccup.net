@@ -29,7 +29,6 @@ import {
 import { processBaroData } from "../helper/baroHelpers";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
-// TODO: Replace all date-fns with luxon?
 import "chartjs-adapter-luxon";
 import { Collapse } from "bootstrap";
 import { options } from "@/config/chartOptions";
