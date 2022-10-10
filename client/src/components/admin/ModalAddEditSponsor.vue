@@ -159,7 +159,7 @@ watchEffect(() => {
 });
 
 const saveButtonIsEnabled = computed(() => {
-  if (!sponsor.value.name || !sponsor.value.website) return false;
+  if (!sponsor.value.website) return false;
   return sponsor.value.name.length > 1 && sponsor.value.website.length > 1;
 });
 

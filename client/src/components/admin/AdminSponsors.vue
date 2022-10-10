@@ -143,10 +143,7 @@ function createNewSponsorObject(): NewSponsor {
 }
 
 function splitSponsorsAndSortEntries(sponsors: Sponsor[]) {
-  sponsors.sort((a, b) => {
-    if (!a.name || !b.name) return 0;
-    return a.name.localeCompare(b.name);
-  });
+  sponsors.sort((a, b) => a.name.localeCompare(b.name));
   activeSponsors.value = sponsors
     .filter((s) => s.sponsorInSeasons?.includes(new Date().getFullYear()))
     .sort((a, b) => Number(b.isGoldSponsor) - Number(a.isGoldSponsor));

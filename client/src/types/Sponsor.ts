@@ -1,9 +1,9 @@
 export interface Sponsor {
   id?: string;
-  name?: string;
+  name: string;
   website?: string;
   tagline?: string;
-  isGoldSponsor?: boolean;
+  isGoldSponsor: boolean;
   sponsorInSeasons?: number[];
   contact?: Contact;
   updatedAt?: Date;
