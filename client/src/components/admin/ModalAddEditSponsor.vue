@@ -72,7 +72,7 @@
             <BaseInput v-model="sponsor.contact.phone" label="Tel." />
             <BaseInput v-model="sponsor.contact.phone2" label="Tel. (2)" />
           </div>
-          <div v-else>
+          <div v-else class="text-danger">
             Der Eintrag dieses Sponsors ist fehlerhaft und muss neu angelegt
             werden.
           </div>
