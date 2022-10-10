@@ -46,7 +46,7 @@ import ApiService from "@/services/ApiService";
 import { Modal } from "bootstrap";
 import { onMounted, ref } from "vue";
 import type { Ref } from "vue";
-import type { Sponsor } from "@/types/Sponsor";
+import type { NewSponsor, Sponsor } from "@/types/Sponsor";
 import AdminSponsorsTable from "./AdminSponsorsTable.vue";
 import ModalAddEditSponsor from "./ModalAddEditSponsor.vue";
 import { GENERIC_ERROR } from "@/common/Constants";
@@ -131,7 +131,7 @@ async function onSave(sponsor: Sponsor) {
   }
 }
 
-function createNewSponsorObject() {
+function createNewSponsorObject(): NewSponsor {
   return {
     name: "",
     website: "",
@@ -143,12 +143,15 @@ function createNewSponsorObject() {
 }
 
 function splitSponsorsAndSortEntries(sponsors: Sponsor[]) {
-  sponsors.sort((a, b) => a.name.localeCompare(b.name));
+  sponsors.sort((a, b) => {
+    if (!a.name || !b.name) return 0;
+    return a.name.localeCompare(b.name);
+  });
   activeSponsors.value = sponsors
-    .filter((s) => s.sponsorInSeasons.includes(new Date().getFullYear()))
+    .filter((s) => s.sponsorInSeasons?.includes(new Date().getFullYear()))
     .sort((a, b) => Number(b.isGoldSponsor) - Number(a.isGoldSponsor));
   furtherSponsors.value = sponsors.filter(
-    (s) => !s.sponsorInSeasons.includes(new Date().getFullYear())
+    (s) => !s.sponsorInSeasons?.includes(new Date().getFullYear())
   );
 }
 </script>
