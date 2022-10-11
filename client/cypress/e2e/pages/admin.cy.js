@@ -146,7 +146,7 @@ describe("check admin page", () => {
       );
   });
 
-  it.only("test add new sponsor", () => {
+  it("test add new sponsor", () => {
     const expectedName = "Ein Sponsor";
     const expectedWebiste = "www.bester-sponsor.de";
     const expectedTagline = "Der beste Sponsor";
