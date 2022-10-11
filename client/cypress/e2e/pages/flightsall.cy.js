@@ -77,7 +77,7 @@ describe("check flights all page", () => {
     );
   });
 
-  it("test filter", () => {
+  it.only("test filter", () => {
     cy.intercept("GET", "filterOptions*").as("get-filter");
     cy.intercept("GET", "flights*").as("get-flights");
 
@@ -91,7 +91,9 @@ describe("check flights all page", () => {
     cy.get("#filterButton").click();
 
     cy.wait("@get-filter");
-
+    // Wait for modal?
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
     cy.get("#filterSelectName").select(expectedName);
     cy.get("#filterSelectClub").select(expectedClub);
     cy.get("#filterSelectTeam").select(expectedTeam);
