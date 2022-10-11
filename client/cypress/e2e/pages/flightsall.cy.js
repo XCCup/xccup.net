@@ -78,8 +78,7 @@ describe("check flights all page", () => {
   });
 
   it("test filter", () => {
-    cy.intercept("GET", "filterOptions*").as("get-filter");
-    cy.intercept("GET", "flights*").as("get-flights");
+    cy.intercept("GET", "/api/flights*").as("get-flights");
 
     const expectedName = "Bobby Volkman";
     const expectedClub = "Die Moselfalken";
@@ -90,7 +89,6 @@ describe("check flights all page", () => {
 
     cy.get("#filterButton").click();
 
-    cy.wait("@get-filter");
     // Wait for modal?
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
