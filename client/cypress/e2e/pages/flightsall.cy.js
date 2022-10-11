@@ -170,7 +170,7 @@ describe("check flights all page", () => {
       .and("include.text", "27 P");
   });
 
-  it.only("test pagination show last and limit 10", () => {
+  it("test pagination show last and limit 10", () => {
     cy.intercept("GET", "filterOptions*").as("get-filter");
     cy.intercept("GET", "flights*").as("get-flights");
 
