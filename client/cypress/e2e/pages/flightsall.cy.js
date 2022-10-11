@@ -77,7 +77,7 @@ describe("check flights all page", () => {
     );
   });
 
-  it.only("test filter", () => {
+  it("test filter", () => {
     cy.intercept("GET", "filterOptions*").as("get-filter");
     cy.intercept("GET", "flights*").as("get-flights");
 

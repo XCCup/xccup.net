@@ -396,6 +396,7 @@ describe("check flight upload page", () => {
       // Wait till flight was fully calculated
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(5000);
+
       cy.visit(`/flug/${flightId}`);
 
       cy.get("[data-cy=flight-details-pilot]")
