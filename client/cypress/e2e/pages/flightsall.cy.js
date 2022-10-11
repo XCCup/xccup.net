@@ -32,14 +32,19 @@ describe("check flights all page", () => {
     const expectedLength = 1;
     const year = new Date().getFullYear();
 
+    cy.intercept("GET", "flights*").as("get-flights");
+
     cy.visit(`${year}/fluege`);
+
+    cy.wait("@get-flights")
+      .its("request.url")
+      .should("include", "/flights?year=" + year + "&limit=50");
 
     cy.get("#select-season").should("have.value", "2022");
     cy.get("#select-season").select((year - 1).toString());
 
-    // Wait till table was updated
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait("@get-flights");
+
     cy.url().should("include", `${year - 1}/fluege`);
 
     cy.get("[data-cy=filter-icon]").should("be.visible");
@@ -73,6 +78,9 @@ describe("check flights all page", () => {
   });
 
   it("test filter", () => {
+    cy.intercept("GET", "filterOptions*").as("get-filter");
+    cy.intercept("GET", "flights*").as("get-flights");
+
     const expectedName = "Bobby Volkman";
     const expectedClub = "Die Moselfalken";
     const expectedTeam = "Die Elstern";
@@ -82,10 +90,8 @@ describe("check flights all page", () => {
 
     cy.get("#filterButton").click();
 
-    // TODO: Test filters more?
-    // Wait till all filter data is loaded
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait("@get-filter");
+
     cy.get("#filterSelectName").select(expectedName);
     cy.get("#filterSelectClub").select(expectedClub);
     cy.get("#filterSelectTeam").select(expectedTeam);
@@ -95,9 +101,8 @@ describe("check flights all page", () => {
 
     cy.get("[data-cy=activate-filter-button]").click();
 
-    // Wait till table was updated
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait("@get-flights");
+
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("[data-cy=no-flights-listed]").should(
@@ -165,16 +170,18 @@ describe("check flights all page", () => {
       .and("include.text", "27 P");
   });
 
-  it("test pagination show last and limit 10", () => {
+  it.only("test pagination show last and limit 10", () => {
+    cy.intercept("GET", "filterOptions*").as("get-filter");
+    cy.intercept("GET", "flights*").as("get-flights");
+
     const expectedName = "Leo Altenwerth";
     const expectedLength = 10;
 
     cy.get("#cyPaginationAmountSelect").select("10");
 
     // Wait till table was updated
+    cy.wait("@get-flights");
     cy.get("[data-cy=filter-icon]").should("be.visible");
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
 
     cy.get("table")
       .get("tbody")
@@ -184,6 +191,7 @@ describe("check flights all page", () => {
     cy.get(".page-item").last().click({ force: true });
 
     // Wait till table was updated
+    cy.wait("@get-flights");
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table")
