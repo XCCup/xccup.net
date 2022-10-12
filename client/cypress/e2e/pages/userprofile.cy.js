@@ -280,7 +280,8 @@ describe("Check user profile", () => {
     const rankingClass = "Schirme EN A+B mit einer Streckung <5,2";
     cy.get("#addGliderModal").within(() => {
       cy.get("#brand-select").select(brand).should("have.value", brand);
-      // cy.wait(1000);
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(1000);
       cy.get("#glider-name").type(gliderName);
       cy.get("[data-cy=save-new-glider-button]").should("be.disabled");
       cy.get("#ranking-class-select").select(rankingClass);
