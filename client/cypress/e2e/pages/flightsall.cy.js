@@ -4,6 +4,7 @@ describe("check flights all page", () => {
   });
 
   beforeEach(() => {
+    cy.intercept("GET", "flights*").as("get-flights");
     cy.visit("/fluege");
   });
 
@@ -32,8 +33,9 @@ describe("check flights all page", () => {
     const expectedLength = 1;
     const year = new Date().getFullYear();
 
-    cy.intercept("GET", "flights*").as("get-flights");
     cy.wait("@get-flights");
+    cy.get("#select-season").should("be.visible");
+    cy.get("table").should("be.visible");
 
     cy.visit(`${year}/fluege`);
 
