@@ -10,11 +10,6 @@ import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { tileOptions } from "@/config/mapbox";
 import { watchEffect, onMounted, ref } from "vue";
 
-import { leafletMarkerRetinaFix } from "@/helper/leafletRetinaMarkerFix";
-
-// Fix for default marker image paths
-leafletMarkerRetinaFix();
-
 const props = defineProps({
   tracks: {
     type: Array,

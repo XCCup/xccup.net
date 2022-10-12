@@ -43,7 +43,7 @@
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "sanitize-html": "^2.7.2",
-    "sequelize": "^6.24.0",
+    "sequelize": "^6.25.0",
     "sharp": "^0.31.1",
     "uuid": "^9.0.0",
     "winston": "^3.8.2"
@@ -60,7 +60,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/lodash": "^4.14.186",
     "@types/morgan": "^1.9.3",
-    "@types/node": "^18.8.3",
+    "@types/node": "^18.8.4",
     "cross-env": "^7.0.3",
     "csv-parser": "^3.0.0",
     "eslint": "^8.25.0",
