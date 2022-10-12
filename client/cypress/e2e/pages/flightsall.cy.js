@@ -28,7 +28,7 @@ describe("check flights all page", () => {
       .and("include.text", "178 P");
   });
 
-  it.only("test flights of previous year", () => {
+  it("test flights of previous year", () => {
     const expectedLength = 1;
     const year = new Date().getFullYear();
 
