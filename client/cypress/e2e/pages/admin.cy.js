@@ -169,7 +169,9 @@ describe("check admin page", () => {
     cy.get("[data-cy=checkSponsorCurrentSeason").check();
     cy.get("[data-cy=checkSponsorGold").check();
     cy.get("Button").filter(":visible").contains("Speichern").click();
-
+    // Wait till modal is gone…
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
     cy.wait("@get-sponsors");
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedName);
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedWebiste);
