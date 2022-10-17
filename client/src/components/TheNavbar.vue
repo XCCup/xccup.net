@@ -72,6 +72,18 @@ const handleLogout = async () => {
                   <i class="bi bi-trophy me-1"></i>Gesamtwertung</router-link
                 >
               </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsClasses',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  <i class="bi bi-trophy-fill me-1"></i
+                  >Klassenwertung</router-link
+                >
+              </li>
               <li><hr class="dropdown-divider" /></li>
 
               <li>
