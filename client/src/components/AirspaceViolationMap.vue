@@ -20,11 +20,6 @@ import {
 } from "../helper/mapHelpers";
 import type { AirspaceViolation } from "@/types/Airspace";
 
-import { leafletMarkerRetinaFix } from "@/helper/leafletRetinaMarkerFix";
-
-// Fix for default marker image paths
-leafletMarkerRetinaFix();
-
 const props = defineProps({
   airspaceViolation: {
     type: Object,
