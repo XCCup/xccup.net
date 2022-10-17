@@ -50,11 +50,6 @@ import type { FlightTurnpoint } from "@/types/Flight";
 
 import useMapPosition, { type MapPosition } from "@/composables/useMapPosition";
 
-import { leafletMarkerRetinaFix } from "@/helper/leafletRetinaMarkerFix";
-
-// Fix for default marker image paths
-leafletMarkerRetinaFix();
-
 const { getPositions } = useMapPosition();
 
 let landingMarker = L.icon({
