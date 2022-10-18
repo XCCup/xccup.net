@@ -16,6 +16,8 @@ describe("check flight upload page", () => {
   });
 
   it("test upload flight", () => {
+    cy.intercept("POST", "photos*").as("post-photo");
+
     const igcFileName = "73320_LA9ChMu1.igc";
     const flightReport = "This is a flight report.";
     const photoCaption = `Super tolles "Bild" 🚀 <a href=""'>foo</a>`;
@@ -136,11 +138,19 @@ describe("check flight upload page", () => {
     cy.get("Button").contains("Streckenmeldung absenden").should("be.disabled");
     cy.get("#acceptTermsCheckbox").check();
 
-    // Wait till all photos are uploaded
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(5000);
+    // Wait till all photos are uploaded (9)
+    for (let i = 1; i <= 9; i++) {
+      cy.wait("@post-photo");
+    }
 
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+
+    // Finish flight submission
     cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
 
     // Expect to be redirected to flight view after submitting
     cy.get("[data-cy=flight-details-pilot]")
@@ -386,6 +396,7 @@ describe("check flight upload page", () => {
       // Wait till flight was fully calculated
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(5000);
+
       cy.visit(`/flug/${flightId}`);
 
       cy.get("[data-cy=flight-details-pilot]")

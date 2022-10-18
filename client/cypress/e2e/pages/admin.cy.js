@@ -151,6 +151,8 @@ describe("check admin page", () => {
     const expectedWebiste = "www.bester-sponsor.de";
     const expectedTagline = "Der beste Sponsor";
 
+    cy.intercept("GET", "/api/sponsors").as("get-sponsors");
+
     cy.get("#nav-sponsors-tab").click();
 
     cy.get("#adminSponsorPanel")
@@ -160,17 +162,17 @@ describe("check admin page", () => {
 
     // Wait till modal was fully loaded
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1000);
+    cy.wait(500);
     cy.get("[data-cy=inputSponsorName").type(expectedName);
     cy.get("[data-cy=inputSponsorWebsite").type(expectedWebiste);
     cy.get("[data-cy=inputSponsorTagline").type(expectedTagline);
     cy.get("[data-cy=checkSponsorCurrentSeason").check();
     cy.get("[data-cy=checkSponsorGold").check();
     cy.get("Button").filter(":visible").contains("Speichern").click();
-
-    // Wait will table was fetched again
+    // Wait till modal is gone…
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(2000);
+    cy.wait(500);
+    cy.wait("@get-sponsors");
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedName);
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedWebiste);
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedTagline);

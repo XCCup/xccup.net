@@ -23,11 +23,10 @@ describe("check siteRecords page", () => {
       form.append("IGCigcIGC", fileContent.toString());
       form.append("igcfn", igcFileName);
 
-      const data = (
-        await axios.post("http://localhost:3000/api/flights/leonardo", form)
-      ).data;
+      await axios.post("http://localhost:3000/api/flights/leonardo", form);
 
       // Wait till flight was fully calculated
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(3000);
       cy.visit(`/fluggebietsrekorde/`);
 
