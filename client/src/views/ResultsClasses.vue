@@ -56,7 +56,6 @@ await initData(ApiService.getResultsOverall, {
 });
 
 const onClassSelected = () => {
-  console.log("Selected Class changed", selectedClass.value);
   filterDataBy({ rankingClass: findKeyOfRankingClass() });
 };
 
