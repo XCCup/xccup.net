@@ -3,7 +3,7 @@ import ApiService from "@/services/ApiService";
 import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
-import useData from "../composables/useData";
+import useData from "@/composables/useData";
 
 interface RankingClasses {
   [key: string]: {
@@ -33,7 +33,7 @@ const selectedClass = ref<null | string>(null);
 try {
   const res = await ApiService.getFilterOptions();
   if (res.data.rankingClasses) {
-    rankingClasses = res.data.rankingClasses;
+    rankingClasses = res.data.rankingClasses as RankingClasses;
     rankingClassDescriptions.value = Object.values(rankingClasses).map(
       (e) => e.shortDescription
     );
@@ -61,7 +61,7 @@ const onClassSelected = () => {
 };
 
 const findKeyOfRankingClass = () => {
-  //TODO: Whey are there these TS erros???
+  if (!rankingClasses) return;
   for (const [key, value] of Object.entries(rankingClasses)) {
     if (value.shortDescription == selectedClass.value) return key;
   }
