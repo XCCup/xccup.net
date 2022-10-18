@@ -4,6 +4,7 @@ import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "@/composables/useData";
+import type { AxiosResponse } from "axios";
 
 interface RankingClasses {
   [key: string]: {
@@ -24,6 +25,7 @@ const {
   dataConstants,
   noDataFlag,
   filterDataBy,
+  activeFilters,
 } = useData();
 
 let rankingClasses: RankingClasses | null = null;
@@ -32,26 +34,20 @@ const selectedClass = ref<null | string>(null);
 
 try {
   const res = await ApiService.getFilterOptions();
-  if (res.data.rankingClasses) {
-    rankingClasses = res.data.rankingClasses as RankingClasses;
-    rankingClassDescriptions.value = Object.values(rankingClasses).map(
-      (e) => e.shortDescription ?? ""
-    );
-    selectedClass.value = rankingClassDescriptions.value[1];
-  } else {
-    console.log("No ranking classes defined");
-  }
+  createRankingClassOptions(res);
 } catch (error) {
   console.log(error);
 }
 
 // Prevent to send a request query with an empty year parameter
 const params = route.params.year ? route.params : undefined;
+
 // Await is necessary to trigger the suspense feature
 await initData(ApiService.getResultsOverall, {
   queryParameters: {
     ...route.query,
     ...params,
+    rankingClass: findKeyOfRankingClass(),
   },
 });
 
@@ -59,12 +55,39 @@ const onClassSelected = () => {
   filterDataBy({ rankingClass: findKeyOfRankingClass() });
 };
 
-const findKeyOfRankingClass = () => {
+function createRankingClassOptions(res: AxiosResponse) {
+  if (res.data.rankingClasses) {
+    rankingClasses = res.data.rankingClasses as RankingClasses;
+    rankingClassDescriptions.value = Object.values(rankingClasses).map(
+      (e) => e.shortDescription ?? ""
+    );
+    selectedClass.value = determineSelectedClass();
+  } else {
+    console.log("No ranking classes defined");
+  }
+}
+
+function findKeyOfRankingClass() {
   if (!rankingClasses) return;
   for (const [key, value] of Object.entries(rankingClasses)) {
     if (value.shortDescription == selectedClass.value) return key;
   }
-};
+}
+
+function determineSelectedClass(): string {
+  const rankingKey = activeFilters.value.rankingClass;
+  if (
+    rankingKey &&
+    rankingClasses &&
+    rankingClasses[rankingKey].shortDescription
+  ) {
+    return (
+      rankingClasses[rankingKey].shortDescription ??
+      rankingClassDescriptions.value[1]
+    );
+  }
+  return rankingClassDescriptions.value[1];
+}
 </script>
 
 <!-- Necessary for <keep-alive> -->
