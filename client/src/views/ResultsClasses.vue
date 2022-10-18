@@ -7,9 +7,9 @@ import useData from "@/composables/useData";
 
 interface RankingClasses {
   [key: string]: {
-    description: string;
-    shortDescription: string;
-    gliderClasses: string[];
+    description?: string;
+    shortDescription?: string;
+    gliderClasses?: string[];
   };
 }
 
@@ -35,7 +35,7 @@ try {
   if (res.data.rankingClasses) {
     rankingClasses = res.data.rankingClasses as RankingClasses;
     rankingClassDescriptions.value = Object.values(rankingClasses).map(
-      (e) => e.shortDescription
+      (e) => e.shortDescription ?? ""
     );
     selectedClass.value = rankingClassDescriptions.value[1];
   } else {
@@ -81,9 +81,9 @@ export default {
     <h3 v-once>{{ title }} {{ route.params?.year }}</h3>
 
     <div v-if="results">
-      <div class="d-flex">
-        <div class="my-2 me-2"><SelectSeason /></div>
-        <div class="my-2">
+      <div class="d-flex mb-4">
+        <div class="my-1 me-2"><SelectSeason /></div>
+        <div class="my-1">
           <select
             id="select-season"
             v-model="selectedClass"
