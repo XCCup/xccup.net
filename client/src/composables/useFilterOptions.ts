@@ -16,5 +16,9 @@ export default () => {
 };
 
 async function fetch() {
-  filterOptions.value = (await ApiService.getFilterOptions()).data;
+  try {
+    filterOptions.value = (await ApiService.getFilterOptions()).data;
+  } catch (error) {
+    console.log(error);
+  }
 }
