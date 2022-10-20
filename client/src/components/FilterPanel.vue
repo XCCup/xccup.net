@@ -296,7 +296,6 @@
 
 <script setup>
 import useData from "../composables/useData";
-import ApiService from "@/services/ApiService";
 import { ref, reactive, computed, onUnmounted, onMounted } from "vue";
 import {
   checkIfAnyValueOfObjectIsDefined,
@@ -305,6 +304,7 @@ import {
 import { FLIGHT_TYPES } from "../common/Constants";
 import { format } from "date-fns";
 import useSwal from "../composables/useSwal";
+import useFilterOptions from "../composables/useFilterOptions";
 import { Tooltip } from "bootstrap";
 
 defineProps({
@@ -366,8 +366,7 @@ const states = ref(null);
 const flightTypes = ref(Object.values(FLIGHT_TYPES));
 
 try {
-  const res = await ApiService.getFilterOptions();
-  filterOptions = res.data;
+  filterOptions = (await useFilterOptions().get()).value;
   userData = filterOptions.userNames;
   siteData = filterOptions.siteNames;
   clubData = filterOptions.clubNames;

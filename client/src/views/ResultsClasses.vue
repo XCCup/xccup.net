@@ -26,8 +26,7 @@ const rankingClassDescriptions = ref<string[]>([]);
 const selectedClass = ref<null | string>(null);
 
 try {
-  rankingClasses =
-    (await useFilterOptions().getFilterOptions()).value?.rankingClasses ?? {};
+  rankingClasses = (await useFilterOptions().get()).value?.rankingClasses ?? {};
   createRankingClassOptions();
 } catch (error) {
   console.log(error);

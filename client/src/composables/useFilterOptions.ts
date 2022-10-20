@@ -12,7 +12,7 @@ export default () => {
     return filterOptions;
   };
 
-  return { getFilterOptions };
+  return { get: getFilterOptions };
 };
 
 async function fetch() {
