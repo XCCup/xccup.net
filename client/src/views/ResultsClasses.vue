@@ -4,15 +4,8 @@ import { ref } from "vue";
 import { setWindowName } from "../helper/utils";
 import { useRoute } from "vue-router";
 import useData from "@/composables/useData";
-import type { AxiosResponse } from "axios";
-
-interface RankingClasses {
-  [key: string]: {
-    description?: string;
-    shortDescription?: string;
-    gliderClasses?: string[];
-  };
-}
+import useFilterOptions from "@/composables/useFilterOptions";
+import type { RankingClasses } from "@/types/FilterOptions";
 
 const route = useRoute();
 const title = ref("Klassenwertung");
@@ -28,13 +21,14 @@ const {
   activeFilters,
 } = useData();
 
-let rankingClasses: RankingClasses | null = null;
+let rankingClasses: RankingClasses;
 const rankingClassDescriptions = ref<string[]>([]);
 const selectedClass = ref<null | string>(null);
 
 try {
-  const res = await ApiService.getFilterOptions();
-  createRankingClassOptions(res);
+  rankingClasses =
+    (await useFilterOptions().getFilterOptions()).value?.rankingClasses ?? {};
+  createRankingClassOptions();
 } catch (error) {
   console.log(error);
 }
@@ -55,20 +49,16 @@ const onClassSelected = () => {
   filterDataBy({ rankingClass: findKeyOfRankingClass() });
 };
 
-function createRankingClassOptions(res: AxiosResponse) {
-  if (res.data.rankingClasses) {
-    rankingClasses = res.data.rankingClasses as RankingClasses;
-    rankingClassDescriptions.value = Object.values(rankingClasses).map(
-      (e) => e.shortDescription ?? ""
-    );
-    selectedClass.value = determineSelectedClass();
-  } else {
-    console.log("No ranking classes defined");
-  }
+function createRankingClassOptions() {
+  rankingClassDescriptions.value = Object.values(rankingClasses).map(
+    (e) => e.shortDescription ?? ""
+  );
+  selectedClass.value = determineSelectedClass();
 }
 
 function findKeyOfRankingClass() {
   if (!rankingClasses) return;
+
   for (const [key, value] of Object.entries(rankingClasses)) {
     if (value.shortDescription == selectedClass.value) return key;
   }
