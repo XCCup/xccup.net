@@ -59,7 +59,6 @@ await initData(ApiService.getUsers, {
  * On the other hand the API enforces the usage of an array.
  * This function handles the possible occurrence of userIds via a route query parameter and transforms it to an array.
  *
- * @param {string|Array} routeQueryParams
  */
 function handleRouteQueryParams() {
   const routeQueryParams = { ...route.query };
