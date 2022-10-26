@@ -288,7 +288,7 @@ export default {
 
   changePassword(password: string) {
     return apiClient.put("users/change-password", {
-      password: password,
+      password,
     });
   },
 
@@ -300,7 +300,7 @@ export default {
 
   changeEmail(email: string) {
     return apiClient.put("users/change-email", {
-      email: email,
+      email,
     });
   },
 

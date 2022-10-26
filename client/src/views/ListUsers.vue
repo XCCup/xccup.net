@@ -49,8 +49,23 @@ const messageUser = (user) => {
 // Await is necessary to trigger the suspense feature
 await initData(ApiService.getUsers, {
   queryParameters: {
-    ...route.query,
+    ...handleRouteQueryParams(),
     records: true,
   },
 });
+
+/**
+ * If userIds are presented via a route query parameter they exist only as a single string.
+ * On the other hand the API enforces the usage of an array.
+ * This function handles the possible occurrence of userIds via a route query parameter and transforms it to an array.
+ *
+ */
+function handleRouteQueryParams() {
+  const routeQueryParams = { ...route.query };
+  if (routeQueryParams.userIds && !Array.isArray(routeQueryParams.userIds)) {
+    routeQueryParams.userIds = routeQueryParams.userIds.split(",");
+  }
+
+  return routeQueryParams;
+}
 </script>
