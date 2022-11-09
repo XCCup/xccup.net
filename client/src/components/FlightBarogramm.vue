@@ -35,6 +35,7 @@ import { options } from "@/config/chartOptions";
 import useMapPosition from "@/composables/useMapPosition";
 
 import type { ChartConfiguration } from "chart.js";
+import { roundWithDigits } from "@/helper/utils";
 
 Chart.register(
   LineElement,
@@ -171,8 +172,7 @@ const config: ChartConfiguration<ChartType> = {
           <i class="bi bi-arrows-expand"></i>
           {{
             getPositions[0]?.positionDetails?.speed
-              ? Math.round(getPositions[0]?.positionDetails?.climb ?? 0 * 10) /
-                10
+              ? roundWithDigits(getPositions[0]?.positionDetails?.climb ?? 0, 1)
               : "0"
           }}
           m/s
