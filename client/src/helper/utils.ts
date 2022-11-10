@@ -37,6 +37,11 @@ export function isInt(value: string) {
   return isInteger(parseInt(value));
 }
 
+export function roundWithDigits(value: number, numberOfDigits: number) {
+  const factor = 10 ** numberOfDigits;
+  return Math.round(value * factor) / factor;
+}
+
 // TODO: How to do this in properly in TS?
 export function findKeyByValue<T1, T2>(object: T1, value: T2) {
   // @ts-ignore

@@ -15,7 +15,9 @@ function execute(fixes: BRecord[]) {
   }
 
   const resolution = (fixes[1].timestamp - fixes[0].timestamp) / 1000;
+  logger.debug("FSC: Resolution " + resolution);
   const step = Math.ceil(TIME_FRAME / resolution);
+  logger.debug("FSC: Step size " + step);
 
   let minHeightBaro = fixes[0].pressureAltitude ?? 0;
   let maxHeightBaro = fixes[0].pressureAltitude ?? 0;
@@ -73,7 +75,7 @@ function execute(fixes: BRecord[]) {
 
   logger.debug("FSC: Finished flight stats calculation");
 
-  return {
+  const result = {
     minHeightBaro,
     maxHeightBaro,
     minHeightGps,
@@ -83,6 +85,17 @@ function execute(fixes: BRecord[]) {
     maxSpeed,
     fixesStats,
   };
+
+  logger.debug(
+    "FSC: Result is " +
+      JSON.stringify(
+        { ...result, fixesStats: ["Empty array for shorter logging"] },
+        null,
+        2
+      )
+  );
+
+  return result;
 }
 
 function pressureHeightDifference(current: BRecord, precessor: BRecord) {
