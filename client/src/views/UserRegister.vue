@@ -149,18 +149,6 @@
         <!-- Checkboxes -->
         <div class="form-check mb-3">
           <input
-            id="flexCheckNewsletter"
-            v-model="userData.emailNewsletter"
-            class="form-check-input"
-            type="checkbox"
-          />
-          <label class="form-check-label" for="flexCheckNewsletter">
-            Newsletter abonieren
-          </label>
-        </div>
-
-        <div class="form-check mb-3">
-          <input
             id="acceptRulesCheckbox"
             v-model="rulesAccepted"
             class="form-check-input"
