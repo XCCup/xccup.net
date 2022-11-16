@@ -1996,6 +1996,13 @@ collect-v8-coverage@^1.0.0:
   resolved "https://registry.npmjs.org/collect-v8-coverage/-/collect-v8-coverage-1.0.1.tgz"
   integrity sha512-iBPtljfCNcTKNAto0KEtDfZ3qzjJvqE3aTGZsbhjSBlorqpXJlaWWtPO35D+ZImoC3KWejX64o+yPGxhWSTzfg==
 
+collections@^5.1.13:
+  version "5.1.13"
+  resolved "https://registry.yarnpkg.com/collections/-/collections-5.1.13.tgz#eee204a93b67473c8e74e00e934a997cc2817585"
+  integrity sha512-SCb6Qd+d3Z02corWQ7/mqXiXeeTdHvkP6TeFSYfGYdCFp1WrjSNZ3j6y8Y3T/7osGEe0iOcU2g1d346l99m4Lg==
+  dependencies:
+    weak-map "~1.0.x"
+
 color-convert@^1.9.0, color-convert@^1.9.3:
   version "1.9.3"
   resolved "https://registry.npmjs.org/color-convert/-/color-convert-1.9.3.tgz"
@@ -2886,6 +2893,18 @@ flat-cache@^3.0.4:
     flatted "^3.1.0"
     rimraf "^3.0.2"
 
+flatbush@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/flatbush/-/flatbush-4.0.0.tgz#4dea9e33f770281d17bd120b54cb08653b9beba0"
+  integrity sha512-8uhCysYGqg9hqyJX8ICqX4PiXcKbdEXGPpVZyGQmPtdWN5uhEF5JtVD3OmVdIL4yuLV6tc+u9D22R+51iKTCDA==
+  dependencies:
+    flatqueue "^2.0.3"
+
+flatqueue@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/flatqueue/-/flatqueue-2.0.3.tgz#dd23673cb478e25d5a9acb9dcbb85c89e9e8e64e"
+  integrity sha512-RZCWZNkmxzUOh8jqEcEGZCycb3B8KAfpPwg3H//cURasunYxsg1eIvE+QDSjX+ZPHTIVfINfK1aLTrVKKO0i4g==
+
 flatted@^3.1.0:
   version "3.2.4"
   resolved "https://registry.npmjs.org/flatted/-/flatted-3.2.4.tgz"
@@ -3218,6 +3237,23 @@ ieee754@^1.1.13:
   version "1.2.1"
   resolved "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz"
   integrity sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==
+
+igc-parser@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/igc-parser/-/igc-parser-1.1.0.tgz#29546737b27110f78ab44e174780f60d59b63072"
+  integrity sha512-CJGWiCcCCxNSI3Pt0zbllHNekEp2NOVCgDysg5/7FuW/uXUUDiW+AcZWSwRwvtRQxnYf+Sn7mQmYKLWQfVSATA==
+  dependencies:
+    flight-recorder-manufacturers "^2.0.0"
+
+igc-xc-score@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/igc-xc-score/-/igc-xc-score-1.7.0.tgz#6d0e175e944926f24fed089499cf713e8c19270b"
+  integrity sha512-49UQM9mbXjTo2mmeRYIq0vszShw8bg8TKhTU2XGwBCmSk0ojJFACajeZKSB0dT8u3F6p+7ap1oRv17g22Xh3PA==
+  dependencies:
+    collections "^5.1.13"
+    flatbush "^4.0.0"
+    igc-parser "^1.1.0"
+    rbush "^3.0.1"
 
 ignore-by-default@^1.0.1:
   version "1.0.1"
@@ -5107,6 +5143,11 @@ quick-lru@^5.1.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
+quickselect@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/quickselect/-/quickselect-2.0.0.tgz#f19680a486a5eefb581303e023e98faaf25dd018"
+  integrity sha512-RKJ22hX8mHe3Y6wH/N3wCM6BWtjaxIyyUIkpHOvfFnxdI4yD4tBXEBKSbriGujF6jnSVkJrffuo6vxACiSSxIw==
+
 range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/range-parser/-/range-parser-1.2.1.tgz"
@@ -5121,6 +5162,13 @@ raw-body@2.5.1:
     http-errors "2.0.0"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+rbush@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/rbush/-/rbush-3.0.1.tgz#5fafa8a79b3b9afdfe5008403a720cc1de882ecf"
+  integrity sha512-XRaVO0YecOpEuIvbhbpTrZgoiI6xBlz6hnlr6EHhd+0x9ase6EmeN+hdwwUaJvLcsFFQ8iWVF1GAK1yB0BWi0w==
+  dependencies:
+    quickselect "^2.0.0"
 
 rc@^1.2.7:
   version "1.2.8"
@@ -6082,6 +6130,11 @@ walker@^1.0.8:
   integrity sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==
   dependencies:
     makeerror "1.0.12"
+
+weak-map@~1.0.x:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/weak-map/-/weak-map-1.0.8.tgz#394c18a9e8262e790544ed8b55c6a4ddad1cb1a3"
+  integrity sha512-lNR9aAefbGPpHO7AEnY0hCFjz1eTkWCXYvkTRrTHs9qv8zJp+SkVYpzfLIFXQQiG3tVvbNFQgVg2bQS8YGgxyw==
 
 which@^2.0.1, which@^2.0.2:
   version "2.0.2"
