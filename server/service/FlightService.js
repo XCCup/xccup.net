@@ -456,9 +456,13 @@ const flightService = {
   },
 
   startResultCalculation: async (flight) => {
+    var startTime = performance.now();
+
     const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
     IgcAnalyzer.startCalculation(flight, flightTypeFactors, (result) => {
       flightService.addResult(result);
+      var endTime = performance.now();
+      console.log(`*** OLC took ${endTime - startTime} milliseconds`);
     }).catch((error) => logger.error(error));
   },
 

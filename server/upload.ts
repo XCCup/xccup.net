@@ -39,6 +39,18 @@ async function main() {
   // Convert igc to JSON
   const igcData = igc2JSON(igcContent);
 
+  // Start alternative OLC calculation
+  var startTime = performance.now();
+  const result = solver(igcData, scoring.FFVL, { trim: true }).next().value;
+
+  var endTime = performance.now();
+  console.log(`*** xc-igc-score took ${endTime - startTime} milliseconds`);
+
+  if (result.optimal) console.log(`score is ${result}`);
+  console.warn(result);
+
+  startTime = performance.now();
+
   // Detect manipulation
 
   // Remove non flight fixes
@@ -48,6 +60,7 @@ async function main() {
 
   // Calculate airtime
   flightDbRef.airtime = calcAirtime(igcData.fixes);
+  console.log("*** Airtime", calcAirtime(igcData.fixes));
 
   // Add date related stats
   const { takeoffTime, landingTime, isWeekend } = getDateStats(igcData.fixes);
@@ -62,6 +75,9 @@ async function main() {
 
   // Detect if flight was uploaded before
 
+  endTime = performance.now();
+  console.log(`*** everything else ${endTime - startTime} milliseconds`);
+
   // Detect takeoff and landing location
   const { siteId, region, landing } = await getTakeoffAndLanding(igcData.fixes);
 
@@ -73,14 +89,6 @@ async function main() {
 
   // Start OLC calculation
   await FlightService.startResultCalculation(flightDbRef);
-
-  // Start alternative OLC calculation
-  var startTime = performance.now();
-  const result = solver(igcData, scoring.FFVL).next().value;
-  var endTime = performance.now();
-  console.log(`*** xc-igc-score took ${endTime - startTime} milliseconds`);
-
-  if (result.optimal) console.log(`score is ${result}`);
 
   //
 

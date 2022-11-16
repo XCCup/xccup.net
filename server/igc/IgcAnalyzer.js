@@ -50,8 +50,6 @@ const IgcAnalyzer = {
     flightTypeFactorParameter,
     callbackFunction
   ) => {
-    var startTime = performance.now();
-
     flightTypeFactors = flightTypeFactorParameter;
     callback = callbackFunction;
 
@@ -89,8 +87,6 @@ const IgcAnalyzer = {
     );
 
     writeStream.end(() => runOlc(pathToFile, flightDataObject, false));
-    var endTime = performance.now();
-    console.log(`*** OLC took ${endTime - startTime} milliseconds`);
   },
 
   extractFixes: (flight) => {
