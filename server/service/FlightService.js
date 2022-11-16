@@ -393,7 +393,7 @@ const flightService = {
     }
 
     flight.save();
-    checkSiteRecordsAndUpdate(flight);
+    // checkSiteRecordsAndUpdate(flight);
     deleteCache(["home", "flights", "results"]);
   },
 
