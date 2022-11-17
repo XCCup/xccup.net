@@ -49,9 +49,10 @@ app.use(
 
 // Development Tools
 if (config.get("env") !== "production") {
-  // https://expressjs.com/en/resources/middleware/cors.html
-  // https://medium.com/swlh/simple-steps-to-fix-cors-error-a2029f9b257a
   app.use(cors());
+} else {
+  // Allow alternative client on render.com
+  app.use(cors({ origin: "https://render.xccup.net" }));
 }
 // The default size limit for a request body is 100kb
 // IGC-Files can easily exceed this limit
