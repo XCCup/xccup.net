@@ -54,7 +54,7 @@ services:
       - xccup-db:/var/lib/postgresql/data
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     container_name: xccup-db-admin
     restart: always
     env_file: ./server/.env
