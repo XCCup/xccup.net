@@ -298,4 +298,35 @@ describe("Check user profile", () => {
           .should("include.text", "Little Cloud Foo 2 (GS Sport low)");
       });
   });
+
+  it("Visit profile and sort my flights table", () => {
+    cy.get("h3", {
+      timeout: 10000,
+    }).should("have.text", `Login`);
+
+    cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
+    cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
+    cy.visit("/profil");
+
+    cy.get("h4", {
+      timeout: 10000,
+    }).should("have.text", `Profil`);
+
+    const expectedDate = "20.04.22";
+    const expectedDateAfterSort = "20.02.22";
+
+    cy.get("[data-cy=my-flights-tab]").click();
+    cy.get("[data-cy=my-flights-table]").should("be.visible");
+    cy.get('[index="0"] > :nth-child(1) > span').should(
+      "include.text",
+      expectedDate
+    );
+
+    cy.get("thead > :nth-child(1)").click().click();
+
+    cy.get('[index="0"] > :nth-child(1) > span').should(
+      "include.text",
+      expectedDateAfterSort
+    );
+  });
 });
