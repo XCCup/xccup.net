@@ -3,6 +3,10 @@
     <div v-if="sponsors">
       <!-- TODO: Shall the year be named? -->
       <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
+      <p>
+        Ihr möchtet auch Sponsor werden? Wir freuen uns auf eure
+        <router-link :to="{ name: 'Imprint' }">Kontaktaufnahme</router-link>.
+      </p>
       <div v-if="sponsors?.length > 0" class="row gy-5 gx-5">
         <div
           v-for="sponsor in sponsors"
