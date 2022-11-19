@@ -299,7 +299,12 @@ describe("Check user profile", () => {
       });
   });
 
-  it("Visit profile and sort my flights table", () => {
+  it.only("Visit profile and sort my flights table", () => {
+    cy.intercept(
+      "GET",
+      "/api/flights/self?limit=50&sortCol=takeoffTime&sortOrder=ASC"
+    ).as("get-flights-asc");
+
     cy.get("h3", {
       timeout: 10000,
     }).should("have.text", `Login`);
@@ -317,16 +322,19 @@ describe("Check user profile", () => {
 
     cy.get("[data-cy=my-flights-tab]").click();
     cy.get("[data-cy=my-flights-table]").should("be.visible");
-    cy.get('[index="0"] > :nth-child(1) > span').should(
-      "include.text",
-      expectedDate
-    );
 
-    cy.get("thead > :nth-child(1)").click().click();
+    cy.get("[data-cy=my-flights-table]")
+      .find("tr")
+      .first()
+      .should("include.text", expectedDate);
 
-    cy.get('[index="0"] > :nth-child(1) > span').should(
-      "include.text",
-      expectedDateAfterSort
-    );
+    cy.get("thead").contains("Datum").click().click();
+
+    cy.wait("@get-flights-asc");
+
+    cy.get("[data-cy=my-flights-table]")
+      .find("tr")
+      .first()
+      .should("include.text", expectedDateAfterSort);
   });
 });
