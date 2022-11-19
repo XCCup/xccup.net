@@ -199,7 +199,7 @@ const config: ChartConfiguration<ChartType> = {
     </div>
     <!-- Baro Switch -->
     <div
-      v-if="flight?.fixes && flight?.fixes[0].pressureAltitude"
+      v-if="flight?.fixes && flight?.fixes[0]?.pressureAltitude"
       id="altSwitchCollapse"
       class="collapse container"
     >
