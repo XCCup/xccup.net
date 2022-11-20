@@ -179,8 +179,8 @@ export default {
   getFlightViolations() {
     return apiClient.get("flights/violations");
   },
-  getFlightsSelf() {
-    return apiClient.get("flights/self");
+  getFlightsSelf(params: FlightsFilterParams) {
+    return apiClient.get("flights/self", { params });
   },
   acceptFlightViolations(flightId: string) {
     return apiClient.put("flights/acceptViolation/" + flightId);
