@@ -1,7 +1,10 @@
 const FlyingSite = require("../db")["FlyingSite"];
 const logger = require("../config/logger");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
-const elevationAttacher = require("../igc/ElevationAttacher");
+const {
+  getElevationData,
+  logElevationError,
+} = require("../igc/ElevationHelper");
 const Club = require("../db")["Club"];
 const User = require("../db")["User"];
 
@@ -47,6 +50,7 @@ const siteService = {
       "createdAt",
       "locationData",
       "heightDifference",
+      "elevation",
     ];
     if (state == STATES.PROPOSAL) attributes.push("submitter");
 
@@ -88,14 +92,14 @@ const siteService = {
     heightDifference,
     submitter,
   }) => {
-    const elevationResult = (
-      await elevationAttacher.executeWithPromise([
-        {
-          latitude: lat,
-          longitude: long,
-        },
-      ])
-    )[0];
+    let elevation;
+    const location = [{ latitude: lat, longitude: long }];
+    try {
+      const res = await getElevationData(location);
+      elevation = res[0];
+    } catch (error) {
+      logElevationError(error);
+    }
 
     const site = {
       name,
@@ -106,7 +110,7 @@ const siteService = {
         region,
       },
       heightDifference,
-      elevation: elevationResult?.elevation,
+      elevation,
       state: STATES.PROPOSAL,
       submitter: submitter.id,
       point: {

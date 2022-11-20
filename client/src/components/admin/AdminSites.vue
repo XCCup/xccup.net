@@ -6,24 +6,36 @@
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Name</th>
-            <th>Startrichtung</th>
-            <th>Website</th>
-            <th>Verein</th>
-            <th>Lat</th>
-            <th>Long</th>
-            <th>Hochgeladen am</th>
-            <th>Nachricht an Pilot</th>
-            <th>Akzeptieren</th>
-            <th>Gebiet löschen</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
           </thead>
           <tbody>
             <tr v-for="site in sites" :key="site.id" :item="site">
               <td>{{ site.name }}</td>
               <td>{{ site.direction }}</td>
-              <td>{{ site.website }}</td>
-              <td>{{ site.club?.name }}</td>
-              <td>{{ site.point?.coordinates[0] }}</td>
-              <td>{{ site.point?.coordinates[1] }}</td>
+              <td>{{ site.elevation }}m</td>
+              <td>
+                <i class="bi bi-arrow-bar-down"></i>
+                {{ site.heightDifference }}m
+              </td>
+              <td><a :href="site.website" target="_blank">Webseite</a></td>
+              <td>{{ site.club?.name ?? "Kein Verein" }}</td>
+              <td>
+                <a
+                  :href="`https://maps.google.com/?q=${site.point?.coordinates[1]},${site.point?.coordinates[0]}`"
+                  target="_blank"
+                >
+                  Auf Karte zeigen
+                </a>
+              </td>
               <td>
                 <BaseDate :timestamp="site.createdAt" />
               </td>
