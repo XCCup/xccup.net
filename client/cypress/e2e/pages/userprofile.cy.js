@@ -323,16 +323,18 @@ describe("Check user profile", () => {
     cy.get("[data-cy=my-flights-tab]").click();
     cy.get("[data-cy=my-flights-table]").should("be.visible");
 
-    cy.get("[data-cy=my-flights-table] tr")
-      .first()
-      .should("include.text", expectedDate);
+    cy.get('[index="0"] > :nth-child(1) > span').should(
+      "include.text",
+      expectedDate
+    );
 
     cy.get("thead").contains("Datum").click().click();
 
     cy.wait("@get-flights-asc");
 
-    cy.get("[data-cy=my-flights-table] tr")
-      .first()
-      .should("include.text", expectedDateAfterSort);
+    cy.get('[index="0"] > :nth-child(1) > span').should(
+      "include.text",
+      expectedDateAfterSort
+    );
   });
 });
