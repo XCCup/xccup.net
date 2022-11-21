@@ -41,17 +41,6 @@ interface MailFrom {
   address: string;
 }
 
-async function getMailCLient() {
-  if (config.get("env") !== "production") {
-    logger.info("E: Use test smtp server");
-    return await createTestNodemailerTransport();
-  } else {
-    logger.info("E: Use production smtp server");
-    // TODO: Shall we use "pool true" to send newsletters etc?
-    return nodemailer.createTransport(prodSmtp);
-  }
-}
-
 /**
  * Sends an e-mail to a single recipent or multiple recipents.
  *
@@ -108,6 +97,18 @@ export const sendMail = async (
 
   return true;
 };
+
+async function getMailCLient() {
+  if (config.get("env") !== "production") {
+    logger.info("E: Use test smtp server");
+    return await createTestNodemailerTransport();
+  } else {
+    logger.info("E: Use production smtp server");
+    // TODO: Shall we use "pool true" to send newsletters etc?
+    return nodemailer.createTransport(prodSmtp);
+  }
+}
+
 function createMessage(
   from: MailFrom,
   toAddresses: string | string[],
