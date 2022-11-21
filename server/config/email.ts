@@ -12,6 +12,13 @@ const prodSmtp = {
     pass: config.get("mailServicePassword"),
   },
 };
+let mailClient: nodemailer.Transporter | undefined;
+
+async function initializeMailClient() {
+  mailClient = await getMailCLient();
+}
+
+initializeMailClient();
 
 async function createTestNodemailerTransport() {
   // Generate SMTP service account from ethereal.email
@@ -74,8 +81,8 @@ const sendMail = async (
     content,
     replyTo
   );
+
   try {
-    const mailClient = await getMailCLient();
     if (!mailClient) throw new Error("No mail client defined");
 
     const info = await mailClient.sendMail(message);

@@ -145,6 +145,7 @@ Cypress.Commands.add(
           if (data?.message && data?.message.includes(text)) break;
         } catch (error) {
           console.log(error);
+        } finally {
           await delay(2000);
         }
       }
