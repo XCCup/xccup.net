@@ -61,6 +61,7 @@
     "@types/lodash": "^4.14.189",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.9",
+    "@types/nodemailer": "^6.4.6",
     "cross-env": "^7.0.3",
     "csv-parser": "^3.0.0",
     "eslint": "^8.28.0",
