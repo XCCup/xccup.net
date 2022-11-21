@@ -136,13 +136,17 @@ Cypress.Commands.add(
       let data;
       // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
       for (let index = 0; index < 3; index++) {
-        data = (
-          await axios.get(
-            `http://localhost:3000/api/testdata/email/${recipientMail}`
-          )
-        ).data;
-        if (data.message && data.message.includes(text)) break;
-        await delay(2000);
+        try {
+          data = (
+            await axios.get(
+              `http://localhost:3000/api/testdata/email/${recipientMail}`
+            )
+          ).data;
+          if (data.message && data.message.includes(text)) break;
+          await delay(2000);
+        } catch (error) {
+          console.log(error);
+        }
       }
 
       expect(data.message, `No message for ${recipientMail} found`).to.exist;
