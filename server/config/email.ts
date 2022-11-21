@@ -30,6 +30,16 @@ async function createTestNodemailerTransport() {
     console.error("Failed to create a testing account. " + error.message);
   }
 }
+interface MailContent {
+  title: string;
+  text: string;
+  attachments?: any;
+}
+
+interface MailFrom {
+  name: string;
+  address: string;
+}
 
 async function getMailCLient() {
   if (config.get("env") !== "production") {
@@ -50,8 +60,11 @@ async function getMailCLient() {
  * @param {string} [replyTo] The replyTo address which will be added to the send e-mail.
  * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
  */
-// @ts-ignore
-export const sendMail = async (mailAddresses, content, replyTo?) => {
+export const sendMail = async (
+  mailAddresses: string | string[],
+  content: MailContent,
+  replyTo?: string
+) => {
   if (
     !content.title ||
     !content.text ||
@@ -59,7 +72,6 @@ export const sendMail = async (mailAddresses, content, replyTo?) => {
     content.text.length == 0
   )
     throw "content.title and content.text are not allowed to be empty";
-
   const message = createMessage(
     {
       name: config.get("mailServiceFromName"),
@@ -96,8 +108,12 @@ export const sendMail = async (mailAddresses, content, replyTo?) => {
 
   return true;
 };
-//@ts-ignore
-function createMessage(from, toAddresses, content, replyTo?) {
+function createMessage(
+  from: MailFrom,
+  toAddresses: string | string[],
+  content: MailContent,
+  replyTo?: string
+) {
   // TODO: Sent mails are not saved. this is out of scope of nodemailer. Use node-imap instead?
   const isArray = Array.isArray(toAddresses);
   const to = isArray ? undefined : toAddresses;
