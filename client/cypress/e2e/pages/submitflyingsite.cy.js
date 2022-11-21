@@ -50,29 +50,23 @@ describe("check flyingsites page", () => {
     cy.get("#nav-sites-tab").click();
 
     cy.get("#adminSitesPanel").within(() => {
-      cy.get("table")
-        .contains("td", expectedName)
-        .parent()
-        .should("include.text", expectedDirection)
-        // TODO: Add fancy test that get the href of the links
-        // .and("include.text", expectedWebsite)
-        // .and("include.text", expectedLat)
-        // .and("include.text", expectedLong);
-        .and("include.text", expectedClub)
-        .and("include.text", expectedHeightDifference)
-        .and("include.text", expectedElevation);
+      cy.get("[data-cy=site-name]").contains(expectedName);
+      cy.get("[data-cy=site-direction]").contains(expectedDirection);
+      cy.get("[data-cy=site-elevation]").contains(expectedElevation);
+      cy.get("[data-cy=site-heightDifference]").contains(
+        expectedHeightDifference
+      );
+      cy.get("[data-cy=site-club]").contains(expectedClub);
+      cy.get("[data-cy=site-name]").contains(expectedName);
     });
 
     // Accept the proposed site
-    cy.get("#adminSitesPanel").within(() => {
-      cy.get("table")
-        .contains("td", expectedName)
-        .parent()
-        .find("td")
-        .eq(9)
-        .find("button")
-        .click();
-    });
+    cy.get(
+      ':nth-child(2) > :nth-child(10) > [data-cy="site-accept"] > .bi'
+    ).click();
+    // cy.get(":nth-child(2)]").within(() => {
+    //   cy.get("[data-cy=site-accept]").click();
+    // });
 
     cy.clickButtonInModal("#modalSiteConfirm", "Akzeptieren");
 

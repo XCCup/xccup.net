@@ -19,16 +19,20 @@
           </thead>
           <tbody>
             <tr v-for="site in sites" :key="site.id" :item="site">
-              <td>{{ site.name }}</td>
-              <td>{{ site.direction }}</td>
-              <td>{{ site.elevation }}m</td>
-              <td>
+              <td data-cy="site-name">{{ site.name }}</td>
+              <td data-cy="site-direction">{{ site.direction }}</td>
+              <td data-cy="site-elevation">{{ site.elevation }}m</td>
+              <td data-cy="site-heightDifference">
                 <i class="bi bi-arrow-bar-down"></i>
                 {{ site.heightDifference }}m
               </td>
-              <td><a :href="site.website" target="_blank">Webseite</a></td>
-              <td>{{ site.club?.name ?? "Kein Verein" }}</td>
-              <td>
+              <td data-cy="site-website">
+                <a :href="site.website" target="_blank">Webseite</a>
+              </td>
+              <td data-cy="site-club">
+                {{ site.club?.name ?? "Kein Verein" }}
+              </td>
+              <td data-cy="site-website">
                 <a
                   :href="`https://maps.google.com/?q=${site.point?.coordinates[1]},${site.point?.coordinates[0]}`"
                   target="_blank"
@@ -36,12 +40,13 @@
                   Auf Karte zeigen
                 </a>
               </td>
-              <td>
+              <td data-cy="site-date">
                 <BaseDate :timestamp="site.createdAt" />
               </td>
               <td>
                 <a
                   class="btn btn-outline-primary btn-sm"
+                  data-cy="site-mail"
                   :href="`mailto:${site.submitter?.email}?subject=Dein Fluggebietsvorschlag (${site.name})`"
                 >
                   <i class="bi bi-envelope"></i>
@@ -50,6 +55,7 @@
               <td>
                 <button
                   class="btn btn-outline-primary btn-sm"
+                  data-cy="site-accept"
                   @click="onAccept(site)"
                 >
                   <i class="bi bi-check2-circle"></i>
@@ -58,6 +64,7 @@
               <td>
                 <button
                   class="btn btn-outline-danger btn-sm"
+                  data-cy="site-delete"
                   @click="onDelete(site)"
                 >
                   <i class="bi bi-trash"></i>
