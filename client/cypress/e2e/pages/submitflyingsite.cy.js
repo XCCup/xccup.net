@@ -27,7 +27,6 @@ describe("check flyingsites page", () => {
     const expectedWebsite = "www.laacher-see.de";
     const expectedClub = "DFC Vulkaneifel";
     const expectedHeightDifference = "123";
-    const expectedElevation = "276";
     const expectedLat = "50.413106647";
     const expectedLong = "7.270120454";
 
@@ -52,7 +51,6 @@ describe("check flyingsites page", () => {
     cy.get("#adminSitesPanel").within(() => {
       cy.get("[data-cy=site-name]").contains(expectedName);
       cy.get("[data-cy=site-direction]").contains(expectedDirection);
-      cy.get("[data-cy=site-elevation]").contains(expectedElevation);
       cy.get("[data-cy=site-heightDifference]").contains(
         expectedHeightDifference
       );
