@@ -529,7 +529,7 @@ Euer Server-Knecht`;
     });
   });
 
-  it.only("test upload flight and get metar data", () => {
+  it("test upload flight and get metar data", () => {
     const igcFileName = "104km.igc";
     const expectedTakeoff = "Hoher Meissner Uengsterode";
     const expectedFirstMetar =

@@ -51,7 +51,7 @@ test("Constant climb of 5 m/s on flight with 5 second resolution; Static horizon
   expect(fixesStats.length).toBe(fixes.length);
 });
 
-test.only("Constant sink of 2 m/s on flight with 2 second resolution; Static horizontal position", () => {
+test("Constant sink of 2 m/s on flight with 2 second resolution; Static horizontal position", () => {
   const fixes = createFixesWithConstantClimb(100, 2, -2, 50, 500);
 
   const {
