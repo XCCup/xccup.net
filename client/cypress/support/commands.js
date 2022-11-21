@@ -142,15 +142,14 @@ Cypress.Commands.add(
               `http://localhost:3000/api/testdata/email/${recipientMail}`
             )
           ).data;
-          if (data.message && data.message.includes(text)) break;
-          await delay(2000);
+          if (data?.message && data?.message.includes(text)) break;
         } catch (error) {
           console.log(error);
+          await delay(2000);
         }
       }
-
-      expect(data.message, `No message for ${recipientMail} found`).to.exist;
-      expect(data.message).to.include(text);
+      expect(data?.message).to.exist;
+      expect(data?.message).to.include(text);
     });
   }
 );
