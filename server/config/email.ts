@@ -49,7 +49,7 @@ interface MailFrom {
  * @param {string} [replyTo] The replyTo address which will be added to the send e-mail.
  * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
  */
-export const sendMail = async (
+const sendMail = async (
   mailAddresses: string | string[],
   content: MailContent,
   replyTo?: string
@@ -60,7 +60,10 @@ export const sendMail = async (
     content.title.length == 0 ||
     content.text.length == 0
   )
-    throw "content.title and content.text are not allowed to be empty";
+    throw new Error(
+      "content.title and content.text are not allowed to be empty"
+    );
+
   const message = createMessage(
     {
       name: config.get("mailServiceFromName"),
@@ -133,3 +136,4 @@ function createMessage(
 }
 
 module.exports = sendMail;
+export default sendMail;
