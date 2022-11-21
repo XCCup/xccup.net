@@ -379,21 +379,6 @@ const service = {
       );
     }
   },
-
-  sendMailAll: async (userId: string, content: MailContent) => {
-    logger.info(`MS: ${userId} requested to send an email to all users`);
-
-    const query = {
-      attributes: ["email"],
-      where: {
-        emailNewsletter: true,
-      },
-    };
-
-    const mailAddresses = await db.User.findAll(query);
-
-    return sendMail(mailAddresses, content);
-  },
 };
 
 async function sendCommentMail(
