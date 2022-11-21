@@ -409,9 +409,6 @@ const flightService = {
 
     try {
       const elevations = await getElevationData(combinedFixes);
-
-      // Type of first argument will not match when FLightService will
-      // be converted to TS because it's not typed in DB model
       addElevationToFixes(flightFixesRef.timeAndHeights, elevations);
 
       // It's necessary to explicit call "changed", because a call to "save" will
