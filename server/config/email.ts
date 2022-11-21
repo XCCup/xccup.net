@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import logger from "./logger";
-import { default as config } from "./env-config";
+import config from "../config/env-config";
 import retrieveTestMail from "../parser/etherealMailParser";
 
 const prodSmtp = {
@@ -51,7 +51,7 @@ async function getMailCLient() {
  * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
  */
 // @ts-ignore
-const sendMail = async (mailAddresses, content, replyTo) => {
+export const sendMail = async (mailAddresses, content, replyTo?) => {
   if (
     !content.title ||
     !content.text ||
@@ -97,7 +97,7 @@ const sendMail = async (mailAddresses, content, replyTo) => {
   return true;
 };
 //@ts-ignore
-function createMessage(from, toAddresses, content, replyTo) {
+function createMessage(from, toAddresses, content, replyTo?) {
   // TODO: Sent mails are not saved. this is out of scope of nodemailer. Use node-imap instead?
   const isArray = Array.isArray(toAddresses);
   const to = isArray ? undefined : toAddresses;

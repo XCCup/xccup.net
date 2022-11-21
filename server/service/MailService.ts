@@ -1,4 +1,4 @@
-import sendMail from "../config/email";
+import { sendMail } from "../config/email";
 import logger from "../config/logger";
 import config from "../config/env-config";
 
