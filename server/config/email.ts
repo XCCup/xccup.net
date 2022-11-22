@@ -92,8 +92,6 @@ const sendMail = async (
       const previewUrl = nodemailer.getTestMessageUrl(info);
       logger.info("E: Preview URL: " + previewUrl);
       const receivedMail = await retrieveTestMail(previewUrl);
-      console.log(receivedMail);
-
       testEmailCache.push(receivedMail);
       logger.info(
         "E: Sent email found in test smtp: " + JSON.stringify(receivedMail)
