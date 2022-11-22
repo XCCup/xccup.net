@@ -455,7 +455,7 @@ describe("check flight upload page", () => {
     });
   });
 
-  it("Test upload with leonardo interface (wrong content)", () => {
+  it.only("Test upload with leonardo interface (wrong content)", () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectApiRespone = "Invalid G-Record";
     const expectedStatus = 400;
@@ -476,16 +476,16 @@ Euer Server-Knecht`;
     };
     cy.wrap(null).then(async () => {
       try {
-        console.log("Post");
+        cy.log("Post");
         await new Promise((resolve) => setTimeout(resolve, 3000));
 
         await axios.post("http://localhost:3000/api/flights/leonardo", payload);
-        console.log("Done");
+        cy.log("Done");
       } catch (error) {
         // Test the response message from the API
         expect(error.response.status).to.equal(expectedStatus);
         expect(error.response.data).to.include(expectApiRespone);
-        console.log("Fail");
+        cy.log("Fail");
       }
 
       // Check that admin received an email
