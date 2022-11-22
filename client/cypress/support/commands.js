@@ -151,6 +151,7 @@ Cypress.Commands.add(
         }
       }
       cy.task("log", data);
+      cy.log(data);
       console.log(data);
       console.log(JSON.stringify({ ...data }));
       expect(data?.message).to.exist;
