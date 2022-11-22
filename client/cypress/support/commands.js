@@ -133,6 +133,9 @@ Cypress.Commands.add(
   "recipientReceivedEmailWithText",
   function (recipientMail, text) {
     cy.wrap(null).then({ timeout: 7000 }, async () => {
+      if (!recipientMail) throw new Error("No email provided");
+      if (!text) throw new Error("No text provided");
+
       let success = false;
       // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
       for (let index = 0; index < 3; index++) {
