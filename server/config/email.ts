@@ -95,7 +95,7 @@ const sendMail = async (
       logger.info("E: Preview URL: " + previewUrl);
       const receivedMail = await retrieveTestMail(previewUrl);
       logger.error("Received mail:");
-      logger.error(receivedMail);
+      logger.error(JSON.stringify(receivedMail));
       testEmailCache.push(receivedMail);
       logger.info(
         "E: Sent email found in test smtp: " + JSON.stringify(receivedMail)
