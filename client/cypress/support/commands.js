@@ -138,7 +138,7 @@ Cypress.Commands.add(
 
       let success = false;
       // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
-      for (let index = 0; index < 3; index++) {
+      for (let index = 0; index < 10; index++) {
         try {
           const res = await axios.get(
             `http://localhost:3000/api/testdata/email/${recipientMail}`
