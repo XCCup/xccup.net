@@ -10,7 +10,7 @@ exports.push = (email) => {
 };
 
 exports.findLatestForToUser = (toUserEmail) => {
-  logger.error("Get last mail");
+  logger.error("Get last mail: ", toUserEmail);
   logger.error(findLast(cache, (e) => e.to?.includes(toUserEmail)));
 
   return findLast(cache, (e) => e.to?.includes(toUserEmail));
