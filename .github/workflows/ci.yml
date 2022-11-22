@@ -76,8 +76,8 @@ jobs:
           config: baseUrl=http://localhost:4173
           browser: chrome
           env:
-            - ELECTRON_ENABLE_LOGGING=true
-            - TZ=Europe/Berlin
+            ELECTRON_ENABLE_LOGGING: true
+            TZ: Europe/Berlin
 
       - name: 😩 Store artefacts of test failures
         uses: actions/upload-artifact@v1
