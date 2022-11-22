@@ -133,6 +133,7 @@ Cypress.Commands.add(
   "recipientReceivedEmailWithText",
   function (recipientMail, text) {
     cy.wrap(null).then({ timeout: 7000 }, async () => {
+      console.log("Looking up mails");
       let data;
       // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
       for (let index = 0; index < 3; index++) {
@@ -149,6 +150,8 @@ Cypress.Commands.add(
           await delay(2000);
         }
       }
+      console.log(data);
+      console.log(JSON.stringify({ ...data }));
       expect(data?.message).to.exist;
       expect(data?.message).to.include(text);
     });
