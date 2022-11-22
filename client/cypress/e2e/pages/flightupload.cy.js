@@ -476,16 +476,11 @@ Euer Server-Knecht`;
     };
     cy.wrap(null).then(async () => {
       try {
-        cy.log("Post");
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-
         await axios.post("http://localhost:3000/api/flights/leonardo", payload);
-        cy.log("Done");
       } catch (error) {
         // Test the response message from the API
         expect(error.response.status).to.equal(expectedStatus);
         expect(error.response.data).to.include(expectApiRespone);
-        cy.log("Fail");
       }
 
       // Check that admin received an email
