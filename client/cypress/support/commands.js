@@ -133,18 +133,16 @@ Cypress.Commands.add(
   "recipientReceivedEmailWithText",
   function (recipientMail, text) {
     cy.wrap(null).then({ timeout: 7000 }, async () => {
-      let data;
+      let success = false;
       // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
       for (let index = 0; index < 3; index++) {
         try {
-          data = (
-            await axios.get(
-              `http://localhost:3000/api/testdata/email/${recipientMail}`
-            )
-          ).data;
-          if (data?.message && data?.message.includes(text)) {
-            expect(data?.message).to.exist;
-            expect(data?.message).to.include(text);
+          const res = await axios.get(
+            `http://localhost:3000/api/testdata/email/${recipientMail}`
+          );
+
+          if (res?.data?.message && res?.data?.message.includes(text)) {
+            success = true;
             break;
           }
           await delay(1000);
@@ -153,7 +151,7 @@ Cypress.Commands.add(
           await delay(1000);
         }
       }
-      if (!data) throw new Error("No message found");
+      if (!success) throw new Error("Message not found");
     });
   }
 );
