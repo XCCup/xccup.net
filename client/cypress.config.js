@@ -10,13 +10,7 @@ module.exports = defineConfig({
     // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
       require("cypress-terminal-report/src/installLogsPrinter")(on);
-      on("task", {
-        log(message) {
-          console.log(message);
 
-          return null;
-        },
-      });
       return require("./cypress/plugins/index.js")(on, config);
     },
     baseUrl: "http://localhost:8000",
