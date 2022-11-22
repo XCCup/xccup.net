@@ -23,7 +23,7 @@
               <td data-cy="site-direction">{{ site.direction }}</td>
               <td data-cy="site-elevation">{{ site.elevation }}m</td>
               <td data-cy="site-heightDifference">
-                <i class="bi bi-arrow-bar-down"></i>
+                <i class="bi bi-graph-down-arrow"></i>
                 {{ site.heightDifference }}m
               </td>
               <td data-cy="site-website">
