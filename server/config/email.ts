@@ -84,18 +84,13 @@ const sendMail = async (
 
   try {
     if (!mailClient) throw new Error("No mail client defined");
-
     const info = await mailClient.sendMail(message);
-    logger.error("Mail sent to: " + info.accepted);
 
     if (config.get("env") !== "production") {
       logger.info("E: Check sent email in test smtp service");
       const previewUrl = nodemailer.getTestMessageUrl(info);
-      logger.error(previewUrl);
       logger.info("E: Preview URL: " + previewUrl);
       const receivedMail = await retrieveTestMail(previewUrl);
-      logger.error("Received mail:");
-      logger.error(JSON.stringify(receivedMail));
       testEmailCache.push(receivedMail);
       logger.info(
         "E: Sent email found in test smtp: " + JSON.stringify(receivedMail)
