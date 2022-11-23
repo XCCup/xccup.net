@@ -4,6 +4,7 @@
       <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''">
         <div class="leaflet-bottom leaflet-left">
           <button
+            id="mapExpandButton"
             class="btn btn-primary leaflet-control"
             @click="toggleMapSize"
           >
@@ -303,5 +304,11 @@ const mapHeight = computed(() => (mapExpanded.value ? "65vh" : "430px"));
 <style scoped>
 #mapContainer {
   height: v-bind("mapHeight");
+}
+
+@media (orientation: portrait) {
+  #mapExpandButton {
+    margin-bottom: 3em;
+  }
 }
 </style>
