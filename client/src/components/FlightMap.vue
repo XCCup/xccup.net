@@ -297,7 +297,7 @@ const toggleMapSize = () => {
   map.invalidateSize();
 };
 
-const mapHeight = computed(() => (mapExpanded.value ? "65vh" : "450px"));
+const mapHeight = computed(() => (mapExpanded.value ? "65vh" : "430px"));
 </script>
 
 <style scoped>
