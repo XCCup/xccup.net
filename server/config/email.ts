@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 import logger from "./logger";
 import config from "../config/env-config";
-import retrieveTestMail from "../parser/etherealMailParser";
-import testEmailCache from "../test/testEmailCache";
+import { retrieveTestMail } from "../parser/etherealMailParser";
+import { push } from "../test/testEmailCache";
 
 const prodSmtp = {
   host: config.get("mailServiceUrl"),
@@ -90,8 +90,11 @@ const sendMail = async (
       logger.info("E: Check sent email in test smtp service");
       const previewUrl = nodemailer.getTestMessageUrl(info);
       logger.info("E: Preview URL: " + previewUrl);
+
+      if (!previewUrl) throw new Error("No URL found for this message");
+
       const receivedMail = await retrieveTestMail(previewUrl);
-      testEmailCache.push(receivedMail);
+      push(receivedMail);
       logger.info(
         "E: Sent email found in test smtp: " + JSON.stringify(receivedMail)
       );
