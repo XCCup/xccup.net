@@ -85,11 +85,13 @@ const sendMail = async (
   try {
     if (!mailClient) throw new Error("No mail client defined");
     const info = await mailClient.sendMail(message);
+    logger.error(JSON.stringify(info));
 
     if (config.get("env") !== "production") {
       logger.info("E: Check sent email in test smtp service");
       const previewUrl = nodemailer.getTestMessageUrl(info);
       logger.info("E: Preview URL: " + previewUrl);
+      logger.error(previewUrl);
 
       if (!previewUrl) throw new Error("No URL found for this message");
 
