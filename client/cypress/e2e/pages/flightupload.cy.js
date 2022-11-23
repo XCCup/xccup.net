@@ -16,8 +16,6 @@ describe("check flight upload page", () => {
   });
 
   it("test upload flight", () => {
-    // TODO: Test elevation data. But as it is already tested in the site
-    // proposal test we assume it works here as well
     cy.intercept("POST", "photos*").as("post-photo");
 
     const igcFileName = "73320_LA9ChMu1.igc";
