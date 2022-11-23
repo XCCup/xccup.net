@@ -1,8 +1,36 @@
 <template v-if="sponsors">
-  <div class="bg-primary text-light py-4">
+  <!-- Gold Sponsors -->
+  <div class="bg-primary py-4">
     <div id="sponsorsPanel" class="container-md">
-      <h2>Sponsoren</h2>
+      <h2 class="text-light">Sponsoren</h2>
+      <div class="row">
+        <div
+          v-for="sponsor in goldSponsors"
+          :key="sponsor.id"
+          class="col-12 col-md-4 mb-2"
+        >
+          <div class="card h-100">
+            <div class="img-wrapper mx-2 mt-2">
+              <img
+                :src="baseURL + `media/` + sponsor.logo.id"
+                class="gold-sponsor-img mw-100 mh-100 position-relative top-50 start-50 translate-middle"
+                alt="..."
+              />
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">
+                <a :href="sponsor.website" target="_blank">
+                  {{ sponsor.name }}
+                </a>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div
+        v-if="false"
         id="goldSponsors"
         class="row row-cols-3 row-cols-md-3 row-cols-lg-3 row-cols-xl-3"
       >
@@ -23,7 +51,7 @@
       </div>
     </div>
   </div>
-
+  <!-- Sponsors -->
   <div class="container-md mt-3">
     <div
       id="otherSponsors"
@@ -78,11 +106,17 @@ const regularSponsors = computed(() => {
 });
 </script>
 
+<style scoped>
+.img-wrapper {
+  height: 100px;
+}
+</style>
 <style lang="scss">
 @import "@/styles";
 // We put the import out of the scoped block to ensure that all similar imports are merged to one global import to reduce bundle size
 // TODO: Should be obsolote when proper dark mode was introduced to bootstrap
 // TODO: Why does sponsor-container work in Safari, but sponsor-box not?
+
 .sponsor-container {
   border: 1px solid $gray-400;
   height: 120px;
