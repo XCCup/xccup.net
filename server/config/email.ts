@@ -94,6 +94,7 @@ const sendMail = async (
       if (!previewUrl) throw new Error("No URL found for this message");
 
       const receivedMail = await retrieveTestMail(previewUrl);
+      logger.error(JSON.stringify(receivedMail));
       push(receivedMail);
       logger.info(
         "E: Sent email found in test smtp: " + JSON.stringify(receivedMail)
