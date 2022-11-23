@@ -132,18 +132,19 @@ Cypress.Commands.add("textareaIncludes", function (selector, text) {
 Cypress.Commands.add(
   "recipientReceivedEmailWithText",
   function (recipientMail, text) {
-    cy.wrap(null).then({ timeout: 15000 }, async () => {
+    cy.wrap(null).then({ timeout: 10000 }, async () => {
       if (!recipientMail) throw new Error("No email provided");
       if (!text) throw new Error("No text provided");
 
       let success = false;
+
+      const url = `http://localhost:3000/api/testdata/email/${recipientMail}`;
+      cy.log(url);
+
       // Maybe the mail wasn't delivered yet. Therefore retry up to 3 times and wait for 1s between retries.
       for (let index = 0; index < 10; index++) {
         try {
-          const res = await axios.get(
-            `http://localhost:3000/api/testdata/email/${recipientMail}`
-          );
-
+          const res = await axios.get(url);
           if (res?.data?.message && res?.data?.message.includes(text)) {
             success = true;
             break;
