@@ -132,7 +132,7 @@ Cypress.Commands.add("textareaIncludes", function (selector, text) {
 Cypress.Commands.add(
   "recipientReceivedEmailWithText",
   function (recipientMail, text) {
-    cy.wrap(null).then({ timeout: 10000 }, async () => {
+    cy.wrap(null).then({ timeout: 15000 }, async () => {
       if (!recipientMail) throw new Error("No email provided");
       if (!text) throw new Error("No text provided");
 
