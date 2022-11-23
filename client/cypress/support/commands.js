@@ -136,6 +136,7 @@ Cypress.Commands.add(
     if (!text) throw new Error("No text provided");
     const url = `http://localhost:3000/api/testdata/email/${recipientMail}`;
     cy.log(url);
+
     cy.wrap(null).then({ timeout: 15000 }, async () => {
       let success = false;
 
