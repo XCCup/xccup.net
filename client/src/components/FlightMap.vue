@@ -147,6 +147,27 @@ onMounted(() => {
 
   // Watch the tracklogs for updated content like airbuddy flights
   watch(tracklogs, () => drawTracks(tracklogs.value));
+
+  L.Control.Watermark = L.Control.extend({
+    onAdd: function (map) {
+      var img = L.DomUtil.create("button");
+      img.classList.add("btn");
+      img.classList.add("btn-primary");
+      img.setAttribute("content", "test content");
+
+      return img;
+    },
+
+    onRemove: function (map) {
+      // Nothing to do here
+    },
+  });
+
+  L.control.watermark = function (opts) {
+    return new L.Control.Watermark(opts);
+  };
+
+  L.control.watermark({ position: "bottomleft" }).addTo(map);
 });
 
 onBeforeUnmount(() => {
@@ -275,10 +296,17 @@ const updateMarkerPosition = (position: MapPosition[]) => {
 watch(getPositions, () => updateMarkerPosition(getPositions.value), {
   deep: true,
 });
+
+const mapHeight = ref("430px");
+
+const expandMap = () => {
+  mapHeight.value = "600px";
+  map.invalidateSize();
+};
 </script>
 
 <style scoped>
 #mapContainer {
-  height: 430px;
+  height: v-bind("mapHeight");
 }
 </style>
