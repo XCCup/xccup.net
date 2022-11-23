@@ -1,7 +1,19 @@
 <template>
   <div class="container-fluid mt-0">
     <div class="row">
-      <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''"></div>
+      <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''">
+        <div class="leaflet-bottom leaflet-left">
+          <button
+            class="btn btn-primary leaflet-control"
+            @click="toggleMapSize"
+          >
+            <i
+              class="bi"
+              :class="mapExpanded ? 'bi-arrows-collapse' : 'bi-arrows-expand'"
+            ></i>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -147,27 +159,6 @@ onMounted(() => {
 
   // Watch the tracklogs for updated content like airbuddy flights
   watch(tracklogs, () => drawTracks(tracklogs.value));
-
-  L.Control.Watermark = L.Control.extend({
-    onAdd: function (map) {
-      var img = L.DomUtil.create("button");
-      img.classList.add("btn");
-      img.classList.add("btn-primary");
-      img.setAttribute("content", "test content");
-
-      return img;
-    },
-
-    onRemove: function (map) {
-      // Nothing to do here
-    },
-  });
-
-  L.control.watermark = function (opts) {
-    return new L.Control.Watermark(opts);
-  };
-
-  L.control.watermark({ position: "bottomleft" }).addTo(map);
 });
 
 onBeforeUnmount(() => {
@@ -297,12 +288,16 @@ watch(getPositions, () => updateMarkerPosition(getPositions.value), {
   deep: true,
 });
 
-const mapHeight = ref("430px");
+// Toggle map size
 
-const expandMap = () => {
-  mapHeight.value = "600px";
+const mapExpanded = ref(false);
+
+const toggleMapSize = () => {
+  mapExpanded.value = !mapExpanded.value;
   map.invalidateSize();
 };
+
+const mapHeight = computed(() => (mapExpanded.value ? "65vh" : "450px"));
 </script>
 
 <style scoped>
