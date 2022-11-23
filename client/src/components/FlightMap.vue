@@ -295,7 +295,11 @@ const mapExpanded = ref(false);
 
 const toggleMapSize = () => {
   mapExpanded.value = !mapExpanded.value;
-  map.invalidateSize();
+  setTimeout(() => {
+    // Invalidation has to be called after the resizing of the map has finished
+    // Otherwise layers like airspace will not be drawn correctly in the additional space
+    map.invalidateSize();
+  }, 100);
 };
 
 const mapHeight = computed(() => (mapExpanded.value ? "65vh" : "430px"));
