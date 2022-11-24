@@ -87,7 +87,7 @@ describe("check admin page", () => {
         .contains("td", expectedName)
         .parent()
         .find("td")
-        .eq(9)
+        .eq(10)
         .find("button")
         .click();
     });

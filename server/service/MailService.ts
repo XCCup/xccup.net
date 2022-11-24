@@ -31,6 +31,8 @@ import {
   NEW_G_CHECK_INVALID_TEXT,
   AIRSPACE_VIOLATION_REJECTED_TEXT,
   AIRSPACE_VIOLATION_REJECTED_TITLE,
+  GOOGLE_ELEVATION_ERROR_TITLE,
+  GOOGLE_ELEVATION_ERROR_TEXT,
 } from "../constants/email-message-constants";
 
 import db from "../db";
@@ -238,6 +240,23 @@ const service = {
       title: NEW_G_CHECK_INVALID_TITLE,
       text: NEW_G_CHECK_INVALID_TEXT(user.firstName, user.lastName),
       attachments: [{ path: igcPath }],
+    };
+
+    const adminMail = config.get("mailServiceFromEmail");
+
+    return sendMail(adminMail, content);
+  },
+  sendGoogleElevationErrorAdminMail: async (
+    flightId: number,
+    error: string
+  ) => {
+    logger.info(
+      `MS: Send Google Elevation Error mail to admins for flight ${flightId}`
+    );
+
+    const content = {
+      title: GOOGLE_ELEVATION_ERROR_TITLE,
+      text: GOOGLE_ELEVATION_ERROR_TEXT(flightId, error),
     };
 
     const adminMail = config.get("mailServiceFromEmail");

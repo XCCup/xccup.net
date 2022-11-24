@@ -44,7 +44,8 @@ export function extractTimeAndHeights(
 }
 
 /**
- * Combines all properties from the flight fixes database object into a single property to synchronize the access via index on these different arrays.
+ * Combines all properties from the flight fixes database object into a single property
+ * to synchronize the access via index on these different arrays.
  *
  * @param fixes The fixes object from the database
  * @returns An array of FlightFixCombined objects

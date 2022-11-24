@@ -38,7 +38,7 @@ async function informAboutDailyWinner() {
     if (result.length >= DAILY_WINNER_THRESHOLD) {
       const content = {
         title: `XCCup Tagessieger ${today}`,
-        text: `Hallo Wolf,
+        text: `Hallo Bärbel,
 Heute gab es insgesamt ${result.length} Wertungsflüge. 
         
 Bis jetzt ${moment().format("HH:mm")} liegt der Flug https://xccup.net/flug/${
@@ -48,7 +48,7 @@ Bis jetzt ${moment().format("HH:mm")} liegt der Flug https://xccup.net/flug/${
 Viele Grüße Deine Admins`,
       };
 
-      sendMail(["wolf@xccup.net", "info@xccup.net"], content);
+      sendMail(["baerbel@xccup.net", "info@xccup.net"], content);
     }
   } catch (error) {
     logger.error(

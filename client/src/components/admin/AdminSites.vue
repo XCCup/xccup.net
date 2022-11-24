@@ -6,30 +6,47 @@
         <table class="table table-striped table-hover text-sm">
           <thead>
             <th>Name</th>
-            <th>Startrichtung</th>
-            <th>Website</th>
-            <th>Verein</th>
-            <th>Lat</th>
-            <th>Long</th>
-            <th>Hochgeladen am</th>
-            <th>Nachricht an Pilot</th>
-            <th>Akzeptieren</th>
-            <th>Gebiet löschen</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
           </thead>
           <tbody>
             <tr v-for="site in sites" :key="site.id" :item="site">
-              <td>{{ site.name }}</td>
-              <td>{{ site.direction }}</td>
-              <td>{{ site.website }}</td>
-              <td>{{ site.club?.name }}</td>
-              <td>{{ site.point?.coordinates[0] }}</td>
-              <td>{{ site.point?.coordinates[1] }}</td>
-              <td>
+              <td data-cy="site-name">{{ site.name }}</td>
+              <td data-cy="site-direction">{{ site.direction }}</td>
+              <td data-cy="site-elevation">{{ site.elevation }}m</td>
+              <td data-cy="site-heightDifference">
+                <i class="bi bi-graph-down-arrow"></i>
+                {{ site.heightDifference }}m
+              </td>
+              <td data-cy="site-website">
+                <a :href="site.website" target="_blank">Webseite</a>
+              </td>
+              <td data-cy="site-club">
+                {{ site.club?.name ?? "Kein Verein" }}
+              </td>
+              <td data-cy="site-website">
+                <a
+                  :href="`https://maps.google.com/?q=${site.point?.coordinates[1]},${site.point?.coordinates[0]}`"
+                  target="_blank"
+                >
+                  Auf Karte zeigen
+                </a>
+              </td>
+              <td data-cy="site-date">
                 <BaseDate :timestamp="site.createdAt" />
               </td>
               <td>
                 <a
                   class="btn btn-outline-primary btn-sm"
+                  data-cy="site-mail"
                   :href="`mailto:${site.submitter?.email}?subject=Dein Fluggebietsvorschlag (${site.name})`"
                 >
                   <i class="bi bi-envelope"></i>
@@ -38,6 +55,7 @@
               <td>
                 <button
                   class="btn btn-outline-primary btn-sm"
+                  data-cy="site-accept"
                   @click="onAccept(site)"
                 >
                   <i class="bi bi-check2-circle"></i>
@@ -46,6 +64,7 @@
               <td>
                 <button
                   class="btn btn-outline-danger btn-sm"
+                  data-cy="site-delete"
                   @click="onDelete(site)"
                 >
                   <i class="bi bi-trash"></i>

@@ -13,7 +13,6 @@ const moment = require("moment");
 
 const IgcAnalyzer = require("../igc/IgcAnalyzer");
 const { findLanding } = require("../igc/LocationFinder");
-const ElevationAttacher = require("../igc/ElevationAttacher");
 const FlightStatsCalculator = require("../igc/FlightStatsCalculator");
 const { getCurrentActive } = require("./SeasonService");
 const { findClosestTakeoff } = require("./FlyingSiteService");
@@ -21,6 +20,7 @@ const { hasAirspaceViolation } = require("./AirspaceService");
 const {
   sendAirspaceViolationAcceptedMail,
   sendAirspaceViolationRejectedMail,
+  sendGoogleElevationErrorAdminMail,
   sendNewAdminTask,
 } = require("./MailService");
 
@@ -41,6 +41,11 @@ const {
   combineFixesProperties,
 } = require("../helper/FlightFixUtils");
 const { checkSiteRecordsAndUpdate } = require("./SiteRecordCache");
+const {
+  getElevationData,
+  addElevationToFixes,
+  logElevationError,
+} = require("../igc/ElevationHelper");
 
 const flightService = {
   getAll: async ({
@@ -398,32 +403,29 @@ const flightService = {
   },
 
   attachElevationDataAndCheckForAirspaceViolations: async (flight) => {
-    const fixes = await retrieveDbObjectOfFlightFixes(flight.id);
+    // Get elevation data and add it to flight fixes
+    const flightFixesRef = await retrieveDbObjectOfFlightFixes(flight.id);
+    const combinedFixes = combineFixesProperties(flightFixesRef);
 
-    // eslint-disable-next-line no-unused-vars
-    await new Promise(function (resolve, reject) {
-      ElevationAttacher.execute(
-        combineFixesProperties(fixes),
-        async (fixesWithElevation) => {
-          for (let i = 0; i < fixes.timeAndHeights.length; i++) {
-            fixes.timeAndHeights[i].elevation = fixesWithElevation[i].elevation;
-          }
-          /**
-           * It is necessary to explicit call "changed", because a call to "save" will only updated data when a value has changed.
-           * Unforunatly the addition of elevation data inside the data object doesn't trigger any change event.
-           */
-          fixes.changed("timeAndHeights", true);
-          await fixes.save();
-          resolve();
-        }
-      );
-    });
+    try {
+      const elevations = await getElevationData(combinedFixes);
+      addElevationToFixes(flightFixesRef.timeAndHeights, elevations);
+
+      // It's necessary to explicit call "changed", because a call to "save" will
+      // only updated data when a value has changed. Unfortunately the addition of elevation
+      // data inside the data object doesn't trigger any change event.
+      flightFixesRef.changed("timeAndHeights", true);
+      await flightFixesRef.save();
+    } catch (error) {
+      logElevationError(error);
+      sendGoogleElevationErrorAdminMail(flight.externalId, error);
+    }
 
     /**
      * Before evaluating airspace violation it's necessary to determine the elevation data.
      * Because some airspace boundaries are defined in relation to the surface (e.g. Floor 1500FT AGL)
      */
-    const violationResult = await hasAirspaceViolation(fixes);
+    const violationResult = await hasAirspaceViolation(flightFixesRef);
     if (violationResult) {
       flight.airspaceViolation = true;
       flight.violationAccepted = false;

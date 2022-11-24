@@ -26,7 +26,7 @@ describe("check flyingsites page", () => {
     const expectedDirection = "S/N";
     const expectedWebsite = "www.laacher-see.de";
     const expectedClub = "DFC Vulkaneifel";
-    const expectedHeight = "123";
+    const expectedHeightDifference = "123";
     const expectedLat = "50.413106647";
     const expectedLong = "7.270120454";
 
@@ -38,7 +38,7 @@ describe("check flyingsites page", () => {
     cy.get("#site-name").type(expectedName);
     cy.get("#site-direction").type(expectedDirection);
     cy.get("#site-website").type(expectedWebsite);
-    cy.get("#site-height").type(expectedHeight);
+    cy.get("#site-height").type(expectedHeightDifference);
     cy.get("#site-lat").type(expectedLat);
     cy.get("#site-long").type(expectedLong);
 
@@ -49,27 +49,22 @@ describe("check flyingsites page", () => {
     cy.get("#nav-sites-tab").click();
 
     cy.get("#adminSitesPanel").within(() => {
-      cy.get("table")
-        .contains("td", expectedName)
-        .parent()
-        .should("include.text", expectedDirection)
-        .and("include.text", expectedWebsite)
-        .and("include.text", expectedClub)
-        // .and("include.text", expectedHeight) Too many columns?
-        .and("include.text", expectedLat)
-        .and("include.text", expectedLong);
+      cy.get("[data-cy=site-name]").contains(expectedName);
+      cy.get("[data-cy=site-direction]").contains(expectedDirection);
+      cy.get("[data-cy=site-heightDifference]").contains(
+        expectedHeightDifference
+      );
+      cy.get("[data-cy=site-club]").contains(expectedClub);
+      cy.get("[data-cy=site-name]").contains(expectedName);
     });
 
     // Accept the proposed site
-    cy.get("#adminSitesPanel").within(() => {
-      cy.get("table")
-        .contains("td", expectedName)
-        .parent()
-        .find("td")
-        .eq(8)
-        .find("button")
-        .click();
-    });
+    cy.get(
+      ':nth-child(2) > :nth-child(10) > [data-cy="site-accept"] > .bi'
+    ).click();
+    // cy.get(":nth-child(2)]").within(() => {
+    //   cy.get("[data-cy=site-accept]").click();
+    // });
 
     cy.clickButtonInModal("#modalSiteConfirm", "Akzeptieren");
 
