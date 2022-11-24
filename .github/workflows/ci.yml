@@ -68,7 +68,7 @@ jobs:
 
       - name: 🧪 Install cypress
         run: npx cypress install
-      # TODO: Fix cypress caching issue and remove the addional install
+      # TODO: Fix cypress caching issue and remove the additional install
 
       - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v4
@@ -80,14 +80,14 @@ jobs:
           browser: chrome
           env: TZ=Europe/Berlin
 
-      - name: 😩 Store artefacts of test failures
+      - name: 😩 Store artifacts of test failures
         uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: cypress-screenshots
           path: ./client/cypress/screenshots
 
-      - name: 🤨 Store artefacts of server logs
+      - name: 🤨 Store artifacts of server logs
         uses: actions/upload-artifact@v1
         if: always()
         with:

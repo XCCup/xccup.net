@@ -78,7 +78,7 @@ const flightService = {
         createTeamInclude(teamId),
         createClubInclude(clubId),
 
-        // The includes for photos and comments are only present to count the releated objects
+        // The includes for photos and comments are only present to count the related objects
         {
           model: FlightPhoto,
           as: "photos",
@@ -125,7 +125,7 @@ const flightService = {
     }
 
     /**
-     * distinct=true was necesseary after photos and comments where included
+     * distinct=true was necessary after photos and comments where included
      * https://github.com/sequelize/sequelize/issues/9481
      * */
     queryObject.distinct = true;
@@ -299,7 +299,7 @@ const flightService = {
   },
 
   /**
-   * Updates one or serveral properties of a flight model.
+   * Updates one or several properties of a flight model.
    *
    * @param {*} id The ID of the flight to update
    * @param {*} props The properties of the flight model which should be updated
@@ -555,7 +555,7 @@ const flightService = {
   },
 
   /**
-   * This method will generate a new externalId for a flight by finding the current heightest externalId and increment it by one.
+   * This method will generate a new externalId for a flight by finding the current highest externalId and increment it by one.
    *
    * Postgres does not support auto increment on non PK columns.
    * Therefore a manual auto increment is necessary.
@@ -685,8 +685,6 @@ async function calcFlightPoints(flight, glider) {
 
   let flightPoints;
   if (flight.flightType && flight.flightDistance) {
-    // const typeFactor = currentSeason.flightTypeFactors[flight.flightType];
-    // const gliderFactor = gliderClassDB.scoringMultiplicator;
     const typeFactor = gliderClassDB.scoringMultiplicator[flight.flightType];
     const gliderFactor = gliderClassDB.scoringMultiplicator.BASE;
     const distance = flight.flightDistance;
@@ -837,7 +835,7 @@ async function findAirbuddiesLegacy(flight) {
  * This method will add specific user data (current clubId, teamId and age of the user) to the flight.
  *
  * It's necessary to add team and club id of user directly to the flight.
- * Because user can change its assocation in the future.
+ * Because user can change its association in the future.
  *
  * @param {*} flight The flight the user data will be attached to.
  */
