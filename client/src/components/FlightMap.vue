@@ -1,7 +1,20 @@
 <template>
   <div class="container-fluid mt-0">
     <div class="row">
-      <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''"></div>
+      <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''">
+        <div class="leaflet-bottom leaflet-left">
+          <button
+            id="mapExpandButton"
+            class="btn btn-primary leaflet-control"
+            @click="toggleMapSize"
+          >
+            <i
+              class="bi"
+              :class="mapExpanded ? 'bi-arrows-collapse' : 'bi-arrows-expand'"
+            ></i>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -275,10 +288,35 @@ const updateMarkerPosition = (position: MapPosition[]) => {
 watch(getPositions, () => updateMarkerPosition(getPositions.value), {
   deep: true,
 });
+
+// Toggle map size
+
+const mapExpanded = ref(false);
+
+const toggleMapSize = () => {
+  mapExpanded.value = !mapExpanded.value;
+  setTimeout(() => {
+    // Invalidation has to be called after the resizing of the map has finished
+    // Otherwise layers like airspace will not be drawn correctly in the additional space
+    map.invalidateSize();
+  }, 100);
+};
+
+const mapHeight = computed(() => (mapExpanded.value ? "65vh" : "430px"));
 </script>
 
 <style scoped>
 #mapContainer {
-  height: 430px;
+  height: v-bind("mapHeight");
+}
+
+#mapExpandButton {
+  margin-bottom: 3em;
+}
+
+@media (min-width: 458px) {
+  #mapExpandButton {
+    margin-bottom: 1em;
+  }
 }
 </style>
