@@ -412,7 +412,7 @@ const flightService = {
       addElevationToFixes(flightFixesRef.timeAndHeights, elevations);
 
       // It's necessary to explicit call "changed", because a call to "save" will
-      // only updated data when a value has changed. Unforunatly the addition of elevation
+      // only updated data when a value has changed. Unfortunately the addition of elevation
       // data inside the data object doesn't trigger any change event.
       flightFixesRef.changed("timeAndHeights", true);
       await flightFixesRef.save();

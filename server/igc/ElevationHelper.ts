@@ -29,7 +29,8 @@ const NUMBER_OF_FIXES_PER_REQUEST = 400;
  */
 export async function getElevationData(fixes: Fix[]) {
   logger.info(
-    "Will request elevation data in chunks of " + NUMBER_OF_FIXES_PER_REQUEST
+    "EA: Will request elevation data in chunks of " +
+      NUMBER_OF_FIXES_PER_REQUEST
   );
 
   const locations = formatFixes(fixes);
@@ -38,7 +39,7 @@ export async function getElevationData(fixes: Fix[]) {
 
   const res = await Promise.all(promises);
   const elevations = combineElevationChunks(res);
-  logger.info("Finished retrieving elevation data");
+  logger.info("EA: Finished retrieving elevation data");
 
   return elevations;
 }
@@ -112,10 +113,10 @@ function createLocationChunks(locations: LatLng[], size: number) {
 function combineElevationChunks(chunks: ElevationResponse[]) {
   const elevations: number[] = [];
   for (let i = 0; i < chunks.length; i++) {
-    const foo = chunks[i].data.results.flatMap((el) =>
-      Math.round(el.elevation)
+    const elevationResultsOfSingleRequest = chunks[i].data.results.flatMap(
+      (el) => Math.round(el.elevation)
     );
-    elevations.push(...foo);
+    elevations.push(...elevationResultsOfSingleRequest);
   }
   return elevations;
 }
