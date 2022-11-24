@@ -310,9 +310,13 @@ const mapHeight = computed(() => (mapExpanded.value ? "65vh" : "430px"));
   height: v-bind("mapHeight");
 }
 
-@media (orientation: portrait) {
+#mapExpandButton {
+  margin-bottom: 3em;
+}
+
+@media (min-width: 458px) {
   #mapExpandButton {
-    margin-bottom: 3em;
+    margin-bottom: 1em;
   }
 }
 </style>
