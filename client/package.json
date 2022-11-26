@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
+    "@sentry/tracing": "^7.21.1",
+    "@sentry/vue": "^7.21.1",
     "@vue-leaflet/vue-leaflet": "^0.6.1",
     "@vueuse/integrations": "^9.5.0",
     "axios": "^1.1.3",
