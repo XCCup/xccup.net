@@ -37,31 +37,5 @@ router.post(
   }
 );
 
-// @desc Send a mail to all users
-// @route POST /mail/all
-// @access Only moderator
-
-router.post(
-  "/all",
-  requesterMustBeModerator,
-  checkStringObjectNotEmptyNoEscaping("content.title"),
-  checkStringObjectNotEmptyNoEscaping("content.text"),
-  async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-
-    const { content } = req.body;
-
-    try {
-      if (!req.user?.id) return res.sendStatus(500);
-
-      const result = await service.sendMailAll(req.user.id, content);
-
-      result ? res.sendStatus(200) : res.sendStatus(500);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 module.exports = router;
 export default router;
