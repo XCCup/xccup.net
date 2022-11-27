@@ -1,0 +1,85 @@
+<mjml>
+  <mj-raw>
+    <!-- Hint: Use this => https://github.com/mjmlio/vscode-mjml -->
+  </mj-raw>
+  <mj-head>
+    <mj-style inline="inline">
+      .rounded img {
+        border-radius: 1000px;
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body>
+    <mj-section background-color="#08556d">
+      <mj-column>
+        <mj-image width="150px" src="https://xccup.net/assets/xccup_white.352249d0.svg"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-raw>
+      <!-- Body text -->
+    </mj-raw>
+    <mj-section background-color="#fafafa">
+      <mj-column>
+        <mj-text font-size="20px" font-family="Lato, Helvetica, Arial, sans-serif" color="#626262">XCCup Ausblick 2023</mj-text>
+        <mj-text color="#525252">
+          Liebe Pilotinnen und Piloten,
+          <p />
+          am 29.10.2022 haben wir unseren offiziellen Jahresabschluss im Kloster Machern gefeiert und die diesjährigen SiegerInnen geehrt. Leider verkündete Wolf dort auch, dass er nach vielen Jahren der Arbeit in seiner Rolle als Organisator des XCCup zurücktritt.
+          <p /> Wolf nahm schon an den ersten Ausgaben des damals noch Mosel Cup genannten Wettbewerbs teil und übernahm die Organisation des XCCup Anfang der 2010er Jahre von Tom Willems.
+
+          <p />
+          Lieber Wolf, für deine Arbeit in den zurückliegenden Jahren danken wir dir außerordentlich. Aber wie du bereits während der diesjährigen XCCup Siegerehrung verkündet hast: „The XCCup will be alive“.
+          <p />
+          Als Dreierteam bestehend aus Bärbel Ellwanger, Kai Wissel und Stephan Schöpe werden wir den XCCup übernehmen und fortführen. Kai und Stephan haben Ende 2021 bereits die Entwicklung der Plattform übernommen. Bärbel wird sich in Zukunft um die Organisation und Außendarstellung kümmern.
+
+          <p />
+          An dieser Stelle möchten wir uns bei Euch auch für das großartige und positive Feedback bedanken, welches wir für die neue Plattform erhalten haben. Eure konstruktiven Ideen haben wir dabei notiert und werden diese zu gegebener Zeit umsetzen.
+          <p />
+          Wir haben darüber hinaus auch viele Ideen zur zukünftigen Ausschreibung erhalten. Diese möchten wir gerne in einem “XCCup Forum” bestehend aus den GewinnerInnen jeder Klasse dieses Jahres diskutieren. Gerne könnt ihr uns auch noch weitere Vorschläge/Ideen zur Diskussion zusenden. *
+          <p />
+          Ein wichtiger Punkt, der auch während der diesjährigen XCCup Siegerehrung angesprochen wurde, ist der Veranstaltungsort. Für das nächste Jahr wird die Veranstaltung deshalb an einem zentraleren Ort stattfinden.
+          <p />
+          Wir wünschen Euch allen eine schöne und erholsame Zwischensaison-Zeit.
+          <p />
+          <br>
+          Euer XCCup-Team
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-raw>
+      <!-- Avatar -->
+    </mj-raw>
+    <mj-section background-color="#fbfbfb">
+
+      <mj-column>
+        <mj-image src="https://xccup.net/api/users/picture/064284b4-7bf0-5998-b994-b370f507010c" alt="Bärbel Ellwanger" css-class="rounded" width="120px" padding="0 25px"></mj-image>
+        <mj-text align="center" color="#08556d" font-size="18px" font-family="Lato, Helvetica, Arial, sans-serif" vertical-align="top" padding="20px 25px"><strong>Bärbel Ellwanger</strong> <br />
+          <!-- <p style="font-size: 15px;color:#000000;">bla bla</p>-->
+        </mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-image src="https://xccup.net/api/users/picture/00dab8be-6271-592a-b0d5-072faa158276" alt="Kai Wissel" css-class="rounded" width="120px" padding="0 25px"></mj-image>
+        <mj-text align="center" color="#08556d" font-size="18px" font-family="Lato, Helvetica, Arial, sans-serif" vertical-align="top" padding="20px 25px"><strong>Kai Wissel</strong> <br />
+          <!-- <p style="font-size: 15px;color:#000000;">bla bla</p>-->
+        </mj-text>
+      </mj-column>
+      <mj-column>
+        <mj-image src="https://xccup.net/api/users/picture/84d5e7c2-287e-56c5-878e-1dd657f4e746" alt="Stephan Schöpe" css-class="rounded" width="120px" padding="0 25px"></mj-image>
+        <mj-text align="center" color="#08556d" font-size="18px" font-family="Lato, Helvetica, Arial, sans-serif" vertical-align="top" padding="20px 25px"><strong>Stephan Schöpe</strong> <br />
+          <!-- <p style="font-size: 15px;color:#000000;">bla bla</p>-->
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#fafafa">
+      <mj-column>
+
+        <mj-text color="#525252">
+          * Möchte ein/e GewinnerIn nicht teilnehmen, so fällt das Recht dem/der Nächsten der jeweiligen Wertung zu. Das Forum soll Mitte Dezember als Online-Meeting stattfinden. Wir werden die jeweiligen Personen in einer gesonderten Mail über die Details informieren.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

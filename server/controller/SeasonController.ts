@@ -1,13 +1,17 @@
-const express = require("express");
+import express, { Request, Response } from "express";
+import { OK } from "../constants/http-status-constants";
+import { GENDER } from "../constants/user-constants";
+import { getCurrentYear } from "../helper/Utils";
+import { getOverall, RANKINGS, getClub, getTeam, getSenior, getNewcomer, getLuxemburg, getRhineland } from "../service/ResultService";
+import service from "../service/SeasonService";
+import { requesterMustBeAdmin } from "./Auth";
+
 const router = express.Router();
-const service = require("../service/SeasonService");
-// const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./Constants");
-// const { authToken, belongsNotToId } = require("./Auth");
 
 // @desc Gets all seasons
 // @route GET /seasons
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (req: Request, res: Response, next) => {
   try {
     const seasons = await service.getAll();
     res.json(seasons);
@@ -19,7 +23,7 @@ router.get("/", async (req, res, next) => {
 // @desc Gets the year of all seasons
 // @route GET /seasons/years
 
-router.get("/years", async (req, res, next) => {
+router.get("/years", async (req: Request, res: Response, next) => {
   try {
     const years = await service.getAll({ retrieveOnlyYears: true });
     res.json(years);
@@ -31,7 +35,7 @@ router.get("/years", async (req, res, next) => {
 // @desc Get current season detail
 // @route GET /seasons/current
 
-router.get("/current", async (req, res, next) => {
+router.get("/current", async (req: Request, res: Response, next) => {
   try {
     const seasons = await service.getCurrentActive();
     res.json(seasons);
@@ -40,9 +44,37 @@ router.get("/current", async (req, res, next) => {
   }
 });
 
+
+
+// @desc Finalizes a season and stores the results of the several rankings
+// @route POST /seasons/current/finalize
+// @access Only admin
+
+router.post("/current/finalize", requesterMustBeAdmin, async (req: Request, res: Response, next) => {
+  getCurrentYear
+  const year = getCurrentYear()
+  try {
+    const results = [
+      { [RANKINGS.OVERALL]: getOverall() },
+      // @ts-ignore
+      { [RANKINGS.LADIES]: getOverall({ year, gender: GENDER.FEMALE }) },
+      { [RANKINGS.CLUB]: getClub() },
+      { [RANKINGS.TEAM]: getTeam() },
+      { [RANKINGS.SENIORS]: getSenior() },
+      { [RANKINGS.NEWCOMER]: getNewcomer() },
+      { [RANKINGS.LUX]: getLuxemburg(getCurrentYear()) },
+      { [RANKINGS.RP]: getRhineland(getCurrentYear()) },
+    ];
+
+    await service.finalize({ results });
+    res.sendStatus(OK);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Adds a season
 // @route POST /season/
-// @access Only admin
 
 // router.post("/", authToken, async (req, res,next) => {
 //   try {

@@ -1,7 +1,8 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 import { Models } from "../../types/Models";
 
-interface SeasonDetailAttributes {
+export interface SeasonDetailAttributes {
+  id?: string
   year: number;
   startDate: Date;
   endDate: Date;
@@ -33,7 +34,7 @@ type RankingTypes =
 
 export interface SeasonDetailInstance
   extends Model<SeasonDetailAttributes>,
-    SeasonDetailAttributes {
+  SeasonDetailAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }

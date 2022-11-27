@@ -23,6 +23,8 @@ const { XccupHttpError } = require("../helper/ErrorHandler");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 
 const cacheNonNewcomer = [];
+const currentYear = getCurrentYear()
+
 const RANKINGS = {
   OVERALL: "overall",
   LADIES: "ladies",
@@ -53,7 +55,7 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (
-      year < 2022 &&
+      year < currentYear &&
       !(
         rankingClass ||
         gender ||
@@ -75,7 +77,7 @@ const service = {
     }
     // Things like this would be easier to understand if they were commented.
     if (
-      year < 2022 &&
+      year < currentYear &&
       gender == GENDER.FEMALE &&
       !(
         rankingClass ||
@@ -140,7 +142,7 @@ const service = {
   getClub: async (year, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < currentYear) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.CLUB);
       const oldResult = await findOldResult(year, RANKINGS.CLUB);
       if (oldResult)
@@ -174,7 +176,7 @@ const service = {
   getTeam: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < currentYear) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.TEAM);
       const oldResult = await findOldResult(year, RANKINGS.TEAM);
       if (oldResult)
@@ -238,7 +240,7 @@ const service = {
   getSenior: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < currentYear) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.SENIORS);
       const oldResult = await findOldResult(year, RANKINGS.SENIORS);
       if (oldResult)
@@ -281,10 +283,10 @@ const service = {
    * @param {*} limit The limit of results to retrieve
    * @returns The results of the ranking  of the provided year
    */
-  getRhineland: async (year, limit) => {
+  getRhineland: async (year, limit = 100) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < currentYear) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.RP);
       const oldResult = await findOldResult(year, RANKINGS.RP);
       if (oldResult)
@@ -324,12 +326,12 @@ const service = {
    * @param {*} limit The limit of results to retrieve
    * @returns The results of the ranking of the provided year
    */
-  getLuxemburg: async (year, limit) => {
+  getLuxemburg: async (year, limit = 100) => {
     const NUMBER_OF_SCORED_FLIGHTS_LUX = 6;
 
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < currentYear) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.LUX);
       const oldResult = await findOldResult(year, RANKINGS.LUX);
       if (oldResult)
@@ -412,7 +414,7 @@ const service = {
   getNewcomer: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < currentYear) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.NEWCOMER);
       const oldResult = await findOldResult(year, RANKINGS.NEWCOMER);
       if (oldResult)
@@ -938,7 +940,7 @@ async function calcSeniorBonusForFlightResult(result) {
           flight.flightPoints = Math.round(
             (flight.flightPoints *
               (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
-              100
+            100
           );
 
           totalPoints += flight.flightPoints;
@@ -965,3 +967,4 @@ function checkIfRankingWasPresent(seasonDetail, rankingType) {
 }
 
 module.exports = service;
+module.exports.RANKINGS = RANKINGS;
