@@ -455,21 +455,18 @@ describe("check flight upload page", () => {
     });
   });
 
-  // eslint-disable-next-line cypress/no-async-tests
-  it("Test upload with leonardo interface (wrong content)", async () => {
+  it("Test upload with leonardo interface (wrong content)", () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectApiRespone = "Invalid G-Record";
     const expectedStatus = 400;
     const expectedComment = `Hallo Admins!
 
-    Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
-    
-    Pilot: Melinda Tremblay
-    
-    Euer Server-Knecht
-        
-    `;
-    const expectedMailReceipient = "info@xccup.net";
+Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
+
+Pilot: Melinda Tremblay
+
+Euer Server-Knecht`;
+    const expectedMailReceipient = "me@example.com";
 
     const payload = {
       user: "blackhole+melinda@xccup.net",
@@ -477,16 +474,21 @@ describe("check flight upload page", () => {
       IGCigcIGC: "just any plain text",
       igcfn: igcFileName,
     };
-    try {
-      await axios.post("http://localhost:3000/api/flights/leonardo", payload);
-    } catch (error) {
-      // Test the response message from the API
-      expect(error.response.status).to.equal(expectedStatus);
-      expect(error.response.data).to.include(expectApiRespone);
-    }
+    cy.wrap(null).then(async () => {
+      try {
+        await axios.post("http://localhost:3000/api/flights/leonardo", payload);
+      } catch (error) {
+        // Test the response message from the API
+        expect(error.response.status).to.equal(expectedStatus);
+        expect(error.response.data).to.include(expectApiRespone);
+      }
 
-    // Check that admin received an email
-    cy.recipientReceivedEmailWithText(expectedMailReceipient, expectedComment);
+      // Check that admin received an email
+      cy.recipientReceivedEmailWithText(
+        expectedMailReceipient,
+        expectedComment
+      );
+    });
   });
 
   it("Test upload with leonardo interface (wrong credentials)", () => {
