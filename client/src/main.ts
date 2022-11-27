@@ -10,11 +10,16 @@ const app = createApp(App);
 
 Sentry.init({
   app,
-  dsn: "https://af74b459444f4ce6a9da5ed70b971f6e@sentry.xccup.net/1",
+  dsn: import.meta.env.VITE_SENTRY_URL,
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracePropagationTargets: ["localhost", "xccup.net", /^\//],
+      tracePropagationTargets: [
+        "localhost",
+        "xccup.net",
+        "render.xccup.net",
+        /^\//,
+      ],
     }),
   ],
   // Set tracesSampleRate to 1.0 to capture 100%
