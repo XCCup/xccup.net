@@ -13,6 +13,7 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { tileOptions, tileOptionsSatellite } from "@/config/mapbox";
 import { ref, onMounted } from "vue";
+import { TRACK_COLORS } from "@/common/Constants";
 
 const map = ref(null);
 
@@ -71,6 +72,38 @@ const createPopupContent = (site) => {
   return lines.join("<br>");
 };
 
+const createRegionIcon = (site) => {
+  const region = site.locationData?.region;
+  let color = TRACK_COLORS[0];
+  switch (region) {
+    case "Mosel":
+      color = TRACK_COLORS[1];
+      break;
+    case "Luxemburg":
+      color = TRACK_COLORS[2];
+      break;
+    case "Pfalz":
+      color = TRACK_COLORS[3];
+      break;
+    case "Nahe":
+      color = TRACK_COLORS[4];
+      break;
+    case "Rhön":
+      color = TRACK_COLORS[5];
+      break;
+    case "Sauerland":
+      color = TRACK_COLORS[6];
+      break;
+    default:
+      break;
+  }
+
+  return L.divIcon({
+    className: "flyingsite-map-marker",
+    html: `<div style="border-radius: 100%; border-style: solid;border-color:${color};min-height:12px;min-width:12px;"></div>`,
+  });
+};
+
 const createTakeOffMarkers = (sites) => {
   if (sites.length === 0) return;
   const listOfTakeoffs = ref([]);
@@ -80,6 +113,7 @@ const createTakeOffMarkers = (sites) => {
 
     listOfTakeoffs.value.push(
       L.marker([site.point.coordinates[1], site.point.coordinates[0]], {
+        icon: createRegionIcon(site),
         title: site.name,
         riseOnHover: true,
       })
@@ -100,7 +134,7 @@ const createXccupBorder = () => {
     [48.93, 6.02],
     [48.93, 10.38],
   ];
-  return L.polygon(xccupBoundaryPoints, { color: "red" });
+  return L.polygon(xccupBoundaryPoints, { color: "red", fillOpacity: 0.1 });
 };
 </script>
 
@@ -109,5 +143,4 @@ const createXccupBorder = () => {
   min-height: 75vh;
 }
 </style>
-
 }
