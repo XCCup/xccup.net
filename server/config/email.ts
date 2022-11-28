@@ -1,36 +1,52 @@
-const nodemailer = require("nodemailer");
-const logger = require("./logger");
-const { default: config } = require("./env-config");
-const retrieveTestMail = require("../parser/etherealMailParser");
-
-let mailClient;
-
-const auth = {
-  user: config.get("mailServiceUser"),
-  pass: config.get("mailServicePassword"),
-};
-
-const testSmtp = {
-  host: "smtp.ethereal.email",
-  secure: false, // true for 465, false for other ports
-  auth,
-};
+import nodemailer from "nodemailer";
+import logger from "./logger";
+import config from "../config/env-config";
+import { retrieveTestMail } from "../parser/etherealMailParser";
+import { push } from "../test/testEmailCache";
 
 const prodSmtp = {
   host: config.get("mailServiceUrl"),
   secure: true,
-  auth,
+  auth: {
+    user: config.get("mailServiceUser"),
+    pass: config.get("mailServicePassword"),
+  },
 };
+let mailClient: nodemailer.Transporter | undefined;
 
-if (config.get("env") !== "production") {
-  logger.info("E: Use test smtp server");
-  logger.info("E: U: " + auth.user.substring(0, 3));
-  logger.info("E: P: " + auth.pass.substring(0, 3));
-  mailClient = nodemailer.createTransport(testSmtp);
-} else {
-  logger.info("E: Use production smtp server");
-  // TODO: Shall we use "pool true" to send newsletters etc?
-  mailClient = nodemailer.createTransport(prodSmtp);
+async function initializeMailClient() {
+  mailClient = await getMailCLient();
+}
+
+initializeMailClient();
+
+async function createTestNodemailerTransport() {
+  // Generate SMTP service account from ethereal.email
+  try {
+    const testAccount = await nodemailer.createTestAccount();
+    const transporter = nodemailer.createTransport({
+      host: testAccount.smtp.host,
+      port: testAccount.smtp.port,
+      secure: testAccount.smtp.secure,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    });
+    return transporter;
+  } catch (error: any) {
+    console.error("Failed to create a testing account. " + error.message);
+  }
+}
+interface MailContent {
+  title: string;
+  text: string;
+  attachments?: any;
+}
+
+interface MailFrom {
+  name: string;
+  address: string;
 }
 
 /**
@@ -41,14 +57,20 @@ if (config.get("env") !== "production") {
  * @param {string} [replyTo] The replyTo address which will be added to the send e-mail.
  * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
  */
-const sendMail = async (mailAddresses, content, replyTo) => {
+const sendMail = async (
+  mailAddresses: string | string[],
+  content: MailContent,
+  replyTo?: string
+) => {
   if (
     !content.title ||
     !content.text ||
     content.title.length == 0 ||
     content.text.length == 0
   )
-    throw "content.title and content.text are not allowed to be empty";
+    throw new Error(
+      "content.title and content.text are not allowed to be empty"
+    );
 
   const message = createMessage(
     {
@@ -59,16 +81,20 @@ const sendMail = async (mailAddresses, content, replyTo) => {
     content,
     replyTo
   );
+
   try {
+    if (!mailClient) throw new Error("No mail client defined");
     const info = await mailClient.sendMail(message);
 
     if (config.get("env") !== "production") {
       logger.info("E: Check sent email in test smtp service");
       const previewUrl = nodemailer.getTestMessageUrl(info);
       logger.info("E: Preview URL: " + previewUrl);
+
+      if (!previewUrl) throw new Error("No URL found for this message");
+
       const receivedMail = await retrieveTestMail(previewUrl);
-      const testEmailCache = require("../test/testEmailCache");
-      testEmailCache.push(receivedMail);
+      push(receivedMail);
       logger.info(
         "E: Sent email found in test smtp: " + JSON.stringify(receivedMail)
       );
@@ -84,7 +110,23 @@ const sendMail = async (mailAddresses, content, replyTo) => {
   return true;
 };
 
-function createMessage(from, toAddresses, content, replyTo) {
+async function getMailCLient() {
+  if (config.get("env") !== "production") {
+    logger.info("E: Use test smtp server");
+    return await createTestNodemailerTransport();
+  } else {
+    logger.info("E: Use production smtp server");
+    // TODO: Shall we use "pool true" to send newsletters etc?
+    return nodemailer.createTransport(prodSmtp);
+  }
+}
+
+function createMessage(
+  from: MailFrom,
+  toAddresses: string | string[],
+  content: MailContent,
+  replyTo?: string
+) {
   // TODO: Sent mails are not saved. this is out of scope of nodemailer. Use node-imap instead?
   const isArray = Array.isArray(toAddresses);
   const to = isArray ? undefined : toAddresses;
@@ -103,3 +145,4 @@ function createMessage(from, toAddresses, content, replyTo) {
 }
 
 module.exports = sendMail;
+export default sendMail;

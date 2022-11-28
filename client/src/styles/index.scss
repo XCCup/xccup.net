@@ -52,6 +52,11 @@ a {
 }
 
 // Hide table cells depending on class
+.hide-on-lg {
+  @extend .d-none;
+  @extend .d-xl-table-cell;
+}
+
 .hide-on-md {
   @extend .d-none;
   @extend .d-lg-table-cell;

@@ -118,7 +118,7 @@ const config = convict({
   mailServiceUser: {
     doc: "The mail service user login name",
     format: noEmptyString,
-    default: "user@mailer.net",
+    default: "me@example.com",
     env: "MAIL_SERVICE_USER",
   },
   mailServiceFromName: {
@@ -130,7 +130,7 @@ const config = convict({
   mailServiceFromEmail: {
     doc: "The E-Mail-Address which will be attached to all mails as response address",
     format: noEmptyString,
-    default: "user@mailer.net",
+    default: "me@example.com",
     env: "MAIL_SERVICE_FROM_EMAIL",
   },
   mailServicePassword: {

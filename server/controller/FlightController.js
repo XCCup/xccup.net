@@ -622,7 +622,7 @@ router.put(
 
 /**
  * This functions checks if a flight
- * - was not maniplulated
+ * - was not manipulated
  * - is modifiable (<= X days or admin)
  * - was not uploaded before
  * - has an airspace violation
@@ -749,7 +749,7 @@ async function persistIgcFile(externalId, igcFile) {
 }
 
 /**
- * Flight upload or modifactions to an already processed flight are only allowed within the first X days after takeoff.
+ * Flight upload or modifications to an already processed flight are only allowed within the first X days after takeoff.
  * There are some exceptions from this rule:
  * - If system is not in production
  * - If the user is an admin

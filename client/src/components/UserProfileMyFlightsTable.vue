@@ -113,7 +113,7 @@ import ApiService from "@/services/ApiService";
 import { checkIfDateIsDaysBeforeToday } from "../helper/utils";
 import { DAYS_FLIGHT_CHANGEABLE } from "../common/Constants";
 
-const { data: flights, sortDataBy, initData } = useData("Profile");
+const { data: flights, sortDataBy, initData } = useData();
 const router = useRouter();
 const showSpinner = ref(false);
 const errorMessage = ref("");
@@ -178,10 +178,10 @@ const routeToFlight = (flightId) => {
 };
 
 const handleSortChange = (value) => {
-  currentSortColumnKey.value = value.key;
+  currentSortColumnKey.value = value.sortCol;
   sortDataBy({
     sortCol: currentSortColumnKey.value,
-    sortOrder: value.order,
+    sortOrder: value.sortOrder,
   });
 };
 </script>

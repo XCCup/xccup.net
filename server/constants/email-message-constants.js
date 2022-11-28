@@ -152,6 +152,17 @@ Euer Server-Knecht
     
 `;
 
+module.exports.GOOGLE_ELEVATION_ERROR_TITLE =
+  "Fehler beim Abrufen der Google Elevation API";
+
+module.exports.GOOGLE_ELEVATION_ERROR_TEXT = (flightId, error) => `Hallo Admins!
+
+Beim Flug https://xccup.net/flug/${flightId} ist ein Fehler beim Abruf der GND Daten aufgetreten.
+
+${error}
+
+Euer Server-Knecht`;
+
 module.exports.NEW_ADMIN_TASK_TITLE = "Neue Admin Aufgabe";
 
 module.exports.NEW_ADMIN_TASK_TEXT = `Hallo Admins!

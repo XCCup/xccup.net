@@ -1,7 +1,11 @@
 <template>
   <div v-if="clubs" class="container-lg">
-    <!-- TODO: Shall the year be named? -->
-    <h3>Teilnehmende Vereine des Jahres {{ new Date().getFullYear() }}</h3>
+    <h3>Teilnehmende Vereine</h3>
+    <p>
+      Ihr vermisst euren Verein? Dann nehmt doch bitte direkt
+      <router-link :to="{ name: 'Imprint' }">Kontakt</router-link> mit uns auf.
+      Wir freuen uns auf Euch.
+    </p>
     <ClubMap :clubs="clubs" />
   </div>
 </template>

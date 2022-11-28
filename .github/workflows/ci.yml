@@ -15,10 +15,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: 👀 Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: 🕸 Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -31,10 +31,7 @@ jobs:
         working-directory: ./server
 
       - name: 🕵️ Add secrets to ENV
-        run: >
-          echo "MAIL_SERVICE_USER=${{ secrets.ETHERNAL_MAIL_USER }}" >> ./.env.ci && 
-          echo "MAIL_SERVICE_PASSWORD=${{ secrets.ETHERNAL_MAIL_PASS }}" >> ./.env.ci &&
-          echo "METAR_API_KEY=${{ secrets.METAR_API_KEY }}" >> ./.env.ci
+        run: echo "METAR_API_KEY=${{ secrets.METAR_API_KEY }}" >> ./.env.ci
         working-directory: ./server
 
       - name: 🐳 Start Docker Backend Environment
@@ -68,7 +65,7 @@ jobs:
 
       - name: 🧪 Install cypress
         run: npx cypress install
-      # TODO: Fix cypress caching issue and remove the addional install
+      # TODO: Fix cypress caching issue and remove the additional install
 
       - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v4
@@ -80,14 +77,14 @@ jobs:
           browser: chrome
           env: TZ=Europe/Berlin
 
-      - name: 😩 Store artefacts of test failures
+      - name: 😩 Store artifacts of test failures
         uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: cypress-screenshots
           path: ./client/cypress/screenshots
 
-      - name: 🤨 Store artefacts of server logs
+      - name: 🤨 Store artifacts of server logs
         uses: actions/upload-artifact@v1
         if: always()
         with:

@@ -54,7 +54,7 @@ services:
       - xccup-db:/var/lib/postgresql/data
 
   pgadmin:
-    image: dpage/pgadmin4:6.10
+    image: dpage/pgadmin4:latest
     container_name: xccup-db-admin
     restart: always
     env_file: ./server/.env
@@ -70,7 +70,7 @@ services:
       traefik.docker.network: traefik
 
   traefik:
-    image: traefik:2.8.8
+    image: traefik:2.9.4
     restart: unless-stopped
     container_name: traefik
     command:
