@@ -5,9 +5,10 @@ interface FlightCommentAttributes {
   id: string;
   message: string;
   relatedTo?: string;
+  flightId?: string;
 }
 
-interface FlightCommentCreationAttributes
+export interface FlightCommentCreationAttributes
   extends Optional<FlightCommentAttributes, "id"> {}
 
 export interface FlightCommentInstance
@@ -39,13 +40,14 @@ export function initFlightComment(
     }
   ) as Models["FlightComment"];
 
-  FlightComment.associate = ({ User }) => {
+  FlightComment.associate = ({ User, Flight }) => {
     FlightComment.belongsTo(User, {
       as: "user",
       foreignKey: {
         name: "userId",
       },
     });
+    // TODO: Shouldn't there by a relation to Flight here?
   };
 
   return FlightComment;
