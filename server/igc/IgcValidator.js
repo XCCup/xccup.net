@@ -15,7 +15,7 @@ const igcValidator = {
    * Checks with the FAI API if a IGC file has a valid G record.
    *
    * @param {Object} igc An object which contains the path to or the content of the IGC file as also the IGC filename.
-   * @param {Boolean} options Options: { disableGCheck }
+   * @param {Object=} options Options: { disableGCheck }
    * @returns
    */
   execute: async (igc, options) => {

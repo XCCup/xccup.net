@@ -41,7 +41,10 @@ async function main() {
 
   // Start alternative OLC calculation
   var startTime = performance.now();
-  const result = solver(igcData, scoring.FFVL, { trim: true }).next().value;
+  let result = solver(igcData, scoring.FFVL, { trim: true }).next().value;
+  result = solver(igcData, scoring.FFVL, { trim: true }).next().value;
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   var endTime = performance.now();
   console.log(`*** xc-igc-score took ${endTime - startTime} milliseconds`);
@@ -60,7 +63,8 @@ async function main() {
 
   // Calculate airtime
   flightDbRef.airtime = calcAirtime(igcData.fixes);
-  console.log("*** Airtime", calcAirtime(igcData.fixes));
+  console.log("*** Airtime OLC", flightDbRef.airtime);
+  console.log("*** Airtime", result.time);
 
   // Add date related stats
   const { takeoffTime, landingTime, isWeekend } = getDateStats(igcData.fixes);
@@ -147,6 +151,11 @@ function getDateStats(fixes: IGCParser.BRecord[]) {
 }
 
 function calcAirtime(fixes: IGCParser.BRecord[]) {
+  console.log(fixes[fixes.length - 1].timestamp - fixes[0].timestamp);
+  console.log(
+    (fixes[fixes.length - 1].timestamp - fixes[0].timestamp) / 1000 / 60
+  );
+
   return Math.round(
     (fixes[fixes.length - 1].timestamp - fixes[0].timestamp) / 1000 / 60
   );

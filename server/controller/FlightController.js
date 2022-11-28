@@ -66,6 +66,7 @@ const {
   LEONARDO_ENDPOINT_MESSAGE,
 } = require("../constants/leonardo-endpoint-message");
 
+const { flightUpload } = require("../helper/FlightUpload");
 const uploadLimiter = createRateLimiter(60, 10);
 
 // All requests to /flights/photos will be rerouted
@@ -239,36 +240,8 @@ router.post(
   igcFileUpload.single("igcFile"),
   requesterMustBeLoggedIn,
   async (req, res, next) => {
-    const userId = req.user.id;
-
     try {
-      // G-Check
-      const validationResult = await igcValidator.execute(req.file);
-      if (isGRecordResultInvalid(res, validationResult)) {
-        sendGCheckInvalidAdminMail(userId, req.file.path);
-        return;
-      }
-
-      // DB Object
-      const flightDbObject = await service.create({
-        userId,
-        igcPath: req.file.path,
-        externalId: req.externalId,
-        uploadEndpoint: UPLOAD_ENDPOINT.WEB,
-        validationResult,
-      });
-
-      // Airspace check / takeoff name / result calculation
-      const { takeoffName, result, airspaceViolation } =
-        await runChecksStartCalculationsStoreFixes(flightDbObject, userId);
-
-      res.json({
-        flightId: flightDbObject.id,
-        externalId: flightDbObject.externalId,
-        airspaceViolation,
-        takeoff: takeoffName,
-        landing: result.landing,
-      });
+      await flightUpload(req, res);
     } catch (error) {
       next(error);
     }
@@ -723,6 +696,8 @@ function createMulterIgcUploadHandler({ parts = 1 } = {}) {
       .join(dataPath, IGC_STORE, getCurrentYear().toString())
       .toString(),
     filename: function (req, file, cb) {
+      // TODO: Is this prone to collisions when there are simultanious uploads?
+
       service.createExternalId().then((externalId) => {
         req.externalId = externalId;
         cb(null, externalId + "_" + file.originalname);
@@ -833,3 +808,5 @@ function isGRecordResultInvalid(res, validationResult) {
 }
 
 module.exports = router;
+exports.runChecksStartCalculationsStoreFixes =
+  runChecksStartCalculationsStoreFixes;
