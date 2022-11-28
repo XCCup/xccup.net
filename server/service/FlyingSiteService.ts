@@ -1,28 +1,42 @@
-const FlyingSite = require("../db")["FlyingSite"];
-const logger = require("../config/logger");
-const { XccupRestrictionError } = require("../helper/ErrorHandler");
-const {
-  getElevationData,
-  logElevationError,
-} = require("../igc/ElevationHelper");
-const Club = require("../db")["Club"];
-const User = require("../db")["User"];
+import db from "../db";
+import logger from "../config/logger";
+import { XccupRestrictionError } from "../helper/ErrorHandler";
+import { getElevationData, logElevationError } from "../igc/ElevationHelper";
+import { QueryTypes } from "sequelize";
+import {
+  FlyingSiteCreationAttributes,
+  FlyingSiteInstance,
+  FlyingSiteState,
+} from "../db/models/FlyingSite";
+import { BRecord } from "../helper/igc-parser";
 
 const MAX_DIST_TO_SEARCH = 5000;
 
 const STATES = {
-  ACTIVE: "active",
-  INACTIVE: "inactive",
-  PROPOSAL: "proposal",
+  ACTIVE: "active" as const,
+  INACTIVE: "inactive" as const,
+  PROPOSAL: "proposal" as const,
 };
 
+interface NewSite {
+  name: string;
+  direction: string;
+  long: number;
+  lat: number;
+  clubId: string;
+  website: string;
+  region: string;
+  heightDifference: number;
+  submitter: string;
+}
+
 const siteService = {
-  getById: async (id) => {
-    return FlyingSite.findByPk(id);
+  getById: async (id: string) => {
+    return db.FlyingSite.findByPk(id);
   },
 
-  getByName: async (shortName) => {
-    return FlyingSite.findOne({
+  getByName: async (shortName: string) => {
+    return db.FlyingSite.findOne({
       where: {
         name: shortName,
       },
@@ -30,7 +44,7 @@ const siteService = {
   },
 
   getAllNames: async () => {
-    const sites = await FlyingSite.findAll({
+    const sites = await db.FlyingSite.findAll({
       attributes: ["id", "name"],
       order: [["name", "asc"]],
       where: {
@@ -40,7 +54,9 @@ const siteService = {
     return sites;
   },
 
-  getAll: async ({ state = STATES.ACTIVE } = {}) => {
+  getAll: async ({
+    state = STATES.ACTIVE,
+  }: { state?: FlyingSiteState } = {}) => {
     const attributes = [
       "id",
       "name",
@@ -54,13 +70,13 @@ const siteService = {
     ];
     if (state == STATES.PROPOSAL) attributes.push("submitter");
 
-    const sites = await FlyingSite.findAll({
+    const sites = await db.FlyingSite.findAll({
       attributes,
       where: {
         state,
       },
       include: {
-        model: Club,
+        model: db.Club,
         as: "club",
         attributes: ["id", "name"],
       },
@@ -71,8 +87,9 @@ const siteService = {
         const plainSite = s.toJSON();
         // Add submitter if it's a proposed site
         if (state == STATES.PROPOSAL) {
-          const submitter = await User.findByPk(s.submitter);
-          plainSite.submitter = submitter;
+          const submitter = await db.User.findByPk(s.submitter);
+          // @ts-ignore We add more info about the submitting user here regardless of types
+          plainSite.submitter = { id: submitter?.id, email: submitter.email };
         }
         return plainSite;
       })
@@ -91,8 +108,8 @@ const siteService = {
     region,
     heightDifference,
     submitter,
-  }) => {
-    let elevation;
+  }: NewSite) => {
+    let elevation = 0;
     const location = [{ latitude: lat, longitude: long }];
     try {
       const res = await getElevationData(location);
@@ -101,7 +118,7 @@ const siteService = {
       logElevationError(error);
     }
 
-    const site = {
+    const site: FlyingSiteCreationAttributes = {
       name,
       direction,
       clubId,
@@ -112,32 +129,32 @@ const siteService = {
       heightDifference,
       elevation,
       state: STATES.PROPOSAL,
-      submitter: submitter.id,
+      submitter,
       point: {
         type: "Point",
         coordinates: [long, lat],
       },
     };
-    return FlyingSite.create(site);
+    return db.FlyingSite.create(site);
   },
 
-  update: async (site) => {
-    return FlyingSite.save(site);
+  update: async (site: FlyingSiteInstance) => {
+    return site.save();
   },
 
-  changeStateToActive: async (site) => {
+  changeStateToActive: async (site: FlyingSiteInstance) => {
     site.state = STATES.ACTIVE;
     site.changed("state", true);
     return site.save();
   },
 
-  delete: async (id) => {
-    return FlyingSite.destroy({
+  delete: async (id: string) => {
+    return db.FlyingSite.destroy({
       where: { id },
     });
   },
 
-  findClosestTakeoff: async (location) => {
+  findClosestTakeoff: async (location: BRecord) => {
     const query = `
     SELECT
     "id","name", "elevation", ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
@@ -152,22 +169,24 @@ const siteService = {
     LIMIT 1
     `;
 
-    const takeoffs = await FlyingSite.sequelize.query(query, {
+    const takeoffs = await db.FlyingSite.sequelize?.query(query, {
       replacements: {
-        latitude: parseFloat(location.latitude),
-        longitude: parseFloat(location.longitude),
+        latitude: location.latitude,
+        longitude: location.longitude,
       },
-      type: FlyingSite.sequelize.QueryTypes.SELECT,
+      type: QueryTypes.SELECT,
     });
+
+    if (!takeoffs || takeoffs.length == 0) {
+      const errorMsg = `Found no takeoff in DB for lat: ${location.latitude} long: ${location.longitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
+      throw new XccupRestrictionError(errorMsg);
+    }
 
     if (takeoffs.length == 1) {
       logger.debug("Found takeoff in DB");
       return takeoffs[0];
     } else if (takeoffs.length > 1) {
       const errorMsg = `Found more than one takeoff in DB for lat: ${location.latitude} long: ${location.longitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
-      throw new XccupRestrictionError(errorMsg);
-    } else {
-      const errorMsg = `Found no takeoff in DB for lat: ${location.latitude} long: ${location.longitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
       throw new XccupRestrictionError(errorMsg);
     }
   },

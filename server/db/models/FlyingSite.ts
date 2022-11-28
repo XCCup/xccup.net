@@ -1,5 +1,6 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { Models } from "../../types/Models";
+import type { Geometry } from "geojson";
 
 interface FlyingSiteAttributes {
   id: string;
@@ -7,17 +8,20 @@ interface FlyingSiteAttributes {
   name: string;
   shortName?: string;
   direction: string;
-  point: DataTypes.GeometryDataType;
+  point: Geometry;
   type?: string;
   image?: string;
+  clubId?: string;
   heightDifference?: number;
   elevation: number;
-  state?: "active" | "inactive" | "proposal";
+  state?: FlyingSiteState;
   website?: string;
   submitter?: string;
 }
 
-interface FlyingSiteCreationAttributes
+export type FlyingSiteState = "active" | "inactive" | "proposal";
+
+export interface FlyingSiteCreationAttributes
   extends Optional<FlyingSiteAttributes, "id"> {}
 
 export interface FlyingSiteInstance

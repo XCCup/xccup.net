@@ -1,7 +1,8 @@
-import { Sequelize, Model, DataTypes } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { Models } from "../../types/Models";
 
 interface SeasonDetailAttributes {
+  id: number;
   year: number;
   startDate: Date;
   endDate: Date;
@@ -31,8 +32,11 @@ type RankingTypes =
   | "earlyBird"
   | "lateBird";
 
+export interface SeasonDetailCreationAttributes
+  extends Optional<SeasonDetailAttributes, "id"> {}
+
 export interface SeasonDetailInstance
-  extends Model<SeasonDetailAttributes>,
+  extends Model<SeasonDetailAttributes, SeasonDetailCreationAttributes>,
     SeasonDetailAttributes {
   createdAt?: Date;
   updatedAt?: Date;
@@ -40,6 +44,12 @@ export interface SeasonDetailInstance
 
 export function initSeasonDetail(sequelize: Sequelize): Models["SeasonDetail"] {
   const SeasonDetail = sequelize.define<SeasonDetailInstance>("SeasonDetail", {
+    id: {
+      type: DataTypes.INTEGER,
+      defaultValue: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+    },
     year: {
       type: DataTypes.INTEGER,
       allowNull: false,

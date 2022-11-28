@@ -1,16 +1,20 @@
-const SeasonDetail = require("../db")["SeasonDetail"];
-const { getCurrentYear } = require("../helper/Utils");
-const logger = require("../config/logger");
-const { XccupHttpError } = require("../helper/ErrorHandler");
-const { getCache, setCache } = require("../controller/CacheManager");
+import db from "../db";
+import { getCurrentYear } from "../helper/Utils";
+import logger from "../config/logger";
+import { XccupHttpError } from "../helper/ErrorHandler";
+import { getCache, setCache } from "../controller/CacheManager";
+import {
+  SeasonDetailInstance,
+  SeasonDetailCreationAttributes,
+} from "../db/models/SeasonDetail";
 
 const service = {
-  getById: async (id) => {
-    return SeasonDetail.findByPk(id);
+  getById: async (id: string) => {
+    return db.SeasonDetail.findByPk(id);
   },
 
-  getByYear: async (year) => {
-    const details = await SeasonDetail.findOne({
+  getByYear: async (year: number) => {
+    const details = await db.SeasonDetail.findOne({
       where: {
         year,
       },
@@ -25,8 +29,8 @@ const service = {
     return details;
   },
 
-  getAll: async ({ retrieveOnlyYears } = {}) => {
-    return SeasonDetail.findAll({
+  getAll: async ({ retrieveOnlyYears } = { retrieveOnlyYears: false }) => {
+    return db.SeasonDetail.findAll({
       attributes: retrieveOnlyYears ? ["year"] : undefined,
     });
   },
@@ -46,7 +50,7 @@ const service = {
 
   refreshCurrentSeasonDetails: async () => {
     logger.info("Refresh cache for currentSeasonDetails");
-    return SeasonDetail.findOne({
+    return db.SeasonDetail.findOne({
       where: {
         year: getCurrentYear(),
       },
@@ -54,16 +58,16 @@ const service = {
     });
   },
 
-  create: async (season) => {
-    return SeasonDetail.create(season);
+  create: async (season: SeasonDetailCreationAttributes) => {
+    return db.SeasonDetail.create(season);
   },
 
-  update: async (season) => {
-    return SeasonDetail.save(season);
+  update: async (season: SeasonDetailInstance) => {
+    return season.save();
   },
 
-  delete: async (id) => {
-    return SeasonDetail.destroy({
+  delete: async (id: string) => {
+    return db.SeasonDetail.destroy({
       where: { id },
     });
   },

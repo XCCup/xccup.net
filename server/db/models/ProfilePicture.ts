@@ -7,9 +7,10 @@ interface ProfilePictureAttributes {
   originalname: string;
   mimetype?: string;
   size?: number;
+  userId?: string;
 }
 
-interface ProfilePictureCreationAttributes
+export interface ProfilePictureCreationAttributes
   extends Optional<ProfilePictureAttributes, "id"> {}
 
 export interface ProfilePictureInstance
