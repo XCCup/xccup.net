@@ -46,8 +46,8 @@ export function initSeasonDetail(sequelize: Sequelize): Models["SeasonDetail"] {
   const SeasonDetail = sequelize.define<SeasonDetailInstance>("SeasonDetail", {
     id: {
       type: DataTypes.INTEGER,
-      defaultValue: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
     },
     year: {
