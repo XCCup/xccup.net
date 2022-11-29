@@ -1,5 +1,5 @@
 export const ADMIN_EMAIL = "info@xccup.net";
-export const TRACK_COLORS = [
+export const ADDITIONAL_COLORS = [
   "DarkSlateBlue",
   "DarkRed",
   "DarkCyan",
