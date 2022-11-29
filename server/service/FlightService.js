@@ -8,6 +8,7 @@ const Brand = require("../db")["Brand"];
 const FlightPhoto = require("../db")["FlightPhoto"];
 const FlyingSite = require("../db")["FlyingSite"];
 const FlightFixes = require("../db")["FlightFixes"];
+const mailService = require("../service/MailService");
 
 const moment = require("moment");
 
@@ -46,6 +47,8 @@ const {
   addElevationToFixes,
   logElevationError,
 } = require("../igc/ElevationHelper");
+
+const { checkIfFlightIsNewPersonalBest } = require("../helper/PersonalBest");
 
 const flightService = {
   getAll: async ({
@@ -355,6 +358,14 @@ const flightService = {
       sendNewAdminTask();
     }
 
+    // Check if flight was a personal best
+    const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
+    if (isNewPersonalBest) {
+      flight.isNewPersonalBest = true;
+      // TODO: Do no send if there is an airspace violation?
+      mailService.sendNewPersonalBestMail(flight);
+    }
+
     const updatedColumns = await flight.save();
     checkSiteRecordsAndUpdate(flight);
     return updatedColumns;
@@ -396,8 +407,8 @@ const flightService = {
         flight.flightStatus = flightStatus;
       }
     }
-
     flight.save();
+    // TODO: Why does this run twice? Here and in finalizeFlightSubmission
     checkSiteRecordsAndUpdate(flight);
     deleteCache(["home", "flights", "results"]);
   },

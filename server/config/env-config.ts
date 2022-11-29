@@ -94,6 +94,8 @@ const config = convict({
     default: "qwertz12345",
     env: "METAR_API_KEY",
   },
+  // TODO: Are default values dangerous because you would run the server with
+  // leaked secrets and no notification about it.
   jwtLogin: {
     doc: "The login token for the jwt authentication mechanism",
     format: check128Hex,

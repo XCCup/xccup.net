@@ -191,6 +191,83 @@ describe("check flight upload page", () => {
     });
   });
 
+  it.only("test upload new personal best", () => {
+    const igcFileName = "104km.igc";
+
+    const expectedTakeoff = "Hoher Meissner Uengsterode";
+    const expectedUserName = "Ramona Gislason";
+
+    // Test another file to not be the personal best
+    const igcFileName2 = "fai_60km42_3h53m.igc";
+    const expectedTakeoff2 = "Zeltingen-Rachtig";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+
+    // Finish flight submission
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
+
+    // Second flight that now should not be a personal best
+    cy.visit("/");
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName2).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff2);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+
+    // Finish flight submission
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
+  });
+
   it("test upload flight twice", () => {
     const igcFileName = "74931_2022-06-18_14.11_Kluesserath.igc";
     const expectedError =

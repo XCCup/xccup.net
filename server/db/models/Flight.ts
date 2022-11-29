@@ -36,8 +36,8 @@ export interface FlightAttributes {
   homeStateOfUser?: string;
   flightStats?: FlightStats;
   airbuddies?: Airbuddy[];
+  // isNewPersonalBest?: boolean;
 }
-
 interface Airbuddy {
   externalId: number;
   correlationPercentage: number;
@@ -45,13 +45,11 @@ interface Airbuddy {
   userLastName: string;
   userId: string;
 }
-
 interface FlightTurnpoint {
   time: string;
   lat: number;
   long: number;
 }
-
 interface Glider {
   id: string;
   brand: string;
@@ -61,7 +59,6 @@ interface Glider {
     shortDescription: string;
   };
 }
-
 interface AirspaceViolation {
   lat: number;
   long: number;
@@ -74,21 +71,18 @@ interface AirspaceViolation {
 }
 
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
-
 export interface FlightOutputAttributes extends FlightAttributes {
   userId: string;
   siteId: string;
   clubId: string;
   teamId?: string;
 }
-
 export interface FlightInstance
   extends Model<FlightAttributes, FlightCreationAttributes>,
     FlightOutputAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
 export interface FlightInstanceUserInclude extends FlightInstance {
   user: UserAttributes;
 }
@@ -204,6 +198,10 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     airbuddies: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
     },
+    // isNewPersonalBest: {
+    //   type: DataTypes.BOOLEAN,
+    //   defaultValue: false,
+    // },
   }) as Models["Flight"];
 
   Flight.associate = ({
