@@ -196,6 +196,9 @@ describe("check flight upload page", () => {
 
     const expectedTakeoff = "Hoher Meissner Uengsterode";
     const expectedUserName = "Ramona Gislason";
+    const expectedMailReceipient = "blackhole+ramona@xccup.net";
+    const expectedMailContent =
+      "Herzlichen Glückwunsch zur neuen persönlichen Bestleistung";
 
     // Test another file to not be the personal best
     const igcFileName2 = "fai_60km42_3h53m.igc";
@@ -233,6 +236,14 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=flight-details-pilot]")
       .find("a")
       .contains(expectedUserName);
+
+    cy.wrap(null).then(async () => {
+      // Check that admin received an email
+      cy.recipientReceivedEmailWithText(
+        expectedMailReceipient,
+        expectedMailContent
+      );
+    });
 
     // Second flight that now should not be a personal best
     cy.visit("/");

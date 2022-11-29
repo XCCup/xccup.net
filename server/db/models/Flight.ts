@@ -36,7 +36,7 @@ export interface FlightAttributes {
   homeStateOfUser?: string;
   flightStats?: FlightStats;
   airbuddies?: Airbuddy[];
-  // isNewPersonalBest?: boolean;
+  isNewPersonalBest?: boolean;
 }
 interface Airbuddy {
   externalId: number;
@@ -198,10 +198,10 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     airbuddies: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
     },
-    // isNewPersonalBest: {
-    //   type: DataTypes.BOOLEAN,
-    //   defaultValue: false,
-    // },
+    isNewPersonalBest: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   }) as Models["Flight"];
 
   Flight.associate = ({
