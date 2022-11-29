@@ -9,7 +9,7 @@ const service = {
 
   getByFlightId: async (flightId: string) => {
     const comments = await db.FlightComment.findAll({
-      // @ts-ignore I know it's there...
+      // @ts-ignore I know it's there... but why?
       where: { flightId },
       include: [
         {
@@ -20,7 +20,6 @@ const service = {
       ],
       order: [["createdAt", "ASC"]],
     });
-
     comments.forEach((comment) => {
       comment.message = _.unescape(comment.message);
     });
