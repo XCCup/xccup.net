@@ -358,11 +358,11 @@ const flightService = {
       sendNewAdminTask();
     }
 
-    // Check if flight was a personal best
+    // Check if flight is a new personal best
     const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
     if (isNewPersonalBest) {
       flight.isNewPersonalBest = true;
-      // TODO: Do no send if there is an airspace violation?
+      // TODO: Do not send if there is an airspace violation?
       mailService.sendNewPersonalBestMail(flight);
     }
 
