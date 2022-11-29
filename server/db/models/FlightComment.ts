@@ -1,21 +1,26 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import {
+  Sequelize,
+  Model,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+  BelongsToCreateAssociationMixin,
+} from "sequelize";
 import { Models } from "../../types/Models";
-
-interface FlightCommentAttributes {
-  id: string;
-  message: string;
-  relatedTo?: string;
-  flightId?: string;
-}
-
-export interface FlightCommentCreationAttributes
-  extends Optional<FlightCommentAttributes, "id"> {}
+import { FlightInstance } from "./Flight";
+import { UserInstance } from "./User";
 
 export interface FlightCommentInstance
-  extends Model<FlightCommentAttributes, FlightCommentCreationAttributes>,
-    FlightCommentAttributes {
-  createdAt?: Date;
-  updatedAt?: Date;
+  extends Model<
+    InferAttributes<FlightCommentInstance>,
+    InferCreationAttributes<FlightCommentInstance>
+  > {
+  id: CreationOptional<number>;
+  message: string;
+  relatedTo?: string;
+  userId: BelongsToCreateAssociationMixin<UserInstance>;
+  flightId: BelongsToCreateAssociationMixin<FlightInstance>;
 }
 
 export function initFlightComment(
@@ -47,7 +52,7 @@ export function initFlightComment(
         name: "userId",
       },
     });
-    // TODO: Shouldn't there by a relation to Flight here?
+    FlightComment.belongsTo(Flight);
   };
 
   return FlightComment;

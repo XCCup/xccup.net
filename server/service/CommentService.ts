@@ -1,9 +1,6 @@
 import db from "../db";
 import _ from "lodash";
-import {
-  FlightCommentCreationAttributes,
-  FlightCommentInstance,
-} from "../db/models/FlightComment";
+import { FlightCommentInstance } from "../db/models/FlightComment";
 
 const service = {
   getById: async (id: string) => {
@@ -12,6 +9,7 @@ const service = {
 
   getByFlightId: async (flightId: string) => {
     const comments = await db.FlightComment.findAll({
+      // @ts-ignore I know it's there...
       where: { flightId },
       include: [
         {
@@ -29,7 +27,7 @@ const service = {
     return comments;
   },
 
-  create: async (comment: FlightCommentCreationAttributes) => {
+  create: async (comment: FlightCommentInstance) => {
     return db.FlightComment.create(comment);
   },
 
