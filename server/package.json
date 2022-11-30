@@ -43,7 +43,7 @@
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
     "sanitize-html": "^2.7.3",
-    "sequelize": "^6.25.8",
+    "sequelize": "^6.26.0",
     "sharp": "^0.31.2",
     "uuid": "^9.0.0",
     "winston": "^3.8.2"
