@@ -302,7 +302,7 @@ const toggleMapSize = () => {
   }, 100);
 };
 
-const mapHeight = computed(() => (mapExpanded.value ? "65vh" : "430px"));
+const mapHeight = computed(() => (mapExpanded.value ? "70vh" : "430px"));
 </script>
 
 <style scoped>
