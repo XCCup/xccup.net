@@ -114,3 +114,10 @@ export async function getSiteRecords() {
   siteRecordsCache = <SiteRecord[]>await service.getSiteRecords();
   return siteRecordsCache;
 }
+
+(() => {
+  setTimeout(() => {
+    logger.info("SRC: Fill site records cache on server start-up");
+    getSiteRecords();
+  }, 10_000);
+})();
