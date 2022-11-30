@@ -310,7 +310,6 @@ router.get(
 
 // @desc Gets the records for all flightTypes over all flyingSites
 // @route GET /results/siteRecords/
-
 router.get("/siteRecords", async (req, res, next) => {
   try {
     const value = getCache(req);
@@ -325,5 +324,8 @@ router.get("/siteRecords", async (req, res, next) => {
     next(error);
   }
 });
+
+// Run this function once at server start because this route take quiet a while on first call...
+getSiteRecords();
 
 module.exports = router;
