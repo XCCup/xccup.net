@@ -13,10 +13,10 @@ import { BRecord } from "../helper/igc-parser";
 const MAX_DIST_TO_SEARCH = 5000;
 
 const STATES = {
-  ACTIVE: "active" as const,
-  INACTIVE: "inactive" as const,
-  PROPOSAL: "proposal" as const,
-};
+  ACTIVE: "active",
+  INACTIVE: "inactive",
+  PROPOSAL: "proposal",
+} as const;
 
 interface NewSite {
   name: string;
