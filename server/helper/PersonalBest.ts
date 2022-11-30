@@ -3,9 +3,12 @@ import { Op } from "sequelize";
 import db from "../db";
 
 export async function checkIfFlightIsNewPersonalBest(flight: FlightInstance) {
+  //  Do not flag to small flights as a new personal best.
+  if (flight.flightPoints && flight.flightPoints < 40) return false;
+
   const newBestFlight: FlightInstance | null = await db.Flight.findOne({
     where: {
-      // @ts-ignore
+      // @ts-ignore 😡 sequelize
       userId: flight.userId,
       flightDistance: { [Op.gt]: flight.flightDistance },
       flightType: flight.flightType,
