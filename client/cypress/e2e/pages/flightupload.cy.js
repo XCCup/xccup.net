@@ -191,11 +191,12 @@ describe("check flight upload page", () => {
     });
   });
 
-  it.only("test upload new personal best", () => {
+  it("test upload new personal best", () => {
     const igcFileName = "104km.igc";
 
     const expectedTakeoff = "Hoher Meissner Uengsterode";
     const expectedUserName = "Ramona Gislason";
+    const expectedAwardText = "Neue Persönliche Bestleistung";
     const expectedMailReceipient = "blackhole+ramona@xccup.net";
     const expectedMailContent =
       "Herzlichen Glückwunsch zur neuen persönlichen Bestleistung";
@@ -237,6 +238,10 @@ describe("check flight upload page", () => {
       .find("a")
       .contains(expectedUserName);
 
+    cy.get("[data-cy=personal-best-tag]")
+      .should("exist")
+      .contains(expectedAwardText);
+
     cy.wrap(null).then(async () => {
       // Check that admin received an email
       cy.recipientReceivedEmailWithText(
@@ -277,6 +282,8 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=flight-details-pilot]")
       .find("a")
       .contains(expectedUserName);
+
+    cy.get("[data-cy=personal-best-tag]").should("not.exist");
   });
 
   it("test upload flight twice", () => {

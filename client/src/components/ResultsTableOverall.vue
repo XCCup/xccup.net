@@ -1,4 +1,5 @@
 <template>
+  <!-- Streckenmeldungen -->
   <section class="pb-3">
     <div v-if="flights?.length > 0" v-memo="[flights]" class="table-responsive">
       <table class="table table-striped table-hover text-sm">
@@ -64,9 +65,13 @@
               <table>
                 <tr>
                   <td>
-                    <strong>{{
-                      flight.user?.firstName + " " + flight.user?.lastName
-                    }}</strong>
+                    <PersonalBestIcon v-if="flight.isNewPersonalBest" />
+
+                    <strong>
+                      {{
+                        flight.user?.firstName + " " + flight.user?.lastName
+                      }}</strong
+                    >
                   </td>
                 </tr>
                 <tr class="d-md-none">
@@ -175,6 +180,9 @@ const handleSortChange = (value: SortOptions) => {
 };
 </script>
 <style scoped>
+.highlight-row {
+  background-color: aquamarine;
+}
 tr:hover {
   /* 
   -moz-box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
