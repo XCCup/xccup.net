@@ -1,5 +1,5 @@
 <template>
-  <div v-if="flight" id="foo" class="row my-4" data-cy="flight-details-pilot">
+  <div v-if="flight" class="row my-4" data-cy="flight-details-pilot">
     <div class="col-12 col-md-6">
       <div class="d-flex">
         <img :src="avatarUrl" class="rounded-circle" />
@@ -62,11 +62,4 @@ const avatarUrl = createUserPictureUrl(flight.value?.user?.id, {
   height: 100px;
   width: 100px;
 }
-
-/* @media (max-width: 768px) {
-  .rounded-circle {
-    height: 50px;
-    width: 50px;
-  }
-} */
 </style>

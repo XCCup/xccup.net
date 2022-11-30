@@ -180,9 +180,6 @@ const handleSortChange = (value: SortOptions) => {
 };
 </script>
 <style scoped>
-.highlight-row {
-  background-color: aquamarine;
-}
 tr:hover {
   /* 
   -moz-box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
