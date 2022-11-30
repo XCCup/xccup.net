@@ -194,7 +194,7 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       as: "picture",
       foreignKey: {
         name: "userId",
-        //Through this constrain it's realized that every comment, will be delete if the user will be deleted
+        //Through this constrain it's realized that every comment, will be deleted if the user will be deleted
         allowNull: false,
       },
       onDelete: "CASCADE",
@@ -204,7 +204,7 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       as: "photos",
       foreignKey: {
         name: "userId",
-        //Through this constrain it's realized that every comment, will be delete if the user will be deleted
+        //Through this constrain it's realized that every photo, will be deleted if the user will be deleted
         allowNull: false,
       },
       onDelete: "CASCADE",

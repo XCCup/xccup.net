@@ -1,20 +1,26 @@
-import { Sequelize, Model, DataTypes, Optional } from "sequelize";
+import {
+  Sequelize,
+  Model,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+  BelongsToCreateAssociationMixin,
+} from "sequelize";
 import { Models } from "../../types/Models";
-
-interface FlightCommentAttributes {
-  id: string;
-  message: string;
-  relatedTo?: string;
-}
-
-interface FlightCommentCreationAttributes
-  extends Optional<FlightCommentAttributes, "id"> {}
+import { FlightInstance } from "./Flight";
+import { UserInstance } from "./User";
 
 export interface FlightCommentInstance
-  extends Model<FlightCommentAttributes, FlightCommentCreationAttributes>,
-    FlightCommentAttributes {
-  createdAt?: Date;
-  updatedAt?: Date;
+  extends Model<
+    InferAttributes<FlightCommentInstance>,
+    InferCreationAttributes<FlightCommentInstance>
+  > {
+  id: CreationOptional<number>;
+  message: string;
+  relatedTo?: string;
+  userId: BelongsToCreateAssociationMixin<UserInstance>;
+  flightId: BelongsToCreateAssociationMixin<FlightInstance>;
 }
 
 export function initFlightComment(
@@ -39,13 +45,14 @@ export function initFlightComment(
     }
   ) as Models["FlightComment"];
 
-  FlightComment.associate = ({ User }) => {
+  FlightComment.associate = ({ User, Flight }) => {
     FlightComment.belongsTo(User, {
       as: "user",
       foreignKey: {
         name: "userId",
       },
     });
+    FlightComment.belongsTo(Flight);
   };
 
   return FlightComment;
