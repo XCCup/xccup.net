@@ -165,12 +165,6 @@ const config = convict({
     default: false,
     env: "SERVER_IMPORT_TEST_DATA",
   },
-  serverImportOriginalData: {
-    doc: "A switch which signals that on server startup original data sets should be loaded",
-    format: Boolean,
-    default: false,
-    env: "SERVER_IMPORT_ORIGINAL_DATA",
-  },
   serverImportToken: {
     doc: "A token to confirm any action with the ImportDataController",
     format: noEmptyString,
