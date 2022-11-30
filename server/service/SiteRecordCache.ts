@@ -2,6 +2,7 @@ import { FlightOutputAttributes } from "../db/models/Flight";
 import service from "./ResultService";
 import db from "../db";
 import { logger } from "bs-logger";
+import config from "../config/env-config";
 
 interface TypeRecord {
   user: {
@@ -116,8 +117,10 @@ export async function getSiteRecords() {
 }
 
 (() => {
-  setTimeout(() => {
-    logger.info("SRC: Fill site records cache on server start-up");
-    getSiteRecords();
-  }, 10_000);
+  if (config.get("env") === "production") {
+    setTimeout(() => {
+      logger.info("SRC: Fill site records cache on server start-up");
+      getSiteRecords();
+    }, 10_000);
+  }
 })();
