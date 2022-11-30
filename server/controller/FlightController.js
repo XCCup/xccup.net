@@ -546,7 +546,7 @@ router.put(
       req.body;
 
     try {
-      if (await requesterIsNotOwner(req, res, flight.userId)) return;
+      if (requesterIsNotOwner(req, res, flight.userId)) return;
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 

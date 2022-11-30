@@ -365,7 +365,6 @@ const flightService = {
       // TODO: Do not send if there is an airspace violation?
       mailService.sendNewPersonalBestMail(flight);
     }
-
     const updatedColumns = await flight.save();
     checkSiteRecordsAndUpdate(flight);
     return updatedColumns;
