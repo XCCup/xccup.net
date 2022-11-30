@@ -10,6 +10,7 @@ export async function checkIfFlightIsNewPersonalBest(flight: FlightInstance) {
     where: {
       // @ts-ignore 😡 sequelize
       userId: flight.userId,
+      externalId: { [Op.ne]: flight.externalId },
       flightDistance: { [Op.gte]: flight.flightDistance },
       flightType: flight.flightType,
     },

@@ -321,9 +321,8 @@ const flightService = {
     hikeAndFly,
   } = {}) => {
     // Set report when value is defined or empty
-    if (report || report == "") {
-      flight.report = report;
-    }
+    if (report || report == "") flight.report = report;
+
     if (airspaceComment || airspaceComment == "") {
       flight.airspaceComment = airspaceComment;
     }
@@ -334,9 +333,9 @@ const flightService = {
       });
       flight.hikeAndFly = site.heightDifference;
     }
-    if (hikeAndFly == 0) {
-      flight.hikeAndFly = 0;
-    }
+    if (hikeAndFly == 0) flight.hikeAndFly = 0;
+
+    const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
 
     if (glider) {
       await createGliderObject(flight, glider);
@@ -354,17 +353,21 @@ const flightService = {
       }
     }
 
-    if (flight.airspaceViolation) {
-      sendNewAdminTask();
+    if (flight.airspaceViolation) sendNewAdminTask();
+
+    // Check if flight is a new personal best (not on edit)
+    if (isNewFlightUpload) {
+      logger.info("FS: Will check if flight is new personal best");
+      const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
+
+      if (isNewPersonalBest) {
+        logger.info("FS: Flight is new personal best");
+        flight.isNewPersonalBest = true;
+        // TODO: Do not send if there is an airspace violation?
+        mailService.sendNewPersonalBestMail(flight);
+      }
     }
 
-    // Check if flight is a new personal best
-    const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
-    if (isNewPersonalBest) {
-      flight.isNewPersonalBest = true;
-      // TODO: Do not send if there is an airspace violation?
-      mailService.sendNewPersonalBestMail(flight);
-    }
     const updatedColumns = await flight.save();
     checkSiteRecordsAndUpdate(flight);
     return updatedColumns;
