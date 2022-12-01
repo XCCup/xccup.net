@@ -1,0 +1,296 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Airspaces {
+  id        String                  @id @db.Uuid
+  season    Int?                    @default(2022)
+  class     String                  @db.VarChar(255)
+  name      String                  @db.VarChar(255)
+  floor     String                  @db.VarChar(255)
+  ceiling   String                  @db.VarChar(255)
+  polygon   Unsupported("geometry")
+  createdAt DateTime                @db.Timestamptz(6)
+  updatedAt DateTime                @db.Timestamptz(6)
+}
+
+model Brands {
+  id        String   @id @db.Uuid
+  name      String   @unique @db.VarChar(255)
+  website   String?  @db.VarChar(255)
+  createdAt DateTime @db.Timestamptz(6)
+  updatedAt DateTime @db.Timestamptz(6)
+  Logos     Logos[]
+}
+
+model Clubs {
+  id                   String        @id @db.Uuid
+  name                 String        @db.VarChar(255)
+  shortName            String        @unique @db.VarChar(255)
+  website              String?       @db.VarChar(255)
+  urlLogo              String?       @db.VarChar(255)
+  mapPosition          Json?         @db.Json
+  participantInSeasons Int[]
+  contacts             Json[]        @db.Json
+  createdAt            DateTime      @db.Timestamptz(6)
+  updatedAt            DateTime      @db.Timestamptz(6)
+  Flights              Flights[]
+  FlyingSites          FlyingSites[]
+  Logos                Logos[]
+  Users                Users[]
+}
+
+model FlightComments {
+  id        String   @id @db.Uuid
+  message   String   @db.VarChar(2000)
+  relatedTo String?  @db.Uuid
+  createdAt DateTime @db.Timestamptz(6)
+  updatedAt DateTime @db.Timestamptz(6)
+  flightId  String   @db.Uuid
+  userId    String?  @db.Uuid
+  Flights   Flights  @relation(fields: [flightId], references: [id], onDelete: Cascade)
+  Users     Users?   @relation(fields: [userId], references: [id])
+}
+
+model FlightFixes {
+  id             String                  @id @db.Uuid
+  geom           Unsupported("geometry")
+  timeAndHeights Json[]                  @db.Json
+  stats          Json[]                  @db.Json
+  createdAt      DateTime                @db.Timestamptz(6)
+  updatedAt      DateTime                @db.Timestamptz(6)
+  flightId       String                  @db.Uuid
+  Flights        Flights                 @relation(fields: [flightId], references: [id], onDelete: Cascade)
+}
+
+model FlightPhotos {
+  id             String    @id @db.Uuid
+  path           String    @db.VarChar(255)
+  pathThumb      String?   @db.VarChar(255)
+  originalname   String    @db.VarChar(255)
+  description    String?   @db.VarChar(2000)
+  timestamp      DateTime? @db.Timestamptz(6)
+  mimetype       String?   @db.VarChar(255)
+  size           BigInt?
+  isExternalLink Boolean?  @default(false)
+  likers         String[]  @default([]) @db.Uuid
+  createdAt      DateTime  @db.Timestamptz(6)
+  updatedAt      DateTime  @db.Timestamptz(6)
+  flightId       String    @db.Uuid
+  userId         String    @db.Uuid
+  Flights        Flights   @relation(fields: [flightId], references: [id], onDelete: Cascade)
+  Users          Users     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Flights {
+  id                 String           @id @db.Uuid
+  externalId         Int?             @unique
+  landing            String?          @db.VarChar(255)
+  report             String?          @db.VarChar(12000)
+  airspaceComment    String?          @db.VarChar(1024)
+  flightPoints       Int?
+  flightDistance     Float?
+  flightDistanceFree Float?
+  flightDistanceFlat Float?
+  flightDistanceFAI  Float?
+  flightType         String?          @db.VarChar(255)
+  flightStatus       String?          @db.VarChar(255)
+  flightTurnpoints   Json?            @db.Json
+  airtime            Int?
+  takeoffTime        DateTime?        @db.Timestamptz(6)
+  landingTime        DateTime?        @db.Timestamptz(6)
+  igcPath            String?          @db.VarChar(255)
+  glider             Json?
+  airspaceViolation  Boolean?         @default(false)
+  uncheckedGRecord   Boolean?         @default(false)
+  violationAccepted  Boolean?         @default(false)
+  hikeAndFly         Int?             @default(0)
+  isWeekend          Boolean?         @default(false)
+  region             String?          @db.VarChar(255)
+  ageOfUser          Int              @default(0)
+  homeStateOfUser    String?          @db.VarChar(255)
+  flightStats        Json?            @db.Json
+  createdAt          DateTime         @db.Timestamptz(6)
+  updatedAt          DateTime         @db.Timestamptz(6)
+  userId             String?          @db.Uuid
+  siteId             String?          @db.Uuid
+  clubId             String?          @db.Uuid
+  teamId             String?          @db.Uuid
+  flightMetarData    Json?            @db.Json
+  uploadEndpoint     String?          @db.VarChar(255)
+  airbuddies         Json[]
+  airspaceViolations Json[]
+  FlightComments     FlightComments[]
+  FlightFixes        FlightFixes[]
+  FlightPhotos       FlightPhotos[]
+  Clubs              Clubs?           @relation(fields: [clubId], references: [id])
+  FlyingSites        FlyingSites?     @relation(fields: [siteId], references: [id])
+  Teams              Teams?           @relation(fields: [teamId], references: [id])
+  Users              Users?           @relation(fields: [userId], references: [id])
+}
+
+model FlyingSites {
+  id               String                  @id @db.Uuid
+  locationData     Json?                   @db.Json
+  name             String                  @unique @db.VarChar(255)
+  shortName        String?                 @unique @db.VarChar(255)
+  direction        String                  @default("") @db.VarChar(255)
+  point            Unsupported("geometry")
+  type             String?                 @db.VarChar(255)
+  image            String?                 @db.VarChar(255)
+  heightDifference Int?
+  state            String?                 @default("active") @db.VarChar(255)
+  website          String?                 @db.VarChar(255)
+  submitter        String?                 @db.Uuid
+  createdAt        DateTime                @db.Timestamptz(6)
+  updatedAt        DateTime                @db.Timestamptz(6)
+  clubId           String?                 @db.Uuid
+  elevation        Int?
+  Flights          Flights[]
+  Clubs            Clubs?                  @relation(fields: [clubId], references: [id])
+}
+
+model Logos {
+  id           String    @id @db.Uuid
+  path         String    @db.VarChar(255)
+  pathThumb    String?   @db.VarChar(255)
+  originalname String?   @db.VarChar(255)
+  mimetype     String?   @db.VarChar(255)
+  size         BigInt?
+  createdAt    DateTime  @db.Timestamptz(6)
+  updatedAt    DateTime  @db.Timestamptz(6)
+  brandId      String?   @db.Uuid
+  clubId       String?   @db.Uuid
+  sponsorId    String?   @db.Uuid
+  Brands       Brands?   @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  Clubs        Clubs?    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  Sponsors     Sponsors? @relation(fields: [sponsorId], references: [id], onDelete: Cascade)
+}
+
+model News {
+  id        String    @id @db.Uuid
+  title     String    @db.VarChar(255)
+  message   String    @db.VarChar(5000)
+  icon      String    @db.VarChar(255)
+  from      DateTime? @db.Date
+  till      DateTime? @db.Date
+  meta      Json?     @default("{}") @db.Json
+  createdAt DateTime  @db.Timestamptz(6)
+  updatedAt DateTime  @db.Timestamptz(6)
+}
+
+model ProfilePictures {
+  id           String   @id @db.Uuid
+  path         String   @db.VarChar(255)
+  pathThumb    String?  @db.VarChar(255)
+  originalname String   @db.VarChar(255)
+  mimetype     String?  @db.VarChar(255)
+  size         BigInt?
+  createdAt    DateTime @db.Timestamptz(6)
+  updatedAt    DateTime @db.Timestamptz(6)
+  userId       String?  @db.Uuid
+  Users        Users?   @relation(fields: [userId], references: [id])
+}
+
+model Results {
+  id        Int      @id @default(autoincrement())
+  season    Int
+  type      String   @db.VarChar(255)
+  result    Json     @db.Json
+  createdAt DateTime @db.Timestamptz(6)
+  updatedAt DateTime @db.Timestamptz(6)
+}
+
+model SeasonDetails {
+  id                      Int      @id @default(autoincrement())
+  year                    Int
+  startDate               DateTime @db.Timestamptz(6)
+  endDate                 DateTime @db.Timestamptz(6)
+  isPaused                Boolean? @default(false)
+  pointThresholdForFlight Int
+  numberOfFlightsForShirt Int
+  gliderClasses           Json     @db.Json
+  flightTypeFactors       Json     @db.Json
+  rankingClasses          Json     @db.Json
+  seniorStartAge          Int
+  seniorBonusPerAge       Int
+  misc                    Json?    @db.Json
+  createdAt               DateTime @db.Timestamptz(6)
+  updatedAt               DateTime @db.Timestamptz(6)
+  activeRankings          String[] @default(["overall", "ladies", "club", "team"]) @db.VarChar(255)
+}
+
+model Sponsors {
+  id               String   @id @db.Uuid
+  name             String   @unique @db.VarChar(255)
+  type             String   @default("OTHER") @db.VarChar(255)
+  website          String?  @db.VarChar(255)
+  tagline          String?  @db.VarChar(255)
+  isGoldSponsor    Boolean? @default(false)
+  sponsorInSeasons Int[]
+  contact          Json?    @db.Json
+  createdAt        DateTime @db.Timestamptz(6)
+  updatedAt        DateTime @db.Timestamptz(6)
+  Logos            Logos[]
+}
+
+model Teams {
+  id        String    @id @db.Uuid
+  name      String    @db.VarChar(255)
+  season    Int?
+  members   String[]  @default([]) @db.Uuid
+  createdAt DateTime  @db.Timestamptz(6)
+  updatedAt DateTime  @db.Timestamptz(6)
+  Flights   Flights[]
+  Users     Users[]
+}
+
+model Tokens {
+  id        Int      @id @default(autoincrement())
+  token     String   @db.VarChar(310)
+  createdAt DateTime @db.Timestamptz(6)
+  updatedAt DateTime @db.Timestamptz(6)
+}
+
+model Users {
+  id                   String            @id @db.Uuid
+  firstName            String?           @db.VarChar(255)
+  lastName             String?           @db.VarChar(255)
+  birthday             DateTime?         @db.Date
+  role                 String?           @default("Inaktiv") @db.VarChar(255)
+  gender               String?           @db.VarChar(255)
+  tshirtSize           String?           @db.VarChar(255)
+  defaultGlider        String?           @db.Uuid
+  gliders              Json[]            @default([]) @db.Json
+  emailInformIfComment Boolean?          @default(false)
+  emailNewsletter      Boolean?          @default(true)
+  emailTeamSearch      Boolean?          @default(false)
+  address              Json?             @db.Json
+  email                String            @unique @db.VarChar(255)
+  rankingNumber        Int?              @unique
+  password             String?           @db.VarChar(255)
+  token                String?           @db.VarChar(255)
+  createdAt            DateTime          @db.Timestamptz(6)
+  updatedAt            DateTime          @db.Timestamptz(6)
+  clubId               String?           @db.Uuid
+  teamId               String?           @db.Uuid
+  FlightComments       FlightComments[]
+  FlightPhotos         FlightPhotos[]
+  Flights              Flights[]
+  ProfilePictures      ProfilePictures[]
+  Clubs                Clubs?            @relation(fields: [clubId], references: [id])
+  Teams                Teams?            @relation(fields: [teamId], references: [id])
+}
+
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String? @db.VarChar(256)
+  auth_srid Int?
+  srtext    String? @db.VarChar(2048)
+  proj4text String? @db.VarChar(2048)
+}

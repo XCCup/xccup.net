@@ -10,6 +10,8 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - xccup-network
+    ports:
+      - 5432:5432
 
   pgadmin:
     image: dpage/pgadmin4
