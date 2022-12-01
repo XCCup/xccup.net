@@ -17,10 +17,10 @@ import { createFileName } from "../helper/igc-file-utils";
 import { findLaunchAndLandingIndexes } from "./FindLaunchAndLanding";
 import { XccupHttpError } from "../helper/ErrorHandler";
 import { BAD_REQUEST } from "../constants/http-status-constants";
-import { flightTypeFactors } from "../db/models/SeasonDetail";
+import { FlightTypeFactors } from "../db/models/SeasonDetail";
 import { exec } from "child_process";
 
-let flightTypeFactors: flightTypeFactors;
+let flightTypeFactors: FlightTypeFactors;
 let callback: Function;
 
 const IgcAnalyzer = {
@@ -52,7 +52,7 @@ const IgcAnalyzer = {
    */
   startCalculation: async (
     flightDataObject: OLCResult,
-    flightTypeFactorParameter: flightTypeFactors,
+    flightTypeFactorParameter: FlightTypeFactors,
     callbackFunction: Function
   ) => {
     flightTypeFactors = flightTypeFactorParameter;
