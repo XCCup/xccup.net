@@ -1,22 +1,27 @@
-const fs = require("fs");
-const path = require("path");
-const IGCParser = require("../helper/igc-parser");
-const parseDMS = require("parse-dms");
-const { uniq } = require("lodash");
-const { TYPE } = require("../constants/flight-constants");
-const {
+import { TYPE } from "../constants/flight-constants";
+import { FlightInstance } from "../db/models/Flight";
+import { BRecord, IGCFile } from "../helper/igc-parser";
+import fs from "fs";
+import path from "path";
+import IGCParser from "../helper/igc-parser";
+// @ts-ignore
+import parseDMS from "parse-dms";
+import { uniq } from "lodash";
+import {
   FIXES_AROUND_TURNPOINT,
   IGC_FIXES_RESOLUTION,
   RESOLUTION_FACTOR,
-} = require("../config/igc-analyzer-config");
-const logger = require("../config/logger");
-const { createFileName } = require("../helper/igc-file-utils");
-const { findLaunchAndLandingIndexes } = require("./FindLaunchAndLanding");
-const { XccupHttpError } = require("../helper/ErrorHandler");
-const { BAD_REQUEST } = require("../constants/http-status-constants");
+} from "../config/igc-analyzer-config";
+import logger from "../config/logger";
+import { createFileName } from "../helper/igc-file-utils";
+import { findLaunchAndLandingIndexes } from "./FindLaunchAndLanding";
+import { XccupHttpError } from "../helper/ErrorHandler";
+import { BAD_REQUEST } from "../constants/http-status-constants";
+import { flightTypeFactors } from "../db/models/SeasonDetail";
+import { exec } from "child_process";
 
-let flightTypeFactors;
-let callback;
+let flightTypeFactors: flightTypeFactors;
+let callback: Function;
 
 const IgcAnalyzer = {
   /**
@@ -46,14 +51,15 @@ const IgcAnalyzer = {
    * @param {Function} callbackFunction The function which will be called when the analyse finishes. This function will receive an result object of type Flight.
    */
   startCalculation: async (
-    flightDataObject,
-    flightTypeFactorParameter,
-    callbackFunction
+    flightDataObject: OLCResult,
+    flightTypeFactorParameter: flightTypeFactors,
+    callbackFunction: Function
   ) => {
     flightTypeFactors = flightTypeFactorParameter;
     callback = callbackFunction;
 
-    const igcAsPlainText = readIgcFile(flightDataObject);
+    const igcAsPlainText = readIgcFile(flightDataObject.igcPath ?? "");
+    if (!igcAsPlainText) throw new Error("No igc content");
 
     // IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
@@ -79,6 +85,8 @@ const IgcAnalyzer = {
       launchAndLandingIndexes.launch,
       launchAndLandingIndexes.landing
     );
+    if (!flightDataObject.externalId)
+      throw new Error("No externel id specified");
 
     const { writeStream, pathToFile } = writeFile(
       flightDataObject.externalId,
@@ -88,11 +96,13 @@ const IgcAnalyzer = {
     writeStream.end(() => runOlc(pathToFile, flightDataObject, false));
   },
 
-  extractFixes: (flight) => {
+  extractFixes: (flight: FlightInstance) => {
     logger.debug(`IA: read file from ${flight.igcPath}`);
-    const igcAsPlainText = readIgcFile(flight);
+    const igcAsPlainText = readIgcFile(flight.igcPath ?? "");
     logger.debug(`IA: start parsing`);
     try {
+      if (!igcAsPlainText) throw new Error("IA: No igc content");
+
       const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
       // Detect manipulated igc files
@@ -122,8 +132,8 @@ const IgcAnalyzer = {
         reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
       }
       return reducedFixes;
-    } catch (error) {
-      const errorMessage = "Error parsing IGC File " + error.message;
+    } catch (error: any) {
+      const errorMessage = "Error parsing IGC File " + error?.message;
       throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
     }
   },
@@ -132,7 +142,7 @@ const IgcAnalyzer = {
 /**
  * Checks if an igc file was manipulated by "MaxPunkte"
  */
-function igcIsManipulated(igc) {
+function igcIsManipulated(igc: IGCFile) {
   if (!igc.commentRecords) return false;
   let manipulated = false;
   igc.commentRecords.forEach((el) => {
@@ -143,7 +153,7 @@ function igcIsManipulated(igc) {
   return manipulated;
 }
 
-function extractOnlyDefinedFieldsFromFix(fix) {
+function extractOnlyDefinedFieldsFromFix(fix: BRecord) {
   return {
     timestamp: fix.timestamp,
     time: fix.time,
@@ -154,8 +164,8 @@ function extractOnlyDefinedFieldsFromFix(fix) {
   };
 }
 
-function readIgcFile(flight) {
-  return fs.readFileSync(flight.igcPath.toString(), "utf8");
+function readIgcFile(path: string) {
+  return fs.readFileSync(path.toString(), "utf8");
 }
 
 /**
@@ -163,9 +173,10 @@ function readIgcFile(flight) {
  *
  * @param {*} resultStripIteration The results from the previous iteration.
  */
-function runTurnpointIteration(resultStripIteration) {
-  const igcAsPlainText = readIgcFile(resultStripIteration);
+function runTurnpointIteration(resultStripIteration: OLCResult) {
+  const igcAsPlainText = readIgcFile(resultStripIteration.igcPath);
 
+  if (!igcAsPlainText) return;
   // IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
   const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
@@ -174,14 +185,13 @@ function runTurnpointIteration(resultStripIteration) {
 
   let igcWithReducedFixes = stripAroundTurnpoints(
     igcAsPlainText,
-    resultStripIteration.turnpoints,
+    resultStripIteration.turnpoints ?? [],
     launchAndLandingIndexes.launch,
     launchAndLandingIndexes.landing
   );
   const { writeStream, pathToFile } = writeFile(
     resultStripIteration.externalId,
-    igcWithReducedFixes,
-    null
+    igcWithReducedFixes
   );
   writeStream.end(() => runOlc(pathToFile, resultStripIteration, true));
 }
@@ -211,8 +221,11 @@ function determineOlcBinary() {
  * @param {Object} flightDataObject
  * @param {boolean} isTurnpointIteration
  */
-function runOlc(filePath, flightDataObject, isTurnpointIteration) {
-  const { exec } = require("child_process");
+function runOlc(
+  filePath: string,
+  flightDataObject: OLCResult,
+  isTurnpointIteration: boolean
+) {
   logger.info("IA: Start OLC analysis " + filePath);
   logger.debug(`IA: CWD of proccess: ${process.cwd()}`);
 
@@ -238,12 +251,24 @@ function runOlc(filePath, flightDataObject, isTurnpointIteration) {
   );
 }
 
-function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
+interface OLCResult {
+  id: string;
+  externalId: number;
+  turnpoints?: TurnPointFix[];
+  igcPath: string;
+  type?: string;
+  dist?: string;
+}
+function parseOlcData(
+  data: string,
+  flightDataObject: OLCResult,
+  isTurnpointsIteration: boolean
+) {
   const dataLines = data.split("\n");
 
-  let freeStartIndex;
-  let flatStartIndex;
-  let faiStartIndex;
+  let freeStartIndex = 0;
+  let flatStartIndex = 0;
+  let faiStartIndex = 0;
   for (let i = 0; i < dataLines.length; i++) {
     if (dataLines[i].startsWith("OUT TYPE FREE_FLIGHT")) freeStartIndex = i;
     if (dataLines[i].startsWith("OUT TYPE FREE_TRIANGLE")) flatStartIndex = i;
@@ -251,13 +276,13 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
   }
 
   const distancePrefix = "OUT FLIGHT_KM ";
-  let freeDistance = dataLines[freeStartIndex + 1]
+  const freeDistance = dataLines[freeStartIndex + 1]
     .replace(distancePrefix, "")
     .replace("\r", "");
-  let flatDistance = dataLines[flatStartIndex + 1]
+  const flatDistance = dataLines[flatStartIndex + 1]
     .replace(distancePrefix, "")
     .replace("\r", "");
-  let faiDistance = dataLines[faiStartIndex + 1]
+  const faiDistance = dataLines[faiStartIndex + 1]
     .replace(distancePrefix, "")
     .replace("\r", "");
 
@@ -265,26 +290,28 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
   logger.debug("IA: FLAT DIST: " + flatDistance);
   logger.debug("IA: FAI DIST: " + faiDistance);
 
-  const freeFactor = freeDistance * flightTypeFactors.FREE;
-  const flatFactor = flatDistance * flightTypeFactors.FLAT;
-  const faiFactor = faiDistance * flightTypeFactors.FAI;
+  const freeFactor = +freeDistance * flightTypeFactors.FREE;
+  const flatFactor = +flatDistance * flightTypeFactors.FLAT;
+  const faiFactor = +faiDistance * flightTypeFactors.FAI;
 
   logger.debug("IA: FREE Factor: " + freeFactor);
   logger.debug("IA: FLAT Factor: " + flatFactor);
   logger.debug("IA: FAI Factor: " + faiFactor);
 
-  const result = {
+  if (!flightDataObject.externalId || !flightDataObject.igcPath)
+    return logger.error("External ID or igc path missing");
+  const result: OLCResult = {
     id: flightDataObject.id,
     externalId: flightDataObject.externalId,
     turnpoints: [],
     igcPath: flightDataObject.igcPath,
   };
-  let cornerStartIndex;
-  if (faiFactor > flatFactor && faiFactor > freeFactor) {
+  let cornerStartIndex: number;
+  if (faiFactor > flatFactor && faiFactor > freeFactor && faiStartIndex) {
     result.type = TYPE.FAI;
     result.dist = faiDistance;
     cornerStartIndex = faiStartIndex + 4;
-  } else if (flatFactor > freeFactor) {
+  } else if (flatFactor > freeFactor && flatStartIndex) {
     result.type = TYPE.FLAT;
     result.dist = flatDistance;
     cornerStartIndex = flatStartIndex + 4;
@@ -293,6 +320,7 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
     result.dist = freeDistance;
     cornerStartIndex = freeStartIndex + 4;
   }
+  result.turnpoints = [];
   result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex]));
   result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex + 1]));
   result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex + 2]));
@@ -313,13 +341,19 @@ function parseOlcData(data, flightDataObject, isTurnpointsIteration) {
   }
 }
 
+interface TurnPointFix {
+  time?: string;
+  lat?: number;
+  long?: number;
+}
+
 /**
  * Creates an turnpoint object from a response line of the OLC binary.
  *
  * @param {string} turnpoint A line with turnpoint information
  */
-function extractTurnpointData(turnpoint) {
-  let result = {};
+function extractTurnpointData(turnpoint: string) {
+  let result: TurnPointFix = {};
   const IGC_FIX_REGEX =
     /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE]\s?(\d*:\d*.\d*).*/;
   const matchingResult = turnpoint.match(IGC_FIX_REGEX);
@@ -340,7 +374,11 @@ function extractTurnpointData(turnpoint) {
  * @param {string[]} igcFileLines
  * @param {number} stripFactor
  */
-function writeFile(flightExternalId, igcFileLines, stripFactor) {
+function writeFile(
+  flightExternalId: number,
+  igcFileLines: string[],
+  stripFactor?: number
+) {
   const pathToFile = createFileName(flightExternalId, null, true, stripFactor);
 
   logger.debug(`IA: Will start writing content to ${pathToFile}`);
@@ -365,13 +403,16 @@ function writeFile(flightExternalId, igcFileLines, stripFactor) {
  *
  * Will return the lines of a minified igc file.
  *
- * @param {*} factor The factor by which the location fixes will be reduced
- * @param {string} igcAsPlainText The whole content of an igc file as a string
  */
-function stripByFactor(factor, igcAsPlainText, launch, landing) {
+function stripByFactor(
+  factor: number,
+  igcAsPlainText: string,
+  launchIndex: number,
+  landingIndex: number
+) {
   const lines = igcAsPlainText.split("\n");
 
-  const foo = removeNonFlightIgcLines(lines, launch, landing);
+  const foo = removeNonFlightIgcLines(lines, launchIndex, landingIndex);
 
   const stripFactor = factor ? factor : 1;
   let reducedLines = [];
@@ -391,7 +432,11 @@ function stripByFactor(factor, igcAsPlainText, launch, landing) {
  * @param {number} landingIndex
  * @returns {string[]}
  */
-function removeNonFlightIgcLines(lines, launchIndex, landingIndex) {
+function removeNonFlightIgcLines(
+  lines: string[],
+  launchIndex: number,
+  landingIndex: number
+) {
   let firstLineWithBRecord = null;
   let offset = 0;
   const newLines = [];
@@ -423,10 +468,10 @@ function removeNonFlightIgcLines(lines, launchIndex, landingIndex) {
  * @param {Object[]} turnpoints An array of turnpoints from the previous "strip" iteration
  */
 function stripAroundTurnpoints(
-  igcAsPlainText,
-  turnpoints,
-  launchIndex,
-  landingIndex
+  igcAsPlainText: string,
+  turnpoints: TurnPointFix[],
+  launchIndex: number,
+  landingIndex: number
 ) {
   const rawLines = igcAsPlainText.split("\n");
 
@@ -434,7 +479,7 @@ function stripAroundTurnpoints(
   let lineIndexes = [];
   let tpIndex = 0;
   for (let i = 0; i < lines.length; i++) {
-    let timeToFind = turnpoints[tpIndex].time.replace(/:/g, "");
+    let timeToFind = turnpoints[tpIndex].time?.replace(/:/g, "");
     if (lines[i].includes("B" + timeToFind)) {
       lineIndexes.push(i);
       logger.debug("IA: Will aggregate fixes around linenumber: " + i);
@@ -480,7 +525,7 @@ function stripAroundTurnpoints(
  *
  * @param {Object} igcAsJson The igc content parsed by the IgcParser.
  */
-function getResolution(igcAsJson) {
+function getResolution(igcAsJson: IGCFile) {
   /**
    * Start with the second timestamp.
    * It occured a few times that the first and second timestamp are in the same second.
@@ -519,7 +564,7 @@ function getResolution(igcAsJson) {
  *
  * @param {number} durationInMinutes The duration of the flight.
  */
-function calculateResolutionForStripIteration(durationInMinutes) {
+function calculateResolutionForStripIteration(durationInMinutes: number) {
   //For every hour decrease resolution by factor of seconds
   const resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
   logger.debug(
@@ -533,7 +578,7 @@ function calculateResolutionForStripIteration(durationInMinutes) {
  *
  * @param {Object} igcAsJson The igc content parsed by the IgcParser.
  */
-function getDuration(igcAsJson) {
+function getDuration(igcAsJson: IGCFile) {
   const sizeOfFixes = igcAsJson.fixes.length;
   const durationInMillis =
     igcAsJson.fixes[sizeOfFixes - 1].timestamp - igcAsJson.fixes[0].timestamp;

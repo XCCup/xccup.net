@@ -10,7 +10,7 @@ interface SeasonDetailAttributes {
   pointThresholdForFlight: number;
   numberOfFlightsForShirt: number;
   gliderClasses: object; // TODO: Type this stricter
-  flightTypeFactors: object; // TODO: Type this stricter
+  flightTypeFactors: flightTypeFactors;
   rankingClasses: object; // TODO: Type this stricter
   seniorStartAge: number;
   seniorBonusPerAge: number;
@@ -18,6 +18,11 @@ interface SeasonDetailAttributes {
   misc?: object; // TODO: Type this stricter
 }
 
+export interface flightTypeFactors {
+  FAI: number;
+  FLAT: number;
+  FREE: number;
+}
 type RankingTypes =
   | "overall"
   | "ladies"
