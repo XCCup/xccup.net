@@ -17,6 +17,9 @@ interface FlyingSiteAttributes {
   state?: FlyingSiteState;
   website?: string;
   submitter?: string;
+  recordFai?: number;
+  recordFlat?: number;
+  recordFree?: number;
 }
 
 export type FlyingSiteState = "active" | "inactive" | "proposal";
@@ -86,6 +89,15 @@ export function initFlyingSite(sequelize: Sequelize): Models["FlyingSite"] {
     },
     submitter: {
       type: DataTypes.UUID,
+    },
+    recordFai: {
+      type: DataTypes.INTEGER,
+    },
+    recordFlat: {
+      type: DataTypes.INTEGER,
+    },
+    recordFree: {
+      type: DataTypes.INTEGER,
     },
   }) as Models["FlyingSite"];
 
