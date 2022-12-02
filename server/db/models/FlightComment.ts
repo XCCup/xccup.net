@@ -52,7 +52,12 @@ export function initFlightComment(
         name: "userId",
       },
     });
-    FlightComment.belongsTo(Flight);
+    FlightComment.belongsTo(Flight, {
+      as: "comment",
+      foreignKey: {
+        name: "flightId",
+      },
+    });
   };
 
   return FlightComment;
