@@ -55,6 +55,26 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// @desc Gets a single site by id
+// @route GET /sites/id
+
+router.get("/:id", checkParamIsUuid("id"), async (req, res, next) => {
+  const siteId = req.params.id;
+
+  try {
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    const site = await service.getById(siteId);
+
+    setCache(req, site);
+
+    res.json(site);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // @desc Gets all proposed sites
 // @route GET /sites/proposed
 
