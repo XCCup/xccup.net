@@ -32,8 +32,8 @@ const IgcAnalyzer = {
    *
    * of a given flight.
    *
-   * Before calling this function, the corresponing igcFile has to be stored to the disk.
-   * The file must be within a location defined by the global var FLIGHT_STORE and a folder corresponing to the flightId.
+   * Before calling this function, the corresponding igcFile has to be stored to the disk.
+   * The file must be within a location defined by the global var FLIGHT_STORE and a folder corresponding to the flightId.
    *
    * How does it work:
    *
@@ -46,9 +46,9 @@ const IgcAnalyzer = {
    * * First iteration: Minimize resolution of the igcFile in general and determine the turnpoints for each task (FREE, FLAT, FAI).
    * * Second iteration: Dismiss all fixes of the original igcFile except a bubble of fixes around the turnpoints of the best task from the first iteration.
    *
-   * @param {Flight} flightDataObject The flight to analyse
+   * @param {Flight} flightDataObject The flight to analyze
    * @param {Object} flightTypeFactorParameter The factors for the flightTypes (FREE, FLAT, FAI)
-   * @param {Function} callbackFunction The function which will be called when the analyse finishes. This function will receive an result object of type Flight.
+   * @param {Function} callbackFunction The function which will be called when the analyze finishes. This function will receive an result object of type Flight.
    */
   startCalculation: async (
     flightDataObject: OLCResult,
@@ -61,7 +61,7 @@ const IgcAnalyzer = {
     const igcAsPlainText = readIgcFile(flightDataObject.igcPath ?? "");
     if (!igcAsPlainText) throw new Error("No igc content");
 
-    // IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
+    // IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with additional records in IGC-File which don't apply with IGCParser.
     const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
     // Remove non flight fixes
@@ -86,7 +86,7 @@ const IgcAnalyzer = {
       launchAndLandingIndexes.landing
     );
     if (!flightDataObject.externalId)
-      throw new Error("No externel id specified");
+      throw new Error("No external id specified");
 
     const { writeStream, pathToFile } = writeFile(
       flightDataObject.externalId,
@@ -169,7 +169,7 @@ function readIgcFile(path: string) {
 }
 
 /**
- * Starts the secondd ("turnpoint") iteration.
+ * Starts the second ("turnpoint") iteration.
  *
  * @param {*} resultStripIteration The results from the previous iteration.
  */
@@ -177,7 +177,7 @@ function runTurnpointIteration(resultStripIteration: OLCResult) {
   const igcAsPlainText = readIgcFile(resultStripIteration.igcPath);
 
   if (!igcAsPlainText) return;
-  // IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with addional records in IGC-File which don't apply with IGCParser.
+  // IGCParser needs lenient: true because some trackers (e.g. XCTrack) work with additional records in IGC-File which don't apply with IGCParser.
   const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
   // Remove non flight fixes
@@ -227,7 +227,7 @@ function runOlc(
   isTurnpointIteration: boolean
 ) {
   logger.info("IA: Start OLC analysis " + filePath);
-  logger.debug(`IA: CWD of proccess: ${process.cwd()}`);
+  logger.debug(`IA: CWD of process: ${process.cwd()}`);
 
   //TODO: Replace compiled app through usage of Node’s N-API
   const binary = determineOlcBinary();
@@ -241,7 +241,7 @@ function runOlc(
         parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
       } catch (error) {
         logger.error(
-          "IA: An error occured while parsing the olc data of " +
+          "IA: An error occurred while parsing the olc data of " +
             filePath +
             ": " +
             error
@@ -451,7 +451,7 @@ function removeNonFlightIgcLines(
       }
     } else {
       newLines.push(lines[i]);
-      // Detect non B-Records inbetween B-Records and increase offset to compensate
+      // Detect non B-Records between B-Records and increase offset to compensate
       if (firstLineWithBRecord && !lines[i].startsWith("B")) offset += 1;
     }
   }
@@ -528,7 +528,7 @@ function stripAroundTurnpoints(
 function getResolution(igcAsJson: IGCFile) {
   /**
    * Start with the second timestamp.
-   * It occured a few times that the first and second timestamp are in the same second.
+   * It occurred a few times that the first and second timestamp are in the same second.
    * Maybe this is due to some corner case in the tracker. Therefore skip the first timestamp.
    */
   const referenceTimestamp = igcAsJson.fixes[1].timestamp;
@@ -536,7 +536,7 @@ function getResolution(igcAsJson: IGCFile) {
     (igcAsJson.fixes[2].timestamp - referenceTimestamp) / 1000;
 
   /**
-   * Some few pilots have their tracker configurated with a tracking interval <1 second.
+   * Some few pilots have their tracker configured with a tracking interval <1 second.
    * This is not supported by the igc definition. All these timestamps will have the same value.
    * To counter this we will search for the next timestamp which has a different value.
    */
