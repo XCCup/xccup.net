@@ -18,7 +18,8 @@ interface Position {
   long: string;
 }
 
-interface ClubCreationAttributes extends Optional<ClubAttributes, "id"> {}
+export interface ClubCreationAttributes
+  extends Optional<ClubAttributes, "id"> {}
 
 export interface ClubInstance
   extends Model<ClubAttributes, ClubCreationAttributes>,

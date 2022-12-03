@@ -1,7 +1,8 @@
-import { Sequelize, Model, DataTypes } from "sequelize";
+import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { Models } from "../../types/Models";
 
 interface SeasonDetailAttributes {
+  id: number;
   year: number;
   startDate: Date;
   endDate: Date;
@@ -9,7 +10,7 @@ interface SeasonDetailAttributes {
   pointThresholdForFlight: number;
   numberOfFlightsForShirt: number;
   gliderClasses: object; // TODO: Type this stricter
-  flightTypeFactors: object; // TODO: Type this stricter
+  flightTypeFactors: FlightTypeFactors;
   rankingClasses: object; // TODO: Type this stricter
   seniorStartAge: number;
   seniorBonusPerAge: number;
@@ -17,6 +18,11 @@ interface SeasonDetailAttributes {
   misc?: object; // TODO: Type this stricter
 }
 
+export interface FlightTypeFactors {
+  FAI: number;
+  FLAT: number;
+  FREE: number;
+}
 type RankingTypes =
   | "overall"
   | "ladies"
@@ -31,8 +37,11 @@ type RankingTypes =
   | "earlyBird"
   | "lateBird";
 
+export interface SeasonDetailCreationAttributes
+  extends Optional<SeasonDetailAttributes, "id"> {}
+
 export interface SeasonDetailInstance
-  extends Model<SeasonDetailAttributes>,
+  extends Model<SeasonDetailAttributes, SeasonDetailCreationAttributes>,
     SeasonDetailAttributes {
   createdAt?: Date;
   updatedAt?: Date;
@@ -40,6 +49,12 @@ export interface SeasonDetailInstance
 
 export function initSeasonDetail(sequelize: Sequelize): Models["SeasonDetail"] {
   const SeasonDetail = sequelize.define<SeasonDetailInstance>("SeasonDetail", {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     year: {
       type: DataTypes.INTEGER,
       allowNull: false,

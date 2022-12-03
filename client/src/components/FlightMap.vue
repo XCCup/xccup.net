@@ -24,7 +24,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import { TRACK_COLORS } from "@/common/Constants";
+import { ADDITIONAL_COLORS } from "@/common/Constants";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
 import useAuth from "@/composables/useAuth";
@@ -89,7 +89,7 @@ const { flight } = useFlight();
 const { activeAirbuddyFlights } = useAirbuddies();
 const { isAdmin } = useAuth();
 
-const trackColors = TRACK_COLORS;
+const trackColors = ADDITIONAL_COLORS;
 
 // Find a way to make this reactive
 const userPrefersDark = ref(

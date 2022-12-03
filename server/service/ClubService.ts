@@ -1,13 +1,11 @@
-const Club = require("../db")["Club"];
-const User = require("../db")["User"];
-const Logo = require("../db")["Logo"];
-const { Op } = require("sequelize");
-
-const { getCurrentYear } = require("../helper/Utils");
+import db from "../db";
+import { Op } from "sequelize";
+import { getCurrentYear } from "../helper/Utils";
+import { ClubCreationAttributes, ClubInstance } from "../db/models/Club";
 
 const clubService = {
   getAllActive: async () => {
-    return Club.findAll({
+    return db.Club.findAll({
       where: {
         participantInSeasons: {
           [Op.contains]: [getCurrentYear()],
@@ -18,7 +16,7 @@ const clubService = {
     });
   },
   getAllNames: async () => {
-    return Club.findAll({
+    return db.Club.findAll({
       where: {
         participantInSeasons: {
           [Op.contains]: [getCurrentYear()],
@@ -29,23 +27,23 @@ const clubService = {
     });
   },
   getAll: async () => {
-    return Club.findAll();
+    return db.Club.findAll();
   },
 
-  getById: async (id) => {
-    return Club.findByPk(id, {
+  getById: async (id: string) => {
+    return db.Club.findByPk(id, {
       include: createLogoInclude(),
     });
   },
 
-  getByShortName: async (shortName) => {
-    return Club.findOne({
+  getByShortName: async (shortName: string) => {
+    return db.Club.findOne({
       where: { shortName },
     });
   },
 
-  getAllMemberOfClub: async (shortName) => {
-    return User.findAll({
+  getAllMemberOfClub: async (shortName: string) => {
+    return db.User.findAll({
       attributes: [
         "name",
         "firstName",
@@ -58,9 +56,9 @@ const clubService = {
         "state",
       ],
       include: {
-        model: Club,
+        model: db.Club,
         attributes: ["name", "shortName"],
-        as: "Club",
+        as: "db.Club",
         where: {
           shortName,
         },
@@ -69,7 +67,7 @@ const clubService = {
   },
 
   countActive: async () => {
-    return Club.count({
+    return db.Club.count({
       where: {
         participantInSeasons: {
           [Op.contains]: [getCurrentYear()],
@@ -78,16 +76,16 @@ const clubService = {
     });
   },
 
-  create: async (club) => {
-    return Club.create(club);
+  create: async (club: ClubCreationAttributes) => {
+    return db.Club.create(club);
   },
 
-  update: async (club) => {
+  update: async (club: ClubInstance) => {
     return club.save();
   },
 
-  delete: async (id) => {
-    const numberOfDestroyedRows = await Club.destroy({
+  delete: async (id: string) => {
+    const numberOfDestroyedRows = await db.Club.destroy({
       where: { id },
     });
     return numberOfDestroyedRows;
@@ -96,7 +94,7 @@ const clubService = {
 
 function createLogoInclude() {
   return {
-    model: Logo,
+    model: db.Logo,
     as: "logo",
     attributes: ["id", "path"],
   };
