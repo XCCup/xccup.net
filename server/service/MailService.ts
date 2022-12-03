@@ -377,8 +377,10 @@ const service = {
     const replyCommentOwnerId = relatedComment ? relatedComment.userId : null;
 
     // Only send reply email if author isn't owner of the reply comment
+    // @ts-ignore sequelize 😡
     if (replyCommentOwnerId && replyCommentOwnerId != comment.userId) {
       sendCommentMail(
+        // @ts-ignore sequelize 😡
         replyCommentOwnerId,
         flight.externalId ?? 0,
         <UserAttributes>fromUser,
