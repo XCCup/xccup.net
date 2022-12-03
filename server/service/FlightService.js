@@ -334,9 +334,7 @@ const flightService = {
       flight.hikeAndFly = site.heightDifference;
     }
     if (hikeAndFly == 0) flight.hikeAndFly = 0;
-
     const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
-
     if (glider) {
       await createGliderObject(flight, glider);
 
@@ -355,8 +353,9 @@ const flightService = {
 
     if (flight.airspaceViolation) sendNewAdminTask();
 
+    console.log("Personal best about to run (finalyze)");
     // Check if flight is a new personal best (not on edit)
-    if (isNewFlightUpload) {
+    if (isNewFlightUpload && !flight.isNewPersonalBest && flight.glider) {
       logger.info("FS: Will check if flight is new personal best");
       const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
 
@@ -389,6 +388,7 @@ const flightService = {
       );
       return;
     }
+    const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
 
     flight.flightDistance = result.dist;
     flight.flightType = result.type;
@@ -409,7 +409,21 @@ const flightService = {
         flight.flightStatus = flightStatus;
       }
     }
-    flight.save();
+    console.log("Personal best about to run");
+    // Check if flight is a new personal best (not on edit)
+    if (isNewFlightUpload && !flight.isNewPersonalBest && flight.glider) {
+      logger.info("FS: Will check if flight is new personal best");
+      const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
+
+      if (isNewPersonalBest) {
+        logger.info("FS: Flight is new personal best");
+        flight.isNewPersonalBest = true;
+        // TODO: Do not send if there is an airspace violation?
+        mailService.sendNewPersonalBestMail(flight);
+      }
+    }
+    await flight.save();
+
     // TODO: Why does this run twice? Here and in finalizeFlightSubmission
     checkSiteRecordsAndUpdate(flight);
     deleteCache(["home", "flights", "results"]);
