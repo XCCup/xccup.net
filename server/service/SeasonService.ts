@@ -5,6 +5,7 @@ import { XccupHttpError } from "../helper/ErrorHandler";
 import { getCache, setCache } from "../controller/CacheManager";
 import {
   SeasonDetailInstance,
+  SeasonDetailAttributes,
   SeasonDetailCreationAttributes,
 } from "../db/models/SeasonDetail";
 
@@ -58,12 +59,51 @@ const service = {
     });
   },
 
+  getLatestSeasonDetails: async () => {
+    const res = await db.SeasonDetail.findAll({
+      order: [["year", "desc"]],
+      limit: 1,
+      raw: true,
+    });
+    return res[0];
+  },
+
   create: async (season: SeasonDetailCreationAttributes) => {
+    const details = await db.SeasonDetail.findOne({
+      where: {
+        year: season.year,
+      },
+    });
+
+    if (details)
+      throw new XccupHttpError(
+        400,
+        `season detail for ${season.year} is already defined`
+      );
+
     return db.SeasonDetail.create(season);
   },
 
-  update: async (season: SeasonDetailInstance) => {
-    return season.save();
+  update: async (id: number, seasonData: SeasonDetailAttributes) => {
+    const now = new Date().getTime();
+    const start = new Date(seasonData.startDate).getTime();
+    const end = new Date(seasonData.endDate).getTime();
+    const isActiveSeason = now > start;
+
+    // If season is already ongoing allow update only on these props
+    const activeSeasonChangeableProps = {
+      isPaused: seasonData.isPaused,
+    };
+
+    const updateObject = isActiveSeason
+      ? activeSeasonChangeableProps
+      : seasonData;
+
+    db.SeasonDetail.update(updateObject, {
+      where: {
+        id,
+      },
+    });
   },
 
   delete: async (id: string) => {
@@ -74,3 +114,4 @@ const service = {
 };
 
 module.exports = service;
+export default service;

@@ -23,6 +23,9 @@ const { XccupHttpError } = require("../helper/ErrorHandler");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 
 const cacheNonNewcomer = [];
+
+const yearOfNewXccupPlatform = 2022;
+
 const RANKINGS = {
   OVERALL: "overall",
   LADIES: "ladies",
@@ -53,7 +56,7 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (
-      year < 2022 &&
+      year < yearOfNewXccupPlatform &&
       !(
         rankingClass ||
         gender ||
@@ -75,7 +78,7 @@ const service = {
     }
     // Things like this would be easier to understand if they were commented.
     if (
-      year < 2022 &&
+      year < yearOfNewXccupPlatform &&
       gender == GENDER.FEMALE &&
       !(
         rankingClass ||
@@ -126,7 +129,7 @@ const service = {
       clubId,
     });
 
-    const result = aggreateFlightsOverUser(resultQuery);
+    const result = aggregateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
     sortDescendingByTotalPoints(result);
 
@@ -140,7 +143,7 @@ const service = {
   getClub: async (year, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < yearOfNewXccupPlatform) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.CLUB);
       const oldResult = await findOldResult(year, RANKINGS.CLUB);
       if (oldResult)
@@ -154,9 +157,9 @@ const service = {
     const where = createDefaultWhereForFlight({ seasonDetail });
     const resultQuery = await queryDb({ where });
 
-    const resultOverUser = aggreateFlightsOverUser(resultQuery);
+    const resultOverUser = aggregateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(resultOverUser, NUMBER_OF_SCORED_FLIGHTS);
-    const resultOverClub = aggreateOverClubAndCalcTotals(resultOverUser);
+    const resultOverClub = aggregateOverClubAndCalcTotals(resultOverUser);
 
     resultOverClub.forEach((club) => {
       // Sort also members in club by totalPoints
@@ -174,7 +177,7 @@ const service = {
   getTeam: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < yearOfNewXccupPlatform) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.TEAM);
       const oldResult = await findOldResult(year, RANKINGS.TEAM);
       if (oldResult)
@@ -238,7 +241,7 @@ const service = {
   getSenior: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < yearOfNewXccupPlatform) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.SENIORS);
       const oldResult = await findOldResult(year, RANKINGS.SENIORS);
       if (oldResult)
@@ -257,7 +260,7 @@ const service = {
     const where = createDefaultWhereForFlight({ seasonDetail, isSenior: true });
     const resultQuery = await queryDb({ where, siteRegion });
 
-    const result = aggreateFlightsOverUser(resultQuery);
+    const result = aggregateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
     await calcSeniorBonusForFlightResult(result);
     sortDescendingByTotalPoints(result);
@@ -284,7 +287,7 @@ const service = {
   getRhineland: async (year, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < yearOfNewXccupPlatform) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.RP);
       const oldResult = await findOldResult(year, RANKINGS.RP);
       if (oldResult)
@@ -303,7 +306,7 @@ const service = {
 
     const resultQuery = await queryDb({ where, siteState: RANKINGS.RP });
 
-    const result = aggreateFlightsOverUser(resultQuery);
+    const result = aggregateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
     sortDescendingByTotalPoints(result);
 
@@ -318,18 +321,18 @@ const service = {
   },
 
   /**
-   * Calculate the results for luxemburg ranking.
+   * Calculate the results for luxembourg ranking.
    *
    * @param {*} year The year to calculate the ranking for
    * @param {*} limit The limit of results to retrieve
    * @returns The results of the ranking of the provided year
    */
-  getLuxemburg: async (year, limit) => {
+  getLuxembourg: async (year, limit) => {
     const NUMBER_OF_SCORED_FLIGHTS_LUX = 6;
 
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < yearOfNewXccupPlatform) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.LUX);
       const oldResult = await findOldResult(year, RANKINGS.LUX);
       if (oldResult)
@@ -351,7 +354,7 @@ const service = {
 
     const resultQuery = await queryDb({ where, siteCountry: RANKINGS.LUX });
 
-    const result = aggreateFlightsOverUser(resultQuery);
+    const result = aggregateFlightsOverUser(resultQuery);
     limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS_LUX);
     sortDescendingByTotalPoints(result);
 
@@ -412,7 +415,7 @@ const service = {
   getNewcomer: async (year, siteRegion, limit) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < 2022) {
+    if (year < yearOfNewXccupPlatform) {
       checkIfRankingWasPresent(seasonDetail, RANKINGS.NEWCOMER);
       const oldResult = await findOldResult(year, RANKINGS.NEWCOMER);
       if (oldResult)
@@ -436,7 +439,7 @@ const service = {
 
     const resultQuery = await queryDb({ where, siteRegion });
 
-    const resultAllUsers = aggreateFlightsOverUser(resultQuery);
+    const resultAllUsers = aggregateFlightsOverUser(resultQuery);
     const resultsNewcomer = await removeNonNewcomer(resultAllUsers, year);
 
     limitFlightsForUserAndCalcTotals(resultsNewcomer, NUMBER_OF_SCORED_FLIGHTS);
@@ -529,13 +532,13 @@ async function removeNonNewcomer(resultAllUsers, year) {
   const resultsNewcomer = [];
 
   await Promise.all(
-    resultAllUsers.map(async (fligthsOfUser) => {
-      if (cacheNonNewcomer.includes(fligthsOfUser.user.id)) return;
+    resultAllUsers.map(async (flightsOfUser) => {
+      if (cacheNonNewcomer.includes(flightsOfUser.user.id)) return;
 
-      const numberOfFlightsInPreviosSeasons = await Flight.count({
+      const numberOfFlightsInPreviousSeasons = await Flight.count({
         where: {
           flightStatus: STATE.IN_RANKING,
-          userId: fligthsOfUser.user.id,
+          userId: flightsOfUser.user.id,
           andOp: sequelize.where(
             sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
             {
@@ -545,9 +548,9 @@ async function removeNonNewcomer(resultAllUsers, year) {
         },
       });
 
-      numberOfFlightsInPreviosSeasons > 0
-        ? cacheNonNewcomer.push(fligthsOfUser.user.id)
-        : resultsNewcomer.push(fligthsOfUser);
+      numberOfFlightsInPreviousSeasons > 0
+        ? cacheNonNewcomer.push(flightsOfUser.user.id)
+        : resultsNewcomer.push(flightsOfUser);
     })
   );
 
@@ -658,7 +661,7 @@ async function queryDb({
       })
     );
   if (useIncludes.includes("club"))
-    include.push(cretaIncludeStatementClub(clubShortName, clubId));
+    include.push(createIncludeStatementClub(clubShortName, clubId));
   if (useIncludes.includes("team")) include.push(createIncludeStatementTeam());
 
   const queryObject = {
@@ -693,7 +696,7 @@ function createIncludeStatementTeam() {
   };
 }
 
-function cretaIncludeStatementClub(shortName, id) {
+function createIncludeStatementClub(shortName, id) {
   const clubInclude = {
     model: Club,
     as: "club",
@@ -821,7 +824,7 @@ function limitFlightsForUserAndCalcTotals(resultArray, maxNumberOfFlights) {
   });
 }
 
-function aggreateOverClubAndCalcTotals(resultOverUser) {
+function aggregateOverClubAndCalcTotals(resultOverUser) {
   const result = [];
   resultOverUser.forEach((entry) => {
     const found = result.find((e) => e.clubId == entry.club.id);
@@ -850,7 +853,7 @@ function aggreateOverClubAndCalcTotals(resultOverUser) {
   return result;
 }
 
-function aggreateFlightsOverUser(resultQuery) {
+function aggregateFlightsOverUser(resultQuery) {
   const result = [];
   resultQuery.forEach((entry) => {
     const found = result.find((e) => e.user?.id == entry.user?.id);

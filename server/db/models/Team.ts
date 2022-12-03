@@ -33,7 +33,7 @@ export function initTeam(sequelize: Sequelize): Models["Team"] {
     season: {
       type: DataTypes.INTEGER,
     },
-    // Create a complete new team entry if the compostion of members changes
+    // Create a complete new team entry if the composition of members changes
     members: {
       type: DataTypes.ARRAY(DataTypes.UUID),
       defaultValue: [],
