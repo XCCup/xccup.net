@@ -1,5 +1,6 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { STATE, TYPE, UPLOAD_ENDPOINT } from "../../constants/flight-constants";
+import { FlightFixesAttributes } from "../../types/FlightFixes";
 import { FlightStats } from "../../types/FlightStats";
 import { Models } from "../../types/Models";
 import { UserAttributes } from "./User";
@@ -21,8 +22,8 @@ export interface FlightAttributes {
   flightStatus?: STATE;
   flightTurnpoints?: FlightTurnpoint[];
   airtime?: number;
-  takeoffTime?: number;
-  landingTime?: number;
+  takeoffTime?: Date;
+  landingTime?: Date;
   igcPath?: string;
   glider?: Glider;
   airspaceViolation?: boolean;
@@ -37,26 +38,28 @@ export interface FlightAttributes {
   flightStats?: FlightStats;
   airbuddies?: Airbuddy[];
   isNewPersonalBest?: boolean;
+  fixes?: FlightFixesAttributes;
 }
 interface Airbuddy {
-  externalId: number;
-  correlationPercentage: number;
-  userFirstName: string;
-  userLastName: string;
-  userId: string;
+  externalId?: number;
+  correlationPercentage?: number;
+  userFirstName?: string;
+  userLastName?: string;
+  userId?: string;
 }
-interface FlightTurnpoint {
-  time: string;
-  lat: number;
-  long: number;
+export interface FlightTurnpoint {
+  time?: string;
+  lat?: number;
+  long?: number;
 }
-interface Glider {
+export interface Glider {
   id: string;
   brand: string;
   model: string;
   gliderClass: {
     key: string;
     shortDescription: string;
+    description: string;
   };
 }
 interface AirspaceViolation {

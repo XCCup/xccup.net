@@ -609,7 +609,7 @@ router.put(
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
-      await service.rejectViolation(flight, req.body);
+      await service.rejectViolation(flight, req.body.message);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 

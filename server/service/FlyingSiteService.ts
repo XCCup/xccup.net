@@ -4,11 +4,12 @@ import { XccupRestrictionError } from "../helper/ErrorHandler";
 import { getElevationData, logElevationError } from "../igc/ElevationHelper";
 import { QueryTypes } from "sequelize";
 import {
+  FlyingSiteAttributes,
   FlyingSiteCreationAttributes,
   FlyingSiteInstance,
   FlyingSiteState,
 } from "../db/models/FlyingSite";
-import { BRecord } from "../helper/igc-parser";
+import { FlightFixCombined } from "../types/FlightFixes";
 
 const MAX_DIST_TO_SEARCH = 5000;
 
@@ -154,7 +155,9 @@ const siteService = {
     });
   },
 
-  findClosestTakeoff: async (location: BRecord) => {
+  findClosestTakeoff: async (
+    location: FlightFixCombined
+  ): Promise<FlyingSiteAttributes | undefined> => {
     const query = `
     SELECT
     "id","name", "elevation", ST_DistanceSphere(ST_SetSRID(ST_MakePoint(:longitude,:latitude),4326), "point") AS distance
@@ -184,12 +187,12 @@ const siteService = {
 
     if (takeoffs.length == 1) {
       logger.debug("Found takeoff in DB");
-      return takeoffs[0];
+      return takeoffs[0] as FlyingSiteAttributes;
     } else if (takeoffs.length > 1) {
       const errorMsg = `Found more than one takeoff in DB for lat: ${location.latitude} long: ${location.longitude} within distance of ${MAX_DIST_TO_SEARCH}m`;
       throw new XccupRestrictionError(errorMsg);
     }
   },
 };
-
+export const findClosestTakeoff = siteService.findClosestTakeoff;
 module.exports = siteService;

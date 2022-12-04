@@ -1,54 +1,95 @@
-const sequelize = require("sequelize");
-const FlightComment = require("../db")["FlightComment"];
-const Flight = require("../db")["Flight"];
-const User = require("../db")["User"];
-const Team = require("../db")["Team"];
-const Club = require("../db")["Club"];
-const Brand = require("../db")["Brand"];
-const FlightPhoto = require("../db")["FlightPhoto"];
-const FlyingSite = require("../db")["FlyingSite"];
-const FlightFixes = require("../db")["FlightFixes"];
-const mailService = require("../service/MailService");
-
-const moment = require("moment");
-
-const IgcAnalyzer = require("../igc/IgcAnalyzer");
-const { findLanding } = require("../igc/LocationFinder");
-const FlightStatsCalculator = require("../igc/FlightStatsCalculator");
-const { getCurrentActive } = require("./SeasonService");
-const { findClosestTakeoff } = require("./FlyingSiteService");
-const { hasAirspaceViolation } = require("./AirspaceService");
-const {
-  sendAirspaceViolationAcceptedMail,
-  sendAirspaceViolationRejectedMail,
-  sendGoogleElevationErrorAdminMail,
-  sendNewAdminTask,
-} = require("./MailService");
-
-const { isNoWorkday } = require("../helper/HolidayCalculator");
-const { sleep, findKeyByValue } = require("../helper/Utils");
-const { deleteIgcFile } = require("../helper/igc-file-utils");
-
-const { COUNTRY, STATE: USER_STATE } = require("../constants/user-constants");
-const { STATE } = require("../constants/flight-constants");
-
-const logger = require("../config/logger");
-const config = require("../config/env-config").default;
-
-const { deleteCache } = require("../controller/CacheManager");
-const {
+import sequelize from "sequelize";
+import db from "../db";
+import mailService from "./MailService";
+import moment from "moment";
+import { startCalculation, OLCResult } from "../igc/IgcAnalyzer";
+import { findLanding } from "../igc/LocationFinder";
+import { calculateFlightStats } from "../igc/FlightStatsCalculator";
+import { getCurrentActive } from "./SeasonService";
+import { findClosestTakeoff } from "./FlyingSiteService";
+import { hasAirspaceViolation } from "./AirspaceService";
+import MailService from "./MailService";
+import { isNoWorkday } from "../helper/HolidayCalculator";
+import { sleep, findKeyByValue } from "../helper/Utils";
+import { deleteIgcFile } from "../helper/igc-file-utils";
+import { COUNTRY, STATE as USER_STATE } from "../constants/user-constants";
+import { STATE } from "../constants/flight-constants";
+import logger from "../config/logger";
+import config from "../config/env-config";
+import { deleteCache } from "../controller/CacheManager";
+import {
   createGeometry,
   extractTimeAndHeights,
   combineFixesProperties,
-} = require("../helper/FlightFixUtils");
-const { checkSiteRecordsAndUpdate } = require("./SiteRecordCache");
-const {
+} from "../helper/FlightFixUtils";
+import { checkSiteRecordsAndUpdate } from "./SiteRecordCache";
+import {
   getElevationData,
   addElevationToFixes,
   logElevationError,
-} = require("../igc/ElevationHelper");
+} from "../igc/ElevationHelper";
 
-const { checkIfFlightIsNewPersonalBest } = require("../helper/PersonalBest");
+import { checkIfFlightIsNewPersonalBest } from "../helper/PersonalBest";
+import {
+  FlightAttributes,
+  FlightInstance,
+  FlightInstanceUserInclude,
+} from "../db/models/Flight";
+import { Glider } from "../db/models/Flight";
+import { FlightFixCombined, FlightFixStat } from "../types/FlightFixes";
+import { Fn } from "sequelize/types/utils";
+
+interface WhereOptions {
+  year?: number;
+  site?: string;
+  siteId?: string;
+  flightType?: string;
+  rankingClass?: string;
+  startDate?: Date;
+  endDate?: Date;
+  userId?: string;
+  gliderClass?: string;
+  flightStatus?: string;
+  onlyUnchecked?: boolean;
+  includeUnchecked?: boolean;
+  limit?: number;
+  offset?: number;
+  clubId?: string;
+  teamId?: string;
+  status?: string;
+  sort?: [string?, string?];
+  minimumData?: boolean;
+  isAdminRequest?: boolean;
+}
+
+interface FinalizeFlightSubmission {
+  flight?: FlightInstance;
+  report?: string;
+  airspaceComment?: string;
+  onlyLogbook?: boolean;
+  glider?: Glider;
+  hikeAndFly?: boolean;
+}
+
+interface CreateFlight {
+  userId: string;
+  igcPath: string;
+  externalId: number;
+  uploadEndpoint: string;
+  validationResult: string;
+}
+
+interface CreateFlightObject extends Omit<CreateFlight, "validationResult"> {
+  teamId?: string;
+  clubId?: string;
+  homeStateOfUser?: string;
+  uncheckedGRecord?: boolean;
+  flightStatus: string;
+}
+
+type FlightApiResponse = Omit<FlightAttributes, "fixes"> & {
+  fixes: FlightFixCombined[];
+};
 
 const flightService = {
   getAll: async ({
@@ -71,7 +112,7 @@ const flightService = {
     sort,
     minimumData,
     isAdminRequest,
-  } = {}) => {
+  }: WhereOptions = {}) => {
     const orderStatement = createOrderStatement(sort);
 
     const queryObject = {
@@ -83,17 +124,17 @@ const flightService = {
 
         // The includes for photos and comments are only present to count the related objects
         {
-          model: FlightPhoto,
+          model: db.FlightPhoto,
           as: "photos",
           attributes: ["id"],
         },
         {
-          model: FlightComment,
+          model: db.FlightComment,
           as: "comments",
           attributes: ["id"],
         },
       ],
-      where: await createWhereStatement(
+      where: await createWhereStatement({
         year,
         flightType,
         rankingClass,
@@ -101,22 +142,26 @@ const flightService = {
         endDate,
         userId,
         gliderClass,
-        status,
+        flightStatus: status,
         onlyUnchecked,
-        includeUnchecked
-      ),
+        includeUnchecked,
+      }),
       order: orderStatement,
     };
 
     if (limit) {
+      // @ts-ignore If someone wants to type this, feel free
       queryObject.limit = limit;
     }
 
     if (offset) {
+      // @ts-ignore If someone wants to type this, feel free
       queryObject.offset = offset;
     }
 
     if (minimumData) {
+      // @ts-ignore If someone wants to type this, feel free
+
       queryObject.attributes = [
         "id",
         "externalId",
@@ -131,22 +176,25 @@ const flightService = {
      * distinct=true was necessary after photos and comments where included
      * https://github.com/sequelize/sequelize/issues/9481
      * */
+    // @ts-ignore If someone wants to type this, feel free
     queryObject.distinct = true;
 
-    const flights = await Flight.findAndCountAll(queryObject);
+    const flights = await db.Flight.findAndCountAll(queryObject);
 
     /**
      * Without mapping "FATAL ERROR: v8::Object::SetInternalField() Internal field out of bounds" occurs.
      * This is due to the fact that node-cache can't clone sequelize objects with active tcp handles.
      * See also: https://github.com/pvorb/clone/issues/106
      */
-
-    flights.rows = flights.rows.map((v) => v.toJSON());
+    const resObj = {
+      rows: flights.rows.map((v) => v.toJSON()),
+      count: flights.count,
+    };
 
     countRelatedObjects(flights.rows, "photos");
     countRelatedObjects(flights.rows, "comments");
 
-    return flights;
+    return resObj;
   },
 
   getTodays: async () => {
@@ -160,8 +208,8 @@ const flightService = {
       fromDay++;
       tillDay++;
     }
-    const fromDate = new Date(today.getFullYear(), today.getMonth(), fromDay);
-    const tillDate = new Date(today.getFullYear(), today.getMonth(), tillDay);
+    const startDate = new Date(today.getFullYear(), today.getMonth(), fromDay);
+    const endDate = new Date(today.getFullYear(), today.getMonth(), tillDay);
 
     const queryObject = {
       include: [
@@ -169,29 +217,33 @@ const flightService = {
         createFixesInclude(["geom"]),
         createSiteInclude(),
       ],
-      where: await createWhereStatement(null, null, null, fromDate, tillDate),
+      where: await createWhereStatement({ startDate, endDate }),
       order: [["flightPoints", "DESC"]],
     };
 
-    const flightDbObjects = await Flight.findAll(queryObject);
+    // @ts-ignore If someone wants to type this, feel free
+    const flightDbObjects = await db.Flight.findAll(queryObject);
 
     const flights = stripFlightFixesForTodayRanking(flightDbObjects);
 
     return flights;
   },
 
-  getById: async (id, noIncludes) => {
+  getById: async (id: string, noIncludes: boolean) => {
     const includes = [
       createSiteInclude(),
       createFixesInclude(["geom", "timeAndHeights"]),
     ];
-    return await Flight.findOne({
+    return await db.Flight.findOne({
       where: { id },
       include: noIncludes ? [] : includes,
     });
   },
 
-  getByExternalId: async (externalId, { excludeSecrets } = {}) => {
+  getByExternalId: async (
+    externalId: number,
+    { excludeSecrets }: { excludeSecrets?: boolean } = {}
+  ) => {
     const blackListedDataAttributes = [
       "airspaceViolations",
       "airspaceViolation",
@@ -199,7 +251,7 @@ const flightService = {
     ];
     const exclude = excludeSecrets ? blackListedDataAttributes : null;
 
-    const flightDbObject = await Flight.findOne({
+    const flightDbObject = await db.Flight.findOne({
       where: { externalId },
       include: [
         createFixesInclude(["geom", "timeAndHeights", "stats"]),
@@ -208,25 +260,30 @@ const flightService = {
         createClubInclude(),
         createTeamInclude(),
         {
-          model: FlightComment,
+          model: db.FlightComment,
           as: "comments",
           include: [createUserInclude()],
         },
         {
-          model: FlightPhoto,
+          model: db.FlightPhoto,
           as: "photos",
         },
       ],
+      // @ts-ignore If someone wants to type this, feel free
       attributes: { exclude },
       order: [
-        [{ model: FlightComment, as: "comments" }, "createdAt", "ASC"],
-        [{ model: FlightPhoto, as: "photos" }, "createdAt", "ASC"],
+        [{ model: db.FlightComment, as: "comments" }, "createdAt", "ASC"],
+        [{ model: db.FlightPhoto, as: "photos" }, "createdAt", "ASC"],
       ],
     });
     if (flightDbObject) {
       const flight = flightDbObject.toJSON();
+      if (!flight.fixes) return;
       //TODO: Merge directly when model is retrieved?
-      flight.fixes = combineFixesProperties(flight.fixes);
+
+      // TODO: TS: Is there a more elegant way?
+      const resObj: FlightApiResponse = flight as unknown as FlightApiResponse;
+      resObj.fixes = combineFixesProperties(flight.fixes);
 
       // Even though we have now a better airbuddy algo this is still here to support older flights with airbuddies
       if (!flight.airbuddies)
@@ -237,9 +294,10 @@ const flightService = {
     return null;
   },
 
-  sumDistance: async (year) => {
-    const totalDistance = await Flight.sum("flightDistance", {
+  sumDistance: async (year: number) => {
+    const totalDistance = await db.Flight.sum("flightDistance", {
       where: {
+        // @ts-ignore
         andOp: sequelize.where(
           sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
           year
@@ -249,8 +307,9 @@ const flightService = {
     return Math.round(totalDistance);
   },
 
-  sumFlightColumnByUser: async (columnName, userId) => {
-    const sum = await Flight.sum(columnName, {
+  sumFlightColumnByUser: async (columnName: string, userId: string) => {
+    // @ts-ignore
+    const sum = await db.Flight.sum(columnName, {
       where: {
         userId,
       },
@@ -258,9 +317,10 @@ const flightService = {
     return Math.round(sum);
   },
 
-  countFlightsByUser: async (userId) => {
-    return Flight.count({
+  countFlightsByUser: async (userId: string) => {
+    return db.Flight.count({
       where: {
+        // @ts-ignore
         userId,
         [sequelize.Op.not]: { flightStatus: STATE.IN_PROCESS },
         [sequelize.Op.or]: [
@@ -275,29 +335,30 @@ const flightService = {
   },
 
   getAllBrands: async () => {
-    const brands = await Brand.findAll({ order: [["name", "ASC"]] });
+    const brands = await db.Brand.findAll({ order: [["name", "ASC"]] });
     return brands.map((e) => e.name);
   },
 
-  update: async (flight) => {
+  update: async (flight: FlightInstance) => {
     return flight.save();
   },
 
-  acceptViolation: async (flight) => {
+  acceptViolation: async (flight: FlightInstance) => {
+    if (!flight.takeoffTime || !flight.flightPoints) return;
     flight.violationAccepted = true;
     flight.flightStatus = await calcFlightStatus(
       flight.takeoffTime,
       flight.flightPoints,
-      flight.onlyLogbook
+      flight.flightStatus == STATE.FLIGHTBOOK
     );
 
     const result = await flight.save();
-    sendAirspaceViolationAcceptedMail(flight);
+    MailService.sendAirspaceViolationAcceptedMail(flight);
     return result;
   },
 
-  rejectViolation: async (flight, { message }) => {
-    sendAirspaceViolationRejectedMail(flight, message);
+  rejectViolation: async (flight: FlightInstance, message: string) => {
+    MailService.sendAirspaceViolationRejectedMail(flight, message);
     flightService.delete(flight);
   },
 
@@ -308,8 +369,8 @@ const flightService = {
    * @param {*} props The properties of the flight model which should be updated
    * @return 1 if an entry was updated; 0 when no entry was updated
    */
-  changeFlightProps: async (id, props = {}) => {
-    return (await Flight.update(props, { where: { id } }))[0];
+  changeFlightProps: async (id: string, props = {}) => {
+    return (await db.Flight.update(props, { where: { id } }))[0];
   },
 
   finalizeFlightSubmission: async ({
@@ -319,7 +380,8 @@ const flightService = {
     onlyLogbook,
     glider,
     hikeAndFly,
-  } = {}) => {
+  }: FinalizeFlightSubmission = {}) => {
+    if (!flight) return;
     // Set report when value is defined or empty
     if (report || report == "") flight.report = report;
 
@@ -328,20 +390,22 @@ const flightService = {
     }
 
     if (hikeAndFly) {
-      const site = await FlyingSite.findByPk(flight.siteId, {
+      const site = await db.FlyingSite.findByPk(flight.siteId, {
         attributes: ["heightDifference"],
       });
-      flight.hikeAndFly = site.heightDifference;
+      flight.hikeAndFly = site?.heightDifference;
     }
-    if (hikeAndFly == 0) flight.hikeAndFly = 0;
+    if (!hikeAndFly) flight.hikeAndFly = 0;
+
     const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
+
     if (glider) {
       await createGliderObject(flight, glider);
 
       const flightPoints = await calcFlightPoints(flight, glider);
       flight.flightPoints = flightPoints;
 
-      if (flight.flightStatus != STATE.IN_REVIEW) {
+      if (flight.flightStatus != STATE.IN_REVIEW && flight.takeoffTime) {
         const flightStatus = await calcFlightStatus(
           flight.takeoffTime,
           flightPoints,
@@ -351,9 +415,8 @@ const flightService = {
       }
     }
 
-    if (flight.airspaceViolation) sendNewAdminTask();
+    if (flight.airspaceViolation) MailService.sendNewAdminTask();
 
-    console.log("Personal best about to run (finalyze)");
     // Check if flight is a new personal best (not on edit)
     if (isNewFlightUpload && !flight.isNewPersonalBest && flight.glider) {
       logger.info("FS: Will check if flight is new personal best");
@@ -372,12 +435,12 @@ const flightService = {
     return updatedColumns;
   },
 
-  delete: async (flight) => {
+  delete: async (flight: FlightInstance) => {
     deleteIgcFile(flight.igcPath);
-    return Flight.destroy({ where: { id: flight.id } });
+    return db.Flight.destroy({ where: { id: flight.id } });
   },
 
-  addResult: async (result) => {
+  addResult: async (result: OLCResult) => {
     logger.info("FS: Will add igc result to flight " + result.id);
     const flight = await flightService.getById(result.id, true);
 
@@ -390,7 +453,7 @@ const flightService = {
     }
     const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
 
-    flight.flightDistance = result.dist;
+    flight.flightDistance = +result.dist;
     flight.flightType = result.type;
     flight.flightTurnpoints = result.turnpoints;
     calculateTaskSpeed(result, flight);
@@ -401,7 +464,7 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, flight.glider);
       flight.flightPoints = flightPoints;
 
-      if (flight.flightStatus != STATE.IN_REVIEW) {
+      if (flight.flightStatus != STATE.IN_REVIEW && flight.takeoffTime) {
         const flightStatus = await calcFlightStatus(
           flight.takeoffTime,
           flight.flightPoints
@@ -409,7 +472,6 @@ const flightService = {
         flight.flightStatus = flightStatus;
       }
     }
-    console.log("Personal best about to run");
     // Check if flight is a new personal best (not on edit)
     if (isNewFlightUpload && !flight.isNewPersonalBest && flight.glider) {
       logger.info("FS: Will check if flight is new personal best");
@@ -429,9 +491,12 @@ const flightService = {
     deleteCache(["home", "flights", "results"]);
   },
 
-  attachElevationDataAndCheckForAirspaceViolations: async (flight) => {
+  attachElevationDataAndCheckForAirspaceViolations: async (
+    flight: FlightInstance
+  ) => {
     // Get elevation data and add it to flight fixes
     const flightFixesRef = await retrieveDbObjectOfFlightFixes(flight.id);
+    if (!flightFixesRef) return;
     const combinedFixes = combineFixesProperties(flightFixesRef);
 
     try {
@@ -445,7 +510,7 @@ const flightService = {
       await flightFixesRef.save();
     } catch (error) {
       logElevationError(error);
-      sendGoogleElevationErrorAdminMail(flight.externalId, error);
+      MailService.sendGoogleElevationErrorAdminMail(flight.externalId, error);
     }
 
     /**
@@ -470,8 +535,8 @@ const flightService = {
     externalId,
     uploadEndpoint,
     validationResult,
-  }) => {
-    const flight = {
+  }: CreateFlight) => {
+    const flight: CreateFlightObject = {
       userId,
       igcPath,
       externalId,
@@ -481,12 +546,14 @@ const flightService = {
     };
 
     await attachUserData(flight);
-    return Flight.create(flight);
+    // @ts-ignore
+    return db.Flight.create(flight);
   },
 
-  startResultCalculation: async (flight) => {
+  startResultCalculation: async (flight: FlightInstance) => {
     const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
-    IgcAnalyzer.startCalculation(flight, flightTypeFactors, (result) => {
+
+    startCalculation(flight, flightTypeFactors, (result: OLCResult) => {
       flightService.addResult(result);
     }).catch((error) => logger.error(error));
   },
@@ -498,7 +565,10 @@ const flightService = {
    * @param {Object} flight The db object of the flight.
    * @param {Array} fixes An array of fixes of the related flight.
    */
-  attachFixRelatedTimeDataToFlight: (flight, fixes) => {
+  attachFixRelatedTimeDataToFlight: (
+    flight: FlightInstance,
+    fixes: FlightFixCombined[]
+  ) => {
     flight.airtime = calcAirtime(fixes);
     flight.takeoffTime = new Date(fixes[0].timestamp);
     flight.landingTime = new Date(fixes[fixes.length - 1].timestamp);
@@ -513,7 +583,10 @@ const flightService = {
    * @param {Object} flight The db object of the flight
    * @param {Array} fixes An array of fixes of the related flight
    */
-  storeFixesAndAddStats: async (flight, fixes) => {
+  storeFixesAndAddStats: async (
+    flight: FlightInstance,
+    fixes: FlightFixCombined[]
+  ) => {
     const fixesStats = attachFlightStats(flight, fixes);
     return storeFixesToDB(flight, fixes, fixesStats);
   },
@@ -527,15 +600,21 @@ const flightService = {
    * @param {Array} fixes An array of fixes of the related flight
    * @returns The name of the takeoff site
    */
-  attachTakeoffAndLanding: async (flight, fixes) => {
+  attachTakeoffAndLanding: async (
+    flight: FlightInstance,
+    fixes: FlightFixCombined[]
+  ) => {
     const requests = [findClosestTakeoff(fixes[0])];
     if (config.get("useGoogleApi")) {
       requests.push(findLanding(fixes[fixes.length - 1]));
     }
     const [takeoff, landing] = await Promise.all(requests);
 
+    if (!takeoff) throw new Error("Error while trying to find takeoff");
+
     flight.siteId = takeoff.id;
-    flight.region = takeoff.region;
+    flight.region = takeoff.locationData?.region;
+
     flight.landing = landing ?? "API Disabled";
 
     return takeoff;
@@ -546,15 +625,14 @@ const flightService = {
    * The check is done by searching the db for a flight from the same takeoff at the same takeoffTime.
    * If a flight was found an XccupRestrictionError will be thrown.
    *
-   * @param {*} siteId The id of the takeoff of the current flight.
-   * @param {*} takeoffTime The takeoffTime of the current flight.
    * @throws An XccupRestrictionError if an flight was found.
    */
-  checkIfFlightWasNotUploadedBefore: async (flight) => {
+  checkIfFlightWasNotUploadedBefore: async (flight: FlightInstance) => {
     const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
-    const result = await Flight.findOne({
+    const result = await db.Flight.findOne({
       where: {
+        // @ts-ignore
         siteId: flight.siteId,
         takeoffTime: flight.takeoffTime,
       },
@@ -587,19 +665,24 @@ const flightService = {
    * Postgres does not support auto increment on non PK columns.
    * Therefore a manual auto increment is necessary.
    *
-   * @param {*} flight The flight the externalId will be attached to.
    */
   createExternalId: async () => {
-    const externalId = (await Flight.max("externalId")) + 1;
+    const externalId =
+      (await db.Flight.max<number, FlightInstance>("externalId")) + 1;
     logger.debug("FS: New external ID was created: " + externalId);
     return externalId;
   },
 };
 
-async function storeFixesToDB(flight, fixes, fixesStats) {
+async function storeFixesToDB(
+  flight: FlightInstance,
+  fixes: FlightFixCombined[],
+  fixesStats: FlightFixStat[]
+) {
   // If a flight was already uploaded before (e.g. this is a rerun) delete the old fixes
-  const oldFixesOfFlight = await FlightFixes.findOne({
+  const oldFixesOfFlight = await db.FlightFixes.findOne({
     where: {
+      // @ts-ignore
       flightId: flight.id,
     },
   });
@@ -608,7 +691,8 @@ async function storeFixesToDB(flight, fixes, fixesStats) {
     oldFixesOfFlight.destroy();
   }
 
-  return FlightFixes.create({
+  return db.FlightFixes.create({
+    // @ts-ignore
     flightId: flight.id,
     geom: createGeometry(fixes),
     timeAndHeights: extractTimeAndHeights(fixes),
@@ -616,32 +700,16 @@ async function storeFixesToDB(flight, fixes, fixesStats) {
   });
 }
 
-function attachFlightStats(flight, fixes) {
-  const {
-    minHeightBaro,
-    maxHeightBaro,
-    minHeightGps,
-    maxHeightGps,
-    maxSink,
-    maxClimb,
-    maxSpeed,
-    fixesStats,
-  } = FlightStatsCalculator.execute(fixes);
-  flight.flightStats = {
-    minHeightBaro,
-    maxHeightBaro,
-    minHeightGps,
-    maxHeightGps,
-    maxSink,
-    maxClimb,
-    maxSpeed,
-  };
-  return fixesStats;
+function attachFlightStats(flight: FlightInstance, fixes: FlightFixCombined[]) {
+  const stats = calculateFlightStats(fixes);
+  if (!stats) return [];
+  flight.flightStats = stats;
+  return stats.fixesStats;
 }
 
-function createFixesInclude(attributes) {
+function createFixesInclude(attributes: string[]) {
   return {
-    model: FlightFixes,
+    model: db.FlightFixes,
     as: "fixes",
     attributes,
   };
@@ -650,7 +718,9 @@ function createFixesInclude(attributes) {
 /**
  * Sorts flights of the same day by points. If no external sort query is present.
  */
-function createOrderStatement(sort) {
+function createOrderStatement(
+  sort?: [string?, string?]
+): [string | Fn, string][] {
   if (!(sort && sort[0])) {
     return [
       // Uses the PostgreSQL date_trunc function to truncate the timestamp to a precision of day.
@@ -659,21 +729,19 @@ function createOrderStatement(sort) {
     ];
   }
 
-  if (!sort[1]) {
-    return [[sort[0], "DESC"]];
-  }
+  if (!sort[1]) return [[sort[0], "DESC"]];
 
-  return [sort];
+  return [[sort[0], sort[1]]];
 }
 
-function calculateTaskSpeed(result, flight) {
-  if (!flight.flightStats) return;
+function calculateTaskSpeed(result: OLCResult, flight: FlightInstance) {
+  if (!flight.flightStats || !flight.airtime) return;
   flight.flightStats.taskSpeed =
-    Math.round((result.dist / flight.airtime) * 600) / 10;
+    Math.round((+result.dist / flight.airtime) * 600) / 10;
   flight.changed("flightStats", true);
 }
 
-function calcAirtime(fixes) {
+function calcAirtime(fixes: FlightFixCombined[]) {
   return Math.round(
     (fixes[fixes.length - 1].timestamp - fixes[0].timestamp) / 1000 / 60
   );
@@ -685,7 +753,10 @@ function calcAirtime(fixes) {
  * @param {Array} flights An array of flight objects.
  * @param {String} flightProperty The name of the flight property which represents the array which will be counted.
  */
-function countRelatedObjects(flights, flightProperty) {
+function countRelatedObjects(
+  flights: FlightInstance[],
+  flightProperty: string
+) {
   flights.forEach((f) => {
     f[flightProperty + "Count"] = f[flightProperty]?.length
       ? f[flightProperty].length
@@ -701,7 +772,7 @@ function countRelatedObjects(flights, flightProperty) {
  * @param {*} glider The glider which determines the glider class. This glider can be different from the glider currently stored in flight.
  * @returns The points for this flight.
  */
-async function calcFlightPoints(flight, glider) {
+async function calcFlightPoints(flight: FlightInstance, glider: Glider) {
   const currentSeason = await getCurrentActive();
   const gliderClassKey = glider.gliderClass.key;
   const gliderClassDB = currentSeason.gliderClasses[gliderClassKey];
@@ -728,7 +799,11 @@ async function calcFlightPoints(flight, glider) {
   return flightPoints;
 }
 
-async function calcFlightStatus(takeoffTime, flightPoints, onlyLogbook) {
+async function calcFlightStatus(
+  takeoffTime: Date,
+  flightPoints: number,
+  onlyLogbook?: boolean
+) {
   if (!flightPoints) return STATE.IN_PROCESS;
 
   const currentSeason = await getCurrentActive();
@@ -750,7 +825,7 @@ async function calcFlightStatus(takeoffTime, flightPoints, onlyLogbook) {
   return flightStatus;
 }
 
-async function createGliderObject(flight, glider) {
+async function createGliderObject(flight: FlightInstance, glider: Glider) {
   const currentSeason = await getCurrentActive();
   const gliderClassDB = currentSeason.gliderClasses[glider.gliderClass.key];
 
@@ -764,13 +839,14 @@ async function createGliderObject(flight, glider) {
   };
 }
 
-async function retrieveDbObjectOfFlightFixes(flightId) {
+async function retrieveDbObjectOfFlightFixes(flightId: string) {
   const MAX_ATTEMPTS = 1;
 
   logger.debug("FS: Will retrieve fixes for flight: ", flightId);
   for (let index = 0; index < MAX_ATTEMPTS; index++) {
-    const fixes = await FlightFixes.findOne({
+    const fixes = await db.FlightFixes.findOne({
       where: {
+        // @ts-ignore
         flightId,
       },
     });
@@ -782,26 +858,30 @@ async function retrieveDbObjectOfFlightFixes(flightId) {
   }
 }
 
-function stripFlightFixesForTodayRanking(flightDbObjects) {
+function stripFlightFixesForTodayRanking(flightDbObjects: FlightInstance[]) {
   const FIXES_PER_HOUR = 60;
   const flights = flightDbObjects.map((entry) => entry.toJSON());
   flights.forEach((entry) => {
-    const fixes = entry.fixes.geom?.coordinates;
-    entry.fixes = [];
+    const fixes = entry.fixes?.geom?.coordinates;
+    if (!fixes) return;
+
+    const reducedFixes = [];
 
     //Fixes are stored in db with an interval of 5s
     const step = 3600 / 5 / FIXES_PER_HOUR;
 
     for (let index = 0; index < fixes.length; index += step) {
-      entry.fixes.push({ lat: fixes[index][1], long: fixes[index][0] });
+      reducedFixes.push({ lat: fixes[index][1], long: fixes[index][0] });
     }
     if (fixes.length % step !== 0) {
       //Add always the last fix
-      entry.fixes.push({
+      reducedFixes.push({
         lat: fixes[fixes.length - 1][1],
         long: fixes[fixes.length - 1][0],
       });
     }
+    // @ts-ignore TODO: Type the correct return type for this function
+    entry.fixes = reducedFixes;
   });
   return flights;
 }
@@ -819,7 +899,7 @@ function stripFlightFixesForTodayRanking(flightDbObjects) {
  *
  * @param {*} flight The flight to which airBuddies should be found.
  */
-async function findAirbuddiesLegacy(flight) {
+async function findAirbuddiesLegacy(flight: FlightAttributes) {
   const timeOffsetValue = 2;
   const timeOffsetUnit = "h";
   const pointThreshold = 30;
@@ -830,11 +910,12 @@ async function findAirbuddiesLegacy(flight) {
     timeOffsetUnit
   );
   const till = moment(flight.takeoffTime).add(timeOffsetValue, timeOffsetUnit);
-  const flights = await Flight.findAll({
+  const flights = (await db.Flight.findAll({
     where: {
       id: {
         [sequelize.Op.not]: flight.id,
       },
+      // @ts-ignore
       siteId: flight.siteId,
       takeoffTime: {
         [sequelize.Op.between]: [from, till],
@@ -846,11 +927,10 @@ async function findAirbuddiesLegacy(flight) {
     include: createUserInclude(),
     limit: maxNumberOfBuddies,
     order: [["flightPoints", "DESC"]],
-  });
-  return flights.map((f) => {
+  })) as FlightInstanceUserInclude[];
+  return flights.map((f: FlightInstanceUserInclude) => {
     return {
       externalId: f.externalId,
-      percentage: "n/a",
       userFirstName: f.user.firstName,
       userLastName: f.user.lastName,
       userId: f.user.id,
@@ -866,18 +946,20 @@ async function findAirbuddiesLegacy(flight) {
  *
  * @param {*} flight The flight the user data will be attached to.
  */
-async function attachUserData(flight) {
-  const user = await User.findByPk(flight.userId);
+async function attachUserData(flight: CreateFlightObject) {
+  const user = await db.User.findByPk(flight.userId);
+  if (!user) return;
   flight.teamId = user.teamId;
   flight.clubId = user.clubId;
   flight.homeStateOfUser =
-    user.address.country == COUNTRY.DEU
+    user?.address?.country == COUNTRY.DEU
       ? findKeyByValue(USER_STATE, user.address.state)
-      : findKeyByValue(COUNTRY, user.address.country);
+      : findKeyByValue(COUNTRY, user?.address?.country);
+  // @ts-ignore
   flight.ageOfUser = user.getAge();
 }
 
-async function createWhereStatement(
+async function createWhereStatement({
   year,
   flightType,
   rankingClass,
@@ -887,8 +969,8 @@ async function createWhereStatement(
   gliderClass,
   flightStatus,
   onlyUnchecked,
-  includeUnchecked
-) {
+  includeUnchecked,
+}: WhereOptions) {
   let whereStatement;
   if (onlyUnchecked) {
     whereStatement = {
@@ -922,19 +1004,24 @@ async function createWhereStatement(
     };
   }
   if (flightType) {
+    // @ts-ignore
     whereStatement.flightType = flightType;
   }
   if (flightStatus) {
+    // @ts-ignore
     whereStatement.flightStatus = flightStatus;
   } else {
+    // @ts-ignore
     whereStatement.flightStatus = {
       [sequelize.Op.not]: STATE.IN_PROCESS,
     };
   }
   if (userId) {
+    // @ts-ignore
     whereStatement.userId = userId;
   }
   if (year) {
+    // @ts-ignore
     whereStatement.andOp = sequelize.where(
       sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
       year
@@ -942,11 +1029,13 @@ async function createWhereStatement(
   }
   if (startDate) {
     const definedEndDate = endDate ? endDate : new Date();
+    // @ts-ignore
     whereStatement.takeoffTime = {
       [sequelize.Op.between]: [startDate, definedEndDate],
     };
   }
   if (!startDate && endDate) {
+    // @ts-ignore
     whereStatement.takeoffTime = {
       [sequelize.Op.between]: ["2004-01-01", endDate],
     };
@@ -957,29 +1046,33 @@ async function createWhereStatement(
       [];
 
     whereStatement.glider = {
+      // @ts-ignore
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
   }
   if (gliderClass) {
     whereStatement.glider = {
+      // @ts-ignore
       gliderClass: { key: gliderClass },
     };
   }
   return whereStatement;
 }
 
-function createSiteInclude(shortName, id) {
+function createSiteInclude(shortName?: string, id?: string) {
   const include = {
-    model: FlyingSite,
+    model: db.FlyingSite,
     as: "takeoff",
     attributes: ["id", "shortName", "name", "direction"],
   };
   if (shortName) {
+    // @ts-ignore
     include.where = {
       shortName,
     };
   }
   if (id) {
+    // @ts-ignore
     include.where = {
       id,
     };
@@ -987,26 +1080,27 @@ function createSiteInclude(shortName, id) {
   return include;
 }
 
-function createUserInclude(isAdminRequest) {
+function createUserInclude(isAdminRequest?: boolean) {
   const attributes = ["id", "firstName", "lastName", "fullName"];
 
   if (isAdminRequest) attributes.push("email");
 
   const include = {
-    model: User,
+    model: db.User,
     as: "user",
     attributes,
   };
   return include;
 }
 
-function createClubInclude(id) {
+function createClubInclude(id?: string) {
   const include = {
-    model: Club,
+    model: db.Club,
     as: "club",
     attributes: ["id", "name"],
   };
   if (id) {
+    // @ts-ignore
     include.where = {
       id,
     };
@@ -1014,13 +1108,14 @@ function createClubInclude(id) {
   return include;
 }
 
-function createTeamInclude(id) {
+function createTeamInclude(id?: string) {
   const include = {
-    model: Team,
+    model: db.Team,
     as: "team",
     attributes: ["id", "name"],
   };
   if (id) {
+    // @ts-ignore
     include.where = {
       id,
     };

@@ -1,7 +1,7 @@
 import {
   FlightFixTimeAndHeights,
-  FlightFixesAttributes,
   FlightFixCombined,
+  FlightFixesAttributes,
 } from "../types/FlightFixes";
 import { LineString } from "geojson";
 import IGCParser from "../helper/igc-parser";
@@ -13,7 +13,7 @@ import IGCParser from "../helper/igc-parser";
  * @param fixes The fixes parsed from the IGCParser
  * @returns An array of FlightFixTimeAndHeights objects
  */
-export function createGeometry(fixes: IGCParser.BRecord[]): LineString {
+export function createGeometry(fixes: FlightFixCombined[]): LineString {
   const coordinates = fixes.map((fix) => {
     return [fix.longitude, fix.latitude];
   });
@@ -31,7 +31,7 @@ export function createGeometry(fixes: IGCParser.BRecord[]): LineString {
  * @returns An array of FlightFixTimeAndHeights objects
  */
 export function extractTimeAndHeights(
-  fixes: IGCParser.BRecord[]
+  fixes: FlightFixCombined[]
 ): FlightFixTimeAndHeights[] {
   return fixes.map((fix) => {
     return {
@@ -47,28 +47,32 @@ export function extractTimeAndHeights(
  * Combines all properties from the flight fixes database object into a single property
  * to synchronize the access via index on these different arrays.
  *
- * @param fixes The fixes object from the database
+ * @param fixesRef The fixes object from the database
  * @returns An array of FlightFixCombined objects
  */
-export function combineFixesProperties(
-  fixes: FlightFixesAttributes
-): FlightFixCombined[] {
-  if (!fixes) return [];
+export function combineFixesProperties(fixesRef: FlightFixesAttributes) {
+  if (!fixesRef) return [];
 
-  const coordinates = fixes.geom.coordinates;
-  const timeAndHeights = fixes.timeAndHeights;
-  const stats = fixes.stats;
+  const coordinates = fixesRef.geom.coordinates;
+  const timeAndHeights = fixesRef.timeAndHeights;
+  const stats = fixesRef.stats;
 
-  // @ts-ignore
-  const newOb: FlightFixCombined[] = [...timeAndHeights];
-
+  const resData: FlightFixCombined[] = [];
   for (let i = 0; i < timeAndHeights.length; i++) {
-    newOb[i].longitude = coordinates[i][0];
-    newOb[i].latitude = coordinates[i][1];
-    if (stats) {
-      newOb[i].speed = stats[i].speed;
-      newOb[i].climb = stats[i].climb;
-    }
+    // TODO: Spread this more elegant
+    const fixData = {
+      longitude: coordinates[i][0],
+      latitude: coordinates[i][1],
+      speed: stats ? stats[i].speed : undefined,
+      climb: stats ? stats[i].climb : undefined,
+      timestamp: timeAndHeights[i].timestamp,
+      time: timeAndHeights[i].time,
+      pressureAltitude: timeAndHeights[i].pressureAltitude,
+      gpsAltitude: timeAndHeights[i].gpsAltitude,
+      elevation: timeAndHeights[i].elevation,
+    };
+    resData.push(fixData);
   }
-  return newOb;
+
+  return resData;
 }

@@ -248,10 +248,9 @@ const service = {
 
     return sendMail(adminMail, content);
   },
-  sendGoogleElevationErrorAdminMail: async (
-    flightId: number,
-    error: string
-  ) => {
+  sendGoogleElevationErrorAdminMail: async (flightId?: number, error?: any) => {
+    if (!flightId) throw new Error("MS: No flight ID specified");
+
     logger.info(
       `MS: Send Google Elevation Error mail to admins for flight ${flightId}`
     );

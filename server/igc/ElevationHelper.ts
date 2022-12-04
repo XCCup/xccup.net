@@ -1,6 +1,7 @@
 import { Client, ElevationResponse } from "@googlemaps/google-maps-services-js";
 import config from "../config/env-config";
 import logger from "../config/logger";
+import { FlightFixTimeAndHeights } from "../types/FlightFixes";
 
 interface LatLng {
   lat: number;
@@ -44,7 +45,10 @@ export async function getElevationData(fixes: Fix[]) {
   return elevations;
 }
 
-export function addElevationToFixes(fixes: Fix[], elevations: number[]) {
+export function addElevationToFixes(
+  fixes: FlightFixTimeAndHeights[],
+  elevations: number[]
+) {
   if (fixes.length !== elevations.length)
     throw new Error(
       `EA: Number of fixes and elevations does not match ${fixes.length}/${elevations.length}`
