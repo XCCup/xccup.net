@@ -75,9 +75,9 @@ interface AirspaceViolation {
 
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
 export interface FlightOutputAttributes extends FlightAttributes {
-  userId: string;
-  siteId: string;
-  clubId: string;
+  userId?: string;
+  siteId?: string;
+  clubId?: string;
   teamId?: string;
 }
 export interface FlightInstance

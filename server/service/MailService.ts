@@ -233,7 +233,6 @@ const service = {
 
   sendGCheckInvalidAdminMail: async (userId: string, igcPath: string) => {
     logger.info(`MS: Send G-Check violation mail with igc to admins`);
-    if (!userId) return;
     const user = await db.User.findByPk(userId);
 
     if (!user) return;
@@ -413,7 +412,7 @@ const service = {
     }
 
     // Only send email if author isn't owner of the flight
-    if (flightOwnerId != comment.userId) {
+    if (flightOwnerId != comment.userId && flightOwnerId) {
       sendCommentMail(
         flightOwnerId,
         flight.externalId ?? 0,

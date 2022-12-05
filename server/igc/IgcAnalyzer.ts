@@ -589,4 +589,5 @@ function getDuration(igcAsJson: IGCFile) {
   return durationInMinutes;
 }
 export const startCalculation = IgcAnalyzer.startCalculation;
+export const extractFixes = IgcAnalyzer.extractFixes;
 module.exports = IgcAnalyzer;

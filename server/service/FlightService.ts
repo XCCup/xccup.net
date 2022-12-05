@@ -235,7 +235,7 @@ const flightService = {
     return flights;
   },
 
-  getById: async (id: string, noIncludes: boolean) => {
+  getById: async (id: string, noIncludes?: boolean) => {
     const includes = [
       createSiteInclude(),
       createFixesInclude(["geom", "timeAndHeights"]),
@@ -363,7 +363,7 @@ const flightService = {
     return result;
   },
 
-  rejectViolation: async (flight: FlightInstance, message: string) => {
+  rejectViolation: async (flight: FlightAttributes, message: string) => {
     MailService.sendAirspaceViolationRejectedMail(flight, message);
     flightService.delete(flight);
   },
@@ -441,7 +441,7 @@ const flightService = {
     return updatedColumns;
   },
 
-  delete: async (flight: FlightInstance) => {
+  delete: async (flight: FlightAttributes) => {
     deleteIgcFile(flight.igcPath);
     return db.Flight.destroy({ where: { id: flight.id } });
   },
