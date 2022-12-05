@@ -38,6 +38,8 @@ import {
 import { Glider } from "../db/models/Flight";
 import { FlightFixCombined, FlightFixStat } from "../types/FlightFixes";
 import { Fn } from "sequelize/types/utils";
+import { FlightCommentInstance } from "../db/models/FlightComment";
+import { FlightPhotoInstance } from "../db/models/FlightPhoto";
 
 interface WhereOptions {
   year?: number;
@@ -89,6 +91,8 @@ interface CreateFlightObject extends Omit<CreateFlight, "validationResult"> {
 
 type FlightApiResponse = Omit<FlightAttributes, "fixes"> & {
   fixes: FlightFixCombined[];
+  comments?: FlightCommentInstance[];
+  photos?: FlightPhotoInstance[];
 };
 
 const flightService = {
@@ -187,7 +191,9 @@ const flightService = {
      * See also: https://github.com/pvorb/clone/issues/106
      */
     const resObj = {
-      rows: flights.rows.map((v) => v.toJSON()),
+      rows: flights.rows.map((v) =>
+        v.toJSON()
+      ) as unknown as FlightApiResponse[],
       count: flights.count,
     };
 
@@ -282,7 +288,7 @@ const flightService = {
       //TODO: Merge directly when model is retrieved?
 
       // TODO: TS: Is there a more elegant way?
-      const resObj: FlightApiResponse = flight as unknown as FlightApiResponse;
+      const resObj = flight as unknown as FlightApiResponse;
       resObj.fixes = combineFixesProperties(flight.fixes);
 
       // Even though we have now a better airbuddy algo this is still here to support older flights with airbuddies
@@ -754,21 +760,16 @@ function calcAirtime(fixes: FlightFixCombined[]) {
  * @param {Array} flights An array of flight objects.
  * @param {String} flightProperty The name of the flight property which represents the array which will be counted.
  */
-// TODO: Find out how to type this
 function countRelatedObjects(
-  flights: FlightAttributes[],
-  flightProperty: string
+  flights: FlightApiResponse[],
+  flightProperty: "comments" | "photos"
 ) {
   flights.forEach((f) => {
-    // @ts-ignore
-    f[(flightProperty + "Count") as keyof FlightAttributes] = f[
-      flightProperty as keyof FlightAttributes
-      // @ts-ignore
-    ]?.length
-      ? // @ts-ignore
-        f[flightProperty].length
+    const key = flightProperty + "Count";
+    // @ts-ignore TODO: Maybe refactor this to make it easier
+    f[key as keyof FlightApiResponse] = Array.isArray(f[flightProperty])
+      ? (f[flightProperty] as unknown as string[]).length
       : 0;
-    // @ts-ignore
     delete f[flightProperty];
   });
 }
@@ -1130,5 +1131,5 @@ function createTeamInclude(id?: string) {
   }
   return include;
 }
-
+export default flightService;
 module.exports = flightService;
