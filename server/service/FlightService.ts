@@ -191,8 +191,8 @@ const flightService = {
       count: flights.count,
     };
 
-    countRelatedObjects(flights.rows, "photos");
-    countRelatedObjects(flights.rows, "comments");
+    countRelatedObjects(resObj.rows, "photos");
+    countRelatedObjects(resObj.rows, "comments");
 
     return resObj;
   },
@@ -606,6 +606,7 @@ const flightService = {
   ) => {
     const requests = [findClosestTakeoff(fixes[0])];
     if (config.get("useGoogleApi")) {
+      // @ts-ignore TODO: How to type this?
       requests.push(findLanding(fixes[fixes.length - 1]));
     }
     const [takeoff, landing] = await Promise.all(requests);
@@ -615,7 +616,7 @@ const flightService = {
     flight.siteId = takeoff.id;
     flight.region = takeoff.locationData?.region;
 
-    flight.landing = landing ?? "API Disabled";
+    flight.landing = (landing as unknown as string) ?? "API Disabled";
 
     return takeoff;
   },
@@ -753,14 +754,21 @@ function calcAirtime(fixes: FlightFixCombined[]) {
  * @param {Array} flights An array of flight objects.
  * @param {String} flightProperty The name of the flight property which represents the array which will be counted.
  */
+// TODO: Find out how to type this
 function countRelatedObjects(
-  flights: FlightInstance[],
+  flights: FlightAttributes[],
   flightProperty: string
 ) {
   flights.forEach((f) => {
-    f[flightProperty + "Count"] = f[flightProperty]?.length
-      ? f[flightProperty].length
+    // @ts-ignore
+    f[(flightProperty + "Count") as keyof FlightAttributes] = f[
+      flightProperty as keyof FlightAttributes
+      // @ts-ignore
+    ]?.length
+      ? // @ts-ignore
+        f[flightProperty].length
       : 0;
+    // @ts-ignore
     delete f[flightProperty];
   });
 }
