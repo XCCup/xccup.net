@@ -93,6 +93,7 @@ type FlightApiResponse = Omit<FlightAttributes, "fixes"> & {
   fixes: FlightFixCombined[];
   comments?: FlightCommentInstance[];
   photos?: FlightPhotoInstance[];
+  userId?: string;
 };
 
 const flightService = {
@@ -293,9 +294,9 @@ const flightService = {
 
       // Even though we have now a better airbuddy algo this is still here to support older flights with airbuddies
       if (!flight.airbuddies)
-        flight.airbuddies = await findAirbuddiesLegacy(flight);
+        resObj.airbuddies = await findAirbuddiesLegacy(flight);
 
-      return flight;
+      return resObj;
     }
     return null;
   },
@@ -441,9 +442,9 @@ const flightService = {
     return updatedColumns;
   },
 
-  delete: async (flight: FlightAttributes) => {
-    deleteIgcFile(flight.igcPath);
-    return db.Flight.destroy({ where: { id: flight.id } });
+  delete: async (flightId: string, igcPath: string) => {
+    deleteIgcFile(igcPath);
+    return db.Flight.destroy({ where: { id: flightId } });
   },
 
   addResult: async (result: OLCResult) => {

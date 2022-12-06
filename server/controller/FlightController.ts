@@ -60,11 +60,6 @@ import { FlyingSiteAttributes } from "../db/models/FlyingSite";
 
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
-interface IgcFile {
-  body: string;
-  name: string;
-}
-
 const router = express.Router();
 
 const uploadLimiter = createLimiter(60, 10);
@@ -121,7 +116,7 @@ router.get(
 router.get(
   "/violations",
   requesterMustBeModerator,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (_, res: Response, next: NextFunction) => {
     try {
       const flights = await service.getAll({
         onlyUnchecked: true,
@@ -194,7 +189,7 @@ router.get(
     try {
       const flight = await service.getById(id, true);
 
-      if (!flight) return res.sendStatus(NOT_FOUND);
+      if (!flight?.igcPath) return res.sendStatus(NOT_FOUND);
 
       const fullfilepath = path.join(path.resolve(), flight.igcPath);
 
@@ -227,14 +222,16 @@ router.delete(
     const flightId = req.params.id;
 
     const flight = await service.getByExternalId(+flightId);
-    if (!flight) return res.sendStatus(NOT_FOUND);
+    if (!flight || !flight?.userId) return res.sendStatus(NOT_FOUND);
 
     try {
       if (requesterIsNotOwner(req, res, flight.userId)) return;
 
       await checkIfFlightIsModifiable(flight, req.user?.id);
-
-      const numberOfDestroyedRows = await service.delete(flight);
+      const numberOfDestroyedRows = await service.delete(
+        flight.id,
+        flight.igcPath
+      );
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -257,24 +254,25 @@ router.post(
   requesterMustBeLoggedIn,
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id;
+    const igcFile = req.file;
+    const externalId = req.externalId;
+
+    if (!igcFile || !userId || !externalId) return; // TODO: What to do?
 
     try {
       // G-Check
-      const validationResult = await validateIgc(req.file);
-      if (
-        isGRecordResultInvalid(res, validationResult) &&
-        userId &&
-        req.file?.path
-      ) {
-        MailService.sendGCheckInvalidAdminMail(userId, req.file?.path);
-        return;
-      }
+      const content = fs.readFileSync(igcFile.path, "utf8");
+      const filename = igcFile.filename;
+      const validationResult = await validateIgc(content, filename);
+
+      if (isGRecordResultInvalid(res, validationResult))
+        return MailService.sendGCheckInvalidAdminMail(userId, igcFile.path);
 
       // DB Object
       const flightDbObject = await service.create({
         userId,
-        igcPath: req.file?.path,
-        externalId: req.externalId,
+        igcPath: igcFile.path,
+        externalId,
         uploadEndpoint: UPLOAD_ENDPOINT.WEB,
         validationResult,
       });
@@ -313,10 +311,17 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = req.body.userId;
+      const igcFile = req.file;
+      const externalId = req.externalId;
+
+      if (!igcFile || !userId || !externalId) return; // TODO: What to do?
+
       const userGliders = await userService.getGlidersById(userId);
       if (!userGliders) return res.sendStatus(NOT_FOUND);
 
-      const validationResult = await validateIgc(req.file);
+      const content = fs.readFileSync(igcFile.path, "utf8");
+      const filename = igcFile.filename;
+      const validationResult = await validateIgc(content, filename);
 
       /** A non igc file will now throw a 500 because the parsing will
        * fail and parsing is currently not in a try/catch block.
@@ -333,8 +338,8 @@ router.post(
 
       const flightDbObject = await service.create({
         userId,
-        igcPath: req.file?.path,
-        externalId: req.externalId,
+        igcPath: igcFile.path,
+        externalId,
         uploadEndpoint: UPLOAD_ENDPOINT.ADMIN,
         validationResult,
       });
@@ -386,7 +391,7 @@ router.get(
       const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flight,
         null,
-        // TODO: Should the recalculation really always skip all checks?
+        // TODO: Should the recalculation realy always skip all checks?
         { skipAllChecks: true }
       );
 
@@ -434,7 +439,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const flight = await service.getById(req.params.id);
-      if (!flight) return res.sendStatus(NOT_FOUND);
+      if (!flight || !flight.fixes) return res.sendStatus(NOT_FOUND);
       // TODO: Should there be a service that attaches the fixes directly
       // to the flight as you would expect it to happen if you query a flight?
       // e.g. getFlightWithFixes(flightId)
@@ -469,10 +474,8 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
-    const igc: IgcFile = {
-      body: req.body.IGCigcIGC,
-      name: req.body.igcfn,
-    };
+    const igcContent: string = req.body.IGCigcIGC;
+    const igcFilename: string = req.body.IGCigcIGC;
 
     try {
       const user = await validate(req.body.user, req.body.pass);
@@ -488,10 +491,10 @@ router.post(
       // Vars
       const userId = user.id;
       const externalId = await service.createExternalId();
-      const igcPath = await persistIgcFile(externalId, igc);
+      const igcPath = await persistIgcFile(externalId, igcContent, igcFilename);
 
       // G-Check
-      const validationResult = await validateIgc(igc);
+      const validationResult = await validateIgc(igcContent, igcFilename);
       if (isGRecordResultInvalid(res, validationResult)) {
         MailService.sendGCheckInvalidAdminMail(userId, igcPath);
         return;
@@ -562,6 +565,9 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
+    const userId = req.user?.id;
+    if (!userId) return; // TODO: What to do?
+
     const flight = await service.getById(req.params.id, true);
 
     if (!flight) return res.sendStatus(NOT_FOUND);
@@ -572,7 +578,7 @@ router.put(
     try {
       if (requesterIsNotOwner(req, res, flight.userId)) return;
 
-      await checkIfFlightIsModifiable(flight, req.user?.id);
+      await checkIfFlightIsModifiable(flight, userId);
 
       await service.finalizeFlightSubmission({
         flight,
@@ -675,9 +681,15 @@ async function runChecksStartCalculationsStoreFixes(
   // TODO: This is getting too complicated. Maybe add an extra service for the rerun calculation instead of all the ifs?
   if (!skipAllChecks && !skipManipulatedCheck)
     checkIfFlightIsManipulated(fixes);
+
+  // TODO: There could be "manipulated" in the fixes…
   service.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
   if (!skipAllChecks && !skipModifiableCheck)
-    await checkIfFlightIsModifiable(flightDbObject, userId);
+    await checkIfFlightIsModifiable(
+      flightDbObject.flightStatus,
+      flightDbObject.takeoffTime,
+      userId
+    );
   const takeoff = await service.attachTakeoffAndLanding(flightDbObject, fixes);
   if (!skipAllChecks && !skipMidflightCheck)
     detectMidFlightIgcStart(takeoff, fixes);
@@ -746,11 +758,10 @@ function createMulterIgcUploadHandler({ parts = 1 } = {}) {
     destination: path
       .join(dataPath, IGC_STORE, getCurrentYear().toString())
       .toString(),
-    filename: function (req, file, cb) {
-      service.createExternalId().then((externalId) => {
-        req.externalId = externalId;
-        cb(null, externalId + "_" + file.originalname);
-      });
+    filename: async function (req: Request, file, cb) {
+      const externalId = await service.createExternalId();
+      req.externalId = externalId;
+      cb(null, externalId + "_" + file.originalname);
     },
   });
   return multer({
@@ -763,12 +774,16 @@ function createMulterIgcUploadHandler({ parts = 1 } = {}) {
   });
 }
 
-async function persistIgcFile(externalId: number, igcFile: IgcFile) {
-  const pathToFile = createFileName(externalId, igcFile.name);
+async function persistIgcFile(
+  externalId: number,
+  content: string,
+  filename: string
+) {
+  const pathToFile = createFileName(externalId, filename);
 
   const fsPromises = fs.promises;
   logger.debug(`FC: Will write received IGC File to: ${pathToFile}`);
-  await fsPromises.writeFile(pathToFile.toString(), igcFile.body);
+  await fsPromises.writeFile(pathToFile.toString(), content);
   return pathToFile;
 }
 
@@ -784,17 +799,17 @@ async function persistIgcFile(externalId: number, igcFile: IgcFile) {
  * @throws A XccupRestrictionError if the requirements are not meet.
  */
 async function checkIfFlightIsModifiable(
-  flight: FlightInstance,
+  flightStatus: STATE,
+  takeoffTime: Date,
   userId: string
 ) {
   const daysFlightEditable = config.get("daysFlightEditable");
   // Allow flight uploads which are older than X days when not in production (Needed for testing)
   const overwriteIfInProcessAndNotProduction =
-    (flight.flightStatus == STATE.IN_PROCESS &&
-      config.get("env") !== "production") ||
+    (flightStatus == STATE.IN_PROCESS && config.get("env") !== "production") ||
     config.get("overruleActive");
 
-  const flightIsYoungerThanThreshold = moment(flight.takeoffTime)
+  const flightIsYoungerThanThreshold = moment(takeoffTime)
     .add(daysFlightEditable, "days")
     .isAfter(moment());
 
