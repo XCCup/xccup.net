@@ -225,14 +225,14 @@ const flightService = {
       ],
       where: await createWhereStatement({ startDate, endDate }),
       order: [["flightPoints", "DESC"]],
+      raw: true,
+      nest: true,
     };
 
     // @ts-ignore If someone wants to type this, feel free
-    const flightDbObjects = await db.Flight.findAll(queryObject);
+    const flights = await db.Flight.findAll(queryObject);
 
-    const flights = stripFlightFixesForTodayRanking(flightDbObjects);
-
-    return flights;
+    return stripFlightFixesForTodayRanking(flights);
   },
 
   getById: async (id: string, noIncludes: boolean) => {
@@ -867,9 +867,9 @@ async function retrieveDbObjectOfFlightFixes(flightId: string) {
   }
 }
 
-function stripFlightFixesForTodayRanking(flightDbObjects: FlightInstance[]) {
+function stripFlightFixesForTodayRanking(flights: FlightAttributes[]) {
   const FIXES_PER_HOUR = 60;
-  const flights = flightDbObjects.map((entry) => entry.toJSON());
+
   flights.forEach((entry) => {
     const fixes = entry.fixes?.geom?.coordinates;
     if (!fixes) return;
