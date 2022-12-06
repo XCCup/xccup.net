@@ -293,9 +293,9 @@ const flightService = {
 
       // Even though we have now a better airbuddy algo this is still here to support older flights with airbuddies
       if (!flight.airbuddies)
-        flight.airbuddies = await findAirbuddiesLegacy(flight);
+        resObj.airbuddies = await findAirbuddiesLegacy(flight);
 
-      return flight;
+      return resObj;
     }
     return null;
   },
