@@ -3,7 +3,7 @@
     <div class="col-6 col">
       <div>
         <h5>Saisonkontrolle</h5>
-        <div>
+        <div data-cy="remarksParagraph">
           <p v-if="!isAfterSeasonStart">
             Saison ist noch nicht gestartet. Du kannst alles ändern. Bitte achte
             darauf, dass die Ausschreibung korrekt angepasst wird.
@@ -20,6 +20,7 @@
           :key="startDate.toDateString()"
           v-model="startDate"
           label="Saisonstart"
+          data-cy="seasonStartDataPicker"
           :lower-limit="
             isAfterSeasonEnd
               ? new Date(new Date().getFullYear() + 1, 0)
@@ -31,6 +32,7 @@
           :key="endDate.toDateString()"
           v-model="endDate"
           label="Saisonende"
+          data-cy="seasonEndDataPicker"
           :lower-limit="startDate"
           :is-disabled="isBetweenSeasons"
         />
@@ -38,6 +40,7 @@
           <input
             v-model="season.isPaused"
             class="form-check-input"
+            data-cy="saisonPauseCheckbox"
             type="checkbox"
             value
           />

@@ -1,6 +1,8 @@
+import axios from "axios";
+
 describe("check admin page", () => {
   before(() => {
-    cy.seedDb();
+    // cy.seedDb();
   });
 
   beforeEach(() => {
@@ -256,5 +258,26 @@ describe("check admin page", () => {
       .contains(expectedPilotName);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+  });
+
+  it.only("check that ongoing season is not modifiable", () => {
+    cy.get("#nav-season-tab").click();
+
+    cy.get('[data-cy="remarksParagraph"]').should(
+      "include.text",
+      "Saison ist aktiv"
+    );
+    cy.get('[data-cy="seasonStartDataPicker"]')
+      .find("input")
+      .should("be.disabled");
+    cy.get('[data-cy="seasonEndDataPicker"]')
+      .find("input")
+      .should("be.disabled");
+  });
+  it.only("pause current season and upload flight", () => {
+    cy.get("#nav-season-tab").click();
+  });
+  it.only("pause current season and upload flight", () => {
+    cy.get("#nav-season-tab").click();
   });
 });
