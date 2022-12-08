@@ -38,6 +38,7 @@
         />
         <div class="form-check mb-3">
           <input
+            id="checkPauseSeason"
             v-model="season.isPaused"
             class="form-check-input"
             data-cy="saisonPauseCheckbox"
@@ -45,7 +46,7 @@
             value
           />
           <div>
-            <label class="form-check-label" for="flexCheckDefault">
+            <label class="form-check-label" for="checkPauseSeason">
               Saison pausieren
             </label>
           </div>

@@ -1,8 +1,6 @@
-import axios from "axios";
-
 describe("check admin page", () => {
   before(() => {
-    // cy.seedDb();
+    cy.seedDb();
   });
 
   beforeEach(() => {
@@ -260,7 +258,7 @@ describe("check admin page", () => {
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
   });
 
-  it.only("check that ongoing season is not modifiable", () => {
+  it("check that ongoing season is not modifiable", () => {
     cy.get("#nav-season-tab").click();
 
     cy.get('[data-cy="remarksParagraph"]').should(
@@ -274,10 +272,51 @@ describe("check admin page", () => {
       .find("input")
       .should("be.disabled");
   });
-  it.only("pause current season and upload flight", () => {
+
+  it("pause current season and upload flight", () => {
+    const fileName = "68090_K3EThSc1.igc";
+    const expectedTakeoff = "Niederzissen/Bausenberg";
+    const expectedFlightStatus = "Flugbuch";
+
     cy.get("#nav-season-tab").click();
-  });
-  it.only("pause current season and upload flight", () => {
-    cy.get("#nav-season-tab").click();
+
+    cy.get('[data-cy="saisonPauseCheckbox"]').check();
+    cy.get("button").contains("Saison updaten").click();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    // Upload flight
+
+    // Wait till page was fully loaded
+    cy.get('input[type="file"]#igcUploadForm').should("be.visible");
+
+    cy.fixture(fileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 4000,
+    }).should("have.value", expectedTakeoff);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    // Wait till redirection has happened
+    cy.get("[data-cy=flight-details-pilot]", {
+      timeout: 10000,
+    });
+
+    // Check for flight status
+    cy.get("#flightDetailsButton").click();
+    cy.get("#moreFlightDetailsTable").should(
+      "include.text",
+      expectedFlightStatus
+    );
   });
 });
