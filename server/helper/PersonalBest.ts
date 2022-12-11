@@ -3,7 +3,6 @@ import { Op } from "sequelize";
 import db from "../db";
 import { MINIMUM_PB_FLIGHT_DISTANCE } from "../constants/flight-constants";
 
-const MINIMUM_PB_FLIGHT_DISTANCE = 10;
 export async function checkIfFlightIsNewPersonalBest(flight: FlightInstance) {
   //  Do not flag short flights as a new personal best.
   // TODO: Model says flightDistance is a number but it's acutally a string... may already be solved in another PR
