@@ -4,7 +4,7 @@
       ref="icon"
       class="bi bi-award text-warning"
       data-bs-placement="top"
-      title="Neuer Persönliche Bestleistung"
+      title="Neue Persönliche Bestleistung"
     ></i>
   </span>
 </template>
