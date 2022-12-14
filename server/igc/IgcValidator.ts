@@ -41,11 +41,6 @@ export const validateIgc = async (content: string, filename: string) => {
       logger.info(
         "IV: IGC vaildation finished with not passed. Result is: " + result
       );
-      // logger.info(
-      //   `IV: IGC file was uploaded via ${
-      //     igcWasUploadedViaWebsite ? "website" : "leonardo"
-      //   }`
-      // );
     }
 
     return result;
