@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import express from "express";
 import logger from "../config/logger";
-import { deleteCache } from "./CacheManager";
+import { cache, deleteCache } from "./CacheManager";
 import db from "../db";
 import { findLatestForToUser } from "../test/testEmailCache";
 import tk from "timekeeper";
@@ -93,6 +93,8 @@ router.get("/time/:timestamp", async (req, res, next) => {
     tk.travel(new Date(timestamp));
     logger.warn("TDC: New system time was set");
 
+    deleteCache("all");
+
     res.sendStatus(OK);
   } catch (error) {
     next(error);
@@ -108,6 +110,8 @@ router.get("/time/reset", async (req, res, next) => {
     tk.reset();
     logger.warn("TDC: System time was resetted");
 
+    deleteCache("all");
+
     res.sendStatus(OK);
   } catch (error) {
     next(error);
@@ -122,6 +126,8 @@ router.get("/time/reset", async (req, res, next) => {
     logger.warn("TDC: Will freeze system time");
     tk.freeze(new Date());
     logger.warn("TDC: System time is freezed in");
+
+    deleteCache("all");
 
     res.sendStatus(OK);
   } catch (error) {
