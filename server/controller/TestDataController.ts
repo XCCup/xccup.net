@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import express from "express";
 import logger from "../config/logger";
-import { cache, deleteCache } from "./CacheManager";
+import { deleteCache } from "./CacheManager";
 import db from "../db";
 import { findLatestForToUser } from "../test/testEmailCache";
 import tk from "timekeeper";
@@ -82,25 +82,6 @@ router.get("/email/:toUserEmail", async (req, res, next) => {
   }
 });
 
-// @desc Sets the system time on the server
-// @route GET /testdata/time/:timestamp
-
-router.get("/time/:timestamp", async (req, res, next) => {
-  try {
-    const timestamp = req.params.timestamp;
-
-    logger.warn("TDC: Will set system time to " + timestamp);
-    tk.travel(new Date(timestamp));
-    logger.warn("TDC: New system time was set");
-
-    deleteCache("all");
-
-    res.sendStatus(OK);
-  } catch (error) {
-    next(error);
-  }
-});
-
 // @desc Resets the system time
 // @route GET /testdata/time/reset
 
@@ -110,7 +91,7 @@ router.get("/time/reset", async (req, res, next) => {
     tk.reset();
     logger.warn("TDC: System time was resetted");
 
-    deleteCache("all");
+    deleteCache(["all"]);
 
     res.sendStatus(OK);
   } catch (error) {
@@ -121,13 +102,32 @@ router.get("/time/reset", async (req, res, next) => {
 // @desc Freezes the system time on the server
 // @route GET /testdata/time/freeze
 
-router.get("/time/reset", async (req, res, next) => {
+router.get("/time/freeze", async (req, res, next) => {
   try {
     logger.warn("TDC: Will freeze system time");
     tk.freeze(new Date());
     logger.warn("TDC: System time is freezed in");
 
-    deleteCache("all");
+    deleteCache(["all"]);
+
+    res.sendStatus(OK);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Sets the system time on the server
+// @route GET /testdata/time/set/:timestamp
+
+router.get("/time/set/:timestamp", async (req, res, next) => {
+  try {
+    const timestamp = req.params.timestamp;
+
+    logger.warn("TDC: Will set system time to " + timestamp);
+    tk.travel(new Date(timestamp));
+    logger.warn("TDC: New system time was set");
+
+    deleteCache(["all"]);
 
     res.sendStatus(OK);
   } catch (error) {
