@@ -258,7 +258,7 @@ describe("check admin page", () => {
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
   });
 
-  it("check that ongoing season is not modifiable", () => {
+  it.only("check that ongoing season is not modifiable", () => {
     cy.get("#nav-season-tab").click();
 
     cy.get('[data-cy="remarksParagraph"]').should(
@@ -273,7 +273,7 @@ describe("check admin page", () => {
       .should("be.disabled");
   });
 
-  it("pause current season and upload flight", () => {
+  it.only("pause current season and upload flight", () => {
     const fileName = "68090_K3EThSc1.igc";
     const expectedTakeoff = "Niederzissen/Bausenberg";
     const expectedFlightStatus = "Flugbuch";

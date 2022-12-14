@@ -7,3 +7,7 @@ export function isInSeason() {
     isBefore(today, new Date(`${today.getFullYear()}-10-01`))
   );
 }
+
+export function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
