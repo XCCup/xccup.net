@@ -1,6 +1,14 @@
+const currentYear = new Date().getFullYear();
+
 describe("check admin page", () => {
   before(() => {
     cy.seedDb();
+    // This pretends that we are currently within an active season on server side
+    cy.setBackendTime(`${currentYear}-06-01T06:00:00`);
+  });
+
+  after(() => {
+    cy.resetBackendTime();
   });
 
   beforeEach(() => {
@@ -17,7 +25,7 @@ describe("check admin page", () => {
 
     // Non admins should be redirected to the landing page
     cy.url().should("not.contain", "/admin");
-    cy.get("h1").should("have.text", `XCCup ${new Date().getFullYear()}`);
+    cy.get("h1").should("have.text", `XCCup ${currentYear}`);
   });
 
   it("test general page loading", () => {
@@ -148,7 +156,7 @@ describe("check admin page", () => {
 
   it("test add new sponsor", () => {
     const expectedName = "Ein Sponsor";
-    const expectedWebiste = "www.bester-sponsor.de";
+    const expectedWebsite = "www.bester-sponsor.de";
     const expectedTagline = "Der beste Sponsor";
 
     cy.intercept("GET", "/api/sponsors").as("get-sponsors");
@@ -164,7 +172,7 @@ describe("check admin page", () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
     cy.get("[data-cy=inputSponsorName").type(expectedName);
-    cy.get("[data-cy=inputSponsorWebsite").type(expectedWebiste);
+    cy.get("[data-cy=inputSponsorWebsite").type(expectedWebsite);
     cy.get("[data-cy=inputSponsorTagline").type(expectedTagline);
     cy.get("[data-cy=checkSponsorCurrentSeason").check();
     cy.get("[data-cy=checkSponsorGold").check();
@@ -174,7 +182,7 @@ describe("check admin page", () => {
     cy.wait(500);
     cy.wait("@get-sponsors");
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedName);
-    cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedWebiste);
+    cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedWebsite);
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedTagline);
   });
 
@@ -258,7 +266,29 @@ describe("check admin page", () => {
     cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
   });
 
-  it.only("check that ongoing season is not modifiable", () => {
+  it("check that after season a new season can be created", () => {
+    cy.clock(new Date(Date.parse(currentYear + "-12-01")).getTime());
+
+    cy.get("#nav-season-tab").click();
+
+    cy.get('[data-cy="remarksParagraph"]').should(
+      "include.text",
+      "Saison ist abgeschlossen"
+    );
+    cy.get('[data-cy="seasonStartDataPicker"]')
+      .find("input")
+      .should("not.be.disabled");
+    cy.get('[data-cy="seasonEndDataPicker"]')
+      .find("input")
+      .should("not.be.disabled");
+
+    // date picker have old values therefore the save button should be disabled
+    cy.get("button").contains("Saison updaten").should("not.be.disabled");
+  });
+
+  it("check that ongoing season is not modifiable", () => {
+    cy.clock(new Date(Date.parse(currentYear + "-06-01")).getTime());
+
     cy.get("#nav-season-tab").click();
 
     cy.get('[data-cy="remarksParagraph"]').should(
@@ -273,7 +303,9 @@ describe("check admin page", () => {
       .should("be.disabled");
   });
 
-  it.only("pause current season and upload flight", () => {
+  it("pause current season and upload flight", () => {
+    cy.clock(new Date(Date.parse(currentYear + "-06-01")).getTime());
+
     const fileName = "68090_K3EThSc1.igc";
     const expectedTakeoff = "Niederzissen/Bausenberg";
     const expectedFlightStatus = "Flugbuch";
@@ -283,9 +315,8 @@ describe("check admin page", () => {
     cy.get('[data-cy="saisonPauseCheckbox"]').check();
     cy.get("button").contains("Saison updaten").click();
 
-    cy.get("button").contains("Flug hochladen").click();
-
     // Upload flight
+    cy.visit("/upload");
 
     // Wait till page was fully loaded
     cy.get('input[type="file"]#igcUploadForm').should("be.visible");

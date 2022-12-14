@@ -1,5 +1,5 @@
 /**
- * Unfornually the bootstrap modal takes some time to load all its functionality. Without the wait it could be possible that the modal will not dispose after clicking.
+ * Unfortunately the bootstrap modal takes some time to load all its functionality. Without the wait it could be possible that the modal will not dispose after clicking.
  * Use this command to a add a wait() before clicking.
  */
 Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
@@ -9,7 +9,7 @@ Cypress.Commands.add("clickButtonInModal", (modalSelector, buttonText) => {
   cy.get(modalSelector).find("button").contains(buttonText).click();
 });
 /**
- * Unfornually the bootstrap modal takes some time to load all its functionality.
+ * Unfortunately the bootstrap modal takes some time to load all its functionality.
  * Use this command to a add a wait() before typing.
  */
 Cypress.Commands.add("typeTextareaInModal", (modalSelector, text) => {
