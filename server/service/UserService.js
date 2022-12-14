@@ -119,19 +119,6 @@ const userService = {
       ],
     });
   },
-  getAllEmail: async (isNewsletter) => {
-    const query = {
-      attributes: ["email"],
-    };
-
-    if (isNewsletter) {
-      query.where = {
-        emailNewsletter: true,
-      };
-    }
-
-    return await User.findAll(query);
-  },
   getGlidersById: async (id) => {
     return await User.findByPk(id, {
       attributes: ["gliders", "defaultGlider"],
@@ -180,7 +167,7 @@ const userService = {
     return usersWithEnoughFlightsJSON;
   },
   /**
-   * Retrieves e-mail-addresses of active users. Does not return e-mail-adresses of developer accounts.
+   * Retrieves e-mail-addresses of active users. Does not return e-mail-addresses of developer accounts.
    * @param {boolean} includeAll If set to true all e-mail addresses will be retrieved. Otherwise only the e-mail-addresses of users which subscribed to the newsletter will be retrieved.
    * @returns An array of e-mail-addresses
    */

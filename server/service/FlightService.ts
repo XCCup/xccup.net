@@ -1,6 +1,5 @@
 import sequelize from "sequelize";
 import db from "../db";
-import mailService from "./MailService";
 import moment from "moment";
 import { startCalculation, OLCResult } from "../igc/IgcAnalyzer";
 import { findLanding } from "../igc/LocationFinder";
@@ -433,7 +432,7 @@ const flightService = {
         logger.info("FS: Flight is new personal best");
         flight.isNewPersonalBest = true;
         // TODO: Do not send if there is an airspace violation?
-        mailService.sendNewPersonalBestMail(flight);
+        MailService.sendNewPersonalBestMail(flight);
       }
     }
 
@@ -488,7 +487,7 @@ const flightService = {
         logger.info("FS: Flight is new personal best");
         flight.isNewPersonalBest = true;
         // TODO: Do not send if there is an airspace violation?
-        mailService.sendNewPersonalBestMail(flight);
+        MailService.sendNewPersonalBestMail(flight);
       }
     }
     await flight.save();
