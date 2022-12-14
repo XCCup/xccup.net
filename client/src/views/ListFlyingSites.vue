@@ -11,6 +11,10 @@
       Flachland-/Mittelgebirgscharakter aufweisen und im örtlichen Zusammenhang
       zum bereits bestehendem XCCup Gebiet stehen.
     </p>
+    <p>
+      Diese Vorschläge werden durch die Organisatoren des XCCup bewertet und
+      ggfs. freigeschaltet.
+    </p>
     <router-link
       :to="{
         name: 'SubmitFlyingSite',
