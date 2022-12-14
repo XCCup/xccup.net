@@ -82,7 +82,7 @@ describe("check landing page", () => {
       });
   });
 
-  it.only("test daily ranking", () => {
+  it("test daily ranking", () => {
     cy.get("#cy-daily-ranking-panel").within(() => {
       //Consider evaluating the date within the h3 (depends on the time; till XX oclock it's the day before to today)
       cy.get("h3").should("include.text", "Tageswertung");
