@@ -34,11 +34,12 @@ import {
   FlightInstance,
   FlightInstanceUserInclude,
 } from "../db/models/Flight";
-import { Glider } from "../db/models/Flight";
+import { Glider } from "../types/Glider";
 import { FlightFixCombined, FlightFixStat } from "../types/FlightFixes";
 import { Fn } from "sequelize/types/utils";
 import { FlightCommentInstance } from "../db/models/FlightComment";
 import { FlightPhotoInstance } from "../db/models/FlightPhoto";
+import { FaiResponse } from "../igc/IgcValidator";
 
 interface WhereOptions {
   year?: number;
@@ -77,7 +78,7 @@ interface CreateFlight {
   igcPath: string;
   externalId: number;
   uploadEndpoint: string;
-  validationResult?: string;
+  validationResult?: FaiResponse;
 }
 
 interface CreateFlightObject extends Omit<CreateFlight, "validationResult"> {
@@ -363,9 +364,15 @@ const flightService = {
     return result;
   },
 
-  rejectViolation: async (flight: FlightAttributes, message: string) => {
-    MailService.sendAirspaceViolationRejectedMail(flight, message);
-    flightService.delete(flight.id, flight.igcPath);
+  rejectViolation: async (
+    userId: string,
+    message: string,
+    externalId: number,
+    flightId: string,
+    igcPath?: string
+  ) => {
+    MailService.sendAirspaceViolationRejectedMail(userId, message, externalId);
+    flightService.delete(flightId, igcPath);
   },
 
   /**

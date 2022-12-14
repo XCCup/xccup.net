@@ -54,10 +54,11 @@ import userService from "../service/UserService";
 import MailService from "../service/MailService";
 import { findAirbuddies } from "../igc/AirbuddyFinder";
 import { LEONARDO_ENDPOINT_MESSAGE } from "../constants/leonardo-endpoint-message";
-import { FlightInstance, Glider } from "../db/models/Flight";
+import { FlightInstance } from "../db/models/Flight";
 import { FlightFixCombined } from "../types/FlightFixes";
 import { FlyingSiteAttributes } from "../db/models/FlyingSite";
 import { UserAttributes } from "../db/models/User";
+import { Glider } from "../types/Glider";
 
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
@@ -98,6 +99,7 @@ router.get(
 
       const flights = await FlightService.getAll({
         ...req.query,
+        // @ts-ignore
         sort: [req.query.sortCol, req.query.sortOrder],
       });
 
@@ -321,7 +323,8 @@ router.post(
 
       if (!igcFile || !userId || !externalId) return; // TODO: What to do?
 
-      const userGliders = await userService.getGlidersById(userId);
+      const userGliders: { defaultGlider: string; gliders: Glider[] } =
+        await userService.getGlidersById(userId);
       if (!userGliders) return res.sendStatus(NOT_FOUND);
 
       const content = fs.readFileSync(igcFile.path, "utf8");
@@ -352,7 +355,6 @@ router.post(
       const { takeoffName, result, airspaceViolation } =
         await runChecksStartCalculationsStoreFixes(flightDbObject, userId, {
           skipModifiableCheck: true,
-          skipManipulatedCheck: req.body.skipManipulated === "true",
           skipMidflightCheck: req.body.skipMidflight === "true",
           skipMeta: req.body.skipMeta === "true",
         });
@@ -398,7 +400,7 @@ router.get(
 
       const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flight,
-        null,
+        flight.userId,
         // TODO: Should the recalculation realy always skip all checks?
         { skipAllChecks: true }
       );
@@ -514,7 +516,7 @@ router.post(
         igcPath,
         externalId,
         uploadEndpoint: UPLOAD_ENDPOINT.LEONARDO,
-        validationResult: false,
+        validationResult: "PASSED",
       });
 
       // Airspace check
@@ -586,7 +588,7 @@ router.put(
     try {
       if (requesterIsNotOwner(req, res, flight.userId)) return;
 
-      await checkIfFlightIsModifiable(flight, userId);
+      await checkIfFlightIsModifiable(flight.flightStatus, undefined, userId);
 
       await FlightService.finalizeFlightSubmission({
         flight,
@@ -644,10 +646,17 @@ router.put(
     if (validationHasErrors(req, res)) return;
 
     const flight = await FlightService.getByExternalId(+req.params.id);
-    if (!flight) return res.sendStatus(NOT_FOUND);
+    if (!flight || !flight.userId || !flight?.externalId)
+      return res.sendStatus(NOT_FOUND);
 
     try {
-      await FlightService.rejectViolation(flight, req.body.message);
+      await FlightService.rejectViolation(
+        flight.userId,
+        req.body.message,
+        flight.externalId,
+        flight.id,
+        flight.igcPath
+      );
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
@@ -679,18 +688,12 @@ async function runChecksStartCalculationsStoreFixes(
   {
     skipAllChecks = false,
     skipModifiableCheck = false,
-    skipManipulatedCheck = false,
     skipMidflightCheck = false,
     skipMeta = false,
   } = {}
 ) {
   const fixes = extractFixes(flightDbObject);
 
-  // TODO: This is getting too complicated. Maybe add an extra service for the rerun calculation instead of all the ifs?
-  if (!skipAllChecks && !skipManipulatedCheck)
-    checkIfFlightIsManipulated(fixes);
-
-  // TODO: There could be "manipulated" in the fixes…
   FlightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
   if (!skipAllChecks && !skipModifiableCheck)
     await checkIfFlightIsModifiable(
@@ -717,10 +720,7 @@ async function runChecksStartCalculationsStoreFixes(
       await getMetarData(flightDbObject, fixes);
     } catch (error) {
       logger.error(
-        "FS: METAR query error for flight " +
-          fixesDbObject.externalId +
-          ": " +
-          error
+        `FS: METAR query error for flight ${flightDbObject.externalId}: ${error}`
       );
     }
   }
@@ -811,8 +811,8 @@ async function persistIgcFile(
  */
 async function checkIfFlightIsModifiable(
   flightStatus: STATE,
-  takeoffTime: Date,
-  userId: string
+  takeoffTime?: Date,
+  userId?: string
 ) {
   const daysFlightEditable = config.get("daysFlightEditable");
   // Allow flight uploads which are older than X days when not in production (Needed for testing)
@@ -834,23 +834,6 @@ async function checkIfFlightIsModifiable(
 }
 
 /**
- * Checks if the igc parser marked a result as manipulated and throws an error if it was manipulated.
- *
- * @param {string | Array} resultOfIgcParser The result of the igc parser
- */
-function checkIfFlightIsManipulated(
-  resultOfIgcParser: FlightFixCombined[] | "manipulated"
-): FlightFixCombined[] {
-  let errorMessage = "Manipulated IGC-File";
-  if (
-    typeof resultOfIgcParser === "string" &&
-    resultOfIgcParser === "manipulated"
-  )
-    throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
-  else return resultOfIgcParser;
-}
-
-/**
  * Checks if an igc file starts mid flight.
  * If the first fix of an igc file is 250m above takeoff elevation it is
  * considered to be a mid flight start.
@@ -864,7 +847,10 @@ function detectMidFlightIgcStart(
   fixes: FlightFixCombined[]
 ) {
   const MAX_START_ALT_OVER_TAKEOFF = 250;
-  if (fixes[0]?.gpsAltitude > takeoff.elevation + MAX_START_ALT_OVER_TAKEOFF) {
+  if (
+    fixes[0]?.gpsAltitude &&
+    fixes[0]?.gpsAltitude > takeoff.elevation + MAX_START_ALT_OVER_TAKEOFF
+  ) {
     const errorMessage = `Flight starts in the middle of a flight: First fix ${fixes[0]?.gpsAltitude}m, takeoff elevation ${takeoff.elevation}m`;
     const clientMessage = `Flight starts in the middle of a flight`;
 

@@ -333,19 +333,20 @@ const service = {
   },
 
   sendAirspaceViolationRejectedMail: async (
-    flight: FlightOutputAttributes,
-    message: string
+    userId: string,
+    message: string,
+    externalId: number
   ) => {
-    const user = await db.User.findByPk(flight.userId);
+    const user = await db.User.findByPk(userId);
     if (!user) {
       logger.error(
-        `MS: Send violation rejected mail failed because user with ID ${flight.userId} wasn't found`
+        `MS: Send violation rejected mail failed because user with ID ${userId} wasn't found`
       );
       return;
     }
 
     logger.info(
-      `MS: Send airspace violation rejected mail for flight ${flight.externalId}`
+      `MS: Send airspace violation rejected mail for flight ${externalId}`
     );
 
     const content = {
