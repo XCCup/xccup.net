@@ -485,7 +485,7 @@ router.post(
     if (validationHasErrors(req, res)) return;
 
     const igcContent: string = req.body.IGCigcIGC;
-    const igcFilename: string = req.body.IGCigcIGC;
+    const igcFilename: string = req.body.igcfn;
 
     try {
       const user: UserAttributes = await validate(req.body.user, req.body.pass);
