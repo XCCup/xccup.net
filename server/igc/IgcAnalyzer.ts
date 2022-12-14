@@ -1,5 +1,5 @@
 import { TYPE } from "../constants/flight-constants";
-import { FlightInstance } from "../db/models/Flight";
+import { FlightInstance, FlightTurnpoint } from "../db/models/Flight";
 import { BRecord, IGCFile } from "../helper/igc-parser";
 import fs from "fs";
 import path from "path";
@@ -23,7 +23,7 @@ import { exec } from "child_process";
 let flightTypeFactors: FlightTypeFactors;
 let callback: Function;
 
-const IgcAnalyzer = {
+export const IgcAnalyzer = {
   /**
    * This function determines
    * * flightType
@@ -51,7 +51,7 @@ const IgcAnalyzer = {
    * @param {Function} callbackFunction The function which will be called when the analyze finishes. This function will receive an result object of type Flight.
    */
   startCalculation: async (
-    flightDataObject: OLCResult,
+    flightDataObject: FlightInstance,
     flightTypeFactorParameter: FlightTypeFactors,
     callbackFunction: Function
   ) => {
@@ -223,7 +223,7 @@ function determineOlcBinary() {
  */
 function runOlc(
   filePath: string,
-  flightDataObject: OLCResult,
+  flightDataObject: FlightInstance | OLCResult,
   isTurnpointIteration: boolean
 ) {
   logger.info("IA: Start OLC analysis " + filePath);
@@ -251,17 +251,17 @@ function runOlc(
   );
 }
 
-interface OLCResult {
+export interface OLCResult {
   id: string;
   externalId: number;
-  turnpoints?: TurnPointFix[];
+  turnpoints?: FlightTurnpoint[];
   igcPath: string;
-  type?: string;
-  dist?: string;
+  type: TYPE;
+  dist: string;
 }
 function parseOlcData(
   data: string,
-  flightDataObject: OLCResult,
+  flightDataObject: FlightInstance | OLCResult,
   isTurnpointsIteration: boolean
 ) {
   const dataLines = data.split("\n");
@@ -300,26 +300,32 @@ function parseOlcData(
 
   if (!flightDataObject.externalId || !flightDataObject.igcPath)
     return logger.error("External ID or igc path missing");
+
+  let type: TYPE;
+  let dist: string;
+  let cornerStartIndex: number;
+  if (faiFactor > flatFactor && faiFactor > freeFactor && faiStartIndex) {
+    type = TYPE.FAI;
+    dist = faiDistance;
+    cornerStartIndex = faiStartIndex + 4;
+  } else if (flatFactor > freeFactor && flatStartIndex) {
+    type = TYPE.FLAT;
+    dist = flatDistance;
+    cornerStartIndex = flatStartIndex + 4;
+  } else {
+    type = TYPE.FREE;
+    dist = freeDistance;
+    cornerStartIndex = freeStartIndex + 4;
+  }
   const result: OLCResult = {
     id: flightDataObject.id,
     externalId: flightDataObject.externalId,
     turnpoints: [],
     igcPath: flightDataObject.igcPath,
+    dist,
+    type,
   };
-  let cornerStartIndex: number;
-  if (faiFactor > flatFactor && faiFactor > freeFactor && faiStartIndex) {
-    result.type = TYPE.FAI;
-    result.dist = faiDistance;
-    cornerStartIndex = faiStartIndex + 4;
-  } else if (flatFactor > freeFactor && flatStartIndex) {
-    result.type = TYPE.FLAT;
-    result.dist = flatDistance;
-    cornerStartIndex = flatStartIndex + 4;
-  } else {
-    result.type = TYPE.FREE;
-    result.dist = freeDistance;
-    cornerStartIndex = freeStartIndex + 4;
-  }
+
   result.turnpoints = [];
   result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex]));
   result.turnpoints.push(extractTurnpointData(dataLines[cornerStartIndex + 1]));
@@ -341,19 +347,13 @@ function parseOlcData(
   }
 }
 
-interface TurnPointFix {
-  time?: string;
-  lat?: number;
-  long?: number;
-}
-
 /**
  * Creates an turnpoint object from a response line of the OLC binary.
  *
  * @param {string} turnpoint A line with turnpoint information
  */
 function extractTurnpointData(turnpoint: string) {
-  let result: TurnPointFix = {};
+  let result: FlightTurnpoint = {};
   const IGC_FIX_REGEX =
     /.*(\d{2}:\d{2}:\d{2}) [NS](\d*:\d*.\d*) [WE]\s?(\d*:\d*.\d*).*/;
   const matchingResult = turnpoint.match(IGC_FIX_REGEX);
@@ -469,7 +469,7 @@ function removeNonFlightIgcLines(
  */
 function stripAroundTurnpoints(
   igcAsPlainText: string,
-  turnpoints: TurnPointFix[],
+  turnpoints: FlightTurnpoint[],
   launchIndex: number,
   landingIndex: number
 ) {
@@ -588,5 +588,5 @@ function getDuration(igcAsJson: IGCFile) {
   );
   return durationInMinutes;
 }
-
+export const startCalculation = IgcAnalyzer.startCalculation;
 module.exports = IgcAnalyzer;

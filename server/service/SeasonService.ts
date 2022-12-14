@@ -72,5 +72,5 @@ const service = {
     });
   },
 };
-
+export const getCurrentActive = service.getCurrentActive;
 module.exports = service;

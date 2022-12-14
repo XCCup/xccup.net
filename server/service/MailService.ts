@@ -33,6 +33,8 @@ import {
   AIRSPACE_VIOLATION_REJECTED_TITLE,
   GOOGLE_ELEVATION_ERROR_TITLE,
   GOOGLE_ELEVATION_ERROR_TEXT,
+  NEW_PERSONAL_BEST_TITLE,
+  NEW_PERSONAL_BEST_TEXT,
 } from "../constants/email-message-constants";
 
 import db from "../db";
@@ -246,10 +248,9 @@ const service = {
 
     return sendMail(adminMail, content);
   },
-  sendGoogleElevationErrorAdminMail: async (
-    flightId: number,
-    error: string
-  ) => {
+  sendGoogleElevationErrorAdminMail: async (flightId?: number, error?: any) => {
+    if (!flightId) throw new Error("MS: No flight ID specified");
+
     logger.info(
       `MS: Send Google Elevation Error mail to admins for flight ${flightId}`
     );
@@ -305,6 +306,28 @@ const service = {
     const content = {
       title: AIRSPACE_VIOLATION_ACCEPTED_TITLE,
       text: AIRSPACE_VIOLATION_ACCEPTED_TEXT(user.firstName, flightLinkUrl),
+    };
+
+    return sendMail(user.email, content);
+  },
+  sendNewPersonalBestMail: async (flight: FlightOutputAttributes) => {
+    const user = await db.User.findByPk(flight.userId);
+    if (!user) {
+      logger.error(
+        `MS: Send new personal best mail failed because user with ID ${flight.userId} wasn't found`
+      );
+      return;
+    }
+
+    logger.info(
+      `MS: Send new personal best mail for flight ${flight.externalId}`
+    );
+
+    const flightLinkUrl = `${clientUrl}${flightLink}/${flight.externalId}`;
+
+    const content = {
+      title: NEW_PERSONAL_BEST_TITLE,
+      text: NEW_PERSONAL_BEST_TEXT(user.firstName, flightLinkUrl),
     };
 
     return sendMail(user.email, content);

@@ -36,3 +36,4 @@ export const REGIONS = [
 
 export const IGC_STORE = "/igc";
 export const IGC_MAX_SIZE = 3000000; // 3MB
+export const MINIMUM_PB_FLIGHT_DISTANCE = 10;

@@ -1,17 +1,18 @@
 import type { BRecord } from "../helper/igc-parser";
 import logger from "../config/logger";
+import { FlightFixCombined } from "../types/FlightFixes";
 
 /**
  * The time frame in which speed and climb will be calculated
  */
 const TIME_FRAME = 45;
 
-function execute(fixes: BRecord[]) {
+export function calculateFlightStats(fixes: FlightFixCombined[]) {
   logger.debug("FSC: Start flight stats calculation");
 
   if (!fixes[0] || !fixes[1]) {
     logger.warn("FSC: Fixes are undefined");
-    return {};
+    return;
   }
 
   const resolution = (fixes[1].timestamp - fixes[0].timestamp) / 1000;
@@ -98,13 +99,19 @@ function execute(fixes: BRecord[]) {
   return result;
 }
 
-function pressureHeightDifference(current: BRecord, precessor: BRecord) {
+function pressureHeightDifference(
+  current: FlightFixCombined,
+  precessor: FlightFixCombined
+) {
   if (current.pressureAltitude && precessor.pressureAltitude) {
     return current.pressureAltitude - precessor.pressureAltitude;
   }
 }
 
-function gpsHeightDifference(current: BRecord, precessor: BRecord) {
+function gpsHeightDifference(
+  current: FlightFixCombined,
+  precessor: FlightFixCombined
+) {
   if (current.gpsAltitude && precessor.gpsAltitude) {
     return current.gpsAltitude - precessor.gpsAltitude;
   }
@@ -132,7 +139,7 @@ const DEGREE_DIST = 95_000;
  * @param {*} fix2
  * @returns The distance in meters between the two coordinates.
  */
-function calculateDistance(fix1: BRecord, fix2: BRecord) {
+function calculateDistance(fix1: FlightFixCombined, fix2: FlightFixCombined) {
   const y = fix2.longitude - fix1.longitude;
   const x = fix2.latitude - fix1.latitude;
 
@@ -145,8 +152,8 @@ function calculateDistance(fix1: BRecord, fix2: BRecord) {
  * already calculated by DetectLaunchAndLanding
  */
 function calculateSpeed(
-  current: BRecord,
-  precessor: BRecord,
+  current: FlightFixCombined,
+  precessor: FlightFixCombined,
   timeDeltaInSeconds: number
 ) {
   return (
@@ -155,5 +162,4 @@ function calculateSpeed(
     ) / 100
   );
 }
-
-exports.execute = execute;
+exports.execute = calculateFlightStats;

@@ -1,13 +1,22 @@
-const axios = require("axios");
-const axiosRetry = require("axios-retry");
-const { default: config } = require("../config/env-config");
-const logger = require("../config/logger");
+import axios from "axios";
+import axiosRetry from "axios-retry";
+import config from "../config/env-config";
+import logger from "../config/logger";
+import { FlightFixCombined } from "../types/FlightFixes";
+
+interface GoogleLocationResponse {
+  results: GoogleLocation[];
+  plus_code?: { compound_code?: string };
+}
+interface GoogleLocation {
+  address_components: [{ long_name?: string }];
+}
 
 const isApiDisabled = config.get("useGoogleApi") == false;
 
 axiosRetry(axios, { retries: 2 });
 
-const byLatLong = async (location) => {
+const byLatLong = async (location: string) => {
   if (isApiDisabled) {
     logger.warn("LF: Usage of Google API is disabled");
     return "API Disabled";
@@ -19,10 +28,11 @@ const byLatLong = async (location) => {
     )}`;
     logger.debug("LF: Request location with ", url);
     const result = await axios.get(url, { timeout: 10000 });
+    const data = result.data;
     // ZipCode TownName, CountryName
     // const nameOfTown = result.data.results[0].formatted_address;
     // Only TownName
-    const nameOfTown = retrieveNameFromResponse(result);
+    const nameOfTown = retrieveNameFromResponse(data);
     return nameOfTown;
   } catch (error) {
     logger.error(error);
@@ -30,16 +40,16 @@ const byLatLong = async (location) => {
   }
 };
 
-const findLanding = async (landingFix) => {
+export const findLanding = async (landingFix: FlightFixCombined) => {
   logger.info("LF: Will retrieve landing name from Google API");
   return await byLatLong(createRequestString(landingFix));
 };
 
-function retrieveNameFromResponse(result) {
-  const longName = result.data.results[0]?.address_components[0]?.long_name;
+function retrieveNameFromResponse(data: GoogleLocationResponse) {
+  const longName = data.results[0].address_components[0]?.long_name;
   if (longName) return longName;
 
-  const nameFromCompoundCode = result.data.plus_code?.compound_code;
+  const nameFromCompoundCode = data.plus_code?.compound_code;
   const compoundRegex = /\w+\+\w+ (.*)/;
   const matchResult = nameFromCompoundCode?.match(compoundRegex);
   if (matchResult) {
@@ -50,7 +60,7 @@ function retrieveNameFromResponse(result) {
   return "Nicht verfügbar";
 }
 
-function createRequestString(fix) {
+function createRequestString(fix: FlightFixCombined) {
   return fix.latitude + "," + fix.longitude;
 }
 
