@@ -36,7 +36,6 @@ const dbTestData = {
     const seasonDetails = require("./testdatasets/seasonDetails.json");
     adjustYearOfEveryFlight(flights);
     adjustTimesOnFlightsToToday(flights, 5);
-    adjustTimesInSeasonDetails(seasonDetails);
 
     // Real data without personal data
     const relations = [
@@ -146,34 +145,6 @@ function adjustYearOfEveryFlight(flights) {
   const landingDate = new Date(flights[lastEntryIndex].landingTime);
   landingDate.setFullYear(today.getFullYear() - 1);
   flights[lastEntryIndex].landingTime = landingDate.toISOString();
-}
-
-function adjustTimesInSeasonDetails(seasonDetails) {
-  // Update last to season to the last two years from current perspective
-  const today = new Date();
-  today.setHours(0);
-  today.setMinutes(0);
-  today.setSeconds(0);
-  today.setMilliseconds(0);
-
-  const lastYear = seasonDetails[seasonDetails.length - 2];
-  const currentYear = seasonDetails[seasonDetails.length - 1];
-
-  lastYear.year = today.getFullYear() - 1;
-  const lastYearStartDateObject = new Date(lastYear.startDate);
-  const lastYearEndDateObject = new Date(lastYear.endDate);
-  lastYearStartDateObject.setFullYear(lastYear.year);
-  lastYearEndDateObject.setFullYear(lastYear.year);
-  lastYear.startDate = lastYearStartDateObject.toISOString();
-  lastYear.endDate = lastYearEndDateObject.toISOString();
-
-  currentYear.year = today.getFullYear() - 1;
-  const currentYearStartDateObject = new Date(currentYear.startDate);
-  const currentYearEndDateObject = new Date(currentYear.endDate);
-  currentYearStartDateObject.setFullYear(currentYear.year);
-  currentYearEndDateObject.setFullYear(currentYear.year);
-  currentYear.startDate = currentYearStartDateObject.toISOString();
-  currentYear.endDate = currentYearEndDateObject.toISOString();
 }
 
 module.exports = dbTestData;
