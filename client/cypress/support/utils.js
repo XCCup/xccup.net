@@ -8,6 +8,10 @@ export function isInSeason() {
   );
 }
 
+export function getCurrentYear() {
+  return new Date().getFullYear();
+}
+
 export function delay(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }

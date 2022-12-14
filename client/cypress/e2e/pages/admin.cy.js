@@ -1,10 +1,10 @@
-const currentYear = new Date().getFullYear();
+import { getCurrentYear } from "../../support/utils";
 
 describe("check admin page", () => {
   before(() => {
     cy.seedDb();
     // This pretends that we are currently within an active season on server side
-    cy.setBackendTime(`${currentYear}-06-01T06:00:00`);
+    cy.setBackendTime(`${getCurrentYear()}-06-01T06:00:00`);
   });
 
   after(() => {
@@ -25,7 +25,7 @@ describe("check admin page", () => {
 
     // Non admins should be redirected to the landing page
     cy.url().should("not.contain", "/admin");
-    cy.get("h1").should("have.text", `XCCup ${currentYear}`);
+    cy.get("h1").should("have.text", `XCCup ${getCurrentYear()}`);
   });
 
   it("test general page loading", () => {
@@ -267,7 +267,7 @@ describe("check admin page", () => {
   });
 
   it("check that after season a new season can be created", () => {
-    cy.clock(new Date(Date.parse(currentYear + "-12-01")).getTime());
+    cy.clock(new Date(Date.parse(getCurrentYear() + "-12-01")).getTime());
 
     cy.get("#nav-season-tab").click();
 
@@ -287,7 +287,7 @@ describe("check admin page", () => {
   });
 
   it("check that ongoing season is not modifiable", () => {
-    cy.clock(new Date(Date.parse(currentYear + "-06-01")).getTime());
+    cy.clock(new Date(Date.parse(getCurrentYear() + "-06-01")).getTime());
 
     cy.get("#nav-season-tab").click();
 
@@ -304,7 +304,7 @@ describe("check admin page", () => {
   });
 
   it("pause current season and upload flight", () => {
-    cy.clock(new Date(Date.parse(currentYear + "-06-01")).getTime());
+    cy.clock(new Date(Date.parse(getCurrentYear() + "-06-01")).getTime());
 
     const fileName = "68090_K3EThSc1.igc";
     const expectedTakeoff = "Niederzissen/Bausenberg";
