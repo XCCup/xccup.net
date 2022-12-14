@@ -105,6 +105,15 @@ ${flightLink}
 Dein XCCup Team
     
 `;
+module.exports.NEW_PERSONAL_BEST_TITLE = "Neue persönliche Bestleistung 🎉🥳🍾";
+
+module.exports.NEW_PERSONAL_BEST_TEXT = (firstName, flightLink) =>
+  `Hallo ${firstName},
+
+Herzlichen Glückwunsch zur neuen persönlichen Bestleistung!
+${flightLink}
+
+Dein XCCup Team`;
 
 module.exports.AIRSPACE_VIOLATION_REJECTED_TITLE =
   "Luftraumprüfung abgeschlossen (Abgelehnt)";

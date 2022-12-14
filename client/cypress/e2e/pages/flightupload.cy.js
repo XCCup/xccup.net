@@ -191,6 +191,115 @@ describe("check flight upload page", () => {
     });
   });
 
+  it("test upload new personal best and check METAR", () => {
+    const igcFileName = "104km.igc";
+
+    const expectedTakeoff = "Hoher Meissner Uengsterode";
+    const expectedUserName = "Ramona Gislason";
+    const expectedAwardText = "Neue Persönliche Bestleistung";
+    const expectedMailReceipient = "blackhole+ramona@xccup.net";
+    const expectedMailContent =
+      "Herzlichen Glückwunsch zur neuen persönlichen Bestleistung";
+
+    const expectedFirstMetar =
+      "METAR EDVK 221050Z 35006KT 320V030 9999 SCT041 17/08 Q1016";
+    const expectedLastMetar =
+      "METAR EDVK 221550Z VRB03KT 9999 FEW048 20/08 Q1014";
+
+    // Test another file to NOT be the personal best
+    const igcFileName2 = "fai_60km42_3h53m.igc";
+    const expectedTakeoff2 = "Zeltingen-Rachtig";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+
+    // Finish flight submission
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
+
+    cy.get("[data-cy=METAR-Stats]").contains("Wetter (Beta)");
+    cy.get("#metarButton").click();
+    cy.get("#metarDetailsCollapse > :nth-child(1)").contains(
+      expectedFirstMetar
+    );
+    cy.get("#metarDetailsCollapse > :nth-child(19)").contains(
+      expectedLastMetar
+    );
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
+
+    cy.get("[data-cy=personal-best-tag]")
+      .should("exist")
+      .contains(expectedAwardText);
+
+    cy.wrap(null).then(async () => {
+      // Check that admin received an email
+      cy.recipientReceivedEmailWithText(
+        expectedMailReceipient,
+        expectedMailContent
+      );
+    });
+
+    // Second flight that now should not be a personal best
+    cy.visit("/");
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName2).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff2);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+
+    // Finish flight submission
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
+
+    cy.get("[data-cy=personal-best-tag]").should("not.exist");
+  });
+
   it("test upload flight twice", () => {
     const igcFileName = "74931_2022-06-18_14.11_Kluesserath.igc";
     const expectedError =

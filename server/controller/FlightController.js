@@ -546,7 +546,7 @@ router.put(
       req.body;
 
     try {
-      if (await requesterIsNotOwner(req, res, flight.userId)) return;
+      if (requesterIsNotOwner(req, res, flight.userId)) return;
 
       await checkIfFlightIsModifiable(flight, req.user.id);
 
@@ -609,7 +609,7 @@ router.put(
     if (!flight) return res.sendStatus(NOT_FOUND);
 
     try {
-      await service.rejectViolation(flight, req.body);
+      await service.rejectViolation(flight, req.body.message);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 

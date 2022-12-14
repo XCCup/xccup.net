@@ -56,16 +56,12 @@ const service = {
     team.members = members;
     return team;
   },
-  getAllMemberOfTeam: async (name) => {
+
+  getAllMemberOfTeam: async (id) => {
     return await User.findAll({
-      attributes: ["name", "id"],
-      include: {
-        model: Team,
-        attributes: [],
-        as: "Team",
-        where: {
-          name,
-        },
+      attributes: ["firstName", "lastName", "fullName", "id"],
+      where: {
+        teamId: id,
       },
     });
   },

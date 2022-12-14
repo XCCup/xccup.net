@@ -19,11 +19,21 @@ export interface UserAttributes {
   emailInformIfComment?: boolean;
   emailNewsletter?: boolean;
   emailTeamSearch?: boolean;
-  address?: object; // TODO: Type this stricter
+  address?: Address;
   email: string;
   rankingNumber?: number;
   password?: string;
   token?: string;
+  teamId?: string;
+  clubId?: string;
+}
+
+interface Address {
+  country?: string;
+  state?: string;
+  street?: string;
+  zip?: string;
+  city?: string;
 }
 
 // Why are those german?

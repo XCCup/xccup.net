@@ -97,15 +97,13 @@ const config = convict({
   jwtLogin: {
     doc: "The login token for the jwt authentication mechanism",
     format: check128Hex,
-    default:
-      "bfd2419fb9a02e6b5ee15f4849df10c1b98426c77292f030f04d8a01f4c293a31ba9b6dcf9ad37ef6220a461db11d3e180b85afee58abe94be204b086ca6f01c",
+    default: "",
     env: "JWT_LOGIN_TOKEN",
   },
   jwtRefresh: {
     doc: "The login token for the jwt authentication mechanism",
     format: check128Hex,
-    default:
-      "1430de12edb529a469d5cc91d4f4b2d4495cfe72664df4e7fd1c8ce9f4dc21800e7b8ace49765a98cdad48ff7b4193736e3158c85a9c459a71822ea090a89980",
+    default: "",
     env: "JWT_REFRESH_TOKEN",
   },
 

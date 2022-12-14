@@ -72,7 +72,7 @@ const service = {
    *
    * Because some airspace boundaries are defined in relation to the surface (e.g. 2000 ft AGL) it's necessary that the data of the flight track also contains the related elevation data.
    *
-   * @param {Array} fixesWithElevation The fixes of a flight track attached with there corresponding elevation data.
+   * @param {object} fixesWithElevation The fixes of a flight track attached with there corresponding elevation data.
    * @returns A airspaceViolation object with lat,long, elevation data of the first fix with a airspace violation and also a line of the whole flighttrack.
    */
   hasAirspaceViolation: async (fixesWithElevation) => {

@@ -4,6 +4,7 @@ import db from "../db";
 import { logger } from "bs-logger";
 import config from "../config/env-config";
 
+// TODO: Generate from Flight tyope?
 interface TypeRecord {
   user: {
     firstName?: string;
@@ -12,7 +13,7 @@ interface TypeRecord {
   };
   flightId: string;
   externalId: number;
-  takeoffTime: number;
+  takeoffTime: Date;
   points: number;
   distance: number;
   glider: {

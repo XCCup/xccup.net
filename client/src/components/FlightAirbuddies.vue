@@ -28,6 +28,7 @@ const onShowAirbuddies = async () => {
   }
 };
 
+// TODO: Maybe clean DB from obsolete "n/a" strings
 function createAirbuddyPercentageString(
   airbuddyFlight: DeepReadonly<AirbuddyFlight>
 ) {
