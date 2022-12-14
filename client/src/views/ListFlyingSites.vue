@@ -7,12 +7,12 @@
     </p>
     <p>
       Startplätze können von allen im XCCup gemeldeten Personen vorgeschlagen
-      werden. Diese Startplätze müssen dabei einen
+      werden. Diese müssen dabei einen
       Flachland-/Mittelgebirgscharakter aufweisen und im örtlichen Zusammenhang
       zum bereits bestehendem XCCup Gebiet stehen.
     </p>
     <p>
-      Diese Vorschläge werden durch die Organisatoren des XCCup bewertet und
+      Die Vorschläge werden durch die Organisatoren des XCCup bewertet und
       ggfs. freigeschaltet.
     </p>
     <router-link
