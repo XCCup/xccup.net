@@ -150,7 +150,6 @@ function adjustYearOfEveryFlight(flights) {
 
 function adjustTimesInSeasonDetails(seasonDetails) {
   // Update last to season to the last two years from current perspective
-  // Ensure that today is the first valid day of a season
   const today = new Date();
   today.setHours(0);
   today.setMinutes(0);
@@ -168,11 +167,12 @@ function adjustTimesInSeasonDetails(seasonDetails) {
   lastYear.startDate = lastYearStartDateObject.toISOString();
   lastYear.endDate = lastYearEndDateObject.toISOString();
 
-  // One week between start and end
-  currentYear.year = today.getFullYear();
-  currentYear.startDate = today.toISOString();
-  const currentYearEndDateObject = new Date();
-  currentYearEndDateObject.setTime(today.getTime() + 1000 * 60 * 60 * 24 * 7);
+  currentYear.year = today.getFullYear() - 1;
+  const currentYearStartDateObject = new Date(currentYear.startDate);
+  const currentYearEndDateObject = new Date(currentYear.endDate);
+  currentYearStartDateObject.setFullYear(currentYear.year);
+  currentYearEndDateObject.setFullYear(currentYear.year);
+  currentYear.startDate = currentYearStartDateObject.toISOString();
   currentYear.endDate = currentYearEndDateObject.toISOString();
 }
 

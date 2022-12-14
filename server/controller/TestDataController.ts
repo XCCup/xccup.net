@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-
 import express from "express";
 import logger from "../config/logger";
 import { deleteCache } from "./CacheManager";
 import db from "../db";
 import { findLatestForToUser } from "../test/testEmailCache";
+import tk from "timekeeper";
+import { OK } from "../constants/http-status-constants";
 
 const router = express.Router();
 
@@ -76,6 +77,53 @@ router.get("/email/:toUserEmail", async (req, res, next) => {
     const lastEmail = findLatestForToUser(req.params.toUserEmail);
 
     res.json(lastEmail);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Sets the system time on the server
+// @route GET /testdata/time/:timestamp
+
+router.get("/time/:timestamp", async (req, res, next) => {
+  try {
+    const timestamp = req.params.timestamp;
+
+    logger.warn("TDC: Will set system time to " + timestamp);
+    tk.travel(new Date(timestamp));
+    logger.warn("TDC: New system time was set");
+
+    res.sendStatus(OK);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Resets the system time
+// @route GET /testdata/time/reset
+
+router.get("/time/reset", async (req, res, next) => {
+  try {
+    logger.warn("TDC: Will reset system time");
+    tk.reset();
+    logger.warn("TDC: System time was resetted");
+
+    res.sendStatus(OK);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// @desc Freezes the system time on the server
+// @route GET /testdata/time/freeze
+
+router.get("/time/reset", async (req, res, next) => {
+  try {
+    logger.warn("TDC: Will freeze system time");
+    tk.freeze(new Date());
+    logger.warn("TDC: System time is freezed in");
+
+    res.sendStatus(OK);
   } catch (error) {
     next(error);
   }
