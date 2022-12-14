@@ -3,8 +3,10 @@ import service from "./ResultService";
 import db from "../db";
 import { logger } from "bs-logger";
 import config from "../config/env-config";
+import { cache } from "../controller/CacheManager";
 
 // TODO: Generate from Flight tyope?
+
 interface TypeRecord {
   user: {
     firstName?: string;
@@ -37,7 +39,9 @@ interface SiteRecord {
   fai?: TypeRecord;
 }
 
-let siteRecordsCache: SiteRecord[];
+// let siteRecordsCache: SiteRecord[];
+
+const SITE_RECORD_CACHE_KEY = "site-record-cache";
 
 export async function checkSiteRecordsAndUpdate(
   flight: FlightOutputAttributes
@@ -111,10 +115,15 @@ async function createNewRecordIfNeeded(
 }
 
 export async function getSiteRecords() {
-  if (siteRecordsCache) return siteRecordsCache;
+  if (cache.get(SITE_RECORD_CACHE_KEY))
+    return cache.get(SITE_RECORD_CACHE_KEY) as SiteRecord[];
 
-  siteRecordsCache = <SiteRecord[]>await service.getSiteRecords();
-  return siteRecordsCache;
+  const siteRecords = <SiteRecord[]>await service.getSiteRecords();
+
+  // TTL=0 keeps site record in cave forever
+  cache.set(SITE_RECORD_CACHE_KEY, siteRecords, 0);
+
+  return siteRecords;
 }
 
 (() => {
