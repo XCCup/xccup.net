@@ -77,7 +77,7 @@ interface CreateFlight {
   igcPath: string;
   externalId: number;
   uploadEndpoint: string;
-  validationResult: string;
+  validationResult?: string;
 }
 
 interface CreateFlightObject extends Omit<CreateFlight, "validationResult"> {
@@ -365,7 +365,7 @@ const flightService = {
 
   rejectViolation: async (flight: FlightAttributes, message: string) => {
     MailService.sendAirspaceViolationRejectedMail(flight, message);
-    flightService.delete(flight);
+    flightService.delete(flight.id, flight.igcPath);
   },
 
   /**
@@ -441,7 +441,7 @@ const flightService = {
     return updatedColumns;
   },
 
-  delete: async (flightId: string, igcPath: string) => {
+  delete: async (flightId: string, igcPath?: string) => {
     deleteIgcFile(igcPath);
     return db.Flight.destroy({ where: { id: flightId } });
   },

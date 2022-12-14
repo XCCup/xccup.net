@@ -14,7 +14,7 @@ export function checkStringObject(field: string) {
 
 /**
  * Checks if the field is a string. HTML will be sanitized.
- * @param {*} field The field in the Reqpuest-Body to check.
+ * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
 export function checkStringObjectNoEscaping(field: string) {

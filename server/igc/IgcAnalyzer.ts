@@ -106,7 +106,7 @@ export const IgcAnalyzer = {
       const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
 
       // Detect manipulated igc files
-      if (igcIsManipulated(igcAsJson)) return "manipulated";
+      if (igcIsManipulated(igcAsJson)) return "manipulated" as const;
 
       // Remove non flight fixes
       const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);

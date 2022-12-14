@@ -1,9 +1,7 @@
-import fs from "fs";
 import axios from "axios";
 import axiosRetry from "axios-retry";
 import FormData from "form-data";
 import logger from "../config/logger";
-import config from "../config/env-config";
 
 axiosRetry(axios, { retries: 2 });
 
