@@ -5,7 +5,7 @@ import logger from "../config/logger";
 
 axiosRetry(axios, { retries: 2 });
 
-export type FaiResponse = "PASSED" | "FAILED";
+export type FaiResponse = "PASSED" | "FAILED" | "ERROR";
 
 /**
  * Checks with the FAI API if an IGC file has a valid G record.
@@ -39,7 +39,7 @@ export const validateIgc = async (content: string, filename: string) => {
 
     if (result != "PASSED") {
       logger.info(
-        "IV: IGC vaildation finished with not passed. Result is: " + result
+        "IV: IGC validation finished with not passed. Result is: " + result
       );
     }
 
