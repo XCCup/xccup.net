@@ -283,7 +283,7 @@ describe("check admin page", () => {
       .should("not.be.disabled");
 
     // date picker have old values therefore the save button should be disabled
-    cy.get("button").contains("Neue Saison anlegen").should("be.disabled");
+    cy.get('[data-cy="submitSeasonButton"]').should("be.disabled");
   });
 
   it("check that ongoing season is not modifiable", () => {

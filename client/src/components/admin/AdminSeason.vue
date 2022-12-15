@@ -87,17 +87,18 @@
           :is-disabled="isBetweenSeasons"
         />
         <p>Klassen und Faktoren werden von der aktuellen Wertung übernommen</p>
-
         <button
           type="submit"
           class="btn btn-outline-primary"
+          data-cy="submitSeasonButton"
           :disabled="disableSubmit"
           @click="onCreateEditSeason"
         >
-          <span v-if="isBetweenSeasons || seasonForNextYearAlreadyDefined"
-            >Saison updaten</span
-          >
-          <span v-else>Neue Saison anlegen</span>
+          {{
+            isBetweenSeasons || seasonForNextYearAlreadyDefined
+              ? "Saison updaten"
+              : "Neue Saison anlegen"
+          }}
           <BaseSpinner v-if="showSpinner" />
         </button>
       </div>
