@@ -6,7 +6,7 @@
       nur von registrierten Startplätzen eingereicht werden.
     </p>
     <p>
-      Startplätze können von allen im XCCup gemeldeten Personen vorgeschlagen
+      Startplätze können von allen beim XCCup registrierten Personen vorgeschlagen
       werden. Diese müssen dabei in einem örtlichen Zusammenhang zum bereits
       bestehendem XCCup Gebiet stehen.
     </p>
