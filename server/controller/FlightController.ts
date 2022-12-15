@@ -1,11 +1,16 @@
 import express, { NextFunction, Request, Response } from "express";
-import FlightService from "../service/FlightService";
-import { isAdmin, validate } from "../service/UserService";
-import { FaiResponse, validateIgc } from "../igc/IgcValidator";
-import { extractFixes } from "../igc/IgcAnalyzer";
 import path from "path";
 import moment from "moment";
 import fs from "fs";
+import multer from "multer";
+import FlightService from "../service/FlightService";
+import UserService from "../service/UserService";
+import MailService from "../service/MailService";
+import { FlightInstance } from "../db/models/Flight";
+import { FlyingSiteAttributes } from "../db/models/FlyingSite";
+import { UserAttributes } from "../db/models/User";
+import { FaiResponse, validateIgc } from "../igc/IgcValidator";
+import { extractFixes } from "../igc/IgcAnalyzer";
 import {
   NOT_FOUND,
   OK,
@@ -27,8 +32,11 @@ import {
   userHasElevatedRole,
 } from "./Auth";
 import { createLimiter } from "./api-protection";
-import { query } from "express-validator";
+import { getCache, setCache, deleteCache } from "./CacheManager";
 import { getMetarData } from "../helper/METAR";
+import { getCurrentYear } from "../helper/Utils";
+import { combineFixesProperties } from "../helper/FlightFixUtils";
+import { createFileName } from "../helper/igc-file-utils";
 import logger from "../config/logger";
 import {
   checkStringObjectNotEmpty,
@@ -43,21 +51,12 @@ import {
   checkIsBoolean,
   checkOptionalStringObjectNotEmpty,
 } from "./Validation";
-import { combineFixesProperties } from "../helper/FlightFixUtils";
-import { getCache, setCache, deleteCache } from "./CacheManager";
-import { createFileName } from "../helper/igc-file-utils";
+import { query } from "express-validator";
 import config from "../config/env-config";
 import { XccupRestrictionError, XccupHttpError } from "../helper/ErrorHandler";
-import multer from "multer";
-import { getCurrentYear } from "../helper/Utils";
-import userService from "../service/UserService";
-import MailService from "../service/MailService";
 import { findAirbuddies } from "../igc/AirbuddyFinder";
 import { LEONARDO_ENDPOINT_MESSAGE } from "../constants/leonardo-endpoint-message";
-import { FlightInstance } from "../db/models/Flight";
 import { FlightFixCombined } from "../types/FlightFixes";
-import { FlyingSiteAttributes } from "../db/models/FlyingSite";
-import { UserAttributes } from "../db/models/User";
 import { Glider } from "../types/Glider";
 
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
@@ -194,9 +193,9 @@ router.get(
 
       if (!flight?.igcPath) return res.sendStatus(NOT_FOUND);
 
-      const fullfilepath = path.join(path.resolve(), flight.igcPath);
+      const fullFilepath = path.join(path.resolve(), flight.igcPath);
 
-      return res.download(fullfilepath, (err) => {
+      return res.download(fullFilepath, (err) => {
         if (err) {
           if (!res.headersSent)
             res.status(NOT_FOUND).send("The file you requested was deleted");
@@ -264,7 +263,11 @@ router.post(
     const igcFile = req.file;
     const externalId = req.externalId;
 
-    if (!igcFile || !userId || !externalId) return; // TODO: What to do?
+    if (!igcFile || !userId || !externalId) {
+      return logger.error(
+        "FC: Unexpected behavior. IgcFile or ID's can't be undefined."
+      );
+    }
 
     try {
       // G-Check
@@ -321,10 +324,14 @@ router.post(
       const igcFile = req.file;
       const externalId = req.externalId;
 
-      if (!igcFile || !userId || !externalId) return; // TODO: What to do?
+      if (!igcFile || !userId || !externalId) {
+        return logger.error(
+          "FC: Unexpected behavior. IgcFile or ID's can't be undefined."
+        );
+      }
 
       const userGliders: { defaultGlider: string; gliders: Glider[] } =
-        await userService.getGlidersById(userId);
+        await UserService.getGlidersById(userId);
       if (!userGliders) return res.sendStatus(NOT_FOUND);
 
       const content = fs.readFileSync(igcFile.path, "utf8");
@@ -401,7 +408,7 @@ router.get(
       const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
         flight,
         flight.userId,
-        // TODO: Should the recalculation realy always skip all checks?
+        // TODO: Should the recalculation really always skip all checks?
         { skipAllChecks: true }
       );
 
@@ -488,7 +495,10 @@ router.post(
     const igcFilename: string = req.body.igcfn;
 
     try {
-      const user: UserAttributes = await validate(req.body.user, req.body.pass);
+      const user: UserAttributes = await UserService.validate(
+        req.body.user,
+        req.body.pass
+      );
       if (!user) return res.sendStatus(UNAUTHORIZED);
 
       // Check for users default glider
@@ -826,7 +836,7 @@ async function checkIfFlightIsModifiable(
 
   if (overwriteIfInProcessAndNotProduction) return;
   if (flightIsYoungerThanThreshold) return;
-  if (await isAdmin(userId)) return;
+  if (await UserService.isAdmin(userId)) return;
 
   throw new XccupRestrictionError(
     `It's not possible to change a flight later than ${daysFlightEditable} days after takeoff`
