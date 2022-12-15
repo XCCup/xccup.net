@@ -324,5 +324,4 @@ router.get("/siteRecords", async (req: Request, res: Response, next) => {
     next(error);
   }
 });
-
-module.exports = router;
+export default router;

@@ -86,7 +86,6 @@
           label="Wertungsklassen"
           :is-disabled="isBetweenSeasons"
         />
-        <p>Klassen und Faktoren werden von der aktuellen Wertung übernommen</p>
         <button
           type="submit"
           class="btn btn-outline-primary"

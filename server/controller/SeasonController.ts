@@ -148,5 +148,4 @@ router.put(
 //   const numberOfDestroyedRows = await service.delete(commentId);
 //   res.json(numberOfDestroyedRows);
 // });
-
-module.exports = router;
+export default router;
