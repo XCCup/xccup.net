@@ -39,42 +39,30 @@ interface SiteRecord {
   fai?: TypeRecord;
 }
 
-// let siteRecordsCache: SiteRecord[];
-
 const SITE_RECORD_CACHE_KEY = "site-record-cache";
 
 export async function checkSiteRecordsAndUpdate(
   flight: FlightOutputAttributes
 ) {
-  const found = (await getSiteRecords()).find(
-    (r) => r.takeoff.id == flight.siteId
-  );
+  const currentRecords = await getSiteRecords();
+
+  const found = currentRecords.find((r) => r.takeoff.id == flight.siteId);
   if (found) {
-    switch (flight.flightType) {
-      case "FREE":
-        const possibleNewRecorda = await createNewRecordIfNeeded(
-          found.free,
-          flight
-        );
-        if (possibleNewRecorda) found.free = possibleNewRecorda;
-        break;
-      case "FLAT":
-        const possibleNewRecordb = await createNewRecordIfNeeded(
-          found.flat,
-          flight
-        );
-        if (possibleNewRecordb) found.flat = possibleNewRecordb;
-        break;
-      case "FAI":
-        const possibleNewRecordc = await createNewRecordIfNeeded(
-          found.fai,
-          flight
-        );
-        if (possibleNewRecordc) found.fai = possibleNewRecordc;
-        break;
-      default:
-        break;
-    }
+    const typeRecordPropertyName = flight.flightType?.toLowerCase() as
+      | "free"
+      | "flat"
+      | "fai";
+
+    if (!typeRecordPropertyName) return;
+
+    const possibleNewRecord = await createNewRecordIfNeeded(
+      found[typeRecordPropertyName],
+      flight
+    );
+    if (possibleNewRecord) found[typeRecordPropertyName] = possibleNewRecord;
+
+    // Object in cache are immutable therefore we have to explicitly update the cache
+    cache.set(SITE_RECORD_CACHE_KEY, currentRecords, 0);
   }
 }
 
