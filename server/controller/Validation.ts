@@ -1,12 +1,14 @@
-const { check, param, query, validationResult } = require("express-validator");
-const { sanitizeHtml } = require("../helper/Utils");
+import { Request, Response } from "express";
+import { check, param, query, validationResult } from "express-validator";
+import { MinMaxOptions } from "express-validator/src/options";
+import { sanitizeHtml } from "../helper/Utils";
 
 /**
  * Checks if the field is a string. Addionally escapes all special charcters (e.g. ">","<").
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkStringObject(field) {
+export function checkStringObject(field: string) {
   return check(field).trim().escape();
 }
 
@@ -15,7 +17,7 @@ function checkStringObject(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkStringObjectNoEscaping(field) {
+export function checkStringObjectNoEscaping(field: string) {
   return check(field)
     .trim()
     .customSanitizer((value) => sanitizeHtml(value));
@@ -26,7 +28,7 @@ function checkStringObjectNoEscaping(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkStringObjectNotEmpty(field) {
+export function checkStringObjectNotEmpty(field: string) {
   return check(field)
     .not()
     .isEmpty()
@@ -41,7 +43,7 @@ function checkStringObjectNotEmpty(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkStringObjectNotEmptyNoEscaping(field) {
+export function checkStringObjectNotEmptyNoEscaping(field: string) {
   return check(field)
     .not()
     .isEmpty()
@@ -56,7 +58,7 @@ function checkStringObjectNotEmptyNoEscaping(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkFieldNotEmpty(field) {
+export function checkFieldNotEmpty(field: string) {
   return check(field).not().isEmpty().withMessage(`${field} is required`);
 }
 /**
@@ -64,7 +66,7 @@ function checkFieldNotEmpty(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkStrongPassword(field) {
+export function checkStrongPassword(field: string) {
   return check(field)
     .isStrongPassword()
     .withMessage(
@@ -76,7 +78,7 @@ function checkStrongPassword(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkOptionalStrongPassword(field) {
+export function checkOptionalStrongPassword(field: string) {
   return check(field)
     .optional()
     .isStrongPassword()
@@ -89,7 +91,7 @@ function checkOptionalStrongPassword(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsDateObject(field) {
+export function checkIsDateObject(field: string) {
   return check(field)
     .isDate()
     .withMessage(`${field} must be a valid date format`);
@@ -100,7 +102,7 @@ function checkIsDateObject(field) {
  * @param {*} length The length of the array to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsArray(field, length) {
+export function checkIsArray(field: string, length: MinMaxOptions) {
   return length
     ? check(field)
         .isArray()
@@ -113,7 +115,7 @@ function checkIsArray(field, length) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsUuidObject(field) {
+export function checkIsUuidObject(field: string) {
   return check(field)
     .isUUID()
     .withMessage(`${field} must be a valid uuid format`);
@@ -123,7 +125,7 @@ function checkIsUuidObject(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsInt(field) {
+export function checkIsInt(field: string) {
   return check(field).isInt().withMessage(`${field} must be a valid integer`);
 }
 /**
@@ -131,7 +133,7 @@ function checkIsInt(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsFloat(field) {
+export function checkIsFloat(field: string) {
   return check(field).isFloat().withMessage(`${field} must be a valid float`);
 }
 /**
@@ -139,7 +141,7 @@ function checkIsFloat(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsUuidObjectOrEmpty(field) {
+export function checkIsUuidObjectOrEmpty(field: string) {
   return check(field)
     .optional({ checkFalsy: true })
     .isUUID()
@@ -150,7 +152,7 @@ function checkIsUuidObjectOrEmpty(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkOptionalUuidObject(field) {
+export function checkOptionalUuidObject(field: string) {
   return check(field)
     .optional()
     .isUUID()
@@ -161,7 +163,7 @@ function checkOptionalUuidObject(field) {
  * @param {*} name The name of the Request-Parameter to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkParamIsUuid(name) {
+export function checkParamIsUuid(name: string) {
   return param(name)
     .isUUID()
     .withMessage(`${name} must be a valid uuid format`);
@@ -171,7 +173,7 @@ function checkParamIsUuid(name) {
  * @param {*} name The name of the Request-Parameter to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkParamIsBoolean(name) {
+export function checkParamIsBoolean(name: string) {
   return param(name).isBoolean().withMessage(`${name} must be a valid boolean`);
 }
 /**
@@ -179,7 +181,7 @@ function checkParamIsBoolean(name) {
  * @param {*} name The name of the Request-Parameter to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkParamIsInt(name) {
+export function checkParamIsInt(name: string) {
   return param(name).isInt().withMessage(`${name} must be a valid integer`);
 }
 /**
@@ -187,7 +189,7 @@ function checkParamIsInt(name) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsEmail(field) {
+export function checkIsEmail(field: string) {
   return check(field)
     .isEmail()
     .withMessage(`${field} must be a valid email format`);
@@ -198,7 +200,10 @@ function checkIsEmail(field) {
  * @param {*} arrayOfValidValues A array of valid values to check against.
  * @returns A ValidationChain object for the checked field.
  */
-function checkOptionalIsOnlyOfValue(field, arrayOfValidValues) {
+export function checkOptionalIsOnlyOfValue(
+  field: string,
+  arrayOfValidValues: any[]
+) {
   return check(field)
     .optional()
     .isIn(arrayOfValidValues)
@@ -210,7 +215,10 @@ function checkOptionalIsOnlyOfValue(field, arrayOfValidValues) {
  * @param {*} arrayOfValidValues A array of valid values to check against.
  * @returns A ValidationChain object for the checked field.
  */
-function checkParamIsOnlyOfValue(field, arrayOfValidValues) {
+export function checkParamIsOnlyOfValue(
+  field: string,
+  arrayOfValidValues: any[]
+) {
   return check(field)
     .optional()
     .isIn(arrayOfValidValues)
@@ -222,7 +230,7 @@ function checkParamIsOnlyOfValue(field, arrayOfValidValues) {
  * @param {*} arrayOfValidValues A array of valid values to check against.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsOnlyOfValue(field, arrayOfValidValues) {
+export function checkIsOnlyOfValue(field: string, arrayOfValidValues: any[]) {
   return check(field)
     .isIn(arrayOfValidValues)
     .withMessage(`Value in ${field} must fit one of ${arrayOfValidValues}`);
@@ -232,7 +240,7 @@ function checkIsOnlyOfValue(field, arrayOfValidValues) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkOptionalIsBoolean(field) {
+export function checkOptionalIsBoolean(field: string) {
   return check(field)
     .optional()
     .isBoolean()
@@ -243,7 +251,7 @@ function checkOptionalIsBoolean(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsBoolean(field) {
+export function checkIsBoolean(field: string) {
   return check(field).isBoolean().withMessage(`${field} must be a boolean`);
 }
 /**
@@ -251,7 +259,7 @@ function checkIsBoolean(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkIsISO8601(field) {
+export function checkIsISO8601(field: string) {
   return check(field)
     .isISO8601()
     .withMessage(`${field} must be a ISO8601 timestamp`);
@@ -261,7 +269,7 @@ function checkIsISO8601(field) {
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
-function checkOptionalStringObjectNotEmpty(field) {
+export function checkOptionalStringObjectNotEmpty(field: string) {
   return check(field)
     .optional()
     .not()
@@ -276,7 +284,10 @@ function checkOptionalStringObjectNotEmpty(field) {
  * @param {*} modelName The name of the Model to check against.
  * @returns A ValidationChain object for the checked parameter.
  */
-function queryOptionalColumnExistsInModel(field, modelName) {
+export function queryOptionalColumnExistsInModel(
+  field: string,
+  modelName: string
+) {
   return query(field)
     .optional()
     .custom((value) => {
@@ -291,7 +302,7 @@ function queryOptionalColumnExistsInModel(field, modelName) {
  * @param {*} res The Response object of the call to API.
  * @returns The response if any error was found, else undefined.
  */
-function validationHasErrors(req, res) {
+export function validationHasErrors(req: Request, res: Response) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });

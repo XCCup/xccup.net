@@ -622,7 +622,7 @@ Euer Server-Knecht`;
 
   it("Test upload by MaxPunkte manipulated valid igc file with leonardo interface", () => {
     const igcFileName = "MaxPunkte_manipulated.igc";
-    const expectApiRespone = "Manipulated IGC-File";
+    const expectApiRespone = "Error parsing IGC File Manipulated IGC-File";
     cy.fixture(igcFileName).then({ timeout: 10000 }, async (fileContent) => {
       const payload = {
         user: "blackhole+melinda@xccup.net",

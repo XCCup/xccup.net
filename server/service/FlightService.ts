@@ -34,11 +34,12 @@ import {
   FlightInstance,
   FlightInstanceUserInclude,
 } from "../db/models/Flight";
-import { Glider } from "../db/models/Flight";
+import { Glider } from "../types/Glider";
 import { FlightFixCombined, FlightFixStat } from "../types/FlightFixes";
 import { Fn } from "sequelize/types/utils";
 import { FlightCommentInstance } from "../db/models/FlightComment";
 import { FlightPhotoInstance } from "../db/models/FlightPhoto";
+import { FaiResponse } from "../igc/IgcValidator";
 
 interface WhereOptions {
   year?: number;
@@ -77,7 +78,7 @@ interface CreateFlight {
   igcPath: string;
   externalId: number;
   uploadEndpoint: string;
-  validationResult: string;
+  validationResult?: FaiResponse;
 }
 
 interface CreateFlightObject extends Omit<CreateFlight, "validationResult"> {
@@ -92,6 +93,7 @@ type FlightApiResponse = Omit<FlightAttributes, "fixes"> & {
   fixes: FlightFixCombined[];
   comments?: FlightCommentInstance[];
   photos?: FlightPhotoInstance[];
+  userId?: string;
 };
 
 const flightService = {
@@ -234,7 +236,7 @@ const flightService = {
     return flights;
   },
 
-  getById: async (id: string, noIncludes: boolean) => {
+  getById: async (id: string, noIncludes?: boolean) => {
     const includes = [
       createSiteInclude(),
       createFixesInclude(["geom", "timeAndHeights"]),
@@ -362,9 +364,15 @@ const flightService = {
     return result;
   },
 
-  rejectViolation: async (flight: FlightInstance, message: string) => {
-    MailService.sendAirspaceViolationRejectedMail(flight, message);
-    flightService.delete(flight);
+  rejectViolation: async (
+    userId: string,
+    message: string,
+    externalId: number,
+    flightId: string,
+    igcPath?: string
+  ) => {
+    MailService.sendAirspaceViolationRejectedMail(userId, message, externalId);
+    flightService.delete(flightId, igcPath);
   },
 
   /**
@@ -440,9 +448,9 @@ const flightService = {
     return updatedColumns;
   },
 
-  delete: async (flight: FlightInstance) => {
-    deleteIgcFile(flight.igcPath);
-    return db.Flight.destroy({ where: { id: flight.id } });
+  delete: async (flightId: string, igcPath?: string) => {
+    deleteIgcFile(igcPath);
+    return db.Flight.destroy({ where: { id: flightId } });
   },
 
   addResult: async (result: OLCResult) => {
