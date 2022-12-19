@@ -12,7 +12,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "up": "taze -I"
+    "up": "taze -I",
+    "docker-install": "docker-compose run --rm yarn install"
   },
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.3.16",

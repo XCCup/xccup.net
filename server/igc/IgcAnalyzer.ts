@@ -19,6 +19,9 @@ import { XccupHttpError } from "../helper/ErrorHandler";
 import { BAD_REQUEST } from "../constants/http-status-constants";
 import { FlightTypeFactors } from "../db/models/SeasonDetail";
 import { exec } from "child_process";
+import util from "util";
+
+const asyncExec = util.promisify(exec);
 
 export interface OLCResult {
   id: string;
@@ -100,7 +103,9 @@ export async function startCalculation(
     igcWithReducedFixes,
     stripFactor
   );
-  writeStream.end(() => runOlc(pathToFile, flightDataObject, false));
+  writeStream.end(
+    async () => await runOlc(pathToFile, flightDataObject, false)
+  );
 }
 
 export function extractFixes(flight: FlightInstance) {
@@ -183,7 +188,7 @@ function readIgcFile(path: string) {
  *
  * @param {*} resultStripIteration The results from the previous iteration.
  */
-function runTurnpointIteration(resultStripIteration: OLCResult) {
+async function runTurnpointIteration(resultStripIteration: OLCResult) {
   const igcAsPlainText = readIgcFile(resultStripIteration.igcPath);
 
   if (!igcAsPlainText) return;
@@ -203,7 +208,9 @@ function runTurnpointIteration(resultStripIteration: OLCResult) {
     resultStripIteration.externalId,
     igcWithReducedFixes
   );
-  writeStream.end(() => runOlc(pathToFile, resultStripIteration, true));
+  writeStream.end(
+    async () => await runOlc(pathToFile, resultStripIteration, true)
+  );
 }
 
 /**
@@ -231,7 +238,7 @@ function determineOlcBinary() {
  * @param {Object} flightDataObject
  * @param {boolean} isTurnpointIteration
  */
-function runOlc(
+async function runOlc(
   filePath: string,
   flightDataObject: FlightInstance | OLCResult,
   isTurnpointIteration: boolean
@@ -242,26 +249,27 @@ function runOlc(
   //TODO: Replace compiled app through usage of Node’s N-API
   const binary = determineOlcBinary();
 
-  exec(
-    path.resolve(__dirname, "..", "igc", binary) + filePath,
-    { cwd: path.resolve(__dirname, "..") },
-    function (err, data) {
-      if (err) logger.error(err);
-      try {
-        parseOlcData(data.toString(), flightDataObject, isTurnpointIteration);
-      } catch (error) {
-        logger.error(
-          "IA: An error occurred while parsing the olc data of " +
-            filePath +
-            ": " +
-            error
-        );
-      }
+  try {
+    const { stdout, stderr } = await asyncExec(
+      path.resolve(__dirname, "..", "igc", binary) + filePath,
+      { cwd: path.resolve(__dirname, "..") }
+    );
+    if (stderr) {
+      logger.error(stderr);
     }
-  );
+
+    parseOlcData(stdout.toString(), flightDataObject, isTurnpointIteration);
+  } catch (error) {
+    logger.error(
+      "IA: An error occurred while parsing the olc data of " +
+        filePath +
+        ": " +
+        error
+    );
+  }
 }
 
-function parseOlcData(
+async function parseOlcData(
   data: string,
   flightDataObject: FlightInstance | OLCResult,
   isTurnpointsIteration: boolean
@@ -340,12 +348,12 @@ function parseOlcData(
       "IA: IGC Result from turnpoint iteration: ",
       JSON.stringify(result)
     );
-    callback(result);
+    await callback(result);
   } else {
     logger.debug(
       "IA: IGC Result from strip iteration: " + JSON.stringify(result)
     );
-    runTurnpointIteration(result);
+    await runTurnpointIteration(result);
   }
 }
 

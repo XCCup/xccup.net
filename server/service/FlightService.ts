@@ -395,6 +395,8 @@ const flightService = {
     hikeAndFly,
   }: FinalizeFlightSubmission = {}) => {
     if (!flight) return;
+
+    await flightService.startResultCalculation(flight);
     // Set report when value is defined or empty
     if (report || report == "") flight.report = report;
 
@@ -566,9 +568,13 @@ const flightService = {
   startResultCalculation: async (flight: FlightInstance) => {
     const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
 
-    startCalculation(flight, flightTypeFactors, (result: OLCResult) => {
-      flightService.addResult(result);
-    }).catch((error) => logger.error(error));
+    await startCalculation(
+      flight,
+      flightTypeFactors,
+      async (result: OLCResult) => {
+        await flightService.addResult(result);
+      }
+    ).catch((error) => logger.error(error));
   },
 
   /**
@@ -605,33 +611,20 @@ const flightService = {
   },
 
   /**
-   * Searches for takeoff and landing and attaches them to the flight.
-   * It's necessary to call the save method of the flight object to persist the data.
-   * The save method will not be called in this method to prevent multiple updates to the same flight in the database.
-   *
-   * @param {Object} flight The db object of the flight
-   * @param {Array} fixes An array of fixes of the related flight
-   * @returns The name of the takeoff site
+   * Searches for takeoff and landing of a flight
    */
-  attachTakeoffAndLanding: async (
-    flight: FlightInstance,
-    fixes: FlightFixCombined[]
-  ) => {
+  findTakeoffAndLanding: async (fixes: FlightFixCombined[]) => {
     const requests = [findClosestTakeoff(fixes[0])];
     if (config.get("useGoogleApi")) {
       // @ts-ignore TODO: How to type this?
       requests.push(findLanding(fixes[fixes.length - 1]));
     }
-    const [takeoff, landing] = await Promise.all(requests);
+    const [takeoff, landingRes] = await Promise.all(requests);
+    const landing = (landingRes as unknown as string) ?? "API Disabled";
 
     if (!takeoff) throw new Error("Error while trying to find takeoff");
 
-    flight.siteId = takeoff.id;
-    flight.region = takeoff.locationData?.region;
-
-    flight.landing = (landing as unknown as string) ?? "API Disabled";
-
-    return takeoff;
+    return { takeoff, landing };
   },
 
   /**

@@ -711,13 +711,21 @@ async function runChecksStartCalculationsStoreFixes(
       flightDbObject.takeoffTime,
       userId
     );
-  const takeoff = await FlightService.attachTakeoffAndLanding(
-    flightDbObject,
-    fixes
-  );
+
+  // Find takeoff and landing
+  const takeoffAndLanding = await FlightService.findTakeoffAndLanding(fixes);
+
+  flightDbObject.siteId = takeoffAndLanding.takeoff.id;
+  flightDbObject.region = takeoffAndLanding.takeoff.locationData?.region;
+  flightDbObject.landing = takeoffAndLanding.landing;
+
+  // Detect mid flight start
   if (!skipAllChecks && !skipMidflightCheck)
-    detectMidFlightIgcStart(takeoff, fixes);
+    detectMidFlightIgcStart(takeoffAndLanding.takeoff, fixes);
+
+  // Check if flight was uploaded before
   await FlightService.checkIfFlightWasNotUploadedBefore(flightDbObject);
+
   const fixesDbObject = await FlightService.storeFixesAndAddStats(
     flightDbObject,
     fixes
@@ -742,12 +750,10 @@ async function runChecksStartCalculationsStoreFixes(
    * and an array of violations. Maybe check if the variable name still fits.
    * And type or JSDoc it.
    */
-  const [airspaceViolations] = await Promise.all([
-    FlightService.attachElevationDataAndCheckForAirspaceViolations(
+  const airspaceViolations =
+    await FlightService.attachElevationDataAndCheckForAirspaceViolations(
       flightDbObject
-    ),
-    FlightService.startResultCalculation(flightDbObject),
-  ]);
+    );
 
   if (airspaceViolations)
     MailService.sendAirspaceViolationAdminMail(
@@ -757,7 +763,7 @@ async function runChecksStartCalculationsStoreFixes(
     );
 
   return {
-    takeoffName: takeoff.name,
+    takeoffName: takeoffAndLanding.takeoff.name,
     result,
     airspaceViolation: airspaceViolations,
   };
