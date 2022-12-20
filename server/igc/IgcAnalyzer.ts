@@ -5,11 +5,7 @@ import { TYPE } from "../constants/flight-constants";
 import { FlightTurnpoint } from "../db/models/Flight";
 // @ts-ignore
 import parseDMS from "parse-dms";
-
-// Types
 import { FlightTypeFactors } from "../db/models/SeasonDetail";
-
-// Miscsc
 import { BRecord, IGCFile } from "../helper/igc-parser";
 import fs from "fs";
 import IGCParser from "../helper/igc-parser";
@@ -24,7 +20,6 @@ import {
   IGC_FIXES_RESOLUTION,
   RESOLUTION_FACTOR,
 } from "../config/igc-analyzer-config";
-// import { createFileName } from "./helper/igc-file-utils";
 import { findLaunchAndLandingIndexes } from "../igc/FindLaunchAndLanding";
 import { XccupHttpError } from "../helper/ErrorHandler";
 import { BAD_REQUEST } from "../constants/http-status-constants";
@@ -34,8 +29,6 @@ export interface OLCResult {
   dist: string;
   type: TYPE;
 }
-
-// Functions
 
 async function runOlc(filePath: string, flightTypeFactors: FlightTypeFactors) {
   logger.info("IA: Start OLC analysis " + filePath);

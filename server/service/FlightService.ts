@@ -64,7 +64,7 @@ interface WhereOptions {
   isAdminRequest?: boolean;
 }
 
-interface FinalizeFlightSubmission {
+interface UpdateFlightDetails {
   flight?: FlightInstance;
   report?: string;
   airspaceComment?: string;
@@ -386,14 +386,14 @@ const flightService = {
     return (await db.Flight.update(props, { where: { id } }))[0];
   },
 
-  finalizeFlightSubmission: async ({
+  updateFlightDetails: async ({
     flight,
     report,
     airspaceComment,
     onlyLogbook,
     glider,
     hikeAndFly,
-  }: FinalizeFlightSubmission = {}) => {
+  }: UpdateFlightDetails = {}) => {
     // TODO: And then?
     if (!flight || !flight.igcPath || !flight.externalId) return;
 
@@ -473,53 +473,20 @@ const flightService = {
   },
 
   addResult: async (flight: FlightInstance, result: OLCResult) => {
-    // logger.info("FS: Will add igc result to flight " + flightId);
-
-    // if (!flight) {
-    //   // This can occur if a user uploads the same igc file again before the calculation has finished.
-    //   logger.warn(
-    //     `FS: Could not add result to flight ${flightId} because the flight wasn't found`
-    //   );
-    //   return;
-    // }
-    // const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
+    logger.info("FS: Will add igc result to flight " + flight.id);
 
     flight.flightDistance = +result.dist;
     flight.flightType = result.type;
     flight.flightTurnpoints = result.turnpoints;
     calculateTaskSpeed(result, flight);
 
-    // if (flight.glider) {
-    //   // If true, the calculation took so long that the glider was already submitted by the user.
-    //   // Therefore calculation of points and status can and will be started here.
-    //   const flightPoints = await calcFlightPoints(flight, flight.glider);
-    //   flight.flightPoints = flightPoints;
-
-    //   if (flight.flightStatus != STATE.IN_REVIEW && flight.takeoffTime) {
-    //     const flightStatus = await calcFlightStatus(
-    //       flight.takeoffTime,
-    //       flight.flightPoints
-    //     );
-    //     flight.flightStatus = flightStatus;
-    //   }
-    // }
-    // Check if flight is a new personal best (not on edit)
-    // if (isNewFlightUpload && !flight.isNewPersonalBest && flight.glider) {
-    //   logger.info("FS: Will check if flight is new personal best");
-    //   const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
-
-    //   if (isNewPersonalBest) {
-    //     logger.info("FS: Flight is new personal best");
-    //     flight.isNewPersonalBest = true;
-    //     // TODO: Do not send if there is an airspace violation?
-    //     MailService.sendNewPersonalBestMail(flight);
-    //   }
-    // }
+    // TODO: Save here or not?
     await flight.save();
 
-    // TODO: Why does this run twice? Here and in finalizeFlightSubmission
+    // TODO: Can we now remove one of the siterecord checks? Which one?
     checkSiteRecordsAndUpdate(flight);
     deleteCache(["home", "flights", "results"]);
+    // Return this or the result of the save method?
     return flight;
   },
 
@@ -581,23 +548,6 @@ const flightService = {
     // @ts-ignore
     return db.Flight.create(flight);
   },
-
-  // startResultCalculation: async (flight: FlightInstance) => {
-  //   const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
-  //   try {
-  //     if (!flight.igcPath || !flight.externalId)
-  //       throw new Error("igc path or external id not defined");
-
-  //     const result = await getFlightResult(
-  //       flight.igcPath,
-  //       flight.externalId,
-  //       flightTypeFactors
-  //     );
-  //     await flightService.addResult(flight.id, result);
-  //   } catch (error) {
-  //     logger.error(error);
-  //   }
-  // },
 
   /**
    * Attaches fix related data like takeoffTime, airtime to the flight object from the db.

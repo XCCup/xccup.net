@@ -289,7 +289,7 @@ router.post(
 
       // Airspace check / takeoff name / result calculation
       const { takeoffName, result, airspaceViolation } =
-        await runChecksStartCalculationsStoreFixes(flightDbObject, userId);
+        await runChecksStoreFixes(flightDbObject, userId);
 
       res.json({
         flightId: flightDbObject.id,
@@ -360,7 +360,7 @@ router.post(
       });
 
       const { takeoffName, result, airspaceViolation } =
-        await runChecksStartCalculationsStoreFixes(flightDbObject, userId, {
+        await runChecksStoreFixes(flightDbObject, userId, {
           skipModifiableCheck: true,
           skipMidflightCheck: req.body.skipMidflight === "true",
           skipMeta: req.body.skipMeta === "true",
@@ -374,7 +374,7 @@ router.post(
           .status(BAD_REQUEST)
           .send("No default glider configured in profile");
 
-      FlightService.finalizeFlightSubmission({
+      FlightService.updateFlightDetails({
         flight: flightDbObject,
         glider,
       });
@@ -405,7 +405,7 @@ router.get(
       const flight = await FlightService.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
 
-      const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
+      const { airspaceViolation } = await runChecksStoreFixes(
         flight,
         flight.userId,
         // TODO: Should the recalculation really always skip all checks?
@@ -530,13 +530,13 @@ router.post(
       });
 
       // Airspace check
-      const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
+      const { airspaceViolation } = await runChecksStoreFixes(
         flightDbObject,
         userId
       );
 
       // DB
-      await FlightService.finalizeFlightSubmission({
+      await FlightService.updateFlightDetails({
         report: req.body.report,
         flight: flightDbObject,
         glider,
@@ -600,7 +600,7 @@ router.put(
 
       await checkIfFlightIsModifiable(flight.flightStatus, undefined, userId);
 
-      await FlightService.finalizeFlightSubmission({
+      await FlightService.updateFlightDetails({
         flight,
         report,
         airspaceComment,
@@ -690,9 +690,9 @@ router.put(
  * - fixes stats
  * - fixes elevation data
  *
- * stores the flight fixes to the DB and starts the OLC algorithm
+ * stores the flight fixes to the DB
  */
-async function runChecksStartCalculationsStoreFixes(
+async function runChecksStoreFixes(
   flightDbObject: FlightInstance,
   userId: string,
   {
@@ -893,4 +893,3 @@ function isGRecordResultInvalid(res: Response, validationResult?: FaiResponse) {
   return false;
 }
 export default router;
-module.exports = router;

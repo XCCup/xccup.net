@@ -186,7 +186,7 @@ const onSubmit = async () => {
   showSpinner.value = true;
   try {
     // Update flight details
-    const res = await ApiService.editFlightDetails(
+    const res = await ApiService.updateFlightDetails(
       flight.value.id,
       modifiedFlightData.value
     );

@@ -83,7 +83,7 @@ export default {
   uploadIgc(data: FormData) {
     return apiClient.post("flights/", data);
   },
-  editFlightDetails(flightId: string, data: ModifiedFlightData) {
+  updateFlightDetails(flightId: string, data: ModifiedFlightData) {
     return apiClient.put("flights/" + flightId, data);
   },
 
