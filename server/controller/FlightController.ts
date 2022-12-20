@@ -702,7 +702,7 @@ async function runChecksStartCalculationsStoreFixes(
     skipMeta = false,
   } = {}
 ) {
-  const fixes = extractFixes(flightDbObject);
+  const fixes = extractFixes(flightDbObject.igcPath);
 
   FlightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
   if (!skipAllChecks && !skipModifiableCheck)

@@ -1,7 +1,7 @@
 import sequelize from "sequelize";
 import db from "../db";
 import moment from "moment";
-import { startCalculation, OLCResult } from "../igc/IgcAnalyzer";
+import { getFlightResult, OLCResult } from "../igc/IgcAnalyzer";
 import { findLanding } from "../igc/LocationFinder";
 import { calculateFlightStats } from "../igc/FlightStatsCalculator";
 import { getCurrentActive } from "./SeasonService";
@@ -394,9 +394,28 @@ const flightService = {
     glider,
     hikeAndFly,
   }: FinalizeFlightSubmission = {}) => {
-    if (!flight) return;
+    // TODO: And then?
+    if (!flight || !flight.igcPath || !flight.externalId) return;
 
-    await flightService.startResultCalculation(flight);
+    const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
+
+    // Get flight result and add it to the DB if this is no edit (new submission)
+    if (isNewFlightUpload) {
+      try {
+        const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
+
+        const result = await getFlightResult(
+          flight.igcPath,
+          flight.externalId,
+          flightTypeFactors
+        );
+        flight = await flightService.addResult(flight, result);
+      } catch (error) {
+        logger.error(error);
+        return;
+      }
+    }
+
     // Set report when value is defined or empty
     if (report || report == "") flight.report = report;
 
@@ -411,8 +430,6 @@ const flightService = {
       flight.hikeAndFly = site?.heightDifference;
     }
     if (!hikeAndFly) flight.hikeAndFly = 0;
-
-    const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
 
     if (glider) {
       await createGliderObject(flight, glider);
@@ -455,55 +472,55 @@ const flightService = {
     return db.Flight.destroy({ where: { id: flightId } });
   },
 
-  addResult: async (result: OLCResult) => {
-    logger.info("FS: Will add igc result to flight " + result.id);
-    const flight = await flightService.getById(result.id, true);
+  addResult: async (flight: FlightInstance, result: OLCResult) => {
+    // logger.info("FS: Will add igc result to flight " + flightId);
 
-    if (!flight) {
-      // This can occur if a user uploads the same igc file again before the calculation has finished.
-      logger.warn(
-        `FS: Could not add result to flight ${result.id} because the flight wasn't found`
-      );
-      return;
-    }
-    const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
+    // if (!flight) {
+    //   // This can occur if a user uploads the same igc file again before the calculation has finished.
+    //   logger.warn(
+    //     `FS: Could not add result to flight ${flightId} because the flight wasn't found`
+    //   );
+    //   return;
+    // }
+    // const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
 
     flight.flightDistance = +result.dist;
     flight.flightType = result.type;
     flight.flightTurnpoints = result.turnpoints;
     calculateTaskSpeed(result, flight);
 
-    if (flight.glider) {
-      // If true, the calculation took so long that the glider was already submitted by the user.
-      // Therefore calculation of points and status can and will be started here.
-      const flightPoints = await calcFlightPoints(flight, flight.glider);
-      flight.flightPoints = flightPoints;
+    // if (flight.glider) {
+    //   // If true, the calculation took so long that the glider was already submitted by the user.
+    //   // Therefore calculation of points and status can and will be started here.
+    //   const flightPoints = await calcFlightPoints(flight, flight.glider);
+    //   flight.flightPoints = flightPoints;
 
-      if (flight.flightStatus != STATE.IN_REVIEW && flight.takeoffTime) {
-        const flightStatus = await calcFlightStatus(
-          flight.takeoffTime,
-          flight.flightPoints
-        );
-        flight.flightStatus = flightStatus;
-      }
-    }
+    //   if (flight.flightStatus != STATE.IN_REVIEW && flight.takeoffTime) {
+    //     const flightStatus = await calcFlightStatus(
+    //       flight.takeoffTime,
+    //       flight.flightPoints
+    //     );
+    //     flight.flightStatus = flightStatus;
+    //   }
+    // }
     // Check if flight is a new personal best (not on edit)
-    if (isNewFlightUpload && !flight.isNewPersonalBest && flight.glider) {
-      logger.info("FS: Will check if flight is new personal best");
-      const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
+    // if (isNewFlightUpload && !flight.isNewPersonalBest && flight.glider) {
+    //   logger.info("FS: Will check if flight is new personal best");
+    //   const isNewPersonalBest = await checkIfFlightIsNewPersonalBest(flight);
 
-      if (isNewPersonalBest) {
-        logger.info("FS: Flight is new personal best");
-        flight.isNewPersonalBest = true;
-        // TODO: Do not send if there is an airspace violation?
-        MailService.sendNewPersonalBestMail(flight);
-      }
-    }
+    //   if (isNewPersonalBest) {
+    //     logger.info("FS: Flight is new personal best");
+    //     flight.isNewPersonalBest = true;
+    //     // TODO: Do not send if there is an airspace violation?
+    //     MailService.sendNewPersonalBestMail(flight);
+    //   }
+    // }
     await flight.save();
 
     // TODO: Why does this run twice? Here and in finalizeFlightSubmission
     checkSiteRecordsAndUpdate(flight);
     deleteCache(["home", "flights", "results"]);
+    return flight;
   },
 
   attachElevationDataAndCheckForAirspaceViolations: async (
@@ -565,17 +582,22 @@ const flightService = {
     return db.Flight.create(flight);
   },
 
-  startResultCalculation: async (flight: FlightInstance) => {
-    const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
+  // startResultCalculation: async (flight: FlightInstance) => {
+  //   const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
+  //   try {
+  //     if (!flight.igcPath || !flight.externalId)
+  //       throw new Error("igc path or external id not defined");
 
-    await startCalculation(
-      flight,
-      flightTypeFactors,
-      async (result: OLCResult) => {
-        await flightService.addResult(result);
-      }
-    ).catch((error) => logger.error(error));
-  },
+  //     const result = await getFlightResult(
+  //       flight.igcPath,
+  //       flight.externalId,
+  //       flightTypeFactors
+  //     );
+  //     await flightService.addResult(flight.id, result);
+  //   } catch (error) {
+  //     logger.error(error);
+  //   }
+  // },
 
   /**
    * Attaches fix related data like takeoffTime, airtime to the flight object from the db.
@@ -795,6 +817,8 @@ async function calcFlightPoints(flight: FlightInstance, glider: Glider) {
     const typeFactor = gliderClassDB.scoringMultiplicator[flight.flightType];
     const gliderFactor = gliderClassDB.scoringMultiplicator.BASE;
     const distance = flight.flightDistance;
+    console.log("***", distance, gliderFactor, typeFactor);
+
     flightPoints = Math.round(typeFactor * gliderFactor * distance);
   } else {
     logger.debug(
