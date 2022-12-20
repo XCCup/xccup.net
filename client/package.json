@@ -9,6 +9,7 @@
     "build-local": "vue-tsc --noEmit && vite build --mode staging",
     "serve": "vite preview --host",
     "preview": "vue-tsc --noEmit && vite build --mode staging && vite preview --host",
+    "preview-8000": "vue-tsc --noEmit && vite build --mode staging && vite preview --host --port 8000",
     "cypress-gui": "cypress open",
     "cypress-headless": "cypress run",
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix src",
