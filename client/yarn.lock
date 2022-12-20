@@ -372,7 +372,7 @@
     "@sentry/types" "7.28.0"
     "@sentry/utils" "7.28.0"
 
-"@sentry/tracing@^7.28.0":
+"@sentry/tracing@^7.27.0":
   version "7.28.0"
   resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.28.0.tgz#341fc98e86639336cd260e932b8130496b3fa4d6"
   integrity sha512-TH+f9AGqinX0B4EkP26ecF0ERm1KleTFHYEfpPEdbn92HFJua+Wvcm3uy6cwQ3njswi29sQHJv9bWQqp//mA+g==
@@ -395,7 +395,7 @@
     "@sentry/types" "7.28.0"
     tslib "^1.9.3"
 
-"@sentry/vue@^7.28.0":
+"@sentry/vue@^7.27.0":
   version "7.28.0"
   resolved "https://registry.yarnpkg.com/@sentry/vue/-/vue-7.28.0.tgz#b5ef9656773838a4d89742e78b4f2424a0f9c8f8"
   integrity sha512-/HV8NSQw2VtNnysTmB/6fZUyWpSb9qY/AEcHFGOHqWn9rvaQ5NWokCvcXjoSTkNCd6f3ALOcm9yTmZDM/2ixvw==
@@ -753,7 +753,7 @@
     "@vueuse/shared" "9.8.2"
     vue-demi "*"
 
-"@vueuse/integrations@^9.8.2":
+"@vueuse/integrations@^9.7.0":
   version "9.8.2"
   resolved "https://registry.yarnpkg.com/@vueuse/integrations/-/integrations-9.8.2.tgz#97b17a0cdfecc15189beeee887c872ed9b632e59"
   integrity sha512-8nIMfD5HezootbTt5Un6AkiK9CL657YxI1ZFtcQa5CggKhYjyoLiJn68HaQ80GeE4LJ++F51qksENKoTukIWQA==
@@ -3312,7 +3312,7 @@ safe-buffer@^5.0.1, safe-buffer@^5.1.2, safe-buffer@~5.2.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass@^1.57.1:
+sass@^1.57.0:
   version "1.57.1"
   resolved "https://registry.yarnpkg.com/sass/-/sass-1.57.1.tgz#dfafd46eb3ab94817145e8825208ecf7281119b5"
   integrity sha512-O2+LwLS79op7GI0xZ8fqzF7X2m/m8WFfI02dHOdsK5R2ECeS5F62zrwg/relM1rjSLy7Vd/DiMNIvPrQGsA0jw==
@@ -3534,7 +3534,7 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-sweetalert2@^11.6.16:
+sweetalert2@^11.6.15:
   version "11.6.16"
   resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.6.16.tgz#ed3062b4b06a5dc81bb4fe4f245ff8b9e432b2d8"
   integrity sha512-T2FO8LptErsjE4r0WMfiSk4YbeUvPadNaUZ/cADMEOnws000znrf8zFX9S5e/spvzJDyRI5En73WQyDZhGypxQ==
@@ -3551,7 +3551,7 @@ tar@^6.1.11, tar@^6.1.2:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
-taze@^0.8.5:
+taze@^0.8.4:
   version "0.8.5"
   resolved "https://registry.yarnpkg.com/taze/-/taze-0.8.5.tgz#accc12bacbe4547897e3159b4b28e32ea32b71e0"
   integrity sha512-4aB/BEfBah5iJJUDY3vW7xjJl7AzV6bsQx0PHC1DxIVlCE+JUFfpE7dDPZv/4Z+ft4Eg3I69NWnMnaAUL++rDQ==
@@ -3823,7 +3823,7 @@ vue-template-compiler@^2.7.14:
     de-indent "^1.0.2"
     he "^1.2.0"
 
-vue-tsc@^1.0.16:
+vue-tsc@^1.0.14:
   version "1.0.16"
   resolved "https://registry.yarnpkg.com/vue-tsc/-/vue-tsc-1.0.16.tgz#e42e169241cf28ec023e7339558ae5ef4f558113"
   integrity sha512-yZaiJBbcKR1rSLhiF9KryAFH7R63po+N/invr2EAHGXxMzZksE5j1zyQKvrYiqK47ZHLAlCR+re/PHqWp/UzTg==
