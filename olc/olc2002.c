@@ -21,7 +21,7 @@
 #define RELEASE "$Revision: 1.3 $ $Date: 2008/06/04 14:12:40 $"
 
 /*
- *	Liste der eingelesenen L�ngen- und Breitengarde
+ *	Liste der eingelesenen Längen- und Breitengarde
  */
    typedef int t_daytime; /* at least 60*60*24=86400 seconds */
    typedef int t_index;   /* point counter */
@@ -40,10 +40,10 @@
 /*
  *	Distanzmatrix von jedem Punkt i zu jedem Punkt j i<=j
  * Die Berechnung erfolgt mit doubles, das Ergbnis wird auf ganze Meter gerundet
- * ganzzahig gespeichert, um sp�ter schneller damit rechnen zu k�nnen
- * Vorsicht: Rechnerabh�ngiger Ganzzahlenbereich mu� 25mal so gro� sein,
- * wie die maximale L�nge einer Strecke in Metern!
- * Wegen Symmetrie ist nur das obere rechte Dreieck gef�llt, f�r
+ * ganzzahig gespeichert, um später schneller damit rechnen zu können
+ * Vorsicht: Rechnerabhängiger Ganzzahlenbereich muß 25mal so groß sein,
+ * wie die maximale Länge einer Strecke in Metern!
+ * Wegen Symmetrie ist nur das obere rechte Dreieck gefüllt, für
  * dmval[i][j] mit i>j verwendet man einfach dmval[j][i]
  */
    typedef int t_distance; /* meters */
@@ -53,7 +53,7 @@
    static t_distance max2dist = 0; /* maximale Distanz in Metern zwischen zwei aufeinanderfolgenden Punkten */
 
 /*
- *	eingelesenen Punkt in Liste der L�ngen- und Breitengrade aufnehmen
+ *	eingelesenen Punkt in Liste der Längen- und Breitengrade aufnehmen
  */
     static void addPoint(double lat, double lon, int seconds) {
       static t_point *last = 0;
@@ -76,7 +76,7 @@
    }
 
 /*
- *	Distanzberechnung f�r Testzewecke und ggf. initiale �berpr�fung des Tracks
+ *	Distanzberechnung für Testzewecke und ggf. initiale Überprüfung des Tracks
  */
     static double calcdistance(double lat1, double lon1, double lat2, double lon2) {/* in metern */
       static double pi_div_180 = ((double)M_PI)/((double)180.0);
@@ -92,7 +92,7 @@
    }
 
 /*
- *	f�r Testzwecke: Vergleich Distanzen in Distanzmatrix mit direkter Berechnung
+ *	für Testzwecke: Vergleich Distanzen in Distanzmatrix mit direkter Berechnung
  */ /*
 static void comparedistances(int p1, int p2) {
 	printf("dist(%d,%d)=%d meter ?= %lf\n",p1,p2,dmval[p1][p2],
@@ -112,7 +112,7 @@ static void comparedistances(int p1, int p2) {
 
 /*
  *	Ausgabe des i-ten Trackpunktes in Koordinatenform mit Angabe
- * von nord/s�d f�r Breiten, bzw. ost/west f�r L�ngen
+ * von nord/süd für Breiten, bzw. ost/west für Längen
  */
     static void printpoint(int i) {
       double lat, lon;
@@ -145,14 +145,14 @@ static void comparedistances(int p1, int p2) {
 /*
  *	Alle Distanzen zwischen allen Punkten berechnen und in Distanzmatrix speichern
  * Die Berechnung erfolgt mit doubles, das Ergbnis wird auf ganze Meter gerundet
- * ganzzahig gespeichert, um sp�ter schneller damit rechnen zu k�nnen
- * Vorsicht: Rechnerabh�ngiger Ganzzahlenbereich mu� 25mal so gro� sein,
- * wie die maximale L�nge einer Strecke in Metern!
+ * ganzzahig gespeichert, um später schneller damit rechnen zu können
+ * Vorsicht: Rechnerabhängiger Ganzzahlenbereich muß 25mal so groß sein,
+ * wie die maximale Länge einer Strecke in Metern!
  */
     static void initdmval() {
-      static double pi_div_180 = ((double)M_PI)/((double)180.0); /* Umrechnung Grad ins Bogenma� */
+      static double pi_div_180 = ((double)M_PI)/((double)180.0); /* Umrechnung Grad ins Bogenmaß */
       static double d_fak = ((double)6371000.0); /* FAI-Erdradius in metern */
-      double *sinlat; /* F�r schnellere Berechnung sin/cos-Werte merken */
+      double *sinlat; /* Für schnellere Berechnung sin/cos-Werte merken */
       double *coslat;
       double *lonrad;
       t_point *old;
@@ -174,15 +174,15 @@ static void comparedistances(int p1, int p2) {
       if (!(coslat=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); exit(1); }
       if (!(lonrad=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); exit(1); }
       printf("DEBUG initializing cos/sin/rad..\n");
-      cmp = pnts+1; /* f�r indexberechnung i,i */
-      for(i=0;i<pnts;i++) { /* alle Punkte ins Bogenma� umrechnen und sin/cos Speichern */
+      cmp = pnts+1; /* für indexberechnung i,i */
+      for(i=0;i<pnts;i++) { /* alle Punkte ins Bogenmaß umrechnen und sin/cos Speichern */
          lonrad[i] = (lonpnts[i] = pointlist->lon) * pi_div_180;
          sinlat[i] = sin( (latrad = (latpnts[i]=pointlist->lat) * pi_div_180) );
          coslat[i] = cos(latrad);
          timepnts[i] = pointlist->seconds;
          pointlist = (old=pointlist)->next;
          free(old);
-         distance[cmp*i] = 0; /* Diagonale der Matrix mit Distanz 0 f�llen */
+         distance[cmp*i] = 0; /* Diagonale der Matrix mit Distanz 0 füllen */
       }
       printf("DEBUG initializing distances..\n");
 
@@ -190,14 +190,14 @@ static void comparedistances(int p1, int p2) {
       max2dist = 0; /* maximale Distanz zwischen zwei aufeinanderfolgenden Punkten neu berechnen */
       max_t_dist=0; /* max takeoff distance */
 
-      cmp = pnts-1; /* Schleifenvergleichswert f�r schnelle Berechnung vorher merken */
+      cmp = pnts-1; /* Schleifenvergleichswert für schnelle Berechnung vorher merken */
 
       maxp1=maxp2=max2p1=max2p2=0;
 
       max_t1=max_t2=0;
       max_t_dist=0;
 
-      for(i=0;i<cmp;i++) { /* diese Schleife NICHT R�CKW�RTS!!! */
+      for(i=0;i<cmp;i++) { /* diese Schleife NICHT RÜCKWÄRTS!!! */
 
          sli = sinlat[i]; 
 	 cli = coslat[i]; 
@@ -275,7 +275,7 @@ static void comparedistances(int p1, int p2) {
    }
 
 /*
- *	Indexe der 5 besten Punkte f�r: freie Strecke, FAI-Dreieck und flaches Dreieck
+ *	Indexe der 5 besten Punkte für: freie Strecke, FAI-Dreieck und flaches Dreieck
  */
    static int max1=0, max2=0, max3=0, max4=0, max5=0;
    static int max1fai=0, max2fai=0, max3fai=0, max4fai=0, max5fai=0;
@@ -283,16 +283,16 @@ static void comparedistances(int p1, int p2) {
    static int maxroute = 0, bestfai=0, bestflach=0;
 
 /*
- *	laufende Indexe w�hrend der Berechnung, f�r die asynchrone Ausgabe von
+ *	laufende Indexe während der Berechnung, für die asynchrone Ausgabe von
  * Zwischenergebnissen, z.B. in der Signalbehandlungsroutine
  */
    static int i1, i2, i3, i4, i5;
 
 
 /*
- *	Beste L�sungen f�r Freie Strecke, flaches Dreieck und FAI-Dreieck
+ *	Beste Lösungen für Freie Strecke, flaches Dreieck und FAI-Dreieck
  * mit Gesamtstrecke in km und Punktzahl auf 1000stel genau ausgeben
- * beim OLC werden Punkte auf 100stel gerundet, �ber das Runden von
+ * beim OLC werden Punkte auf 100stel gerundet, über das Runden von
  * Teilstrecken ist keine Aussage gemacht, der OLC-Server scheint
  * aber bereits Teilstrecken auf 100stel km = dezimeter zu runden.
  * Trotzdem wird hier in Metern und nicht in Dezimetern gerechnet,
@@ -396,23 +396,23 @@ static void comparedistances(int p1, int p2) {
    }
 
 /*
- * Matrix mit den kleinsten Abst�nden zwischen Start- und Endpunkt
- * f�r gegebenen ersten und dritten Wendepunkt.
- * Beispiel: dmin[5][10] ist die kleinstm�gliche Distanz d zwischen 
+ * Matrix mit den kleinsten Abständen zwischen Start- und Endpunkt
+ * für gegebenen ersten und dritten Wendepunkt.
+ * Beispiel: dmin[5][10] ist die kleinstmögliche Distanz d zwischen 
  * Start- und Endpunkt, wenn Punkt 5 der erste und Punkt 10 der 3te
- * Wendepunkt ist. dmini[5][10] leifert dann, den Index des zugeh�rigen
- * Startpunktes und dminj[5][10] den Index des Endpunktes f�r diese
+ * Wendepunkt ist. dmini[5][10] leifert dann, den Index des zugehörigen
+ * Startpunktes und dminj[5][10] den Index des Endpunktes für diese
  * minimale Distanz
  * Dies Matritzen werden mit quadratischem Aufwand vorab berechnet,
  * da sie zur Bestimmung von Dreiecken bei der Optimierung in der
- * innersten Schleife f�r die 3 Wendepunkte n^3 mal immer wieder
- * ben�tigt werden. Dadurch kann der Gesamtrechaufwand in der Gr��enordnung
- * von n^5 auf Gr��enordnung n^3+n^2 gesenkt werden.
+ * innersten Schleife für die 3 Wendepunkte n^3 mal immer wieder
+ * benötigt werden. Dadurch kann der Gesamtrechaufwand in der Größenordnung
+ * von n^5 auf Größenordnung n^3+n^2 gesenkt werden.
  *
  * Hinweis: diese Matritzen sind nur im oberen rechten Dreieck besetzt:
  */
 /*
-static int  dmin[MAXPOINTS][MAXPOINTS];   hierf�r wird unbesetzte Ecke von distance genutzt
+static int  dmin[MAXPOINTS][MAXPOINTS];   hierfür wird unbesetzte Ecke von distance genutzt
 static int dmini[MAXPOINTS][MAXPOINTS];
 static int dminj[MAXPOINTS][MAXPOINTS];   diese beiden teilen sich die folgende Matrix */
    static t_index *dminindex = 0;
@@ -420,7 +420,7 @@ static int dminj[MAXPOINTS][MAXPOINTS];   diese beiden teilen sich die folgende 
 #define dminj(x,y) dminindex[(y)+pnts*(x)]
 
 /*
- *	f�r Debuggingzwecke k�nnen die Matrizen ausgegeben werden
+ *	für Debuggingzwecke können die Matrizen ausgegeben werden
  */ /*
 static void printdmin() {
 	int i, j;
@@ -435,11 +435,11 @@ static void printdmin() {
 
 /*
  * berechne kleinste Distanz dmin(i,j) zwischen allen Punkten x und y mit x<=i und y>=j
- *   f�r alle x<=i, y>=j: dmin(i,j) <= dmin(x,y)
+ *   für alle x<=i, y>=j: dmin(i,j) <= dmin(x,y)
  *      und dmval[dmini[i][j]][dminj[i][j]] <= dmval[x][y]
  */
 #define dmin(x,y) distance[(y)+pnts*(x)]
-/* untere linke Ecke von distance f�r dmin nutzen */
+/* untere linke Ecke von distance für dmin nutzen */
     static void initdmin() {
       register int i, j, d, mini, minj, minimum = maxdist;
    
@@ -496,7 +496,7 @@ int fdmin(int i, int j) {
    static t_index *maxendpunkt=0;
 
 /*
- *	berechnet den besten Endpunkt f�r Freie Strecke bei gegebenem 3ten Wendepunkt
+ *	berechnet den besten Endpunkt für Freie Strecke bei gegebenem 3ten Wendepunkt
  */
     void initmaxend() {
       register int w3, i, f, maxf, besti, leaveout;
@@ -523,11 +523,11 @@ int maxendi(int w3) {}
 */
 
 /*
- * berechnet eine initiale geratene L�sung, damit leaveouts von Anfang an gro� sind
+ * berechnet eine initiale geratene Lösung, damit leaveouts von Anfang an groß sind
  */
     void firstguess() {
       int a, b, c, d, u, tmp;
-   /* geratene L�sung f�r freie Strecke: */
+   /* geratene Lösung für freie Strecke: */
    /* max1 = 0;       /* Start ganz vorne */
    /* max2 = pnts/4;  /* Erste Wende nach einem 4tel der Strecke */
    /* max3 = pnts/2;  /* Zweite Wende etwa in der Mitte */
@@ -541,7 +541,7 @@ int maxendi(int w3) {}
       max5 = pnts-1;  /* Endpunkt ganz hinten */
       maxroute = distance[max1+pnts*max2] + distance[max2+pnts*max3] + distance[max3+pnts*max4] + distance[max4+pnts*max5];
    
-   /* geratene L�sung f�r ein Dreieck begonnen auf einem Schenkel */
+   /* geratene Lösung für ein Dreieck begonnen auf einem Schenkel */
       i1 = 0;       /* Start ganz vorne */
       i2 = pnts/6;  /* Erste Wende nach einem Sechstel */
       i3 = pnts/2;  /* Zweite Wende in der Mitte */
@@ -552,9 +552,9 @@ int maxendi(int w3) {}
       c = distance[i2+pnts*i4];
       d = distance[i1+pnts*i5];
       u = a + b + c;
-      if (d*5 <= u) { /* zuf�llig ein Dreieck gefunden? */
+      if (d*5 <= u) { /* zufällig ein Dreieck gefunden? */
          tmp = u * 7;
-         if ((a*25>=tmp)&&(b*25>=tmp)&&(c*25>=tmp)) { /* zuf�llig FAI-D gefunden? */
+         if ((a*25>=tmp)&&(b*25>=tmp)&&(c*25>=tmp)) { /* zufällig FAI-D gefunden? */
             bestfai = u - d;
             max1fai = i1; max2fai = i2; max3fai = i3; max4fai = i4; max5fai = i5;
          } 
@@ -564,7 +564,7 @@ int maxendi(int w3) {}
          }
       }
    
-   /* geratene L�sung f�r eine Dreieck begonnen an erster Wende */
+   /* geratene Lösung für eine Dreieck begonnen an erster Wende */
       i1 = i2 = 0;     /* Start und erste Wende ganz vorne */
       i3 = pnts/3;     /* zweite Wende nach 1/3 der Strecke */
       i4 = pnts*2/3;   /* dritte Wende nach 2/3 der Strecke */
@@ -574,9 +574,9 @@ int maxendi(int w3) {}
       c = distance[i2+pnts*i4];
       d = distance[i1+pnts*i5];
       u = a + b + c;
-      if (d*5 <= u) { /* zuf�llig ein Dreieck gefunden? */
+      if (d*5 <= u) { /* zufällig ein Dreieck gefunden? */
          tmp = u * 7;
-         if ((a*25>=tmp)&&(b*25>=tmp)&&(c*25>=tmp)) { /* zuf�llig FAI-D gefunden? */
+         if ((a*25>=tmp)&&(b*25>=tmp)&&(c*25>=tmp)) { /* zufällig FAI-D gefunden? */
             if ((u-d)>bestfai) {
                bestfai = u - d;
                max1fai = i1; max2fai = i2; max3fai = i3; max4fai = i4; max5fai = i5;
@@ -595,7 +595,7 @@ int maxendi(int w3) {}
 #define MAX(x,y) (x>y)?x:y
 
 /*
- *	f�hrt die Eigentliche Optimierung (�ber 3 Punkte) durch
+ *	führt die Eigentliche Optimierung (über 3 Punkte) durch
  * mrme   = maxroute - e
  * mrmemf = maxroute - e -f
  * bflpdmc ) bestflach +d -c
@@ -630,7 +630,7 @@ int maxendi(int w3) {}
             maxaplusb = 0; /* leaveout = 1;  eigentlich nicht notwendig */
             f = maxend(i4); mrmemf = mrme -f;  epf = e + f;
             for(i=i3=i2+1; i<i4; i+=leaveout) { /* 2.Wende separat optimieren */
-               if ((aplusb=(a=distance[i2+pnts*i])+(b=distance[i+pnts*i4]))>maxaplusb) { /* findet gr��tes a+b (und auch gr��tes Dreieck) */
+               if ((aplusb=(a=distance[i2+pnts*i])+(b=distance[i+pnts*i4]))>maxaplusb) { /* findet größtes a+b (und auch größtes Dreieck) */
                   maxaplusb = aplusb; i3 = i;
                }
                if (d5minusc<=aplusb) { /* Dreieck gefunden 5*d<= a+b+c */
@@ -712,7 +712,7 @@ int maxendi(int w3) {}
  * Aufeinanderfolgende Punkte mit selbem Zeitstempel werden weggelassen,
  * wenn sie auch die selben Koordinaten haben
  * Aufeinanderfolgende Punkt mit den selben Koordinaten (oder sehr kleiner
- * Distanz) k�nnten auch ausgelassen werden.
+ * Distanz) könnten auch ausgelassen werden.
 
  * IGC file read in, points in point list notice 
  * Successive points with same time stamp are omitted, 
@@ -844,7 +844,7 @@ int maxendi(int w3) {}
    }
 
 /**
- *	konvertieren eines (auch unvollst�ndigen) Zeitstrings in sekunden
+ *	konvertieren eines (auch unvollständigen) Zeitstrings in sekunden
  */
     static int a2s(char *str) {
       int hours=0, minutes=0, seconds=0, len;
@@ -855,7 +855,7 @@ int maxendi(int w3) {}
    }
 
 /*
- *	Abfrage der Programmoptionen.   -v(erbose) f�r Ausgabe aller Punkte
+ *	Abfrage der Programmoptionen.   -v(erbose) für Ausgabe aller Punkte
  *                                 -s#maxspeed
  * Wird kein Filename angegeben, wird von der
  * Standardeingabe gelesen (erlaubt ein Pipen der Daten ins Programm)
