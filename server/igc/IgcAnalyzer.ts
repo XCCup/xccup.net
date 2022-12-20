@@ -30,33 +30,6 @@ export interface OLCResult {
   type: TYPE;
 }
 
-async function runOlc(filePath: string, flightTypeFactors: FlightTypeFactors) {
-  logger.info("IA: Start OLC analysis " + filePath);
-  logger.debug(`IA: CWD of process: ${process.cwd()}`);
-
-  const binary = determineOlcBinary();
-  const pathToBinary = path.resolve(__dirname, "..", "igc", binary);
-
-  try {
-    const asyncExec = util.promisify(exec);
-    const { stdout, stderr } = await asyncExec(pathToBinary + filePath, {
-      cwd: path.resolve(__dirname, ".."),
-    });
-    logger.info(stderr); // Throw won't work as stderr is always defined
-
-    const res = parseOlcData(stdout.toString(), flightTypeFactors);
-    return res;
-  } catch (error) {
-    // TODO: Check what happens to the client when this catches an error
-    logger.error(
-      "IA: An error occurred while parsing the olc data of " +
-        filePath +
-        ": " +
-        error
-    );
-  }
-}
-
 /**
  * This function determines
  * * flightType
@@ -137,31 +110,83 @@ export async function calculateFlightResult(
   return res;
 }
 
-/**
- * Determines the OLC Binary which will be used. Depends on OS and architecture.
- */
-function determineOlcBinary() {
-  const os = require("os");
-  const platform = os.platform();
-  logger.debug(`IA: Running on OS: ${platform} (${os.arch()})`);
-  //TODO: This is not failsafe, but good for now;)
-  if (platform.includes("win") && !platform.includes("darwin")) {
-    return "olc.exe < ";
-  }
-  if (platform.includes("darwin") && os.arch() != "arm64") {
-    return "olc_mac_x64 <";
-  }
-  if (os.arch() === "arm64") {
-    return "olc_lnx_arm < ";
-  } else {
-    return "olc_lnx < ";
+export function extractFixes(igcPath?: string) {
+  logger.debug(`IA: read file from ${igcPath}`);
+  const igcAsPlainText = readIgcFile(igcPath ?? "");
+  logger.debug(`IA: start parsing`);
+  try {
+    if (!igcAsPlainText) throw new Error("IA: No igc content");
+
+    const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
+
+    // Detect manipulated igc files
+    if (igcIsManipulated(igcAsJson)) {
+      let errorMessage = "Manipulated IGC-File";
+
+      throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+    }
+
+    // Remove non flight fixes
+    const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
+    igcAsJson.fixes = igcAsJson.fixes.slice(
+      launchAndLandingIndexes.launch,
+      launchAndLandingIndexes.landing
+    );
+    logger.debug(`IA: Finished parsing`);
+
+    const currentResolution = getResolution(igcAsJson);
+
+    let shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
+
+    logger.debug(
+      `IA: Will shrink extracted fixes by factor ${shrinkingFactor}`
+    );
+
+    //Prevent endless loop for negative numbers
+    if (shrinkingFactor < 1) shrinkingFactor = 1;
+
+    const reducedFixes = [];
+    for (let i = 0; i < igcAsJson.fixes.length; i += shrinkingFactor) {
+      reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
+    }
+    return reducedFixes;
+  } catch (error: any) {
+    const errorMessage = "Error parsing IGC File " + error?.message;
+    throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
   }
 }
 
 /**
+ * Checks if an igc file was manipulated by "MaxPunkte"
+ */
+function igcIsManipulated(igc: IGCFile) {
+  if (!igc.commentRecords) return false;
+  let manipulated = false;
+  igc.commentRecords.forEach((el) => {
+    if (el.code === "XMP" && el.message.includes("removed by user"))
+      return (manipulated = true);
+  });
+
+  return manipulated;
+}
+
+function extractOnlyDefinedFieldsFromFix(fix: BRecord) {
+  return {
+    timestamp: fix.timestamp,
+    time: fix.time,
+    latitude: fix.latitude,
+    longitude: fix.longitude,
+    pressureAltitude: fix.pressureAltitude,
+    gpsAltitude: fix.gpsAltitude,
+  };
+}
+
+function readIgcFile(path: string) {
+  return fs.readFileSync(path.toString(), "utf8");
+}
+
+/**
  * Starts the second ("turnpoint") iteration.
- *
- * @param {*} result The results from the previous iteration.
  */
 function runTurnpointIteration(
   result: OLCResult,
@@ -184,6 +209,54 @@ function runTurnpointIteration(
     launchAndLandingIndexes.landing
   );
   return igcWithReducedFixes;
+}
+
+/**
+ * Determines the OLC Binary which will be used. Depends on OS and architecture.
+ */
+function determineOlcBinary() {
+  const os = require("os");
+  const platform = os.platform();
+  logger.debug(`IA: Running on OS: ${platform} (${os.arch()})`);
+  //TODO: This is not failsafe, but good for now;)
+  if (platform.includes("win") && !platform.includes("darwin")) {
+    return "olc.exe < ";
+  }
+  if (platform.includes("darwin") && os.arch() != "arm64") {
+    return "olc_mac_x64 <";
+  }
+  if (os.arch() === "arm64") {
+    return "olc_lnx_arm < ";
+  } else {
+    return "olc_lnx < ";
+  }
+}
+
+async function runOlc(filePath: string, flightTypeFactors: FlightTypeFactors) {
+  logger.info("IA: Start OLC analysis " + filePath);
+  logger.debug(`IA: CWD of process: ${process.cwd()}`);
+
+  const binary = determineOlcBinary();
+  const pathToBinary = path.resolve(__dirname, "..", "igc", binary);
+
+  try {
+    const asyncExec = util.promisify(exec);
+    const { stdout, stderr } = await asyncExec(pathToBinary + filePath, {
+      cwd: path.resolve(__dirname, ".."),
+    });
+    logger.info(stderr); // Throw won't work as stderr is always defined
+
+    const res = parseOlcData(stdout.toString(), flightTypeFactors);
+    return res;
+  } catch (error) {
+    // TODO: Check what happens to the client when this catches an error
+    logger.error(
+      "IA: An error occurred while parsing the olc data of " +
+        filePath +
+        ": " +
+        error
+    );
+  }
 }
 
 function parseOlcData(data: string, flightTypeFactors: FlightTypeFactors) {
@@ -253,10 +326,6 @@ function parseOlcData(data: string, flightTypeFactors: FlightTypeFactors) {
   return result;
 }
 
-function readIgcFile(path: string) {
-  return fs.readFileSync(path.toString(), "utf8");
-}
-
 /**
  * Creates a turnpoint object from a response line of the OLC binary.
  */
@@ -273,91 +342,6 @@ function extractTurnpointData(turnpoint: string) {
     logger.error("IA: Could not extract turnpoint from " + turnpoint);
   }
   return result;
-}
-
-/**
- * Determines the time resolution (in seconds) of the fixes in an igc file.
- */
-function getResolution(igcAsJson: IGCFile) {
-  /**
-   * Start with the second timestamp.
-   * It occurred a few times that the first and second timestamp are in the same second.
-   * Maybe this is due to some corner case in the tracker. Therefore skip the first timestamp.
-   */
-  const referenceTimestamp = igcAsJson.fixes[1].timestamp;
-  let currentResolution =
-    (igcAsJson.fixes[2].timestamp - referenceTimestamp) / 1000;
-
-  /**
-   * Some few pilots have their tracker configured with a tracking interval <1 second.
-   * This is not supported by the igc definition. All these timestamps will have the same value.
-   * To counter this we will search for the next timestamp which has a different value.
-   */
-  if (currentResolution == 0) {
-    const startIndex = 3;
-    // Just search in the first 20 fixes to fail fast
-    for (let index = startIndex; index < 20; index++) {
-      const elementTimestamp = igcAsJson.fixes[index].timestamp;
-      if (elementTimestamp != referenceTimestamp) {
-        currentResolution = 1 / index;
-        break;
-      }
-    }
-  }
-
-  logger.debug(
-    `The resolution of the timestamps is ${currentResolution} seconds`
-  );
-  return currentResolution;
-}
-
-function getFlightDuration(igcAsJson: IGCFile) {
-  const sizeOfFixes = igcAsJson.fixes.length;
-  const durationInMillis =
-    igcAsJson.fixes[sizeOfFixes - 1].timestamp - igcAsJson.fixes[0].timestamp;
-  const durationInMinutes = durationInMillis / 1000 / 60;
-  logger.debug(
-    `IA: The duration of the flight is ${durationInMinutes} minutes`
-  );
-  return durationInMinutes;
-}
-
-/**
- * Calculates the comparable resolution to which the igc content will be reduced in the first iteration.
- * This value is calculated by the flight duration and a constant factor defined in {@link RESOLUTION_FACTOR}.
- */
-function calculateResolutionForReduction(durationInMinutes: number) {
-  //For every hour decrease resolution by factor of seconds
-  const resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
-  logger.debug(
-    `IA: The flight will be calculated with a new resolution of ${resolution} seconds`
-  );
-  return resolution;
-}
-
-/**
- * Splits the content of an igc file into lines and reduces the amount of B records (location fixes) of the given igc content.
- * B records will be reduced evenly by a factor.
- * Will return the lines of a minified igc file.
- */
-function reduceByFactor(
-  factor: number,
-  igcAsPlainText: string,
-  launchIndex: number,
-  landingIndex: number
-) {
-  const lines = igcAsPlainText.split("\n");
-
-  const flightFixes = removeNonFlightIgcLines(lines, launchIndex, landingIndex);
-
-  let reducedLines = [];
-  for (let i = 0; i < flightFixes.length; i++) {
-    reducedLines.push(flightFixes[i]);
-    if (flightFixes[i] && flightFixes[i].startsWith("B")) {
-      i = i + (factor - 1);
-    }
-  }
-  return reducedLines;
 }
 
 /**
@@ -389,6 +373,30 @@ async function writeIgcToFile(
       reject();
     });
   });
+}
+/**
+ * Splits the content of an igc file into lines and reduces the amount of B records (location fixes) of the given igc content.
+ * B records will be reduced evenly by a factor.
+ * Will return the lines of a minified igc file.
+ */
+function reduceByFactor(
+  factor: number,
+  igcAsPlainText: string,
+  launchIndex: number,
+  landingIndex: number
+) {
+  const lines = igcAsPlainText.split("\n");
+
+  const flightFixes = removeNonFlightIgcLines(lines, launchIndex, landingIndex);
+
+  let reducedLines = [];
+  for (let i = 0; i < flightFixes.length; i++) {
+    reducedLines.push(flightFixes[i]);
+    if (flightFixes[i] && flightFixes[i].startsWith("B")) {
+      i = i + (factor - 1);
+    }
+  }
+  return reducedLines;
 }
 
 /**
@@ -477,74 +485,62 @@ function stripAroundTurnpoints(
   }
   return reducedLines;
 }
+/**
+ * Determines the time resolution (in seconds) of the fixes in an igc file.
+ */
+function getResolution(igcAsJson: IGCFile) {
+  /**
+   * Start with the second timestamp.
+   * It occurred a few times that the first and second timestamp are in the same second.
+   * Maybe this is due to some corner case in the tracker. Therefore skip the first timestamp.
+   */
+  const referenceTimestamp = igcAsJson.fixes[1].timestamp;
+  let currentResolution =
+    (igcAsJson.fixes[2].timestamp - referenceTimestamp) / 1000;
 
-export function extractFixes(igcPath?: string) {
-  logger.debug(`IA: read file from ${igcPath}`);
-  const igcAsPlainText = readIgcFile(igcPath ?? "");
-  logger.debug(`IA: start parsing`);
-  try {
-    if (!igcAsPlainText) throw new Error("IA: No igc content");
-
-    const igcAsJson = IGCParser.parse(igcAsPlainText, { lenient: true });
-
-    // Detect manipulated igc files
-    if (igcIsManipulated(igcAsJson)) {
-      let errorMessage = "Manipulated IGC-File";
-
-      throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+  /**
+   * Some few pilots have their tracker configured with a tracking interval <1 second.
+   * This is not supported by the igc definition. All these timestamps will have the same value.
+   * To counter this we will search for the next timestamp which has a different value.
+   */
+  if (currentResolution == 0) {
+    const startIndex = 3;
+    // Just search in the first 20 fixes to fail fast
+    for (let index = startIndex; index < 20; index++) {
+      const elementTimestamp = igcAsJson.fixes[index].timestamp;
+      if (elementTimestamp != referenceTimestamp) {
+        currentResolution = 1 / index;
+        break;
+      }
     }
-
-    // Remove non flight fixes
-    const launchAndLandingIndexes = findLaunchAndLandingIndexes(igcAsJson);
-    igcAsJson.fixes = igcAsJson.fixes.slice(
-      launchAndLandingIndexes.launch,
-      launchAndLandingIndexes.landing
-    );
-    logger.debug(`IA: Finished parsing`);
-
-    const currentResolution = getResolution(igcAsJson);
-
-    let shrinkingFactor = Math.ceil(IGC_FIXES_RESOLUTION / currentResolution);
-
-    logger.debug(
-      `IA: Will shrink extracted fixes by factor ${shrinkingFactor}`
-    );
-
-    //Prevent endless loop for negative numbers
-    if (shrinkingFactor < 1) shrinkingFactor = 1;
-
-    const reducedFixes = [];
-    for (let i = 0; i < igcAsJson.fixes.length; i += shrinkingFactor) {
-      reducedFixes.push(extractOnlyDefinedFieldsFromFix(igcAsJson.fixes[i]));
-    }
-    return reducedFixes;
-  } catch (error: any) {
-    const errorMessage = "Error parsing IGC File " + error?.message;
-    throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
   }
+
+  logger.debug(
+    `The resolution of the timestamps is ${currentResolution} seconds`
+  );
+  return currentResolution;
 }
 
 /**
- * Checks if an igc file was manipulated by "MaxPunkte"
+ * Calculates the comparable resolution to which the igc content will be reduced in the first iteration.
+ * This value is calculated by the flight duration and a constant factor defined in {@link RESOLUTION_FACTOR}.
  */
-function igcIsManipulated(igc: IGCFile) {
-  if (!igc.commentRecords) return false;
-  let manipulated = false;
-  igc.commentRecords.forEach((el) => {
-    if (el.code === "XMP" && el.message.includes("removed by user"))
-      return (manipulated = true);
-  });
-
-  return manipulated;
+function calculateResolutionForReduction(durationInMinutes: number) {
+  //For every hour decrease resolution by factor of seconds
+  const resolution = Math.floor((durationInMinutes / 60) * RESOLUTION_FACTOR);
+  logger.debug(
+    `IA: The flight will be calculated with a new resolution of ${resolution} seconds`
+  );
+  return resolution;
 }
 
-function extractOnlyDefinedFieldsFromFix(fix: BRecord) {
-  return {
-    timestamp: fix.timestamp,
-    time: fix.time,
-    latitude: fix.latitude,
-    longitude: fix.longitude,
-    pressureAltitude: fix.pressureAltitude,
-    gpsAltitude: fix.gpsAltitude,
-  };
+function getFlightDuration(igcAsJson: IGCFile) {
+  const sizeOfFixes = igcAsJson.fixes.length;
+  const durationInMillis =
+    igcAsJson.fixes[sizeOfFixes - 1].timestamp - igcAsJson.fixes[0].timestamp;
+  const durationInMinutes = durationInMillis / 1000 / 60;
+  logger.debug(
+    `IA: The duration of the flight is ${durationInMinutes} minutes`
+  );
+  return durationInMinutes;
 }
