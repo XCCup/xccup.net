@@ -80,7 +80,7 @@ async function runOlc(filePath: string, flightTypeFactors: FlightTypeFactors) {
  * * Second iteration: Dismiss all fixes of the original igcFile except a bubble of fixes around the turnpoints of the best task from the first iteration.
  *
  */
-export async function getFlightResult(
+export async function calculateFlightResult(
   igcPath: string,
   externalId: number,
   flightTypeFactors: FlightTypeFactors

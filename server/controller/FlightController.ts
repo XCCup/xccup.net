@@ -374,7 +374,7 @@ router.post(
           .status(BAD_REQUEST)
           .send("No default glider configured in profile");
 
-      FlightService.updateFlightDetails({
+      await FlightService.updateFlightDetailsAndGetResult({
         flight: flightDbObject,
         glider,
       });
@@ -405,12 +405,19 @@ router.get(
       const flight = await FlightService.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
 
+      // TODO: Skip the checks and only recalculate?
       const { airspaceViolation } = await runChecksStoreFixes(
         flight,
         flight.userId,
         // TODO: Should the recalculation really always skip all checks?
         { skipAllChecks: true }
       );
+
+      await FlightService.updateFlightDetailsAndGetResult({
+        report: req.body.report,
+        flight: flight,
+        glider: flight.glider,
+      });
 
       res.json({
         airspaceViolation,
@@ -536,7 +543,7 @@ router.post(
       );
 
       // DB
-      await FlightService.updateFlightDetails({
+      await FlightService.updateFlightDetailsAndGetResult({
         report: req.body.report,
         flight: flightDbObject,
         glider,
@@ -600,7 +607,7 @@ router.put(
 
       await checkIfFlightIsModifiable(flight.flightStatus, undefined, userId);
 
-      await FlightService.updateFlightDetails({
+      await FlightService.updateFlightDetailsAndGetResult({
         flight,
         report,
         airspaceComment,

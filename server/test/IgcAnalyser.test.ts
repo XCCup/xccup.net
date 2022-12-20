@@ -1,6 +1,6 @@
 import path from "path";
 import logger from "../config/logger";
-import { getFlightResult, extractFixes } from "../igc/IgcAnalyzer";
+import { calculateFlightResult, extractFixes } from "../igc/IgcAnalyzer";
 
 const flightTypeFactors = {
   FAI: 2,
@@ -35,7 +35,7 @@ test("Validate an igc-File which should result to a FAI triangle", async () => {
     },
   };
 
-  const result = await getFlightResult(
+  const result = await calculateFlightResult(
     flightToAnaylze.igcPath,
     flightToAnaylze.externalId,
     flightTypeFactors
@@ -64,7 +64,7 @@ test("Validate an igc-File which should result to a FLAT triangle", async () => 
     },
   };
 
-  const result = await getFlightResult(
+  const result = await calculateFlightResult(
     flightToAnaylze.igcPath,
     flightToAnaylze.externalId,
     flightTypeFactors
@@ -93,7 +93,7 @@ test("Validate an igc-File which should result to a free flight", async () => {
     },
   };
 
-  const result = await getFlightResult(
+  const result = await calculateFlightResult(
     flightToAnaylze.igcPath,
     flightToAnaylze.externalId,
     flightTypeFactors
@@ -118,7 +118,7 @@ test("Validate an igc-File were two turnpoints match", async () => {
     dist: "16.511",
   };
 
-  const result = await getFlightResult(
+  const result = await calculateFlightResult(
     flightToAnaylze.igcPath,
     flightToAnaylze.externalId,
     flightTypeFactors
@@ -141,7 +141,7 @@ test.skip("Validate that the landing is detected (even when igc has more fixes)"
     type: "FREE",
     dist: "2.345",
   };
-  const result = await getFlightResult(
+  const result = await calculateFlightResult(
     flightToAnaylze.igcPath,
     flightToAnaylze.externalId,
     flightTypeFactors

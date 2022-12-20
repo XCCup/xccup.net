@@ -1,7 +1,7 @@
 import sequelize from "sequelize";
 import db from "../db";
 import moment from "moment";
-import { getFlightResult, OLCResult } from "../igc/IgcAnalyzer";
+import { calculateFlightResult, OLCResult } from "../igc/IgcAnalyzer";
 import { findLanding } from "../igc/LocationFinder";
 import { calculateFlightStats } from "../igc/FlightStatsCalculator";
 import { getCurrentActive } from "./SeasonService";
@@ -386,7 +386,11 @@ const flightService = {
     return (await db.Flight.update(props, { where: { id } }))[0];
   },
 
-  updateFlightDetails: async ({
+  /**
+   * Updates the flight details and triggers the result calcutation
+   * if it is a new flight upload.
+   */
+  updateFlightDetailsAndGetResult: async ({
     flight,
     report,
     airspaceComment,
@@ -404,7 +408,7 @@ const flightService = {
       try {
         const flightTypeFactors = (await getCurrentActive()).flightTypeFactors;
 
-        const result = await getFlightResult(
+        const result = await calculateFlightResult(
           flight.igcPath,
           flight.externalId,
           flightTypeFactors
@@ -767,7 +771,6 @@ async function calcFlightPoints(flight: FlightInstance, glider: Glider) {
     const typeFactor = gliderClassDB.scoringMultiplicator[flight.flightType];
     const gliderFactor = gliderClassDB.scoringMultiplicator.BASE;
     const distance = flight.flightDistance;
-    console.log("***", distance, gliderFactor, typeFactor);
 
     flightPoints = Math.round(typeFactor * gliderFactor * distance);
   } else {
