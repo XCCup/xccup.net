@@ -9,7 +9,7 @@ describe("check admin page", () => {
     cy.visit("/admin");
   });
 
-  it.only("test accessing as non admin user", () => {
+  it("test accessing as non admin user", () => {
     cy.logout();
     cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
     cy.get("#userNavDropdownMenu").should("include.text", "Clinton");
