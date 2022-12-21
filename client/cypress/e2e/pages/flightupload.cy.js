@@ -528,7 +528,7 @@ describe("check flight upload page", () => {
     const expectApiRespone2 =
       "Dein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
 
-    cy.fixture(igcFileName).then({ timeout: 10000 }, async (fileContent) => {
+    cy.fixture(igcFileName).then({ timeout: 20000 }, async (fileContent) => {
       const payload = {
         user: "blackhole+melinda@xccup.net",
         pass: "PW_MelindaTremblay",
@@ -548,7 +548,7 @@ describe("check flight upload page", () => {
 
       // Wait till flight was fully calculated
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(5000);
+      // cy.wait(5000);
       cy.login(payload.user, payload.pass);
 
       // Check if flight link is valid
