@@ -18,6 +18,7 @@
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.3.16",
     "@types/multer": "^1.4.7",
+    "@types/sanitize-html": "^2.8.0",
     "adm-zip": "^0.5.10",
     "axios": "1.2.1",
     "axios-retry": "^3.3.1",

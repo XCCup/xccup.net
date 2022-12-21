@@ -1,41 +1,41 @@
-const logger = require("../config/logger");
-const sanitizeHtml = require("sanitize-html");
+import logger from "../config/logger";
+import sanitizer from "sanitize-html";
 
-async function sleep(ms) {
+export async function sleep(ms: number) {
   logger.info(`Will suspend thread for ${ms} ms on purpose`);
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function getCurrentYear() {
+export function getCurrentYear() {
   return new Date().getFullYear();
 }
 
-function findKeyByValue(objectToSearch, valueToFind) {
+export function findKeyByValue(objectToSearch: object, valueToFind: any) {
   for (const [key, value] of Object.entries(objectToSearch)) {
     if (value == valueToFind) return key;
   }
 }
 
-function arrayRemove(array, elementToRemove) {
+export function arrayRemove(array: Array<any>, elementToRemove: any) {
   array.splice(array.indexOf(elementToRemove), 1);
 }
 
-function generateRandomString() {
+export function generateRandomString() {
   return (
     Math.random().toString(36).substring(2, 15) +
     Math.random().toString(36).substring(2, 15)
   );
 }
 
-function sanitize(text) {
-  return sanitizeHtml(text, {
+export function sanitizeHtml(text: string) {
+  return sanitizer(text, {
     // Do not allow html at all
     allowedTags: [],
     allowedAttributes: {},
   });
 }
 
-exports.sanitizeHtml = sanitize;
+exports.sanitizeHtml = sanitizeHtml;
 exports.sleep = sleep;
 exports.getCurrentYear = getCurrentYear;
 exports.arrayRemove = arrayRemove;

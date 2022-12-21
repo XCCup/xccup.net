@@ -1,15 +1,15 @@
-const { IGC_STORE } = require("../constants/flight-constants");
-const path = require("path");
-const fs = require("fs");
-const logger = require("../config/logger");
-const { getCurrentYear } = require("./Utils");
-const config = require("../config/env-config").default;
+import { IGC_STORE } from "../constants/flight-constants";
+import path from "path";
+import fs from "fs";
+import logger from "../config/logger";
+import { getCurrentYear } from "./Utils";
+import config from "../config/env-config";
 
-function createFileName(
-  externalId,
-  igcFileName,
-  isTemp,
-  stripFactor,
+export function createFileName(
+  externalId: number,
+  igcFileName: string,
+  isTemp?: boolean,
+  stripFactor?: number,
   year = getCurrentYear().toString()
 ) {
   const dataPath = config.get("dataPath");
@@ -34,7 +34,7 @@ function createFileName(
   return pathToFile;
 }
 
-function deleteIgcFile(igcPath) {
+export function deleteIgcFile(igcPath?: string) {
   if (!igcPath)
     return logger.warn("IFU: Should delete igc file but path prop was empty");
   const fullfilepath = path.join(config.get("rootDir"), igcPath);

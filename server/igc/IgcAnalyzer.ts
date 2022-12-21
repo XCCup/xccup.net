@@ -351,9 +351,9 @@ function extractTurnpointData(turnpoint: string) {
 async function writeIgcToFile(
   flightExternalId: number,
   igcFileLines: string[],
-  stripFactor?: number
+  reduceFactor?: number
 ): Promise<string> {
-  const pathToFile = createFileName(flightExternalId, null, true, stripFactor);
+  const pathToFile = createFileName(flightExternalId, "", true, reduceFactor);
 
   logger.debug(`IA: Will start writing content to ${pathToFile}`);
 
