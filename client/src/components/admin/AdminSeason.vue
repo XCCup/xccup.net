@@ -16,87 +16,39 @@
             Jahr anlegen.
           </p>
         </div>
-        <BaseDatePicker
-          :key="startDate.toDateString()"
-          v-model="startDate"
-          label="Saisonstart"
-          data-cy="seasonStartDataPicker"
-          :lower-limit="
+        <BaseDatePicker :key="startDate.toDateString()" v-model="startDate" label="Saisonstart"
+          data-cy="seasonStartDataPicker" :lower-limit="
             isAfterSeasonEnd
               ? new Date(new Date().getFullYear() + 1, 0)
               : new Date()
-          "
-          :is-disabled="isBetweenSeasons"
-        />
-        <BaseDatePicker
-          :key="endDate.toDateString()"
-          v-model="endDate"
-          label="Saisonende"
-          data-cy="seasonEndDataPicker"
-          :lower-limit="startDate"
-          :is-disabled="isBetweenSeasons"
-        />
+          " :is-disabled="isBetweenSeasons" />
+        <BaseDatePicker :key="endDate.toDateString()" v-model="endDate" label="Saisonende" data-cy="seasonEndDataPicker"
+          :lower-limit="startDate" :is-disabled="isBetweenSeasons" />
         <div class="form-check mb-3">
-          <input
-            id="checkPauseSeason"
-            v-model="season.isPaused"
-            class="form-check-input"
-            data-cy="saisonPauseCheckbox"
-            type="checkbox"
-            value
-          />
+          <input id="checkPauseSeason" v-model="season.isPaused" class="form-check-input" data-cy="saisonPauseCheckbox"
+            type="checkbox" value />
           <div>
             <label class="form-check-label" for="checkPauseSeason">
               Saison pausieren
             </label>
           </div>
         </div>
-        <BaseInput
-          v-model="season.pointThresholdForFlight"
-          label="Punkteschwelle Wertungsflug"
-          :is-disabled="isBetweenSeasons"
-        />
-        <BaseInput
-          v-model="season.numberOfFlightsForShirt"
-          label="Flüge für T-Shirt"
-          :is-disabled="isBetweenSeasons"
-        />
-        <BaseInput
-          v-model="season.seniorStartAge"
-          label="Start Seniorenwertung (Alter)"
-          :is-disabled="isBetweenSeasons"
-        />
-        <BaseInput
-          v-model="season.seniorBonusPerAge"
-          label="Bonus Seniorenwertung (%)"
-          :is-disabled="isBetweenSeasons"
-        />
-        <BaseTextarea
-          v-model="plainFlightTypeFactors"
-          label="Flugfaktoren"
-          :is-disabled="isBetweenSeasons"
-        />
-        <BaseTextarea
-          v-model="plainGliderClasses"
-          label="Klassenfaktoren"
-          :is-disabled="isBetweenSeasons"
-        />
-        <BaseTextarea
-          v-model="plainRankingClasses"
-          label="Wertungsklassen"
-          :is-disabled="isBetweenSeasons"
-        />
-        <button
-          type="submit"
-          class="btn btn-outline-primary"
-          data-cy="submitSeasonButton"
-          :disabled="disableSubmit"
-          @click="onCreateEditSeason"
-        >
+        <BaseInput v-model="season.pointThresholdForFlight" label="Punkteschwelle Wertungsflug"
+          :is-disabled="isBetweenSeasons" />
+        <BaseInput v-model="season.numberOfFlightsForShirt" label="Flüge für T-Shirt" :is-disabled="isBetweenSeasons" />
+        <BaseInput v-model="season.seniorStartAge" label="Start Seniorenwertung (Alter)"
+          :is-disabled="isBetweenSeasons" />
+        <BaseInput v-model="season.seniorBonusPerAge" label="Bonus Seniorenwertung (%)"
+          :is-disabled="isBetweenSeasons" />
+        <BaseTextarea v-model="plainFlightTypeFactors" label="Flugfaktoren" :is-disabled="isBetweenSeasons" />
+        <BaseTextarea v-model="plainGliderClasses" label="Klassenfaktoren" :is-disabled="isBetweenSeasons" />
+        <BaseTextarea v-model="plainRankingClasses" label="Wertungsklassen" :is-disabled="isBetweenSeasons" />
+        <button type="submit" class="btn btn-outline-primary" data-cy="submitSeasonButton" :disabled="disableSubmit"
+          @click="onCreateEditSeason">
           {{
-            isBetweenSeasons || seasonForNextYearAlreadyDefined
-              ? "Saison updaten"
-              : "Neue Saison anlegen"
+              isBetweenSeasons || seasonForNextYearAlreadyDefined
+                ? "Saison updaten"
+                : "Neue Saison anlegen"
           }}
           <BaseSpinner v-if="showSpinner" />
         </button>
@@ -159,7 +111,12 @@ watch(startDate, () => {
 
 async function onCreateEditSeason() {
   const seasonId = season.value.id;
-  prepareSeasonDataForRequest();
+  try {
+    prepareSeasonDataForRequest();
+  } catch (error) {
+    // Just terminate call here
+    return
+  }
   try {
     showSpinner.value = true;
     if (
@@ -184,10 +141,19 @@ function stringify(object: Object) {
   return JSON.stringify(object, null, 2);
 }
 
+function parseJsonTextareas(value: string, fieldName: string) {
+  try {
+    return JSON.parse(value);
+  } catch (error) {
+    showFailedToast(`JSON in ${fieldName} ist invalide`)
+    throw error
+  }
+}
+
 function prepareSeasonDataForRequest() {
-  season.value.flightTypeFactors = JSON.parse(plainFlightTypeFactors.value);
-  season.value.gliderClasses = JSON.parse(plainGliderClasses.value);
-  season.value.rankingClasses = JSON.parse(plainRankingClasses.value);
+  season.value.flightTypeFactors = parseJsonTextareas(plainFlightTypeFactors.value, "Flugfaktoren");
+  season.value.gliderClasses = parseJsonTextareas(plainGliderClasses.value, "Klassenfaktoren");
+  season.value.rankingClasses = parseJsonTextareas(plainRankingClasses.value, "Wertungsklassen");
 
   season.value.startDate = format(startDate.value, "yyyy-MM-dd");
   season.value.endDate = format(endDate.value, "yyyy-MM-dd");
@@ -229,8 +195,6 @@ async function retrieveCurrentSeason() {
     // Copy retrieved season otherwise use default season object
     if (latestSeason.value) season.value = cloneDeep(latestSeason.value);
 
-    console.log("Current season: ", season.value);
-
     noSeasonDefined.value = season.value == null;
 
     startDate.value = new Date(season.value?.startDate);
@@ -238,10 +202,6 @@ async function retrieveCurrentSeason() {
     const now = new Date().getTime();
     const start = startDate.value.getTime();
     const end = endDate.value.getTime();
-
-    console.log("N: ", now);
-    console.log("S: ", start);
-    console.log("E: ", end);
 
     isAfterSeasonStart.value = now > start;
     isAfterSeasonEnd.value = now > end;
