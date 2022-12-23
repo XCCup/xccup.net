@@ -1,6 +1,8 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { STATE, TYPE, UPLOAD_ENDPOINT } from "../../constants/flight-constants";
+import { FlightFixesAttributes } from "../../types/FlightFixes";
 import { FlightStats } from "../../types/FlightStats";
+import { Glider } from "../../types/Glider";
 import { Models } from "../../types/Models";
 import { UserAttributes } from "./User";
 
@@ -18,11 +20,11 @@ export interface FlightAttributes {
   flightDistanceFAI?: number;
   flightMetarData?: string[];
   flightType?: TYPE;
-  flightStatus?: STATE;
+  flightStatus: STATE;
   flightTurnpoints?: FlightTurnpoint[];
   airtime?: number;
-  takeoffTime?: number;
-  landingTime?: number;
+  takeoffTime?: Date;
+  landingTime?: Date;
   igcPath?: string;
   glider?: Glider;
   airspaceViolation?: boolean;
@@ -36,30 +38,20 @@ export interface FlightAttributes {
   homeStateOfUser?: string;
   flightStats?: FlightStats;
   airbuddies?: Airbuddy[];
+  isNewPersonalBest?: boolean;
+  fixes?: FlightFixesAttributes;
 }
-
 interface Airbuddy {
-  externalId: number;
-  correlationPercentage: number;
-  userFirstName: string;
-  userLastName: string;
-  userId: string;
+  externalId?: number;
+  correlationPercentage?: number;
+  userFirstName?: string;
+  userLastName?: string;
+  userId?: string;
 }
-
-interface FlightTurnpoint {
-  time: string;
-  lat: number;
-  long: number;
-}
-
-interface Glider {
-  id: string;
-  brand: string;
-  model: string;
-  gliderClass: {
-    key: string;
-    shortDescription: string;
-  };
+export interface FlightTurnpoint {
+  time?: string;
+  lat?: number;
+  long?: number;
 }
 
 interface AirspaceViolation {
@@ -74,21 +66,18 @@ interface AirspaceViolation {
 }
 
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
-
 export interface FlightOutputAttributes extends FlightAttributes {
   userId: string;
-  siteId: string;
-  clubId: string;
+  siteId?: string;
+  clubId?: string;
   teamId?: string;
 }
-
 export interface FlightInstance
   extends Model<FlightAttributes, FlightCreationAttributes>,
     FlightOutputAttributes {
   createdAt?: Date;
   updatedAt?: Date;
 }
-
 export interface FlightInstanceUserInclude extends FlightInstance {
   user: UserAttributes;
 }
@@ -140,6 +129,7 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     },
     flightStatus: {
       type: DataTypes.STRING,
+      defaultValue: STATE.IN_PROCESS,
     },
     flightTurnpoints: {
       type: DataTypes.JSON,
@@ -203,6 +193,10 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     },
     airbuddies: {
       type: DataTypes.ARRAY(DataTypes.JSONB),
+    },
+    isNewPersonalBest: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   }) as Models["Flight"];
 

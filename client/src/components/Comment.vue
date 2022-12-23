@@ -1,5 +1,11 @@
 <template>
-  <div v-if="comment" :id="`comment-${comment.id}`" data-cy="flight-comment">
+  <!-- TODO: Handle comments from deleted users -->
+
+  <div
+    v-if="comment && comment.user"
+    :id="`comment-${comment.id}`"
+    data-cy="flight-comment"
+  >
     <div class="d-flex mb-2" data-cy="comment-header">
       <img :src="avatarUrl" class="rounded-circle" />
       <router-link
@@ -9,7 +15,7 @@
           query: { userId: comment?.user?.id },
         }"
       >
-        {{ comment.user.fullName }}
+        {{ comment.user?.fullName }}
       </router-link>
 
       <span

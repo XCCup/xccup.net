@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TRACK_COLORS } from "@/common/Constants";
+import { ADDITIONAL_COLORS } from "@/common/Constants";
 import useFlight from "@/composables/useFlight";
 import useAirbuddy from "@/composables/useAirbuddies";
 
@@ -13,7 +13,7 @@ const { fetchAll, airbuddiesFlightData, updateCheckedAirbuddies } =
 const checkedFlights = ref<string[]>([]);
 const loaded = ref(false);
 
-const trackColors = TRACK_COLORS;
+const trackColors = ADDITIONAL_COLORS;
 
 watchEffect(() => updateCheckedAirbuddies(checkedFlights.value));
 
@@ -28,6 +28,7 @@ const onShowAirbuddies = async () => {
   }
 };
 
+// TODO: Maybe clean DB from obsolete "n/a" strings
 function createAirbuddyPercentageString(
   airbuddyFlight: DeepReadonly<AirbuddyFlight>
 ) {

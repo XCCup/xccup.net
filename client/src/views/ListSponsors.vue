@@ -1,8 +1,7 @@
 <template>
   <div class="container">
     <div v-if="sponsors">
-      <!-- TODO: Shall the year be named? -->
-      <h3>Sponsoren des Jahres {{ new Date().getFullYear() }}</h3>
+      <h3>Unsere Sponsoren</h3>
       <p>
         Ihr möchtet auch Sponsor werden? Wir freuen uns auf eure
         <router-link :to="{ name: 'Imprint' }">Kontaktaufnahme</router-link>.
@@ -16,7 +15,7 @@
           <SponsorCard :sponsor="sponsor" />
         </div>
       </div>
-      <div v-else>Leider haben wir keine Sponsoren für dieses Jahr.</div>
+      <div v-else>Aktuell haben wir keine Sponsoren.</div>
     </div>
     <GenericError v-else />
   </div>

@@ -141,7 +141,7 @@ export async function refreshToken(token: string) {
 export function requesterIsNotOwner(
   req: Request,
   res: Response,
-  otherId: string
+  otherId?: string
 ): boolean {
   if (otherId !== req.user?.id && !userHasElevatedRole(req.user)) {
     logger.debug("auth: requester is not owner");

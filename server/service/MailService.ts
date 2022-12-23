@@ -33,6 +33,8 @@ import {
   AIRSPACE_VIOLATION_REJECTED_TITLE,
   GOOGLE_ELEVATION_ERROR_TITLE,
   GOOGLE_ELEVATION_ERROR_TEXT,
+  NEW_PERSONAL_BEST_TITLE,
+  NEW_PERSONAL_BEST_TEXT,
 } from "../constants/email-message-constants";
 
 import db from "../db";
@@ -81,13 +83,13 @@ const service = {
 
     logger.debug(`MS: ${fromUserId} requested to send an email`);
 
-    const isXccupOffical = fromUser?.role != "Keine";
+    const isXccupOfficial = fromUser?.role != "Keine";
     const toMail = toUser?.email;
     const fromMail = fromUser?.email;
     const fromName = `${fromUser?.firstName} ${fromUser?.lastName}`;
 
     if (!toMail) return;
-    if (!isXccupOffical) {
+    if (!isXccupOfficial) {
       content.text = MAIL_MESSAGE_PREFIX(fromName) + content.text;
     }
 
@@ -158,7 +160,7 @@ const service = {
     newEmail: string
   ) => {
     logger.info(
-      `MS: Send notificatione mail for user ${user.firstName} ${user.lastName} to ${user.email}`
+      `MS: Send notification mail for user ${user.firstName} ${user.lastName} to ${user.email}`
     );
 
     const content = {
@@ -231,7 +233,6 @@ const service = {
 
   sendGCheckInvalidAdminMail: async (userId: string, igcPath: string) => {
     logger.info(`MS: Send G-Check violation mail with igc to admins`);
-    if (!userId) return;
     const user = await db.User.findByPk(userId);
 
     if (!user) return;
@@ -246,10 +247,9 @@ const service = {
 
     return sendMail(adminMail, content);
   },
-  sendGoogleElevationErrorAdminMail: async (
-    flightId: number,
-    error: string
-  ) => {
+  sendGoogleElevationErrorAdminMail: async (flightId?: number, error?: any) => {
+    if (!flightId) throw new Error("MS: No flight ID specified");
+
     logger.info(
       `MS: Send Google Elevation Error mail to admins for flight ${flightId}`
     );
@@ -291,7 +291,7 @@ const service = {
     const user = await db.User.findByPk(flight.userId);
     if (!user) {
       logger.error(
-        `MS: Send violation accpted mail failed because user with ID ${flight.userId} wasn't found`
+        `MS: Send violation accepted mail failed because user with ID ${flight.userId} wasn't found`
       );
       return;
     }
@@ -309,21 +309,44 @@ const service = {
 
     return sendMail(user.email, content);
   },
-
-  sendAirspaceViolationRejectedMail: async (
-    flight: FlightOutputAttributes,
-    message: string
-  ) => {
+  sendNewPersonalBestMail: async (flight: FlightOutputAttributes) => {
     const user = await db.User.findByPk(flight.userId);
     if (!user) {
       logger.error(
-        `MS: Send violation rejected mail failed because user with ID ${flight.userId} wasn't found`
+        `MS: Send new personal best mail failed because user with ID ${flight.userId} wasn't found`
       );
       return;
     }
 
     logger.info(
-      `MS: Send airspace violation rejected mail for flight ${flight.externalId}`
+      `MS: Send new personal best mail for flight ${flight.externalId}`
+    );
+
+    const flightLinkUrl = `${clientUrl}${flightLink}/${flight.externalId}`;
+
+    const content = {
+      title: NEW_PERSONAL_BEST_TITLE,
+      text: NEW_PERSONAL_BEST_TEXT(user.firstName, flightLinkUrl),
+    };
+
+    return sendMail(user.email, content);
+  },
+
+  sendAirspaceViolationRejectedMail: async (
+    userId: string,
+    message: string,
+    externalId: number
+  ) => {
+    const user = await db.User.findByPk(userId);
+    if (!user) {
+      logger.error(
+        `MS: Send violation rejected mail failed because user with ID ${userId} wasn't found`
+      );
+      return;
+    }
+
+    logger.info(
+      `MS: Send airspace violation rejected mail for flight ${externalId}`
     );
 
     const content = {
@@ -377,8 +400,10 @@ const service = {
     const replyCommentOwnerId = relatedComment ? relatedComment.userId : null;
 
     // Only send reply email if author isn't owner of the reply comment
+    // @ts-ignore sequelize 😡
     if (replyCommentOwnerId && replyCommentOwnerId != comment.userId) {
       sendCommentMail(
+        // @ts-ignore sequelize 😡
         replyCommentOwnerId,
         flight.externalId ?? 0,
         <UserAttributes>fromUser,
@@ -397,21 +422,6 @@ const service = {
         false
       );
     }
-  },
-
-  sendMailAll: async (userId: string, content: MailContent) => {
-    logger.info(`MS: ${userId} requested to send an email to all users`);
-
-    const query = {
-      attributes: ["email"],
-      where: {
-        emailNewsletter: true,
-      },
-    };
-
-    const mailAddresses = await db.User.findAll(query);
-
-    return sendMail(mailAddresses, content);
   },
 };
 

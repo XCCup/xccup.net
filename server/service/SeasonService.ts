@@ -1,10 +1,12 @@
-import { SeasonDetailAttributes, SeasonDetailInstance } from "../db/models/SeasonDetail";
-
+import db from "../db";
 import { getCurrentYear } from "../helper/Utils";
 import logger from "../config/logger";
 import { XccupHttpError } from "../helper/ErrorHandler";
 import { getCache, setCache } from "../controller/CacheManager";
-import db from "../db";
+import {
+  SeasonDetailInstance,
+  SeasonDetailCreationAttributes,
+} from "../db/models/SeasonDetail";
 
 const service = {
   getById: async (id: string) => {
@@ -27,7 +29,7 @@ const service = {
     return details;
   },
 
-  getAll: async ({ retrieveOnlyYears = true } = {}) => {
+  getAll: async ({ retrieveOnlyYears } = { retrieveOnlyYears: false }) => {
     return db.SeasonDetail.findAll({
       attributes: retrieveOnlyYears ? ["year"] : undefined,
     });
@@ -46,15 +48,6 @@ const service = {
     return currentSeasonDetails;
   },
 
-  finalize: async (results: { name: string, func: CallableFunction }[]) => {
-    logger.info("SS: Start to finalize the current season");
-
-    // results.forEach(result => {
-    //   Result.create
-    // });
-
-  },
-
   refreshCurrentSeasonDetails: async () => {
     logger.info("SS: Refresh cache for currentSeasonDetails");
     return db.SeasonDetail.findOne({
@@ -65,8 +58,12 @@ const service = {
     });
   },
 
-  create: async (season: SeasonDetailAttributes) => {
+  create: async (season: SeasonDetailCreationAttributes) => {
     return db.SeasonDetail.create(season);
+  },
+
+  update: async (season: SeasonDetailInstance) => {
+    return season.save();
   },
 
   delete: async (id: string) => {
@@ -75,5 +72,5 @@ const service = {
     });
   },
 };
-
-export default service;
+export const getCurrentActive = service.getCurrentActive;
+module.exports = service;

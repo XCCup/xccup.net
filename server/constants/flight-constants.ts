@@ -12,13 +12,6 @@ export const enum TYPE {
   FAI = "FAI",
 }
 
-// TODO: Remove this hack when IgcAnalyzer is refactored to TS
-module.exports.TYPE = {
-  FREE: TYPE.FREE,
-  FLAT: TYPE.FLAT,
-  FAI: TYPE.FAI,
-};
-
 export const enum UPLOAD_ENDPOINT {
   WEB = "WEB",
   LEONARDO = "LEONARDO",
@@ -36,3 +29,4 @@ export const REGIONS = [
 
 export const IGC_STORE = "/igc";
 export const IGC_MAX_SIZE = 3000000; // 3MB
+export const MINIMUM_PB_FLIGHT_DISTANCE = 10;

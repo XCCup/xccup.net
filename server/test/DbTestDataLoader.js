@@ -60,18 +60,6 @@ const dbTestData = {
       relations.push([FlightComment, require("./testdatasets/comments.json")]);
       relations.push([FlightFixes, require("./testdatasets/fixes.json")]);
     }
-    // Real data with personal data
-    if (config.get("serverImportOriginalData")) {
-      relations.push([User, require("../import/usersImport.json")]);
-      relations.push([Team, require("../import/teamsImport.json")]);
-      relations.push([Flight, require("../import/flightsImport.json")]);
-      relations.push([FlightFixes, findAllFlightFixes("2021/a")]);
-      relations.push([FlightFixes, findAllFlightFixes("2021/b")]);
-      relations.push([FlightFixes, findAllFlightFixes("2021/c")]);
-      relations.push([FlightFixes, findAllFlightFixes("2021/d")]);
-      relations.push([FlightFixes, findAllFlightFixes("2021/e")]);
-      relations.push([FlightComment, require("../import/commentsImport.json")]);
-    }
 
     await addToDb(relations);
 
@@ -156,27 +144,6 @@ function adjustYearOfEveryFlight(flights) {
   const landingDate = new Date(flights[lastEntryIndex].landingTime);
   landingDate.setFullYear(today.getFullYear() - 1);
   flights[lastEntryIndex].landingTime = landingDate.toISOString();
-}
-
-// function sliceIntoChunks(arr, chunkSize) {
-//   const res = [];
-//   for (let i = 0; i < arr.length; i += chunkSize) {
-//     const chunk = arr.slice(i, i + chunkSize);
-//     res.push(chunk);
-//   }
-//   return res;
-// }
-
-function findAllFlightFixes(year) {
-  const fs = require("fs");
-
-  const fixesDir = `${config.get("rootDir")}/import/fixes/${year}`;
-  const fixesFileNames = fs.readdirSync(fixesDir);
-  console.log("FOUND FIXES: ", fixesFileNames);
-  const fixesAsOneArray = fixesFileNames.map((file) =>
-    require(fixesDir + "/" + file)
-  );
-  return fixesAsOneArray;
 }
 
 module.exports = dbTestData;

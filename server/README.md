@@ -45,17 +45,13 @@ Define credentials in backup.sh and config a cron job to execute backup.sh on a 
 ##### All tests
 
 ```
-
 docker-compose run --rm yarn test
-
 ```
 
 ##### A single tests
 
 ```
-
 docker-compose run --rm yarn test test/LocationFinder.test.js
-
 ```
 
 #### Connect PgAdmin to Postgres:
@@ -70,12 +66,8 @@ File -> Preferences -> Query Tool -> Results grid -> "Do as you like"
 
 #### Compile the OLC Binary
 
-```
+Contrary to what the name indicates we are using `olc2002.c` and not `olc2002_xccup.c`
 
+```
 gcc olc2002.c -o olc_lnx -lm
-
-```
-
-```
-
 ```

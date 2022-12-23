@@ -1,4 +1,4 @@
-import { TRACK_COLORS } from "@/common/Constants";
+import { ADDITIONAL_COLORS } from "@/common/Constants";
 import type { BuddyTrack } from "@/types/Airbuddy";
 import type { Flight } from "@/types/Flight";
 import type { ChartDataset } from "chart.js";
@@ -58,8 +58,8 @@ export function processBaroData(
   chartData[1] = {
     label: "Pilot",
     data: baroData,
-    backgroundColor: TRACK_COLORS[0],
-    borderColor: TRACK_COLORS[0],
+    backgroundColor: ADDITIONAL_COLORS[0],
+    borderColor: ADDITIONAL_COLORS[0],
   };
   // Datasets for all aribuddies
   if (buddyTracks) {
@@ -80,8 +80,8 @@ export function processBaroData(
       chartData[index + 2] = {
         label: element.buddyName,
         data: buddyBaro,
-        backgroundColor: TRACK_COLORS[index + 1],
-        borderColor: TRACK_COLORS[index + 1],
+        backgroundColor: ADDITIONAL_COLORS[index + 1],
+        borderColor: ADDITIONAL_COLORS[index + 1],
       };
     });
   }

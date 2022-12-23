@@ -18,13 +18,7 @@
 #define EOS '\0'
 #endif
 #define MAXPOINTS 5000
-#define M_PI 3.14159265358979323846
 #define RELEASE "$Revision: 1.3 $ $Date: 2008/06/04 14:12:40 $"
-
-#define TASK_TYPE_UNDEFINED 'x'
-#define TASK_TYPE_JOJO      'j'
-#define TASK_TYPE_TRIANGLE  'f'
-#define TASK_TYPE_FAI       'd'
 
 /*
  *	Liste der eingelesenen Längen- und Breitengarde
@@ -69,11 +63,12 @@
    	exit(-1);
    }
    timepnts[pnts]=seconds; latpnts[pnts]=lat;  lonpnts[pnts++]=lon; */
-      if (!(neu=(t_point*)malloc(sizeof(t_point)))) { perror("optigc: not enough memory");printf("OUT_OF_MEMORY"); exit(1); }
+      if (!(neu=(t_point*)malloc(sizeof(t_point)))) { perror("optigc: not enough memory"); exit(1); }
       neu->lat = lat; neu->lon = lon; neu->seconds = seconds; neu->next = 0;
       if (!pointlist) {
          pointlist = neu;
-      } else {
+      } 
+      else {
          last->next = neu;
       }
       last = neu;
@@ -140,11 +135,10 @@ static void comparedistances(int p1, int p2) {
       hours = (minutes = (seconds = timepnts[i])/60)/60;
       seconds -= 60*minutes;
       minutes -= 60*hours;
-      printf("%f %f", lat, lon);
-      //printf("p%04d %02d:%02d:%02d %c", i+1, hours, minutes, seconds, (signlat<0)?'S':'N');
-      //printdegrees(lat);
-      //printf(" %c", (signlon<0)?'E':'W');
-      //printdegrees(lon);
+      printf("p%04d %02d:%02d:%02d %c", i+1, hours, minutes, seconds, (signlat<0)?'S':'N');
+      printdegrees(lat);
+      printf(" %c", (signlon<0)?'E':'W');
+      printdegrees(lon);
    }
 
 
@@ -172,13 +166,13 @@ static void comparedistances(int p1, int p2) {
       if (latpnts) free(latpnts);
       if (lonpnts) free(lonpnts);
       if (timepnts) free(timepnts);
-      if (!(timepnts=(t_daytime*)malloc(sizeof(t_daytime)*pnts))) { perror("optigc mem: "); printf("OUT_OF_MEMORY"); exit(1); }
-      if (!(lonpnts=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); printf("OUT_OF_MEMORY"); exit(1); }
-      if (!(latpnts=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); printf("OUT_OF_MEMORY"); exit(1); }
-      if (!(distance=(t_distance*)malloc(sizeof(t_distance)*pnts*pnts))) { perror("optigc mem: "); printf("OUT_OF_MEMORY"); exit(1); }
-      if (!(sinlat=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); printf("OUT_OF_MEMORY"); exit(1); }
-      if (!(coslat=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); printf("OUT_OF_MEMORY"); exit(1); }
-      if (!(lonrad=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); printf("OUT_OF_MEMORY"); exit(1); }
+      if (!(timepnts=(t_daytime*)malloc(sizeof(t_daytime)*pnts))) { perror("optigc mem: "); exit(1); }
+      if (!(lonpnts=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); exit(1); }
+      if (!(latpnts=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); exit(1); }
+      if (!(distance=(t_distance*)malloc(sizeof(t_distance)*pnts*pnts))) { perror("optigc mem: "); exit(1); }
+      if (!(sinlat=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); exit(1); }
+      if (!(coslat=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); exit(1); }
+      if (!(lonrad=(double*)malloc(sizeof(double)*pnts))) { perror("optigc mem: "); exit(1); }
       printf("DEBUG initializing cos/sin/rad..\n");
       cmp = pnts+1; /* für indexberechnung i,i */
       for(i=0;i<pnts;i++) { /* alle Punkte ins Bogenmaß umrechnen und sin/cos Speichern */
@@ -312,116 +306,94 @@ static void comparedistances(int p1, int p2) {
  * Nevertheless in meters and not in dezimetern one counts here, 
  * comes there it otherwise to rounding errors.
  */
-   static void printResult(double factorJojo, double factorFlach, double factorFAI, char preselTask) {
-       double freeFlightKm = ((double)maxroute) / (double)1000.0;
-       double freeTriangleKm = ((double)bestflach) / (double)1000.0;
-       double FAITriangleKm = ((double)bestfai) / (double)1000.0;
-
-       double freeFlightPoints = freeFlightKm   *((double)factorJojo);
-       double freeTrianglePoints = freeTriangleKm *((double)factorFlach);
-       double FAITrianglePoints = FAITriangleKm  *((double)factorFAI);
-
-       switch (preselTask) {
-       case TASK_TYPE_JOJO:
-           printf("RES FORCE TASK TYPE: JOJO\n");
-           printf("RES BEST_FLIGHT_TYPE (JOJO)\n");
-           printf("RES FLIGHT_KM (%.3lf)\n", freeFlightKm);
-           printf("RES FLIGHT_POINTS (%.3lf)\n", freeFlightPoints);
-
-           printf("DEBUG Best free Flight: %.3lf km = %.3lf Points\n", freeFlightKm, freeFlightPoints);
-
-           printf("RES TASK_POINT %d:", max1); printpoint(max1); printf("\n");
-           printf("RES TASK_POINT %d:", max2); printpoint(max2); printf("\n");
-           printf("RES TASK_POINT %d:", max3); printpoint(max3); printf("\n");
-           printf("RES TASK_POINT %d:", max4); printpoint(max4); printf("\n");
-           printf("RES TASK_POINT %d:", max5); printpoint(max5); printf("\n");
-           break;
-
-       case TASK_TYPE_TRIANGLE:
-           printf("RES FORCE TASK TYPE: D\n");
-           printf("RES BEST_FLIGHT_TYPE (D)\n");
-           printf("RES FLIGHT_KM (%.3lf)\n", freeTriangleKm);
-           printf("RES FLIGHT_POINTS (%.3lf)\n", freeTrianglePoints);
-
-           printf("DEBUG Best free Triangle: %.3lf km = %.3lf Points\n",
-               ((double)bestflach) / (double)1000.0, ((double)bestflach) / ((double)1000.0)*((double)factorFlach));
-
-           printf("RES TASK_POINT %d:", max1flach); printpoint(max1flach); printf("\n");
-           printf("RES TASK_POINT %d:", max2flach); printpoint(max2flach); printf("\n");
-           printf("RES TASK_POINT %d:", max3flach); printpoint(max3flach); printf("\n");
-           printf("RES TASK_POINT %d:", max4flach); printpoint(max4flach); printf("\n");
-           printf("RES TASK_POINT %d:", max5flach); printpoint(max5flach); printf("\n");
-           break;
-
-       case TASK_TYPE_FAI:
-           printf("RES FORCE TASK TYPE: D\n");
-           printf("RES BEST_FLIGHT_TYPE (FAI-D)\n");
-           printf("RES FLIGHT_KM (%.3lf)\n", FAITriangleKm);
-           printf("RES FLIGHT_POINTS (%.3lf)\n", FAITrianglePoints);
-
-           printf("bestes FAI Dreieck: %.3lf km = %.3lf Punkte\n",
-               ((double)bestfai) / (double)1000.0, ((double)bestfai) / ((double)1000.0)*((double)factorFAI));
-
-           printf("RES TASK_POINT %d:", max1); printpoint(max1fai); printf("\n");
-           printf("RES TASK_POINT %d:", max2fai); printpoint(max2fai); printf("\n");
-           printf("RES TASK_POINT %d:", max3fai); printpoint(max3fai); printf("\n");
-           printf("RES TASK_POINT %d:", max4fai); printpoint(max4fai); printf("\n");
-           printf("RES TASK_POINT %d:", max5fai); printpoint(max5fai); printf("\n");
-           break;
-
-       default:
-           if (freeFlightPoints > freeTrianglePoints && freeFlightPoints > FAITrianglePoints) {
-               printf("RES BEST_FLIGHT_TYPE (JOJO)\n");
-               printf("RES FLIGHT_KM (%.3lf)\n", freeFlightKm);
-               printf("RES FLIGHT_POINTS (%.3lf)\n", freeFlightPoints);
-
-               printf("DEBUG Best free Flight: %.3lf km = %.3lf Points\n", freeFlightKm, freeFlightPoints);
-
-               printf("RES TASK_POINT %d:", max1); printpoint(max1); printf("\n");
-               printf("RES TASK_POINT %d:", max2); printpoint(max2); printf("\n");
-               printf("RES TASK_POINT %d:", max3); printpoint(max3); printf("\n");
-               printf("RES TASK_POINT %d:", max4); printpoint(max4); printf("\n");
-               printf("RES TASK_POINT %d:", max5); printpoint(max5); printf("\n");
-           } else if (freeTrianglePoints > FAITrianglePoints) {
-               printf("RES BEST_FLIGHT_TYPE (D)\n");
-               printf("RES FLIGHT_KM (%.3lf)\n", freeTriangleKm);
-               printf("RES FLIGHT_POINTS (%.3lf)\n", freeTrianglePoints);
-
-               printf("DEBUG Best free Triangle: %.3lf km = %.3lf Points\n",
-                   ((double)bestflach) / (double)1000.0, ((double)bestflach) / ((double)1000.0)*((double)factorFlach));
-
-               printf("RES TASK_POINT %d:", max1flach); printpoint(max1flach); printf("\n");
-               printf("RES TASK_POINT %d:", max2flach); printpoint(max2flach); printf("\n");
-               printf("RES TASK_POINT %d:", max3flach); printpoint(max3flach); printf("\n");
-               printf("RES TASK_POINT %d:", max4flach); printpoint(max4flach); printf("\n");
-               printf("RES TASK_POINT %d:", max5flach); printpoint(max5flach); printf("\n");
-           } else {
-               printf("RES BEST_FLIGHT_TYPE (FAI-D)\n");
-               printf("RES FLIGHT_KM (%.3lf)\n", FAITriangleKm);
-               printf("RES FLIGHT_POINTS (%.3lf)\n", FAITrianglePoints);
-
-               printf("bestes FAI Dreieck: %.3lf km = %.3lf Punkte\n",
-                   ((double)bestfai) / (double)1000.0, ((double)bestfai) / ((double)1000.0)*((double)factorFAI));
-
-               printf("RES TASK_POINT %d:", max1fai); printpoint(max1fai); printf("\n");
-               printf("RES TASK_POINT %d:", max2fai); printpoint(max2fai); printf("\n");
-               printf("RES TASK_POINT %d:", max3fai); printpoint(max3fai); printf("\n");
-               printf("RES TASK_POINT %d:", max4fai); printpoint(max4fai); printf("\n");
-               printf("RES TASK_POINT %d:", max5fai); printpoint(max5fai); printf("\n");
-           }
-           break;
-       }
-   }
  
+    static void printbest() {
+   
+      double freeFlightKm  =((double)maxroute)/(double)1000.0;
+      double freeTriangleKm=((double)bestflach)/(double)1000.0;
+      double FAITriangleKm =((double)bestfai)/(double)1000.0;
+   
+      double freeFlightPoints   = freeFlightKm   *((double)1.5);
+      double freeTrianglePoints = freeTriangleKm *((double)1.75);
+      double FAITrianglePoints  = FAITriangleKm  *((double)2.0);
+   
+   
+      if ( freeFlightPoints > freeTrianglePoints && freeFlightPoints > FAITrianglePoints ) {
+         printf("OUT BEST_FLIGHT_TYPE FREE_FLIGHT\n");
+      } else if ( freeTrianglePoints > FAITrianglePoints ) {      
+	      /*
+	      *	Die Dreiecke bestehen aus den Schenkeln a, b und c. Von dieser Strecke
+	      * wird die Distanz d zwischen Start- und Endpunkt abgezogen
+	      */
+	         printf("OUT BEST_FLIGHT_TYPE FREE_TRIANGLE\n");
+	   } else {
+          printf("OUT BEST_FLIGHT_TYPE FAI_TRIANGLE\n");
+       }
+
+		/* Print all opti results          */
+		
+         printf("OUT TYPE FREE_FLIGHT\n");
+         printf("OUT FLIGHT_KM %.3lf\n",freeFlightKm );
+         printf("OUT FLIGHT_POINTS %.3lf\n",freeFlightPoints );
+      
+         printf("DEBUG Best free Flight: %.3lf km = %.3lf Points\n",freeFlightKm,freeFlightPoints );
+         printf ("OUT "); printpoint(max1); printf("\n");
+         printf ("OUT "); printpoint(max2); printf(" %3.3lf km\n",
+            ((double)distance[max1+pnts*max2])/((double)1000.0) );
+         printf ("OUT "); printpoint(max3); printf(" %3.3lf km\n",
+            ((double)distance[max2+pnts*max3])/((double)1000.0) );
+         printf ("OUT "); printpoint(max4); printf(" %3.3lf km\n",
+            ((double)distance[max3+pnts*max4])/((double)1000.0) );
+         printf ("OUT "); printpoint(max5); printf(" %3.3lf km\n",
+            ((double)distance[max4+pnts*max5])/((double)1000.0) );
+      
+    
+         printf("OUT TYPE FREE_TRIANGLE\n");
+         printf("OUT FLIGHT_KM %.3lf\n",freeTriangleKm );
+         printf("OUT FLIGHT_POINTS %.3lf\n",freeTrianglePoints );
+      
+         printf("DEBUG Best free Triangle: %.3lf km = %.3lf Points\n",
+            ((double)bestflach)/(double)1000.0, ((double)bestflach)/((double)1000.0)*((double)1.75) );
+         printf ("OUT "); printpoint(max1flach); printf("\n");
+         printf ("OUT "); printpoint(max2flach); printf(" %3.3lf km=d\n",
+            ((double)distance[max1flach+pnts*max5flach])/(double)1000.0);
+         printf ("OUT "); printpoint(max3flach); printf(" %3.3lf km=a\n",
+            ((double)distance[max2flach+pnts*max3flach])/(double)1000.0);
+         printf ("OUT "); printpoint(max4flach); printf(" %3.3lf km=b\n",
+            ((double)distance[max3flach+pnts*max4flach])/(double)1000.0);
+         printf ("OUT "); printpoint(max5flach); printf(" %3.3lf km=c\n",
+            ((double)distance[max2flach+pnts*max4flach])/(double)1000.0);
+
+
+         printf("OUT TYPE FAI_TRIANGLE\n");
+         printf("OUT FLIGHT_KM %.3lf\n",FAITriangleKm );
+         printf("OUT FLIGHT_POINTS %.3lf\n",FAITrianglePoints );
+      
+         printf("bestes FAI Dreieck: %.3lf km = %.3lf Punkte\n",
+            ((double)bestfai)/(double)1000.0, ((double)bestfai)/((double)1000.0)*((double)2.0) );
+         printf ("OUT "); printpoint(max1fai); printf("\n");
+         printf ("OUT "); printpoint(max2fai); printf(" %3.3lf km=d\n",
+            ((double)distance[max1fai+pnts*max5fai])/(double)1000.0);
+         printf ("OUT "); printpoint(max3fai); printf(" %3.3lf km=a\n",
+            ((double)distance[max2fai+pnts*max3fai])/(double)1000.0);
+         printf ("OUT "); printpoint(max4fai); printf(" %3.3lf km=b\n",
+            ((double)distance[max3fai+pnts*max4fai])/(double)1000.0);
+         printf ("OUT "); printpoint(max5fai); printf(" %3.3lf km=c\n",
+            ((double)distance[max2fai+pnts*max4fai])/(double)1000.0);
+      
+      
+      
+   }
+
 /*
  *	Signalbehandlungsroutine die bisher bester Zwischenergebnise asynchron ausgibt
  */
-   /* static void opthandler(int signum) {
+    static void opthandler(int signum) {
       printf("\ncurrent ");
       printbest();
       printf("current count: %d %d %d %d %d\n",i1,i2,i3,i4,i5);
       if (-1==(int)signal(signum,opthandler)) perror("signal()");
-   }*/
+   }
 
 /*
  * Matrix mit den kleinsten Abständen zwischen Start- und Endpunkt
@@ -472,7 +444,7 @@ static void printdmin() {
       register int i, j, d, mini, minj, minimum = maxdist;
    
       printf("initializing dmin(i,j) with best start/endpoints for triangles..\n");
-      if (!(dminindex=(t_index*)malloc(sizeof(t_index)*pnts*pnts))) { perror("mem"); printf("OUT_OF_MEMORY"); exit(1); }
+      if (!(dminindex=(t_index*)malloc(sizeof(t_index)*pnts*pnts))) { perror("mem"); exit(1); }
       for(j=pnts-1;j>0;j--) { /* erste Zeile separat behandeln */
          d = distance[0+pnts*j];
          if (d<minimum) {/* d<=minimum falls gleichwertiger Punkt weiter vorne im track gefunden werden soll */
@@ -529,8 +501,8 @@ int fdmin(int i, int j) {
     void initmaxend() {
       register int w3, i, f, maxf, besti, leaveout;
       printf("initializing maxenddist[] with maximal distance to best endpoint ..\n");
-      if (!(maxenddist=(t_distance*)malloc(sizeof(t_distance)*pnts))) { perror("mem"); printf("OUT_OF_MEMORY"); exit(1); }
-      if (!(maxendpunkt=(t_index*)malloc(sizeof(t_index)*pnts))) { perror("mem"); printf("OUT_OF_MEMORY"); exit(1); }
+      if (!(maxenddist=(t_distance*)malloc(sizeof(t_distance)*pnts))) { perror("mem"); exit(1); }
+      if (!(maxendpunkt=(t_index*)malloc(sizeof(t_index)*pnts))) { perror("mem"); exit(1); }
       for(w3=pnts-1; w3>1; w3--) {
          maxf = 0; leaveout = 1;
          for(i=besti=pnts-1; i>=w3; i -= leaveout) {
@@ -628,7 +600,7 @@ int maxendi(int w3) {}
  * mrmemf = maxroute - e -f
  * bflpdmc ) bestflach +d -c
  */
-    static void optimize(int nocalc, double factorJojo, double factorFlach, double factorFAI, char preselTask) {
+    static void optimize(int nocalc) {
       register int i4cmp, i1leaveout, fsleaveout, flachleaveout, leaveout, faileaveout, dreieckleaveout, i2cmp = pnts-2, max2d2, max2d7, max2d3;
       register int i, a, b, c, d, e, f, u, w, tmp, maxaplusb, aplusb, c25, d5minusc, mrmemf, mrme, bflpdmc, dmc, baipdmc, epf;
       if (pnts<5) {
@@ -644,7 +616,7 @@ int maxendi(int w3) {}
       max2d2 = max2dist * 2; max2d7 = max2dist * 7; max2d3 = max2dist * 3;
       firstguess();
       printf("calculating best waypoints.. for more than 500 points need some minutes, press Ctrl-C for intermediate results..\n");
-      //signal(SIGINT, opthandler);
+      signal(SIGINT, opthandler);
       for(i2=0; i2<i2cmp; i2++) { /* 1.Wende */ /* i1leaveout = 1; kann wech */
          for(i=i1=e=0; i<i2; i+=i1leaveout) { /* Starting point for free distance is separately optimized  */
             if ((tmp = distance[i+pnts*i2])>=e) { e = tmp; i1 = i; }
@@ -710,7 +682,7 @@ int maxendi(int w3) {}
          /* } */
          }
       }
-      printResult(factorJojo, factorFlach, factorFAI, preselTask);
+      printbest();
       free(maxendpunkt); free(maxenddist);
       free(dminindex);
    }
@@ -750,7 +722,6 @@ int maxendi(int w3) {}
  */
     static void analyzeIGC(FILE *in, int verbose, double maxspeed, int starttime, int endtime) {
       int i = 0, hint0 = 0, hint5 = 0;
-      int pointCount = 0;
       char line[255];
       int last = 0, seconds, minutes, hours, current, deltaseconds, first = TRUE;
       double lastlat=(double)0.0, lastlon=(double)0.0, lat, lon, signlat, signlon, tmp, speed;
@@ -758,37 +729,10 @@ int maxendi(int w3) {}
    	double maximum_speed=0,mean_speed=0;
    	unsigned int alt,last_alt,max_alt=0,min_alt=60000,takeoff_alt;
    	double dalt,min_dalt=0,max_dalt=0;
-    int pointStep = 1;
+   	
       pnts = 0; pointlist = 0;
    
       printf("starttime: %d endtime: %d\n", starttime, endtime);
-
-      int totalPointCount = 0;
-
-      while (fscanf(in, "%s", line) == 1) {
-          if (*line != 'B') {
-              if (line[0] == 'H' && line[1] == 'F' && line[2] == 'D' && line[3] == 'T' && line[4] == 'E') {
-                  printf("DEBUG DATE %s\n", &line[5]);   /*  the date is HFDTE140702 */
-              }
-              continue;
-          }
-          /*  if ( line[15] != '0')
-               continue; */
-          if ((line[14] != 'N') && (line[14] != 'S'))
-              continue;
-          if ((line[23] != 'E') && (line[23] != 'W'))
-              continue;
-          if (strlen(line) < 23)
-              continue;
-
-          totalPointCount++;
-      }
-
-      if (totalPointCount > MAXPOINTS) {
-          pointStep = (int)ceil((double)totalPointCount / (double)MAXPOINTS);
-      }
-                 
-      rewind(in);
    
       while (fscanf(in,"%s", line)==1) {
          if ( *line != 'B') {
@@ -805,13 +749,6 @@ int maxendi(int w3) {}
             continue;
          if (strlen(line) < 23) 
             continue;
-
-         pointCount++;
-
-         if((pointCount % pointStep) != 0) {
-             continue;
-         }
-
          if (line[14]=='N') signlat = (double)1.0;
          if (line[14]=='S') signlat = (double)(-1.0);
          if (line[23]=='W') signlon = (double)1.0;
@@ -863,35 +800,31 @@ int maxendi(int w3) {}
       	
       	++i;
          if (verbose) printf("%02d:%02d:%02d dt=%ds ds=%lfm\t spd=%lfkm/h\n", hours, minutes, seconds, deltaseconds, tmp, speed);
-         //if (speed>=maxspeed) printf("WARNING: more than %lfkm/h at %02d:%02d:%02d, %lfkm/h\n", maxspeed, hours, minutes, seconds, speed);
-         //if (deltaseconds<0) printf("WARNING: timewrap before %02d:%02d:%02d\n", hours , minutes, seconds);
+         if (speed>=maxspeed) printf("WARNING: more than %lfkm/h at %02d:%02d:%02d, %lfkm/h\n", maxspeed, hours, minutes, seconds, speed);
+         if (deltaseconds<0) printf("WARNING: timewrap before %02d:%02d:%02d\n", hours , minutes, seconds);
          if (current!=last) {
             if (tmp<((double)0.5)) { /* smaller distance than 0,5 meters is no measurable */
                if (last) {
                   hint5++;
-            } else {
-                addPoint(lat,lon,current);
+               } 
+               else addPoint(lat,lon,current);
+            } 
+            else addPoint(lat,lon,current);
          } 
-            } else {
-                addPoint(lat,lon,current);
+         else { /* punkte mit 0 Zeitunterschied auslassen */
+            if (tmp>=((double)0.5)) {
+               addPoint(lat,lon,current);
+               printf("WARNING: dtime=0 but dstrecke=%lf\n",tmp);
+            } 
+            else {
+               if (!first) {
+                  if (tmp!=0.0) printf("WARNING: dtime=0 dstrecke=%lf point left out!\n",tmp);
+                  else hint0++;
+               } 
+               else { /* ersten Punkt nicht weglassen */
+                  addPoint(lat,lon,current); first=FALSE;
+               }
             }
-         } else { /* punkte mit 0 Zeitunterschied auslassen */
-             if (tmp >= ((double)0.5)) {
-                 addPoint(lat, lon, current);
-                 //printf("WARNING: dtime=0 but dstrecke=%lf\n",tmp);
-             } else {
-                 if (!first) {
-                     if (tmp != 0.0) {
-                         // printf("WARNING: dtime=0 dstrecke=%lf point left out!\n",tmp);
-                     }
-                     else {
-                         hint0++;
-                     }
-                 } else { /* ersten Punkt weglassen, wichtig bei Garmin-Geräten wg. Ausschalt-Bug */
-                     //addPoint(lat, lon, current);
-                     first = FALSE;
-                 }
-             }
          }
          last = current; lastlat = lat; lastlon = lon;
       }
@@ -927,21 +860,13 @@ int maxendi(int w3) {}
  * Wird kein Filename angegeben, wird von der
  * Standardeingabe gelesen (erlaubt ein Pipen der Daten ins Programm)
  */
-
     int main(int ac, char *av[]) {
-	  double factorJojo  = 0.0;
-	  double factorFlach = 0.0;
-	  double factorFAI   = 0.0;
-
-	  char preselTask = TASK_TYPE_UNDEFINED;
-
       int i, verbose = FALSE;
       int nocalc=0;
       FILE *in;
       double maxspeed = 90.0;
       int starttime = 0;
       int endtime = 24*60*60;
-
       char *filename = 0;
       for (i=1; i<ac; i++) {
          if (av[i][0]=='-') {
@@ -950,10 +875,6 @@ int maxendi(int w3) {}
             else if (av[i][1]=='b') starttime = a2s(&(av[i][2]));
 	    else if (av[i][1]=='n') nocalc = 1;
             else if (av[i][1]=='e') endtime = a2s(&(av[i][2]));
-            else if (av[i][1]=='j') factorJojo = atof(&(av[i][2]));
-            else if (av[i][1]=='f') factorFlach = atof(&(av[i][2]));
-            else if (av[i][1]=='d') factorFAI = atof(&(av[i][2]));
-            else if (av[i][1]=='t') preselTask = av[i][2];
             else if (av[i][1]=='h') {
                printf("usage: %s [-v] [-n] [-s] [-bhh[:mm[:ss]]] [-ehh[:mm[:ss]]] [-help] [ name ]\n",av[0]);
                printf("  -v    : enable verbose mode\n");
@@ -961,11 +882,6 @@ int maxendi(int w3) {}
                printf("  -s    : use another parameter for MaxSpeed Detection, default is: %lfkmh\n",maxspeed);
                printf("  -bhh[:mm[:ss]] : begin time (points before are skipped)\n");
                printf("  -ehh[:mm[:ss]] : end time (points after this time are skipped\n");
-               printf("  -j<factor> : JOJO factor\n");
-               printf("  -f<factor> : Triangle factor\n");
-               printf("  -d<factor> : FAI triangle factor\n");
-               printf("  -t<task>: Force calculate task [j=JOJO, f=triangle, d=FAI triangle]\n");
-               printf("  -k<step>: Skip IGC points every <step>.\n");
                printf("  -help : this help screen\n");
                printf("   name : igc filename, otherwise reading from stdin\n");
                printf("  release: %s %s\n\n", av[0], RELEASE);
@@ -980,16 +896,13 @@ int maxendi(int w3) {}
       }
       if (filename) {
          if (!(in=fopen(filename,"r"))) { perror(filename); exit(1); }
-      } else {
+      } 
+      else {
          fprintf(stderr,"reading from stdin..\n");
          if (!(in=fdopen(STDIN,"r"))) { perror("STDIN"); exit(1); }
       }
       analyzeIGC(in,verbose,maxspeed,starttime,endtime); /* IGC-File einlesen */
       fclose(in);
-      printf("JOJO:  %f\n", factorJojo);
-      printf("Flach: %f\n", factorFlach);
-	  printf("FAI:   %f\n", factorFAI);
-      optimize(nocalc, factorJojo, factorFlach, factorFAI, preselTask); /* Track optimieren */
-
+      optimize(nocalc); /* Track optimieren */
       return 0;
    }

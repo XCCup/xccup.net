@@ -4,6 +4,7 @@ import { ROLE } from "../../constants/user-constants";
 
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { Models } from "../../types/Models";
+import { Glider } from "../../types/Glider";
 
 export interface UserAttributes {
   id: string;
@@ -15,15 +16,25 @@ export interface UserAttributes {
   gender?: string;
   tshirtSize?: string;
   defaultGlider?: string;
-  gliders?: glider[];
+  gliders?: Glider[];
   emailInformIfComment?: boolean;
   emailNewsletter?: boolean;
   emailTeamSearch?: boolean;
-  address?: object; // TODO: Type this stricter
+  address?: Address;
   email: string;
   rankingNumber?: number;
   password?: string;
   token?: string;
+  teamId?: string;
+  clubId?: string;
+}
+
+interface Address {
+  country?: string;
+  state?: string;
+  street?: string;
+  zip?: string;
+  city?: string;
 }
 
 // Why are those german?
@@ -33,13 +44,6 @@ type UserRole =
   | "Keine"
   | "Inaktiv"
   | "Entwickler";
-
-interface glider {
-  id: string;
-  brand: string;
-  model: string;
-  gliderClass: string;
-}
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 
@@ -194,7 +198,7 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       as: "picture",
       foreignKey: {
         name: "userId",
-        //Through this constrain it's realized that every comment, will be delete if the user will be deleted
+        //Through this constrain it's realized that every comment, will be deleted if the user will be deleted
         allowNull: false,
       },
       onDelete: "CASCADE",
@@ -204,7 +208,7 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       as: "photos",
       foreignKey: {
         name: "userId",
-        //Through this constrain it's realized that every comment, will be delete if the user will be deleted
+        //Through this constrain it's realized that every photo, will be deleted if the user will be deleted
         allowNull: false,
       },
       onDelete: "CASCADE",

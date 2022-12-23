@@ -8,5 +8,6 @@ declare namespace Express {
       gender: string;
     };
     authStatus?: string;
+    externalId?: number;
   }
 }

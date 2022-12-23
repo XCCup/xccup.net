@@ -6,3 +6,6 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+interface ImportMeta {
+  readonly VITE_SENTRY_URL: string;
+}

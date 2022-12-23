@@ -71,6 +71,7 @@ declare module '@vue/runtime-core' {
     NewsPanel: typeof import('./src/components/NewsPanel.vue')['default']
     NotFound: typeof import('./src/components/NotFound.vue')['default']
     PaginationPanel: typeof import('./src/components/PaginationPanel.vue')['default']
+    PersonalBestIcon: typeof import('./src/components/PersonalBestIcon.vue')['default']
     PhotoCarousel: typeof import('./src/components/PhotoCarousel.vue')['default']
     PrivacyPolicy: typeof import('./src/components/PrivacyPolicy.vue')['default']
     RankingClass: typeof import('./src/components/RankingClass.vue')['default']

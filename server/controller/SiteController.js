@@ -89,7 +89,7 @@ router.post(
     try {
       await service.create({
         ...req.body,
-        submitter: req.user,
+        submitter: req.user.id,
       });
       mailService.sendNewAdminTask();
 

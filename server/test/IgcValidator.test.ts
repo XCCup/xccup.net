@@ -1,8 +1,8 @@
 /**
  * @jest-environment node
  */
-const IgcValidator = require("../igc/IgcValidator");
-const { readIgcFile } = require("./IgcTestHelper");
+import { validateIgc } from "../igc/IgcValidator";
+import { readIgcFile } from "./IgcTestHelper";
 
 test("Validate an igc-File which should result to PASSED", (done) => {
   const igc = {
@@ -10,7 +10,7 @@ test("Validate an igc-File which should result to PASSED", (done) => {
     body: readIgcFile("kai_fai", "fai_60km42_3h53m.igc"),
   };
 
-  IgcValidator.execute(igc)
+  validateIgc(igc.body, igc.name)
     .then((result) => {
       expect(result).toBe("PASSED");
       done();
@@ -24,7 +24,7 @@ test("Validate an igc-File which should result to FAILED", (done) => {
     body: readIgcFile("kai_fai_invalid", "removed_line_20to22.igc"),
   };
 
-  IgcValidator.execute(igc)
+  validateIgc(igc.body, igc.name)
     .then((result) => {
       expect(result).toBe("FAILED");
       done();

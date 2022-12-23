@@ -2,8 +2,8 @@ const User = require("../db")["User"];
 const Club = require("../db")["Club"];
 const Team = require("../db")["Team"];
 const Flight = require("../db")["Flight"];
-const flightService = require("../service/FlightService");
-const mailService = require("../service/MailService");
+const flightService = require("./FlightService");
+const mailService = require("./MailService");
 const ProfilePicture = require("../db")["ProfilePicture"];
 const { ROLE } = require("../constants/user-constants");
 const { TYPE, STATE } = require("../constants/flight-constants");
@@ -119,19 +119,6 @@ const userService = {
       ],
     });
   },
-  getAllEmail: async (isNewsletter) => {
-    const query = {
-      attributes: ["email"],
-    };
-
-    if (isNewsletter) {
-      query.where = {
-        emailNewsletter: true,
-      };
-    }
-
-    return await User.findAll(query);
-  },
   getGlidersById: async (id) => {
     return await User.findByPk(id, {
       attributes: ["gliders", "defaultGlider"],
@@ -180,7 +167,7 @@ const userService = {
     return usersWithEnoughFlightsJSON;
   },
   /**
-   * Retrieves e-mail-addresses of active users. Does not return e-mail-adresses of developer accounts.
+   * Retrieves e-mail-addresses of active users. Does not return e-mail-addresses of developer accounts.
    * @param {boolean} includeAll If set to true all e-mail addresses will be retrieved. Otherwise only the e-mail-addresses of users which subscribed to the newsletter will be retrieved.
    * @returns An array of e-mail-addresses
    */

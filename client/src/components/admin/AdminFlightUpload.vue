@@ -57,18 +57,7 @@
         >Luftstart ignorieren</label
       >
     </div>
-    <div class="form-check form-switch mb-3">
-      <input
-        id="flexSwitchCheckManipulation"
-        v-model="skipManipulated"
-        class="form-check-input"
-        type="checkbox"
-        role="switch"
-      />
-      <label class="form-check-label" for="flexSwitchCheckManipulation"
-        >Manipulation ignorieren</label
-      >
-    </div>
+
     <div class="form-check form-switch mb-3">
       <input
         id="flexSwitchMetar"
@@ -111,7 +100,6 @@ const showSpinner = ref(false);
 const fileLoaded = ref(false);
 const properUserSet = ref(false);
 const skipGCheck = ref(false);
-const skipManipulated = ref(false);
 const skipMidflight = ref(false);
 const skipMeta = ref(false);
 
@@ -149,8 +137,7 @@ async function onSubmit() {
       formData.append("userId", selectedUserObject.id);
       if (skipGCheck.value)
         formData.append("skipGCheck", skipGCheck.value.toString());
-      if (skipManipulated.value)
-        formData.append("skipManipulated", skipManipulated.value.toString());
+
       if (skipMidflight.value)
         formData.append("skipMidflight", skipMidflight.value.toString());
       if (skipMeta.value)
@@ -163,7 +150,6 @@ async function onSubmit() {
   } catch (error: any) {
     console.log(error.response);
     formData?.delete("skipGCheck");
-    formData?.delete("skipManipulated");
     formData?.delete("skipMidflight");
     formData?.delete("skipMeta");
     formData?.delete("userId");
