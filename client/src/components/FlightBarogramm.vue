@@ -130,8 +130,10 @@ const ctx = ref(null);
 
 // Watch and update the chart
 watchEffect(() => {
+  // @ts-ignore TODO: I know it's there!
   if (chart.value && chartData.value && chart.value.options?.scales?.y?.title) {
     chart.value.data.datasets = chartData.value;
+    // @ts-ignore TODO: I know it's there!
     chart.value.options.scales.y.title.text = usePressureAlt.value
       ? "Baro Höhe"
       : "GPS Höhe";

@@ -1,6 +1,7 @@
-const path = require("path");
-const logger = require("../config/logger");
-const IgcAnalyzer = require("../igc/IgcAnalyzer");
+import path from "path";
+import logger from "../config/logger";
+import { FlightInstance } from "../db/models/Flight";
+import { startCalculation, extractFixes, OLCResult } from "../igc/IgcAnalyzer";
 
 const flightTypeFactors = {
   FAI: 2,
@@ -10,7 +11,9 @@ const flightTypeFactors = {
 
 beforeEach(() => {
   // Supress logging to console
+  // @ts-ignore
   jest.spyOn(logger, "debug").mockImplementation(() => {});
+  // @ts-ignore
   jest.spyOn(logger, "info").mockImplementation(() => {});
 });
 
@@ -21,7 +24,7 @@ test("Validate an igc-File which should result to a FAI triangle", (done) => {
   const flightToAnaylze = {
     externalId: "kai_fai",
     igcPath: path.join(__dirname, "../igc", filePath),
-  };
+  } as unknown as FlightInstance;
 
   const expectedFlight = {
     externalId: "kai_fai",
@@ -36,14 +39,15 @@ test("Validate an igc-File which should result to a FAI triangle", (done) => {
   };
 
   try {
-    IgcAnalyzer.startCalculation(
+    startCalculation(
       flightToAnaylze,
       flightTypeFactors,
-      (result) => {
+      (result: OLCResult) => {
         expect(result.type).toBe(expectedFlight.type);
         expect(result.dist).toBe(expectedFlight.dist);
+        // @ts-ignore
         expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
-        expect(result.id).toBe(expectedFlight.id);
+        expect(result.externalId).toBe(expectedFlight.externalId);
         expect(result.igcPath).toContain(expectedFlight.igcPath);
         done();
       }
@@ -60,7 +64,7 @@ test("Validate an igc-File which should result to a FLAT triangle", (done) => {
   const flightToAnaylze = {
     externalId: "kai_flat",
     igcPath: path.join(__dirname, "../igc", filePath),
-  };
+  } as unknown as FlightInstance;
 
   const expectedFlight = {
     externalId: "kai_flat",
@@ -75,14 +79,15 @@ test("Validate an igc-File which should result to a FLAT triangle", (done) => {
   };
 
   try {
-    IgcAnalyzer.startCalculation(
+    startCalculation(
       flightToAnaylze,
       flightTypeFactors,
-      (result) => {
+      (result: OLCResult) => {
         expect(result.type).toBe(expectedFlight.type);
         expect(result.dist).toBe(expectedFlight.dist);
+        // @ts-ignore
         expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
-        expect(result.id).toBe(expectedFlight.id);
+        expect(result.externalId).toBe(expectedFlight.externalId);
         expect(result.igcPath).toContain(expectedFlight.igcPath);
         done();
       }
@@ -99,7 +104,7 @@ test("Validate an igc-File which should result to a free flight", (done) => {
   const flightToAnaylze = {
     externalId: "kai_free",
     igcPath: path.join(__dirname, "../igc", filePath),
-  };
+  } as unknown as FlightInstance;
 
   const expectedFlight = {
     externalId: "kai_free",
@@ -114,14 +119,15 @@ test("Validate an igc-File which should result to a free flight", (done) => {
   };
 
   try {
-    IgcAnalyzer.startCalculation(
+    startCalculation(
       flightToAnaylze,
       flightTypeFactors,
-      (result) => {
+      (result: OLCResult) => {
         expect(result.type).toBe(expectedFlight.type);
         expect(result.dist).toBe(expectedFlight.dist);
+        // @ts-ignore
         expect(result.turnpoints[2]).toStrictEqual(expectedFlight.turnpoints);
-        expect(result.id).toBe(expectedFlight.id);
+        expect(result.externalId).toBe(expectedFlight.externalId);
         expect(result.igcPath).toContain(expectedFlight.igcPath);
         done();
       }
@@ -139,7 +145,7 @@ test("Validate an igc-File were two turnpoints match", (done) => {
   const flightToAnaylze = {
     externalId: "user",
     igcPath: path.join(__dirname, "../igc", filePath),
-  };
+  } as unknown as FlightInstance;
 
   const expectedFlight = {
     externalId: "user",
@@ -149,13 +155,13 @@ test("Validate an igc-File were two turnpoints match", (done) => {
   };
 
   try {
-    IgcAnalyzer.startCalculation(
+    startCalculation(
       flightToAnaylze,
       flightTypeFactors,
-      (result) => {
+      (result: OLCResult) => {
         expect(result.type).toBe(expectedFlight.type);
         expect(result.dist).toBe(expectedFlight.dist);
-        expect(result.id).toBe(expectedFlight.id);
+        expect(result.externalId).toBe(expectedFlight.externalId);
         expect(result.igcPath).toContain(expectedFlight.igcPath);
         done();
       }
@@ -172,7 +178,7 @@ test("Validate that the landing is detected (even when igc has more fixes)", (do
   const flightToAnaylze = {
     externalId: "flight_with_car_drive",
     igcPath: path.join(__dirname, "../igc", filePath),
-  };
+  } as unknown as FlightInstance;
 
   const expectedFlight = {
     externalId: "flight_with_car_drive",
@@ -182,13 +188,13 @@ test("Validate that the landing is detected (even when igc has more fixes)", (do
   };
 
   try {
-    IgcAnalyzer.startCalculation(
+    startCalculation(
       flightToAnaylze,
       flightTypeFactors,
-      (result) => {
+      (result: OLCResult) => {
         expect(result.type).toBe(expectedFlight.type);
         expect(result.dist).toBe(expectedFlight.dist);
-        expect(result.id).toBe(expectedFlight.id);
+        expect(result.externalId).toBe(expectedFlight.externalId);
         expect(result.igcPath).toContain(expectedFlight.igcPath);
         done();
       }
@@ -205,7 +211,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s =>
   const expectedFlight = {
     externalId: "kai_free",
     igcPath: path.join(__dirname, "../igc", filePath),
-  };
+  } as unknown as FlightInstance;
   const numberOfFixes = 2978;
   const fixNr2345 = {
     time: "13:13:26",
@@ -216,7 +222,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s =>
     pressureAltitude: 1025,
   };
 
-  const reducedFixes = IgcAnalyzer.extractFixes(expectedFlight);
+  const reducedFixes = extractFixes(expectedFlight);
 
   expect(reducedFixes.length).toBe(numberOfFixes);
   expect(reducedFixes[2345]).toStrictEqual(fixNr2345);
@@ -229,7 +235,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s =>
   const expectedFlight = {
     externalId: "kai_flat_res2",
     igcPath: path.join(__dirname, "../igc", filePath),
-  };
+  } as unknown as FlightInstance;
 
   const numberOfFixes = 3757;
   const fixNr2345 = {
@@ -241,7 +247,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s =>
     pressureAltitude: 874,
   };
 
-  const reducedFixes = IgcAnalyzer.extractFixes(expectedFlight);
+  const reducedFixes = extractFixes(expectedFlight);
 
   expect(reducedFixes.length).toBe(numberOfFixes);
   expect(reducedFixes[2345]).toStrictEqual(fixNr2345);
@@ -257,7 +263,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s =
   const expectedFlight = {
     externalId: "kai_free_res10",
     igcPath: path.join(__dirname, "../igc", filePath),
-  };
+  } as unknown as FlightInstance;
 
   const numberOfFixes = 1807;
   const fixNr234 = {
@@ -269,7 +275,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s =
     pressureAltitude: 878,
   };
 
-  const reducedFixes = IgcAnalyzer.extractFixes(expectedFlight);
+  const reducedFixes = extractFixes(expectedFlight);
 
   expect(reducedFixes.length).toBe(numberOfFixes);
   expect(reducedFixes[234]).toStrictEqual(fixNr234);

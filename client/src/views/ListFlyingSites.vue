@@ -1,6 +1,19 @@
 <template>
   <div v-if="sites" class="container-lg">
     <h3>Fluggebietsübersicht</h3>
+    <p>
+      Der XCCup ist ein mitteldeutscher Flachland Wettbewerb. Flüge können dabei
+      nur von registrierten Startplätzen eingereicht werden.
+    </p>
+    <p>
+      Startplätze können von allen beim XCCup registrierten Personen vorgeschlagen
+      werden. Diese müssen dabei in einem örtlichen Zusammenhang zum bereits
+      bestehendem XCCup Gebiet stehen.
+    </p>
+    <p>
+      Die Vorschläge werden durch die Organisatoren des XCCup bewertet und ggfs.
+      freigeschaltet.
+    </p>
     <router-link
       :to="{
         name: 'SubmitFlyingSite',

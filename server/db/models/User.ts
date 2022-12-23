@@ -4,6 +4,7 @@ import { ROLE } from "../../constants/user-constants";
 
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { Models } from "../../types/Models";
+import { Glider } from "../../types/Glider";
 
 export interface UserAttributes {
   id: string;
@@ -15,7 +16,7 @@ export interface UserAttributes {
   gender?: string;
   tshirtSize?: string;
   defaultGlider?: string;
-  gliders?: glider[];
+  gliders?: Glider[];
   emailInformIfComment?: boolean;
   emailNewsletter?: boolean;
   emailTeamSearch?: boolean;
@@ -43,13 +44,6 @@ type UserRole =
   | "Keine"
   | "Inaktiv"
   | "Entwickler";
-
-interface glider {
-  id: string;
-  brand: string;
-  model: string;
-  gliderClass: string;
-}
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 

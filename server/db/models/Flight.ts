@@ -2,6 +2,7 @@ import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { STATE, TYPE, UPLOAD_ENDPOINT } from "../../constants/flight-constants";
 import { FlightFixesAttributes } from "../../types/FlightFixes";
 import { FlightStats } from "../../types/FlightStats";
+import { Glider } from "../../types/Glider";
 import { Models } from "../../types/Models";
 import { UserAttributes } from "./User";
 
@@ -19,7 +20,7 @@ export interface FlightAttributes {
   flightDistanceFAI?: number;
   flightMetarData?: string[];
   flightType?: TYPE;
-  flightStatus?: STATE;
+  flightStatus: STATE;
   flightTurnpoints?: FlightTurnpoint[];
   airtime?: number;
   takeoffTime?: Date;
@@ -52,16 +53,7 @@ export interface FlightTurnpoint {
   lat?: number;
   long?: number;
 }
-export interface Glider {
-  id: string;
-  brand: string;
-  model: string;
-  gliderClass: {
-    key: string;
-    shortDescription: string;
-    description: string;
-  };
-}
+
 interface AirspaceViolation {
   lat: number;
   long: number;
@@ -76,8 +68,8 @@ interface AirspaceViolation {
 interface FlightCreationAttributes extends Optional<FlightAttributes, "id"> {}
 export interface FlightOutputAttributes extends FlightAttributes {
   userId: string;
-  siteId: string;
-  clubId: string;
+  siteId?: string;
+  clubId?: string;
   teamId?: string;
 }
 export interface FlightInstance
@@ -137,6 +129,7 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     },
     flightStatus: {
       type: DataTypes.STRING,
+      defaultValue: STATE.IN_PROCESS,
     },
     flightTurnpoints: {
       type: DataTypes.JSON,

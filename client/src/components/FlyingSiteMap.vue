@@ -53,7 +53,6 @@ onMounted(() => {
 
   terrain.addTo(map.value);
   createTakeOffMarkers(props.sites).addTo(map.value);
-  createXccupBorder().addTo(map.value);
 
   L.control.layers(baseMaps).addTo(map.value);
   map.value.setView([50.5, 8.0], 7);
@@ -130,16 +129,6 @@ const createTakeOffMarkers = (sites) => {
   });
 
   return L.layerGroup(listOfTakeoffs.value);
-};
-
-const createXccupBorder = () => {
-  const xccupBoundaryPoints = [
-    [51.68, 10.38],
-    [51.68, 6.02],
-    [48.93, 6.02],
-    [48.93, 10.38],
-  ];
-  return L.polygon(xccupBoundaryPoints, { color: "red", fillOpacity: 0.1 });
 };
 </script>
 
