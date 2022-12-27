@@ -85,14 +85,14 @@
               :options="listOfGenders"
             />
           </div>
-          <!-- Don't erase the :key; This is a hack to enfore new rendering on the component if the value changes;
-          In this particular circumstance the vue reactivity system doesn't regcognize the change in birthday after the fetch.-->
+          <!-- Don't erase the :key; This is a hack to enforce new rendering on the component if the value changes;
+          In this particular circumstance the vue reactivity system doesn't recognize the change in birthday after the fetch.-->
           <div :key="modifiedUserData.birthday" class="col-md-6">
-            <!-- TODO: Replace with three seperate selects -->
+            <!-- TODO: Replace with three separate selects -->
             <BaseDatePicker
               id="birthday"
               v-model="modifiedUserData.birthday"
-              label="Geburstag"
+              label="Geburtstag"
               starting-view="year"
             />
           </div>
@@ -119,12 +119,14 @@
         type="checkbox"
         value
       />
-      <label class="form-check-label" for="flexCheckDefault">
-        E-Mail bei neuem Kommentar
-        <!-- TODO: Add popup description -->
-
-        <!-- <i class="bi bi-info-circle"></i> -->
-      </label>
+      <span>
+        <label class="form-check-label" for="flexCheckDefault">
+          E-Mail bei neuem Kommentar
+          <InfoCollapsable
+            id="emailInfo"
+            info-message="Falls ein Kommentar unter einem deiner Flüge geschrieben wird, erhältst du eine Benachrichtigung per E-Mail darüber."
+          /> </label
+      ></span>
     </div>
     <div class="form-check">
       <input
@@ -136,8 +138,10 @@
       />
       <label class="form-check-label" for="flexCheckDefault">
         Newsletter abonnieren
-        <!-- TODO: Add popup description -->
-        <!-- <i class="bi bi-info-circle"></i> -->
+        <InfoCollapsable
+          id="newsletterInfo"
+          info-message="Im Newsletter werden z.B. über neue Rekorde oder andere spannende Ergebnisse im XCCup informiert. Wichtige Nachrichten werden ungeachtet dieser Einstellung an Dich versendet."
+        />
       </label>
     </div>
 
