@@ -108,7 +108,7 @@
             />
             <div class="form-check">
               <input
-                id="notifyForComment"
+                id="optOutTshirt"
                 v-model="modifiedUserData.noTshirtRequested"
                 class="form-check-input"
                 type="checkbox"
