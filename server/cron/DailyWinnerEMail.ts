@@ -12,14 +12,11 @@ import {
 
 const DAILY_WINNER_THRESHOLD = 3;
 
-// Run cron job only in production
-if (config.get("env") === "production") {
-  // Run the job every day at 22:15
-  const task = cron.schedule("15 22 * * *", informAboutDailyWinner);
+// Run the job every day at 22:15
+const task = cron.schedule("15 22 * * *", informAboutDailyWinner);
 
-  logger.info("DWE: Will start cron job daily winner email");
-  task.start();
-}
+logger.info("DWE: Will start cron job daily winner email");
+task.start();
 
 async function informAboutDailyWinner() {
   try {
