@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.3.16",
-    "@types/multer": "^1.4.7",
     "adm-zip": "^0.5.9",
     "axios": "1.2.1",
     "axios-retry": "^3.3.1",
@@ -62,7 +61,9 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/lodash": "^4.14.191",
     "@types/morgan": "^1.9.3",
+    "@types/multer": "^1.4.7",
     "@types/node": "^18.11.17",
+    "@types/node-cron": "^3.0.6",
     "@types/nodemailer": "^6.4.7",
     "cross-env": "^7.0.3",
     "csv-parser": "^3.0.0",
