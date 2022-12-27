@@ -7,7 +7,7 @@
       :placeholder="label"
       :starting-view="startingView"
       class="form-select"
-      :disabled="isDisabled"
+      :disabled="$attrs.disabled"
       input-format="dd.MM.yyyy"
       :upper-limit="upperLimit"
       :lower-limit="lowerLimit"
@@ -28,10 +28,6 @@ const props = defineProps({
   modelValue: {
     type: Date,
     default: new Date(),
-  },
-  isDisabled: {
-    type: Boolean,
-    default: false,
   },
   startingView: {
     type: String,

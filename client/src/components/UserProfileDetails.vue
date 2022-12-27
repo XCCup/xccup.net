@@ -27,7 +27,7 @@
           label="Verein*"
           :show-label="true"
           :options="listOfClubs"
-          :is-disabled="!isClubChangeable"
+          :disabled="!isClubChangeable"
         />
         <BaseInput
           id="street"
@@ -96,6 +96,7 @@
               starting-view="year"
             />
           </div>
+          <h5 class="mt-3">XCCup T-Shirt</h5>
           <div class="col-md-6">
             <BaseSelect
               id="shirtSize"
@@ -103,14 +104,30 @@
               label="T-Shirt Größe"
               :show-label="true"
               :options="listOfTshirtSizes"
+              :disabled="modifiedUserData.noTshirtRequested"
             />
+            <div class="form-check">
+              <input
+                id="notifyForComment"
+                v-model="modifiedUserData.noTshirtRequested"
+                class="form-check-input"
+                type="checkbox"
+                value
+              />
+              <span>
+                <label class="form-check-label" for="flexCheckDefault">
+                  Ich möchte kein T-Shirt erhalten
+                  <InfoCollapsable
+                    id="tshirtInfo"
+                    info-message="Wenn du die Vorgaben der Ausschreibung erfüllst, so erstellen wir für dich ein XCCup T-Shirt der jeweiligen Saison. Falls du gar kein T-Shirt möchtest, so kannst du diese Option hier auswählen."
+                  /> </label
+              ></span>
+            </div>
           </div>
         </div>
-
-        <div class="mt-3"></div>
       </div>
     </div>
-    <h5>Benachrichtigungen</h5>
+    <h5 class="mt-3">Benachrichtigungen</h5>
     <div class="form-check">
       <input
         id="notifyForComment"
@@ -153,7 +170,7 @@
     >
       Speichern
       <BaseSpinner v-if="showSpinner" />
-      <i v-if="showSuccessInidcator" class="bi bi-check-circle"></i>
+      <i v-if="showSuccessIndicator" class="bi bi-check-circle"></i>
     </button>
     <p class="mt-3">* Wechsel nur außerhalb der Saison erlaubt</p>
     <!-- Error Message -->
@@ -185,7 +202,7 @@ const isClubChangeable = ref(false);
 
 // Page state
 const showSpinner = ref(false);
-const showSuccessInidcator = ref(false);
+const showSuccessIndicator = ref(false);
 const errorMessage = ref(null);
 
 // Clubs needs to be global to allow later access to object ids
@@ -276,5 +293,3 @@ async function hasNoFlightInSeason(dataSeason) {
   }
 }
 </script>
-
-<style scoped></style>
