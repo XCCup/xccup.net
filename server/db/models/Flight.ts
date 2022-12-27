@@ -114,7 +114,7 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     flightDistance: {
       type: DataTypes.DOUBLE,
     },
-    // Seperate flightDistances are not used at the moment but should prepare the DB for upcoming changes
+    // Separate flightDistances are not used at the moment but should prepare the DB for upcoming changes
     flightDistanceFree: {
       type: DataTypes.DOUBLE,
     },
@@ -169,16 +169,13 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
       defaultValue: false,
     },
     hikeAndFly: {
-      //We will save the climbed height directly, so it's easier to aggreate later
+      //We will save the climbed height directly, so it's easier to aggregate later
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
     isWeekend: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-    },
-    region: {
-      type: DataTypes.STRING,
     },
     ageOfUser: {
       type: DataTypes.INTEGER,
