@@ -247,6 +247,6 @@ module.exports.DAILY_WINNER_TEXT = (numberOfFlights, winnerId, currentTime) =>
   `Hallo Bärbel,
 Heute gab es insgesamt ${numberOfFlights} Wertungsflüge. 
         
-Bis jetzt ${currentTime} liegt der Flug https://xccup.net/flug/${winnerId} vorne. Den aktuell Stand findest du auf der Startseite https://xccup.net.
+Bis jetzt ${currentTime} liegt der Flug https://xccup.net/flug/${winnerId} vorne. Den aktuellen Stand findest du auf der Startseite https://xccup.net.
         
 Viele Grüße Deine Admins`;
