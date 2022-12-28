@@ -24,6 +24,7 @@ import type { Mail } from "@/types/Mail";
 import type { CreateNews, News } from "@/types/News";
 import type { FlyingSite } from "@/types/FlyingSite";
 import type { Flight } from "@/types/Flight";
+import type { SeasonDetail } from "@/types/SeasonDetail";
 
 import useAxiosJwt, {
   type IAuthTokens,
@@ -202,6 +203,15 @@ export default {
   },
   deleteNews(newsId: string) {
     return apiClient.delete("news/" + newsId);
+  },
+  getLatestSeason() {
+    return apiClient.get("seasons/latest");
+  },
+  createNewSeason(season: SeasonDetail) {
+    return apiClient.post("seasons/", season);
+  },
+  updateSeason(seasonId: number, seasonData: SeasonDetail) {
+    return apiClient.put("seasons/" + seasonId, seasonData);
   },
 
   // Results

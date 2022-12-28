@@ -240,3 +240,13 @@ Falls Du garnicht in das Team aufgenommen werden wolltest, wende Dich bitte dire
 Dein XCCup Team
     
 `;
+
+module.exports.DAILY_WINNER_TITLE = (date) => `XCCup Tagessieger ${date}`;
+
+module.exports.DAILY_WINNER_TEXT = (numberOfFlights, winnerId, currentTime) =>
+  `Hallo Bärbel,
+Heute gab es insgesamt ${numberOfFlights} Wertungsflüge. 
+        
+Bis jetzt ${currentTime} liegt der Flug https://xccup.net/flug/${winnerId} vorne. Den aktuellen Stand findest du auf der Startseite https://xccup.net.
+        
+Viele Grüße Deine Admins`;

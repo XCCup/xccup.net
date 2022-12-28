@@ -23,6 +23,7 @@ const app: Application = express();
 // Start Cron Jobs
 import "./cron/CleanIgcStore";
 import "./cron/DailyWinnerEMail";
+import "./cron/CleanTokenStore";
 
 // Logging
 app.use(requestLogger);
@@ -70,7 +71,7 @@ app.use("/api", routes);
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 app.use(handleError);
 
-// Handle calls to non exisiting routes
+// Handle calls to non existing routes
 app.use("*", (req, res) => {
   res.status(404).json({
     success: "false",

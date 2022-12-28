@@ -45,7 +45,7 @@ describe("check flight upload page", () => {
       });
     });
 
-    // Increase timeout because calclation takes some time
+    // Increase timeout because calculation takes some time
     cy.get('input[type="text"]', {
       timeout: 40000,
     }).should("have.value", expectedTakeoff);
@@ -119,7 +119,7 @@ describe("check flight upload page", () => {
       });
     cy.get("[data-cy=error-message]").contains(expectedMaxPhotosMessage);
 
-    // Add data to differnt inputs
+    // Add data to different inputs
 
     cy.get("[data-cy=airspace-comment-checkbox]").should("not.be.checked");
     cy.get("#airspace-collapse").should("not.have.class", "show");
@@ -318,7 +318,7 @@ describe("check flight upload page", () => {
       });
     });
 
-    // Increase timeout because calclation takes some time
+    // Increase timeout because calculation takes some time
     cy.get('input[type="text"]', {
       timeout: 40000,
     }).should("have.value", expectedLanding);
@@ -327,7 +327,7 @@ describe("check flight upload page", () => {
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
 
-    // Wait till redirection has happend
+    // Wait till redirection has happened
     cy.get("[data-cy=flight-details-pilot]", {
       timeout: 10000,
     });
@@ -369,7 +369,7 @@ describe("check flight upload page", () => {
       });
     });
 
-    // Increase timeout because calclation takes some time
+    // Increase timeout because calculation takes some time
     cy.get('input[type="text"]', {
       timeout: 40000,
     }).should("have.value", "Serrig");
@@ -526,7 +526,7 @@ describe("check flight upload page", () => {
     const expectedUserName = "Melinda Tremblay";
     const expectedAirtime = "1:42h";
     const expectedReport = "Das ist ein Upload über die Leonardo Schnittstelle";
-    const expectApiRespone =
+    const expectApiResponse =
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
 
     cy.fixture(igcFileName).then(async (fileContent) => {
@@ -541,7 +541,7 @@ describe("check flight upload page", () => {
       ).data;
 
       // Test the response message from the API
-      expect(data).to.include(expectApiRespone);
+      expect(data).to.include(expectApiResponse);
 
       const regex = /.*\/flug\/(\d+)./;
       const flightId = data.match(regex)[1];

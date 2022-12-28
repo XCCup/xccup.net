@@ -138,7 +138,6 @@ import { ref, onMounted } from "vue";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import useAuth from "@/composables/useAuth";
 import ApiService from "@/services/ApiService";
-import { v4 as uuidv4 } from "uuid";
 import { remove, last } from "lodash-es";
 import BaseError from "./BaseError.vue";
 import { MAX_PHOTOS } from "@/common/Constants";
@@ -238,7 +237,7 @@ const photoUploadQueue = ref<UploadCueItem[]>([]);
 const onPhotoSelected = (e: Event) => {
   const event = e as HTMLInputEvent;
   if (!event.target.files?.length) return;
-  // Check files count and substract alredy uploaded photos
+  // Check files count and subtract already uploaded photos
   if (event.target.files.length > MAX_PHOTOS - _photos.value.length) {
     errorMessage.value = MAX_PHOTO_MESSAGE;
     return;
@@ -248,7 +247,7 @@ const onPhotoSelected = (e: Event) => {
   const array = [...event.target.files];
   array.slice(0, MAX_PHOTOS).forEach((photo) => {
     photoUploadQueue.value.push({
-      id: uuidv4(),
+      id: crypto.randomUUID(),
       photo: photo,
       status: "pending",
     });

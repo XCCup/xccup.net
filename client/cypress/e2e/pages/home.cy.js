@@ -3,6 +3,14 @@ import { isInSeason } from "../../support/utils";
 describe("check landing page", () => {
   before(() => {
     cy.seedFlightDb();
+    // This forces a certain time for time depending test cases
+    const todayMorning = new Date();
+    todayMorning.setHours(6);
+    cy.setBackendTime(todayMorning.toISOString());
+  });
+
+  after(() => {
+    cy.resetBackendTime();
   });
 
   beforeEach(() => {
@@ -88,28 +96,28 @@ describe("check landing page", () => {
       console.log("TZ: ", process.env.TZ);
       console.log("STUNDEN: ", hours);
 
-      const isNextDailyRanking = new Date().getHours() >= 15;
-      const anyRow1 = isNextDailyRanking
-        ? ["Leo Altenwerth", "Stüppel", "74 km", "212 P"]
-        : ["Ms. Laurie", "Burgen", "12 km", "75 P"];
-      const anyRow2 = isNextDailyRanking
-        ? ["Camille Schaden", "Königstuhl", "19 km", "55 P"]
-        : ["Ramona Gislason", "Schriesheim-Ölberg", "9 km", "53 P"];
+      const firstDailyRow = ["Ms. Laurie", "Burgen", "12 km", "75 P"];
+      const secondDailyRow = [
+        "Ramona Gislason",
+        "Schriesheim-Ölberg",
+        "9 km",
+        "53 P",
+      ];
 
       cy.get("table")
         .find("td")
-        .contains(anyRow1[0])
+        .contains(firstDailyRow[0])
         .parent()
-        .and("include.text", anyRow1[1])
-        .and("include.text", anyRow1[2])
-        .and("include.text", anyRow1[3]);
+        .and("include.text", firstDailyRow[1])
+        .and("include.text", firstDailyRow[2])
+        .and("include.text", firstDailyRow[3]);
       cy.get("table")
         .find("td")
-        .contains(anyRow2[0])
+        .contains(secondDailyRow[0])
         .parent()
-        .and("include.text", anyRow2[1])
-        .and("include.text", anyRow2[2])
-        .and("include.text", anyRow2[3]);
+        .and("include.text", secondDailyRow[1])
+        .and("include.text", secondDailyRow[2])
+        .and("include.text", secondDailyRow[3]);
     });
   });
 
@@ -126,7 +134,7 @@ describe("check landing page", () => {
   });
 
   it("test team ranking", () => {
-    //Due to the modifaction on the "daily flights" this value will change
+    //Due to the modification on the "daily flights" this value will change
     const expectedValue = isInSeason()
       ? "3Die Adler739 P199 km"
       : "3Die Möwen587 P179 km";

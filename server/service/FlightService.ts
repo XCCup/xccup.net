@@ -601,6 +601,7 @@ const flightService = {
     if (!takeoff) throw new Error("Error while trying to find takeoff");
 
     return { takeoff, landing };
+
   },
 
   /**
