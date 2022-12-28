@@ -627,7 +627,6 @@ const flightService = {
     if (!takeoff) throw new Error("Error while trying to find takeoff");
 
     flight.siteId = takeoff.id;
-    flight.region = takeoff.locationData?.region;
 
     flight.landing = (landing as unknown as string) ?? "API Disabled";
 
