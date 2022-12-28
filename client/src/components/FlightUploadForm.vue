@@ -139,7 +139,7 @@
             Ansprüche gegenüber dem Veranstalter, dem Ausrichter, dem
             Organisator, dem Wettbewerbsleiter sowie deren Helfer wegen
             einfacher Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des
-            Haken erkenne ich die
+            Hakens erkenne ich die
             <a href="#" @click.prevent="compRulesModal.show()">Ausschreibung</a>
             und
             <a href="#" @click.prevent="privacyPolicyModal.show()"
