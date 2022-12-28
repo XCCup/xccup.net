@@ -6,7 +6,7 @@ describe("check users page", () => {
     cy.visit("/");
   });
 
-  it("test page only accessable for logged-in users", () => {
+  it("test page only accessible for logged-in users", () => {
     cy.get("#navbarLists").click();
 
     cy.get("#navbarLists").find("li").contains("Registrierte Piloten").click();

@@ -104,6 +104,19 @@
         </button>
         <button
           v-if="isAdmin"
+          id="nav-season-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-season"
+          type="button"
+          role="tab"
+          aria-controls="nav-season"
+          aria-selected="false"
+        >
+          Saison
+        </button>
+        <button
+          v-if="isAdmin"
           id="nav-newsletter-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -187,6 +200,15 @@
         aria-labelledby="nav-cache-tab"
       >
         <AdminCache />
+      </div>
+      <div
+        v-if="isAdmin"
+        id="nav-season"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-season-tab"
+      >
+        <AdminSeason />
       </div>
       <div
         v-if="isAdmin"

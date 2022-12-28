@@ -1,16 +1,15 @@
-const express = require("express");
+import express, { Request, Response } from "express";
+import service from "../service/ResultService";
+import { query } from "express-validator";
+import { validationHasErrors, checkParamIsOnlyOfValue } from "./Validation";
+import { getCache, setCache } from "./CacheManager";
+import { STATE, COUNTRY } from "../constants/user-constants";
+import { XccupHttpError } from "../helper/ErrorHandler";
+import { NOT_FOUND } from "../constants/http-status-constants";
+import { getSiteRecords } from "../service/SiteRecordCache";
+import { NextFunction } from "express-serve-static-core";
+
 const router = express.Router();
-const service = require("../service/ResultService");
-const { query } = require("express-validator");
-const {
-  validationHasErrors,
-  checkParamIsOnlyOfValue,
-} = require("./Validation");
-const { getCache, setCache } = require("./CacheManager");
-const { STATE, COUNTRY } = require("../constants/user-constants");
-const { XccupHttpError } = require("../helper/ErrorHandler");
-const { NOT_FOUND } = require("../constants/http-status-constants");
-const { getSiteRecords } = require("../service/SiteRecordCache");
 
 // @desc Gets the overall result
 // @route GET /results
@@ -32,7 +31,7 @@ router.get(
     query("clubShortName").optional().not().isEmpty().trim().escape(),
     query("clubId").optional().isUUID(),
   ],
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
     const {
       year,
@@ -82,7 +81,7 @@ router.get(
 // @desc Gets the result for a specific club
 // @route GET /results/club/:club
 
-// router.get("/club/:club", async (req, res,next) => {
+// router.get("/club/:club", async (req: Request, res: Response,next) => {
 //   // const result = await service.getOverall();
 //   res.json(null);
 // });
@@ -93,7 +92,7 @@ router.get(
 router.get(
   "/clubs",
   [query("year").optional().isInt(), query("limit").optional().isInt()],
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const value = getCache(req);
@@ -123,7 +122,7 @@ router.get(
     query("siteRegion").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
   ],
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const value = getCache(req);
@@ -143,7 +142,7 @@ router.get(
   }
 );
 
-// @desc Gets the result for the senior ranking (addional bonus per age)
+// @desc Gets the result for the senior ranking (additional bonus per age)
 // @route GET /results/seniors/
 
 router.get(
@@ -153,7 +152,7 @@ router.get(
     query("siteRegion").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
   ],
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const value = getCache(req);
@@ -184,7 +183,7 @@ router.get(
     "isoCode",
     Object.keys(STATE).concat(Object.keys(COUNTRY))
   ),
-  async (req, res, next) => {
+  async (req: Request, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
 
     const value = getCache(req);
@@ -197,7 +196,7 @@ router.get(
       let resultFunction;
       switch (isoCode) {
         case "LUX":
-          resultFunction = service.getLuxemburg;
+          resultFunction = service.getLuxembourg;
           break;
         case "RP":
           resultFunction = service.getRhineland;
@@ -229,7 +228,7 @@ router.get(
     query("year").optional().isInt(),
     query("siteRegion").optional().not().isEmpty().trim().escape(),
   ],
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const value = getCache(req);
@@ -258,7 +257,7 @@ router.get(
     query("year").optional().isInt(),
     query("siteRegion").optional().not().isEmpty().trim().escape(),
   ],
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const value = getCache(req);
@@ -288,7 +287,7 @@ router.get(
     query("siteRegion").optional().not().isEmpty().trim().escape(),
     query("limit").optional().isInt(),
   ],
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const value = getCache(req);
@@ -311,7 +310,7 @@ router.get(
 // @desc Gets the records for all flightTypes over all flyingSites
 // @route GET /results/siteRecords/
 
-router.get("/siteRecords", async (req, res, next) => {
+router.get("/siteRecords", async (req: Request, res: Response, next) => {
   try {
     const value = getCache(req);
     if (value) return res.json(value);
@@ -325,5 +324,4 @@ router.get("/siteRecords", async (req, res, next) => {
     next(error);
   }
 });
-
-module.exports = router;
+export default router;

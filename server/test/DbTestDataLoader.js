@@ -20,7 +20,7 @@ const dbTestData = {
   addFlights: async () => {
     const flights = require("./testdatasets/flights.json");
     adjustYearOfEveryFlight(flights);
-    adjustTimesToToday(flights, 5);
+    adjustTimesOnFlightsToToday(flights, 5);
 
     const relations = [
       [Flight, flights],
@@ -33,14 +33,15 @@ const dbTestData = {
   },
   addTestData: async () => {
     const flights = require("./testdatasets/flights.json");
+    const seasonDetails = require("./testdatasets/seasonDetails.json");
     adjustYearOfEveryFlight(flights);
-    adjustTimesToToday(flights, 5);
+    adjustTimesOnFlightsToToday(flights, 5);
 
     // Real data without personal data
     const relations = [
       [Club, require("./testdatasets/clubs.json")],
       [FlyingSite, require("./testdatasets/flyingSites.json")],
-      [SeasonDetail, require("./testdatasets/seasonDetails.json")],
+      [SeasonDetail, seasonDetails],
       [Airspace, require("./testdatasets/airspaces_lux.json")],
       [Airspace, require("./testdatasets/airspaces_deu.json")],
       [News, require("./testdatasets/news.json")],
@@ -93,7 +94,7 @@ async function addDataset(model, dataset) {
   );
 }
 
-function adjustTimesToToday(flights, numberOfEntriesToAdjust) {
+function adjustTimesOnFlightsToToday(flights, numberOfEntriesToAdjust) {
   for (let index = 0; index < numberOfEntriesToAdjust; index++) {
     const today = new Date();
     const takeoffDate = new Date(flights[index].takeoffTime);
