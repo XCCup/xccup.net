@@ -401,7 +401,7 @@ const flightService = {
     // TODO: And then?
     if (!flight || !flight.igcPath || !flight.externalId) return;
 
-    const isNewFlightUpload = flight.flightStatus === STATE.IN_PROCESS;
+    const isNewFlightUpload = flight.flightPoints === null;
 
     // Get flight result and add it to the DB if this is no edit (new submission)
     if (isNewFlightUpload) {
