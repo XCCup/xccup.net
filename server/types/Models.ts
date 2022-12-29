@@ -16,6 +16,7 @@ import { SponsorInstance } from "../db/models/Sponsor";
 import { TeamInstance } from "../db/models/Team";
 import { TokenInstance } from "../db/models/Token";
 import { UserInstance } from "../db/models/User";
+import { MessageInstance } from "../db/models/Message";
 
 interface extendedModel<M extends Model<any, any>> extends ModelStatic<M> {
   associate?: (props: Models) => void;
@@ -39,4 +40,5 @@ export interface Models {
   Team: extendedModel<TeamInstance>;
   Token: extendedModel<TokenInstance>;
   User: extendedModel<UserInstance>;
+  Message: extendedModel<MessageInstance>;
 }

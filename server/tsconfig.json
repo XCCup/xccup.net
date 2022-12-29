@@ -4,6 +4,7 @@
     "module": "commonjs",
     "sourceMap": true,
     "outDir": "./dist",
+    "lib": ["ES2021"],
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,

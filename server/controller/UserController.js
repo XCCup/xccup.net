@@ -427,6 +427,12 @@ router.post(
   }
 );
 
+router.get("/testmail", async (req, res) => {
+  const user = await service.getById("cd1583d1-fb7f-4a93-b732-effd59e5c3ae");
+  mailService.sendActivationMail(user);
+  res.sendStatus(OK);
+});
+
 // @desc Edits a user
 // @route PUT /users/
 // @access Only owner

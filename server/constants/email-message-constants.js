@@ -9,11 +9,11 @@ Du kannst direkt auf diese E-Mail antworten.
 
 module.exports.REGISTRATION_TITLE = "Deine Anmeldung bei XCCup.net";
 
-module.exports.REGISTRATION_TEXT = (firstName, activateLink) =>
+module.exports.REGISTRATION_TEXT = (firstName, activationLink) =>
   `Hallo ${firstName}! Willkommen beim XCCup.
 
 Um dein Konto zu aktivieren klicke bitte auf den folgenden Link:
-${activateLink}
+${activationLink}
 
 Wir wünschen Dir allzeit gute Flüge und viel Spaß.
 
