@@ -1,5 +1,4 @@
 import axios from "axios";
-import { lightFormat } from "date-fns";
 
 describe("check flight upload page", () => {
   before(() => {
@@ -402,6 +401,7 @@ describe("check flight upload page", () => {
       "contain.text",
       expectedFlightState
     );
+    cy.url().as("flightURL");
 
     // Switch to admin and accept violation
     cy.logout();
@@ -420,7 +420,9 @@ describe("check flight upload page", () => {
     cy.clickButtonInModal("#acceptFlightModal", "Akzeptieren");
 
     // Navigate back to flight and see if the flight state changed (could be "In Wertung" or "Flugbuch")
-    cy.go(-4);
+    cy.get("@flightURL").then((url) => {
+      cy.visit(url);
+    });
     cy.url().should("include", "/flug");
     cy.get("#moreFlightDetailsTable").should(
       "not.contain.text",
