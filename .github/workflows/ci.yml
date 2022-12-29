@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: ☑️ Check for "it.only" in test files
+      - name: 🙄 Check for "it.only" in test files
         working-directory: ./client/cypress/e2e
         # Grep will exit with 1 if no matching line in any file was found
         # Therefore we will invert the result of grep
