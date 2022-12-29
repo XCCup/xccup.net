@@ -350,7 +350,7 @@ describe("check flight upload page", () => {
     }).should("have.text", expectedError);
   });
 
-  it.only("test upload flight with airspace violation and accept it", () => {
+  it("test upload flight with airspace violation and accept it", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError = "Dieser Flug enthält eine Luftraumverletzung";
