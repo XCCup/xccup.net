@@ -37,7 +37,6 @@ declare module '@vue/runtime-core' {
     Comments: typeof import('./src/components/Comments.vue')['default']
     CompFactors: typeof import('./src/components/CompFactors.vue')['default']
     CompRules: typeof import('./src/components/CompRules.vue')['default']
-    copy: typeof import('./src/components/admin/AdminCache copy.vue')['default']
     DailyResults: typeof import('./src/components/DailyResults.vue')['default']
     DailyResultsMap: typeof import('./src/components/DailyResultsMap.vue')['default']
     FilterPanel: typeof import('./src/components/FilterPanel.vue')['default']
