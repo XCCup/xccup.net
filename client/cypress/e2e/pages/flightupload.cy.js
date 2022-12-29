@@ -421,7 +421,10 @@ describe("check flight upload page", () => {
 
     // Navigate back to flight and see if the flight state changed (could be "In Wertung" or "Flugbuch")
     cy.go(-4);
+    cy.reload();
     cy.wait("@get-flight");
+    cy.url().should("include", "/flug");
+
     cy.get("#moreFlightDetailsTable").should(
       "not.contain.text",
       expectedFlightState
