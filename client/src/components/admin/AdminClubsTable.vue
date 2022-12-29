@@ -3,47 +3,38 @@
     <thead>
       <th>Name</th>
       <th>Website</th>
-      <th>Tagline</th>
       <th>Kontakt</th>
-      <th></th>
-      <th>Sponsor in</th>
+      <th>Club in</th>
       <th>Letzte Änderung</th>
       <th></th>
     </thead>
     <tbody>
-      <tr v-for="sponsor in props.sponsors" :key="sponsor.id" :item="sponsor">
-        <td>{{ sponsor.name }}</td>
+      <tr v-for="club in props.clubs" :key="club.id" :item="club">
+        <td>{{ club.name }}</td>
         <td style="max-width: 15vw; word-wrap: break-word">
-          {{ sponsor.website }}
+          {{ club.website }}
         </td>
-        <td>{{ sponsor.tagline }}</td>
         <td>
           <p
-            v-for="line in beautifyContactForTable(sponsor.contact)"
+            v-for="line in beautifyContactForTable(club.contact)"
             :key="line"
             :value="line"
           >
             {{ line }}
           </p>
         </td>
+        <td>{{ beautifySeasonsForTable(club.participantInSeasons) }}</td>
         <td>
-          <i
-            v-if="sponsor.isGoldSponsor"
-            class="bi bi bi-coin text-warning"
-          ></i>
-        </td>
-        <td>{{ beautifySeasonsForTable(sponsor.sponsorInSeasons) }}</td>
-        <td>
-          <BaseDate :timestamp="sponsor.updatedAt" />
+          <BaseDate :timestamp="club.updatedAt" />
         </td>
         <td>
           <button
             class="btn btn-outline-primary m-1 btn-sm bi bi-pencil-square"
-            @click="$emit('editSponsor', sponsor)"
+            @click="$emit('editClub', club)"
           ></button>
           <button
             class="btn btn-outline-danger m-1 btn-sm bi bi-trash"
-            @click="$emit('deleteSponsor', sponsor)"
+            @click="$emit('deleteClub', club)"
           ></button>
         </td>
       </tr>
@@ -53,20 +44,21 @@
 
 <script setup lang="ts">
 import BaseDate from "../BaseDate.vue";
-import type { Sponsor } from "@/types/Sponsor";
+import type { Club } from "@/types/Club";
 import type { Contact } from "@/types/Contact";
 
 interface Props {
-  sponsors: Sponsor[];
+  clubs: Club[];
 }
 const props = withDefaults(defineProps<Props>(), {});
 
-defineEmits(["editSponsor", "deleteSponsor"]);
+defineEmits(["editClub", "deleteClub"]);
 
-function beautifyContactForTable(contact?: Contact) {
-  if (!contact || Object.keys(contact).length == 0) return "";
-  const nonEmptyValues = Object.values(contact).filter((v) => v?.length > 0);
-  return nonEmptyValues;
+function beautifyContactForTable(contact?: Contact[]) {
+  // if (!contact || Object.keys(contact).length == 0) return "";
+  // const nonEmptyValues = Object.values(contact).filter((v) => v?.length > 0);
+  // return nonEmptyValues;
+  return "";
 }
 
 function beautifySeasonsForTable(seasons?: number[]) {

@@ -78,6 +78,18 @@
           Sponsoren
         </button>
         <button
+          id="nav-clubs-tab"
+          class="nav-link"
+          data-bs-toggle="tab"
+          data-bs-target="#nav-clubs"
+          type="button"
+          role="tab"
+          aria-controls="nav-clubs"
+          aria-selected="false"
+        >
+          Vereine
+        </button>
+        <button
           id="nav-photos-tab"
           class="nav-link"
           data-bs-toggle="tab"
@@ -183,6 +195,14 @@
         aria-labelledby="nav-sponsors-tab"
       >
         <AdminSponsors />
+      </div>
+      <div
+        id="nav-clubs"
+        class="tab-pane fade"
+        role="tabpanel"
+        aria-labelledby="nav-clubs-tab"
+      >
+        <AdminClubs />
       </div>
       <div
         id="nav-photos"

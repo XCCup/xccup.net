@@ -8,6 +8,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AdminCache: typeof import('./src/components/admin/AdminCache.vue')['default']
+    AdminClubs: typeof import('./src/components/admin/AdminClubs.vue')['default']
+    AdminClubsTable: typeof import('./src/components/admin/AdminClubsTable.vue')['default']
     AdminFlights: typeof import('./src/components/admin/AdminFlights.vue')['default']
     AdminFlightUpload: typeof import('./src/components/admin/AdminFlightUpload.vue')['default']
     AdminNews: typeof import('./src/components/admin/AdminNews.vue')['default']
@@ -37,7 +39,7 @@ declare module '@vue/runtime-core' {
     Comments: typeof import('./src/components/Comments.vue')['default']
     CompFactors: typeof import('./src/components/CompFactors.vue')['default']
     CompRules: typeof import('./src/components/CompRules.vue')['default']
-    copy: typeof import('./src/components/admin/AdminCache copy.vue')['default']
+    copy: typeof import("./src/components/admin/AdminCache copy.vue")["default"]
     DailyResults: typeof import('./src/components/DailyResults.vue')['default']
     DailyResultsMap: typeof import('./src/components/DailyResultsMap.vue')['default']
     FilterPanel: typeof import('./src/components/FilterPanel.vue')['default']
@@ -61,6 +63,7 @@ declare module '@vue/runtime-core' {
     InfoBox: typeof import('./src/components/InfoBox.vue')['default']
     InlineAlert: typeof import('./src/components/InlineAlert.vue')['default']
     LogoHandler: typeof import('./src/components/LogoHandler.vue')['default']
+    ModalAddEditClub: typeof import('./src/components/admin/ModalAddEditClub.vue')['default']
     ModalAddEditNews: typeof import('./src/components/admin/ModalAddEditNews.vue')['default']
     ModalAddEditSponsor: typeof import('./src/components/admin/ModalAddEditSponsor.vue')['default']
     ModalAddGlider: typeof import('./src/components/ModalAddGlider.vue')['default']
