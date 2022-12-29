@@ -350,7 +350,7 @@ describe("check flight upload page", () => {
     }).should("have.text", expectedError);
   });
 
-  it("test upload flight with airspace violation and accept it", () => {
+  it.only("test upload flight with airspace violation and accept it", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError = "Dieser Flug enthält eine Luftraumverletzung";
@@ -421,6 +421,7 @@ describe("check flight upload page", () => {
 
     // Navigate back to flight and see if the flight state changed (could be "In Wertung" or "Flugbuch")
     cy.go(-4);
+    cy.wait("@get-flight");
     cy.get("#moreFlightDetailsTable").should(
       "not.contain.text",
       expectedFlightState
