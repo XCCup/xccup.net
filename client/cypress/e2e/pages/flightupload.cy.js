@@ -1,4 +1,5 @@
 import axios from "axios";
+import { lightFormat } from "date-fns";
 
 describe("check flight upload page", () => {
   before(() => {
@@ -350,7 +351,7 @@ describe("check flight upload page", () => {
     }).should("have.text", expectedError);
   });
 
-  it("test upload flight with airspace violation and accept it", () => {
+  it.only("test upload flight with airspace violation and accept it", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError = "Dieser Flug enthält eine Luftraumverletzung";
@@ -416,15 +417,11 @@ describe("check flight upload page", () => {
         .find("button")
         .click();
     });
-
     cy.clickButtonInModal("#acceptFlightModal", "Akzeptieren");
 
     // Navigate back to flight and see if the flight state changed (could be "In Wertung" or "Flugbuch")
     cy.go(-4);
-    cy.reload();
-    cy.wait("@get-flight");
     cy.url().should("include", "/flug");
-
     cy.get("#moreFlightDetailsTable").should(
       "not.contain.text",
       expectedFlightState
