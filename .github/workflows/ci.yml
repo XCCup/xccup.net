@@ -22,12 +22,16 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: 🙄 Check for "it.only" in test files
+      - name: 🙄 Check for "only" in test files (client)
         working-directory: ./client/cypress/e2e
         # Grep will exit with 1 if no matching line in any file was found
         # Therefore we will invert the result of grep
         # Exit codes !0 will fail the whole workflow
         run: (! grep -r "it.only" .)
+
+      - name: Check for "only" in test files (server)
+        working-directory: ./server/test
+        run: (! grep -r "test.only" .)
 
       - name: 🖥 Install backend
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
