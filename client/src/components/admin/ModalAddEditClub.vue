@@ -36,7 +36,7 @@
               data-cy="checkClubCurrentSeason"
             />
             <label class="form-check-label" for="currentClubCheck">
-              Verein aktuelle Saison
+              Verein nimmt an aktueller Saison teil
             </label>
           </div>
           <!--  This prevents the client from crashing if the contact field does not contain an object.
