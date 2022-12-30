@@ -71,15 +71,10 @@ export async function calculateFlightResult(
     launchAndLandingIndexes.landing
   );
 
-  const currentResolutionInSeconds = getResolution(igcAsJson);
-  const durationInMinutes = getFlightDuration(igcAsJson);
-  const requiredResolution = calculateResolutionForReduction(durationInMinutes);
-  const reduceFactor = Math.ceil(
-    requiredResolution / currentResolutionInSeconds
-  );
+  const reductionFactor = determineInitialReductionFactor(igcAsJson);
 
   const roughResult = await runFirstIteration(
-    reduceFactor,
+    reductionFactor,
     igcContent,
     launchAndLandingIndexes,
     externalId,
@@ -97,6 +92,22 @@ export async function calculateFlightResult(
   return res;
 }
 
+function determineInitialReductionFactor(igcAsJson: IGCFile) {
+  const currentResolutionInSeconds = getResolution(igcAsJson);
+  const durationInMinutes = getFlightDuration(igcAsJson);
+  const requiredResolution = calculateResolutionForReduction(durationInMinutes);
+  const reductionFactor = Math.ceil(
+    requiredResolution / currentResolutionInSeconds
+  );
+
+  logger.debug(`IA: Reduction factor is ${reductionFactor}`);
+
+  return reductionFactor;
+}
+
+/**
+ * We aggregate all available fixes from the original IGC around the now known turnpoints and drop all other fixes. Than we rerun the OLC again and determine the exact turnpoints of the optimized task.
+ */
 async function runSecondIteration(
   igcContent: string,
   roughResult: OLCResult,
@@ -127,6 +138,9 @@ async function runSecondIteration(
   return res;
 }
 
+/**
+ * The resolution of the IGC will be worsen so that the OLC finishes in a reasonable time. The goal is to estimate the rough position of the turnpoints.
+ */
 async function runFirstIteration(
   reduceFactor: number,
   igcContent: string,
@@ -134,7 +148,6 @@ async function runFirstIteration(
   externalId: number,
   flightTypeFactors: FlightTypeFactors
 ) {
-  logger.debug(`IA: Will strip igc fixes by factor ${reduceFactor}`);
   const reducedFixesByFactor = reduceByFactor(
     reduceFactor,
     igcContent,
