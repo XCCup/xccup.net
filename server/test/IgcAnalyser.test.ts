@@ -127,8 +127,7 @@ test("Validate an igc-File were two turnpoints match", async () => {
   expect(result.dist).toBe(expectedFlight.dist);
 });
 
-// TODO: Why does this fail?
-test.skip("Validate that the landing is detected (even when igc has more fixes)", async () => {
+test("Validate that the landing is detected (even when igc has more fixes)", async () => {
   process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/flight_with_car_drive/flight_with_car_drive.igc";
 

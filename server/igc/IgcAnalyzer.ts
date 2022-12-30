@@ -389,11 +389,14 @@ function reduceByFactor(
 
   const flightFixes = removeNonFlightIgcLines(lines, launchIndex, landingIndex);
 
+  // Ensure that factor is at least 1
+  const stripFactor = factor ? factor : 1;
+
   let reducedLines = [];
   for (let i = 0; i < flightFixes.length; i++) {
     reducedLines.push(flightFixes[i]);
     if (flightFixes[i] && flightFixes[i].startsWith("B")) {
-      i = i + (factor - 1);
+      i = i + (stripFactor - 1);
     }
   }
   return reducedLines;
