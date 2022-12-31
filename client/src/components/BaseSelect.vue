@@ -4,7 +4,7 @@
     :id="id"
     class="form-select mb-3"
     :value="modelValue"
-    :disabled="$attrs.disabled"
+    :disabled="disabled"
     v-bind="{
       ...$attrs,
       onChange: ($event) => {
@@ -51,6 +51,10 @@ defineProps({
     default: false,
   },
   addEmptyOption: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
     type: Boolean,
     default: false,
   },

@@ -6,7 +6,7 @@
         id="glider-select"
         class="form-select"
         :value="modelValue"
-        :disabled="$attrs.disabled || gliders.length == 0"
+        :disabled="disabled || gliders.length == 0"
         v-bind="{
           ...$attrs,
           onChange: ($event) => {
@@ -58,6 +58,10 @@ defineProps({
     required: true,
   },
   showLabel: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
     type: Boolean,
     default: false,
   },

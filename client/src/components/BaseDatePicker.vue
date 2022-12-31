@@ -7,7 +7,7 @@
       :placeholder="label"
       :starting-view="startingView"
       class="form-select"
-      :disabled="$attrs.disabled"
+      :disabled="disabled"
       input-format="dd.MM.yyyy"
       :upper-limit="upperLimit"
       :lower-limit="lowerLimit"
@@ -40,6 +40,10 @@ const props = defineProps({
   lowerLimit: {
     type: Date,
     default: new Date(1930, 0, 0),
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
 });
 const emit = defineEmits(["update:modelValue"]);
