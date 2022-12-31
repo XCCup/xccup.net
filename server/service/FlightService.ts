@@ -361,6 +361,7 @@ const flightService = {
 
     const result = await flight.save();
     MailService.sendAirspaceViolationAcceptedMail(flight);
+    checkSiteRecordsAndUpdate(flight);
     return result;
   },
 
@@ -466,8 +467,11 @@ const flightService = {
       }
     }
 
+    // Check if flight is a new site record (not if there is an airspace violation)
+    if (isNewFlightUpload && !flight.airspaceViolation)
+      checkSiteRecordsAndUpdate(flight);
+
     const updatedColumns = await flight.save();
-    checkSiteRecordsAndUpdate(flight);
     return updatedColumns;
   },
 
@@ -487,8 +491,6 @@ const flightService = {
     // TODO: Save here or not?
     await flight.save();
 
-    // TODO: Can we now remove one of the siterecord checks? Which one?
-    checkSiteRecordsAndUpdate(flight);
     deleteCache(["home", "flights", "results"]);
     // Return this or the result of the save method?
     return flight;
@@ -601,7 +603,6 @@ const flightService = {
     if (!takeoff) throw new Error("Error while trying to find takeoff");
 
     return { takeoff, landing };
-
   },
 
   /**
