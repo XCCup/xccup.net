@@ -9,8 +9,6 @@ import { FlightTypeFactors } from "../db/models/SeasonDetail";
 import { BRecord, IGCFile } from "../helper/igc-parser";
 import fs from "fs";
 import IGCParser from "../helper/igc-parser";
-// @ts-ignore
-import parseDMS from "parse-dms";
 import { uniq } from "lodash";
 import logger from "../config/logger";
 import { createFileName } from "../helper/igc-file-utils";
@@ -139,7 +137,7 @@ async function runSecondIteration(
 }
 
 /**
- * The resolution of the IGC will be worsen so that the OLC finishes in a reasonable time. The goal is to estimate the rough position of the turnpoints.
+ * The resolution of the IGC will be decreased so that the OLC finishes in a reasonable time. The goal is to estimate the rough position of the turnpoints.
  */
 async function runFirstIteration(
   reduceFactor: number,
@@ -378,7 +376,7 @@ function extractTurnpointData(turnpoint: string) {
 
 /**
  * Writes the lines of an igc file to a new file.
- * External ID and strip factor are only used to create a unique file name
+ * External ID and reduce factor are only used to create a unique file name
  */
 async function writeIgcToFile(
   flightExternalId: number,
@@ -422,13 +420,14 @@ function reduceByFactor(
   const flightFixes = removeNonFlightIgcLines(lines, launchIndex, landingIndex);
 
   // Ensure that factor is at least 1
-  const stripFactor = factor ? factor : 1;
+  let reduceFactor = 1;
+  if (factor > 1) reduceFactor = factor;
 
   let reducedLines = [];
   for (let i = 0; i < flightFixes.length; i++) {
     reducedLines.push(flightFixes[i]);
     if (flightFixes[i] && flightFixes[i].startsWith("B")) {
-      i = i + (stripFactor - 1);
+      i = i + (reduceFactor - 1);
     }
   }
   return reducedLines;
