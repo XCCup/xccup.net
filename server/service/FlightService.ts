@@ -399,8 +399,10 @@ const flightService = {
     glider,
     hikeAndFly,
   }: UpdateFlightDetails = {}) => {
-    // TODO: And then?
-    if (!flight || !flight.igcPath || !flight.externalId) return;
+    if (!flight || !flight.igcPath || !flight.externalId)
+      return logger.error(
+        "FS: Unexpected behavior. Missing mandatory data (igcPath or extID)"
+      );
 
     const isNewFlightUpload = flight.flightPoints === null;
 
