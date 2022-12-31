@@ -113,15 +113,24 @@ export async function logoutToken(token: string): Promise<number> {
 export async function refreshToken(token: string) {
   if (!token) return;
 
-  const found = await db.Token.findOne({
-    where: { token },
-  });
-  if (!found) return;
+  const found = await db.Token.update(
+    {
+      lastRefresh: new Date(),
+    },
+    {
+      where: { token },
+    }
+  );
+  if (!found) {
+    logger.debug("A: Unknown refresh token used");
+    return;
+  }
+
   return jwt.verify(token, config.get("jwtRefresh"), (error, data) => {
     const user = data as TokenUserObject;
     if (error) {
       logger.warn(
-        `Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,
+        `A: Refresh authentication for user ${user.firstName} ${user.lastName} failed: `,
         error
       );
       return;

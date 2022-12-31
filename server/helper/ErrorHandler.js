@@ -17,7 +17,9 @@ function handleXccupRestrictionError(error, res) {
 function handleXccupHttpError(error, res) {
   if (error.name === "XccupHttpError") {
     logger.warn(error);
-    return res.status(error.statusCode).send(error.clientMessage);
+    return res
+      .status(error.statusCode)
+      .send(error.clientMessage ?? error.message);
   }
 }
 

@@ -1,7 +1,7 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 import { Models } from "../../types/Models";
 
-interface SeasonDetailAttributes {
+export interface SeasonDetailAttributes {
   id: number;
   year: number;
   startDate: Date;
@@ -58,6 +58,7 @@ export function initSeasonDetail(sequelize: Sequelize): Models["SeasonDetail"] {
     year: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true,
     },
     startDate: {
       type: DataTypes.DATE,

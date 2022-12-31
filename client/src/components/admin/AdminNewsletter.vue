@@ -3,13 +3,13 @@
     <h5>Newsletter</h5>
     <div class="form-check mt-3">
       <input
-        id="flexCheckDefault"
+        id="checkNewsLetterIncludeAll"
         v-model="includeAllUserEmails"
         class="form-check-input"
         type="checkbox"
         @change="onIncludeAllChanged"
       />
-      <label class="form-check-label" for="flexCheckDefault">
+      <label class="form-check-label" for="checkNewsLetterIncludeAll">
         Sende Nachricht an alle Nutzer anstatt nur Newsletter Abonennten
       </label>
     </div>

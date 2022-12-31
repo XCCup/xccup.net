@@ -1,17 +1,18 @@
-const path = require("path");
-const fs = require("fs");
-const cron = require("node-cron");
-const logger = require("../config/logger");
-const { deleteIgcFile } = require("../helper/igc-file-utils");
-const { Op } = require("sequelize");
-const Flight = require("../db")["Flight"];
-const { STATE } = require("../constants/flight-constants");
-const config = require("../config/env-config").default;
+import path from "path";
+import fs from "fs";
+import cron from "node-cron";
+import logger from "../config/logger";
+import { deleteIgcFile } from "../helper/igc-file-utils";
+import { Op } from "sequelize";
+import { STATE } from "../constants/flight-constants";
+import { FlightAttributes, FlightInstance } from "../db/models/Flight";
+import db from "../db";
+import config from "../config/env-config";
 
 // Run the job every day at 02:00
 const task = cron.schedule("0 2 * * *", cleanIgcStore);
 
-logger.info("CIS: Will start cron job: clean igc store");
+logger.info("CIS: Will start cron job clean igc store");
 task.start();
 
 async function cleanIgcStore() {
@@ -20,19 +21,21 @@ async function cleanIgcStore() {
     const nowMinus1Hour = new Date();
     // Remove all flights which are longer than 1h in an unfinished state
     nowMinus1Hour.setHours(nowMinus1Hour.getHours() - 1);
-    const flightsToDelete = (
-      await Flight.findAll({
+
+    const flightsToDelete: FlightAttributes[] = (
+      await db.Flight.findAll({
         where: {
           flightStatus: STATE.IN_PROCESS,
+          // @ts-ignore
           createdAt: {
             [Op.lte]: nowMinus1Hour,
           },
         },
       })
-    ).map((v) => v.toJSON());
+    ).map((v: FlightInstance) => v.toJSON());
     flightsToDelete.forEach((flight) => {
       deleteIgcFile(flight.igcPath);
-      Flight.destroy({
+      db.Flight.destroy({
         where: {
           id: flight.id,
         },
