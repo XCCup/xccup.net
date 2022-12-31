@@ -186,7 +186,7 @@ describe("check admin page", () => {
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedTagline);
   });
 
-  it.only("test add new club", () => {
+  it("test add new club", () => {
     const expectedName = "Krachbumm Enten";
     const expectedShortName = "Enten";
     const expectedWebsite = "www.krach-bumm.de";
