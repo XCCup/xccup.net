@@ -68,7 +68,7 @@ const props = defineProps({
     default: "Das Feld darf nicht leer sein",
   },
   // TODO: Remove note
-  // NOTE: Emtpy strings will add the attribute with value "" which can cause duplicate ids
+  // NOTE: Empty strings will add the attribute with value "" which can cause duplicate ids
   // Null does not add the attribute
   id: {
     type: [String, null],

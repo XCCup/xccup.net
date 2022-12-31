@@ -115,9 +115,9 @@ async function onSave(club: Club) {
   try {
     showSpinner.value = true;
     if (club.id) {
-      ApiService.editClub(club);
+      await ApiService.editClub(club);
     } else {
-      ApiService.addClub(club);
+      await ApiService.addClub(club);
     }
     await fetchClubs();
     addEditClubModal.value?.hide();
@@ -132,8 +132,10 @@ async function onSave(club: Club) {
 function createNewClubObject(): NewClub {
   return {
     name: "",
+    shortName: "",
     website: "",
-    contact: [{ address: "", email: "", phone: "", phone2: "" }],
+    contacts: [{ name: "", address: "", email: "", phone: "", phone2: "" }],
+    participantInSeasons: [],
   };
 }
 

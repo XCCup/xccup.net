@@ -186,6 +186,33 @@ describe("check admin page", () => {
     cy.get("[data-cy=currentSponsorTable").find("td").contains(expectedTagline);
   });
 
+  it.only("test add new club", () => {
+    const expectedName = "Krachbumm Enten";
+    const expectedShortName = "Enten";
+    const expectedWebsite = "www.krach-bumm.de";
+
+    cy.intercept("GET", "/api/clubs").as("get-clubs");
+
+    cy.get("#nav-clubs-tab").click();
+
+    cy.get("#adminClubPanel").find("button").contains("Neuer Verein").click();
+
+    // Wait till modal was fully loaded
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+    cy.get("[data-cy=inputClubName").type(expectedName);
+    cy.get("[data-cy=inputClubShortName").type(expectedShortName);
+    cy.get("[data-cy=inputClubWebsite").type(expectedWebsite);
+    cy.get("[data-cy=checkClubCurrentSeason").check();
+    cy.get("Button").filter(":visible").contains("Speichern").click();
+    // Wait till modal is gone…
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+    cy.wait("@get-clubs");
+    cy.get("[data-cy=currentClubTable").find("td").contains(expectedName);
+    cy.get("[data-cy=currentClubTable").find("td").contains(expectedWebsite);
+  });
+
   it("test admin flight upload list", () => {
     const expectedPilotName = "Adam Bayer";
     const igcFileName = "73320_LA9ChMu1.igc";

@@ -4,10 +4,14 @@ import ApiService from "@/services/ApiService";
 import { Modal } from "bootstrap";
 import { watch } from "vue";
 import { onMounted, ref } from "vue";
+import type { PropType } from "vue";
+
+type ReferenceType = "Sponsor" | "Club";
+type LogoIdType = String | undefined;
 
 const props = defineProps({
   logoId: {
-    type: String,
+    type: String as PropType<LogoIdType>,
     required: false,
     default: undefined,
   },
@@ -17,14 +21,14 @@ const props = defineProps({
     default: undefined,
   },
   referenceType: {
-    type: String,
+    type: String as PropType<ReferenceType>,
     required: true,
     default: "Sponsor",
   },
 });
 
 // Maybe also support a future admin club  with this component in the future
-const supportedReferenceTypes = ["Sponsor"];
+const supportedReferenceTypes = ["Sponsor", "Club"];
 if (!supportedReferenceTypes.includes(props.referenceType))
   throw new Error(
     "Reference type is not supported; Supported types are " +

@@ -4,9 +4,10 @@ import type { Logo } from "./Logo";
 export interface Club {
   id?: string;
   name: string;
+  shortName: string;
   website?: string;
   participantInSeasons?: number[];
-  contact?: Contact[];
+  contacts?: Contact[];
   mapPosition?: Position;
   updatedAt?: Date;
   createdAt?: Date;
@@ -20,6 +21,8 @@ interface Position {
 
 export interface NewClub {
   name: string;
+  shortName: string;
   website: string;
-  contact: Contact[];
+  contacts: Contact[];
+  participantInSeasons: number[];
 }

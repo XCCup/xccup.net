@@ -16,7 +16,7 @@
         </td>
         <td>
           <p
-            v-for="line in beautifyContactForTable(club.contact)"
+            v-for="line in beautifyContactForTable(club.contacts)"
             :key="line"
             :value="line"
           >
@@ -54,11 +54,15 @@ const props = withDefaults(defineProps<Props>(), {});
 
 defineEmits(["editClub", "deleteClub"]);
 
-function beautifyContactForTable(contact?: Contact[]) {
-  // if (!contact || Object.keys(contact).length == 0) return "";
-  // const nonEmptyValues = Object.values(contact).filter((v) => v?.length > 0);
-  // return nonEmptyValues;
-  return "";
+function beautifyContactForTable(contacts?: Contact[]) {
+  if (!contacts) return "";
+
+  let lines: string[] = [];
+
+  contacts.forEach((contact) => {
+    lines = lines.concat(Object.values(contact).filter((v) => v?.length > 0));
+  });
+  return lines;
 }
 
 function beautifySeasonsForTable(seasons?: number[]) {

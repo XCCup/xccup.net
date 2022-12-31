@@ -1,34 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const service = require("../service/ClubService");
-const logoService = require("../service/LogoService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
-const { query } = require("express-validator");
 const { requesterMustBeModerator } = require("./Auth");
 const {
   checkStringObjectNotEmpty,
   checkParamIsUuid,
-  checkIsBoolean,
-  checkIsUuidObject,
   validationHasErrors,
+  checkIsArray,
 } = require("./Validation");
-const multer = require("multer");
-const {
-  defineFileDestination,
-  defineImageFileNameWithCurrentDateAsPrefix,
-  retrieveFilePath,
-  IMAGE_SIZES,
-} = require("../helper/ImageUtils");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const CACHE_RELEVANT_KEYS = ["home", "clubs", "filterOptions"];
-
-const IMAGE_STORE = "test/testdatasets/images/clubs";
-
-const storage = multer.diskStorage({
-  destination: defineFileDestination(IMAGE_STORE),
-  filename: defineImageFileNameWithCurrentDateAsPrefix(),
-});
-const imageUpload = multer({ storage });
 
 // @desc Gets all open information of all active clubs
 // @route GET /clubs/public
@@ -76,14 +58,17 @@ router.get("/names", async (req, res, next) => {
 // @route GET /clubs/
 // @access Only moderator
 
-router.get("/", requesterMustBeModerator, async (req, res, next) => {
-  try {
-    const clubs = await service.getAll();
-    res.json(clubs);
-  } catch (error) {
-    next(error);
+router.get(
+  "/",
+  /*requesterMustBeModerator,*/ async (req, res, next) => {
+    try {
+      const clubs = await service.getAll();
+      res.json(clubs);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // @desc Gets all members of clubs
 // @route GET /clubs/:shortName/member/
@@ -106,7 +91,7 @@ router.get("/:shortName/member", async (req, res, next) => {
 router.get(
   "/:id",
   checkParamIsUuid("id"),
-  requesterMustBeModerator,
+  // requesterMustBeModerator,
   async (req, res, next) => {
     try {
       const clubId = req.params.id;
@@ -131,11 +116,11 @@ router.post(
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("shortName"),
   checkStringObjectNotEmpty("website"),
-  checkStringObjectNotEmpty("contacts"),
-  checkIsBoolean("isActiveParticipant"),
+  checkIsArray("contacts"),
+  checkIsArray("participantInSeasons"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const { name, shortName, website, contacts, isActiveParticipant } =
+    const { name, shortName, website, contacts, participantInSeasons } =
       req.body;
 
     try {
@@ -144,9 +129,7 @@ router.post(
         shortName,
         website,
         contacts,
-        participantInSeasons: isActiveParticipant
-          ? [new Date().getFullYear()]
-          : [],
+        participantInSeasons,
       };
 
       const newClub = await service.create(club);
@@ -171,12 +154,12 @@ router.put(
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("shortName"),
   checkStringObjectNotEmpty("website"),
-  checkStringObjectNotEmpty("contacts"),
-  checkIsBoolean("isActiveParticipant"),
+  checkIsArray("contacts"),
+  checkIsArray("participantInSeasons"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
     const clubId = req.params.id;
-    const { name, shortName, website, contacts, isActiveParticipant } =
+    const { name, shortName, website, contacts, participantInSeasons } =
       req.body;
 
     try {
@@ -187,83 +170,13 @@ router.put(
       club.shortName = shortName;
       club.homepage = website;
       club.contacts = contacts;
-      if (
-        isActiveParticipant &&
-        !club.participantInSeasons.includes(new Date().getFullYear())
-      ) {
-        isActiveParticipant.push(new Date().getFullYear());
-      }
+      club.participantInSeasons = participantInSeasons;
 
       const updatedClub = await service.update(club);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 
       res.json(updatedClub);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-// @desc Gets the logo of an sponsor
-// @route GET /sponsors/logo/:id
-
-router.get(
-  "/logo/:id",
-  checkParamIsUuid("id"),
-  query("size")
-    .optional()
-    .isIn(Object.values(IMAGE_SIZES).map((f) => f.name)),
-  async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-    const id = req.params.id;
-    const size = req.query.size;
-
-    try {
-      const logo = await logoService.getById(id);
-
-      if (!logo) return res.sendStatus(NOT_FOUND);
-
-      const fullfilepath = retrieveFilePath(logo.path, size);
-
-      return res.type(logo.mimetype).sendFile(fullfilepath);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-// @desc Uploads a new logo
-// @route POST /clubs/logo
-// @access Only moderator
-
-router.post(
-  "/logo",
-  requesterMustBeModerator,
-  imageUpload.single("image"),
-  checkIsUuidObject("clubId"),
-  async (req, res, next) => {
-    try {
-      const { originalname, mimetype, size, path } = req.file;
-
-      const clubId = req.body.clubId;
-
-      const club = await service.getById(clubId);
-      if (!club) return res.sendStatus(NOT_FOUND);
-
-      if (club.Logo) {
-        logoService.deleteOldLogo(club);
-      }
-
-      const logo = await logoService.create({
-        originalname,
-        mimetype,
-        size,
-        path,
-        clubId,
-      });
-
-      res.json(logo);
     } catch (error) {
       next(error);
     }
@@ -296,5 +209,97 @@ router.delete(
     }
   }
 );
+
+// Logos aren't currently used anywhere on the frontend for clubs
+// // @desc Uploads a new logo for a club
+// // @route POST /clubs/logo/
+// // @access Only moderator
+
+// @desc Gets the logo of an club
+// @route GET /clubs/logo/:id
+
+// router.get(
+//   "/logo/:id",
+//   checkParamIsUuid("id"),
+//   query("size")
+//     .optional()
+//     .isIn(Object.values(IMAGE_SIZES).map((f) => f.name)),
+//   async (req, res, next) => {
+//     if (validationHasErrors(req, res)) return;
+//     const id = req.params.id;
+//     const size = req.query.size;
+
+//     try {
+//       const logo = await logoService.getById(id);
+
+//       if (!logo) return res.sendStatus(NOT_FOUND);
+
+//       const fullfilepath = retrieveFilePath(logo.path, size);
+
+//       return res.type(logo.mimetype).sendFile(fullfilepath);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
+// router.post(
+//   "/logo/",
+//   requesterMustBeModerator,
+//   imageUpload.single("image"),
+//   async (req, res, next) => {
+//     if (validationHasErrors(req, res)) return;
+//     try {
+//       const { originalname, mimetype, size, path } = req.file;
+//       const clubId = req.body.sponsorId;
+
+//       const club = await service.getById(clubId);
+//       if (!club) return res.sendStatus(NOT_FOUND);
+
+//       if (club.logo) {
+//         logoService.deleteOldLogo(club);
+//       }
+
+//       const logo = await logoService.create({
+//         originalname,
+//         mimetype,
+//         size,
+//         path,
+//         sponsorId: clubId,
+//       });
+
+//       deleteCache([club.logo?.id, "clubs/public"]);
+//       res.json(logo);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
+
+// // @desc Deletes a logo for a club
+// // @route DELETE /clubs/logo/:id
+// // @access Only moderator
+
+// router.delete(
+//   "/logo/:id",
+//   requesterMustBeModerator,
+//   checkParamIsUuid("id"),
+//   async (req, res, next) => {
+//     if (validationHasErrors(req, res)) return;
+//     try {
+//       const club = await service.getById(req.params.id);
+//       if (!club) return res.sendStatus(NOT_FOUND);
+
+//       if (club.logo) {
+//         logoService.deleteOldLogo(club);
+//       }
+
+//       deleteCache([club.logo.id, "clubs/public"]);
+//       res.sendStatus(OK);
+//     } catch (error) {
+//       next(error);
+//     }
+//   }
+// );
 
 module.exports = router;

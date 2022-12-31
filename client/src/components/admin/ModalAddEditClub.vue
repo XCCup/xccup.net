@@ -22,6 +22,11 @@
         <div class="modal-body">
           <BaseInput v-model="club.name" label="Name" data-cy="inputClubName" />
           <BaseInput
+            v-model="club.shortName"
+            label="Kurzname (wird z.B. in Links genutzt werden)"
+            data-cy="inputClubShortName"
+          />
+          <BaseInput
             v-model="club.website"
             label="Website"
             data-cy="inputClubWebsite"
@@ -39,23 +44,59 @@
               Verein nimmt an aktueller Saison teil
             </label>
           </div>
-          <!--  This prevents the client from crashing if the contact field does not contain an object.
-                Updating then is not possible, as there is no object to bind to. Instead it is obligatory to 
-                delete the club and add it again. This seems counterintuitive but will only happen on badly imported clubs.
-                It could be handled more elegant but with much more code. And again: This is very unlikely 
-          -->
-          <div v-if="club.contact">
-            <BaseInput v-model="club.contact[0].address" label="Adresse" />
-            <BaseInput v-model="club.contact[0].email" label="E-Mail" />
-            <BaseInput v-model="club.contact[0].phone" label="Tel." />
-            <BaseInput v-model="club.contact[0].phone2" label="Tel. (2)" />
+          <div
+            v-for="(contact, index) in club.contacts"
+            :key="contact.name"
+            :item="contact"
+            :index="index"
+          >
+            <hr />
+            <p>{{ index + 1 }}. Kontakt</p>
+            <div v-if="club.contacts && club.contacts[index]">
+              <BaseInput
+                :id="'clubContactNameInput' + index"
+                v-model="club.contacts[index].name"
+                label="Name"
+              />
+              <BaseInput
+                :id="'clubContactAddressInput' + index"
+                v-model="club.contacts[index].address"
+                label="Adresse"
+              />
+              <BaseInput
+                :id="'clubContactEmailInput' + index"
+                v-model="club.contacts[index].email"
+                label="E-Mail"
+              />
+              <BaseInput
+                :id="'clubContactPhoneInput' + index"
+                v-model="club.contacts[index].phone"
+                label="Tel."
+              />
+              <BaseInput
+                v-model="club.contacts[index].phone2"
+                label="Tel. (2)"
+              />
+            </div>
+            <button
+              v-if="index !== 0"
+              class="btn btn-sm btn-outline-danger mb-3"
+              @click="onDeleteContact(index)"
+            >
+              Kontakt löschen
+            </button>
           </div>
-          <div v-else class="text-danger">
-            Der Eintrag dieses Clubs ist fehlerhaft und muss neu angelegt
-            werden.
+          <div>
+            <button
+              class="btn btn-sm btn-outline-primary"
+              @click="onAddContact"
+            >
+              Kontakt ergänzen
+            </button>
           </div>
-
-          <LogoHandler
+          <hr />
+          <!-- Logos aren't currently used anywhere on the frontend for clubs -->
+          <!-- <LogoHandler
             v-if="club.id"
             :logo-id="club.logo?.id"
             :reference-id="club.id"
@@ -65,7 +106,7 @@
           <p v-else>
             Du musst zuerst den Eintrag speichern, bevor du ein Logo hinzufügen
             kannst
-          </p>
+          </p> -->
         </div>
         <div class="modal-footer">
           <BaseError :error-message="errorMessage" />
@@ -137,16 +178,36 @@ watchEffect(() => {
 
 const saveButtonIsEnabled = computed(() => {
   if (!club.value.website) return false;
-  return club.value.name.length > 1 && club.value.website.length > 1;
+  return (
+    club.value.name.length > 1 &&
+    club.value.shortName.length > 1 &&
+    club.value.website.length > 1
+  );
 });
 
 const onSaveClub = () => {
   emit("save-club", club.value);
 };
 
-const onLogoUpdated = (type: string) => {
-  emit("logo-updated", type);
+const onDeleteContact = (index: number) => {
+  if (!club.value.contacts) return;
+  club.value.contacts.splice(index, 1);
 };
+
+const onAddContact = () => {
+  if (!club.value.contacts) return;
+  club.value.contacts.push({
+    name: "",
+    address: "",
+    email: "",
+    phone: "",
+    phone2: "",
+  });
+};
+
+// const onLogoUpdated = (type: string) => {
+//   emit("logo-updated", type);
+// };
 </script>
 
 <style scoped>
