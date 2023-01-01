@@ -442,6 +442,7 @@ router.put(
   checkIsBoolean("emailInformIfComment"),
   checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
+  checkIsBoolean("noTshirtRequested"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
   checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
   checkOptionalStrongPassword("password"),
@@ -460,6 +461,7 @@ router.put(
       emailInformIfComment,
       emailNewsletter,
       emailTeamSearch,
+      noTshirtRequested,
       state,
       address,
       password,
@@ -479,6 +481,7 @@ router.put(
       user.emailInformIfComment = emailInformIfComment;
       user.emailNewsletter = emailNewsletter;
       user.emailTeamSearch = emailTeamSearch;
+      user.noTshirtRequested = noTshirtRequested;
       user.state = state;
       user.address = address;
       user.password = password;

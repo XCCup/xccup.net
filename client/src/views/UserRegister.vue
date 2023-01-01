@@ -35,22 +35,13 @@
 
         <!-- Info collapse -->
         <div class="mb-3">
-          <a
-            data-bs-toggle="collapse"
-            href="#collapseInfo"
-            role="button"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-          >
-            <i class="bi bi-info-circle"> Warum so viele weitere Angaben?</i>
-          </a>
-          <div id="collapseInfo" class="collapse">
-            <div class="card card-body mt-3">
-              Im XCCup gibt es verschiedene Wertungen die auf diesen
+          <InfoCollapsable
+            id="backgroundInformation"
+            label="Warum so viele weitere Angaben?"
+            info-message="Im XCCup gibt es verschiedene Wertungen die auf diesen
               Informationen basieren. Zum Beispiel die Seniorenwertung oder die
-              Landesmeisterschaft Rheinland-Pfalz.
-            </div>
-          </div>
+              Landesmeisterschaft Rheinland-Pfalz."
+          />
         </div>
         <!-- Gender / Birthday -->
         <div class="row">
@@ -64,11 +55,11 @@
             />
           </div>
           <div class="col-md-6">
-            <!-- TODO: Replace with three seperate selects -->
+            <!-- TODO: Replace with three separate selects -->
             <BaseDatePicker
               id="birthday"
               v-model="userData.birthday"
-              label="Geburstag"
+              label="Geburtstag"
               starting-view="year"
               :upper-limit="initialDate"
             />
@@ -230,7 +221,7 @@ const showSpinner = ref(false);
 const privacyPolicyModal = ref(null);
 const compRulesModal = ref(null);
 
-const inidcateSuccess = async () => {
+const indicateSuccess = async () => {
   await showSuccessAlert(
     "Um deinen Account zu aktivieren öffne bitte den Link den wir dir gerade per Email geschickt haben."
   );
@@ -302,7 +293,7 @@ try {
   console.log(error);
 }
 
-// Delete users state if country is not germany
+// Delete users state if country is not Germany
 watchEffect(() => {
   if (userData.address.country != "Deutschland") {
     userData.address.state = "";
@@ -320,7 +311,7 @@ const onSubmit = async () => {
     await ApiService.register(userData);
     errorMessage.value = null;
     showSpinner.value = false;
-    inidcateSuccess();
+    indicateSuccess();
   } catch (error) {
     showSpinner.value = false;
 

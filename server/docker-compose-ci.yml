@@ -37,7 +37,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: xccup/yarn
-    profiles: ['cli']
+    profiles: ["cli"]
     volumes:
       - .:/home/node/app
     command: "apk add --no-cache && libc6-compat && libstdc++"

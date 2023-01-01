@@ -11,4 +11,3 @@ export function formatFlightDuration(duration: number | undefined): string {
 
   return hours + ":" + minutes + "h";
 }
-
