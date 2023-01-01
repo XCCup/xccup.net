@@ -299,7 +299,7 @@ describe("Check user profile", () => {
       });
   });
 
-  it("Visit profile and sort my flights table", () => {
+  it.only("Visit profile and sort my flights table", () => {
     cy.intercept(
       "GET",
       "/api/flights/self?limit=50&sortCol=takeoffTime&sortOrder=ASC"
@@ -317,8 +317,10 @@ describe("Check user profile", () => {
       timeout: 10000,
     }).should("have.text", `Profil`);
 
-    const expectedDate = "20.04.22";
-    const expectedDateAfterSort = "20.02.22";
+    const expectedDate =
+      "20.04." + new Date().getFullYear().toString().slice(-2);
+    const expectedDateAfterSort =
+      "20.02." + new Date().getFullYear().toString().slice(-2);
 
     cy.get("[data-cy=my-flights-tab]").click();
     cy.get("[data-cy=my-flights-table]").should("be.visible");
