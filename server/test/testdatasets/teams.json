@@ -24,6 +24,18 @@
     ]
   },
   {
+    "id": "31e94f3e-e1d6-4f95-aaaa-17af4992339f",
+    "name": "Die Adler",
+    "season": 2023,
+    "members": [
+      "cd1583d1-fb7f-4a93-b732-effd59e5c3ae",
+      "8131b218-ed76-4095-bd29-0bf3902358c2",
+      "e071350f-a7c3-4081-9e2f-709625b07a07",
+      "25346d86-de5b-48b0-9dee-bffe06e560c8",
+      "0f6e6f97-b64b-4e04-a516-adada6f2cba0"
+    ]
+  },
+  {
     "id": "31e94f3e-e1d6-4f95-b9a8-17af49923300",
     "name": "Die Adler",
     "season": 2021,
@@ -60,6 +72,18 @@
     ]
   },
   {
+    "id": "9c82827b-c393-47f9-aaaa-7c8e7c6f8fce",
+    "name": "Die Elstern",
+    "season": 2023,
+    "members": [
+      "67e5230b-667f-4ff1-8750-17739e7d3ea4",
+      "1fddb1fe-f9fe-48ef-a76e-d70d53e5fb6a",
+      "61895b0e-0e22-480d-87ac-c0040e682c5d",
+      "2a33b726-8edf-4d4b-8da8-f97138371b6c",
+      "9efc1c62-ea6a-4659-b89c-421b57ab73f6"
+    ]
+  },
+  {
     "id": "99486b20-8887-4240-8cb2-e2d7ac3c1bcd",
     "name": "Die Möwen",
     "season": 2020,
@@ -75,6 +99,18 @@
     "id": "99486b20-8887-4240-8cb2-e2d7ac3c1bce",
     "name": "Die Möwen",
     "season": 2022,
+    "members": [
+      "1c3fb13d-e725-4869-a816-87498833bee0",
+      "bc8f46c2-fc95-4662-877c-d4a08806f482",
+      "67172eda-57c7-4bbc-af90-f4c56c30f5ec",
+      "45907c75-9c14-42af-bc5a-993f4bec4b0f",
+      "9efc1c62-ea6a-4659-b89c-421b57ab73f6"
+    ]
+  },
+  {
+    "id": "99486b20-8887-aaaa-8cb2-e2d7ac3c1bce",
+    "name": "Die Möwen",
+    "season": 2023,
     "members": [
       "1c3fb13d-e725-4869-a816-87498833bee0",
       "bc8f46c2-fc95-4662-877c-d4a08806f482",

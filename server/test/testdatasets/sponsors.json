@@ -20,7 +20,7 @@
       "2018",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "ADVANCE Thun AG Seestrasse 14 CH-3602 Thun",
@@ -110,7 +110,7 @@
     "website": "https://www.ad-gliders.com",
     "type": "MANUFACTURER",
     "tagline": "Gleitschirme und mehr",
-    "sponsorInSeasons": ["2019", "2020", "2022"],
+    "sponsorInSeasons": ["2019", "2020", "2022","2023"],
     "contact": {
       "address": "AIRDESIGN GmbH Rhombergstraße 9, 4. Stock 6067 Absam Innsbruck Austria",
       "email": "info@ad-gliders.com, martin@ad-gliders.com",
@@ -124,7 +124,7 @@
     "tagline": "We make you fly",
     "website": "https://air-touch.de",
     "type": "SCHOOL",
-    "sponsorInSeasons": ["2018", "2019", "2020", "2022"],
+    "sponsorInSeasons": ["2018", "2019", "2020", "2022","2023"],
     "contact": {
       "address": "AiR-touch DHV Flugschule Jochen Henrichs Hans-Böckler-Straße 3 D-56070 KOBLENZ",
       "email": "fly@air-touch.de",
@@ -185,7 +185,7 @@
     "website": "http://www.baumpflege-stingl.de",
     "type": "OTHER",
     "tagline": "Die Baumpflege ist unsere Leidenschaft",
-    "sponsorInSeasons": ["2016", "2017", "2018", "2019", "2020", "2022"],
+    "sponsorInSeasons": ["2016", "2017", "2018", "2019", "2020", "2022","2023"],
     "contact": {
       "address": "Baumpflege Jochen Stingl Am Forsthaus 10 65719 Hofheim/Ts.",
       "email": "stingl@baumpflege-stingl.de",
@@ -279,7 +279,7 @@
     "website": "http://www.dank-e.de",
     "tagline": "Ökologisch. Nachhaltig. Innovativ.",
     "type": "OTHER",
-    "sponsorInSeasons": ["2019", "2020", "2022"],
+    "sponsorInSeasons": ["2019", "2020", "2022","2023"],
     "contact": {
       "address": "DANKe Projekt GmbH Am Wiesengrund 23 65510 Hünstetten",
       "email": "mboerner@dank-e.de",
@@ -314,7 +314,7 @@
       "2017",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "Elsenbach Design Dipl. Des. Nicole Elsenbach Südstraße 12 42499 Hückeswagen",
@@ -342,7 +342,7 @@
     "website": "https://www.fly-a-glider.de/",
     "type": "SCHOOL",
     "tagline": "DHV Gleitflugschule",
-    "sponsorInSeasons": ["2018", "2019", "2020", "2022"],
+    "sponsorInSeasons": ["2018", "2019", "2020", "2022","2023"],
     "contact": {
       "address": "Robert Ruland Milostr. 12 54293 Trier",
       "email": "rob@fly-a-glider.de, rob.ruland@web.de",
@@ -403,7 +403,7 @@
       "2018",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "Flugschule Hierondelle Untergasse 27 D-69469 Weinheim",
@@ -444,7 +444,7 @@
     "website": "http://holiday-flat-almunecar.de",
     "type": "HOLIDAY",
     "tagline": "Erste Reihe am Strand der Playa Velilla",
-    "sponsorInSeasons": ["2016", "2018", "2019", "2020", "2022"],
+    "sponsorInSeasons": ["2016", "2018", "2019", "2020", "2022","2023"],
     "contact": {
       "address": "Bärbel Schüller und Martin Droste Mirker Höhe 52 42109 Wuppertal Deutschland",
       "email": "info@holiday-flat-almunecar.de",
@@ -513,7 +513,7 @@
       "2018",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "FlyMarket Flugsport-Zubehör D-87637 Eisenberg Pröbstenerstr. 15",
@@ -593,7 +593,7 @@
     "website": "http://maier-components.de",
     "type": "MANUFACTURER",
     "tagline": "Händler für Flugsportzubehör",
-    "sponsorInSeasons": ["2017", "2018", "2019", "2020", "2022"],
+    "sponsorInSeasons": ["2017", "2018", "2019", "2020", "2022","2023"],
     "contact": {
       "address": "Mozartstraße 1A D-35392 Gießen phone: +49 641/5599957 (AB) action@maier-components.de",
       "email": "action@maier-components.de",
@@ -679,7 +679,7 @@
       "2013",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "NOVA Vertriebsges.m.b.H Bernhard Hoefel Str. 14 6020 INNSBRUCK AUSTRIA",
@@ -705,7 +705,7 @@
       "2018",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "Konny Karlheinz KONRAD Samerberg",
@@ -769,7 +769,7 @@
     "type": "MANUFACTURER",
     "isGoldSponsor": true,
     "tagline": "The new paragliding brand of Hannes Papesh and team",
-    "sponsorInSeasons": ["2019", "2020", "2022"],
+    "sponsorInSeasons": ["2019", "2020", "2022","2023"],
     "contact": {
       "address": "Achenseestraße 12 6212 Maurach, Austria - behind the Rofan cabel car -",
       "email": "info@phi-air.com",
@@ -835,7 +835,7 @@
     "website": "http://www.skyman.aero",
     "type": "MANUFACTURER",
     "tagline": "Neue Wege entdecken",
-    "sponsorInSeasons": ["2019", "2020", "2022"],
+    "sponsorInSeasons": ["2019", "2020", "2022","2023"],
     "contact": {
       "address": "Fly-market Flugsport-Zubehör GmbH & Co. KG Am Schönebach 3 87637 Eisenberg",
       "email": "",
@@ -890,7 +890,7 @@
       "2018",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "skywalk GmbH & Co. KG Bahnhofstraße 110 83224 GRASSAU",
@@ -942,7 +942,7 @@
       "2012",
       "2013",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "Swing Flugsportgeräte GmbH An der Leiten 4 82290 Landsberied Germany",
@@ -1015,7 +1015,7 @@
       "2012",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "UP International GmbH Kreuzeckbahnstrasse 7 D-82467 Garmisch-Partenkirchen",
@@ -1041,7 +1041,7 @@
       "2017",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "U-Turn GmbH Esslinger Straße 23 D-78054 Villingen-Schwenningen",
@@ -1090,7 +1090,7 @@
       "2018",
       "2019",
       "2020",
-      "2022"
+      "2022","2023"
     ],
     "contact": {
       "address": "Wolf Loehr Hauptstr.27 D-54538 Kinderbeuern 93 Vorster Ave Johannesburg/Glenanda South Africa +27764222244",
