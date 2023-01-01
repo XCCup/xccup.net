@@ -18,6 +18,10 @@ const props = defineProps({
 });
 
 const formatedDate = computed(() => {
-  return formatInTimeZone(new Date(props.timestamp), getXccupTimezone(), props.dateFormat);
+  return formatInTimeZone(
+    new Date(props.timestamp),
+    getXccupTimezone(),
+    props.dateFormat
+  );
 });
 </script>

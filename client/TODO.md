@@ -25,7 +25,6 @@
 
 ### Profile
 
-
 ### Upload
 
 - [ ] Handle .igc filenames containing whitespaces
@@ -36,6 +35,5 @@
 - [ ] Display stats for airbuddies
 
 ### FlightsAll
-
 
 ### Results
