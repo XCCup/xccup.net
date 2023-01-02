@@ -416,7 +416,7 @@ const flightService = {
           flight.externalId,
           flightTypeFactors
         );
-        flight = await flightService.addResult(flight, result);
+        flight = flightService.addResult(flight, result);
       } catch (error) {
         logger.error(error);
         return;
@@ -482,19 +482,14 @@ const flightService = {
     return db.Flight.destroy({ where: { id: flightId } });
   },
 
-  addResult: async (flight: FlightInstance, result: OLCResult) => {
+  addResult: (flight: FlightInstance, result: OLCResult) => {
     logger.info("FS: Will add igc result to flight " + flight.id);
 
     flight.flightDistance = +result.dist;
     flight.flightType = result.type;
     flight.flightTurnpoints = result.turnpoints;
     calculateTaskSpeed(result, flight);
-
-    // TODO: Save here or not?
-    await flight.save();
-
     deleteCache(["home", "flights", "results"]);
-    // Return this or the result of the save method?
     return flight;
   },
 
