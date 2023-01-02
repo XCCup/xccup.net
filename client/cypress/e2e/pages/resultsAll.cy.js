@@ -28,7 +28,7 @@ describe("check results overall page", () => {
 
     cy.visit(`${year}/einzelwertung`);
 
-    cy.get("#select-season").should("have.value", "2022");
+    cy.get("#select-season").should("have.value", year);
     cy.get("#select-season").select((year - 1).toString());
     cy.url().should("include", `${year - 1}/einzelwertung`);
     cy.get("[data-cy=filter-icon]").should("be.visible");
