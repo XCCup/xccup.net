@@ -91,14 +91,6 @@ app.use("*", (req, res) => {
 // Sentry
 if (config.get("env") == "production") {
   app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
-  // Optional fallthrough error handler
-  // @ts-ignore
-  app.use(function onError(err, req, res, next) {
-    // The error id is attached to `res.sentry` to be returned
-    // and optionally displayed to the user for support.
-    res.statusCode = 500;
-    res.end(res.sentry + "\n");
-  });
 }
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
