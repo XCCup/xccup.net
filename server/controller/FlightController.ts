@@ -289,7 +289,7 @@ router.post(
 
       // Airspace check / takeoff name / result calculation
       const { takeoffName, result, airspaceViolation } =
-        await runChecksStartCalculationsStoreFixes(flightDbObject, userId);
+        await runChecksStoreFixes(flightDbObject, userId);
 
       res.json({
         flightId: flightDbObject.id,
@@ -360,7 +360,7 @@ router.post(
       });
 
       const { takeoffName, result, airspaceViolation } =
-        await runChecksStartCalculationsStoreFixes(flightDbObject, userId, {
+        await runChecksStoreFixes(flightDbObject, userId, {
           skipModifiableCheck: true,
           skipMidflightCheck: req.body.skipMidflight === "true",
           skipMeta: req.body.skipMeta === "true",
@@ -374,7 +374,7 @@ router.post(
           .status(BAD_REQUEST)
           .send("No default glider configured in profile");
 
-      FlightService.finalizeFlightSubmission({
+      await FlightService.updateFlightDetailsAndGetResult({
         flight: flightDbObject,
         glider,
       });
@@ -405,12 +405,19 @@ router.get(
       const flight = await FlightService.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
 
-      const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
+      // TODO: Skip the checks and only recalculate?
+      const { airspaceViolation } = await runChecksStoreFixes(
         flight,
         flight.userId,
         // TODO: Should the recalculation really always skip all checks?
         { skipAllChecks: true }
       );
+
+      await FlightService.updateFlightDetailsAndGetResult({
+        report: req.body.report,
+        flight: flight,
+        glider: flight.glider,
+      });
 
       res.json({
         airspaceViolation,
@@ -530,13 +537,13 @@ router.post(
       });
 
       // Airspace check
-      const { airspaceViolation } = await runChecksStartCalculationsStoreFixes(
+      const { airspaceViolation } = await runChecksStoreFixes(
         flightDbObject,
         userId
       );
 
       // DB
-      await FlightService.finalizeFlightSubmission({
+      await FlightService.updateFlightDetailsAndGetResult({
         report: req.body.report,
         flight: flightDbObject,
         glider,
@@ -600,7 +607,7 @@ router.put(
 
       await checkIfFlightIsModifiable(flight.flightStatus, undefined, userId);
 
-      await FlightService.finalizeFlightSubmission({
+      await FlightService.updateFlightDetailsAndGetResult({
         flight,
         report,
         airspaceComment,
@@ -690,9 +697,9 @@ router.put(
  * - fixes stats
  * - fixes elevation data
  *
- * stores the flight fixes to the DB and starts the OLC algorithm
+ * stores the flight fixes to the DB
  */
-async function runChecksStartCalculationsStoreFixes(
+async function runChecksStoreFixes(
   flightDbObject: FlightInstance,
   userId: string,
   {
@@ -702,7 +709,7 @@ async function runChecksStartCalculationsStoreFixes(
     skipMeta = false,
   } = {}
 ) {
-  const fixes = extractFixes(flightDbObject);
+  const fixes = extractFixes(flightDbObject.igcPath);
 
   FlightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
   if (!skipAllChecks && !skipModifiableCheck)
@@ -711,13 +718,21 @@ async function runChecksStartCalculationsStoreFixes(
       flightDbObject.takeoffTime,
       userId
     );
-  const takeoff = await FlightService.attachTakeoffAndLanding(
-    flightDbObject,
-    fixes
-  );
+
+  // Find takeoff and landing
+  const takeoffAndLanding = await FlightService.findTakeoffAndLanding(fixes);
+
+  flightDbObject.siteId = takeoffAndLanding.takeoff.id;
+  flightDbObject.region = takeoffAndLanding.takeoff.locationData?.region;
+  flightDbObject.landing = takeoffAndLanding.landing;
+
+  // Detect mid flight start
   if (!skipAllChecks && !skipMidflightCheck)
-    detectMidFlightIgcStart(takeoff, fixes);
+    detectMidFlightIgcStart(takeoffAndLanding.takeoff, fixes);
+
+  // Check if flight was uploaded before
   await FlightService.checkIfFlightWasNotUploadedBefore(flightDbObject);
+
   const fixesDbObject = await FlightService.storeFixesAndAddStats(
     flightDbObject,
     fixes
@@ -742,12 +757,10 @@ async function runChecksStartCalculationsStoreFixes(
    * and an array of violations. Maybe check if the variable name still fits.
    * And type or JSDoc it.
    */
-  const [airspaceViolations] = await Promise.all([
-    FlightService.attachElevationDataAndCheckForAirspaceViolations(
+  const airspaceViolations =
+    await FlightService.attachElevationDataAndCheckForAirspaceViolations(
       flightDbObject
-    ),
-    FlightService.startResultCalculation(flightDbObject),
-  ]);
+    );
 
   if (airspaceViolations)
     MailService.sendAirspaceViolationAdminMail(
@@ -757,7 +770,7 @@ async function runChecksStartCalculationsStoreFixes(
     );
 
   return {
-    takeoffName: takeoff.name,
+    takeoffName: takeoffAndLanding.takeoff.name,
     result,
     airspaceViolation: airspaceViolations,
   };
@@ -887,4 +900,3 @@ function isGRecordResultInvalid(res: Response, validationResult?: FaiResponse) {
   return false;
 }
 export default router;
-module.exports = router;

@@ -43,7 +43,7 @@ describe("check flights all page", () => {
       .its("request.url")
       .should("include", "/flights?year=" + year + "&limit=50");
 
-    cy.get("#select-season").should("have.value", "2022");
+    cy.get("#select-season").should("have.value", new Date().getFullYear());
     cy.get("#select-season").select((year - 1).toString());
 
     cy.wait("@get-flights");

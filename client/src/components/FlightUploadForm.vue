@@ -332,7 +332,7 @@ const igcSelected = async (file) => {
 const sendFlightDetails = async () => {
   showSpinner.value = true;
   try {
-    const response = await ApiService.editFlightDetails(flightId.value, {
+    const response = await ApiService.updateFlightDetails(flightId.value, {
       glider: listOfGliders.value.find(
         (glider) => glider.id === defaultGlider.value
       ),
