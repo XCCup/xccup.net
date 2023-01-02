@@ -1284,7 +1284,7 @@
       },
       "id": "b8626cb9-92de-4957-a7ff-c5c8c6a48664"
     },
-    "flightStatus": "In Wertung",
+    "flightStatus": "In Prüfung",
     "airspaceViolation": true,
     "uncheckedGRecord": false,
     "hikeAndFly": 0,
@@ -1352,7 +1352,7 @@
       },
       "id": "e0bbb3e4-543b-4451-a374-0435a38cc823"
     },
-    "flightStatus": "In Wertung",
+    "flightStatus": "In Prüfung",
     "airspaceViolation": false,
     "uncheckedGRecord": true,
     "isHike": 0,

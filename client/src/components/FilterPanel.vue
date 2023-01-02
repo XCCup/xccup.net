@@ -30,7 +30,7 @@
             class="col btn btn-outline-primary btn-sm mb-3"
             @click="onShareButtonClicked"
           >
-            <i class="bi bi-share" data-cy="filter-icon"></i>
+            <i class="bi bi-share" data-cy="share-icon"></i>
           </button>
         </li>
       </ul>

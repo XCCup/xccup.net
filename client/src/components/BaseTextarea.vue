@@ -7,7 +7,7 @@
       :value="modelValue"
       :placeholder="label"
       class="form-control"
-      :disabled="isDisabled"
+      :disabled="disabled"
       @input="$emit('update:modelValue', $event.target.value)"
     ></textarea>
     <label v-if="label">{{ label }}</label>
@@ -27,7 +27,7 @@ defineProps({
     required: false,
     default: "",
   },
-  isDisabled: {
+  disabled: {
     type: Boolean,
     default: false,
   },

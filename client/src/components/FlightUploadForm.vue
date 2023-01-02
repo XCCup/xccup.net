@@ -32,7 +32,7 @@
             <BaseInput
               v-model="takeoff"
               label="Startplatz"
-              :is-disabled="true"
+              :disabled="true"
               :is-required="false"
             />
           </div>
@@ -40,7 +40,7 @@
             <BaseInput
               v-model="landing"
               label="Landeplatz"
-              :is-disabled="true"
+              :disabled="true"
               :is-required="false"
             />
           </div>
@@ -139,7 +139,7 @@
             Ansprüche gegenüber dem Veranstalter, dem Ausrichter, dem
             Organisator, dem Wettbewerbsleiter sowie deren Helfer wegen
             einfacher Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des
-            Häckchens erkenne ich die
+            Hakens erkenne ich die
             <a href="#" @click.prevent="compRulesModal.show()">Ausschreibung</a>
             und
             <a href="#" @click.prevent="privacyPolicyModal.show()"
@@ -332,7 +332,7 @@ const igcSelected = async (file) => {
 const sendFlightDetails = async () => {
   showSpinner.value = true;
   try {
-    const response = await ApiService.editFlightDetails(flightId.value, {
+    const response = await ApiService.updateFlightDetails(flightId.value, {
       glider: listOfGliders.value.find(
         (glider) => glider.id === defaultGlider.value
       ),

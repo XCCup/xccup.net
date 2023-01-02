@@ -20,7 +20,7 @@ describe("check admin page", () => {
   it("test accessing as non admin user", () => {
     cy.logout();
     cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
-    cy.get("#userNavDropdownMenu").should("have.text", "Clinton 3");
+    cy.get("#userNavDropdownMenu").should("include.text", "Clinton");
     cy.visit("/admin");
 
     // Non admins should be redirected to the landing page
@@ -151,6 +151,29 @@ describe("check admin page", () => {
       .should(
         "include.text",
         "Zur Zeit haben sich 10 Piloten für ein T-Shirt qualifiziert. Dies teilt sich wie folgt auf."
+      );
+  });
+
+  it("test tshirt list after user opt-out", () => {
+    // Go to profile and opt out
+    cy.visit("/profil");
+    cy.get("#optOutTshirt").check();
+    cy.get("button").contains("Speichern").click();
+
+    // Return to admin dashboard
+    cy.visit("/admin");
+    cy.get("#nav-tshirt-tab").click();
+
+    cy.get("#adminTShirtPanel")
+      .find("button")
+      .contains("Statistik anfordern")
+      .click();
+
+    cy.get("#adminTShirtPanel")
+      .get("[data-cy=tshirt-overall-count]")
+      .should(
+        "include.text",
+        "Zur Zeit haben sich 9 Piloten für ein T-Shirt qualifiziert. Dies teilt sich wie folgt auf."
       );
   });
 

@@ -9,7 +9,7 @@
       :class="formClass"
       invalid="true"
       :type="type"
-      :disabled="isDisabled"
+      :disabled="disabled"
       data-bs-toggle="tooltip"
       data-bs-placement="top"
       :title="tooltipValue"
@@ -43,10 +43,6 @@ const props = defineProps({
     type: [String, Number],
     required: true,
   },
-  isDisabled: {
-    type: Boolean,
-    default: false,
-  },
   isPassword: {
     type: Boolean,
     default: false,
@@ -66,6 +62,10 @@ const props = defineProps({
   validationText: {
     type: String,
     default: "Das Feld darf nicht leer sein",
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
   // TODO: Remove note
   // NOTE: Empty strings will add the attribute with value "" which can cause duplicate ids

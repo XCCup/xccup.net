@@ -20,6 +20,7 @@ export interface UserAttributes {
   emailInformIfComment?: boolean;
   emailNewsletter?: boolean;
   emailTeamSearch?: boolean;
+  noTshirtRequested: boolean;
   address?: Address;
   email: string;
   rankingNumber?: number;
@@ -91,6 +92,10 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       },
       tshirtSize: {
         type: DataTypes.STRING,
+      },
+      noTshirtRequested: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
       defaultGlider: {
         type: DataTypes.UUID,

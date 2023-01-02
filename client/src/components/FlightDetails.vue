@@ -69,7 +69,9 @@
             </tr>
             <tr>
               <th>Punkte</th>
-              <td v-if="flight?.flightPoints">{{ flight?.flightPoints }}</td>
+              <td v-if="flight?.flightStatus != 'In Prüfung'">
+                {{ flight?.flightPoints }}
+              </td>
               <td v-else><i class="bi bi-hourglass-split"></i></td>
             </tr>
 

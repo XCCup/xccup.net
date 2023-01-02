@@ -16,7 +16,7 @@
           </div>
 
           <div class="row"></div>
-          <!-- TODO: Maybe use these elements to show some addtional data above the profil -->
+          <!-- TODO: Maybe use these elements to show some additional data above the profile -->
           <!-- <span class="font-weight-bold">A nice fact</span>
           <span class="text-secondary">or two about the user</span> -->
         </div>
