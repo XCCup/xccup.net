@@ -31,6 +31,7 @@ import useAxiosJwt, {
   type TokenRefreshRequest,
 } from "@/composables/useAxiosJwt";
 import type { Sponsor } from "@/types/Sponsor";
+import type { Club } from "@/types/Club";
 
 const { applyAuthTokenInterceptor } = useAxiosJwt();
 
@@ -354,10 +355,6 @@ export default {
 
   // Clubs
 
-  getClubNames() {
-    return apiClient.get("clubs/names/");
-  },
-
   /**
    * @param {Boolean} retrieveAll If set to true all data - including non public ones - will be retrieved. The user needs to have an "elevated" role to use the option "retrieveAll".
    * @returns An array with club objects.
@@ -366,6 +363,30 @@ export default {
     return retrieveAll
       ? apiClient.get("/clubs")
       : apiClient.get("/clubs/public");
+  },
+
+  getClubNames() {
+    return apiClient.get("clubs/names/");
+  },
+
+  addClub(club: Club) {
+    return apiClient.post("/clubs/", club);
+  },
+
+  editClub(club: Club) {
+    return apiClient.put("/clubs/" + club.id, club);
+  },
+
+  deleteClub(id: string) {
+    return apiClient.delete("/clubs/" + id);
+  },
+
+  addClubLogo(data: FormData) {
+    return apiClient.post("/clubs/logo/", data);
+  },
+
+  deleteClubLogo(id: string) {
+    return apiClient.delete("/clubs/logo/" + id);
   },
 
   // Teams

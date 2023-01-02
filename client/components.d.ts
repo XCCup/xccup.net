@@ -8,6 +8,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AdminCache: typeof import('./src/components/admin/AdminCache.vue')['default']
+    AdminClubs: typeof import('./src/components/admin/AdminClubs.vue')['default']
+    AdminClubsTable: typeof import('./src/components/admin/AdminClubsTable.vue')['default']
     AdminFlights: typeof import('./src/components/admin/AdminFlights.vue')['default']
     AdminFlightUpload: typeof import('./src/components/admin/AdminFlightUpload.vue')['default']
     AdminNews: typeof import('./src/components/admin/AdminNews.vue')['default']
@@ -61,6 +63,7 @@ declare module '@vue/runtime-core' {
     InfoCollapsable: typeof import('./src/components/InfoCollapsable.vue')['default']
     InlineAlert: typeof import('./src/components/InlineAlert.vue')['default']
     LogoHandler: typeof import('./src/components/LogoHandler.vue')['default']
+    ModalAddEditClub: typeof import('./src/components/admin/ModalAddEditClub.vue')['default']
     ModalAddEditNews: typeof import('./src/components/admin/ModalAddEditNews.vue')['default']
     ModalAddEditSponsor: typeof import('./src/components/admin/ModalAddEditSponsor.vue')['default']
     ModalAddGlider: typeof import('./src/components/ModalAddGlider.vue')['default']

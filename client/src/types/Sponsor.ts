@@ -1,3 +1,6 @@
+import type { Contact } from "./Contact";
+import type { Logo } from "./Logo";
+
 export interface Sponsor {
   id?: string;
   name: string;
@@ -18,15 +21,4 @@ export interface NewSponsor {
   isGoldSponsor: boolean;
   sponsorInSeasons: number[];
   contact: Contact;
-}
-
-export interface Contact {
-  address?: string;
-  email?: string;
-  phone?: string;
-  phone2?: string;
-}
-
-export interface Logo {
-  id: string;
 }

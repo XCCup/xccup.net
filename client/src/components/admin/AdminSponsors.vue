@@ -117,9 +117,9 @@ async function onSave(sponsor: Sponsor) {
   try {
     showSpinner.value = true;
     if (sponsor.id) {
-      ApiService.editSponsor(sponsor);
+      await ApiService.editSponsor(sponsor);
     } else {
-      ApiService.addSponsor(sponsor);
+      await ApiService.addSponsor(sponsor);
     }
     await fetchSponsors();
     addEditSponsorModal.value?.hide();
