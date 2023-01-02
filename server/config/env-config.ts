@@ -250,6 +250,12 @@ const config = convict({
     default: "db",
     env: "POSTGRES_HOST",
   },
+  sentryUrl: {
+    doc: "The sentry DSN",
+    format: String,
+    default: "",
+    env: "SENTRY_URL",
+  },
 });
 
 config.validate({ allowed: "strict" });
