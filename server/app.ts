@@ -1,5 +1,6 @@
 // Load server config
 import config from "./config/env-config";
+import * as Sentry from "@sentry/node";
 
 // Setup DB
 import "./db";
@@ -24,6 +25,13 @@ const app: Application = express();
 import "./cron/CleanIgcStore";
 import "./cron/DailyWinnerEMail";
 import "./cron/CleanTokenStore";
+
+// Sentry
+if (config.get("env") == "production") {
+  logger.info("Sentry set up");
+  Sentry.init({ dsn: config.get("sentryUrl") });
+  app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
+}
 
 // Logging
 app.use(requestLogger);
@@ -68,9 +76,6 @@ app.get(
 );
 app.use("/api", routes);
 
-// Handle global errors on requests. Endpoints have to forward the error to their own next() function!
-app.use(handleError);
-
 // Handle calls to non existing routes
 app.use("*", (req, res) => {
   res.status(404).json({
@@ -82,6 +87,22 @@ app.use("*", (req, res) => {
     },
   });
 });
+
+// Sentry
+if (config.get("env") == "production") {
+  app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
+  // Optional fallthrough error handler
+  // @ts-ignore
+  app.use(function onError(err, req, res, next) {
+    // The error id is attached to `res.sentry` to be returned
+    // and optionally displayed to the user for support.
+    res.statusCode = 500;
+    res.end(res.sentry + "\n");
+  });
+}
+
+// Handle global errors on requests. Endpoints have to forward the error to their own next() function!
+app.use(handleError);
 
 const port = config.get("port");
 const server = app.listen(port, () =>
