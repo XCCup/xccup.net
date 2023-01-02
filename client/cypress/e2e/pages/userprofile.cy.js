@@ -299,7 +299,7 @@ describe("Check user profile", () => {
       });
   });
 
-  it.only("Visit profile and sort my flights table", () => {
+  it("Visit profile and sort my flights table", () => {
     cy.intercept(
       "GET",
       "/api/flights/self?limit=50&sortCol=takeoffTime&sortOrder=ASC"
