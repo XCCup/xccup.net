@@ -416,7 +416,7 @@ const flightService = {
           flight.externalId,
           flightTypeFactors
         );
-        flight = flightService.addResult(flight, result);
+        attachResultToFlightObject(flight, result);
       } catch (error) {
         logger.error(error);
         return;
@@ -480,17 +480,6 @@ const flightService = {
   delete: async (flightId: string, igcPath?: string) => {
     deleteIgcFile(igcPath);
     return db.Flight.destroy({ where: { id: flightId } });
-  },
-
-  addResult: (flight: FlightInstance, result: OLCResult) => {
-    logger.info("FS: Will add igc result to flight " + flight.id);
-
-    flight.flightDistance = +result.dist;
-    flight.flightType = result.type;
-    flight.flightTurnpoints = result.turnpoints;
-    calculateTaskSpeed(result, flight);
-    deleteCache(["home", "flights", "results"]);
-    return flight;
   },
 
   attachElevationDataAndCheckForAirspaceViolations: async (
@@ -680,6 +669,15 @@ async function storeFixesToDB(
     timeAndHeights: extractTimeAndHeights(fixes),
     stats: fixesStats,
   });
+}
+
+function attachResultToFlightObject (flight: FlightInstance, result: OLCResult)  {
+  logger.info("FS: Will add igc result to flight " + flight.id);
+
+  flight.flightDistance = +result.dist;
+  flight.flightType = result.type;
+  flight.flightTurnpoints = result.turnpoints;
+  calculateTaskSpeed(result, flight);
 }
 
 function attachFlightStats(flight: FlightInstance, fixes: FlightFixCombined[]) {
