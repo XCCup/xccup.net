@@ -27,7 +27,7 @@ describe("check siteRecords page", () => {
 
       // Wait till flight was fully calculated
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(3000);
+      // cy.wait(3000);
       cy.visit(`/fluggebietsrekorde/`);
 
       cy.get("table")

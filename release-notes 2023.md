@@ -2,3 +2,4 @@
 
 - Personal best
 - Map expand
+- Opt-out T-Shirt

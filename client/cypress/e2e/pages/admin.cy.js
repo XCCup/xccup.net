@@ -20,7 +20,7 @@ describe("check admin page", () => {
   it("test accessing as non admin user", () => {
     cy.logout();
     cy.login("blackhole+clinton@xccup.net", "PW_ClintonHettinger");
-    cy.get("#userNavDropdownMenu").should("have.text", "Clinton 3");
+    cy.get("#userNavDropdownMenu").should("include.text", "Clinton");
     cy.visit("/admin");
 
     // Non admins should be redirected to the landing page

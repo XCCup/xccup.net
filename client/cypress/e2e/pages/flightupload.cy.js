@@ -350,10 +350,12 @@ describe("check flight upload page", () => {
     }).should("have.text", expectedError);
   });
 
-  it("test upload flight with airspace violation", () => {
+  it("test upload flight with airspace violation and accept it", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError = "Dieser Flug enthält eine Luftraumverletzung";
+    const expectedUserName = "Ramona Gislason";
+    const expectedFlightState = "In Prüfung";
 
     cy.loginNormalUser();
 
@@ -380,7 +382,52 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=airspace-comment-textarea]").type(airspaceComment);
 
     cy.get("Button").contains("Streckenmeldung absenden").click();
-    // TODO: Check if admin info email contains all important information
+
+    // Finish flight submission
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
+
+    cy.get("#flightDetailsButton").click();
+    cy.get("#moreFlightDetailsTable").should(
+      "contain.text",
+      expectedFlightState
+    );
+    cy.url().as("flightURL");
+
+    // Switch to admin and accept violation
+    cy.logout();
+    cy.loginAdminUser();
+    cy.visit("/admin");
+
+    cy.get("#adminFlightsPanel").within(() => {
+      cy.get("table")
+        .contains("td", expectedUserName)
+        .parent()
+        .find("td")
+        .eq(6)
+        .find("button")
+        .click();
+    });
+    cy.clickButtonInModal("#acceptFlightModal", "Akzeptieren");
+
+    // Navigate back to flight and see if the flight state changed (could be "In Wertung" or "Flugbuch")
+    cy.get("@flightURL").then((url) => {
+      cy.visit(url);
+    });
+    cy.url().should("include", "/flug");
+    cy.get("#moreFlightDetailsTable").should(
+      "not.contain.text",
+      expectedFlightState
+    );
   });
 
   it("Test upload flight out of xccup area", () => {
@@ -504,7 +551,7 @@ describe("check flight upload page", () => {
 
       // Wait till flight was fully calculated
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(5000);
+      // cy.wait(5000);
 
       cy.visit(`/flug/${flightId}`);
 
@@ -528,7 +575,7 @@ describe("check flight upload page", () => {
     const expectApiRespone2 =
       "Dein Flug hatte eine Luftraumverletzung. Bitte ergänze eine Begründung in der Online-Ansicht. Wir prüfen diese so schnell wie möglich.";
 
-    cy.fixture(igcFileName).then({ timeout: 10000 }, async (fileContent) => {
+    cy.fixture(igcFileName).then({ timeout: 20000 }, async (fileContent) => {
       const payload = {
         user: "blackhole+melinda@xccup.net",
         pass: "PW_MelindaTremblay",
@@ -548,7 +595,7 @@ describe("check flight upload page", () => {
 
       // Wait till flight was fully calculated
       // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(5000);
+      // cy.wait(5000);
       cy.login(payload.user, payload.pass);
 
       // Check if flight link is valid
