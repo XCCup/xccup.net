@@ -58,6 +58,7 @@ declare module '@vue/runtime-core' {
     GenericError: typeof import('./src/components/GenericError.vue')['default']
     GliderSelect: typeof import('./src/components/GliderSelect.vue')['default']
     InfoBox: typeof import('./src/components/InfoBox.vue')['default']
+    InfoCollapsable: typeof import('./src/components/InfoCollapsable.vue')['default']
     InlineAlert: typeof import('./src/components/InlineAlert.vue')['default']
     LogoHandler: typeof import('./src/components/LogoHandler.vue')['default']
     ModalAddEditNews: typeof import('./src/components/admin/ModalAddEditNews.vue')['default']

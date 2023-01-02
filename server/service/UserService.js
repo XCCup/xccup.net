@@ -143,6 +143,7 @@ const userService = {
         id: {
           [Op.in]: userIds,
         },
+        noTshirtRequested: false,
       },
       attributes: [
         "id",

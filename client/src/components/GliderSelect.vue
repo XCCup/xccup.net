@@ -6,7 +6,7 @@
         id="glider-select"
         class="form-select"
         :value="modelValue"
-        :disabled="isDisabled || gliders.length == 0"
+        :disabled="disabled || gliders.length == 0"
         v-bind="{
           ...$attrs,
           onChange: ($event) => {
@@ -49,10 +49,6 @@
 <script setup>
 const emit = defineEmits(["update:modelValue", "gliders-changed"]);
 defineProps({
-  isDisabled: {
-    type: Boolean,
-    default: false,
-  },
   modelValue: {
     type: [String, null],
     required: true,
@@ -65,7 +61,11 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
-// TODO: Refactor with a composable to prevent nested emiting?
+// TODO: Refactor with a composable to prevent nested emitting?
 const glidersChanged = () => emit("gliders-changed");
 </script>

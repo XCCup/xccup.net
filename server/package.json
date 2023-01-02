@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "up": "docker-compose run --rm yarn taze -I",
+    "format": "prettier .  --write",
     "docker-install": "docker-compose run --rm yarn install"
   },
   "dependencies": {
@@ -45,9 +46,10 @@
     "parse-dms": "^0.0.5",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
-    "sanitize-html": "^2.8.1",
-    "sequelize": "^6.28.0",
-    "sharp": "^0.31.3",
+    "prettier": "^2.8.1",
+    "sanitize-html": "^2.8.0",
+    "sequelize": "^6.27.0",
+    "sharp": "^0.31.2",
     "timekeeper": "^2.2.0",
     "uuid": "^9.0.0",
     "winston": "^3.8.2"

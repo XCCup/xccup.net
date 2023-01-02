@@ -6,7 +6,7 @@
         v-model="modifiedUserData.email"
         :is-email="true"
         label="E-Mail"
-        :is-disabled="emailFieldIsDisabled"
+        :disabled="emailFieldIsDisabled"
       />
     </div>
   </div>
@@ -48,7 +48,7 @@ const onSave = async () => {
     showSpinner.value = true;
     await ApiService.changeEmail(modifiedUserData.value.email);
     showSuccessAlert(
-      "Um die Änderung deiner E-Mail-Addresse zu bestätigen öffne bitte den Link den wir dir gerade per Email geschickt haben."
+      "Um die Änderung deiner E-Mail-Adresse zu bestätigen öffne bitte den Link den wir dir gerade per Email geschickt haben."
     );
     emailFieldIsDisabled.value = true;
   } catch (error) {
