@@ -58,17 +58,14 @@ router.get("/names", async (req, res, next) => {
 // @route GET /clubs/
 // @access Only moderator
 
-router.get(
-  "/",
-  /*requesterMustBeModerator,*/ async (req, res, next) => {
-    try {
-      const clubs = await service.getAll();
-      res.json(clubs);
-    } catch (error) {
-      next(error);
-    }
+router.get("/", async (req, res, next) => {
+  try {
+    const clubs = await service.getAll();
+    res.json(clubs);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // @desc Gets all members of clubs
 // @route GET /clubs/:shortName/member/
