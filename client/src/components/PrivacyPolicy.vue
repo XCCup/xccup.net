@@ -2,29 +2,47 @@
   <h3>Datenschutz</h3>
 
   <p>
-    Wir, die Betreiber des XCCup nehmen den Schutz Deiner persönlichen Daten
-    sehr ernst und halten uns strikt an die Regeln der Datenschutzgesetze.
-    Personenbezogene Daten werden auf dieser Webseite nur im technisch
-    notwendigen Umfang erhoben. In keinem Fall werden die erhobenen Daten
-    verkauft oder aus anderen Gründen an Dritte weitergegeben.<br />
-    Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, oder
-    E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf
-    freiwilliger Basis. Diese Daten werden ohne Deine ausdrückliche Zustimmung
-    nicht an Dritte weitergegeben.
+    Wir freuen uns über Ihren Besuch auf unserem Internetangebot www.xccup.net.
+    Der Schutz Ihrer personenbezogenen Daten ist uns ein wichtiges Anliegen.
+    Personenbezogene Daten sind Informationen über persönliche oder sachliche
+    Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person. Darunter
+    fallen z.B. der bürgerliche Name, die Anschrift, die Telefonnummer und das
+    Geburtsdatum, aber auch alle anderen Daten, die auf eine bestimmbare Person
+    bezogen werden können. Da personenbezogene Daten besonderen gesetzlichen
+    Schutz genießen, werden sie bei uns nur soweit dies für die Bereitstellung
+    unserer Internetseite und die Erbringung unserer Leistung erforderlich ist
+    erhoben.
   </p>
   <p>
-    Die nachfolgende Erklärung gibt Dir einen Überblick darüber, wie wir diesen
-    Schutz gewährleisten und welche Art von Daten zu welchem Zweck erhoben
-    werden.
+    Nachfolgend stellen wir dar, welche personenbezogenen Informationen wir
+    während Ihres Besuches auf unserer Internetseite erfassen und wie wir diese
+    nutzen. Unsere Datenschutzpraxis steht im Einklang mit den gesetzlichen
+    Regelungen, insbesondere denen des Bundesdatenschutzgesetzes (neu) 2018
+    (BDSG), des Telemediengesetzes (TMG) und der Datenschutzgrundverordnung der
+    EU (DSGVO). Wir werden Ihre personenbezogenen Daten ausschließlich erheben,
+    verarbeiten und speichern, soweit dies zur funktionsfähigen Bereitstellung
+    dieser Internetseite und unserer Inhalte und Leistungen erforderlich ist,
+    sowie zur Bearbeitung von Anfragen und ggf. zur Abwicklung von Bestellungen
+    / Verträgen, dies jeweils aber nur, soweit hierfür ein berechtigtes
+    Interesse i.S.d. Art. 6 Abs. 1 S.1 lit. f DSGVO oder ein sonstiger
+    Erlaubnistatbestand besteht.
+  </p>
+  <p><strong>Verantwortlicher i.S.d. Art. 4 Abs. 7 DSGVO</strong></p>
+  <p>
+    Verantwortlicher im Sinne der DSGVO und anderer nationaler
+    Datenschutzgesetze der EU-Mitgliedsstaaten sowie sonstiger
+    datenschutzrechtlicher Bestimmungen ist:
   </p>
   <p>
-    Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der
-    Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser
-    Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.
+    XCCup - nicht eingetragener Verein <br />gemeinschaftlich vertreten durch
+    <br />Bärbel Ellwanger, Kai Wissel und Stephan Schöpe
+  </p>
+  <p>
+    Heinrich-Brauns-Str.1 <br />54296 Trier <br />E-Mail: info@xccup.net
+    <br />Tel.: +49 (0) 172-2339124
   </p>
 
-  <h4>a) Nutzung des Online-Angebotes auf xccup.net:</h4>
-
+  <p><strong>a) Nutzung des Online-Angebotes auf xccup.net</strong></p>
   <p>
     Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener
     Daten möglich.
@@ -32,19 +50,20 @@
 
   <div id="register" class="section">
     <a name="register"></a>
-    <h4>
-      b) Bei Registrierung als Teilnehmer werden folgende Daten erfasst und
-      gespeichert:
-    </h4>
+    <p>
+      <strong>
+        b) Bei Registrierung als Teilnehmer werden folgende Daten erfasst und
+        gespeichert</strong
+      >
+    </p>
 
     <ul>
       <li>E-Mail-Adresse</li>
-      <li>Login-Name</li>
       <li>Name, Vorname</li>
       <li>Passwort</li>
       <li>Geschlecht</li>
       <li>Geburtsdatum</li>
-      <li>Herkunftsland</li>
+      <li>Adresse</li>
       <li>T-Shirt-Größe</li>
       <li>Vereinszugehörigkeit</li>
       <li>Name, Hersteller und Klasse des eigenen Fluggerätes</li>
@@ -60,10 +79,10 @@
 
   <div id="teams" class="section">
     <a name="teams"></a>
-    <h4>c) Teambildung</h4>
+    <p><strong>c) Teambildung</strong></p>
 
     <p>
-      Bei der Bildung von Teams werden folgende Daten erfasst und gespeichert:
+      Bei der Bildung von Teams werden folgende Daten erfasst und gespeichert
     </p>
 
     <ul>
@@ -78,39 +97,14 @@
     </p>
   </div>
 
-  <div id="teamsearch" class="section">
-    <a name="teamsearch"></a>
-    <h4>d) Teamsuche</h4>
-
-    <p>
-      Beim Eintragen in das Formular "Teamsuche" werden folgende Daten erfasst
-      und gespeichert:
-    </p>
-
-    <ul>
-      <li>Name, Vorname</li>
-      <li>E-Mail-Adresse</li>
-      <li>Vereinszugehörigkeit</li>
-      <li>Fluggeräteklasse</li>
-      <li>kurzer eigener Kommentar</li>
-    </ul>
-
-    <p>
-      Wir weisen darauf hin, dass die o.g. Daten auf der Startseite in der Box
-      "Teamsuche" angezeigt werden.<br />
-      Diese Daten sind ausschließlich für auf xccup.net registrierte Piloten
-      einsehbar.<br />
-      Die Angabe der E-Mail-Adresse erlaubt die Kontaktaufnahme zu anderen
-      Piloten.
-    </p>
-  </div>
-
   <div id="flightsubmit" class="section">
     <a name="flightsubmit"></a>
-    <h4>
-      e) Bei Einreichen eines Fluges werden außerdem folgende Daten erfasst und
-      gespeichert:
-    </h4>
+    <p>
+      <strong>
+        d) Bei Einreichen eines Fluges werden außerdem folgende Daten erfasst
+        und gespeichert:</strong
+      >
+    </p>
 
     <ul>
       <li>Name, Vorname</li>
@@ -127,7 +121,6 @@
       <li>Flugdatum und Uhrzeit das Start- und Landezeitpunktes</li>
       <li>Start-/ und Landeplatz</li>
       <li>optional: Flugbericht</li>
-      <li>optional: URL zu einem externen Video (YouTube, Vimeo, ...)</li>
       <li>optional: bis zu 10 Fotos (JPEG-Datei und ggf. Bildbeschreibung)</li>
     </ul>
 
@@ -147,7 +140,7 @@
 
   <div id="comments" class="section">
     <a name="comments"></a>
-    <h4>Kommentare, E-Mails, Flugberichte</h4>
+    <p><strong>Kommentare, E-Mails, Flugberichte</strong></p>
 
     <p>
       Selbstverständlich erfassen und speichern wir solche Informationen, die Du
@@ -165,7 +158,7 @@
 
   <div id="newsletter" class="section">
     <a name="newsletter"></a>
-    <h4>Newsletterdaten</h4>
+    <p><strong>Newsletterdaten</strong></p>
 
     <p>
       Wenn Du den auf der Website angebotenen Newsletter beziehen möchtest,
@@ -175,16 +168,14 @@
       bist. Weitere Daten werden nicht erhoben. Diese Daten verwenden wir
       ausschließlich für den Versand der angeforderten Informationen und geben
       sie nicht an Dritte weiter.
-      <br />
-      Die erteilte Einwilligung zur Speicherung der Daten, der E-Mail-Adresse
-      sowie deren Nutzung zum Versand des Newsletters kannst Du jederzeit
-      widerrufen, indem Du auf der
-      <a href="/" class="hl">Startseite</a> die Funktion "austragen" der
-      Newsletterbox verwendest.
+    </p>
+    <p>
+      Die erteilte Einwilligung zum Versand des Newsletters kannst Du jederzeit
+      in deinen Profileinstellungen widerrufen.
     </p>
   </div>
 
-  <h4>Hinweise für Sponsoren</h4>
+  <p><strong>Hinweise für Sponsoren</strong></p>
 
   <p>
     Sponsoren des XCCup erklären sich einverstanden, dass wir folgende Daten
@@ -204,73 +195,9 @@
   zugehörigen Daten löschen.
   <p></p>
 
-  <div id="youtube">
-    <a name="youtube"></a>
-    <h4>YouTube</h4>
-
-    <p>
-      Unsere Website nutzt Plugins der von Google betriebenen Seite YouTube.
-      Betreiber der Seiten ist die YouTube, LLC, 901 Cherry Ave., San Bruno, CA
-      94066, USA. Wenn Du eine unserer mit einem YouTube-Plugin ausgestatteten
-      Seiten besuchst, wird eine Verbindung zu den Servern von YouTube
-      hergestellt. Dabei wird dem Youtube-Server mitgeteilt, welche unserer
-      Seiten Du besucht hast.
-    </p>
-    <p>
-      Wenn Du in Deinm YouTube-Account eingeloggt bist ermöglichst Du YouTube,
-      Dein Surfverhalten direkt Deinem persönlichen Profil zuzuordnen. Dies
-      kannst Du verhindern, indem Du Dich aus Deinem YouTube-Account ausloggst.
-    </p>
-    <p>
-      Weitere Informationen zum Umgang von Nutzerdaten findest Du in der
-      Datenschutzerklärung von YouTube unter:
-      <a
-        class="hl"
-        href=" https://www.google.de/intl/de/policies/privacy"
-        target="_blank"
-      >
-        https://www.google.de/intl/de/policies/privacy</a
-      >
-    </p>
-  </div>
-
-  <div id="vimeo">
-    <a name="vimeo"></a>
-    <h4>Vimeo</h4>
-
-    <p>
-      Auf unserer Website sind Plugins des Videoportals Vimeo der Vimeo, LLC,
-      555 West 18th Street, New York, New York 10011, USA eingebunden. Wenn Du
-      eine Seite unseres Webauftritts aufrufst, die ein solches Plugin enthält,
-      stellt Dein Browser eine direkte Verbindung zu den Servern von Vimeo her.
-      Der Inhalt des Plugins wird von Vimeo direkt an Deinen Browser übermittelt
-      und in die Seite eingebunden. Durch diese Einbindung erhält Vimeo die
-      Information, dass Dein Browser die entsprechende Seite unseres
-      Webauftritts aufgerufen hat, auch wenn Du keinen Vimeo-Acoount besitz oder
-      gerade nicht bei Vimeo eingeloggt bist. Diese Information (einschließlich
-      Ihrer IP-Adresse) wird von Deinem Browser direkt an einen Server von Vimeo
-      in die USA übermittelt und dort gespeichert.
-    </p>
-    <p>
-      Bist Du bei Vimeo eingeloggt, kann Vimeo den Besuch unserer Website Deinem
-      Vimeo-Account unmittelbar zuordnen. Wenn Du mit den Plugins interagieren
-      (wie z.B. Betätigung des Start-Buttons eines Videos), wird diese
-      Information ebenfalls direkt an einen Server von Vimeo übermittelt und
-      dort gespeichert. Zweck und Umfang der Datenerhebung und die weitere
-      Verarbeitung und Nutzung der Daten durch Vimeo sowie Deine diesbezüglichen
-      Rechte und Einstellungsmöglichkeiten zum Schutz Deiner Privatsphäre
-      entnehme bitte den Datenschutzhinweisen von Vimeo:
-      <a href="http://vimeo.com/privacy" class="hl" target="_blank"
-        >http://vimeo.com/privacy</a
-      >. Wenn Du nicht möchtest, dass Vimeo die über unseren Webauftritt
-      gesammelten Daten unmittelbar Deinem Vimeo-Account zuordnet, musst Du Dich
-      vor Deinem Besuch unserer Website bei Vimeo ausloggen.
-    </p>
-  </div>
-
   <div id="ssl" class="section">
     <a name="ssl"></a>
-    <h4>SSL-Verschlüsselung</h4>
+    <p><strong>SSL-Verschlüsselung</strong></p>
 
     <p>
       Diese Seite nutzt aus Gründen der Sicherheit und zum Schutz der
@@ -284,7 +211,7 @@
       uns übermittelst, nicht von Dritten mitgelesen werden.
     </p>
 
-    <h4>Dauer der Speicherung</h4>
+    <p><strong>Dauer der Speicherung</strong></p>
 
     <p>
       Deine Daten werden solange unbegrenzt gespeichert, solange Du die
@@ -294,7 +221,7 @@
       gespeichert, eine Veröffentlichung ist nicht mehr rückgängig zu machen.
     </p>
 
-    <h4>Auskunftsrecht</h4>
+    <p><strong>Auskunftsrecht</strong></p>
 
     <p>
       Du hast jederzeit das Recht auf unentgeltliche Auskunft über Deine
