@@ -85,7 +85,8 @@ describe("check flights all page", () => {
 
     const expectedName = "Bobby Volkman";
     const expectedClub = "Die Moselfalken";
-    const expectedTeam = `Die Elstern (${new Date().getFullYear()})`;
+    const expectedTeamSelect = `Die Elstern (${new Date().getFullYear()})`;
+    const expectedTeamBadge = `Die Elstern (${new Date().getFullYear()})`;
     const expectedRanking = "GS Sport";
     const expectedSite = "Adelberg";
     const expectedLength = 2;
@@ -97,7 +98,7 @@ describe("check flights all page", () => {
     cy.wait(500);
     cy.get("#filterSelectName").select(expectedName);
     cy.get("#filterSelectClub").select(expectedClub);
-    cy.get("#filterSelectTeam").select(expectedTeam);
+    cy.get("#filterSelectTeam").select(expectedTeamSelect);
     cy.get("#filterSelectRanking").select(expectedRanking);
     cy.get("#filterSelectRanking").select(expectedRanking);
     cy.get("#filterSelectSite").select(expectedSite);
@@ -113,7 +114,10 @@ describe("check flights all page", () => {
       "Keine Flüge gemeldet in diesem Jahr"
     );
     cy.get("[data-cy=filter-badge-clubId]").should("contain", expectedClub);
-    cy.get("[data-cy=filter-badge-teamId]").should("contain", expectedTeam);
+    cy.get("[data-cy=filter-badge-teamId]").should(
+      "contain",
+      expectedTeamBadge
+    );
     cy.get("[data-cy=filter-badge-rankingClass]").should(
       "contain",
       expectedRanking
