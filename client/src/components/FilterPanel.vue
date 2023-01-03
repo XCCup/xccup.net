@@ -327,7 +327,13 @@ defineProps({
   },
 });
 
-const { filterDataBy, isLoading, activeFilters, clearOneFilter } = useData();
+const {
+  filterDataBy,
+  isLoading,
+  activeFilters,
+  clearOneFilter,
+  selectedSeason,
+} = useData();
 
 const selects = reactive({
   site: "",
@@ -376,7 +382,7 @@ try {
   genderData = filterOptions.genders;
   regions = filterOptions.regions;
   users.value = userData.map((e) => `${e.firstName} ${e.lastName}`);
-  teams.value = teamData.map((e) => e.name + ` (${e.season})`);
+  teams.value = createTeamFilterOptions(teamData);
   sites.value = siteData.map((e) => e.name);
   clubs.value = clubData.map((e) => e.name);
   states.value = Object.values(statesData).map((e) => e);
@@ -475,6 +481,17 @@ const findDate = (value) => {
   if (!(value instanceof Date)) return undefined;
   return format(value, "yyyy-MM-dd");
 };
+
+function createTeamFilterOptions(teamData) {
+  if (selectedSeason.value) {
+    return teamData
+      .filter((t) => t.season == selectedSeason.value)
+      .map((e) => e.name);
+  }
+
+  // If no season was selected return all teams with a season postfix
+  return teamData.map((e) => e.name + ` (${e.season})`);
+}
 
 function findIdByUserName() {
   return selects.user

@@ -31,18 +31,20 @@ export default () => {
 };
 
 function createInstance(viewComponentName: RouteRecordName) {
+  const router = useRouter();
+  const route = useRoute();
+
   const data = ref<any>(null);
   const queryCache = ref<QueryCache>({});
   const limitCache = ref(DEFAULT_LIMIT);
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
   const currentRange = ref({ start: 1, end: DEFAULT_LIMIT });
+  const selectedSeason = ref<Number>(+(route.params.year ?? ""));
   const errorMessage = ref(null);
   const noDataFlag = ref(false);
   const dataConstants = ref(null);
   let apiEndpoint: Function | null = null;
-
-  const router = useRouter();
 
   const filterBlackList = [
     "offset",
@@ -70,6 +72,7 @@ function createInstance(viewComponentName: RouteRecordName) {
   };
 
   const selectSeason = async (year: number) => {
+    selectedSeason.value = year;
     // This call reloads the view and which leads to a new initData call. The year param will then be stored in queryCache again.
     router.push({
       name: viewComponentName.toString(),
@@ -183,6 +186,7 @@ function createInstance(viewComponentName: RouteRecordName) {
     isLoading: readonly(isLoading),
     filterActive,
     activeFilters,
+    selectedSeason,
     DEFAULT_LIMIT,
     LIMIT_OPTIONS,
     limitCache,

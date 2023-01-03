@@ -12,7 +12,7 @@
   </select>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { SEASONS } from "../common/Constants";
 import { useRoute } from "vue-router";
 import { ref } from "vue";
@@ -30,6 +30,7 @@ const route = useRoute();
 
 const yearParam = route.params.year ?? "";
 const selectedSeason = ref(yearParam);
+
 const onSeasonSelected = () => {
   selectSeason(selectedSeason.value);
 };
