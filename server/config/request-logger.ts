@@ -2,8 +2,10 @@ import morgan from "morgan";
 import config from "./env-config";
 import logger from "./logger";
 
+const format =
+  ":remote-addr :remote-user :method :url :status :res[content-length] - :response-time ms";
 // dev format also colorizes status code which leads to ASCII color codes when logging to a file
-const morganLogFormat = config.get("env") === "development" ? "dev" : "tiny";
+const morganLogFormat = config.get("env") === "development" ? "dev" : format;
 
 interface BlackListRoute {
   method: "GET" | "POST"; // Add more when needed
