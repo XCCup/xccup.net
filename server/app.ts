@@ -32,8 +32,11 @@ if (config.get("env") == "production") {
   Sentry.init({ dsn: config.get("sentryUrl") });
   app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
 }
+// When running an Express app behind a reverse proxy, some of the Express APIs may return different values than expected.
+// In order to adjust for this, the trust proxy application setting may be used to expose information provided by the reverse proxy in the Express APIs.
+app.enable("trust proxy");
 
-// Logging
+// Log all requests
 app.use(requestLogger);
 
 // Basic auth check
