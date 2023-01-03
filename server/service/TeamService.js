@@ -17,7 +17,7 @@ const service = {
     const whereStatement = includeAllTeamsWhichEverCompeted
       ? {
           season: {
-            [Op.in]: range(2004, getCurrentYear()),
+            [Op.in]: range(2004, getCurrentYear() + 1),
           },
         }
       : {
