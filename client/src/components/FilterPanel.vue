@@ -423,7 +423,7 @@ const selectedFilters = computed(() => {
       : undefined,
     userIds: findIdsByNameParts(),
     userId: findIdByUserName(),
-    teamId: findIdByNameAndYear(selects.team, teamData),
+    teamId: findIdOfTeam(selects.team, teamData),
     flightType: findKeyByValue(FLIGHT_TYPES, selects.flightType),
     startDate: findDate(fromDate.value),
     endDate: findDate(tillDate.value),
@@ -448,11 +448,14 @@ const findIdByName = (selectObject, initialData) => {
     : undefined;
 };
 
-const findIdByNameAndYear = (selectObject, initialData) => {
+const findIdOfTeam = (selectObject, initialData) => {
+  // If a season is selected than also filter for the season in the selected option
+  const includeSeason = (e) =>
+    selectedSeason ? true : selectObject.includes(e.season);
+
   return selectObject
-    ? initialData.find(
-        (e) => selectObject.includes(e.name) && selectObject.includes(e.season)
-      ).id
+    ? initialData.find((e) => selectObject.includes(e.name) && includeSeason(e))
+        .id
     : undefined;
 };
 
