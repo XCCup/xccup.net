@@ -2,6 +2,7 @@ import db from "../db";
 import { Op } from "sequelize";
 import { getCurrentYear } from "../helper/Utils";
 import { ClubCreationAttributes, ClubInstance } from "../db/models/Club";
+import { range } from "lodash";
 
 const clubService = {
   getAllActive: async () => {
@@ -15,13 +16,21 @@ const clubService = {
       attributes: { exclude: ["contacts"] },
     });
   },
-  getAllNames: async () => {
+  getAllNames: async ({ includeAllClubsWhichEverCompeted = false }) => {
+    const whereStatement = includeAllClubsWhichEverCompeted
+      ? {
+          participantInSeasons: {
+            [Op.overlap]: range(2004, getCurrentYear()),
+          },
+        }
+      : {
+          participantInSeasons: {
+            [Op.contains]: [getCurrentYear()],
+          },
+        };
+
     return db.Club.findAll({
-      where: {
-        participantInSeasons: {
-          [Op.contains]: [getCurrentYear()],
-        },
-      },
+      where: whereStatement,
       attributes: ["id", "name"],
       order: [["name", "asc"]],
     });

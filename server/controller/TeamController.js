@@ -50,7 +50,7 @@ router.get(
     const { year } = req.query;
 
     try {
-      const teams = await service.getAllNames(year);
+      const teams = await service.getAllNames({ year });
       res.json(teams);
     } catch (error) {
       next(error);

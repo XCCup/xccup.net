@@ -85,7 +85,7 @@ describe("check flights all page", () => {
 
     const expectedName = "Bobby Volkman";
     const expectedClub = "Die Moselfalken";
-    const expectedTeam = "Die Elstern";
+    const expectedTeam = `Die Elstern (${new Date().getFullYear()})`;
     const expectedRanking = "GS Sport";
     const expectedSite = "Adelberg";
     const expectedLength = 2;

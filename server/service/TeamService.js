@@ -7,14 +7,26 @@ const { getCurrentYear } = require("../helper/Utils");
 const { TEAM_SIZE } = require("../config/result-determination-config");
 const { ROLE } = require("../constants/user-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
+const { range } = require("lodash");
 
 const service = {
-  getAllNames: async (year = getCurrentYear()) => {
+  getAllNames: async ({
+    year = getCurrentYear(),
+    includeAllTeamsWhichEverCompeted = false,
+  }) => {
+    const whereStatement = includeAllTeamsWhichEverCompeted
+      ? {
+          season: {
+            [Op.in]: range(2004, getCurrentYear()),
+          },
+        }
+      : {
+          season: year,
+        };
+
     const teams = await Team.findAll({
-      where: {
-        season: year,
-      },
-      attributes: ["id", "name"],
+      where: whereStatement,
+      attributes: ["id", "name", "season"],
       order: [["name", "asc"]],
     });
     return teams;
