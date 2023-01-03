@@ -449,14 +449,19 @@ const findIdByName = (selectObject, initialData) => {
 };
 
 const findIdOfTeam = (selectObject, initialData) => {
-  // If a season is selected than also filter for the season in the selected option
-  const includeSeason = (e) =>
-    selectedSeason ? true : selectObject.includes(e.season);
+  if (!selectObject) return undefined;
 
-  return selectObject
-    ? initialData.find((e) => selectObject.includes(e.name) && includeSeason(e))
-        .id
-    : undefined;
+  // If no season is selected the value of selectedSeason is an empty string
+  // Also the select options have a postfix with the year of the season
+  if (!selectedSeason.value) {
+    return initialData.find(
+      (e) => selectObject.includes(e.name) && selectObject.includes(e.season)
+    ).id;
+  }
+
+  return initialData.find(
+    (e) => e.season == selectedSeason.value && selectObject.includes(e.name)
+  ).id;
 };
 
 const findIdsByNameParts = () => {
