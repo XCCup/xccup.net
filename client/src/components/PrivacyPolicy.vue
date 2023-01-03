@@ -47,6 +47,11 @@
     Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener
     Daten möglich.
   </p>
+  <p>
+    Kommt es auf der Webseite zu technischen Fehlern, nehmen wir uns heraus
+    Deine IP-Adresse, Betriebssystem- und Browserversion zu speichern. Diese
+    Daten werden nach Fehleranalyse gelöscht.
+  </p>
 
   <div id="register" class="section">
     <a name="register"></a>
