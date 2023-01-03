@@ -16,7 +16,7 @@ const clubService = {
       attributes: { exclude: ["contacts"] },
     });
   },
-  getAllNames: async ({ includeAllClubsWhichEverCompeted = false }) => {
+  getAllNames: async ({ includeAllClubsWhichEverCompeted = false } = {}) => {
     const whereStatement = includeAllClubsWhichEverCompeted
       ? {
           participantInSeasons: {

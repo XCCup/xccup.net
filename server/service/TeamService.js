@@ -13,7 +13,7 @@ const service = {
   getAllNames: async ({
     year = getCurrentYear(),
     includeAllTeamsWhichEverCompeted = false,
-  }) => {
+  } = {}) => {
     const whereStatement = includeAllTeamsWhichEverCompeted
       ? {
           season: {
