@@ -2,8 +2,8 @@
   <h3>Datenschutz</h3>
 
   <p>
-    Wir freuen uns über Ihren Besuch auf unserem Internetangebot www.xccup.net.
-    Der Schutz Ihrer personenbezogenen Daten ist uns ein wichtiges Anliegen.
+    Wir freuen uns über deinen Besuch auf unserem Internetangebot xccup.net. Der
+    Schutz Deiner personenbezogenen Daten ist uns ein wichtiges Anliegen.
     Personenbezogene Daten sind Informationen über persönliche oder sachliche
     Verhältnisse einer bestimmten oder bestimmbaren natürlichen Person. Darunter
     fallen z.B. der bürgerliche Name, die Anschrift, die Telefonnummer und das
@@ -15,11 +15,11 @@
   </p>
   <p>
     Nachfolgend stellen wir dar, welche personenbezogenen Informationen wir
-    während Ihres Besuches auf unserer Internetseite erfassen und wie wir diese
+    während Deines Besuches auf unserer Internetseite erfassen und wie wir diese
     nutzen. Unsere Datenschutzpraxis steht im Einklang mit den gesetzlichen
     Regelungen, insbesondere denen des Bundesdatenschutzgesetzes (neu) 2018
     (BDSG), des Telemediengesetzes (TMG) und der Datenschutzgrundverordnung der
-    EU (DSGVO). Wir werden Ihre personenbezogenen Daten ausschließlich erheben,
+    EU (DSGVO). Wir werden Deine personenbezogenen Daten ausschließlich erheben,
     verarbeiten und speichern, soweit dies zur funktionsfähigen Bereitstellung
     dieser Internetseite und unserer Inhalte und Leistungen erforderlich ist,
     sowie zur Bearbeitung von Anfragen und ggf. zur Abwicklung von Bestellungen
