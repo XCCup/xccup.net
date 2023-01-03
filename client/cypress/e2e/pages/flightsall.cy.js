@@ -85,8 +85,9 @@ describe("check flights all page", () => {
 
     const expectedName = "Bobby Volkman";
     const expectedClub = "Die Moselfalken";
-    const expectedTeamSelect = `Die Elstern (${new Date().getFullYear()})`;
-    const expectedTeamBadge = `Die Elstern (${new Date().getFullYear()})`;
+    const expectedTeamBadge = "Die Elstern";
+    const expectedTeamSelect =
+      expectedTeamBadge + ` (${new Date().getFullYear()})`;
     const expectedRanking = "GS Sport";
     const expectedSite = "Adelberg";
     const expectedLength = 2;
