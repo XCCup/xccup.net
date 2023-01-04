@@ -64,6 +64,7 @@ const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 const router = express.Router();
 
 const uploadLimiter = createLimiter(60, 10);
+const flightRequestLimiter = createLimiter(200, 50);
 
 // All requests to /flights/photos will be rerouted
 router.use("/photos", require("./FlightPhotoController"));
@@ -73,6 +74,7 @@ router.use("/photos", require("./FlightPhotoController"));
 
 router.get(
   "/",
+  flightRequestLimiter,
   [
     query("year").optional().isInt(),
     query("site").optional().not().isEmpty().trim().escape(),
