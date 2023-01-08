@@ -27,7 +27,10 @@ const service = {
     const teams = await Team.findAll({
       where: whereStatement,
       attributes: ["id", "name", "season"],
-      order: [["name", "asc"]],
+      order: [
+        ["name", "asc"],
+        ["season", "desc"],
+      ],
     });
     return teams;
   },
