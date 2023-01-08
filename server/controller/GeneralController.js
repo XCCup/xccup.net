@@ -10,7 +10,7 @@ const {
 const {
   GENDER: genders,
   COUNTRY: countries,
-  STATE: conutryStates,
+  STATE: countryStates,
   TSHIRT_SIZES,
   GENDER,
   STATE,
@@ -85,28 +85,39 @@ router.get("/filterOptions", async (req, res, next) => {
     res.set("Cache-control", "public, max-age=3600, immutable");
     if (value) return res.json(value);
 
-    const userNames = userService.getAllNames();
-    const siteNames = siteService.getAllNames();
-    const clubNames = clubService.getAllNames();
-    const teamNames = teamService.getAllNames();
-    const brandNames = getAllBrands();
+    const userNamesQuery = userService.getAllNames();
+    const siteNamesQuery = siteService.getAllNames();
+    const clubNamesQuery = clubService.getAllNames({
+      includeAllClubsWhichEverCompeted: true,
+    });
+    const teamNamesQuery = teamService.getAllNames({
+      includeAllTeamsWhichEverCompeted: true,
+    });
+    const brandNamesQuery = getAllBrands();
 
-    const values = await Promise.all([
+    const [
       userNames,
       siteNames,
       clubNames,
       teamNames,
       brandNames,
+      seasonDetails,
+    ] = await Promise.all([
+      userNamesQuery,
+      siteNamesQuery,
+      clubNamesQuery,
+      teamNamesQuery,
+      brandNamesQuery,
       getCurrentActive(),
     ]);
 
     const resultObject = {
-      userNames: values[0],
-      siteNames: values[1],
-      clubNames: values[2],
-      teamNames: values[3],
-      brandNames: values[4],
-      rankingClasses: values[5].rankingClasses,
+      userNames,
+      siteNames,
+      clubNames,
+      teamNames,
+      brandNames,
+      rankingClasses: seasonDetails.rankingClasses,
       states: STATE,
       regions: REGIONS,
       genders: GENDER,
@@ -120,7 +131,7 @@ router.get("/filterOptions", async (req, res, next) => {
   }
 });
 
-// @desc Gets all possiblites of flightStates
+// @desc Gets all possibilities of flightStates
 // @route GET /general/flight/states
 
 router.get("/flight/states", async (req, res, next) => {
@@ -131,7 +142,7 @@ router.get("/flight/states", async (req, res, next) => {
   }
 });
 
-// @desc Gets all possiblites of flightTypes
+// @desc Gets all possibilities of flightTypes
 // @route GET /general/flight/types
 
 router.get("/flight/types", async (req, res, next) => {
@@ -150,7 +161,7 @@ router.get("/user/constants", async (req, res, next) => {
     const userConstants = {
       genders: genders,
       countries: countries,
-      states: conutryStates,
+      states: countryStates,
       tShirtSizes: TSHIRT_SIZES,
     };
     res.json(userConstants);

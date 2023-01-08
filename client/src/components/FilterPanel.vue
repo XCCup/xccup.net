@@ -327,7 +327,13 @@ defineProps({
   },
 });
 
-const { filterDataBy, isLoading, activeFilters, clearOneFilter } = useData();
+const {
+  filterDataBy,
+  isLoading,
+  activeFilters,
+  clearOneFilter,
+  selectedSeason,
+} = useData();
 
 const selects = reactive({
   site: "",
@@ -376,7 +382,7 @@ try {
   genderData = filterOptions.genders;
   regions = filterOptions.regions;
   users.value = userData.map((e) => `${e.firstName} ${e.lastName}`);
-  teams.value = teamData.map((e) => e.name);
+  teams.value = createTeamFilterOptions(teamData);
   sites.value = siteData.map((e) => e.name);
   clubs.value = clubData.map((e) => e.name);
   states.value = Object.values(statesData).map((e) => e);
@@ -407,7 +413,7 @@ const selectedFilters = computed(() => {
   return {
     siteId: findIdByName(selects.site, siteData),
     clubId: findIdByName(selects.club, clubData),
-    rankingClass: findKeyOfRankingClass(selects.team, teamData),
+    rankingClass: findKeyOfRankingClass(),
     siteRegion: selects.region ? selects.region : undefined,
     isWeekend: weekend.value ? true : undefined,
     isHikeAndFly: hikeAndFly.value ? true : undefined,
@@ -417,7 +423,7 @@ const selectedFilters = computed(() => {
       : undefined,
     userIds: findIdsByNameParts(),
     userId: findIdByUserName(),
-    teamId: findIdByName(selects.team, teamData),
+    teamId: findIdOfTeam(selects.team, teamData),
     flightType: findKeyByValue(FLIGHT_TYPES, selects.flightType),
     startDate: findDate(fromDate.value),
     endDate: findDate(tillDate.value),
@@ -436,9 +442,20 @@ const onActivate = async () => {
   filterDataBy(selectedFilters.value);
 };
 
-const findIdByName = (selectObject, initalData) => {
+const findIdByName = (selectObject, initialData) => {
   return selectObject
-    ? initalData.find((e) => e.name == selectObject).id
+    ? initialData.find((e) => e.name == selectObject).id
+    : undefined;
+};
+
+const findIdOfTeam = (selectObject, initialData) => {
+  // If a season is selected than also filter for the season in the selected option
+  const includeSeason = (e) =>
+    selectedSeason ? true : selectObject.includes(e.season);
+
+  return selectObject
+    ? initialData.find((e) => selectObject.includes(e.name) && includeSeason(e))
+        .id
     : undefined;
 };
 
@@ -467,6 +484,17 @@ const findDate = (value) => {
   if (!(value instanceof Date)) return undefined;
   return format(value, "yyyy-MM-dd");
 };
+
+function createTeamFilterOptions(teamData) {
+  if (selectedSeason.value) {
+    return teamData
+      .filter((t) => t.season == selectedSeason.value)
+      .map((e) => e.name);
+  }
+
+  // If no season was selected return all teams with a season postfix
+  return teamData.map((e) => e.name + ` (${e.season})`);
+}
 
 function findIdByUserName() {
   return selects.user
