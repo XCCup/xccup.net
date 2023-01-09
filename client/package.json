@@ -35,7 +35,7 @@
     "leaflet": "^1.9.3",
     "leaflet-gesture-handling": "^1.2.2",
     "lodash-es": "^4.17.21",
-    "luxon": "^3.2.0",
+    "luxon": "^3.2.1",
     "marked": "^4.2.5",
     "metar-parser": "^1.0.1",
     "nprogress": "^0.2.0",
