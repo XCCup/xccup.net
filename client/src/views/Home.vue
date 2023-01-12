@@ -1,12 +1,5 @@
 <template>
   <div v-if="seasonStats">
-    <!-- <div class="alert alert-danger mb-0" role="alert">
-      Falls dies dein erster Besuch der neuen Webseite ist, lies dir bitte die
-      <router-link :to="{ name: 'NewXccup' }" class="alert-link"
-        >Hinweise und Neuerungen durch.</router-link
-      >
-    </div> -->
-
     <InfoBox :season-stats="seasonStats" />
     <DailyResults :max-rows="10" :flights="dailyResults" />
     <NewsPanel v-if="newsItems?.length > 0" :news-items="newsItems" />
