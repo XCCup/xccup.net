@@ -93,6 +93,15 @@ a {
     background-color: shade-color($primary, 20%)
 }
 
+.sponsor-container {
+  border: 1px solid $gray-400;
+  height: 120px;
+}
+.sponsor-container:hover {
+  border: 1px solid $primary;
+}
+
+
 @media (max-width: 992px) {
 }
 

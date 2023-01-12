@@ -78,20 +78,6 @@ const regularSponsors = computed(() => {
 });
 </script>
 
-<style lang="scss">
-@import "@/styles";
-// We put the import out of the scoped block to ensure that all similar imports are merged to one global import to reduce bundle size
-// TODO: Should be obsolote when proper dark mode was introduced to bootstrap
-// TODO: Why does sponsor-container work in Safari, but sponsor-box not?
-.sponsor-container {
-  border: 1px solid $gray-400;
-  height: 120px;
-}
-.sponsor-container:hover {
-  border: 1px solid $primary;
-}
-</style>
-
 <style lang="scss" scoped>
 .filter {
   filter: grayscale(100%);
