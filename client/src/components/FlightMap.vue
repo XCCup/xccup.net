@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid mt-0">
     <div class="row">
-      <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''">
+      <div id="mapContainer" class="darken-map">
         <div class="leaflet-bottom leaflet-left">
           <button
             id="mapExpandButton"
@@ -90,11 +90,6 @@ const { activeAirbuddyFlights } = useAirbuddies();
 const { isAdmin } = useAuth();
 
 const trackColors = ADDITIONAL_COLORS;
-
-// Find a way to make this reactive
-const userPrefersDark = ref(
-  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-);
 
 // Leaflet objects
 

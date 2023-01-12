@@ -1,13 +1,9 @@
 // Custom variables are imported in vite config
 
 // Bootstrap
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 @import "sweetalert2/src/sweetalert2.scss";
-
-// Workaround for dark mode
-@import "@/styles/bootstrapCustom";
-
 @import "@/styles/rankingClasses";
 @import "@/styles/dialogBackground";
 
@@ -33,10 +29,9 @@ h5 {
 a {
   text-decoration: none;
 }
-.footer {
-  a:hover {
-    color: darken($light, 20%);
-  }
+.link-secondary:hover {
+  color: shade-color($light, 30%) !important;
+  
 }
 .alert {
   border-radius: 0 !important;
@@ -58,24 +53,25 @@ a {
 }
 
 .hide-on-md {
-  @extend .d-none;
-  @extend .d-lg-table-cell;
+  @extend .d-none !optional;
+  @extend .d-lg-table-cell !optional;
 }
 
 .hide-on-sm {
-  @extend .d-none;
-  @extend .d-md-table-cell;
+  @extend .d-none !optional;
+  @extend .d-md-table-cell !optional;
 }
 
 .hide-on-xs {
-  @extend .d-none;
-  @extend .d-sm-table-cell;
+  @extend .d-none !optional;
+  @extend .d-sm-table-cell !optional;
 }
 
-// Darken map on dark mode
-
+// Darken map in dark mode
 .darken-map {
-  filter: brightness(85%);
+  @include color-scheme(dark) {
+    filter: brightness(85%);
+  }
 }
 
 .clickable {
@@ -86,14 +82,16 @@ a {
   white-space: pre-line;
 }
 
-// TODO: Is this obsolete?
-// Fix for responsive scaling of barogramm
-// .barogramm-container {
-//   position: relative;
-//   margin: auto;
-//   height: 20vh;
-//   width: 100%;
-// }
+.bg-comment-reply {
+  background-color: $primary-bg-subtle;
+  @include color-scheme(dark) {
+    background-color: $primary;
+  }
+}
+
+.bg-flight-subnav {
+    background-color: shade-color($primary, 20%)
+}
 
 @media (max-width: 992px) {
 }

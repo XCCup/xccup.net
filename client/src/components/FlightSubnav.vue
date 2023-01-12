@@ -1,8 +1,11 @@
 <template>
-  <div id="flight-subnav" class="container-fluid custom text-light mb-0 p-1">
+  <div
+    id="flight-subnav"
+    class="container-fluid bg-flight-subnav text-light mb-0 p-1"
+  >
     <p class="m-0">
-      <a href="#" class="link-light" @click.prevent="$router.go(-1)"
-        ><i class="bi bi-chevron-left mx-2"></i
+      <a href="#" @click.prevent="$router.go(-1)"
+        ><i class="bi bi-chevron-left mx-2 link-secondary"></i
       ></a>
       Flug von
       <router-link
@@ -10,7 +13,7 @@
           name: 'FlightsAll',
           query: { userId: flight?.user?.id },
         }"
-        class="link-light"
+        class="link-secondary"
       >
         {{ flight?.user?.fullName }}
       </router-link>
@@ -23,7 +26,7 @@
             endDate: dayAfter(flight?.takeoffTime),
           },
         }"
-        class="link-light"
+        class="link-secondary"
       >
         <BaseDate :timestamp="flight?.takeoffTime" />
       </router-link>
@@ -36,9 +39,3 @@ import useFlight from "@/composables/useFlight";
 import { retrieveDateOnly, dayAfter } from "../helper/utils";
 const { flight } = useFlight();
 </script>
-
-<style lang="scss" scoped>
-.custom {
-  background-color: darken($primary, 5%);
-}
-</style>

@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="mapContainer"
-    :class="userPrefersDark ? 'darken-map' : ''"
-    class="mb-3"
-  ></div>
+  <div id="mapContainer" class="mb-3 darken-map"></div>
 </template>
 
 <script setup lang="ts">
@@ -12,7 +8,7 @@ import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { tileOptions } from "@/config/mapbox";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 
 import {
   drawAirspaces,
@@ -28,10 +24,6 @@ const props = defineProps({
 });
 
 let map: L.Map;
-// Find a way to make this reactive
-const userPrefersDark = ref(
-  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-);
 
 onMounted(() => {
   // Setup leaflet

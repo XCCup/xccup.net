@@ -9,7 +9,6 @@
     <div class="d-flex mb-2" data-cy="comment-header">
       <img :src="avatarUrl" class="rounded-circle" />
       <router-link
-        :class="userPrefersDark ? 'link-light' : ''"
         :to="{
           name: 'FlightsAll',
           query: { userId: comment?.user?.id },
@@ -18,9 +17,7 @@
         {{ comment.user?.fullName }}
       </router-link>
 
-      <span
-        class="ms-auto fw-light"
-        :class="userPrefersDark ? 'text-light' : 'text-secondary'"
+      <span class="ms-auto fw-light"
         ><BaseDate
           :timestamp="comment.createdAt"
           date-format="dd.MM.yyyy HH:mm"
@@ -39,8 +36,7 @@
     <div
       v-for="reply in comment.replies"
       :key="reply.id"
-      class="shadow-sm rounded p-3 mb-3"
-      :class="userPrefersDark ? 'dark-reply' : ''"
+      class="shadow-sm rounded p-3 mb-3 bg-comment-reply"
     >
       <Comment :comment="reply" />
     </div>
@@ -72,11 +68,7 @@
         v-if="getUserId && !comment?.relatedTo"
         class="text-secondary text-end"
       >
-        <a
-          href="#"
-          :class="userPrefersDark ? 'link-light' : ''"
-          @click.prevent="openReplyEditor"
-        >
+        <a href="#" @click.prevent="openReplyEditor">
           <i class="bi bi-reply" data-cy="reply-comment-button"></i> Antworten
         </a>
       </div>
@@ -85,18 +77,10 @@
         v-if="comment.userId === getUserId && !showCommentEditor"
         class="text-secondary text-end"
       >
-        <a
-          href="#"
-          :class="userPrefersDark ? 'link-light' : ''"
-          @click.prevent="onEditComment"
-        >
+        <a href="#" @click.prevent="onEditComment">
           <i class="bi bi-pencil-square mx-1"></i>Bearbeiten
         </a>
-        <a
-          href="#"
-          :class="userPrefersDark ? 'link-light' : ''"
-          @click.prevent="deleteCommentModal.show()"
-        >
+        <a href="#" @click.prevent="deleteCommentModal.show()">
           <i class="bi bi-trash mx-1"></i>Löschen
         </a>
       </div>
@@ -163,11 +147,6 @@ const commentWithLinks = computed(() =>
 const avatarUrl = createUserPictureUrl(props.comment?.user?.id, {
   size: "thumb",
 });
-
-// Find a way to make this reactive
-const userPrefersDark = ref(
-  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-);
 
 // Modal
 const deleteCommentModal = ref(null);
@@ -250,14 +229,6 @@ const closeReplyEditor = () => {
   replyMessage.value = "";
 };
 </script>
-<style lang="scss">
-@import "@/styles";
-// We put the import out of the scoped block to ensure that all similar imports are merged to one global import to reduce bundle size
-// TODO: Should be obsolote when proper dark mode was introduced to bootstrap
-.dark-reply {
-  background-color: tint-color($primary, 5);
-}
-</style>
 <style lang="scss" scoped>
 .rounded-circle {
   margin-right: 6px;
