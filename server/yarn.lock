@@ -1056,39 +1056,39 @@
     read-package-json-fast "^2.0.3"
     which "^2.0.2"
 
-"@sentry/core@7.29.0":
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.29.0.tgz#bc4b54d56cf7652598d4430cf43ea97cc069f6fe"
-  integrity sha512-+e9aIp2ljtT4EJq3901z6TfEVEeqZd5cWzbKEuQzPn2UO6If9+Utd7kY2Y31eQYb4QnJgZfiIEz1HonuYY6zqQ==
+"@sentry/core@7.30.0":
+  version "7.30.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.30.0.tgz#02d2e8747484ba64b6d712e8afe6736250efdc26"
+  integrity sha512-NeLigkBlpcK63ymM63GoIHurml6V3BUe1Vi+trwm4/qqOTzT7PQhvdJCX+o3+atzRBH+zdb6kd4VWx44Oye3KA==
   dependencies:
-    "@sentry/types" "7.29.0"
-    "@sentry/utils" "7.29.0"
+    "@sentry/types" "7.30.0"
+    "@sentry/utils" "7.30.0"
     tslib "^1.9.3"
 
-"@sentry/node@^7.29.0":
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.29.0.tgz#721aab15faef98f291b5a3fcb9b303565deb1e74"
-  integrity sha512-s/bN/JS5gPTmwzVms4FtI5YNYtC9aGY4uqdx/llVrIiVv7G6md/oJJzKtO1C4dt6YshjGjSs5KCpEn1NM4+1iA==
+"@sentry/node@^7.30.0":
+  version "7.30.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.30.0.tgz#42ef5b29d065f6de6ac5556a56aca20d3b9073e1"
+  integrity sha512-YYasu6C3I0HBP4N1oc/ed2nunxhGJgtAWaKwq3lo8uk3uF6cB1A8+2e0CpjzU5ejhbaFPUBxHyj4th39Bvku/w==
   dependencies:
-    "@sentry/core" "7.29.0"
-    "@sentry/types" "7.29.0"
-    "@sentry/utils" "7.29.0"
+    "@sentry/core" "7.30.0"
+    "@sentry/types" "7.30.0"
+    "@sentry/utils" "7.30.0"
     cookie "^0.4.1"
     https-proxy-agent "^5.0.0"
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/types@7.29.0":
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.29.0.tgz#ed829b6014ee19049035fec6af2b4fea44ff28b8"
-  integrity sha512-DmoEpoqHPty3VxqubS/5gxarwebHRlcBd/yuno+PS3xy++/i9YPjOWLZhU2jYs1cW68M9R6CcCOiC9f2ckJjdw==
+"@sentry/types@7.30.0":
+  version "7.30.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.30.0.tgz#fc2baeb5b0e1ecc4d52b07b056fcba54449cd9ce"
+  integrity sha512-l4A86typvt/SfWh5JffpdxNGkg5EEA8m35BzpIcKmCAQZUDmnb4b478r8jdD2uuOjLmPNmZr1tifdRW4NCLuxQ==
 
-"@sentry/utils@7.29.0":
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.29.0.tgz#cbf8f87dd851b0fdc7870db9c68014c321c3bab8"
-  integrity sha512-ICcBwTiBGK8NQA8H2BJo0JcMN6yCeKLqNKNMVampRgS6wSfSk1edvcTdhRkW3bSktIGrIPZrKskBHyMwDGF2XQ==
+"@sentry/utils@7.30.0":
+  version "7.30.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.30.0.tgz#1d83145399c65e31f725c1b6ae02f451a990f326"
+  integrity sha512-tSlBhr5u/LdE2emxIDTDmjmyRr99GnZGIAh5GwRxUgeDQ3VEfNUFlyFodBCbZ6yeYTYd6PWNih5xoHn1+Rf3Sw==
   dependencies:
-    "@sentry/types" "7.29.0"
+    "@sentry/types" "7.30.0"
     tslib "^1.9.3"
 
 "@sinclair/typebox@^0.24.1":
@@ -4043,6 +4043,11 @@ json5@^2.2.1:
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.1.tgz#655d50ed1e6f95ad1a3caababd2b0efda10b395c"
   integrity sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==
 
+json5@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.3.tgz#78cd6f1a19bdc12b73db5ad0c61efd66c1e29283"
+  integrity sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==
+
 jsonparse@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
@@ -4558,10 +4563,10 @@ node-releases@^2.0.3:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.4.tgz#f38252370c43854dc48aa431c766c6c398f40476"
   integrity sha512-gbMzqQtTtDz/00jQzZ21PQzdI9PyLYqUSvD0p3naOhX4odFji0ZxYdnVwPTxmSwkmxhcFImpozceidSG+AgoPQ==
 
-nodemailer@^6.8.0:
-  version "6.8.0"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.8.0.tgz#804bcc5256ee5523bc914506ee59f8de8f0b1cd5"
-  integrity sha512-EjYvSmHzekz6VNkNd12aUqAco+bOkRe3Of5jVhltqKhEsjw/y0PYPJfp83+s9Wzh1dspYAkUW/YNQ350NATbSQ==
+nodemailer@^6.9.0:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.0.tgz#a17488ff470ff9edf1bb31d9ec23079bc94f7dd3"
+  integrity sha512-jFaCEGTeT3E/m/5R2MHWiyQH3pSARECRUDM+1hokOYc3lQAAG7ASuy+2jIsYVf+RVa9zePopSQwKNVFH8DKUpA==
 
 nodemon@^2.0.20:
   version "2.0.20"
@@ -5949,15 +5954,15 @@ triple-beam@^1.3.0:
   resolved "https://registry.npmjs.org/triple-beam/-/triple-beam-1.3.0.tgz"
   integrity sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==
 
-ts-jest@^29.0.3:
-  version "29.0.3"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.0.3.tgz#63ea93c5401ab73595440733cefdba31fcf9cb77"
-  integrity sha512-Ibygvmuyq1qp/z3yTh9QTwVVAbFdDy/+4BtIQR2sp6baF2SJU/8CKK/hhnGIDY2L90Az2jIqTwZPnN2p+BweiQ==
+ts-jest@^29.0.4:
+  version "29.0.4"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.0.4.tgz#9bc1fd0ec4d863f001af6c5c630e3a807df90f6d"
+  integrity sha512-YdNofkoyzeinwjIqLSYQeAM+GTmFQ7xFNtWcR5OyitY5VLzzNINrNmfhP5H3daA/V+RGQR7O3g1K6ysRgu5xIQ==
   dependencies:
     bs-logger "0.x"
     fast-json-stable-stringify "2.x"
     jest-util "^29.0.0"
-    json5 "^2.2.1"
+    json5 "^2.2.3"
     lodash.memoize "4.x"
     make-error "1.x"
     semver "7.x"
