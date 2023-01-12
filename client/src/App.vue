@@ -65,3 +65,7 @@ const componentsToKeepAlive = [
   "ResultsLux",
 ];
 </script>
+
+<style lang="scss">
+@import "@/styles";
+</style>
