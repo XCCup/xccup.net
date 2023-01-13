@@ -1,28 +1,52 @@
-const FlyingSite = require("../db")["FlyingSite"];
-const User = require("../db")["User"];
-const Flight = require("../db")["Flight"];
-const Club = require("../db")["Club"];
-const Team = require("../db")["Team"];
-const Result = require("../db")["Result"];
+import db from "../db";
 
-const seasonService = require("./SeasonService");
-const teamService = require("./TeamService");
-const sequelize = require("sequelize");
+import seasonService from "./SeasonService";
+import teamService from "./TeamService";
+import sequelize from "sequelize";
 
-const { getCurrentYear } = require("../helper/Utils");
-const { TYPE, STATE } = require("../constants/flight-constants");
-const { GENDER } = require("../constants/user-constants");
-const {
+import { getCurrentYear } from "../helper/Utils";
+import { FLIGHT_TYPE, FLIGHT_STATE } from "../constants/flight-constants";
+import { GENDER } from "../constants/user-constants";
+import {
   TEAM_DISMISSES,
   TEAM_SIZE,
   NUMBER_OF_SCORED_FLIGHTS,
   NEWCOMER_MAX_RANKING_CLASS,
-} = require("../config/result-determination-config");
-const moment = require("moment");
-const { XccupHttpError } = require("../helper/ErrorHandler");
-const { NOT_FOUND } = require("../constants/http-status-constants");
+} from "../config/result-determination-config";
+import moment from "moment";
+import { XccupHttpError } from "../helper/ErrorHandler";
+import { NOT_FOUND } from "../constants/http-status-constants";
+import {
+  RankingClasses,
+  SeasonDetailAttributes,
+} from "../db/models/SeasonDetail";
 
-const cacheNonNewcomer = [];
+import type { RankingTypes } from "../db/models/SeasonDetail";
+import type {
+  UserResults,
+  UserResultsWithTotals,
+  ClubResults,
+  UserResultFlight,
+  QueryResult,
+  SiteRecordsUncombined,
+  FlightSitesWithRecord,
+  FlightSiteRecord,
+  TeamResults,
+  Totals,
+  Team,
+  TeamWithMemberFlights,
+  Member,
+} from "../types/ResultTypes";
+import {
+  FlightAttributes,
+  FlightInstance,
+  FlightInstanceUserInclude,
+} from "../db/models/Flight";
+import { FlyingSiteInstance } from "../db/models/FlyingSite";
+
+const { FlyingSite, User, Flight, Club, Team, Result } = db;
+
+const cacheNonNewcomer: string[] = [];
 
 const yearOfNewXccupPlatform = 2022;
 
@@ -36,6 +60,22 @@ const RANKINGS = {
   LUX: "LUX",
   RP: "RP",
 };
+
+interface optionsGetOverall {
+  year: number;
+  rankingClass: string;
+  gender: string;
+  homeStateOfUser: string;
+  isSenior: boolean;
+  isWeekend: boolean;
+  isHikeAndFly: boolean;
+  siteShortName: string;
+  siteId: string;
+  siteRegion: string;
+  clubShortName: string;
+  clubId: string;
+  limit: number;
+}
 
 const service = {
   getOverall: async ({
@@ -52,7 +92,7 @@ const service = {
     clubShortName,
     clubId,
     limit,
-  }) => {
+  }: optionsGetOverall) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (
@@ -68,7 +108,7 @@ const service = {
         clubId
       )
     ) {
-      checkIfRankingWasPresent(seasonDetail, RANKINGS.OVERALL);
+      checkIfRankingWasPresent(seasonDetail, "overall");
 
       const oldResult = await findOldResult(year, RANKINGS.OVERALL);
       if (oldResult)
@@ -90,7 +130,7 @@ const service = {
         clubId
       )
     ) {
-      checkIfRankingWasPresent(seasonDetail, RANKINGS.LADIES);
+      checkIfRankingWasPresent(seasonDetail, "ladies");
       const oldResult = await findOldResult(year, RANKINGS.LADIES);
       if (oldResult)
         return addConstantInformationToResult(
@@ -104,22 +144,26 @@ const service = {
     if (rankingClass) {
       const gliderClasses =
         seasonDetail?.rankingClasses[rankingClass].gliderClasses ?? [];
+      //@ts-ignore
       where.glider = {
         gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
       };
     }
     if (isWeekend) {
+      //@ts-ignore
       where.isWeekend = true;
     }
     if (isHikeAndFly) {
+      //@ts-ignore
       where.hikeAndFly = {
         [sequelize.Op.gt]: 0,
       };
     }
     if (homeStateOfUser) {
+      //@ts-ignore
       where.homeStateOfUser = homeStateOfUser;
     }
-    const resultQuery = await queryDb({
+    const resultQuery = (await queryDb({
       where,
       gender,
       siteShortName,
@@ -127,24 +171,27 @@ const service = {
       siteRegion,
       clubShortName,
       clubId,
-    });
+    })) as unknown as QueryResult[];
 
     const result = aggregateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
-    sortDescendingByTotalPoints(result);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      result,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
 
     return addConstantInformationToResult(
-      result,
+      resultsWithTotals,
       { NUMBER_OF_SCORED_FLIGHTS },
       limit
     );
   },
 
-  getClub: async (year, limit) => {
+  getClub: async (year: number, limit: number) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, RANKINGS.CLUB);
+      checkIfRankingWasPresent(seasonDetail, "club");
       const oldResult = await findOldResult(year, RANKINGS.CLUB);
       if (oldResult)
         return addConstantInformationToResult(
@@ -155,11 +202,14 @@ const service = {
     }
 
     const where = createDefaultWhereForFlight({ seasonDetail });
-    const resultQuery = await queryDb({ where });
+    const resultQuery = (await queryDb({ where })) as unknown as QueryResult[];
 
     const resultOverUser = aggregateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(resultOverUser, NUMBER_OF_SCORED_FLIGHTS);
-    const resultOverClub = aggregateOverClubAndCalcTotals(resultOverUser);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      resultOverUser,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    const resultOverClub = aggregateOverClubAndCalcTotals(resultsWithTotals);
 
     resultOverClub.forEach((club) => {
       // Sort also members in club by totalPoints
@@ -174,11 +224,11 @@ const service = {
     );
   },
 
-  getTeam: async (year, siteRegion, limit) => {
+  getTeam: async (year: number, siteRegion: string, limit: number) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, RANKINGS.TEAM);
+      checkIfRankingWasPresent(seasonDetail, "team");
       const oldResult = await findOldResult(year, RANKINGS.TEAM);
       if (oldResult)
         return addConstantInformationToResult(
@@ -193,41 +243,39 @@ const service = {
         );
     }
 
-    const teamsOfSeason = await teamService.getAll({
+    const teamsOfSeason = (await teamService.getAll({
       year,
-    });
+    })) as Team[];
 
-    await Promise.all(
+    const teamResults = await Promise.all(
       teamsOfSeason.map(async (team) => {
-        await Promise.all(
-          team.members.map(async (member) => {
-            const where = createDefaultWhereForFlight({ seasonDetail });
-            where.userId = member.id;
-            member.flights = (
-              await queryDb({
-                where,
-                limit: NUMBER_OF_SCORED_FLIGHTS,
-                siteRegion,
-                useIncludes: ["site"],
-              })
-            ).map((e) => e.toJSON());
-          })
+        attachFlightsToTeamMembers;
+        const membersWithFlights = await attachFlightsToTeamMembers(
+          team,
+          seasonDetail,
+          siteRegion
         );
+        const teamWithFlights = {
+          ...team,
+          members: membersWithFlights,
+        } as unknown as TeamWithMemberFlights;
 
-        markFlightsToDismiss(team);
+        markFlightsToDismiss(teamWithFlights);
 
-        team.members.forEach((member) => {
+        teamWithFlights.members.forEach((member) => {
           calcTotalsOfMember(member);
         });
-        calcTotalsOverMembers(team);
-        sortDescendingByTotalPoints(team.members);
+        const teamWithTotals = calcTotalsOverMembers(teamWithFlights);
+        sortDescendingByTotalPoints(teamWithTotals.members);
+
+        return teamWithTotals;
       })
     );
 
-    sortDescendingByTotalPoints(teamsOfSeason);
+    sortDescendingByTotalPoints(teamResults);
 
     return addConstantInformationToResult(
-      teamsOfSeason,
+      teamResults,
       {
         NUMBER_OF_SCORED_FLIGHTS,
         TEAM_DISMISSES,
@@ -238,11 +286,11 @@ const service = {
     );
   },
 
-  getSenior: async (year, siteRegion, limit) => {
+  getSenior: async (year: number, siteRegion: string, limit: number) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, RANKINGS.SENIORS);
+      checkIfRankingWasPresent(seasonDetail, "seniors");
       const oldResult = await findOldResult(year, RANKINGS.SENIORS);
       if (oldResult)
         return addConstantInformationToResult(
@@ -258,12 +306,18 @@ const service = {
     }
 
     const where = createDefaultWhereForFlight({ seasonDetail, isSenior: true });
-    const resultQuery = await queryDb({ where, siteRegion });
+    const resultQuery = (await queryDb({
+      where,
+      siteRegion,
+    })) as unknown as QueryResult[];
 
     const result = aggregateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
-    await calcSeniorBonusForFlightResult(result);
-    sortDescendingByTotalPoints(result);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      result,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    await addSeniorBonusForFlightResult(resultsWithTotals);
+    sortDescendingByTotalPoints(resultsWithTotals);
 
     return addConstantInformationToResult(
       result,
@@ -284,11 +338,11 @@ const service = {
    * @param {*} limit The limit of results to retrieve
    * @returns The results of the ranking  of the provided year
    */
-  getRhineland: async (year, limit) => {
+  getRhineland: async (year: number, limit: number) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, RANKINGS.RP);
+      checkIfRankingWasPresent(seasonDetail, "RP");
       const oldResult = await findOldResult(year, RANKINGS.RP);
       if (oldResult)
         return addConstantInformationToResult(
@@ -302,13 +356,20 @@ const service = {
     }
 
     const where = createDefaultWhereForFlight({ seasonDetail });
+    //@ts-ignore
     where.homeStateOfUser = RANKINGS.RP;
 
-    const resultQuery = await queryDb({ where, siteState: RANKINGS.RP });
+    const resultQuery = (await queryDb({
+      where,
+      siteState: RANKINGS.RP,
+    })) as unknown as QueryResult[];
 
     const result = aggregateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS);
-    sortDescendingByTotalPoints(result);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      result,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
 
     return addConstantInformationToResult(
       result,
@@ -327,13 +388,13 @@ const service = {
    * @param {*} limit The limit of results to retrieve
    * @returns The results of the ranking of the provided year
    */
-  getLuxembourg: async (year, limit) => {
+  getLuxembourg: async (year: number, limit: number) => {
     const NUMBER_OF_SCORED_FLIGHTS_LUX = 6;
 
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, RANKINGS.LUX);
+      checkIfRankingWasPresent(seasonDetail, "LUX");
       const oldResult = await findOldResult(year, RANKINGS.LUX);
       if (oldResult)
         return addConstantInformationToResult(
@@ -348,15 +409,22 @@ const service = {
 
     const where = createDefaultWhereForFlight({
       seasonDetail,
-      flightStatus: [STATE.IN_RANKING, STATE.NOT_IN_RANKING],
+      flightStatuses: [FLIGHT_STATE.IN_RANKING, FLIGHT_STATE.NOT_IN_RANKING],
     });
+    //@ts-ignore
     where.homeStateOfUser = RANKINGS.LUX;
 
-    const resultQuery = await queryDb({ where, siteCountry: RANKINGS.LUX });
+    const resultQuery = (await queryDb({
+      where,
+      siteCountry: RANKINGS.LUX,
+    })) as unknown as QueryResult[];
 
     const result = aggregateFlightsOverUser(resultQuery);
-    limitFlightsForUserAndCalcTotals(result, NUMBER_OF_SCORED_FLIGHTS_LUX);
-    sortDescendingByTotalPoints(result);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      result,
+      NUMBER_OF_SCORED_FLIGHTS_LUX
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
 
     return addConstantInformationToResult(
       result,
@@ -368,17 +436,19 @@ const service = {
     );
   },
 
-  getEarlyBird: async (year, siteRegion) => {
+  getEarlyBird: async (year: number, siteRegion: string) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const startDate = seasonDetail?.startDate;
-    const endDate = moment(startDate).add(3, "months");
+    const endDate = moment(startDate).add(3, "months").toDate();
     const dates = { startDate, endDate };
     const where = createDefaultWhereForFlight({ seasonDetail: dates });
     const sortOrder = ["takeoffTime"];
 
     const resultQuery = await queryDb({ where, siteRegion, sortOrder });
-    const result = resultQuery.map((r) => r.toJSON());
+    const result = resultQuery.map((r) =>
+      r.toJSON()
+    ) as unknown as FlightInstanceUserInclude[];
     const resultSingleUserEntries = removeMultipleEntriesForUsers(result);
 
     return addConstantInformationToResult(
@@ -390,17 +460,19 @@ const service = {
     );
   },
 
-  getLateBird: async (year, siteRegion) => {
+  getLateBird: async (year: number, siteRegion: string) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const endDate = seasonDetail?.endDate;
-    const startDate = moment(endDate).subtract(2, "months");
+    const startDate = moment(endDate).subtract(2, "months").toDate();
     const dates = { startDate, endDate };
     const where = createDefaultWhereForFlight({ seasonDetail: dates });
     const sortOrder = [["landingTime", "DESC"]];
 
     const resultQuery = await queryDb({ where, siteRegion, sortOrder });
-    const result = resultQuery.map((r) => r.toJSON());
+    const result = resultQuery.map((r) =>
+      r.toJSON()
+    ) as unknown as FlightInstanceUserInclude[];
     const resultSingleUserEntries = removeMultipleEntriesForUsers(result);
 
     return addConstantInformationToResult(
@@ -412,11 +484,11 @@ const service = {
     );
   },
 
-  getNewcomer: async (year, siteRegion, limit) => {
+  getNewcomer: async (year: number, siteRegion: string, limit: number) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, RANKINGS.NEWCOMER);
+      checkIfRankingWasPresent(seasonDetail, "newcomer");
       const oldResult = await findOldResult(year, RANKINGS.NEWCOMER);
       if (oldResult)
         return addConstantInformationToResult(
@@ -433,17 +505,24 @@ const service = {
     const rankingClass =
       seasonDetail?.rankingClasses[NEWCOMER_MAX_RANKING_CLASS];
     const gliderClasses = rankingClass.gliderClasses ?? [];
+    //@ts-ignore
     where.glider = {
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
     };
 
-    const resultQuery = await queryDb({ where, siteRegion });
+    const resultQuery = (await queryDb({
+      where,
+      siteRegion,
+    })) as unknown as QueryResult[];
 
     const resultAllUsers = aggregateFlightsOverUser(resultQuery);
     const resultsNewcomer = await removeNonNewcomer(resultAllUsers, year);
 
-    limitFlightsForUserAndCalcTotals(resultsNewcomer, NUMBER_OF_SCORED_FLIGHTS);
-    sortDescendingByTotalPoints(resultsNewcomer);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      resultsNewcomer,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
 
     return addConstantInformationToResult(
       resultsNewcomer,
@@ -457,17 +536,21 @@ const service = {
   },
 
   getSiteRecords: async () => {
-    const freeRecords = findSiteRecordOfType(TYPE.FREE);
-    const flatRecords = findSiteRecordOfType(TYPE.FLAT);
-    const faiRecords = findSiteRecordOfType(TYPE.FAI);
+    const freeRecords = findSiteRecordOfType(FLIGHT_TYPE.FREE);
+    const flatRecords = findSiteRecordOfType(FLIGHT_TYPE.FLAT);
+    const faiRecords = findSiteRecordOfType(FLIGHT_TYPE.FAI);
 
-    const records = await Promise.all([freeRecords, flatRecords, faiRecords]);
+    const [free, flat, fai] = await Promise.all([
+      freeRecords,
+      flatRecords,
+      faiRecords,
+    ]);
 
-    return mergeRecordsByTakeoffs(records);
+    return mergeRecordsByTakeoffs({ free, flat, fai });
   },
 };
 
-async function findOldResult(season, type) {
+async function findOldResult(season: number, type: string) {
   const result = await Result.findOne({
     where: {
       season,
@@ -477,8 +560,9 @@ async function findOldResult(season, type) {
   return result ? result.result : undefined;
 }
 
-function markFlightsToDismiss(team) {
-  let allFlights = [];
+function markFlightsToDismiss(team: TeamWithMemberFlights) {
+  let allFlights: UserResultFlight[] = [];
+
   team.members.forEach((member) => {
     allFlights = allFlights.concat(member.flights);
   });
@@ -497,18 +581,21 @@ function markFlightsToDismiss(team) {
   }
 }
 
-function calcTotalsOverMembers(team) {
-  team.totalPoints = team.members.reduce(
-    (acc, member) => acc + member.totalPoints,
-    0
-  );
-  team.totalDistance = team.members.reduce(
-    (acc, member) => acc + member.totalDistance,
-    0
-  );
+function calcTotalsOverMembers(team: TeamWithMemberFlights) {
+  return {
+    ...team,
+    totalPoints: team.members.reduce(
+      (acc, member) => acc + member.totalPoints,
+      0
+    ),
+    totalDistance: team.members.reduce(
+      (acc, member) => acc + member.totalDistance,
+      0
+    ),
+  };
 }
 
-function calcTotalsOfMember(member) {
+function calcTotalsOfMember(member: Member) {
   member.totalPoints = member.flights.reduce((acc, flight) => {
     if (flight.isDismissed) return acc;
     return acc + flight.flightPoints;
@@ -519,25 +606,30 @@ function calcTotalsOfMember(member) {
   }, 0);
 }
 
-function addConstantInformationToResult(result, constants, limit) {
+function addConstantInformationToResult(
+  result: any[],
+  constants: {},
+  limit?: number
+) {
   return {
     constants,
     values: limit ? result.slice(0, limit) : result,
   };
 }
 
-async function removeNonNewcomer(resultAllUsers, year) {
-  const searchYear = year ? year : getCurrentYear();
+async function removeNonNewcomer(resultAllUsers: UserResults[], year: number) {
+  const resultsNewcomer: UserResults[] = [];
 
-  const resultsNewcomer = [];
+  const searchYear = year ? year : getCurrentYear();
 
   await Promise.all(
     resultAllUsers.map(async (flightsOfUser) => {
       if (cacheNonNewcomer.includes(flightsOfUser.user.id)) return;
 
-      const numberOfFlightsInPreviousSeasons = await Flight.count({
+      const numberOfFlightsInPreviousSeasons = (await Flight.count({
         where: {
-          flightStatus: STATE.IN_RANKING,
+          flightStatus: FLIGHT_STATE.IN_RANKING,
+          // @ts-ignore
           userId: flightsOfUser.user.id,
           andOp: sequelize.where(
             sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
@@ -546,7 +638,7 @@ async function removeNonNewcomer(resultAllUsers, year) {
             }
           ),
         },
-      });
+      })) as unknown as number;
 
       numberOfFlightsInPreviousSeasons > 0
         ? cacheNonNewcomer.push(flightsOfUser.user.id)
@@ -557,24 +649,27 @@ async function removeNonNewcomer(resultAllUsers, year) {
   return resultsNewcomer;
 }
 
-async function mergeRecordsByTakeoffs(records) {
+async function mergeRecordsByTakeoffs(records: SiteRecordsUncombined) {
   const results = [];
 
-  for (let index = 0; index < records[0].length; index++) {
-    const combinedResult = { takeoff: {} };
-    combinedResult.takeoff.id = records[0][index].id;
-    combinedResult.takeoff.name = records[0][index].name;
-    combinedResult.takeoff.shortName = records[0][index].shortName;
-    combinedResult.free = createEntryOfRecord(records[0][index].flights[0]);
-    combinedResult.flat = createEntryOfRecord(records[1][index].flights[0]);
-    combinedResult.fai = createEntryOfRecord(records[2][index].flights[0]);
+  for (let index = 0; index < records.free.length; index++) {
+    const combinedResult = {
+      takeoff: {
+        id: records.free[index].id,
+        name: records.free[index].name,
+        shortName: records.free[index].shortName,
+      },
+      free: createEntryOfRecord(records.free[index].flights[0]),
+      flat: createEntryOfRecord(records.flat[index].flights[0]),
+      fai: createEntryOfRecord(records.fai[index].flights[0]),
+    };
     results.push(combinedResult);
   }
 
   return results;
 }
 
-function createEntryOfRecord(siteRecord) {
+function createEntryOfRecord(siteRecord: FlightSiteRecord) {
   if (siteRecord) {
     return {
       user: siteRecord.user,
@@ -589,7 +684,30 @@ function createEntryOfRecord(siteRecord) {
   return null;
 }
 
-async function findSiteRecordOfType(type) {
+async function attachFlightsToTeamMembers(
+  team: Team,
+  seasonDetail: SeasonDetailAttributes,
+  siteRegion: string
+) {
+  return await Promise.all(
+    team.members.map(async (member) => {
+      const where = createDefaultWhereForFlight({ seasonDetail });
+      //@ts-ignore
+      where.userId = member.id;
+      const flights = (
+        await queryDb({
+          where,
+          limit: NUMBER_OF_SCORED_FLIGHTS,
+          siteRegion,
+          useIncludes: ["site"],
+        })
+      ).map((e) => e.toJSON());
+      return { ...member, flights };
+    })
+  );
+}
+
+async function findSiteRecordOfType(type: string) {
   return FlyingSite.findAll({
     include: [
       {
@@ -622,6 +740,7 @@ async function findSiteRecordOfType(type) {
         order: [["flightDistance", "DESC"]],
         limit: 1,
         include: {
+          // @ts-ignore
           model: User,
           as: "user",
           attributes: ["firstName", "lastName", "fullName", "id"],
@@ -629,10 +748,25 @@ async function findSiteRecordOfType(type) {
       },
     ],
     attributes: ["id", "name", "shortName"],
+    // @ts-ignore
     order: [["name"]],
-  });
+  }) as Promise<FlightSitesWithRecord[]>;
 }
 
+interface queryDbOptions {
+  where: Object;
+  gender: string;
+  limit: number;
+  siteShortName: string;
+  siteId: string;
+  clubShortName: string;
+  clubId: string;
+  useIncludes: string[];
+  siteRegion: string;
+  siteState: string;
+  siteCountry: string;
+  sortOrder: string[] | string[][];
+}
 async function queryDb({
   where,
   gender,
@@ -646,7 +780,7 @@ async function queryDb({
   siteState,
   siteCountry,
   sortOrder,
-}) {
+}: Partial<queryDbOptions>) {
   const include = [];
   if (useIncludes.includes("user"))
     include.push(createIncludeStatementUser(gender));
@@ -680,11 +814,14 @@ async function queryDb({
     order: [["flightPoints", "DESC"]],
   };
   if (limit) {
+    // @ts-ignore
     queryObject.limit = limit;
   }
   if (sortOrder) {
+    // @ts-ignore
     queryObject.order = sortOrder;
   }
+  // @ts-ignore
   return Flight.findAll(queryObject);
 }
 
@@ -696,11 +833,12 @@ function createIncludeStatementTeam() {
   };
 }
 
-function createIncludeStatementClub(shortName, id) {
+function createIncludeStatementClub(shortName?: string, id?: string) {
   const clubInclude = {
     model: Club,
     as: "club",
     attributes: ["name", "shortName", "id"],
+    where: {},
   };
   if (shortName) {
     clubInclude.where = {
@@ -715,17 +853,25 @@ function createIncludeStatementClub(shortName, id) {
   return clubInclude;
 }
 
+type Values<T> = T[keyof T];
+
+interface optionsCreateDefaultWhere {
+  seasonDetail: Partial<SeasonDetailAttributes>;
+  isSenior: boolean;
+  flightStatuses: Values<typeof FLIGHT_STATE>[];
+}
+
 function createDefaultWhereForFlight({
   seasonDetail,
   isSenior,
-  flightStatus = [STATE.IN_RANKING],
-} = {}) {
+  flightStatuses = [FLIGHT_STATE.IN_RANKING],
+}: Partial<optionsCreateDefaultWhere> = {}) {
   const where = {
     takeoffTime: {
       [sequelize.Op.between]: [seasonDetail?.startDate, seasonDetail?.endDate],
     },
     flightStatus: {
-      [sequelize.Op.in]: flightStatus,
+      [sequelize.Op.in]: flightStatuses,
     },
     [sequelize.Op.or]: [
       { violationAccepted: true },
@@ -739,6 +885,7 @@ function createDefaultWhereForFlight({
   };
 
   if (isSenior) {
+    // @ts-ignore
     where.ageOfUser = {
       [sequelize.Op.gte]: seasonDetail?.seniorStartAge,
     };
@@ -747,7 +894,7 @@ function createDefaultWhereForFlight({
   return where;
 }
 
-function createIncludeStatementUser(gender) {
+function createIncludeStatementUser(gender?: string) {
   const userInclude = {
     model: User,
     as: "user",
@@ -759,6 +906,7 @@ function createIncludeStatementUser(gender) {
       "gender",
       "birthday",
     ],
+    where: {},
   };
   if (gender) {
     userInclude.where = {
@@ -767,21 +915,30 @@ function createIncludeStatementUser(gender) {
   }
   return userInclude;
 }
+
+interface optionsCreateIncludeSite {
+  siteShortName: string;
+  siteId: string;
+  region: string;
+  state: string;
+  country: string;
+}
 function createIncludeStatementSite({
-  site,
+  siteShortName,
   siteId,
   region,
   state,
   country,
-} = {}) {
+}: Partial<optionsCreateIncludeSite> = {}) {
   const siteInclude = {
     model: FlyingSite,
     as: "takeoff",
     attributes: ["name", "shortName", "id"],
+    where: {},
   };
-  if (site) {
+  if (siteShortName) {
     siteInclude.where = {
-      shortName: site,
+      shortName: siteShortName,
     };
   }
   if (siteId) {
@@ -790,7 +947,8 @@ function createIncludeStatementSite({
     };
   }
   if (region || state || country) {
-    const locationData = {};
+    const locationData: { region?: string; state?: string; country?: string } =
+      {};
     if (region) {
       locationData.region = region;
     }
@@ -807,25 +965,32 @@ function createIncludeStatementSite({
   return siteInclude;
 }
 
-function limitFlightsForUserAndCalcTotals(resultArray, maxNumberOfFlights) {
-  resultArray.forEach((entry) => {
-    entry.totalFlights = entry.flights.length;
-
-    entry.flights = entry.flights.slice(0, maxNumberOfFlights);
-
-    entry.totalDistance = entry.flights.reduce(
-      (acc, cur) => acc + cur.flightDistance,
-      0
-    );
-    entry.totalPoints = entry.flights.reduce(
-      (acc, cur) => acc + cur.flightPoints,
-      0
-    );
+function limitFlightsForUserAndCalcTotals(
+  resultArray: UserResults[],
+  maxNumberOfFlights: number
+) {
+  return resultArray.map((entry) => {
+    return {
+      ...entry,
+      flights: entry.flights.slice(0, maxNumberOfFlights),
+      totalFlights: entry.flights.length,
+      totalDistance: entry.flights.reduce(
+        (acc, cur) => acc + cur.flightDistance,
+        0
+      ),
+      totalPoints: entry.flights.reduce(
+        (acc, cur) => acc + cur.flightPoints,
+        0
+      ),
+    };
   });
 }
 
-function aggregateOverClubAndCalcTotals(resultOverUser) {
-  const result = [];
+function aggregateOverClubAndCalcTotals(
+  resultOverUser: UserResultsWithTotals[]
+) {
+  const result: ClubResults[] = [];
+
   resultOverUser.forEach((entry) => {
     const found = result.find((e) => e.clubId == entry.club.id);
     const memberEntry = {
@@ -853,8 +1018,9 @@ function aggregateOverClubAndCalcTotals(resultOverUser) {
   return result;
 }
 
-function aggregateFlightsOverUser(resultQuery) {
-  const result = [];
+function aggregateFlightsOverUser(resultQuery: QueryResult[]) {
+  const result: UserResults[] = [];
+
   resultQuery.forEach((entry) => {
     const found = result.find((e) => e.user?.id == entry.user?.id);
 
@@ -895,18 +1061,22 @@ function aggregateFlightsOverUser(resultQuery) {
   });
   return result;
 }
+
 /**
  * Sorts an array of result objects descending by the value of the "totalPoints" field of each entry.
  * @param {*} resultArray The result array to be sorted.
  */
-function sortDescendingByTotalPoints(resultArray) {
+function sortDescendingByTotalPoints(resultArray: Totals[]) {
   resultArray.sort((a, b) => {
     return b.totalPoints - a.totalPoints;
   });
 }
 
-function removeMultipleEntriesForUsers(resultsWithMultipleEntriesForUser) {
-  const results = [];
+function removeMultipleEntriesForUsers(
+  resultsWithMultipleEntriesForUser: FlightInstanceUserInclude[]
+) {
+  const results: FlightInstanceUserInclude[] = [];
+
   resultsWithMultipleEntriesForUser.forEach((e) => {
     const found = results.find((r) => r.user.id == e.user.id);
     if (found) return;
@@ -915,7 +1085,7 @@ function removeMultipleEntriesForUsers(resultsWithMultipleEntriesForUser) {
   return results;
 }
 
-async function retrieveSeasonDetails(year) {
+async function retrieveSeasonDetails(year: number) {
   const seasonDetail =
     year && year != getCurrentYear()
       ? await seasonService.getByYear(year)
@@ -924,7 +1094,7 @@ async function retrieveSeasonDetails(year) {
 }
 
 //TODO: Calc bonus in regards of seasonDetails for year xxxx
-async function calcSeniorBonusForFlight(age) {
+async function calcSeniorBonusForFlight(age: number) {
   const seasonDetail = await seasonService.getCurrentActive();
   const bonusPerYear = seasonDetail?.seniorBonusPerAge;
   const startAge = seasonDetail?.seniorStartAge;
@@ -932,16 +1102,17 @@ async function calcSeniorBonusForFlight(age) {
   return age > startAge ? bonusPerYear * (age - startAge) : 0;
 }
 
-async function calcSeniorBonusForFlightResult(result) {
+async function addSeniorBonusForFlightResult(result: UserResultsWithTotals[]) {
   await Promise.all(
     result.map(async (entry) => {
       let totalPoints = 0;
       await Promise.all(
-        entry.flights.map(async (flight) => {
+        entry.flights.map(async (flight: UserResultFlight) => {
           flight.flightPoints = Math.round(
-            (flight.flightPoints *
-              (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))) /
-              100
+            (flight.flightPoints
+              ? flight.flightPoints *
+                (100 + (await calcSeniorBonusForFlight(flight.ageOfUser)))
+              : 0) / 100
           );
 
           totalPoints += flight.flightPoints;
@@ -958,7 +1129,10 @@ async function calcSeniorBonusForFlightResult(result) {
  * @param {*} rankingType The type of ranking (e.g. overall, senior, ladies) which will be checked
  * @throws An XccupRestrictionError if the rankingType was no active in the season
  */
-function checkIfRankingWasPresent(seasonDetail, rankingType) {
+function checkIfRankingWasPresent(
+  seasonDetail: SeasonDetailAttributes,
+  rankingType: RankingTypes
+) {
   if (!seasonDetail?.activeRankings?.includes(rankingType)) {
     throw new XccupHttpError(
       NOT_FOUND,
@@ -968,3 +1142,4 @@ function checkIfRankingWasPresent(seasonDetail, rankingType) {
 }
 
 module.exports = service;
+export default service;

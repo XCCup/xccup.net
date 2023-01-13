@@ -19,7 +19,7 @@ import {
   NO_CONTENT,
 } from "../constants/http-status-constants";
 import {
-  STATE,
+  FLIGHT_STATE,
   IGC_STORE,
   UPLOAD_ENDPOINT,
   IGC_MAX_SIZE,
@@ -835,14 +835,15 @@ async function persistIgcFile(
  * @throws A XccupRestrictionError if the requirements are not meet.
  */
 async function checkIfFlightIsModifiable(
-  flightStatus: STATE,
+  flightStatus: string,
   takeoffTime?: Date,
   userId?: string
 ) {
   const daysFlightEditable = config.get("daysFlightEditable");
   // Allow flight uploads which are older than X days when not in production (Needed for testing)
   const overwriteIfInProcessAndNotProduction =
-    (flightStatus == STATE.IN_PROCESS && config.get("env") !== "production") ||
+    (flightStatus == FLIGHT_STATE.IN_PROCESS &&
+      config.get("env") !== "production") ||
     config.get("overruleActive");
 
   const flightIsYoungerThanThreshold = moment(takeoffTime)

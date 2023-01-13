@@ -4,7 +4,7 @@ import cron from "node-cron";
 import logger from "../config/logger";
 import { deleteIgcFile } from "../helper/igc-file-utils";
 import { Op } from "sequelize";
-import { STATE } from "../constants/flight-constants";
+import { FLIGHT_STATE } from "../constants/flight-constants";
 import { FlightAttributes, FlightInstance } from "../db/models/Flight";
 import db from "../db";
 import config from "../config/env-config";
@@ -25,7 +25,7 @@ async function cleanIgcStore() {
     const flightsToDelete: FlightAttributes[] = (
       await db.Flight.findAll({
         where: {
-          flightStatus: STATE.IN_PROCESS,
+          flightStatus: FLIGHT_STATE.IN_PROCESS,
           // @ts-ignore
           createdAt: {
             [Op.lte]: nowMinus1Hour,

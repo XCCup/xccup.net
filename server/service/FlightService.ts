@@ -12,7 +12,7 @@ import { isNoWorkday } from "../helper/HolidayCalculator";
 import { sleep, findKeyByValue } from "../helper/Utils";
 import { deleteIgcFile } from "../helper/igc-file-utils";
 import { COUNTRY, STATE as USER_STATE } from "../constants/user-constants";
-import { STATE } from "../constants/flight-constants";
+import { FLIGHT_STATE } from "../constants/flight-constants";
 import logger from "../config/logger";
 import config from "../config/env-config";
 import { deleteCache } from "../controller/CacheManager";
@@ -329,7 +329,7 @@ const flightService = {
       where: {
         // @ts-ignore
         userId,
-        [sequelize.Op.not]: { flightStatus: STATE.IN_PROCESS },
+        [sequelize.Op.not]: { flightStatus: FLIGHT_STATE.IN_PROCESS },
         [sequelize.Op.or]: [
           { violationAccepted: true },
           {
@@ -356,7 +356,7 @@ const flightService = {
     flight.flightStatus = await calcFlightStatus(
       flight.takeoffTime,
       flight.flightPoints,
-      flight.flightStatus == STATE.FLIGHTBOOK
+      flight.flightStatus == FLIGHT_STATE.FLIGHTBOOK
     );
 
     const result = await flight.save();
@@ -388,7 +388,7 @@ const flightService = {
   },
 
   /**
-   * Updates the flight details and triggers the result calcutation
+   * Updates the flight details and triggers the result calculation
    * if it is a new flight upload.
    */
   updateFlightDetailsAndGetResult: async ({
@@ -444,7 +444,7 @@ const flightService = {
       const flightPoints = await calcFlightPoints(flight, glider);
       flight.flightPoints = flightPoints;
 
-      if (flight.flightStatus != STATE.IN_REVIEW && flight.takeoffTime) {
+      if (flight.flightStatus != FLIGHT_STATE.IN_REVIEW && flight.takeoffTime) {
         const flightStatus = await calcFlightStatus(
           flight.takeoffTime,
           flightPoints,
@@ -512,7 +512,7 @@ const flightService = {
     if (violationResult) {
       flight.airspaceViolation = true;
       flight.violationAccepted = false;
-      flight.flightStatus = STATE.IN_REVIEW;
+      flight.flightStatus = FLIGHT_STATE.IN_REVIEW;
       flight.airspaceViolations = violationResult.airspaceViolations;
       flight.save();
     }
@@ -533,7 +533,7 @@ const flightService = {
       externalId,
       uploadEndpoint,
       uncheckedGRecord: validationResult == undefined ? true : false,
-      flightStatus: STATE.IN_PROCESS,
+      flightStatus: FLIGHT_STATE.IN_PROCESS,
     };
 
     await attachUserData(flight);
@@ -613,8 +613,8 @@ const flightService = {
     if (!result || flight.id == result.id) return;
 
     if (
-      result.flightStatus == STATE.IN_PROCESS ||
-      result.flightStatus == STATE.IN_REVIEW
+      result.flightStatus == FLIGHT_STATE.IN_PROCESS ||
+      result.flightStatus == FLIGHT_STATE.IN_REVIEW
     ) {
       logger.info(
         `FS: Will delete flight ${result.externalId} which has same takeoff site and time but is still in process state`
@@ -671,7 +671,7 @@ async function storeFixesToDB(
   });
 }
 
-function attachResultToFlightObject (flight: FlightInstance, result: OLCResult)  {
+function attachResultToFlightObject(flight: FlightInstance, result: OLCResult) {
   logger.info("FS: Will add igc result to flight " + flight.id);
 
   flight.flightDistance = +result.dist;
@@ -787,7 +787,7 @@ async function calcFlightStatus(
   flightPoints: number,
   onlyLogbook?: boolean
 ) {
-  if (!flightPoints) return STATE.IN_PROCESS;
+  if (!flightPoints) return FLIGHT_STATE.IN_PROCESS;
 
   const currentSeason = await getCurrentActive();
   const isOffSeason = !moment(takeoffTime).isBetween(
@@ -796,12 +796,14 @@ async function calcFlightStatus(
   );
 
   if (onlyLogbook || currentSeason.isPaused == true || isOffSeason)
-    return STATE.FLIGHTBOOK;
+    return FLIGHT_STATE.FLIGHTBOOK;
 
   const pointThreshold = currentSeason.pointThresholdForFlight;
 
   const flightStatus =
-    flightPoints >= pointThreshold ? STATE.IN_RANKING : STATE.NOT_IN_RANKING;
+    flightPoints >= pointThreshold
+      ? FLIGHT_STATE.IN_RANKING
+      : FLIGHT_STATE.NOT_IN_RANKING;
 
   logger.debug(`FS: Flight status set to ${flightStatus}`);
 
@@ -967,7 +969,7 @@ async function createWhereStatement({
           // Don't include unfinalized flights (e.g. glider is missing)
           glider: { [sequelize.Op.not]: null },
         },
-        { flightStatus: STATE.IN_REVIEW },
+        { flightStatus: FLIGHT_STATE.IN_REVIEW },
       ],
     };
   } else if (!includeUnchecked) {
@@ -996,7 +998,7 @@ async function createWhereStatement({
   } else {
     // @ts-ignore
     whereStatement.flightStatus = {
-      [sequelize.Op.not]: STATE.IN_PROCESS,
+      [sequelize.Op.not]: FLIGHT_STATE.IN_PROCESS,
     };
   }
   if (userId) {

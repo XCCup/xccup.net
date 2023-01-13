@@ -7,7 +7,7 @@ const seasonService = require("./SeasonService");
 const sponsorService = require("./SponsorService");
 const newsService = require("./NewsService").default;
 const flightPhotoService = require("./FlightPhotoService");
-const { STATE } = require("../constants/flight-constants");
+const { FLIGHT_STATE } = require("../constants/flight-constants");
 
 const { getCurrentYear } = require("../helper/Utils");
 
@@ -44,7 +44,7 @@ const service = {
         year: getCurrentYear(),
         limit: NUMBER_OF_FLIGHTS_OVERALL,
         sort: ["flightPoints", "DESC"],
-        status: STATE.IN_RANKING,
+        status: FLIGHT_STATE.IN_RANKING,
       }),
       todaysFlights: flightService.getTodays(),
       randomPhotos: flightPhotoService.getRandomCurrentYear(20),

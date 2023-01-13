@@ -1,7 +1,7 @@
 import { exec } from "child_process";
 import util from "util";
 import path from "path";
-import { TYPE } from "../constants/flight-constants";
+import { FLIGHT_TYPE } from "../constants/flight-constants";
 import { FlightTurnpoint } from "../db/models/Flight";
 // @ts-ignore
 import parseDMS from "parse-dms";
@@ -25,7 +25,7 @@ import { BAD_REQUEST } from "../constants/http-status-constants";
 export interface OLCResult {
   turnpoints: FlightTurnpoint[];
   dist: string;
-  type: TYPE;
+  type: FLIGHT_TYPE;
 }
 
 /**
@@ -324,19 +324,19 @@ function parseOlcData(data: string, flightTypeFactors: FlightTypeFactors) {
   logger.debug("IA: FLAT Factor: " + flatFactor);
   logger.debug("IA: FAI Factor: " + faiFactor);
 
-  let type: TYPE;
+  let type: FLIGHT_TYPE;
   let dist: string;
   let cornerStartIndex: number;
   if (faiFactor > flatFactor && faiFactor > freeFactor && faiStartIndex) {
-    type = TYPE.FAI;
+    type = FLIGHT_TYPE.FAI;
     dist = faiDistance;
     cornerStartIndex = faiStartIndex + 4;
   } else if (flatFactor > freeFactor && flatStartIndex) {
-    type = TYPE.FLAT;
+    type = FLIGHT_TYPE.FLAT;
     dist = flatDistance;
     cornerStartIndex = flatStartIndex + 4;
   } else {
-    type = TYPE.FREE;
+    type = FLIGHT_TYPE.FREE;
     dist = freeDistance;
     cornerStartIndex = freeStartIndex + 4;
   }

@@ -1,12 +1,16 @@
-export const enum STATE {
-  IN_RANKING = "In Wertung",
-  NOT_IN_RANKING = "Nicht in Wertung",
-  FLIGHTBOOK = "Flugbuch",
-  IN_PROCESS = "In Bearbeitung",
-  IN_REVIEW = "In Prüfung",
-}
+type Values<T> = T[keyof T];
 
-export const enum TYPE {
+export const FLIGHT_STATE = {
+  IN_RANKING: "In Wertung",
+  NOT_IN_RANKING: "Nicht in Wertung",
+  FLIGHTBOOK: "Flugbuch",
+  IN_PROCESS: "In Bearbeitung",
+  IN_REVIEW: "In Prüfung",
+} as const;
+
+export type FlightStateType = Values<typeof FLIGHT_STATE>[];
+
+export const enum FLIGHT_TYPE {
   FREE = "FREE",
   FLAT = "FLAT",
   FAI = "FAI",

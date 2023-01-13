@@ -4,7 +4,7 @@ import { Models } from "../../types/Models";
 interface ResultAttributes {
   season: number;
   type: string;
-  result: object; // TODO: Type this stricter
+  result: object[];
 }
 
 export interface ResultInstance

@@ -182,12 +182,5 @@ async function retrieveStats(team, year) {
 
   return stats;
 }
-// function createMemberInclude() {
-//   return {
-//     model: User,
-//     as: "members",
-//     attributes: ["firstName", "lastName", "id"],
-//   };
-// }
 
 module.exports = service;

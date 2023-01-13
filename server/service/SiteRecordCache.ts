@@ -4,40 +4,7 @@ import db from "../db";
 import { logger } from "bs-logger";
 import config from "../config/env-config";
 import { cache } from "../controller/CacheManager";
-
-// TODO: Generate from Flight tyope?
-
-interface TypeRecord {
-  user: {
-    firstName?: string;
-    lastName?: string;
-    id?: string;
-  };
-  flightId: string;
-  externalId: number;
-  takeoffTime: Date;
-  points: number;
-  distance: number;
-  glider: {
-    brand: string;
-    model: string;
-    gliderClass: {
-      key: string;
-      shortDescription: string;
-    };
-  };
-}
-
-interface SiteRecord {
-  takeoff: {
-    id: string;
-    name: string;
-    shortName: string;
-  };
-  free?: TypeRecord;
-  flat?: TypeRecord;
-  fai?: TypeRecord;
-}
+import { SiteRecord, TypeRecord } from "../types/ResultTypes";
 
 const SITE_RECORD_CACHE_KEY = "site-record-cache";
 
