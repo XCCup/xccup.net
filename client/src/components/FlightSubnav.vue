@@ -39,3 +39,8 @@ import useFlight from "@/composables/useFlight";
 import { retrieveDateOnly, dayAfter } from "../helper/utils";
 const { flight } = useFlight();
 </script>
+<style lang="scss" scoped>
+.bg-flight-subnav {
+  background-color: shade-color($primary, 20%);
+}
+</style>

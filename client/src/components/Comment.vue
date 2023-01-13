@@ -230,6 +230,12 @@ const closeReplyEditor = () => {
 };
 </script>
 <style lang="scss" scoped>
+.bg-comment-reply {
+  background-color: $primary-bg-subtle;
+  @include color-scheme(dark) {
+    background-color: $primary;
+  }
+}
 .rounded-circle {
   margin-right: 6px;
   height: 24px;

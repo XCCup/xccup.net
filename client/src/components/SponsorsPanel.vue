@@ -87,4 +87,12 @@ const regularSponsors = computed(() => {
 .filter:hover {
   filter: none;
 }
+
+.sponsor-container {
+  border: 1px solid $gray-400;
+  height: 120px;
+}
+.sponsor-container:hover {
+  border: 1px solid $primary;
+}
 </style>

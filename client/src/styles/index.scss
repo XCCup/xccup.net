@@ -82,26 +82,6 @@ a {
   white-space: pre-line;
 }
 
-.bg-comment-reply {
-  background-color: $primary-bg-subtle;
-  @include color-scheme(dark) {
-    background-color: $primary;
-  }
-}
-
-.bg-flight-subnav {
-    background-color: shade-color($primary, 20%)
-}
-
-.sponsor-container {
-  border: 1px solid $gray-400;
-  height: 120px;
-}
-.sponsor-container:hover {
-  border: 1px solid $primary;
-}
-
-
 @media (max-width: 992px) {
 }
 
