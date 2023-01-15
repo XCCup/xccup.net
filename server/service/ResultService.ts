@@ -92,10 +92,11 @@ const service = {
     clubShortName,
     clubId,
     limit,
-  }: optionsGetOverall) => {
+  }: Partial<optionsGetOverall>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     if (
+      year &&
       year < yearOfNewXccupPlatform &&
       !(
         rankingClass ||
@@ -118,6 +119,7 @@ const service = {
     }
     // Things like this would be easier to understand if they were commented.
     if (
+      year &&
       year < yearOfNewXccupPlatform &&
       gender == GENDER.FEMALE &&
       !(
@@ -175,6 +177,69 @@ const service = {
 
     const result = aggregateFlightsOverUser(resultQuery);
     const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      result,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
+
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      { NUMBER_OF_SCORED_FLIGHTS },
+      limit
+    );
+  },
+  getOverallNew: async ({
+    year,
+    rankingClass,
+    gender,
+    homeStateOfUser,
+    isSenior,
+    isWeekend,
+    isHikeAndFly,
+    siteShortName,
+    siteId,
+    siteRegion,
+    clubShortName,
+    clubId,
+    limit,
+  }: Partial<optionsGetOverall>) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const where = createDefaultWhereForFlight({ seasonDetail, isSenior });
+    if (rankingClass) {
+      const gliderClasses =
+        seasonDetail?.rankingClasses[rankingClass].gliderClasses ?? [];
+      //@ts-ignore
+      where.glider = {
+        gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
+      };
+    }
+    if (isWeekend) {
+      //@ts-ignore
+      where.isWeekend = true;
+    }
+    if (isHikeAndFly) {
+      //@ts-ignore
+      where.hikeAndFly = {
+        [sequelize.Op.gt]: 0,
+      };
+    }
+    if (homeStateOfUser) {
+      //@ts-ignore
+      where.homeStateOfUser = homeStateOfUser;
+    }
+    const resultQuery = (await queryDb({
+      where,
+      gender,
+      siteShortName,
+      siteId,
+      siteRegion,
+      clubShortName,
+      clubId,
+    })) as unknown as QueryResult[];
+
+    const result = aggregateFlightsOverUser(resultQuery);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotalsNew(
       result,
       NUMBER_OF_SCORED_FLIGHTS
     );
@@ -986,6 +1051,73 @@ function limitFlightsForUserAndCalcTotals(
   });
 }
 
+function limitFlightsForUserAndCalcTotalsNew(
+  resultArray: UserResults[],
+  maxNumberOfFlights: number
+) {
+  return resultArray.map((entry) => {
+    return {
+      ...entry,
+      flights: reduceToTopFlights(entry.flights, maxNumberOfFlights),
+      totalFlights: entry.flights.length,
+      totalDistance: sumUp(entry.flights, "flightDistance"),
+      totalPoints: sumUp(entry.flights, "flightPoints"),
+    };
+  });
+}
+
+/**
+ * Find top flights.
+ * For paragliders include at least 1 one-way flight.
+ */
+function reduceToTopFlights(
+  flights: UserResultFlight[],
+  maxNumberOfFlights: number
+) {
+  // Include (n-1) of maxNumberFlights from top
+  const topFlights = flights.slice(0, maxNumberOfFlights - 1);
+  // Check if a free flight is already in the top flights
+  // If free flight is already contained add the next flight in line
+  if (isFreeFlightIncluded(topFlights)) {
+    topFlights.push(flights[maxNumberOfFlights - 1]);
+    return topFlights;
+  }
+  // Add also next flight in line if the previous flights were all made my a hangglider
+  if (areAllFlightsMadeByHandglider(topFlights)) {
+    topFlights.push(flights[maxNumberOfFlights - 1]);
+    return topFlights;
+  }
+  // Find the next best free flight
+  const nextFreeFlight = findNextFreeFlight(flights);
+  if (nextFreeFlight) topFlights.push(nextFreeFlight);
+  return topFlights;
+}
+
+function isFreeFlightIncluded(flights: UserResultFlight[]) {
+  const found = flights.find((f) => f.flightType == FLIGHT_TYPE.FREE);
+  return found ? true : false;
+}
+
+function areAllFlightsMadeByHandglider(flights: UserResultFlight[]) {
+  const HANGGLIDER_PREFIX = "HG";
+  const found = flights.every((f) =>
+    f.glider.gliderClass.key.includes(HANGGLIDER_PREFIX)
+  );
+  return found ? true : false;
+}
+
+function findNextFreeFlight(flights: UserResultFlight[]) {
+  const found = flights.find((f) => f.flightType == FLIGHT_TYPE.FREE);
+  return found;
+}
+
+function sumUp(
+  flights: UserResultFlight[],
+  key: "flightPoints" | "flightDistance"
+) {
+  return flights.reduce((acc, cur) => acc + cur[key], 0);
+}
+
 function aggregateOverClubAndCalcTotals(
   resultOverUser: UserResultsWithTotals[]
 ) {
@@ -1085,7 +1217,7 @@ function removeMultipleEntriesForUsers(
   return results;
 }
 
-async function retrieveSeasonDetails(year: number) {
+async function retrieveSeasonDetails(year?: number) {
   const seasonDetail =
     year && year != getCurrentYear()
       ? await seasonService.getByYear(year)

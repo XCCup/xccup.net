@@ -33,40 +33,53 @@ router.get(
   ],
   async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
-    const {
-      year,
-      rankingClass,
-      gender,
-      homeStateOfUser,
-      isWeekend,
-      isHikeAndFly,
-      isSenior,
-      limit,
-      siteShortName,
-      siteId,
-      siteRegion,
-      clubShortName,
-      clubId,
-    } = req.query;
 
     try {
       const value = getCache(req);
       if (value) return res.json(value);
 
       const result = await service.getOverall({
-        year,
-        rankingClass,
-        gender,
-        homeStateOfUser,
-        isWeekend,
-        isHikeAndFly,
-        isSenior,
-        limit,
-        siteShortName,
-        siteId,
-        siteRegion,
-        clubShortName,
-        clubId,
+        ...req.query,
+      });
+
+      setCache(req, result);
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Gets the overall result
+// @route GET /results/new-overall
+
+router.get(
+  "/new-overall",
+  [
+    query("year").optional().isInt(),
+    query("limit").optional().isInt(),
+    query("isWeekend").optional().isBoolean(),
+    query("isHikeAndFly").optional().isBoolean(),
+    query("isSenior").optional().isBoolean(),
+    query("rankingClass").optional().not().isEmpty().trim().escape(),
+    query("gender").optional().not().isEmpty().trim().escape(),
+    query("homeStateOfUser").optional().not().isEmpty().trim().escape(),
+    query("siteShortName").optional().not().isEmpty().trim().escape(),
+    query("siteId").optional().isUUID(),
+    query("siteRegion").optional().not().isEmpty().trim().escape(),
+    query("clubShortName").optional().not().isEmpty().trim().escape(),
+    query("clubId").optional().isUUID(),
+  ],
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (validationHasErrors(req, res)) return;
+
+    try {
+      const value = getCache(req);
+      if (value) return res.json(value);
+
+      const result = await service.getOverallNew({
+        ...req.query,
       });
 
       setCache(req, result);
