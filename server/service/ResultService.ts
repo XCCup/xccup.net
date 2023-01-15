@@ -43,6 +43,7 @@ import {
   FlightInstanceUserInclude,
 } from "../db/models/Flight";
 import { FlyingSiteInstance } from "../db/models/FlyingSite";
+import { limitFlightsForUserAndCalcTotalsNew } from "../helper/ResultUtils";
 
 const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
@@ -1044,73 +1045,6 @@ function limitFlightsForUserAndCalcTotals(
       totalPoints: flights.reduce((acc, cur) => acc + cur.flightPoints, 0),
     };
   });
-}
-
-function limitFlightsForUserAndCalcTotalsNew(
-  resultArray: UserResults[],
-  maxNumberOfFlights: number
-) {
-  return resultArray.map((entry) => {
-    return {
-      ...entry,
-      flights: reduceToTopFlights(entry.flights, maxNumberOfFlights),
-      totalFlights: entry.flights.length,
-      totalDistance: sumUp(entry.flights, "flightDistance"),
-      totalPoints: sumUp(entry.flights, "flightPoints"),
-    };
-  });
-}
-
-/**
- * Find top flights.
- * For paragliders include at least 1 one-way flight.
- */
-function reduceToTopFlights(
-  flights: UserResultFlight[],
-  maxNumberOfFlights: number
-) {
-  // Include (n-1) of maxNumberFlights from top
-  const topFlights = flights.slice(0, maxNumberOfFlights - 1);
-  // Check if a free flight is already in the top flights
-  // If free flight is already contained add the next flight in line
-  if (isFreeFlightIncluded(topFlights)) {
-    topFlights.push(flights[maxNumberOfFlights - 1]);
-    return topFlights;
-  }
-  // Add also next flight in line if the previous flights were all made my a hangglider
-  if (areAllFlightsMadeByHandglider(topFlights)) {
-    topFlights.push(flights[maxNumberOfFlights - 1]);
-    return topFlights;
-  }
-  // Find the next best free flight
-  const nextFreeFlight = findNextFreeFlight(flights);
-  if (nextFreeFlight) topFlights.push(nextFreeFlight);
-  return topFlights;
-}
-
-function isFreeFlightIncluded(flights: UserResultFlight[]) {
-  const found = flights.find((f) => f.flightType == FLIGHT_TYPE.FREE);
-  return found ? true : false;
-}
-
-function areAllFlightsMadeByHandglider(flights: UserResultFlight[]) {
-  const HANGGLIDER_PREFIX = "HG";
-  const found = flights.every((f) =>
-    f.glider.gliderClass.key.includes(HANGGLIDER_PREFIX)
-  );
-  return found ? true : false;
-}
-
-function findNextFreeFlight(flights: UserResultFlight[]) {
-  const found = flights.find((f) => f.flightType == FLIGHT_TYPE.FREE);
-  return found;
-}
-
-function sumUp(
-  flights: UserResultFlight[],
-  key: "flightPoints" | "flightDistance"
-) {
-  return flights.reduce((acc, cur) => acc + cur[key], 0);
 }
 
 function aggregateOverClubAndCalcTotals(
