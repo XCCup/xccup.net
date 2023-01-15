@@ -970,18 +970,13 @@ function limitFlightsForUserAndCalcTotals(
   maxNumberOfFlights: number
 ) {
   return resultArray.map((entry) => {
+    const flights = entry.flights.slice(0, maxNumberOfFlights);
     return {
       ...entry,
-      flights: entry.flights.slice(0, maxNumberOfFlights),
-      totalFlights: entry.flights.length,
-      totalDistance: entry.flights.reduce(
-        (acc, cur) => acc + cur.flightDistance,
-        0
-      ),
-      totalPoints: entry.flights.reduce(
-        (acc, cur) => acc + cur.flightPoints,
-        0
-      ),
+      flights,
+      totalFlights: flights.length,
+      totalDistance: flights.reduce((acc, cur) => acc + cur.flightDistance, 0),
+      totalPoints: flights.reduce((acc, cur) => acc + cur.flightPoints, 0),
     };
   });
 }
