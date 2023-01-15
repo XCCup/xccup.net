@@ -222,6 +222,11 @@ export default {
       params,
     });
   },
+  getResultsOverall2023(params: OverallFilterParams) {
+    return apiClient.get("results/new-overall", {
+      params,
+    });
+  },
   getResultsNewcomer(params: NewcomerFilterParams) {
     return apiClient.get("results/newcomer", {
       params,
