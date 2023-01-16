@@ -20,7 +20,9 @@ export function limitFlightsForUserAndCalcTotalsNew(
 
 /**
  * Find top flights.
- * For paragliders include at least 1 one-way flight.
+ * For hangglider pilots score always top 3 flights.
+ * For paragliders allow only 2 of a kind oneway (free) or triangle (flat&fai).
+ * To work correctly it is mandatory that the flights are already sorted desc by flightPoints (normally achieved by sorting in the db query).
  */
 function reduceToTopFlights(
   flights: UserResultFlight[],
@@ -28,40 +30,37 @@ function reduceToTopFlights(
 ) {
   // Include (n-1) of maxNumberFlights from top
   const topFlights = flights.slice(0, maxNumberOfFlights - 1);
-  // Check if a free flight is already in the top flights
-  // If free flight is already contained add the next flight in line
-  if (isFreeFlightIncluded(topFlights)) {
-    addNextPossibleFlight(flights, topFlights, maxNumberOfFlights);
-    return topFlights;
-  }
-  // Add also next flight in line if the previous flights were all made my a hangglider
+  // Add next flight in line if the previous flights were all made my a hangglider
   if (areAllFlightsMadeByHandglider(topFlights)) {
-    console.log(JSON.stringify(topFlights, null, 2));
-    addNextPossibleFlight(flights, topFlights, maxNumberOfFlights);
-    console.log(JSON.stringify(topFlights, null, 2));
+    addNextPossibleFlight(flights, topFlights);
     return topFlights;
   }
-  // Find the next best free flight
-  const nextFreeFlight = findNextFreeFlight(flights);
-  if (nextFreeFlight) topFlights.push(nextFreeFlight);
+  // Add next triangle flight if only oneway flights are present
+  if (areAllFlightsOneway(topFlights)) {
+    addNextTriangleFlight(flights, topFlights);
+    return topFlights;
+  }
+  // Add next oneway flight if only triangle flights are present
+  if (areAllFlightsTriangle(topFlights)) {
+    addNextOnewayFlight(flights, topFlights);
+    return topFlights;
+  }
+
+  addNextPossibleFlight(flights, topFlights);
   return topFlights;
 }
 
 function addNextPossibleFlight(
   allFlights: UserResultFlight[],
-  topFlights: UserResultFlight[],
-  maxNumberOfFlights: number
+  topFlights: UserResultFlight[]
 ) {
-  console.log("Hi");
-
   // Add only an entry if a flight is present
-  if (allFlights[maxNumberOfFlights - 1]) {
-    console.log("Ho");
-    topFlights.push(allFlights[maxNumberOfFlights - 1]);
+  if (allFlights[topFlights.length]) {
+    topFlights.push(allFlights[topFlights.length]);
   }
 }
 
-function isFreeFlightIncluded(flights: UserResultFlight[]) {
+function isOnewayFlightIncluded(flights: UserResultFlight[]) {
   const found = flights.find((f) => f.flightType == FLIGHT_TYPE.FREE);
   return found ? true : false;
 }
@@ -73,9 +72,32 @@ function areAllFlightsMadeByHandglider(flights: UserResultFlight[]) {
   );
 }
 
-function findNextFreeFlight(flights: UserResultFlight[]) {
-  const found = flights.find((f) => f.flightType == FLIGHT_TYPE.FREE);
-  return found;
+function areAllFlightsOneway(flights: UserResultFlight[]) {
+  return flights.every((f) => f.flightType == FLIGHT_TYPE.FREE);
+}
+
+function areAllFlightsTriangle(flights: UserResultFlight[]) {
+  return flights.every(
+    (f) => f.flightType == FLIGHT_TYPE.FAI || f.flightType == FLIGHT_TYPE.FLAT
+  );
+}
+
+function addNextOnewayFlight(
+  allFlights: UserResultFlight[],
+  topFlights: UserResultFlight[]
+) {
+  const found = allFlights.find((f) => f.flightType == FLIGHT_TYPE.FREE);
+  if (found) topFlights.push(found);
+}
+
+function addNextTriangleFlight(
+  allFlights: UserResultFlight[],
+  topFlights: UserResultFlight[]
+) {
+  const found = allFlights.find(
+    (f) => f.flightType == FLIGHT_TYPE.FAI || f.flightType == FLIGHT_TYPE.FLAT
+  );
+  if (found) topFlights.push(found);
 }
 
 function sumUp(
