@@ -38,8 +38,14 @@ const service = {
       resultRankingClasses: retrieveRankingClassResults(currentSeason),
       sponsors: sponsorService.getAllActive(),
       activeNews: newsService.getActive(),
-      bestTeams: resultService.getTeam(getCurrentYear(), null, NUMBER_OF_TEAMS),
-      bestClubs: resultService.getClub(getCurrentYear(), NUMBER_OF_CLUBS),
+      bestTeams: resultService.getTeam({
+        year: getCurrentYear(),
+        limit: NUMBER_OF_TEAMS,
+      }),
+      bestClubs: resultService.getClub({
+        year: getCurrentYear(),
+        limit: NUMBER_OF_CLUBS,
+      }),
       bestFlightsOverallCurrentYear: flightService.getAll({
         year: getCurrentYear(),
         limit: NUMBER_OF_FLIGHTS_OVERALL,

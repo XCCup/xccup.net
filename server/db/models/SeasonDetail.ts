@@ -22,8 +22,20 @@ export interface SeasonDetailAttributes {
   };
 }
 
-export interface GliderClasses {
-  [key: string]: {
+type GliderClass =
+  | "AB_low"
+  | "AB_high"
+  | "C_low"
+  | "C_high"
+  | "D_low"
+  | "D_high"
+  | "Tandem"
+  | "HG_1_Turm"
+  | "HG_1_Turmlos"
+  | "HG_5_starr";
+
+export type GliderClasses = {
+  [key in GliderClass]: {
     scoringMultiplicator: {
       BASE: number;
       FREE: number;
@@ -33,7 +45,7 @@ export interface GliderClasses {
     description: string;
     shortDescription: string;
   };
-}
+};
 
 export interface RankingClasses {
   [key: string]: {
