@@ -1,12 +1,24 @@
 import { FLIGHT_TYPE } from "../constants/flight-constants";
-import { UserResultFlight, UserResults } from "../types/ResultTypes";
+import { FlightInstanceUserInclude } from "../db/models/Flight";
+import {
+  Member,
+  TeamWithMemberFlights,
+  Totals,
+  UserResultFlight,
+  UserResults,
+} from "../types/ResultTypes";
 
-export function limitFlightsForUserAndCalcTotalsNew(
+export function limitFlightsForUserAndCalcTotals(
   resultArray: UserResults[],
-  maxNumberOfFlights: number
+  maxNumberOfFlights: number,
+  useClassicMode?: boolean
 ) {
+  const limitFunction = useClassicMode
+    ? selectTopFlightsOnlyByPoints
+    : selectTopMixedFlights;
+
   return resultArray.map((entry) => {
-    const flights = reduceToTopFlights(entry.flights, maxNumberOfFlights);
+    const flights = limitFunction(entry.flights, maxNumberOfFlights);
 
     return {
       ...entry,
@@ -18,13 +30,20 @@ export function limitFlightsForUserAndCalcTotalsNew(
   });
 }
 
+function selectTopFlightsOnlyByPoints(
+  flights: UserResultFlight[],
+  maxNumberOfFlights: number
+) {
+  return flights.slice(0, maxNumberOfFlights);
+}
+
 /**
  * Find top flights.
  * For hangglider pilots score always top 3 flights.
  * For paragliders allow only 2 of a kind oneway (free) or triangle (flat&fai).
  * To work correctly it is mandatory that the flights are already sorted desc by flightPoints (normally achieved by sorting in the db query).
  */
-function reduceToTopFlights(
+function selectTopMixedFlights(
   flights: UserResultFlight[],
   maxNumberOfFlights: number
 ) {
@@ -58,11 +77,6 @@ function addNextPossibleFlight(
   if (allFlights[topFlights.length]) {
     topFlights.push(allFlights[topFlights.length]);
   }
-}
-
-function isOnewayFlightIncluded(flights: UserResultFlight[]) {
-  const found = flights.find((f) => f.flightType == FLIGHT_TYPE.FREE);
-  return found ? true : false;
 }
 
 function areAllFlightsMadeByHandglider(flights: UserResultFlight[]) {
@@ -105,4 +119,52 @@ function sumUp(
   key: "flightPoints" | "flightDistance"
 ) {
   return flights.reduce((acc, cur) => acc + cur[key], 0);
+}
+
+export function calcTotalsOverMembers(team: TeamWithMemberFlights) {
+  return {
+    ...team,
+    totalPoints: team.members.reduce(
+      (acc, member) => acc + member.totalPoints,
+      0
+    ),
+    totalDistance: team.members.reduce(
+      (acc, member) => acc + member.totalDistance,
+      0
+    ),
+  };
+}
+
+export function calcTotalsOfMember(member: Member) {
+  member.totalPoints = member.flights.reduce((acc, flight) => {
+    if (flight.isDismissed) return acc;
+    return acc + flight.flightPoints;
+  }, 0);
+  member.totalDistance = member.flights.reduce((acc, flight) => {
+    if (flight.isDismissed) return acc;
+    return acc + flight.flightDistance;
+  }, 0);
+}
+
+/**
+ * Sorts an array of result objects descending by the value of the "totalPoints" field of each entry.
+ * @param {*} resultArray The result array to be sorted.
+ */
+export function sortDescendingByTotalPoints(resultArray: Totals[]) {
+  resultArray.sort((a, b) => {
+    return b.totalPoints - a.totalPoints;
+  });
+}
+
+export function removeMultipleEntriesForUsers(
+  resultsWithMultipleEntriesForUser: FlightInstanceUserInclude[]
+) {
+  const results: FlightInstanceUserInclude[] = [];
+
+  resultsWithMultipleEntriesForUser.forEach((e) => {
+    const found = results.find((r) => r.user.id == e.user.id);
+    if (found) return;
+    results.push(e);
+  });
+  return results;
 }

@@ -51,46 +51,6 @@ router.get(
   }
 );
 
-// @desc Gets the overall result
-// @route GET /results/new-overall
-
-router.get(
-  "/new-overall",
-  [
-    query("year").optional().isInt(),
-    query("limit").optional().isInt(),
-    query("isWeekend").optional().isBoolean(),
-    query("isHikeAndFly").optional().isBoolean(),
-    query("isSenior").optional().isBoolean(),
-    query("rankingClass").optional().not().isEmpty().trim().escape(),
-    query("gender").optional().not().isEmpty().trim().escape(),
-    query("homeStateOfUser").optional().not().isEmpty().trim().escape(),
-    query("siteShortName").optional().not().isEmpty().trim().escape(),
-    query("siteId").optional().isUUID(),
-    query("siteRegion").optional().not().isEmpty().trim().escape(),
-    query("clubShortName").optional().not().isEmpty().trim().escape(),
-    query("clubId").optional().isUUID(),
-  ],
-  async (req: Request, res: Response, next: NextFunction) => {
-    if (validationHasErrors(req, res)) return;
-
-    try {
-      const value = getCache(req);
-      if (value) return res.json(value);
-
-      const result = await service.getOverallNew({
-        ...req.query,
-      });
-
-      setCache(req, result);
-
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 // @desc Gets the result for a specific club
 // @route GET /results/club/:club
 
@@ -111,10 +71,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, limit } = req.query;
-
     try {
-      const result = await service.getClub(year, limit);
+      const result = await service.getClub({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -141,10 +101,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, siteRegion, limit } = req.query;
-
     try {
-      const result = await service.getTeam(year, siteRegion, limit);
+      const result = await service.getTeam({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -171,10 +131,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, region: siteRegion, limit } = req.query;
-
     try {
-      const result = await service.getSenior(year, siteRegion, limit);
+      const result = await service.getSenior({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -202,7 +162,6 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, limit } = req.query;
     const isoCode = req.params.isoCode;
 
     try {
@@ -221,7 +180,9 @@ router.get(
           );
       }
 
-      const result = await resultFunction(year, limit);
+      const result = await resultFunction({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -247,10 +208,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, siteRegion } = req.query;
-
     try {
-      const result = await service.getEarlyBird(year, siteRegion);
+      const result = await service.getEarlyBird({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -276,10 +237,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, siteRegion } = req.query;
-
     try {
-      const result = await service.getLateBird(year, siteRegion);
+      const result = await service.getLateBird({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -306,10 +267,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, siteRegion, limit } = req.query;
-
     try {
-      const result = await service.getNewcomer(year, siteRegion, limit);
+      const result = await service.getNewcomer({
+        ...req.query,
+      });
 
       setCache(req, result);
 

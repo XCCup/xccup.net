@@ -16,10 +16,7 @@ import {
 import moment from "moment";
 import { XccupHttpError } from "../helper/ErrorHandler";
 import { NOT_FOUND } from "../constants/http-status-constants";
-import {
-  RankingClasses,
-  SeasonDetailAttributes,
-} from "../db/models/SeasonDetail";
+import { SeasonDetailAttributes } from "../db/models/SeasonDetail";
 
 import type { RankingTypes } from "../db/models/SeasonDetail";
 import type {
@@ -31,25 +28,24 @@ import type {
   SiteRecordsUncombined,
   FlightSitesWithRecord,
   FlightSiteRecord,
-  TeamResults,
   Totals,
   Team,
   TeamWithMemberFlights,
-  Member,
 } from "../types/ResultTypes";
+import { FlightInstanceUserInclude } from "../db/models/Flight";
 import {
-  FlightAttributes,
-  FlightInstance,
-  FlightInstanceUserInclude,
-} from "../db/models/Flight";
-import { FlyingSiteInstance } from "../db/models/FlyingSite";
-import { limitFlightsForUserAndCalcTotalsNew } from "../helper/ResultUtils";
+  calcTotalsOfMember,
+  calcTotalsOverMembers,
+  limitFlightsForUserAndCalcTotals,
+  removeMultipleEntriesForUsers,
+  sortDescendingByTotalPoints,
+} from "../helper/ResultUtils";
 
 const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
 const cacheNonNewcomer: string[] = [];
 
-const yearOfNewXccupPlatform = 2022;
+const CURRENT_SCORING_VERSION_YEAR = 2022;
 
 const RANKINGS = {
   OVERALL: "overall",
@@ -62,7 +58,7 @@ const RANKINGS = {
   RP: "RP",
 };
 
-interface optionsGetOverall {
+interface OptionsGetOverall extends OptionsYearLimitRegion {
   year: number;
   rankingClass: string;
   gender: string;
@@ -72,10 +68,14 @@ interface optionsGetOverall {
   isHikeAndFly: boolean;
   siteShortName: string;
   siteId: string;
-  siteRegion: string;
   clubShortName: string;
   clubId: string;
   limit: number;
+}
+interface OptionsYearLimitRegion {
+  year: number;
+  limit: number;
+  siteRegion: string;
 }
 
 const service = {
@@ -93,54 +93,50 @@ const service = {
     clubShortName,
     clubId,
     limit,
-  }: Partial<optionsGetOverall>) => {
+  }: Partial<OptionsGetOverall>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (
-      year &&
-      year < yearOfNewXccupPlatform &&
-      !(
-        rankingClass ||
-        gender ||
-        homeStateOfUser ||
-        isSenior ||
-        isWeekend ||
-        isHikeAndFly ||
-        siteId ||
-        clubId
-      )
-    ) {
-      checkIfRankingWasPresent(seasonDetail, "overall");
+    const constantsForResult = { NUMBER_OF_SCORED_FLIGHTS };
 
-      const oldResult = await findOldResult(year, RANKINGS.OVERALL);
-      if (oldResult)
-        return addConstantInformationToResult(oldResult, {
-          NUMBER_OF_SCORED_FLIGHTS,
-        });
-    }
-    // Things like this would be easier to understand if they were commented.
-    if (
-      year &&
-      year < yearOfNewXccupPlatform &&
-      gender == GENDER.FEMALE &&
-      !(
-        rankingClass ||
-        homeStateOfUser ||
-        isSenior ||
-        isWeekend ||
-        isHikeAndFly ||
-        siteId ||
+    // Search for old overall results
+    const oldRes = await findOldResults(
+      year,
+      limit,
+      "overall",
+      seasonDetail,
+      constantsForResult,
+      nonShouldBeDefined(
+        rankingClass,
+        gender,
+        homeStateOfUser,
+        isSenior,
+        isWeekend,
+        isHikeAndFly,
+        siteId,
         clubId
       )
-    ) {
-      checkIfRankingWasPresent(seasonDetail, "ladies");
-      const oldResult = await findOldResult(year, RANKINGS.LADIES);
-      if (oldResult)
-        return addConstantInformationToResult(
-          oldResult,
-          { NUMBER_OF_SCORED_FLIGHTS },
-          limit
-        );
+    );
+    if (oldRes) return oldRes;
+
+    // Search for old overall ladies results
+    if (gender == GENDER.FEMALE) {
+      const oldRes = await findOldResults(
+        year,
+        limit,
+        "ladies",
+        seasonDetail,
+        constantsForResult,
+        nonShouldBeDefined(
+          rankingClass ||
+            homeStateOfUser ||
+            isSenior ||
+            isWeekend ||
+            isHikeAndFly ||
+            siteId ||
+            clubId
+        )
+      );
+      if (oldRes) return oldRes;
     }
 
     const where = createDefaultWhereForFlight({ seasonDetail, isSenior });
@@ -189,83 +185,20 @@ const service = {
       limit
     );
   },
-  getOverallNew: async ({
-    year,
-    rankingClass,
-    gender,
-    homeStateOfUser,
-    isSenior,
-    isWeekend,
-    isHikeAndFly,
-    siteShortName,
-    siteId,
-    siteRegion,
-    clubShortName,
-    clubId,
-    limit,
-  }: Partial<optionsGetOverall>) => {
+
+  getClub: async ({ year, limit }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const where = createDefaultWhereForFlight({ seasonDetail, isSenior });
-    if (rankingClass) {
-      const gliderClasses =
-        seasonDetail?.rankingClasses[rankingClass].gliderClasses ?? [];
-      //@ts-ignore
-      where.glider = {
-        gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
-      };
-    }
-    if (isWeekend) {
-      //@ts-ignore
-      where.isWeekend = true;
-    }
-    if (isHikeAndFly) {
-      //@ts-ignore
-      where.hikeAndFly = {
-        [sequelize.Op.gt]: 0,
-      };
-    }
-    if (homeStateOfUser) {
-      //@ts-ignore
-      where.homeStateOfUser = homeStateOfUser;
-    }
-    const resultQuery = (await queryDb({
-      where,
-      gender,
-      siteShortName,
-      siteId,
-      siteRegion,
-      clubShortName,
-      clubId,
-    })) as unknown as QueryResult[];
+    const constantsForResult = { NUMBER_OF_SCORED_FLIGHTS };
 
-    const result = aggregateFlightsOverUser(resultQuery);
-    const resultsWithTotals = limitFlightsForUserAndCalcTotalsNew(
-      result,
-      NUMBER_OF_SCORED_FLIGHTS
+    const oldRes = await findOldResults(
+      year,
+      limit,
+      "club",
+      seasonDetail,
+      constantsForResult
     );
-    sortDescendingByTotalPoints(resultsWithTotals);
-
-    return addConstantInformationToResult(
-      resultsWithTotals,
-      { NUMBER_OF_SCORED_FLIGHTS },
-      limit
-    );
-  },
-
-  getClub: async (year: number, limit: number) => {
-    const seasonDetail = await retrieveSeasonDetails(year);
-
-    if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, "club");
-      const oldResult = await findOldResult(year, RANKINGS.CLUB);
-      if (oldResult)
-        return addConstantInformationToResult(
-          oldResult,
-          { NUMBER_OF_SCORED_FLIGHTS },
-          limit
-        );
-    }
+    if (oldRes) return oldRes;
 
     const where = createDefaultWhereForFlight({ seasonDetail });
     const resultQuery = (await queryDb({ where })) as unknown as QueryResult[];
@@ -285,29 +218,33 @@ const service = {
 
     return addConstantInformationToResult(
       resultOverClub,
-      { NUMBER_OF_SCORED_FLIGHTS },
+      constantsForResult,
       limit
     );
   },
 
-  getTeam: async (year: number, siteRegion: string, limit: number) => {
+  getTeam: async ({
+    year,
+    limit,
+    siteRegion,
+  }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, "team");
-      const oldResult = await findOldResult(year, RANKINGS.TEAM);
-      if (oldResult)
-        return addConstantInformationToResult(
-          oldResult,
-          {
-            NUMBER_OF_SCORED_FLIGHTS,
-            TEAM_DISMISSES,
-            TEAM_SIZE,
-            REMARKS: seasonDetail?.misc?.textMessages?.resultsTeam,
-          },
-          limit
-        );
-    }
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS,
+      TEAM_DISMISSES,
+      TEAM_SIZE,
+      REMARKS: seasonDetail?.misc?.textMessages?.resultsTeam,
+    };
+
+    const oldRes = await findOldResults(
+      year,
+      limit,
+      "team",
+      seasonDetail,
+      constantsForResult
+    );
+    if (oldRes) return oldRes;
 
     const teamsOfSeason = (await teamService.getAll({
       year,
@@ -342,34 +279,33 @@ const service = {
 
     return addConstantInformationToResult(
       teamResults,
-      {
-        NUMBER_OF_SCORED_FLIGHTS,
-        TEAM_DISMISSES,
-        TEAM_SIZE,
-        REMARKS: seasonDetail?.misc?.textMessages?.resultsTeams,
-      },
+      constantsForResult,
       limit
     );
   },
 
-  getSenior: async (year: number, siteRegion: string, limit: number) => {
+  getSenior: async ({
+    year,
+    limit,
+    siteRegion,
+  }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, "seniors");
-      const oldResult = await findOldResult(year, RANKINGS.SENIORS);
-      if (oldResult)
-        return addConstantInformationToResult(
-          oldResult,
-          {
-            NUMBER_OF_SCORED_FLIGHTS,
-            SENIOR_START_AGE: seasonDetail?.seniorStartAge,
-            SENIOR_BONUS_PER_AGE: seasonDetail?.seniorBonusPerAge,
-            REMARKS: seasonDetail?.misc?.textMessages?.resultsSeniors,
-          },
-          limit
-        );
-    }
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS,
+      SENIOR_START_AGE: seasonDetail?.seniorStartAge,
+      SENIOR_BONUS_PER_AGE: seasonDetail?.seniorBonusPerAge,
+      REMARKS: seasonDetail?.misc?.textMessages?.resultsSeniors,
+    };
+
+    const oldRes = await findOldResults(
+      year,
+      limit,
+      "seniors",
+      seasonDetail,
+      constantsForResult
+    );
+    if (oldRes) return oldRes;
 
     const where = createDefaultWhereForFlight({ seasonDetail, isSenior: true });
     const resultQuery = (await queryDb({
@@ -385,16 +321,7 @@ const service = {
     await addSeniorBonusForFlightResult(resultsWithTotals);
     sortDescendingByTotalPoints(resultsWithTotals);
 
-    return addConstantInformationToResult(
-      result,
-      {
-        NUMBER_OF_SCORED_FLIGHTS,
-        SENIOR_START_AGE: seasonDetail?.seniorStartAge,
-        SENIOR_BONUS_PER_AGE: seasonDetail?.seniorBonusPerAge,
-        REMARKS: seasonDetail?.misc?.textMessages?.resultsSeniors,
-      },
-      limit
-    );
+    return addConstantInformationToResult(result, constantsForResult, limit);
   },
 
   /**
@@ -404,22 +331,22 @@ const service = {
    * @param {*} limit The limit of results to retrieve
    * @returns The results of the ranking  of the provided year
    */
-  getRhineland: async (year: number, limit: number) => {
+  getRhineland: async ({ year, limit }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, "RP");
-      const oldResult = await findOldResult(year, RANKINGS.RP);
-      if (oldResult)
-        return addConstantInformationToResult(
-          oldResult,
-          {
-            NUMBER_OF_SCORED_FLIGHTS,
-            REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
-          },
-          limit
-        );
-    }
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS,
+      REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
+    };
+
+    const oldRes = await findOldResults(
+      year,
+      limit,
+      "RP",
+      seasonDetail,
+      constantsForResult
+    );
+    if (oldRes) return oldRes;
 
     const where = createDefaultWhereForFlight({ seasonDetail });
     //@ts-ignore
@@ -437,14 +364,7 @@ const service = {
     );
     sortDescendingByTotalPoints(resultsWithTotals);
 
-    return addConstantInformationToResult(
-      result,
-      {
-        NUMBER_OF_SCORED_FLIGHTS,
-        REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
-      },
-      limit
-    );
+    return addConstantInformationToResult(result, constantsForResult, limit);
   },
 
   /**
@@ -454,24 +374,24 @@ const service = {
    * @param {*} limit The limit of results to retrieve
    * @returns The results of the ranking of the provided year
    */
-  getLuxembourg: async (year: number, limit: number) => {
+  getLuxembourg: async ({ year, limit }: Partial<OptionsYearLimitRegion>) => {
     const NUMBER_OF_SCORED_FLIGHTS_LUX = 6;
 
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, "LUX");
-      const oldResult = await findOldResult(year, RANKINGS.LUX);
-      if (oldResult)
-        return addConstantInformationToResult(
-          oldResult,
-          {
-            NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_LUX,
-            REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
-          },
-          limit
-        );
-    }
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_LUX,
+      REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
+    };
+
+    const oldRes = await findOldResults(
+      year,
+      limit,
+      "LUX",
+      seasonDetail,
+      constantsForResult
+    );
+    if (oldRes) return oldRes;
 
     const where = createDefaultWhereForFlight({
       seasonDetail,
@@ -488,21 +408,18 @@ const service = {
     const result = aggregateFlightsOverUser(resultQuery);
     const resultsWithTotals = limitFlightsForUserAndCalcTotals(
       result,
-      NUMBER_OF_SCORED_FLIGHTS_LUX
+      NUMBER_OF_SCORED_FLIGHTS_LUX,
+      true
     );
     sortDescendingByTotalPoints(resultsWithTotals);
 
-    return addConstantInformationToResult(
-      result,
-      {
-        NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_LUX,
-        REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
-      },
-      limit
-    );
+    return addConstantInformationToResult(result, constantsForResult, limit);
   },
 
-  getEarlyBird: async (year: number, siteRegion: string) => {
+  getEarlyBird: async ({
+    year,
+    siteRegion,
+  }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const startDate = seasonDetail?.startDate;
@@ -526,7 +443,10 @@ const service = {
     );
   },
 
-  getLateBird: async (year: number, siteRegion: string) => {
+  getLateBird: async ({
+    year,
+    siteRegion,
+  }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const endDate = seasonDetail?.endDate;
@@ -550,27 +470,33 @@ const service = {
     );
   },
 
-  getNewcomer: async (year: number, siteRegion: string, limit: number) => {
+  getNewcomer: async ({
+    year,
+    limit,
+    siteRegion,
+  }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    if (year < yearOfNewXccupPlatform) {
-      checkIfRankingWasPresent(seasonDetail, "newcomer");
-      const oldResult = await findOldResult(year, RANKINGS.NEWCOMER);
-      if (oldResult)
-        return addConstantInformationToResult(
-          oldResult,
-          {
-            NUMBER_OF_SCORED_FLIGHTS,
-            REMARKS: seasonDetail?.misc?.textMessages?.resultsNewcomer,
-          },
-          limit
-        );
-    }
-
-    const where = createDefaultWhereForFlight({ seasonDetail });
     const rankingClass =
       seasonDetail?.rankingClasses[NEWCOMER_MAX_RANKING_CLASS];
     const gliderClasses = rankingClass.gliderClasses ?? [];
+
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS,
+      NEWCOMER_MAX_RANKING_CLASS: rankingClass.description,
+      REMARKS: seasonDetail?.misc?.textMessages?.resultsNewcomer,
+    };
+
+    const oldRes = await findOldResults(
+      year,
+      limit,
+      "newcomer",
+      seasonDetail,
+      constantsForResult
+    );
+    if (oldRes) return oldRes;
+
+    const where = createDefaultWhereForFlight({ seasonDetail });
     //@ts-ignore
     where.glider = {
       gliderClass: { key: { [sequelize.Op.in]: gliderClasses } },
@@ -592,11 +518,7 @@ const service = {
 
     return addConstantInformationToResult(
       resultsNewcomer,
-      {
-        NUMBER_OF_SCORED_FLIGHTS,
-        NEWCOMER_MAX_RANKING_CLASS: rankingClass.description,
-        REMARKS: seasonDetail?.misc?.textMessages?.resultsNewcomer,
-      },
+      constantsForResult,
       limit
     );
   },
@@ -615,16 +537,6 @@ const service = {
     return mergeRecordsByTakeoffs({ free, flat, fai });
   },
 };
-
-async function findOldResult(season: number, type: string) {
-  const result = await Result.findOne({
-    where: {
-      season,
-      type,
-    },
-  });
-  return result ? result.result : undefined;
-}
 
 function markFlightsToDismiss(team: TeamWithMemberFlights) {
   let allFlights: UserResultFlight[] = [];
@@ -647,34 +559,9 @@ function markFlightsToDismiss(team: TeamWithMemberFlights) {
   }
 }
 
-function calcTotalsOverMembers(team: TeamWithMemberFlights) {
-  return {
-    ...team,
-    totalPoints: team.members.reduce(
-      (acc, member) => acc + member.totalPoints,
-      0
-    ),
-    totalDistance: team.members.reduce(
-      (acc, member) => acc + member.totalDistance,
-      0
-    ),
-  };
-}
-
-function calcTotalsOfMember(member: Member) {
-  member.totalPoints = member.flights.reduce((acc, flight) => {
-    if (flight.isDismissed) return acc;
-    return acc + flight.flightPoints;
-  }, 0);
-  member.totalDistance = member.flights.reduce((acc, flight) => {
-    if (flight.isDismissed) return acc;
-    return acc + flight.flightDistance;
-  }, 0);
-}
-
 function addConstantInformationToResult(
   result: any[],
-  constants: {},
+  constants?: { [key: string]: any },
   limit?: number
 ) {
   return {
@@ -683,7 +570,7 @@ function addConstantInformationToResult(
   };
 }
 
-async function removeNonNewcomer(resultAllUsers: UserResults[], year: number) {
+async function removeNonNewcomer(resultAllUsers: UserResults[], year?: number) {
   const resultsNewcomer: UserResults[] = [];
 
   const searchYear = year ? year : getCurrentYear();
@@ -753,7 +640,7 @@ function createEntryOfRecord(siteRecord: FlightSiteRecord) {
 async function attachFlightsToTeamMembers(
   team: Team,
   seasonDetail: SeasonDetailAttributes,
-  siteRegion: string
+  siteRegion?: string
 ) {
   return await Promise.all(
     team.members.map(async (member) => {
@@ -1031,22 +918,6 @@ function createIncludeStatementSite({
   return siteInclude;
 }
 
-function limitFlightsForUserAndCalcTotals(
-  resultArray: UserResults[],
-  maxNumberOfFlights: number
-) {
-  return resultArray.map((entry) => {
-    const flights = entry.flights.slice(0, maxNumberOfFlights);
-    return {
-      ...entry,
-      flights,
-      totalFlights: flights.length,
-      totalDistance: flights.reduce((acc, cur) => acc + cur.flightDistance, 0),
-      totalPoints: flights.reduce((acc, cur) => acc + cur.flightPoints, 0),
-    };
-  });
-}
-
 function aggregateOverClubAndCalcTotals(
   resultOverUser: UserResultsWithTotals[]
 ) {
@@ -1123,29 +994,6 @@ function aggregateFlightsOverUser(resultQuery: QueryResult[]) {
   return result;
 }
 
-/**
- * Sorts an array of result objects descending by the value of the "totalPoints" field of each entry.
- * @param {*} resultArray The result array to be sorted.
- */
-function sortDescendingByTotalPoints(resultArray: Totals[]) {
-  resultArray.sort((a, b) => {
-    return b.totalPoints - a.totalPoints;
-  });
-}
-
-function removeMultipleEntriesForUsers(
-  resultsWithMultipleEntriesForUser: FlightInstanceUserInclude[]
-) {
-  const results: FlightInstanceUserInclude[] = [];
-
-  resultsWithMultipleEntriesForUser.forEach((e) => {
-    const found = results.find((r) => r.user.id == e.user.id);
-    if (found) return;
-    results.push(e);
-  });
-  return results;
-}
-
 async function retrieveSeasonDetails(year?: number) {
   const seasonDetail =
     year && year != getCurrentYear()
@@ -1200,6 +1048,48 @@ function checkIfRankingWasPresent(
       `The ranking ${rankingType} was not present within the season ${seasonDetail?.year}`
     );
   }
+}
+
+/**
+ * Checks if a result for the presented year and rankingType is stored in the db.
+ * If found returns the result otherwise undefined.
+ *
+ * This is important because the scoring algorithm could change over time and would manipulated old results.
+ */
+async function findOldResults(
+  year?: number,
+  limit?: number,
+  rankingType?: RankingTypes,
+  seasonDetail?: SeasonDetailAttributes,
+  constantsForResult?: { [key: string]: any },
+  skipSearch?: boolean
+) {
+  if (!year || !rankingType || !seasonDetail || skipSearch) return undefined;
+
+  if (year < CURRENT_SCORING_VERSION_YEAR) {
+    checkIfRankingWasPresent(seasonDetail, rankingType);
+    const oldResult = await findOldResult(year, rankingType);
+    if (oldResult)
+      return addConstantInformationToResult(
+        oldResult,
+        constantsForResult,
+        limit
+      );
+  }
+}
+
+async function findOldResult(season: number, type: string) {
+  const result = await Result.findOne({
+    where: {
+      season,
+      type,
+    },
+  });
+  return result ? result.result : undefined;
+}
+
+function nonShouldBeDefined(...params: any[]) {
+  return params.every((p) => !p);
 }
 
 module.exports = service;

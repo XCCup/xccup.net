@@ -1,10 +1,10 @@
-import { limitFlightsForUserAndCalcTotalsNew } from "../helper/ResultUtils";
+import { limitFlightsForUserAndCalcTotals } from "../helper/ResultUtils";
 import { UserResultFlight, UserResults } from "../types/ResultTypes";
 
 test("Pilot has 5 FAI --> Top 2 count", () => {
   const flights = createTestEntry(createTestFlights(1, 2, "FAI", "GS", 5));
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(2);
   expect(topFlights[0].totalPoints).toBe(2);
@@ -14,7 +14,7 @@ test("Pilot has 5 FAI --> Top 2 count", () => {
 test("Pilot has 2 FAI --> Top 2 count", () => {
   const flights = createTestEntry(createTestFlights(1, 2, "FAI", "GS", 2));
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(2);
   expect(topFlights[0].totalPoints).toBe(2);
@@ -24,7 +24,7 @@ test("Pilot has 2 FAI --> Top 2 count", () => {
 test("Pilot has 5 FAI flights but is hangglider --> Top 3 count", () => {
   const flights = createTestEntry(createTestFlights(1, 2, "FAI", "HG", 5));
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(3);
   expect(topFlights[0].totalPoints).toBe(3);
@@ -38,7 +38,7 @@ test("Pilot has 1 free, 1 fai, 1 flat --> All flights count", () => {
     createTestFlights(3, 6, "FREE", "GS", 1)
   );
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(3);
   expect(topFlights[0].totalPoints).toBe(6);
@@ -52,7 +52,7 @@ test("Pilot has top 3 fai, 2 free, 1 flat (has more points than free) --> Top 2 
     createTestFlights(20, 10, "FLAT", "GS", 1)
   );
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(3);
   expect(topFlights[0].totalPoints).toBe(65);
@@ -62,7 +62,7 @@ test("Pilot has top 3 fai, 2 free, 1 flat (has more points than free) --> Top 2 
 test("Pilot has only 1 fai flight --> The 1 flight should cont", () => {
   const flights = createTestEntry(createTestFlights(5, 13, "FAI", "GS", 1));
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(1);
   expect(topFlights[0].totalPoints).toBe(5);
@@ -76,7 +76,7 @@ test("Pilot has 1 free, 1 fai, 1 flat --> All flights count", () => {
     createTestFlights(3, 3, "FLAT", "GS", 1)
   );
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(3);
   expect(topFlights[0].totalPoints).toBe(23);
@@ -89,7 +89,7 @@ test("Pilot has 3 free flights --> Top 2 count", () => {
     createTestFlights(10, 3, "FREE", "GS", 1)
   );
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(2);
   expect(topFlights[0].totalPoints).toBe(30);
@@ -102,7 +102,7 @@ test("Pilot has 3 free flights (HG) --> Top 3 count", () => {
     createTestFlights(10, 3, "FREE", "HG", 1)
   );
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(3);
   expect(topFlights[0].totalPoints).toBe(40);
@@ -118,7 +118,7 @@ test("Pilot has 4 top free flights, 2 fai, 2 flat (fai top) --> Top 2 free and t
 
   console.log(JSON.stringify(flights, null, 2));
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(3);
   expect(topFlights[0].totalPoints).toBe(130);
@@ -132,7 +132,7 @@ test("Pilot has 4 top free flights, 2 fai, 2 flat (flat top) --> Top 2 free and 
     createTestFlights(30, 15, "FAI", "GS", 1)
   );
 
-  const topFlights = limitFlightsForUserAndCalcTotalsNew(flights, 3);
+  const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
 
   expect(topFlights[0].flights.length).toBe(3);
   expect(topFlights[0].totalPoints).toBe(160);

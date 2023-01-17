@@ -15,7 +15,11 @@ export interface SeasonDetailAttributes {
   seniorStartAge: number;
   seniorBonusPerAge: number;
   activeRankings: RankingTypes[];
-  misc?: object; // TODO: Type this stricter
+  misc?: {
+    textMessages?: {
+      [key: string]: string;
+    };
+  };
 }
 
 export interface GliderClasses {
