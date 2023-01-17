@@ -49,12 +49,6 @@ export const Routes = [
     component: () => import("../views/FlightsAll.vue"),
   },
   {
-    path: "/:year/einzelwertung-test/",
-    name: "ResultsOverall2023",
-    beforeEnter: validateRouteParamYear,
-    component: () => import("../views/ResultsOverall2023.vue"),
-  },
-  {
     path: "/:year/einzelwertung/",
     name: "ResultsOverall",
     beforeEnter: validateRouteParamYear,
