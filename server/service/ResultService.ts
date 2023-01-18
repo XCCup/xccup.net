@@ -28,7 +28,6 @@ import type {
   SiteRecordsUncombined,
   FlightSitesWithRecord,
   FlightSiteRecord,
-  Totals,
   Team,
   TeamWithMemberFlights,
 } from "../types/ResultTypes";
@@ -45,7 +44,7 @@ const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
 const cacheNonNewcomer: string[] = [];
 
-const CURRENT_SCORING_VERSION_YEAR = 2022;
+const CURRENT_SCORING_VERSION_YEAR = 2023;
 
 const RANKINGS = {
   OVERALL: "overall",
