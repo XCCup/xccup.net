@@ -1,9 +1,8 @@
-// @import "../../node_modules/bootstrap/scss/functions";
+$blue: #08556d ;
+$secondary: #efefef;
 
-$primary: #08556d;
-$primary-alt: #08556d;
-$table-bg-scale: 0;
 $form-check-input-width: 1.1em;
 
+$table-bg-scale: 0;
 $table-striped-bg-factor: 0.05;
-$table-striped-bg: rgba($primary, $table-striped-bg-factor);
+$table-striped-bg: rgba($blue, $table-striped-bg-factor); 

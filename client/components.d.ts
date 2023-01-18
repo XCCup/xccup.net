@@ -33,6 +33,7 @@ declare module '@vue/runtime-core' {
     BaseSpinner: typeof import('./src/components/BaseSpinner.vue')['default']
     BaseTextarea: typeof import('./src/components/BaseTextarea.vue')['default']
     ClubMap: typeof import('./src/components/ClubMap.vue')['default']
+    ColorModeToggle: typeof import('./src/components/ColorModeToggle.vue')['default']
     Comment: typeof import('./src/components/Comment.vue')['default']
     CommentEditor: typeof import('./src/components/CommentEditor.vue')['default']
     CommentInlineEditor: typeof import('./src/components/CommentInlineEditor.vue')['default']

@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="mapContainer"
-    class="mb-3"
-    :class="userPrefersDark ? 'darken-map' : ''"
-  ></div>
+  <div id="mapContainer" class="mb-3 darken-map"></div>
 </template>
 
 <script setup>
@@ -23,11 +19,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-// Find a way to make this reactive
-const userPrefersDark = ref(
-  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-);
 
 const createPopupContent = (club) => {
   const lines = [];

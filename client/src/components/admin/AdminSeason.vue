@@ -108,7 +108,7 @@
 <script setup lang="ts">
 import type { SeasonDetail } from "@/types/SeasonDetail";
 import { format } from "date-fns";
-import { cloneDeep } from "lodash";
+import { cloneDeep } from "lodash-es";
 import { computed, ref, watch } from "vue";
 import useSwal from "../../composables/useSwal";
 import ApiService from "../../services/ApiService";

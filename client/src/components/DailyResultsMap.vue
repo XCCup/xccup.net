@@ -1,5 +1,5 @@
 <template>
-  <div id="mapContainer" :class="userPrefersDark ? 'darken-map' : ''"></div>
+  <div id="mapContainer" class="darken-map"></div>
 </template>
 
 <script setup>
@@ -22,11 +22,6 @@ const props = defineProps({
 });
 const map = ref(null);
 const trackLines = ref([]);
-
-// Find a way to make this reactive
-const userPrefersDark = ref(
-  window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
-);
 
 onMounted(() => {
   // Setup leaflet
