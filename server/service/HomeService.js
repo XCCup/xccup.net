@@ -7,7 +7,7 @@ const seasonService = require("./SeasonService");
 const sponsorService = require("./SponsorService");
 const newsService = require("./NewsService").default;
 const flightPhotoService = require("./FlightPhotoService");
-const { STATE } = require("../constants/flight-constants");
+const { FLIGHT_STATE } = require("../constants/flight-constants");
 
 const { getCurrentYear } = require("../helper/Utils");
 
@@ -38,13 +38,19 @@ const service = {
       resultRankingClasses: retrieveRankingClassResults(currentSeason),
       sponsors: sponsorService.getAllActive(),
       activeNews: newsService.getActive(),
-      bestTeams: resultService.getTeam(getCurrentYear(), null, NUMBER_OF_TEAMS),
-      bestClubs: resultService.getClub(getCurrentYear(), NUMBER_OF_CLUBS),
+      bestTeams: resultService.getTeam({
+        year: getCurrentYear(),
+        limit: NUMBER_OF_TEAMS,
+      }),
+      bestClubs: resultService.getClub({
+        year: getCurrentYear(),
+        limit: NUMBER_OF_CLUBS,
+      }),
       bestFlightsOverallCurrentYear: flightService.getAll({
         year: getCurrentYear(),
         limit: NUMBER_OF_FLIGHTS_OVERALL,
         sort: ["flightPoints", "DESC"],
-        status: STATE.IN_RANKING,
+        status: FLIGHT_STATE.IN_RANKING,
       }),
       todaysFlights: flightService.getTodays(),
       randomPhotos: flightPhotoService.getRandomCurrentYear(20),

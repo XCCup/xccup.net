@@ -4,7 +4,6 @@ import logger from "../config/logger";
 import { XccupHttpError } from "../helper/ErrorHandler";
 import { getCache, setCache } from "../controller/CacheManager";
 import {
-  SeasonDetailInstance,
   SeasonDetailAttributes,
   SeasonDetailCreationAttributes,
 } from "../db/models/SeasonDetail";

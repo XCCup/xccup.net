@@ -3,8 +3,8 @@ const router = express.Router();
 const { getCurrentActive } = require("../service/SeasonService");
 const { getAllBrands } = require("../service/FlightService");
 const {
-  STATE: flightStates,
-  TYPE: types,
+  FLIGHT_STATE: flightStates,
+  FLIGHT_TYPE: types,
   REGIONS,
 } = require("../constants/flight-constants");
 const {

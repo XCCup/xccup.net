@@ -1,6 +1,6 @@
 import cron from "node-cron";
 import logger from "../config/logger";
-import { STATE } from "../constants/flight-constants";
+import { FLIGHT_STATE } from "../constants/flight-constants";
 import flightService from "../service/FlightService";
 import moment from "moment";
 import sendMail from "../config/email";
@@ -27,7 +27,7 @@ async function informAboutDailyWinner() {
 
     const result = (
       await flightService.getAll({
-        status: STATE.IN_RANKING,
+        status: FLIGHT_STATE.IN_RANKING,
         startDate: startOfToday.toDate(),
         endDate: endOfToday.toDate(),
         sort: ["flightPoints", "DESC"],

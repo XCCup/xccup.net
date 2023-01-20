@@ -1,5 +1,10 @@
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
-import { STATE, TYPE, UPLOAD_ENDPOINT } from "../../constants/flight-constants";
+import {
+  FLIGHT_STATE,
+  FLIGHT_TYPE,
+  UPLOAD_ENDPOINT,
+  FlightStateType,
+} from "../../constants/flight-constants";
 import { FlightFixesAttributes } from "../../types/FlightFixes";
 import { FlightStats } from "../../types/FlightStats";
 import { Glider } from "../../types/Glider";
@@ -19,8 +24,8 @@ export interface FlightAttributes {
   flightDistanceFlat?: number;
   flightDistanceFAI?: number;
   flightMetarData?: string[];
-  flightType?: TYPE;
-  flightStatus: STATE;
+  flightType?: FLIGHT_TYPE;
+  flightStatus: string;
   flightTurnpoints?: FlightTurnpoint[];
   airtime?: number;
   takeoffTime?: Date;
@@ -129,7 +134,7 @@ export function initFlight(sequelize: Sequelize): Models["Flight"] {
     },
     flightStatus: {
       type: DataTypes.STRING,
-      defaultValue: STATE.IN_PROCESS,
+      defaultValue: FLIGHT_STATE.IN_PROCESS,
     },
     flightTurnpoints: {
       type: DataTypes.JSON,

@@ -9,13 +9,50 @@ export interface SeasonDetailAttributes {
   isPaused: boolean;
   pointThresholdForFlight: number;
   numberOfFlightsForShirt: number;
-  gliderClasses: object; // TODO: Type this stricter
+  gliderClasses: GliderClasses;
   flightTypeFactors: FlightTypeFactors;
-  rankingClasses: object; // TODO: Type this stricter
+  rankingClasses: RankingClasses;
   seniorStartAge: number;
   seniorBonusPerAge: number;
   activeRankings: RankingTypes[];
-  misc?: object; // TODO: Type this stricter
+  misc?: {
+    textMessages?: {
+      [key: string]: string;
+    };
+  };
+}
+
+type GliderClass =
+  | "AB_low"
+  | "AB_high"
+  | "C_low"
+  | "C_high"
+  | "D_low"
+  | "D_high"
+  | "Tandem"
+  | "HG_1_Turm"
+  | "HG_1_Turmlos"
+  | "HG_5_starr";
+
+export type GliderClasses = {
+  [key in GliderClass]: {
+    scoringMultiplicator: {
+      BASE: number;
+      FREE: number;
+      FLAT: number;
+      FAI: number;
+    };
+    description: string;
+    shortDescription: string;
+  };
+};
+
+export interface RankingClasses {
+  [key: string]: {
+    gliderClasses: string[];
+    description: string;
+    shortDescription: string;
+  };
 }
 
 export interface FlightTypeFactors {
@@ -23,7 +60,8 @@ export interface FlightTypeFactors {
   FLAT: number;
   FREE: number;
 }
-type RankingTypes =
+
+export type RankingTypes =
   | "overall"
   | "ladies"
   | "club"

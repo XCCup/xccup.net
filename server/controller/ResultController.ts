@@ -33,40 +33,13 @@ router.get(
   ],
   async (req: Request, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
-    const {
-      year,
-      rankingClass,
-      gender,
-      homeStateOfUser,
-      isWeekend,
-      isHikeAndFly,
-      isSenior,
-      limit,
-      siteShortName,
-      siteId,
-      siteRegion,
-      clubShortName,
-      clubId,
-    } = req.query;
 
     try {
       const value = getCache(req);
       if (value) return res.json(value);
 
       const result = await service.getOverall({
-        year,
-        rankingClass,
-        gender,
-        homeStateOfUser,
-        isWeekend,
-        isHikeAndFly,
-        isSenior,
-        limit,
-        siteShortName,
-        siteId,
-        siteRegion,
-        clubShortName,
-        clubId,
+        ...req.query,
       });
 
       setCache(req, result);
@@ -98,10 +71,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, limit } = req.query;
-
     try {
-      const result = await service.getClub(year, limit);
+      const result = await service.getClub({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -128,10 +101,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, siteRegion, limit } = req.query;
-
     try {
-      const result = await service.getTeam(year, siteRegion, limit);
+      const result = await service.getTeam({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -158,10 +131,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, region: siteRegion, limit } = req.query;
-
     try {
-      const result = await service.getSenior(year, siteRegion, limit);
+      const result = await service.getSenior({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -189,7 +162,6 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, limit } = req.query;
     const isoCode = req.params.isoCode;
 
     try {
@@ -208,7 +180,9 @@ router.get(
           );
       }
 
-      const result = await resultFunction(year, limit);
+      const result = await resultFunction({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -234,10 +208,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, siteRegion } = req.query;
-
     try {
-      const result = await service.getEarlyBird(year, siteRegion);
+      const result = await service.getEarlyBird({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -263,10 +237,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, siteRegion } = req.query;
-
     try {
-      const result = await service.getLateBird(year, siteRegion);
+      const result = await service.getLateBird({
+        ...req.query,
+      });
 
       setCache(req, result);
 
@@ -293,10 +267,10 @@ router.get(
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const { year, siteRegion, limit } = req.query;
-
     try {
-      const result = await service.getNewcomer(year, siteRegion, limit);
+      const result = await service.getNewcomer({
+        ...req.query,
+      });
 
       setCache(req, result);
 

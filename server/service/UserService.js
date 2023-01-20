@@ -6,7 +6,7 @@ const flightService = require("./FlightService");
 const mailService = require("./MailService");
 const ProfilePicture = require("../db")["ProfilePicture"];
 const { ROLE } = require("../constants/user-constants");
-const { TYPE, STATE } = require("../constants/flight-constants");
+const { FLIGHT_TYPE, FLIGHT_STATE } = require("../constants/flight-constants");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
 const { Op } = require("sequelize");
@@ -46,9 +46,18 @@ const userService = {
       const usersWithRecords = await Promise.all(
         users.rows.map(async (user) => {
           const userJson = user.toJSON();
-          const bestFreeFlight = findFlightRecordOfType(userJson.id, TYPE.FREE);
-          const bestFlatFlight = findFlightRecordOfType(userJson.id, TYPE.FLAT);
-          const bestFaiFlight = findFlightRecordOfType(userJson.id, TYPE.FAI);
+          const bestFreeFlight = findFlightRecordOfType(
+            userJson.id,
+            FLIGHT_TYPE.FREE
+          );
+          const bestFlatFlight = findFlightRecordOfType(
+            userJson.id,
+            FLIGHT_TYPE.FLAT
+          );
+          const bestFaiFlight = findFlightRecordOfType(
+            userJson.id,
+            FLIGHT_TYPE.FAI
+          );
           const sumDistance = flightService.sumFlightColumnByUser(
             "flightDistance",
             userJson.id
@@ -127,7 +136,7 @@ const userService = {
   getTShirtList: async (year) => {
     const flightsOfYear = await Flight.findAll({
       where: {
-        flightStatus: STATE.IN_RANKING,
+        flightStatus: FLIGHT_STATE.IN_RANKING,
         andOp: sequelize.where(
           sequelize.fn("date_part", "year", sequelize.col("takeoffTime")),
           year
@@ -210,9 +219,9 @@ const userService = {
         createBasicInclude(Team, "team"),
       ],
     });
-    const bestFreeFlight = findFlightRecordOfType(id, TYPE.FREE);
-    const bestFlatFlight = findFlightRecordOfType(id, TYPE.FLAT);
-    const bestFaiFlight = findFlightRecordOfType(id, TYPE.FAI);
+    const bestFreeFlight = findFlightRecordOfType(id, FLIGHT_TYPE.FREE);
+    const bestFlatFlight = findFlightRecordOfType(id, FLIGHT_TYPE.FLAT);
+    const bestFaiFlight = findFlightRecordOfType(id, FLIGHT_TYPE.FAI);
     const results = await Promise.all([
       userQuery,
       bestFreeFlight,
