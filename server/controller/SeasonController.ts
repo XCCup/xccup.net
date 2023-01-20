@@ -8,6 +8,7 @@ import {
   validationHasErrors,
   checkIsBoolean,
   checkFieldNotEmpty,
+  checkParamIsInt,
 } from "./Validation";
 
 const router = express.Router();
@@ -85,6 +86,26 @@ router.post(
 
     try {
       await service.create(req.body);
+      res.sendStatus(OK);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Stores predefined ranking results of a season to the db
+// @route GET /seasons/storeResults/
+// @access Only admin
+
+router.get(
+  "/storeResults/",
+  // checkParamIsInt("year"),
+  requesterMustBeAdmin,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    try {
+      await service.storeOldResults();
       res.sendStatus(OK);
     } catch (error) {
       next(error);
