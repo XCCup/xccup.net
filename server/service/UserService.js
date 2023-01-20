@@ -260,14 +260,14 @@ const userService = {
       where: { id, token },
     });
 
-    // Return empty object, otherwise destructering doesn't work
+    // Return empty object, otherwise destructuring doesn't work
     if (!user) return {};
 
     logger.info("US: Will create a new password for " + user.email);
 
     if (user.role == ROLE.INACTIVE) {
       logger.info(
-        "US: The user was inactive. The user will now be considerd as active"
+        "US: The user was inactive. The user will now be considered as active"
       );
       user.role = ROLE.NONE;
     }
@@ -287,7 +287,7 @@ const userService = {
       },
     });
 
-    // Return empty object, otherwise destructering doesn't work
+    // Return empty object, otherwise destructuring doesn't work
     if (!user) return {};
 
     logger.debug("US: Will create a resetPassword for " + email);

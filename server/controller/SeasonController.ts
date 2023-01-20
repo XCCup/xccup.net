@@ -8,6 +8,7 @@ import {
   validationHasErrors,
   checkIsBoolean,
   checkFieldNotEmpty,
+  checkParamIsInt,
 } from "./Validation";
 
 const router = express.Router();
