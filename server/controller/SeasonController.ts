@@ -93,26 +93,6 @@ router.post(
   }
 );
 
-// @desc Stores predefined ranking results of a season to the db
-// @route GET /seasons/storeResults/
-// @access Only admin
-
-router.get(
-  "/storeResults/",
-  // checkParamIsInt("year"),
-  requesterMustBeAdmin,
-  async (req, res, next) => {
-    if (validationHasErrors(req, res)) return;
-
-    try {
-      await service.storeOldResults();
-      res.sendStatus(OK);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 // @desc Updates a season
 // @route PUT /season/
 // @access Only admin
