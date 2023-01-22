@@ -233,7 +233,7 @@ router.put(
     try {
       const media = await service.getById(id);
 
-      if (await requesterIsNotOwner(req, res, media.userId)) return;
+      if (requesterIsNotOwner(req, res, media.userId)) return;
 
       media.description = req.body.description;
       await service.update(media);
@@ -262,7 +262,7 @@ router.delete(
 
       if (!media) return res.sendStatus(NOT_FOUND);
 
-      if (await requesterIsNotOwner(req, res, media.userId)) return;
+      if (requesterIsNotOwner(req, res, media.userId)) return;
 
       await Promise.all([service.delete(id), deleteImages(media)]);
       res.sendStatus(OK);
