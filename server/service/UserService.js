@@ -2,6 +2,8 @@ const User = require("../db")["User"];
 const Club = require("../db")["Club"];
 const Team = require("../db")["Team"];
 const Flight = require("../db")["Flight"];
+const FlightPhoto = require("../db")["FlightPhoto"];
+const FlightComment = require("../db")["FlightComment"];
 const flightService = require("./FlightService");
 const mailService = require("./MailService");
 const ProfilePicture = require("../db")["ProfilePicture"];
@@ -316,9 +318,55 @@ const userService = {
     return result;
   },
   delete: async (id) => {
-    return User.destroy({
-      where: { id },
+    // Delete personal user data and set role to deleted
+    await User.update(
+      {
+        role: ROLE.DELETED,
+        firstName: "Gelöschter",
+        lastName: "Benutzer",
+        email: "",
+        address: {},
+        gliders: [],
+        tshirtSize: "",
+        gender: "",
+        birthday: new Date(),
+      },
+      {
+        where: { id },
+      }
+    );
+    // If season is ongoing delete all flights from current season
+
+    // Remove all content from comments but keep entry to show other users that there was a dialogue
+    FlightComment.update(
+      { message: "Gelöschter Inhalt" },
+      { where: { userId: id } }
+    );
+
+    // Remove all pictures from user
+    const userPhotos = await FlightPhoto.findAll({
+      where: { userId: id },
     });
+    const photoPaths = userPhotos.map((p) => p.path);
+    await FlightPhoto.destroy({
+      where: { userId: id },
+    });
+
+    const userPictures = await ProfilePicture.findAll({
+      where: { userId: id },
+    });
+    const picturePaths = userPictures.map((f) => f.igcPath);
+    await ProfilePicture.destroy({
+      where: { userId: id },
+    });
+
+    // Remove all flight reports
+    const userFlights = await Flight.findAll({ where: { userId: id } });
+    const igcPaths = userFlights.map((f) => f.igcPath);
+    await Flight.update({ report: "", igcPath: "" }, { where: { userId: id } });
+
+    //Delete IGC and picture files from disk
+    deleteFiles([...photoPaths, ...picturePaths, ...igcPaths]);
   },
   save: async (user) => {
     user.token = generateRandomString();
@@ -514,6 +562,20 @@ async function findFlightRecordOfType(id, flightType) {
       minimumData: true,
     })
   ).rows;
+}
+
+function deleteFiles(paths) {
+  const fs = require("fs");
+
+  paths.forEach((path) => {
+    if (fs.existsSync(path)) {
+      fs.unlink(path, (err) => {
+        if (err) {
+          logger.error(err);
+        }
+      });
+    }
+  });
 }
 
 module.exports = userService;

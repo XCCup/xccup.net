@@ -78,6 +78,19 @@
             >
               Meine Flüge
             </button>
+            <button
+              id="nav-profil-deactivate-tab"
+              class="nav-link"
+              data-bs-toggle="tab"
+              data-bs-target="#nav-profil-deactivate"
+              type="button"
+              role="tab"
+              aria-controls="nav-profil-deactivate"
+              aria-selected="false"
+              data-cy="my-profil-deactivate-tab"
+            >
+              Profil deaktivieren
+            </button>
           </div>
         </nav>
         <!-- Tab content -->
@@ -116,6 +129,14 @@
           >
             <UserProfileMyFlights />
           </div>
+          <div
+            id="nav-profil-deactivate"
+            class="tab-pane fade"
+            role="tabpanel"
+            aria-labelledby="nav-profil-deactivate-tab"
+          >
+            <UserProfileDeactivation />
+          </div>
         </div>
       </div>
     </div>
@@ -130,6 +151,7 @@ import { Tab } from "bootstrap";
 import { createUserPictureUrl } from "../helper/profilePictureHelper";
 import { Modal } from "bootstrap";
 import { useRouter } from "vue-router";
+import UserProfileDeactivation from "@/components/UserProfileDeactivation.vue";
 
 setWindowName("Profil");
 

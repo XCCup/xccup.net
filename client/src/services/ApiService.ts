@@ -127,6 +127,12 @@ export default {
   updateUserProfile(userProfile: UserData) {
     return apiClient.put("users/", userProfile);
   },
+  deleteProfil() {
+    return apiClient.delete("users/");
+  },
+  deactivateProfil() {
+    return apiClient.put("users/deactivate/");
+  },
   getGliders(userId?: string) {
     return userId
       ? apiClient.get("users/gliders/get/" + userId)
