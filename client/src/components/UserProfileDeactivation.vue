@@ -68,7 +68,7 @@ const onDeactivate = async (deleteProfil: boolean = false) => {
     showSpinner.value = true;
 
     const call = deleteProfil
-      ? ApiService.deactivateProfil
+      ? ApiService.deleteProfil
       : ApiService.deactivateProfil;
 
     call();

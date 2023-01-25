@@ -123,11 +123,7 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true, // Constrain on DB
-        validate: {
-          // Validation will be performed before any sql interaction happens
-          notEmpty: true, // No empty string allowed
-        },
+        unique: true,
       },
       rankingNumber: {
         type: DataTypes.INTEGER,
