@@ -3,7 +3,11 @@
  * that uses reactive local storage
  */
 
-import type { AxiosInstance, AxiosRequestConfig } from "axios";
+import type {
+  AxiosInstance,
+  AxiosRequestConfig,
+  InternalAxiosRequestConfig,
+} from "axios";
 import jwtDecode from "jwt-decode";
 import { useStorage } from "@vueuse/core";
 import { computed } from "vue";
@@ -251,7 +255,9 @@ export default () => {
       headerPrefix = "Bearer ",
       requestRefresh,
     }: IAuthTokenInterceptorConfig) =>
-    async (requestConfig: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+    async (
+      requestConfig: InternalAxiosRequestConfig
+    ): Promise<InternalAxiosRequestConfig> => {
       // We need refresh token to do any authenticated requests
       if (!getRefreshToken.value) return requestConfig;
 
