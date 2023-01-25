@@ -268,7 +268,6 @@ export default () => {
         })
           .then((token) => {
             if (requestConfig.headers) {
-              // @ts-ignore TODO: Evaluate
               requestConfig.headers[header] = `${headerPrefix}${token}`;
             }
             return requestConfig;
@@ -293,7 +292,6 @@ export default () => {
 
       // add token to headers
       if (accessToken && requestConfig.headers)
-        // @ts-ignore TODO: Evaluate
         requestConfig.headers[header] = `${headerPrefix}${accessToken}`;
       return requestConfig;
     };
