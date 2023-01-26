@@ -18,7 +18,11 @@
         reaktivieren.
       </p>
     </div>
-    <button class="btn btn-danger" @click="onDeactivate(false)">
+    <button
+      class="btn btn-danger"
+      data-cy="userDeactivateButton"
+      @click="onDeactivate(false)"
+    >
       Deaktivieren
     </button>
     <hr />
@@ -37,7 +41,13 @@
       </p>
       <p>Eine Wiederherstellung deines Profils ist nicht mehr möglich.</p>
     </div>
-    <button class="btn btn-danger" @click="onDeactivate(true)">Löschen</button>
+    <button
+      class="btn btn-danger"
+      data-cy="userDeleteButton"
+      @click="onDeactivate(true)"
+    >
+      Löschen
+    </button>
   </div>
   <BaseModal
     :modal-title="modalTitle"
