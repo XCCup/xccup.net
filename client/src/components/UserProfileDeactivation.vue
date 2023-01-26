@@ -20,8 +20,6 @@
     </div>
     <button class="btn btn-danger" @click="onDeactivate(false)">
       Deaktivieren
-      <BaseSpinner v-if="showSpinner" />
-      <i v-if="showSuccessIndicator" class="bi bi-check-circle"></i>
     </button>
     <hr />
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -39,40 +37,69 @@
       </p>
       <p>Eine Wiederherstellung deines Profils ist nicht mehr möglich.</p>
     </div>
-    <button class="btn btn-danger" @click="onDeactivate(true)">
-      Löschen
-      <BaseSpinner v-if="showSpinner" />
-      <i v-if="showSuccessIndicator" class="bi bi-check-circle"></i>
-    </button>
+    <button class="btn btn-danger" @click="onDeactivate(true)">Löschen</button>
   </div>
+  <BaseModal
+    :modal-title="modalTitle"
+    :modal-body="modalBody"
+    :confirm-button-text="modalTitle"
+    modal-id="confirmUserDeactivationModal"
+    :confirm-action="onConfirm"
+    :is-dangerous-action="true"
+    :show-spinner="showSpinner"
+    error-message=""
+  />
 </template>
 <script setup lang="ts">
 import ApiService from "@/services/ApiService";
-import { ref } from "vue";
-import BaseSpinner from "./BaseSpinner.vue";
+import { ref, onMounted } from "vue";
 import useSwal from "../composables/useSwal";
 import { GENERIC_ERROR } from "@/common/Constants";
 import useAuth from "../composables/useAuth";
 import { useRouter } from "vue-router";
+import { Modal } from "bootstrap";
 
 const { logout } = useAuth();
 const { showSuccessToast, showFailedToast } = useSwal();
 const router = useRouter();
 
+const modalTitle = ref("");
+const modalBody = ref("");
+const deleteProfil = ref(false);
+
 // Page state
 const showSpinner = ref(false);
-const showSuccessIndicator = ref(false);
 
-const onDeactivate = async (deleteProfil: boolean = false) => {
+// Modals
+const confirmModal = ref<Modal>();
+onMounted(() => {
+  const el = document.getElementById("confirmUserDeactivationModal");
+  if (el) confirmModal.value = new Modal(el);
+});
+
+const onDeactivate = async (shouldDelete: boolean = false) => {
+  deleteProfil.value = shouldDelete;
+  if (shouldDelete) {
+    modalTitle.value = "Profil löschen";
+    modalBody.value =
+      "Bist Du dir wirklich sicher dein Profil zu löschen? Deine Daten gehen unwiderruflich verloren.";
+  } else {
+    modalTitle.value = "Profil deaktivieren";
+    modalBody.value =
+      "Bist Du dir wirklich sicher dein Profil zu deaktivieren? Dein Profil kann auf Anfrage von den Admins wieder reaktiviert werden.";
+  }
+  confirmModal.value?.show();
+};
+
+const onConfirm = async () => {
   try {
     showSpinner.value = true;
 
-    const call = deleteProfil
+    const call = deleteProfil.value
       ? ApiService.deleteProfil
       : ApiService.deactivateProfil;
 
-    call();
-
+    await call();
     router.push({
       name: "Home",
     });
@@ -82,6 +109,7 @@ const onDeactivate = async (deleteProfil: boolean = false) => {
     console.error(error);
     showFailedToast(GENERIC_ERROR);
   } finally {
+    confirmModal.value?.hide();
     showSpinner.value = false;
   }
 };
