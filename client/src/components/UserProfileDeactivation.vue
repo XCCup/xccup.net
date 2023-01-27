@@ -28,9 +28,8 @@
     <div>
       <p>Du kannst dein Profil auch komplett löschen.</p>
       Kommentare, Fotos oder IGC-Dateien werden unwiederbringlich gelöscht. Zur
-      Wahrung der vergangenen Wertungen bleiben deine Flüge erhalten. Dein Name
-      wird auf die Initialen gekürzt. Flüge aus der laufenden Saison werden
-      gelöscht.
+      Wahrung der vergangenen Wertungen bleiben deine Flüge erhalten. Flüge aus
+      der laufenden Saison werden gelöscht.
       <p>Eine Wiederherstellung deines Profils ist nicht mehr möglich.</p>
     </div>
     <button
