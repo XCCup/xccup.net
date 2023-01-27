@@ -5,14 +5,10 @@
     </div>
     <div>
       <p>Nachfolgend hast Du die Möglichkeit dein Profil zu deaktivieren.</p>
-      <p>
-        D.h. du erhältst keinerlei Benachrichtigung mehr von dieser Plattform.
-        Du kannst dich auch nicht mehr einloggen.
-      </p>
-      <p>
-        Deine Flüge, Kommentare, Fotos oder sonstigen öffentlichen Beiträge auf
-        dieser Plattform bleiben erhalten.
-      </p>
+
+      Du erhältst dann keinerlei Benachrichtigung mehr von dieser Plattform und
+      kannst dich auch nicht mehr einloggen. Deine Flüge, Kommentare, Fotos oder
+      sonstigen öffentlichen Beiträge auf dieser Plattform bleiben erhalten.
       <p>
         Wenn du uns eine Nachricht schreibst, können wir dein Profil wieder
         reaktivieren.
@@ -30,15 +26,11 @@
       <h4 class="text-right">Profil löschen</h4>
     </div>
     <div>
-      <p>Nachfolgend hast Du die Möglichkeit dein Profil zu löschen.</p>
-      <p>
-        Kommentare, Fotos oder IGC-Dateien werden unwiederbringlich gelöscht.
-      </p>
-      <p>
-        Zur Wahrung der vergangenen Rankings bleiben deine Flüge erhalten. Dein
-        Name wird auf die Initialen gekürzt. Flüge aus der laufenden Saison
-        werden gelöscht.
-      </p>
+      <p>Du kannst dein Profil auch komplett löschen.</p>
+      Kommentare, Fotos oder IGC-Dateien werden unwiederbringlich gelöscht. Zur
+      Wahrung der vergangenen Wertungen bleiben deine Flüge erhalten. Dein Name
+      wird auf die Initialen gekürzt. Flüge aus der laufenden Saison werden
+      gelöscht.
       <p>Eine Wiederherstellung deines Profils ist nicht mehr möglich.</p>
     </div>
     <button
@@ -92,7 +84,7 @@ const onDeactivate = async (shouldDelete: boolean = false) => {
   if (shouldDelete) {
     modalTitle.value = "Profil löschen";
     modalBody.value =
-      "Bist Du dir wirklich sicher dein Profil zu löschen? Deine Daten gehen unwiderruflich verloren.";
+      "Bist Du dir wirklich sicher dein Profil zu löschen? Deine Daten gehen unwiederbringlich verloren.";
   } else {
     modalTitle.value = "Profil deaktivieren";
     modalBody.value =
