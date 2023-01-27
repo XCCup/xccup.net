@@ -153,7 +153,7 @@ describe("check users page", () => {
       .filter(`:contains("${expectedName}")`);
   });
 
-  it.only("delete user and remove personal information", () => {
+  it("delete user and remove personal information", () => {
     const userToDelete = "Leo Altenwerth";
     const expectedName = "Gelöschter Benutzer";
     const flightWithPhotosOfUser = 2;
