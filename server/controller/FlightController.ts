@@ -407,6 +407,10 @@ router.get(
       const flight = await FlightService.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
 
+      if (!flight.igcPath) {
+        throw new XccupRestrictionError("No IGC file saved for this flight");
+      }
+
       // TODO: Skip the checks and only recalculate?
       const { airspaceViolation } = await runChecksStoreFixes(
         flight,
