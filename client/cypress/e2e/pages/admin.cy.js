@@ -236,7 +236,7 @@ describe("check admin page", () => {
     cy.get("[data-cy=currentClubTable").find("td").contains(expectedWebsite);
   });
 
-  it.only("remove club from current season -> flight upload for members not possible", () => {
+  it("remove club from current season -> flight upload for members not possible", () => {
     cy.intercept("POST", "/api/flights").as("postFlight");
 
     cy.get("#nav-clubs-tab").click();
