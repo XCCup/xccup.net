@@ -118,7 +118,7 @@ router.get("/names", async (req, res, next) => {
 });
 
 // @desc Logs a user in by his credentials
-// @route GET /users/login
+// @route POST /users/login
 
 router.post(
   "/login",
@@ -147,7 +147,7 @@ router.post(
 );
 
 // @desc Refreshes an user access token if it has expired
-// @route GET /users/token
+// @route POST /users/token
 
 router.post("/token", async (req, res, next) => {
   const token = req.body.token;
@@ -164,7 +164,7 @@ router.post("/token", async (req, res, next) => {
 });
 
 // @desc Logs a user out
-// @route GET /users/logout
+// @route POST /users/logout
 
 router.post("/logout", async (req, res, next) => {
   const token = req.body.token;
