@@ -2,6 +2,9 @@ const User = require("../db")["User"];
 const Club = require("../db")["Club"];
 const Team = require("../db")["Team"];
 const Flight = require("../db")["Flight"];
+const SeasonDetail = require("../db")["SeasonDetail"];
+const FlightPhoto = require("../db")["FlightPhoto"];
+const FlightComment = require("../db")["FlightComment"];
 const flightService = require("./FlightService");
 const mailService = require("./MailService");
 const ProfilePicture = require("../db")["ProfilePicture"];
@@ -99,6 +102,7 @@ const userService = {
      */
     return users.rows.map((v) => v.toJSON());
   },
+
   getAllNames: async () => {
     const users = await User.findAll({
       where: {
@@ -113,6 +117,7 @@ const userService = {
     return users;
     // return users.map((user) => user.fullName);
   },
+
   getById: async (id) => {
     return await User.findByPk(id, {
       attributes: {
@@ -128,11 +133,13 @@ const userService = {
       ],
     });
   },
+
   getGlidersById: async (id) => {
     return await User.findByPk(id, {
       attributes: ["gliders", "defaultGlider"],
     });
   },
+
   getTShirtList: async (year) => {
     const flightsOfYear = await Flight.findAll({
       where: {
@@ -176,6 +183,7 @@ const userService = {
 
     return usersWithEnoughFlightsJSON;
   },
+
   /**
    * Retrieves e-mail-addresses of active users. Does not return e-mail-addresses of developer accounts.
    * @param {boolean} includeAll If set to true all e-mail addresses will be retrieved. Otherwise only the e-mail-addresses of users which subscribed to the newsletter will be retrieved.
@@ -198,6 +206,7 @@ const userService = {
     });
     return result.map((e) => e.email);
   },
+
   getByIdPublic: async (id) => {
     const userQuery = User.findOne({
       where: { id },
@@ -232,6 +241,7 @@ const userService = {
     userJson.records = [results[1], results[2], results[3]];
     return userJson;
   },
+
   activateUser: async (id, token) => {
     const user = await User.findOne({
       where: { id, token },
@@ -244,6 +254,7 @@ const userService = {
     await user.save();
     return user;
   },
+
   confirmMailChange: async (id, token, email) => {
     const user = await User.findOne({
       where: { id, token },
@@ -255,6 +266,7 @@ const userService = {
     user.token = "";
     return await user.save();
   },
+
   renewPassword: async (id, token) => {
     const user = await User.findOne({
       where: { id, token },
@@ -278,6 +290,7 @@ const userService = {
 
     return { updatedUser, newPassword };
   },
+
   requestNewPassword: async (email) => {
     const user = await User.findOne({
       where: {
@@ -297,6 +310,7 @@ const userService = {
 
     return { updatedUser, token };
   },
+
   count: async () => {
     return User.count({
       where: {
@@ -306,25 +320,89 @@ const userService = {
       },
     });
   },
+
   isAdmin: async (id) => {
     const user = await userService.getById(id);
     return user?.role == ROLE.ADMIN;
   },
+
   isModerator: async (id) => {
     const user = await userService.getById(id);
     const result = user?.role == ROLE.ADMIN || user?.role == ROLE.MODERATOR;
     return result;
   },
+
   delete: async (id) => {
-    return User.destroy({
-      where: { id },
+    // Delete personal user data and set role to deleted
+    await User.update(
+      {
+        role: ROLE.DELETED,
+        firstName: "Gelöschter",
+        lastName: "Benutzer",
+        // Set a random string because E-Mail has a unique constrain within DB
+        email: uuidv4(),
+        address: {},
+        gliders: [],
+        tshirtSize: "",
+        gender: "",
+        birthday: new Date(),
+      },
+      {
+        where: { id },
+      }
+    );
+    // If season is ongoing delete all flights from current season
+    const now = new Date();
+    const season = await SeasonDetail.findOne({
+      where: { year: now.getFullYear() },
     });
+    if (moment(now).isBetween(season.startDate, season.endDate)) {
+      await Flight.destroy({
+        where: {
+          takeoffTime: { [Op.gte]: season.startDate },
+        },
+      });
+    }
+
+    // Remove all content from comments but keep entry to show other users that there was a dialogue
+    FlightComment.update(
+      { message: "Gelöschter Inhalt" },
+      { where: { userId: id } }
+    );
+
+    // Remove all photos from user
+    const userPhotos = await FlightPhoto.findAll({
+      where: { userId: id },
+    });
+    const photoPaths = userPhotos.map((p) => p.path);
+    FlightPhoto.destroy({
+      where: { userId: id },
+    });
+
+    // Remove all photos from user
+    const userPictures = await ProfilePicture.findAll({
+      where: { userId: id },
+    });
+    const picturePaths = userPictures.map((f) => f.igcPath);
+    ProfilePicture.destroy({
+      where: { userId: id },
+    });
+
+    // Remove all flight reports
+    const userFlights = await Flight.findAll({ where: { userId: id } });
+    const igcPaths = userFlights.map((f) => f.igcPath);
+    Flight.update({ report: "", igcPath: "" }, { where: { userId: id } });
+
+    //Delete IGC and picture files from disk
+    deleteFiles([...photoPaths, ...picturePaths, ...igcPaths]);
   },
+
   save: async (user) => {
     user.token = generateRandomString();
     user.hashPassword = true;
     return User.create(user);
   },
+
   update: async (user) => {
     await checkForClubChange(user);
     checkForMailChange(user);
@@ -332,6 +410,7 @@ const userService = {
 
     return user.save();
   },
+
   validate: async (email, password) => {
     const user = await User.findOne({
       where: {
@@ -351,6 +430,7 @@ const userService = {
     logger.warn(`US: The password for ${user.id} is not valid`);
     return null;
   },
+
   addGlider: async (userId, glider) => {
     glider.id = uuidv4();
 
@@ -370,6 +450,7 @@ const userService = {
       gliders: updatedUser.gliders,
     };
   },
+
   removeGlider: async (userId, gliderId) => {
     const user = await User.findByPk(userId, {
       attributes: ["id", "gliders", "defaultGlider"],
@@ -391,6 +472,7 @@ const userService = {
       gliders: updatedUser.gliders,
     };
   },
+
   setDefaultGlider: async (userId, gliderId) => {
     const user = await User.findByPk(userId, {
       attributes: ["id", "gliders", "defaultGlider"],
@@ -443,7 +525,7 @@ function createBasicInclude(model, as, id) {
 function createUserWhereStatement(userIds) {
   const where = {
     role: {
-      [Op.not]: ROLE.INACTIVE,
+      [Op.notIn]: [ROLE.INACTIVE, ROLE.DELETED, ROLE.DEVELOPER],
     },
   };
 
@@ -514,6 +596,20 @@ async function findFlightRecordOfType(id, flightType) {
       minimumData: true,
     })
   ).rows;
+}
+
+function deleteFiles(paths) {
+  const fs = require("fs");
+
+  paths.forEach((path) => {
+    if (fs.existsSync(path)) {
+      fs.unlink(path, (err) => {
+        if (err) {
+          logger.error(err);
+        }
+      });
+    }
+  });
 }
 
 module.exports = userService;

@@ -238,7 +238,12 @@ function extractOnlyDefinedFieldsFromFix(fix: BRecord) {
 }
 
 function readIgcFile(path: string) {
-  return fs.readFileSync(path.toString(), "utf8");
+  try {
+    return fs.readFileSync(path.toString(), "utf8");
+  } catch (error) {
+    const errorMessage = "Path to IGC File not valid";
+    throw new XccupHttpError(BAD_REQUEST, errorMessage, errorMessage);
+  }
 }
 
 /**

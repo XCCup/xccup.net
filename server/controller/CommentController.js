@@ -84,7 +84,7 @@ router.put(
       const commentId = req.params.id;
       const comment = await service.getById(commentId);
 
-      if (await requesterIsNotOwner(req, res, comment.userId)) return;
+      if (requesterIsNotOwner(req, res, comment.userId)) return;
 
       comment.message = req.body.message;
       const result = await service.update(comment);
@@ -108,7 +108,7 @@ router.delete("/:id", requesterMustBeLoggedIn, async (req, res, next) => {
 
     if (!comment) return res.sendStatus(NOT_FOUND);
 
-    if (await requesterIsNotOwner(req, res, comment.userId)) return;
+    if (requesterIsNotOwner(req, res, comment.userId)) return;
 
     const numberOfDestroyedRows = await service.delete(commentId);
     res.json(numberOfDestroyedRows);

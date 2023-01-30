@@ -2,9 +2,11 @@ describe("Check user profile", () => {
   before(() => {
     cy.seedDb();
   });
+
   beforeEach(() => {
     cy.visit("/profil");
   });
+
   it("Visit profile as guest", () => {
     cy.get("h3").should("have.text", `Login`);
   });
@@ -13,7 +15,7 @@ describe("Check user profile", () => {
     cy.loginNormalUser();
     cy.visit("/profil");
 
-    cy.get("h4", {
+    cy.get("h4:visible", {
       timeout: 10000,
     }).should("have.text", `Profil`);
 
@@ -59,7 +61,7 @@ describe("Check user profile", () => {
     cy.loginNormalUser();
     cy.visit("/profil");
 
-    cy.get("h4", {
+    cy.get("h4:visible", {
       timeout: 10000,
     }).should("have.text", `Profil`);
 
@@ -99,7 +101,7 @@ describe("Check user profile", () => {
 
     // Check if all edits are correct
 
-    cy.get("h4").should("have.text", `Profil`);
+    cy.get("h4:visible").should("have.text", `Profil`);
 
     cy.get("#firstName").should("have.value", expectedFirstName);
     cy.get("#lastName").should("have.value", expectedLastName);
@@ -139,7 +141,7 @@ describe("Check user profile", () => {
 
     cy.visit("/profil");
 
-    cy.get("h4", {
+    cy.get("h4:visible", {
       timeout: 10000,
     }).should("have.text", `Profil`);
 
@@ -163,7 +165,7 @@ describe("Check user profile", () => {
     // cy.wait(2000);
     cy.visit("/profil");
 
-    cy.get("h4", {
+    cy.get("h4:visible", {
       timeout: 10000,
     }).should("have.text", `Profil`);
 
@@ -184,7 +186,7 @@ describe("Check user profile", () => {
 
     cy.visit("/profil");
 
-    cy.get("h4", {
+    cy.get("h4:visible", {
       timeout: 10000,
     }).should("have.text", `Profil`);
 
@@ -224,7 +226,7 @@ describe("Check user profile", () => {
     cy.get("#userNavDropdownMenu").should("includes.text", "Ramona");
     cy.visit("/profil");
 
-    cy.get("h4", {
+    cy.get("h4:visible", {
       timeout: 10000,
     }).should("have.text", `Profil`);
 
@@ -266,7 +268,7 @@ describe("Check user profile", () => {
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
     cy.visit("/profil");
 
-    cy.get("h4", {
+    cy.get("h4:visible", {
       timeout: 10000,
     }).should("have.text", `Profil`);
 
@@ -313,7 +315,7 @@ describe("Check user profile", () => {
     cy.get("#userNavDropdownMenu").should("includes.text", "Clinton");
     cy.visit("/profil");
 
-    cy.get("h4", {
+    cy.get("h4:visible", {
       timeout: 10000,
     }).should("have.text", `Profil`);
 

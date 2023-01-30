@@ -86,7 +86,8 @@ const service = {
       const photoMeta = p.toJSON();
       archive.addLocalFile(
         photoMeta.path,
-        /* store photos in folders in zip archive */ photoMeta.user.firstName +
+        // store photos in folders in zip archive
+        photoMeta.user.firstName +
           "_" +
           photoMeta.user.lastName +
           "/Flight_" +

@@ -41,5 +41,6 @@ module.exports.ROLE = {
   MODERATOR: "Moderator",
   NONE: "Keine",
   INACTIVE: "Inaktiv",
+  DELETED: "Geloescht",
   DEVELOPER: "Entwickler",
 };

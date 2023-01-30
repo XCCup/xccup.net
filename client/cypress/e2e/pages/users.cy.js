@@ -152,4 +152,73 @@ describe("check users page", () => {
       .find(".cy-user-name-label")
       .filter(`:contains("${expectedName}")`);
   });
+
+  it("delete user and remove personal information", () => {
+    const userToDelete = "Leo Altenwerth";
+    const expectedName = "Gelöschter Benutzer";
+    const flightWithPhotosOfUser = 2;
+    const flightWithCommentsOfUser = 40;
+    const userMail = "blackhole+leo@xccup.net";
+    const userPw = "PW_LeoAltenwerth";
+
+    cy.login(userMail, userPw);
+
+    // Delete user
+    cy.visit("/profil");
+    cy.get("#nav-profil-deactivate-tab").click();
+
+    cy.get("[data-cy='userDeleteButton']").click();
+    cy.clickButtonInModal("#confirmUserDeactivationModal", "Profil löschen");
+
+    // Logoff and redirect to homepage
+    cy.get("h1").should("contain.text", "XCCup");
+    cy.get("#userNavDropdownMenu").should("not.exist");
+
+    // Login shouldn't be possible anymore
+    cy.get("#loginNavButton").click();
+    cy.url().should("include", "/login");
+
+    cy.get("input#email").type(userMail);
+    cy.get("input#password").type(userPw);
+
+    cy.get("button").contains("Anmelden").click();
+
+    cy.get("#loginErrorMessage").should(
+      "includes.text",
+      "Benutzername/Passwort falsch"
+    );
+
+    // User shouldn't be listed anymore; Login as a different user
+    cy.loginNormalUser();
+
+    cy.get("#navbarLists").click();
+    cy.get("#navbarLists").find("li").contains("Registrierte Piloten").click();
+
+    cy.get(".cy-user-name-label").should("not.contain", userToDelete);
+
+    // Pilot name in flight should not be deleted
+    // Photos of user should be deleted
+    cy.visit(`flug/${flightWithPhotosOfUser}`);
+
+    cy.get("h4").should("not.include.text", userToDelete);
+    cy.get("h4").should("include.text", expectedName);
+
+    cy.get("photo-0").should("not.exist");
+    cy.get("photo-1").should("not.exist");
+    cy.get("photo-2").should("not.exist");
+    cy.get("photo-3").should("not.exist");
+
+    // No user comment should be left
+    cy.visit(`flug/${flightWithCommentsOfUser}`);
+
+    cy.get("[data-cy='flight-comment']").should("contain.text", expectedName);
+    cy.get("[data-cy='flight-comment']").should(
+      "not.contain.text",
+      userToDelete
+    );
+    cy.get("[data-cy='flight-comment']").should(
+      "contain.text",
+      "Gelöschter Inhalt"
+    );
+  });
 });

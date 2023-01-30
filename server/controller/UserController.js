@@ -293,7 +293,7 @@ router.get(
     }
   }
 );
-// @desc Sends a confirmation mail for a passwort reset
+// @desc Sends a confirmation mail for a password reset
 // @route POST /users/request-new-password/
 
 router.post(
@@ -343,13 +343,11 @@ router.delete("/", requesterMustBeLoggedIn, async (req, res, next) => {
   const id = req.user.id;
 
   try {
-    const user = await service.delete(id);
-
-    if (!user) return res.sendStatus(NOT_FOUND);
+    await service.delete(id);
 
     deleteCache(CACHE_RELEVANT_KEYS);
 
-    res.json(user);
+    res.sendStatus(OK);
   } catch (error) {
     next(error);
   }
@@ -430,6 +428,7 @@ router.post(
 // @desc Edits a user
 // @route PUT /users/
 // @access Only owner
+
 router.put(
   "/",
   requesterMustBeLoggedIn,
@@ -500,6 +499,7 @@ router.put(
 // @desc Edits a users email
 // @route PUT /users/change-email
 // @access Only owner
+
 router.put(
   "/change-email",
   requesterMustBeLoggedIn,
@@ -525,6 +525,30 @@ router.put(
     }
   }
 );
+
+// @desc Deactivates a users role
+// @route PUT /users/deactivate
+// @access Only owner
+
+router.put("/deactivate/", requesterMustBeLoggedIn, async (req, res, next) => {
+  if (validationHasErrors(req, res)) return;
+
+  const id = req.user.id;
+
+  try {
+    const user = await service.getById(id);
+    if (!user) return res.sendStatus(NOT_FOUND);
+
+    user.role = ROLE.INACTIVE;
+
+    const result = await service.update(user);
+    deleteCache(["users", "home"]);
+
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // @desc Edits a users password
 // @route PUT /users/change-password/
