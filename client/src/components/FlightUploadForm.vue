@@ -313,7 +313,7 @@ const igcSelected = async (file) => {
       error?.response?.status === 403 &&
       error.response.data.includes("current club of user is not active")
     )
-      return (errorMessage.value = `Der Verein mit dem du z.Zt. registriert bist, nimmt aktuell noch nicht an der Saison teil. Wenn du denkst, dass der XCCup eine tolle Sache ist nimm bitte Kontakt mit deinem Vereinsvorstand auf.`);
+      return (errorMessage.value = `Der Verein mit dem du aktuell registriert bist, nimmt noch nicht an der Saison teil. Wenn du denkst, dass der XCCup eine tolle Sache ist nimm bitte Kontakt mit deinem Vereinsvorstand auf.`);
     if (
       error?.response?.status === 403 &&
       error.response.data.includes("not possible to change")
