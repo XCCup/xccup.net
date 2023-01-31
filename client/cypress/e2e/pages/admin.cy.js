@@ -241,6 +241,9 @@ describe("check admin page", () => {
 
     cy.get("#nav-clubs-tab").click();
 
+    // TODO: Find a better solution without a hard coded wait.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1000);
     // Find edit button of club
     cy.get("tr:visible")
       .contains("Drachenflieger-Club Trier")
