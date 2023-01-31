@@ -129,19 +129,27 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits(["save-sponsor", "logo-updated"]);
-
 const currentYear = new Date().getFullYear();
-const sponsor: Ref<Sponsor> = ref(cloneDeep(props.sponsorObject));
-const isActiveSponsor = ref(
-  sponsor.value.sponsorInSeasons?.includes(currentYear)
-);
+const sponsor: Ref<Sponsor | null> = ref(null);
+const isActiveSponsor = ref(false);
+
+try {
+  sponsor.value = ref(cloneDeep(props.sponsorObject));
+  isActiveSponsor.value = sponsor.value.sponsorInSeasons?.includes(currentYear);
+} catch (error) {
+  throw "Error from init " + error;
+}
 
 watch(
   () => props.sponsorObject,
   () => {
-    sponsor.value = cloneDeep(props.sponsorObject);
-    isActiveSponsor.value =
-      sponsor.value.sponsorInSeasons?.includes(currentYear);
+    try {
+      sponsor.value = cloneDeep(props.sponsorObject);
+      isActiveSponsor.value =
+        sponsor.value.sponsorInSeasons?.includes(currentYear);
+    } catch (error) {
+      throw "Error from watch " + error;
+    }
   }
 );
 
