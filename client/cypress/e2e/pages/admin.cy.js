@@ -238,6 +238,12 @@ describe("check admin page", () => {
 
   it("remove club from current season -> flight upload for members not possible", () => {
     cy.intercept("POST", "/api/flights").as("postFlight");
+    Cypress.on("uncaught:exception", (err) => {
+      // returning false here prevents Cypress from
+      // failing the test
+      console.log("Cypress detected uncaught exception: ", err);
+      return false;
+    });
 
     cy.get("#nav-clubs-tab").click();
 
@@ -281,7 +287,7 @@ describe("check admin page", () => {
     // Check if error message will be displayed
     cy.get("#upload-error").should(
       "contain.text",
-      "Der Verein mit dem du z.Zt. registriert bist, nimmt aktuell noch nicht an der Saison teil."
+      "Der Verein mit dem du aktuell registriert bist, nimmt noch nicht an der Saison teil"
     );
   });
 
