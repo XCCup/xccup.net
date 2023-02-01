@@ -22,6 +22,7 @@ router.get(
     query("isWeekend").optional().isBoolean(),
     query("isHikeAndFly").optional().isBoolean(),
     query("isSenior").optional().isBoolean(),
+    query("isReynoldsClass").optional().isBoolean(),
     query("rankingClass").optional().not().isEmpty().trim().escape(),
     query("gender").optional().not().isEmpty().trim().escape(),
     query("homeStateOfUser").optional().not().isEmpty().trim().escape(),
@@ -269,6 +270,36 @@ router.get(
 
     try {
       const result = await service.getNewcomer({
+        ...req.query,
+      });
+
+      setCache(req, result);
+
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Gets the result for the reynolds class
+// @route GET /results/reynolds-class/
+
+router.get(
+  "/reynolds-class",
+  [
+    query("year").optional().isInt(),
+    query("siteRegion").optional().not().isEmpty().trim().escape(),
+    query("limit").optional().isInt(),
+  ],
+  async (req: Request, res: Response, next: NextFunction) => {
+    if (validationHasErrors(req, res)) return;
+
+    const value = getCache(req);
+    if (value) return res.json(value);
+
+    try {
+      const result = await service.getReynoldsClass({
         ...req.query,
       });
 

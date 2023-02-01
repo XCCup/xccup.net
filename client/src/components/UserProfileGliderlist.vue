@@ -79,7 +79,7 @@ const addModal = ref<Modal | null>(null);
 const showAddGliderSpinner = ref(false);
 const showSpinner = ref(false);
 
-const addGliderErrorMessage = ref<string | null>(null);
+const addGliderErrorMessage = ref<string | undefined>(undefined);
 
 // Update local copy of glider data
 const updateGliderData = (data: any) => {
@@ -118,6 +118,11 @@ const onRemove = (glider: Glider) => {
   removeGliderErrorMessage.value = null;
   removeGliderModal.value?.show();
 };
+const onEdit = (glider: Glider) => {
+  gliderToRemove.value = glider;
+  removeGliderErrorMessage.value = null;
+  removeGliderModal.value?.show();
+};
 
 const removeGlider = async () => {
   try {
@@ -145,7 +150,7 @@ const addGlider = async (glider: Glider) => {
     const res = await ApiService.addGlider(glider);
     if (res.status != 200) throw res.statusText;
     updateGliderData(res.data);
-    addGliderErrorMessage.value = null;
+    addGliderErrorMessage.value = undefined;
     addModal.value?.hide();
     emit("gliders-changed");
   } catch (error) {

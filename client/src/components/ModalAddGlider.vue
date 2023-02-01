@@ -38,7 +38,7 @@
           <select
             id="ranking-class-select"
             v-model="newGlider.gliderClass"
-            class="form-select"
+            class="form-select mb-3"
           >
             <option disabled value selected>Geräteklasse</option>
             <option
@@ -49,6 +49,17 @@
               {{ gliderClass.description }}
             </option>
           </select>
+          <div class="form-check">
+            <input
+              id="reynolds-check-box"
+              v-model="newGlider.reynoldsClass"
+              class="form-check-input"
+              type="checkbox"
+            />
+            <label class="form-check-label" for="reynolds-check-box">
+              Leichtgewichtswertung
+            </label>
+          </div>
         </div>
         <div class="modal-footer">
           <BaseError id="loginErrorMessage" :error-message="errorMessage" />
@@ -75,32 +86,27 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import ApiService from "@/services/ApiService";
 import { ref, computed, reactive, onMounted } from "vue";
 import { Modal } from "bootstrap";
 
 const emit = defineEmits(["add-glider"]);
 
-defineProps({
-  showSpinner: {
-    type: Boolean,
-    default: false,
-  },
-  errorMessage: {
-    type: [String, null],
-    default: null,
-  },
-});
+defineProps<{
+  showSpinner?: boolean;
+  errorMessage?: string;
+}>();
 
-const _modal = ref(null);
-const modal = ref(null);
+const _modal = ref();
+const modal = ref<Modal | null>();
+
 onMounted(() => {
   modal.value = new Modal(_modal.value);
 });
 
-const show = () => modal.value.show();
-const hide = () => modal.value.hide();
+const show = () => modal.value?.show();
+const hide = () => modal.value?.hide();
 
 defineExpose({ show, hide });
 
@@ -108,12 +114,39 @@ const newGlider = reactive({
   brand: "",
   model: "",
   gliderClass: "",
+  reynoldsClass: false,
 });
 
-// Fetch data
+// TODO: Introduce common types between backend and client as these are duplicate type definitions
 
-const brands = ref(null);
-const gliderClasses = ref(null);
+type GliderClass =
+  | "AB_low"
+  | "AB_high"
+  | "C_low"
+  | "C_high"
+  | "D_low"
+  | "D_high"
+  | "Tandem"
+  | "HG_1_Turm"
+  | "HG_1_Turmlos"
+  | "HG_5_starr";
+
+type GliderClasses = {
+  [key in GliderClass]: {
+    scoringMultiplicator: {
+      BASE: number;
+      FREE: number;
+      FLAT: number;
+      FAI: number;
+    };
+    description: string;
+    shortDescription: string;
+  };
+};
+
+// Fetch data
+const brands = ref<string[] | undefined>();
+const gliderClasses = ref<GliderClasses | undefined>();
 
 try {
   [brands.value, gliderClasses.value] = (
@@ -125,9 +158,9 @@ try {
 
 const saveButtonIsEnabled = computed(() => {
   return (
-    (newGlider.model.length > 2) &
-    (newGlider.brand != "") &
-    (newGlider.gliderClass != "")
+    newGlider.model.length > 2 &&
+    newGlider.brand != "" &&
+    newGlider.gliderClass != ""
   );
 });
 
