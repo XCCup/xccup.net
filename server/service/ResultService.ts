@@ -1061,9 +1061,9 @@ async function findOldResults(
   rankingType?: RankingTypes,
   seasonDetail?: SeasonDetailAttributes,
   constantsForResult?: { [key: string]: any },
-  skipSearch?: boolean
+  enableFind?: boolean
 ) {
-  if (!year || !rankingType || !seasonDetail || skipSearch) return undefined;
+  if (!year || !rankingType || !seasonDetail || !enableFind) return undefined;
 
   if (year < CURRENT_SCORING_VERSION_YEAR) {
     checkIfRankingWasPresent(seasonDetail, rankingType);
