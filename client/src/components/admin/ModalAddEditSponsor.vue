@@ -131,7 +131,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(["save-sponsor", "logo-updated"]);
 const currentYear = new Date().getFullYear();
-const sponsor: Ref<Sponsor | null> = ref(null);
+const sponsor: Ref<Sponsor> = ref({ isGoldSponsor: false, name: "" });
 const isActiveSponsor = ref(false);
 
 try {
