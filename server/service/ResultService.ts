@@ -126,13 +126,13 @@ const service = {
         seasonDetail,
         constantsForResult,
         nonShouldBeDefined(
-          rankingClass ||
-            homeStateOfUser ||
-            isSenior ||
-            isWeekend ||
-            isHikeAndFly ||
-            siteId ||
-            clubId
+          rankingClass,
+          homeStateOfUser,
+          isSenior,
+          isWeekend,
+          isHikeAndFly,
+          siteId,
+          clubId
         )
       );
       if (oldRes) return oldRes;
