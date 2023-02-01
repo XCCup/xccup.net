@@ -94,9 +94,9 @@ function onNew() {
 function onEdit(sponsor: Sponsor) {
   // Ensure no null value
   sponsor.tagline = sponsor.tagline ?? "";
+  selectedSponsor.value = sponsor;
 
   errorMessage.value = "";
-  selectedSponsor.value = sponsor;
   addEditSponsorModal.value?.show();
 }
 
