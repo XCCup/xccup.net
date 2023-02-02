@@ -516,7 +516,7 @@ const service = {
     sortDescendingByTotalPoints(resultsWithTotals);
 
     return addConstantInformationToResult(
-      resultsNewcomer,
+      resultsWithTotals,
       constantsForResult,
       limit
     );
