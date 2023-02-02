@@ -49,7 +49,7 @@
               {{ gliderClass.description }}
             </option>
           </select>
-          <div class="form-check">
+          <div v-if="reynoldsClassIsEnabled" class="form-check">
             <input
               id="reynolds-check-box"
               v-model="newGlider.reynoldsClass"
@@ -164,7 +164,16 @@ const saveButtonIsEnabled = computed(() => {
   );
 });
 
+const qualifiedForReynoldsClass = computed(() =>
+  ["AB_low", "AB_high", "C_low", "C_high", "D_low", "D_high"].includes(
+    newGlider.gliderClass
+  )
+);
+
+const reynoldsClassIsEnabled = computed(() => qualifiedForReynoldsClass.value);
+
 const onAddGlider = () => {
+  if (!qualifiedForReynoldsClass.value) newGlider.reynoldsClass = false;
   emit("add-glider", newGlider);
 };
 </script>

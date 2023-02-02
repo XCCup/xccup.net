@@ -19,6 +19,7 @@
       />
       <label class="form-check-label" :for="glider.id">
         {{ formatGliderName(glider) }}
+        <FeatherIcon v-if="glider.reynoldsClass" class="me-1" />
         <a href="#" data-cy="delete-glider" @click.prevent="onRemove(glider)">
           <i class="bi bi-trash"></i>
         </a>
@@ -118,11 +119,6 @@ const onRemove = (glider: Glider) => {
   removeGliderErrorMessage.value = null;
   removeGliderModal.value?.show();
 };
-const onEdit = (glider: Glider) => {
-  gliderToRemove.value = glider;
-  removeGliderErrorMessage.value = null;
-  removeGliderModal.value?.show();
-};
 
 const removeGlider = async () => {
   try {
@@ -148,6 +144,8 @@ const addGlider = async (glider: Glider) => {
   try {
     showAddGliderSpinner.value = true;
     const res = await ApiService.addGlider(glider);
+    console.log(res);
+
     if (res.status != 200) throw res.statusText;
     updateGliderData(res.data);
     addGliderErrorMessage.value = undefined;
