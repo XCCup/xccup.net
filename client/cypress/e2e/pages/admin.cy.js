@@ -252,7 +252,7 @@ describe("check admin page", () => {
     cy.wait(5000);
     // Find edit button of club
     cy.get("tr:visible")
-      .contains("Asslarer Gleitschirmflieger")
+      .contains("Trier")
       .parent()
       .find("button.bi-pencil-square")
       .click();
