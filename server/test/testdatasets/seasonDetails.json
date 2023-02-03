@@ -706,10 +706,10 @@
       },
       "D_high": {
         "scoringMultiplicator": {
-          "BASE": 2.2,
+          "BASE": 2.3,
           "FREE": 1.1,
-          "FLAT": 2.0,
-          "FAI": 2.2
+          "FLAT": 2.1,
+          "FAI": 2.3
         },
         "description": "Schirme mit EN-D oder CCC und einer Streckung von 7,0 und mehr",
         "shortDescription": "GS Performance high"
