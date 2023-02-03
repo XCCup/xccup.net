@@ -38,7 +38,9 @@ import {
   limitFlightsForUserAndCalcTotals,
   removeMultipleEntriesForUsers,
   sortDescendingByTotalPoints,
+  sortDescendingByTotalPointsDismissed,
 } from "../helper/ResultUtils";
+import { log } from "console";
 
 const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
@@ -188,7 +190,11 @@ const service = {
   getClub: async ({ year, limit }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const constantsForResult = { NUMBER_OF_SCORED_FLIGHTS };
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS: 5,
+      REMARKS:
+        "Für die Vereinswertung zählen jeweils nur die 30 besten Flüge eines jeden Vereins. Dabei gehen max. die 5 besten Flüge eines einzelnen Piloten mit in die Wertung ein.",
+    };
 
     const oldRes = await findOldResults(
       year,
@@ -213,10 +219,21 @@ const service = {
       // Sort also members in club by totalPoints
       sortDescendingByTotalPoints(club.members);
     });
-    sortDescendingByTotalPoints(resultOverClub);
+
+    markFlightsToDismissClub(resultOverClub);
+
+    const resultsOverClubDismissedTotals =
+      calcTotalsWithDismissedClubFlights(resultOverClub);
+
+    console.log("###############################");
+    console.log(JSON.stringify(resultsOverClubDismissedTotals, null, 2));
+
+    sortDescendingByTotalPointsDismissed(resultsOverClubDismissedTotals);
+
+    // sortDescendingByTotalPoints(resultOverClub);
 
     return addConstantInformationToResult(
-      resultOverClub,
+      resultsOverClubDismissedTotals,
       constantsForResult,
       limit
     );
@@ -556,6 +573,24 @@ function markFlightsToDismiss(team: TeamWithMemberFlights) {
       }
     });
   }
+}
+
+function markFlightsToDismissClub(clubs: ClubResults[]) {
+  clubs.forEach((club) => {
+    let allFlights: UserResultFlight[] = [];
+    club.members.forEach((member) => {
+      allFlights = allFlights.concat(member.flights);
+    });
+    allFlights.sort((a, b) => b.flightPoints - a.flightPoints);
+    for (let i = 5; i < allFlights.length; i++) {
+      club.members.forEach((member) => {
+        const found = member.flights.find((f) => f.id == allFlights[i].id);
+        if (found) {
+          found.isDismissed = true;
+        }
+      });
+    }
+  });
 }
 
 function addConstantInformationToResult(
@@ -936,6 +971,7 @@ function aggregateOverClubAndCalcTotals(
       found.members.push(memberEntry);
       found.totalPoints += memberEntry.totalPoints;
       found.totalDistance += memberEntry.totalDistance;
+      found.totalFlights += memberEntry.flights.length;
     } else {
       result.push({
         clubName: entry.club.name,
@@ -943,6 +979,7 @@ function aggregateOverClubAndCalcTotals(
         members: [memberEntry],
         totalDistance: memberEntry.totalDistance,
         totalPoints: memberEntry.totalPoints,
+        totalFlights: memberEntry.flights.length,
       });
     }
   });
@@ -991,6 +1028,22 @@ function aggregateFlightsOverUser(resultQuery: QueryResult[]) {
     }
   });
   return result;
+}
+
+function calcTotalsWithDismissedClubFlights(resultOverClub: ClubResults[]) {
+  return resultOverClub.map((c) => {
+    let totalDistanceDismissed: number = 0;
+    let totalPointsDismissed: number = 0;
+    c.members.forEach((m) => {
+      m.flights.forEach((f) => {
+        if (f.isDismissed) return;
+
+        totalDistanceDismissed += f.flightDistance;
+        totalPointsDismissed += f.flightPoints;
+      });
+    });
+    return { ...c, totalDistanceDismissed, totalPointsDismissed };
+  });
 }
 
 async function retrieveSeasonDetails(year?: number) {

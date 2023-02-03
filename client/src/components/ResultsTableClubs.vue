@@ -26,11 +26,23 @@
             <td>
               <tr class="no-line-break">
                 {{
-                  club.totalPoints
+                  club.totalPointsDismissed
                 }}
                 P
               </tr>
               <tr class="no-line-break">
+                ({{
+                  Math.floor(club.totalDistanceDismissed)
+                }}
+                km)
+              </tr>
+              <tr class="no-line-break text-decoration-line-through fst-italic">
+                {{
+                  club.totalPoints
+                }}
+                P
+              </tr>
+              <tr class="no-line-break text-decoration-line-through fst-italic">
                 ({{
                   Math.floor(club.totalDistance)
                 }}
@@ -63,8 +75,12 @@
                         flightId: member.flights[n - 1].externalId,
                       },
                     }"
-                  >
-                    {{ member.flights[n - 1].flightPoints }}
+                    ><span
+                      v-if="member.flights[n - 1].isDismissed"
+                      class="text-decoration-line-through fst-italic"
+                      >{{ member.flights[n - 1].flightPoints }}</span
+                    >
+                    <span v-else>{{ member.flights[n - 1].flightPoints }}</span>
                   </router-link>
                 </td>
                 <td v-else>-</td>
