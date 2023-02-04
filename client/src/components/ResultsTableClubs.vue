@@ -36,18 +36,6 @@
                 }}
                 km)
               </tr>
-              <tr class="no-line-break text-decoration-line-through fst-italic">
-                {{
-                  club.totalPoints
-                }}
-                P
-              </tr>
-              <tr class="no-line-break text-decoration-line-through fst-italic">
-                ({{
-                  Math.floor(club.totalDistance)
-                }}
-                km)
-              </tr>
             </td>
 
             <td>

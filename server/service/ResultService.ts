@@ -190,10 +190,23 @@ const service = {
   getClub: async ({ year, limit }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
+    // Determines how many flights per club member will be scored.
+    // Use global default if no value was found for that particular season.
+    const NUMBER_OF_SCORED_FLIGHTS_CLUB =
+      seasonDetail?.misc?.rankingConstants?.club?.NUMBER_OF_SCORED_FLIGHTS ??
+      NUMBER_OF_SCORED_FLIGHTS;
+    // The max number of flights which will be scored for one club.
+    const MAX_NUMBER_OF_FLIGHTS_PER_CLUB =
+      seasonDetail?.misc?.rankingConstants?.club
+        ?.MAX_NUMBER_OF_FLIGHTS_PER_CLUB;
+    // The remarks text which will be displayed in the view.
+    const remarks = createRemarks(
+      seasonDetail?.misc?.textMessages?.resultsClub,
+      { NUMBER_OF_SCORED_FLIGHTS, MAX_NUMBER_OF_FLIGHTS_PER_CLUB }
+    );
     const constantsForResult = {
-      NUMBER_OF_SCORED_FLIGHTS: 5,
-      REMARKS:
-        "Für die Vereinswertung zählen jeweils nur die 30 besten Flüge eines jeden Vereins. Dabei gehen max. die 5 besten Flüge eines einzelnen Piloten mit in die Wertung ein.",
+      NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_CLUB,
+      REMARKS: remarks,
     };
 
     const oldRes = await findOldResults(
@@ -211,7 +224,7 @@ const service = {
     const resultOverUser = aggregateFlightsOverUser(resultQuery);
     const resultsWithTotals = limitFlightsForUserAndCalcTotals(
       resultOverUser,
-      NUMBER_OF_SCORED_FLIGHTS
+      NUMBER_OF_SCORED_FLIGHTS_CLUB
     );
     const resultOverClub = aggregateOverClubAndCalcTotals(resultsWithTotals);
 
@@ -220,17 +233,12 @@ const service = {
       sortDescendingByTotalPoints(club.members);
     });
 
-    markFlightsToDismissClub(resultOverClub);
+    markFlightsToDismissClub(resultOverClub, MAX_NUMBER_OF_FLIGHTS_PER_CLUB);
 
     const resultsOverClubDismissedTotals =
       calcTotalsWithDismissedClubFlights(resultOverClub);
 
-    console.log("###############################");
-    console.log(JSON.stringify(resultsOverClubDismissedTotals, null, 2));
-
     sortDescendingByTotalPointsDismissed(resultsOverClubDismissedTotals);
-
-    // sortDescendingByTotalPoints(resultOverClub);
 
     return addConstantInformationToResult(
       resultsOverClubDismissedTotals,
@@ -554,6 +562,21 @@ const service = {
   },
 };
 
+/**
+ * Creates a string out of the baseString and replaces all values which match the pattern $NAME_OF_VALUE.
+ *
+ */
+function createRemarks(baseString: string | undefined, replacements: Object) {
+  if (!baseString) return;
+
+  let string = baseString;
+  for (const [key, value] of Object.entries(replacements)) {
+    string = string.replace(`$${key}`, value);
+  }
+
+  return string;
+}
+
 function markFlightsToDismiss(team: TeamWithMemberFlights) {
   let allFlights: UserResultFlight[] = [];
 
@@ -575,14 +598,17 @@ function markFlightsToDismiss(team: TeamWithMemberFlights) {
   }
 }
 
-function markFlightsToDismissClub(clubs: ClubResults[]) {
+function markFlightsToDismissClub(
+  clubs: ClubResults[],
+  maxNumberOfFlights: number
+) {
   clubs.forEach((club) => {
     let allFlights: UserResultFlight[] = [];
     club.members.forEach((member) => {
       allFlights = allFlights.concat(member.flights);
     });
     allFlights.sort((a, b) => b.flightPoints - a.flightPoints);
-    for (let i = 5; i < allFlights.length; i++) {
+    for (let i = maxNumberOfFlights; i < allFlights.length; i++) {
       club.members.forEach((member) => {
         const found = member.flights.find((f) => f.id == allFlights[i].id);
         if (found) {
