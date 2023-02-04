@@ -38,7 +38,6 @@ import {
   limitFlightsForUserAndCalcTotals,
   removeMultipleEntriesForUsers,
   sortDescendingByTotalPoints,
-  sortDescendingByTotalPointsDismissed,
 } from "../helper/ResultUtils";
 import { log } from "console";
 
@@ -238,7 +237,7 @@ const service = {
     const resultsOverClubDismissedTotals =
       calcTotalsWithDismissedClubFlights(resultOverClub);
 
-    sortDescendingByTotalPointsDismissed(resultsOverClubDismissedTotals);
+    sortDescendingByTotalPoints(resultsOverClubDismissedTotals);
 
     return addConstantInformationToResult(
       resultsOverClubDismissedTotals,

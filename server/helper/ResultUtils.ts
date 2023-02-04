@@ -156,15 +156,6 @@ export function sortDescendingByTotalPoints(resultArray: Totals[]) {
   });
 }
 
-export function sortDescendingByTotalPointsDismissed(resultArray: Totals[]) {
-  resultArray.sort((a, b) => {
-    if (!a.totalPointsDismissed && !b.totalPointsDismissed) return 0;
-    if (!b.totalPointsDismissed) return -1;
-    if (!a.totalPointsDismissed) return 1;
-    return b.totalPointsDismissed - a.totalPointsDismissed;
-  });
-}
-
 export function removeMultipleEntriesForUsers(
   resultsWithMultipleEntriesForUser: FlightInstanceUserInclude[]
 ) {
