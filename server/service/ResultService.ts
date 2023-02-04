@@ -1068,7 +1068,11 @@ function calcTotalsWithDismissedClubFlights(resultOverClub: ClubResults[]) {
         totalPointsDismissed += f.flightPoints;
       });
     });
-    return { ...c, totalDistanceDismissed, totalPointsDismissed };
+    return {
+      ...c,
+      totalDistance: totalDistanceDismissed,
+      totalPoints: totalPointsDismissed,
+    };
   });
 }
 

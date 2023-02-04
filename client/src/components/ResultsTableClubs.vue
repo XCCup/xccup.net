@@ -26,13 +26,13 @@
             <td>
               <tr class="no-line-break">
                 {{
-                  club.totalPointsDismissed
+                  club.totalPoints
                 }}
                 P
               </tr>
               <tr class="no-line-break">
                 ({{
-                  Math.floor(club.totalDistanceDismissed)
+                  Math.floor(club.totalDistance)
                 }}
                 km)
               </tr>
