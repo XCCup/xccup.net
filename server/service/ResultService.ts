@@ -39,7 +39,6 @@ import {
   removeMultipleEntriesForUsers,
   sortDescendingByTotalPoints,
 } from "../helper/ResultUtils";
-import { log } from "console";
 
 const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
@@ -286,7 +285,10 @@ const service = {
           members: membersWithFlights,
         } as unknown as TeamWithMemberFlights;
 
-        markFlightsToDismiss(teamWithFlights);
+        markFlightsToDismiss(
+          teamWithFlights,
+          TEAM_SIZE * NUMBER_OF_SCORED_FLIGHTS - TEAM_DISMISSES
+        );
 
         teamWithFlights.members.forEach((member) => {
           calcTotalsOfMember(member);
@@ -576,19 +578,18 @@ function createRemarks(baseString: string | undefined, replacements: Object) {
   return string;
 }
 
-function markFlightsToDismiss(team: TeamWithMemberFlights) {
+function markFlightsToDismiss(
+  entityWithMembers: TeamWithMemberFlights | ClubResults,
+  maxNumberOfFlights: number
+) {
   let allFlights: UserResultFlight[] = [];
 
-  team.members.forEach((member) => {
+  entityWithMembers.members.forEach((member) => {
     allFlights = allFlights.concat(member.flights);
   });
   allFlights.sort((a, b) => b.flightPoints - a.flightPoints);
-  for (
-    let i = TEAM_SIZE * NUMBER_OF_SCORED_FLIGHTS - TEAM_DISMISSES;
-    i < allFlights.length;
-    i++
-  ) {
-    team.members.forEach((member) => {
+  for (let i = maxNumberOfFlights; i < allFlights.length; i++) {
+    entityWithMembers.members.forEach((member) => {
       const found = member.flights.find((f) => f.id == allFlights[i].id);
       if (found) {
         found.isDismissed = true;
@@ -602,19 +603,7 @@ function markFlightsToDismissClub(
   maxNumberOfFlights: number
 ) {
   clubs.forEach((club) => {
-    let allFlights: UserResultFlight[] = [];
-    club.members.forEach((member) => {
-      allFlights = allFlights.concat(member.flights);
-    });
-    allFlights.sort((a, b) => b.flightPoints - a.flightPoints);
-    for (let i = maxNumberOfFlights; i < allFlights.length; i++) {
-      club.members.forEach((member) => {
-        const found = member.flights.find((f) => f.id == allFlights[i].id);
-        if (found) {
-          found.isDismissed = true;
-        }
-      });
-    }
+    markFlightsToDismiss(club, maxNumberOfFlights);
   });
 }
 
