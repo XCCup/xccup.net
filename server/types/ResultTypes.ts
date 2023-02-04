@@ -51,8 +51,6 @@ export interface UserResultsWithTotals extends UserResults, Totals {
 export interface Totals {
   totalPoints: number;
   totalDistance: number;
-  totalPointsDismissed?: number;
-  totalDistanceDismissed?: number;
 }
 
 export interface UserResultFlight {
