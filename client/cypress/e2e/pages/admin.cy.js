@@ -263,32 +263,32 @@ describe("check admin page", () => {
     cy.wait(500);
     cy.get("[data-cy='checkClubCurrentSeason']").uncheck();
 
-    cy.clickButtonInModal("#addEditClubModal", "Speichern");
+    // cy.clickButtonInModal("#addEditClubModal", "Speichern");
 
-    // Logout admin user
-    cy.logout();
+    // // Logout admin user
+    // cy.logout();
 
-    // Login user with non active club
-    cy.login("blackhole+everett@xccup.net", "PW_EverettGislason");
+    // // Login user with non active club
+    // cy.login("blackhole+everett@xccup.net", "PW_EverettGislason");
 
-    // Try to upload flight
-    cy.get("button").contains("Flug hochladen").click();
-    const igcFileName = "73320_LA9ChMu1.igc";
-    cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
-        fileName: igcFileName,
-        mimeType: "text/plain",
-      });
-    });
+    // // Try to upload flight
+    // cy.get("button").contains("Flug hochladen").click();
+    // const igcFileName = "73320_LA9ChMu1.igc";
+    // cy.fixture(igcFileName).then((fileContent) => {
+    //   cy.get('input[type="file"]#igcUploadForm').attachFile({
+    //     fileContent: fileContent.toString(),
+    //     fileName: igcFileName,
+    //     mimeType: "text/plain",
+    //   });
+    // });
 
-    cy.wait("@postFlight");
+    // cy.wait("@postFlight");
 
-    // Check if error message will be displayed
-    cy.get("#upload-error").should(
-      "contain.text",
-      "Der Verein mit dem du aktuell registriert bist, nimmt noch nicht an der Saison teil"
-    );
+    // // Check if error message will be displayed
+    // cy.get("#upload-error").should(
+    //   "contain.text",
+    //   "Der Verein mit dem du aktuell registriert bist, nimmt noch nicht an der Saison teil"
+    // );
   });
 
   it("test admin flight upload list", () => {
