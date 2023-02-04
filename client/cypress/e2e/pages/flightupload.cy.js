@@ -401,7 +401,7 @@ describe("check flight upload page", () => {
       "contain.text",
       expectedFlightState
     );
-    cy.url().as("flightURL");
+    cy.url().as("flightURL", { type: "static" });
 
     // Switch to admin and accept violation
     cy.logout();
@@ -622,7 +622,7 @@ Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
 Pilot: Melinda Tremblay
 
 Euer Server-Knecht`;
-    const expectedMailReceipient = "me@example.com";
+    const expectedMailReceipient = "info@xccup.net";
 
     const payload = {
       user: "blackhole+melinda@xccup.net",
