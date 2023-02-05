@@ -3,7 +3,6 @@ export interface Glider {
   brand: string;
   model: string;
   gliderClass: GliderClass;
-  reynoldsClass?: boolean;
 }
 
 export interface GliderClass {

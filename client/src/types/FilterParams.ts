@@ -69,11 +69,6 @@ export interface SeniorsFilterParams {
   year?: number;
   siteRegion?: string;
 }
-export interface ReynoldsClassFilterParams {
-  limit?: number;
-  year?: number;
-  siteRegion?: string;
-}
 
 export interface NewcomerFilterParams {
   limit?: number;

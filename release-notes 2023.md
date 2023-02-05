@@ -7,4 +7,3 @@
 - Bundle size reduced by 13%
 - Added option for user deactivation/delete
 - CCC multiplicator increased by 0.1
-- Reynolds class introduced

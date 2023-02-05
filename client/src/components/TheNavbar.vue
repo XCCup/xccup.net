@@ -141,18 +141,6 @@ const handleLogout = async () => {
                   >Damenwertung</router-link
                 >
               </li>
-              <li>
-                <router-link
-                  :to="{
-                    name: 'ResultsReynoldsClass',
-                    params: { year: currentYear },
-                  }"
-                  class="dropdown-item"
-                >
-                  <FeatherIcon />
-                  Leichtgewichtswertung</router-link
-                >
-              </li>
               <li><hr class="dropdown-divider" /></li>
 
               <li>

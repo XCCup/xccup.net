@@ -587,17 +587,15 @@ router.post(
   checkStringObjectNotEmpty("brand"),
   checkStringObjectNotEmpty("model"),
   checkStringObjectNotEmpty("gliderClass"),
-  checkIsBoolean("reynoldsClass"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
     const userId = req.user.id;
-    const { brand, model, gliderClass, reynoldsClass } = req.body;
+    const { brand, model, gliderClass } = req.body;
     const glider = {
       brand,
       model,
       gliderClass,
-      reynoldsClass,
     };
 
     try {

@@ -83,13 +83,6 @@ export const Routes = [
     component: () => import("../views/ResultsLadies.vue"),
   },
   {
-    path: "/:year/leichtgewichtswertung/",
-    name: "ResultsReynoldsClass",
-    beforeEnter: validateRouteParamYear,
-
-    component: () => import("../views/ResultsReynoldsClass.vue"),
-  },
-  {
     path: "/:year/lux-championat/",
     name: "ResultsLux",
     beforeEnter: validateRouteParamYear,

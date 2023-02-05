@@ -25,7 +25,6 @@
           "key": "D_low",
           "shortDescription": "GS Performance low"
         },
-        "reynoldsClass": true,
         "id": "450244fc-b65a-4685-ad22-d457a5035b86"
       }
     ],
@@ -286,7 +285,6 @@
           "key": "D_low",
           "shortDescription": "GS Performance low"
         },
-        "reynoldsClass": true,
         "id": "cd25b974-1e30-4969-ba46-34990461990d"
       },
       {
