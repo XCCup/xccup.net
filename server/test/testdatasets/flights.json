@@ -251,6 +251,7 @@
         "key": "AB_low",
         "shortDescription": "GS Sport low"
       },
+      "reynoldsClass": true,
       "id": "8f6f8250-a7ff-4be6-8a70-4dbf57139d24"
     },
     "flightStatus": "In Wertung",
@@ -319,7 +320,8 @@
       "gliderClass": {
         "key": "C_low",
         "shortDescription": "GS Intermdediate low"
-      }
+      },
+      "reynoldsClass": true
     },
     "flightStatus": "In Wertung",
     "airspaceViolation": false,
@@ -940,6 +942,7 @@
         "key": "D_high",
         "shortDescription": "GS Competition high"
       },
+      "reynoldsClass": true,
       "id": "97afeda0-c6cf-483c-b39b-f2cea1dd0b20"
     },
     "flightStatus": "In Wertung",
@@ -1488,6 +1491,7 @@
         "key": "AB_low",
         "shortDescription": "GS Sport low"
       },
+      "reynoldsClass": true,
       "id": "8f6f8250-a7ff-4be6-8a70-4dbf57139d24"
     },
     "flightStatus": "In Wertung",
