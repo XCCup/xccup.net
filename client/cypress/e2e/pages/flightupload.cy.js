@@ -401,6 +401,7 @@ describe("check flight upload page", () => {
       "contain.text",
       expectedFlightState
     );
+    // Store URL of current flight view to navigate back to it later
     cy.url().as("flightURL", { type: "static" });
 
     // Switch to admin and accept violation
