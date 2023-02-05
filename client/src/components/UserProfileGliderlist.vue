@@ -144,7 +144,6 @@ const addGlider = async (glider: Glider) => {
   try {
     showAddGliderSpinner.value = true;
     const res = await ApiService.addGlider(glider);
-    console.log(res);
 
     if (res.status != 200) throw res.statusText;
     updateGliderData(res.data);
