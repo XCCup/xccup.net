@@ -130,7 +130,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(["save-sponsor", "logo-updated"]);
 const currentYear = new Date().getFullYear();
-const sponsor: Ref<Sponsor> = ref(cloneDeep(props.sponsorObject));
+const sponsor: Ref<Sponsor> = ref(props.sponsorObject);
 const isActiveSponsor = ref(
   sponsor.value.sponsorInSeasons?.includes(currentYear)
 );
@@ -138,7 +138,7 @@ const isActiveSponsor = ref(
 watch(
   () => props.sponsorObject,
   () => {
-    sponsor.value = cloneDeep(props.sponsorObject);
+    sponsor.value = props.sponsorObject;
     isActiveSponsor.value =
       sponsor.value.sponsorInSeasons?.includes(currentYear);
   }
