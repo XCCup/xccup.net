@@ -1,5 +1,5 @@
 describe("check login options", () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit("/");
   });
 
