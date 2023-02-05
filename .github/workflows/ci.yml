@@ -78,7 +78,7 @@ jobs:
           wait-on: http://localhost:4173
           working-directory: ./client
           config: baseUrl=http://localhost:4173
-          browser: chrome
+          # browser: chrome
           env: TZ=Europe/Berlin
 
       - name: 😩 Store artifacts of test failures
