@@ -622,7 +622,7 @@ Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
 Pilot: Melinda Tremblay
 
 Euer Server-Knecht`;
-    const expectedMailReceipient = "info@xccup.net";
+    const expectedMailReceipient = "me@example.com";
 
     const payload = {
       user: "blackhole+melinda@xccup.net",
