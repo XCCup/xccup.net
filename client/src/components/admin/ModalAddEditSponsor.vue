@@ -115,6 +115,7 @@
 </template>
 <script setup lang="ts">
 import type { Sponsor } from "@/types/Sponsor";
+import { cloneDeep } from "lodash-es";
 import { computed, ref, watch, watchEffect, type Ref } from "vue";
 
 interface Props {
@@ -129,7 +130,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(["save-sponsor", "logo-updated"]);
 const currentYear = new Date().getFullYear();
-const sponsor: Ref<Sponsor> = ref(props.sponsorObject);
+const sponsor: Ref<Sponsor> = ref(cloneDeep(props.sponsorObject));
 const isActiveSponsor = ref(
   sponsor.value.sponsorInSeasons?.includes(currentYear)
 );
@@ -137,7 +138,7 @@ const isActiveSponsor = ref(
 watch(
   () => props.sponsorObject,
   () => {
-    sponsor.value = props.sponsorObject;
+    sponsor.value = cloneDeep(props.sponsorObject);
     isActiveSponsor.value =
       sponsor.value.sponsorInSeasons?.includes(currentYear);
   }
