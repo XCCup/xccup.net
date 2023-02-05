@@ -795,7 +795,8 @@
         "resultsState": "Es zählt die Heimataddresse eines Piloten die zum Zeitpunkt des Fluges in seinem Profil hinterlegt war",
         "resultsTeams": "Die schlechtesten 3 Ergebnisse eines Teams werden gestrichen",
         "resultsSeniors": "Die Wertung beginnt ab einem Alter von 60 mit einem Bonus von 2% pro weiterem Lebensjahr",
-        "resultsNewcomer": "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben. Es werden nur Flüge mit Geräten bis zur Sportklasse (EN A+EN B) berücksichtigt"
+        "resultsNewcomer": "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben. Es werden nur Flüge mit Geräten bis zur Sportklasse (EN A+EN B) berücksichtigt",
+        "resultsReynoldsClass": "Schirme mit einem zulässigen Startgewicht von maximal 85kg"
       }
     }
   }
