@@ -1696,20 +1696,20 @@ cypress-file-upload@^5.0.8:
   resolved "https://registry.yarnpkg.com/cypress-file-upload/-/cypress-file-upload-5.0.8.tgz#d8824cbeaab798e44be8009769f9a6c9daa1b4a1"
   integrity sha512-+8VzNabRk3zG6x8f8BWArF/xA/W0VK4IZNx3MV0jFWrJS/qKn8eHfa5nU73P9fOQAgwHFJx7zjg4lwOnljMO8g==
 
-cypress-terminal-report@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/cypress-terminal-report/-/cypress-terminal-report-5.0.1.tgz#4b94126565c36c0fb12defb46806d03c1109a75c"
-  integrity sha512-JJWjKnmZwgGe+PfDMYL43CU0n/nwOnAHUaohbdDwOAYzx/rE1sKEAAibKF+wAuss9C03j6IDnzxN15PSoOH6yQ==
+cypress-terminal-report@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/cypress-terminal-report/-/cypress-terminal-report-5.0.2.tgz#923db46f06c4b32021c48da0177065ea1af2d999"
+  integrity sha512-YJ6HODTvxKD0FYQX2p3f1DlBRcJcMJjRh3JWZZrBte4dQdnTuIElb4jPh3zbcqsV4MJ+QwF6XyJoXybZgg6kHg==
   dependencies:
     chalk "^4.0.0"
     fs-extra "^10.1.0"
     semver "^7.3.5"
     tv4 "^1.3.0"
 
-cypress@11.2.0:
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-11.2.0.tgz#63edef8c387b687066c5493f6f0ad7b9ced4b2b7"
-  integrity sha512-u61UGwtu7lpsNWLUma/FKNOsrjcI6wleNmda/TyKHe0dOBcVjbCPlp1N6uwFZ0doXev7f/91YDpU9bqDCFeBLA==
+cypress@12.5.1:
+  version "12.5.1"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-12.5.1.tgz#effdcccdd5a6187d61d497300903d4f3b5b21b6e"
+  integrity sha512-ZmCmJ3lsyeOpBfh410m5+AO2CO1AxAzFBt7k6/uVbNcrNZje1vdiwYTpj2ksPKg9mjr9lR6V8tmlDNMvr4H/YQ==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
@@ -3949,9 +3949,10 @@ rollup-plugin-visualizer@^5.9.0:
     yargs "^17.5.1"
 
 rollup@^3.10.0:
-  version "3.12.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.12.1.tgz#2975b97713e4af98c15e7024b88292d7fddb3853"
-  integrity sha512-t9elERrz2i4UU9z7AwISj3CQcXP39cWxgRWLdf4Tm6aKm1eYrqHIgjzXBgb67GNY1sZckTFFi0oMozh3/S++Ig==
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-3.13.0.tgz#202883a91b5d1bf98302efe4daa907e3e5e4ae94"
+  integrity sha512-HJwQtrXAc0AmyDohTJ/2c+Bx/sWPScJLlAUJ1kuD7rAkCro8Cr2SnVB2gVYBiSLxpgD2kZ24jbyXtG++GumrYQ==
+
   optionalDependencies:
     fsevents "~2.3.2"
 

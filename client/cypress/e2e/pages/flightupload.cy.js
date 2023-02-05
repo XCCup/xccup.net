@@ -401,7 +401,7 @@ describe("check flight upload page", () => {
       "contain.text",
       expectedFlightState
     );
-    cy.url().as("flightURL");
+    cy.url().as("flightURL", { type: "static" });
 
     // Switch to admin and accept violation
     cy.logout();
