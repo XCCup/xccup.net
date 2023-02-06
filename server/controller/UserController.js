@@ -587,7 +587,6 @@ router.post(
   checkStringObjectNotEmpty("brand"),
   checkStringObjectNotEmpty("model"),
   checkStringObjectNotEmpty("gliderClass"),
-  checkIsBoolean("reynoldsClass"),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
 
@@ -597,7 +596,7 @@ router.post(
       brand,
       model,
       gliderClass,
-      reynoldsClass,
+      reynoldsClass: reynoldsClass ?? false,
     };
 
     try {
