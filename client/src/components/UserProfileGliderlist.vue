@@ -19,7 +19,6 @@
       />
       <label class="form-check-label" :for="glider.id">
         {{ formatGliderName(glider) }}
-        <FeatherIcon v-if="glider.reynoldsClass" class="me-1" />
         <a href="#" data-cy="delete-glider" @click.prevent="onRemove(glider)">
           <i class="bi bi-trash"></i>
         </a>
@@ -80,7 +79,7 @@ const addModal = ref<Modal | null>(null);
 const showAddGliderSpinner = ref(false);
 const showSpinner = ref(false);
 
-const addGliderErrorMessage = ref<string | undefined>(undefined);
+const addGliderErrorMessage = ref<string | null>(null);
 
 // Update local copy of glider data
 const updateGliderData = (data: any) => {
@@ -144,10 +143,9 @@ const addGlider = async (glider: Glider) => {
   try {
     showAddGliderSpinner.value = true;
     const res = await ApiService.addGlider(glider);
-
     if (res.status != 200) throw res.statusText;
     updateGliderData(res.data);
-    addGliderErrorMessage.value = undefined;
+    addGliderErrorMessage.value = null;
     addModal.value?.hide();
     emit("gliders-changed");
   } catch (error) {
