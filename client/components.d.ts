@@ -42,6 +42,7 @@ declare module '@vue/runtime-core' {
     CompRules: typeof import('./src/components/CompRules.vue')['default']
     DailyResults: typeof import('./src/components/DailyResults.vue')['default']
     DailyResultsMap: typeof import('./src/components/DailyResultsMap.vue')['default']
+    FeatherIcon: typeof import('./src/components/admin/FeatherIcon.vue')['default']
     FilterPanel: typeof import('./src/components/FilterPanel.vue')['default']
     FlightAirbuddies: typeof import('./src/components/FlightAirbuddies.vue')['default']
     FlightBarogramm: typeof import('./src/components/FlightBarogramm.vue')['default']
