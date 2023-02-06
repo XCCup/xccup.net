@@ -38,7 +38,7 @@
           <select
             id="ranking-class-select"
             v-model="newGlider.gliderClass"
-            class="form-select mb-3"
+            class="form-select"
           >
             <option disabled value selected>Geräteklasse</option>
             <option
@@ -49,17 +49,6 @@
               {{ gliderClass.description }}
             </option>
           </select>
-          <div v-if="reynoldsClassIsEnabled" class="form-check">
-            <input
-              id="reynolds-check-box"
-              v-model="newGlider.reynoldsClass"
-              class="form-check-input"
-              type="checkbox"
-            />
-            <label class="form-check-label" for="reynolds-check-box">
-              Leichtgewichtswertung
-            </label>
-          </div>
         </div>
         <div class="modal-footer">
           <BaseError id="loginErrorMessage" :error-message="errorMessage" />
@@ -86,27 +75,32 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import ApiService from "@/services/ApiService";
 import { ref, computed, reactive, onMounted } from "vue";
 import { Modal } from "bootstrap";
 
 const emit = defineEmits(["add-glider"]);
 
-defineProps<{
-  showSpinner?: boolean;
-  errorMessage?: string;
-}>();
+defineProps({
+  showSpinner: {
+    type: Boolean,
+    default: false,
+  },
+  errorMessage: {
+    type: [String, null],
+    default: null,
+  },
+});
 
-const _modal = ref();
-const modal = ref<Modal | null>();
-
+const _modal = ref(null);
+const modal = ref(null);
 onMounted(() => {
   modal.value = new Modal(_modal.value);
 });
 
-const show = () => modal.value?.show();
-const hide = () => modal.value?.hide();
+const show = () => modal.value.show();
+const hide = () => modal.value.hide();
 
 defineExpose({ show, hide });
 
@@ -114,39 +108,12 @@ const newGlider = reactive({
   brand: "",
   model: "",
   gliderClass: "",
-  reynoldsClass: false,
 });
 
-// TODO: Introduce common types between backend and client as these are duplicate type definitions
-
-type GliderClass =
-  | "AB_low"
-  | "AB_high"
-  | "C_low"
-  | "C_high"
-  | "D_low"
-  | "D_high"
-  | "Tandem"
-  | "HG_1_Turm"
-  | "HG_1_Turmlos"
-  | "HG_5_starr";
-
-type GliderClasses = {
-  [key in GliderClass]: {
-    scoringMultiplicator: {
-      BASE: number;
-      FREE: number;
-      FLAT: number;
-      FAI: number;
-    };
-    description: string;
-    shortDescription: string;
-  };
-};
-
 // Fetch data
-const brands = ref<string[] | undefined>();
-const gliderClasses = ref<GliderClasses | undefined>();
+
+const brands = ref(null);
+const gliderClasses = ref(null);
 
 try {
   [brands.value, gliderClasses.value] = (
@@ -156,29 +123,15 @@ try {
   console.log(error);
 }
 
-const saveButtonIsEnabled = true;
-
-// computed(() => {
-//   return (
-//     newGlider.model.length > 2 &&
-//     newGlider.brand != "" &&
-//     newGlider.gliderClass != ""
-//   );
-// });
-
-const qualifiedForReynoldsClass = true;
-// computed(() =>
-//   ["AB_low", "AB_high", "C_low", "C_high", "D_low", "D_high"].includes(
-//     newGlider.gliderClass
-//   )
-// );
-
-const reynoldsClassIsEnabled = true;
-// computed(() => qualifiedForReynoldsClass.value);
+const saveButtonIsEnabled = computed(() => {
+  return (
+    (newGlider.model.length > 2) &
+    (newGlider.brand != "") &
+    (newGlider.gliderClass != "")
+  );
+});
 
 const onAddGlider = () => {
-  // if (!qualifiedForReynoldsClass.value)
-  newGlider.reynoldsClass = false;
   emit("add-glider", newGlider);
 };
 </script>
