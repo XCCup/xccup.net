@@ -49,7 +49,7 @@
               {{ gliderClass.description }}
             </option>
           </select>
-          <!-- <div v-if="reynoldsClassIsEnabled" class="form-check">
+          <div v-if="reynoldsClassIsEnabled" class="form-check">
             <input
               id="reynolds-check-box"
               v-model="newGlider.reynoldsClass"
@@ -59,7 +59,7 @@
             <label class="form-check-label" for="reynolds-check-box">
               Leichtgewichtswertung
             </label>
-          </div> -->
+          </div>
         </div>
         <div class="modal-footer">
           <BaseError id="loginErrorMessage" :error-message="errorMessage" />
@@ -117,10 +117,8 @@ onMounted(() => {
   modal.value = new Modal(_modal.value);
 });
 
-// const show = () => modal.value?.show();
-// const hide = () => modal.value?.hide();
-const show = () => modal.value.show();
-const hide = () => modal.value.hide();
+const show = () => modal.value?.show();
+const hide = () => modal.value?.hide();
 
 defineExpose({ show, hide });
 
@@ -180,16 +178,16 @@ const saveButtonIsEnabled = computed(() => {
   );
 });
 
-// const qualifiedForReynoldsClass = computed(() =>
-//   ["AB_low", "AB_high", "C_low", "C_high", "D_low", "D_high"].includes(
-//     newGlider.gliderClass
-//   )
-// );
+const qualifiedForReynoldsClass = computed(() =>
+  ["AB_low", "AB_high", "C_low", "C_high", "D_low", "D_high"].includes(
+    newGlider.gliderClass
+  )
+);
 
-// const reynoldsClassIsEnabled = computed(() => qualifiedForReynoldsClass.value);
+const reynoldsClassIsEnabled = computed(() => qualifiedForReynoldsClass.value);
 
 const onAddGlider = () => {
-  // if (!qualifiedForReynoldsClass.value) newGlider.reynoldsClass = false;
+  if (!qualifiedForReynoldsClass.value) newGlider.reynoldsClass = false;
   emit("add-glider", newGlider);
 };
 </script>
