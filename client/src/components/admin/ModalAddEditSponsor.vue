@@ -137,6 +137,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  sponsorObject: {
+    type: Object,
+    required: true,
+  },
 });
 
 const emit = defineEmits(["save-sponsor", "logo-updated"]);
