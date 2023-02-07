@@ -789,11 +789,10 @@ async function calcFlightStatus(
   if (!flightPoints) return FLIGHT_STATE.IN_PROCESS;
 
   const currentSeason = await getCurrentActive();
-  const isOffSeason = false;
-  // const isOffSeason = !moment(takeoffTime).isBetween(
-  //   currentSeason.startDate,
-  //   currentSeason.endDate
-  // );
+  const isOffSeason = !moment(takeoffTime).isBetween(
+    currentSeason.startDate,
+    currentSeason.endDate
+  );
 
   if (onlyLogbook || currentSeason.isPaused == true || isOffSeason)
     return FLIGHT_STATE.FLIGHTBOOK;
