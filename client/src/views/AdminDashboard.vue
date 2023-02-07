@@ -252,12 +252,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { setWindowName } from "../helper/utils";
 import { ref } from "vue";
 import useAuth from "../composables/useAuth";
-import type AdminFlightsVue from "@/components/admin/AdminFlights.vue";
-import type AdminSitesVue from "@/components/admin/AdminSites.vue";
+// import type AdminFlightsVue from "@/components/admin/AdminFlights.vue";
+// import type AdminSitesVue from "@/components/admin/AdminSites.vue";
 import AdminPhotos from "../components/admin/AdminPhotos.vue";
 import AdminSponsors from "../components/admin/AdminSponsors.vue";
 
@@ -265,8 +265,10 @@ const { isAdmin } = useAuth();
 
 setWindowName("Admin");
 
-const adminFlights = ref<InstanceType<typeof AdminFlightsVue> | null>(null);
-const adminSites = ref<InstanceType<typeof AdminSitesVue> | null>(null);
+const adminFlights = ref(null);
+const adminSites = ref(null);
+// const adminFlights = ref<InstanceType<typeof AdminFlightsVue> | null>(null);
+// const adminSites = ref<InstanceType<typeof AdminSitesVue> | null>(null);
 </script>
 
 <style scoped></style>
