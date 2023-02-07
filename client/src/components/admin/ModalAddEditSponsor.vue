@@ -113,24 +113,36 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-import type { Sponsor } from "@/types/Sponsor";
+<script setup>
+// import type { Sponsor } from "@/types/Sponsor";
+// import type { Ref } from "vue";
 import { cloneDeep } from "lodash-es";
-import { computed, ref, watch, watchEffect, type Ref } from "vue";
+import { computed, ref, watch, watchEffect } from "vue";
 
-interface Props {
-  sponsorObject: Sponsor;
-  showSpinner: boolean;
-  errorMessage: string;
-}
-const props = withDefaults(defineProps<Props>(), {
-  showSpinner: false,
-  errorMessage: "",
+// interface Props {
+//   sponsorObject: Sponsor;
+//   showSpinner: boolean;
+//   errorMessage: string;
+// }
+// const props = withDefaults(defineProps<Props>(), {
+//   showSpinner: false,
+//   errorMessage: "",
+// });
+const props = defineProps({
+  showSpinner: {
+    type: Boolean,
+    default: false,
+  },
+  errorMessage: {
+    type: String,
+    default: "",
+  },
 });
 
 const emit = defineEmits(["save-sponsor", "logo-updated"]);
 const currentYear = new Date().getFullYear();
-const sponsor: Ref<Sponsor> = ref(cloneDeep(props.sponsorObject));
+const sponsor = ref(cloneDeep(props.sponsorObject));
+// const sponsor: Ref<Sponsor> = ref(cloneDeep(props.sponsorObject));
 const isActiveSponsor = ref(
   sponsor.value.sponsorInSeasons?.includes(currentYear)
 );
@@ -166,7 +178,8 @@ const onSaveSponsor = () => {
   emit("save-sponsor", sponsor.value);
 };
 
-const onLogoUpdated = (type: string) => {
+// const onLogoUpdated = (type: string) => {
+const onLogoUpdated = (type) => {
   emit("logo-updated", type);
 };
 </script>
