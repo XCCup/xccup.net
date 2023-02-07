@@ -544,7 +544,6 @@ const service = {
       where,
       siteRegion,
     })) as unknown as QueryResult[];
-    const result = aggregateFlightsOverUser(resultQuery);
 
     const resultsReynoldsClass = aggregateFlightsOverUser(resultQuery);
 

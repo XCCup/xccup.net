@@ -15,7 +15,6 @@ import { COUNTRY, STATE as USER_STATE } from "../constants/user-constants";
 import { FLIGHT_STATE } from "../constants/flight-constants";
 import logger from "../config/logger";
 import config from "../config/env-config";
-import { deleteCache } from "../controller/CacheManager";
 import {
   createGeometry,
   extractTimeAndHeights,
@@ -790,10 +789,11 @@ async function calcFlightStatus(
   if (!flightPoints) return FLIGHT_STATE.IN_PROCESS;
 
   const currentSeason = await getCurrentActive();
-  const isOffSeason = !moment(takeoffTime).isBetween(
-    currentSeason.startDate,
-    currentSeason.endDate
-  );
+  const isOffSeason = false;
+  // const isOffSeason = !moment(takeoffTime).isBetween(
+  //   currentSeason.startDate,
+  //   currentSeason.endDate
+  // );
 
   if (onlyLogbook || currentSeason.isPaused == true || isOffSeason)
     return FLIGHT_STATE.FLIGHTBOOK;
