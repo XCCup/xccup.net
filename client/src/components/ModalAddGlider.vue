@@ -57,7 +57,7 @@
               type="checkbox"
             />
             <label class="form-check-label" for="reynolds-check-box">
-              Leichtgewichtswertung
+              Leichtgewichtswertung (TOW &le; 85kg) <FeatherIcon />
             </label>
           </div>
         </div>
