@@ -41,21 +41,26 @@
   />
 </template>
 
-<script setup lang="ts">
+<script setup>
 import ApiService from "@/services/ApiService";
 import { Modal } from "bootstrap";
 import { onMounted, ref } from "vue";
-import type { Ref } from "vue";
-import type { NewSponsor, Sponsor } from "@/types/Sponsor";
+// import type { Ref } from "vue";
+// import type { NewSponsor, Sponsor } from "@/types/Sponsor";
 import AdminSponsorsTable from "./AdminSponsorsTable.vue";
 import ModalAddEditSponsor from "./ModalAddEditSponsor.vue";
 import { GENERIC_ERROR } from "@/common/Constants";
 
-const sponsors: Ref<Sponsor[]> = ref([]);
-const activeSponsors: Ref<Sponsor[]> = ref([]);
-const furtherSponsors: Ref<Sponsor[]> = ref([]);
+const sponsors = ref([]);
+const activeSponsors = ref([]);
+const furtherSponsors = ref([]);
 
-const selectedSponsor: Ref<Sponsor> = ref(createNewSponsorObject());
+const selectedSponsor = ref(createNewSponsorObject());
+// const sponsors: Ref<Sponsor[]> = ref([]);
+// const activeSponsors: Ref<Sponsor[]> = ref([]);
+// const furtherSponsors: Ref<Sponsor[]> = ref([]);
+
+// const selectedSponsor: Ref<Sponsor> = ref(createNewSponsorObject());
 
 const confirmMessage = ref("");
 const confirmModalId = "modalSponsorConfirm";
@@ -63,8 +68,10 @@ const confirmModalId = "modalSponsorConfirm";
 const showSpinner = ref(false);
 const errorMessage = ref("");
 
-const confirmModal = ref<Modal>();
-const addEditSponsorModal = ref<Modal>();
+const confirmModal = ref();
+const addEditSponsorModal = ref();
+// const confirmModal = ref<Modal>();
+// const addEditSponsorModal = ref<Modal>();
 onMounted(() => {
   const addEditModalElement = document.getElementById("addEditSponsorModal");
   if (addEditModalElement)
@@ -91,7 +98,8 @@ function onNew() {
   addEditSponsorModal.value?.show();
 }
 
-function onEdit(sponsor: Sponsor) {
+// function onEdit(sponsor: Sponsor) {
+function onEdit(sponsor) {
   // Ensure no null value
   sponsor.tagline = sponsor.tagline ?? "";
   selectedSponsor.value = sponsor;
@@ -100,7 +108,8 @@ function onEdit(sponsor: Sponsor) {
   addEditSponsorModal.value?.show();
 }
 
-function onDelete(sponsor: Sponsor) {
+// function onDelete(sponsor: Sponsor) {
+function onDelete(sponsor) {
   confirmMessage.value = `Willst du den Eintrag ${sponsor.name} wirklich löschen?`;
   selectedSponsor.value = sponsor;
   confirmModal.value?.show();
@@ -113,7 +122,8 @@ async function processConfirmResult() {
   confirmModal.value?.hide();
 }
 
-async function onSave(sponsor: Sponsor) {
+// async function onSave(sponsor: Sponsor) {
+async function onSave(sponsor) {
   try {
     showSpinner.value = true;
     if (sponsor.id) {
@@ -131,7 +141,8 @@ async function onSave(sponsor: Sponsor) {
   }
 }
 
-function createNewSponsorObject(): NewSponsor {
+// function createNewSponsorObject(): NewSponsor {
+function createNewSponsorObject() {
   return {
     name: "",
     website: "",
@@ -142,7 +153,8 @@ function createNewSponsorObject(): NewSponsor {
   };
 }
 
-function splitSponsorsAndSortEntries(sponsors: Sponsor[]) {
+// function splitSponsorsAndSortEntries(sponsors: Sponsor[]) {
+function splitSponsorsAndSortEntries(sponsors) {
   sponsors.sort((a, b) => a.name.localeCompare(b.name));
   activeSponsors.value = sponsors
     .filter((s) => s.sponsorInSeasons?.includes(new Date().getFullYear()))
