@@ -363,7 +363,11 @@ const service = {
     );
     sortDescendingByTotalPoints(resultsWithTotals);
 
-    return addConstantInformationToResult(result, constantsForResult, limit);
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      constantsForResult,
+      limit
+    );
   },
 
   /**
@@ -412,7 +416,11 @@ const service = {
     );
     sortDescendingByTotalPoints(resultsWithTotals);
 
-    return addConstantInformationToResult(result, constantsForResult, limit);
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      constantsForResult,
+      limit
+    );
   },
 
   getEarlyBird: async ({
