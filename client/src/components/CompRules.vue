@@ -21,15 +21,23 @@
       <li class="mb-3">
         <strong>Gewertete Flüge</strong><br />
         <p class="mb-3">
-          Flüge mit Start im XCCup Gebiet.<br />
+          Flüge mit Start im XCCup Gebiet.<p />
+          Koordinaten<br />
+          NO: 51.68, 10.38<br />
+          NW: 51.68, 6.02<br />
+          SW: 48.93, 6.02<br />
+          SO: 48.93, 10.38<br />
+        </p>
+        <p>
           F-Schlepp: Schlepphöhe darf 1000m und 5km Radius vom Flugfeld nicht
           überschreiten.
         </p>
-
         Ein Flug muss eine Punktzahl von mindestens 60 erreichen, um als
         Wertungsflug zu zählen. <br />
         Piloten die mindestens 2 Wertungsflüge erzielen, qualifizieren sich für
         ein XCCup T-Shirt.
+
+        <p class="mb-3"></p>
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
@@ -39,10 +47,7 @@
         <!-- TODO: Tabelle oder Link einfügen "hier" -->
         <strong>Faktoren</strong><br />
         Details zu den Faktoren der Geräteklassen sind hier zusammengefasst.
-        <router-link
-          to="/ausschreibung#factorPanel"
-          @click.capture="anchorHashCheck('factorPanel')"
-        >
+        <router-link to="/ausschreibung#factorPanel">
           <i class="bi bi-box-arrow-in-right"></i>
         </router-link>
       </li>
@@ -70,7 +75,7 @@
           <li>Sport High: Schirme EN A+B mit einer Streckung >=5,2</li>
         </ul>
 
-        <strong> Intermediate Klasse</strong> (EN C)
+        <strong>Intermediate Klasse</strong> (EN C)
         <ul>
           <li>
             Intermediate Low: Schirme EN C mit einer maximalen Streckung &lt;6,4
@@ -139,7 +144,7 @@
         Teilnahme an einem Team einen Flug eingereicht hat, so zählt dieser Flug
         nicht in der Teamwertung.
       </li>
-      <li class="mb-3">
+      <li id="reynolds-class" class="mb-3">
         <strong>Leichtgewichtswertung (Reynolds Class)</strong><br />
         Alle Flüge mit Gleitschirmen deren zugelassenes Startgewicht maximal
         85kg beträgt.
@@ -264,29 +269,6 @@
         sind ausgeschlossen.
       </li>
     </ol>
-    <p>Das XCCup Komitee 10.2.2023</p>
+    <p>Das XCCup Komitee 11.2.2023</p>
   </div>
 </template>
-
-<script setup>
-import { useRoute } from "vue-router";
-const route = useRoute();
-
-function anchorHashCheck(element) {
-  console.log("Anchor hash check");
-
-  const newLocal = route.hash.slice(1);
-  console.log("FUC HASH: ", newLocal);
-  console.log("FUC element: ", element);
-  // if (window.location.hash === route.hash) {
-  const el = document.getElementById(element);
-
-  console.log("FUC EL: ", el);
-
-  if (el) {
-    console.log("FUC EL TOP: ", el.offsetTop);
-    window.scroll(0, el.offsetTop);
-  }
-  // }
-}
-</script>
