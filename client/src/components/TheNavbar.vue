@@ -129,7 +129,7 @@ const handleLogout = async () => {
                   >Seniorenwertung</router-link
                 >
               </li>
-              <li>
+              <li v-if="false">
                 <router-link
                   :to="{
                     name: 'ResultsLadies',
