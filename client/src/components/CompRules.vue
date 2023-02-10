@@ -21,7 +21,7 @@
       <li class="mb-3">
         <strong>Gewertete Flüge</strong><br />
         <p class="mb-3">
-          Flüge mit Start im XCCup Gebiet.<p />
+          Flüge mit Start im XCCup Gebiet.<br /><br />
           Koordinaten<br />
           NO: 51.68, 10.38<br />
           NW: 51.68, 6.02<br />
@@ -36,8 +36,6 @@
         Wertungsflug zu zählen. <br />
         Piloten die mindestens 2 Wertungsflüge erzielen, qualifizieren sich für
         ein XCCup T-Shirt.
-
-        <p class="mb-3"></p>
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
