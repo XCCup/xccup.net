@@ -57,12 +57,12 @@
               type="checkbox"
             />
             <label class="form-check-label" for="reynolds-check-box">
-              Leichtgewichtswertung
+              Leichtgewichtswertung <FeatherIcon />
             </label>
             <p>
               <router-link :to="{ name: 'Rules', hash: '#reynolds-class' }"
-                >Startgewicht max. 85kg</router-link
-              >
+                >Startgewicht max. 85kg
+              </router-link>
             </p>
           </div>
         </div>
@@ -200,22 +200,4 @@ const onAddGlider = () => {
   if (!qualifiedForReynoldsClass.value) newGlider.reynoldsClass = false;
   emit("add-glider", newGlider);
 };
-
-function anchorHashCheck(element) {
-  console.log("Anchor hash check");
-
-  const newLocal = route.hash.slice(1);
-  console.log("FUC HASH: ", newLocal);
-  console.log("FUC element: ", element);
-  // if (window.location.hash === route.hash) {
-  const el = document.getElementById(element);
-
-  console.log("FUC EL: ", el);
-
-  if (el) {
-    console.log("FUC EL TOP: ", el.offsetTop);
-    window.scroll(0, el.offsetTop);
-  }
-  // }
-}
 </script>
