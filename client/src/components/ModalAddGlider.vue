@@ -57,8 +57,13 @@
               type="checkbox"
             />
             <label class="form-check-label" for="reynolds-check-box">
-              Leichtgewichtswertung (TOW &le; 85kg) <FeatherIcon />
+              Leichtgewichtswertung
             </label>
+            <p>
+              <router-link :to="{ name: 'Rules', hash: '#reynolds-class' }"
+                >Startgewicht max. 85kg</router-link
+              >
+            </p>
           </div>
         </div>
         <div class="modal-footer">
@@ -88,8 +93,11 @@
 </template>
 <script setup>
 import ApiService from "@/services/ApiService";
-import { ref, computed, reactive, onMounted } from "vue";
+import { ref, computed, reactive, onMounted, onUnmounted } from "vue";
 import { Modal } from "bootstrap";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const emit = defineEmits(["add-glider"]);
 
@@ -116,6 +124,8 @@ const modal = ref(null);
 onMounted(() => {
   modal.value = new Modal(_modal.value);
 });
+
+onUnmounted(() => modal.value?.hide());
 
 const show = () => modal.value?.show();
 const hide = () => modal.value?.hide();
@@ -190,4 +200,22 @@ const onAddGlider = () => {
   if (!qualifiedForReynoldsClass.value) newGlider.reynoldsClass = false;
   emit("add-glider", newGlider);
 };
+
+function anchorHashCheck(element) {
+  console.log("Anchor hash check");
+
+  const newLocal = route.hash.slice(1);
+  console.log("FUC HASH: ", newLocal);
+  console.log("FUC element: ", element);
+  // if (window.location.hash === route.hash) {
+  const el = document.getElementById(element);
+
+  console.log("FUC EL: ", el);
+
+  if (el) {
+    console.log("FUC EL TOP: ", el.offsetTop);
+    window.scroll(0, el.offsetTop);
+  }
+  // }
+}
 </script>
