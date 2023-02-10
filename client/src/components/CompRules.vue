@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- TODO: Refine this -->
-    <h3>Ausschreibung XCCup 2022</h3>
+    <h3>Ausschreibung XCCup 2023</h3>
     <ol>
       <li class="mb-3">
         <strong>Art der Wertung</strong><br />
         Streckenflugwettbewerb mit Einzelwertung und Teamwertung,
-        Vereinswertung, Sonderwertung, Rheinland-Pfalz Pokal
+        Vereinswertung, Leichtgewichtswertung, Rheinland-Pfalz Pokal
       </li>
       <li class="mb-3">
         <strong>Teilnehmer</strong><br />
@@ -26,23 +26,14 @@
           überschreiten.
         </p>
 
-        <!-- TODO: Karte des XCCup Gebietes !  -->
-        <p class="mb-3">
-          <strong>Koordinaten</strong> <br />
-          NO: 51.68, 10.38<br />
-          NW: 51.68, 6.02<br />
-          SW: 48.93, 6.02<br />
-          SO: 48.93, 10.38<br />
-        </p>
-        <strong>Mindestpunktzahl</strong> <br />
         Ein Flug muss eine Punktzahl von mindestens 60 erreichen, um als
         Wertungsflug zu zählen. <br />
-        Piloten die mindestens 2 Wertungsflüge erzielen, qualifizierten sich für
+        Piloten die mindestens 2 Wertungsflüge erzielen, qualifizieren sich für
         ein XCCup T-Shirt.
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
-        15.02.2022 bis 15.10.2022
+        15.02.2023 bis 15.10.2023
       </li>
       <li class="mb-3">
         <!-- TODO: Tabelle oder Link einfügen "hier" -->
@@ -57,14 +48,18 @@
       </li>
       <li class="mb-3">
         <strong>Einzelwertung</strong><br />
-        Wertung der besten 3 eingereichten Flüge eines Piloten.
+        Wertung der besten drei eingereichten Flüge eines Piloten, wobei
+        mindestens eine freie Strecke und ein Dreieck eingereicht werden muss.
+        Bei Flügen mit Drachen zählen die besten drei eingereichten Flüge eines
+        Piloten unabhängig der Wertungsart.
       </li>
       <li class="mb-3">
         <strong>Gerätewertung</strong><br />
 
         <p class="mb-3">
           Für folgende Klassen erfolgt eine Wertung. Dabei umfassen
-          Wertungsklassen ggfs. verschiedene Geräteklassen.
+          Wertungsklassen ggfs. verschiedene Geräteklassen. Es gelten die
+          gleichen Regeln wie bei der Einzelwertung.
         </p>
 
         <strong>Sportklasse</strong> (EN A + EN B, Tandem)
@@ -145,11 +140,17 @@
         nicht in der Teamwertung.
       </li>
       <li class="mb-3">
+        <strong>Leichtgewichtswertung (Reynolds Class)</strong><br />
+        Alle Flüge mit Gleitschirmen deren zugelassenes Startgewicht maximal
+        85kg beträgt.
+      </li>
+      <li class="mb-3">
         <strong>Vereinswertung</strong><br />
         Alle teilnehmenden Vereine der aktiven XCCup Saison nehmen automatisch
-        an der Vereinswertung teil. In die Gesamtwertung des Vereins, gehen
-        jeweils die 3 besten Flüge jedes Vereinsmitgliedes ein. Es gilt die
-        Vereinszugehörigkeit zum Zeitpunkt der Einreichung eines Fluges.
+        an der Vereinswertung teil. In die Gesamtwertung des Vereins gehen die
+        30 besten Wertungsflüge des jeweiligen Vereins ein. Davon maximal 7 pro
+        Teilnehmer. Es gilt die Vereinszugehörigkeit zum Zeitpunkt der
+        Einreichung eines Fluges.
       </li>
       <li class="mb-3">
         <strong>Rheinland-Pfalz Pokal</strong><br />
@@ -221,20 +222,11 @@
         </ul>
       </li>
       <li class="mb-3">
-        <strong>Sonderwertungen</strong><br />
-        <p class="mb-3">
-          Es werden 2 Sonderwertungen in der Saison geflogen und gewertet.
+        <strong>Betrug / Unsportliches Verhalten</strong><br />
+        <p>
+          Jegliche Form von Betrug oder unsportlichem Verhalten wird mit
+          Ausschluß aus der Sasion geahndet.
         </p>
-        <ol>
-          <li class="mb-3">
-            <strong>Early Bird: </strong>Die ersten 20 gewerteten Flüge der
-            Saison
-          </li>
-          <li>
-            <strong>Letzte Flüge: </strong>Die letzen 20 gewerteten Flüge der
-            Saison
-          </li>
-        </ol>
       </li>
       <li class="mb-3">
         <strong>Luftrechtliche Bestimmungen</strong><br />
@@ -272,7 +264,7 @@
         sind ausgeschlossen.
       </li>
     </ol>
-    <p>Das XCCup Komitee 01.01.2022</p>
+    <p>Das XCCup Komitee 10.2.2023</p>
   </div>
 </template>
 
