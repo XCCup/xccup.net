@@ -55,6 +55,7 @@ const RANKINGS = {
   NEWCOMER: "newcomer",
   LUX: "LUX",
   RP: "RP",
+  REYNOLDS: "reynoldsClass",
 };
 
 interface OptionsGetOverall extends OptionsYearLimitRegion {
@@ -363,7 +364,11 @@ const service = {
     );
     sortDescendingByTotalPoints(resultsWithTotals);
 
-    return addConstantInformationToResult(result, constantsForResult, limit);
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      constantsForResult,
+      limit
+    );
   },
 
   /**
@@ -412,7 +417,11 @@ const service = {
     );
     sortDescendingByTotalPoints(resultsWithTotals);
 
-    return addConstantInformationToResult(result, constantsForResult, limit);
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      constantsForResult,
+      limit
+    );
   },
 
   getEarlyBird: async ({
@@ -511,6 +520,43 @@ const service = {
 
     const resultsWithTotals = limitFlightsForUserAndCalcTotals(
       resultsNewcomer,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
+
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      constantsForResult,
+      limit
+    );
+  },
+
+  getReynoldsClass: async ({
+    year,
+    limit,
+    siteRegion,
+  }: Partial<OptionsYearLimitRegion>) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS,
+      REMARKS: seasonDetail?.misc?.textMessages?.resultsReynoldsClass,
+    };
+
+    const where = createDefaultWhereForFlight({
+      seasonDetail,
+      isReynoldsClass: true,
+    });
+
+    const resultQuery = (await queryDb({
+      where,
+      siteRegion,
+    })) as unknown as QueryResult[];
+
+    const resultsReynoldsClass = aggregateFlightsOverUser(resultQuery);
+
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      resultsReynoldsClass,
       NUMBER_OF_SCORED_FLIGHTS
     );
     sortDescendingByTotalPoints(resultsWithTotals);
@@ -810,12 +856,14 @@ type Values<T> = T[keyof T];
 interface optionsCreateDefaultWhere {
   seasonDetail: Partial<SeasonDetailAttributes>;
   isSenior: boolean;
+  isReynoldsClass: boolean;
   flightStatuses: Values<typeof FLIGHT_STATE>[];
 }
 
 function createDefaultWhereForFlight({
   seasonDetail,
   isSenior,
+  isReynoldsClass,
   flightStatuses = [FLIGHT_STATE.IN_RANKING],
 }: Partial<optionsCreateDefaultWhere> = {}) {
   const where = {
@@ -840,6 +888,12 @@ function createDefaultWhereForFlight({
     // @ts-ignore
     where.ageOfUser = {
       [sequelize.Op.gte]: seasonDetail?.seniorStartAge,
+    };
+  }
+  if (isReynoldsClass) {
+    // @ts-ignore
+    where.glider = {
+      reynoldsClass: true,
     };
   }
 

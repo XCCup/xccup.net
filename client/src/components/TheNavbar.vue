@@ -129,7 +129,7 @@ const handleLogout = async () => {
                   >Seniorenwertung</router-link
                 >
               </li>
-              <li>
+              <li v-if="false">
                 <router-link
                   :to="{
                     name: 'ResultsLadies',
@@ -139,6 +139,18 @@ const handleLogout = async () => {
                 >
                   <i class="bi bi-gender-female me-1"></i
                   >Damenwertung</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsReynoldsClass',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                >
+                  <FeatherIcon />
+                  Leichtgewichtswertung</router-link
                 >
               </li>
               <li><hr class="dropdown-divider" /></li>
@@ -165,29 +177,6 @@ const handleLogout = async () => {
                   <i class="bi bi-flag me-1"></i>Luxemburg
                   Championat</router-link
                 >
-              </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <router-link
-                  :to="{
-                    name: 'ResultsEarlybird',
-                    params: { year: currentYear },
-                  }"
-                  class="dropdown-item"
-                >
-                  <i class="bi bi-brightness-alt-high me-1"></i>Early Bird
-                </router-link>
-              </li>
-              <li>
-                <router-link
-                  :to="{
-                    name: 'ResultsLatebird',
-                    params: { year: currentYear },
-                  }"
-                  class="dropdown-item"
-                >
-                  <i class="bi bi-brightness-alt-low-fill me-1"></i>Late Bird
-                </router-link>
               </li>
               <li><hr class="dropdown-divider" /></li>
 
@@ -260,7 +249,7 @@ const handleLogout = async () => {
               </li>
               <li>
                 <router-link :to="{ name: 'Rules' }" class="dropdown-item"
-                  >Ausschreibung 2022</router-link
+                  >Ausschreibung 2023</router-link
                 >
               </li>
             </ul>

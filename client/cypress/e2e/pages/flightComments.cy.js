@@ -129,9 +129,12 @@ describe("check flight comments", () => {
       .parent()
       .within(() => {
         cy.get("[data-cy=admin-edit-comment]").click();
-        cy.get("[data-cy=text-editor-textarea]").type(expectedNewComment);
-        cy.get("[data-cy=save-comment-button]").click();
       });
+
+    cy.get(':nth-child(2) > [data-cy="text-editor-textarea"]').type(
+      expectedNewComment
+    );
+    cy.get("[data-cy=save-comment-button]").click();
 
     // Check that comment has new value also after reload
     cy.visit("/flug/9");
