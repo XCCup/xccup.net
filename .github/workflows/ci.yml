@@ -72,7 +72,7 @@ jobs:
       # TODO: Fix cypress caching issue and remove the additional install
 
       - name: 🏃‍♀️ Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           start: docker-compose run --service-ports --rm client serve
           wait-on: http://localhost:4173
