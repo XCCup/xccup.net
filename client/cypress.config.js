@@ -1,7 +1,6 @@
-// Why do we use "require" instead of "import": https://github.com/cypress-io/cypress/issues/22038
-const { defineConfig } = require("cypress");
+import { defineConfig } from "cypress";
 
-module.exports = defineConfig({
+export default defineConfig({
   viewportWidth: 1600,
   viewportHeight: 900,
   video: false,

@@ -63,16 +63,8 @@ jobs:
       - name: 🖨 Print current server log before testing (just for debugging)
         run: docker logs server
 
-      - name: 🩹 Remove tsconfig.json from ./client # or cypress will fail… TODO: Why 🤷‍♂️
-        working-directory: ./client
-        run: rm tsconfig.json
-
-      - name: 🧪 Install cypress
-        run: npx cypress@12.5.1 install
-      # TODO: Fix cypress caching issue and remove the additional install
-
       - name: 🏃‍♀️ Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           start: docker-compose run --service-ports --rm client serve
           wait-on: http://localhost:4173
