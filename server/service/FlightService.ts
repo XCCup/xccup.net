@@ -15,7 +15,6 @@ import { COUNTRY, STATE as USER_STATE } from "../constants/user-constants";
 import { FLIGHT_STATE } from "../constants/flight-constants";
 import logger from "../config/logger";
 import config from "../config/env-config";
-import { deleteCache } from "../controller/CacheManager";
 import {
   createGeometry,
   extractTimeAndHeights,

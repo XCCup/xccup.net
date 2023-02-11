@@ -48,10 +48,7 @@
         <!-- TODO: Tabelle oder Link einfügen "hier" -->
         <strong>Faktoren</strong><br />
         Details zu den Faktoren der Geräteklassen sind hier zusammengefasst.
-        <router-link
-          to="/ausschreibung#factorPanel"
-          @click.capture="anchorHashCheck('factorPanel')"
-        >
+        <router-link to="/ausschreibung#factorPanel">
           <i class="bi bi-box-arrow-in-right"></i>
         </router-link>
       </li>
@@ -275,26 +272,3 @@
     <p>Das XCCup Komitee 01.01.2022</p>
   </div>
 </template>
-
-<script setup>
-import { useRoute } from "vue-router";
-const route = useRoute();
-
-function anchorHashCheck(element) {
-  console.log("Anchor hash check");
-
-  const newLocal = route.hash.slice(1);
-  console.log("FUC HASH: ", newLocal);
-  console.log("FUC element: ", element);
-  // if (window.location.hash === route.hash) {
-  const el = document.getElementById(element);
-
-  console.log("FUC EL: ", el);
-
-  if (el) {
-    console.log("FUC EL TOP: ", el.offsetTop);
-    window.scroll(0, el.offsetTop);
-  }
-  // }
-}
-</script>

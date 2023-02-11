@@ -7,4 +7,5 @@ export interface Glider {
     shortDescription: string;
     description?: string;
   };
+  reynoldsClass?: boolean;
 }
