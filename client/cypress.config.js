@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-// Why do we use "require" instead of "import": https://github.com/cypress-io/cypress/issues/22038
-=======
->>>>>>> main
 import { defineConfig } from "cypress";
 
 export default defineConfig({
