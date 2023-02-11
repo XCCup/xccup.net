@@ -67,9 +67,9 @@ jobs:
       #   working-directory: ./client
       #   run: rm tsconfig.json
 
-      - name: 🧪 Install cypress
-        run: npx cypress@12.5.1 install
-      # TODO: Fix cypress caching issue and remove the additional install
+      # - name: 🧪 Install cypress
+      #   run: npx cypress@12.5.1 install
+      # # TODO: Fix cypress caching issue and remove the additional install
 
       - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v5
