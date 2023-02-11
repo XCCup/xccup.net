@@ -37,6 +37,12 @@ export interface OverallFilterParams {
   sortOder: "desc" | "asc";
 }
 
+export interface ReynoldsClassFilterParams {
+  limit?: number;
+  year?: number;
+  siteRegion?: string;
+}
+
 export interface OverallLadiesFilterParams
   extends Omit<OverallFilterParams, "gender"> {}
 

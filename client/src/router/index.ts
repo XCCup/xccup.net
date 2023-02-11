@@ -3,7 +3,7 @@ import { Routes } from "./routes";
 import useAuth from "@/composables/useAuth";
 
 interface Scroll {
-  selector?: string;
+  el?: string;
   top?: number;
   behavior?: "smooth";
 }
@@ -14,7 +14,7 @@ const router = createRouter({
   scrollBehavior(to) {
     const scroll: Scroll = {};
 
-    if (to.hash) scroll.selector = to.hash;
+    if (to.hash) scroll.el = to.hash;
     if (to.meta.toTop) scroll.top = 0;
     if (to.meta.smoothScroll) scroll.behavior = "smooth";
 

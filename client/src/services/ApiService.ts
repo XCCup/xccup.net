@@ -11,6 +11,7 @@ import type {
   ResultsEarlyBirdFilterParams,
   ResultsLateBirdFilterParams,
   ResultsTeamsFilterParams,
+  ReynoldsClassFilterParams,
   RlpFilterParams,
   SeniorsFilterParams,
   TeamsFilterParams,
@@ -235,6 +236,11 @@ export default {
   },
   getResultsSeniors(params: SeniorsFilterParams) {
     return apiClient.get("results/seniors", {
+      params,
+    });
+  },
+  getResultsReynoldsClass(params: ReynoldsClassFilterParams) {
+    return apiClient.get("results/reynolds-class", {
       params,
     });
   },

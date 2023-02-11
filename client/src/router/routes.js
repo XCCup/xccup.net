@@ -83,6 +83,13 @@ export const Routes = [
     component: () => import("../views/ResultsLadies.vue"),
   },
   {
+    path: "/:year/leichtgewichtswertung/",
+    name: "ResultsReynoldsClass",
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import("../views/ResultsReynoldsClass.vue"),
+  },
+  {
     path: "/:year/lux-championat/",
     name: "ResultsLux",
     beforeEnter: validateRouteParamYear,
@@ -111,22 +118,6 @@ export const Routes = [
     component: () => import("../views/ResultsClubs.vue"),
   },
   {
-    path: "/:year/earlybird/",
-    name: "ResultsEarlybird",
-    props: () => ({ category: "earlyBird" }),
-    beforeEnter: validateRouteParamYear,
-
-    component: () => import("../views/ResultsSpecial.vue"),
-  },
-  {
-    path: "/:year/latebird/",
-    name: "ResultsLatebird",
-    props: () => ({ category: "lateBird" }),
-    beforeEnter: validateRouteParamYear,
-
-    component: () => import("../views/ResultsSpecial.vue"),
-  },
-  {
     path: "/fluggebietsrekorde/",
     name: "SiteRecords",
     props: true,
@@ -140,7 +131,6 @@ export const Routes = [
     meta: { requiredAuth: true },
     component: () => import("../views/FlightUpload.vue"),
   },
-
   {
     path: "/profil",
     name: "Profile",

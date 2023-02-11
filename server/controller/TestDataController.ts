@@ -89,7 +89,7 @@ router.get("/time/reset", async (req, res, next) => {
   try {
     logger.warn("TDC: Will reset system time");
     tk.reset();
-    logger.warn("TDC: System time was resetted");
+    logger.warn("TDC: System time was reset");
 
     deleteCache(["all"]);
 

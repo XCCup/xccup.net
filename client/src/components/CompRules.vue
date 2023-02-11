@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- TODO: Refine this -->
-    <h3>Ausschreibung XCCup 2022</h3>
+    <h3>Ausschreibung XCCup 2023</h3>
     <ol>
       <li class="mb-3">
         <strong>Art der Wertung</strong><br />
         Streckenflugwettbewerb mit Einzelwertung und Teamwertung,
-        Vereinswertung, Sonderwertung, Rheinland-Pfalz Pokal
+        Vereinswertung, Leichtgewichtswertung, Rheinland-Pfalz Pokal
       </li>
       <li class="mb-3">
         <strong>Teilnehmer</strong><br />
@@ -21,50 +21,48 @@
       <li class="mb-3">
         <strong>Gewertete Flüge</strong><br />
         <p class="mb-3">
-          Flüge mit Start im XCCup Gebiet.<br />
-          F-Schlepp: Schlepphöhe darf 1000m und 5km Radius vom Flugfeld nicht
-          überschreiten.
-        </p>
-
-        <!-- TODO: Karte des XCCup Gebietes !  -->
-        <p class="mb-3">
-          <strong>Koordinaten</strong> <br />
+          Flüge mit Start im XCCup Gebiet.<br /><br />
+          Koordinaten<br />
           NO: 51.68, 10.38<br />
           NW: 51.68, 6.02<br />
           SW: 48.93, 6.02<br />
           SO: 48.93, 10.38<br />
         </p>
-        <strong>Mindestpunktzahl</strong> <br />
+        <p>
+          F-Schlepp: Schlepphöhe darf 1000m und 5km Radius vom Flugfeld nicht
+          überschreiten.
+        </p>
         Ein Flug muss eine Punktzahl von mindestens 60 erreichen, um als
         Wertungsflug zu zählen. <br />
-        Piloten die mindestens 2 Wertungsflüge erzielen, qualifizierten sich für
+        Piloten die mindestens 2 Wertungsflüge erzielen, qualifizieren sich für
         ein XCCup T-Shirt.
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
-        15.02.2022 bis 15.10.2022
+        15.02.2023 bis 15.10.2023
       </li>
       <li class="mb-3">
         <!-- TODO: Tabelle oder Link einfügen "hier" -->
         <strong>Faktoren</strong><br />
         Details zu den Faktoren der Geräteklassen sind hier zusammengefasst.
-        <router-link
-          to="/ausschreibung#factorPanel"
-          @click.capture="anchorHashCheck('factorPanel')"
-        >
+        <router-link to="/ausschreibung#factorPanel">
           <i class="bi bi-box-arrow-in-right"></i>
         </router-link>
       </li>
       <li class="mb-3">
         <strong>Einzelwertung</strong><br />
-        Wertung der besten 3 eingereichten Flüge eines Piloten.
+        Wertung der besten drei eingereichten Flüge eines Piloten, wobei
+        mindestens eine freie Strecke und ein Dreieck eingereicht werden muss.
+        Bei Flügen mit Drachen zählen die besten drei eingereichten Flüge eines
+        Piloten unabhängig der Wertungsart.
       </li>
       <li class="mb-3">
         <strong>Gerätewertung</strong><br />
 
         <p class="mb-3">
           Für folgende Klassen erfolgt eine Wertung. Dabei umfassen
-          Wertungsklassen ggfs. verschiedene Geräteklassen.
+          Wertungsklassen ggfs. verschiedene Geräteklassen. Es gelten die
+          gleichen Regeln wie bei der Einzelwertung.
         </p>
 
         <strong>Sportklasse</strong> (EN A + EN B, Tandem)
@@ -75,7 +73,7 @@
           <li>Sport High: Schirme EN A+B mit einer Streckung >=5,2</li>
         </ul>
 
-        <strong> Intermediate Klasse</strong> (EN C)
+        <strong>Intermediate Klasse</strong> (EN C)
         <ul>
           <li>
             Intermediate Low: Schirme EN C mit einer maximalen Streckung &lt;6,4
@@ -144,12 +142,18 @@
         Teilnahme an einem Team einen Flug eingereicht hat, so zählt dieser Flug
         nicht in der Teamwertung.
       </li>
+      <li id="reynolds-class" class="mb-3">
+        <strong>Leichtgewichtswertung (Reynolds Class)</strong><br />
+        Alle Flüge mit Gleitschirmen deren zugelassenes Startgewicht maximal
+        85kg beträgt.
+      </li>
       <li class="mb-3">
         <strong>Vereinswertung</strong><br />
         Alle teilnehmenden Vereine der aktiven XCCup Saison nehmen automatisch
-        an der Vereinswertung teil. In die Gesamtwertung des Vereins, gehen
-        jeweils die 3 besten Flüge jedes Vereinsmitgliedes ein. Es gilt die
-        Vereinszugehörigkeit zum Zeitpunkt der Einreichung eines Fluges.
+        an der Vereinswertung teil. In die Gesamtwertung des Vereins gehen die
+        30 besten Wertungsflüge des jeweiligen Vereins ein. Davon maximal 5 pro
+        Teilnehmer. Es gilt die Vereinszugehörigkeit zum Zeitpunkt der
+        Einreichung eines Fluges.
       </li>
       <li class="mb-3">
         <strong>Rheinland-Pfalz Pokal</strong><br />
@@ -221,20 +225,11 @@
         </ul>
       </li>
       <li class="mb-3">
-        <strong>Sonderwertungen</strong><br />
-        <p class="mb-3">
-          Es werden 2 Sonderwertungen in der Saison geflogen und gewertet.
+        <strong>Betrug / Unsportliches Verhalten</strong><br />
+        <p>
+          Jegliche Form von Betrug oder unsportlichem Verhalten wird mit
+          Ausschluß aus der Sasion geahndet.
         </p>
-        <ol>
-          <li class="mb-3">
-            <strong>Early Bird: </strong>Die ersten 20 gewerteten Flüge der
-            Saison
-          </li>
-          <li>
-            <strong>Letzte Flüge: </strong>Die letzen 20 gewerteten Flüge der
-            Saison
-          </li>
-        </ol>
       </li>
       <li class="mb-3">
         <strong>Luftrechtliche Bestimmungen</strong><br />
@@ -251,16 +246,14 @@
           Flüge innerhalb Deutschlands und Luxemburg geprüft.
         </p>
         <p>
-          Im Fall einer (evtl.) Luftraumverletzung hat der Pilot die Möglichkeit
-          entsprechende Informationen in der Flugbeschreibung einzugeben um die
-          Situation zu klären. Des weiteren wird der Pilot per E-Mail
-          aufgefordert eine Stellungnahme zur möglichen LRV abzugegeben. Ein
-          Flug mit möglichen LRV geht NICHT in die Wertung ein und bleibt bis
-          auf Weiteres unsichtbar. Hat der Pilot die Einhaltung aller Auflagen
-          bestätigt und eine schlüssige Erklärung geliefert, wird der Flug ohne
-          weitere Prüfung in die Wertung übernommen. Flüge werden nach einem
-          regelgerechten Einspruch überprüft und ggf. aus der Wertung genommen.
-          Der XCCup behält sich vor, Flüge die eine Luftraumverletzung
+          Im Fall einer (evtl.) Luftraumverletzung muss der Pilot entsprechende
+          Informationen in der Flugbeschreibung hinterlassen um die Situation zu
+          klären. Ein Flug mit möglichen LRV geht NICHT in die Wertung ein und
+          bleibt bis auf Weiteres unsichtbar. Hat der Pilot die Einhaltung aller
+          Auflagen bestätigt und eine schlüssige Erklärung geliefert, wird der
+          Flug ohne weitere Prüfung in die Wertung übernommen. Flüge werden nach
+          einem regelgerechten Einspruch überprüft und ggf. aus der Wertung
+          genommen. Der XCCup behält sich vor, Flüge die eine Luftraumverletzung
           beinhalten, nicht in die Wertung zu nehmen.
         </p>
       </li>
@@ -272,29 +265,6 @@
         sind ausgeschlossen.
       </li>
     </ol>
-    <p>Das XCCup Komitee 01.01.2022</p>
+    <p>Das XCCup Komitee 11.2.2023</p>
   </div>
 </template>
-
-<script setup>
-import { useRoute } from "vue-router";
-const route = useRoute();
-
-function anchorHashCheck(element) {
-  console.log("Anchor hash check");
-
-  const newLocal = route.hash.slice(1);
-  console.log("FUC HASH: ", newLocal);
-  console.log("FUC element: ", element);
-  // if (window.location.hash === route.hash) {
-  const el = document.getElementById(element);
-
-  console.log("FUC EL: ", el);
-
-  if (el) {
-    console.log("FUC EL TOP: ", el.offsetTop);
-    window.scroll(0, el.offsetTop);
-  }
-  // }
-}
-</script>
