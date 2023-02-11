@@ -249,7 +249,7 @@ const handleLogout = async () => {
               </li>
               <li>
                 <router-link :to="{ name: 'Rules' }" class="dropdown-item"
-                  >Ausschreibung 2022</router-link
+                  >Ausschreibung 2023</router-link
                 >
               </li>
             </ul>
