@@ -151,7 +151,7 @@
         <strong>Vereinswertung</strong><br />
         Alle teilnehmenden Vereine der aktiven XCCup Saison nehmen automatisch
         an der Vereinswertung teil. In die Gesamtwertung des Vereins gehen die
-        30 besten Wertungsflüge des jeweiligen Vereins ein. Davon maximal 7 pro
+        30 besten Wertungsflüge des jeweiligen Vereins ein. Davon maximal 5 pro
         Teilnehmer. Es gilt die Vereinszugehörigkeit zum Zeitpunkt der
         Einreichung eines Fluges.
       </li>
@@ -246,16 +246,14 @@
           Flüge innerhalb Deutschlands und Luxemburg geprüft.
         </p>
         <p>
-          Im Fall einer (evtl.) Luftraumverletzung hat der Pilot die Möglichkeit
-          entsprechende Informationen in der Flugbeschreibung einzugeben um die
-          Situation zu klären. Des weiteren wird der Pilot per E-Mail
-          aufgefordert eine Stellungnahme zur möglichen LRV abzugegeben. Ein
-          Flug mit möglichen LRV geht NICHT in die Wertung ein und bleibt bis
-          auf Weiteres unsichtbar. Hat der Pilot die Einhaltung aller Auflagen
-          bestätigt und eine schlüssige Erklärung geliefert, wird der Flug ohne
-          weitere Prüfung in die Wertung übernommen. Flüge werden nach einem
-          regelgerechten Einspruch überprüft und ggf. aus der Wertung genommen.
-          Der XCCup behält sich vor, Flüge die eine Luftraumverletzung
+          Im Fall einer (evtl.) Luftraumverletzung muss der Pilot entsprechende
+          Informationen in der Flugbeschreibung hinterlassen um die Situation zu
+          klären. Ein Flug mit möglichen LRV geht NICHT in die Wertung ein und
+          bleibt bis auf Weiteres unsichtbar. Hat der Pilot die Einhaltung aller
+          Auflagen bestätigt und eine schlüssige Erklärung geliefert, wird der
+          Flug ohne weitere Prüfung in die Wertung übernommen. Flüge werden nach
+          einem regelgerechten Einspruch überprüft und ggf. aus der Wertung
+          genommen. Der XCCup behält sich vor, Flüge die eine Luftraumverletzung
           beinhalten, nicht in die Wertung zu nehmen.
         </p>
       </li>
