@@ -167,29 +167,6 @@ const handleLogout = async () => {
                 >
               </li>
               <li><hr class="dropdown-divider" /></li>
-              <li>
-                <router-link
-                  :to="{
-                    name: 'ResultsEarlybird',
-                    params: { year: currentYear },
-                  }"
-                  class="dropdown-item"
-                >
-                  <i class="bi bi-brightness-alt-high me-1"></i>Early Bird
-                </router-link>
-              </li>
-              <li>
-                <router-link
-                  :to="{
-                    name: 'ResultsLatebird',
-                    params: { year: currentYear },
-                  }"
-                  class="dropdown-item"
-                >
-                  <i class="bi bi-brightness-alt-low-fill me-1"></i>Late Bird
-                </router-link>
-              </li>
-              <li><hr class="dropdown-divider" /></li>
 
               <li>
                 <router-link
