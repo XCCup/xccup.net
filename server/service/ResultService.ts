@@ -201,7 +201,10 @@ const service = {
     // The remarks text which will be displayed in the view.
     const remarks = createRemarks(
       seasonDetail?.misc?.textMessages?.resultsClub,
-      { NUMBER_OF_SCORED_FLIGHTS, MAX_NUMBER_OF_FLIGHTS_PER_CLUB }
+      {
+        NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_CLUB,
+        MAX_NUMBER_OF_FLIGHTS_PER_CLUB,
+      }
     );
     const constantsForResult = {
       NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_CLUB,
