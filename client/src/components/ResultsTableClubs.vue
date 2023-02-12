@@ -63,8 +63,12 @@
                         flightId: member.flights[n - 1].externalId,
                       },
                     }"
-                  >
-                    {{ member.flights[n - 1].flightPoints }}
+                    ><span
+                      v-if="member.flights[n - 1].isDismissed"
+                      class="text-decoration-line-through fst-italic"
+                      >{{ member.flights[n - 1].flightPoints }}</span
+                    >
+                    <span v-else>{{ member.flights[n - 1].flightPoints }}</span>
                   </router-link>
                 </td>
                 <td v-else>-</td>

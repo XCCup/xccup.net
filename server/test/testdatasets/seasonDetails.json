@@ -796,7 +796,14 @@
         "resultsTeams": "Die schlechtesten 3 Ergebnisse eines Teams werden gestrichen",
         "resultsSeniors": "Die Wertung beginnt ab einem Alter von 60 mit einem Bonus von 2% pro weiterem Lebensjahr",
         "resultsNewcomer": "Als Newcomer zählen alle Piloten, die in dieser Saison ihren allerersten Wertungsflug eingereicht haben. Es werden nur Flüge mit Geräten bis zur Sportklasse (EN A+EN B) berücksichtigt",
-        "resultsReynoldsClass": "Schirme mit einem zulässigen Startgewicht von maximal 85kg"
+        "resultsReynoldsClass": "Schirme mit einem zulässigen Startgewicht von maximal 85kg",
+        "resultsClub": "Für die Vereinswertung zählen jeweils nur die $MAX_NUMBER_OF_FLIGHTS_PER_CLUB besten Flüge eines jeden Vereins. Dabei gehen max. die $NUMBER_OF_SCORED_FLIGHTS besten Flüge eines einzelnen Piloten mit in die Wertung ein."
+      },
+      "rankingConstants": {
+        "club": {
+          "NUMBER_OF_SCORED_FLIGHTS": 5,
+          "MAX_NUMBER_OF_FLIGHTS_PER_CLUB": 30
+        }
       }
     }
   }

@@ -1,4 +1,3 @@
-import { FlightInstance, FlightInstanceUserInclude } from "../db/models/Flight";
 import { FlyingSiteInstance } from "../db/models/FlyingSite";
 
 export interface TeamBaseAttributes {
@@ -35,6 +34,7 @@ export interface ClubResults extends Totals {
   clubName: string;
   clubId: string;
   members: Member[];
+  totalFlights: number;
 }
 
 export interface UserResults {

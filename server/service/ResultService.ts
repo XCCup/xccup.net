@@ -189,7 +189,27 @@ const service = {
   getClub: async ({ year, limit }: Partial<OptionsYearLimitRegion>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const constantsForResult = { NUMBER_OF_SCORED_FLIGHTS };
+    // Determines how many flights per club member will be scored.
+    // Use global default if no value was found for that particular season.
+    const NUMBER_OF_SCORED_FLIGHTS_CLUB =
+      seasonDetail?.misc?.rankingConstants?.club?.NUMBER_OF_SCORED_FLIGHTS ??
+      NUMBER_OF_SCORED_FLIGHTS;
+    // The max number of flights which will be scored for one club.
+    const MAX_NUMBER_OF_FLIGHTS_PER_CLUB =
+      seasonDetail?.misc?.rankingConstants?.club
+        ?.MAX_NUMBER_OF_FLIGHTS_PER_CLUB;
+    // The remarks text which will be displayed in the view.
+    const remarks = createRemarks(
+      seasonDetail?.misc?.textMessages?.resultsClub,
+      {
+        NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_CLUB,
+        MAX_NUMBER_OF_FLIGHTS_PER_CLUB,
+      }
+    );
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS: NUMBER_OF_SCORED_FLIGHTS_CLUB,
+      REMARKS: remarks,
+    };
 
     const oldRes = await findOldResults(
       year,
@@ -206,7 +226,7 @@ const service = {
     const resultOverUser = aggregateFlightsOverUser(resultQuery);
     const resultsWithTotals = limitFlightsForUserAndCalcTotals(
       resultOverUser,
-      NUMBER_OF_SCORED_FLIGHTS
+      NUMBER_OF_SCORED_FLIGHTS_CLUB
     );
     const resultOverClub = aggregateOverClubAndCalcTotals(resultsWithTotals);
 
@@ -214,10 +234,16 @@ const service = {
       // Sort also members in club by totalPoints
       sortDescendingByTotalPoints(club.members);
     });
-    sortDescendingByTotalPoints(resultOverClub);
+
+    markFlightsToDismissClub(resultOverClub, MAX_NUMBER_OF_FLIGHTS_PER_CLUB);
+
+    const resultsOverClubDismissedTotals =
+      calcTotalsWithDismissedClubFlights(resultOverClub);
+
+    sortDescendingByTotalPoints(resultsOverClubDismissedTotals);
 
     return addConstantInformationToResult(
-      resultOverClub,
+      resultsOverClubDismissedTotals,
       constantsForResult,
       limit
     );
@@ -263,7 +289,10 @@ const service = {
           members: membersWithFlights,
         } as unknown as TeamWithMemberFlights;
 
-        markFlightsToDismiss(teamWithFlights);
+        markFlightsToDismiss(
+          teamWithFlights,
+          TEAM_SIZE * NUMBER_OF_SCORED_FLIGHTS - TEAM_DISMISSES
+        );
 
         teamWithFlights.members.forEach((member) => {
           calcTotalsOfMember(member);
@@ -583,25 +612,48 @@ const service = {
   },
 };
 
-function markFlightsToDismiss(team: TeamWithMemberFlights) {
+/**
+ * Creates a string out of the baseString and replaces all values which match the pattern $NAME_OF_VALUE.
+ *
+ */
+function createRemarks(baseString: string | undefined, replacements: Object) {
+  if (!baseString) return;
+
+  let string = baseString;
+  for (const [key, value] of Object.entries(replacements)) {
+    string = string.replace(`$${key}`, value);
+  }
+
+  return string;
+}
+
+function markFlightsToDismiss(
+  entityWithMembers: TeamWithMemberFlights | ClubResults,
+  maxNumberOfFlights: number
+) {
   let allFlights: UserResultFlight[] = [];
 
-  team.members.forEach((member) => {
+  entityWithMembers.members.forEach((member) => {
     allFlights = allFlights.concat(member.flights);
   });
   allFlights.sort((a, b) => b.flightPoints - a.flightPoints);
-  for (
-    let i = TEAM_SIZE * NUMBER_OF_SCORED_FLIGHTS - TEAM_DISMISSES;
-    i < allFlights.length;
-    i++
-  ) {
-    team.members.forEach((member) => {
+  for (let i = maxNumberOfFlights; i < allFlights.length; i++) {
+    entityWithMembers.members.forEach((member) => {
       const found = member.flights.find((f) => f.id == allFlights[i].id);
       if (found) {
         found.isDismissed = true;
       }
     });
   }
+}
+
+function markFlightsToDismissClub(
+  clubs: ClubResults[],
+  maxNumberOfFlights: number
+) {
+  clubs.forEach((club) => {
+    markFlightsToDismiss(club, maxNumberOfFlights);
+  });
 }
 
 function addConstantInformationToResult(
@@ -990,6 +1042,7 @@ function aggregateOverClubAndCalcTotals(
       found.members.push(memberEntry);
       found.totalPoints += memberEntry.totalPoints;
       found.totalDistance += memberEntry.totalDistance;
+      found.totalFlights += memberEntry.flights.length;
     } else {
       result.push({
         clubName: entry.club.name,
@@ -997,6 +1050,7 @@ function aggregateOverClubAndCalcTotals(
         members: [memberEntry],
         totalDistance: memberEntry.totalDistance,
         totalPoints: memberEntry.totalPoints,
+        totalFlights: memberEntry.flights.length,
       });
     }
   });
@@ -1045,6 +1099,26 @@ function aggregateFlightsOverUser(resultQuery: QueryResult[]) {
     }
   });
   return result;
+}
+
+function calcTotalsWithDismissedClubFlights(resultOverClub: ClubResults[]) {
+  return resultOverClub.map((c) => {
+    let totalDistanceDismissed: number = 0;
+    let totalPointsDismissed: number = 0;
+    c.members.forEach((m) => {
+      m.flights.forEach((f) => {
+        if (f.isDismissed) return;
+
+        totalDistanceDismissed += f.flightDistance;
+        totalPointsDismissed += f.flightPoints;
+      });
+    });
+    return {
+      ...c,
+      totalDistance: totalDistanceDismissed,
+      totalPoints: totalPointsDismissed,
+    };
+  });
 }
 
 async function retrieveSeasonDetails(year?: number) {
