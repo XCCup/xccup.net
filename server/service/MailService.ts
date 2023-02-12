@@ -45,6 +45,7 @@ import type {
 } from "../db/models/Flight";
 import type { Comment } from "../types/Comment";
 import { FlightCommentInstance } from "../db/models/FlightComment";
+import { getMessageByNameForEmail } from "./MessageService";
 
 const clientUrl = config.get("clientUrl");
 const userActivateLink = config.get("clientActivateProfil");
@@ -101,10 +102,10 @@ const service = {
 
     const activationLink = `${clientUrl}${userActivateLink}?userId=${user.id}&token=${user.token}`;
 
-    const content = {
-      title: REGISTRATION_TITLE,
-      text: REGISTRATION_TEXT(user.firstName, activationLink),
-    };
+    const content = await getMessageByNameForEmail("REGISTRATION", {
+      firstName: user.firstName,
+      activationLink,
+    });
 
     return sendMail(user.email, content);
   },

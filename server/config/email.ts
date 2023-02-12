@@ -35,7 +35,7 @@ async function createTestNodemailerTransport() {
     });
     return transporter;
   } catch (error: any) {
-    console.error("Failed to create a testing account. " + error.message);
+    logger.error("E: Failed to create a testing account. " + error.message);
   }
 }
 interface MailContent {
@@ -50,27 +50,34 @@ interface MailFrom {
 }
 
 /**
- * Sends an e-mail to a single recipent or multiple recipents.
+ * Sends an e-mail to a single recipient or multiple recipients.
  *
  * @param {string|Array} mailAddresses A single email address of type string oder multiple addresses as an array of strings.
  * @param {object} content A object containing a "title" and a "text" property of type string.
  * @param {string} [replyTo] The replyTo address which will be added to the send e-mail.
- * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
+ * @returns Returns true if a mail was successfully delegated to the E-Mail Service Provider.
  */
 const sendMail = async (
   mailAddresses: string | string[],
-  content: MailContent,
+  content: MailContent | undefined,
   replyTo?: string
 ) => {
+  if (!content) {
+    logger.error("E: email content is undefined");
+    return;
+  }
+
   if (
     !content.title ||
     !content.text ||
     content.title.length == 0 ||
     content.text.length == 0
-  )
-    throw new Error(
-      "content.title and content.text are not allowed to be empty"
+  ) {
+    logger.error(
+      "E: content.title and content.text are not allowed to be empty"
     );
+    return;
+  }
 
   const message = createMessage(
     {

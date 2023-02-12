@@ -28,7 +28,7 @@ const deleteCache = (keysArrayToDelete) => {
           keysArrayToDelete.some((includeKey) => ck.includes(includeKey))
         );
 
-  logger.debug("Will delete these keys from cache: " + keysToDelete);
+  logger.debug("CM: Will delete these keys from cache: " + keysToDelete);
 
   return cache.del(keysToDelete);
 };

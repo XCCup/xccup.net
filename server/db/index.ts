@@ -21,6 +21,7 @@ import { initSponsor } from "./models/Sponsor";
 import { initTeam } from "./models/Team";
 import { initToken } from "./models/Token";
 import { initUser } from "./models/User";
+import { initMessage } from "./models/Message";
 import { Models } from "../types/Models";
 
 // Config
@@ -63,6 +64,7 @@ const models: Models = {
   Team: initTeam(sequelize),
   Token: initToken(sequelize),
   User: initUser(sequelize),
+  Message: initMessage(sequelize),
 };
 
 const db = {

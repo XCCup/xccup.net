@@ -7,6 +7,7 @@ const FlyingSite = require("../db")["FlyingSite"];
 const FlightFixes = require("../db")["FlightFixes"];
 const FlightPhoto = require("../db")["FlightPhoto"];
 const SeasonDetail = require("../db")["SeasonDetail"];
+const Message = require("../db")["Message"];
 const Airspace = require("../db")["Airspace"];
 const News = require("../db")["News"];
 const Sponsor = require("../db")["Sponsor"];
@@ -48,6 +49,7 @@ const dbTestData = {
       [Sponsor, require("./testdatasets/sponsors.json")],
       [Brand, require("./testdatasets/brands.json")],
       [Logo, require("./testdatasets/logos.json")],
+      [Message, require("./testdatasets/messages.json")],
     ];
     // Test data with personal data
     if (config.get("serverImportTestData")) {

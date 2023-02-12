@@ -1,0 +1,14 @@
+[
+  {
+    "name": "REGISTRATION",
+    "content": "Deine Anmeldung bei XCCup.net",
+    "typeOfMessage": "email",
+    "position": "title"
+  },
+  {
+    "name": "REGISTRATION",
+    "content": "Hallo $firstName!\nWillkommen beim XCCup.\n\nUm dein Konto zu aktivieren klicke bitte auf den folgenden Link:\n$activationLink\n\nWir wünschen Dir allzeit gute Flüge und viel Spaß.\n\nDein XCCup Team",
+    "typeOfMessage": "email",
+    "position": "text"
+  }
+]
