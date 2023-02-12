@@ -63,6 +63,10 @@ jobs:
       - name: 🖨 Print current server log before testing (just for debugging)
         run: docker logs server
 
+      - name: 🧪 Install cypress
+        run: npx cypress@12.5.1 install
+      # TODO: Fix cypress caching issue and remove the additional install
+
       - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v5
         with:
