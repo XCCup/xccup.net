@@ -133,20 +133,15 @@ Dein XCCup Team
 module.exports.NEW_AIRSPACE_VIOLATION_TITLE = "Neuer Flug mit LRV";
 
 module.exports.NEW_AIRSPACE_VIOLATION_TEXT = (
-  flightId,
-  firstName,
-  lastName,
-  email,
+  flight,
+  user,
   airspaceViolation
 ) => `Hallo Admins!
 Es wurde versucht einen Flug mit einer Luftraumverletzung hochzuladen.
-
-Flug ID: ${flightId}
-Pilot: ${firstName} ${lastName} // ${email}
-
+Flug ID: ${flight.externalId}
+Pilot: ${user.firstName} ${user.lastName}
 Luftraumverletzung: 
 ${airspaceViolation}
-
 Euer Server-Knecht
     
 `;
@@ -155,13 +150,12 @@ module.exports.NEW_G_CHECK_INVALID_TITLE = "Neuer Flug mit negativem G-Check";
 
 module.exports.NEW_G_CHECK_INVALID_TEXT = (
   firstName,
-  lastName,
-  email
+  lastName
 ) => `Hallo Admins!
 
 Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
 
-Pilot: ${firstName} ${lastName} // ${email}
+Pilot: ${firstName} ${lastName}
 
 Euer Server-Knecht
     
