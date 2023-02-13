@@ -350,7 +350,11 @@ const service = {
     await addSeniorBonusForFlightResult(resultsWithTotals);
     sortDescendingByTotalPoints(resultsWithTotals);
 
-    return addConstantInformationToResult(result, constantsForResult, limit);
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      constantsForResult,
+      limit
+    );
   },
 
   /**
