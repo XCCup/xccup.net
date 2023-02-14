@@ -219,8 +219,10 @@ const service = {
     const content = {
       title: NEW_AIRSPACE_VIOLATION_TITLE,
       text: NEW_AIRSPACE_VIOLATION_TEXT(
-        flight,
-        user,
+        flight.externalId,
+        user.firstName,
+        user.lastName,
+        user.email,
         listOfAirspaceViolations.join("\n")
       ),
       attachments: [{ path: flight.igcPath }],
@@ -239,7 +241,7 @@ const service = {
 
     const content = {
       title: NEW_G_CHECK_INVALID_TITLE,
-      text: NEW_G_CHECK_INVALID_TEXT(user.firstName, user.lastName),
+      text: NEW_G_CHECK_INVALID_TEXT(user.firstName, user.lastName, user.email),
       attachments: [{ path: igcPath }],
     };
 
