@@ -620,7 +620,7 @@ describe("check flight upload page", () => {
 
 Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
 
-Pilot: Melinda Tremblay
+Pilot: Melinda Tremblay // blackhole+melinda@xccup.net
 
 Euer Server-Knecht`;
     const expectedMailReceipient = "me@example.com";
