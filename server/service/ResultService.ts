@@ -217,7 +217,8 @@ const service = {
       limit,
       "club",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -269,7 +270,8 @@ const service = {
       limit,
       "team",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -333,7 +335,8 @@ const service = {
       limit,
       "seniors",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -378,7 +381,8 @@ const service = {
       limit,
       "RP",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -474,7 +478,8 @@ const service = {
       limit,
       "LUX",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -581,7 +586,8 @@ const service = {
       limit,
       "newcomer",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -1243,9 +1249,17 @@ async function findOldResults(
   constantsForResult?: { [key: string]: any },
   enableFind?: boolean
 ) {
+  console.log("**************************************");
+  console.log("RT: ", rankingType);
+  console.log("SD: ", seasonDetail);
+  console.log("EF: ", enableFind);
+
   if (!year || !rankingType || !seasonDetail || !enableFind) return undefined;
 
+  console.log("-------------------------------------");
   if (year < CURRENT_SCORING_VERSION_YEAR) {
+    console.log("##############################");
+
     checkIfRankingWasPresent(seasonDetail, rankingType);
     const oldResult = await findOldResult(year, rankingType);
     if (oldResult)
