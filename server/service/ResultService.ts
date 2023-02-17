@@ -1250,9 +1250,6 @@ async function findOldResults(
     checkIfRankingWasPresent(seasonDetail, rankingType);
     const oldResult = await findOldResult(year, rankingType);
     if (oldResult) {
-      logger.info(
-        `RS: Old result for type ${rankingType} and year ${year} found`
-      );
       return addConstantInformationToResult(
         oldResult,
         constantsForResult,
@@ -1270,7 +1267,12 @@ async function findOldResult(season: number, type: string) {
       type,
     },
   });
-  return result ? result.result : undefined;
+  if (result) {
+    logger.info(`RS: Old result for type ${type} and season ${season} found`);
+    return result.result;
+  }
+  logger.info(`RS: No old result for type ${type} and season ${season} found`);
+  return undefined;
 }
 
 function nonShouldBeDefined(...params: any[]) {
