@@ -787,7 +787,7 @@
         "shortDescription": "HG Starr"
       }
     },
-    "activeRankings": ["overall", "ladies", "club", "team", "LUX", "RP"],
+    "activeRankings": ["overall", "ladies", "club", "team", "LUX", "RP", "HE"],
     "misc": {
       "textMessages": {
         "resultsEarlybird": "Es werden die ersten 20 Flüge einer Saison gewertet. Sortiert nach Startzeit. In der Early Bird Wertung wird nur der erste Flug eines Piloten gewertet",

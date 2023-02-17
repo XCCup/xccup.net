@@ -425,13 +425,7 @@ const service = {
     };
 
     // Before 2023 hessencup was organized via DHV XC
-    const startOfHesseRankingInXccup = 2023;
-    if (year && year < startOfHesseRankingInXccup) {
-      throw new XccupHttpError(
-        404,
-        `Hesse Cup is only supported in XCCup from ${startOfHesseRankingInXccup} and onwards`
-      );
-    }
+    checkIfRankingWasPresent(seasonDetail, "HE");
 
     const where = createDefaultWhereForFlight({ seasonDetail });
     //@ts-ignore
