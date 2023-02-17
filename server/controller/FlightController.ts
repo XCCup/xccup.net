@@ -258,7 +258,7 @@ const igcFileUpload = createMulterIgcUploadHandler();
 router.post(
   "/",
   uploadLimiter,
-  igcFileUpload.single("igcFile"),
+  igcFileUpload.single("igcFile") as express.RequestHandler,
   requesterMustBeLoggedIn,
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.user?.id;
@@ -313,7 +313,7 @@ router.post(
 const igcAdminFileUpload = createMulterIgcUploadHandler({ parts: 3 });
 router.post(
   "/admin/upload",
-  igcAdminFileUpload.single("igcFile"),
+  igcAdminFileUpload.single("igcFile") as express.RequestHandler,
   checkIsUuidObject("userId"),
   checkIsBoolean("skipGCheck"),
   checkIsBoolean("skipManipulated"),
@@ -495,7 +495,7 @@ const leonardoUpload = multer({
 router.post(
   "/leonardo",
   uploadLimiter,
-  leonardoUpload.none(),
+  leonardoUpload.none() as express.RequestHandler,
   checkStringObjectNotEmpty("user"),
   checkStringObjectNotEmptyNoEscaping("pass"),
   checkStringObjectNotEmptyNoEscaping("IGCigcIGC"),
