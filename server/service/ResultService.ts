@@ -39,6 +39,7 @@ import {
   removeMultipleEntriesForUsers,
   sortDescendingByTotalPoints,
 } from "../helper/ResultUtils";
+import logger from "../config/logger";
 
 const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
@@ -1243,29 +1244,26 @@ async function findOldResults(
   constantsForResult?: { [key: string]: any },
   enableFind?: boolean
 ) {
-  console.log("**************************************");
-  console.log("RT: ", rankingType);
-  console.log("SD: ", seasonDetail);
-  console.log("EF: ", enableFind);
-
   if (!year || !rankingType || !seasonDetail || !enableFind) return undefined;
 
-  console.log("-------------------------------------");
   if (year < CURRENT_SCORING_VERSION_YEAR) {
-    console.log("##############################");
-
     checkIfRankingWasPresent(seasonDetail, rankingType);
     const oldResult = await findOldResult(year, rankingType);
-    if (oldResult)
+    if (oldResult) {
+      logger.info(
+        `RS: Old result for type ${rankingType} and year ${year} found`
+      );
       return addConstantInformationToResult(
         oldResult,
         constantsForResult,
         limit
       );
+    }
   }
 }
 
 async function findOldResult(season: number, type: string) {
+  logger.info(`RS: Find old result for type ${type} and season ${season}`);
   const result = await Result.findOne({
     where: {
       season,
