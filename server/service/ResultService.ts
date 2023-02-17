@@ -55,6 +55,7 @@ const RANKINGS = {
   NEWCOMER: "newcomer",
   LUX: "LUX",
   RP: "RP",
+  HE: "HE",
   REYNOLDS: "reynoldsClass",
 };
 
@@ -388,6 +389,53 @@ const service = {
     const resultQuery = (await queryDb({
       where,
       siteState: RANKINGS.RP,
+    })) as unknown as QueryResult[];
+
+    const result = aggregateFlightsOverUser(resultQuery);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      result,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
+
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      constantsForResult,
+      limit
+    );
+  },
+
+  /**
+   * Calculate the results for hes cup.
+   *
+   * @param {*} year The year to calculate the ranking for
+   * @param {*} limit The limit of results to retrieve
+   * @returns The results of the ranking  of the provided year
+   */
+  getHesse: async ({ year, limit }: Partial<OptionsYearLimitRegion>) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS,
+      REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
+    };
+
+    // Before 2023 hessencup was organized via DHV XC
+    const startOfHesseRankingInXccup = 2023;
+    if (year && year < startOfHesseRankingInXccup) {
+      throw new XccupHttpError(
+        404,
+        `Hesse Cup is only supported in XCCup from ${startOfHesseRankingInXccup} and onwards`
+      );
+    }
+
+    const where = createDefaultWhereForFlight({ seasonDetail });
+    //@ts-ignore
+    where.homeStateOfUser = RANKINGS.HE;
+
+    const resultQuery = (await queryDb({
+      where,
+      siteState: RANKINGS.HE,
     })) as unknown as QueryResult[];
 
     const result = aggregateFlightsOverUser(resultQuery);

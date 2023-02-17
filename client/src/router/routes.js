@@ -104,6 +104,13 @@ export const Routes = [
     component: () => import("../views/ResultsRlp.vue"),
   },
   {
+    path: "/:year/hes-pokal/",
+    name: "ResultsHes",
+    beforeEnter: validateRouteParamYear,
+
+    component: () => import("../views/ResultsHes.vue"),
+  },
+  {
     path: "/:year/teamwertung/",
     name: "ResultsTeams",
     beforeEnter: validateRouteParamYear,

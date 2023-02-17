@@ -259,6 +259,11 @@ export default {
       params,
     });
   },
+  getResultsHes(params: RlpFilterParams) {
+    return apiClient.get("results/state/HE", {
+      params,
+    });
+  },
   getResultsTeams(params: ResultsTeamsFilterParams) {
     return apiClient.get("results/teams", {
       params,
