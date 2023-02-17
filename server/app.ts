@@ -5,7 +5,7 @@ import * as Sentry from "@sentry/node";
 // Setup DB
 import "./db";
 
-import express, { Application, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import routes from "./routes";
 
 import logger from "./config/logger";
@@ -19,7 +19,7 @@ import { authToken } from "./controller/Auth";
 // Set timezone of node server
 process.env.TZ = config.get("timezone");
 
-const app: Application = express();
+const app = express();
 
 // Start Cron Jobs
 import "./cron/CleanIgcStore";
@@ -43,6 +43,7 @@ app.use(requestLogger);
 app.use(authToken);
 
 // Compression
+
 app.use(
   compression({
     filter: (req, res) => {
@@ -56,7 +57,7 @@ app.use(
        */
       return compression.filter(req, res);
     },
-  })
+  }) as any // TODO: Find out why…
 );
 
 // Development Tools
