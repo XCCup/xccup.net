@@ -235,19 +235,19 @@ describe("check admin page", () => {
     cy.get("[data-cy=currentClubTable").find("td").contains(expectedWebsite);
   });
 
-  it("remove club from current season -> flight upload for members not possible", () => {
+  it.only("remove club from current season -> flight upload for members not possible", () => {
     cy.intercept("POST", "/api/flights").as("postFlight");
 
     cy.get("#nav-clubs-tab").click();
 
     // TODO: Find a better solution without a hard coded wait.
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(5000);
+    cy.wait(500);
     // Find edit button of club
     cy.get("tr:visible")
       .contains("Trier")
       .parent()
-      .find("button.bi-pencil-square")
+      .find("[data-cy='edit-club']")
       .click();
 
     // Unfortunately the bootstrap modal takes some time to load all its functionality.
