@@ -272,6 +272,9 @@ router.post(
     }
 
     try {
+      // Check if user belongs to an active club
+      await checkIfUserClubIsActive(userId);
+
       // G-Check
       const content = fs.readFileSync(igcFile.path, "utf8");
       const filename = igcFile.filename;
@@ -331,6 +334,9 @@ router.post(
           "FC: Unexpected behavior. IgcFile or ID's can't be undefined."
         );
       }
+
+      // Check if user belongs to an active club
+      await checkIfUserClubIsActive(userId);
 
       const userGliders: { defaultGlider: string; gliders: Glider[] } =
         await UserService.getGlidersById(userId);
@@ -513,6 +519,9 @@ router.post(
         req.body.pass
       );
       if (!user) return res.sendStatus(UNAUTHORIZED);
+
+      // Check if user belongs to an active club
+      await checkIfUserClubIsActive(user.id);
 
       // Check for users default glider
       const glider = user.gliders?.find((g) => g.id == user.defaultGlider);
@@ -861,6 +870,12 @@ async function checkIfFlightIsModifiable(
   throw new XccupRestrictionError(
     `It's not possible to change a flight later than ${daysFlightEditable} days after takeoff`
   );
+}
+
+async function checkIfUserClubIsActive(userId: string) {
+  if (await UserService.isClubOfUserActive(userId)) return;
+
+  throw new XccupRestrictionError("The current club of user is not active");
 }
 
 /**
