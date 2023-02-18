@@ -41,9 +41,12 @@ import { ref, onErrorCaptured } from "vue";
 import { useNProgress } from "@vueuse/integrations/useNProgress";
 import "nprogress/nprogress.css";
 import { leafletMarkerRetinaFix } from "@/helper/leafletRetinaMarkerFix";
+import { determineColorMode } from "@/helper/colorModeToggler";
 
 // Global fix for default marker image paths
 leafletMarkerRetinaFix();
+
+determineColorMode();
 
 const { start, done } = useNProgress(null, { showSpinner: false });
 

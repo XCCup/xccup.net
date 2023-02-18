@@ -4,32 +4,30 @@
  * Licensed under the Creative Commons Attribution 3.0 Unported License.
  */
 
-(() => {
-  "use strict";
+const storedTheme = localStorage.getItem("theme");
 
-  const storedTheme = localStorage.getItem("theme");
+const getPreferredTheme = () => {
+  if (storedTheme == "dark" || storedTheme == "light") {
+    return storedTheme;
+  }
 
-  const getPreferredTheme = () => {
-    if (storedTheme) {
-      return storedTheme;
-    }
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
+const setTheme = function (theme: string) {
+  if (
+    theme === "auto" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    document.documentElement.setAttribute("data-bs-theme", "dark");
+  } else {
+    document.documentElement.setAttribute("data-bs-theme", theme);
+  }
+};
 
-  const setTheme = function (theme) {
-    if (
-      theme === "auto" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      document.documentElement.setAttribute("data-bs-theme", "dark");
-    } else {
-      document.documentElement.setAttribute("data-bs-theme", theme);
-    }
-  };
-
+export function determineColorMode() {
   setTheme(getPreferredTheme());
 
   //   const showActiveTheme = (theme) => {
@@ -52,6 +50,7 @@
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", () => {
+      // @ts-ignore
       if (storedTheme !== "light" || storedTheme !== "dark") {
         setTheme(getPreferredTheme());
       }
@@ -69,4 +68,4 @@
   //       });
   //     });
   //   });
-})();
+}
