@@ -54,6 +54,8 @@ const createPopupContent = (site) => {
   lines.push(`<strong>${site.name}</strong>`);
   if (site.direction) lines.push(`Startrichtung: ${site.direction}`);
   if (site.club) lines.push(`Club: ${site.club.name}`);
+  if (site.locationData?.state)
+    lines.push(`Bundesland: ${site.locationData.state}`);
   if (site.locationData?.region)
     lines.push(`Region: ${site.locationData.region}`);
   if (site.heightDifference)

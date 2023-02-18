@@ -39,6 +39,7 @@ import {
   removeMultipleEntriesForUsers,
   sortDescendingByTotalPoints,
 } from "../helper/ResultUtils";
+import logger from "../config/logger";
 
 const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
@@ -55,6 +56,7 @@ const RANKINGS = {
   NEWCOMER: "newcomer",
   LUX: "LUX",
   RP: "RP",
+  HE: "HE",
   REYNOLDS: "reynoldsClass",
 };
 
@@ -216,7 +218,8 @@ const service = {
       limit,
       "club",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -268,7 +271,8 @@ const service = {
       limit,
       "team",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -332,7 +336,8 @@ const service = {
       limit,
       "seniors",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -377,7 +382,8 @@ const service = {
       limit,
       "RP",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -388,6 +394,47 @@ const service = {
     const resultQuery = (await queryDb({
       where,
       siteState: RANKINGS.RP,
+    })) as unknown as QueryResult[];
+
+    const result = aggregateFlightsOverUser(resultQuery);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      result,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
+
+    return addConstantInformationToResult(
+      resultsWithTotals,
+      constantsForResult,
+      limit
+    );
+  },
+
+  /**
+   * Calculate the results for hes cup.
+   *
+   * @param {*} year The year to calculate the ranking for
+   * @param {*} limit The limit of results to retrieve
+   * @returns The results of the ranking  of the provided year
+   */
+  getHesse: async ({ year, limit }: Partial<OptionsYearLimitRegion>) => {
+    const seasonDetail = await retrieveSeasonDetails(year);
+
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS,
+      REMARKS_STATE: seasonDetail?.misc?.textMessages?.resultsState,
+    };
+
+    // Before 2023 hessencup was organized via DHV XC
+    checkIfRankingWasPresent(seasonDetail, "HE");
+
+    const where = createDefaultWhereForFlight({ seasonDetail });
+    //@ts-ignore
+    where.homeStateOfUser = RANKINGS.HE;
+
+    const resultQuery = (await queryDb({
+      where,
+      siteState: RANKINGS.HE,
     })) as unknown as QueryResult[];
 
     const result = aggregateFlightsOverUser(resultQuery);
@@ -426,7 +473,8 @@ const service = {
       limit,
       "LUX",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -533,7 +581,8 @@ const service = {
       limit,
       "newcomer",
       seasonDetail,
-      constantsForResult
+      constantsForResult,
+      true
     );
     if (oldRes) return oldRes;
 
@@ -1200,23 +1249,30 @@ async function findOldResults(
   if (year < CURRENT_SCORING_VERSION_YEAR) {
     checkIfRankingWasPresent(seasonDetail, rankingType);
     const oldResult = await findOldResult(year, rankingType);
-    if (oldResult)
+    if (oldResult) {
       return addConstantInformationToResult(
         oldResult,
         constantsForResult,
         limit
       );
+    }
   }
 }
 
 async function findOldResult(season: number, type: string) {
+  logger.info(`RS: Find old result for type ${type} and season ${season}`);
   const result = await Result.findOne({
     where: {
       season,
       type,
     },
   });
-  return result ? result.result : undefined;
+  if (result) {
+    logger.info(`RS: Old result for type ${type} and season ${season} found`);
+    return result.result;
+  }
+  logger.info(`RS: No old result for type ${type} and season ${season} found`);
+  return undefined;
 }
 
 function nonShouldBeDefined(...params: any[]) {

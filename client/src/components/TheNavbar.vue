@@ -178,6 +178,16 @@ const handleLogout = async () => {
                   Championat</router-link
                 >
               </li>
+              <li>
+                <router-link
+                  :to="{
+                    name: 'ResultsHes',
+                    params: { year: currentYear },
+                  }"
+                  class="dropdown-item"
+                  ><i class="bi bi-flag-fill me-1"></i>Hessencup</router-link
+                >
+              </li>
               <li><hr class="dropdown-divider" /></li>
 
               <li>

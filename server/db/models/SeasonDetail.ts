@@ -71,6 +71,7 @@ export type RankingTypes =
   | "fun"
   | "sundays"
   | "RP"
+  | "HE"
   | "LUX"
   | "earlyBird"
   | "lateBird";

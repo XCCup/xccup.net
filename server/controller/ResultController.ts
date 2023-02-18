@@ -174,6 +174,9 @@ router.get(
         case "RP":
           resultFunction = service.getRhineland;
           break;
+        case "HE":
+          resultFunction = service.getHesse;
+          break;
         default:
           throw new XccupHttpError(
             NOT_FOUND,
