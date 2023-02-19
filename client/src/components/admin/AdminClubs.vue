@@ -92,10 +92,15 @@ function onNew() {
 }
 
 function onEdit(club: Club) {
-  // Ensure no null value
-  errorMessage.value = "";
-  selectedClub.value = club;
-  addEditClubModal.value?.show();
+  try {
+    // Ensure no null value
+    errorMessage.value = "";
+    selectedClub.value = club;
+    console.log("Opening modal for club", club);
+    addEditClubModal.value?.show();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function onDelete(club: Club) {

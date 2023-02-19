@@ -243,8 +243,6 @@ describe("check admin page", () => {
     // TODO: Find a better solution without a hard coded wait.
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
-  });
-  it.skip("remove club from current season -> flight upload for members not possible", () => {
     // Find edit button of club
     cy.get("tr:visible")
       .contains("Trier")
