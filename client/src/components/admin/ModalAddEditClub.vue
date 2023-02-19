@@ -149,6 +149,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(["save-club", "logo-updated"]);
 
+console.log("Club Modal received:", props.clubObject);
+
 const currentYear = new Date().getFullYear();
 const club: Ref<Club> = ref(cloneDeep(props.clubObject));
 const isActiveClub = ref(

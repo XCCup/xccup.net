@@ -55,7 +55,7 @@ const clubs: Ref<Club[]> = ref([]);
 const activeClubs: Ref<Club[]> = ref([]);
 const furtherClubs: Ref<Club[]> = ref([]);
 
-const selectedClub: Ref<Club> = ref(createNewClubObject());
+let selectedClub: Club = createNewClubObject();
 
 const confirmMessage = ref("");
 const confirmModalId = "modalClubConfirm";
@@ -65,6 +65,7 @@ const errorMessage = ref("");
 
 const confirmModal = ref<Modal>();
 const addEditClubModal = ref<Modal>();
+
 onMounted(() => {
   const addEditModalElement = document.getElementById("addEditClubModal");
   if (addEditModalElement)
@@ -83,11 +84,11 @@ async function fetchClubs() {
   }
 }
 
-fetchClubs();
+await fetchClubs();
 
 function onNew() {
   errorMessage.value = "";
-  selectedClub.value = createNewClubObject();
+  selectedClub = createNewClubObject();
   addEditClubModal.value?.show();
 }
 
@@ -95,8 +96,9 @@ function onEdit(club: Club) {
   try {
     // Ensure no null value
     errorMessage.value = "";
-    selectedClub.value = club;
-    console.log("Opening modal for club", club);
+    selectedClub = club;
+    console.log("Emitted", club);
+    console.log("Opening modal for club", selectedClub);
     addEditClubModal.value?.show();
   } catch (error) {
     console.log(error);
@@ -105,13 +107,13 @@ function onEdit(club: Club) {
 
 function onDelete(club: Club) {
   confirmMessage.value = `Willst du den Eintrag ${club.name} wirklich löschen?`;
-  selectedClub.value = club;
+  selectedClub = club;
   confirmModal.value?.show();
 }
 
 async function processConfirmResult() {
-  if (!selectedClub.value?.id) return;
-  await ApiService.deleteClub(selectedClub.value.id);
+  if (!selectedClub?.id) return;
+  await ApiService.deleteClub(selectedClub.id);
   await fetchClubs();
   confirmModal.value?.hide();
 }
