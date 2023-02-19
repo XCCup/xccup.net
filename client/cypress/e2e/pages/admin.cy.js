@@ -243,14 +243,14 @@ describe("check admin page", () => {
     // TODO: Find a better solution without a hard coded wait.
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
-  });
-  it.skip("remove club from current season -> flight upload for members not possible", () => {
+    cy.get(':nth-child(15) > :nth-child(6) > [data-cy="edit-club"]').click();
+
     // Find edit button of club
-    cy.get("tr:visible")
-      .contains("Trier")
-      .parent()
-      .find("[data-cy='edit-club']")
-      .click();
+    // cy.get("tr:visible")
+    //   .contains("Trier")
+    //   .parent()
+    //   .find("[data-cy='edit-club']")
+    //   .click();
 
     // Unfortunately the bootstrap modal takes some time to load all its functionality.
     // TODO: Find a better solution without a hard coded wait.
