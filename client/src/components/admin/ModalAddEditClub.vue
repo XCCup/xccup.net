@@ -54,26 +54,45 @@
             <p>{{ index + 1 }}. Kontakt</p>
             <div v-if="club.contacts && club.contacts[index]">
               <BaseInput
+                v-if="
+                  club.contacts[index].name || club.contacts[index].name === ''
+                "
                 :id="'clubContactNameInput' + index"
                 v-model="club.contacts[index].name"
                 label="Name"
               />
               <BaseInput
+                v-if="
+                  club.contacts[index].address ||
+                  club.contacts[index].address === ''
+                "
                 :id="'clubContactAddressInput' + index"
                 v-model="club.contacts[index].address"
                 label="Adresse"
               />
               <BaseInput
+                v-if="
+                  club.contacts[index].email ||
+                  club.contacts[index].email === ''
+                "
                 :id="'clubContactEmailInput' + index"
                 v-model="club.contacts[index].email"
                 label="E-Mail"
               />
               <BaseInput
+                v-if="
+                  club.contacts[index].phone ||
+                  club.contacts[index].phone === ''
+                "
                 :id="'clubContactPhoneInput' + index"
                 v-model="club.contacts[index].phone"
                 label="Tel."
               />
               <BaseInput
+                v-if="
+                  club.contacts[index].phone2 ||
+                  club.contacts[index].phone2 === ''
+                "
                 v-model="club.contacts[index].phone2"
                 label="Tel. (2)"
               />
@@ -158,6 +177,8 @@ const isActiveClub = ref(
 watch(
   () => props.clubObject,
   () => {
+    // console.log("WATCH");
+
     club.value = cloneDeep(props.clubObject);
     isActiveClub.value = club.value.participantInSeasons?.includes(currentYear);
   }

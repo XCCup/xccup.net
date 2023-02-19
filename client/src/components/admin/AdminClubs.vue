@@ -54,8 +54,7 @@ import { GENERIC_ERROR } from "@/common/Constants";
 const clubs: Ref<Club[]> = ref([]);
 const activeClubs: Ref<Club[]> = ref([]);
 const furtherClubs: Ref<Club[]> = ref([]);
-
-let selectedClub: Ref<Club>;
+const selectedClub: Ref<Club> = ref(createNewClubObject());
 
 const confirmMessage = ref("");
 const confirmModalId = "modalClubConfirm";
@@ -66,9 +65,6 @@ const errorMessage = ref("");
 const confirmModal = ref<Modal>();
 const addEditClubModal = ref<Modal>();
 onMounted(() => {
-  console.log("Mount");
-
-  selectedClub = ref(createNewClubObject());
   const addEditModalElement = document.getElementById("addEditClubModal");
   if (addEditModalElement)
     addEditClubModal.value = new Modal(addEditModalElement);
@@ -86,8 +82,7 @@ async function fetchClubs() {
   }
 }
 
-await fetchClubs();
-console.log("Fetch");
+fetchClubs();
 
 function onNew() {
   errorMessage.value = "";
