@@ -177,8 +177,6 @@ const isActiveClub = ref(
 watch(
   () => props.clubObject,
   () => {
-    // console.log("WATCH");
-
     club.value = cloneDeep(props.clubObject);
     isActiveClub.value = club.value.participantInSeasons?.includes(currentYear);
   }
