@@ -237,14 +237,14 @@ describe("check admin page", () => {
 
   it("remove club from current season -> flight upload for members not possible", () => {
     cy.intercept("POST", "/api/flights").as("postFlight");
-    cy.intercept("GET", "/api/clubs").as("get-clubs");
+    // cy.intercept("GET", "/api/clubs").as("get-clubs");
 
     cy.get("#nav-clubs-tab").click();
 
     // TODO: Find a better solution without a hard coded wait.
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(500);
-    cy.wait("@get-clubs");
+    // cy.wait(500);
+    // cy.wait("@get-clubs");
 
     // Find edit button of club
     cy.get("tr:visible")
