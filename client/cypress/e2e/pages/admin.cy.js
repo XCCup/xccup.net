@@ -235,6 +235,50 @@ describe("check admin page", () => {
     cy.get("[data-cy=currentClubTable").find("td").contains(expectedWebsite);
   });
 
+  it("remove club from current season -> flight upload for members not possible", () => {
+    cy.intercept("POST", "/api/flights").as("postFlight");
+
+    cy.get("#nav-clubs-tab").click();
+
+    // Find edit button of club
+    cy.get("tr:visible")
+      .contains("Trier")
+      .parent()
+      .find("[data-cy='edit-club']")
+      .click();
+
+    // Unfortunately the bootstrap modal takes some time to load all its functionality.
+    // TODO: Find a better solution without a hard coded wait.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(500);
+    cy.get("[data-cy='checkClubCurrentSeason']").uncheck();
+
+    cy.clickButtonInModal("#addEditClubModal", "Speichern");
+
+    // Logout admin user
+    cy.logout();
+
+    // Login user with non active club
+    cy.login("blackhole+everett@xccup.net", "PW_EverettGislason");
+
+    // Try to upload flight
+    cy.get("button").contains("Flug hochladen").click();
+    const igcFileName = "73320_LA9ChMu1.igc";
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Check if error message will be displayed
+    cy.get("#upload-error").should(
+      "contain.text",
+      "Der Verein mit dem du aktuell registriert bist, nimmt noch nicht an der Saison teil"
+    );
+  });
+
   it("test admin flight upload list", () => {
     const expectedPilotName = "Adam Bayer";
     const igcFileName = "73320_LA9ChMu1.igc";

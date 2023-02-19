@@ -30,6 +30,7 @@
         <td>
           <button
             class="btn btn-outline-primary m-1 btn-sm bi bi-pencil-square"
+            data-cy="edit-club"
             @click="$emit('editClub', club)"
           ></button>
           <button

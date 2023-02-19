@@ -332,6 +332,23 @@ const userService = {
     return result;
   },
 
+  isClubOfUserActive: async (userId) => {
+    const club = await Club.findOne({
+      include: [
+        {
+          model: User,
+          as: "members",
+          attributes: ["clubId", "firstName", "lastName"],
+          where: {
+            id: userId,
+          },
+        },
+      ],
+    });
+
+    return club.participantInSeasons.includes(new Date().getFullYear());
+  },
+
   delete: async (id) => {
     // Delete personal user data and set role to deleted
     await User.update(

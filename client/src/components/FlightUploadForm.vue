@@ -311,6 +311,11 @@ const igcSelected = async (file) => {
       return (errorMessage.value = `Dieser Flug ist bereits vorhanden. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
     if (
       error?.response?.status === 403 &&
+      error.response.data.includes("current club of user is not active")
+    )
+      return (errorMessage.value = `Der Verein mit dem du aktuell registriert bist, nimmt noch nicht an der Saison teil. Wenn du denkst, dass der XCCup eine tolle Sache ist nimm bitte Kontakt mit deinem Vereinsvorstand auf.`);
+    if (
+      error?.response?.status === 403 &&
       error.response.data.includes("not possible to change")
     )
       return (errorMessage.value = `Dieser Flug ist älter als ${DAYS_FLIGHT_CHANGEABLE} Tage. Ein Upload ist nicht mehr möglich. Wenn du denkst, dass  dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);

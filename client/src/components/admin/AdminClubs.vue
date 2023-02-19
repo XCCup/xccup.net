@@ -54,7 +54,6 @@ import { GENERIC_ERROR } from "@/common/Constants";
 const clubs: Ref<Club[]> = ref([]);
 const activeClubs: Ref<Club[]> = ref([]);
 const furtherClubs: Ref<Club[]> = ref([]);
-
 const selectedClub: Ref<Club> = ref(createNewClubObject());
 
 const confirmMessage = ref("");
