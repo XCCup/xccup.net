@@ -55,7 +55,7 @@ const clubs: Ref<Club[]> = ref([]);
 const activeClubs: Ref<Club[]> = ref([]);
 const furtherClubs: Ref<Club[]> = ref([]);
 
-const selectedClub: Ref<Club> = ref(createNewClubObject());
+let selectedClub: Ref<Club>;
 
 const confirmMessage = ref("");
 const confirmModalId = "modalClubConfirm";
@@ -66,6 +66,9 @@ const errorMessage = ref("");
 const confirmModal = ref<Modal>();
 const addEditClubModal = ref<Modal>();
 onMounted(() => {
+  console.log("Mount");
+
+  selectedClub = ref(createNewClubObject());
   const addEditModalElement = document.getElementById("addEditClubModal");
   if (addEditModalElement)
     addEditClubModal.value = new Modal(addEditModalElement);
@@ -83,7 +86,8 @@ async function fetchClubs() {
   }
 }
 
-fetchClubs();
+await fetchClubs();
+console.log("Fetch");
 
 function onNew() {
   errorMessage.value = "";
