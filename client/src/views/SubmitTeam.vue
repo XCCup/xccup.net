@@ -79,8 +79,12 @@
       </ul>
       <hr />
       <BaseError id="saveErrorMessage" :error-message="errorMessage" />
+      <p>
+        Mit dem Absenden der Teammeldung versicherst du, dass du das
+        Einverständnis aller Teammitglieder hast.
+      </p>
       <button
-        class="mt-3 btn btn-primary btn"
+        class="my-2 btn btn-primary btn"
         type="submit"
         :disabled="nameIsAlreadyInUse || !teamIsCompleted"
         @click.prevent="onSubmit"
