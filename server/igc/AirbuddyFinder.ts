@@ -82,7 +82,7 @@ export async function findAirbuddies(
 
 function minimizeFixesOfFlight(fixes: FlightFixesInstance) {
   const combinedFixes = combineFixesProperties(fixes);
-  const fixesStep = Math.floor(combinedFixes.length / RESOLUTION);
+  const fixesStep = Math.ceil(combinedFixes.length / RESOLUTION);
   logger.debug("AF: Will split fixes in steps of " + fixesStep);
   const minimizedFixes: FlightFixCombined[] = [];
   for (let index = 0; index < combinedFixes.length; index += fixesStep) {
