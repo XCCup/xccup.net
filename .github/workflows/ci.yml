@@ -64,7 +64,7 @@ jobs:
         run: docker logs server
 
       - name: 🧪 Install cypress
-        run: npx cypress@12.6.0 install
+        run: npx cypress@12.7.0 install
       # TODO: Fix cypress caching issue and remove the additional install
 
       - name: 🏃‍♀️ Cypress run
