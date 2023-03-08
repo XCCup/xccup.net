@@ -102,7 +102,7 @@ describe("check users page", () => {
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     // Wait till table is updated otherwise its() will always resolve to 25
-    // cy.wait(1000);
+    cy.wait(500);
     /*eslint-enable */
 
     cy.get("#userListView")
