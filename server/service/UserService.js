@@ -377,6 +377,7 @@ const userService = {
       await Flight.destroy({
         where: {
           takeoffTime: { [Op.gte]: season.startDate },
+          userId: id,
         },
       });
     }
