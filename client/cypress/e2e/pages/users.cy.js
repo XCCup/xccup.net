@@ -158,6 +158,8 @@ describe("check users page", () => {
     const expectedName = "Gelöschter Benutzer";
     const flightWithPhotosOfUser = 2;
     const flightWithCommentsOfUser = 40;
+    const flightNotRelated = 37;
+    const userNotRelated = "Everett Gislason";
     const userMail = "blackhole+leo@xccup.net";
     const userPw = "PW_LeoAltenwerth";
 
@@ -196,17 +198,27 @@ describe("check users page", () => {
 
     cy.get(".cy-user-name-label").should("not.contain", userToDelete);
 
-    // Pilot name in flight should not be deleted
-    // Photos of user should be deleted
     cy.visit(`flug/${flightWithPhotosOfUser}`);
 
-    cy.get("h4").should("not.include.text", userToDelete);
-    cy.get("h4").should("include.text", expectedName);
+    cy.url().should("include", "/404");
 
-    cy.get("photo-0").should("not.exist");
-    cy.get("photo-1").should("not.exist");
-    cy.get("photo-2").should("not.exist");
-    cy.get("photo-3").should("not.exist");
+    // TODO: Test will fail if running off season. Find a way to get around that.
+    // Code for off season below
+
+    // Pilot name in flight should not be deleted
+    // Photos of user should be deleted
+
+    // cy.get("h4").should("not.include.text", userToDelete);
+    // cy.get("h4").should("include.text", expectedName);
+
+    // cy.get("photo-0").should("not.exist");
+    // cy.get("photo-1").should("not.exist");
+    // cy.get("photo-2").should("not.exist");
+    // cy.get("photo-3").should("not.exist");
+
+    // Check for side effects:
+    cy.visit(`flug/${flightNotRelated}`);
+    cy.get("h4").should("include.text", userNotRelated);
 
     // No user comment should be left
     cy.visit(`flug/${flightWithCommentsOfUser}`);

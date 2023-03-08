@@ -66,7 +66,7 @@ const router = useRouter();
 
 const modalTitle = ref("");
 const modalBody = ref("");
-const deleteProfil = ref(false);
+const deleteProfile = ref(false);
 
 // Page state
 const showSpinner = ref(false);
@@ -79,7 +79,7 @@ onMounted(() => {
 });
 
 const onDeactivate = async (shouldDelete: boolean = false) => {
-  deleteProfil.value = shouldDelete;
+  deleteProfile.value = shouldDelete;
   if (shouldDelete) {
     modalTitle.value = "Profil löschen";
     modalBody.value =
@@ -96,7 +96,7 @@ const onConfirm = async () => {
   try {
     showSpinner.value = true;
 
-    const call = deleteProfil.value
+    const call = deleteProfile.value
       ? ApiService.deleteProfil
       : ApiService.deactivateProfil;
 
@@ -104,7 +104,9 @@ const onConfirm = async () => {
     router.push({
       name: "Home",
     });
-    showSuccessToast("Profil deaktiviert");
+    showSuccessToast(
+      deleteProfile.value ? "Profil gelöscht" : "Profil deaktiviert"
+    );
     logout();
   } catch (error) {
     console.error(error);
