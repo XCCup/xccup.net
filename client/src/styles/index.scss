@@ -41,6 +41,10 @@ a {
   height: 60vh;
 }
 
+input[type="checkbox"]{
+  border-color: $blue;
+}
+
 // Used in various results tables
 .no-line-break {
   white-space: nowrap;
