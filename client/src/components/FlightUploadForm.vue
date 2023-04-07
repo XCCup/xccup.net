@@ -132,7 +132,7 @@
             class="form-check-input"
             type="checkbox"
           />
-          <label class="form-check-label" for="flexCheckDefault">
+          <label class="form-check-label" for="acceptTermsCheckbox">
             Die Ausschreibung ist mir bekannt, flugrechtliche Auflagen wurden
             eingehalten.<br />
             Jeder Teilnehmer nimmt auf eigene Gefahr an diesem Wettbewerb teil.
