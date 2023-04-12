@@ -24,7 +24,7 @@ export interface Flight {
   takeoffTime: string;
   landingTime: string;
   igcPath: string;
-  glider: Glider;
+  glider?: Glider;
   airspaceViolation: boolean;
   airspaceViolations?: AirspaceViolation[];
   uncheckedGRecord: boolean;

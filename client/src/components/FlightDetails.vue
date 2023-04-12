@@ -18,7 +18,10 @@
                   :short="true"
                   :show-description="true"
                 />
-                <FeatherIcon v-if="flight?.glider.reynoldsClass" class="ms-1" />
+                <FeatherIcon
+                  v-if="flight?.glider?.reynoldsClass"
+                  class="ms-1"
+                />
               </td>
             </tr>
             <tr>
