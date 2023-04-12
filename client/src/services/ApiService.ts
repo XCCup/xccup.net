@@ -95,7 +95,7 @@ export default {
   uploadPhotos(data: FormData) {
     return apiClient.post("flights/photos/", data);
   },
-  editPhoto(id: string, data: string) {
+  editPhoto(id: string, data: { description?: string }) {
     return apiClient.put("flights/photos/" + id, data);
   },
   getInitialData() {

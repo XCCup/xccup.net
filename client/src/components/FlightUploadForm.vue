@@ -140,9 +140,11 @@
             Organisator, dem Wettbewerbsleiter sowie deren Helfer wegen
             einfacher Fahrlässigkeit sind ausgeschlossen. Mit dem Anklicken des
             Hakens erkenne ich die
-            <a href="#" @click.prevent="compRulesModal.show()">Ausschreibung</a>
+            <a href="#" @click.prevent="compRulesModal?.show()"
+              >Ausschreibung</a
+            >
             und
-            <a href="#" @click.prevent="privacyPolicyModal.show()"
+            <a href="#" @click.prevent="privacyPolicyModal?.show()"
               >Datenschutzbestimmungen
             </a>
             an.
@@ -174,22 +176,22 @@
   </BaseSlotModal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ApiService from "@/services/ApiService";
 import { useRouter } from "vue-router";
 import { ref, computed, onMounted } from "vue";
-import { Collapse } from "bootstrap";
+import { Collapse, Modal } from "bootstrap";
 import { DAYS_FLIGHT_CHANGEABLE, ADMIN_EMAIL } from "@/common/Constants";
 import { asyncForEach, setWindowName } from "../helper/utils";
-import { Modal } from "bootstrap";
+import type { Glider } from "@/types/Glider";
 
 const router = useRouter();
 
 setWindowName("Flug hochladen");
 
 const collapse = ref(null);
-const airspaceCollapse = ref(null);
-let detailsCollapse = null;
+const airspaceCollapse = ref<Collapse | null>(null);
+let detailsCollapse: null | Collapse = null;
 
 onMounted(() => {
   if (collapse.value)
@@ -199,21 +201,21 @@ onMounted(() => {
 });
 
 // Modal
-const privacyPolicyModal = ref(null);
-const compRulesModal = ref(null);
+const privacyPolicyModal = ref<Modal | null>(null);
+const compRulesModal = ref<Modal | null>(null);
 onMounted(async () => {
-  privacyPolicyModal.value = new Modal(
-    document.getElementById("privacy-policy-modal")
-  );
-  compRulesModal.value = new Modal(document.getElementById("comp-rules-modal"));
+  const privacyModalEl = document.getElementById("privacy-policy-modal");
+  if (privacyModalEl) privacyPolicyModal.value = new Modal(privacyModalEl);
+  const rulesModalEl = document.getElementById("comp-rules-modal");
+  if (rulesModalEl) compRulesModal.value = new Modal(rulesModalEl);
 
-  airspaceCollapse.value = new Collapse(
-    document.getElementById("airspace-collapse")
-  );
+  const airspaceCollapseEl = document.getElementById("airspace-collapse");
+  if (airspaceCollapseEl)
+    airspaceCollapse.value = new Collapse(airspaceCollapseEl);
 });
 
 // Fetch users gliders
-const listOfGliders = ref(null);
+const listOfGliders = ref<Glider[] | null>(null);
 const defaultGlider = ref(null);
 
 const fetchGliders = async () => {
@@ -236,15 +238,15 @@ const onlyLogbook = ref(false);
 const hikeAndFly = ref(false);
 const airspaceComment = ref("");
 
-const flightId = ref(null);
-const externalId = ref(null);
+const flightId = ref<undefined | string>(undefined);
+const externalId = ref<number | null>(null);
 const airspaceViolation = ref(null);
 const takeoff = ref("");
 const landing = ref("");
 const flightReport = ref("");
 const showSpinner = ref(false);
 
-const errorMessage = ref(null);
+const errorMessage = ref<string | null>(null);
 
 const sendButtonIsDisabled = computed(() => {
   return (
@@ -257,20 +259,25 @@ const sendButtonIsDisabled = computed(() => {
 });
 
 // IGC
-async function sendIgc(file) {
+async function sendIgc(file: File) {
   const formData = new FormData();
-  formData.append("igcFile", file.target.files[0], file.target.files[0].name);
+  formData.append("igcFile", file, file.name);
   const response = await ApiService.uploadIgc(formData);
   return response;
 }
 
-const igcSelected = async (file) => {
-  flightId.value = null;
+const igcSelected = async (event: Event) => {
+  const target = event.target as HTMLInputElement;
+
+  flightId.value = undefined;
   showSpinner.value = true;
   try {
-    if (!file.target.files[0]) return;
-    const response = await sendIgc(file);
+    if (!target.files || !(target.files.length > 0)) return;
+    const igcFile = target.files[0];
+    if (!igcFile.name.endsWith(".igc"))
+      return (errorMessage.value = `Dies ist keine .igc Datei. Wenn du denkst, dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
 
+    const response = await sendIgc(igcFile);
     if (response.status != 200) throw response.statusText;
     errorMessage.value = null;
     flightId.value = response.data.flightId;
@@ -280,14 +287,14 @@ const igcSelected = async (file) => {
     airspaceViolation.value = response.data.airspaceViolation;
     if (airspaceViolation.value) {
       leaveAirspaceComment.value = true;
-      airspaceCollapse.value.show();
+      airspaceCollapse.value?.show();
     } else {
-      airspaceCollapse.value.hide();
+      airspaceCollapse.value?.hide();
     }
-    detailsCollapse.show();
-  } catch (error) {
-    detailsCollapse.hide();
-    console.log(error.response);
+    detailsCollapse?.show();
+  } catch (error: any) {
+    detailsCollapse?.hide();
+    console.log(error?.response);
     if (
       error?.response?.status === 400 &&
       error.response.data == "Invalid G-Record"
@@ -336,11 +343,16 @@ const igcSelected = async (file) => {
 
 const sendFlightDetails = async () => {
   showSpinner.value = true;
+  if (!flightId.value) throw new Error("No flight id present");
+
+  const glider = listOfGliders.value?.find(
+    (glider) => glider.id === defaultGlider.value
+  );
+  if (!glider) throw new Error("No glider found");
+
   try {
     const response = await ApiService.updateFlightDetails(flightId.value, {
-      glider: listOfGliders.value.find(
-        (glider) => glider.id === defaultGlider.value
-      ),
+      glider,
       report: flightReport.value,
       hikeAndFly: hikeAndFly.value,
       onlyLogbook: onlyLogbook.value,
@@ -356,6 +368,7 @@ const sendFlightDetails = async () => {
     await asyncForEach(photosToDelete.value, async (e) => {
       await ApiService.deletePhoto(e);
     });
+    if (!externalId.value) throw new Error("No external id present");
 
     redirectToFlight(externalId.value);
   } catch (error) {
@@ -365,17 +378,29 @@ const sendFlightDetails = async () => {
     showSpinner.value = false;
   }
 };
+// TODO: Merge types from FlightPhotos and this component
+interface NewPhoto {
+  id: string;
+  description?: string;
+  uploadCue?: string;
+}
+
+interface PhotosData {
+  all: NewPhoto[];
+  removed: string[];
+  added: File[];
+}
 
 // Photos
-const uploadedPhotos = ref([]);
-const photosToDelete = ref([]);
+const uploadedPhotos = ref<NewPhoto[]>([]);
+const photosToDelete = ref<string[]>([]);
 
-const onPhotosUpdated = (photos) => {
+const onPhotosUpdated = (photos: PhotosData) => {
   uploadedPhotos.value = photos.all;
   photosToDelete.value = photos.removed;
 };
 
-const redirectToFlight = (id) => {
+const redirectToFlight = (id: number) => {
   router.push({
     name: "Flight",
     params: {
