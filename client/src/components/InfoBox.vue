@@ -1,9 +1,13 @@
 <template>
   <!-- Alert -->
-  <!-- <div class="alert alert-danger mb-0" role="alert">
-    Erste Sonderwertung "Early Bird"
-    <a href="#" class="alert-link">mehr Infos</a>
-  </div> -->
+  <div class="alert alert-danger mb-0" role="alert">
+    Bitte stelle sicher, dass du deinen Schirm für die Leichtgewichtswertung
+    registriert hast, wenn du an dieser teilnehmen möchtest. Details dazu
+    findest du unter
+    <a href="https://xccup.net/news" class="alert-link"
+      >Änderungen an der Ausschreibung</a
+    >.
+  </div>
   <!-- Alert -->
   <div class="header-image-parent">
     <section class="container-fluid header-image"></section>
