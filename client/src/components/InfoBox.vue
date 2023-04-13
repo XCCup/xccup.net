@@ -5,9 +5,6 @@
     <a href="#" class="alert-link">mehr Infos</a>
   </div> -->
   <!-- Alert -->
-  <div class="header-image-parent">
-    <section class="container-fluid header-image"></section>
-  </div>
   <section v-if="seasonStats" class="py-3 text-center container">
     <div class="col-md-8 mx-auto">
       <!-- TODO: Replace with season details -->
