@@ -274,7 +274,7 @@ const igcSelected = async (event: Event) => {
   try {
     if (!target.files || !(target.files.length > 0)) return;
     const igcFile = target.files[0];
-    if (!igcFile.name.endsWith(".igc"))
+    if (!igcFile.name.toLowerCase().endsWith(".igc"))
       return (errorMessage.value = `Dies ist keine .igc Datei. Wenn du denkst, dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
 
     const response = await sendIgc(igcFile);
