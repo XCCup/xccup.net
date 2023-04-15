@@ -122,6 +122,8 @@ const onAddSite = async () => {
     await showSuccessAlert(
       "Dein Vorschlag wurde übermittelt. Die Admins müssen diesen noch prüfen, bevor Du ihn nutzen kannst."
     );
+    errorMessage.value = "";
+
     router.push({ name: "Home" });
   } catch (error) {
     console.error(error);
