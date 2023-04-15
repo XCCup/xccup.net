@@ -6,4 +6,5 @@ export interface FlyingSite {
   heightDifference: number;
   lat: number;
   long: number;
+  clubId?: string;
 }

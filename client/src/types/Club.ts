@@ -1,9 +1,12 @@
 import type { Contact } from "./Contact";
 import type { Logo } from "./Logo";
 
-export interface Club {
+export interface BaseClub {
   id?: string;
   name: string;
+}
+
+export interface Club extends BaseClub {
   shortName: string;
   website?: string;
   participantInSeasons?: number[];
