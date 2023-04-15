@@ -53,17 +53,19 @@
     </button>
   </slot-dialog>
 </template>
-<script setup>
+<script lang="ts" setup>
 import ApiService from "@/services/ApiService";
 import { ref, computed, reactive } from "vue";
+import type { Ref } from "vue";
 import { isCoordinate, isDirection, isInt } from "../helper/utils";
 import useSwal from "../composables/useSwal";
 import { useRouter } from "vue-router";
+import type { BaseClub } from "@/types/Club";
 
 const router = useRouter();
 const { showSuccessAlert } = useSwal();
 
-const errorMessage = ref(null);
+const errorMessage = ref("");
 const showSpinner = ref(false);
 
 const newSite = reactive({
@@ -76,8 +78,8 @@ const newSite = reactive({
   long: "",
 });
 
-const clubs = ref(null);
-const clubData = ref(null);
+const clubs: Ref<String[]> = ref([]);
+const clubData: Ref<BaseClub[]> = ref([]);
 
 const latIsValid = computed(() => isCoordinate(newSite.lat));
 const longIsValid = computed(() => isCoordinate(newSite.long));
@@ -86,9 +88,9 @@ const directionIsValid = computed(() => isDirection(newSite.direction));
 
 try {
   clubData.value = (await ApiService.getClubNames()).data;
-  clubs.value = clubData.value.map((c) => c.name);
+  clubs.value = clubData.value?.map((c) => c.name);
   // Add empty option
-  clubs.value.push("");
+  clubs.value.push("Es trifft keine Auswahl zu");
 } catch (error) {
   router.push({
     name: "NetworkError",
@@ -111,8 +113,11 @@ const onAddSite = async () => {
     showSpinner.value = true;
     await ApiService.addSite({
       ...newSite,
+      lat: +newSite.lat,
+      long: +newSite.long,
+      heightDifference: +newSite.heightDifference,
       direction: newSite.direction.toUpperCase(),
-      clubId: clubData.value.find((e) => e.name == newSite.club).id,
+      clubId: findClubId(newSite.club),
     });
     await showSuccessAlert(
       "Dein Vorschlag wurde übermittelt. Die Admins müssen diesen noch prüfen, bevor Du ihn nutzen kannst."
@@ -125,4 +130,8 @@ const onAddSite = async () => {
     showSpinner.value = false;
   }
 };
+
+function findClubId(clubName?: string) {
+  return clubData.value.find((e) => e.name == clubName)?.id;
+}
 </script>
