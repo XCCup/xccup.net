@@ -21,15 +21,6 @@ await initData(ApiService.getFlights, {
 });
 </script>
 
-<!-- Necessary for <keep-alive> -->
-<script lang="ts">
-export default {
-  name: "FlightsAll",
-  inheritAttrs: false,
-  customOptions: {},
-};
-</script>
-
 <template>
   <div class="container-xl mb-3">
     <h3 v-once>Streckenmeldungen {{ route.params.year }}</h3>
