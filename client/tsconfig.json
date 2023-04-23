@@ -7,9 +7,7 @@
     "allowJs": true,
     "paths": {
       "@/*": ["./src/*"]
-    },
-    // TODO: Remove when fixed: https://github.com/vuejs/tsconfig/issues/6
-    "ignoreDeprecations": "5.0"
+    }
   },
   "exclude": ["dist", "node_modules"],
 
