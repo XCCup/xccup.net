@@ -1,3 +1,15 @@
+<template>
+  <div class="container-lg">
+    <div v-if="results">
+      <h3 v-once>Teamwertung {{ route.params.year }}</h3>
+      <p v-if="remark">Hinweis: {{ remark }}</p>
+      <div class="my-2"><SelectSeason /></div>
+      <ResultsTableTeams :results="results" />
+    </div>
+    <GenericError v-else />
+  </div>
+</template>
+
 <script setup lang="ts">
 import ApiService from "@/services/ApiService";
 import { ref } from "vue";
@@ -22,24 +34,3 @@ try {
   }
 }
 </script>
-
-<!-- Necessary for <keep-alive> -->
-<script lang="ts">
-export default {
-  name: "ResultsTeams",
-  inheritAttrs: false,
-  customOptions: {},
-};
-</script>
-
-<template>
-  <div class="container-lg">
-    <div v-if="results">
-      <h3 v-once>Teamwertung {{ route.params.year }}</h3>
-      <p v-if="remark">Hinweis: {{ remark }}</p>
-      <div class="my-2"><SelectSeason /></div>
-      <ResultsTableTeams :results="results" />
-    </div>
-    <GenericError v-else />
-  </div>
-</template>

@@ -24,7 +24,7 @@ const router = createRouter({
 
 const { loggedIn, hasElevatedRole } = useAuth();
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   // Always allow to go to home
   if (to.fullPath == "/") return next();
 

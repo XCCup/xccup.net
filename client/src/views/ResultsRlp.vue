@@ -24,15 +24,6 @@ await initData(ApiService.getResultsRlp, {
 const remark = ref(dataConstants.value?.REMARKS_STATE);
 </script>
 
-<!-- Necessary for <keep-alive> -->
-<script lang="ts">
-export default {
-  name: "ResultsRlp",
-  inheritAttrs: false,
-  customOptions: {},
-};
-</script>
-
 <template>
   <div class="container-lg">
     <div v-if="results">
