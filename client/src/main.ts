@@ -4,7 +4,7 @@ import router from "./router";
 import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import * as Sentry from "@sentry/vue";
-import { BrowserTracing } from "@sentry/tracing";
+import { BrowserTracing } from "@sentry/browser";
 
 const app = createApp(App);
 

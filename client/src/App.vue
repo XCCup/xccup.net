@@ -56,6 +56,7 @@ onErrorCaptured((e) => {
   console.log(e);
   return true;
 });
+
 // Prevents fetching data again & clearing filters when navigating back
 const componentsToKeepAlive = [
   "FlightsAll",

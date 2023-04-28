@@ -37,8 +37,8 @@ export interface Dewpoint {
 }
 
 export interface Altimeter {
-  inches: number;
-  millibars: number;
+  inches?: number;
+  millibars?: number;
 }
 
 export interface Cloud {
@@ -50,23 +50,23 @@ export interface Cloud {
 }
 
 export interface METAR {
-  type: string;
-  auto: boolean;
-  station: string;
-  time: Time;
-  wind: Wind;
-  correction: boolean;
-  nosig: boolean;
-  visibility: Visibility;
-  temperature: Temperature;
-  dewpoint: Dewpoint;
-  altimeter: Altimeter;
-  clouds: Cloud[];
-  runwayVisualRange: any[];
-  weather: any[];
-  cavok: boolean;
-  windshear: any[];
+  type?: string;
+  auto?: boolean;
+  station?: string;
+  time?: Time;
+  wind?: Wind;
+  correction?: boolean;
+  nosig?: boolean;
+  visibility?: Visibility;
+  temperature?: Temperature;
+  dewpoint?: Dewpoint;
+  altimeter?: Altimeter;
+  clouds?: Cloud[];
+  runwayVisualRange?: any[];
+  weather?: any[];
+  cavok?: boolean;
+  windshear?: any[];
   verticalVisibility?: any;
-  recentWeather: any[];
+  recentWeather?: any[];
   remarks?: any;
 }
