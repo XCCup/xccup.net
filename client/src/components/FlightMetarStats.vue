@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// @ts-expect-error No types available
+// @ts-ignore
 import metarParser from "metar-parser";
 import { computed, type DeepReadonly } from "vue";
 import type { METAR } from "@/types/METAR";
@@ -36,7 +36,8 @@ const currentMetar = computed(() => {
 
 // METAR only contains the day of the month not a complete date.
 // To compare it to a timestamp we use the elapsed minutes of a day instead of the timestamp
-function getElapsedMinutesOfDay(date: string | number): number {
+function getElapsedMinutesOfDay(date?: string | number): number {
+  if (!date) return 0;
   const _date = new Date(date);
   return _date.getHours() * 60 + _date.getMinutes();
 }
@@ -65,12 +66,13 @@ function decodeClouds(data?: string): string {
 function decodeWind(metar?: METAR): string {
   if (!metar) return "";
   let direction: number | string = "";
-  if (typeof metar.wind.direction == "number")
-    direction = metar.wind.direction + "°";
-  if (typeof metar.wind.direction == "string") direction = metar.wind.direction;
+  if (typeof metar?.wind?.direction == "number")
+    direction = metar?.wind.direction + "°";
+  if (typeof metar?.wind?.direction == "string")
+    direction = metar.wind.direction;
 
-  const speed = metar.wind.speedMps
-    ? Math.round(metar.wind.speedMps * 3.6)
+  const speed = metar?.wind?.speedMps
+    ? Math.round(metar?.wind.speedMps * 3.6)
     : 0 + "km/h";
 
   return direction + " / " + speed + " km/h";
@@ -84,10 +86,12 @@ function findClosestMetar(
   }
   return metars.reduce((prev, curr) => {
     const aDiff = Math.abs(
-      getElapsedMinutesOfDay(prev.time.date) - getElapsedMinutesOfDay(timestamp)
+      getElapsedMinutesOfDay(prev?.time?.date) -
+        getElapsedMinutesOfDay(timestamp)
     );
     const bDiff = Math.abs(
-      getElapsedMinutesOfDay(curr.time.date) - getElapsedMinutesOfDay(timestamp)
+      getElapsedMinutesOfDay(curr.time?.date) -
+        getElapsedMinutesOfDay(timestamp)
     );
 
     if (aDiff == bDiff) {
@@ -122,11 +126,11 @@ function findClosestMetar(
       <i class="bi bi-wind"></i>
       {{ decodeWind(currentMetar) }}
     </div>
-    <div class="col">
+    <div v-if="currentMetar?.altimeter?.millibars" class="col">
       <i class="bi bi-arrow-bar-down"></i>
-      {{ currentMetar?.altimeter.millibars ?? 0 }} hPa
+      {{ currentMetar?.altimeter?.millibars ?? 0 }} hPa
     </div>
-    <div class="col">
+    <div v-if="currentMetar?.clouds?.length" class="col">
       <i class="bi bi-cloud"></i>
       {{ decodeClouds(currentMetar?.clouds[0]?.code) }}
     </div>
