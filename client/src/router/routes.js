@@ -181,6 +181,12 @@ export const Routes = [
     component: () => import("../views/InfoAirspaces.vue"),
   },
   {
+    path: "/info-upload",
+    name: "InfoAutoUpload",
+    meta: { smoothScroll: true },
+    component: () => import("../views/InfoAutoUpload.vue"),
+  },
+  {
     path: "/vereine",
     name: "Clubs",
     component: () => import("../views/ListClubs.vue"),
