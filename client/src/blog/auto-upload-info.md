@@ -47,5 +47,5 @@ Bei der Implementierung der API haben wir uns versucht an den "Leonardo-Standard
     * igcfn: IGC file name
     * report: Flight report (optional)
 
-##### Hinweis
+#### Hinweis
 Beim Upload wird dein im Profil als Standard definiertes Gerät angenommen. 
