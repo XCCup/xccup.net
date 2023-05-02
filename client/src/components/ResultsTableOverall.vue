@@ -156,8 +156,10 @@ import { useRouter } from "vue-router";
 import useData from "../composables/useData";
 import FlightInfoIcons from "./FlightInfoIcons.vue";
 import type { SortOptions } from "../composables/useData";
+import { Flight } from "@/types/Flight";
 
-const { data: flights, sortDataBy } = useData();
+const { data, sortDataBy } = useData();
+const flights = data as Flight[];
 const router = useRouter();
 
 const routeToFlight = (flightId: number) => {

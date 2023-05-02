@@ -34,7 +34,7 @@ function createInstance(viewComponentName: RouteRecordName) {
   const router = useRouter();
   const route = useRoute();
 
-  const data = ref<any>(null);
+  const data = ref<unknown>(null);
   const queryCache = ref<QueryCache>({});
   const limitCache = ref(DEFAULT_LIMIT);
   const numberOfTotalEntries = ref(0);
