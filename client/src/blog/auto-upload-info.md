@@ -1,12 +1,11 @@
 ### Automatischer Upload von Flügen
 
 Verschiedene internetfähige Tracker bieten Euch die Möglichkeit Flüge direkt aus dem Gerät auf XC Plattformen hochzuladen.
-
-Flymaster und Skytraxx bieten dies auch für den XCCup an.
-
-Nachfolgend wird kurz beschrieben, wie ihr die notwendige Konfiguration durchführen könnt.
-
+Flymaster und Skytraxx bieten dies für den XCCup an. Apps, in denen Leonardo-Server durch Euch selbst konfiguriert werden können (z.B. Flyskyhy), werden durch die XCCup API unterstützt.
 Wer die XCCup API direkt ansprechen möchte erhält hier ebenfalls alle notwendigen Informationen.
+
+###### Hinweis
+Beim Upload wird dein im Profil als Standard definiertes Gerät angenommen. 
 
 #### Flymaster
 - Gehe auf lt.flymaster.net 
@@ -33,6 +32,10 @@ Wer die XCCup API direkt ansprechen möchte erhält hier ebenfalls alle notwendi
 - Im Flugmenü auf Flug Hochladen klicken
 - Den gewünschten Contest auswählen und der Flug wird hochgeladen 
 
+#### Flyskyhy
+- Wähle "Other Leonardo Server" aus
+- Gebe die URL https://xccup.net/api/flights/leonardo an
+- Fülle deine Zugangsdaten aus
 
 #### XCCup API
 Bei der Implementierung der API haben wir uns versucht an den "Leonardo-Standard" zu halten.
@@ -47,5 +50,3 @@ Bei der Implementierung der API haben wir uns versucht an den "Leonardo-Standard
     * igcfn: IGC file name
     * report: Flight report (optional)
 
-#### Hinweis
-Beim Upload wird dein im Profil als Standard definiertes Gerät angenommen. 
