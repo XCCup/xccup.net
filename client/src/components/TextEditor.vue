@@ -38,8 +38,10 @@
 
 <script setup lang="ts">
 import { ref, useAttrs, computed } from "vue";
-import { VuemojiPicker } from "vuemoji-picker";
 import useAuth from "@/composables/useAuth";
+// @ts-ignore
+import { VuemojiPicker } from "vuemoji-picker";
+// @ts-ignore
 import type { EmojiClickEventDetail } from "vuemoji-picker";
 
 const { getAuthData } = useAuth();

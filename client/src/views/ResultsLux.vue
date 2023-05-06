@@ -24,15 +24,6 @@ await initData(ApiService.getResultsLux, {
 const remark = ref(dataConstants.value?.REMARKS_STATE);
 </script>
 
-<!-- Necessary for <keep-alive> -->
-<script lang="ts">
-export default {
-  name: "ResultsLux",
-  inheritAttrs: false,
-  customOptions: {},
-};
-</script>
-
 <template>
   <div class="container-lg">
     <div v-if="results">

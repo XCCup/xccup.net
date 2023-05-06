@@ -3,11 +3,7 @@
  * that uses reactive local storage
  */
 
-import type {
-  AxiosInstance,
-  AxiosRequestConfig,
-  InternalAxiosRequestConfig,
-} from "axios";
+import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import jwtDecode from "jwt-decode";
 import { useStorage } from "@vueuse/core";
 import { computed } from "vue";

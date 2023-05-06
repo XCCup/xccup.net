@@ -24,15 +24,6 @@ await initData(ApiService.getResultsHes, {
 const remark = ref(dataConstants.value?.REMARKS_STATE);
 </script>
 
-<!-- Necessary for <keep-alive> -->
-<script lang="ts">
-export default {
-  name: "ResultsHes",
-  inheritAttrs: false,
-  customOptions: {},
-};
-</script>
-
 <template>
   <div class="container-lg">
     <div v-if="results">

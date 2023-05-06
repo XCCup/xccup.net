@@ -31,6 +31,7 @@ export interface Flight {
   violationAccepted: boolean;
   hikeAndFly: number;
   isWeekend: boolean;
+  isNewPersonalBest: boolean;
   region?: string;
   ageOfUser: number;
   homeStateOfUser: string;

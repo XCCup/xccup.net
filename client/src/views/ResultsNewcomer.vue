@@ -24,15 +24,6 @@ await initData(ApiService.getResultsNewcomer, {
 const remark = ref(dataConstants.value?.REMARKS);
 </script>
 
-<!-- Necessary for <keep-alive> -->
-<script lang="ts">
-export default {
-  name: "ResultsNewcomer",
-  inheritAttrs: false,
-  customOptions: {},
-};
-</script>
-
 <template>
   <div class="container-lg">
     <div v-if="results">

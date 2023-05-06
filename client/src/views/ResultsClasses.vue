@@ -81,15 +81,6 @@ function determineSelectedClass(): string {
 }
 </script>
 
-<!-- Necessary for <keep-alive> -->
-<script lang="ts">
-export default {
-  name: "ResultsClasses",
-  inheritAttrs: false,
-  customOptions: {},
-};
-</script>
-
 <template>
   <div class="container-lg">
     <h3 v-once>{{ title }} {{ route.params?.year }}</h3>
