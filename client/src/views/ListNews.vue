@@ -1,5 +1,10 @@
 <template>
-  <div v-if="newsItems" data-cy="list-news" class="container py-4">
+  <div
+    v-if="newsItems"
+    data-cy="list-news"
+    class="container py-4"
+    style="max-width: 800px"
+  >
     <h2 class="pb-2 border-bottom">News</h2>
     <div class="row mt-3">
       <div

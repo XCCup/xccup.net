@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-4">
+  <div class="container py-4" style="max-width: 800px">
     <h3>Der neue XCCup</h3>
     <p>
       Da die alte Webseite aus einer Zeit stammte, in der Smartphones noch kein
@@ -129,26 +129,6 @@
         möglich. Eine Meldung mittels Start-/Landezeugen ist nicht mehr möglich.
       </li>
     </ul>
-    <p>
-      Die „alte“ Plattform wird noch eine Zeit lang als Archiv - bis alle Daten
-      übertragen worden sind - betrieben.
-      <a href="https://archiv.xccup.net" target="_blank"
-        >https://archiv.xccup.net</a
-      >
-      <br />
-      Streckenmeldungen in der „alten“ Welt werden nicht für die kommende Saison
-      gezählt.
-    </p>
-    <h4>Leonardo Schnittstelle</h4>
-    <p>
-      Ihr könnt Flüge direkt von euren Instrumenten hochladen, wenn diese die
-      Option bieten Flüge direkt an einen Leonardo Server zu senden.
-      <br />
-      Die URL ist: <code>https://xccup.net/api/flights/leonardo</code> <br />Das
-      in eurem Instrument angegebene Fluggerät wird ignoriert. Stattdessen wird
-      das Standardgerät aus eurem XCCup Profil zur Berechnung der Punkte
-      verwendet.
-    </p>
   </div>
 </template>
 
