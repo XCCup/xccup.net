@@ -1,0 +1,2683 @@
+yarn run v1.22.11
+$ jest test/IgcAnalyser.test.ts
+
+    Start of possible ground contact:  10:24:44
+
+
+
+
+    Revoke possible ground contact:  10:24:46
+
+
+
+
+    Start of possible ground contact:  10:25:01
+
+
+
+
+    Revoke possible ground contact:  10:25:06
+
+
+
+
+    Start of possible ground contact:  10:25:25
+
+
+
+
+    Revoke possible ground contact:  10:25:44
+
+
+
+
+    Start of possible ground contact:  10:25:47
+
+
+
+
+    Mark this as ground:  10:26:08
+
+
+
+
+    Mark this as ground:  10:26:09
+
+
+
+
+    Mark this as ground:  10:26:10
+
+
+
+
+    Mark this as ground:  10:26:11
+
+
+
+
+    Mark this as ground:  10:26:12
+
+
+
+
+    Mark this as ground:  10:26:13
+
+
+
+
+    Mark this as ground:  10:26:14
+
+
+
+
+    Mark this as ground:  10:26:15
+
+
+
+
+    Mark this as ground:  10:26:16
+
+
+
+
+    Mark this as ground:  10:26:17
+
+
+
+
+    Revoke possible ground contact:  10:26:18
+
+
+
+
+    Start of possible ground contact:  10:26:55
+
+
+
+
+    Revoke possible ground contact:  10:27:02
+
+
+
+
+    T: 11:45:31; GA: 359; HS: 8.75; VS: 0.00; HMA: 7.76; VMA: 1.55
+
+
+
+
+    T: 11:45:32; GA: 359; HS: 9.42; VS: 0.00; HMA: 7.97; VMA: 1.45
+
+
+
+
+    T: 11:45:33; GA: 359; HS: 6.56; VS: 2.00; HMA: 8.42; VMA: 2.00
+
+
+
+
+    T: 11:45:34; GA: 359; HS: 7.77; VS: -3.00; HMA: 9.01; VMA: 2.27
+
+
+
+
+    T: 11:45:35; GA: 359; HS: 9.91; VS: 1.00; HMA: 9.60; VMA: 2.18
+
+
+
+
+    T: 11:45:36; GA: 357; HS: 8.75; VS: -1.00; HMA: 9.89; VMA: 2.27
+
+
+
+
+    T: 11:45:37; GA: 356; HS: 8.34; VS: -2.00; HMA: 9.82; VMA: 2.55
+
+
+
+
+    T: 11:45:38; GA: 353; HS: 11.01; VS: -8.00; HMA: 9.39; VMA: 2.73
+
+
+
+
+    T: 11:45:39; GA: 347; HS: 13.03; VS: -4.00; HMA: 9.26; VMA: 2.64
+
+
+
+
+    T: 11:45:40; GA: 343; HS: 14.22; VS: 1.00; HMA: 9.21; VMA: 2.64
+
+
+
+
+    T: 11:45:41; GA: 344; HS: 11.01; VS: 3.00; HMA: 9.02; VMA: 2.82
+
+
+
+
+    T: 11:45:42; GA: 349; HS: 8.04; VS: 3.00; HMA: 9.09; VMA: 2.82
+
+
+
+
+    T: 11:45:43; GA: 352; HS: 4.65; VS: 2.00; HMA: 9.04; VMA: 2.73
+
+
+
+
+    T: 11:45:44; GA: 352; HS: 5.09; VS: -1.00; HMA: 8.55; VMA: 2.09
+
+
+
+
+    T: 11:45:45; GA: 351; HS: 7.25; VS: -3.00; HMA: 7.77; VMA: 1.91
+
+
+
+
+    T: 11:45:46; GA: 346; HS: 7.77; VS: -3.00; HMA: 6.99; VMA: 2.00
+
+
+
+
+    T: 11:45:47; GA: 343; HS: 9.56; VS: -1.00; HMA: 6.51; VMA: 1.82
+
+
+
+
+    T: 11:45:48; GA: 342; HS: 7.77; VS: -1.00; HMA: 6.59; VMA: 2.00
+
+
+
+
+    T: 11:45:49; GA: 343; HS: 5.68; VS: 1.00; HMA: 7.22; VMA: 2.00
+
+
+
+
+    T: 11:45:50; GA: 343; HS: 4.38; VS: -2.00; HMA: 7.72; VMA: 2.09
+
+
+
+
+    T: 11:45:51; GA: 341; HS: 5.68; VS: -2.00; HMA: 7.88; VMA: 1.91
+
+
+
+
+    T: 11:45:52; GA: 339; HS: 5.68; VS: -1.00; HMA: 7.62; VMA: 1.91
+
+
+
+
+    T: 11:45:53; GA: 336; HS: 8.92; VS: -5.00; HMA: 6.97; VMA: 1.82
+
+
+
+
+    T: 11:45:54; GA: 332; HS: 11.62; VS: -2.00; HMA: 0.00; VMA: 1.91
+
+
+
+
+    T: 11:45:55; GA: 329; HS: 10.62; VS: 2.00; HMA: 0.17; VMA: 2.09
+
+
+
+
+    T: 11:45:56; GA: 332; HS: 8.94; VS: -1.00; HMA: 0.27; VMA: 1.91
+
+
+
+
+    T: 11:45:57; GA: 334; HS: 5.00; VS: -3.00; HMA: 0.00; VMA: 1.82
+
+
+
+
+    T: 11:45:58; GA: 333; HS: 2.32; VS: 0.00; HMA: 0.00; VMA: 1.91
+
+
+
+
+    T: 11:45:59; GA: 333; HS: 0.00; VS: 2.00; HMA: 0.17; VMA: 1.45
+
+
+
+
+    T: 11:46:00; GA: 333; HS: 1.85; VS: -3.00; HMA: 0.34; VMA: 1.36
+
+
+
+
+    T: 11:46:01; GA: 333; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 1.18
+
+
+
+
+    T: 11:46:02; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 1.18
+
+
+
+
+    T: 11:46:03; GA: 332; HS: 0.00; VS: -2.00; HMA: 0.00; VMA: 1.00
+
+
+
+
+    T: 11:46:04; GA: 332; HS: 1.85; VS: 0.00; HMA: 0.00; VMA: 1.00
+
+
+
+
+    T: 11:46:05; GA: 333; HS: 1.85; VS: 1.00; HMA: 0.00; VMA: 0.91
+
+
+
+
+    T: 11:46:06; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:46:07; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:46:08; GA: 333; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:46:09; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:46:10; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:46:11; GA: 333; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:46:12; GA: 332; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.82
+
+
+
+
+    T: 11:46:13; GA: 332; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.82
+
+
+
+
+    T: 11:46:14; GA: 331; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:46:15; GA: 331; HS: 0.00; VS: 1.00; HMA: 0.11; VMA: 0.73
+
+
+
+
+    T: 11:46:16; GA: 331; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:46:17; GA: 331; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:46:18; GA: 330; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:46:19; GA: 331; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:46:20; GA: 330; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:46:21; GA: 330; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:46:22; GA: 330; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:46:23; GA: 330; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:24; GA: 329; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:46:25; GA: 329; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:46:26; GA: 329; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:46:27; GA: 328; HS: 0.00; VS: 0.00; HMA: 0.20; VMA: 0.36
+
+
+
+
+    T: 11:46:28; GA: 328; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:46:29; GA: 328; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:46:30; GA: 329; HS: 0.00; VS: 0.00; HMA: 0.11; VMA: 0.27
+
+
+
+
+    Start of possible ground contact:  11:46:30
+
+
+
+
+    T: 11:46:31; GA: 329; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:46:32; GA: 329; HS: 2.19; VS: 0.00; HMA: 0.00; VMA: 0.27
+
+
+
+
+    T: 11:46:33; GA: 329; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    Revoke possible ground contact:  11:46:33
+
+
+
+
+    T: 11:46:34; GA: 328; HS: 0.00; VS: -1.00; HMA: 0.11; VMA: 0.36
+
+
+
+
+    T: 11:46:35; GA: 328; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:36; GA: 328; HS: 0.00; VS: 0.00; HMA: 0.17; VMA: 0.55
+
+
+
+
+    T: 11:46:37; GA: 328; HS: 0.00; VS: 2.00; HMA: 0.34; VMA: 0.55
+
+
+
+
+    T: 11:46:38; GA: 328; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:46:39; GA: 327; HS: 1.16; VS: 0.00; HMA: 0.17; VMA: 0.73
+
+
+
+
+    T: 11:46:40; GA: 327; HS: 0.00; VS: 1.00; HMA: 0.27; VMA: 0.64
+
+
+
+
+    T: 11:46:41; GA: 327; HS: 1.85; VS: -1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:46:42; GA: 326; HS: 1.85; VS: 0.00; HMA: 0.17; VMA: 0.64
+
+
+
+
+    T: 11:46:43; GA: 326; HS: 0.00; VS: -1.00; HMA: 0.27; VMA: 0.55
+
+
+
+
+    T: 11:46:44; GA: 326; HS: 1.85; VS: 1.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:45; GA: 326; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:46:46; GA: 326; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:47; GA: 326; HS: 1.85; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:48; GA: 326; HS: 1.16; VS: -1.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:46:49; GA: 326; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:50; GA: 326; HS: 0.00; VS: 1.00; HMA: 0.11; VMA: 0.36
+
+
+
+
+    T: 11:46:51; GA: 326; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:52; GA: 326; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:53; GA: 327; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:46:54; GA: 327; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:55; GA: 327; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:56; GA: 327; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:46:57; GA: 326; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:46:58; GA: 325; HS: 0.00; VS: -1.00; HMA: 0.11; VMA: 0.45
+
+
+
+
+    T: 11:46:59; GA: 325; HS: 0.00; VS: 0.00; HMA: 0.21; VMA: 0.36
+
+
+
+
+    T: 11:47:00; GA: 324; HS: 0.00; VS: 0.00; HMA: 0.32; VMA: 0.36
+
+
+
+
+    T: 11:47:01; GA: 324; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:47:02; GA: 323; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:47:03; GA: 323; HS: 1.16; VS: -1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:47:04; GA: 323; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:47:05; GA: 323; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:47:06; GA: 323; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:47:07; GA: 323; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:47:08; GA: 324; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:47:09; GA: 324; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:47:10; GA: 325; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:47:11; GA: 325; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:47:12; GA: 326; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:47:13; GA: 326; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:14; GA: 327; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.82
+
+
+
+
+    T: 11:47:15; GA: 328; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:16; GA: 328; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:17; GA: 328; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:18; GA: 328; HS: 0.00; VS: 1.00; HMA: 0.17; VMA: 0.73
+
+
+
+
+    T: 11:47:19; GA: 328; HS: 0.00; VS: -1.00; HMA: 0.27; VMA: 0.73
+
+
+
+
+    T: 11:47:20; GA: 328; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:21; GA: 328; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.82
+
+
+
+
+    T: 11:47:22; GA: 329; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.91
+
+
+
+
+    T: 11:47:23; GA: 329; HS: 1.85; VS: -1.00; HMA: 0.00; VMA: 0.91
+
+
+
+
+    T: 11:47:24; GA: 329; HS: 1.16; VS: 1.00; HMA: 0.11; VMA: 0.91
+
+
+
+
+    T: 11:47:25; GA: 331; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.91
+
+
+
+
+    T: 11:47:26; GA: 331; HS: 0.00; VS: -1.00; HMA: 0.11; VMA: 0.91
+
+
+
+
+    T: 11:47:27; GA: 331; HS: 0.00; VS: -2.00; HMA: 0.27; VMA: 0.82
+
+
+
+
+    T: 11:47:28; GA: 331; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.82
+
+
+
+
+    T: 11:47:29; GA: 331; HS: 1.16; VS: 1.00; HMA: 0.11; VMA: 0.91
+
+
+
+
+    T: 11:47:30; GA: 331; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.82
+
+
+
+
+    T: 11:47:31; GA: 332; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.82
+
+
+
+
+    T: 11:47:32; GA: 332; HS: 1.85; VS: 0.00; HMA: 0.00; VMA: 0.82
+
+
+
+
+    T: 11:47:33; GA: 332; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:47:34; GA: 333; HS: 1.16; VS: 2.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:47:35; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:47:36; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:47:37; GA: 334; HS: 0.00; VS: -1.00; HMA: 0.17; VMA: 0.45
+
+
+
+
+    T: 11:47:38; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:47:39; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:47:40; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:47:41; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:47:42; GA: 334; HS: 1.85; VS: 1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:43; GA: 334; HS: 0.00; VS: -1.00; HMA: 0.11; VMA: 0.64
+
+
+
+
+    T: 11:47:44; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:47:45; GA: 334; HS: 0.00; VS: -2.00; HMA: 0.11; VMA: 0.73
+
+
+
+
+    T: 11:47:46; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:47; GA: 333; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:48; GA: 333; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:49; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.73
+
+
+
+
+    T: 11:47:50; GA: 333; HS: 1.16; VS: 1.00; HMA: 0.00; VMA: 0.64
+
+
+
+
+    T: 11:47:51; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:47:52; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.11; VMA: 0.45
+
+
+
+
+    T: 11:47:53; GA: 333; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:47:54; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 1.09
+
+
+
+
+    T: 11:47:55; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 1.73
+
+
+
+
+    T: 11:47:56; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 1.73
+
+
+
+
+    T: 11:47:57; GA: 334; HS: 1.16; VS: 1.00; HMA: 0.00; VMA: 1.82
+
+
+
+
+    T: 11:47:58; GA: 334; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 1.82
+
+
+
+
+    T: 11:47:59; GA: 334; HS: 0.00; VS: -7.00; HMA: 0.00; VMA: 1.73
+
+
+
+
+    T: 11:48:00; GA: 334; HS: 0.00; VS: 7.00; HMA: 0.00; VMA: 1.73
+
+
+
+
+    T: 11:48:01; GA: 335; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 1.73
+
+
+
+
+    T: 11:48:02; GA: 334; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 1.73
+
+
+
+
+    T: 11:48:03; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 1.73
+
+
+
+
+    T: 11:48:04; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 1.73
+
+
+
+
+    T: 11:48:05; GA: 334; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 1.09
+
+
+
+
+    T: 11:48:06; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.11; VMA: 0.45
+
+
+
+
+    T: 11:48:07; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:48:08; GA: 334; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:48:09; GA: 334; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:48:10; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:48:11; GA: 334; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:48:12; GA: 334; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:48:13; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.55
+
+
+
+
+    T: 11:48:14; GA: 334; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:48:15; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:48:16; GA: 334; HS: 0.00; VS: 1.00; HMA: 0.11; VMA: 0.36
+
+
+
+
+    T: 11:48:17; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:48:18; GA: 334; HS: 0.00; VS: -1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:48:19; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.11; VMA: 0.36
+
+
+
+
+    T: 11:48:20; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:48:21; GA: 333; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.45
+
+
+
+
+    T: 11:48:22; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:48:23; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:48:24; GA: 333; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.27
+
+
+
+
+    Start of possible ground contact:  11:48:24
+
+
+
+
+    T: 11:48:25; GA: 333; HS: 0.00; VS: -1.00; HMA: 0.11; VMA: 0.27
+
+
+
+
+    T: 11:48:26; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.27
+
+
+
+
+    T: 11:48:27; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.27
+
+
+
+
+    T: 11:48:28; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:29; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:30; GA: 334; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:31; GA: 335; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.09
+
+
+
+
+    T: 11:48:32; GA: 335; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.00
+
+
+
+
+    T: 11:48:33; GA: 335; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.00
+
+
+
+
+    T: 11:48:34; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.00
+
+
+
+
+    T: 11:48:35; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.00
+
+
+
+
+    T: 11:48:36; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.00
+
+
+
+
+    T: 11:48:37; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.09
+
+
+
+
+    T: 11:48:38; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:39; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:40; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:41; GA: 334; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:42; GA: 333; HS: 0.00; VS: 1.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:43; GA: 333; HS: 0.00; VS: -1.00; HMA: 0.11; VMA: 0.18
+
+
+
+
+    T: 11:48:44; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    T: 11:48:45; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.27
+
+
+
+
+    Mark this as ground:  11:48:45
+
+
+
+
+    T: 11:48:46; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    Revoke possible ground contact:  11:48:46
+
+
+
+
+    T: 11:48:47; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.36
+
+
+
+
+    T: 11:48:48; GA: 333; HS: 1.16; VS: 0.00; HMA: 0.00; VMA: 0.27
+
+
+
+
+    Start of possible ground contact:  11:48:48
+
+
+
+
+    T: 11:48:49; GA: 333; HS: 0.00; VS: 0.00; HMA: 0.00; VMA: 0.18
+
+
+
+
+    Revoke possible ground contact:  11:48:54
+
+
+
+
+    Start of possible ground contact:  11:49:06
+
+
+
+
+    Revoke possible ground contact:  11:49:10
+
+
+
+
+    Start of possible ground contact:  11:49:12
+
+
+
+
+    Revoke possible ground contact:  11:49:15
+
+
+
+
+    Start of possible ground contact:  11:49:21
+
+
+
+
+    Revoke possible ground contact:  11:49:22
+
+
+
+
+    Start of possible ground contact:  11:49:24
+
+
+
+
+    Revoke possible ground contact:  11:49:27
+
+
+
+
+    Start of possible ground contact:  11:49:31
+
+
+
+
+    Revoke possible ground contact:  11:49:36
+
+
+
+
+    Start of possible ground contact:  11:49:37
+
+
+
+
+    Revoke possible ground contact:  11:49:40
+
+
+
+
+    Start of possible ground contact:  11:50:17
+
+
+
+
+    Revoke possible ground contact:  11:50:22
+
+
+
+
+    Start of possible ground contact:  11:50:23
+
+
+
+
+    Revoke possible ground contact:  11:50:27
+
+
+
+
+    Start of possible ground contact:  11:50:42
+
+
+
+
+    Revoke possible ground contact:  11:50:45
+
+
+
+
+    Start of possible ground contact:  11:51:07
+
+
+
+
+    Revoke possible ground contact:  11:51:11
+
+
+
+
+    Start of possible ground contact:  11:51:27
+
+
+
+
+    Revoke possible ground contact:  11:51:29
+
+
+
+
+    Start of possible ground contact:  11:51:44
+
+
+
+
+    Revoke possible ground contact:  11:51:45
+
+
+
+
+    Start of possible ground contact:  11:51:46
+
+
+
+
+    Revoke possible ground contact:  11:51:48
+
+
+
+
+    Start of possible ground contact:  11:51:49
+
+
+
+
+    Revoke possible ground contact:  11:52:03
+
+
+
+
+    Start of possible ground contact:  11:52:30
+
+
+
+
+    Revoke possible ground contact:  11:52:34
+
+
+
+
+    Start of possible ground contact:  11:53:09
+
+
+
+
+    Revoke possible ground contact:  11:53:15
+
+
+
+
+    Start of possible ground contact:  11:53:22
+
+
+
+
+    Mark this as ground:  11:53:43
+
+
+
+
+    Mark this as ground:  11:53:44
+
+
+
+
+    Mark this as ground:  11:53:45
+
+
+
+
+    Mark this as ground:  11:53:46
+
+
+
+
+    Mark this as ground:  11:53:47
+
+
+
+
+    Mark this as ground:  11:53:48
+
+
+
+
+    Revoke possible ground contact:  11:53:49
+
+
+
+
+    Start of possible ground contact:  11:53:50
+
+
+
+
+    Revoke possible ground contact:  11:53:52
+
+
+
+
+    Start of possible ground contact:  11:53:57
+
+
+
+
+    Revoke possible ground contact:  11:54:02
+
+
+
+
+    Start of possible ground contact:  11:54:03
+
+
+
+
+    Revoke possible ground contact:  11:54:06
+
+
+
+
+    Start of possible ground contact:  11:54:44
+
+
+
+
+    Mark this as ground:  11:55:05
+
+
+
+
+    Mark this as ground:  11:55:06
+
+
+
+
+    Mark this as ground:  11:55:07
+
+
+
+
+    Mark this as ground:  11:55:08
+
+
+
+
+    Revoke possible ground contact:  11:55:09
+
+
+
+
+    Start of possible ground contact:  11:55:21
+
+
+
+
+    Revoke possible ground contact:  11:55:26
+
+
+
+
+    Start of possible ground contact:  11:55:27
+
+
+
+
+    Revoke possible ground contact:  11:55:29
+
+
+
+
+    Start of possible ground contact:  11:55:42
+
+
+
+
+    Revoke possible ground contact:  11:55:43
+
+
+
+
+    Start of possible ground contact:  11:55:54
+
+
+
+
+    Revoke possible ground contact:  11:55:56
+
+
+
+
+    Start of possible ground contact:  11:56:16
+
+
+
+
+    Revoke possible ground contact:  11:56:23
+
+
+
+
+    Start of possible ground contact:  11:56:38
+
+
+
+
+    Revoke possible ground contact:  11:56:40
+
+
+
+
+    Start of possible ground contact:  11:56:45
+
+
+
+
+    Revoke possible ground contact:  11:56:50
+
+
+
+
+    Start of possible ground contact:  11:56:52
+
+
+
+
+    Revoke possible ground contact:  11:56:56
+
+
+
+
+    Start of possible ground contact:  11:57:02
+
+
+
+
+    Revoke possible ground contact:  11:57:19
+
+
+
+
+    Start of possible ground contact:  11:57:28
+
+
+
+
+    Revoke possible ground contact:  11:57:29
+
+
+
+
+    Start of possible ground contact:  11:57:30
+
+
+
+
+    Revoke possible ground contact:  11:57:31
+
+
+
+
+    Start of possible ground contact:  11:57:32
+
+
+
+
+    Revoke possible ground contact:  11:57:38
+
+
+
+
+    Start of possible ground contact:  11:57:40
+
+
+
+
+    Revoke possible ground contact:  11:57:41
+
+
+
+
+    Start of possible ground contact:  11:57:52
+
+
+
+
+    Revoke possible ground contact:  11:57:56
+
+
+
+
+    Start of possible ground contact:  11:58:10
+
+
+
+
+    Revoke possible ground contact:  11:58:21
+
+
+
+
+    Start of possible ground contact:  11:58:35
+
+
+
+
+    Revoke possible ground contact:  11:58:38
+
+
+
+
+    Start of possible ground contact:  11:58:40
+
+
+
+
+    Mark this as ground:  11:59:01
+
+
+
+
+    Mark this as ground:  11:59:02
+
+
+
+
+    Mark this as ground:  11:59:03
+
+
+
+
+    Mark this as ground:  11:59:04
+
+
+
+
+    Mark this as ground:  11:59:05
+
+
+
+
+    Mark this as ground:  11:59:06
+
+
+
+
+    Revoke possible ground contact:  11:59:07
+
+
+
+
+    Start of possible ground contact:  11:59:29
+
+
+
+
+    Revoke possible ground contact:  11:59:33
+
+
+
+
+    Start of possible ground contact:  11:59:35
+
+
+
+
+    Revoke possible ground contact:  11:59:36
+
+
+
+
+    Start of possible ground contact:  12:00:21
+
+
+
+
+    Revoke possible ground contact:  12:00:32
+
+
+
+
+    Start of possible ground contact:  12:00:42
+
+
+
+
+    Revoke possible ground contact:  12:00:56
+
+
+
+
+    Start of possible ground contact:  12:00:59
+
+
+
+
+    Revoke possible ground contact:  12:01:01
+
+
+
+
+    Start of possible ground contact:  12:01:41
+
+
+
+
+    Revoke possible ground contact:  12:01:47
+
+
+
+
+    Start of possible ground contact:  12:01:48
+
+
+
+
+    Revoke possible ground contact:  12:01:49
+
+
+
+
+    Start of possible ground contact:  12:02:00
+
+
+
+
+    Revoke possible ground contact:  12:02:01
+
+
+
+
+    Start of possible ground contact:  12:02:02
+
+
+
+
+    Revoke possible ground contact:  12:02:04
+
+
+
+
+    Start of possible ground contact:  12:02:06
+
+
+
+
+    Revoke possible ground contact:  12:02:08
+
+
+
+
+    Start of possible ground contact:  12:03:00
+
+
+
+
+    Revoke possible ground contact:  12:03:02
+
+
+
+
+    Start of possible ground contact:  12:03:08
+
+
+
+
+    Revoke possible ground contact:  12:03:09
+
+
+
+
+    Start of possible ground contact:  12:03:14
+
+
+
+
+    Revoke possible ground contact:  12:03:15
+
+
+
+
+    Start of possible ground contact:  12:03:24
+
+
+
+
+    Mark this as ground:  12:03:45
+
+
+
+
+    Mark this as ground:  12:03:46
+
+
+
+
+    Mark this as ground:  12:03:47
+
+
+
+
+    Mark this as ground:  12:03:48
+
+
+
+
+    Mark this as ground:  12:03:49
+
+
+
+
+    Mark this as ground:  12:03:50
+
+
+
+
+    Revoke possible ground contact:  12:03:51
+
+
+
+
+    Start of possible ground contact:  12:03:55
+
+
+
+
+    Revoke possible ground contact:  12:04:00
+
+
+
+
+    Start of possible ground contact:  12:04:01
+
+
+
+
+    Revoke possible ground contact:  12:04:05
+
+
+
+
+    Start of possible ground contact:  12:04:27
+
+
+
+
+    Revoke possible ground contact:  12:04:44
+
+
+
+
+    Start of possible ground contact:  12:04:54
+
+
+
+
+    Revoke possible ground contact:  12:05:15
+
+
+
+
+    Start of possible ground contact:  12:05:16
+
+
+
+
+    Revoke possible ground contact:  12:05:18
+
+
+
+
+    Start of possible ground contact:  12:05:20
+
+
+
+
+    Revoke possible ground contact:  12:05:21
+
+
+
+
+    Start of possible ground contact:  12:06:24
+
+
+
+
+    Revoke possible ground contact:  12:06:40
+
+
+
+
+    Start of possible ground contact:  12:07:12
+
+
+
+
+    Revoke possible ground contact:  12:07:15
+
+
+
+
+    Start of possible ground contact:  12:07:19
+
+
+
+
+    Revoke possible ground contact:  12:07:21
+
+
+
+
+    Start of possible ground contact:  12:07:26
+
+
+
+
+    Revoke possible ground contact:  12:07:36
+
+
+
+
+    Start of possible ground contact:  12:07:57
+
+
+
+
+    Mark this as ground:  12:08:18
+
+
+
+
+    Mark this as ground:  12:08:19
+
+
+
+
+    Mark this as ground:  12:08:20
+
+
+
+
+    Mark this as ground:  12:08:21
+
+
+
+
+    Mark this as ground:  12:08:22
+
+
+
+
+    Mark this as ground:  12:08:23
+
+
+
+
+    Revoke possible ground contact:  12:08:24
+
+
+
+
+    Start of possible ground contact:  12:08:28
+
+
+
+
+    Revoke possible ground contact:  12:08:33
+
+
+
+
+    Start of possible ground contact:  12:08:50
+
+
+
+
+    Revoke possible ground contact:  12:08:51
+
+
+
+
+    Start of possible ground contact:  12:08:54
+
+
+
+
+    Revoke possible ground contact:  12:08:58
+
+
+
+
+    Start of possible ground contact:  12:09:02
+
+
+
+
+    Revoke possible ground contact:  12:09:03
+
+
+
+
+    Start of possible ground contact:  12:09:51
+
+
+
+
+    Revoke possible ground contact:  12:09:59
+
+
+
+
+    Start of possible ground contact:  12:10:08
+
+
+
+
+    Revoke possible ground contact:  12:10:16
+
+
+
+
+    Start of possible ground contact:  12:10:28
+
+
+
+
+    Mark this as ground:  12:10:49
+
+
+
+
+    Mark this as ground:  12:10:50
+
+
+
+
+    Mark this as ground:  12:10:51
+
+
+
+
+    Mark this as ground:  12:10:52
+
+
+
+
+    Mark this as ground:  12:10:53
+
+
+
+
+    Mark this as ground:  12:10:54
+
+
+
+
+    Mark this as ground:  12:10:55
+
+
+
+
+    Mark this as ground:  12:10:56
+
+
+
+
+    Mark this as ground:  12:10:57
+
+
+
+
+    Mark this as ground:  12:10:58
+
+
+
+
+    Mark this as ground:  12:10:59
+
+
+
+
+    Mark this as ground:  12:11:00
+
+
+
+
+    Mark this as ground:  12:11:01
+
+
+
+
+    Mark this as ground:  12:11:02
+
+
+
+
+    Mark this as ground:  12:11:03
+
+
+
+
+    Mark this as ground:  12:11:04
+
+
+
+
+    Mark this as ground:  12:11:05
+
+
+
+
+    Revoke possible ground contact:  12:11:06
+
+
+
+
+    Start of possible ground contact:  12:11:20
+
+
+
+
+    Revoke possible ground contact:  12:11:21
+
+
+
+
+    Start of possible ground contact:  12:11:22
+
+
+
+
+    Revoke possible ground contact:  12:11:24
+
+
+
+
+    Start of possible ground contact:  12:11:36
+
+
+
+
+    Revoke possible ground contact:  12:11:41
+
+
+
+
+    Start of possible ground contact:  12:11:57
+
+
+
+
+    Revoke possible ground contact:  12:12:15
+
+
+
+
+    Start of possible ground contact:  12:12:51
+
+
+
+
+    Revoke possible ground contact:  12:12:58
+
+
+
+
+    Start of possible ground contact:  12:14:19
+
+
+
+
+    Revoke possible ground contact:  12:14:22
+
+
+
+
+    Start of possible ground contact:  12:14:24
+
+
+
+
+    Revoke possible ground contact:  12:14:28
+
+
+
+
+    Start of possible ground contact:  12:15:04
+
+
+
+
+    Revoke possible ground contact:  12:15:06
+
+
+
+
+    Start of possible ground contact:  12:15:35
+
+
+
+
+    Revoke possible ground contact:  12:15:38
+
+
+
+
+    Start of possible ground contact:  12:15:51
+
+
+
+
+    Revoke possible ground contact:  12:15:58
+
+
+
+
+    Start of possible ground contact:  12:16:00
+
+
+
+
+    Revoke possible ground contact:  12:16:01
+
+
+
+
+    Start of possible ground contact:  12:16:19
+
+
+
+
+    Revoke possible ground contact:  12:16:25
+
+
+
+
+    Start of possible ground contact:  12:16:43
+
+
+
+
+    Revoke possible ground contact:  12:16:45
+
+
+
+
+    Start of possible ground contact:  12:16:56
+
+
+
+
+    Revoke possible ground contact:  12:16:59
+
+
+
+
+    Start of possible ground contact:  12:17:10
+
+
+
+
+    Revoke possible ground contact:  12:17:25
+
+
+
+
+    Start of possible ground contact:  12:17:35
+
+
+
+
+    Revoke possible ground contact:  12:17:46
+
+
+
+
+    Start of possible ground contact:  12:17:56
+
+
+
+
+    Revoke possible ground contact:  12:17:59
+
+
+
+
+    Start of possible ground contact:  12:18:01
+
+
+
+
+    Revoke possible ground contact:  12:18:04
+
+
+
+
+    Start of possible ground contact:  12:18:14
+
+
+
+
+    Revoke possible ground contact:  12:18:21
+
+
+
+
+    Start of possible ground contact:  12:18:39
+
+
+
+
+    Revoke possible ground contact:  12:18:41
+
+
+
+
+    Start of possible ground contact:  12:18:43
+
+
+
+
+    Revoke possible ground contact:  12:18:47
+
+
+
+
+    Start of possible ground contact:  12:18:58
+
+
+
+
+    Revoke possible ground contact:  12:19:02
+
+
+
+
+    Start of possible ground contact:  12:19:05
+
+
+
+
+    Revoke possible ground contact:  12:19:07
+
+
+
+
+    Start of possible ground contact:  12:19:12
+
+
+
+
+    Revoke possible ground contact:  12:19:15
+
+
+
+
+    Start of possible ground contact:  12:19:17
+
+
+
+
+    Revoke possible ground contact:  12:19:23
+
+
+
+
+    Start of possible ground contact:  12:19:26
+
+
+
+
+    Revoke possible ground contact:  12:19:27
+
+
+
+
+    Start of possible ground contact:  12:20:21
+
+
+
+
+    Revoke possible ground contact:  12:20:22
+
+
+
+
+    Start of possible ground contact:  12:22:07
+
+
+
+
+    Revoke possible ground contact:  12:22:11
+
+
+
+
+    Start of possible ground contact:  12:22:31
+
+
+
+
+    Revoke possible ground contact:  12:22:42
+
+
+
+
+    Start of possible ground contact:  12:22:44
+
+
+
+
+    Mark this as ground:  12:23:05
+
+
+
+
+    Mark this as ground:  12:23:06
+
+
+
+
+    Mark this as ground:  12:23:07
+
+
+
+
+    Mark this as ground:  12:23:08
+
+
+
+
+    Mark this as ground:  12:23:09
+
+
+
+
+    Mark this as ground:  12:23:10
+
+
+
+
+    Mark this as ground:  12:23:11
+
+
+
+
+    Mark this as ground:  12:23:12
+
+
+
+
+    Mark this as ground:  12:23:13
+
+
+
+
+    Mark this as ground:  12:23:14
+
+
+
+
+    Mark this as ground:  12:23:15
+
+
+
+
+    Mark this as ground:  12:23:16
+
+
+
+
+    Mark this as ground:  12:23:17
+
+
+
+
+    Mark this as ground:  12:23:18
+
+
+
+
+    Mark this as ground:  12:23:19
+
+
+
+
+    Mark this as ground:  12:23:20
+
+
+
+
+    Mark this as ground:  12:23:21
+
+
+
+
+    Mark this as ground:  12:23:22
+
+
+
+
+    Mark this as ground:  12:23:23
+
+
+
+
+    Mark this as ground:  12:23:24
+
+
+
+
+    Revoke possible ground contact:  12:23:25
+
+
+
+
+    Start of possible ground contact:  12:23:28
+
+
+
+
+    Revoke possible ground contact:  12:23:42
+
+
+
+
+    Start of possible ground contact:  12:24:06
+
+
+
+
+    Revoke possible ground contact:  12:24:24
+
+
+
+
+    Start of possible ground contact:  12:24:25
+
+
+
+
+    Revoke possible ground contact:  12:24:28
+
+
+
+
+    Start of possible ground contact:  12:25:12
+
+
+
+
+    Revoke possible ground contact:  12:25:14
+
+
+
+
+    Start of possible ground contact:  12:25:18
+
+
+
+
+    Mark this as ground:  12:25:39
+
+
+
+
+    Mark this as ground:  12:25:40
+
+
+
+
+    Mark this as ground:  12:25:41
+
+
+
+
+    Mark this as ground:  12:25:42
+
+
+
+
+    Mark this as ground:  12:25:43
+
+
+
+
+    Mark this as ground:  12:25:44
+
+
+
+
+    Mark this as ground:  12:25:45
+
+
+
+
+    Mark this as ground:  12:25:46
+
+
+
+
+    Mark this as ground:  12:25:47
+
+
+
+
+    Mark this as ground:  12:25:48
+
+
+
+
+    Mark this as ground:  12:25:49
+
+
+
+
+    Revoke possible ground contact:  12:25:50
+
+
+
+
+    Start of possible ground contact:  12:26:02
+
+
+
+
+    Revoke possible ground contact:  12:26:07
+
+
+
+
+    Start of possible ground contact:  12:26:22
+
+
+
+
+    Revoke possible ground contact:  12:26:26
+
+
+
+
+    Start of possible ground contact:  12:26:41
+
+
+
+
+    Revoke possible ground contact:  12:26:44
+
+
+
+
+    Start of possible ground contact:  12:26:57
+
+
+
+
+    Revoke possible ground contact:  12:26:58
+
+
+
+
+    Start of possible ground contact:  12:32:17
+
+
+
+
+    Revoke possible ground contact:  12:32:22
+
+
+
+
+    Start of possible ground contact:  12:34:13
+
+
+
+
+    Revoke possible ground contact:  12:34:24
+
+
+
+
+    Start of possible ground contact:  12:34:38
+
+
+
+
+    Revoke possible ground contact:  12:34:40
+
+
+
+
+    Start of possible ground contact:  12:34:55
+
+
+
+
+    Revoke possible ground contact:  12:34:56
+
+
+
+
+    Start of possible ground contact:  12:35:02
+
+
+
+
+    Revoke possible ground contact:  12:35:10
+
+
+
+
+    Start of possible ground contact:  12:41:10
+
+
+
+
+    Revoke possible ground contact:  12:41:22
+
+
+
+
+    Start of possible ground contact:  12:42:10
+
+
+
+
+    Revoke possible ground contact:  12:42:23
+
+
+
+
+    Start of possible ground contact:  12:50:56
+
+
+
+
+    Revoke possible ground contact:  12:50:59
+
+
+
+Done in 5.62s.
