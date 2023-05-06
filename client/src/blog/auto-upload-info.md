@@ -2,10 +2,10 @@
 
 Verschiedene internetfähige Tracker bieten Euch die Möglichkeit Flüge direkt aus dem Gerät auf XC Plattformen hochzuladen.
 Flymaster und Skytraxx bieten dies für den XCCup an. Apps, in denen Leonardo-Server durch Euch selbst konfiguriert werden können (z.B. Flyskyhy), werden durch die XCCup API unterstützt.
-Wer die XCCup API direkt ansprechen möchte erhält hier ebenfalls alle notwendigen Informationen.
+Wer die XCCup API direkt ansprechen möchte, erhält hier ebenfalls alle notwendigen Informationen.
 
 ###### Hinweis
-Beim Upload wird dein im Profil als Standard definiertes Gerät angenommen. 
+Beim Upload wird Dein im Profil als Standard definiertes Gerät angenommen. 
 
 #### Flymaster
 - Gehe auf lt.flymaster.net 
@@ -15,7 +15,7 @@ Beim Upload wird dein im Profil als Standard definiertes Gerät angenommen.
 - Aktiviere "Auto Upload"
 
 #### Skytraxx
-- Stelle sicher das die neue Firmwaremauf deinem Gerät installiert ist
+- Stelle sicher, dass die neue Firmware auf Deinem Gerät installiert ist
 - Im Hauptmenü auf Einstellungen gehen
 - Auf Pilot klicken
 - Profil erstellen mit Name, Schirmmarke und -typ, Zulassung 
@@ -24,7 +24,7 @@ Beim Upload wird dein im Profil als Standard definiertes Gerät angenommen.
 - In Einstellungen auf OLC klicken
 - Profile klicken
 - Hinzufügen klicken
-- Den relevanten Contest auswählen (DHV-XC, XContest, XCglobe oder XCcup)
+- Den relevanten Contest auswählen (DHV-XC, XContest, XCglobe oder XCCup)
 - Profilname eingeben
 - Dann Benutzername und Passwort für den gewählten Contest eingeben (derselbe BN und dasselbe PW wie in der Webversion)
 - Login testen
@@ -35,10 +35,10 @@ Beim Upload wird dein im Profil als Standard definiertes Gerät angenommen.
 #### Flyskyhy
 - Wähle "Other Leonardo Server" aus
 - Gebe die URL https://xccup.net/api/flights/leonardo an
-- Fülle deine Zugangsdaten aus
+- Fülle Deine Zugangsdaten aus
 
 #### XCCup API
-Bei der Implementierung der API haben wir uns versucht an den "Leonardo-Standard" zu halten.
+Bei der Implementierung der API haben wir versucht uns an den "Leonardo-Standard" zu halten.
 
 * URL: https://xccup.net/api/flights/leonardo
 * HTTP-Method: POST
