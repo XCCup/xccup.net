@@ -4,7 +4,7 @@ import { MinMaxOptions } from "express-validator/src/options";
 import { sanitizeHtml } from "../helper/Utils";
 
 /**
- * Checks if the field is a string. Addionally escapes all special charcters (e.g. ">","<").
+ * Checks if the field is a string. Additionally escapes all special characters (e.g. ">","<").
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
@@ -24,7 +24,7 @@ export function checkStringObjectNoEscaping(field: string) {
 }
 
 /**
- * Checks if the field is a string and not empty. Addionally escapes all special charcters (e.g. ">","<").
+ * Checks if the field is a string and not empty. Additionally escapes all special characters (e.g. ">","<").
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
@@ -265,7 +265,7 @@ export function checkIsISO8601(field: string) {
     .withMessage(`${field} must be a ISO8601 timestamp`);
 }
 /**
- * Checks, when the field is present, if the field is a string and not empty. Addionally escapes all special charcters (e.g. ">","<").
+ * Checks, when the field is present, if the field is a string and not empty. Additionally escapes all special characters (e.g. ">","<").
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.
  */
@@ -279,7 +279,7 @@ export function checkOptionalStringObjectNotEmpty(field: string) {
     .escape();
 }
 /**
- * Checks in a query string, when the parameter is present, if the parameter value matches a columnname of the provided modelname.
+ * Checks in a query string, when the parameter is present, if the parameter value matches a column name of the provided model name.
  * @param {*} field The field in the Request-Body to check.
  * @param {*} modelName The name of the Model to check against.
  * @returns A ValidationChain object for the checked parameter.
@@ -297,7 +297,7 @@ export function queryOptionalColumnExistsInModel(
     });
 }
 /**
- * Validates if one or more of the previous checks on fields failed. If at least one check failed, the response status of that call will be set to 400 and the addionally error information will be send to the response.
+ * Validates if one or more of the previous checks on fields failed. If at least one check failed, the response status of that call will be set to 400 and the additionally error information will be send to the response.
  * @param {*} req The Request object of the call to API.
  * @param {*} res The Response object of the call to API.
  * @returns The response if any error was found, else undefined.
