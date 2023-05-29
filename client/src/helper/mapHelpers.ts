@@ -112,6 +112,7 @@ export function drawAirspaceViolationMarkers(
 function createViolationPopupContent(violation: AirspaceViolation) {
   return `GPS Höhe:  ${violation.gpsAltitude} m
   <br>ISA Höhe:  ${violation.pressureAltitude ?? "N/A"} m
+  <br>Luftraum:  ${violation.airspaceName}
   <br>Untergrenze:  ${violation.lowerLimitOriginal} / ${Math.round(
     violation.lowerLimitMeter
   )} m
