@@ -118,7 +118,7 @@ router.get("/names", async (req, res, next) => {
 });
 
 // @desc Logs a user in by his credentials
-// @route GET /users/login
+// @route POST /users/login
 
 router.post(
   "/login",
