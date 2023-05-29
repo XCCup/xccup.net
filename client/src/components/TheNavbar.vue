@@ -258,6 +258,13 @@ const handleLogout = async () => {
                 >
               </li>
               <li>
+                <router-link
+                  :to="{ name: 'InfoAutoUpload' }"
+                  class="dropdown-item"
+                  >Automatischer Upload</router-link
+                >
+              </li>
+              <li>
                 <router-link :to="{ name: 'Rules' }" class="dropdown-item"
                   >Ausschreibung 2023</router-link
                 >
