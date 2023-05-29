@@ -45,7 +45,7 @@ const definitionFlight = {
 const definitionGround = {
   t: 20,
   xmax: 2.5,
-  zmax: 0.3,
+  zmax: 0.2,
 };
 // Attach horizontal and vertical speed to each fix
 function prepare(fixes: ExtendedBRecord[]) {

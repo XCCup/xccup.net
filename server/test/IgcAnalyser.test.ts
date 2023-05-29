@@ -162,7 +162,7 @@ test("Validate that the landing is detected (even when igc has more fixes; case 
 
   const expectedFlight = {
     type: "FREE",
-    dist: "24.156",
+    dist: "24.173",
   };
   const result = await calculateFlightResult(
     flightToAnaylze.igcPath,
