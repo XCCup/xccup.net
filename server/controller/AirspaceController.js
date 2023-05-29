@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const service = require("../service/AirspaceService");
 const { query } = require("express-validator");
-const { validationHasErrors } = require("./Validation");
+const { validationHasErrors, checkFieldNotEmpty } = require("./Validation");
+const { requesterMustBeAdmin } = require("./Auth");
+const { OK } = require("../constants/http-status-constants");
 
 const POINTS_FORMAT =
   /(\d+.\d+,\d+.\d+)\|(\d+.\d+,\d+.\d+)\|(\d+.\d+,\d+.\d+)\|(\d+.\d+,\d+.\d+)/;
@@ -32,6 +34,26 @@ router.get(
         ? await service.getAllRelevantInPolygon(points)
         : await service.getAllRelevant();
       res.json(airspaces);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// @desc Extend database with new airspaces
+// @route POST /airspaces/
+// @access Only admin
+
+router.post(
+  "/",
+  checkFieldNotEmpty("airspace"),
+  requesterMustBeAdmin,
+  async (req, res, next) => {
+    if (validationHasErrors(req, res)) return;
+
+    try {
+      await service.addAirspace(req.body.airspace);
+      res.sendStatus(OK);
     } catch (error) {
       next(error);
     }

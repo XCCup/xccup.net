@@ -36,9 +36,30 @@ const service = {
     return result;
   },
 
+  addAirspace: async (airspace) => {
+    logger.info("Will upload new airspace to db");
+
+    // TODO: Add check for duplicated entries
+    // There is no unique identifier in the dataset and there are duplicated names
+    // const airspaceAlreadyExists = await Airspace.findOne({
+    //   where: {
+    //     season: airspace.season,
+    //     name: airspace.name,
+    //   },
+    // });
+    //
+    // if (airspaceAlreadyExists) {
+    //   throw new XccupRestrictionError(
+    //     `Their exists already an airspace with name ${airspace.name} for the season ${airspace.season}`
+    //   );
+    // }
+
+    return await Airspace.create(airspace);
+  },
+
   /**
    * It was encountered that some entries in the DB are not valid by means of OpenGIS specification.
-   * You will maybe see an error like "lwgeom_intersection_prec: GEOS Error: TopologyException: Input geom 0 is invalid: Self-intersection at or near poin".
+   * You will maybe see an error like "lwgeom_intersection_prec: GEOS Error: TopologyException: Input geom 0 is invalid: Self-intersection at or near point".
    *
    * You can list all invalid ones with "SELECT * from "Airspaces" WHERE NOT ST_isvalid(polygon);".
    *
