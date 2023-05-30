@@ -313,7 +313,7 @@ router.post(
 // @route POST /flights/admin/upload
 // @access Only admins
 
-const igcAdminFileUpload = createMulterIgcUploadHandler({ parts: 3 });
+const igcAdminFileUpload = createMulterIgcUploadHandler({ parts: 6 });
 router.post(
   "/admin/upload",
   igcAdminFileUpload.single("igcFile") as express.RequestHandler,
