@@ -59,12 +59,11 @@ describe("check flyingsites page", () => {
     });
 
     // Accept the proposed site
-    cy.get(
-      ':nth-child(2) > :nth-child(10) > [data-cy="site-accept"] > .bi'
-    ).click();
-    // cy.get(":nth-child(2)]").within(() => {
-    //   cy.get("[data-cy=site-accept]").click();
-    // });
+    cy.get('[data-cy="site-name"]')
+      .contains(expectedName)
+      .parent()
+      .find('[data-cy="site-accept"]')
+      .click();
 
     cy.clickButtonInModal("#modalSiteConfirm", "Akzeptieren");
 
