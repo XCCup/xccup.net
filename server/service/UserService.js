@@ -105,14 +105,8 @@ const userService = {
 
   getAllNames: async () => {
     const users = await User.findAll({
-      where: {
-        // TODO: Decide what to do in frontend when this users really should be excluded from the list
-        // role: {
-        //   [Op.not]: ROLE.INACTIVE,
-        // },
-      },
       order: [["firstName", "asc"]],
-      attributes: ["id", "firstName", "lastName", "fullName"],
+      attributes: ["id", "firstName", "lastName", "fullName", "role"],
     });
 
     return users;
