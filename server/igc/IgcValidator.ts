@@ -11,13 +11,17 @@ export type FaiResponse = "PASSED" | "FAILED" | "ERROR";
  * Checks with the FAI API if an IGC file has a valid G record.
  *
  */
-export const validateIgc = async (content: string, filename: string) => {
+export const validateIgc = async (
+  content: string,
+  filename: string,
+  encoding: BufferEncoding = "utf-8"
+) => {
   // http://vali.fai-civl.org/webservice.html
   logger.info("Validating igc file with FAI API");
   try {
     const url = "http://vali.fai-civl.org/api/vali/json";
     const formData = new FormData();
-    const buffer = Buffer.from(content);
+    const buffer = Buffer.from(content, encoding);
 
     formData.append("igcfile", buffer, {
       filename,

@@ -191,6 +191,96 @@ describe("check flight upload page", () => {
     });
   });
 
+  it.only("test upload flight (UTF-8 Encoding)", () => {
+    cy.intercept("POST", "photos*").as("post-photo");
+
+    const igcFileName = "73320_LA9ChMu1.igc";
+
+    const expectedTakeoff = "Laubenheim";
+    const expectedUserName = "Ramona Gislason";
+    const expectedAirtime = "1:23h";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+
+    // Finish flight submission
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+  });
+
+  it.only("test upload flight (ANSI / Win1252 Encoding)", () => {
+    cy.intercept("POST", "photos*").as("post-photo");
+
+    const igcFileName = "77814_36RXXXX1.igc";
+
+    const expectedTakeoff = "Laubenheim";
+    const expectedUserName = "Ramona Gislason";
+    const expectedAirtime = "1:23h";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+
+    // Finish flight submission
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+  });
+
   it("test upload new personal best and check METAR", () => {
     const igcFileName = "104km.igc";
 
