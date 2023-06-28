@@ -21,8 +21,8 @@ test("Validate an igc-File which should result to PASSED", (done) => {
     .catch((error) => done(error));
 });
 
-test("Validate an igc-File which should result to PASSED (ANSI Encoding)", (done) => {
-  const { content, encoding } = readFile("ansi", "77814_36RXXXX1.igc");
+test("Validate an igc-File which should result to PASSED (Win1252 Encoding)", (done) => {
+  const { content, encoding } = readFile("non-utf8", "Win1252.igc");
 
   const igc = {
     name: "AValidFile.igc",
