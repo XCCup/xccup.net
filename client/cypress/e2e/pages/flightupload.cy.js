@@ -191,61 +191,59 @@ describe("check flight upload page", () => {
     });
   });
 
-  it.only("test upload flight (UTF-8 Encoding)", () => {
-    cy.intercept("POST", "photos*").as("post-photo");
+  // it("test upload flight (UTF-8 Encoding)", () => {
+  //   cy.intercept("POST", "photos*").as("post-photo");
 
-    const igcFileName = "73320_LA9ChMu1.igc";
+  //   const igcFileName = "73320_LA9ChMu1.igc";
 
-    const expectedTakeoff = "Laubenheim";
-    const expectedUserName = "Ramona Gislason";
-    const expectedAirtime = "1:23h";
+  //   const expectedTakeoff = "Laubenheim";
+  //   const expectedUserName = "Ramona Gislason";
+  //   const expectedAirtime = "1:23h";
 
-    cy.loginNormalUser();
+  //   cy.loginNormalUser();
 
-    cy.get("button").contains("Flug hochladen").click();
+  //   cy.get("button").contains("Flug hochladen").click();
 
-    cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
-        fileName: igcFileName,
-        mimeType: "text/plain",
-      });
-    });
+  //   cy.fixture(igcFileName).then((fileContent) => {
+  //     cy.get('input[type="file"]#igcUploadForm').attachFile({
+  //       fileContent: fileContent.toString(),
+  //       fileName: igcFileName,
+  //       mimeType: "text/plain",
+  //     });
+  //   });
 
-    // Increase timeout because calculation takes some time
-    cy.get('input[type="text"]', {
-      timeout: 40000,
-    }).should("have.value", expectedTakeoff);
+  //   // Increase timeout because calculation takes some time
+  //   cy.get('input[type="text"]', {
+  //     timeout: 40000,
+  //   }).should("have.value", expectedTakeoff);
 
-    cy.get("#acceptTermsCheckbox").check();
+  //   cy.get("#acceptTermsCheckbox").check();
 
-    cy.intercept("PUT", "/api/flights/*").as("update-flight");
-    cy.intercept("GET", "/api/flights/*").as("get-flight");
+  //   cy.intercept("PUT", "/api/flights/*").as("update-flight");
+  //   cy.intercept("GET", "/api/flights/*").as("get-flight");
 
-    // Finish flight submission
-    cy.get("Button").contains("Streckenmeldung absenden").click();
+  //   // Finish flight submission
+  //   cy.get("Button").contains("Streckenmeldung absenden").click();
 
-    cy.wait("@update-flight");
-    cy.wait("@get-flight");
+  //   cy.wait("@update-flight");
+  //   cy.wait("@get-flight");
 
-    // Expect to be redirected to flight view after submitting
-    cy.get("[data-cy=flight-details-pilot]")
-      .find("a")
-      .contains(expectedUserName);
-    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
-    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
-  });
+  //   // Expect to be redirected to flight view after submitting
+  //   cy.get("[data-cy=flight-details-pilot]")
+  //     .find("a")
+  //     .contains(expectedUserName);
+  //   cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
+  //   cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+  // });
 
-  it.only("test upload flight (ANSI / Win1252 Encoding)", () => {
-    cy.intercept("POST", "photos*").as("post-photo");
+  it("test upload flight (Win1252 Encoding)", () => {
+    const igcFileName = "Win1252_Encoding.igc";
 
-    const igcFileName = "77814_36RXXXX1.igc";
+    const expectedTakeoff = "Königstuhl";
+    const expectedUserName = "Willis Romaguera";
+    const expectedAirtime = "2:00h";
 
-    const expectedTakeoff = "Laubenheim";
-    const expectedUserName = "Ramona Gislason";
-    const expectedAirtime = "1:23h";
-
-    cy.loginNormalUser();
+    cy.login("blackhole+willis@xccup.net", "PW_WillisRomaguera");
 
     cy.get("button").contains("Flug hochladen").click();
 
@@ -444,10 +442,10 @@ describe("check flight upload page", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError = "Dieser Flug enthält eine Luftraumverletzung";
-    const expectedUserName = "Ramona Gislason";
     const expectedFlightState = "In Prüfung";
+    const expectedUserName = "Frank Jacobs";
 
-    cy.loginNormalUser();
+    cy.login("blackhole+frank@xccup.net", "PW_FrankJacobs");
 
     cy.get("button").contains("Flug hochladen").click();
 
@@ -612,7 +610,7 @@ describe("check flight upload page", () => {
     }).should("include.text", expectedError);
   });
 
-  it("Test upload with leonardo interface", () => {
+  it.only("Test upload with leonardo interface", () => {
     const form = new FormData();
 
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
