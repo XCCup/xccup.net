@@ -276,9 +276,8 @@ router.post(
       await checkIfUserClubIsActive(userId);
 
       // G-Check
-      const content = fs.readFileSync(igcFile.path, "utf8");
       const filename = igcFile.filename;
-      const validationResult = await validateIgc(content, filename);
+      const validationResult = await validateIgc(igcFile.path, filename);
 
       if (isGRecordResultInvalid(res, validationResult))
         return MailService.sendGCheckInvalidAdminMail(userId, igcFile.path);
@@ -342,9 +341,8 @@ router.post(
         await UserService.getGlidersById(userId);
       if (!userGliders) return res.sendStatus(NOT_FOUND);
 
-      const content = fs.readFileSync(igcFile.path, "utf8");
       const filename = igcFile.filename;
-      const validationResult = await validateIgc(content, filename);
+      const validationResult = await validateIgc(igcFile.path, filename);
 
       /** A non igc file will now throw a 500 because the parsing will
        * fail and parsing is currently not in a try/catch block.
@@ -536,7 +534,7 @@ router.post(
       const igcPath = await persistIgcFile(externalId, igcContent, igcFilename);
 
       // G-Check
-      const validationResult = await validateIgc(igcContent, igcFilename);
+      const validationResult = await validateIgc(igcPath, igcFilename);
       if (isGRecordResultInvalid(res, validationResult)) {
         MailService.sendGCheckInvalidAdminMail(userId, igcPath);
         return;
