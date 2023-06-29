@@ -581,7 +581,7 @@ const genderDescription = (gender) => {
   return "Divers";
 };
 
-const createFullName = (user) => user.firstName + " " + user.lastName;
+const createFullName = (user) => user?.firstName + " " + user?.lastName;
 
 onUnmounted(() => onClear());
 </script>
