@@ -2,7 +2,6 @@
  * @jest-environment node
  */
 import path from "path";
-import fs from "fs";
 import { validateIgc } from "../igc/IgcValidator";
 
 test("Validate an igc-File which should result to PASSED", (done) => {
@@ -46,14 +45,6 @@ test("Validate an igc-File which should result to FAILED", (done) => {
     })
     .catch((error) => done(error));
 });
-
-function readFile(folder: string, file: string) {
-  const parentDir = path.resolve(__dirname, "..");
-  const igcFilePath = path.join(parentDir, "/igc/demo_igcs", folder, file);
-
-  // return readIgcFile(igcFilePath);
-  return fs.readFileSync(igcFilePath);
-}
 
 function createFilePath(folder: string, file: string) {
   const parentDir = path.resolve(__dirname, "..");
