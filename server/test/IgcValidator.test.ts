@@ -4,7 +4,6 @@
 import path from "path";
 import fs from "fs";
 import { validateIgc } from "../igc/IgcValidator";
-// import { readIgcFile } from "../igc/IgcFileRead";
 
 test("Validate an igc-File which should result to PASSED", (done) => {
   const igc = {
