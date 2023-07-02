@@ -16,7 +16,7 @@
             </h3>
             <!-- TODO: Beautify the hover -->
             <div>
-              <table class="table table-hover text-light bg-primary">
+              <table class="table table-hover table-primary">
                 <tbody>
                   <tr
                     v-for="(flight, index) in flights.slice(0, maxRows)"
