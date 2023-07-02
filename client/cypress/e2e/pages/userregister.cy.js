@@ -20,11 +20,7 @@ describe("check users register page", () => {
     cy.get("#gender").select("M").should("have.value", "M");
 
     cy.get("#birthday").click();
-    for (let index = 0; index < 3; index++) {
-      cy.get(".v3dp__heading__button").first().click();
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(500);
-    }
+    cy.get(".v3dp__heading__button").first().click();
     cy.get(".v3dp__elements").find("button").contains("1994").click();
     cy.get(".v3dp__elements").find("button").contains("Mai").click();
     cy.get(".v3dp__elements").find("button").contains("01").click();
@@ -81,11 +77,7 @@ describe("check users register page", () => {
     cy.get("#gender").select("M").should("have.value", "M");
 
     cy.get("#birthday").click();
-    for (let index = 0; index < 3; index++) {
-      cy.get(".v3dp__heading__button").first().click();
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(500);
-    }
+    cy.get(".v3dp__heading__button").first().click();
     cy.get(".v3dp__elements").find("button").contains("1996").click();
     cy.get(".v3dp__elements").find("button").contains("Feb").click();
     cy.get(".v3dp__elements").find("button").contains("28").click();
