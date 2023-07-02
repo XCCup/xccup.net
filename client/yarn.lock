@@ -1084,10 +1084,10 @@ bootstrap-icons@^1.10.5:
   resolved "https://registry.yarnpkg.com/bootstrap-icons/-/bootstrap-icons-1.10.5.tgz#5a1bbb1bb2212397d416587db1d422cc9501847c"
   integrity sha512-oSX26F37V7QV7NCE53PPEL45d7EGXmBgHG3pDpZvcRaKVzWMqIRL9wcqJUyEha1esFtM3NJzvmxFXDxjJYD0jQ==
 
-bootstrap@5.3.0-alpha1:
-  version "5.3.0-alpha1"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.3.0-alpha1.tgz#380629c4367893f02f7879a01ea3ae0f94e2e70e"
-  integrity sha512-ABZpKK4ObS3kKlIqH+ZVDqoy5t/bhFG0oHTAzByUdon7YIom0lpCeTqRniDzJmbtcWkNe800VVPBiJgxSYTYew==
+bootstrap@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-5.3.0.tgz#0718a7cc29040ee8dbf1bd652b896f3436a87c29"
+  integrity sha512-UnBV3E3v4STVNQdms6jSGO2CvOkjUMdDAVR2V5N4uCMdaIkaQjbcEAMqRimDHIs4uqBYzDAKCQwCB+97tJgHQw==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -4179,10 +4179,10 @@ vue-tsc@^1.6.5:
     "@volar/vue-typescript" "1.6.5"
     semver "^7.3.8"
 
-vue3-datepicker@^0.3.4:
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/vue3-datepicker/-/vue3-datepicker-0.3.4.tgz#1f406d8dc6228c06b471a1a52a8b8093238e7997"
-  integrity sha512-pD4Lixnqdr6KeIO/ZK/xdmhYDQUvMPHgTeWkNYeAx5sKY4eaNItOqbLuevwI51d3ubozhNS1y+Z8Enxi33pXiQ==
+vue3-datepicker@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/vue3-datepicker/-/vue3-datepicker-0.4.0.tgz#d9493e801022062a89ba41e7927b391e5fe2e039"
+  integrity sha512-o0/y4yuZZc0DXYhiAlX8Znrkm/zvkeYuyV9PUt0UAvwxkno2jqMS388jVUa9Ns+a2s2pOAAybyXo5uQ9YAIwVw==
   dependencies:
     date-fns "^2.22.1"
 
