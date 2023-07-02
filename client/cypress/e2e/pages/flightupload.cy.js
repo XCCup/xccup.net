@@ -191,53 +191,8 @@ describe("check flight upload page", () => {
     });
   });
 
-  // it("test upload flight (UTF-8 Encoding)", () => {
-  //   cy.intercept("POST", "photos*").as("post-photo");
-
-  //   const igcFileName = "73320_LA9ChMu1.igc";
-
-  //   const expectedTakeoff = "Laubenheim";
-  //   const expectedUserName = "Ramona Gislason";
-  //   const expectedAirtime = "1:23h";
-
-  //   cy.loginNormalUser();
-
-  //   cy.get("button").contains("Flug hochladen").click();
-
-  //   cy.fixture(igcFileName).then((fileContent) => {
-  //     cy.get('input[type="file"]#igcUploadForm').attachFile({
-  //       fileContent: fileContent.toString(),
-  //       fileName: igcFileName,
-  //       mimeType: "text/plain",
-  //     });
-  //   });
-
-  //   // Increase timeout because calculation takes some time
-  //   cy.get('input[type="text"]', {
-  //     timeout: 40000,
-  //   }).should("have.value", expectedTakeoff);
-
-  //   cy.get("#acceptTermsCheckbox").check();
-
-  //   cy.intercept("PUT", "/api/flights/*").as("update-flight");
-  //   cy.intercept("GET", "/api/flights/*").as("get-flight");
-
-  //   // Finish flight submission
-  //   cy.get("Button").contains("Streckenmeldung absenden").click();
-
-  //   cy.wait("@update-flight");
-  //   cy.wait("@get-flight");
-
-  //   // Expect to be redirected to flight view after submitting
-  //   cy.get("[data-cy=flight-details-pilot]")
-  //     .find("a")
-  //     .contains(expectedUserName);
-  //   cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
-  //   cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
-  // });
-
   it("test upload flight (Win1252 Encoding)", () => {
-    const igcFileName = "Win1252_Encoding.igc";
+    const igcFileName = "cypress/fixtures/Win1252_Encoding.igc";
 
     const expectedTakeoff = "Königstuhl";
     const expectedUserName = "Willis Romaguera";
@@ -247,13 +202,8 @@ describe("check flight upload page", () => {
 
     cy.get("button").contains("Flug hochladen").click();
 
-    cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
-        fileName: igcFileName,
-        mimeType: "text/plain",
-      });
-    });
+    // Use selectFile to ensure that the file encoding will not be tempered
+    cy.get("input[type=file]#igcUploadForm").selectFile(igcFileName);
 
     // Increase timeout because calculation takes some time
     cy.get('input[type="text"]', {
@@ -610,7 +560,7 @@ describe("check flight upload page", () => {
     }).should("include.text", expectedError);
   });
 
-  it.only("Test upload with leonardo interface", () => {
+  it("Test upload with leonardo interface", () => {
     const form = new FormData();
 
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
