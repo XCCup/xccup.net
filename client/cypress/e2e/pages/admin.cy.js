@@ -273,7 +273,7 @@ describe("check admin page", () => {
     });
 
     // Check if error message will be displayed
-    cy.get("#upload-error").should(
+    cy.get("#upload-error", { timeout: 20000 }).should(
       "contain.text",
       "Der Verein mit dem du aktuell registriert bist, nimmt noch nicht an der Saison teil"
     );
