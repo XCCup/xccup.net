@@ -4179,10 +4179,10 @@ vue-tsc@^1.6.5:
     "@volar/vue-typescript" "1.6.5"
     semver "^7.3.8"
 
-vue3-datepicker@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/vue3-datepicker/-/vue3-datepicker-0.3.8.tgz#b88fd30083d6b38d49821e62cfb6f53c8b98578e"
-  integrity sha512-TpVRvurl73tRH0ZTEmmInxSrs9bF+KbdZ5UC2rK8scyIwmN0/DDbe+UU2bBVpDvj3GZEYjNXaDt7hDTgqwBq+A==
+vue3-datepicker@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/vue3-datepicker/-/vue3-datepicker-0.4.0.tgz#d9493e801022062a89ba41e7927b391e5fe2e039"
+  integrity sha512-o0/y4yuZZc0DXYhiAlX8Znrkm/zvkeYuyV9PUt0UAvwxkno2jqMS388jVUa9Ns+a2s2pOAAybyXo5uQ9YAIwVw==
   dependencies:
     date-fns "^2.22.1"
 
