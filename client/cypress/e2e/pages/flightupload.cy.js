@@ -191,6 +191,44 @@ describe("check flight upload page", () => {
     });
   });
 
+  it("test upload flight (Win1252 Encoding)", () => {
+    const igcFileName = "cypress/fixtures/Win1252_Encoding.igc";
+
+    const expectedTakeoff = "Königstuhl";
+    const expectedUserName = "Willis Romaguera";
+    const expectedAirtime = "2:00h";
+
+    cy.login("blackhole+willis@xccup.net", "PW_WillisRomaguera");
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    // Use selectFile to ensure that the file encoding will not be tempered
+    cy.get("input[type=file]#igcUploadForm").selectFile(igcFileName);
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedTakeoff);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.intercept("PUT", "/api/flights/*").as("update-flight");
+    cy.intercept("GET", "/api/flights/*").as("get-flight");
+
+    // Finish flight submission
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    cy.wait("@update-flight");
+    cy.wait("@get-flight");
+
+    // Expect to be redirected to flight view after submitting
+    cy.get("[data-cy=flight-details-pilot]")
+      .find("a")
+      .contains(expectedUserName);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
+    cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+  });
+
   it("test upload new personal best and check METAR", () => {
     const igcFileName = "104km.igc";
 
@@ -354,10 +392,10 @@ describe("check flight upload page", () => {
     const igcFileName = "47188_J3USaNi1.igc";
     const airspaceComment = "CTR Büchel inaktiv";
     const expectedError = "Dieser Flug enthält eine Luftraumverletzung";
-    const expectedUserName = "Ramona Gislason";
     const expectedFlightState = "In Prüfung";
+    const expectedUserName = "Frank Jacobs";
 
-    cy.loginNormalUser();
+    cy.login("blackhole+frank@xccup.net", "PW_FrankJacobs");
 
     cy.get("button").contains("Flug hochladen").click();
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import axiosRetry from "axios-retry";
 import FormData from "form-data";
 import logger from "../config/logger";
+import fs from "fs";
 
 axiosRetry(axios, { retries: 2 });
 
@@ -11,13 +12,13 @@ export type FaiResponse = "PASSED" | "FAILED" | "ERROR";
  * Checks with the FAI API if an IGC file has a valid G record.
  *
  */
-export const validateIgc = async (content: string, filename: string) => {
+export const validateIgc = async (filePath: string, filename: string) => {
   // http://vali.fai-civl.org/webservice.html
   logger.info("Validating igc file with FAI API");
   try {
     const url = "http://vali.fai-civl.org/api/vali/json";
     const formData = new FormData();
-    const buffer = Buffer.from(content);
+    const buffer = fs.readFileSync(filePath);
 
     formData.append("igcfile", buffer, {
       filename,
@@ -41,6 +42,7 @@ export const validateIgc = async (content: string, filename: string) => {
       logger.info(
         "IV: IGC validation finished with not passed. Result is: " + result
       );
+      logger.debug("IV: Full response" + JSON.stringify(res.data, null, 2));
     }
 
     return result;
