@@ -21,7 +21,26 @@ export function convertMapBoundsToQueryString(data: L.Polyline): string {
 export function createAirspacePopupContent(airspace: Airspace): string {
   const upperLimitInMeters = tryToConvertToMeters(airspace.ceiling);
   const lowerLimitInMeters = tryToConvertToMeters(airspace.floor);
-  return `Name: ${airspace.name}<br>Class: ${airspace.class}<br>Ceiling: ${airspace.ceiling}${upperLimitInMeters}<br>Floor: ${airspace.floor}${lowerLimitInMeters}`;
+  let content = `Name: ${airspace.name}<br>
+  Class: ${airspace.class}<br>
+  Ceiling: ${airspace.ceiling}${upperLimitInMeters}<br>
+  Floor: ${airspace.floor}${lowerLimitInMeters}`;
+
+  if (airspace.class.toLowerCase() == "w") {
+    const gliderSectorInfoLink =
+      "https://www.daec.de/fachbereiche/luftraum-flugsicherheit-betrieb/segelflugsektoren/";
+
+    content += `
+    <br><br>
+    <i>
+    Es handelt sich hier um einen Segelflugsektor. Dieser mildert unter Umständen die Vorgaben des umgebenen Luftraums.
+    <br><br>
+    Für weitere Informationen siehe:
+    <a href="${gliderSectorInfoLink}" target="_blank">${gliderSectorInfoLink}</a> 
+    </i>
+    `;
+  }
+  return content;
 }
 
 function tryToConvertToMeters(value: string): string {
@@ -112,6 +131,7 @@ export function drawAirspaceViolationMarkers(
 function createViolationPopupContent(violation: AirspaceViolation) {
   return `GPS Höhe:  ${violation.gpsAltitude} m
   <br>ISA Höhe:  ${violation.pressureAltitude ?? "N/A"} m
+  <br>Luftraum:  ${violation.airspaceName}
   <br>Untergrenze:  ${violation.lowerLimitOriginal} / ${Math.round(
     violation.lowerLimitMeter
   )} m

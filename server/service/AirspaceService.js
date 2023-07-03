@@ -19,16 +19,8 @@ const service = {
     });
   },
 
-  /**
-   * class='W' will not be retrieved
-   */
   getAllRelevant: async () => {
     const result = await Airspace.findAll({
-      where: {
-        class: {
-          [Op.notIn]: ["W"],
-        },
-      },
       // To ensure that lower level airspaces are not overlayed by others we will sort these airspaces to the end
       order: [["floor", "asc"]],
     });
@@ -84,7 +76,7 @@ const service = {
 
     findViolationOfFL100(flightTrackLine, airspaceViolations);
 
-    const intersections2D = await findHorizontalIntersection(
+    const intersections2D = await findHorizontalIntersectionOfCriticalAirspaces(
       fixesWithElevation.id
     );
 
@@ -218,7 +210,11 @@ function createViolationEntry(
   };
 }
 
-async function findHorizontalIntersection(fixesId) {
+/**
+ * Exclude zones like Q (e.g. parachute dropzone) and W (e.g. glider sector) from search of violations.
+ * Because there are no hard restrictions (Q) or they mitigate restrictions (W).
+ */
+async function findHorizontalIntersectionOfCriticalAirspaces(fixesId) {
   const query = `
   SELECT id, class, name, floor, ceiling, "intersectionLine" FROM(
     SELECT *, (ST_Dump(ST_Intersection(
@@ -255,7 +251,7 @@ async function findAirspacesWithinPolygon(points) {
     ))).geom AS "intersectionPolygon"
     FROM "Airspaces"
     WHERE season=date_part('year',now()) 
-    AND NOT class='W')
+    )
   AS "intersectionEntry"
   `;
 
