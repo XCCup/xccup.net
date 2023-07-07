@@ -377,6 +377,11 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@popperjs/core@^2.11.0":
+  version "2.11.8"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
+  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
+
 "@popperjs/core@^2.9.2":
   version "2.11.5"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.5.tgz#db5a11bf66bdab39569719555b0f76e138d7bd64"
@@ -1561,11 +1566,6 @@ electron-to-chromium@^1.4.284:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.340.tgz#3a6d7414c1fc2dbf84b6f7af3ec24270606c85b8"
   integrity sha512-zx8hqumOqltKsv/MF50yvdAlPF9S/4PXbyfzJS6ZGhbddGkRegdwImmfSVqCkEziYzrIGZ/TlrzBND4FysfkDg==
 
-emoji-picker-element@^1.10.1:
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/emoji-picker-element/-/emoji-picker-element-1.11.1.tgz#3b36ce615c92aedc9d18d2c572d61508e7d773c4"
-  integrity sha512-xF8tUKr9WIXpS6gcrQgZC7ghdcbzamknKF7t9+81bJHjQEXzMGSwhyvZrx2S3XeNFtKcx9RqwwGStog5iUjZeQ==
-
 emoji-regex@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
@@ -2299,6 +2299,11 @@ iconv-lite@^0.6.2:
   integrity sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==
   dependencies:
     safer-buffer ">= 2.1.2 < 3.0.0"
+
+idb@^7.1.0:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/idb/-/idb-7.1.1.tgz#d910ded866d32c7ced9befc5bfdf36f572ced72b"
+  integrity sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==
 
 ieee754@^1.1.13:
   version "1.2.1"
@@ -4141,11 +4146,6 @@ vue-demi@>=0.14.5:
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.5.tgz#676d0463d1a1266d5ab5cba932e043d8f5f2fbd9"
   integrity sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA==
 
-vue-demi@^0.12.4:
-  version "0.12.5"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.5.tgz#8eeed566a7d86eb090209a11723f887d28aeb2d1"
-  integrity sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==
-
 vue-eslint-parser@^9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-9.1.1.tgz#3f4859be7e9bb7edaa1dc7edb05abffee72bf3dd"
@@ -4203,12 +4203,21 @@ vue3-datepicker@^0.4.0:
   dependencies:
     date-fns "^2.22.1"
 
+vue3-emoji-picker@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/vue3-emoji-picker/-/vue3-emoji-picker-1.1.7.tgz#079db0b774be67c9c860cf80e53ca8fb1d87ea5f"
+  integrity sha512-dKSI1NyrinYFykllwcOqBB1sw7EHdwQG4tjHYSO+khQkY8Csn4Evn5X2nAdz8Kl8o3P1J0jV4BGwbQ2dVWCxMA==
+  dependencies:
+    "@popperjs/core" "^2.11.0"
+    idb "^7.1.0"
+    vue "^3.2.23"
+
 vue@^2.4.1:
   version "2.6.14"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
   integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
-vue@^3.3.4:
+vue@^3.2.23, vue@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.4.tgz#8ed945d3873667df1d0fcf3b2463ada028f88bd6"
   integrity sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==
@@ -4218,14 +4227,6 @@ vue@^3.3.4:
     "@vue/runtime-dom" "3.3.4"
     "@vue/server-renderer" "3.3.4"
     "@vue/shared" "3.3.4"
-
-vuemoji-picker@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/vuemoji-picker/-/vuemoji-picker-0.1.4.tgz#e8410e0f2e2cfadf21d79210b04149962913b334"
-  integrity sha512-gy+MkjcUn92mBENC4b/zqNMW0oz+F005KTf7mWhe1DVUuNhJVsEG2VPJQBIOa7yg+Owd68v7CBrF5TDf45jjzw==
-  dependencies:
-    emoji-picker-element "^1.10.1"
-    vue-demi "^0.12.4"
 
 walk-up-path@^3.0.1:
   version "3.0.1"

@@ -43,7 +43,7 @@
     "vue-avatar-editor-improved": "^1.0.7",
     "vue-router": "^4.2.2",
     "vue3-datepicker": "^0.4.0",
-    "vuemoji-picker": "^0.1.4"
+    "vue3-emoji-picker": "^1.1.7"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.6",
