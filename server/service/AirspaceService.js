@@ -3,6 +3,7 @@ const Airspace = require("../db")["Airspace"];
 const { Op } = require("sequelize");
 const logger = require("../config/logger");
 const { combineFixesProperties } = require("../helper/FlightFixUtils");
+const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
 const FEET_IN_METER = 0.3048;
 
@@ -39,21 +40,39 @@ const service = {
   addAirspace: async (airspace) => {
     logger.info("Will upload new airspace to db");
 
-    // TODO: Add check for duplicated entries
-    // There is no unique identifier in the dataset and there are duplicated names
-    // const airspaceAlreadyExists = await Airspace.findOne({
-    //   where: {
-    //     season: airspace.season,
-    //     name: airspace.name,
-    //   },
-    // });
-    //
-    // if (airspaceAlreadyExists) {
-    //   throw new XccupRestrictionError(
-    //     `Their exists already an airspace with name ${airspace.name} for the season ${airspace.season}`
-    //   );
-    // }
+    const query = `
+    SELECT id,seasons,name,floor,ceiling FROM "Airspaces"
+      WHERE name = '${airspace.name}' 
+      AND floor = '${airspace.floor}'
+      AND ceiling = '${airspace.ceiling}'
+      AND class = '${airspace.class}'
+      AND ST_Equals(
+        (SELECT polygon FROM "Airspaces" 
+          WHERE name = '${airspace.name}' 
+          AND floor = '${airspace.floor}'
+          AND ceiling = '${airspace.ceiling}'
+          AND class = '${airspace.class}'),
+		    ST_GeomFromGeoJSON('${JSON.stringify(airspace.polygon, null, 2)}'));
+    `;
 
+    const result = await FlightFixes.sequelize.query(query, {
+      model: Airspace,
+    });
+
+    logger.debug("AS: Airspace result " + JSON.stringify(result, null, 2));
+
+    checkIfOnlyOneEntryWasFound(result, airspace);
+
+    if (result.length == 1) {
+      logger.info(
+        "AS: Will add new season to already present airspace " + airspace.name
+      );
+      const entry = result[0];
+      checkIfEntryForSeasonAlreadyExists(entry, airspace);
+      return await addNewSeasonToDbEntry(entry, airspace);
+    }
+
+    logger.info("AS: Will create new airspace entry for " + airspace.name);
     return await Airspace.create(airspace);
   },
 
@@ -141,6 +160,35 @@ const service = {
       return { flightTrackLine, airspaceViolations };
   },
 };
+
+function checkIfOnlyOneEntryWasFound(result, airspace) {
+  if (result?.length > 2) {
+    const msg =
+      "Found more than one matching entry for the airspace" + airspace.name;
+    logger.error("AS: " + msg);
+    throw new XccupRestrictionError(msg);
+  }
+}
+
+function checkIfEntryForSeasonAlreadyExists(entry, airspace) {
+  if (entry.seasons.includes(airspace.season)) {
+    const msg = `An entry with matching borders for ${airspace.name} and season ${airspace.season} is already present`;
+    throw new XccupRestrictionError(msg);
+  }
+}
+
+async function addNewSeasonToDbEntry(entry, airspace) {
+  return await Airspace.update(
+    {
+      seasons: [...entry.seasons, airspace.season],
+    },
+    {
+      where: {
+        id: entry.id,
+      },
+    }
+  );
+}
 
 function findVerticalIntersection(
   flightTrackLine,
