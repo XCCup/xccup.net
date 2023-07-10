@@ -3,6 +3,7 @@ export interface UserDataEssential {
   firstName: string;
   lastName: string;
   fullName: string;
+  role: string;
 }
 
 export interface CreateUserData extends Omit<UserData, "id"> {}

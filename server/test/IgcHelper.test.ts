@@ -7,13 +7,19 @@ test("Test launch & landing detection", () => {
   const tests = [
     {
       file: "demo_igcs/flight_with_car_drive/flight_with_car_drive.igc",
-      launch: 1750,
-      landing: 2362,
+      // launch: 1750,
+      // landing: 2362,
+      launch: 1757,
+      landing: 2359,
+      // launch: 1750,
+      // landing: 2362,
     },
     {
       file: "demo_igcs/no-pressure-alt.igc",
       launch: 0,
-      landing: 15757,
+      // landing: 15645,
+      landing: 15751,
+      // landing: 15757,
     },
   ];
 

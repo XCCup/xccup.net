@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!excludeEmojiPicker" class="dropend my-2">
+  <div class="dropend my-2">
     <button
       id="dropdownMenuButton1"
       class="btn btn-secondary btn-sm dropdown-toggle"
@@ -12,11 +12,14 @@
       <i class="bi bi-emoji-smile"></i>
     </button>
     <div class="dropdown-menu">
-      <!-- TODO: Self host emoji DB? -->
-      <VuemojiPicker @emoji-click="handleEmojiClick" />
+      <EmojiPicker
+        :native="true"
+        theme="auto"
+        :display-recent="true"
+        @select="handleEmojiClick"
+      />
     </div>
   </div>
-  <div v-else><h5 class="text-danger">Emoji Picker disabled</h5></div>
   <div :class="placeholderIsSet ? 'form-floating' : ''">
     <textarea
       id="textarea"
@@ -39,15 +42,11 @@
 <script setup lang="ts">
 import { ref, useAttrs, computed } from "vue";
 import useAuth from "@/composables/useAuth";
-// @ts-ignore
-import { VuemojiPicker } from "vuemoji-picker";
-// @ts-ignore
-import type { EmojiClickEventDetail } from "vuemoji-picker";
+
+import EmojiPicker from "vue3-emoji-picker";
+import "vue3-emoji-picker/css";
 
 const { getAuthData } = useAuth();
-
-// Exclude emoji picker in ci build because in causes test errors in cypress
-const excludeEmojiPicker = import.meta.env.VITE_EXCLUDE_EMOJI_PICKER === "true";
 
 const emit = defineEmits(["update:modelValue", "change"]);
 
@@ -71,14 +70,23 @@ const onInput = (text: string) => {
 };
 
 // Emoji Picker
+
+interface Emoji {
+  i: string;
+  n: string;
+  r: string;
+  t: string;
+  u: string;
+}
+
 const ta = ref<HTMLInputElement | null>(null);
-const handleEmojiClick = (detail: EmojiClickEventDetail) => {
-  if (!detail.unicode || !ta.value) return;
+const handleEmojiClick = (emoji: Emoji) => {
+  if (!emoji.i || !ta.value) return;
   try {
     ta.value.focus();
     const newValue =
       props.modelValue.substring(0, ta.value.selectionStart ?? undefined) +
-      detail.unicode +
+      emoji.i +
       props.modelValue.substring(ta.value.selectionEnd ?? 0);
     emit("update:modelValue", newValue);
   } catch (error) {

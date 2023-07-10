@@ -3,8 +3,8 @@ import logger from "../config/logger";
 import { calculateFlightResult, extractFixes } from "../igc/IgcAnalyzer";
 
 const flightTypeFactors = {
-  FAI: 2,
-  FLAT: 1.5,
+  FAI: 1.7273,
+  FLAT: 1.5455,
   FREE: 1,
 };
 
@@ -127,7 +127,7 @@ test("Validate an igc-File were two turnpoints match", async () => {
   expect(result.dist).toBe(expectedFlight.dist);
 });
 
-test("Validate that the landing is detected (even when igc has more fixes)", async () => {
+test("Validate that the landing is detected (even when igc has more fixes; case 1)", async () => {
   process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/flight_with_car_drive/flight_with_car_drive.igc";
 
@@ -150,7 +150,31 @@ test("Validate that the landing is detected (even when igc has more fixes)", asy
   expect(result.dist).toBe(expectedFlight.dist);
 });
 
-test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s => Reducion by factor 5)", () => {
+test("Validate that the landing is detected (even when igc has more fixes; case 2)", async () => {
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
+  const filePath =
+    "demo_igcs/flight_with_car_drive_2/flight_with_car_drive_2.igc";
+
+  const flightToAnaylze = {
+    externalId: 69,
+    igcPath: path.join(__dirname, "../igc", filePath),
+  };
+
+  const expectedFlight = {
+    type: "FREE",
+    dist: "24.173",
+  };
+  const result = await calculateFlightResult(
+    flightToAnaylze.igcPath,
+    flightToAnaylze.externalId,
+    flightTypeFactors
+  );
+
+  expect(result.dist).toBe(expectedFlight.dist);
+  expect(result.type).toBe(expectedFlight.type);
+});
+
+test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s => Reduction by factor 5)", () => {
   process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_free/free_79km35_4h8m.igc";
 
@@ -174,7 +198,7 @@ test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s =>
   expect(reducedFixes[2345]).toStrictEqual(fixNr2345);
 });
 
-test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s => Reducion by factor 3 -> ceil(5/2))", () => {
+test("Validate that the number of fixes was reduced (IGC-File Resolution = 2s => Reduction by factor 3 -> ceil(5/2))", () => {
   process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_flat_res2/kai_flat_res2.igc";
 
@@ -203,7 +227,7 @@ test.skip("Validate that a flight igc does not start mid flight", () => {
   // TODO: Test me!
 });
 
-test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s => No Reducion)", () => {
+test("Validate that the number of fixes was reduced (IGC-File Resolution = 10s => No Reduction)", () => {
   const filePath = "demo_igcs/kai_free_res10/kai_free_res10.igc";
 
   const expectedFlight = {

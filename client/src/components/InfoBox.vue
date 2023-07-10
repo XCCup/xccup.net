@@ -1,13 +1,13 @@
 <template>
   <!-- Alert -->
-  <div class="alert alert-danger mb-0" role="alert">
+  <!-- <div class="alert alert-danger mb-0" role="alert">
     Bitte stelle sicher, dass du deinen Schirm für die Leichtgewichtswertung
     registriert hast, wenn du an dieser teilnehmen möchtest. Details dazu
     findest du unter
     <a href="https://xccup.net/news" class="alert-link"
       >Änderungen an der Ausschreibung</a
     >.
-  </div>
+  </div> -->
   <!-- Alert -->
   <section v-if="seasonStats" class="py-3 text-center container">
     <div class="col-md-8 mx-auto">

@@ -124,7 +124,9 @@ fetchNames();
 async function fetchNames() {
   try {
     users.value = (await ApiService.getUserNames()).data;
-    userNames.value = users.value.map((u) => createFullname(u));
+    userNames.value = users.value
+      .filter((u) => u.role != "Inaktiv")
+      .map((u) => createFullname(u));
   } catch (error) {
     console.error(error);
   }

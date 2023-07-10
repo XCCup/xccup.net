@@ -45,7 +45,7 @@ const definitionFlight = {
 const definitionGround = {
   t: 20,
   xmax: 2.5,
-  zmax: 0.1,
+  zmax: 0.2,
 };
 // Attach horizontal and vertical speed to each fix
 function prepare(fixes: ExtendedBRecord[]) {
@@ -108,22 +108,21 @@ function prepare(fixes: ExtendedBRecord[]) {
 function detectFlight(fixes: ExtendedBRecord[]) {
   let start: number | undefined;
   for (let i = 0; i < fixes.length - 1; i++) {
+    const fix = fixes[i];
+
     if (
       start === undefined &&
-      fixes[i].hma! > definitionFlight.xt &&
-      fixes[i].vma! > definitionFlight.zt
+      fix.hma! > definitionFlight.xt &&
+      fix.vma! > definitionFlight.zt
     )
       start = i;
     if (start !== undefined)
-      if (
-        fixes[i].hma! > definitionFlight.x0 &&
-        fixes[i].vma! > definitionFlight.z0
-      ) {
+      if (fix.hma! > definitionFlight.x0 && fix.vma! > definitionFlight.z0) {
         if (
           fixes[i].timestamp >
           fixes[start].timestamp + definitionFlight.t * 1000
         )
-          for (let j = start; j <= i; j++) fixes[i].stateFlight = true;
+          for (let j = start; j <= i; j++) fix.stateFlight = true;
       } else {
         start = undefined;
       }
@@ -133,23 +132,41 @@ function detectFlight(fixes: ExtendedBRecord[]) {
 function detectGround(fixes: ExtendedBRecord[]) {
   let start;
   for (let i = 0; i < fixes.length - 1; i++) {
+    const fix = fixes[i];
+
+    // // Uncomment this block and adjust the timestamps to analyze a flight
+    // if (fix.timestamp > 1682941530000 && fix.timestamp < 1682941730000) {
+    //   console.log(
+    //     `T: ${fix.time}; GA: ${fix.gpsAltitude}; HS: ${fix.hspeed?.toFixed(
+    //       2
+    //     )}; VS: ${fix.vspeed?.toFixed(2)}; HMA: ${fix.hma?.toFixed(
+    //       2
+    //     )}; VMA: ${fix.vma?.toFixed(2)}`
+    //   );
+    // }
+
     if (
       start === undefined &&
-      fixes[i].hma! < definitionGround.xmax &&
-      fixes[i].vma! < definitionGround.zmax
-    )
+      fix.hma! < definitionGround.xmax &&
+      fix.vma! < definitionGround.zmax
+    ) {
+      // console.log("Start of possible ground contact: ", fix.time);
       start = i;
+    }
     if (start !== undefined)
       if (
-        fixes[i].hma! < definitionGround.xmax &&
-        fixes[i].vma! < definitionGround.zmax
+        fix.hma! < definitionGround.xmax &&
+        fix.vma! < definitionGround.zmax
       ) {
         if (
-          fixes[i].timestamp >
+          fix.timestamp >
           fixes[start].timestamp + definitionGround.t * 1000
-        )
-          for (let j = start; j <= i; j++) fixes[i].stateGround = true;
+        ) {
+          // console.log("Mark this as ground: ", fix.time);
+          for (let j = start; j <= i; j++) fix.stateGround = true;
+        }
       } else {
+        // console.log("Revoke possible ground contact: ", fix.time);
         start = undefined;
       }
   }

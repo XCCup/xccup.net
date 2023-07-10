@@ -35,6 +35,7 @@ services:
       - ./import:/home/node/app/import
     depends_on:
       - db
+      - traefik
     labels:
       traefik.enable: true
       traefik.http.routers.xccup-api.rule: "Host(`xccup.net`) && PathPrefix(`/api`) || Host(`test.xccup.net`) && PathPrefix(`/api`)"
