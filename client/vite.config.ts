@@ -4,6 +4,8 @@ import Components from "unplugin-vue-components/vite";
 import AutoImport from "unplugin-auto-import/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import path from "node:path";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
+
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,6 +22,11 @@ export default defineConfig({
     // https://github.com/antfu/vite-plugin-components
     Components({
       dts: true,
+    }),
+    sentryVitePlugin({
+      org: "xccup",
+      project: "xccup",
+      authToken: process.env.SENTRY_AUTH_TOKEN,
     }),
   ],
   resolve: {
@@ -44,21 +51,6 @@ export default defineConfig({
     rollupOptions: {
       plugins: [visualizer()],
     },
+    sourcemap: true,
   },
 });
-
-// import { defineConfig } from "vite";
-// import vue from "@vitejs/plugin-vue";
-// import Components from "unplugin-vue-components/vite";
-// import { visualizer } from "rollup-plugin-visualizer";
-// import { fileURLToPath, URL } from "url";
-// import path from "path";
-
-// // https://vitejs.dev/config/
-// export default defineConfig({
-
-//   resolve: {
-//     dedupe: ["vue"],
-//   },
-
-// });
