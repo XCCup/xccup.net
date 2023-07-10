@@ -61,7 +61,9 @@ async function loginToApi(email, password) {
 async function sendRequestsToApi(airspaces, token) {
   for (const airspace of airspaces) {
     try {
-      console.log(`Will upload ${airspace.name}`);
+      console.log(
+        `Will upload ${airspace.name} ${airspace.floor} ${airspace.ceiling}`
+      );
       await axios.post(
         targetUrl + "/airspaces",
         {

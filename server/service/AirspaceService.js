@@ -47,11 +47,7 @@ const service = {
       AND ceiling = '${airspace.ceiling}'
       AND class = '${airspace.class}'
       AND ST_Equals(
-        (SELECT polygon FROM "Airspaces" 
-          WHERE name = '${airspace.name}' 
-          AND floor = '${airspace.floor}'
-          AND ceiling = '${airspace.ceiling}'
-          AND class = '${airspace.class}'),
+        "Airspaces".polygon,
 		    ST_GeomFromGeoJSON('${JSON.stringify(airspace.polygon, null, 2)}'));
     `;
 
