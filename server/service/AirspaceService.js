@@ -247,7 +247,7 @@ async function findHorizontalIntersection(fixesId) {
       (SELECT "geom" FROM "FlightFixes" WHERE id =:fixesId)
     ))).geom AS "intersectionLine"
     FROM "Airspaces"
-    WHERE season=date_part('year',now()) 
+    WHERE date_part('year',now()) = ANY(seasons)
     AND NOT (class='Q' OR class='W'))
   AS "intersectionEntry"
   `;
@@ -275,7 +275,7 @@ async function findAirspacesWithinPolygon(points) {
       (SELECT ST_Polygon('LINESTRING(${polygonPointsAsLinestring})'::geometry, 4326))
     ))).geom AS "intersectionPolygon"
     FROM "Airspaces"
-    WHERE season=date_part('year',now()) 
+    WHERE date_part('year',now()) = ANY(seasons) 
     AND NOT class='W')
   AS "intersectionEntry"
   `;
