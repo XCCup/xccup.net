@@ -52,8 +52,8 @@ router.post(
     if (validationHasErrors(req, res)) return;
 
     try {
-      await service.addAirspace(req.body.airspace);
-      res.sendStatus(OK);
+      const result = await service.addAirspace(req.body.airspace);
+      res.status(OK).send(result);
     } catch (error) {
       next(error);
     }

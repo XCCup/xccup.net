@@ -64,7 +64,7 @@ async function sendRequestsToApi(airspaces, token) {
       console.log(
         `Will upload ${airspace.name} ${airspace.floor} ${airspace.ceiling}`
       );
-      await axios.post(
+      const res = await axios.post(
         targetUrl + "/airspaces",
         {
           airspace,
@@ -75,6 +75,7 @@ async function sendRequestsToApi(airspaces, token) {
           },
         }
       );
+      console.log("Upload successful " + res.data);
     } catch (error) {
       console.error(
         `Error uploading airspace ${airspace.name}: ` + error.response.data

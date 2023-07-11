@@ -40,36 +40,23 @@ const service = {
   addAirspace: async (airspace) => {
     logger.info("Will upload new airspace to db");
 
-    const query = `
-    SELECT id,seasons,name,floor,ceiling FROM "Airspaces"
-      WHERE name = '${airspace.name}' 
-      AND floor = '${airspace.floor}'
-      AND ceiling = '${airspace.ceiling}'
-      AND class = '${airspace.class}'
-      AND ST_Equals(
-        "Airspaces".polygon,
-		    ST_GeomFromGeoJSON('${JSON.stringify(airspace.polygon, null, 2)}'));
-    `;
+    const results = await findMatchingAirspaces(airspace);
 
-    const result = await FlightFixes.sequelize.query(query, {
-      model: Airspace,
-    });
+    checkIfOnlyOneEntryWasFound(results, airspace);
 
-    logger.debug("AS: Airspace result " + JSON.stringify(result, null, 2));
-
-    checkIfOnlyOneEntryWasFound(result, airspace);
-
-    if (result.length == 1) {
+    if (results.length == 1) {
       logger.info(
         "AS: Will add new season to already present airspace " + airspace.name
       );
-      const entry = result[0];
+      const entry = results[0];
       checkIfEntryForSeasonAlreadyExists(entry, airspace);
-      return await addNewSeasonToDbEntry(entry, airspace);
+      await addNewSeasonToDbEntry(entry, airspace);
+      return "add new season";
     }
 
     logger.info("AS: Will create new airspace entry for " + airspace.name);
-    return await Airspace.create(airspace);
+    await Airspace.create(airspace);
+    return "create new entry";
   },
 
   /**
@@ -157,8 +144,33 @@ const service = {
   },
 };
 
-function checkIfOnlyOneEntryWasFound(result, airspace) {
-  if (result?.length > 2) {
+async function findMatchingAirspaces(airspace) {
+  const query = `
+    SELECT id,seasons,name,floor,ceiling FROM "Airspaces"
+      WHERE name = '${airspace.name}' 
+      AND floor = '${airspace.floor}'
+      AND ceiling = '${airspace.ceiling}'
+      AND class = '${airspace.class}'
+      AND ST_Equals(
+        "Airspaces".polygon,
+		    ST_GeomFromGeoJSON('${JSON.stringify(airspace.polygon)}'));
+    `;
+
+  try {
+    const result = await FlightFixes.sequelize.query(query, {
+      model: Airspace,
+    });
+    logger.debug("AS: Airspace result " + JSON.stringify(result, null, 2));
+    return result;
+  } catch (error) {
+    throw new XccupRestrictionError(
+      "Error querying db for matching entries with " + query
+    );
+  }
+}
+
+function checkIfOnlyOneEntryWasFound(results, airspace) {
+  if (results?.length > 1) {
     const msg =
       "Found more than one matching entry for the airspace" + airspace.name;
     logger.error("AS: " + msg);
