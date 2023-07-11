@@ -27,6 +27,10 @@ router.get(
     if (validationHasErrors(req, res)) return;
     const { p, year } = req.query;
 
+    // We don't have any airspace data prior 2022.
+    // Therefore we retrieve always data from 2022 if old airspaces are requested.
+    const adjustedYear = year < 2022 ? 2022 : year;
+
     const matchResult = p?.match(POINTS_FORMAT);
     let points = matchResult
       ? [matchResult[1], matchResult[2], matchResult[3], matchResult[4]]
@@ -34,8 +38,8 @@ router.get(
 
     try {
       const airspaces = points
-        ? await service.getAllRelevantInPolygon(points, year)
-        : await service.getAllRelevant(year);
+        ? await service.getAllRelevantInPolygon(points, adjustedYear)
+        : await service.getAllRelevant(adjustedYear);
       res.json(airspaces);
     } catch (error) {
       next(error);
