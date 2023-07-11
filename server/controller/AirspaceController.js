@@ -20,9 +20,12 @@ router.get(
     .withMessage(
       'The points must be presented in the following format: p=6.01,51.49|10.39,51.49|10.39,49.98|6.01,49.98.\nThere are only 4 points valid. Points start in the "upper left corner" and continue clockwise.'
     ),
+  query("year")
+    .optional()
+    .matches(/20\d{2}/),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
-    const { p } = req.query;
+    const { p, year } = req.query;
 
     const matchResult = p?.match(POINTS_FORMAT);
     let points = matchResult
@@ -31,8 +34,8 @@ router.get(
 
     try {
       const airspaces = points
-        ? await service.getAllRelevantInPolygon(points)
-        : await service.getAllRelevant();
+        ? await service.getAllRelevantInPolygon(points, year)
+        : await service.getAllRelevant(year);
       res.json(airspaces);
     } catch (error) {
       next(error);

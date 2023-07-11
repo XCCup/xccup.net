@@ -9,10 +9,16 @@ export function isIsoDateWithoutTime(string: string): boolean {
 export function setWindowName(namePostfix: string) {
   document.title = `${import.meta.env.VITE_PAGE_TITLE_PREFIX}${namePostfix}`;
 }
+
 export function retrieveDateOnly(isoDate?: string) {
   if (!isoDate) return "";
   return isoDate.substring(0, 10);
 }
+
+export function retrieveYearOnly(isoDate?: string) {
+  return isoDate ? new Date(isoDate).getFullYear() : undefined;
+}
+
 export function dayAfter(date?: string) {
   if (!date) return "";
   const dateObject = new Date(date);

@@ -23,12 +23,13 @@ const service = {
   /**
    * class='W' will not be retrieved
    */
-  getAllRelevant: async () => {
+  getAllRelevant: async (year = new Date().getFullYear()) => {
     const result = await Airspace.findAll({
       where: {
         class: {
           [Op.notIn]: ["W"],
         },
+        seasons: { [Op.in]: [year] },
       },
       // To ensure that lower level airspaces are not overlayed by others we will sort these airspaces to the end
       order: [["floor", "asc"]],
@@ -79,8 +80,8 @@ const service = {
     });
   },
 
-  getAllRelevantInPolygon: async (points) => {
-    return findAirspacesWithinPolygon(points);
+  getAllRelevantInPolygon: async (points, year = new Date().getFullYear()) => {
+    return findAirspacesWithinPolygon(points, year);
   },
 
   /**
@@ -318,7 +319,7 @@ async function findHorizontalIntersection(fixesId) {
   return result.length == 0 ? [] : result;
 }
 
-async function findAirspacesWithinPolygon(points) {
+async function findAirspacesWithinPolygon(points, year) {
   const polygonPoints = points.map((e) => e.replace(",", " "));
   // Close polygon and add first entry again as last entry
   polygonPoints.push(polygonPoints[0]);
@@ -331,7 +332,7 @@ async function findAirspacesWithinPolygon(points) {
       (SELECT ST_Polygon('LINESTRING(${polygonPointsAsLinestring})'::geometry, 4326))
     ))).geom AS "intersectionPolygon"
     FROM "Airspaces"
-    WHERE date_part('year',now()) = ANY(seasons) 
+    WHERE ${year} = ANY(seasons) 
     AND NOT class='W')
   AS "intersectionEntry"
   `;

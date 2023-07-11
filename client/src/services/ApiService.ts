@@ -463,9 +463,9 @@ export default {
   getRankingClasses() {
     return apiClient.get("general/rankingClasses");
   },
-  getAirspaces(query: string) {
+  getAirspaces(query: string, year?: number) {
     return apiClient.get("airspaces/relevant", {
-      params: { p: query },
+      params: { p: query, year },
     });
   },
   getUserProfileConstants() {
