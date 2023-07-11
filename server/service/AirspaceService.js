@@ -23,7 +23,7 @@ const service = {
   /**
    * class='W' will not be retrieved
    */
-  getAllRelevant: async (year = new Date().getFullYear()) => {
+  getAllRelevant: async (year) => {
     const result = await Airspace.findAll({
       where: {
         class: {
@@ -80,7 +80,7 @@ const service = {
     });
   },
 
-  getAllRelevantInPolygon: async (points, year = new Date().getFullYear()) => {
+  getAllRelevantInPolygon: async (points, year) => {
     return findAirspacesWithinPolygon(points, year);
   },
 

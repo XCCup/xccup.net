@@ -29,7 +29,9 @@ router.get(
 
     // We don't have any airspace data prior 2022.
     // Therefore we retrieve always data from 2022 if old airspaces are requested.
-    const adjustedYear = year < 2022 ? 2022 : year;
+    // If year is undefined we retrieve the current year.
+    const adjustedYear =
+      year == undefined ? new Date().getFullYear() : year < 2022 ? 2022 : year;
 
     const matchResult = p?.match(POINTS_FORMAT);
     let points = matchResult
