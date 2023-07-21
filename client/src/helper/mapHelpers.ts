@@ -75,9 +75,9 @@ export function processTracklogs(
   return tracklogs;
 }
 
-export async function drawAirspaces(map: L.Map, bounds: string) {
+export async function drawAirspaces(map: L.Map, bounds: string, year?: number) {
   try {
-    const res = await ApiService.getAirspaces(bounds);
+    const res = await ApiService.getAirspaces(bounds, year);
     const airspaceData = res.data;
     const options: L.GeoJSONOptions = {
       // @ts-expect-error

@@ -1,9 +1,9 @@
-import { Point, Polygon } from "geojson";
+import { Polygon } from "geojson";
 import { Sequelize, Model, DataTypes, Optional } from "sequelize";
 
 interface AirspaceAttributes {
   id: string;
-  season: number;
+  seasons: number[];
   class: string;
   name: string;
   floor: string;
@@ -29,9 +29,9 @@ export function initAirspace(sequelize: Sequelize) {
       allowNull: false,
       primaryKey: true,
     },
-    season: {
-      type: DataTypes.INTEGER,
-      defaultValue: new Date().getFullYear(),
+    seasons: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      defaultValue: [new Date().getFullYear()],
     },
     class: {
       type: DataTypes.STRING,

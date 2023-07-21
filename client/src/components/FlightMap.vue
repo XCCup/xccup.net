@@ -62,6 +62,7 @@ import { tileOptionsSatellite, tileOptions } from "../config/mapbox";
 import type { FlightTurnpoint } from "@/types/Flight";
 
 import useMapPosition, { type MapPosition } from "@/composables/useMapPosition";
+import { retrieveYearOnly } from "@/helper/utils";
 
 const { getPositions } = useMapPosition();
 
@@ -147,7 +148,14 @@ onMounted(() => {
   if (tracklogs.value) {
     drawTracks(tracklogs.value);
   }
-  drawAirspaces(map, convertMapBoundsToQueryString(trackLines.value[0]));
+
+  const yearOfFlight = retrieveYearOnly(flight.value?.takeoffTime);
+
+  drawAirspaces(
+    map,
+    convertMapBoundsToQueryString(trackLines.value[0]),
+    yearOfFlight
+  );
 
   if (isAdmin.value && flight.value?.airspaceViolations) {
     drawAirspaceViolationMarkers(map, flight.value?.airspaceViolations);

@@ -3,6 +3,7 @@ const Airspace = require("../db")["Airspace"];
 const { Op } = require("sequelize");
 const logger = require("../config/logger");
 const { combineFixesProperties } = require("../helper/FlightFixUtils");
+const { XccupRestrictionError } = require("../helper/ErrorHandler");
 
 const FEET_IN_METER = 0.3048;
 
@@ -22,12 +23,13 @@ const service = {
   /**
    * class='W' will not be retrieved
    */
-  getAllRelevant: async () => {
+  getAllRelevant: async (year) => {
     const result = await Airspace.findAll({
       where: {
         class: {
           [Op.notIn]: ["W"],
         },
+        seasons: { [Op.in]: [year] },
       },
       // To ensure that lower level airspaces are not overlayed by others we will sort these airspaces to the end
       order: [["floor", "asc"]],
@@ -36,9 +38,31 @@ const service = {
     return result;
   },
 
+  addAirspace: async (airspace) => {
+    logger.info("Will upload new airspace to db");
+
+    const results = await findMatchingAirspaces(airspace);
+
+    checkIfOnlyOneEntryWasFound(results, airspace);
+
+    if (results.length == 1) {
+      logger.info(
+        "AS: Will add new season to already present airspace " + airspace.name
+      );
+      const entry = results[0];
+      checkIfEntryForSeasonAlreadyExists(entry, airspace);
+      await addNewSeasonToDbEntry(entry, airspace);
+      return "add new season";
+    }
+
+    logger.info("AS: Will create new airspace entry for " + airspace.name);
+    await Airspace.create(airspace);
+    return "create new entry";
+  },
+
   /**
    * It was encountered that some entries in the DB are not valid by means of OpenGIS specification.
-   * You will maybe see an error like "lwgeom_intersection_prec: GEOS Error: TopologyException: Input geom 0 is invalid: Self-intersection at or near poin".
+   * You will maybe see an error like "lwgeom_intersection_prec: GEOS Error: TopologyException: Input geom 0 is invalid: Self-intersection at or near point".
    *
    * You can list all invalid ones with "SELECT * from "Airspaces" WHERE NOT ST_isvalid(polygon);".
    *
@@ -56,8 +80,8 @@ const service = {
     });
   },
 
-  getAllRelevantInPolygon: async (points) => {
-    return findAirspacesWithinPolygon(points);
+  getAllRelevantInPolygon: async (points, year) => {
+    return findAirspacesWithinPolygon(points, year);
   },
 
   /**
@@ -120,6 +144,60 @@ const service = {
       return { flightTrackLine, airspaceViolations };
   },
 };
+
+async function findMatchingAirspaces(airspace) {
+  const query = `
+    SELECT id,seasons,name,floor,ceiling FROM "Airspaces"
+      WHERE name = '${airspace.name}' 
+      AND floor = '${airspace.floor}'
+      AND ceiling = '${airspace.ceiling}'
+      AND class = '${airspace.class}'
+      AND ST_Equals(
+        "Airspaces".polygon,
+		    ST_GeomFromGeoJSON('${JSON.stringify(airspace.polygon)}'));
+    `;
+
+  try {
+    const result = await FlightFixes.sequelize.query(query, {
+      model: Airspace,
+    });
+    logger.debug("AS: Airspace result " + JSON.stringify(result, null, 2));
+    return result;
+  } catch (error) {
+    throw new XccupRestrictionError(
+      "Error querying db for matching entries with " + query
+    );
+  }
+}
+
+function checkIfOnlyOneEntryWasFound(results, airspace) {
+  if (results?.length > 1) {
+    const msg =
+      "Found more than one matching entry for the airspace" + airspace.name;
+    logger.error("AS: " + msg);
+    throw new XccupRestrictionError(msg);
+  }
+}
+
+function checkIfEntryForSeasonAlreadyExists(entry, airspace) {
+  if (entry.seasons.includes(airspace.season)) {
+    const msg = `An entry with matching borders for ${airspace.name} and season ${airspace.season} is already present`;
+    throw new XccupRestrictionError(msg);
+  }
+}
+
+async function addNewSeasonToDbEntry(entry, airspace) {
+  return await Airspace.update(
+    {
+      seasons: [...entry.seasons, airspace.season],
+    },
+    {
+      where: {
+        id: entry.id,
+      },
+    }
+  );
+}
 
 function findVerticalIntersection(
   flightTrackLine,
@@ -226,7 +304,7 @@ async function findHorizontalIntersection(fixesId) {
       (SELECT "geom" FROM "FlightFixes" WHERE id =:fixesId)
     ))).geom AS "intersectionLine"
     FROM "Airspaces"
-    WHERE season=date_part('year',now()) 
+    WHERE date_part('year',now()) = ANY(seasons)
     AND NOT (class='Q' OR class='W'))
   AS "intersectionEntry"
   `;
@@ -241,7 +319,7 @@ async function findHorizontalIntersection(fixesId) {
   return result.length == 0 ? [] : result;
 }
 
-async function findAirspacesWithinPolygon(points) {
+async function findAirspacesWithinPolygon(points, year) {
   const polygonPoints = points.map((e) => e.replace(",", " "));
   // Close polygon and add first entry again as last entry
   polygonPoints.push(polygonPoints[0]);
@@ -254,7 +332,7 @@ async function findAirspacesWithinPolygon(points) {
       (SELECT ST_Polygon('LINESTRING(${polygonPointsAsLinestring})'::geometry, 4326))
     ))).geom AS "intersectionPolygon"
     FROM "Airspaces"
-    WHERE season=date_part('year',now()) 
+    WHERE ${year} = ANY(seasons) 
     AND NOT class='W')
   AS "intersectionEntry"
   `;
