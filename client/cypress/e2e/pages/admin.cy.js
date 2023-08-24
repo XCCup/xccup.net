@@ -234,7 +234,7 @@ describe("check admin page", () => {
     cy.get("[data-cy=currentClubTable").find("td").contains(expectedWebsite);
   });
 
-  it.only("remove club from current season -> flight upload for members not possible", () => {
+  it("remove club from current season -> flight upload for members not possible", () => {
     const clubName = "Drachenflieger-Club Trier";
     const columnNumberYearOfParticipation = 3;
     const expectedYear = "2023";
