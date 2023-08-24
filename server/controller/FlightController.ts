@@ -805,7 +805,7 @@ function paramIdIsLeonardo(req: Request, res: Response) {
   return res.status(BAD_REQUEST).send(LEONARDO_ENDPOINT_MESSAGE);
 }
 
-function createMulterIgcUploadHandler({ parts = 1 } = {}) {
+function createMulterIgcUploadHandler({ parts = 2 } = {}) {
   const dataPath = config.get("dataPath");
   const igcStorage = multer.diskStorage({
     destination: path
