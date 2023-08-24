@@ -43,19 +43,20 @@ services:
       - db
 
   yarn:
-    image: node:18.10.0-alpine3.16
+    image: node:18.17.1-alpine3.18
     working_dir: /home/node/app
-    profiles: ["cli"]
+    profiles: [ "cli" ]
     volumes:
       - ../.yarn-cache:/yarn-cache:rw
       - .:/home/node/app
-    entrypoint: ["yarn"]
+    entrypoint: [ "yarn" ]
     environment:
       YARN_CACHE_FOLDER: "/yarn-cache"
 
 volumes:
   db:
   pgadmin-data:
+
 
 networks:
   xccup-network:

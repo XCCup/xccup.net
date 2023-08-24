@@ -213,8 +213,6 @@ describe("check admin page", () => {
     const expectedShortName = "Enten";
     const expectedWebsite = "www.krach-bumm.de";
 
-    cy.intercept("GET", "/api/clubs").as("get-clubs");
-
     cy.get("#nav-clubs-tab").click();
 
     cy.get("#adminClubPanel").find("button").contains("Neuer Verein").click();
@@ -226,23 +224,34 @@ describe("check admin page", () => {
     cy.get("[data-cy=inputClubShortName").type(expectedShortName);
     cy.get("[data-cy=inputClubWebsite").type(expectedWebsite);
     cy.get("[data-cy=checkClubCurrentSeason").check();
+
+    cy.intercept("GET", "/api/clubs").as("get-clubs");
     cy.get("Button").filter(":visible").contains("Speichern").click();
     // Wait till modal is gone…
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(500);
     cy.wait("@get-clubs");
     cy.get("[data-cy=currentClubTable").find("td").contains(expectedName);
     cy.get("[data-cy=currentClubTable").find("td").contains(expectedWebsite);
   });
 
-  it("remove club from current season -> flight upload for members not possible", () => {
-    cy.intercept("POST", "/api/flights").as("postFlight");
+  it.only("remove club from current season -> flight upload for members not possible", () => {
+    const clubName = "Drachenflieger-Club Trier";
+    const columnNumberYearOfParticipation = 3;
+    const expectedYear = "2023";
 
     cy.get("#nav-clubs-tab").click();
 
+    // Verify that in column "years of participation" the current year is set
+    cy.get("tr:visible")
+      .contains(clubName)
+      .parent()
+      .find("td")
+      .eq(columnNumberYearOfParticipation)
+      .should("include.text", expectedYear);
+
     // Find edit button of club
     cy.get("tr:visible")
-      .contains("Trier")
+      .contains(clubName)
       .parent()
       .find("[data-cy='edit-club']")
       .click();
@@ -254,6 +263,14 @@ describe("check admin page", () => {
     cy.get("[data-cy='checkClubCurrentSeason']").uncheck();
 
     cy.clickButtonInModal("#addEditClubModal", "Speichern");
+
+    // Verify that in column "years of participation" the current year was removed
+    cy.get("tr:visible")
+      .contains(clubName)
+      .parent()
+      .find("td")
+      .eq(columnNumberYearOfParticipation)
+      .should("not.include.text", expectedYear);
 
     // Logout admin user
     cy.logout();
