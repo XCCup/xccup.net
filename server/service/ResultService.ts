@@ -13,7 +13,6 @@ import {
   NUMBER_OF_SCORED_FLIGHTS,
   NEWCOMER_MAX_RANKING_CLASS,
 } from "../config/result-determination-config";
-import moment from "moment";
 import { XccupHttpError } from "../helper/ErrorHandler";
 import { NOT_FOUND } from "../constants/http-status-constants";
 import { SeasonDetailAttributes } from "../db/models/SeasonDetail";
@@ -40,6 +39,7 @@ import {
   sortDescendingByTotalPoints,
 } from "../helper/ResultUtils";
 import logger from "../config/logger";
+import { addMonths, subMonths } from "date-fns";
 
 const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
@@ -512,7 +512,8 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const startDate = seasonDetail?.startDate;
-    const endDate = moment(startDate).add(3, "months").toDate();
+
+    const endDate = addMonths(startDate, 3);
     const dates = { startDate, endDate };
     const where = createDefaultWhereForFlight({ seasonDetail: dates });
     const sortOrder = ["takeoffTime"];
@@ -539,7 +540,7 @@ const service = {
     const seasonDetail = await retrieveSeasonDetails(year);
 
     const endDate = seasonDetail?.endDate;
-    const startDate = moment(endDate).subtract(2, "months").toDate();
+    const startDate = subMonths(endDate, 2);
     const dates = { startDate, endDate };
     const where = createDefaultWhereForFlight({ seasonDetail: dates });
     const sortOrder = [["landingTime", "DESC"]];

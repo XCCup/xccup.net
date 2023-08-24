@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import path from "path";
-import moment from "moment";
+import { addDays, isAfter } from "date-fns";
 import fs from "fs";
 import multer from "multer";
 import FlightService from "../service/FlightService";
@@ -851,19 +851,21 @@ async function persistIgcFile(
  */
 async function checkIfFlightIsModifiable(
   flightStatus: string,
-  takeoffTime?: Date,
+  takeoffTime: Date = new Date(),
   userId?: string
 ) {
   const daysFlightEditable = config.get("daysFlightEditable");
+
   // Allow flight uploads which are older than X days when not in production (Needed for testing)
   const overwriteIfInProcessAndNotProduction =
     (flightStatus == FLIGHT_STATE.IN_PROCESS &&
       config.get("env") !== "production") ||
     config.get("overruleActive");
 
-  const flightIsYoungerThanThreshold = moment(takeoffTime)
-    .add(daysFlightEditable, "days")
-    .isAfter(moment());
+  const flightIsYoungerThanThreshold = isAfter(
+    addDays(takeoffTime, daysFlightEditable),
+    new Date()
+  );
 
   if (overwriteIfInProcessAndNotProduction) return;
   if (flightIsYoungerThanThreshold) return;

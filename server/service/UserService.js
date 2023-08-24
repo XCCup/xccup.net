@@ -14,10 +14,10 @@ const { XccupRestrictionError } = require("../helper/ErrorHandler");
 const { getCurrentActive } = require("./SeasonService");
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
-const moment = require("moment");
 const { v4: uuidv4 } = require("uuid");
 const { arrayRemove, generateRandomString } = require("../helper/Utils");
 const logger = require("../config/logger");
+const { isWithinInterval } = require("date-fns");
 
 const userService = {
   getAll: async ({ records, limit, offset, userIds, clubId, teamId } = {}) => {
@@ -368,7 +368,9 @@ const userService = {
     const season = await SeasonDetail.findOne({
       where: { year: now.getFullYear() },
     });
-    if (moment(now).isBetween(season.startDate, season.endDate)) {
+    if (
+      isWithinInterval(now, { start: season.startDate, end: season.endDate })
+    ) {
       await Flight.destroy({
         where: {
           takeoffTime: { [Op.gte]: season.startDate },
@@ -560,11 +562,11 @@ function createUserWhereStatement(userIds) {
 async function checkForClubChange(user) {
   if (Array.isArray(user.changed()) && user.changed().includes("clubId")) {
     const seasonDetails = await getCurrentActive();
-    const seasonStart = moment(seasonDetails.startDate);
-    const seasonEnd = moment(seasonDetails.endDate);
+    const seasonStart = seasonDetails.startDate;
+    const seasonEnd = seasonDetails.endDate;
 
     if (
-      moment().isBetween(seasonStart, seasonEnd) &&
+      isWithinInterval(new Date(), { start: seasonStart, end: seasonEnd }) &&
       (await hasUserFlightsWithinCurrentSeason(user))
     ) {
       throw new XccupRestrictionError(

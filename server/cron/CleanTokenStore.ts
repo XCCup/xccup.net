@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import logger from "../config/logger";
 import { Op } from "sequelize";
-import moment from "moment";
+import { subMonths } from "date-fns";
 import db from "../db";
 
 // Run the job every day at 02:00
@@ -15,7 +15,7 @@ async function cleanTokenStore() {
     logger.info("CIS: Will clean token store");
 
     // Remove all tokens which weren't used in the last 3 months
-    const nowMinus3Months = moment().subtract(3, "months").toDate();
+    const nowMinus3Months = subMonths(new Date(), 3);
 
     const numberOfRemovedTokens = await db.Token.destroy({
       where: {

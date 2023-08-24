@@ -3,7 +3,7 @@
  */
 const Helper = require("./IgcTestHelper");
 const IGCParser = require("../helper/igc-parser");
-const moment = require("moment");
+const { addSeconds } = require("date-fns");
 
 function retrieveIgcFixes(folder, file) {
   const igcAsPlainText = Helper.readIgcFile(folder, file);
@@ -280,7 +280,7 @@ function createFixesWithConstantClimb(
 ) {
   const fixes = [];
   const numberOfFixes = flightDurationInSeconds / resolutionOfFixesInSeconds;
-  const startTimestamp = moment();
+  const startTimestamp = new Date();
 
   for (let index = 0; index < numberOfFixes; index++) {
     const newAltitude =
@@ -288,8 +288,10 @@ function createFixesWithConstantClimb(
       index * constantClimbInMeterPerSecond * resolutionOfFixesInSeconds;
 
     fixes.push({
-      timestamp:
-        startTimestamp.add(resolutionOfFixesInSeconds, "seconds").unix() * 1000,
+      timestamp: addSeconds(
+        startTimestamp,
+        resolutionOfFixesInSeconds * index
+      ).getTime(),
       latitude: 123456,
       longitude: 123456,
       pressureAltitude: newAltitude,
