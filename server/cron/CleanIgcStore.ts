@@ -8,6 +8,7 @@ import { FLIGHT_STATE } from "../constants/flight-constants";
 import { FlightAttributes, FlightInstance } from "../db/models/Flight";
 import db from "../db";
 import config from "../config/env-config";
+import { subHours } from "date-fns";
 
 // Run the job every day at 02:00
 const task = cron.schedule("0 2 * * *", cleanIgcStore);
@@ -18,9 +19,7 @@ task.start();
 async function cleanIgcStore() {
   try {
     logger.info("CIS: Will clean igc store");
-    const nowMinus1Hour = new Date();
-    // Remove all flights which are longer than 1h in an unfinished state
-    nowMinus1Hour.setHours(nowMinus1Hour.getHours() - 1);
+    const nowMinus1Hour = subHours(new Date(), 1);
 
     const flightsToDelete: FlightAttributes[] = (
       await db.Flight.findAll({
