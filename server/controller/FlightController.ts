@@ -231,11 +231,7 @@ router.delete(
     try {
       if (requesterIsNotOwner(req, res, flight.userId)) return;
 
-      await checkIfFlightIsModifiable(
-        flight.flightStatus,
-        flight.takeoffTime,
-        req.user?.id
-      );
+      await checkIfFlightIsModifiable(flight.takeoffTime, req.user?.id);
       const numberOfDestroyedRows = await FlightService.delete(
         flight.id,
         flight.igcPath
@@ -622,7 +618,7 @@ router.put(
     try {
       if (requesterIsNotOwner(req, res, flight.userId)) return;
 
-      await checkIfFlightIsModifiable(flight.flightStatus, undefined, userId);
+      await checkIfFlightIsModifiable(flight.takeoffTime, userId);
 
       await FlightService.updateFlightDetailsAndGetResult({
         flight,
@@ -730,11 +726,7 @@ async function runChecksStoreFixes(
 
   FlightService.attachFixRelatedTimeDataToFlight(flightDbObject, fixes);
   if (!skipAllChecks && !skipModifiableCheck)
-    await checkIfFlightIsModifiable(
-      flightDbObject.flightStatus,
-      flightDbObject.takeoffTime,
-      userId
-    );
+    await checkIfFlightIsModifiable(flightDbObject.takeoffTime, userId);
 
   // Find takeoff and landing
   const takeoffAndLanding = await FlightService.findTakeoffAndLanding(fixes);
@@ -850,26 +842,46 @@ async function persistIgcFile(
  * @throws A XccupRestrictionError if the requirements are not meet.
  */
 async function checkIfFlightIsModifiable(
-  flightStatus: string,
-  takeoffTime: Date = new Date(),
+  takeoffTime: Date | undefined,
   userId?: string
 ) {
   const daysFlightEditable = config.get("daysFlightEditable");
+  const noProductionEnv = config.get("env") !== "production";
+  const overruleActive = config.get("overruleActive");
+  const now = new Date();
 
-  // Allow flight uploads which are older than X days when not in production (Needed for testing)
-  const overwriteIfInProcessAndNotProduction =
-    (flightStatus == FLIGHT_STATE.IN_PROCESS &&
-      config.get("env") !== "production") ||
-    config.get("overruleActive");
+  if (overruleActive) {
+    logger.debug(
+      "FC: Ignore modifiable check because overrule is " + overruleActive
+    );
+    return;
+  }
 
-  const flightIsYoungerThanThreshold = isAfter(
-    addDays(takeoffTime, daysFlightEditable),
-    new Date()
-  );
+  if (noProductionEnv) {
+    logger.debug("FC: Ignore modifiable check because env is not productive");
+    return;
+  }
 
-  if (overwriteIfInProcessAndNotProduction) return;
-  if (flightIsYoungerThanThreshold) return;
-  if (await UserService.isAdmin(userId)) return;
+  if (takeoffTime) {
+    const flightIsYoungerThanThreshold = isAfter(
+      addDays(takeoffTime, daysFlightEditable),
+      now
+    );
+
+    if (flightIsYoungerThanThreshold) {
+      logger.debug(
+        "FC: Flight is younger then threshold of " + daysFlightEditable
+      );
+      return;
+    }
+  } else {
+    logger.warn("FC: No takeoffTime found");
+  }
+
+  if (await UserService.isAdmin(userId)) {
+    logger.debug("FC: Ignore modifiable check because request is from admin");
+    return;
+  }
 
   throw new XccupRestrictionError(
     `It's not possible to change a flight later than ${daysFlightEditable} days after takeoff`
