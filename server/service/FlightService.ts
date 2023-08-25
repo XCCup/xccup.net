@@ -38,7 +38,14 @@ import { Fn } from "sequelize/types/utils";
 import { FlightCommentInstance } from "../db/models/FlightComment";
 import { FlightPhotoInstance } from "../db/models/FlightPhoto";
 import { FaiResponse } from "../igc/IgcValidator";
-import { addHours, isWithinInterval, subHours } from "date-fns";
+import {
+  addDays,
+  addHours,
+  isWithinInterval,
+  startOfDay,
+  subDays,
+  subHours,
+} from "date-fns";
 
 interface WhereOptions {
   year?: number;
@@ -207,15 +214,14 @@ const flightService = {
     const SWITCHOVER_HOUR_TODAY_RANKING = 15;
 
     const today = new Date();
-    let fromDay = today.getDate() - 1;
-    let tillDay = today.getDate();
+
+    let startDate = startOfDay(subDays(today, 1));
+    let endDate = startOfDay(today);
 
     if (today.getHours() >= SWITCHOVER_HOUR_TODAY_RANKING) {
-      fromDay++;
-      tillDay++;
+      startDate = addDays(startDate, 1);
+      endDate = addDays(endDate, 1);
     }
-    const startDate = new Date(today.getFullYear(), today.getMonth(), fromDay);
-    const endDate = new Date(today.getFullYear(), today.getMonth(), tillDay);
 
     const queryObject = {
       include: [
