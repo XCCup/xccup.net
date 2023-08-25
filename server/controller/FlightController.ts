@@ -167,12 +167,22 @@ router.get(
 
     if (validationHasErrors(req, res)) return;
 
-    const flight = await FlightService.getByExternalId(+req.params.id, {
-      excludeSecrets: !userHasElevatedRole(req.user),
-    });
-    if (!flight) return res.sendStatus(NOT_FOUND);
-
     try {
+      if (userHasElevatedRole(req.user)) {
+        return retrieveFlightForAdmin(req, res);
+      }
+
+      const value = getCache(req);
+      if (value) return res.json(value);
+
+      const flight = await FlightService.getByExternalId(+req.params.id, {
+        excludeSecrets: true,
+      });
+
+      if (!flight) return res.sendStatus(NOT_FOUND);
+
+      setCache(req, flight);
+
       res.json(flight);
     } catch (error) {
       next(error);
@@ -923,4 +933,13 @@ function isGRecordResultInvalid(res: Response, validationResult?: FaiResponse) {
   }
   return false;
 }
+
+async function retrieveFlightForAdmin(req: Request, res: Response) {
+  const flight = await FlightService.getByExternalId(+req.params.id, {
+    excludeSecrets: false,
+  });
+  if (!flight) return res.sendStatus(NOT_FOUND);
+  res.json(flight);
+}
+
 export default router;

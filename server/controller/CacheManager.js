@@ -1,16 +1,16 @@
 const NodeCache = require("node-cache");
 const logger = require("../config/logger");
 
-// All cache elements will be deleted after one week
+// All cache elements will be deleted after 3 days
 const cache = new NodeCache({
-  stdTTL: 60 * 60 * 24 * 7,
+  stdTTL: 60 * 60 * 24 * 3,
   checkperiod: 60 * 60 * 6,
 });
 
 const getCache = (req) => {
   const value = cache.get(req.originalUrl);
   if (value) {
-    logger.debug("access from cache: " + req.originalUrl);
+    logger.debug("CM: Access from cache: " + req.originalUrl);
     return value;
   }
 };
@@ -28,7 +28,7 @@ const deleteCache = (keysArrayToDelete) => {
           keysArrayToDelete.some((includeKey) => ck.includes(includeKey))
         );
 
-  logger.debug("Will delete these keys from cache: " + keysToDelete);
+  logger.debug("CM: Will delete these keys from cache: " + keysToDelete);
 
   return cache.del(keysToDelete);
 };
