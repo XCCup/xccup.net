@@ -1,6 +1,5 @@
 import sequelize from "sequelize";
 import db from "../db";
-import moment from "moment";
 import { calculateFlightResult, OLCResult } from "../igc/IgcAnalyzer";
 import { findLanding } from "../igc/LocationFinder";
 import { calculateFlightStats } from "../igc/FlightStatsCalculator";
@@ -39,6 +38,14 @@ import { Fn } from "sequelize/types/utils";
 import { FlightCommentInstance } from "../db/models/FlightComment";
 import { FlightPhotoInstance } from "../db/models/FlightPhoto";
 import { FaiResponse } from "../igc/IgcValidator";
+import {
+  addDays,
+  addHours,
+  isWithinInterval,
+  startOfDay,
+  subDays,
+  subHours,
+} from "date-fns";
 
 interface WhereOptions {
   year?: number;
@@ -207,15 +214,14 @@ const flightService = {
     const SWITCHOVER_HOUR_TODAY_RANKING = 15;
 
     const today = new Date();
-    let fromDay = today.getDate() - 1;
-    let tillDay = today.getDate();
+
+    let startDate = startOfDay(subDays(today, 1));
+    let endDate = startOfDay(today);
 
     if (today.getHours() >= SWITCHOVER_HOUR_TODAY_RANKING) {
-      fromDay++;
-      tillDay++;
+      startDate = addDays(startDate, 1);
+      endDate = addDays(endDate, 1);
     }
-    const startDate = new Date(today.getFullYear(), today.getMonth(), fromDay);
-    const endDate = new Date(today.getFullYear(), today.getMonth(), tillDay);
 
     const queryObject = {
       include: [
@@ -789,10 +795,10 @@ async function calcFlightStatus(
   if (!flightPoints) return FLIGHT_STATE.IN_PROCESS;
 
   const currentSeason = await getCurrentActive();
-  const isOffSeason = !moment(takeoffTime).isBetween(
-    currentSeason.startDate,
-    currentSeason.endDate
-  );
+  const isOffSeason = !isWithinInterval(takeoffTime, {
+    start: currentSeason.startDate,
+    end: currentSeason.endDate,
+  });
 
   if (onlyLogbook || currentSeason.isPaused == true || isOffSeason)
     return FLIGHT_STATE.FLIGHTBOOK;
@@ -884,16 +890,15 @@ function stripFlightFixesForTodayRanking(flightDbObjects: FlightInstance[]) {
  * @param {*} flight The flight to which airBuddies should be found.
  */
 async function findAirbuddiesLegacy(flight: FlightAttributes) {
-  const timeOffsetValue = 2;
-  const timeOffsetUnit = "h";
+  const timeOffHours = 2;
   const pointThreshold = 30;
   const maxNumberOfBuddies = 10;
 
-  const from = moment(flight.takeoffTime).subtract(
-    timeOffsetValue,
-    timeOffsetUnit
-  );
-  const till = moment(flight.takeoffTime).add(timeOffsetValue, timeOffsetUnit);
+  if (!flight.takeoffTime) return;
+
+  const from = subHours(flight.takeoffTime, timeOffHours);
+  const till = addHours(flight.takeoffTime, timeOffHours);
+
   const flights = (await db.Flight.findAll({
     where: {
       id: {

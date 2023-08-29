@@ -2,9 +2,8 @@ import cron from "node-cron";
 import logger from "../config/logger";
 import { FLIGHT_STATE } from "../constants/flight-constants";
 import flightService from "../service/FlightService";
-import moment from "moment";
+import { addDays, format, startOfDay } from "date-fns";
 import sendMail from "../config/email";
-import config from "../config/env-config";
 import {
   DAILY_WINNER_TEXT,
   DAILY_WINNER_TITLE,
@@ -22,14 +21,16 @@ async function informAboutDailyWinner() {
   try {
     logger.info("DWE: Will look if there is a daily winner");
 
-    const startOfToday = moment().startOf("day");
-    const endOfToday = moment().add(1, "d").startOf("day");
+    const todaysDate = new Date();
+
+    const startOfToday = startOfDay(todaysDate);
+    const endOfToday = startOfDay(addDays(todaysDate, 1));
 
     const result = (
       await flightService.getAll({
         status: FLIGHT_STATE.IN_RANKING,
-        startDate: startOfToday.toDate(),
-        endDate: endOfToday.toDate(),
+        startDate: startOfToday,
+        endDate: endOfToday,
         sort: ["flightPoints", "DESC"],
       })
     ).rows;
@@ -38,11 +39,11 @@ async function informAboutDailyWinner() {
 
     if (result.length >= DAILY_WINNER_THRESHOLD) {
       const content = {
-        title: DAILY_WINNER_TITLE(startOfToday.format("YYYY-MM-DD")),
+        title: DAILY_WINNER_TITLE(format(startOfToday, "yyyy-mm-dd")),
         text: DAILY_WINNER_TEXT(
           result.length,
           result[0].externalId,
-          moment().format("HH:mm")
+          format(todaysDate, "HH:mm")
         ),
       };
 
