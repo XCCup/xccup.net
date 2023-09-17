@@ -2,17 +2,70 @@
   <div class="container-fluid mt-0">
     <div class="row">
       <div id="mapContainer" class="darken-map">
-        <div class="leaflet-bottom leaflet-left">
-          <button
-            id="mapExpandButton"
-            class="btn btn-primary leaflet-control"
-            @click="toggleMapSize"
-          >
-            <i
-              class="bi"
-              :class="mapExpanded ? 'bi-arrows-collapse' : 'bi-arrows-expand'"
-            ></i>
-          </button>
+        <div class="leaflet-bottom">
+          <div class="row leaflet-left">
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col"
+              @click="toggleMapSize"
+            >
+              <i
+                class="bi"
+                :class="mapExpanded ? 'bi-arrows-collapse' : 'bi-arrows-expand'"
+              ></i>
+            </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col no-line-break"
+              @click="toggleMapSize"
+            >
+              <i
+                class="bi"
+                :class="mapExpanded ? 'bi bi-pause-fill' : 'bi bi-pause-fill'"
+              ></i>
+            </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col no-line-break"
+              @click="toggleMapSize"
+            >
+              <i
+                class="bi"
+                :class="
+                  mapExpanded ? 'bi bi-pause-fill' : 'bi bi-skip-backward-fill'
+                "
+              ></i>
+            </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col no-line-break"
+              @click="toggleMapSize"
+            >
+              5x
+            </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col no-line-break"
+              @click="toggleMapSize"
+            >
+              <i
+                class="bi"
+                :class="
+                  mapExpanded ? 'bi bi-pause-fill' : 'bi bi-fast-forward-fill'
+                "
+              ></i>
+            </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col"
+              @click="toggleMapSize"
+            >
+              <i
+                class="bi"
+                :class="mapExpanded ? 'bi bi-stop-fill' : 'bi bi-stop-fill'"
+              ></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
