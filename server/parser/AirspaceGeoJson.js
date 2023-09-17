@@ -78,7 +78,8 @@ async function sendRequestsToApi(airspaces, token) {
       console.log("Upload successful " + res.data);
     } catch (error) {
       console.error(
-        `Error uploading airspace ${airspace.name}: ` + error.response.data
+        `Error uploading airspace ${airspace.name}: ` +
+          JSON.stringify(error.response.data, null, 2)
       );
     }
   }
