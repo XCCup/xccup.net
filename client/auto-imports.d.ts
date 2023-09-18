@@ -180,6 +180,7 @@ declare global {
   const useFilterOptions: typeof import('./src/composables/useFilterOptions')['default']
   const useFlight: typeof import('./src/composables/useFlight')['default']
   const useFlightEdit: typeof import('./src/composables/useFlightEdit')['default']
+  const useFlightReplay: typeof import('./src/composables/useFlightReplay')['default']
   const useFocus: typeof import('@vueuse/core')['useFocus']
   const useFocusWithin: typeof import('@vueuse/core')['useFocusWithin']
   const useFps: typeof import('@vueuse/core')['useFps']
@@ -486,6 +487,7 @@ declare module 'vue' {
     readonly useFilterOptions: UnwrapRef<typeof import('./src/composables/useFilterOptions')['default']>
     readonly useFlight: UnwrapRef<typeof import('./src/composables/useFlight')['default']>
     readonly useFlightEdit: UnwrapRef<typeof import('./src/composables/useFlightEdit')['default']>
+    readonly useFlightReplay: UnwrapRef<typeof import('./src/composables/useFlightReplay')['default']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>
@@ -786,6 +788,7 @@ declare module '@vue/runtime-core' {
     readonly useFilterOptions: UnwrapRef<typeof import('./src/composables/useFilterOptions')['default']>
     readonly useFlight: UnwrapRef<typeof import('./src/composables/useFlight')['default']>
     readonly useFlightEdit: UnwrapRef<typeof import('./src/composables/useFlightEdit')['default']>
+    readonly useFlightReplay: UnwrapRef<typeof import('./src/composables/useFlightReplay')['default']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>

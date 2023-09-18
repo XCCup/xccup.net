@@ -16,55 +16,61 @@
             </button>
             <button
               id="mapExpandButton"
-              class="btn btn-primary leaflet-control col no-line-break"
-              @click="toggleMapSize"
+              class="btn btn-primary leaflet-control col"
+              @click="centerMapOnClickListener"
             >
-              <i
-                class="bi"
-                :class="mapExpanded ? 'bi bi-pause-fill' : 'bi bi-pause-fill'"
-              ></i>
-            </button>
-            <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col no-line-break"
-              @click="toggleMapSize"
-            >
-              <i
-                class="bi"
-                :class="
-                  mapExpanded ? 'bi bi-pause-fill' : 'bi bi-skip-backward-fill'
-                "
-              ></i>
-            </button>
-            <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col no-line-break"
-              @click="toggleMapSize"
-            >
-              5x
-            </button>
-            <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col no-line-break"
-              @click="toggleMapSize"
-            >
-              <i
-                class="bi"
-                :class="
-                  mapExpanded ? 'bi bi-pause-fill' : 'bi bi-fast-forward-fill'
-                "
-              ></i>
+              <i class="bi" :class="'bi bi-crosshair'"></i>
             </button>
             <button
               id="mapExpandButton"
               class="btn btn-primary leaflet-control col"
-              @click="toggleMapSize"
+              @click="startReplay"
+              v-if="!trackIsOnReplay"
             >
-              <i
-                class="bi"
-                :class="mapExpanded ? 'bi bi-stop-fill' : 'bi bi-stop-fill'"
-              ></i>
+              <i class="bi" :class="'bi bi-play-fill'"></i>
             </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col"
+              @click="pauseReplay"
+              v-if="trackIsOnReplay"
+            >
+              <i class="bi" :class="'bi bi-pause-fill'"></i>
+            </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col"
+              :disabled="isSlowerDisabled"
+              @click="slowerReplay"
+              v-if="trackIsOnReplay"
+            >
+              <i class="bi" :class="'bi bi-skip-backward-fill'"></i>
+            </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control disabled col"
+              v-if="trackIsOnReplay"
+            >
+              {{ replaySpeed }}
+            </button>
+            <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col"
+              :disabled="isFasterDisabled"
+              @click="fasterReplay"
+              v-if="trackIsOnReplay"
+            >
+              <i class="bi" :class="'bi bi-fast-forward-fill'"></i>
+            </button>
+
+            <!-- <button
+              id="mapExpandButton"
+              class="btn btn-primary leaflet-control col"
+              @click="stopReplay"
+              v-if="trackIsOnReplay"
+            >
+              <i class="bi" :class="'bi bi-stop-fill'"></i>
+            </button> -->
           </div>
         </div>
       </div>
@@ -116,8 +122,20 @@ import type { FlightTurnpoint } from "@/types/Flight";
 
 import useMapPosition, { type MapPosition } from "@/composables/useMapPosition";
 import { retrieveYearOnly } from "@/helper/utils";
+import useFlightReplay from "@/composables/useFlightReplay";
 
 const { getPositions } = useMapPosition();
+
+const {
+  trackIsOnReplay,
+  replaySpeed,
+  isSlowerDisabled,
+  isFasterDisabled,
+  startReplay,
+  pauseReplay,
+  fasterReplay,
+  slowerReplay,
+} = useFlightReplay();
 
 let landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,

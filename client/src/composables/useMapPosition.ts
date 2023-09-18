@@ -69,5 +69,19 @@ export default () => {
     update(context);
   };
 
-  return { getPositions, updatePosition };
+  const increasePosition = () => {
+    console.log("increase");
+
+    state.value.forEach((v) => {
+      if (!v.position) v.position = 0;
+
+      v.position += 1;
+
+      // console.log(v.position)
+    });
+
+    // state.value[1].position = state.value[1].position + 1;
+  };
+
+  return { getPositions, updatePosition, increasePosition };
 };
