@@ -143,7 +143,12 @@ watchEffect(() => {
 
 onMounted(() => {
   // Create a new chart
-  if (ctx.value) chart.value = new Chart<ChartType>(ctx.value, config);
+  if (!ctx.value) return;
+  let plainChartObject = new Chart<ChartType>(ctx.value, config);
+  chart.value = plainChartObject;
+
+  if (!plainChartObject) return;
+  simulateMouseOver(plainChartObject);
 });
 
 onBeforeUnmount(() => {
@@ -151,6 +156,27 @@ onBeforeUnmount(() => {
     chart.value.destroy();
   }
 });
+
+/**
+ * We simulate a first mouseover so that we can pre fill the positionDetailsCollapse and have the first context objects for the track replay feature.
+ * Otherwise replay would only start if we mouseover manually over the graph.
+ *
+ * @param chart The plain chart object from chart.js
+ *
+ */
+function simulateMouseOver(chart: Chart) {
+  const meta = chart.getDatasetMeta(0);
+  const rect = chart.canvas.getBoundingClientRect();
+  // @ts-ignore TODO: I know it's there!
+  const point = meta.data[0].getCenterPoint();
+
+  const evt = new MouseEvent("mousemove", {
+    clientX: rect.left + point.x,
+    clientY: rect.top + point.y,
+  });
+  const node = chart.canvas;
+  node.dispatchEvent(evt);
+}
 
 const config: ChartConfiguration<ChartType> = {
   type: "line",
