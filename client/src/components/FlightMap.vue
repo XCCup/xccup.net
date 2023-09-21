@@ -5,8 +5,7 @@
         <div class="leaflet-bottom">
           <div class="row leaflet-left">
             <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col"
+              class="btn btn-primary leaflet-control col mapControlElement"
               @click="toggleMapSize"
             >
               <i
@@ -15,31 +14,30 @@
               ></i>
             </button>
             <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col"
+              class="btn btn-primary leaflet-control col mapControlElement"
               @click="centerMapOnClickListener"
+              @dblclick.stop
             >
               <i class="bi" :class="'bi bi-crosshair'"></i>
             </button>
             <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col"
+              class="btn btn-primary leaflet-control col mapControlElement"
               @click="startReplay"
               v-if="!trackIsOnReplay"
+              @dblclick.stop
             >
               <i class="bi" :class="'bi bi-play-fill'"></i>
             </button>
             <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col"
+              class="btn btn-primary leaflet-control col mapControlElement"
               @click="pauseReplay"
               v-if="trackIsOnReplay"
+              @dblclick.stop
             >
               <i class="bi" :class="'bi bi-pause-fill'"></i>
             </button>
             <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col"
+              class="btn btn-primary leaflet-control col mapControlElement"
               @click="slowerReplay"
               @dblclick.stop
               v-if="trackIsOnReplay"
@@ -47,15 +45,13 @@
               <i class="bi" :class="'bi bi-skip-backward-fill'"></i>
             </button>
             <label
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control disabled col"
+              class="btn btn-primary leaflet-control disabled col mapControlElement"
               v-if="trackIsOnReplay"
             >
               {{ replaySpeed }}
             </label>
             <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col"
+              class="btn btn-primary leaflet-control col mapControlElement"
               @click="fasterReplay"
               @dblclick.stop
               v-if="trackIsOnReplay"
@@ -373,12 +369,12 @@ const mapHeight = computed(() => (mapExpanded.value ? "70vh" : "430px"));
   height: v-bind("mapHeight");
 }
 
-#mapExpandButton {
+.mapControlElement {
   margin-bottom: 3em;
 }
 
 @media (min-width: 458px) {
-  #mapExpandButton {
+  .mapControlElement {
     margin-bottom: 1em;
   }
 }
