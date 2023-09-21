@@ -1,8 +1,11 @@
 import { throttle } from "lodash-es";
 import { computed, ref } from "vue";
 import type { TooltipItem } from "chart.js";
+// import useFlightReplay from "./useFlightReplay";
 
 const state = ref<MapPosition[]>([]);
+
+// const { updateReplayPosition } = useFlightReplay();
 
 interface PositionDetails {
   gpsAltitude?: number;
@@ -34,6 +37,8 @@ export interface BaroTooltipItem extends TooltipItem<"line"> {
  */
 
 const throttled = throttle((context: BaroTooltipItem) => {
+  // console.log("Context:", context);
+
   state.value[context.datasetIndex - 1] = {
     position: context.dataIndex,
     time: context.parsed.x,
@@ -52,7 +57,7 @@ const throttled = throttle((context: BaroTooltipItem) => {
  * Otherwise airbuddy tracks may not get updated because of
  * the throttling of the main flight.
  * TODO: Find a way to still prevent too frequent updates of the same
- * index even if there was an update of another track inbetween
+ * index even if there was an update of another track in between
  */
 let throttleDatasetIndexCache: number | null = null;
 const update = (context: BaroTooltipItem) => {
@@ -66,14 +71,10 @@ export default () => {
   const getPositions = computed(() => state.value);
 
   const updatePosition = (context: BaroTooltipItem) => {
+    console.log("ctx:", context);
     update(context);
+    // updateReplayPosition(context.dataIndex);
   };
 
-  const increasePosition = () => {
-    state.value.forEach((v) => {
-      v.position += 1;
-    });
-  };
-
-  return { getPositions, updatePosition, increasePosition };
+  return { getPositions, updatePosition };
 };

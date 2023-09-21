@@ -49,7 +49,7 @@ export const options: ChartOptions<"line"> = {
           minute: "HH:mm",
           hour: "HH:mm",
         },
-        tooltipFormat: "HH:mm",
+        tooltipFormat: "HH:mm:ss",
         minUnit: "hour",
       },
       adapters: {

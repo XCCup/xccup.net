@@ -23,7 +23,7 @@
             <button
               class="btn btn-primary leaflet-control col mapControlElement"
               @click="startReplay"
-              v-if="!trackIsOnReplay"
+              v-if="!isOnReplay || isStopped"
               @dblclick.stop
             >
               <i class="bi" :class="'bi bi-play-fill'"></i>
@@ -31,7 +31,7 @@
             <button
               class="btn btn-primary leaflet-control col mapControlElement"
               @click="pauseReplay"
-              v-if="trackIsOnReplay"
+              v-if="isOnReplay && !isStopped"
               @dblclick.stop
             >
               <i class="bi" :class="'bi bi-pause-fill'"></i>
@@ -40,13 +40,13 @@
               class="btn btn-primary leaflet-control col mapControlElement"
               @click="slowerReplay"
               @dblclick.stop
-              v-if="trackIsOnReplay"
+              v-if="!isStopped"
             >
               <i class="bi" :class="'bi bi-skip-backward-fill'"></i>
             </button>
             <label
               class="btn btn-primary leaflet-control disabled col mapControlElement"
-              v-if="trackIsOnReplay"
+              v-if="!isStopped"
             >
               {{ replaySpeed }}
             </label>
@@ -54,9 +54,17 @@
               class="btn btn-primary leaflet-control col mapControlElement"
               @click="fasterReplay"
               @dblclick.stop
-              v-if="trackIsOnReplay"
+              v-if="!isStopped"
             >
               <i class="bi" :class="'bi bi-fast-forward-fill'"></i>
+            </button>
+            <button
+              class="btn btn-primary leaflet-control col mapControlElement"
+              @click="stopReplay"
+              @dblclick.stop
+              v-if="isOnReplay || (!isOnReplay && !isStopped)"
+            >
+              <i class="bi" :class="'bi bi-stop-fill'"></i>
             </button>
           </div>
         </div>
@@ -114,12 +122,14 @@ import useFlightReplay from "@/composables/useFlightReplay";
 const { getPositions } = useMapPosition();
 
 const {
-  trackIsOnReplay,
+  isOnReplay,
+  isStopped,
   replaySpeed,
   startReplay,
   pauseReplay,
   fasterReplay,
   slowerReplay,
+  stopReplay,
 } = useFlightReplay();
 
 let landingMarker = L.icon({
