@@ -1,8 +1,6 @@
 import { computed, ref } from "vue";
-import useMapPosition from "./useMapPosition";
 import useChartMouseOver from "./useChartMouseOver";
 
-const { getPositions } = useMapPosition();
 const { simulateMouseOver } = useChartMouseOver();
 
 const MAX_REPLAY_FACTOR = 11;
@@ -17,17 +15,14 @@ const isStopped = ref(true);
 const isOnReplay = ref(false);
 
 let position = 0;
-// let preventDoubleEvent = false;
 
 function resetTimer() {
   clearInterval(timer);
+
   timer = setInterval(() => {
     console.log("interval");
 
     position += 1;
-
-    // if (preventDoubleEvent) return (preventDoubleEvent = false);
-    // preventDoubleEvent = true;
 
     simulateMouseOver(position);
     // simulateMouseOver(getPositions.value[0].position + 1);
@@ -38,15 +33,13 @@ export default () => {
   const startReplay = () => {
     console.log("start");
 
-    position = getPositions.value[0].position;
+    // position = getPositions.value[0].position;
 
     isOnReplay.value = true;
     isStopped.value = false;
     replayFactor.value = 1;
     resetTimer();
   };
-
-  // const stopReplay = () => {};
 
   const pauseReplay = () => {
     console.log("pause");
@@ -82,22 +75,11 @@ export default () => {
     simulateMouseOver(position);
   };
 
-  // const updateReplayPosition = (newPosition: number) => {
-  // const delta = Math.abs(position - newPosition);
-  // // if (preventDoubleEvent) return (preventDoubleEvent = false);
-  // // preventDoubleEvent = true;
-  // console.log("delta:", delta);
-  // if (delta > 100 && !preventDoubleEvent) {
-  //   console.log("set");
-  //   position = newPosition;
-  //   preventDoubleEvent = true;
-  // }
-  // if (Math.abs(position - newPosition) < 2) {
-  //   console.log("reset");
-  //   preventDoubleEvent = false;
-  // }
-  // console.log("cur:", position);
-  // };
+  const updateReplayPosition = (newPosition: number) => {
+    console.log("set");
+    position = newPosition;
+    pauseReplay();
+  };
 
   const isFasterDisabled = computed(
     () => replayFactor.value == MAX_REPLAY_FACTOR
@@ -120,6 +102,6 @@ export default () => {
     stopReplay,
     fasterReplay,
     slowerReplay,
-    // updateReplayPosition,
+    updateReplayPosition,
   };
 };

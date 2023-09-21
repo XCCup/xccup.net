@@ -71,7 +71,7 @@ export default () => {
   const getPositions = computed(() => state.value);
 
   const updatePosition = (context: BaroTooltipItem) => {
-    console.log("ctx:", context);
+    // console.log("ctx:", context);
     update(context);
     // updateReplayPosition(context.dataIndex);
   };
