@@ -40,37 +40,28 @@
             <button
               id="mapExpandButton"
               class="btn btn-primary leaflet-control col"
-              :disabled="isSlowerDisabled"
               @click="slowerReplay"
+              @dblclick.stop
               v-if="trackIsOnReplay"
             >
               <i class="bi" :class="'bi bi-skip-backward-fill'"></i>
             </button>
-            <button
+            <label
               id="mapExpandButton"
               class="btn btn-primary leaflet-control disabled col"
               v-if="trackIsOnReplay"
             >
               {{ replaySpeed }}
-            </button>
+            </label>
             <button
               id="mapExpandButton"
               class="btn btn-primary leaflet-control col"
-              :disabled="isFasterDisabled"
               @click="fasterReplay"
+              @dblclick.stop
               v-if="trackIsOnReplay"
             >
               <i class="bi" :class="'bi bi-fast-forward-fill'"></i>
             </button>
-
-            <!-- <button
-              id="mapExpandButton"
-              class="btn btn-primary leaflet-control col"
-              @click="stopReplay"
-              v-if="trackIsOnReplay"
-            >
-              <i class="bi" :class="'bi bi-stop-fill'"></i>
-            </button> -->
           </div>
         </div>
       </div>
@@ -129,8 +120,6 @@ const { getPositions } = useMapPosition();
 const {
   trackIsOnReplay,
   replaySpeed,
-  isSlowerDisabled,
-  isFasterDisabled,
   startReplay,
   pauseReplay,
   fasterReplay,
