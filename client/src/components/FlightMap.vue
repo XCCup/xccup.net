@@ -235,9 +235,10 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  // Remove the center map on click listener
+  // Remove all click listener and terminate possible going replay
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
   removeKeyboardHandler();
+  stopReplay();
 });
 
 // Update map
