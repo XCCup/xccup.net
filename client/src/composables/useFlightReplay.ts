@@ -8,10 +8,11 @@ const INTERVAL_MS = 1000;
 const FLIGHT_FIXES_INTERVAL_S = 5;
 
 let timer: ReturnType<typeof setInterval>;
+let handleSpaceBarForReplay: (event: KeyboardEvent) => void;
+let preventDefaultSpaceBarBehaviour: (event: KeyboardEvent) => void;
 
 const replayFactor = ref(0);
 const isStopped = ref(true);
-
 const isOnReplay = ref(false);
 
 let position = 0;
@@ -81,6 +82,30 @@ export default () => {
     pauseReplay();
   };
 
+  const addKeyboardHandler = () => {
+    const handleSpaceBarForReplay = (event: KeyboardEvent): void => {
+      console.log("keyup");
+      if (event.code === "Space") {
+        // if (isOnReplay.value) pauseReplay();
+        // else startReplay();
+        isOnReplay.value ? pauseReplay() : startReplay();
+      }
+    };
+    document.addEventListener("keyup", handleSpaceBarForReplay);
+    preventDefaultSpaceBarBehaviour = (event: KeyboardEvent): void => {
+      console.log("keydown");
+      if (event.code === "Space") {
+        event.preventDefault();
+      }
+    };
+    document.addEventListener("keydown", preventDefaultSpaceBarBehaviour);
+  };
+
+  const removeKeyboardHandler = () => {
+    document.removeEventListener("keyup", handleSpaceBarForReplay);
+    document.removeEventListener("keydown", preventDefaultSpaceBarBehaviour);
+  };
+
   const isFasterDisabled = computed(
     () => replayFactor.value == MAX_REPLAY_FACTOR
   );
@@ -103,5 +128,7 @@ export default () => {
     fasterReplay,
     slowerReplay,
     updateReplayPosition,
+    addKeyboardHandler,
+    removeKeyboardHandler,
   };
 };

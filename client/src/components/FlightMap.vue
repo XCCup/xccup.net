@@ -131,6 +131,8 @@ const {
   slowerReplay,
   stopReplay,
   updateReplayPosition,
+  addKeyboardHandler,
+  removeKeyboardHandler,
 } = useFlightReplay();
 
 let landingMarker = L.icon({
@@ -235,8 +237,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   // Remove the center map on click listener
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
-  document.removeEventListener("keyup", handleSpaceBarForReplay);
-  document.removeEventListener("keydown", preventDefaultSpaceBarBehaviour);
+  removeKeyboardHandler();
 });
 
 // Update map
@@ -350,20 +351,7 @@ const centerMapOnClickListener = () => {
   if (index) updateReplayPosition(index);
 };
 document.addEventListener("centerMapOnClick", centerMapOnClickListener);
-
-const handleSpaceBarForReplay = (event: KeyboardEvent): void => {
-  if (event.code === "Space") {
-    if (isOnReplay.value) pauseReplay();
-    else startReplay();
-  }
-};
-document.addEventListener("keyup", handleSpaceBarForReplay);
-const preventDefaultSpaceBarBehaviour = (event: KeyboardEvent): void => {
-  if (event.code === "Space") {
-    event.preventDefault();
-  }
-};
-document.addEventListener("keydown", preventDefaultSpaceBarBehaviour);
+addKeyboardHandler();
 
 const updateMarkerPosition = (position: MapPosition[]) => {
   if (!map) return;
