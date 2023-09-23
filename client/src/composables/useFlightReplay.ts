@@ -3,18 +3,19 @@ import useChartMouseOver from "./useChartMouseOver";
 
 const { simulateMouseOver } = useChartMouseOver();
 
-const MAX_REPLAY_FACTOR = 11;
+const REPLAY_FACTORS = [1, 2, 5, 10, 20, 50, 100];
 const INTERVAL_MS = 1000;
 const FLIGHT_FIXES_INTERVAL_S = 5;
 
 let timer: ReturnType<typeof setInterval>;
 let handleSpaceBarForReplay: (event: KeyboardEvent) => void;
-let preventDefaultSpaceBarBehaviour: (event: KeyboardEvent) => void;
+let preventDefaultSpaceBarBehavior: (event: KeyboardEvent) => void;
 
 const replayFactor = ref(0);
 const isStopped = ref(true);
 const isOnReplay = ref(false);
 
+let replayFactorBeforePaused = 0;
 let position = 0;
 
 function resetTimer() {
@@ -27,7 +28,7 @@ function resetTimer() {
 
     simulateMouseOver(position);
     // simulateMouseOver(getPositions.value[0].position + 1);
-  }, INTERVAL_MS / replayFactor.value);
+  }, INTERVAL_MS / REPLAY_FACTORS[replayFactor.value]);
 }
 
 export default () => {
@@ -38,7 +39,7 @@ export default () => {
 
     isOnReplay.value = true;
     isStopped.value = false;
-    replayFactor.value = 1;
+    replayFactor.value = replayFactorBeforePaused;
     resetTimer();
   };
 
@@ -46,14 +47,15 @@ export default () => {
     console.log("pause");
 
     isOnReplay.value = false;
-    replayFactor.value = 0;
+    replayFactorBeforePaused = replayFactor.value;
+    replayFactor.value = -1;
     clearInterval(timer);
   };
 
   const fasterReplay = () => {
     console.log("faster");
 
-    if (replayFactor.value <= MAX_REPLAY_FACTOR)
+    if (replayFactor.value < REPLAY_FACTORS.length - 1)
       replayFactor.value = replayFactor.value + 1;
     resetTimer();
   };
@@ -83,45 +85,47 @@ export default () => {
   };
 
   const addKeyboardHandler = () => {
-    const handleSpaceBarForReplay = (event: KeyboardEvent): void => {
-      console.log("keyup");
+    const replayKeyHandler = (event: KeyboardEvent): void => {
+      // Use same shortcuts as YouTube
+
+      // Start / Pause
       if (event.code === "Space") {
-        // if (isOnReplay.value) pauseReplay();
-        // else startReplay();
         isOnReplay.value ? pauseReplay() : startReplay();
       }
+      // Slower
+      if (event.shiftKey && event.key === ";") {
+        isOnReplay.value ? slowerReplay() : undefined;
+      }
+      // Faster
+      if (event.shiftKey && event.key === ":") {
+        isOnReplay.value ? fasterReplay() : undefined;
+      }
     };
-    document.addEventListener("keyup", handleSpaceBarForReplay);
-    preventDefaultSpaceBarBehaviour = (event: KeyboardEvent): void => {
+    document.addEventListener("keyup", replayKeyHandler);
+    preventDefaultSpaceBarBehavior = (event: KeyboardEvent): void => {
       console.log("keydown");
       if (event.code === "Space") {
         event.preventDefault();
       }
     };
-    document.addEventListener("keydown", preventDefaultSpaceBarBehaviour);
+    document.addEventListener("keydown", preventDefaultSpaceBarBehavior);
   };
 
   const removeKeyboardHandler = () => {
     document.removeEventListener("keyup", handleSpaceBarForReplay);
-    document.removeEventListener("keydown", preventDefaultSpaceBarBehaviour);
+    document.removeEventListener("keydown", preventDefaultSpaceBarBehavior);
   };
 
-  const isFasterDisabled = computed(
-    () => replayFactor.value == MAX_REPLAY_FACTOR
-  );
-
-  const isSlowerDisabled = computed(() => replayFactor.value == 0);
-
-  const replaySpeed = computed(
-    () => replayFactor.value * FLIGHT_FIXES_INTERVAL_S + "s"
+  const replaySpeed = computed(() =>
+    replayFactor.value >= 0
+      ? REPLAY_FACTORS[replayFactor.value] * FLIGHT_FIXES_INTERVAL_S + "x"
+      : "0"
   );
 
   return {
     isOnReplay,
     isStopped,
     replaySpeed,
-    isSlowerDisabled,
-    isFasterDisabled,
     startReplay,
     pauseReplay,
     stopReplay,

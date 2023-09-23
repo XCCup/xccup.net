@@ -25,6 +25,7 @@
               @click="startReplay"
               v-if="!isOnReplay || isStopped"
               @dblclick.stop
+              title="Leertaste"
             >
               <i class="bi" :class="'bi bi-play-fill'"></i>
             </button>
@@ -33,6 +34,7 @@
               @click="pauseReplay"
               v-if="isOnReplay && !isStopped"
               @dblclick.stop
+              title="Leertaste"
             >
               <i class="bi" :class="'bi bi-pause-fill'"></i>
             </button>
@@ -41,6 +43,7 @@
               @click="slowerReplay"
               @dblclick.stop
               v-if="!isStopped"
+              title="Shift + ,"
             >
               <i class="bi" :class="'bi bi-skip-backward-fill'"></i>
             </button>
@@ -55,6 +58,7 @@
               @click="fasterReplay"
               @dblclick.stop
               v-if="!isStopped"
+              title="Shift + ."
             >
               <i class="bi" :class="'bi bi-fast-forward-fill'"></i>
             </button>
