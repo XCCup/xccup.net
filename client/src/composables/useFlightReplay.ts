@@ -14,7 +14,7 @@ let preventDefaultSpaceBarBehavior: (event: KeyboardEvent) => void;
 const replayFactor = ref(0);
 const isStopped = ref(true);
 const isOnReplay = ref(false);
-// const isfollowReplay = ref(false);
+const isFollowReplay = ref(true);
 
 let replayFactorBeforePaused = 0;
 let position = 0;
@@ -25,14 +25,14 @@ function resetTimer() {
   timer = setInterval(() => {
     position += 1;
     simulateMouseOver(position);
-    // if (isfollowReplay.value) centerMapOnPosition();
+    if (isFollowReplay.value) centerMapOnPosition();
   }, INTERVAL_MS / REPLAY_FACTORS[replayFactor.value]);
 }
 
-// function centerMapOnPosition() {
-//   const centerMapEvent = new CustomEvent("centerMapOnClick");
-//   document.dispatchEvent(centerMapEvent);
-// }
+function centerMapOnPosition() {
+  const centerMapEvent = new CustomEvent("centerMapOnClick");
+  document.dispatchEvent(centerMapEvent);
+}
 
 export default () => {
   const startReplay = () => {
@@ -73,10 +73,9 @@ export default () => {
     position = newPosition;
   };
 
-  //
-  // const followReplayOnMap = (follow: boolean) => {
-  //   isfollowReplay.value = follow;
-  // };
+  const followReplayOnMap = (follow: boolean) => {
+    isFollowReplay.value = follow;
+  };
 
   const addKeyboardHandler = () => {
     const replayKeyHandler = (event: KeyboardEvent): void => {
@@ -119,7 +118,7 @@ export default () => {
   return {
     isOnReplay,
     isStopped,
-    // isfollowReplay,
+    isFollowReplay,
     replaySpeed,
     startReplay,
     pauseReplay,
@@ -127,7 +126,7 @@ export default () => {
     fasterReplay,
     slowerReplay,
     updateReplayPosition,
-    // followReplayOnMap,
+    followReplayOnMap,
     addKeyboardHandler,
     removeKeyboardHandler,
   };

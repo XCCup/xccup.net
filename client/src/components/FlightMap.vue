@@ -18,7 +18,7 @@
               @click="centerMapOnClickListener"
               @dblclick.stop
             >
-              <i class="bi" :class="'bi bi-crosshair'"></i>
+              <i class="bi bi-crosshair"></i>
             </button>
             <button
               class="btn btn-primary leaflet-control col mapControlElement"
@@ -27,7 +27,7 @@
               @dblclick.stop
               title="Leertaste"
             >
-              <i class="bi" :class="'bi bi-play-fill'"></i>
+              <i class="bi bi-play-fill"></i>
             </button>
             <button
               class="btn btn-primary leaflet-control col mapControlElement"
@@ -36,7 +36,7 @@
               @dblclick.stop
               title="Leertaste"
             >
-              <i class="bi" :class="'bi bi-pause-fill'"></i>
+              <i class="bi bi-pause-fill"></i>
             </button>
             <button
               class="btn btn-primary leaflet-control col mapControlElement"
@@ -45,7 +45,7 @@
               v-if="!isStopped"
               title="Shift + ,"
             >
-              <i class="bi" :class="'bi bi-skip-backward-fill'"></i>
+              <i class="bi bi-skip-backward-fill"></i>
             </button>
             <label
               class="btn btn-primary leaflet-control disabled col mapControlElement"
@@ -60,7 +60,7 @@
               v-if="!isStopped"
               title="Shift + ."
             >
-              <i class="bi" :class="'bi bi-fast-forward-fill'"></i>
+              <i class="bi bi-fast-forward-fill"></i>
             </button>
             <button
               class="btn btn-primary leaflet-control col mapControlElement"
@@ -68,7 +68,22 @@
               @dblclick.stop
               v-if="isOnReplay || (!isOnReplay && !isStopped)"
             >
-              <i class="bi" :class="'bi bi-stop-fill'"></i>
+              <i class="bi bi-stop-fill"></i>
+            </button>
+            <button
+              class="btn btn-primary leaflet-control col mapControlElement"
+              @click="
+                isFollowReplay
+                  ? followReplayOnMap(false)
+                  : followReplayOnMap(true)
+              "
+              @dblclick.stop
+              v-if="isOnReplay || (!isOnReplay && !isStopped)"
+            >
+              <i
+                class="bi"
+                :class="isFollowReplay ? 'bi-eye' : 'bi-eye-slash'"
+              ></i>
             </button>
           </div>
         </div>
@@ -128,6 +143,7 @@ const { getPositions } = useMapPosition();
 const {
   isOnReplay,
   isStopped,
+  isFollowReplay,
   replaySpeed,
   startReplay,
   pauseReplay,
@@ -137,6 +153,7 @@ const {
   updateReplayPosition,
   addKeyboardHandler,
   removeKeyboardHandler,
+  followReplayOnMap,
 } = useFlightReplay();
 
 let landingMarker = L.icon({
@@ -240,6 +257,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   // Remove all click listener and terminate possible going replay
+  // @ts-ignore
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
   removeKeyboardHandler();
   stopReplay();
@@ -342,18 +360,13 @@ const drawTurnpoints = (turnpointData: DeepReadonly<FlightTurnpoint[]>) => {
 };
 
 // Center map on baro click listener
-const centerMapOnClickListener = () => {
-  const latLng = positionMarkers.value[0].getLatLng();
+const centerMapOnClickListener = (event: Event) => {
   if (!map) return;
-  map.setView(latLng);
-  console.log(latLng);
-
-  const index = flight.value?.fixes?.findIndex(
-    (f) => f.latitude == latLng.lat && f.longitude == latLng.lng
-  );
-  console.log("IDX:", index);
-
-  if (index) updateReplayPosition(index);
+  map.setView(positionMarkers.value[0].getLatLng());
+  // @ts-ignore
+  if (event?.detail?.x)
+    // @ts-ignore
+    updateReplayPosition(event.detail.x);
 };
 document.addEventListener("centerMapOnClick", centerMapOnClickListener);
 addKeyboardHandler();

@@ -7,9 +7,13 @@ const { updatePosition } = useMapPosition();
 
 export const options: ChartOptions<"line"> = {
   responsive: true,
-  onClick: () => {
+  onClick: (evt) => {
     // Center map at current position
-    const centerMapEvent = new CustomEvent("centerMapOnClick");
+    const centerMapEvent = new CustomEvent("centerMapOnClick", {
+      detail: {
+        x: evt.x,
+      },
+    });
     document.dispatchEvent(centerMapEvent);
   },
   maintainAspectRatio: false,
