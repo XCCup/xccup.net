@@ -9,12 +9,12 @@ const FLIGHT_FIXES_INTERVAL_S = 5;
 
 let timer: ReturnType<typeof setInterval>;
 let handleSpaceBarForReplay: (event: KeyboardEvent) => void;
-let preventDefaultSpaceBarBehavior: (event: KeyboardEvent) => void;
+let preventSpacebarPageScrollDown: (event: KeyboardEvent) => void;
 
 const replayFactor = ref(0);
 const isStopped = ref(true);
 const isOnReplay = ref(false);
-const isFollowReplay = ref(true);
+const isFollowReplay = ref(false);
 
 let replayFactorBeforePaused = 0;
 let position = 0;
@@ -79,34 +79,34 @@ export default () => {
 
   const addKeyboardHandler = () => {
     const replayKeyHandler = (event: KeyboardEvent): void => {
-      // Use same shortcuts as YouTube
+      // Use similar shortcuts as YouTube
 
       // Start / Pause
-      if (event.code === "Space") {
+      if (event.ctrlKey && event.code === "Space") {
         isOnReplay.value ? pauseReplay() : startReplay();
       }
       // Slower
-      if (event.shiftKey && event.key === ";") {
+      if (event.ctrlKey && event.key === ",") {
         isOnReplay.value ? slowerReplay() : undefined;
       }
       // Faster
-      if (event.shiftKey && event.key === ":") {
+      if (event.ctrlKey && event.key === ".") {
         isOnReplay.value ? fasterReplay() : undefined;
       }
     };
     document.addEventListener("keyup", replayKeyHandler);
-    preventDefaultSpaceBarBehavior = (event: KeyboardEvent): void => {
+    preventSpacebarPageScrollDown = (event: KeyboardEvent): void => {
       console.log("keydown");
-      if (event.code === "Space") {
+      if (event.code === "Space" && event.target == document.body) {
         event.preventDefault();
       }
     };
-    document.addEventListener("keydown", preventDefaultSpaceBarBehavior);
+    document.addEventListener("keydown", preventSpacebarPageScrollDown);
   };
 
   const removeKeyboardHandler = () => {
     document.removeEventListener("keyup", handleSpaceBarForReplay);
-    document.removeEventListener("keydown", preventDefaultSpaceBarBehavior);
+    document.removeEventListener("keydown", preventSpacebarPageScrollDown);
   };
 
   const replaySpeed = computed(() =>

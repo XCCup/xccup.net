@@ -3,88 +3,28 @@
     <div class="row">
       <div id="mapContainer" class="darken-map">
         <div class="leaflet-bottom">
-          <div class="row leaflet-left">
-            <button
-              class="btn btn-primary leaflet-control col mapControlElement"
-              @click="toggleMapSize"
-            >
-              <i
-                class="bi"
-                :class="mapExpanded ? 'bi-arrows-collapse' : 'bi-arrows-expand'"
-              ></i>
-            </button>
-            <button
-              class="btn btn-primary leaflet-control col mapControlElement"
-              @click="centerMapOnClickListener"
-              @dblclick.stop
-            >
-              <i class="bi bi-crosshair"></i>
-            </button>
-            <button
-              class="btn btn-primary leaflet-control col mapControlElement"
-              @click="startReplay"
-              v-if="!isOnReplay || isStopped"
-              @dblclick.stop
-              title="Leertaste"
-            >
-              <i class="bi bi-play-fill"></i>
-            </button>
-            <button
-              class="btn btn-primary leaflet-control col mapControlElement"
-              @click="pauseReplay"
-              v-if="isOnReplay && !isStopped"
-              @dblclick.stop
-              title="Leertaste"
-            >
-              <i class="bi bi-pause-fill"></i>
-            </button>
-            <button
-              class="btn btn-primary leaflet-control col mapControlElement"
-              @click="slowerReplay"
-              @dblclick.stop
-              v-if="!isStopped"
-              title="Shift + ,"
-            >
-              <i class="bi bi-skip-backward-fill"></i>
-            </button>
-            <label
-              class="btn btn-primary leaflet-control disabled col mapControlElement"
-              v-if="!isStopped"
-            >
-              {{ replaySpeed }}
-            </label>
-            <button
-              class="btn btn-primary leaflet-control col mapControlElement"
-              @click="fasterReplay"
-              @dblclick.stop
-              v-if="!isStopped"
-              title="Shift + ."
-            >
-              <i class="bi bi-fast-forward-fill"></i>
-            </button>
-            <button
-              class="btn btn-primary leaflet-control col mapControlElement"
-              @click="stopReplay"
-              @dblclick.stop
-              v-if="isOnReplay || (!isOnReplay && !isStopped)"
-            >
-              <i class="bi bi-stop-fill"></i>
-            </button>
-            <button
-              class="btn btn-primary leaflet-control col mapControlElement"
-              @click="
-                isFollowReplay
-                  ? followReplayOnMap(false)
-                  : followReplayOnMap(true)
-              "
-              @dblclick.stop
-              v-if="isOnReplay || (!isOnReplay && !isStopped)"
-            >
-              <i
-                class="bi"
-                :class="isFollowReplay ? 'bi-eye' : 'bi-eye-slash'"
-              ></i>
-            </button>
+          <div class="leaflet-left">
+            <div class="row">
+              <button
+                class="btn btn-primary leaflet-control col-auto"
+                @click="toggleMapSize"
+              >
+                <i
+                  class="bi"
+                  :class="
+                    mapExpanded ? 'bi-arrows-collapse' : 'bi-arrows-expand'
+                  "
+                ></i>
+              </button>
+              <button
+                class="btn btn-primary leaflet-control col-auto"
+                @click="centerMapOnClickListener"
+                @dblclick.stop
+              >
+                <i class="bi bi-crosshair"></i>
+              </button>
+            </div>
+            <FlightReplayControls class="add-gap-leaflet-attribution" />
           </div>
         </div>
       </div>
@@ -140,21 +80,7 @@ import useFlightReplay from "@/composables/useFlightReplay";
 
 const { getPositions } = useMapPosition();
 
-const {
-  isOnReplay,
-  isStopped,
-  isFollowReplay,
-  replaySpeed,
-  startReplay,
-  pauseReplay,
-  fasterReplay,
-  slowerReplay,
-  stopReplay,
-  updateReplayPosition,
-  addKeyboardHandler,
-  removeKeyboardHandler,
-  followReplayOnMap,
-} = useFlightReplay();
+const { updateReplayPosition } = useFlightReplay();
 
 let landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,
@@ -257,10 +183,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   // Remove all click listener and terminate possible going replay
-  // @ts-ignore
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
-  removeKeyboardHandler();
-  stopReplay();
 });
 
 // Update map
@@ -369,7 +292,6 @@ const centerMapOnClickListener = (event: Event) => {
     updateReplayPosition(event.detail.x);
 };
 document.addEventListener("centerMapOnClick", centerMapOnClickListener);
-addKeyboardHandler();
 
 const updateMarkerPosition = (position: MapPosition[]) => {
   if (!map) return;
@@ -411,12 +333,12 @@ const mapHeight = computed(() => (mapExpanded.value ? "70vh" : "430px"));
   height: v-bind("mapHeight");
 }
 
-.mapControlElement {
+.add-gap-leaflet-attribution {
   margin-bottom: 3em;
 }
 
 @media (min-width: 458px) {
-  .mapControlElement {
+  .add-gap-leaflet-attribution {
     margin-bottom: 1em;
   }
 }
