@@ -8,6 +8,7 @@
               <button
                 class="btn btn-primary leaflet-control col-auto"
                 @click="toggleMapSize"
+                title="Vergrößere Kartenausschnitt"
               >
                 <i
                   class="bi"
@@ -20,9 +21,11 @@
                 class="btn btn-primary leaflet-control col-auto"
                 @click="centerMapOnClickListener"
                 @dblclick.stop
+                title="Fokussiere Karte auf aktuelle Position"
               >
                 <i class="bi bi-crosshair"></i>
               </button>
+              <FlightReplayStart />
             </div>
             <FlightReplayControls class="add-gap-leaflet-attribution" />
           </div>

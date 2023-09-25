@@ -2,21 +2,12 @@
   <div class="row">
     <button
       class="btn btn-primary leaflet-control col-auto"
-      @click="startReplay"
-      v-if="!isOnReplay || isStopped"
+      @click="isOnReplay ? pauseReplay() : startReplay()"
+      v-if="isOnReplay || (!isOnReplay && !isStopped)"
       @dblclick.stop
-      title="Start (Strg + Leertaste)"
+      title="Start/Pause (Strg + Leertaste)"
     >
-      <i class="bi bi-play-fill"></i>
-    </button>
-    <button
-      class="btn btn-primary leaflet-control col-auto"
-      @click="pauseReplay"
-      v-if="isOnReplay && !isStopped"
-      @dblclick.stop
-      title="Pause (Strg + Leertaste)"
-    >
-      <i class="bi bi-pause-fill"></i>
+      <i :class="isOnReplay ? 'bi bi-pause-fill' : 'bi bi-play-fill'"></i>
     </button>
     <select
       class="btn btn-primary dropdown-toggle leaflet-control col-auto"
@@ -34,35 +25,12 @@
         {{ option.text }}
       </option>
     </select>
-    <!-- <button
-      class="btn btn-primary leaflet-control col-auto"
-      @click="slowerReplay"
-      @dblclick.stop
-      v-if="!isStopped"
-      title="Langsamer: Strg + ,"
-    >
-      <i class="bi bi-skip-backward-fill"></i>
-    </button>
-    <label
-      class="btn btn-primary leaflet-control disabled col-auto"
-      v-if="!isStopped"
-    >
-      {{ replaySpeed }}
-    </label>
-    <button
-      class="btn btn-primary leaflet-control col-auto"
-      @click="fasterReplay"
-      @dblclick.stop
-      v-if="!isStopped"
-      title="Schneller: Strg + ."
-    >
-      <i class="bi bi-fast-forward-fill"></i>
-    </button> -->
     <button
       class="btn btn-primary leaflet-control col-auto"
       @click="stopReplay"
       @dblclick.stop
       v-if="isOnReplay || (!isOnReplay && !isStopped)"
+      title="Beende Wiedergabe"
     >
       <i class="bi bi-stop-fill"></i>
     </button>
