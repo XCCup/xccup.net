@@ -5,7 +5,7 @@
       @click="startReplay"
       v-if="!isOnReplay || isStopped"
       @dblclick.stop
-      title="Start: Strg + Leertaste"
+      title="Start (Strg + Leertaste)"
     >
       <i class="bi bi-play-fill"></i>
     </button>
@@ -14,11 +14,27 @@
       @click="pauseReplay"
       v-if="isOnReplay && !isStopped"
       @dblclick.stop
-      title="Pause: Strg + Leertaste"
+      title="Pause (Strg + Leertaste)"
     >
       <i class="bi bi-pause-fill"></i>
     </button>
-    <button
+    <select
+      class="btn btn-primary dropdown-toggle leaflet-control col-auto"
+      v-if="!isStopped"
+      @change="changeReplaySpeed($event)"
+      title="Langsamer (Strg + ,) / Schneller (Strg + .)"
+    >
+      <option
+        v-for="option in replayFactors"
+        class="dropdown-item"
+        :key="option.value"
+        :value="option.value"
+        :selected="option.value === replayFactor"
+      >
+        {{ option.text }}
+      </option>
+    </select>
+    <!-- <button
       class="btn btn-primary leaflet-control col-auto"
       @click="slowerReplay"
       @dblclick.stop
@@ -41,7 +57,7 @@
       title="Schneller: Strg + ."
     >
       <i class="bi bi-fast-forward-fill"></i>
-    </button>
+    </button> -->
     <button
       class="btn btn-primary leaflet-control col-auto"
       @click="stopReplay"
@@ -57,6 +73,7 @@
       "
       @dblclick.stop
       v-if="isOnReplay || (!isOnReplay && !isStopped)"
+      title="Halte Position in Kartenmitte"
     >
       <i class="bi" :class="isFollowReplay ? 'bi-eye-slash' : 'bi-eye'"></i>
     </button>
@@ -71,16 +88,21 @@ const {
   isOnReplay,
   isStopped,
   isFollowReplay,
-  replaySpeed,
   startReplay,
   pauseReplay,
-  fasterReplay,
-  slowerReplay,
   stopReplay,
+  setReplayFactor,
   addKeyboardHandler,
   removeKeyboardHandler,
   followReplayOnMap,
+  replayFactor,
+  replayFactors,
 } = useFlightReplay();
+
+const changeReplaySpeed = (event: Event) => {
+  // @ts-ignore
+  setReplayFactor(event.target?.value);
+};
 
 onBeforeUnmount(() => {
   // Remove all click listener and terminate possible going replay

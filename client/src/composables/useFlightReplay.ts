@@ -1,5 +1,8 @@
-import { computed, ref } from "vue";
+import { readonly, ref } from "vue";
 import useChartMouseOver from "./useChartMouseOver";
+import useFlight from "./useFlight";
+
+const { flight } = useFlight();
 
 const { simulateMouseOver } = useChartMouseOver();
 
@@ -9,21 +12,41 @@ const FLIGHT_FIXES_INTERVAL_S = 5;
 
 let timer: ReturnType<typeof setInterval>;
 let handleSpaceBarForReplay: (event: KeyboardEvent) => void;
-let preventSpacebarPageScrollDown: (event: KeyboardEvent) => void;
+let preventSpaceBarPageScrollDown: (event: KeyboardEvent) => void;
 
 const replayFactor = ref(0);
 const isStopped = ref(true);
 const isOnReplay = ref(false);
 const isFollowReplay = ref(false);
+const replayFactors = ref(
+  REPLAY_FACTORS.map((e) => {
+    return {
+      text: e * FLIGHT_FIXES_INTERVAL_S + "x",
+      value: REPLAY_FACTORS.indexOf(e),
+    };
+  })
+);
 
-let replayFactorBeforePaused = 0;
 let position = 0;
+
+function resetReplay() {
+  clearInterval(timer);
+  isOnReplay.value = false;
+  position = 0;
+}
 
 function resetTimer() {
   clearInterval(timer);
 
+  if (!isOnReplay.value) return;
+
   timer = setInterval(() => {
     position += 1;
+
+    if (position == flight.value?.fixes?.length) {
+      resetReplay();
+    }
+
     simulateMouseOver(position);
     if (isFollowReplay.value) centerMapOnPosition();
   }, INTERVAL_MS / REPLAY_FACTORS[replayFactor.value]);
@@ -38,25 +61,30 @@ export default () => {
   const startReplay = () => {
     isOnReplay.value = true;
     isStopped.value = false;
-    replayFactor.value = replayFactorBeforePaused;
     resetTimer();
   };
 
   const pauseReplay = () => {
     isOnReplay.value = false;
-    replayFactorBeforePaused = replayFactor.value;
-    replayFactor.value = -1;
     clearInterval(timer);
   };
 
   const fasterReplay = () => {
-    if (replayFactor.value < REPLAY_FACTORS.length - 1)
+    if (replayFactor.value < REPLAY_FACTORS.length - 1) {
       replayFactor.value = replayFactor.value + 1;
-    resetTimer();
+      resetTimer();
+    }
   };
 
   const slowerReplay = () => {
-    if (replayFactor.value > 0) replayFactor.value = replayFactor.value - 1;
+    if (replayFactor.value > 0) {
+      replayFactor.value = replayFactor.value - 1;
+      resetTimer();
+    }
+  };
+
+  const setReplayFactor = (factor: number) => {
+    replayFactor.value = factor;
     resetTimer();
   };
 
@@ -66,7 +94,6 @@ export default () => {
     isOnReplay.value = false;
     replayFactor.value = 0;
     position = 0;
-    simulateMouseOver(position);
   };
 
   const updateReplayPosition = (newPosition: number) => {
@@ -95,36 +122,31 @@ export default () => {
       }
     };
     document.addEventListener("keyup", replayKeyHandler);
-    preventSpacebarPageScrollDown = (event: KeyboardEvent): void => {
-      console.log("keydown");
+    preventSpaceBarPageScrollDown = (event: KeyboardEvent): void => {
       if (event.code === "Space" && event.target == document.body) {
         event.preventDefault();
       }
     };
-    document.addEventListener("keydown", preventSpacebarPageScrollDown);
+    document.addEventListener("keydown", preventSpaceBarPageScrollDown);
   };
 
   const removeKeyboardHandler = () => {
     document.removeEventListener("keyup", handleSpaceBarForReplay);
-    document.removeEventListener("keydown", preventSpacebarPageScrollDown);
+    document.removeEventListener("keydown", preventSpaceBarPageScrollDown);
   };
 
-  const replaySpeed = computed(() =>
-    replayFactor.value >= 0
-      ? REPLAY_FACTORS[replayFactor.value] * FLIGHT_FIXES_INTERVAL_S + "x"
-      : "0"
-  );
-
   return {
-    isOnReplay,
-    isStopped,
-    isFollowReplay,
-    replaySpeed,
+    isOnReplay: readonly(isOnReplay),
+    isStopped: readonly(isStopped),
+    isFollowReplay: readonly(isFollowReplay),
+    replayFactor: readonly(replayFactor),
+    replayFactors: readonly(replayFactors),
     startReplay,
     pauseReplay,
     stopReplay,
     fasterReplay,
     slowerReplay,
+    setReplayFactor,
     updateReplayPosition,
     followReplayOnMap,
     addKeyboardHandler,
