@@ -38,8 +38,12 @@ test.each([
 test.each([
   ["3500F AGL", 100, 1166.8],
   ["3500FT AGL", 200, 1266.8],
+  ["3500 F AGL", 100, 1166.8],
+  ["3500 FT AGL", 200, 1266.8],
   ["3500f AGL", 300, 1366.8],
   ["3500ft AGL", 400, 1466.8],
+  ["3500 f AGL", 300, 1366.8],
+  ["3500 ft AGL", 400, 1466.8],
 ])(
   "Convert AGL value %s with elevation %i to %i",
   (value, elevation, expected) => {
