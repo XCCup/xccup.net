@@ -64,5 +64,5 @@ test.each([
 test("No number at all should throw an error", () => {
   expect(() => {
     convertVerticalLimitToMeterMSL("foobar MSL", 0);
-  }).toThrow("Couldn't convert to a height value in meter");
+  }).toThrow("Couldn't convert airspace height information of");
 });
