@@ -37,6 +37,7 @@ import useMapPosition from "@/composables/useMapPosition";
 import type { ChartConfiguration } from "chart.js";
 import { roundWithDigits } from "@/helper/utils";
 import useChartMouseOver from "@/composables/useChartMouseOver";
+import useFlightReplay from "@/composables/useFlightReplay";
 
 Chart.register(
   LineElement,
@@ -55,6 +56,7 @@ const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 const { getPositions } = useMapPosition();
 const { initChartMouseOver } = useChartMouseOver();
+const { isOnReplay } = useFlightReplay();
 
 // UI Elements
 const pressureAltToggle = ref(false);
@@ -161,6 +163,10 @@ onBeforeUnmount(() => {
   }
 });
 
+const canvasClass = computed(() => {
+  return isOnReplay.value ? "deactivate-mouse-hover" : "";
+});
+
 const config: ChartConfiguration<ChartType> = {
   type: "line",
   data: {
@@ -206,7 +212,7 @@ const config: ChartConfiguration<ChartType> = {
 
     <!-- Baro -->
     <div class="container mt-3">
-      <canvas ref="ctx"></canvas>
+      <canvas :class="canvasClass" ref="ctx"></canvas>
     </div>
     <!-- Baro Switch -->
     <div
@@ -233,4 +239,8 @@ const config: ChartConfiguration<ChartType> = {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.deactivate-mouse-hover {
+  pointer-events: none;
+}
+</style>
