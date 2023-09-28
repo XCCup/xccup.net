@@ -4,6 +4,9 @@ const { Op } = require("sequelize");
 const logger = require("../config/logger");
 const { combineFixesProperties } = require("../helper/FlightFixUtils");
 const { XccupRestrictionError } = require("../helper/ErrorHandler");
+const {
+  convertVerticalLimitToMeterMSL,
+} = require("../helper/AirspaceHeightConverter");
 
 const FEET_IN_METER = 0.3048;
 
@@ -355,46 +358,6 @@ async function findAirspacesWithinPolygon(points, year) {
   const result = airspaces.length ? airspaces : [];
 
   return result;
-}
-
-/**
- * Converts a vertical airspace limit (GND/MSL/AGL/FL) to MSL (in meter)
- * @param {string} verticalLimit
- * @param {number} elevation
- * @returns
- */
-function convertVerticalLimitToMeterMSL(verticalLimit, elevation) {
-  if (verticalLimit.includes("GND")) {
-    return elevation ?? 0;
-  }
-
-  if (verticalLimit.includes("AGL")) {
-    const regex = /(\d+)(F|ft) AGL/;
-    const matchingResult = verticalLimit.match(regex);
-    return convertFeetToMeter(matchingResult[1]) + elevation ?? 0;
-  }
-
-  if (verticalLimit.includes("MSL")) {
-    const regex = /(\d+)(F|ft) MSL/;
-    const matchingResult = verticalLimit.match(regex);
-    return convertFeetToMeter(matchingResult[1]);
-  }
-
-  /**
-   * This is actually not the correct way to convert a FL to a MSL altitude. On high pressure
-   * days the result will to low. But it's the only practical way for the moment because not
-   * every flightlog includes the pressure altitude…
-   */
-  if (verticalLimit.includes("FL")) {
-    const regex = /FL\s?(\d+)/;
-    const matchingResult = verticalLimit.match(regex);
-    return convertFeetToMeter(matchingResult[1] * 100);
-  }
-  logger.warn("AS: No parsable height value found: " + verticalLimit);
-}
-
-function convertFeetToMeter(feet) {
-  return feet * FEET_IN_METER;
 }
 
 module.exports = service;
