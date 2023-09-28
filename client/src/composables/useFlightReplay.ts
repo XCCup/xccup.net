@@ -92,7 +92,6 @@ export default () => {
     clearInterval(timer);
     isStopped.value = true;
     isOnReplay.value = false;
-    replayFactor.value = 0;
     position = 0;
   };
 
