@@ -2,17 +2,33 @@
   <div class="container-fluid mt-0">
     <div class="row">
       <div id="mapContainer" class="darken-map">
-        <div class="leaflet-bottom leaflet-left">
-          <button
-            id="mapExpandButton"
-            class="btn btn-primary leaflet-control"
-            @click="toggleMapSize"
-          >
-            <i
-              class="bi"
-              :class="mapExpanded ? 'bi-arrows-collapse' : 'bi-arrows-expand'"
-            ></i>
-          </button>
+        <div class="leaflet-bottom">
+          <div class="leaflet-left">
+            <div class="row">
+              <button
+                class="btn btn-primary leaflet-control col-auto"
+                @click="toggleMapSize"
+                title="Vergrößere Kartenausschnitt"
+              >
+                <i
+                  class="bi"
+                  :class="
+                    mapExpanded ? 'bi-arrows-collapse' : 'bi-arrows-expand'
+                  "
+                ></i>
+              </button>
+              <button
+                class="btn btn-primary leaflet-control col-auto"
+                @click="centerMapOnClickListener"
+                @dblclick.stop
+                title="Fokussiere Karte auf aktuelle Position"
+              >
+                <i class="bi bi-crosshair"></i>
+              </button>
+              <FlightReplayStart />
+            </div>
+            <FlightReplayControls class="add-gap-leaflet-attribution" />
+          </div>
         </div>
       </div>
     </div>
@@ -63,8 +79,11 @@ import type { FlightTurnpoint } from "@/types/Flight";
 
 import useMapPosition, { type MapPosition } from "@/composables/useMapPosition";
 import { retrieveYearOnly } from "@/helper/utils";
+import useFlightReplay from "@/composables/useFlightReplay";
 
 const { getPositions } = useMapPosition();
+
+const { updateReplayPosition } = useFlightReplay();
 
 let landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,
@@ -166,7 +185,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  // Remove the center map on click listener
+  // Remove all click listener and terminate possible going replay
   document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
 });
 
@@ -267,9 +286,13 @@ const drawTurnpoints = (turnpointData: DeepReadonly<FlightTurnpoint[]>) => {
 };
 
 // Center map on baro click listener
-const centerMapOnClickListener = () => {
+const centerMapOnClickListener = (event: Event) => {
   if (!map) return;
   map.setView(positionMarkers.value[0].getLatLng());
+  // @ts-ignore
+  if (event?.detail?.x)
+    // @ts-ignore
+    updateReplayPosition(event.detail.x);
 };
 document.addEventListener("centerMapOnClick", centerMapOnClickListener);
 
@@ -313,12 +336,12 @@ const mapHeight = computed(() => (mapExpanded.value ? "70vh" : "430px"));
   height: v-bind("mapHeight");
 }
 
-#mapExpandButton {
+.add-gap-leaflet-attribution {
   margin-bottom: 3em;
 }
 
 @media (min-width: 458px) {
-  #mapExpandButton {
+  .add-gap-leaflet-attribution {
     margin-bottom: 1em;
   }
 }

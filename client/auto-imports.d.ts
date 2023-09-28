@@ -139,6 +139,8 @@ declare global {
   const useBroadcastChannel: typeof import('@vueuse/core')['useBroadcastChannel']
   const useBrowserLocation: typeof import('@vueuse/core')['useBrowserLocation']
   const useCached: typeof import('@vueuse/core')['useCached']
+  const useChart: typeof import('./src/composables/useChart')['default']
+  const useChartMouseOver: typeof import('./src/composables/useChartMouseOver')['default']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
   const useCloned: typeof import('@vueuse/core')['useCloned']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
@@ -180,6 +182,7 @@ declare global {
   const useFilterOptions: typeof import('./src/composables/useFilterOptions')['default']
   const useFlight: typeof import('./src/composables/useFlight')['default']
   const useFlightEdit: typeof import('./src/composables/useFlightEdit')['default']
+  const useFlightReplay: typeof import('./src/composables/useFlightReplay')['default']
   const useFocus: typeof import('@vueuse/core')['useFocus']
   const useFocusWithin: typeof import('@vueuse/core')['useFocusWithin']
   const useFps: typeof import('@vueuse/core')['useFps']
@@ -445,6 +448,7 @@ declare module 'vue' {
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
+    readonly useChartMouseOver: UnwrapRef<typeof import('./src/composables/useChartMouseOver')['default']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
@@ -486,6 +490,7 @@ declare module 'vue' {
     readonly useFilterOptions: UnwrapRef<typeof import('./src/composables/useFilterOptions')['default']>
     readonly useFlight: UnwrapRef<typeof import('./src/composables/useFlight')['default']>
     readonly useFlightEdit: UnwrapRef<typeof import('./src/composables/useFlightEdit')['default']>
+    readonly useFlightReplay: UnwrapRef<typeof import('./src/composables/useFlightReplay')['default']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>
@@ -745,6 +750,7 @@ declare module '@vue/runtime-core' {
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
+    readonly useChartMouseOver: UnwrapRef<typeof import('./src/composables/useChartMouseOver')['default']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
@@ -786,6 +792,7 @@ declare module '@vue/runtime-core' {
     readonly useFilterOptions: UnwrapRef<typeof import('./src/composables/useFilterOptions')['default']>
     readonly useFlight: UnwrapRef<typeof import('./src/composables/useFlight')['default']>
     readonly useFlightEdit: UnwrapRef<typeof import('./src/composables/useFlightEdit')['default']>
+    readonly useFlightReplay: UnwrapRef<typeof import('./src/composables/useFlightReplay')['default']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>

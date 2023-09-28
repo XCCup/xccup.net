@@ -36,6 +36,8 @@ import useMapPosition from "@/composables/useMapPosition";
 
 import type { ChartConfiguration } from "chart.js";
 import { roundWithDigits } from "@/helper/utils";
+import useChartMouseOver from "@/composables/useChartMouseOver";
+import useFlightReplay from "@/composables/useFlightReplay";
 
 Chart.register(
   LineElement,
@@ -53,6 +55,8 @@ Chart.register(
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
 const { getPositions } = useMapPosition();
+const { initChartMouseOver } = useChartMouseOver();
+const { isOnReplay } = useFlightReplay();
 
 // UI Elements
 const pressureAltToggle = ref(false);
@@ -143,13 +147,24 @@ watchEffect(() => {
 
 onMounted(() => {
   // Create a new chart
-  if (ctx.value) chart.value = new Chart<ChartType>(ctx.value, config);
+  if (!ctx.value) return;
+  let plainChartObject = new Chart<ChartType>(ctx.value, config);
+  chart.value = plainChartObject;
+
+  if (!plainChartObject) return;
+  // We simulate a first mouseover so that we can pre fill the positionDetailsCollapse and have the first context objects for the track replay feature.
+  // Otherwise replay would only start if we mouseover manually over the graph.
+  initChartMouseOver(plainChartObject);
 });
 
 onBeforeUnmount(() => {
   if (chart.value) {
     chart.value.destroy();
   }
+});
+
+const canvasClass = computed(() => {
+  return isOnReplay.value ? "deactivate-mouse-hover" : "";
 });
 
 const config: ChartConfiguration<ChartType> = {
@@ -197,7 +212,7 @@ const config: ChartConfiguration<ChartType> = {
 
     <!-- Baro -->
     <div class="container mt-3">
-      <canvas ref="ctx"></canvas>
+      <canvas :class="canvasClass" ref="ctx"></canvas>
     </div>
     <!-- Baro Switch -->
     <div
@@ -224,4 +239,8 @@ const config: ChartConfiguration<ChartType> = {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.deactivate-mouse-hover {
+  pointer-events: none;
+}
+</style>
