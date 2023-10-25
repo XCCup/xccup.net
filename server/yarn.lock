@@ -1371,10 +1371,10 @@ axios-retry@^3.7.0:
     "@babel/runtime" "^7.15.4"
     is-retry-allowed "^2.2.0"
 
-axios@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.4.0.tgz#38a7bf1224cd308de271146038b551d725f0be1f"
-  integrity sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==
+axios@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.5.0.tgz#f02e4af823e2e46a9768cfc74691fdd0517ea267"
+  integrity sha512-D4DdjDo5CY50Qms0qGQTTw6Q44jl7zRwY7bthds06pUGfChBCTcQs+N743eFWGEd6pRTMd6A+I87aWyFV5wiZQ==
   dependencies:
     follow-redirects "^1.15.0"
     form-data "^4.0.0"
@@ -1963,9 +1963,9 @@ cross-spawn@^7.0.0, cross-spawn@^7.0.1, cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     which "^2.0.1"
 
 crypto-js@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
-  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.2.0.tgz#4d931639ecdfd12ff80e8186dba6af2c2e856631"
+  integrity sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==
 
 css-select@^5.1.0:
   version "5.1.0"
