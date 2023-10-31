@@ -4,7 +4,7 @@
  */
 
 import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useStorage } from "@vueuse/core";
 import { computed } from "vue";
 
