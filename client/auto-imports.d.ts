@@ -144,6 +144,7 @@ declare global {
   const useChart: typeof import('./src/composables/useChart')['default']
   const useChartMouseOver: typeof import('./src/composables/useChartMouseOver')['default']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
+  const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
   const useComments: typeof import('./src/composables/useComments')['default']
@@ -454,6 +455,7 @@ declare module 'vue' {
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useChartMouseOver: UnwrapRef<typeof import('./src/composables/useChartMouseOver')['default']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
+    readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
     readonly useComments: UnwrapRef<typeof import('./src/composables/useComments')['default']>
@@ -758,6 +760,7 @@ declare module '@vue/runtime-core' {
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useChartMouseOver: UnwrapRef<typeof import('./src/composables/useChartMouseOver')['default']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
+    readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
     readonly useComments: UnwrapRef<typeof import('./src/composables/useComments')['default']>
