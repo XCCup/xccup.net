@@ -52,7 +52,6 @@ declare module 'vue' {
     FlightMap: typeof import('./src/components/FlightMap.vue')['default']
     FlightMetarStats: typeof import('./src/components/FlightMetarStats.vue')['default']
     FlightPhotos: typeof import('./src/components/FlightPhotos.vue')['default']
-    FlightReplayControl: (typeof import("./src/components/FlightReplayControl.vue"))["default"]
     FlightReplayControls: typeof import('./src/components/FlightReplayControls.vue')['default']
     FlightReplayStart: typeof import('./src/components/FlightReplayStart.vue')['default']
     FlightReport: typeof import('./src/components/FlightReport.vue')['default']

@@ -7,7 +7,9 @@ export function createLimiter(
 ) {
   return rateLimit({
     windowMs: windowMinutes * 60 * 1000,
-    max: config.get("disableApiProtection") ? 0 : maxRequestsInWindow,
+    limit: config.get("disableApiProtection")
+      ? Number.MAX_SAFE_INTEGER
+      : maxRequestsInWindow,
   });
 }
 
