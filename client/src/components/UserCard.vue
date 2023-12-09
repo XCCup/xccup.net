@@ -39,7 +39,7 @@
     </div>
     <div class="col-xl-4 row mb-3">
       <div class="col-6">
-        <div>
+        <div v-if="user.club">
           <strong>Club</strong>
           <router-link
             :to="{
