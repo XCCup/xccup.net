@@ -1,13 +1,14 @@
 # Build Stage
-FROM node:18.17.1-alpine3.18 AS build-stage
+FROM node:20-alpine3.19 AS build-stage
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
+
 RUN yarn build
 
 # Production build
-FROM nginx:1.25.1-alpine
+FROM nginx:1.23.1-alpine
 #RUN addgroup app && adduser -S -G app app
 #USER app
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
