@@ -51,6 +51,8 @@ services:
     container_name: xccup-db
     restart: always
     env_file: ./server/.env
+    ports:
+      - "127.0.0.1:5432:5432"
     volumes:
       - xccup-db:/var/lib/postgresql/data
 
@@ -115,7 +117,6 @@ services:
 volumes:
   xccup-db:
   pgadmin-data:
-
 
 networks:
   default:
