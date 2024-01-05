@@ -713,10 +713,10 @@
     lru-cache "^10.0.1"
     socks-proxy-agent "^8.0.1"
 
-"@npmcli/config@^8.0.2":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@npmcli/config/-/config-8.0.2.tgz#61f50dbf9a1b032e341cb4cf4f74c34d3f43d358"
-  integrity sha512-g+DAp7bUsiUDynRI4jTO0wPAXJpy3puhovHHg8S4iq54NF8zd00588GJOm5ARxDaDUdKCUYu9E5fNc+esYl5JA==
+"@npmcli/config@^8.0.3":
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@npmcli/config/-/config-8.0.3.tgz#deacc4217060f3bf3e751cfdc5dd91481595aecd"
+  integrity sha512-rqRX7/UORvm2YRImY67kyfwD9rpi5+KXXb1j/cpTUKRcUqvpJ9/PMMc7Vv57JVqmrFj8siBBFEmXI3Gg7/TonQ==
   dependencies:
     "@npmcli/map-workspaces" "^3.0.2"
     ci-info "^4.0.0"
@@ -799,45 +799,45 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@sentry-internal/tracing@7.90.0":
-  version "7.90.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/tracing/-/tracing-7.90.0.tgz#cd21662dbfa3d90d34e91eabd875a1616717d3d3"
-  integrity sha512-74jEtpdio9aRkiVBcrY1ZJXek0oFMqxDJK6BkJNCA+aUK1z96V9viehANRk3Nbxm01rWjmH1U4e1siuo9FhjuQ==
+"@sentry-internal/tracing@7.92.0":
+  version "7.92.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/tracing/-/tracing-7.92.0.tgz#505d94a93b5df965ec6bfb35da43389988259d4d"
+  integrity sha512-ur55vPcUUUWFUX4eVLNP71ohswK7ZZpleNZw9Y1GfLqyI+0ILQUwjtzqItJrdClvVsdRZJMRmDV40Hp9Lbb9mA==
   dependencies:
-    "@sentry/core" "7.90.0"
-    "@sentry/types" "7.90.0"
-    "@sentry/utils" "7.90.0"
+    "@sentry/core" "7.92.0"
+    "@sentry/types" "7.92.0"
+    "@sentry/utils" "7.92.0"
 
-"@sentry/core@7.90.0":
-  version "7.90.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.90.0.tgz#dfd8e3e4eec4b140681ddb21a3fea848fcab7a01"
-  integrity sha512-HolpdHjULCwehKPWHR6IPQM0NBjmORhlBU7FtCh/e8TtSkZ9ztPsuofNBomMS1+mdbL+yxOIc9KUYEl0zRfeAQ==
+"@sentry/core@7.92.0":
+  version "7.92.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.92.0.tgz#4e74c1959348b698226c49ead7a24e165502b55c"
+  integrity sha512-1Tly7YB2I1byI5xb0Cwrxs56Rhww+6mQ7m9P7rTmdC3/ijOzbEoohtYIUPwcooCEarpbEJe/tAayRx6BrH2UbQ==
   dependencies:
-    "@sentry/types" "7.90.0"
-    "@sentry/utils" "7.90.0"
+    "@sentry/types" "7.92.0"
+    "@sentry/utils" "7.92.0"
 
-"@sentry/node@^7.90.0":
-  version "7.90.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.90.0.tgz#083bbdc053426d491281bff6f8a238600dd93e99"
-  integrity sha512-VjDI2MCkidoFEzrMa1gqmwYt1sUhYnu+zoFF5P5jgapTVVJ5xc2b7k/lS62U6IsfxHNrIdTtQHsrbCS5+s0GvQ==
+"@sentry/node@^7.92.0":
+  version "7.92.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.92.0.tgz#880d3be5cb8ef805a6856c619db3951b1678f726"
+  integrity sha512-LZeQL1r6kikEoOzA9K61OmMl32/lK/6PzmFNDH6z7UYwQopCZgVA6IP+CZuln8K2ys5c9hCyF7ICQMysXfpNJA==
   dependencies:
-    "@sentry-internal/tracing" "7.90.0"
-    "@sentry/core" "7.90.0"
-    "@sentry/types" "7.90.0"
-    "@sentry/utils" "7.90.0"
+    "@sentry-internal/tracing" "7.92.0"
+    "@sentry/core" "7.92.0"
+    "@sentry/types" "7.92.0"
+    "@sentry/utils" "7.92.0"
     https-proxy-agent "^5.0.0"
 
-"@sentry/types@7.90.0":
-  version "7.90.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.90.0.tgz#72797abd790fc3de546d42600752004a7f7d07d0"
-  integrity sha512-dA0Mtba5jYlcQ6xBsGILZuFq4NGrWLfr2ys036z2JE4H1+3PxOVERlD3Di7p+WKYM5gjFw10Hn3EgUV979E3dA==
+"@sentry/types@7.92.0":
+  version "7.92.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.92.0.tgz#4c308fdb316c0272f55f0816230fe87e7b9b551a"
+  integrity sha512-APmSOuZuoRGpbPpPeYIbMSplPjiWNLZRQa73QiXuTflW4Tu/ItDlU8hOa2+A6JKVkJCuD2EN6yUrxDGSMyNXeg==
 
-"@sentry/utils@7.90.0":
-  version "7.90.0"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.90.0.tgz#d4eea6392af7498c7be03205151ad11ea8707915"
-  integrity sha512-6BpqAzONm/HQbdlL4TY2W2vBSmaG/eVvwUaHoz0wB49EkWwpF6j/SO9Kb/XkiA/qp9GoJVXpnGBFQLPx7kv/Yw==
+"@sentry/utils@7.92.0":
+  version "7.92.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.92.0.tgz#20ed29742594eab007f9ff72e008b5262456a319"
+  integrity sha512-3nEfrQ1z28b/2zgFGANPh5yMVtgwXmrasZxTvKbrAj+KWJpjrJHrIR84r9W277J44NMeZ5RhRW2uoDmuBslPnA==
   dependencies:
-    "@sentry/types" "7.90.0"
+    "@sentry/types" "7.92.0"
 
 "@sigstore/bundle@^2.1.0":
   version "2.1.0"
@@ -1126,10 +1126,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.4.tgz#4666fb40f9974d60c53c4ff554315860ba4feab8"
   integrity sha512-Y9vbIAoM31djQZrPYjpTLo0XlaSwOIsrlfE3LpulZeRblttsLQRFRlBAppW0LOxyT3ALj2M5vU1ucQQayQH3jA==
 
-"@types/node@^20.10.5":
-  version "20.10.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.5.tgz#47ad460b514096b7ed63a1dae26fad0914ed3ab2"
-  integrity sha512-nNPsNE65wjMxEKI93yOP+NPGGBJz/PoN3kZsVLee0XMiJolxSekEVD8wRwBUBqkwc7UWop0edW50yrCQW4CyRw==
+"@types/node@^20.10.6":
+  version "20.10.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.6.tgz#a3ec84c22965802bf763da55b2394424f22bfbb5"
+  integrity sha512-Vac8H+NlRNNlAmDfGUP7b5h/KA+AtWIzuXy0E6OyP8f1tCLYAtPvKRRDJjAPqhpCb0t6U2j7/xqAuLEebW2kiw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -4133,10 +4133,10 @@ node-gyp@^10.0.0:
     tar "^6.1.2"
     which "^4.0.0"
 
-node-html-parser@^6.1.11:
-  version "6.1.11"
-  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.11.tgz#387378111348c001a5c5fbebb7f478fdf65610aa"
-  integrity sha512-FAgwwZ6h0DSDWxfD0Iq1tsDcBCxdJB1nXpLPPxX8YyVWzbfCjKWEzaynF4gZZ/8hziUmp7ZSaKylcn0iKhufUQ==
+node-html-parser@^6.1.12:
+  version "6.1.12"
+  resolved "https://registry.yarnpkg.com/node-html-parser/-/node-html-parser-6.1.12.tgz#6138f805d0ad7a6b5ef415bcd91bca07374bf575"
+  integrity sha512-/bT/Ncmv+fbMGX96XG9g05vFt43m/+SYKIs9oAemQVYyVcZmDAI2Xq/SbNcpOA35eF0Zk2av3Ksf+Xk8Vt8abA==
   dependencies:
     css-select "^5.1.0"
     he "1.2.0"
@@ -4151,10 +4151,10 @@ node-releases@^2.0.13:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.13.tgz#d5ed1627c23e3461e819b02e57b75e4899b1c81d"
   integrity sha512-uYr7J37ae/ORWdZeQ1xxMJe3NtdmqMC/JZK+geofDrkLUApKRHPd18/TxtBOJ4A0/+uUIliorNrfYV6s1b02eQ==
 
-nodemailer@^6.9.7:
-  version "6.9.7"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.7.tgz#ec2f488f62ba1558e7b19239b62778df4a5c4397"
-  integrity sha512-rUtR77ksqex/eZRLmQ21LKVH5nAAsVicAtAYudK7JgwenEDZ0UIQ1adUGqErz7sMkWYxWTTU1aeP2Jga6WQyJw==
+nodemailer@^6.9.8:
+  version "6.9.8"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.8.tgz#29601e80440f2af7aa62b32758fdac7c6b784143"
+  integrity sha512-cfrYUk16e67Ks051i4CntM9kshRYei1/o/Gi8K1d+R34OIs21xdFnW7Pt7EucmVKA0LKtqUGNcjMZ7ehjl49mQ==
 
 nodemon@^3.0.2:
   version "3.0.2"
@@ -4395,10 +4395,10 @@ packet-reader@1.0.0:
   resolved "https://registry.yarnpkg.com/packet-reader/-/packet-reader-1.0.0.tgz#9238e5480dedabacfe1fe3f2771063f164157d74"
   integrity sha512-HAKu/fG3HpHFO0AA8WE8q2g+gBJaZ9MG7fcKk+IJPLTGAD6Psw4443l+9DGRbOIh3/aXr7Phy0TjilYivJo5XQ==
 
-pacote@^17.0.4:
-  version "17.0.4"
-  resolved "https://registry.yarnpkg.com/pacote/-/pacote-17.0.4.tgz#4bac6c0745967bde96985ec12fbbfc8dea7140e8"
-  integrity sha512-eGdLHrV/g5b5MtD5cTPyss+JxOlaOloSMG3UwPMAvL8ywaLJ6beONPF40K4KKl/UI6q5hTKCJq5rCu8tkF+7Dg==
+pacote@^17.0.5:
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/pacote/-/pacote-17.0.5.tgz#e9854edee7a073635cdd36b0c07cd4f2ab1757b6"
+  integrity sha512-TAE0m20zSDMnchPja9vtQjri19X3pZIyRpm2TJVeI+yU42leJBBDTRYhOcWFsPhaMxf+3iwQkFiKz16G9AEeeA==
   dependencies:
     "@npmcli/git" "^5.0.0"
     "@npmcli/installed-package-contents" "^2.0.1"
@@ -5432,18 +5432,18 @@ tar@^6.1.11, tar@^6.1.2:
     mkdirp "^1.0.3"
     yallist "^4.0.0"
 
-taze@^0.13.0:
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/taze/-/taze-0.13.0.tgz#b811766ebc48863a2f172b99f2c7d06953dc2324"
-  integrity sha512-o17Y6miF+44sDJ7haRHTqZefTlGOaBSdDHRwRcrt+s3WeGSPBUtPSG18XNwToIXN//eh58hyYnyDwTnpYLp4sg==
+taze@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/taze/-/taze-0.13.1.tgz#52d042fa88908ac8708f0fe3dedb02badc6093cd"
+  integrity sha512-viIeTWEezE1mtQ9M9dtvIwfF7WkNRXVZP7g/NsGDFxwwzJIVJReSiZiyfsJccdJo6XUe7FaYzvrG1VD6Tnj4Jg==
   dependencies:
     "@antfu/ni" "^0.21.12"
-    "@npmcli/config" "^8.0.2"
+    "@npmcli/config" "^8.0.3"
     cli-progress "^3.12.0"
     deepmerge "^4.3.1"
     detect-indent "^7.0.1"
     execa "^8.0.1"
-    pacote "^17.0.4"
+    pacote "^17.0.5"
     picocolors "^1.0.0"
     prompts "^2.4.2"
     semver "^7.5.4"
