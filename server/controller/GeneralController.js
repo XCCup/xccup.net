@@ -30,7 +30,7 @@ router.get("/gliderClasses", async (req, res, next) => {
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const gliderClasses = (await getCurrentActive()).gliderClasses;
+    const gliderClasses = (await getCurrentActive())?.gliderClasses;
 
     setCache(req, gliderClasses);
 
