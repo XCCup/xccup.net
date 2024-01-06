@@ -117,7 +117,7 @@ router.get("/filterOptions", async (req, res, next) => {
       clubNames,
       teamNames,
       brandNames,
-      rankingClasses: seasonDetails.rankingClasses,
+      rankingClasses: seasonDetails?.rankingClasses,
       states: STATE,
       regions: REGIONS,
       genders: GENDER,
