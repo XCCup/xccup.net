@@ -2,7 +2,7 @@ import { isInSeason } from "../../support/utils";
 
 describe("check landing page", () => {
   before(() => {
-    cy.seedFlightDb();
+    cy.seedDb();
     // This forces a certain time for time depending test cases
     const todayMorning = new Date();
     todayMorning.setHours(6);
