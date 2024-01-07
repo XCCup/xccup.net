@@ -277,7 +277,7 @@ declare global {
   const useTransition: typeof import('@vueuse/core')['useTransition']
   const useUrlSearchParams: typeof import('@vueuse/core')['useUrlSearchParams']
   const useUserMedia: typeof import('@vueuse/core')['useUserMedia']
-  const useUserProfile: typeof import('./src/composables/useUserProfile.js')['default']
+  const useUserProfile: typeof import('./src/composables/useUserProfile')['default']
   const useUserSignup: typeof import('./src/composables/useUserSignup')['default']
   const useVModel: typeof import('@vueuse/core')['useVModel']
   const useVModels: typeof import('@vueuse/core')['useVModels']

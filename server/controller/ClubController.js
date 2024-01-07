@@ -41,7 +41,9 @@ router.get("/names", async (req, res, next) => {
     const value = getCache(req);
     if (value) return res.json(value);
 
-    const clubs = await service.getAllNames();
+    const clubs = await service.getAllNames({
+      includeAllClubsWhichEverCompeted: true,
+    });
 
     setCache(
       req,

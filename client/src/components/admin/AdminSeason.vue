@@ -8,7 +8,7 @@
             Saison ist noch nicht gestartet. Du kannst alles ändern. Bitte achte
             darauf, dass die Ausschreibung korrekt angepasst wird.
           </p>
-          <p v-if="isBetweenSeasons" class="text-danger">
+          <p v-if="isActiveSeason" class="text-danger">
             Saison ist aktiv. Du kannst nur wenige Änderungen vornehmen.
           </p>
           <p v-if="isAfterSeasonEnd && isAfterSeasonStart">
@@ -21,12 +21,8 @@
           v-model="startDate"
           label="Saisonstart"
           data-cy="seasonStartDataPicker"
-          :lower-limit="
-            isAfterSeasonEnd
-              ? new Date(new Date().getFullYear() + 1, 0)
-              : new Date()
-          "
-          :disabled="isBetweenSeasons"
+          :lower-limit="new Date()"
+          :disabled="isActiveSeason"
         />
         <BaseDatePicker
           :key="endDate.toDateString()"
@@ -34,7 +30,7 @@
           label="Saisonende"
           data-cy="seasonEndDataPicker"
           :lower-limit="startDate"
-          :disabled="isBetweenSeasons"
+          :disabled="isActiveSeason"
         />
         <div class="form-check mb-3">
           <input
@@ -54,50 +50,45 @@
         <BaseInput
           v-model="season.pointThresholdForFlight"
           label="Punkteschwelle Wertungsflug"
-          :disabled="isBetweenSeasons"
+          :disabled="isActiveSeason"
         />
         <BaseInput
           v-model="season.numberOfFlightsForShirt"
           label="Flüge für T-Shirt"
-          :disabled="isBetweenSeasons"
+          :disabled="isActiveSeason"
         />
         <BaseInput
           v-model="season.seniorStartAge"
           label="Start Seniorenwertung (Alter)"
-          :disabled="isBetweenSeasons"
+          :disabled="isActiveSeason"
         />
         <BaseInput
           v-model="season.seniorBonusPerAge"
           label="Bonus Seniorenwertung (%)"
-          :disabled="isBetweenSeasons"
+          :disabled="isActiveSeason"
         />
         <BaseTextarea
           v-model="plainFlightTypeFactors"
           label="Flugfaktoren"
-          :disabled="isBetweenSeasons"
+          :disabled="isActiveSeason"
         />
         <BaseTextarea
           v-model="plainGliderClasses"
           label="Klassenfaktoren"
-          :disabled="isBetweenSeasons"
+          :disabled="isActiveSeason"
         />
         <BaseTextarea
           v-model="plainRankingClasses"
           label="Wertungsklassen"
-          :disabled="isBetweenSeasons"
+          :disabled="isActiveSeason"
         />
         <button
           type="submit"
           class="btn btn-outline-primary"
           data-cy="submitSeasonButton"
-          :disabled="disableSubmit"
           @click="onCreateEditSeason"
         >
-          {{
-            isBetweenSeasons || seasonForNextYearAlreadyDefined
-              ? "Saison updaten"
-              : "Neue Saison anlegen"
-          }}
+          {{ isUpdate ? "Saison updaten" : "Neue Saison anlegen" }}
           <BaseSpinner v-if="showSpinner" />
         </button>
       </div>
@@ -117,19 +108,35 @@ const { showSuccessToast, showFailedToast } = useSwal();
 
 const showSpinner = ref(false);
 
-const disableSubmit = computed(() => {
-  const res =
-    isAfterSeasonEnd.value &&
-    startDate.value.getFullYear() == new Date().getFullYear();
-  return res;
-});
-const seasonForNextYearAlreadyDefined = computed(() => {
-  const yearOfLatestSeason = latestSeason?.value
-    ? new Date(latestSeason?.value.startDate).getFullYear()
-    : new Date().getFullYear();
+const isActiveSeason = computed(() => {
+  const now = new Date();
+  // No season defined at all
+  if (!latestSeason.value) return false;
+  const startLatestSeason = new Date(latestSeason?.value.startDate);
+  const endLatestSeason = new Date(latestSeason?.value.endDate);
 
+  if (
+    now.getTime() >= startLatestSeason.getTime() &&
+    now.getTime() < endLatestSeason.getTime()
+  )
+    return true;
+
+  return false;
+});
+
+const nextSeasonAlreadyDefined = computed(() => {
+  if (!latestSeason.value) return false;
+
+  const yearOfLatestSeason = new Date(
+    latestSeason?.value.startDate
+  ).getFullYear();
+
+  return yearOfLatestSeason == new Date().getFullYear();
+});
+
+const isUpdate = computed(() => {
   return (
-    !isAfterSeasonStart.value && yearOfLatestSeason > new Date().getFullYear()
+    (isActiveSeason || nextSeasonAlreadyDefined) && !isAfterSeasonEnd.value
   );
 });
 
@@ -137,7 +144,6 @@ const latestSeason = ref<SeasonDetail | null>(null);
 const season = ref<SeasonDetail>(createDefaultSeasonObject());
 const isAfterSeasonStart = ref(false);
 const isAfterSeasonEnd = ref(false);
-const isBetweenSeasons = ref(false);
 const noSeasonDefined = ref(false);
 
 const plainFlightTypeFactors = ref("");
@@ -167,10 +173,7 @@ async function onCreateEditSeason() {
   }
   try {
     showSpinner.value = true;
-    if (
-      (isBetweenSeasons.value || seasonForNextYearAlreadyDefined.value) &&
-      seasonId
-    ) {
+    if (isUpdate.value && seasonId) {
       await ApiService.updateSeason(seasonId, season.value);
     } else {
       await ApiService.createNewSeason(season.value);
@@ -262,8 +265,6 @@ async function retrieveCurrentSeason() {
 
     isAfterSeasonStart.value = now > start;
     isAfterSeasonEnd.value = now > end;
-    isBetweenSeasons.value =
-      isAfterSeasonStart.value && !isAfterSeasonEnd.value;
 
     plainFlightTypeFactors.value = stringify(season.value.flightTypeFactors);
     plainGliderClasses.value = stringify(season.value.gliderClasses);
