@@ -80,10 +80,9 @@ describe("check admin page", () => {
     );
     cy.clickButtonInModal("#deleteFlightModal", "Löschen");
 
-    cy.get("#adminFlightsPanel")
-      .find("table")
-      .contains("td", userOfFlightToAccept)
-      .should("not.exist");
+    // TODO: this test actually depends on the previous test.
+    // Because if the previous one fails the flight table will exists and this test will fail.
+    cy.get("#adminFlightsPanel").should("not.exist");
   });
 
   it("test delete proposed flying site", () => {
