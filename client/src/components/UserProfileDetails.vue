@@ -235,7 +235,7 @@ try {
   listOfClubs.value = dataClubs.value.map((c) => c.name);
   // Is club changeable
   isClubChangeable.value =
-    calculateOffseason(dataSeason) || (await hasNoFlightInSeason(dataSeason));
+    calculateOffSeason(dataSeason) || (await hasNoFlightInSeason(dataSeason));
 
   errorMessage.value = "";
 } catch (error) {
@@ -264,7 +264,9 @@ const onSave = async () => {
   }
 };
 
-function calculateOffseason(dataSeason) {
+function calculateOffSeason(dataSeason) {
+  if (!dataSeason) return true;
+
   const today = new Date();
   const startDate = new Date(dataSeason.startDate);
   const endDate = new Date(dataSeason.endDate);

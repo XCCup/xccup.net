@@ -200,21 +200,24 @@ describe("check users page", () => {
 
     cy.visit(`flug/${flightWithPhotosOfUser}`);
 
-    cy.url().should("include", "/404");
-
     // TODO: Test will fail if running off season. Find a way to get around that.
-    // Code for off season below
 
+    // ----- Code for on season ------
+    // Flights of pilot will be complexly removed to not intervene with ranking
+    // cy.url().should("include", "/404");
+    // -------------------------------
+
+    // ----- Code for off season -----
     // Pilot name in flight should not be deleted
     // Photos of user should be deleted
+    cy.get("h4").should("not.include.text", userToDelete);
+    cy.get("h4").should("include.text", expectedName);
 
-    // cy.get("h4").should("not.include.text", userToDelete);
-    // cy.get("h4").should("include.text", expectedName);
-
-    // cy.get("photo-0").should("not.exist");
-    // cy.get("photo-1").should("not.exist");
-    // cy.get("photo-2").should("not.exist");
-    // cy.get("photo-3").should("not.exist");
+    cy.get("photo-0").should("not.exist");
+    cy.get("photo-1").should("not.exist");
+    cy.get("photo-2").should("not.exist");
+    cy.get("photo-3").should("not.exist");
+    // -------------------------------
 
     // Check for side effects:
     cy.visit(`flug/${flightNotRelated}`);

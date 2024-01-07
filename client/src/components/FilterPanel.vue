@@ -71,8 +71,8 @@
                 userOptions
                   ? "Pilotenfilter"
                   : flightOptions
-                  ? "Flugfilter"
-                  : "Wertungsfilter"
+                    ? "Flugfilter"
+                    : "Wertungsfilter"
               }}
             </h5>
             <button
@@ -386,7 +386,9 @@ try {
   sites.value = siteData.map((e) => e.name);
   clubs.value = clubData.map((e) => e.name);
   states.value = Object.values(statesData).map((e) => e);
-  rankings.value = Object.values(rankingData).map((e) => e.shortDescription);
+  rankings.value = rankingData
+    ? Object.values(rankingData).map((e) => e.shortDescription)
+    : [];
   genders.value = Object.values(genderData).map((e) => e);
 } catch (error) {
   console.log(error);
@@ -480,6 +482,8 @@ const findIdsByNameParts = () => {
 };
 
 const findKeyOfRankingClass = () => {
+  if (!rankingData) return undefined;
+
   for (const [key, value] of Object.entries(rankingData)) {
     if (value.shortDescription == selects.ranking) return key;
   }

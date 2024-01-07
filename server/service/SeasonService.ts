@@ -1,4 +1,5 @@
 import db from "../db";
+import { Op } from "sequelize";
 import { getCurrentYear } from "../helper/Utils";
 import logger from "../config/logger";
 import { XccupHttpError } from "../helper/ErrorHandler";
@@ -80,7 +81,20 @@ const service = {
         `season detail for ${season.year} is already defined`
       );
 
-    return db.SeasonDetail.create(season);
+    const res = await db.SeasonDetail.create(season);
+
+    // Clear all old team associations
+    await db.User.update(
+      // @ts-ignore
+      { teamId: null },
+      {
+        where: {
+          teamId: { [Op.not]: null },
+        },
+      }
+    );
+
+    return res;
   },
 
   update: async (id: number, seasonData: SeasonDetailAttributes) => {
