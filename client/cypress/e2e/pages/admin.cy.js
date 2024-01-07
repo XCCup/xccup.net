@@ -238,7 +238,7 @@ describe("check admin page", () => {
   it("remove club from current season -> flight upload for members not possible", () => {
     const clubName = "Drachenflieger-Club Trier";
     const columnNumberYearOfParticipation = 3;
-    const expectedYear = "2023";
+    const expectedYear = new Date().getFullYear();
 
     cy.get("#nav-clubs-tab").click();
 
@@ -394,7 +394,9 @@ describe("check admin page", () => {
       .should("not.be.disabled");
 
     // date picker have old values therefore the save button should be disabled
-    cy.get('[data-cy="submitSeasonButton"]').should("be.disabled");
+    cy.get('[data-cy="submitSeasonButton"]')
+      .should("be.enabled")
+      .and("contain.text", "Neue Saison anlegen");
   });
 
   it("check that ongoing season is not modifiable", () => {
