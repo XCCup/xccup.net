@@ -155,6 +155,11 @@ export default {
     return apiClient.delete("users/picture/");
   },
 
+  // Live
+  getLiveFlights() {
+    return apiClient.get("live");
+  },
+
   // Mail
 
   // sendMailToAll(mail) {

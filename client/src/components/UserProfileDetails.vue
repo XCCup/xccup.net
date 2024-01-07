@@ -96,6 +96,25 @@
               starting-view="year"
             />
           </div>
+          <h5 class="mt-3">FLARM/FANET+/Naviter</h5>
+          <div class="col-md-6">
+            <BaseInput
+              id="flarmId"
+              v-model="modifiedUserData.flarmId"
+              :is-required="false"
+              label="ID"
+            />
+            <p v-if="!validFlarmId" class="text-danger ms-1">
+              Die ID muss aus exakt sechs Zeichen bestehen.
+            </p>
+          </div>
+          <p class="mt-1">
+            Wenn du im Livetracking erscheinen möchtest gib hier bitte deine
+            sechstellige FLARM, FANET+ oder Naviter OGN ID ein. Deine
+            Positionsdaten werden nicht gespeichert und du musst nach deinen
+            Flug wie gewohnt dein IGC File hochladen.
+          </p>
+
           <h5 class="mt-3">XCCup T-Shirt</h5>
           <div class="col-md-6">
             <BaseSelect
@@ -248,6 +267,13 @@ const stateListIsEnabled = computed(
   () => modifiedUserData.value.address.country === "Deutschland"
 );
 
+const validFlarmId = computed(() => {
+  return (
+    !modifiedUserData.value.flarmId ||
+    modifiedUserData.value.flarmId.length === 6
+  );
+});
+
 const onSave = async () => {
   try {
     showSpinner.value = true;
@@ -256,6 +282,7 @@ const onSave = async () => {
 
     await updateProfile();
     showSuccessToast("Änderungen gespeichert");
+    errorMessage.value = "";
   } catch (error) {
     console.error(error);
     errorMessage.value = GENERIC_ERROR;
@@ -273,7 +300,8 @@ function calculateOffseason(dataSeason) {
 
 function findClubIdByName() {
   return modifiedUserData.value.club.name
-    ? dataClubs.value.find((e) => e.name == modifiedUserData.value.club.name).id
+    ? dataClubs.value.find((e) => e.name == modifiedUserData.value.club.name)
+        ?.id
     : undefined;
 }
 

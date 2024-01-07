@@ -1,7 +1,7 @@
 <template>
   <footer class="footer p-3 text-light bg-primary mt-auto">
-    <p class="float-end"><a href="#">Nach oben</a></p>
-    <p>
+    <!-- <p class="float-end"><a href="#">Nach oben</a></p> -->
+    <p class="m-auto">
       © XCCup {{ new Date().getFullYear() }} ·
       <router-link :to="{ name: 'Privacy' }" class="link-secondary"
         >Datenschutz

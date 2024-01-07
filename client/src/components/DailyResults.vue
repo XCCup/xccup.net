@@ -19,25 +19,37 @@
               <table class="table table-hover table-primary">
                 <tbody>
                   <tr
-                    v-for="(flight, index) in flights.slice(0, maxRows)"
+                    v-for="(flight, index) in mergedFlights.slice(0, maxRows)"
                     :key="flight.id"
                     :item="flight"
                     :index="index"
-                    @click="routeToFlight(flight.externalId)"
+                    @click="
+                      flight.isLive
+                        ? routeToLiveView()
+                        : routeToFlight(flight.externalId)
+                    "
                     @mouseover="updateHighlightedFlight(flight.id)"
                     @mouseleave="updateHighlightedFlight(null)"
                   >
                     <td scope="row" class="hide-on-sm">{{ index + 1 }}</td>
                     <td>{{ flight.user.fullName }}</td>
-                    <td>{{ flight.takeoff.name }}</td>
+                    <td>
+                      {{ flight.isLive ? "Live " : flight.takeoff?.name }}
+                      <i v-if="flight.isLive" class="bi bi-activity"></i>
+                    </td>
                     <td class="no-line-break">
                       {{ Math.floor(flight.flightDistance) }} km
                     </td>
                     <td>
-                      <FlightTypeIcon :flight-type="flight.flightType" />
+                      <FlightTypeIcon
+                        v-if="!flight.isLive"
+                        :flight-type="flight.flightType"
+                      />
                     </td>
                     <td class="no-line-break hide-on-sm">
-                      {{ flight.flightPoints }} P
+                      <span v-if="!flight.isLive">
+                        {{ flight.flightPoints }} P</span
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -79,8 +91,14 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  liveFlights: {
+    type: Array,
+    required: true,
+  },
   maxRows: { type: Number, required: true },
 });
+
+const FILTER_LIVE_FLIGHTS_LESS_THAN = 20;
 
 const highlightedFlightId = ref(null);
 const router = useRouter();
@@ -99,6 +117,18 @@ const dailyFlightsMapTracks = computed(() => {
   return tracks;
 });
 
+// Merge live flights and scored flights but filter out live flight with distance < 20km
+const mergedFlights = computed(() => {
+  const tmp = [
+    ...props.liveFlights
+      .filter((flight) => flight.flightDistance > FILTER_LIVE_FLIGHTS_LESS_THAN)
+      .sort((flight) => flight.flightDistance),
+    ...props.flights,
+  ];
+
+  return tmp;
+});
+
 const currentYear = computed(() => new Date().getFullYear());
 
 const updateHighlightedFlight = (flightId) =>
@@ -110,6 +140,12 @@ const routeToFlight = (flightId) => {
     params: {
       flightId: flightId,
     },
+  });
+};
+
+const routeToLiveView = () => {
+  router.push({
+    name: "Live",
   });
 };
 </script>

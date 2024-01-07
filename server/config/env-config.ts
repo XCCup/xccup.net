@@ -94,6 +94,18 @@ const config = convict({
     default: "qwertz12345",
     env: "METAR_API_KEY",
   },
+  flarmUrl: {
+    doc: "The URL to the METAR data API",
+    format: noEmptyString,
+    default: "https://flarm.lurb.org/flarm",
+    env: "FLARM_URL",
+  },
+  flarmApiKey: {
+    doc: "The API Key to the FLARM data API",
+    format: String,
+    default: "qwertz12345",
+    env: "FLARM_API_KEY",
+  },
   jwtLogin: {
     doc: "The login token for the jwt authentication mechanism",
     format: check128Hex,

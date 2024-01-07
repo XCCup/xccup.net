@@ -28,6 +28,7 @@ export interface UserAttributes {
   token?: string;
   teamId?: string;
   clubId?: string;
+  flarmId?: string | null;
 }
 
 interface Address {
@@ -38,7 +39,7 @@ interface Address {
   city?: string;
 }
 
-// Why are those german?
+// TODO: Why are those in german?
 type UserRole =
   | "Administrator"
   | "Moderator"
@@ -135,6 +136,10 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       },
       token: {
         type: DataTypes.STRING,
+      },
+      flarmId: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {

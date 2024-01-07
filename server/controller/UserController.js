@@ -44,6 +44,7 @@ const {
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
+  checkFlarmId,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const CACHE_RELEVANT_KEYS = [
@@ -434,6 +435,7 @@ router.put(
   requesterMustBeLoggedIn,
   checkStringObjectNotEmpty("lastName"),
   checkStringObjectNotEmpty("firstName"),
+  checkFlarmId("flarmId"),
   checkIsISO8601("birthday"),
   checkIsUuidObject("clubId"),
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
@@ -464,6 +466,7 @@ router.put(
       state,
       address,
       password,
+      flarmId,
     } = req.body;
 
     try {
@@ -484,6 +487,7 @@ router.put(
       user.state = state;
       user.address = address;
       user.password = password;
+      user.flarmId = flarmId;
 
       const result = await service.update(user);
 

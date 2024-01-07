@@ -19,6 +19,7 @@
       @blur="isFocused = false"
     />
     <label v-if="label && !showLabelOnTop">{{ label }}</label>
+    <!-- TODO: Remove or improve? -->
     <!-- <p v-if="isInvalid">{{ validationText }}</p> -->
   </div>
 </template>
@@ -86,6 +87,7 @@ const type = computed(() => {
   return "text";
 });
 
+// TODO: Remove or improve?
 const isInvalid = computed(() => {
   return (
     props.externalValidationResult ||
