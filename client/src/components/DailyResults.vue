@@ -3,17 +3,14 @@
     <!-- This prevents long components on big screens but leaves a nasty background "blitzer" -->
     <div class="container-xl">
       <div id="cy-daily-ranking-panel" class="row">
-        <div
-          v-if="flights.length > 0 || filteredLiveFLights.length > 0"
-          class="col-xl-5 col-lg-6 col-12"
-        >
-          <div v-if="filteredLiveFLights.length > 0" class="pb-3 text-light">
+        <div v-if="hasFlightsToShow" class="col-xl-5 col-lg-6 col-12">
+          <div v-if="filteredLiveFlights.length > 0" class="pb-3 text-light">
             <h3>Live Flüge</h3>
             <div>
               <table class="table table-hover table-primary">
                 <tbody>
                   <tr
-                    v-for="(flight, index) in filteredLiveFLights.slice(
+                    v-for="(flight, index) in filteredLiveFlights.slice(
                       0,
                       maxRows
                     )"
@@ -40,7 +37,7 @@
               </table>
             </div>
           </div>
-          <div v-if="flights.length > 0" class="pb-3 text-light">
+          <div v-if="flights && flights.length > 0" class="pb-3 text-light">
             <h3>
               Tageswertung
               <BaseDate
@@ -89,19 +86,13 @@
           </div>
         </div>
 
-        <div
-          v-if="flights.length > 0 || filteredLiveFLights.length > 0"
-          class="col-xl-7 col-lg-6 col-12 p-0 m-0"
-        >
+        <div v-if="hasFlightsToShow" class="col-xl-7 col-lg-6 col-12 p-0 m-0">
           <DailyResultsMap
             :highlighted-flight="highlightedFlightId"
             :tracks="dailyFlightsMapTracks"
           />
         </div>
-        <div
-          v-if="!(flights.length > 0) && !(filteredLiveFLights.length > 0)"
-          class="text-center pb-3 text-light"
-        >
+        <div v-if="!hasFlightsToShow" class="text-center pb-3 text-light">
           <h3>Tageswertung</h3>
           <p class="fs-1">
             <i class="bi bi-cloud-lightning-rain mx-2"></i>
@@ -145,9 +136,8 @@ type Flight = {
 };
 
 const props = defineProps<{
-  flights: Flight[];
-  liveFlights: LiveFlight[];
-  highlightedFlight?: string;
+  flights?: Flight[];
+  liveFlights?: LiveFlight[];
   maxRows: number;
 }>();
 
@@ -158,7 +148,7 @@ const highlightedFlightId = ref<string | null>(null);
 const router = useRouter();
 
 const dailyFlightsMapTracks = computed(() => {
-  if (!props.flights && !filteredLiveFLights.value) return;
+  if (!props.flights && !filteredLiveFlights.value) return;
   const tracks: { turnpoints: Fix[]; flightId: string }[] = [];
 
   if (props.flights) {
@@ -170,8 +160,8 @@ const dailyFlightsMapTracks = computed(() => {
       });
     });
   }
-  if (filteredLiveFLights.value.length > 0) {
-    filteredLiveFLights.value.slice(0, props.maxRows).forEach((flight) => {
+  if (filteredLiveFlights.value.length > 0) {
+    filteredLiveFlights.value.slice(0, props.maxRows).forEach((flight) => {
       tracks.push({ turnpoints: flight.track, flightId: flight.id });
     });
   }
@@ -179,7 +169,7 @@ const dailyFlightsMapTracks = computed(() => {
   return tracks;
 });
 
-const filteredLiveFLights = computed(() => {
+const filteredLiveFlights = computed(() => {
   if (!props.liveFlights || props.liveFlights.length <= 0) return [];
   return props.liveFlights
     .filter((flight) => flight.flightDistance > FILTER_LIVE_FLIGHTS_LESS_THAN)
@@ -199,6 +189,12 @@ const routeToFlight = (flightId: number) => {
     },
   });
 };
+
+const hasFlightsToShow = computed(
+  () =>
+    (props.flights && props.flights.length > 0) ||
+    filteredLiveFlights.value.length > 0
+);
 
 const routeToLiveView = () => router.push({ name: "Live" });
 </script>
