@@ -43,7 +43,6 @@ const TRACK_RESOLUTION = 10; // 10 seconds (s not ms)
 // Run the job every 60 seconds between 8 in the morning and 9 in the evening
 const task = cron.schedule("* 8-21 * * *", fetchFlarmData);
 task.start();
-task.on("start", () => logger.info("LT: Cron to fetch FLARM data started"));
 
 const service = {
   getActive: () => cache.get<ReducedFlightData>("flarm") || [],
