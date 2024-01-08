@@ -4,17 +4,19 @@
     <div class="container-xl">
       <div id="cy-daily-ranking-panel" class="row">
         <div
-          v-if="flights.length > 0 || liveFLights.length > 0"
+          v-if="flights.length > 0 || filteredLiveFLights.length > 0"
           class="col-xl-5 col-lg-6 col-12"
         >
-          <div v-if="liveFLights.length > 0" class="pb-3 text-light">
+          <div v-if="filteredLiveFLights.length > 0" class="pb-3 text-light">
             <h3>Live Flüge</h3>
-            <!-- TODO: Beautify the hover -->
             <div>
               <table class="table table-hover table-primary">
                 <tbody>
                   <tr
-                    v-for="(flight, index) in liveFLights.slice(0, maxRows)"
+                    v-for="(flight, index) in filteredLiveFLights.slice(
+                      0,
+                      maxRows
+                    )"
                     :key="flight.id"
                     :item="flight"
                     :index="index"
@@ -88,7 +90,7 @@
         </div>
 
         <div
-          v-if="flights.length > 0 || liveFLights.length > 0"
+          v-if="flights.length > 0 || filteredLiveFLights.length > 0"
           class="col-xl-7 col-lg-6 col-12 p-0 m-0"
         >
           <DailyResultsMap
@@ -97,7 +99,7 @@
           />
         </div>
         <div
-          v-if="!(flights.length > 0) && !(liveFLights.length > 0)"
+          v-if="!(flights.length > 0) && !(filteredLiveFLights.length > 0)"
           class="text-center pb-3 text-light"
         >
           <h3>Tageswertung</h3>
@@ -156,7 +158,7 @@ const highlightedFlightId = ref<string | null>(null);
 const router = useRouter();
 
 const dailyFlightsMapTracks = computed(() => {
-  if (!props.flights && !props.liveFlights) return;
+  if (!props.flights && !filteredLiveFLights.value) return;
   const tracks: { turnpoints: Fix[]; flightId: string }[] = [];
 
   if (props.flights) {
@@ -168,8 +170,8 @@ const dailyFlightsMapTracks = computed(() => {
       });
     });
   }
-  if (props.liveFlights) {
-    props.liveFlights.slice(0, props.maxRows).forEach((flight) => {
+  if (filteredLiveFLights.value.length > 0) {
+    filteredLiveFLights.value.slice(0, props.maxRows).forEach((flight) => {
       tracks.push({ turnpoints: flight.track, flightId: flight.id });
     });
   }
@@ -177,8 +179,8 @@ const dailyFlightsMapTracks = computed(() => {
   return tracks;
 });
 
-const liveFLights = computed(() => {
-  if (!props.liveFlights || props.liveFlights.length > 0) return [];
+const filteredLiveFLights = computed(() => {
+  if (!props.liveFlights || props.liveFlights.length <= 0) return [];
   return props.liveFlights
     .filter((flight) => flight.flightDistance > FILTER_LIVE_FLIGHTS_LESS_THAN)
     .sort((flight) => flight.flightDistance);
