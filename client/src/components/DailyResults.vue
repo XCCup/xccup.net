@@ -177,11 +177,12 @@ const dailyFlightsMapTracks = computed(() => {
   return tracks;
 });
 
-const liveFLights = computed(() =>
-  props.liveFlights
+const liveFLights = computed(() => {
+  if (!props.liveFlights || props.liveFlights.length > 0) return [];
+  return props.liveFlights
     .filter((flight) => flight.flightDistance > FILTER_LIVE_FLIGHTS_LESS_THAN)
-    .sort((flight) => flight.flightDistance)
-);
+    .sort((flight) => flight.flightDistance);
+});
 
 const currentYear = computed(() => new Date().getFullYear());
 
