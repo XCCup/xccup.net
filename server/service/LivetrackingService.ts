@@ -39,6 +39,7 @@ type ReducedFlightData = {
  */
 
 const TRACK_RESOLUTION = 10; // 10 seconds (s not ms)
+const TRACK_RESOLUTION_HOME = 60; // 60 seconds (s not ms)
 
 // Run the job every 60 seconds between 8 in the morning and 9 in the evening
 const task = cron.schedule("* 8-21 * * *", fetchFlarmData);
@@ -58,6 +59,15 @@ const service = {
         flightDistance: flight.distance,
         id: flight.fixes[0].address,
         isLive: true,
+        track: reduceResolution(flight.fixes, TRACK_RESOLUTION_HOME).map(
+          (fix) => {
+            return {
+              lat: fix.lat,
+              long: fix.lon,
+              timestamp: fix.timestamp * 1000,
+            };
+          }
+        ),
       };
     });
   },
@@ -80,20 +90,10 @@ async function fetchFlarmData() {
 
     // Reduce resolution to 10 seconds and add pilot name and distance
     const reduced = Object.keys(data.tracks).map((key) => {
-      let lastTimestamp: null | number = null;
       return {
         name: idsWithNames.find((user) => user.flarmId === key)?.name || key,
         distance: data.distances[key],
-        fixes: data.tracks[key].filter((fix) => {
-          if (
-            lastTimestamp === null ||
-            fix.timestamp - lastTimestamp >= TRACK_RESOLUTION
-          ) {
-            lastTimestamp = fix.timestamp;
-            return true;
-          }
-          return false;
-        }),
+        fixes: reduceResolution(data.tracks[key], TRACK_RESOLUTION),
       };
     });
 
@@ -101,6 +101,17 @@ async function fetchFlarmData() {
   } catch (error) {
     console.log(error);
   }
+}
+
+function reduceResolution(array: FlightData[], resolution: number) {
+  let last: null | number = null;
+  return array.filter((item) => {
+    if (last === null || item.timestamp - last >= resolution) {
+      last = item.timestamp;
+      return true;
+    }
+    return false;
+  });
 }
 
 async function getUserFlarmIds() {
