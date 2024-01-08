@@ -4,6 +4,7 @@ import config from "../config/env-config";
 import db from "../db";
 import sequelize from "sequelize";
 import logger from "../config/logger";
+import cron from "node-cron";
 
 const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
@@ -37,11 +38,12 @@ type ReducedFlightData = {
  * The endpoint only returns fixes within the XCCup area and flights that had a live position less then 30 minutes ago.
  */
 
-const FETCH_INTERVAL = 1000 * 60; // 60 seconds in ms
 const TRACK_RESOLUTION = 10; // 10 seconds (s not ms)
 
-fetchFlarmData();
-setInterval(fetchFlarmData, FETCH_INTERVAL);
+// Run the job every 60 seconds between 8 in the morning and 9 in the evening
+const task = cron.schedule("* 8-21 * * *", fetchFlarmData);
+task.start();
+task.on("start", () => logger.info("LT: Cron to fetch FLARM data started"));
 
 const service = {
   getActive: () => cache.get<ReducedFlightData>("flarm") || [],
