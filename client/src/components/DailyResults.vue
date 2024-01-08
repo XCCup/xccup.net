@@ -7,7 +7,7 @@
           v-if="flights.length > 0 || liveFLights.length > 0"
           class="col-xl-5 col-lg-6 col-12"
         >
-          <div class="pb-3 text-light">
+          <div v-if="liveFLights.length > 0" class="pb-3 text-light">
             <h3>Live Flüge</h3>
             <!-- TODO: Beautify the hover -->
             <div>
