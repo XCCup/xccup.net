@@ -4,6 +4,7 @@ import liveTrackingService from "../service/LivetrackingService";
 import { getCache, setCache } from "./CacheManager";
 
 const router = express.Router();
+
 // @desc Gets all information needed for the homepage
 // @route GET /
 
