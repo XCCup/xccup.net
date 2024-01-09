@@ -102,6 +102,8 @@ type FlightApiResponse = Omit<FlightAttributes, "fixes"> & {
   userId?: string;
 };
 
+const MAX_NUMBER_OF_RETRIEVABLE_FLIGHTS = 500;
+
 const flightService = {
   getAll: async ({
     year,
@@ -109,7 +111,7 @@ const flightService = {
     siteId,
     flightType,
     rankingClass,
-    limit,
+    limit = MAX_NUMBER_OF_RETRIEVABLE_FLIGHTS,
     offset,
     startDate,
     endDate,
@@ -160,10 +162,11 @@ const flightService = {
       order: orderStatement,
     };
 
-    if (limit) {
-      // @ts-ignore If someone wants to type this, feel free
-      queryObject.limit = limit;
-    }
+    // @ts-ignore If someone wants to type this, feel free
+    queryObject.limit =
+      limit > MAX_NUMBER_OF_RETRIEVABLE_FLIGHTS
+        ? MAX_NUMBER_OF_RETRIEVABLE_FLIGHTS
+        : limit;
 
     if (offset) {
       // @ts-ignore If someone wants to type this, feel free
