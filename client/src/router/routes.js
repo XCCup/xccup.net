@@ -236,6 +236,11 @@ export const Routes = [
     component: () => import("../views/PrivacyView.vue"),
   },
   {
+    path: "/live",
+    name: "Live",
+    component: () => import("../views/LiveView.vue"),
+  },
+  {
     path: "/admin",
     name: "AdminDashboard",
     meta: {

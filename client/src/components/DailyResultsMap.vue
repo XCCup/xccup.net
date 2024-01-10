@@ -2,39 +2,44 @@
   <div id="mapContainer" class="darken-map"></div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import L, { LatLngTuple } from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { tileOptions } from "@/config/mapbox";
 import { watchEffect, onMounted, ref } from "vue";
 
-const props = defineProps({
-  tracks: {
-    type: Array,
-    required: true,
-  },
-  highlightedFlight: {
-    type: String,
-    default: "",
-  },
-});
-const map = ref(null);
-const trackLines = ref([]);
+const props = defineProps<{
+  tracks: FlightTrack[];
+  highlightedFlight?: string;
+}>();
+
+let map: L.Map;
+const trackLines = ref<L.Polyline[]>([]);
+
+type FlightTrack = {
+  flightId: number;
+  turnpoints: {
+    lat: number;
+    long: number;
+  }[];
+};
 
 onMounted(() => {
   // Setup leaflet
   L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
-  map.value = L.map("mapContainer", {
+  map = L.map("mapContainer", {
+    // @ts-expect-error
     gestureHandling: true,
+    zoomAnimation: false,
   }).setView([50.143, 7.146], 8);
 
   L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptions
-  ).addTo(map.value);
+  ).addTo(map);
 
   watchEffect(() => highlightTrack(props.highlightedFlight));
 
@@ -42,42 +47,36 @@ onMounted(() => {
   drawTracks(props.tracks);
 });
 
-const popup = (id) => {
-  // TODO: Beautify this popup
-  return `Flug ID: ${id} <br/> <a href="/flug/${id}">Öffne Flug</a>`;
-};
-const highlightTrack = (flightId) => {
+const highlightTrack = (flightId?: string) => {
   // Reset color of all tracks to default
-  trackLines.value.forEach((e) => e.setStyle({ color: "darkred", weight: 3 }));
+  trackLines.value.forEach((e) =>
+    e.setStyle({ color: "darkred", weight: 2.5 })
+  );
   if (!flightId) return; // @mouseleave in parent sends "null"
 
   // Find highlighted track
-  let index = props.tracks.findIndex((e) => e.flightId === flightId);
+  let index = props.tracks.findIndex((e) => e.flightId.toString() === flightId);
   if (index < 0 || index == null) return; // (!index) does not work because "0" is falsy
 
   // Highlight track
-  trackLines.value[index].setStyle({ color: "#08556d", weight: 5 });
+  trackLines.value[index].setStyle({ color: "#08556d", weight: 4 });
 };
 
-const drawTracks = (tracks) => {
+const drawTracks = (tracks: FlightTrack[]) => {
   if (tracks.length === 0) return;
-
-  let trackGroup = new L.featureGroup();
+  const trackGroup = L.featureGroup();
   tracks.forEach((track) => {
-    let tmp = [];
-    track.turnpoints.forEach((tp) => {
-      tmp.push([tp.lat, tp.long]);
-    });
+    const fixes = track.turnpoints.map(
+      (tp) => [tp.lat, tp.long] as LatLngTuple
+    );
     trackLines.value.push(
-      L.polyline(tmp, {
+      L.polyline(fixes, {
         color: "darkred",
-      })
-        .bindPopup(popup(track.externalId))
-        .addTo(trackGroup)
+      }).addTo(trackGroup)
     );
   });
-  map.value.addLayer(trackGroup);
-  map.value.fitBounds(trackGroup.getBounds());
+  map.addLayer(trackGroup);
+  map.fitBounds(trackGroup.getBounds());
 };
 </script>
 

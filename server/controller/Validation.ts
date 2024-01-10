@@ -13,6 +13,25 @@ export function checkStringObject(field: string) {
 }
 
 /**
+ * Checks if the field is a string of exactly six characters or is empty. Additionally escapes all special characters (e.g. ">","<").
+ * @param {*} field The field in the Request-Body to check.
+ * @returns A ValidationChain object for the checked field.
+ */
+export function checkFlarmId(field: string) {
+  return check(field)
+    .trim()
+    .escape()
+    .custom((value) => {
+      if (value.length === 0 || value.length === 6) {
+        return true;
+      }
+      throw new Error(
+        "Field can either be empty or have exactly six characters"
+      );
+    });
+}
+
+/**
  * Checks if the field is a string. HTML will be sanitized.
  * @param {*} field The field in the Request-Body to check.
  * @returns A ValidationChain object for the checked field.

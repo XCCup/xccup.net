@@ -22,6 +22,7 @@ const userData = ref({
   emailInformIfComment: false,
   emailTeamSearch: false,
   picture: null,
+  flarmId: "",
 });
 
 // Make an editable copy of the userData state

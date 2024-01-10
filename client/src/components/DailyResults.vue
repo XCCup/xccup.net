@@ -3,8 +3,41 @@
     <!-- This prevents long components on big screens but leaves a nasty background "blitzer" -->
     <div class="container-xl">
       <div id="cy-daily-ranking-panel" class="row">
-        <div v-if="flights.length > 0" class="col-xl-5 col-lg-6 col-12">
-          <div class="pb-3 text-light">
+        <div v-if="hasFlightsToShow" class="col-xl-5 col-lg-6 col-12">
+          <div v-if="filteredLiveFlights.length > 0" class="pb-3 text-light">
+            <h3>Live Flüge</h3>
+            <div>
+              <table class="table table-hover table-primary">
+                <tbody>
+                  <tr
+                    v-for="(flight, index) in filteredLiveFlights.slice(
+                      0,
+                      maxRows
+                    )"
+                    :key="flight.id"
+                    :item="flight"
+                    :index="index"
+                    @click="routeToLiveView()"
+                    @mouseover="updateHighlightedFlight(flight.id)"
+                    @mouseleave="updateHighlightedFlight(null)"
+                  >
+                    <td scope="row" class="hide-on-sm">{{ index + 1 }}</td>
+                    <td>{{ flight.user.fullName }}</td>
+                    <td>
+                      Live
+                      <i v-if="flight.isLive" class="bi bi-activity"></i>
+                    </td>
+                    <td class="no-line-break">
+                      {{ Math.floor(flight.flightDistance) }} km
+                    </td>
+                    <td></td>
+                    <td class="no-line-break hide-on-sm"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div v-if="flights && flights.length > 0" class="pb-3 text-light">
             <h3>
               Tageswertung
               <BaseDate
@@ -29,7 +62,9 @@
                   >
                     <td scope="row" class="hide-on-sm">{{ index + 1 }}</td>
                     <td>{{ flight.user.fullName }}</td>
-                    <td>{{ flight.takeoff.name }}</td>
+                    <td>
+                      {{ flight.takeoff?.name }}
+                    </td>
                     <td class="no-line-break">
                       {{ Math.floor(flight.flightDistance) }} km
                     </td>
@@ -51,13 +86,13 @@
           </div>
         </div>
 
-        <div v-if="flights.length > 0" class="col-xl-7 col-lg-6 col-12 p-0 m-0">
+        <div v-if="hasFlightsToShow" class="col-xl-7 col-lg-6 col-12 p-0 m-0">
           <DailyResultsMap
             :highlighted-flight="highlightedFlightId"
             :tracks="dailyFlightsMapTracks"
           />
         </div>
-        <div v-if="!flights.length > 0" class="text-center pb-3 text-light">
+        <div v-if="!hasFlightsToShow" class="text-center pb-3 text-light">
           <h3>Tageswertung</h3>
           <p class="fs-1">
             <i class="bi bi-cloud-lightning-rain mx-2"></i>
@@ -70,41 +105,83 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
-const props = defineProps({
-  flights: {
-    type: Array,
-    required: true,
-  },
-  maxRows: { type: Number, required: true },
-});
+type Fix = {
+  lat: number;
+  long: number;
+  timestamp: number;
+};
 
-const highlightedFlightId = ref(null);
+type LiveFlight = {
+  user: { fullName: string };
+  flightDistance: number;
+  id: string;
+  isLive: boolean;
+  track: Fix[];
+};
+
+type Flight = {
+  user: { fullName: string };
+  takeoff: { name: string };
+  id: string;
+  externalId: number;
+  flightDistance: number;
+  takeoffTime: string;
+  flightType: string;
+  flightPoints: number;
+  fixes: Fix[];
+};
+
+const props = defineProps<{
+  flights?: Flight[];
+  liveFlights?: LiveFlight[];
+  maxRows: number;
+}>();
+
+// Filter out live flight with distance < 20km
+const FILTER_LIVE_FLIGHTS_LESS_THAN = 20;
+
+const highlightedFlightId = ref<string | null>(null);
 const router = useRouter();
 
 const dailyFlightsMapTracks = computed(() => {
-  if (!props.flights) return;
-  let tracks = [];
+  if (!props.flights && !filteredLiveFlights.value) return;
+  const tracks: { turnpoints: Fix[]; flightId: string }[] = [];
 
-  props.flights.slice(0, props.maxRows).forEach((flight) => {
-    tracks.push({
-      flightId: flight.id,
-      externalId: flight.externalId,
-      turnpoints: flight.fixes,
+  if (props.flights) {
+    props.flights.slice(0, props.maxRows).forEach((flight) => {
+      if (!flight.fixes) return;
+      tracks.push({
+        flightId: flight.id,
+        turnpoints: flight.fixes,
+      });
     });
-  });
+  }
+  if (filteredLiveFlights.value.length > 0) {
+    filteredLiveFlights.value.slice(0, props.maxRows).forEach((flight) => {
+      tracks.push({ turnpoints: flight.track, flightId: flight.id });
+    });
+  }
+
   return tracks;
+});
+
+const filteredLiveFlights = computed(() => {
+  if (!props.liveFlights || props.liveFlights.length <= 0) return [];
+  return props.liveFlights
+    .filter((flight) => flight.flightDistance > FILTER_LIVE_FLIGHTS_LESS_THAN)
+    .sort((flight) => flight.flightDistance);
 });
 
 const currentYear = computed(() => new Date().getFullYear());
 
-const updateHighlightedFlight = (flightId) =>
+const updateHighlightedFlight = (flightId: string | null) =>
   (highlightedFlightId.value = flightId);
 
-const routeToFlight = (flightId) => {
+const routeToFlight = (flightId: number) => {
   router.push({
     name: "Flight",
     params: {
@@ -112,6 +189,14 @@ const routeToFlight = (flightId) => {
     },
   });
 };
+
+const hasFlightsToShow = computed(
+  () =>
+    (props.flights && props.flights.length > 0) ||
+    filteredLiveFlights.value.length > 0
+);
+
+const routeToLiveView = () => router.push({ name: "Live" });
 </script>
 <style scoped>
 tr:hover {
@@ -119,7 +204,6 @@ tr:hover {
   -moz-box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
   -webkit-box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 0 0 10em rgba(255, 255, 255, 0.1); */
-
   cursor: pointer;
 }
 </style>

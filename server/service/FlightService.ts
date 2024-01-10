@@ -214,7 +214,7 @@ const flightService = {
   },
 
   getTodays: async () => {
-    const SWITCHOVER_HOUR_TODAY_RANKING = 15;
+    const SWITCHOVER_HOUR_TODAY_RANKING = 10; // => 12 MEZ or 13 MESZ
 
     const today = new Date();
 
