@@ -2,6 +2,7 @@ const express = require("express");
 const service = require("../service/UserService");
 const flightService = require("../service/FlightService");
 const siteService = require("../service/FlyingSiteService");
+const liveTrackingService = require("../service/LivetrackingService");
 const mailService = require("../service/MailService");
 const { getCurrentActive } = require("../service/SeasonService");
 const {
@@ -347,7 +348,7 @@ router.delete("/", requesterMustBeLoggedIn, async (req, res, next) => {
     await service.delete(id);
 
     deleteCache(CACHE_RELEVANT_KEYS);
-
+    liveTrackingService.flushFlarmIdCache();
     res.sendStatus(OK);
   } catch (error) {
     next(error);
@@ -492,6 +493,7 @@ router.put(
       const result = await service.update(user);
 
       deleteCache(CACHE_RELEVANT_KEYS);
+      liveTrackingService.flushFlarmIdCache();
 
       res.json(result);
     } catch (error) {
