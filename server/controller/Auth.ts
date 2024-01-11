@@ -15,12 +15,6 @@ interface TokenUserObject extends JwtPayload {
   gender: string;
 }
 
-enum AuthTokenStatus {
-  NO_LOG_IN = "NO_AUTH",
-  EXPIRED = "EXPIRED",
-  INVALID = "INVALID",
-}
-
 /**
  * The authentication middleware for the request. If any error within authentication happens the request will be terminated here.
  */
@@ -33,7 +27,7 @@ export async function authToken(
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) {
-      req.authStatus = AuthTokenStatus.NO_LOG_IN;
+      req.authStatus = "NO_AUTH";
       next();
       return;
     }
@@ -52,6 +46,8 @@ export async function authToken(
         return res.sendStatus(UNAUTHORIZED);
       }
       req.user = user;
+      req.authStatus = "VALID";
+
       next();
     });
   } catch (error) {
@@ -195,7 +191,7 @@ export function requesterMustBeLoggedIn(
   res: Response,
   next: CallableFunction
 ) {
-  if (req.authStatus == AuthTokenStatus.NO_LOG_IN) {
+  if (req.authStatus == "NO_AUTH") {
     logger.debug("auth: requester is not logged in");
     return res.sendStatus(FORBIDDEN);
   }

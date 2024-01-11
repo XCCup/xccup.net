@@ -112,7 +112,8 @@
             Wenn du im Livetracking erscheinen möchtest gib hier bitte deine
             sechstellige FLARM, FANET+ oder Naviter OGN ID ein. Deine
             Positionsdaten werden nicht gespeichert und du musst nach deinen
-            Flug wie gewohnt dein IGC File hochladen.
+            Flug wie gewohnt dein IGC File hochladen. <br />
+            <b>Live Flüge sind nur für angemeldete Pilot:innen sichtbar.</b>
           </p>
 
           <h5 class="mt-3">XCCup T-Shirt</h5>

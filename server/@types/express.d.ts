@@ -7,7 +7,7 @@ declare namespace Express {
       lastName: string;
       gender: string;
     };
-    authStatus?: string;
+    authStatus?: "NO_AUTH" | "EXPIRED" | "INVALID" | "VALID";
     externalId?: number;
   }
 }

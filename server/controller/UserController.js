@@ -487,7 +487,7 @@ router.put(
       user.state = state;
       user.address = address;
       user.password = password;
-      user.flarmId = flarmId;
+      user.flarmId = flarmId.toUpperCase();
 
       const result = await service.update(user);
 

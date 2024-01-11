@@ -238,6 +238,7 @@ export const Routes = [
   {
     path: "/live",
     name: "Live",
+    meta: { requiredAuth: true },
     component: () => import("../views/LiveView.vue"),
   },
   {

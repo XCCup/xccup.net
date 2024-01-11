@@ -44,7 +44,7 @@ try {
   const { data: initialData } = await ApiService.getInitialData();
 
   dailyResults.value = initialData.todaysFlights;
-  liveFlights.value = initialData.activeFlights;
+  liveFlights.value = initialData.liveFlights;
   topFlights.value = initialData.bestFlightsOverallCurrentYear;
   resultsByClass.value = initialData.rankingClasses;
   bestClubs.value = initialData.bestClubs;
