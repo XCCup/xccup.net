@@ -413,6 +413,7 @@ router.post(
       const user = await service.save(newUser);
       mailService.sendActivationMail(user);
 
+      liveTrackingService.flushFlarmIdCache();
       res.status(CREATED).json(user);
     } catch (error) {
       if (
