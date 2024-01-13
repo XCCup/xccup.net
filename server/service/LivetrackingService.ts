@@ -10,7 +10,10 @@ const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
 const FLARM_USER_IDS_KEY = "user-flarm-ids";
 
-const cache = new NodeCache({ stdTTL: 600 });
+const CACHE_INDEFINITELY = 0;
+const CACHE_10_MINUTES = 600;
+
+const cache = new NodeCache({ stdTTL: CACHE_10_MINUTES });
 
 type FlightData = {
   address: string;
@@ -140,8 +143,7 @@ async function getUserFlarmIds(): Promise<FlarmIdWithName[]> {
       name: `${user.firstName} ${user.lastName}`,
     };
   });
-
-  cache.set(FLARM_USER_IDS_KEY, arrangedIds, 0); // Cache indefinitely
+  cache.set(FLARM_USER_IDS_KEY, arrangedIds, CACHE_INDEFINITELY);
   return arrangedIds;
 }
 
