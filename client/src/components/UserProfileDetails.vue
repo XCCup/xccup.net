@@ -109,10 +109,10 @@
             </p>
           </div>
           <p class="mt-1">
-            Wenn du im Livetracking erscheinen möchtest gib hier bitte deine
-            sechstellige FLARM, FANET+ oder Naviter OGN ID ein. Deine
-            Positionsdaten werden nicht gespeichert und du musst nach deinen
-            Flug wie gewohnt dein IGC File hochladen. <br />
+            Wenn du im Livetracking erscheinen möchtest, gib hier deine
+            sechsstellige FLARM oder FANET+ ID ein. Deine Positionsdaten werden
+            nicht gespeichert und du musst nach dem Flug wie gewohnt dein IGC
+            File hochladen. <br />
             <b>Live Flüge sind nur für angemeldete Pilot:innen sichtbar.</b>
           </p>
 
