@@ -5,25 +5,24 @@ import { getCache, setCache } from "./CacheManager";
 
 const router = express.Router();
 
-// @desc Gets all information needed for the homepage
-// @route GET /
-
+/**
+ * @desc Gets all information needed for the homepage.
+ * @desc Live flight data only gets injected when the user is logged in.
+ * @route GET /
+ */
 router.get("/", async (req: Request, res: Response, next) => {
+  const liveFlights =
+    req.authStatus === "VALID" ? liveTrackingService.getActiveDistances() : [];
+
   try {
     const cached = getCache(req);
-    if (cached) {
-      // Inject active flights to avoid caching
-      cached.activeFlights = liveTrackingService.getActiveDistances();
-      return res.json(cached);
-    }
+    if (cached) return res.json({ ...cached, liveFlights });
 
     const homeData = await service.get();
 
     setCache(req, homeData);
 
-    const liveData = liveTrackingService.getActiveDistances();
-    // Inject active
-    res.json({ ...homeData, liveData });
+    res.json({ ...homeData, liveFlights });
   } catch (error) {
     next(error);
   }

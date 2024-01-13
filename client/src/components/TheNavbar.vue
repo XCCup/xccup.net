@@ -51,6 +51,13 @@ const handleLogout = async () => {
             >
             <ul class="dropdown-menu">
               <li>
+                <router-link :to="{ name: 'Live' }" class="dropdown-item"
+                  ><i class="bi bi-activity me-1"></i>Live Flüge</router-link
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+
+              <li>
                 <router-link
                   :to="{
                     name: 'FlightsAll',

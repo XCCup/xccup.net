@@ -728,6 +728,7 @@
     "lastName": "Schaefer",
     "birthday": "1981-07-15",
     "gender": "M",
+    "flarmId": "113DAC",
     "tshirtSize": "XXL",
     "role": "Keine",
     "gliders": [
@@ -816,6 +817,7 @@
     "lastName": "Emmerich",
     "birthday": "1987-08-03",
     "gender": "M",
+    "flarmId": "DF0862",
     "tshirtSize": "XXL",
     "role": "Moderator",
     "gliders": [

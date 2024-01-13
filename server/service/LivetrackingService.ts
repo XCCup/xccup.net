@@ -8,8 +8,12 @@ import cron from "node-cron";
 
 const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
+const FLARM_USER_IDS_KEY = "user-flarm-ids";
 
-const cache = new NodeCache({ stdTTL: 600 });
+const CACHE_INDEFINITELY = 0;
+const CACHE_10_MINUTES = 600;
+
+const cache = new NodeCache({ stdTTL: CACHE_10_MINUTES });
 
 type FlightData = {
   address: string;
@@ -71,6 +75,10 @@ const service = {
       };
     });
   },
+  flushFlarmIdCache: () => {
+    logger.info("LTS: Flushing user FLARM ID cache");
+    return cache.del(FLARM_USER_IDS_KEY);
+  },
 };
 
 async function fetchFlarmData() {
@@ -99,7 +107,7 @@ async function fetchFlarmData() {
 
     cache.set<ReducedFlightData>("flarm", reduced);
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 }
 
@@ -114,18 +122,29 @@ function reduceResolution(array: FlightData[], resolution: number) {
   });
 }
 
-async function getUserFlarmIds() {
+type FlarmIdWithName = {
+  flarmId: string | null | undefined;
+  name: string;
+};
+
+async function getUserFlarmIds(): Promise<FlarmIdWithName[]> {
+  const cached = cache.get<FlarmIdWithName[]>(FLARM_USER_IDS_KEY);
+
+  if (cached) return cached;
+
   const ids = await db.User.findAll({
     where: { flarmId: { [sequelize.Op.not]: null } },
     attributes: ["flarmId", "firstName", "lastName"],
   });
 
-  return ids.map((user) => {
+  const arrangedIds = ids.map((user) => {
     return {
       flarmId: user.flarmId,
       name: `${user.firstName} ${user.lastName}`,
     };
   });
+  cache.set(FLARM_USER_IDS_KEY, arrangedIds, CACHE_INDEFINITELY);
+  return arrangedIds;
 }
 
 module.exports = service;
