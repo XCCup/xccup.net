@@ -452,7 +452,7 @@ describe("check flight upload page", () => {
         .contains("td", expectedUserName)
         .parent()
         .find("td")
-        .eq(6)
+        .eq(7)
         .find("button")
         .click();
     });
