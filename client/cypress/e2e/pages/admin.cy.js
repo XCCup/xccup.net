@@ -48,7 +48,7 @@ describe("check admin page", () => {
         .contains("td", userOfFlightToAccept)
         .parent()
         .find("td")
-        .eq(6)
+        .eq(7)
         .find("button")
         .click();
     });
@@ -69,7 +69,7 @@ describe("check admin page", () => {
         .contains("td", userOfFlightToAccept)
         .parent()
         .find("td")
-        .eq(7)
+        .eq(8)
         .find("button")
         .click();
     });

@@ -174,7 +174,6 @@
     "externalId": 1,
     "report": "neque ipsa incidunt et magni et at veniam omnis quod non libero aut autem illum ullam culpa quasi non exercitationem non ut maiores velit non dolores natus et soluta non et vero nam totam delectus et nostrum earum suscipit accusantium fugit et itaque enim labore cum inventore impedit quo dolor facere amet et est repellendus voluptatum laudantium quis id placeat ut accusantium dolores nesciunt ea architecto tempora est vel vero quo earum iusto aperiam saepe non eos voluptatem assumenda quo aspernatur pariatur quia nemo est architecto et officiis molestiae est dolores facere sit rerum debitis quis amet labore eaque enim sapiente autem vero tempore amet dolores corrupti pariatur quia dolor a",
     "airspaceComment": "Lorem Ipsum ad alti",
-
     "glider": {
       "brand": "Little Cloud",
       "model": "Spiruline",
@@ -1277,6 +1276,7 @@
     "igcPath": "igc/demo_igcs/kai_fai/fai_60km42_3h53m.igc",
     "userId": "6e8764ec-c4b6-49b1-b804-f0871e390f31",
     "externalId": 18,
+    "uploadEndpoint": "web",
     "report": "quaerat est quibusdam voluptates cum sequi qui quasi vel dolorem voluptatem id similique reiciendis neque nesciunt ut explicabo repellat fugit pariatur voluptatem ullam ab fugit saepe suscipit repellendus et minima quaerat ducimus sed veniam nulla accusantium est ut sit repellendus quod placeat animi veniam assumenda quasi quod magnam consectetur autem sint unde maxime fugiat nobis sunt qui maiores qui eveniet alias dicta expedita nemo similique facere beatae accusantium pariatur et sunt laudantium rem perferendis consequatur adipisci voluptas omnis non non sunt ab qui vitae eligendi ut a id aut nulla facilis tempora ut tempore quaerat omnis dolores autem accusantium ut iste consequatur eveniet consequatur aut nam commodi magnam ut sed qui quidem asperiores et libero iste voluptatem quos dolores quod temporibus debitis porro dicta maiores accusamus numquam commodi natus id qui delectus",
     "glider": {
       "brand": "Air-G",
@@ -1345,6 +1345,7 @@
     "igcPath": "igc/path_doesnt_exists/fai_60km42_3h53m.igc",
     "userId": "1c3c8082-d82a-4c4a-a60c-80d4e089b4f7",
     "externalId": 19,
+    "uploadEndpoint": "leonardo",
     "report": "assumenda sint non unde fugiat ipsam reprehenderit recusandae vel magnam nemo quod eligendi explicabo cum nostrum voluptas pariatur tempora distinctio quos nostrum rem et omnis sint accusamus voluptatem molestias ducimus asperiores explicabo omnis deserunt quidem atque laudantium quibusdam quae possimus placeat odio asperiores deleniti et est aut dolores quaerat quod esse error sequi laborum voluptatibus nam vel cum esse nisi placeat perspiciatis atque dolore vero ducimus ad dignissimos facilis et non quis quae dolor quibusdam at necessitatibus tempora dolorem ea aut totam unde voluptatem sit veritatis sed cupiditate minima ut quo voluptas sit possimus aut porro natus quis quas consectetur sequi voluptatum rerum est maiores et sapiente qui distinctio doloribus minima totam ad tenetur similique alias aut qui nam deserunt dolorem voluptates sed distinctio vel sequi libero itaque rerum voluptas iure qui repudiandae quasi est porro aut labore voluptatem suscipit molestias incidunt qui quo eligendi sequi pariatur sequi cupiditate earum vitae nulla ut dicta suscipit deserunt minus labore vero hic sint",
     "glider": {
       "brand": "U-Turn",
