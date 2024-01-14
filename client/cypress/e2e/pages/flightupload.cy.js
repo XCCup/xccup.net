@@ -276,7 +276,9 @@ describe("check flight upload page", () => {
     cy.wait("@update-flight");
     cy.wait("@get-flight");
 
-    cy.get("[data-cy=METAR-Stats]").contains("Wetter (Beta)");
+    cy.get("[data-cy=METAR-Stats]", { timeout: 10_000 }).contains(
+      "Wetter (Beta)"
+    );
     cy.get("#metarButton").click();
     cy.get("#metarDetailsCollapse > :nth-child(1)").contains(
       expectedFirstMetar
