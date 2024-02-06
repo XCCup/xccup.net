@@ -1,12 +1,11 @@
 <template>
   <div>
     <!-- TODO: Refine this -->
-    <h3>Ausschreibung XCCup 2023</h3>
+    <h3>Ausschreibung XCCup 2024</h3>
     <ol>
       <li class="mb-3">
         <strong>Art der Wertung</strong><br />
-        Streckenflugwettbewerb mit Einzelwertung und Teamwertung,
-        Vereinswertung, Leichtgewichtswertung, Rheinland-Pfalz Pokal
+        Streckenflugwettbewerb mit Einzel-, Team- und Vereinswertung.
       </li>
       <li class="mb-3">
         <strong>Teilnehmer</strong><br />
@@ -21,12 +20,9 @@
       <li class="mb-3">
         <strong>Gewertete Flüge</strong><br />
         <p class="mb-3">
-          Flüge mit Start im XCCup Gebiet.<br /><br />
-          Koordinaten<br />
-          NO: 51.68, 10.38<br />
-          NW: 51.68, 6.02<br />
-          SW: 48.93, 6.02<br />
-          SO: 48.93, 10.38<br />
+          Flüge mit Start im XCCup Gebiet (siehe
+          <router-link to="/fluggebiete"> Fluggebietsübersicht</router-link
+          >).<br />
         </p>
         <p>
           F-Schlepp: Schlepphöhe darf 1000m und 5km Radius vom Flugfeld nicht
@@ -39,7 +35,7 @@
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
-        15.02.2023 bis 15.10.2023
+        16.02.2023 bis 13.10.2023
       </li>
       <li class="mb-3">
         <!-- TODO: Tabelle oder Link einfügen "hier" -->
@@ -62,7 +58,9 @@
         <p class="mb-3">
           Für folgende Klassen erfolgt eine Wertung. Dabei umfassen
           Wertungsklassen ggfs. verschiedene Geräteklassen. Es gelten die
-          gleichen Regeln wie bei der Einzelwertung.
+          gleichen Regeln wie bei der Einzelwertung. Umfasst eine Klasse weniger
+          als 10 Teilnehmer, so wird diese mit einer anderen Klasse
+          zusammengefasst.
         </p>
 
         <strong>Sportklasse</strong> (EN A + EN B, Tandem)
@@ -92,9 +90,6 @@
           </li>
         </ul>
 
-        <strong>Gleitschirm Tandem</strong><br />
-        (ab 5 Teilnehmern mit Wertungsflügen, sonst Sportklasse)
-        <br />
         <strong>Flexdrachen</strong><br />
         <ul>
           <li>Turmdrachen</li>
@@ -166,9 +161,9 @@
         <strong>Preisgeld</strong><br />
         Das Gesamtpreisgeld "Gpg" wird nach folgendem Schlüssel ermittelt:
         Festbetrag pro Verein: 1,50 EURO für jedes Mitglied, welches dem DHV zum
-        Stichtag 01.01. gemeldet wurde (wird von den Vereinen im Voraus bezahlt)
-        vom Gpg werden die Werbungskosten (T-Shirts, Datenbank, Preisgelder
-        etc.) bestritten
+        Stichtag 01.01. gemeldet wurde (wird von den Vereinen im Voraus
+        bezahlt). Vom Gpg werden die Werbungskosten (T-Shirts, IT, etc.)
+        bestritten.
       </li>
       <li class="mb-3">
         <strong>Preise</strong><br />
@@ -179,8 +174,12 @@
           </li>
           <li>25% vom verbleibenden Gpg an die Sieger der Teamwertung</li>
           <li>
-            Es werden Sachpreise, soweit vorhanden, an die jeweils Zweit- und
-            Drittplazierten der Wertungen nach Geräteklassen vergeben
+            Die jeweils Erstplatzierten erhalten 50%, die Zweitplatzierten 30%
+            und Drittplatzierten 20% des jeweiligen Preisgelds
+          </li>
+          <li>
+            Sachpreise werden, soweit vorhanden, bei der Siegerehrung unter
+            allen anwesenden Piloten verlost
           </li>
         </ul>
       </li>
@@ -265,6 +264,6 @@
         sind ausgeschlossen.
       </li>
     </ol>
-    <p>Das XCCup Komitee 11.2.2023</p>
+    <p>Das XCCup Komitee 06.02.2024</p>
   </div>
 </template>
