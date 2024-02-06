@@ -40,7 +40,7 @@ test("Test that METAR service is responding correctly", (done) => {
       // @ts-ignore
       expect(result[0]).toBe(expectedMetarDataFirstEntry);
       // @ts-ignore
-      expect(result[100]).toBe(expectedMetarDataLastEntry);
+      expect(result[1]).toBe(expectedMetarDataLastEntry);
 
       done();
     })
