@@ -35,7 +35,7 @@
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
-        16.02.2023 bis 13.10.2023
+        16.02.2024 bis 13.10.2024
       </li>
       <li class="mb-3">
         <!-- TODO: Tabelle oder Link einfügen "hier" -->
