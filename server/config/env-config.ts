@@ -5,6 +5,8 @@ import { resolve } from "path";
 if (process.env.NODE_ENV === "CI") {
   // Load a different env file when running in CI; By default .env will always be loaded
   require("dotenv").config({ path: "./.env.ci" });
+} else {
+  require("dotenv").config();
 }
 
 const rootDirPath = resolve(__dirname, "..");
