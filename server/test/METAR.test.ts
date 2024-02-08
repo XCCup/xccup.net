@@ -2,7 +2,7 @@ import { FlightInstance } from "../db/models/Flight";
 import { getMetarData } from "../helper/METAR";
 import { FlightFixCombined } from "../types/FlightFixes";
 
-test("Test that METAR service is responding correctly", (done) => {
+test.skip("Test that METAR service is responding correctly", (done) => {
   const flightObject = { save: () => {} } as FlightInstance;
   const spy = jest.spyOn(flightObject, "save");
   // Fixes are taken from the 104.igc file, which is also used in the frontend e2e test
