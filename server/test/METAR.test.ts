@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 import { FlightInstance } from "../db/models/Flight";
 import { getMetarData } from "../helper/METAR";
 import { FlightFixCombined } from "../types/FlightFixes";

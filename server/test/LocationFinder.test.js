@@ -1,6 +1,6 @@
 const { expect } = require("@jest/globals");
 const { byLatLong, findLanding } = require("../igc/LocationFinder");
-const config = require("../config/env-config");
+const { default: config } = require("../config/env-config");
 
 const isApiActive = config.get("useGoogleApi");
 
