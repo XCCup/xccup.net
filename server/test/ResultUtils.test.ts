@@ -2,6 +2,11 @@ import { limitFlightsForUserAndCalcTotals } from "../helper/ResultUtils";
 import { UserResultFlight, UserResults } from "../types/ResultTypes";
 
 test("Pilot has 5 FAI --> Top 2 count", () => {
+  console.log(
+    "#########################################",
+    process.env.NODE_ENV
+  );
+
   const flights = createTestEntry(createTestFlights(1, 2, "FAI", "GS", 5));
 
   const topFlights = limitFlightsForUserAndCalcTotals(flights, 3);
