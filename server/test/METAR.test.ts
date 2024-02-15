@@ -55,9 +55,9 @@ test("Test that METAR service is responding correctly", (done) => {
       expect(spy).toHaveBeenCalled();
 
       // @ts-ignore
-      expect(result[1]).toBe(expectedMetarDataLastEntry);
-      // @ts-ignore
       expect(result[0]).toBe(expectedMetarDataFirstEntry);
+      // @ts-ignore
+      expect(result[1]).toBe(expectedMetarDataLastEntry);
 
       done();
     })
