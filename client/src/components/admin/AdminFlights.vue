@@ -8,6 +8,7 @@
             <th>ID</th>
             <th>Pilot</th>
             <th>Hochgeladen am</th>
+            <th>über</th>
             <th>G-Check</th>
             <th>LR Verletzung</th>
             <th>Nachricht an Pilot</th>
@@ -28,6 +29,9 @@
               <td>{{ flight.user.firstName }} {{ flight.user.lastName }}</td>
               <td>
                 <BaseDate :timestamp="flight.createdAt" />
+              </td>
+              <td>
+                {{ flight.uploadEndpoint }}
               </td>
               <td>
                 <i
