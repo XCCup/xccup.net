@@ -37,13 +37,14 @@ jobs:
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm yarn install
         working-directory: ./server
 
-      - name: 🧪 Test backend
-        run: docker-compose -f docker-compose-ci.yml run --rm yarn test
-        working-directory: ./server
-
       - name: 🕵️ Add secrets to ENV
         run: echo "METAR_API_KEY=${{ secrets.METAR_API_KEY }}" >> ./.env.ci
         working-directory: ./server
+
+      - name: 🧪 Test backend
+        run: docker-compose -f docker-compose-ci.yml run --rm -e NODE_ENV=CI yarn test
+        working-directory: ./server
+
 
       - name: 🐳 Start Docker Backend Environment
         run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d

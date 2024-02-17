@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 const Helper = require("./IgcTestHelper");
 const IGCParser = require("../helper/igc-parser");
 const { addSeconds } = require("date-fns");

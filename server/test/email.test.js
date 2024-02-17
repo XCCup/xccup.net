@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 const sendMail = require("../config/email");
 
 test("Check if mail service doesn't error out", (done) => {

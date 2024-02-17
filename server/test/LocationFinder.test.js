@@ -1,15 +1,13 @@
 const { expect } = require("@jest/globals");
 const { byLatLong, findLanding } = require("../igc/LocationFinder");
+const { default: config } = require("../config/env-config");
 
-const isApiActive = process.env.USE_GOOGLE_API === true;
+const isApiActive = config.get("useGoogleApi");
 
 test("Validate a location name for a specific latLong", (done) => {
-  //50.22134205072505, 7.067118217391005 -> Müllenbacher Dom, Hauptstraße 41, 56761 Müllenbach
-  //https://maps.googleapis.com/maps/api/geocode/json?latlng=50.22134205072505,7.067118217391005&result_type=locality&key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
   const location = "50.22134205072505,7.067118217391";
 
   const expectedResult = isApiActive ? "Müllenbach" : "API Disabled";
-  // const expectedResult = "56761 Müllenbach, Deutschland";
 
   byLatLong(location)
     .then((result) => {

@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 import Helper from "./IgcTestHelper";
 import IGCParser from "../helper/igc-parser";
 import { getElevationData, addElevationToFixes } from "../igc/ElevationHelper";

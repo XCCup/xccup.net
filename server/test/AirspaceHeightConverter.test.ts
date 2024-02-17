@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 import { convertVerticalLimitToMeterMSL } from "../helper/AirspaceHeightConverter";
 
 test.each([
