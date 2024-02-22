@@ -20,7 +20,7 @@ const clubService = {
     const whereStatement = includeAllClubsWhichEverCompeted
       ? {
           participantInSeasons: {
-            [Op.overlap]: range(2004, getCurrentYear()),
+            [Op.overlap]: range(2004, getCurrentYear() + 1),
           },
         }
       : {
