@@ -121,7 +121,7 @@ function grabImageFromDicebear(user) {
   const diceBearUrl =
     config.get("env") === "production"
       ? `${config.get("dicebearUrl")}api/initials/${seed}${initals}.svg`
-      : `https://avatars.dicebear.com/api/initials/${seed}${initals}.svg`;
+      : `https://api.dicebear.com/8.x/initials/svg?seed=${initals}${seed}`;
 
   return diceBearUrl;
 }
