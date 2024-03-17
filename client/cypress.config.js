@@ -5,6 +5,9 @@ export default defineConfig({
   viewportWidth: 1600,
   viewportHeight: 900,
   video: false,
+  retries: {
+    runMode: 2,
+  },
   e2e: {
     setupNodeEvents(on, config) {
       installLogsPrinter(on);

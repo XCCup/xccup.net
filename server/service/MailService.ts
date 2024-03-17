@@ -1,4 +1,4 @@
-import sendMail from "../config/email";
+import sendMail, { NO_REPLY_ADDRESS } from "../config/email";
 import logger from "../config/logger";
 import config from "../config/env-config";
 
@@ -383,7 +383,7 @@ const service = {
     const queries: [
       Promise<UserInstance | null>,
       Promise<FlightInstance | null>,
-      Promise<FlightCommentInstance | null>?
+      Promise<FlightCommentInstance | null>?,
     ] = [
       db.User.findByPk(comment.userId),
       db.Flight.findByPk(comment.flightId),
@@ -460,7 +460,7 @@ async function sendCommentMail(
     ),
   };
 
-  return sendMail(toUser.email, content);
+  return sendMail(toUser.email, content, NO_REPLY_ADDRESS);
 }
 
 module.exports = service;
