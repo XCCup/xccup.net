@@ -699,20 +699,16 @@ router.get(
 // @route GET /users/emails/
 // Only moderator
 
-router.get(
-  "/emails/:includeAll",
-  requesterMustBeAdmin,
-  async (req, res, next) => {
-    try {
-      if (validationHasErrors(req, res)) return;
+router.get("/emails/", requesterMustBeAdmin, async (req, res, next) => {
+  try {
+    if (validationHasErrors(req, res)) return;
 
-      const result = await service.getEmails();
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
+    const result = await service.getEmails();
+    res.json(result);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // @desc Retrieves the gliders of an user.
 // @route GET /users/gliders/
