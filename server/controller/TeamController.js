@@ -5,10 +5,10 @@ const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
 const { requesterMustBeLoggedIn, requesterMustBeModerator } = require("./Auth");
 const {
-  checkStringObjectNotEmpty,
   checkIsArray,
   checkParamIsUuid,
   validationHasErrors,
+  checkStringObjectNotEmptyNoEscaping,
 } = require("./Validation");
 const { query } = require("express-validator");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
@@ -90,7 +90,7 @@ router.get("/availableUsers", async (req, res, next) => {
 router.post(
   "/",
   requesterMustBeLoggedIn,
-  checkStringObjectNotEmpty("name"),
+  checkStringObjectNotEmptyNoEscaping("name"),
   checkIsArray("memberIds", 5),
   async (req, res, next) => {
     if (validationHasErrors(req, res)) return;
