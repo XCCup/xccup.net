@@ -4,6 +4,8 @@ import config from "../config/env-config";
 import { retrieveTestMail } from "../parser/etherealMailParser";
 import { push } from "../test/testEmailCache";
 
+export const NO_REPLY_ADDRESS = "noreply@xccup.net";
+
 const prodSmtp = {
   host: config.get("mailServiceUrl"),
   secure: true,
@@ -50,12 +52,12 @@ interface MailFrom {
 }
 
 /**
- * Sends an e-mail to a single recipent or multiple recipents.
+ * Sends an e-mail to a single recipient or multiple recipients.
  *
  * @param {string|Array} mailAddresses A single email address of type string oder multiple addresses as an array of strings.
  * @param {object} content A object containing a "title" and a "text" property of type string.
  * @param {string} [replyTo] The replyTo address which will be added to the send e-mail.
- * @returns Returns true if a mail was sucessfully delegated to the E-Mail Service Provider.
+ * @returns Returns true if a mail was successfully delegated to the E-Mail Service Provider.
  */
 const sendMail = async (
   mailAddresses: string | string[],
