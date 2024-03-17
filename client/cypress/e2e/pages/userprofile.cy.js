@@ -38,9 +38,7 @@ describe("Check user profile", () => {
 
     // Checkboxes
     cy.get("#notifyForComment").uncheck();
-    cy.get("#optInNewsletter").uncheck();
     cy.get("#notifyForComment").should("not.be.checked");
-    cy.get("#optInNewsletter").should("not.be.checked");
 
     cy.get("Button").contains("Speichern").should("be.disabled");
   });

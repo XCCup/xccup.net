@@ -181,19 +181,14 @@ const userService = {
 
   /**
    * Retrieves e-mail-addresses of active users. Does not return e-mail-addresses of developer accounts.
-   * @param {boolean} includeAll If set to true all e-mail addresses will be retrieved. Otherwise only the e-mail-addresses of users which subscribed to the newsletter will be retrieved.
    * @returns An array of e-mail-addresses
    */
-  getEmails: async (includeAll) => {
+  getEmails: async () => {
     const where = {
       role: {
         [Op.notIn]: [ROLE.INACTIVE, ROLE.DEVELOPER],
       },
     };
-
-    if (!includeAll) {
-      where.emailNewsletter = true;
-    }
 
     const result = await User.findAll({
       where,

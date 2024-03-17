@@ -41,7 +41,6 @@ const {
   checkIsUuidObject,
   checkParamIsUuid,
   checkParamIsInt,
-  checkParamIsBoolean,
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
@@ -369,7 +368,6 @@ router.post(
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
   checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
   checkIsBoolean("emailInformIfComment"),
-  checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
   checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
@@ -386,7 +384,6 @@ router.post(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailNewsletter,
       emailTeamSearch,
       state,
       address,
@@ -402,7 +399,6 @@ router.post(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailNewsletter,
       emailTeamSearch,
       state,
       address,
@@ -443,7 +439,6 @@ router.put(
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
   checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
   checkIsBoolean("emailInformIfComment"),
-  checkIsBoolean("emailNewsletter"),
   checkIsBoolean("emailTeamSearch"),
   checkIsBoolean("noTshirtRequested"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
@@ -462,7 +457,6 @@ router.put(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailNewsletter,
       emailTeamSearch,
       noTshirtRequested,
       state,
@@ -483,7 +477,6 @@ router.put(
       user.gender = gender;
       user.tshirtSize = tshirtSize;
       user.emailInformIfComment = emailInformIfComment;
-      user.emailNewsletter = emailNewsletter;
       user.emailTeamSearch = emailTeamSearch;
       user.noTshirtRequested = noTshirtRequested;
       user.state = state;
@@ -703,19 +696,17 @@ router.get(
   }
 );
 // @desc Retrieves all user e-mails (No developer accounts)
-// @route GET /users/emails/:includeAll
+// @route GET /users/emails/
 // Only moderator
 
 router.get(
   "/emails/:includeAll",
   requesterMustBeAdmin,
-  checkParamIsBoolean("includeAll"),
   async (req, res, next) => {
     try {
       if (validationHasErrors(req, res)) return;
 
-      const includeAll = req.params.includeAll.toLowerCase() === "true";
-      const result = await service.getEmails(includeAll);
+      const result = await service.getEmails();
       res.json(result);
     } catch (error) {
       next(error);

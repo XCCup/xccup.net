@@ -18,7 +18,6 @@ export interface UserAttributes {
   defaultGlider?: string;
   gliders?: Glider[];
   emailInformIfComment?: boolean;
-  emailNewsletter?: boolean;
   emailTeamSearch?: boolean;
   noTshirtRequested: boolean;
   address?: Address;
@@ -108,10 +107,6 @@ export function initUser(sequelize: Sequelize): Models["User"] {
       emailInformIfComment: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-      },
-      emailNewsletter: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
       },
       emailTeamSearch: {
         type: DataTypes.BOOLEAN,

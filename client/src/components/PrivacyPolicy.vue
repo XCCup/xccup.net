@@ -161,25 +161,6 @@
     </p>
   </div>
 
-  <div id="newsletter" class="section">
-    <a name="newsletter"></a>
-    <p><strong>Newsletterdaten</strong></p>
-
-    <p>
-      Wenn Du den auf der Website angebotenen Newsletter beziehen möchtest,
-      benötigen wir von Dir eine E-Mail-Adresse sowie Informationen, welche uns
-      die Überprüfung gestatten, dass Du der Inhaber der angegebenen
-      E-Mail-Adresse sind und mit dem Empfang des Newsletters einverstanden
-      bist. Weitere Daten werden nicht erhoben. Diese Daten verwenden wir
-      ausschließlich für den Versand der angeforderten Informationen und geben
-      sie nicht an Dritte weiter.
-    </p>
-    <p>
-      Die erteilte Einwilligung zum Versand des Newsletters kannst Du jederzeit
-      in deinen Profileinstellungen widerrufen.
-    </p>
-  </div>
-
   <p><strong>Hinweise für Sponsoren</strong></p>
 
   <p>

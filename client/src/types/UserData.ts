@@ -21,7 +21,6 @@ export interface UserData extends UserDataEssential {
     zip: string;
     city: string;
   };
-  emailNewsletter: boolean;
   tshirtSize: string;
   emailInformIfComment: boolean;
   emailTeamSearch: boolean;

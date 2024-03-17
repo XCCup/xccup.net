@@ -30,7 +30,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": true,
     "emailTeamSearch": false,
     "email": "steph@xccup.net",
     "flarmId": "DD0AFD",
@@ -214,7 +213,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "email": "blackhole+mrs@xccup.net",
     "password": "PW_Mrs.Roman",
@@ -395,7 +393,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "email": "blackhole+sonia@xccup.net",
     "password": "PW_SoniaHarber",
@@ -441,7 +438,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
     "emailTeamSearch": false,
     "email": "blackhole+ron@xccup.net",
     "password": "PW_RonCrooks",
@@ -485,7 +481,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "email": "blackhole+bobby@xccup.net",
     "password": "PW_BobbyVolkman",
@@ -530,7 +525,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "email": "blackhole+tamara@xccup.net",
     "password": "PW_TamaraLedner",
@@ -664,7 +658,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "email": "blackhole+melinda@xccup.net",
     "password": "PW_MelindaTremblay",
@@ -708,7 +701,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "email": "blackhole+clinton@xccup.net",
     "password": "PW_ClintonHettinger",
@@ -841,7 +833,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "email": "blackhole+olive@xccup.net",
     "password": "PW_OliveEmmerich",
@@ -886,7 +877,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "email": "blackhole+lois@xccup.net",
     "password": "PW_LoisWhite",
@@ -910,7 +900,6 @@
     "tshirtSize": "M",
     "role": "Inaktiv",
     "emailInformIfComment": true,
-    "emailNewsletter": true,
     "emailTeamSearch": true,
     "token": "23dsd23kskd23",
     "email": "blackhole+hubbert@xccup.net",
