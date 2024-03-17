@@ -21,7 +21,6 @@ const state = reactive({
   address: { country: "Deutschland", state: "" },
   tshirtSize: "L",
   emailInformIfComment: true,
-  emailTeamSearch: false,
 });
 
 export default () => {

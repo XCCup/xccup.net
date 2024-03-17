@@ -19,7 +19,6 @@ const userData = ref({
   address: { street: "", country: "", state: "", zip: "", city: "" },
   tshirtSize: "",
   emailInformIfComment: false,
-  emailTeamSearch: false,
   picture: null,
   flarmId: "",
 });

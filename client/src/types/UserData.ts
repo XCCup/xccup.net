@@ -23,6 +23,5 @@ export interface UserData extends UserDataEssential {
   };
   tshirtSize: string;
   emailInformIfComment: boolean;
-  emailTeamSearch: boolean;
   picture?: string;
 }
