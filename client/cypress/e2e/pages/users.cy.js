@@ -204,19 +204,19 @@ describe("check users page", () => {
 
     // ----- Code for on season ------
     // Flights of pilot will be complexly removed to not intervene with ranking
-    // cy.url().should("include", "/404");
+    cy.url().should("include", "/404");
     // -------------------------------
 
     // ----- Code for off season -----
     // Pilot name in flight should not be deleted
     // Photos of user should be deleted
-    cy.get("h4").should("not.include.text", userToDelete);
-    cy.get("h4").should("include.text", expectedName);
+    // cy.get("h4").should("not.include.text", userToDelete);
+    // cy.get("h4").should("include.text", expectedName);
 
-    cy.get("photo-0").should("not.exist");
-    cy.get("photo-1").should("not.exist");
-    cy.get("photo-2").should("not.exist");
-    cy.get("photo-3").should("not.exist");
+    // cy.get("photo-0").should("not.exist");
+    // cy.get("photo-1").should("not.exist");
+    // cy.get("photo-2").should("not.exist");
+    // cy.get("photo-3").should("not.exist");
     // -------------------------------
 
     // Check for side effects:
