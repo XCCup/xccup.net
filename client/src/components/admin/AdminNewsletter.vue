@@ -41,14 +41,11 @@ const fetchEmails = async () => {
 await fetchEmails();
 
 const emailBody = computed(() => {
-  const maxDay = 6;
-  const maxHour = 3;
+  const maxDay = 750;
+  const maxHour = 250;
 
   const chunksHour = chunk(userEmails.value, maxHour);
   const chunksDay = chunk(chunksHour, maxDay / maxHour);
-
-  console.log(chunksHour);
-  console.log(chunksDay);
 
   const linebreak = "%0D%0A";
 
