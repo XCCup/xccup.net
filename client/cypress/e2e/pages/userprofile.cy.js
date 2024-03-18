@@ -93,7 +93,6 @@ describe("Check user profile", () => {
 
     // Checkboxes
     cy.get("#notifyForComment").check();
-    cy.get("#optInNewsletter").check();
 
     cy.get("Button").contains("Speichern").should("not.be.disabled").click();
 
@@ -119,7 +118,6 @@ describe("Check user profile", () => {
 
     // Checkboxes
     cy.get("#notifyForComment").should("be.checked");
-    cy.get("#optInNewsletter").should("be.checked");
 
     cy.get("Button").contains("Speichern").should("be.disabled");
   });

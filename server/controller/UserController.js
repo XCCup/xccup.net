@@ -368,7 +368,6 @@ router.post(
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
   checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
   checkIsBoolean("emailInformIfComment"),
-  checkIsBoolean("emailTeamSearch"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
   checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
   checkStrongPassword("password"),
@@ -384,7 +383,6 @@ router.post(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailTeamSearch,
       state,
       address,
       password,
@@ -399,7 +397,6 @@ router.post(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailTeamSearch,
       state,
       address,
       password,
@@ -439,7 +436,6 @@ router.put(
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
   checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
   checkIsBoolean("emailInformIfComment"),
-  checkIsBoolean("emailTeamSearch"),
   checkIsBoolean("noTshirtRequested"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
   checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
@@ -457,7 +453,6 @@ router.put(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailTeamSearch,
       noTshirtRequested,
       state,
       address,
@@ -477,7 +472,6 @@ router.put(
       user.gender = gender;
       user.tshirtSize = tshirtSize;
       user.emailInformIfComment = emailInformIfComment;
-      user.emailTeamSearch = emailTeamSearch;
       user.noTshirtRequested = noTshirtRequested;
       user.state = state;
       user.address = address;
