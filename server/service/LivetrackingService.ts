@@ -83,7 +83,7 @@ const service = {
 
 async function fetchFlarmData() {
   try {
-    logger.info("LT: Fetching FLARM data");
+    logger.debug("LT: Fetching FLARM data");
 
     const idsWithNames = await getUserFlarmIds();
     const ids = idsWithNames.map((user) => user.flarmId);
@@ -94,7 +94,7 @@ async function fetchFlarmData() {
       headers: { "API-Key": FLARM_API_KEY },
     });
 
-    logger.info(`LT: Active FLARM IDs: ${Object.keys(data.tracks)}`);
+    logger.debug(`LT: Active FLARM IDs: ${Object.keys(data.tracks)}`);
 
     // Reduce resolution to 10 seconds and add pilot name and distance
     const reduced = Object.keys(data.tracks).map((key) => {
