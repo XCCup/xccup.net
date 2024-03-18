@@ -25,7 +25,10 @@
           </p>
         </td>
         <td>{{ beautifySeasonsForTable(club.participantInSeasons) }}</td>
-        <td>{{ club.mapPosition?.lat + ", " + club.mapPosition?.lon }}</td>
+        <td v-if="club.mapPosition?.lat">
+          {{ club.mapPosition?.lat + ", " + club.mapPosition?.lon }}
+        </td>
+        <td v-else></td>
         <td>
           <BaseDate :timestamp="club.updatedAt" />
         </td>
