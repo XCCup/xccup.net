@@ -46,6 +46,7 @@
           </div>
           <div
             v-for="(contact, index) in club.contacts"
+            :key="index"
             :item="contact"
             :index="index"
           >
