@@ -165,23 +165,6 @@
           /> </label
       ></span>
     </div>
-    <div class="form-check">
-      <input
-        id="optInNewsletter"
-        v-model="modifiedUserData.emailNewsletter"
-        class="form-check-input"
-        type="checkbox"
-        value
-      />
-      <label class="form-check-label" for="flexCheckDefault">
-        Newsletter abonnieren
-        <InfoCollapsable
-          id="newsletterInfo"
-          info-message="Im Newsletter werden z.B. über neue Rekorde oder andere spannende Ergebnisse im XCCup informiert. Wichtige Nachrichten werden ungeachtet dieser Einstellung an Dich versendet."
-        />
-      </label>
-    </div>
-
     <br />
     <button
       class="btn btn-primary"

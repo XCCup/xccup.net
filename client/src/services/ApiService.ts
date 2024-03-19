@@ -181,8 +181,8 @@ export default {
   createPhotoArchivOfYear(year = new Date().getFullYear()) {
     return apiClient.get("flights/photos/create-archive/" + year);
   },
-  getUserEmails(includeAll: boolean) {
-    return apiClient.get("users/emails/" + includeAll);
+  getUserEmails() {
+    return apiClient.get("users/emails/");
   },
   getCacheStats() {
     return apiClient.get("cache/stats");

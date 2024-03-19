@@ -30,8 +30,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": true,
-    "emailTeamSearch": false,
     "email": "steph@xccup.net",
     "flarmId": "DD0AFD",
     "password": "PW_CamilleSchaden",
@@ -76,8 +74,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": true,
     "flarmId": "3D1E62",
     "email": "blackhole+frank@xccup.net",
     "password": "PW_FrankJacobs",
@@ -122,8 +118,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": false,
     "email": "blackhole+leo@xccup.net",
     "password": "PW_LeoAltenwerth",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
@@ -169,8 +163,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": false,
     "email": "blackhole+willis@xccup.net",
     "password": "PW_WillisRomaguera",
     "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
@@ -214,8 +206,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "email": "blackhole+mrs@xccup.net",
     "password": "PW_Mrs.Roman",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
@@ -258,8 +248,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": false,
     "email": "blackhole+ms@xccup.net",
     "password": "PW_Ms.Laurie",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
@@ -304,8 +292,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": false,
-    "emailTeamSearch": false,
     "email": "blackhole+ramona@xccup.net",
     "password": "PW_RamonaGislason",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
@@ -350,8 +336,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": true,
     "email": "blackhole+toby@xccup.net",
     "password": "PW_TobyGerhold",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
@@ -395,8 +379,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "email": "blackhole+sonia@xccup.net",
     "password": "PW_SoniaHarber",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
@@ -441,8 +423,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
-    "emailTeamSearch": false,
     "email": "blackhole+ron@xccup.net",
     "password": "PW_RonCrooks",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
@@ -485,8 +465,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "email": "blackhole+bobby@xccup.net",
     "password": "PW_BobbyVolkman",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
@@ -530,8 +508,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "email": "blackhole+tamara@xccup.net",
     "password": "PW_TamaraLedner",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
@@ -574,8 +550,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": false,
     "email": "blackhole+wilma@xccup.net",
     "password": "PW_WilmaHodkiewicz",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
@@ -619,8 +593,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": false,
     "email": "blackhole+adam@xccup.net",
     "password": "PW_AdamBayer",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
@@ -664,8 +636,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "email": "blackhole+melinda@xccup.net",
     "password": "PW_MelindaTremblay",
     "clubId": "edbbd5af-20a3-45b0-9ff1-1a25739cf268",
@@ -708,8 +678,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "email": "blackhole+clinton@xccup.net",
     "password": "PW_ClintonHettinger",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
@@ -752,8 +720,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": false,
     "email": "blackhole+christie@xccup.net",
     "password": "PW_ChristieSchaefer",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
@@ -796,8 +762,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": false,
-    "emailTeamSearch": true,
     "email": "blackhole+everett@xccup.net",
     "password": "PW_EverettGislason",
     "clubId": "9fa934c1-53e8-4efb-9ee9-a9db7cf6e2ec",
@@ -841,8 +805,6 @@
       }
     ],
     "emailInformIfComment": false,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "email": "blackhole+olive@xccup.net",
     "password": "PW_OliveEmmerich",
     "clubId": "f0d429c5-0d72-4892-bd83-8ce9c4a06dcd",
@@ -886,8 +848,6 @@
       }
     ],
     "emailInformIfComment": true,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "email": "blackhole+lois@xccup.net",
     "password": "PW_LoisWhite",
     "clubId": "e496ea3d-594f-41b0-9a10-2ebf50c7af66",
@@ -910,8 +870,6 @@
     "tshirtSize": "M",
     "role": "Inaktiv",
     "emailInformIfComment": true,
-    "emailNewsletter": true,
-    "emailTeamSearch": true,
     "token": "23dsd23kskd23",
     "email": "blackhole+hubbert@xccup.net",
     "password": "PW_HubbertEder",

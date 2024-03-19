@@ -61,7 +61,6 @@ const clubService = {
         "urlProfilPicture",
         "gender",
         "gliders",
-        "emailTeamSearch",
         "state",
       ],
       include: {

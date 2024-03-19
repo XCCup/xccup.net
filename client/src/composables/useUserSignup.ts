@@ -19,10 +19,8 @@ const state = reactive({
   clubId: "",
   email: "",
   address: { country: "Deutschland", state: "" },
-  emailNewsletter: true,
   tshirtSize: "L",
   emailInformIfComment: true,
-  emailTeamSearch: false,
 });
 
 export default () => {

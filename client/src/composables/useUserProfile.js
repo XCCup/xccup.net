@@ -17,10 +17,8 @@ const userData = ref({
   club: { name: "" },
   email: "",
   address: { street: "", country: "", state: "", zip: "", city: "" },
-  emailNewsletter: true,
   tshirtSize: "",
   emailInformIfComment: false,
-  emailTeamSearch: false,
   picture: null,
   flarmId: "",
 });

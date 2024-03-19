@@ -141,7 +141,7 @@
                   class="form-check-input"
                   type="checkbox"
                 />
-                <label class="form-check-label" for="flexCheckNewsletter">
+                <label class="form-check-label" for="filterCheckWeekend">
                   Wochenende und Feiertage*
                 </label>
               </div>
@@ -152,7 +152,7 @@
                   class="form-check-input"
                   type="checkbox"
                 />
-                <label class="form-check-label" for="flexCheckNewsletter">
+                <label class="form-check-label" for="filterCheckHikeAndFly">
                   Hike & Fly*
                 </label>
               </div>

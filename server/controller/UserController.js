@@ -41,7 +41,6 @@ const {
   checkIsUuidObject,
   checkParamIsUuid,
   checkParamIsInt,
-  checkParamIsBoolean,
   checkStrongPassword,
   checkOptionalStrongPassword,
   validationHasErrors,
@@ -369,8 +368,6 @@ router.post(
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
   checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
   checkIsBoolean("emailInformIfComment"),
-  checkIsBoolean("emailNewsletter"),
-  checkIsBoolean("emailTeamSearch"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
   checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
   checkStrongPassword("password"),
@@ -386,8 +383,6 @@ router.post(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailNewsletter,
-      emailTeamSearch,
       state,
       address,
       password,
@@ -402,8 +397,6 @@ router.post(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailNewsletter,
-      emailTeamSearch,
       state,
       address,
       password,
@@ -443,8 +436,6 @@ router.put(
   checkIsOnlyOfValue("gender", Object.values(GENDER)),
   checkIsOnlyOfValue("tshirtSize", TSHIRT_SIZES),
   checkIsBoolean("emailInformIfComment"),
-  checkIsBoolean("emailNewsletter"),
-  checkIsBoolean("emailTeamSearch"),
   checkIsBoolean("noTshirtRequested"),
   checkIsOnlyOfValue("address.state", Object.values(STATE)),
   checkIsOnlyOfValue("address.country", Object.values(COUNTRY)),
@@ -462,8 +453,6 @@ router.put(
       gender,
       tshirtSize,
       emailInformIfComment,
-      emailNewsletter,
-      emailTeamSearch,
       noTshirtRequested,
       state,
       address,
@@ -483,8 +472,6 @@ router.put(
       user.gender = gender;
       user.tshirtSize = tshirtSize;
       user.emailInformIfComment = emailInformIfComment;
-      user.emailNewsletter = emailNewsletter;
-      user.emailTeamSearch = emailTeamSearch;
       user.noTshirtRequested = noTshirtRequested;
       user.state = state;
       user.address = address;
@@ -703,25 +690,19 @@ router.get(
   }
 );
 // @desc Retrieves all user e-mails (No developer accounts)
-// @route GET /users/emails/:includeAll
+// @route GET /users/emails/
 // Only moderator
 
-router.get(
-  "/emails/:includeAll",
-  requesterMustBeAdmin,
-  checkParamIsBoolean("includeAll"),
-  async (req, res, next) => {
-    try {
-      if (validationHasErrors(req, res)) return;
+router.get("/emails/", requesterMustBeAdmin, async (req, res, next) => {
+  try {
+    if (validationHasErrors(req, res)) return;
 
-      const includeAll = req.params.includeAll.toLowerCase() === "true";
-      const result = await service.getEmails(includeAll);
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
+    const result = await service.getEmails();
+    res.json(result);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // @desc Retrieves the gliders of an user.
 // @route GET /users/gliders/
