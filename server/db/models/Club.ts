@@ -15,7 +15,7 @@ interface ClubAttributes {
 
 interface Position {
   lat: string;
-  long: string;
+  lon: string;
 }
 
 export interface ClubCreationAttributes

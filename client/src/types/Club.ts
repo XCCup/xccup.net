@@ -19,7 +19,7 @@ export interface Club extends BaseClub {
 
 interface Position {
   lat: string;
-  long: string;
+  lon: string;
 }
 
 export interface NewClub {

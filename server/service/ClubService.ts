@@ -16,6 +16,7 @@ const clubService = {
       attributes: { exclude: ["contacts"] },
     });
   },
+
   getAllNames: async ({ includeAllClubsWhichEverCompeted = false } = {}) => {
     const whereStatement = includeAllClubsWhichEverCompeted
       ? {
@@ -35,6 +36,7 @@ const clubService = {
       order: [["name", "asc"]],
     });
   },
+
   getAll: async () => {
     return db.Club.findAll();
   },

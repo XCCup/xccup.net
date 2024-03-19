@@ -8,6 +8,7 @@ const {
   checkParamIsUuid,
   validationHasErrors,
   checkIsArray,
+  checkStringObjectNotEmptyNoEscaping,
 } = require("./Validation");
 const { getCache, setCache, deleteCache } = require("./CacheManager");
 const CACHE_RELEVANT_KEYS = ["home", "clubs", "filterOptions"];
@@ -114,7 +115,7 @@ router.post(
   requesterMustBeModerator,
   checkStringObjectNotEmpty("name"),
   checkStringObjectNotEmpty("shortName"),
-  checkStringObjectNotEmpty("website"),
+  checkStringObjectNotEmptyNoEscaping("website"),
   checkIsArray("contacts"),
   checkIsArray("participantInSeasons"),
   async (req, res, next) => {
