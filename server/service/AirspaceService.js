@@ -23,22 +23,14 @@ const service = {
     });
   },
 
-  /**
-   * class='W' will not be retrieved
-   */
-  getAllRelevant: async (year) => {
-    const result = await Airspace.findAll({
-      where: {
-        class: {
-          [Op.notIn]: ["W"],
-        },
-        seasons: { [Op.in]: [year] },
-      },
-      // To ensure that lower level airspaces are not overlayed by others we will sort these airspaces to the end
-      order: [["floor", "asc"]],
-    });
+  getAllRelevant: (year, points) => {
+    // We don't have any airspace data prior 2022.
+    // Therefore we retrieve always data from 2022 if old airspaces are requested.
+    // If year is undefined we retrieve the current year.
+    const adjustedYear =
+      year == undefined ? new Date().getFullYear() : year < 2022 ? 2022 : year;
 
-    return result;
+    return findAirspacesWithinPolygon(adjustedYear, points);
   },
 
   addAirspace: async (airspace) => {
@@ -81,10 +73,6 @@ const service = {
     return FlightFixes.sequelize.query(query, {
       type: FlightFixes.sequelize.QueryTypes.UPDATE,
     });
-  },
-
-  getAllRelevantInPolygon: async (points, year) => {
-    return findAirspacesWithinPolygon(points, year);
   },
 
   /**
@@ -322,23 +310,31 @@ async function findHorizontalIntersection(fixesId) {
   return result.length == 0 ? [] : result;
 }
 
-async function findAirspacesWithinPolygon(points, year) {
-  const polygonPoints = points.map((e) => e.replace(",", " "));
-  // Close polygon and add first entry again as last entry
-  polygonPoints.push(polygonPoints[0]);
-  const polygonPointsAsLinestring = polygonPoints.join(",");
-
-  const query = `
-  SELECT id FROM(
-    SELECT id, (ST_Dump(ST_Intersection(
-      "Airspaces".polygon,
-      (SELECT ST_Polygon('LINESTRING(${polygonPointsAsLinestring})'::geometry, 4326))
-    ))).geom AS "intersectionPolygon"
-    FROM "Airspaces"
+async function findAirspacesWithinPolygon(year, points) {
+  let query = `
+  SELECT id FROM "Airspaces"
     WHERE ${year} = ANY(seasons) 
-    AND NOT class='W')
-  AS "intersectionEntry"
+    AND NOT class='W'
   `;
+
+  if (points) {
+    const polygonPoints = points.map((e) => e.replace(",", " "));
+    // Close polygon and add first entry again as last entry
+    polygonPoints.push(polygonPoints[0]);
+    const polygonPointsAsLinestring = polygonPoints.join(",");
+
+    query = `
+    SELECT id FROM(
+      SELECT id, (ST_Dump(ST_Intersection(
+        "Airspaces".polygon,
+        (SELECT ST_Polygon('LINESTRING(${polygonPointsAsLinestring})'::geometry, 4326))
+      ))).geom AS "intersectionPolygon"
+      FROM "Airspaces"
+      WHERE ${year} = ANY(seasons) 
+      AND NOT class='W')
+    AS "intersectionEntry"
+    `;
+  }
 
   const intersections = await Airspace.sequelize.query(query, {
     type: FlightFixes.sequelize.QueryTypes.SELECT,
