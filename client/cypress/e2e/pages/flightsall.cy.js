@@ -83,21 +83,20 @@ describe("check flights all page", () => {
   it("test filter", () => {
     cy.intercept("GET", "/api/flights*").as("get-flights");
 
-    const expectedName = "Bobby Volkman";
     const expectedClub = "Die Moselfalken";
     const expectedTeamBadge = "Die Elstern";
     const expectedTeamSelect =
       expectedTeamBadge + ` (${new Date().getFullYear()})`;
     const expectedRanking = "GS Sport";
     const expectedSite = "Adelberg";
-    const expectedLength = 2;
+    const expectedLength = 5;
 
     cy.get("#filterButton").click();
 
     // Wait for modal?
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(500);
-    cy.get("#filterSelectName").select(expectedName);
+
     cy.get("#filterSelectClub").select(expectedClub);
     cy.get("#filterSelectTeam").select(expectedTeamSelect);
     cy.get("#filterSelectRanking").select(expectedRanking);
@@ -125,6 +124,7 @@ describe("check flights all page", () => {
     );
     cy.get("[data-cy=filter-badge-siteId]").should("contain", expectedSite);
 
+    // Remove site from filter
     cy.get("[data-cy=filter-badge-siteId]").within(() => {
       cy.get("[data-cy=filter-clear-one-button]").click({ force: true });
     });
@@ -141,13 +141,13 @@ describe("check flights all page", () => {
     cy.get("table")
       .find("tr")
       .first()
-      .should("include.text", expectedName)
+      .should("include.text", "Frank Jacobs")
       .and("include.text", "Die Moselfalken")
       .and("include.text", "Die Elstern")
-      .and("include.text", "Ockfen")
+      .and("include.text", "Graach")
       .and("include.text", "Sky Apollo")
-      .and("include.text", "48 km")
-      .and("include.text", "289 P");
+      .and("include.text", "11 km")
+      .and("include.text", "66 P");
   });
 
   it("test sort on points ascending", () => {
