@@ -1,11 +1,11 @@
 # Build Stage
 FROM node:20-alpine3.19 AS build-stage
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install
+COPY package.json package-lock ./
+RUN npm install
 COPY . .
 
-RUN yarn build
+RUN npm build
 
 # Production build
 FROM nginx:1.23.1-alpine

@@ -32,16 +32,16 @@ services:
       - db
     command: ./docker-entrypoint.sh
 
-  yarn:
+  npm:
     build:
       context: .
       dockerfile: Dockerfile
-    image: xccup/yarn
+    image: xccup/npm
     profiles: ["cli"]
     volumes:
       - .:/home/node/app
     command: "apk add --no-cache && libc6-compat && libstdc++"
-    entrypoint: ["yarn"]
+    entrypoint: ["npm"]
 
 volumes:
   db:
