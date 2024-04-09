@@ -2,10 +2,10 @@
 FROM node:20-alpine3.19 AS build-stage
 WORKDIR /app
 COPY package.json package-lock ./
-RUN npm install
+RUN yarn install
 COPY . .
 
-RUN npm build
+RUN yarn build
 
 # Production build
 FROM nginx:1.23.1-alpine
