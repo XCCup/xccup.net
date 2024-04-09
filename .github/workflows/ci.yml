@@ -57,7 +57,7 @@ jobs:
         working-directory: ./server
 
       - name: 💻 Install and build frontend
-        run: docker-compose run --rm npm install && docker-compose run --rm npm run build-local
+        run: docker-compose run --rm npm install && npm run build-local
         working-directory: ./client
 
       - name: 🖨 Print current server log before testing (just for debugging)
