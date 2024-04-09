@@ -42,6 +42,7 @@
     "sweetalert2": "^11.10.7",
     "vue": "^3.4.21",
     "vue-avatar-editor-improved": "^1.0.7",
+    "vue-demi": "^0.14.7",
     "vue-router": "^4.3.0",
     "vue3-datepicker": "^0.4.0",
     "vue3-emoji-picker": "^1.1.8"
