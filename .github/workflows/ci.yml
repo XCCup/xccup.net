@@ -15,10 +15,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
       - name: 👀 Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🕸 Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
 
@@ -44,7 +44,6 @@ jobs:
       - name: 🧪 Test backend
         run: docker-compose -f docker-compose-ci.yml run --rm -e NODE_ENV=CI yarn test
         working-directory: ./server
-
 
       - name: 🐳 Start Docker Backend Environment
         run: docker-compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
