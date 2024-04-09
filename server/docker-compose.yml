@@ -50,7 +50,7 @@ services:
     profiles: ["cli"]
     volumes:
       - .:/home/node/app
-    entrypoint: ["npm"]
+    entrypoint: [""]
 
 volumes:
   db:
