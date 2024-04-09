@@ -70,7 +70,7 @@ jobs:
       - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v6
         with:
-          start: docker-compose run --service-ports --rm client serve
+          start: chmod -R 777 . && docker-compose run --service-ports --rm client serve
           wait-on: http://localhost:4173
           working-directory: ./client
           config: baseUrl=http://localhost:4173
