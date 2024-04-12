@@ -21,5 +21,10 @@
     "commandCenter.border": "#15202b99"
   },
   "peacock.color": "#42b883",
-  "cSpell.language": "en,de-DE"
+  "cSpell.language": "en,de-DE",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

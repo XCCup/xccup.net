@@ -141,7 +141,6 @@ import ApiService from "@/services/ApiService";
 import { remove, last } from "lodash-es";
 import BaseError from "./BaseError.vue";
 import { MAX_PHOTOS } from "@/common/Constants";
-// @ts-expect-error - no types available
 import GLightbox from "glightbox";
 import { createImageSrcSet } from "@/helper/imageHelper";
 import type { DeepReadonly } from "vue";

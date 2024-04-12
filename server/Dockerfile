@@ -16,7 +16,7 @@ RUN mkdir -p ./igc/flights \
     && chmod a+wx ./igc/flights \
     && chmod a+x ./igc/olc_lnx \
     && chmod a+x ./igc/olc_lnx_arm
-RUN yarn install
+RUN npm install
 
 USER node
 
