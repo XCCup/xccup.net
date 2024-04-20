@@ -45,6 +45,7 @@ import type {
 } from "../db/models/Flight";
 import type { Comment } from "../types/Comment";
 import { FlightCommentInstance } from "../db/models/FlightComment";
+import _, { groupBy } from "lodash";
 
 const clientUrl = config.get("clientUrl");
 const userActivateLink = config.get("clientActivateProfil");
@@ -68,6 +69,7 @@ interface AirspaceViolation {
   lowerLimitOriginal: number;
   upperLimitOriginal: number;
   timestamp: number;
+  violatedByMeters: number;
 }
 
 const service = {
@@ -197,24 +199,10 @@ const service = {
 
     if (!user) return;
 
-    const listOfAirspaceViolations: string[] = [];
-    // TODO: Beautify the email output
-    airspaceViolations.map((airspaceViolation) => {
-      listOfAirspaceViolations.push(
-        JSON.stringify({
-          lat: airspaceViolation.lat,
-          long: airspaceViolation.long,
-          gpsAltitude: airspaceViolation.gpsAltitude,
-          pressureAltitude: airspaceViolation.pressureAltitude,
-          airspaceName: airspaceViolation.airspaceName,
-          lowerLimitMeter: airspaceViolation.lowerLimitMeter,
-          upperLimitMeter: airspaceViolation.upperLimitMeter,
-          lowerLimitOriginal: airspaceViolation.lowerLimitOriginal,
-          upperLimitOriginal: airspaceViolation.upperLimitOriginal,
-          timestamp: airspaceViolation.timestamp,
-        })
-      );
-    });
+    const listOfAirspaceViolations = airspaceViolations
+      .sort((a, b) => b.violatedByMeters - a.violatedByMeters)
+      .slice(0, 10)
+      .map(beautifyLrvForMail);
 
     const content = {
       title: NEW_AIRSPACE_VIOLATION_TITLE,
@@ -426,6 +414,18 @@ const service = {
     }
   },
 };
+
+function beautifyLrvForMail(aV: AirspaceViolation) {
+  const asString = JSON.stringify({
+    time: new Date(aV.timestamp),
+    airspace: `${aV.airspaceName} ${aV.lowerLimitOriginal.toString() == "GND" ? "GND" : Math.round(aV.lowerLimitMeter) / aV.lowerLimitOriginal} - ${Math.round(aV.upperLimitMeter)} / ${aV.upperLimitOriginal}`,
+    coords: `${_.round(aV.lat, 4)}, ${_.round(aV.long, 4)}`,
+    gpsAlt: aV.gpsAltitude,
+    pressureAlt: aV.pressureAltitude,
+    violatedByMeters: Math.round(aV.violatedByMeters),
+  });
+  return asString.slice(1, -1).replaceAll('"', "").replaceAll(",", ", ");
+}
 
 async function sendCommentMail(
   toUserId: string,

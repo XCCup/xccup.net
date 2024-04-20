@@ -229,7 +229,13 @@ function findVerticalIntersection(
             lowerLimit,
             upperLimit,
             intersection.floor,
-            intersection.ceiling
+            intersection.ceiling,
+            intersection.floor == "GND"
+              ? upperLimit - fix.gpsAltitude
+              : Math.min(
+                  fix.gpsAltitude - lowerLimit,
+                  upperLimit - fix.gpsAltitude
+                )
           )
         );
       }
@@ -257,7 +263,8 @@ function findViolationOfFL100(fixesWithElevation, airspaceViolations) {
         fl100InMeters,
         99999,
         "FL100",
-        99999
+        99999,
+        fix.gpsAltitude - fl100InMeters
       );
 
       airspaceViolations.push(violationFound);
@@ -271,7 +278,8 @@ function createViolationEntry(
   lowerLimitMeter,
   upperLimitMeter,
   lowerLimitOriginal,
-  upperLimitOriginal
+  upperLimitOriginal,
+  violatedByMeters
 ) {
   return {
     lat: fix.latitude,
@@ -284,6 +292,7 @@ function createViolationEntry(
     upperLimitOriginal,
     airspaceName,
     timestamp: fix.timestamp,
+    violatedByMeters,
   };
 }
 
@@ -339,6 +348,7 @@ async function findAirspacesWithinPolygon(year, points) {
   const intersections = await Airspace.sequelize.query(query, {
     type: FlightFixes.sequelize.QueryTypes.SELECT,
   });
+
   const intersectionIds = intersections.map((e) => e.id);
 
   const airspaces = await Airspace.findAll({
