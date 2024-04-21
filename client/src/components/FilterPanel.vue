@@ -198,14 +198,20 @@
           <!-- Flights -->
           <div v-if="flightOptions" class="modal-body">
             <div class="mb-3">
-              <BaseSelect
-                id="filterSelectName"
+              <label for="pilotNameDataList" class="form-label">Name</label>
+              <input
+                id="pilotNameDataList"
                 v-model="selects.user"
-                label="Name"
-                :show-label="true"
-                :options="users"
-                :add-empty-option="true"
+                class="form-control mb-3"
+                list="datalistPilotNames"
+                placeholder="Suchen..."
               />
+              <datalist id="datalistPilotNames">
+                <!-- Beware: If you associate the user to the normal "value" attribute, this element will cause long loading times in chrome -->
+                <option v-for="user in users" :key="user" :data-value="user">
+                  {{ user }}
+                </option>
+              </datalist>
               <BaseSelect
                 id="filterSelectSite"
                 v-model="selects.site"
@@ -507,7 +513,7 @@ function createTeamFilterOptions(teamData) {
 
 function findIdByUserName() {
   return selects.user
-    ? userData.find((e) => `${e.firstName} ${e.lastName}` == selects.user).id
+    ? userData.find((e) => `${e.firstName} ${e.lastName}` == selects.user)?.id
     : undefined;
 }
 
