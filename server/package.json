@@ -9,7 +9,7 @@
     "start": "ts-node --transpile-only app.ts",
     "dev": "ts-node-dev --poll --respawn --pretty --transpile-only app.ts",
     "build": "tsc -p tsconfig.build.json",
-    "lint": "eslint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "up": "docker-compose run --rm npm npx taze -I",

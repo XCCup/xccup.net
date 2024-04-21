@@ -37,6 +37,10 @@ jobs:
         run: chmod -R 777 . && docker-compose -f docker-compose-ci.yml run --rm npm install
         working-directory: ./server
 
+      - name: 🚿 Lint backend
+        run: docker-compose -f docker-compose-ci.yml run --rm npm run lint
+        working-directory: ./server
+
       - name: 🕵️ Add secrets to ENV
         run: echo "METAR_API_KEY=${{ secrets.METAR_API_KEY }}" >> ./.env.ci
         working-directory: ./server

@@ -45,6 +45,7 @@ import type {
 } from "../db/models/Flight";
 import type { Comment } from "../types/Comment";
 import { FlightCommentInstance } from "../db/models/FlightComment";
+import _, { groupBy } from "lodash";
 
 const clientUrl = config.get("clientUrl");
 const userActivateLink = config.get("clientActivateProfil");
@@ -68,6 +69,7 @@ interface AirspaceViolation {
   lowerLimitOriginal: number;
   upperLimitOriginal: number;
   timestamp: number;
+  violatedByMeters: number;
 }
 
 const service = {
@@ -197,23 +199,26 @@ const service = {
 
     if (!user) return;
 
-    const listOfAirspaceViolations: string[] = [];
-    // TODO: Beautify the email output
-    airspaceViolations.map((airspaceViolation) => {
-      listOfAirspaceViolations.push(
-        JSON.stringify({
-          lat: airspaceViolation.lat,
-          long: airspaceViolation.long,
-          gpsAltitude: airspaceViolation.gpsAltitude,
-          pressureAltitude: airspaceViolation.pressureAltitude,
-          airspaceName: airspaceViolation.airspaceName,
-          lowerLimitMeter: airspaceViolation.lowerLimitMeter,
-          upperLimitMeter: airspaceViolation.upperLimitMeter,
-          lowerLimitOriginal: airspaceViolation.lowerLimitOriginal,
-          upperLimitOriginal: airspaceViolation.upperLimitOriginal,
-          timestamp: airspaceViolation.timestamp,
-        })
+    const violationsByAirspace = new Map();
+    airspaceViolations.forEach((aV) => {
+      const found = violationsByAirspace.get(aV.airspaceName);
+      found ? found.push(aV) : violationsByAirspace.set(aV.airspaceName, [aV]);
+    });
+
+    violationsByAirspace.forEach((v: AirspaceViolation[], k, m) => {
+      m.set(
+        k,
+        v
+          .sort((a, b) => b.violatedByMeters - a.violatedByMeters)
+          .slice(0, 10)
+          .map(beautifyLrvForMail)
+          .join("\n")
       );
+    });
+
+    let text = "";
+    violationsByAirspace.forEach((v, k) => {
+      text += k + "\n" + v + "\n";
     });
 
     const content = {
@@ -223,7 +228,7 @@ const service = {
         user.firstName,
         user.lastName,
         user.email,
-        listOfAirspaceViolations.join("\n")
+        text
       ),
       attachments: [{ path: flight.igcPath }],
     };
@@ -426,6 +431,20 @@ const service = {
     }
   },
 };
+
+function beautifyLrvForMail(aV: AirspaceViolation) {
+  return `${new Date(aV.timestamp).toISOString()}, limits: ${
+    aV.lowerLimitOriginal.toString() == "GND"
+      ? "GND"
+      : Math.round(aV.lowerLimitMeter) / aV.lowerLimitOriginal
+  } - ${Math.round(aV.upperLimitMeter)} / ${
+    aV.upperLimitOriginal
+  }, coords: ${_.round(aV.lat, 4)}, ${_.round(aV.long, 4)}, gps: ${
+    aV.gpsAltitude
+  }, pressure: ${aV.pressureAltitude}, violatedByMeters: ${Math.round(
+    aV.violatedByMeters
+  )}`;
+}
 
 async function sendCommentMail(
   toUserId: string,

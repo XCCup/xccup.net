@@ -3,7 +3,7 @@ var lookupManufacturer = require('flight-recorder-manufacturers/lookup');
 var ONE_HOUR = 60 * 60 * 1000;
 var ONE_DAY = 24 * 60 * 60 * 1000;
 /* tslint:disable:max-line-length */
-var RE_A = /^A(\w{3})(\w{3,}?)(?:FLIGHT:(\d+)|\:(.+))?$/;
+var RE_A = /^A(\w{3})(\w{3,}?)(?:FLIGHT:(\d+)|:(.+))?$/;
 var RE_HFDTE = /^HFDTE(?:DATE:)?(\d{2})(\d{2})(\d{2})(?:,?(\d{2}))?/;
 var RE_PLT_HEADER = /^H(\w)PLT(?:.{0,}?:(.*)|(.*))$/;
 var RE_CM2_HEADER = /^H(\w)CM2(?:.{0,}?:(.*)|(.*))$/; // P is used by some broken Flarms
@@ -177,7 +177,9 @@ var IGCParser = /** @class */ (function () {
         }
         match = line.match(/^A(\w{3})(.+)?$/);
         if (match) {
+            // eslint-disable-next-line no-redeclare
             var manufacturer = lookupManufacturer(match[1]);
+            // eslint-disable-next-line no-redeclare
             var additionalData = match[2] ? match[2].trim() : null;
             return { manufacturer: manufacturer, loggerId: null, numFlight: null, additionalData: additionalData };
         }
