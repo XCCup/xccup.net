@@ -199,10 +199,27 @@ const service = {
 
     if (!user) return;
 
-    const listOfAirspaceViolations = airspaceViolations
-      .sort((a, b) => b.violatedByMeters - a.violatedByMeters)
-      .slice(0, 10)
-      .map(beautifyLrvForMail);
+    const violationsByAirspace = new Map();
+    airspaceViolations.forEach((aV) => {
+      const found = violationsByAirspace.get(aV.airspaceName);
+      found ? found.push(aV) : violationsByAirspace.set(aV.airspaceName, [aV]);
+    });
+
+    violationsByAirspace.forEach((v: AirspaceViolation[], k, m) => {
+      m.set(
+        k,
+        v
+          .sort((a, b) => b.violatedByMeters - a.violatedByMeters)
+          .slice(0, 10)
+          .map(beautifyLrvForMail)
+          .join("\n")
+      );
+    });
+
+    let text = "";
+    violationsByAirspace.forEach((v, k) => {
+      text += k + "\n" + v + "\n";
+    });
 
     const content = {
       title: NEW_AIRSPACE_VIOLATION_TITLE,
@@ -211,7 +228,7 @@ const service = {
         user.firstName,
         user.lastName,
         user.email,
-        listOfAirspaceViolations.join("\n")
+        text
       ),
       attachments: [{ path: flight.igcPath }],
     };
@@ -416,15 +433,17 @@ const service = {
 };
 
 function beautifyLrvForMail(aV: AirspaceViolation) {
-  const asString = JSON.stringify({
-    time: new Date(aV.timestamp),
-    airspace: `${aV.airspaceName} ${aV.lowerLimitOriginal.toString() == "GND" ? "GND" : Math.round(aV.lowerLimitMeter) / aV.lowerLimitOriginal} - ${Math.round(aV.upperLimitMeter)} / ${aV.upperLimitOriginal}`,
-    coords: `${_.round(aV.lat, 4)}, ${_.round(aV.long, 4)}`,
-    gpsAlt: aV.gpsAltitude,
-    pressureAlt: aV.pressureAltitude,
-    violatedByMeters: Math.round(aV.violatedByMeters),
-  });
-  return asString.slice(1, -1).replaceAll('"', "").replaceAll(",", ", ");
+  return `${new Date(aV.timestamp).toISOString()}, limits: ${
+    aV.lowerLimitOriginal.toString() == "GND"
+      ? "GND"
+      : Math.round(aV.lowerLimitMeter) / aV.lowerLimitOriginal
+  } - ${Math.round(aV.upperLimitMeter)} / ${
+    aV.upperLimitOriginal
+  }, coords: ${_.round(aV.lat, 4)}, ${_.round(aV.long, 4)}, gps: ${
+    aV.gpsAltitude
+  }, pressure: ${aV.pressureAltitude}, violatedByMeters: ${Math.round(
+    aV.violatedByMeters
+  )}`;
 }
 
 async function sendCommentMail(
