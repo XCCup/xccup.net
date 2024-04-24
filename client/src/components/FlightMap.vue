@@ -112,7 +112,6 @@ const { isAdmin } = useAuth();
 const trackColors = ADDITIONAL_COLORS;
 
 // Leaflet objects
-
 let map: L.Map;
 const trackLines = ref();
 const positionMarkers = ref<L.CircleMarker[]>([]);
@@ -216,9 +215,6 @@ const drawTracks = (tracklogs: SimpleFix[][]) => {
 
       // Only for main tracklog:
       if (index === 0) {
-        // Center map view on first track
-        map.fitBounds(lines[0].getBounds());
-
         // Create takeoff & landing markers
         takeoffAndLandingMarkers.push(
           L.marker(track[0].position, { title: "Start" }).addTo(map),
@@ -268,6 +264,13 @@ const drawTracks = (tracklogs: SimpleFix[][]) => {
       }).addTo(map);
     }
   });
+
+  // TODO: Why is this out of the sudden necessary? Otherwise nothing will render on the map.
+  setTimeout(() => {
+    map.invalidateSize();
+    // Fit bounds to the first track
+    map.fitBounds(lines[0].getBounds());
+  }, 100);
 
   // Update data
   trackLines.value = lines;
