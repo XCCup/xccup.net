@@ -22,7 +22,8 @@
         >
           <l-tooltip :options="{ permanent: true }">
             <b>{{ name }}</b>
-            {{ Math.floor(distance) }} km / {{ fixes.at(-1)?.altitude }} m
+            {{ distance ? Math.floor(distance) : "?" }} km /
+            {{ fixes.at(-1)?.altitude }} m
           </l-tooltip>
         </l-circle-marker>
       </l-polyline>
@@ -49,7 +50,7 @@ import {
 
 type LiveData = {
   name: string;
-  distance: number;
+  distance?: number;
   fixes: {
     lon: number;
     lat: number;

@@ -5,6 +5,7 @@ import db from "../db";
 import sequelize from "sequelize";
 import logger from "../config/logger";
 import cron from "node-cron";
+import { solver, scoringRules as scoring } from "igc-xc-score";
 
 const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
@@ -30,7 +31,7 @@ type ResponseType = {
 
 type ReducedFlightData = {
   name: string;
-  distance: number;
+  distance?: number;
   fixes: FlightData[];
 }[];
 
@@ -98,10 +99,11 @@ async function fetchFlarmData() {
 
     // Reduce resolution to 10 seconds and add pilot name and distance
     const reduced = Object.keys(data.tracks).map((key) => {
+      const reducedFixes = reduceResolution(data.tracks[key], TRACK_RESOLUTION);
       return {
         name: idsWithNames.find((user) => user.flarmId === key)?.name || key,
-        distance: data.distances[key],
-        fixes: reduceResolution(data.tracks[key], TRACK_RESOLUTION),
+        distance: calculateLiveTrackDistance(reducedFixes),
+        fixes: reducedFixes,
       };
     });
 
@@ -109,6 +111,25 @@ async function fetchFlarmData() {
   } catch (error) {
     logger.error(error);
   }
+}
+
+function calculateLiveTrackDistance(fixes: FlightData[]) {
+  const transformedFixes = fixes.map((fix) => ({
+    timestamp: fix.timestamp,
+    latitude: fix.lat,
+    longitude: fix.lon,
+    valid: true,
+  }));
+
+  try {
+    // @ts-expect-error The provisioned data is sufficient for the solver
+    const result = solver({ fixes: transformedFixes }, scoring.XContest).next()
+      .value;
+    if (result.optimal) return result?.scoreInfo?.distance;
+  } catch (error) {
+    logger.error(error);
+  }
+  return;
 }
 
 function reduceResolution(array: FlightData[], resolution: number) {

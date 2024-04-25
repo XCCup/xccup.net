@@ -17,15 +17,15 @@
     "docker-install": "docker-compose run --rm npm npm install"
   },
   "dependencies": {
-    "@googlemaps/google-maps-services-js": "^3.3.42",
-    "@sentry/node": "^7.109.0",
+    "@googlemaps/google-maps-services-js": "^3.4.0",
+    "@sentry/node": "^7.112.2",
     "adm-zip": "^0.5.12",
     "axios": "1.6.2",
     "axios-retry": "^4.1.0",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "convict": "^6.2.4",
-    "core-js": "^3.36.1",
+    "core-js": "^3.37.0",
     "cors": "^2.8.5",
     "date-easter": "^1.0.3",
     "date-fns": "^2.30.0",
@@ -35,6 +35,7 @@
     "express-rate-limit": "^7.2.0",
     "express-validator": "^7.0.1",
     "flight-recorder-manufacturers": "^2.0.0",
+    "igc-xc-score": "^1.7.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
@@ -48,7 +49,7 @@
     "pg-hstore": "^2.3.4",
     "prettier": "^3.2.5",
     "sanitize-html": "^2.13.0",
-    "sequelize": "^6.37.2",
+    "sequelize": "^6.37.3",
     "sharp": "^0.33.3",
     "timekeeper": "^2.3.1",
     "uuid": "^9.0.1",
@@ -66,7 +67,7 @@
     "@types/lodash": "^4.17.0",
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
-    "@types/node": "^20.12.6",
+    "@types/node": "^20.12.7",
     "@types/node-cron": "^3.0.11",
     "@types/nodemailer": "^6.4.14",
     "@types/sanitize-html": "^2.11.0",
@@ -77,7 +78,7 @@
     "nodemon": "^3.1.0",
     "ts-jest": "^29.1.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "engines": {
     "node": ">=20"
