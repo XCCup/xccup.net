@@ -1,13 +1,13 @@
-const NodeCache = require("node-cache");
-const logger = require("../config/logger");
+import NodeCache from "node-cache";
+import logger from "../config/logger";
 
 // All cache elements will be deleted after one week
-const cache = new NodeCache({
+export const cache = new NodeCache({
   stdTTL: 60 * 60 * 24 * 7,
   checkperiod: 60 * 60 * 6,
 });
 
-const getCache = (req) => {
+export const getCache = (req: { originalUrl: string }) => {
   const value = cache.get(req.originalUrl);
   if (value) {
     logger.debug("access from cache: " + req.originalUrl);
@@ -15,11 +15,11 @@ const getCache = (req) => {
   }
 };
 
-const setCache = (req, value) => {
+export const setCache = (req: { originalUrl: string }, value: any) => {
   cache.set(req.originalUrl, value);
 };
 
-const deleteCache = (keysArrayToDelete) => {
+export const deleteCache = (keysArrayToDelete: string[]) => {
   const cachedKeys = cache.keys();
   const keysToDelete =
     keysArrayToDelete[0] == "all"
@@ -33,19 +33,10 @@ const deleteCache = (keysArrayToDelete) => {
   return cache.del(keysToDelete);
 };
 
-const listCache = () => {
+export const listCache = () => {
   return cache.keys();
 };
 
-const getCacheStats = () => {
+export const getCacheStats = () => {
   return cache.getStats();
-};
-
-module.exports = {
-  cache,
-  getCache,
-  setCache,
-  deleteCache,
-  listCache,
-  getCacheStats,
 };

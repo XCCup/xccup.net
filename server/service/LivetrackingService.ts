@@ -5,7 +5,7 @@ import db from "../db";
 import sequelize from "sequelize";
 import logger from "../config/logger";
 import cron from "node-cron";
-import { solver, scoringRules as scoring } from "igc-xc-score";
+import { solver, scoringRules } from "igc-xc-score";
 
 const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
@@ -102,7 +102,7 @@ async function fetchFlarmData() {
       const reducedFixes = reduceResolution(data.tracks[key], TRACK_RESOLUTION);
       return {
         name: idsWithNames.find((user) => user.flarmId === key)?.name || key,
-        distance: calculateLiveTrackDistance(reducedFixes),
+        distance: 0, //calculateLiveTrackDistance(reducedFixes),
         fixes: reducedFixes,
       };
     });
@@ -113,7 +113,7 @@ async function fetchFlarmData() {
   }
 }
 
-function calculateLiveTrackDistance(fixes: FlightData[]) {
+async function calculateLiveTrackDistance(fixes: FlightData[]) {
   const transformedFixes = fixes.map((fix) => ({
     timestamp: fix.timestamp,
     latitude: fix.lat,
@@ -123,8 +123,11 @@ function calculateLiveTrackDistance(fixes: FlightData[]) {
 
   try {
     // @ts-expect-error The provisioned data is sufficient for the solver
-    const result = solver({ fixes: transformedFixes }, scoring.XContest).next()
-      .value;
+    const result = solver({ fixes: transformedFixes }, scoringRules.XContest, {
+      maxcycle: 2000, // max execution time per cycle in milliseconds
+      noflight: true, // do not include the flight track in the geojson output
+      invalid: true, // do not filter invalid GPS fixes
+    }).next().value;
     if (result.optimal) return result?.scoreInfo?.distance;
   } catch (error) {
     logger.error(error);
