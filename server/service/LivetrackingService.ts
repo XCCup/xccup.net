@@ -1,15 +1,16 @@
 import axios from "axios";
 import NodeCache from "node-cache";
-import config from "../config/env-config";
 import db from "../db";
 import sequelize from "sequelize";
 import logger from "../config/logger";
 import cron from "node-cron";
-import { solver, scoringRules } from "igc-xc-score";
+import config from "../config/env-config";
 
 const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
 const FLARM_USER_IDS_KEY = "user-flarm-ids";
+
+const IGC_XC_SCORE_HOST = config.get("igcXcScoreHost");
 
 const CACHE_INDEFINITELY = 0;
 const CACHE_10_MINUTES = 600;
@@ -98,14 +99,19 @@ async function fetchFlarmData() {
     logger.debug(`LT: Active FLARM IDs: ${Object.keys(data.tracks)}`);
 
     // Reduce resolution to 10 seconds and add pilot name and distance
-    const reduced = Object.keys(data.tracks).map((key) => {
-      const reducedFixes = reduceResolution(data.tracks[key], TRACK_RESOLUTION);
-      return {
-        name: idsWithNames.find((user) => user.flarmId === key)?.name || key,
-        distance: 0, //calculateLiveTrackDistance(reducedFixes),
-        fixes: reducedFixes,
-      };
-    });
+    const reduced = await Promise.all(
+      Object.keys(data.tracks).map(async (key) => {
+        const reducedFixes = reduceResolution(
+          data.tracks[key],
+          TRACK_RESOLUTION
+        );
+        return {
+          name: idsWithNames.find((user) => user.flarmId === key)?.name || key,
+          distance: await calculateLiveTrackDistance(reducedFixes),
+          fixes: reducedFixes,
+        };
+      })
+    );
 
     cache.set<ReducedFlightData>("flarm", reduced);
   } catch (error) {
@@ -122,13 +128,11 @@ async function calculateLiveTrackDistance(fixes: FlightData[]) {
   }));
 
   try {
-    // @ts-expect-error The provisioned data is sufficient for the solver
-    const result = solver({ fixes: transformedFixes }, scoringRules.XContest, {
-      maxcycle: 2000, // max execution time per cycle in milliseconds
-      noflight: true, // do not include the flight track in the geojson output
-      invalid: true, // do not filter invalid GPS fixes
-    }).next().value;
-    if (result.optimal) return result?.scoreInfo?.distance;
+    const { data } = await axios.post(`http://${IGC_XC_SCORE_HOST}:3030`, {
+      fixes: transformedFixes,
+    });
+
+    if (typeof data === "number") return data;
   } catch (error) {
     logger.error(error);
   }

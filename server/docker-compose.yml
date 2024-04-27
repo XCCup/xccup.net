@@ -43,6 +43,18 @@ services:
       - xccup-network
     depends_on:
       - db
+      - igc-xc-score
+
+  igc-xc-score:
+    container_name: igc-xc-score
+    build:
+      context: ./igc-xc-score
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3030:3030
+    networks:
+      - xccup-network
 
   npm:
     image: node:20-alpine3.19
