@@ -17,7 +17,7 @@ const fixesSchema = z
   .min(8);
 
 app.post("/", zValidator("json", fixesSchema), async (c) => {
-  const { fixes } = await c.req.json();
+  const fixes = await c.req.json();
   if (!fixes || fixes.length < 8) return c.json(undefined);
   console.log("Fixes:", fixes.length);
 

@@ -127,13 +127,17 @@ async function calculateLiveTrackDistance(fixes: FlightData[]) {
     valid: true,
   }));
 
+  if (transformedFixes.length < 8) return;
+
   try {
-    const { data } = await axios.post(`http://${IGC_XC_SCORE_HOST}:3030`, {
-      fixes: transformedFixes,
-    });
+    const { data } = await axios.post(
+      `http://${IGC_XC_SCORE_HOST}:3030`,
+      transformedFixes
+    );
 
     if (typeof data === "number") return data;
   } catch (error) {
+    logger.error("LT: Failed to calculate live track distance");
     logger.error(error);
   }
   return;
