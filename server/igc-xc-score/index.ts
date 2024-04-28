@@ -1,9 +1,22 @@
 import { Hono } from "hono";
 import { solver, scoringRules } from "igc-xc-score";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
 
 const app = new Hono();
 
-app.post("/", async (c) => {
+const fixesSchema = z
+  .array(
+    z.object({
+      timestamp: z.union([z.string(), z.number()]),
+      latitude: z.number(),
+      longitude: z.number(),
+      valid: z.boolean(),
+    })
+  )
+  .min(8);
+
+app.post("/", zValidator("json", fixesSchema), async (c) => {
   const { fixes } = await c.req.json();
   if (!fixes || fixes.length < 8) return c.json(undefined);
   console.log("Fixes:", fixes.length);
