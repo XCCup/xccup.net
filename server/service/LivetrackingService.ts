@@ -98,28 +98,29 @@ async function fetchFlarmData() {
 
     logger.debug(`LT: Active FLARM IDs: ${Object.keys(data.tracks)}`);
 
-    // Reduce resolution to 10 seconds and add pilot name and distance
+    // Reduce resolution to 10 seconds, add pilot name & distance and
+    // filter out flights with unrealistically high distances (FLARM not updated)
 
-    const reduced = await Promise.all(
-      Object.keys(data.tracks).map(async (key) => {
-        const reducedFixes = reduceResolution(
-          data.tracks[key],
-          TRACK_RESOLUTION
-        );
-        return {
-          name: idsWithNames.find((user) => user.flarmId === key)?.name || key,
-          distance: await calculateLiveTrackDistance(reducedFixes),
-          fixes: reducedFixes,
-        };
-      })
-    );
-
-    // Filter out flights with unrealistically high distances (FLARM not updated)
-    const filtered = reduced.filter(
+    const reduced = (
+      await Promise.all(
+        Object.keys(data.tracks).map(async (key) => {
+          const reducedFixes = reduceResolution(
+            data.tracks[key],
+            TRACK_RESOLUTION
+          );
+          return {
+            name:
+              idsWithNames.find((user) => user.flarmId === key)?.name || key,
+            distance: await calculateLiveTrackDistance(reducedFixes),
+            fixes: reducedFixes,
+          };
+        })
+      )
+    ).filter(
       (flight) => typeof flight.distance === "number" && flight.distance < 900
     );
 
-    cache.set<ReducedFlightData>("flarm", filtered);
+    cache.set<ReducedFlightData>("flarm", reduced);
   } catch (error) {
     logger.error(error);
   }
