@@ -116,7 +116,7 @@ async function fetchFlarmData() {
 
     // Filter out flights with unrealistically high distances (FLARM not updated)
     const filtered = reduced.filter(
-      (flight) => flight.distance && flight.distance < 900
+      (flight) => typeof flight.distance === "number" && flight.distance < 900
     );
 
     cache.set<ReducedFlightData>("flarm", filtered);
