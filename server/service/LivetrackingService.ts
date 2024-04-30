@@ -99,6 +99,7 @@ async function fetchFlarmData() {
     logger.debug(`LT: Active FLARM IDs: ${Object.keys(data.tracks)}`);
 
     // Reduce resolution to 10 seconds and add pilot name and distance
+
     const reduced = await Promise.all(
       Object.keys(data.tracks).map(async (key) => {
         const reducedFixes = reduceResolution(
@@ -113,7 +114,12 @@ async function fetchFlarmData() {
       })
     );
 
-    cache.set<ReducedFlightData>("flarm", reduced);
+    // Filter out flights with unrealistically high distances (FLARM not updated)
+    const filtered = reduced.filter(
+      (flight) => flight.distance && flight.distance < 900
+    );
+
+    cache.set<ReducedFlightData>("flarm", filtered);
   } catch (error) {
     logger.error(error);
   }
