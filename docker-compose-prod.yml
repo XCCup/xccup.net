@@ -36,6 +36,7 @@ services:
     depends_on:
       - db
       - traefik
+      - igc-xc-score
     labels:
       traefik.enable: true
       traefik.http.routers.xccup-api.rule: "Host(`xccup.net`) && PathPrefix(`/api`) || Host(`test.xccup.net`) && PathPrefix(`/api`)"
@@ -45,6 +46,15 @@ services:
       traefik.http.routers.xccup-api.priority: 200
       traefik.docker.network: traefik
     command: ./docker-entrypoint.sh
+
+  igc-xc-score:
+    container_name: igc-xc-score
+    build:
+      context: ./igc-xc-score
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3030:3030
 
   db:
     image: postgis/postgis:13-3.1

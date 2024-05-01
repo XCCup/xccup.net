@@ -1,14 +1,16 @@
 import axios from "axios";
 import NodeCache from "node-cache";
-import config from "../config/env-config";
 import db from "../db";
 import sequelize from "sequelize";
 import logger from "../config/logger";
 import cron from "node-cron";
+import config from "../config/env-config";
 
 const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
 const FLARM_USER_IDS_KEY = "user-flarm-ids";
+
+const IGC_XC_SCORE_HOST = config.get("igcXcScoreHost");
 
 const CACHE_INDEFINITELY = 0;
 const CACHE_10_MINUTES = 600;
@@ -30,7 +32,7 @@ type ResponseType = {
 
 type ReducedFlightData = {
   name: string;
-  distance: number;
+  distance?: number;
   fixes: FlightData[];
 }[];
 
@@ -96,19 +98,56 @@ async function fetchFlarmData() {
 
     logger.debug(`LT: Active FLARM IDs: ${Object.keys(data.tracks)}`);
 
-    // Reduce resolution to 10 seconds and add pilot name and distance
-    const reduced = Object.keys(data.tracks).map((key) => {
-      return {
-        name: idsWithNames.find((user) => user.flarmId === key)?.name || key,
-        distance: data.distances[key],
-        fixes: reduceResolution(data.tracks[key], TRACK_RESOLUTION),
-      };
-    });
+    // Reduce resolution to 10 seconds, add pilot name & distance and
+    // filter out flights with unrealistically high distances (FLARM not updated)
+
+    const reduced = (
+      await Promise.all(
+        Object.keys(data.tracks).map(async (key) => {
+          const reducedFixes = reduceResolution(
+            data.tracks[key],
+            TRACK_RESOLUTION
+          );
+          return {
+            name:
+              idsWithNames.find((user) => user.flarmId === key)?.name || key,
+            distance: await calculateLiveTrackDistance(reducedFixes),
+            fixes: reducedFixes,
+          };
+        })
+      )
+    ).filter(
+      (flight) => typeof flight.distance === "number" && flight.distance < 900
+    );
 
     cache.set<ReducedFlightData>("flarm", reduced);
   } catch (error) {
     logger.error(error);
   }
+}
+
+async function calculateLiveTrackDistance(fixes: FlightData[]) {
+  const transformedFixes = fixes.map((fix) => ({
+    timestamp: fix.timestamp,
+    latitude: fix.lat,
+    longitude: fix.lon,
+    valid: true,
+  }));
+
+  if (transformedFixes.length < 8) return;
+
+  try {
+    const { data } = await axios.post(
+      `http://${IGC_XC_SCORE_HOST}:3030`,
+      transformedFixes
+    );
+
+    if (typeof data === "number") return data;
+  } catch (error) {
+    logger.error("LT: Failed to calculate live track distance");
+    logger.error(error);
+  }
+  return;
 }
 
 function reduceResolution(array: FlightData[], resolution: number) {

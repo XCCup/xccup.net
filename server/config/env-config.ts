@@ -264,6 +264,12 @@ const config = convict({
     default: "db",
     env: "POSTGRES_HOST",
   },
+  igcXcScoreHost: {
+    doc: "The live scoring API host",
+    format: String,
+    default: "igc-xc-score",
+    env: "IGC_XC_SCORE_HOST",
+  },
   sentryUrl: {
     doc: "The sentry DSN",
     format: String,

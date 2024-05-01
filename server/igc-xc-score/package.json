@@ -1,0 +1,14 @@
+{
+  "scripts": {
+    "dev": "bun run --hot index.ts"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "^0.2.1",
+    "hono": "^4.2.8",
+    "igc-xc-score": "^1.7.0",
+    "zod": "^3.23.4"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}

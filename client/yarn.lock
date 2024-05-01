@@ -567,52 +567,52 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.16.0.tgz#0db109f8e1a604da9c9a86deebd84d8d040d6671"
   integrity sha512-tkfxXt+7c3Ecgn7ln9NJPdBM+QKwQdmFFpgAP+FYhAuRS5y3tY8xeza82gFjbPpytkHmaQnVdMtuzbToCz2tuw==
 
-"@sentry-internal/feedback@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-7.112.1.tgz#011077f1eaaadd1ab9be4886c47f161b89a50b86"
-  integrity sha512-ejE4eRXLqv5emxVWudBkRQCv5Q7s21thei7gqSxGLBXe8AUrCjTiD0qA1ToJAKcleIyRRf/TQvGb/T7U6vwAAw==
+"@sentry-internal/feedback@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-7.112.2.tgz#3945ae9e980854e1d53560ed6a28684f02625fbc"
+  integrity sha512-z+XP8BwB8B3pa+i8xqbrPsbtDWUFUS6wo+FJbmOYUqOusJJbVFDAhBoEdKoo5ZjOcsAZG7XR6cA9zrhJynIWBA==
   dependencies:
-    "@sentry/core" "7.112.1"
-    "@sentry/types" "7.112.1"
-    "@sentry/utils" "7.112.1"
+    "@sentry/core" "7.112.2"
+    "@sentry/types" "7.112.2"
+    "@sentry/utils" "7.112.2"
 
-"@sentry-internal/replay-canvas@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-7.112.1.tgz#0d3b59ca05a40ea3596784a7ec813a2b0a8ca52c"
-  integrity sha512-+xDd/LEiJZGk4PQKs4xcAWKJFzFKpuNF64DFW/JWuJ5FDnKB+t7w198nQyAZKGjupN7LixLb49Z8O2Gda7fHQQ==
+"@sentry-internal/replay-canvas@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-7.112.2.tgz#a29719ffb816dec01661b81def09d24704476d86"
+  integrity sha512-BCCCxrZ1wJvN6La5gg1JJbKitAhJI5MATCnhtklsZbUcHkHB9iZoj19J65+P56gwssvHz5xh63AjNiITaetIRg==
   dependencies:
-    "@sentry/core" "7.112.1"
-    "@sentry/replay" "7.112.1"
-    "@sentry/types" "7.112.1"
-    "@sentry/utils" "7.112.1"
+    "@sentry/core" "7.112.2"
+    "@sentry/replay" "7.112.2"
+    "@sentry/types" "7.112.2"
+    "@sentry/utils" "7.112.2"
 
-"@sentry-internal/tracing@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/tracing/-/tracing-7.112.1.tgz#10d53452f39cf087bc6ebb86fd95f10d634200bc"
-  integrity sha512-pZVIOB6+t4HlgU3mCRtIbvo//t8uQY9tnBjbJJ2nEv8nTu8A7/dZ5ebrLOWStV3bNp/+uCqLuLuuimJeNNn6vQ==
+"@sentry-internal/tracing@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/tracing/-/tracing-7.112.2.tgz#83460e51875ddb160c060bfee2e21833117f259c"
+  integrity sha512-fT1Y46J4lfXZkgFkb03YMNeIEs2xS6jdKMoukMFQfRfVvL9fSWEbTgZpHPd/YTT8r2i082XzjtAoQNgklm/0Hw==
   dependencies:
-    "@sentry/core" "7.112.1"
-    "@sentry/types" "7.112.1"
-    "@sentry/utils" "7.112.1"
+    "@sentry/core" "7.112.2"
+    "@sentry/types" "7.112.2"
+    "@sentry/utils" "7.112.2"
 
 "@sentry/babel-plugin-component-annotate@2.16.1":
   version "2.16.1"
   resolved "https://registry.yarnpkg.com/@sentry/babel-plugin-component-annotate/-/babel-plugin-component-annotate-2.16.1.tgz#da3bf4ec1c1dc68a97d6a7e27bd710001d6b07fb"
   integrity sha512-pJka66URsqQbk6hTs9H1XFpUeI0xxuqLYf9Dy5pRGNHSJMtfv91U+CaYSWt03aRRMGDXMduh62zAAY7Wf0HO+A==
 
-"@sentry/browser@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-7.112.1.tgz#88f2046a026de773d19d58b9febf410bd9139b13"
-  integrity sha512-NRTo3mJbhiCd9GEFEWL8SplFJhTCPjiAlOhjUw8MnJb7pkxWm2xhC7PVi6SUE8hF/g1rrEwgUr9SX5v8+xwK6g==
+"@sentry/browser@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-7.112.2.tgz#8c25b8f96257685279cf6837ba4ea6e6cba8c9e2"
+  integrity sha512-wULwavCch84+d0bueAdFm6CDm1u0TfOjN91VgY+sj/vxUV2vesvDgI8zRZfmbZEor3MYA90zerkZT3ehZQKbYw==
   dependencies:
-    "@sentry-internal/feedback" "7.112.1"
-    "@sentry-internal/replay-canvas" "7.112.1"
-    "@sentry-internal/tracing" "7.112.1"
-    "@sentry/core" "7.112.1"
-    "@sentry/integrations" "7.112.1"
-    "@sentry/replay" "7.112.1"
-    "@sentry/types" "7.112.1"
-    "@sentry/utils" "7.112.1"
+    "@sentry-internal/feedback" "7.112.2"
+    "@sentry-internal/replay-canvas" "7.112.2"
+    "@sentry-internal/tracing" "7.112.2"
+    "@sentry/core" "7.112.2"
+    "@sentry/integrations" "7.112.2"
+    "@sentry/replay" "7.112.2"
+    "@sentry/types" "7.112.2"
+    "@sentry/utils" "7.112.2"
 
 "@sentry/bundler-plugin-core@2.16.1":
   version "2.16.1"
@@ -682,52 +682,52 @@
     "@sentry/cli-win32-i686" "2.31.0"
     "@sentry/cli-win32-x64" "2.31.0"
 
-"@sentry/core@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.112.1.tgz#0b97e6fc41aa30889efeb1d4bb5b8be5728543b0"
-  integrity sha512-ZhOxt4sZVLqHurWqIY1ExWYZ20ViFTbqgW2GdJGHz4XwJhBln0ZVpHD+tKXy3GBEY+2Ee4qoqHi6tDrFgPvJqw==
+"@sentry/core@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.112.2.tgz#d2e6d2acb6947fcb384298a3bd2b0c8183533dd8"
+  integrity sha512-gHPCcJobbMkk0VR18J65WYQTt3ED4qC6X9lHKp27Ddt63E+MDGkG6lvYBU1LS8cV7CdyBGC1XXDCfor61GvLsA==
   dependencies:
-    "@sentry/types" "7.112.1"
-    "@sentry/utils" "7.112.1"
+    "@sentry/types" "7.112.2"
+    "@sentry/utils" "7.112.2"
 
-"@sentry/integrations@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.112.1.tgz#3334955adf93437c94ce6f7eb5518a031f8fc250"
-  integrity sha512-jIgXT+ahUS7zmhDMAzsgQHCNA6ZwZAp0Bwjoz0tcuGzNcv7mOCnjHz5YooJVQgXuREV653RmEuGGTklrpn6S2w==
+"@sentry/integrations@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.112.2.tgz#2aad01719b1e4a1326f42db78f77fcf1e58d4c63"
+  integrity sha512-ioC2yyU6DqtLkdmWnm87oNvdn2+9oKctJeA4t+jkS6JaJ10DcezjCwiLscX4rhB9aWJV3IWF7Op0O6K3w0t2Hg==
   dependencies:
-    "@sentry/core" "7.112.1"
-    "@sentry/types" "7.112.1"
-    "@sentry/utils" "7.112.1"
+    "@sentry/core" "7.112.2"
+    "@sentry/types" "7.112.2"
+    "@sentry/utils" "7.112.2"
     localforage "^1.8.1"
 
-"@sentry/replay@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry/replay/-/replay-7.112.1.tgz#a38c7b5c5c658ec4e957326e0fcdecc7fe5352df"
-  integrity sha512-4lobxfgmbB2C7ZHk1inWt9IRIvlQa2Sczau5ngE4Qd4mZSKIgIYGtIJC52uOuGvBcP8gHiIbA7ACihkd7834Ew==
+"@sentry/replay@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry/replay/-/replay-7.112.2.tgz#4910244b80dabd32a83cc02b9fdd566ff766df34"
+  integrity sha512-7Ns/8D54WPsht1nlVj93Inf6rXyve2AZoibYN0YfcM2w3lI4NO51gPPHJU0lFEfMwzwK4ZBJWzOeW9098a+uEg==
   dependencies:
-    "@sentry-internal/tracing" "7.112.1"
-    "@sentry/core" "7.112.1"
-    "@sentry/types" "7.112.1"
-    "@sentry/utils" "7.112.1"
+    "@sentry-internal/tracing" "7.112.2"
+    "@sentry/core" "7.112.2"
+    "@sentry/types" "7.112.2"
+    "@sentry/utils" "7.112.2"
 
-"@sentry/tracing@^7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.112.1.tgz#cffa84d0eff98a37cbca5da76898c5644daa9e80"
-  integrity sha512-/ScTA0RxHbtg8axsXtYqGba8Qq9rpSgCPh2L4XSKiszYKlq+po4c0YeoFQOdYVHUmMQZDkXBxLWZPxd/Oz1N+g==
+"@sentry/tracing@^7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry/tracing/-/tracing-7.112.2.tgz#719bd07f898f2fca0d015240d07eb9bd1d7022d2"
+  integrity sha512-Dw641xm7seI+f3SAbKmSi6RNIpsLPrNPxPQbUhJpfDmJQOY6Rl00XANKAwW+QEiSqukGko1Evo3kU1NDxVmRgA==
   dependencies:
-    "@sentry-internal/tracing" "7.112.1"
+    "@sentry-internal/tracing" "7.112.2"
 
-"@sentry/types@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.112.1.tgz#0a66b2e9f072181e7ec1a3cbf64e89e13aa561a4"
-  integrity sha512-5dLIxWZfCXH5kExrsWc+R6loMr3RR6OQuonVNL3Fa8Dw37Q7aExCrjRmocOHeQKhHwNBd3QhYm7phjnbxS6Oaw==
+"@sentry/types@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.112.2.tgz#71ff27c668309ccd8d17b7793e044e46f81eca1b"
+  integrity sha512-kCMLt7yhY5OkWE9MeowlTNmox9pqDxcpvqguMo4BDNZM5+v9SEb1AauAdR78E1a1V8TyCzjBD7JDfXWhvpYBcQ==
 
-"@sentry/utils@7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.112.1.tgz#518210c78384837109e4264fefcc3d166e665569"
-  integrity sha512-/AMGDD6OMvT2cpfL5KuDC10oTS8yOt7BAPomXJNS/xn1TRcEEEZ1TWbYZiGT5ijggQEL1OXSojpeQU8XEW8dcQ==
+"@sentry/utils@7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.112.2.tgz#223f9feee5860459792a43904db4bf38fba73ed3"
+  integrity sha512-OjLh0hx0t1EcL4ZIjf+4svlmmP+tHUDGcr5qpFWH78tjmkPW4+cqPuZCZfHSuWcDdeiaXi8TnYoVRqDcJKK/eQ==
   dependencies:
-    "@sentry/types" "7.112.1"
+    "@sentry/types" "7.112.2"
 
 "@sentry/vite-plugin@^2.16.1":
   version "2.16.1"
@@ -737,15 +737,15 @@
     "@sentry/bundler-plugin-core" "2.16.1"
     unplugin "1.0.1"
 
-"@sentry/vue@^7.112.1":
-  version "7.112.1"
-  resolved "https://registry.yarnpkg.com/@sentry/vue/-/vue-7.112.1.tgz#724028dff31ec8e2ce3d0e354c13b5ea914239b7"
-  integrity sha512-3RyCewB45642Celc71JKtDW/KoExGR6lkEgLYlxBVwXPotnFrB5lChUNISG/EkP9fviwSXVECEtmQVpJLp+Xwg==
+"@sentry/vue@^7.112.2":
+  version "7.112.2"
+  resolved "https://registry.yarnpkg.com/@sentry/vue/-/vue-7.112.2.tgz#296eba4b02388f461620f04410652cd17df8d371"
+  integrity sha512-CHfirgFV0kBQ5jnObOccDOkv0BQx4UmIH+ClDDvBiJRii6+OmyYyzgpPE8wYBfrrBWFSyd8VaPJ9j7NNH6N57A==
   dependencies:
-    "@sentry/browser" "7.112.1"
-    "@sentry/core" "7.112.1"
-    "@sentry/types" "7.112.1"
-    "@sentry/utils" "7.112.1"
+    "@sentry/browser" "7.112.2"
+    "@sentry/core" "7.112.2"
+    "@sentry/types" "7.112.2"
+    "@sentry/utils" "7.112.2"
 
 "@types/bootstrap@^5.2.10":
   version "5.2.10"
@@ -972,13 +972,13 @@
     estree-walker "^2.0.2"
     source-map-js "^1.2.0"
 
-"@vue/compiler-core@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/compiler-core/-/compiler-core-3.4.24.tgz#6b4a5ffddcd874a692f2acfa68981201bcd7096b"
-  integrity sha512-vbW/tgbwJYj62N/Ww99x0zhFTkZDTcGh3uwJEuadZ/nF9/xuFMC4693P9r+3sxGXISABpDKvffY5ApH9pmdd1A==
+"@vue/compiler-core@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-core/-/compiler-core-3.4.25.tgz#691f59ee5014f6f2a2488fd4465f892e1e82f729"
+  integrity sha512-Y2pLLopaElgWnMNolgG8w3C5nNUVev80L7hdQ5iIKPtMJvhVpG0zhnBG/g3UajJmZdvW0fktyZTotEHD1Srhbg==
   dependencies:
     "@babel/parser" "^7.24.4"
-    "@vue/shared" "3.4.24"
+    "@vue/shared" "3.4.25"
     entities "^4.5.0"
     estree-walker "^2.0.2"
     source-map-js "^1.2.0"
@@ -991,13 +991,13 @@
     "@vue/compiler-core" "3.4.23"
     "@vue/shared" "3.4.23"
 
-"@vue/compiler-dom@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.4.24.tgz#b7335a49f095b6d35e48b6f7be8da513c1fa52b8"
-  integrity sha512-4XgABML/4cNndVsQndG6BbGN7+EoisDwi3oXNovqL/4jdNhwvP8/rfRMTb6FxkxIxUUtg6AI1/qZvwfSjxJiWA==
+"@vue/compiler-dom@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-dom/-/compiler-dom-3.4.25.tgz#b367e0c84e11d9e9f70beabdd6f6b2277fde375f"
+  integrity sha512-Ugz5DusW57+HjllAugLci19NsDK+VyjGvmbB2TXaTcSlQxwL++2PETHx/+Qv6qFwNLzSt7HKepPe4DcTE3pBWg==
   dependencies:
-    "@vue/compiler-core" "3.4.24"
-    "@vue/shared" "3.4.24"
+    "@vue/compiler-core" "3.4.25"
+    "@vue/shared" "3.4.25"
 
 "@vue/compiler-sfc@2.7.16":
   version "2.7.16"
@@ -1025,16 +1025,16 @@
     postcss "^8.4.38"
     source-map-js "^1.2.0"
 
-"@vue/compiler-sfc@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.4.24.tgz#2872e353147ce2a145169a33ddd4d68dc95c3a18"
-  integrity sha512-nRAlJUK02FTWfA2nuvNBAqsDZuERGFgxZ8sGH62XgFSvMxO2URblzulExsmj4gFZ8e+VAyDooU9oAoXfEDNxTA==
+"@vue/compiler-sfc@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-3.4.25.tgz#ceab148f81571c8b251e8a8b75a9972addf1db8b"
+  integrity sha512-m7rryuqzIoQpOBZ18wKyq05IwL6qEpZxFZfRxlNYuIPDqywrXQxgUwLXIvoU72gs6cRdY6wHD0WVZIFE4OEaAQ==
   dependencies:
     "@babel/parser" "^7.24.4"
-    "@vue/compiler-core" "3.4.24"
-    "@vue/compiler-dom" "3.4.24"
-    "@vue/compiler-ssr" "3.4.24"
-    "@vue/shared" "3.4.24"
+    "@vue/compiler-core" "3.4.25"
+    "@vue/compiler-dom" "3.4.25"
+    "@vue/compiler-ssr" "3.4.25"
+    "@vue/shared" "3.4.25"
     estree-walker "^2.0.2"
     magic-string "^0.30.10"
     postcss "^8.4.38"
@@ -1048,13 +1048,13 @@
     "@vue/compiler-dom" "3.4.23"
     "@vue/shared" "3.4.23"
 
-"@vue/compiler-ssr@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/compiler-ssr/-/compiler-ssr-3.4.24.tgz#0d11fe54dabd17cbd6393a16bf7f785da1cfab46"
-  integrity sha512-ZsAtr4fhaUFnVcDqwW3bYCSDwq+9Gk69q2r/7dAHDrOMw41kylaMgOP4zRnn6GIEJkQznKgrMOGPMFnLB52RbQ==
+"@vue/compiler-ssr@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-ssr/-/compiler-ssr-3.4.25.tgz#7fdd540bfdf2d4a3d6cb107b7ba4c77228d36331"
+  integrity sha512-H2ohvM/Pf6LelGxDBnfbbXFPyM4NE3hrw0e/EpwuSiYu8c819wx+SVGdJ65p/sFrYDd6OnSDxN1MB2mN07hRSQ==
   dependencies:
-    "@vue/compiler-dom" "3.4.24"
-    "@vue/shared" "3.4.24"
+    "@vue/compiler-dom" "3.4.25"
+    "@vue/shared" "3.4.25"
 
 "@vue/devtools-api@^6.5.1":
   version "6.6.1"
@@ -1090,12 +1090,12 @@
   dependencies:
     "@vue/shared" "3.4.23"
 
-"@vue/reactivity@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.4.24.tgz#150584316ca2acc4ed19a24f9f29863c3a17a7b2"
-  integrity sha512-nup3fSYg4i4LtNvu9slF/HF/0dkMQYfepUdORBcMSsankzRPzE7ypAFurpwyRBfU1i7Dn1kcwpYsE1wETSh91g==
+"@vue/reactivity@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/reactivity/-/reactivity-3.4.25.tgz#74983b146e06ce3341d15382669350125375d36f"
+  integrity sha512-mKbEtKr1iTxZkAG3vm3BtKHAOhuI4zzsVcN0epDldU/THsrvfXRKzq+lZnjczZGnTdh3ojd86/WrP+u9M51pWQ==
   dependencies:
-    "@vue/shared" "3.4.24"
+    "@vue/shared" "3.4.25"
 
 "@vue/runtime-core@3.4.23":
   version "3.4.23"
@@ -1105,13 +1105,13 @@
     "@vue/reactivity" "3.4.23"
     "@vue/shared" "3.4.23"
 
-"@vue/runtime-core@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.4.24.tgz#066c544dc59a07a96c12874a57b750c239124874"
-  integrity sha512-c7iMfj6cJMeAG3s5yOn9Rc5D9e2/wIuaozmGf/ICGCY3KV5H7mbTVdvEkd4ZshTq7RUZqj2k7LMJWVx+EBiY1g==
+"@vue/runtime-core@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/runtime-core/-/runtime-core-3.4.25.tgz#c5545d469ae0827dc471a1376f97c6ace41081ec"
+  integrity sha512-3qhsTqbEh8BMH3pXf009epCI5E7bKu28fJLi9O6W+ZGt/6xgSfMuGPqa5HRbUxLoehTNp5uWvzCr60KuiRIL0Q==
   dependencies:
-    "@vue/reactivity" "3.4.24"
-    "@vue/shared" "3.4.24"
+    "@vue/reactivity" "3.4.25"
+    "@vue/shared" "3.4.25"
 
 "@vue/runtime-dom@3.4.23":
   version "3.4.23"
@@ -1122,13 +1122,13 @@
     "@vue/shared" "3.4.23"
     csstype "^3.1.3"
 
-"@vue/runtime-dom@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/runtime-dom/-/runtime-dom-3.4.24.tgz#4f8e7acbe1e8ffa7c55af1366e4438729ebe9b20"
-  integrity sha512-uXKzuh/Emfad2Y7Qm0ABsLZZV6H3mAJ5ZVqmAOlrNQRf+T5mxpPGZBfec1hkP41t6h6FwF6RSGCs/gd8WbuySQ==
+"@vue/runtime-dom@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/runtime-dom/-/runtime-dom-3.4.25.tgz#9bc195e4860edcd0db4303cbba5a160922b963fd"
+  integrity sha512-ode0sj77kuwXwSc+2Yhk8JMHZh1sZp9F/51wdBiz3KGaWltbKtdihlJFhQG4H6AY+A06zzeMLkq6qu8uDSsaoA==
   dependencies:
-    "@vue/runtime-core" "3.4.24"
-    "@vue/shared" "3.4.24"
+    "@vue/runtime-core" "3.4.25"
+    "@vue/shared" "3.4.25"
     csstype "^3.1.3"
 
 "@vue/server-renderer@3.4.23":
@@ -1139,23 +1139,23 @@
     "@vue/compiler-ssr" "3.4.23"
     "@vue/shared" "3.4.23"
 
-"@vue/server-renderer@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/server-renderer/-/server-renderer-3.4.24.tgz#80dd546f8d6a9f5c4f8b68083fe9cc2d62299332"
-  integrity sha512-H+DLK4sQF6sRgzKyofmlEVBIV/9KrQU6HIV7nt6yIwSGGKvSwlV8pqJlebUKLpbXaNHugdSfAbP6YmXF69lxow==
+"@vue/server-renderer@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/server-renderer/-/server-renderer-3.4.25.tgz#6cfc96ee631104951d5d6c09a8f1e7cef3ef3972"
+  integrity sha512-8VTwq0Zcu3K4dWV0jOwIVINESE/gha3ifYCOKEhxOj6MEl5K5y8J8clQncTcDhKF+9U765nRw4UdUEXvrGhyVQ==
   dependencies:
-    "@vue/compiler-ssr" "3.4.24"
-    "@vue/shared" "3.4.24"
+    "@vue/compiler-ssr" "3.4.25"
+    "@vue/shared" "3.4.25"
 
 "@vue/shared@3.4.23", "@vue/shared@^3.4.0":
   version "3.4.23"
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.4.23.tgz#e536a6dfd2f5f950d08c2e8ebcfe7e5329a851a1"
   integrity sha512-wBQ0gvf+SMwsCQOyusNw/GoXPV47WGd1xB5A1Pgzy0sQ3Bi5r5xm3n+92y3gCnB3MWqnRDdvfkRGxhKtbBRNgg==
 
-"@vue/shared@3.4.24":
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.4.24.tgz#278ac71f492b392b9b17fe8fc7d324db1a8842db"
-  integrity sha512-BW4tajrJBM9AGAknnyEw5tO2xTmnqgup0VTnDAMcxYmqOX0RG0b9aSUGAbEKolD91tdwpA6oCwbltoJoNzpItw==
+"@vue/shared@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.4.25.tgz#243ba8543e7401751e0ca319f75a80f153edd273"
+  integrity sha512-k0yappJ77g2+KNrIaF0FFnzwLvUBLUYr8VOwz+/6vLsmItFp51AcxLL7Ey3iPd7BIRyWPOcqUjMnm7OkahXllA==
 
 "@vueuse/core@10.9.0":
   version "10.9.0"
@@ -3870,16 +3870,16 @@ vue@^3.2.23, vue@^3.2.25:
     "@vue/server-renderer" "3.4.23"
     "@vue/shared" "3.4.23"
 
-vue@^3.4.24:
-  version "3.4.24"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-3.4.24.tgz#f269549939a6c092480f018aa0bd886ba64f4c6f"
-  integrity sha512-NPdx7dLGyHmKHGRRU5bMRYVE+rechR+KDU5R2tSTNG36PuMwbfAJ+amEvOAw7BPfZp5sQulNELSLm5YUkau+Sg==
+vue@^3.4.25:
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-3.4.25.tgz#e59d4ed36389647b52ff2fd7aa84bb6691f4205b"
+  integrity sha512-HWyDqoBHMgav/OKiYA2ZQg+kjfMgLt/T0vg4cbIF7JbXAjDexRf5JRg+PWAfrAkSmTd2I8aPSXtooBFWHB98cg==
   dependencies:
-    "@vue/compiler-dom" "3.4.24"
-    "@vue/compiler-sfc" "3.4.24"
-    "@vue/runtime-dom" "3.4.24"
-    "@vue/server-renderer" "3.4.24"
-    "@vue/shared" "3.4.24"
+    "@vue/compiler-dom" "3.4.25"
+    "@vue/compiler-sfc" "3.4.25"
+    "@vue/runtime-dom" "3.4.25"
+    "@vue/server-renderer" "3.4.25"
+    "@vue/shared" "3.4.25"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
