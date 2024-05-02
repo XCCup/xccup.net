@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   client:
     build:
@@ -50,7 +48,7 @@ services:
   igc-xc-score:
     container_name: igc-xc-score
     build:
-      context: ./igc-xc-score
+      context: ./server/igc-xc-score
     environment:
       NODE_ENV: production
     ports:

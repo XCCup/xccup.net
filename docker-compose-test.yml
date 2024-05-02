@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   client-test:
     build:
@@ -9,7 +7,7 @@ services:
     container_name: xccup-client-test
     env_file: ./client/.env
     restart: always
- 
+
     labels:
       traefik.enable: true
       traefik.http.routers.xccup-test.rule: "Host(`test.xccup.net`)"
