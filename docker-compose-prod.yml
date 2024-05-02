@@ -49,6 +49,7 @@ services:
     container_name: igc-xc-score
     build:
       context: ./server/igc-xc-score
+    image: xc-igc-score
     environment:
       NODE_ENV: production
     ports:
