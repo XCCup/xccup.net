@@ -1,7 +1,7 @@
 const FlightPhoto = require("../db")["FlightPhoto"];
 const Flight = require("../db")["Flight"];
 const User = require("../db")["User"];
-const Sequelize = require("sequelize");
+const { Op, fn, col, where, Sequelize } = require("sequelize");
 const logger = require("../config/logger");
 const AdmZip = require("adm-zip");
 const { default: config } = require("../config/env-config");
@@ -12,16 +12,17 @@ const service = {
   },
 
   getRandomCurrentYear: async (count) => {
+    const currentYear = new Date().getFullYear();
+    const imagesSizeBytes = 250_000;
     const randomPhotos = await FlightPhoto.findAll({
       where: {
-        andOp: Sequelize.where(
-          Sequelize.fn(
-            "date_part",
-            "year",
-            Sequelize.col("FlightPhoto.createdAt")
+        [Op.and]: [
+          where(
+            fn("date_part", "year", col("FlightPhoto.createdAt")),
+            currentYear
           ),
-          new Date().getFullYear()
-        ),
+          { size: { [Op.gte]: imagesSizeBytes } },
+        ],
       },
       order: Sequelize.literal("random()"),
       limit: count,
