@@ -52,6 +52,7 @@ const userActivateLink = config.get("clientActivateProfil");
 const userPasswordLostLink = config.get("clientPasswordLost");
 const confirmMailChangeLink = config.get("clientConfirmEmail");
 const flightLink = config.get("clientFlight");
+const adminMail = config.get("mailServiceFromEmail");
 
 interface MailContent {
   title: string;
@@ -182,8 +183,6 @@ const service = {
       title: NEW_ADMIN_TASK_TITLE,
       text: NEW_ADMIN_TASK_TEXT,
     };
-
-    const adminMail = config.get("mailServiceFromEmail");
 
     return sendMail(adminMail, content);
   },
@@ -364,13 +363,19 @@ const service = {
     return sendMail(user.email, content);
   },
 
-  sendAddedToTeamMail: async (teamName: string, memberIds: string[]) => {
+  sendAddedToTeamMail: async (
+    teamName: string,
+    memberIds: string[],
+    teamLeadId: string
+  ) => {
     const users = await db.User.findAll({
       where: {
         id: memberIds,
       },
     });
     const userMails = users.map((u: UserAttributes) => u.email);
+    const teamLead = users.find((u: UserAttributes) => u.id == teamLeadId);
+    const teamLeadName = `${teamLead?.firstName} ${teamLead?.lastName}`;
 
     users.forEach((u) => {
       logger.info(`MS: Send "Added to team mail" to user ${u.id}`);
@@ -378,7 +383,7 @@ const service = {
 
     const content = {
       title: ADDED_TO_TEAM_TITLE,
-      text: ADDED_TO_TEAM_TEXT(teamName),
+      text: ADDED_TO_TEAM_TEXT(teamName, teamLeadName),
     };
 
     return sendMail(userMails, content);

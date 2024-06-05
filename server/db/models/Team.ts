@@ -4,6 +4,7 @@ import { Models } from "../../types/Models";
 interface TeamAttributes {
   id: string;
   name: string;
+  teamLead: string;
   season?: number;
   members?: string[];
 }
@@ -29,6 +30,9 @@ export function initTeam(sequelize: Sequelize): Models["Team"] {
       type: DataTypes.STRING,
       allowNull: false,
       unique: false, // It's allowed that the same name can be reused in different seasons
+    },
+    teamLead: {
+      type: DataTypes.UUID,
     },
     season: {
       type: DataTypes.INTEGER,

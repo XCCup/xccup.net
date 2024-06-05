@@ -89,11 +89,12 @@ const service = {
     });
   },
 
-  create: async (teamName, memberIds) => {
+  create: async (teamName, memberIds, teamLeadId) => {
     const team = {
       name: teamName,
       season: getCurrentYear(),
       members: memberIds,
+      teamLead: teamLeadId,
     };
     const newTeam = await Team.create(team);
     const members = await User.findAll({
