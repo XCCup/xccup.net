@@ -100,8 +100,8 @@ router.post(
     try {
       await service.checkMembersAlreadyAssigned(memberIds);
 
-      const team = await service.create(name, memberIds);
-      mailService.sendAddedToTeamMail(name, memberIds);
+      const team = await service.create(name, memberIds, req.user.id);
+      mailService.sendAddedToTeamMail(name, memberIds, req.user.id);
 
       deleteCache(CACHE_RELEVANT_KEYS);
 

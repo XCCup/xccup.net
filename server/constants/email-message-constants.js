@@ -234,10 +234,10 @@ Dein XCCup Team
 
 module.exports.ADDED_TO_TEAM_TITLE = "Dein Team auf XCCup.net";
 
-module.exports.ADDED_TO_TEAM_TEXT = (teamName) =>
+module.exports.ADDED_TO_TEAM_TEXT = (teamName, teamLeadName) =>
   `Hallo!
 
-Du wurdest dem Team ${teamName} hinzugefügt.
+Du wurdest von ${teamLeadName} dem Team ${teamName} hinzugefügt.
 
 Wir wünschen Euch viel Erfolg in der neuen Saison!
 
