@@ -341,7 +341,7 @@ describe("check flight upload page", () => {
   it("test upload corrupt but valid igc", () => {
     const igcFileName = "corrupt_igc.igc";
     const expectedError =
-      "Dein Tracklog scheint GPS Fehler zu ethalten. Bitte versuche es mit einer alternativen IGC Datei erneut.";
+      "Dein Tracklog scheint GPS Fehler zu enthalten. Bitte versuche es mit einer alternativen IGC Datei erneut.";
     const expectedLanding = "Bremm";
 
     cy.loginNormalUser();

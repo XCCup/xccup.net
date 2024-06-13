@@ -390,7 +390,7 @@ const sendFlightDetails = async () => {
       error.response.data.includes("igc corrupt")
     )
       return (errorMessage.value =
-        "Dein Tracklog scheint GPS Fehler zu ethalten. Bitte versuche es mit einer alternativen IGC Datei erneut.");
+        "Dein Tracklog scheint GPS Fehler zu enthalten. Bitte versuche es mit einer alternativen IGC Datei erneut.");
 
     errorMessage.value = "Da ist leider was schief gelaufen";
   } finally {
