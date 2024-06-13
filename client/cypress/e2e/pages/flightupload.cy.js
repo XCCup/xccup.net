@@ -338,6 +338,39 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=personal-best-tag]").should("not.exist");
   });
 
+  it("test upload corrupt but valid igc", () => {
+    const igcFileName = "corrupt_igc.igc";
+    const expectedError =
+      "Dein Tracklog scheint GPS Fehler zu ethalten. Bitte versuche es mit einer alternativen IGC Datei erneut.";
+    const expectedLanding = "Bremm";
+
+    cy.loginNormalUser();
+
+    cy.get("button").contains("Flug hochladen").click();
+
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.get('input[type="file"]#igcUploadForm').attachFile({
+        fileContent: fileContent.toString(),
+        fileName: igcFileName,
+        mimeType: "text/plain",
+      });
+    });
+
+    // Increase timeout because calculation takes some time
+    cy.get('input[type="text"]', {
+      timeout: 40000,
+    }).should("have.value", expectedLanding);
+
+    cy.get("#acceptTermsCheckbox").check();
+
+    cy.get("Button").contains("Streckenmeldung absenden").click();
+
+    // Increase timeout because processing takes some time
+    cy.get("#upload-error", {
+      timeout: 10000,
+    }).should("have.text", expectedError);
+  });
+
   it("test upload flight twice", () => {
     const igcFileName = "74931_2022-06-18_14.11_Kluesserath.igc";
     const expectedError =
