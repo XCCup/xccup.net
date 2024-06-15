@@ -441,8 +441,8 @@ function beautifyLrvForMail(aV: AirspaceViolation) {
   return `${new Date(aV.timestamp).toISOString()}, limits: ${
     aV.lowerLimitOriginal.toString() == "GND"
       ? "GND"
-      : Math.round(aV.lowerLimitMeter) / aV.lowerLimitOriginal
-  } - ${Math.round(aV.upperLimitMeter)} / ${
+      : Math.round(aV.lowerLimitMeter)
+  } / ${aV.lowerLimitOriginal} - ${Math.round(aV.upperLimitMeter)} / ${
     aV.upperLimitOriginal
   }, coords: ${_.round(aV.lat, 4)}, ${_.round(aV.long, 4)}, gps: ${
     aV.gpsAltitude
