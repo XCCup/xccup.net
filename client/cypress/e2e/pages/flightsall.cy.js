@@ -80,7 +80,7 @@ describe("check flights all page", () => {
     );
   });
 
-  it.only("test filter", () => {
+  it("test filter", () => {
     cy.intercept("GET", "/api/flights*").as("get-flights");
     const expectedClub = "Die Moselfalken";
     const expectedTeamBadge = "Die Elstern";
