@@ -198,7 +198,7 @@ module.exports.NEW_FLIGHT_COMMENT_TEXT = (
 ) =>
   `Hallo ${firstName}!
 
-Dein Flug hat einen Kommentar erhalten.
+Dein Flug hat einen Kommentar erhalten. Bitte antworte nicht auf diese Mail, sondern direkt auf den Kommentar.
 ${flightLink}
 
 ${commenterName} schrieb:
