@@ -1,6 +1,6 @@
 describe("check flights all page", () => {
   before(() => {
-    cy.seedDb();
+    cy.seedFlightDb();
   });
 
   beforeEach(() => {
@@ -82,6 +82,7 @@ describe("check flights all page", () => {
 
   it("test filter", () => {
     cy.intercept("GET", "/api/flights*").as("get-flights");
+
     const expectedClub = "Die Moselfalken";
     const expectedTeamBadge = "Die Elstern";
     const expectedTeamSelect =
