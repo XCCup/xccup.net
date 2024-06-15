@@ -76,4 +76,8 @@ function emitSortChange() {
 th:hover {
   cursor: pointer;
 }
+
+i {
+  background: none;
+}
 </style>
