@@ -17,6 +17,7 @@ import {
   BAD_REQUEST,
   UNAUTHORIZED,
   NO_CONTENT,
+  FORBIDDEN,
 } from "../constants/http-status-constants";
 import {
   FLIGHT_STATE,
@@ -620,7 +621,7 @@ router.put(
 
       await checkIfFlightIsModifiable(flight.takeoffTime, userId);
 
-      await FlightService.updateFlightDetailsAndGetResult({
+      const result = await FlightService.updateFlightDetailsAndGetResult({
         flight,
         report,
         airspaceComment,
@@ -628,6 +629,22 @@ router.put(
         glider,
         hikeAndFly,
       });
+
+      // Check if a corrupted igc file was uploaded (GPS Errors that lead to unusable tracklogs)
+      if (
+        result &&
+        "igcCorrupted" in result &&
+        typeof result.igcCorrupted === "boolean"
+      ) {
+        if (result.igcCorrupted) {
+          logger.error(
+            "FC: IGC file is corrupted. Deleting flight from DB. Flight ID: " +
+              flight.id
+          );
+          await FlightService.delete(flight.id, flight.igcPath);
+          return res.status(FORBIDDEN).send("igc corrupted");
+        }
+      }
 
       deleteCache(CACHE_RELEVANT_KEYS);
 

@@ -103,6 +103,7 @@ type FlightApiResponse = Omit<FlightAttributes, "fixes"> & {
 };
 
 const MAX_NUMBER_OF_RETRIEVABLE_FLIGHTS = 500;
+const MAX_REALISTIC_DISTANCE = 500; // km
 
 const flightService = {
   getAll: async ({
@@ -424,6 +425,15 @@ const flightService = {
           flight.externalId,
           flightTypeFactors
         );
+
+        if (Number.parseFloat(result.dist) > MAX_REALISTIC_DISTANCE) {
+          logger.error(
+            "Distance is unrealistically high. igc file is probably corrupted."
+          );
+
+          return { igcCorrupted: true };
+        }
+
         attachResultToFlightObject(flight, result);
       } catch (error) {
         logger.error(error);

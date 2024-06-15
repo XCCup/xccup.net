@@ -14,7 +14,11 @@
           @change="igcSelected"
         />
       </div>
-      <BaseError id="upload-error" :error-message="errorMessage" />
+      <BaseError
+        v-if="!flightId"
+        id="upload-error"
+        :error-message="errorMessage"
+      />
 
       <div class="text-primary text-center lh-lg">
         <!-- TODO: Put the spinner somewhere else -->
@@ -165,6 +169,12 @@
             <span class="visually-hidden">Loading...</span>
           </div>
         </button>
+        <BaseError
+          class="mt-3"
+          v-if="flightId"
+          id="upload-error"
+          :error-message="errorMessage"
+        />
       </div>
     </form>
   </div>
@@ -358,6 +368,7 @@ const sendFlightDetails = async () => {
       onlyLogbook: onlyLogbook.value,
       airspaceComment: leaveAirspaceComment.value ? airspaceComment.value : "",
     });
+
     if (response.status != 200) throw response.statusText;
 
     await asyncForEach(uploadedPhotos.value, async (e) => {
@@ -371,8 +382,16 @@ const sendFlightDetails = async () => {
     if (!externalId.value) throw new Error("No external id present");
 
     redirectToFlight(externalId.value);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
+
+    if (
+      error?.response?.status === 403 &&
+      error.response.data.includes("igc corrupt")
+    )
+      return (errorMessage.value =
+        "Dein Tracklog scheint GPS Fehler zu enthalten. Bitte versuche es mit einer alternativen IGC Datei erneut.");
+
     errorMessage.value = "Da ist leider was schief gelaufen";
   } finally {
     showSpinner.value = false;
