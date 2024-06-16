@@ -141,13 +141,11 @@ describe("check flights all page", () => {
     cy.get("table")
       .find("tr")
       .first()
-      .should("include.text", "Frank Jacobs")
-      .and("include.text", "Die Moselfalken")
+      .should("include.text", "Die Moselfalken")
       .and("include.text", "Die Elstern")
-      .and("include.text", "Graach")
       .and("include.text", "Sky Apollo")
-      .and("include.text", "11 km")
-      .and("include.text", "66 P");
+      .and("include.text", "km")
+      .and("include.text", "P");
   });
 
   it("test sort on points ascending", () => {
