@@ -80,7 +80,7 @@ describe("check flights all page", () => {
     );
   });
 
-  it("test filter", () => {
+  it.only("test filter", () => {
     cy.intercept("GET", "/api/flights*").as("get-flights");
 
     const expectedClub = "Die Moselfalken";
@@ -143,7 +143,9 @@ describe("check flights all page", () => {
       .first()
       .should("include.text", "Die Moselfalken")
       .and("include.text", "Die Elstern")
-      .and("include.text", "Sky Apollo");
+      .and("include.text", "Sky Apollo")
+      .and("include.text", "km")
+      .and("include.text", "P");
   });
 
   it("test sort on points ascending", () => {
