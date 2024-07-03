@@ -40,6 +40,7 @@
     "metar-parser": "^1.0.1",
     "nprogress": "^0.2.0",
     "sweetalert2": "^11.10.8",
+    "v-plausible": "^1.2.0",
     "vue": "^3.4.26",
     "vue-avatar-editor-improved": "^1.0.7",
     "vue-demi": "^0.14.7",
