@@ -35,7 +35,7 @@ if (import.meta.env.MODE == "production") {
 const plausible = createPlausible({
   init: {
     domain: "xccup.net",
-    apiHost: process.env.VITE_PLAUSIBLE_API_HOST,
+    apiHost: import.meta.env.VITE_PLAUSIBLE_API_HOST,
     trackLocalhost: false,
   },
   settings: {
