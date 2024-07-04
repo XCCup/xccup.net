@@ -5,7 +5,7 @@ import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/browser";
-import { createPlausible } from "v-plausible/vue";
+import { plausible } from "./config/plausible";
 
 const app = createApp(App);
 
@@ -31,19 +31,6 @@ if (import.meta.env.MODE == "production") {
     logErrors: true,
   });
 }
-
-const plausible = createPlausible({
-  init: {
-    domain: "xccup.net",
-    apiHost: import.meta.env.VITE_PLAUSIBLE_API_HOST,
-    trackLocalhost: false,
-  },
-  settings: {
-    enableAutoOutboundTracking: true,
-    enableAutoPageviews: true,
-  },
-  partytown: false,
-});
 
 app.use(plausible);
 app.use(router);
