@@ -218,4 +218,19 @@
       angegebenen Adresse an uns wenden.
     </p>
   </div>
+
+  <div id="monitoring" class="section">
+    <a name="monitoring"></a>
+    <p><strong>Monitoring / Statistik</strong></p>
+
+    <p>
+      Zur Analyse und Monitoring verwenden wir Plausible und Sentry. Plausible
+      wird für die Analyse des Website-Traffics verwendet, um uns Einblicke in
+      die Nutzung unserer Seite zu geben. Dabei handelt es sich um eine
+      datenschutzfreundliche "self-hosted" Lösung, die sicherstellt, dass deine
+      Daten nur auf unseren eigenen Servern gespeichert und verarbeitet werden.
+      Zusätzlich nutzen wir Sentry für das Monitoring und die Verfolgung von
+      Fehlermeldungen auf unserer Webseite. Auch dieser Dienst ist self-hosted.
+    </p>
+  </div>
 </template>

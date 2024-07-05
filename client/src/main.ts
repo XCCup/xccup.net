@@ -5,6 +5,7 @@ import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import * as Sentry from "@sentry/vue";
 import { BrowserTracing } from "@sentry/browser";
+import { plausible } from "./config/plausible";
 
 const app = createApp(App);
 
@@ -31,5 +32,6 @@ if (import.meta.env.MODE == "production") {
   });
 }
 
+app.use(plausible);
 app.use(router);
 app.mount("#app");
