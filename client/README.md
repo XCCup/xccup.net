@@ -5,19 +5,19 @@ Preview: https://xccup.onrender.com (not running main branch and way behind…)
 ## Project setup
 
 ```
-docker-compose run --rm yarn install
+docker compose run --rm yarn install
 ```
 
 ### Compiles and hot-reloads for development
 
 ```
-docker-compose up
+docker compose up
 ```
 
 ### Compiles and minifies for production
 
 ```
-docker-compose run --rm yarn build
+docker compose run --rm yarn build
 ```
 
 Find the rollup bundle stats at stats.html after build

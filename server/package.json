@@ -12,9 +12,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "jest",
-    "up": "docker-compose run --rm npm npx taze -I",
+    "up": "docker compose run --rm npm npx taze -I",
     "format": "prettier .  --write",
-    "docker-install": "docker-compose run --rm npm npm install"
+    "docker-install": "docker compose run --rm npm npm install"
   },
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.4.0",
