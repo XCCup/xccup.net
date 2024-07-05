@@ -5,7 +5,7 @@
 Delete the node_modules folder
 
 ```
-docker-compose run --rm npm install
+docker compose run --rm npm install
 ```
 
 ### Why to set arch/platform parameters (Sharp dependency)
@@ -23,7 +23,7 @@ https://sharp.pixelplumbing.com/install
 #### Dev Server:
 
 ```
-docker-compose up
+docker compose up
 ```
 
 ## Before first StartUp
@@ -45,13 +45,13 @@ Define credentials in backup.sh and config a cron job to execute backup.sh on a 
 ##### All tests
 
 ```
-docker-compose run --rm npm run test
+docker compose run --rm npm run test
 ```
 
 ##### A single tests
 
 ```
-docker-compose run --rm npm run test test/LocationFinder.test.js
+docker compose run --rm npm run test test/LocationFinder.test.js
 ```
 
 #### Connect PgAdmin to Postgres:
