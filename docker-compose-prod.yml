@@ -82,7 +82,7 @@ services:
       traefik.docker.network: traefik
 
   traefik:
-    image: traefik:2
+    image: traefik:2.11
     restart: unless-stopped
     container_name: traefik
     command:
