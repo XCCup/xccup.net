@@ -4,7 +4,6 @@ import router from "./router";
 import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import * as Sentry from "@sentry/vue";
-import { BrowserTracing } from "@sentry/browser";
 import { plausible } from "./config/plausible";
 
 const app = createApp(App);
@@ -14,19 +13,18 @@ if (import.meta.env.MODE == "production") {
     app,
     dsn: import.meta.env.VITE_SENTRY_URL,
     integrations: [
-      new BrowserTracing({
-        routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-        tracePropagationTargets: [
-          "localhost",
-          "xccup.net",
-          "render.xccup.net",
-          /^\//,
-        ],
-      }),
+      Sentry.browserTracingIntegration({ router }),
+      Sentry.replayIntegration(),
     ],
     // Set tracesSampleRate to 1.0 to capture 100%
     // of transactions for performance monitoring.
     // We recommend adjusting this value in production
+    tracePropagationTargets: [
+      "localhost",
+      "xccup.net",
+      "render.xccup.net",
+      /^\//,
+    ],
     tracesSampleRate: 1.0,
     logErrors: true,
   });

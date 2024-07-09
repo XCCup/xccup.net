@@ -31,6 +31,8 @@ export default () => {
 };
 
 function createInstance(viewComponentName: RouteRecordName) {
+  if (!viewComponentName) return;
+
   const router = useRouter();
   const route = useRoute();
 
