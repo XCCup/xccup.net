@@ -317,6 +317,11 @@ const igcSelected = async (event: Event) => {
       return (errorMessage.value = `Diese IGC-File wurde manipuliert. Wenn du denkst, dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
     if (
       error?.response?.status === 400 &&
+      error.response.data == "Error parsing IGC File Missing A record"
+    )
+      return (errorMessage.value = `Es scheint als wäre diese keine valide IGC Aufzeichnung. Wenn du denkst, dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);
+    if (
+      error?.response?.status === 400 &&
       error.response.data == "Flight starts in the middle of a flight"
     )
       return (errorMessage.value = `Es scheint als würde diese igc Datei mitten im Flug beginnen. Wenn du denkst, dass dies ein Fehler ist wende dich bitte an ${ADMIN_EMAIL}`);

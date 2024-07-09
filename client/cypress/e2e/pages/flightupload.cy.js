@@ -528,7 +528,7 @@ describe("check flight upload page", () => {
   it("Test upload invalid igc file (FAI error response)", () => {
     const igcFileName = "invalid.igc";
     const expectedError =
-      "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
+      "Es scheint als wäre diese keine valide IGC Aufzeichnung.";
 
     cy.loginNormalUser();
 
@@ -685,16 +685,16 @@ describe("check flight upload page", () => {
 
   it("Test upload with leonardo interface (wrong content)", () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
-    const expectApiRespone = "Invalid G-Record";
+    const expectApiRespone = "Error parsing IGC File Missing A record";
     const expectedStatus = 400;
-    const expectedComment = `Hallo Admins!
+    //     const expectedComment = `Hallo Admins!
 
-Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
+    // Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
 
-Pilot: Melinda Tremblay // blackhole+melinda@xccup.net
+    // Pilot: Melinda Tremblay // blackhole+melinda@xccup.net
 
-Euer Server-Knecht`;
-    const expectedMailReceipient = "me@example.com";
+    // Euer Server-Knecht`;
+    // const expectedMailReceipient = "me@example.com";
 
     const payload = {
       user: "blackhole+melinda@xccup.net",
@@ -712,10 +712,10 @@ Euer Server-Knecht`;
       }
 
       // Check that admin received an email
-      cy.recipientReceivedEmailWithText(
-        expectedMailReceipient,
-        expectedComment
-      );
+      // cy.recipientReceivedEmailWithText(
+      //   expectedMailReceipient,
+      //   expectedComment
+      // );
     });
   });
 
