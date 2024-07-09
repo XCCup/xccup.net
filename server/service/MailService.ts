@@ -35,6 +35,8 @@ import {
   GOOGLE_ELEVATION_ERROR_TEXT,
   NEW_PERSONAL_BEST_TITLE,
   NEW_PERSONAL_BEST_TEXT,
+  NEW_G_CHECK_ERROR_TITLE,
+  NEW_G_CHECK_ERROR_TEXT,
 } from "../constants/email-message-constants";
 
 import db from "../db";
@@ -246,6 +248,22 @@ const service = {
     const content = {
       title: NEW_G_CHECK_INVALID_TITLE,
       text: NEW_G_CHECK_INVALID_TEXT(user.firstName, user.lastName, user.email),
+      attachments: [{ path: igcPath }],
+    };
+
+    const adminMail = config.get("mailServiceFromEmail");
+
+    return sendMail(adminMail, content);
+  },
+  sendGCheckErrorAdminMail: async (userId: string, igcPath: string) => {
+    logger.info(`MS: Send G-Check error mail with igc to admins`);
+    const user = await db.User.findByPk(userId);
+
+    if (!user) return;
+
+    const content = {
+      title: NEW_G_CHECK_ERROR_TITLE,
+      text: NEW_G_CHECK_ERROR_TEXT(user.firstName, user.lastName, user.email),
       attachments: [{ path: igcPath }],
     };
 

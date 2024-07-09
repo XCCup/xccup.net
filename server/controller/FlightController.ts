@@ -278,8 +278,8 @@ router.post(
         igcFile.filename
       );
 
-      if (isGRecordResultInvalid(res, validationResult))
-        return MailService.sendGCheckInvalidAdminMail(userId, igcFile.path);
+      if (isGRecordResultInvalid(res, userId, igcFile.path, validationResult))
+        return;
 
       // DB Object
       const flightDbObject = await FlightService.create({
@@ -355,7 +355,8 @@ router.post(
       if (req.body.skipGCheck === "true") {
         logger.info("FC: Skipping G-Check for admin upload");
       } else {
-        if (isGRecordResultInvalid(res, validationResult)) return;
+        if (isGRecordResultInvalid(res, userId, igcFile.path, validationResult))
+          return;
       }
 
       const flightDbObject = await FlightService.create({
@@ -536,10 +537,8 @@ router.post(
 
       // G-Check
       const validationResult = await validateIgc(igcPath, igcFilename);
-      if (isGRecordResultInvalid(res, validationResult)) {
-        MailService.sendGCheckInvalidAdminMail(userId, igcPath);
+      if (isGRecordResultInvalid(res, userId, igcPath, validationResult))
         return;
-      }
 
       // DB Object
       const flightDbObject = await FlightService.create({
@@ -937,18 +936,30 @@ function detectMidFlightIgcStart(
 }
 
 /**
- * Checks if the validation result is defined and if the result is != PASSED sends a BAD_REQUEST response to the user.
- * @param {Response} res The response object of the current request
- * @param {boolean} validationResult The result to check
+ * Checks if the validation result is defined and if the result is === FAILED sends a BAD_REQUEST response to the user.
+ * For UX reasons a flight is considered valid if the server returns ERROR
  * @returns true if the result is invalid otherwise undefined
  */
-function isGRecordResultInvalid(res: Response, validationResult?: FaiResponse) {
+function isGRecordResultInvalid(
+  res: Response,
+  userId: string,
+  igcPath: string,
+  validationResult?: FaiResponse
+) {
   if (!validationResult) {
     logger.warn("FC: G-Record Validation returned undefined");
-  } else if (validationResult != "PASSED") {
+    return false;
+  } else if (validationResult === "ERROR") {
+    logger.warn("FC: G-Record Validation returned ERROR");
+    MailService.sendGCheckErrorAdminMail(userId, igcPath);
+    return false;
+  } else if (validationResult === "PASSED") {
+    return false;
+  } else if (validationResult === "FAILED") {
     logger.info(
       "FC: Invalid G-Record found. Validation result: " + validationResult
     );
+    MailService.sendGCheckInvalidAdminMail(userId, igcPath);
     res.status(BAD_REQUEST).send("Invalid G-Record");
     return true;
   }

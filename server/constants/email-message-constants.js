@@ -166,6 +166,22 @@ Pilot: ${firstName} ${lastName} // ${email}
 Euer Server-Knecht
     
 `;
+module.exports.NEW_G_CHECK_ERROR_TITLE = "FAI Server antwortete mit ERROR";
+
+module.exports.NEW_G_CHECK_ERROR_TEXT = (
+  firstName,
+  lastName,
+  email
+) => `Hallo Admins!
+
+Die IGC Validierung für diesen Flug konnte nicht abgeschlossen werden. (ERROR)
+Er wurde dennoch akzeptiert.
+
+Pilot: ${firstName} ${lastName} // ${email}
+
+Euer Server-Knecht
+    
+`;
 
 module.exports.GOOGLE_ELEVATION_ERROR_TITLE =
   "Fehler beim Abrufen der Google Elevation API";
