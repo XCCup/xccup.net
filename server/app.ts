@@ -1,5 +1,5 @@
 // Import this first!
-import "./config/sentry";
+// import "./config/sentry";
 
 // Load server config
 import config from "./config/env-config";
