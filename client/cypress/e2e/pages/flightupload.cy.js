@@ -2,7 +2,7 @@ import axios from "axios";
 
 describe("check flight upload page", () => {
   before(() => {
-    cy.seedFlightDb();
+    cy.seedDb();
   });
 
   beforeEach(() => {
@@ -552,13 +552,23 @@ describe("check flight upload page", () => {
     const igcFileName = "removed_line_20to22.igc";
     const expectedError =
       "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
+    const expectedAdminEmailContent = `Hallo Admins!
+
+Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
+
+Pilot: Ramona Gislason // blackhole+ramona@xccup.net
+
+Euer Server-Knecht`;
+    const expectedMailReceipient = "me@example.com";
 
     cy.loginNormalUser();
 
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
+      cy.get('input[type="file"]#igcUploadForm', {
+        timeout: 10_000,
+      }).attachFile({
         fileContent: fileContent.toString(),
         fileName: igcFileName,
         mimeType: "text/plain",
@@ -569,6 +579,12 @@ describe("check flight upload page", () => {
     cy.get("#upload-error", {
       timeout: 10000,
     }).should("include.text", expectedError);
+
+    // Check that admin received an email
+    cy.recipientReceivedEmailWithText(
+      expectedMailReceipient,
+      expectedAdminEmailContent
+    );
   });
 
   it("Test upload by MaxPunkte manipulated valid igc file", () => {
@@ -685,21 +701,14 @@ describe("check flight upload page", () => {
 
   it("Test upload with leonardo interface (wrong content)", () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
+    const igcFilePayload = "just any plain text";
     const expectApiRespone = "Error parsing IGC File Missing A record";
     const expectedStatus = 400;
-    //     const expectedComment = `Hallo Admins!
-
-    // Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
-
-    // Pilot: Melinda Tremblay // blackhole+melinda@xccup.net
-
-    // Euer Server-Knecht`;
-    // const expectedMailReceipient = "me@example.com";
 
     const payload = {
       user: "blackhole+melinda@xccup.net",
       pass: "PW_MelindaTremblay",
-      IGCigcIGC: "just any plain text",
+      IGCigcIGC: igcFilePayload,
       igcfn: igcFileName,
     };
     cy.wrap(null).then(async () => {
@@ -710,12 +719,6 @@ describe("check flight upload page", () => {
         expect(error.response.status).to.equal(expectedStatus);
         expect(error.response.data).to.include(expectApiRespone);
       }
-
-      // Check that admin received an email
-      // cy.recipientReceivedEmailWithText(
-      //   expectedMailReceipient,
-      //   expectedComment
-      // );
     });
   });
 
