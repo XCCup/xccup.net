@@ -1,6 +1,8 @@
+// Import this first!
+import "./config/sentry";
+
 // Load server config
 import config from "./config/env-config";
-// import * as Sentry from "@sentry/node";
 
 // Setup DB
 import "./db";
@@ -26,16 +28,6 @@ import "./cron/CleanIgcStore";
 import "./cron/DailyWinnerEMail";
 import "./cron/CleanTokenStore";
 
-// TODO: Refactor Sentry config
-// Sentry
-// if (config.get("env") == "production") {
-//   logger.info("Sentry set up");
-//   Sentry.init({
-//     dsn: config.get("sentryUrl"),
-//     integrations: [nodeProfilingIntegration()],
-//   });
-//   app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
-// }
 // When running an Express app behind a reverse proxy, some of the Express APIs may return different values than expected.
 // In order to adjust for this, the trust proxy application setting may be used to expose information provided by the reverse proxy in the Express APIs.
 app.enable("trust proxy");
@@ -95,11 +87,6 @@ app.use("*", (req, res) => {
     },
   });
 });
-
-// Sentry
-// if (config.get("env") == "production") {
-//   app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
-// }
 
 // Handle global errors on requests. Endpoints have to forward the error to their own next() function!
 app.use(handleError);
