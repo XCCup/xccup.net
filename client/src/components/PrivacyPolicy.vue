@@ -230,7 +230,8 @@
       datenschutzfreundliche "self-hosted" Lösung, die sicherstellt, dass deine
       Daten nur auf unseren eigenen Servern gespeichert und verarbeitet werden.
       Zusätzlich nutzen wir Sentry für das Monitoring und die Verfolgung von
-      Fehlermeldungen auf unserer Webseite. Auch dieser Dienst ist self-hosted.
+      Fehlermeldungen auf unserer Webseite. Alle Daten sind auf Servern in der
+      EU gespeichert.
     </p>
   </div>
 </template>
