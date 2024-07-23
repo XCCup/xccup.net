@@ -38,7 +38,9 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
+      cy.get('input[type="file"]#igcUploadForm', {
+        timeout: 10_000,
+      }).attachFile({
         fileContent: fileContent.toString(),
         fileName: igcFileName,
         mimeType: "text/plain",
@@ -65,7 +67,7 @@ describe("check flight upload page", () => {
       timeout: 10000,
     })
       .should("exist")
-      .find("img")
+      .find("img", { timeout: 10_000 })
       .should("be.visible")
       .and(($img) => {
         expect($img[0].naturalWidth).to.be.greaterThan(0);
@@ -528,7 +530,7 @@ describe("check flight upload page", () => {
   it("Test upload invalid igc file (FAI error response)", () => {
     const igcFileName = "invalid.igc";
     const expectedError =
-      "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
+      "Es scheint als wäre diese keine valide IGC Aufzeichnung.";
 
     cy.loginNormalUser();
 
@@ -552,13 +554,23 @@ describe("check flight upload page", () => {
     const igcFileName = "removed_line_20to22.igc";
     const expectedError =
       "Dieser Flug resultiert gem. FAI in einem negativen G-Check";
+    const expectedAdminEmailContent = `Hallo Admins!
+
+Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
+
+Pilot: Ramona Gislason // blackhole+ramona@xccup.net
+
+Euer Server-Knecht`;
+    const expectedMailReceipient = "me@example.com";
 
     cy.loginNormalUser();
 
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
+      cy.get('input[type="file"]#igcUploadForm', {
+        timeout: 10_000,
+      }).attachFile({
         fileContent: fileContent.toString(),
         fileName: igcFileName,
         mimeType: "text/plain",
@@ -569,6 +581,12 @@ describe("check flight upload page", () => {
     cy.get("#upload-error", {
       timeout: 10000,
     }).should("include.text", expectedError);
+
+    // Check that admin received an email
+    cy.recipientReceivedEmailWithText(
+      expectedMailReceipient,
+      expectedAdminEmailContent
+    );
   });
 
   it("Test upload by MaxPunkte manipulated valid igc file", () => {
@@ -685,21 +703,14 @@ describe("check flight upload page", () => {
 
   it("Test upload with leonardo interface (wrong content)", () => {
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
-    const expectApiRespone = "Invalid G-Record";
+    const igcFilePayload = "just any plain text";
+    const expectApiRespone = "Error parsing IGC File Missing A record";
     const expectedStatus = 400;
-    const expectedComment = `Hallo Admins!
-
-Es wurde versucht einen Flug mit einem negativen G-Check hochzuladen.
-
-Pilot: Melinda Tremblay // blackhole+melinda@xccup.net
-
-Euer Server-Knecht`;
-    const expectedMailReceipient = "me@example.com";
 
     const payload = {
       user: "blackhole+melinda@xccup.net",
       pass: "PW_MelindaTremblay",
-      IGCigcIGC: "just any plain text",
+      IGCigcIGC: igcFilePayload,
       igcfn: igcFileName,
     };
     cy.wrap(null).then(async () => {
@@ -710,12 +721,6 @@ Euer Server-Knecht`;
         expect(error.response.status).to.equal(expectedStatus);
         expect(error.response.data).to.include(expectApiRespone);
       }
-
-      // Check that admin received an email
-      cy.recipientReceivedEmailWithText(
-        expectedMailReceipient,
-        expectedComment
-      );
     });
   });
 
