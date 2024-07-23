@@ -15,7 +15,7 @@ describe("check flight upload page", () => {
     cy.location("pathname").should("eq", "/login");
   });
 
-  it.only("test upload flight", () => {
+  it("test upload flight", () => {
     cy.intercept("POST", "photos*").as("post-photo");
 
     const igcFileName = "73320_LA9ChMu1.igc";
