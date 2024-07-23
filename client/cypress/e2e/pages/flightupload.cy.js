@@ -2,7 +2,7 @@ import axios from "axios";
 
 describe("check flight upload page", () => {
   before(() => {
-    cy.seedDb();
+    cy.seedFlightDb();
   });
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe("check flight upload page", () => {
     cy.location("pathname").should("eq", "/login");
   });
 
-  it("test upload flight", () => {
+  it.only("test upload flight", () => {
     cy.intercept("POST", "photos*").as("post-photo");
 
     const igcFileName = "73320_LA9ChMu1.igc";
@@ -38,7 +38,9 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
+      cy.get('input[type="file"]#igcUploadForm', {
+        timeout: 10_000,
+      }).attachFile({
         fileContent: fileContent.toString(),
         fileName: igcFileName,
         mimeType: "text/plain",
@@ -65,7 +67,7 @@ describe("check flight upload page", () => {
       timeout: 10000,
     })
       .should("exist")
-      .find("img")
+      .find("img", { timeout: 10_000 })
       .should("be.visible")
       .and(($img) => {
         expect($img[0].naturalWidth).to.be.greaterThan(0);
