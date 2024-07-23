@@ -6,12 +6,11 @@ import { visualizer } from "rollup-plugin-visualizer";
 import path from "node:path";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
-  const env = loadEnv(mode, process.cwd(), '')
+  const env = loadEnv(mode, process.cwd(), "");
   return {
     // vite config
     plugins: [
@@ -23,16 +22,15 @@ export default defineConfig(({ mode }) => {
         dirs: ["./src/composables"],
         vueTemplate: true,
       }),
-  
+
       // https://github.com/antfu/vite-plugin-components
       Components({
         dts: true,
       }),
       sentryVitePlugin({
         org: "xccup",
-        project: "xccup",
+        project: "xccup-client",
         authToken: env.SENTRY_AUTH_TOKEN,
-        url: env.SENTRY_URL
       }),
     ],
     resolve: {
@@ -59,6 +57,5 @@ export default defineConfig(({ mode }) => {
       },
       sourcemap: true,
     },
-  }
-})
-
+  };
+});
