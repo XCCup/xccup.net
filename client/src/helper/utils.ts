@@ -1,5 +1,5 @@
 import { isString, isInteger } from "lodash-es";
-import { utcToZonedTime } from "date-fns-tz";
+import { toZonedTime } from "date-fns-tz";
 
 export function isIsoDateWithoutTime(string: string): boolean {
   const regex = /^\d{4}-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/g;
@@ -31,7 +31,7 @@ export function getXccupTimezone() {
 }
 
 export function adjustDateToLocal(originalDate: string) {
-  return utcToZonedTime(new Date(originalDate).getTime(), getXccupTimezone());
+  return toZonedTime(new Date(originalDate).getTime(), getXccupTimezone());
 }
 
 export function isEmail(value: string): boolean {
