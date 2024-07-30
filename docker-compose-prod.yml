@@ -53,7 +53,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - "3030:3030"
+      - "127.0.0.1:3030:3030"
 
   db:
     image: postgis/postgis:13-3.1
