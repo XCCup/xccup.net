@@ -87,7 +87,7 @@ const config = convict({
   metarUrl: {
     doc: "The URL to the METAR data API",
     format: noEmptyString,
-    default: "https://metar.lurb.org/metar",
+    default: "https://metar.xccup.net/metar",
     env: "METAR_URL",
   },
   metarApiKey: {
@@ -97,9 +97,9 @@ const config = convict({
     env: "METAR_API_KEY",
   },
   flarmUrl: {
-    doc: "The URL to the METAR data API",
+    doc: "The URL to the FLARM data API",
     format: noEmptyString,
-    default: "https://flarm.lurb.org/flarm",
+    default: "https://flarm.xccup.net/flarm",
     env: "FLARM_URL",
   },
   flarmApiKey: {
