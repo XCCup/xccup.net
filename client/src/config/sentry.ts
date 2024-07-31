@@ -15,7 +15,8 @@ export const initSentry = (app: App<Element>, router: Router) => {
     // We recommend adjusting this value in production
     tracePropagationTargets: [
       "localhost",
-      "xccup.net",
+      "https://xccup.net",
+      "https://www.xccup.net",
       "render.xccup.net",
       /^\//,
     ],
