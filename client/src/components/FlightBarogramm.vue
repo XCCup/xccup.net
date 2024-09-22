@@ -211,7 +211,7 @@ const config: ChartConfiguration<ChartType> = {
     </div>
 
     <!-- Baro -->
-    <div class="container mt-3">
+    <div class="container mt-3 user-select-none">
       <canvas :class="canvasClass" ref="ctx"></canvas>
     </div>
     <!-- Baro Switch -->
