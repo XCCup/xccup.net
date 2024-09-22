@@ -5,15 +5,17 @@
       <div class="table-responsive">
         <table class="table table-striped table-hover text-sm">
           <thead>
-            <th>ID</th>
-            <th>Pilot</th>
-            <th>Hochgeladen am</th>
-            <th>über</th>
-            <th>G-Check</th>
-            <th>LR Verletzung</th>
-            <th>Nachricht an Pilot</th>
-            <th>Akzeptieren</th>
-            <th>Flug löschen</th>
+            <tr>
+              <th>ID</th>
+              <th>Pilot</th>
+              <th>Hochgeladen am</th>
+              <th>über</th>
+              <th>G-Check</th>
+              <th>LR Verletzung</th>
+              <th>Nachricht an Pilot</th>
+              <th>Akzeptieren</th>
+              <th>Flug löschen</th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="flight in flights" :key="flight.id" :item="flight">
