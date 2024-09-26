@@ -68,7 +68,7 @@ jobs:
         run: docker logs server
 
       - name: 🧪 Install cypress
-        run: npx cypress@13.13.1 install
+        run: npx cypress@13.14.2 install
       # TODO: Fix cypress caching issue and remove the additional install
 
       - name: 🏃‍♀️ Cypress run
@@ -82,14 +82,14 @@ jobs:
           env: TZ=Europe/Berlin
 
       - name: 😩 Store artifacts of test failures
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: ./client/cypress/screenshots
 
       - name: 🤨 Store artifacts of server logs
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: server-logs

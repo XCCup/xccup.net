@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
+  <div class="row user-select-none">
     <button
-      class="btn btn-primary leaflet-control col-auto"
+      class="btn btn-primary leaflet-control col-auto user-select-none"
       @click="isOnReplay ? pauseReplay() : startReplay()"
       v-if="isOnReplay || (!isOnReplay && !isStopped)"
       @dblclick.stop
@@ -10,14 +10,14 @@
       <i :class="isOnReplay ? 'bi bi-pause-fill' : 'bi bi-play-fill'"></i>
     </button>
     <select
-      class="btn btn-primary dropdown-toggle leaflet-control col-auto"
+      class="btn btn-primary dropdown-toggle leaflet-control col-auto user-select-none"
       v-if="!isStopped"
       @change="changeReplaySpeed($event)"
       title="Langsamer (Strg + ,) / Schneller (Strg + .)"
     >
       <option
         v-for="option in replayFactors"
-        class="dropdown-item"
+        class="dropdown-item user-select-none"
         :key="option.value"
         :value="option.value"
         :selected="option.value === replayFactor"
@@ -26,7 +26,7 @@
       </option>
     </select>
     <button
-      class="btn btn-primary leaflet-control col-auto"
+      class="btn btn-primary leaflet-control col-auto user-select-none"
       @click="stopReplay"
       @dblclick.stop
       v-if="isOnReplay || (!isOnReplay && !isStopped)"
@@ -35,7 +35,7 @@
       <i class="bi bi-stop-fill"></i>
     </button>
     <button
-      class="btn btn-primary leaflet-control col-auto"
+      class="btn btn-primary leaflet-control col-auto user-select-none"
       @click="
         isFollowReplay ? followReplayOnMap(false) : followReplayOnMap(true)
       "
@@ -43,7 +43,10 @@
       v-if="isOnReplay || (!isOnReplay && !isStopped)"
       title="Halte Position in Kartenmitte"
     >
-      <i class="bi" :class="isFollowReplay ? 'bi-eye-slash' : 'bi-eye'"></i>
+      <i
+        class="bi user-select-none"
+        :class="isFollowReplay ? 'bi-eye-slash' : 'bi-eye'"
+      ></i>
     </button>
   </div>
 </template>

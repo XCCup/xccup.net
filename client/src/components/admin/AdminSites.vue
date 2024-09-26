@@ -5,17 +5,19 @@
         <h5>Ausstehende Fluggebietsprüfungen</h5>
         <table class="table table-striped table-hover text-sm">
           <thead>
-            <th>Name</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <tr>
+              <th>Name</th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="site in sites" :key="site.id" :item="site">

@@ -22,9 +22,11 @@
       </p>
       <table class="table table-striped table-hover text-sm">
         <thead>
-          <th>Größe</th>
-          <th>Geschlecht</th>
-          <th>Anzahl</th>
+          <tr>
+            <th>Größe</th>
+            <th>Geschlecht</th>
+            <th>Anzahl</th>
+          </tr>
         </thead>
         <tbody>
           <tr
@@ -43,12 +45,14 @@
         <h5>Gesamtübersicht</h5>
         <table class="table table-striped table-hover text-sm">
           <thead>
-            <th>Verein</th>
-            <th>Name</th>
-            <th>Größe</th>
-            <th>Geschlecht</th>
-            <th>E-Mail</th>
-            <th>Adresse</th>
+            <tr>
+              <th>Verein</th>
+              <th>Name</th>
+              <th>Größe</th>
+              <th>Geschlecht</th>
+              <th>E-Mail</th>
+              <th>Adresse</th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="entry in entries" :key="entry.id" :item="entry">
