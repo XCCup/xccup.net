@@ -37,7 +37,7 @@ describe("check admin page", () => {
       .find("table")
       .find("tr")
       .its("length")
-      .should("eq", 2);
+      .should("eq", 3);
   });
 
   it("test accept flight", () => {
