@@ -623,36 +623,43 @@ Euer Server-Knecht`;
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
 
     cy.fixture(igcFileName).then(async (fileContent) => {
-      form.append("user", "blackhole+melinda@xccup.net");
-      form.append("pass", "PW_MelindaTremblay");
-      form.append("IGCigcIGC", fileContent.toString());
-      form.append("igcfn", igcFileName);
-      form.append("report", expectedReport);
+      const data = await cy
+        .request({
+          url: "http://localhost:3000/api/flights/leonardo",
+          method: "POST",
+          body: {
+            user: "blackhole+melinda@xccup.net",
+            pass: "PW_MelindaTremblay",
+            IGCigcIGC: fileContent.toString(),
+            igcfn: igcFileName,
+            report: expectedReport,
+          },
+          form: true,
+        })
+        .then((response) => {
+          // response.body is automatically serialized into JSON
 
-      const data = (
-        await axios.post("http://localhost:3000/api/flights/leonardo", form)
-      ).data;
+          expect(response.body).to.include(expectApiResponse);
 
-      // Test the response message from the API
-      expect(data).to.include(expectApiResponse);
+          const data = response.body;
+          const regex = /.*\/flug\/(\d+)./;
+          const flightId = data.match(regex)[1];
 
-      const regex = /.*\/flug\/(\d+)./;
-      const flightId = data.match(regex)[1];
+          // Wait till flight was fully calculated
+          // eslint-disable-next-line cypress/no-unnecessary-waiting
+          // cy.wait(5000);
 
-      // Wait till flight was fully calculated
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      // cy.wait(5000);
+          cy.visit(`/flug/${flightId}`);
 
-      cy.visit(`/flug/${flightId}`);
-
-      cy.get("[data-cy=flight-details-pilot]")
-        .find("a")
-        .contains(expectedUserName);
-      cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
-      cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
-      cy.get("[data-cy=flight-report]")
-        .find("p")
-        .should("have.text", expectedReport);
+          cy.get("[data-cy=flight-details-pilot]")
+            .find("a")
+            .contains(expectedUserName);
+          cy.get("#cyFlightDetailsTable2").find("td").contains(expectedTakeoff);
+          cy.get("#cyFlightDetailsTable2").find("td").contains(expectedAirtime);
+          cy.get("[data-cy=flight-report]")
+            .find("p")
+            .should("have.text", expectedReport);
+        });
     });
   });
 
