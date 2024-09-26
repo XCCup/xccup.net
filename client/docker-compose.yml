@@ -1,6 +1,6 @@
 services:
   client:
-    image: node:22-alpine3.19
+    image: node:20-alpine3.19
     working_dir: /home/node/app
     volumes:
       - .:/home/node/app
@@ -11,7 +11,7 @@ services:
     command: ["dev"]
 
   yarn:
-    image: node:22-alpine3.19
+    image: node:20-alpine3.19
     working_dir: /home/node/app
     profiles: ["cli"]
     volumes:
