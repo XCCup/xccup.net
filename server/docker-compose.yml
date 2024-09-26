@@ -56,7 +56,7 @@ services:
       - xccup-network
 
   npm:
-    image: node:20-alpine3.19
+    image: node:22-alpine3.19
     working_dir: /home/node/app
     profiles: ["cli"]
     volumes:
