@@ -22,6 +22,7 @@
     "@sentry/tracing": "^7.114.0",
     "@sentry/vue": "^8.30.0",
     "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "@vueuse/core": "^11.1.0",
     "@vueuse/integrations": "^11.1.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",

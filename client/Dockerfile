@@ -1,17 +1,23 @@
-# Build Stage
-FROM node:20-alpine3.19 AS build-stage
+FROM node:20-alpine3.19 AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+COPY . /app
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install
-COPY . .
 
-RUN yarn build
+FROM base AS prod-deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+
+FROM base AS build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm run build
 
 # Production build
 FROM nginx:1.23.1-alpine
 #RUN addgroup app && adduser -S -G app app
 #USER app
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
+
 EXPOSE 80
 ENTRYPOINT [ "nginx", "-g", "daemon off;" ]
