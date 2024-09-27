@@ -67,13 +67,14 @@ jobs:
       - name: 🖨 Print current server log before testing (just for debugging)
         run: docker logs server
 
-      - name: 🧪 Install cypress
-        run: npx cypress@13.14.2 install
+      #- name: 🧪 Install cypress
+      # run: npx cypress@13.14.2 install
       # TODO: Fix cypress caching issue and remove the additional install
 
       - name: 🏃‍♀️ Cypress run
         uses: cypress-io/github-action@v6
         with:
+          install: false
           start: docker compose run --service-ports --rm client serve
           wait-on: http://localhost:4173
           working-directory: ./client
