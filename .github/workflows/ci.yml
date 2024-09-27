@@ -81,7 +81,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           #install: false
-          start: docker compose run --service-ports --rm client serve
+          start: docker compose up -d -f docker-compose-ci.yml
           wait-on: http://localhost:4173
           working-directory: ./client
           config: baseUrl=http://localhost:4173

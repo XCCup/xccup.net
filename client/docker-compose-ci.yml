@@ -1,0 +1,10 @@
+services:
+  client:
+    image: node:20-alpine3.19
+    working_dir: /home/node/app
+    volumes:
+      - .:/home/node/app
+    ports:
+      - "8000:8000"
+      - "4173:4173"
+    command: sh -c "wget -qO- https://get.pnpm.io/install.sh | ENV=\"$HOME/.shrc\" SHELL=\"$(which sh)\" sh - && . $HOME/.shrc && pnpm run serve"
