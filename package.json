@@ -1,0 +1,10 @@
+{
+  "name": "xccup.net",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w client & npm run docker-dev -w server"
+  }
+}

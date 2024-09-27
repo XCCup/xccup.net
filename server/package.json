@@ -8,6 +8,7 @@
   "scripts": {
     "start": "ts-node --transpile-only app.ts",
     "dev": "ts-node-dev --poll --respawn --pretty --transpile-only app.ts",
+    "docker-dev": "docker compose up",
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
