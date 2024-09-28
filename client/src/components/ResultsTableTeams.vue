@@ -3,20 +3,18 @@
     <div v-if="results?.values?.length > 0" class="table-responsive">
       <table class="table table-striped table-hover text-sm">
         <thead>
-          <tr>
-            <th>Platz</th>
-            <th>Team</th>
-            <th class="no-line-break">Punkte</th>
-            <th>Pilot</th>
-            <th
-              v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
-              :key="n"
-              class="no-line-break"
-            >
-              Flug {{ n }}
-            </th>
-            <th class="hide-on-sm">Gesamt</th>
-          </tr>
+          <th>Platz</th>
+          <th>Team</th>
+          <th class="no-line-break">Punkte</th>
+          <th>Pilot</th>
+          <th
+            v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
+            :key="n"
+            class="no-line-break"
+          >
+            Flug {{ n }}
+          </th>
+          <th class="hide-on-sm">Gesamt</th>
         </thead>
         <tbody>
           <tr v-for="(team, index) in results.values" :key="team.teamId">

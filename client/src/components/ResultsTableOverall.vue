@@ -4,35 +4,33 @@
     <div v-if="flights?.length > 0" v-memo="[flights]" class="table-responsive">
       <table class="table table-striped table-hover text-sm">
         <thead>
-          <tr>
-            <TableSortHead
-              content="Datum"
-              column-object-key="takeoffTime"
-              :current-sort-column-key="currentSortColumnKey"
-              @head-sort-changed="handleSortChange"
-            />
-            <th class="hide-on-xs"></th>
-            <th>Name</th>
-            <th scope="col" class="hide-on-md">Verein</th>
-            <th scope="col" class="hide-on-md">Team</th>
-            <th class="hide-on-sm">Startplatz</th>
-            <th scope="col" class="hide-on-sm">Gerät</th>
-            <TableSortHead
-              content="Strecke"
-              column-object-key="flightDistance"
-              :current-sort-column-key="currentSortColumnKey"
-              @head-sort-changed="handleSortChange"
-            />
-            <TableSortHead
-              content="Punkte"
-              column-object-key="flightPoints"
-              :current-sort-column-key="currentSortColumnKey"
-              class="hide-on-sm"
-              @head-sort-changed="handleSortChange"
-            />
-            <th class="hide-on-xs"></th>
-            <th class="hide-on-md"></th>
-          </tr>
+          <TableSortHead
+            content="Datum"
+            column-object-key="takeoffTime"
+            :current-sort-column-key="currentSortColumnKey"
+            @head-sort-changed="handleSortChange"
+          />
+          <th class="hide-on-xs"></th>
+          <th>Name</th>
+          <th scope="col" class="hide-on-md">Verein</th>
+          <th scope="col" class="hide-on-md">Team</th>
+          <th class="hide-on-sm">Startplatz</th>
+          <th scope="col" class="hide-on-sm">Gerät</th>
+          <TableSortHead
+            content="Strecke"
+            column-object-key="flightDistance"
+            :current-sort-column-key="currentSortColumnKey"
+            @head-sort-changed="handleSortChange"
+          />
+          <TableSortHead
+            content="Punkte"
+            column-object-key="flightPoints"
+            :current-sort-column-key="currentSortColumnKey"
+            class="hide-on-sm"
+            @head-sort-changed="handleSortChange"
+          />
+          <th class="hide-on-xs"></th>
+          <th class="hide-on-md"></th>
         </thead>
         <tbody>
           <tr
@@ -44,21 +42,19 @@
           >
             <td>
               <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <BaseDate
-                        :timestamp="flight.takeoffTime"
-                        :date-format="$route.params.year ? 'dd.MM' : 'dd.MM.yy'"
-                      />
-                    </td>
-                  </tr>
-                  <tr class="d-md-none">
-                    <td class="fw-lighter max-width-11ch">
-                      {{ flight.takeoff?.name }}
-                    </td>
-                  </tr>
-                </tbody>
+                <tr>
+                  <td>
+                    <BaseDate
+                      :timestamp="flight.takeoffTime"
+                      :date-format="$route.params.year ? 'dd.MM' : 'dd.MM.yy'"
+                    />
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td class="fw-lighter max-width-11ch">
+                    {{ flight.takeoff?.name }}
+                  </td>
+                </tr>
               </table>
             </td>
             <td class="hide-on-xs px-0 mx-0">
@@ -67,27 +63,23 @@
             </td>
             <td>
               <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <PersonalBestIcon v-if="flight.isNewPersonalBest" />
+                <tr>
+                  <td>
+                    <PersonalBestIcon v-if="flight.isNewPersonalBest" />
 
-                      <strong>
-                        {{
-                          flight.user?.firstName + " " + flight.user?.lastName
-                        }}</strong
-                      >
-                    </td>
-                  </tr>
-                  <tr class="d-md-none">
-                    <td scope="col">
-                      <RankingClass
-                        :ranking-class="flight.glider?.gliderClass"
-                      />
-                      {{ flight.glider?.model }}
-                    </td>
-                  </tr>
-                </tbody>
+                    <strong>
+                      {{
+                        flight.user?.firstName + " " + flight.user?.lastName
+                      }}</strong
+                    >
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td scope="col">
+                    <RankingClass :ranking-class="flight.glider?.gliderClass" />
+                    {{ flight.glider?.model }}
+                  </td>
+                </tr>
               </table>
             </td>
             <td scope="col" class="hide-on-md">
@@ -111,19 +103,17 @@
             </td>
             <td>
               <table>
-                <tbody>
-                  <tr>
-                    <td class="no-line-break">
-                      {{ Math.floor(flight.flightDistance) }} km
-                      <FlightTypeIcon :flight-type="flight.flightType" />
-                    </td>
-                  </tr>
-                  <tr class="d-md-none">
-                    <td class="fw-lighter no-line-break">
-                      {{ flight.flightPoints }} P
-                    </td>
-                  </tr>
-                </tbody>
+                <tr>
+                  <td class="no-line-break">
+                    {{ Math.floor(flight.flightDistance) }} km
+                    <FlightTypeIcon :flight-type="flight.flightType" />
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td class="fw-lighter no-line-break">
+                    {{ flight.flightPoints }} P
+                  </td>
+                </tr>
               </table>
             </td>
 

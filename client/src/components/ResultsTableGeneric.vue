@@ -3,19 +3,17 @@
     <div v-if="results?.length > 0 && maxFlights" class="table-responsive">
       <table class="table table-striped table-hover text-sm">
         <thead>
-          <tr>
-            <th>Platz</th>
+          <th>Platz</th>
 
-            <th>Name</th>
-            <th scope="col" class="hide-on-sm">Verein</th>
-            <th scope="col" class="hide-on-sm">Team</th>
+          <th>Name</th>
+          <th scope="col" class="hide-on-sm">Verein</th>
+          <th scope="col" class="hide-on-sm">Team</th>
 
-            <th v-for="n in maxFlights" :key="n" class="no-line-break">
-              #{{ n }}
-            </th>
+          <th v-for="n in maxFlights" :key="n" class="no-line-break">
+            #{{ n }}
+          </th>
 
-            <th>Gesamt</th>
-          </tr>
+          <th>Gesamt</th>
         </thead>
         <tbody>
           <tr v-for="(result, index) in results" :key="result.user.id">
