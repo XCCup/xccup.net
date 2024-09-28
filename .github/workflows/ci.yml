@@ -82,7 +82,7 @@ jobs:
         with:
           #install: false
           start: docker compose -f docker-compose-ci.yml up -d
-          wait-on: "http://localhost:4173, http://localhost:3000"
+          wait-on: http://localhost:4173
           working-directory: ./client
           config: baseUrl=http://localhost:4173
           browser: chrome
