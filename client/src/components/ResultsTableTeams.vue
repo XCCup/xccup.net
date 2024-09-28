@@ -25,27 +25,21 @@
             <td>
               <strong>{{ team.name }}</strong>
             </td>
-            <td>
-              <tr class="no-line-break">
-                {{
-                  team.totalPoints
-                }}
-                P
-              </tr>
-              <tr class="no-line-break">
-                ({{
-                  Math.round(team.totalDistance)
-                }}
-                km)
-              </tr>
+            <td class="no-line-break">
+              {{ team.totalPoints }}
+              P <br />
+              ({{ Math.round(team.totalDistance) }}
+              km)
             </td>
 
             <td>
-              <tr v-for="member in team.members" :key="member.id">
-                <td class="no-line-break">
-                  {{ member.firstName + " " + member.lastName }}
-                </td>
-              </tr>
+              <div
+                v-for="member in team.members"
+                :key="member.id"
+                class="no-line-break"
+              >
+                {{ member.firstName + " " + member.lastName }}
+              </div>
             </td>
             <td
               v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
