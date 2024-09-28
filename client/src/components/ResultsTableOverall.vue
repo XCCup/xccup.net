@@ -1,7 +1,12 @@
 <template>
   <!-- Streckenmeldungen -->
   <section class="pb-3">
-    <div v-if="flights?.length > 0" v-memo="[flights]" class="table-responsive">
+    <div
+      v-if="flights?.length > 0"
+      v-memo="[flights]"
+      class="table-responsive"
+      id="cy-parent-table"
+    >
       <table class="table table-striped table-hover text-sm">
         <thead>
           <tr>
@@ -44,21 +49,19 @@
           >
             <td>
               <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <BaseDate
-                        :timestamp="flight.takeoffTime"
-                        :date-format="$route.params.year ? 'dd.MM' : 'dd.MM.yy'"
-                      />
-                    </td>
-                  </tr>
-                  <tr class="d-md-none">
-                    <td class="fw-lighter max-width-11ch">
-                      {{ flight.takeoff?.name }}
-                    </td>
-                  </tr>
-                </tbody>
+                <tr>
+                  <td>
+                    <BaseDate
+                      :timestamp="flight.takeoffTime"
+                      :date-format="$route.params.year ? 'dd.MM' : 'dd.MM.yy'"
+                    />
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td class="fw-lighter max-width-11ch">
+                    {{ flight.takeoff?.name }}
+                  </td>
+                </tr>
               </table>
             </td>
             <td class="hide-on-xs px-0 mx-0">
@@ -67,27 +70,23 @@
             </td>
             <td>
               <table>
-                <tbody>
-                  <tr>
-                    <td>
-                      <PersonalBestIcon v-if="flight.isNewPersonalBest" />
+                <tr>
+                  <td>
+                    <PersonalBestIcon v-if="flight.isNewPersonalBest" />
 
-                      <strong>
-                        {{
-                          flight.user?.firstName + " " + flight.user?.lastName
-                        }}</strong
-                      >
-                    </td>
-                  </tr>
-                  <tr class="d-md-none">
-                    <td scope="col">
-                      <RankingClass
-                        :ranking-class="flight.glider?.gliderClass"
-                      />
-                      {{ flight.glider?.model }}
-                    </td>
-                  </tr>
-                </tbody>
+                    <strong>
+                      {{
+                        flight.user?.firstName + " " + flight.user?.lastName
+                      }}</strong
+                    >
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td scope="col">
+                    <RankingClass :ranking-class="flight.glider?.gliderClass" />
+                    {{ flight.glider?.model }}
+                  </td>
+                </tr>
               </table>
             </td>
             <td scope="col" class="hide-on-md">
@@ -111,19 +110,17 @@
             </td>
             <td>
               <table>
-                <tbody>
-                  <tr>
-                    <td class="no-line-break">
-                      {{ Math.floor(flight.flightDistance) }} km
-                      <FlightTypeIcon :flight-type="flight.flightType" />
-                    </td>
-                  </tr>
-                  <tr class="d-md-none">
-                    <td class="fw-lighter no-line-break">
-                      {{ flight.flightPoints }} P
-                    </td>
-                  </tr>
-                </tbody>
+                <tr>
+                  <td class="no-line-break">
+                    {{ Math.floor(flight.flightDistance) }} km
+                    <FlightTypeIcon :flight-type="flight.flightType" />
+                  </td>
+                </tr>
+                <tr class="d-md-none">
+                  <td class="fw-lighter no-line-break">
+                    {{ flight.flightPoints }} P
+                  </td>
+                </tr>
               </table>
             </td>
 

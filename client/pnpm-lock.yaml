@@ -12,7 +12,7 @@ importers:
         specifier: ^7.114.0
         version: 7.114.0
       '@sentry/vue':
-        specifier: ^8.30.0
+        specifier: ^8.32.0
         version: 8.32.0(vue@3.5.10(typescript@5.6.2))
       '@vue-leaflet/vue-leaflet':
         specifier: ^0.10.1
@@ -78,7 +78,7 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(rollup@4.22.5)(vue@3.5.10(typescript@5.6.2))(webpack-sources@3.2.3)
       vue:
-        specifier: ^3.5.8
+        specifier: ^3.5.10
         version: 3.5.10(typescript@5.6.2)
       vue-avatar-editor-improved:
         specifier: ^1.0.7
@@ -115,11 +115,11 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       '@types/node':
-        specifier: ^20.16.5
+        specifier: ^20.16.10
         version: 20.16.10
       '@vitejs/plugin-vue':
         specifier: ^5.1.4
-        version: 5.1.4(vite@5.4.8(@types/node@20.16.10)(sass@1.79.3))(vue@3.5.10(typescript@5.6.2))
+        version: 5.1.4(vite@5.4.8(@types/node@20.16.10)(sass@1.79.4))(vue@3.5.10(typescript@5.6.2))
       '@vue/eslint-config-typescript':
         specifier: ^13.0.0
         version: 13.0.0(eslint-plugin-vue@9.28.0(eslint@9.11.1(jiti@2.0.0)))(eslint@9.11.1(jiti@2.0.0))(typescript@5.6.2)
@@ -127,16 +127,16 @@ importers:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.47)
       cypress:
-        specifier: ^13.14.2
+        specifier: ^13.15.0
         version: 13.15.0
       cypress-file-upload:
         specifier: ^5.0.8
         version: 5.0.8(cypress@13.15.0)
       cypress-terminal-report:
-        specifier: ^7.0.2
+        specifier: ^7.0.3
         version: 7.0.3(cypress@13.15.0)
       eslint:
-        specifier: ^9.11.0
+        specifier: ^9.11.1
         version: 9.11.1(jiti@2.0.0)
       eslint-config-prettier:
         specifier: ^9.1.0
@@ -157,8 +157,8 @@ importers:
         specifier: ^5.12.0
         version: 5.12.0(rollup@4.22.5)
       sass:
-        specifier: ^1.79.3
-        version: 1.79.3
+        specifier: ^1.79.4
+        version: 1.79.4
       typescript:
         specifier: ^5.6.2
         version: 5.6.2
@@ -169,8 +169,8 @@ importers:
         specifier: ^0.27.4
         version: 0.27.4(@babel/parser@7.25.6)(@nuxt/kit@3.13.2(rollup@4.22.5)(webpack-sources@3.2.3))(rollup@4.22.5)(vue@3.5.10(typescript@5.6.2))(webpack-sources@3.2.3)
       vite:
-        specifier: ^5.4.7
-        version: 5.4.8(@types/node@20.16.10)(sass@1.79.3)
+        specifier: ^5.4.8
+        version: 5.4.8(@types/node@20.16.10)(sass@1.79.4)
       vue-tsc:
         specifier: ^2.1.6
         version: 2.1.6(typescript@5.6.2)
@@ -2296,8 +2296,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.79.3:
-    resolution: {integrity: sha512-m7dZxh0W9EZ3cw50Me5GOuYm/tVAJAn91SUnohLRo9cXBixGUOdvmryN+dXpwR831bhoY3Zv7rEFt85PUwTmzA==}
+  sass@1.79.4:
+    resolution: {integrity: sha512-K0QDSNPXgyqO4GZq2HO5Q70TLxTH6cIT59RdoCHMivrC8rqzaTw5ab9prjz9KUN1El4FLXrBXJhik61JR4HcGg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -2497,8 +2497,8 @@ packages:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
     engines: {node: '>=18'}
 
-  unimport@3.13.0:
-    resolution: {integrity: sha512-0WkKsLy8jkcnB38VQdAGvF0N2trJyDbUuHsfXcyrspwgwWTIThiMpvnDNZMVsuNc11SwT2GYzcQ2RnI1TY/xcw==}
+  unimport@3.13.1:
+    resolution: {integrity: sha512-nNrVzcs93yrZQOW77qnyOVHtb68LegvhYFwxFMfuuWScmwQmyVCG/NBuN8tYsaGzgQUVYv34E/af+Cc9u4og4A==}
 
   universalify@0.2.0:
     resolution: {integrity: sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg==}
@@ -3056,7 +3056,7 @@ snapshots:
       semver: 7.6.3
       ufo: 1.5.4
       unctx: 2.3.1(webpack-sources@3.2.3)
-      unimport: 3.13.0(rollup@4.22.5)(webpack-sources@3.2.3)
+      unimport: 3.13.1(rollup@4.22.5)(webpack-sources@3.2.3)
       untyped: 1.5.0
     transitivePeerDependencies:
       - magicast
@@ -3076,7 +3076,7 @@ snapshots:
       std-env: 3.7.0
       ufo: 1.5.4
       uncrypto: 0.1.3
-      unimport: 3.13.0(rollup@4.22.5)(webpack-sources@3.2.3)
+      unimport: 3.13.1(rollup@4.22.5)(webpack-sources@3.2.3)
       untyped: 1.5.0
     transitivePeerDependencies:
       - rollup
@@ -3405,9 +3405,9 @@ snapshots:
       '@typescript-eslint/types': 7.18.0
       eslint-visitor-keys: 3.4.3
 
-  '@vitejs/plugin-vue@5.1.4(vite@5.4.8(@types/node@20.16.10)(sass@1.79.3))(vue@3.5.10(typescript@5.6.2))':
+  '@vitejs/plugin-vue@5.1.4(vite@5.4.8(@types/node@20.16.10)(sass@1.79.4))(vue@3.5.10(typescript@5.6.2))':
     dependencies:
-      vite: 5.4.8(@types/node@20.16.10)(sass@1.79.3)
+      vite: 5.4.8(@types/node@20.16.10)(sass@1.79.4)
       vue: 3.5.10(typescript@5.6.2)
 
   '@volar/language-core@2.4.5':
@@ -4892,7 +4892,7 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.79.3:
+  sass@1.79.4:
     dependencies:
       chokidar: 4.0.1
       immutable: 4.3.7
@@ -5078,7 +5078,7 @@ snapshots:
 
   unicorn-magic@0.1.0: {}
 
-  unimport@3.13.0(rollup@4.22.5)(webpack-sources@3.2.3):
+  unimport@3.13.1(rollup@4.22.5)(webpack-sources@3.2.3):
     dependencies:
       '@rollup/pluginutils': 5.1.2(rollup@4.22.5)
       acorn: 8.12.1
@@ -5109,7 +5109,7 @@ snapshots:
       local-pkg: 0.5.0
       magic-string: 0.30.11
       minimatch: 9.0.5
-      unimport: 3.13.0(rollup@4.22.5)(webpack-sources@3.2.3)
+      unimport: 3.13.1(rollup@4.22.5)(webpack-sources@3.2.3)
       unplugin: 1.14.1(webpack-sources@3.2.3)
     optionalDependencies:
       '@nuxt/kit': 3.13.2(rollup@4.22.5)(webpack-sources@3.2.3)
@@ -5204,7 +5204,7 @@ snapshots:
       core-util-is: 1.0.2
       extsprintf: 1.3.0
 
-  vite@5.4.8(@types/node@20.16.10)(sass@1.79.3):
+  vite@5.4.8(@types/node@20.16.10)(sass@1.79.4):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.47
@@ -5212,7 +5212,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.16.10
       fsevents: 2.3.3
-      sass: 1.79.3
+      sass: 1.79.4
 
   vscode-uri@3.0.8: {}
 

@@ -12,14 +12,15 @@ describe("check flights all page", () => {
     // By default flights will be sorted by takeoff date. This date will always change for 10 flights (5 flights to today, 5 flights to yesterday)
     const expectedLength = 41;
 
-    cy.get("table")
-      .get("tbody")
-      .children()
+    cy.get("#cy-parent-table")
+      .find("tbody")
+      .children("tr")
       .its("length")
       .should("eq", expectedLength);
-    cy.get("table")
-      .find("tr")
-      // .first()
+
+    cy.get("#cy-parent-table")
+      .find("tbody")
+      .children("tr")
       .should("include.text", "Sonia Harber")
       .and("include.text", "1. Pfälzer DGFC")
       .and("include.text", "Die Möwen")
@@ -54,11 +55,13 @@ describe("check flights all page", () => {
     cy.url().should("include", `${year - 1}/fluege`);
 
     cy.get("table")
-      .get("tbody")
+      .find("tbody")
       .children()
       .its("length")
       .should("eq", expectedLength);
     cy.get("table")
+      .find("tbody")
+
       .find("tr")
       .first()
       .should("include.text", "Leo Altenwerth")
@@ -133,12 +136,13 @@ describe("check flights all page", () => {
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table")
-      .get("tbody")
+      .find("tbody")
       .children()
       .its("length")
       .should("eq", expectedLength);
 
     cy.get("table")
+      .find("tbody")
       .find("tr")
       .first()
       .should("include.text", "Die Moselfalken")
@@ -166,6 +170,7 @@ describe("check flights all page", () => {
       .should("eq", expectedLength);
 
     cy.get("table")
+      .find("tbody")
       .find("tr")
       .first()
       .should("include.text", expectedName)
@@ -190,7 +195,7 @@ describe("check flights all page", () => {
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table")
-      .get("tbody")
+      .find("tbody")
       .children()
       .its("length")
       .should("eq", expectedLength);
@@ -201,7 +206,7 @@ describe("check flights all page", () => {
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
     cy.get("table")
-      .get("tbody")
+      .find("tbody")
       .children()
       .last()
       .should("include.text", expectedName)
