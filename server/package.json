@@ -80,7 +80,6 @@
     "csv-parser": "^3.0.0",
     "eslint": "^8.57.1",
     "jest": "^29.7.0",
-    "nodemon": "^3.1.7",
     "ts-jest": "^29.2.5",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.6.2"

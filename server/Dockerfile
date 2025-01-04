@@ -4,7 +4,7 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-# Packages are necesseary to run c-compiled apps (e.g. OLC) on alpine
+# Packages are necessary to run c-compiled apps (e.g. OLC) on alpine
 # TODO: Replace compiled app through usage of Node’s N-API
 RUN apk add --no-cache \
     libc6-compat \
