@@ -22,6 +22,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -75,12 +76,7 @@
     "name": "Aircotec flight intruments",
     "website": "http://www.aircotec.com/",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2009",
-      "2010",
-      "2011",
-      "2013"
-    ],
+    "sponsorInSeasons": ["2009", "2010", "2011", "2013"],
     "contact": {
       "address": "Alteggerstraße 8 A-8083 St. Stefan i.R. Austria",
       "email": "office@aircotec.com",
@@ -117,13 +113,7 @@
     "website": "https://www.ad-gliders.com",
     "type": "MANUFACTURER",
     "tagline": "Gleitschirme und mehr",
-    "sponsorInSeasons": [
-      "2019",
-      "2020",
-      "2022",
-      "2023",
-      "2024"
-    ],
+    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2025", "2024"],
     "contact": {
       "address": "AIRDESIGN GmbH Rhombergstraße 9, 4. Stock 6067 Absam Innsbruck Austria",
       "email": "info@ad-gliders.com, martin@ad-gliders.com",
@@ -143,6 +133,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -178,10 +169,7 @@
     "name": "Apco",
     "website": "http://www.fly-apco.de/",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2007",
-      "2008"
-    ],
+    "sponsorInSeasons": ["2007", "2008"],
     "contact": {
       "address": "APCO Deutschland + Österreich Stefan Stautner Prälat-Wellenhofer-Str. 31 81377 München",
       "email": "stefan.stautner@web.de",
@@ -194,12 +182,7 @@
     "name": "Baumer & Schilling Industrieservice GmbH",
     "website": "http://www.baumer-industrieservice.de",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2008",
-      "2009",
-      "2010",
-      "2011"
-    ],
+    "sponsorInSeasons": ["2008", "2009", "2010", "2011"],
     "contact": {
       "address": "Baumer & Schilling Industrieservice GmbH Geschäftsführer: Karl-Heinz Baumer Franzstr. 1 50226 Frechen",
       "email": "info@baumer-industrieservice.de",
@@ -221,6 +204,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -258,9 +242,7 @@
     "name": "Bruce Goldsmith Design",
     "website": "http://www.flybgd.com",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2020"
-    ],
+    "sponsorInSeasons": ["2020"],
     "contact": {
       "address": "Hügelweg 12 9400 Wolfsberg Austria",
       "email": "sales@flybgd.com",
@@ -303,14 +285,7 @@
     "name": "Finsterwalder & Charly",
     "website": "http://www.charly-produkte.de/",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2008",
-      "2009",
-      "2010",
-      "2011",
-      "2013",
-      "2016"
-    ],
+    "sponsorInSeasons": ["2008", "2009", "2010", "2011", "2013", "2016"],
     "contact": {
       "address": "Finsterwalder GmbH Pagodenburgstr. 8 D-81247 München",
       "email": "info@charly-produkte.de",
@@ -325,13 +300,7 @@
     "website": "http://www.dank-e.de",
     "tagline": "Ökologisch. Nachhaltig. Innovativ.",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2019",
-      "2020",
-      "2022",
-      "2023",
-      "2024"
-    ],
+    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2025", "2024"],
     "contact": {
       "address": "DANKe Projekt GmbH Am Wiesengrund 23 65510 Hünstetten",
       "email": "mboerner@dank-e.de",
@@ -368,6 +337,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -382,9 +352,7 @@
     "name": "Flow Paragliders",
     "website": "https://www.flowparagliders.de",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2020"
-    ],
+    "sponsorInSeasons": ["2020"],
     "contact": {
       "address": "Dirk Weiss Höhe Roth 64 57234 Wilnsdorf",
       "email": "info@flowparagliders.de",
@@ -404,6 +372,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -418,9 +387,7 @@
     "name": "freeX",
     "website": "http://www.freex.com",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2006"
-    ],
+    "sponsorInSeasons": ["2006"],
     "contact": {
       "address": "",
       "email": "",
@@ -433,11 +400,7 @@
     "name": "Fahrrad Freund OHG",
     "website": "http://www.fahrrad-freund.com",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2018",
-      "2019",
-      "2020"
-    ],
+    "sponsorInSeasons": ["2018", "2019", "2020"],
     "contact": {
       "address": "Niederhofheimer Str. 49 65719 Hofheim",
       "email": "wfreund@fahrradfreund.com",
@@ -450,9 +413,7 @@
     "name": "Freiflieger",
     "website": "http://www.freiflieger.eu",
     "type": "SCHOOL",
-    "sponsorInSeasons": [
-      "2017"
-    ],
+    "sponsorInSeasons": ["2017"],
     "contact": {
       "address": "Freiflieger Hermsdorfer Str. 12 56112 Lahnstein",
       "email": "info@freiflieger.eu",
@@ -476,6 +437,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -490,10 +452,7 @@
     "name": "Flugschule Mittelrhein",
     "website": "http://www.flugschule-mittelrhein.de",
     "type": "SCHOOL",
-    "sponsorInSeasons": [
-      "2010",
-      "2011"
-    ],
+    "sponsorInSeasons": ["2010", "2011"],
     "contact": {
       "address": "Klaus Killian 56170 Bendorf Schloßstraße 28",
       "email": "info@skys-shop.de",
@@ -506,9 +465,7 @@
     "name": "GIN Paragliders",
     "website": "https://www.gingliders.com",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2020"
-    ],
+    "sponsorInSeasons": ["2020"],
     "contact": {
       "address": "",
       "email": "",
@@ -529,6 +486,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -568,9 +526,7 @@
     "name": "IMO Car Wash Group",
     "website": "http://www.imo-carwash.com",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2008"
-    ],
+    "sponsorInSeasons": ["2008"],
     "contact": {
       "address": "IMO Car Wash Group 35-37 Amersham Hill High Wycombe Bucks, HP13 6NU",
       "email": "info@imocarwash.com",
@@ -603,6 +559,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -617,12 +574,7 @@
     "name": "KiM GmbH",
     "website": "http://www.kimweb.de",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2004",
-      "2005",
-      "2006",
-      "2007"
-    ],
+    "sponsorInSeasons": ["2004", "2005", "2006", "2007"],
     "contact": {
       "address": "KiM GmbH Konstruktion & Internet im Maschinenbau Kapellenweg 31 D- 66606 St. Wendel",
       "email": "info@kimweb.de",
@@ -648,9 +600,7 @@
     "name": "LinkingWings",
     "website": "http://www.linkingwings.de",
     "type": "SCHOOL",
-    "sponsorInSeasons": [
-      "2013"
-    ],
+    "sponsorInSeasons": ["2013"],
     "contact": {
       "address": "Dirk Soboll Drachenflugschule Airborne Europa Winnertzhof 20, 47799 Krefeld",
       "email": "dirk@linkingwings.de",
@@ -676,11 +626,7 @@
     "name": "Macpara",
     "website": "http://www.macpara.com",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2013",
-      "2014",
-      "2015"
-    ],
+    "sponsorInSeasons": ["2013", "2014", "2015"],
     "contact": {
       "address": "",
       "email": "",
@@ -701,6 +647,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -754,14 +701,7 @@
     "name": "Naviter SeeYou",
     "website": "http://www.naviter.com",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2004",
-      "2005",
-      "2006",
-      "2007",
-      "2008",
-      "2019"
-    ],
+    "sponsorInSeasons": ["2004", "2005", "2006", "2007", "2008", "2019"],
     "contact": {
       "address": "Naviter d.o.o. Gradnikova 89 4240 Radovljica Slowenien",
       "email": "info@naviter.com",
@@ -774,9 +714,7 @@
     "name": "Niviuk",
     "website": "http://www.niviuk.com",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2009"
-    ],
+    "sponsorInSeasons": ["2009"],
     "contact": {
       "address": "NIVIUK Gliders C. Doctor Codina, 29 17165 La Callera de Ter - Girona Spanien",
       "email": "",
@@ -799,6 +737,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -827,6 +766,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -854,12 +794,7 @@
     "name": "Parashop at",
     "website": "http://www.parashop.at",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2009",
-      "2010",
-      "2011",
-      "2012"
-    ],
+    "sponsorInSeasons": ["2009", "2010", "2011", "2012"],
     "contact": {
       "address": "Parashop Kössen Hütte 30 A-6345 Kössen",
       "email": "pier@parashop.at",
@@ -896,13 +831,7 @@
     "type": "MANUFACTURER",
     "isGoldSponsor": true,
     "tagline": "The new paragliding brand of Hannes Papesh and team",
-    "sponsorInSeasons": [
-      "2019",
-      "2020",
-      "2022",
-      "2023",
-      "2024"
-    ],
+    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2025", "2024"],
     "contact": {
       "address": "Achenseestraße 12 6212 Maurach, Austria - behind the Rofan cabel car -",
       "email": "info@phi-air.com",
@@ -915,13 +844,7 @@
     "name": "PowerTrike GmbH",
     "website": "http://www.powertrike.de",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2004",
-      "2005",
-      "2006",
-      "2007",
-      "2008"
-    ],
+    "sponsorInSeasons": ["2004", "2005", "2006", "2007", "2008"],
     "contact": {
       "address": "PowerTrike GmbH Siedlung 17 D-67686 Mackenbach",
       "email": "info@powertrike.de",
@@ -934,9 +857,7 @@
     "name": "Pro-Design",
     "website": "http://www.pro-design.at",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2009"
-    ],
+    "sponsorInSeasons": ["2009"],
     "contact": {
       "address": "Zimmeterweg 4 6020 Innsbruck Austria / Europe",
       "email": "office@pro-design.at",
@@ -962,9 +883,7 @@
     "name": "SKYclimber",
     "website": "http://www.skyclimber.de",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2008"
-    ],
+    "sponsorInSeasons": ["2008"],
     "contact": {
       "address": "SKYclimber Jens Wiesner Stuttgarter Straße 100 70771 Leinfelden-Echterdingen",
       "email": "jens@skyclimber.de",
@@ -978,13 +897,7 @@
     "website": "http://www.skyman.aero",
     "type": "MANUFACTURER",
     "tagline": "Neue Wege entdecken",
-    "sponsorInSeasons": [
-      "2019",
-      "2020",
-      "2022",
-      "2023",
-      "2024"
-    ],
+    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2025", "2024"],
     "contact": {
       "address": "Fly-market Flugsport-Zubehör GmbH & Co. KG Am Schönebach 3 87637 Eisenberg",
       "email": "",
@@ -997,11 +910,7 @@
     "name": "Skys-Shop Sportartikel",
     "website": "http://www.skys-shop.de",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2008",
-      "2009",
-      "2010"
-    ],
+    "sponsorInSeasons": ["2008", "2009", "2010"],
     "contact": {
       "address": "Skys-Shop K.M. Killian Schloßstraße 28 56170 Bendorf",
       "email": "info@skys-shop.de",
@@ -1014,10 +923,7 @@
     "name": "Skytraxx",
     "website": "https://www.skytraxx.eu/",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2018",
-      "2019"
-    ],
+    "sponsorInSeasons": ["2018", "2019"],
     "contact": {
       "address": "Skytraxx GmbH Im Bildstöckle 5 79822 Titisee-Neustadt",
       "email": "info@skytraxx.eu",
@@ -1048,6 +954,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -1102,6 +1009,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -1138,12 +1046,7 @@
     "name": "Triple Seven",
     "website": "http://www.living-sky.de",
     "type": "MANUFACTURER",
-    "sponsorInSeasons": [
-      "2016",
-      "2017",
-      "2018",
-      "2019"
-    ],
+    "sponsorInSeasons": ["2016", "2017", "2018", "2019"],
     "contact": {
       "address": "Triple Seven Ulica IV. prekomorske 61 5270 Ajdovščina, Slowenien +386-40-777313",
       "email": "tim@living-sky.de",
@@ -1156,9 +1059,7 @@
     "name": "TURNPOINT fastline",
     "website": "http://www.turnpoint.de",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2009"
-    ],
+    "sponsorInSeasons": ["2009"],
     "contact": {
       "address": "Edlingerstraße 68 D-83071 Stephanskirchen/Baierbach",
       "email": "Info@turnpoint.de",
@@ -1184,6 +1085,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -1212,6 +1114,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -1263,6 +1166,7 @@
       "2020",
       "2022",
       "2023",
+      "2025",
       "2024"
     ],
     "contact": {
@@ -1277,13 +1181,7 @@
     "name": "Sponsor des XCCup 2020 werden?",
     "website": "http://www.xccup.net/Static/sponsorensuche.htm",
     "type": "OTHER",
-    "sponsorInSeasons": [
-      "2013",
-      "2016",
-      "2017",
-      "2018",
-      "2020"
-    ],
+    "sponsorInSeasons": ["2013", "2016", "2017", "2018", "2020"],
     "contact": {
       "address": "Wie werde ich Sponsor des XCCup 2020?",
       "email": "",
@@ -1296,9 +1194,7 @@
     "name": "XIX Paragliders",
     "type": "MANUFACTURER",
     "website": "http://www.xix.ch",
-    "sponsorInSeasons": [
-      "2005"
-    ],
+    "sponsorInSeasons": ["2005"],
     "contact": {
       "address": "",
       "email": "",

@@ -6,6 +6,7 @@ describe("check flights all page", () => {
   beforeEach(() => {
     cy.intercept("GET", "flights*").as("get-flights");
     cy.visit("/fluege");
+    cy.wait("@get-flights");
   });
 
   it("test no filter no sorting", () => {
@@ -34,7 +35,6 @@ describe("check flights all page", () => {
     const expectedLength = 1;
     const year = new Date().getFullYear();
 
-    cy.wait("@get-flights");
     cy.get("#select-season").should("be.visible");
     cy.get("table").should("be.visible");
 
@@ -77,15 +77,13 @@ describe("check flights all page", () => {
     const year = 2004;
 
     cy.visit(`${year}/fluege`);
-    cy.get("[data-cy=no-flights-listed]").should(
+    cy.get("[data-cy=no-flights-listed]", { timeout: 10_000 }).should(
       "contain",
       "Keine Flüge gemeldet in diesem Jahr"
     );
   });
 
   it("test filter", () => {
-    cy.intercept("GET", "/api/flights*").as("get-flights");
-
     const expectedClub = "Die Moselfalken";
     const expectedTeamBadge = "Die Elstern";
     const expectedTeamSelect =
@@ -106,9 +104,10 @@ describe("check flights all page", () => {
     cy.get("#filterSelectRanking").select(expectedRanking);
     cy.get("#filterSelectSite").select(expectedSite);
 
+    cy.intercept("GET", "/api/flights*").as("get-flights-filter");
     cy.get("[data-cy=activate-filter-button]").click();
 
-    cy.wait("@get-flights");
+    cy.wait("@get-flights-filter");
 
     cy.get("[data-cy=filter-icon]").should("be.visible");
 
@@ -182,17 +181,15 @@ describe("check flights all page", () => {
   });
 
   it("test pagination show last and limit 10", () => {
-    cy.intercept("GET", "filterOptions*").as("get-filter");
-    cy.intercept("GET", "flights*").as("get-flights");
-
     const expectedName = "Leo Altenwerth";
     const expectedLength = 10;
 
     cy.get("#cyPaginationAmountSelect").select("10");
 
     // Wait till table was updated
-    cy.wait("@get-flights");
+    cy.intercept("GET", "/api/flights*").as("get-flights-filter");
     cy.get("[data-cy=filter-icon]").should("be.visible");
+    cy.wait("@get-flights-filter");
 
     cy.get("table")
       .find("tbody")
