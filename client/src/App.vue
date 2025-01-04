@@ -8,7 +8,7 @@
           <suspense timeout="500" @pending="start" @resolve="done">
             <template #default>
               <!-- 
-          :key="$route.path" is neccesary to re-render and fetch API when 
+          :key="$route.path" is necessary to re-render and fetch API when 
           URL props changed. See https://notestack.io/public/force-reload-of-vue-component-with-dynamic-route-parameters/f62f3c66-e77b-494e-b120-bf0ddefe0522
           and https://router.vuejs.org/guide/essentials/dynamic-matching.html#reacting-to-params-changes
           for details.

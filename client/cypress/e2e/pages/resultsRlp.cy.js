@@ -12,9 +12,14 @@ describe("check results overall page", () => {
   it("test only citizens of rlp are listed", () => {
     const expectedLength = 2;
 
-    cy.get("table").find("tr").its("length").should("eq", expectedLength);
+    cy.get("table")
+      .find("tbody")
+      .find("tr")
+      .its("length")
+      .should("eq", expectedLength);
 
     cy.get("table")
+      .find("tbody")
       .find("tr")
       .first()
       .should("include.text", "Bobby Volkman")

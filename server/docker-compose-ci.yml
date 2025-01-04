@@ -30,16 +30,16 @@ services:
       - db
     command: ./docker-entrypoint.sh
 
-  npm:
+  pnpm:
     build:
       context: .
       dockerfile: Dockerfile
-    image: xccup/npm
+    image: xccup/pnpm
     profiles: ["cli"]
     volumes:
       - .:/home/node/app
     command: "apk add --no-cache && libc6-compat && libstdc++"
-    entrypoint: ["npm"]
+    entrypoint: ["pnpm"]
 
 volumes:
   db:

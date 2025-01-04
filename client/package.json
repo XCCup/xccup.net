@@ -20,8 +20,9 @@
   },
   "dependencies": {
     "@sentry/tracing": "^7.114.0",
-    "@sentry/vue": "^8.30.0",
+    "@sentry/vue": "^8.32.0",
     "@vue-leaflet/vue-leaflet": "^0.10.1",
+    "@vueuse/core": "^11.1.0",
     "@vueuse/integrations": "^11.1.0",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
@@ -41,7 +42,7 @@
     "nprogress": "^0.2.0",
     "sweetalert2": "^11.14.1",
     "v-plausible": "^1.2.0",
-    "vue": "^3.5.8",
+    "vue": "^3.5.10",
     "vue-avatar-editor-improved": "^1.0.7",
     "vue-demi": "^0.14.10",
     "vue-router": "^4.4.5",
@@ -55,28 +56,42 @@
     "@types/leaflet": "^1.9.12",
     "@types/lodash-es": "^4.17.12",
     "@types/marked": "^6.0.0",
-    "@types/node": "^20.16.5",
+    "@types/node": "^20.16.10",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/eslint-config-typescript": "^13.0.0",
     "autoprefixer": "^10.4.20",
-    "cypress": "^13.14.2",
+    "cypress": "^13.15.0",
     "cypress-file-upload": "^5.0.8",
-    "cypress-terminal-report": "^7.0.2",
-    "eslint": "^9.11.0",
+    "cypress-terminal-report": "^7.0.3",
+    "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-cypress": "^3.5.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-vue": "^9.28.0",
     "prettier": "^3.3.3",
     "rollup-plugin-visualizer": "^5.12.0",
-    "sass": "^1.79.3",
+    "sass": "^1.79.4",
     "typescript": "^5.6.2",
     "unplugin-auto-import": "^0.18.3",
     "unplugin-vue-components": "^0.27.4",
-    "vite": "^5.4.7",
+    "vite": "^5.4.8",
     "vue-tsc": "^2.1.6"
   },
   "engines": {
     "node": ">=20"
+  },
+  "pnpm": {
+    "supportedArchitectures": {
+      "os": [
+        "win32",
+        "darwin",
+        "linux",
+        "current"
+      ],
+      "cpu": [
+        "x64",
+        "arm64"
+      ]
+    }
   }
 }

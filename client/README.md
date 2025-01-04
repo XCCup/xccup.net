@@ -1,11 +1,9 @@
 # xccup.net frontend
 
-Preview: https://xccup.onrender.com (not running main branch and way behind…)
-
 ## Project setup
 
 ```
-docker compose run --rm yarn install
+pnpm install
 ```
 
 ### Compiles and hot-reloads for development
@@ -35,3 +33,9 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Howto connect to cypress within WSL
 
 https://nickymeuleman.netlify.app/blog/gui-on-wsl2-cypress
+
+## Howto skip local install of Cypress binary 
+
+```
+CYPRESS_INSTALL_BINARY=0 pnpm install
+```

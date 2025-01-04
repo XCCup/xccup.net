@@ -3,18 +3,20 @@
     <div v-if="results?.values?.length > 0" class="table-responsive">
       <table class="table table-striped table-hover text-sm">
         <thead>
-          <th>Platz</th>
-          <th>Team</th>
-          <th class="no-line-break">Punkte</th>
-          <th>Pilot</th>
-          <th
-            v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
-            :key="n"
-            class="no-line-break"
-          >
-            Flug {{ n }}
-          </th>
-          <th class="hide-on-sm">Gesamt</th>
+          <tr>
+            <th>Platz</th>
+            <th>Team</th>
+            <th class="no-line-break">Punkte</th>
+            <th>Pilot</th>
+            <th
+              v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"
+              :key="n"
+              class="no-line-break"
+            >
+              Flug {{ n }}
+            </th>
+            <th class="hide-on-sm">Gesamt</th>
+          </tr>
         </thead>
         <tbody>
           <tr v-for="(team, index) in results.values" :key="team.teamId">
@@ -23,27 +25,21 @@
             <td>
               <strong>{{ team.name }}</strong>
             </td>
-            <td>
-              <tr class="no-line-break">
-                {{
-                  team.totalPoints
-                }}
-                P
-              </tr>
-              <tr class="no-line-break">
-                ({{
-                  Math.round(team.totalDistance)
-                }}
-                km)
-              </tr>
+            <td class="no-line-break">
+              {{ team.totalPoints }}
+              P <br />
+              ({{ Math.round(team.totalDistance) }}
+              km)
             </td>
 
             <td>
-              <tr v-for="member in team.members" :key="member.id">
-                <td class="no-line-break">
-                  {{ member.firstName + " " + member.lastName }}
-                </td>
-              </tr>
+              <div
+                v-for="member in team.members"
+                :key="member.id"
+                class="no-line-break"
+              >
+                {{ member.firstName + " " + member.lastName }}
+              </div>
             </td>
             <td
               v-for="n in results.constants.NUMBER_OF_SCORED_FLIGHTS"

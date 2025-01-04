@@ -1,6 +1,10 @@
 FROM node:20-alpine3.19
 
-# Packages are necesseary to run c-compiled apps (e.g. OLC) on alpine
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+# Packages are necessary to run c-compiled apps (e.g. OLC) on alpine
 # TODO: Replace compiled app through usage of Node’s N-API
 RUN apk add --no-cache \
     libc6-compat \
@@ -15,8 +19,9 @@ COPY . .
 RUN mkdir -p ./igc/flights \
     && chmod a+wx ./igc/flights \
     && chmod a+x ./igc/olc_lnx \
+    && chmod a+x ./igc/olc_mac_arm \
     && chmod a+x ./igc/olc_lnx_arm
-RUN npm install
+RUN pnpm install
 
 USER node
 

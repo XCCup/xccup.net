@@ -260,6 +260,9 @@ function determineOlcBinary() {
   if (platform.includes("darwin") && os.arch() != "arm64") {
     return "olc_mac_x64 <";
   }
+  if (platform.includes("darwin") && os.arch() == "arm64") {
+    return "olc_mac_arm <";
+  }
   if (os.arch() === "arm64") {
     return "olc_lnx_arm < ";
   } else {
