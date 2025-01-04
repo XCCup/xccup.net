@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- TODO: Refine this -->
-    <h3>Ausschreibung XCCup 2024</h3>
+    <h3>Ausschreibung XCCup 2025</h3>
     <ol>
       <li class="mb-3">
         <strong>Art der Wertung</strong><br />
@@ -21,8 +21,7 @@
         <strong>Gewertete Flüge</strong><br />
         <p class="mb-3">
           Flüge mit Start im XCCup Gebiet (siehe
-          <router-link to="/fluggebiete"> Fluggebietsübersicht</router-link
-          >).<br />
+          <router-link to="/fluggebiete"> Fluggebietsübersicht</router-link>).<br />
         </p>
         <p>
           F-Schlepp: Schlepphöhe darf 1000m und 5km Radius vom Flugfeld nicht
@@ -35,7 +34,7 @@
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
-        16.02.2024 bis 13.10.2024
+        14.02.2024 bis 19.10.2024
       </li>
       <li class="mb-3">
         <!-- TODO: Tabelle oder Link einfügen "hier" -->
