@@ -11,7 +11,7 @@ const INTERVAL_MS = 1000;
 const FLIGHT_FIXES_INTERVAL_S = 5;
 
 let timer: ReturnType<typeof setInterval>;
-let handleSpaceBarForReplay: (event: KeyboardEvent) => void;
+let replayKeyHandler: (event: KeyboardEvent) => void;
 let preventSpaceBarPageScrollDown: (event: KeyboardEvent) => void;
 
 const replayFactor = ref(0);
@@ -104,7 +104,7 @@ export default () => {
   };
 
   const addKeyboardHandler = () => {
-    const replayKeyHandler = (event: KeyboardEvent): void => {
+    replayKeyHandler = (event: KeyboardEvent): void => {
       // Use similar shortcuts as YouTube
 
       // Start / Pause
@@ -130,7 +130,7 @@ export default () => {
   };
 
   const removeKeyboardHandler = () => {
-    document.removeEventListener("keyup", handleSpaceBarForReplay);
+    document.removeEventListener("keyup", replayKeyHandler);
     document.removeEventListener("keydown", preventSpaceBarPageScrollDown);
   };
 
