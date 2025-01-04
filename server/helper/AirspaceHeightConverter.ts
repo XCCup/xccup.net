@@ -21,7 +21,7 @@ export function convertVerticalLimitToMeterMSL(
   const heightValue = extractHeightValueFromText(verticalLimit);
 
   if (verticalLimit.includes("AGL")) {
-    return convertFeetToMeter(heightValue) + elevation ?? 0;
+    return convertFeetToMeter(heightValue) + elevation;
   }
 
   if (verticalLimit.includes("MSL")) {

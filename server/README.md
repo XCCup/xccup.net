@@ -2,13 +2,13 @@
 
 ## Project setup
 
-Delete the node_modules folder
+- Install pnpm globally `npm install -g pnpm`
+- Run `docker build .` 
+    - This will create the server image and execute `pnpm install` within this image
+    - node_modules folder will be linked between Image and Workspace
 
-```
-docker compose run --rm npm install
-```
 
-### Why to set arch/platform parameters (Sharp dependency)
+### What's the matter with the Sharp dependency?
 
 Sharp is a high performance dependency for image compression which uses kernel functions.
 The sharp dependency comes with precompiled binaries for different platforms and architectures.
