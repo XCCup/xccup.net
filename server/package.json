@@ -26,7 +26,6 @@
     "axios-retry": "^4.5.0",
     "bcryptjs": "^2.4.3",
     "bs-logger": "^0.2.6",
-    "compression": "^1.7.4",
     "compression": "^1.7.5",
     "convict": "^6.2.4",
     "core-js": "^3.39.0",
