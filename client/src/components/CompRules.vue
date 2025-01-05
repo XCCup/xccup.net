@@ -34,7 +34,7 @@
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
-        14.02.2024 bis 19.10.2024
+        14.02.2025 bis 19.10.2025
       </li>
       <li class="mb-3">
         <!-- TODO: Tabelle oder Link einfügen "hier" -->
@@ -263,6 +263,6 @@
         sind ausgeschlossen.
       </li>
     </ol>
-    <p>Das XCCup Komitee 06.02.2024</p>
+    <p>Das XCCup Komitee 05.01.2025</p>
   </div>
 </template>
