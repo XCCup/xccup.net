@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.4.0",
-    "@sentry/node": "^8.47.0",
+    "@sentry/node": "^8.49.0",
     "@sentry/profiling-node": "^8.47.0",
     "adm-zip": "^0.5.16",
     "axios": "1.6.2",
