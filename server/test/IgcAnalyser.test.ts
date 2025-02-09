@@ -174,6 +174,29 @@ test("Validate that the landing is detected (even when igc has more fixes; case 
   expect(result.type).toBe(expectedFlight.type);
 });
 
+test("Validate that the landing is not detected to early (slow or stationary flight)", async () => {
+  process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
+  const filePath = "/demo_igcs/user/slow_flight_parts.igc";
+
+  const flightToAnaylze = {
+    externalId: 69,
+    igcPath: path.join(__dirname, "../igc", filePath),
+  };
+
+  const expectedFlight = {
+    type: "FLAT",
+    dist: "9.818",
+  };
+  const result = await calculateFlightResult(
+    flightToAnaylze.igcPath,
+    flightToAnaylze.externalId,
+    flightTypeFactors
+  );
+
+  expect(result.dist).toBe(expectedFlight.dist);
+  expect(result.type).toBe(expectedFlight.type);
+});
+
 test("Validate that the number of fixes was reduced (IGC-File Resolution = 1s => Reduction by factor 5)", () => {
   process.env.SERVER_DATA_PATH = "./igc/demo_igcs";
   const filePath = "demo_igcs/kai_free/free_79km35_4h8m.igc";

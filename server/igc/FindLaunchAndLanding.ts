@@ -21,7 +21,7 @@
  * cross the detection threshold for t seconds
  */
 
-import type { IGCFile, BRecord } from "../helper/igc-parser";
+import type { BRecord, IGCFile } from "../helper/igc-parser";
 import { Point } from "./igc-score/foundation";
 
 interface ExtendedBRecord extends BRecord {
@@ -44,7 +44,7 @@ const definitionFlight = {
 
 const definitionGround = {
   t: 20,
-  xmax: 2.5,
+  xmax: 2.1,
   zmax: 0.2,
 };
 // Attach horizontal and vertical speed to each fix
