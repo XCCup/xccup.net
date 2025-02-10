@@ -2,7 +2,9 @@ FROM node:20-alpine3.19
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+# Remove next line if corepack version was updated in node:20 image
+# RUN corepack enable
+RUN corepack disable && npm install -g pnpm@latest 
 
 # Packages are necessary to run c-compiled apps (e.g. OLC) on alpine
 # TODO: Replace compiled app through usage of Node’s N-API
