@@ -1,8 +1,8 @@
-FROM node:22-alpine3.19
+FROM node:20-alpine3.19
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-# Remove next line if corepack version was updated in node:22 image
+# Remove next line if corepack version was updated in node:20 image
 # RUN corepack enable
 RUN corepack disable && npm install -g pnpm@latest 
 
