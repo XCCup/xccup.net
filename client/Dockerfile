@@ -1,7 +1,9 @@
 FROM node:20-alpine3.19 AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+# Remove next line if corepack version was updated in node:20 image
+# RUN corepack enable
+RUN corepack disable && npm install -g pnpm@latest 
 COPY . /app
 WORKDIR /app
 
