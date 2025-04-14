@@ -39,7 +39,7 @@ async function informAboutDailyWinner() {
 
     if (result.length >= DAILY_WINNER_THRESHOLD) {
       const content = {
-        title: DAILY_WINNER_TITLE(format(startOfToday, "yyyy-mm-dd")),
+        title: DAILY_WINNER_TITLE(format(startOfToday, "yyyy-MM-dd")),
         text: DAILY_WINNER_TEXT(
           result.length,
           result[0].externalId,
