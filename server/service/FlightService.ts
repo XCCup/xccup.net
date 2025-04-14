@@ -930,12 +930,13 @@ async function findAirbuddiesLegacy(flight: FlightAttributes) {
     limit: maxNumberOfBuddies,
     order: [["flightPoints", "DESC"]],
   })) as FlightInstanceUserInclude[];
+
   return flights.map((f: FlightInstanceUserInclude) => {
     return {
       externalId: f.externalId,
-      userFirstName: f.user.firstName,
-      userLastName: f.user.lastName,
-      userId: f.user.id,
+      userFirstName: f.user?.firstName,
+      userLastName: f.user?.lastName,
+      userId: f.user?.id,
     };
   });
 }

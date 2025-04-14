@@ -1,10 +1,9 @@
 import axios from "axios";
 import NodeCache from "node-cache";
-import db from "../db";
 import sequelize from "sequelize";
-import logger from "../config/logger";
-import cron from "node-cron";
 import config from "../config/env-config";
+import logger from "../config/logger";
+import db from "../db";
 
 const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
@@ -48,8 +47,9 @@ const TRACK_RESOLUTION = 10; // 10 seconds (s not ms)
 const TRACK_RESOLUTION_HOME = 60; // 60 seconds (s not ms)
 
 // Run the job every 60 seconds between 8 in the morning and 9 in the evening
-const task = cron.schedule("* 8-21 * * *", fetchFlarmData);
-task.start();
+// TODO: Re-enable cron job for live tracking: Skipped for now due to errors on server
+// const task = cron.schedule("* 8-21 * * *", fetchFlarmData);
+// task.start();
 
 const service = {
   getActive: () => cache.get<ReducedFlightData>("flarm") || [],

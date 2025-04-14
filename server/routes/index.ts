@@ -19,7 +19,7 @@ import GeneralController from "../controller/GeneralController";
 import MailController from "../controller/MailController";
 import SiteController from "../controller/SiteController";
 import CacheController from "../controller/CacheController";
-import LivetrackingController from "../controller/LivetrackingController";
+// import LivetrackingController from "../controller/LivetrackingController";
 
 import TestDataController from "../controller/TestDataController";
 import ImportDataController from "../controller/ImportDataController";
@@ -39,7 +39,7 @@ router.use("/media", MediaController);
 router.use("/general", GeneralController);
 router.use("/mail", MailController);
 router.use("/sites", SiteController);
-router.use("/live", LivetrackingController);
+// router.use("/live", LivetrackingController);
 router.use("/cache", CacheController);
 
 if (config.get("env") !== "production" || config.get("overruleActive")) {
