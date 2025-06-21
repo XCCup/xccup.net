@@ -33,7 +33,7 @@ module.exports.GENDER = {
   DIVERS: "D",
 };
 
-module.exports.TSHIRT_SIZES = ["S", "M", "L", "XL", "XXL"];
+module.exports.TSHIRT_SIZES = ["S", "M", "L", "XL", "XXL", "3XL"];
 
 // Why are those in german?
 module.exports.ROLE = {
