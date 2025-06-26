@@ -3,6 +3,7 @@ const router = express.Router();
 const service = require("../service/CommentService");
 const mailService = require("../service/MailService");
 const { NOT_FOUND } = require("../constants/http-status-constants");
+const { deleteCache } = require("./CacheManager");
 
 const { requesterMustBeLoggedIn, requesterIsNotOwner } = require("./Auth");
 const {
@@ -63,6 +64,8 @@ router.post(
       mailService.sendNewFlightCommentMail(comment);
 
       res.json(comment);
+
+      deleteCache("flights");
     } catch (error) {
       next(error);
     }
