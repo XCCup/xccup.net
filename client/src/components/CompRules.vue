@@ -75,7 +75,7 @@
           <li>
             Intermediate Low: Schirme EN C mit einer maximalen Streckung &lt;6,4
           </li>
-          <li>Intermediate High: Schirme EN C mit einer Streckung von >6,4</li>
+          <li>Intermediate High: Schirme EN C mit einer Streckung von >=6,4</li>
         </ul>
 
         <strong>Performance Klasse</strong> (EN D + CC mit AR 7,0 und höher)
