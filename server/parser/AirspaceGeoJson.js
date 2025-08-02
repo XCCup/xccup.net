@@ -1,9 +1,9 @@
 /**
- * 1. Lade Luftraumdaten für Deutschland herunter: https://www.daec.de/fachbereiche/luftraum-flugsicherheit-betrieb/luftraumdaten/
- * Liste: Für andere Länder https://www.alus.it/AirspaceConverter/openAIP.php
- * 2. Konvertiere OpenAir Format in GeoJSON: https://mygeodata.cloud/converter/openair-to-geojson
+ * 1. Lade Luftraumdaten herunter: https://www.openaip.net/data/exports
  * 3. Lasse den Parser laufen "node AirspaceGeoJson parse [PATH_TO_GEOJSON]"
  * 4. Prüfe das Ergebnis manuell [CURRENTYEAR]_airspaces.json
+ * 4a. Alle mit floor = FL100 entfernt
+ * 4b. Alle mit class = E die nicht TMZ/RMZ sind entfernt
  * 5. Starte den Upload "node AirspaceGeoJson upload [PATH_TO_JSON] [EMAIL_OF_ADMIN_ACCOUNT] [PASSWORD_ACCOUNT] [USE_PROD=true|false]"
  */
 
@@ -96,10 +96,10 @@ function parseGeoJSONFile() {
 
   airspacesFromGeoJSON.features.forEach((e) => {
     airspacesForDb.push({
-      class: e.properties.CLASS,
-      name: e.properties.NAME,
-      floor: e.properties.FLOOR,
-      ceiling: e.properties.CEILING,
+      class: getClassValue(e.properties.icaoClass),
+      name: e.properties.name,
+      floor: getHeightValueAsString(e.properties.lowerLimit),
+      ceiling: getHeightValueAsString(e.properties.upperLimit),
       polygon: e.geometry,
       season: currentYear,
     });
@@ -124,4 +124,51 @@ function checkFileEndingConvertIfNecessary(path) {
   }
 
   return path;
+}
+
+function getHeightValueAsString({ value, unit, referenceDatum }) {
+  // GND
+  if (
+    referenceDatum === 0 &&
+    (value === 0 || value === null || value === undefined)
+  ) {
+    return "GND";
+  }
+
+  // Flight Level
+  if (unit === 6) {
+    return `FL${value}`;
+  }
+
+  // Meter oder Feet
+  let unitStr = unit === 0 ? "m" : unit === 1 ? "ft" : "";
+  let refStr = "";
+  if (referenceDatum === 0) refStr = "AGL";
+  else if (referenceDatum === 1) refStr = "MSL";
+  else if (referenceDatum === 2) refStr = "STD";
+
+  let str = value + unitStr;
+  if (refStr) str += ` ${refStr}`;
+  return str;
+}
+
+function getClassValue(icaoClass) {
+  switch (icaoClass) {
+    case 0:
+      return "A";
+    case 1:
+      return "B";
+    case 2:
+      return "C";
+    case 3:
+      return "D";
+    case 4:
+      return "E";
+    case 5:
+      return "F";
+    case 6:
+      return "G";
+    default:
+      return "Q";
+  }
 }
