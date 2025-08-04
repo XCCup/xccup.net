@@ -1,0 +1,20 @@
+[
+  {
+    "class": "D",
+    "name": "Private Kontrollzone Schriesheim Ölberg",
+    "floor": "2300ft MSL",
+    "ceiling": "3610ft MSL",
+    "polygon": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [8.663333, 49.474444],
+          [8.703333, 49.474444],
+          [8.703333, 49.459167],
+          [8.663333, 49.459167]
+        ]
+      ]
+    },
+    "season": 2025
+  }
+]

@@ -47,10 +47,12 @@ async function uploadToServer() {
 
 async function loginToApi(email, password) {
   try {
+    console.log("Try to login");
     const result = await axios.post(targetUrl + "/users/login", {
       email,
       password,
     });
+    console.log("Login successful");
     return result.data.accessToken;
   } catch (error) {
     console.log("Login not successful");
