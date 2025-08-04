@@ -2,6 +2,13 @@
   <div id="adminNewsPanel" class="pb-3">
     <div class="table-responsive">
       <h5>Nachrichten auf der Startseite</h5>
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm m-1"
+        @click="onAddNews"
+      >
+        Erstelle eine neue Nachricht
+      </button>
       <table class="table table-striped table-hover text-sm">
         <thead>
           <th>Titel</th>
@@ -52,13 +59,6 @@
           </tr>
         </tbody>
       </table>
-      <button
-        type="button"
-        class="btn btn-outline-primary btn-sm m-1"
-        @click="onAddNews"
-      >
-        Erstelle eine neue Nachricht
-      </button>
     </div>
   </div>
   <!-- Modals -->
