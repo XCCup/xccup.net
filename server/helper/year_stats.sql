@@ -61,3 +61,59 @@ select * from
 -- 113	
 -- 201	
 -- 45
+
+
+-- ============================================
+-- JAHRESSTATISTIKEN (Pro Jahr)
+-- ============================================
+
+-- Anzahl Clubs pro Jahr (basierend auf participantInSeasons)
+SELECT 
+  season AS year,
+  COUNT(*) AS club_count
+FROM "Clubs",
+LATERAL unnest("participantInSeasons") AS season
+GROUP BY season
+ORDER BY season DESC;
+
+-- Anzahl Flüge pro Jahr (gesamt und in Wertung)
+SELECT 
+  EXTRACT(YEAR FROM "createdAt") AS year,
+  COUNT(*) AS flight_count,
+  COUNT(*) FILTER (WHERE "flightStatus" = 'In Wertung') AS flights_in_wertung
+FROM "Flights"
+GROUP BY EXTRACT(YEAR FROM "createdAt")
+ORDER BY year DESC;
+
+-- Anzahl aktiver User pro Jahr (User mit mindestens einem Flug)
+SELECT 
+  EXTRACT(YEAR FROM f."createdAt") AS year,
+  COUNT(DISTINCT f."userId") AS active_users,
+  COUNT(DISTINCT f."userId") FILTER (WHERE f."flightStatus" = 'In Wertung') AS users_with_wertung
+FROM "Flights" f
+GROUP BY EXTRACT(YEAR FROM f."createdAt")
+ORDER BY year DESC;
+
+-- Längster Flug pro Jahr mit Pilot-Name und Flight-ID
+WITH max_flights AS (
+  SELECT DISTINCT ON (EXTRACT(YEAR FROM f."createdAt"))
+    EXTRACT(YEAR FROM f."createdAt") AS year,
+    f."flightDistance" AS max_distance,
+    u."firstName" || ' ' || u."lastName" AS pilot_name,
+    'XC-' || f."externalId" AS flight_id
+  FROM "Flights" f
+  JOIN "Users" u ON f."userId" = u.id
+  WHERE f."flightDistance" IS NOT NULL
+  ORDER BY EXTRACT(YEAR FROM f."createdAt"), f."flightDistance" DESC
+)
+SELECT * FROM max_flights
+ORDER BY year DESC;
+
+-- Anzahl Teams pro Jahr (basierend auf season)
+SELECT 
+  season AS year,
+  COUNT(*) AS team_count
+FROM "Teams"
+WHERE season IS NOT NULL
+GROUP BY season
+ORDER BY season DESC;
