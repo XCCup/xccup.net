@@ -124,14 +124,14 @@ importers:
         specifier: ^10.4.23
         version: 10.4.23(postcss@8.5.6)
       cypress:
-        specifier: ^13.17.0
-        version: 13.17.0
+        specifier: ^15.9.0
+        version: 15.9.0
       cypress-file-upload:
         specifier: ^5.0.8
-        version: 5.0.8(cypress@13.17.0)
+        version: 5.0.8(cypress@15.9.0)
       cypress-terminal-report:
         specifier: ^7.3.3
-        version: 7.3.3(cypress@13.17.0)
+        version: 7.3.3(cypress@15.9.0)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -276,10 +276,6 @@ packages:
   '@babel/types@7.28.6':
     resolution: {integrity: sha512-0ZrskXVEHSWIqZM/sQZ4EV3jZJXRkio/WCxaqKZP1g//CEWEPSfeZFcms4XeKBCHU0ZKnIkdJeU/kF+eRp5lBg==}
     engines: {node: '>=6.9.0'}
-
-  '@colors/colors@1.5.0':
-    resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
-    engines: {node: '>=0.1.90'}
 
   '@cypress/request@3.0.10':
     resolution: {integrity: sha512-hauBrOdvu08vOsagkZ/Aju5XuiZx6ldsLfByg1htFeldhex+PeMrYauANzFsMJeAA0+dyPLbDoX2OYuvVoLDkQ==}
@@ -835,6 +831,9 @@ packages:
   '@types/sizzle@2.3.8':
     resolution: {integrity: sha512-0vWLNK2D5MT9dg0iOo8GlKguPAU02QjmZitPEsXRuJXU/OGIOt9vT9Fc26wtYuavLxtO45v9PGleoL9Z0k1LHg==}
 
+  '@types/tmp@0.2.6':
+    resolution: {integrity: sha512-chhaNf2oKHlRkDGt+tiKE2Z5aJ6qalm7Z9rlLdBwmOiAAf09YQvvoLXjWK4HWPF1xU/fqvMgfNfpVoBscA/tKA==}
+
   '@types/web-bluetooth@0.0.21':
     resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==}
 
@@ -1117,9 +1116,6 @@ packages:
     resolution: {integrity: sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==}
     engines: {node: '>=8'}
 
-  async@3.2.6:
-    resolution: {integrity: sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==}
-
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
 
@@ -1254,10 +1250,6 @@ packages:
       chart.js: '>=3.0.0'
       luxon: '>=1.0.0'
 
-  check-more-types@2.24.0:
-    resolution: {integrity: sha512-Pj779qHxV2tuapviy1bSZNEL1maXr13bPYpsvSDB68HlYcYuhlDrmGd63i0JHMCLKzc7rUSNIrpdJlhVlNwrxA==}
-    engines: {node: '>= 0.8.0'}
-
   chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
@@ -1285,8 +1277,8 @@ packages:
     resolution: {integrity: sha512-I/zHAwsKf9FqGoXM4WWRACob9+SNukZTd94DWF57E4toouRulbCxcUh6RKUEOQlYTHJnzkPMySvPNaaSLNfLZw==}
     engines: {node: '>=8'}
 
-  cli-table3@0.6.5:
-    resolution: {integrity: sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==}
+  cli-table3@0.6.1:
+    resolution: {integrity: sha512-w0q/enDHhPLq44ovMGdQeeDLvwxwavsJX7oQGYt/LrBlYsyaxyDnp6z3QzFut/6kLLKnlcUVJLrpB7KBfgG/RA==}
     engines: {node: 10.* || >= 12.*}
 
   cli-truncate@2.1.0:
@@ -1312,6 +1304,10 @@ packages:
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
+
+  colors@1.4.0:
+    resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
+    engines: {node: '>=0.1.90'}
 
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
@@ -1381,9 +1377,9 @@ packages:
     peerDependencies:
       cypress: '>=10.0.0'
 
-  cypress@13.17.0:
-    resolution: {integrity: sha512-5xWkaPurwkIljojFidhw8lFScyxhtiFHl/i/3zov+1Z5CmY4t9tjIdvSXfu82Y3w7wt0uR9KkucbhkVvJZLQSA==}
-    engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
+  cypress@15.9.0:
+    resolution: {integrity: sha512-Ks6Bdilz3TtkLZtTQyqYaqtL/WT3X3APKaSLhTV96TmTyudzSjc6EJsJCHmBb7DxO+3R12q3Jkbjgm/iPgmwfg==}
+    engines: {node: ^20.1.0 || ^22.0.0 || >=24.0.0}
     hasBin: true
 
   dashdash@1.14.1:
@@ -1732,9 +1728,6 @@ packages:
     resolution: {integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==}
     engines: {node: '>=16'}
 
-  getos@3.2.1:
-    resolution: {integrity: sha512-U56CfOK17OKgTVqozZjUKNdkfEv6jk5WISBJ8SHoagjE6L69zOwl3Z+O8myjY9MEW3i2HPWQBt/LTbCgcC973Q==}
-
   getpass@0.1.7:
     resolution: {integrity: sha512-0fzj9JxOLfJ+XGLhR8ze3unN0KZCgZwiSSDz168VERjK8Wl8kVSdcu2kspd4s4wtAa1y/qrVRiAA0WclVsu0ng==}
 
@@ -1813,6 +1806,10 @@ packages:
 
   hash-sum@2.0.0:
     resolution: {integrity: sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==}
+
+  hasha@5.2.2:
+    resolution: {integrity: sha512-Hrp5vIK/xr5SkeN2onO32H0MgNZ0f17HRNH39WfL0SYUNOTZ5Lz1TJ8Pajo/87dYGEFlLMm7mIc/k/s6Bvz9HQ==}
+    engines: {node: '>=8'}
 
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
@@ -2004,10 +2001,6 @@ packages:
 
   knitwork@1.1.0:
     resolution: {integrity: sha512-oHnmiBUVHz1V+URE77PNot2lv3QiYU2zQf1JjOVkMt3YDKGbu8NAFr+c4mcNOhdsGrB/VpVbRwPwhiXrPhxQbw==}
-
-  lazy-ass@1.6.0:
-    resolution: {integrity: sha512-cc8oEVoctTvsFZ/Oje/kGnHbpWHYBe8IAJe4C0QNc3t8uM/0Y8+erSz/7Y1ALuXTEZTMvxXwO6YbX1ey3ujiZw==}
-    engines: {node: '> 0.8'}
 
   leaflet-gesture-handling@1.2.2:
     resolution: {integrity: sha512-Blf5V4PoNphWkzL7Y1qge+Spkd4OCQ2atjwUNhMhLIcjKzPcBH++x/lwOinaR9jSqLWqJ6oKYO8d0XdTffy4hQ==}
@@ -2619,6 +2612,12 @@ packages:
     resolution: {integrity: sha512-Bh7QjT8/SuKUIfObSXNHNSK6WHo6J1tHCqJsuaFDP7gP0fkzSfTxI8y85JrppZ0h8l0maIgc2tfuZQ6/t3GtnQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  systeminformation@5.30.6:
+    resolution: {integrity: sha512-LEIyK1aEv5P3BhAPW3swdlIyCihxwEq/Gki+kcONieU4PIeRCSLDuGkk0Va/56PSBgjVgEksOM88dmY6YqOyfQ==}
+    engines: {node: '>=8.0.0'}
+    os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
+    hasBin: true
+
   tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
@@ -2639,8 +2638,8 @@ packages:
     resolution: {integrity: sha512-WMi/OQ2axVTf/ykqCQgXiIct+mSQDFdH2fkwhPwgEwvJ1kSzZRiinb0zF2Xb8u4+OqPChmyI6MEu4EezNJz+FQ==}
     hasBin: true
 
-  tmp@0.2.3:
-    resolution: {integrity: sha512-nZD7m9iCPC5g0pYmcaxogYKggSfLsdxl8of3Q/oIbqCqLLIO9IAF0GWjX1z9NZRHPiXv8Wex4yDCaZsgEw0Y8w==}
+  tmp@0.2.5:
+    resolution: {integrity: sha512-voyz6MApa1rQGUxT3E+BK7/ROe8itEx7vD8/HEvt4xwXucvQ5G5oeEiHkmHZJuBO21RpOf+YYm9MOivj709jow==}
     engines: {node: '>=14.14'}
 
   to-fast-properties@2.0.0:
@@ -2688,6 +2687,10 @@ packages:
   type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
+
+  type-fest@0.8.1:
+    resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
+    engines: {node: '>=8'}
 
   typescript@5.9.3:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
@@ -3088,9 +3091,6 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
-
-  '@colors/colors@1.5.0':
-    optional: true
 
   '@cypress/request@3.0.10':
     dependencies:
@@ -3580,6 +3580,8 @@ snapshots:
 
   '@types/sizzle@2.3.8': {}
 
+  '@types/tmp@0.2.6': {}
+
   '@types/web-bluetooth@0.0.21': {}
 
   '@types/yauzl@2.10.3':
@@ -3897,8 +3899,6 @@ snapshots:
 
   astral-regex@2.0.0: {}
 
-  async@3.2.6: {}
-
   asynckit@0.4.0: {}
 
   at-least-node@1.0.0: {}
@@ -4038,8 +4038,6 @@ snapshots:
       chart.js: 4.5.1
       luxon: 3.7.2
 
-  check-more-types@2.24.0: {}
-
   chokidar@3.6.0:
     dependencies:
       anymatch: 3.1.3
@@ -4070,11 +4068,11 @@ snapshots:
     dependencies:
       restore-cursor: 3.1.0
 
-  cli-table3@0.6.5:
+  cli-table3@0.6.1:
     dependencies:
       string-width: 4.2.3
     optionalDependencies:
-      '@colors/colors': 1.5.0
+      colors: 1.4.0
 
   cli-truncate@2.1.0:
     dependencies:
@@ -4100,6 +4098,9 @@ snapshots:
   color-name@1.1.4: {}
 
   colorette@2.0.20: {}
+
+  colors@1.4.0:
+    optional: true
 
   combined-stream@1.0.8:
     dependencies:
@@ -4143,33 +4144,33 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  cypress-file-upload@5.0.8(cypress@13.17.0):
+  cypress-file-upload@5.0.8(cypress@15.9.0):
     dependencies:
-      cypress: 13.17.0
+      cypress: 15.9.0
 
-  cypress-terminal-report@7.3.3(cypress@13.17.0):
+  cypress-terminal-report@7.3.3(cypress@15.9.0):
     dependencies:
       chalk: 4.1.2
       compare-versions: 6.1.1
-      cypress: 13.17.0
+      cypress: 15.9.0
       superstruct: 0.14.2
 
-  cypress@13.17.0:
+  cypress@15.9.0:
     dependencies:
       '@cypress/request': 3.0.10
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
       '@types/sinonjs__fake-timers': 8.1.1
       '@types/sizzle': 2.3.8
+      '@types/tmp': 0.2.6
       arch: 2.2.0
       blob-util: 2.0.2
       bluebird: 3.7.2
       buffer: 5.7.1
       cachedir: 2.4.0
       chalk: 4.1.2
-      check-more-types: 2.24.0
       ci-info: 4.3.1
       cli-cursor: 3.1.0
-      cli-table3: 0.6.5
+      cli-table3: 0.6.1
       commander: 6.2.1
       common-tags: 1.8.2
       dayjs: 1.11.13
@@ -4181,9 +4182,8 @@ snapshots:
       extract-zip: 2.0.1(supports-color@8.1.1)
       figures: 3.2.0
       fs-extra: 9.1.0
-      getos: 3.2.1
+      hasha: 5.2.2
       is-installed-globally: 0.4.0
-      lazy-ass: 1.6.0
       listr2: 3.14.0(enquirer@2.4.1)
       lodash: 4.17.21
       log-symbols: 4.1.0
@@ -4193,9 +4193,9 @@ snapshots:
       process: 0.11.10
       proxy-from-env: 1.0.0
       request-progress: 3.0.0
-      semver: 7.6.3
       supports-color: 8.1.1
-      tmp: 0.2.3
+      systeminformation: 5.30.6
+      tmp: 0.2.5
       tree-kill: 1.2.2
       untildify: 4.0.0
       yauzl: 2.10.0
@@ -4591,10 +4591,6 @@ snapshots:
 
   get-stream@8.0.1: {}
 
-  getos@3.2.1:
-    dependencies:
-      async: 3.2.6
-
   getpass@0.1.7:
     dependencies:
       assert-plus: 1.0.0
@@ -4683,6 +4679,11 @@ snapshots:
       has-symbols: 1.0.3
 
   hash-sum@2.0.0: {}
+
+  hasha@5.2.2:
+    dependencies:
+      is-stream: 2.0.1
+      type-fest: 0.8.1
 
   hasown@2.0.2:
     dependencies:
@@ -4826,8 +4827,6 @@ snapshots:
   klona@2.0.6: {}
 
   knitwork@1.1.0: {}
-
-  lazy-ass@1.6.0: {}
 
   leaflet-gesture-handling@1.2.2: {}
 
@@ -5395,6 +5394,8 @@ snapshots:
     dependencies:
       '@pkgr/core': 0.2.9
 
+  systeminformation@5.30.6: {}
+
   tar@6.2.1:
     dependencies:
       chownr: 2.0.0
@@ -5416,7 +5417,7 @@ snapshots:
     dependencies:
       tldts-core: 6.1.86
 
-  tmp@0.2.3: {}
+  tmp@0.2.5: {}
 
   to-fast-properties@2.0.0: {}
 
@@ -5451,6 +5452,8 @@ snapshots:
   type-fest@0.20.2: {}
 
   type-fest@0.21.3: {}
+
+  type-fest@0.8.1: {}
 
   typescript@5.9.3: {}
 

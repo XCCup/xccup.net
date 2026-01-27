@@ -23,7 +23,8 @@
       "2022",
       "2023",
       "2025",
-      "2024"
+      "2024",
+      "2026"
     ],
     "contact": {
       "address": "ADVANCE Thun AG Seestrasse 14 CH-3602 Thun",
@@ -113,7 +114,7 @@
     "website": "https://www.ad-gliders.com",
     "type": "MANUFACTURER",
     "tagline": "Gleitschirme und mehr",
-    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2025", "2024"],
+    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2026", "2024"],
     "contact": {
       "address": "AIRDESIGN GmbH Rhombergstraße 9, 4. Stock 6067 Absam Innsbruck Austria",
       "email": "info@ad-gliders.com, martin@ad-gliders.com",
@@ -133,7 +134,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -204,7 +205,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -300,7 +301,7 @@
     "website": "http://www.dank-e.de",
     "tagline": "Ökologisch. Nachhaltig. Innovativ.",
     "type": "OTHER",
-    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2025", "2024"],
+    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2026", "2024"],
     "contact": {
       "address": "DANKe Projekt GmbH Am Wiesengrund 23 65510 Hünstetten",
       "email": "mboerner@dank-e.de",
@@ -337,7 +338,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -372,7 +373,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -437,7 +438,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -486,7 +487,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -559,7 +560,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -647,7 +648,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -656,7 +657,7 @@
       "phone": "+49 641/5599957",
       "phone2": ""
     },
-    "id": "20258e0b-3932-4a0f-a765-b916cd4b8d41"
+    "id": "20268e0b-3932-4a0f-a765-b916cd4b8d41"
   },
   {
     "name": "Moselglider",
@@ -737,7 +738,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -766,7 +767,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -831,7 +832,7 @@
     "type": "MANUFACTURER",
     "isGoldSponsor": true,
     "tagline": "The new paragliding brand of Hannes Papesh and team",
-    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2025", "2024"],
+    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2026", "2024"],
     "contact": {
       "address": "Achenseestraße 12 6212 Maurach, Austria - behind the Rofan cabel car -",
       "email": "info@phi-air.com",
@@ -897,7 +898,7 @@
     "website": "http://www.skyman.aero",
     "type": "MANUFACTURER",
     "tagline": "Neue Wege entdecken",
-    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2025", "2024"],
+    "sponsorInSeasons": ["2019", "2020", "2022", "2023", "2026", "2024"],
     "contact": {
       "address": "Fly-market Flugsport-Zubehör GmbH & Co. KG Am Schönebach 3 87637 Eisenberg",
       "email": "",
@@ -954,7 +955,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -1009,7 +1010,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -1085,7 +1086,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -1114,7 +1115,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
@@ -1166,7 +1167,7 @@
       "2020",
       "2022",
       "2023",
-      "2025",
+      "2026",
       "2024"
     ],
     "contact": {
