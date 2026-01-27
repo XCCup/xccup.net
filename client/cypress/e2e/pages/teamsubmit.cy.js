@@ -24,7 +24,7 @@ describe("check flyingsites page", () => {
     );
   });
 
-  it.only("test submit a new team", () => {
+  it("test submit a new team", () => {
     const expectedTeamName = 'Le "Foobars"';
     const expectedTeamNameAlreadyInUser = "Die Elstern";
     const expectedSubmitter = "Olive Emmerich";
