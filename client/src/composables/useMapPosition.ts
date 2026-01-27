@@ -41,7 +41,7 @@ const throttled = throttle((context: BaroTooltipItem) => {
 
   state.value[context.datasetIndex - 1] = {
     position: context.dataIndex,
-    time: context.parsed.x,
+    time: context.parsed.x as number,
     positionDetails: {
       speed: context.raw.speed,
       gpsAltitude: context.raw.gpsAltitude,
