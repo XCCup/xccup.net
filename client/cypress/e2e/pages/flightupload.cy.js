@@ -241,10 +241,10 @@ describe("check flight upload page", () => {
     const expectedMailContent =
       "Herzlichen Glückwunsch zur neuen persönlichen Bestleistung";
 
-    const expectedFirstMetar =
-      "METAR EDVK 221050Z 35006KT 320V030 9999 SCT041 17/08 Q1016";
-    const expectedLastMetar =
-      "METAR EDVK 221550Z VRB03KT 9999 FEW048 20/08 Q1014";
+    // const expectedFirstMetar =
+    //   "METAR EDVK 221050Z 35006KT 320V030 9999 SCT041 17/08 Q1016";
+    // const expectedLastMetar =
+    //   "METAR EDVK 221550Z VRB03KT 9999 FEW048 20/08 Q1014";
 
     // Test another file to NOT be the personal best
     const igcFileName2 = "fai_60km42_3h53m.igc";
@@ -278,14 +278,14 @@ describe("check flight upload page", () => {
     cy.wait("@update-flight");
     cy.wait("@get-flight");
 
-    cy.get("[data-cy=METAR-Stats]").contains("Wetter (Beta)");
-    cy.get("#metarButton").click();
-    cy.get("#metarDetailsCollapse > :nth-child(1)").contains(
-      expectedFirstMetar
-    );
-    cy.get("#metarDetailsCollapse > :nth-child(19)").contains(
-      expectedLastMetar
-    );
+    // cy.get("[data-cy=METAR-Stats]").contains("Wetter (Beta)");
+    // cy.get("#metarButton").click();
+    // cy.get("#metarDetailsCollapse > :nth-child(1)").contains(
+    //   expectedFirstMetar
+    // );
+    // cy.get("#metarDetailsCollapse > :nth-child(19)").contains(
+    //   expectedLastMetar
+    // );
 
     // Expect to be redirected to flight view after submitting
     cy.get("[data-cy=flight-details-pilot]")

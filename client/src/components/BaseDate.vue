@@ -8,7 +8,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import { computed } from "vue";
 const props = defineProps({
   timestamp: {
-    type: [String, Number, Date],
+    type: [String, Number, Date, undefined],
     required: true,
   },
   dateFormat: {

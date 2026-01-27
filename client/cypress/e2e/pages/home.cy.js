@@ -188,6 +188,6 @@ describe("check landing page", () => {
     });
 
     cy.get("#goldSponsors").find(".cy-sponsor").its("length").should("eq", 3);
-    cy.get("#otherSponsors").find(".cy-sponsor").its("length").should("eq", 17);
+    cy.get("#otherSponsors").find(".cy-sponsor").its("length").should("eq", 16);
   });
 });

@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- TODO: Refine this -->
-    <h3>Ausschreibung XCCup 2025</h3>
+    <h3>Ausschreibung XCCup 2026</h3>
     <ol>
       <li class="mb-3">
         <strong>Art der Wertung</strong><br />
@@ -27,17 +26,16 @@
           F-Schlepp: Schlepphöhe darf 1000m und 5km Radius vom Flugfeld nicht
           überschreiten.
         </p>
-        Ein Flug muss eine Punktzahl von mindestens 60 erreichen, um als
+        Ein Flug muss eine Punktzahl von mindestens 80 erreichen, um als
         Wertungsflug zu zählen. <br />
         Piloten die mindestens 2 Wertungsflüge erzielen, qualifizieren sich für
         ein XCCup T-Shirt.
       </li>
       <li class="mb-3">
         <strong>Zeitraum</strong><br />
-        14.02.2025 bis 19.10.2025
+        14.02.2026 bis 19.10.2026
       </li>
       <li class="mb-3">
-        <!-- TODO: Tabelle oder Link einfügen "hier" -->
         <strong>Faktoren</strong><br />
         Details zu den Faktoren der Geräteklassen sind hier zusammengefasst.
         <router-link to="/ausschreibung#factorPanel">
@@ -73,9 +71,9 @@
         <strong>Intermediate Klasse</strong> (EN C)
         <ul>
           <li>
-            Intermediate Low: Schirme EN C mit einer maximalen Streckung &lt;6,4
+            Intermediate Low: Schirme EN-C Drei-Leiner
           </li>
-          <li>Intermediate High: Schirme EN C mit einer Streckung von >=6,4</li>
+          <li>Intermediate High: Schirme EN-C Zwei-Leiner</li>
         </ul>
 
         <strong>Performance Klasse</strong> (EN D + CC mit AR 7,0 und höher)
@@ -263,6 +261,6 @@
         sind ausgeschlossen.
       </li>
     </ol>
-    <p>Das XCCup Komitee 05.01.2025</p>
+    <p>Das XCCup Komitee 27.01.2026</p>
   </div>
 </template>

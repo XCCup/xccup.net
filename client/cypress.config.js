@@ -1,5 +1,5 @@
 import { defineConfig } from "cypress";
-import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
+import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter.js";
 
 export default defineConfig({
   viewportWidth: 1600,

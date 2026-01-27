@@ -21,6 +21,7 @@ describe("check users register page", () => {
 
     cy.get("#birthday").click();
     cy.get(".v3dp__heading__button").first().click();
+    cy.get(".v3dp__heading__button").first().click();
     cy.get(".v3dp__elements").find("button").contains("1994").click();
     cy.get(".v3dp__elements").find("button").contains("Mai").click();
     cy.get(".v3dp__elements").find("button").contains("01").click();
@@ -77,6 +78,7 @@ describe("check users register page", () => {
     cy.get("#gender").select("M").should("have.value", "M");
 
     cy.get("#birthday").click();
+    cy.get(".v3dp__heading__button").first().click();
     cy.get(".v3dp__heading__button").first().click();
     cy.get(".v3dp__elements").find("button").contains("1996").click();
     cy.get(".v3dp__elements").find("button").contains("Feb").click();

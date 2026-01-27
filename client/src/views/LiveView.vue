@@ -1,25 +1,12 @@
 <template>
   <div style="height: 100%; width: 100%" class="darken-map">
     <l-map ref="map" :zoom="7" :center="[50.143, 7.146]">
-      <l-tile-layer
-        :url="url"
-        :attribution="tileOptions.attribution"
-        :max-zoom="tileOptions.maxZoom"
-      ></l-tile-layer>
-      <l-polyline
-        v-for="({ fixes, name, distance }, index) in liveData"
-        :lat-lngs="fixes.map((fix) => [fix.lat, fix.lon])"
-        :color="ADDITIONAL_COLORS[index % ADDITIONAL_COLORS.length]"
-      >
-        <l-circle-marker
-          :lat-lng="[fixes.at(-1)?.lat ?? 0, fixes.at(-1)?.lon ?? 0]"
-          :radius="6"
-          :stroke="true"
-          :weight="1"
-          :fill-opacity="0.8"
-          :fill-color="ADDITIONAL_COLORS[index % ADDITIONAL_COLORS.length]"
-          color="#fff"
-        >
+      <l-tile-layer :url="url" :attribution="tileOptions.attribution" :max-zoom="tileOptions.maxZoom"></l-tile-layer>
+      <l-polyline v-for="({ fixes, name, distance }, index) in liveData"
+        :lat-lngs="fixes.map((fix) => [fix.lat, fix.lon])" :color="ADDITIONAL_COLORS[index % ADDITIONAL_COLORS.length]">
+        <l-circle-marker :lat-lng="[fixes.at(-1)?.lat ?? 0, fixes.at(-1)?.lon ?? 0]" :radius="6" :stroke="true"
+          :weight="1" :fill-opacity="0.8" :fill-color="ADDITIONAL_COLORS[index % ADDITIONAL_COLORS.length]"
+          color="#fff">
           <l-tooltip :options="{ permanent: true }">
             <b>{{ name }}</b>
             {{
@@ -38,7 +25,7 @@ import ApiService from "@/services/ApiService";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
-import { ref, onUnmounted } from "vue";
+import { ref, onUnmounted, onMounted } from "vue";
 import { setWindowName } from "@/helper/utils";
 import { ADDITIONAL_COLORS } from "@/common/Constants";
 import { tileOptions } from "@/config/mapbox";
@@ -76,6 +63,13 @@ let intervalId: NodeJS.Timeout | null = null;
 intervalId = setInterval(fetchData, 5000);
 
 onUnmounted(() => clearInterval(intervalId as NodeJS.Timeout));
+
+onMounted(() => {
+  const leafletMap = map.value;
+  if (!leafletMap) return;
+
+  leafletMap.invalidateSize();
+});
 
 async function fetchData() {
   try {

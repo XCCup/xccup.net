@@ -21,6 +21,6 @@ export const initSentry = (app: App<Element>, router: Router) => {
       /^\//,
     ],
     tracesSampleRate: 1.0,
-    logErrors: true,
+    // logErrors: true,
   });
 };
