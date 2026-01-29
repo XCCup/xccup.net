@@ -1,43 +1,31 @@
 import sequelize from "sequelize";
-import db from "../db";
-import { calculateFlightResult, OLCResult } from "../igc/IgcAnalyzer";
-import { findLanding } from "../igc/LocationFinder";
-import { calculateFlightStats } from "../igc/FlightStatsCalculator";
-import { getCurrentActive } from "./SeasonService";
-import { findClosestTakeoff } from "./FlyingSiteService";
-import { hasAirspaceViolation } from "./AirspaceService";
-import MailService from "./MailService";
-import { isNoWorkday } from "../helper/HolidayCalculator";
-import { sleep, findKeyByValue } from "../helper/Utils";
-import { deleteIgcFile } from "../helper/igc-file-utils";
-import { COUNTRY, STATE as USER_STATE } from "../constants/user-constants";
-import { FLIGHT_STATE } from "../constants/flight-constants";
-import logger from "../config/logger";
 import config from "../config/env-config";
+import logger from "../config/logger";
+import { FLIGHT_STATE } from "../constants/flight-constants";
+import { COUNTRY, STATE as USER_STATE } from "../constants/user-constants";
+import db from "../db";
 import {
+  combineFixesProperties,
   createGeometry,
   extractTimeAndHeights,
-  combineFixesProperties,
 } from "../helper/FlightFixUtils";
-import { checkSiteRecordsAndUpdate } from "./SiteRecordCache";
+import { isNoWorkday } from "../helper/HolidayCalculator";
+import { findKeyByValue, sleep } from "../helper/Utils";
+import { deleteIgcFile } from "../helper/igc-file-utils";
 import {
-  getElevationData,
   addElevationToFixes,
+  getElevationData,
   logElevationError,
 } from "../igc/ElevationHelper";
+import { calculateFlightStats } from "../igc/FlightStatsCalculator";
+import { calculateFlightResult, OLCResult } from "../igc/IgcAnalyzer";
+import { findLanding } from "../igc/LocationFinder";
+import { hasAirspaceViolation } from "./AirspaceService";
+import { findClosestTakeoff } from "./FlyingSiteService";
+import MailService from "./MailService";
+import { getCurrentActive } from "./SeasonService";
+import { checkSiteRecordsAndUpdate } from "./SiteRecordCache";
 
-import { checkIfFlightIsNewPersonalBest } from "../helper/PersonalBest";
-import {
-  FlightAttributes,
-  FlightInstance,
-  FlightInstanceUserInclude,
-} from "../db/models/Flight";
-import { Glider } from "../types/Glider";
-import { FlightFixCombined, FlightFixStat } from "../types/FlightFixes";
-import { Fn } from "sequelize/types/utils";
-import { FlightCommentInstance } from "../db/models/FlightComment";
-import { FlightPhotoInstance } from "../db/models/FlightPhoto";
-import { FaiResponse } from "../igc/IgcValidator";
 import {
   addDays,
   addHours,
@@ -46,6 +34,18 @@ import {
   subDays,
   subHours,
 } from "date-fns";
+import { Fn } from "sequelize/types/utils";
+import {
+  FlightAttributes,
+  FlightInstance,
+  FlightInstanceUserInclude,
+} from "../db/models/Flight";
+import { FlightCommentInstance } from "../db/models/FlightComment";
+import { FlightPhotoInstance } from "../db/models/FlightPhoto";
+import { checkIfFlightIsNewPersonalBest } from "../helper/PersonalBest";
+import { FaiResponse } from "../igc/IgcValidator";
+import { FlightFixCombined, FlightFixStat } from "../types/FlightFixes";
+import { Glider } from "../types/Glider";
 
 interface WhereOptions {
   year?: number;

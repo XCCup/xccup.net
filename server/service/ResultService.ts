@@ -1,36 +1,26 @@
 import db from "../db";
 
+import sequelize from "sequelize";
 import seasonService from "./SeasonService";
 import teamService from "./TeamService";
-import sequelize from "sequelize";
 
-import { getCurrentYear } from "../helper/Utils";
-import { FLIGHT_TYPE, FLIGHT_STATE } from "../constants/flight-constants";
-import { GENDER } from "../constants/user-constants";
 import {
+  NEWCOMER_MAX_RANKING_CLASS,
+  NUMBER_OF_SCORED_FLIGHTS,
   TEAM_DISMISSES,
   TEAM_SIZE,
-  NUMBER_OF_SCORED_FLIGHTS,
-  NEWCOMER_MAX_RANKING_CLASS,
 } from "../config/result-determination-config";
-import { XccupHttpError } from "../helper/ErrorHandler";
+import { FLIGHT_STATE, FLIGHT_TYPE } from "../constants/flight-constants";
 import { NOT_FOUND } from "../constants/http-status-constants";
+import { GENDER } from "../constants/user-constants";
 import { SeasonDetailAttributes } from "../db/models/SeasonDetail";
+import { XccupHttpError } from "../helper/ErrorHandler";
+import { getCurrentYear } from "../helper/Utils";
 
-import type { RankingTypes } from "../db/models/SeasonDetail";
-import type {
-  UserResults,
-  UserResultsWithTotals,
-  ClubResults,
-  UserResultFlight,
-  QueryResult,
-  SiteRecordsUncombined,
-  FlightSitesWithRecord,
-  FlightSiteRecord,
-  Team,
-  TeamWithMemberFlights,
-} from "../types/ResultTypes";
+import { addMonths, subMonths } from "date-fns";
+import logger from "../config/logger";
 import { FlightInstanceUserInclude } from "../db/models/Flight";
+import type { RankingTypes } from "../db/models/SeasonDetail";
 import {
   calcTotalsOfMember,
   calcTotalsOverMembers,
@@ -38,8 +28,18 @@ import {
   removeMultipleEntriesForUsers,
   sortDescendingByTotalPoints,
 } from "../helper/ResultUtils";
-import logger from "../config/logger";
-import { addMonths, subMonths } from "date-fns";
+import type {
+  ClubResults,
+  FlightSiteRecord,
+  FlightSitesWithRecord,
+  QueryResult,
+  SiteRecordsUncombined,
+  Team,
+  TeamWithMemberFlights,
+  UserResultFlight,
+  UserResults,
+  UserResultsWithTotals,
+} from "../types/ResultTypes";
 
 const { FlyingSite, User, Flight, Club, Team, Result } = db;
 
@@ -98,7 +98,10 @@ const service = {
   }: Partial<OptionsGetOverall>) => {
     const seasonDetail = await retrieveSeasonDetails(year);
 
-    const constantsForResult = { NUMBER_OF_SCORED_FLIGHTS };
+    const constantsForResult = {
+      NUMBER_OF_SCORED_FLIGHTS,
+      REMARKS: seasonDetail?.misc?.textMessages?.resultsOverall,
+    };
 
     // Search for old overall results
     const oldRes = await findOldResults(
@@ -183,7 +186,7 @@ const service = {
 
     return addConstantInformationToResult(
       resultsWithTotals,
-      { NUMBER_OF_SCORED_FLIGHTS },
+      { ...constantsForResult },
       limit
     );
   },
