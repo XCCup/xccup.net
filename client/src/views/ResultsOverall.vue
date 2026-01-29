@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import ApiService from "@/services/ApiService";
-import { setWindowName } from "../helper/utils";
+import { ref } from "vue";
 import { useRoute } from "vue-router";
 import useData from "../composables/useData";
-import { ref } from "vue";
+import { setWindowName } from "../helper/utils";
 
 const route = useRoute();
 const title = ref("Gesamtwertung");
-const remark = ref("");
 
 setWindowName(title.value);
 
 const { initData, data: results, dataConstants, noDataFlag } = useData();
+const remark = ref(dataConstants.value?.REMARKS);
 
 // Prevent to send a request query with an empty year parameter
 const params = route.params.year ? route.params : undefined;
@@ -36,11 +36,8 @@ await initData(ApiService.getResultsOverall, {
           <FilterPanel />
         </div>
       </div>
-      <ResultsTableGeneric
-        :results="results"
-        :no-data-flag="noDataFlag"
-        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0"
-      />
+      <ResultsTableGeneric :results="results" :no-data-flag="noDataFlag"
+        :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0" />
     </div>
     <GenericError v-else />
   </div>

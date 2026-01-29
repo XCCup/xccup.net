@@ -1,9 +1,7 @@
-FROM node:20-alpine3.19 AS base
+FROM node:24-alpine3.22 AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-# Remove next line if corepack version was updated in node:20 image
-# RUN corepack enable
-RUN corepack disable && npm install -g pnpm@latest 
+RUN corepack enable
 COPY . /app
 WORKDIR /app
 
@@ -15,7 +13,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
 # Production build
-FROM nginx:1.23.1-alpine
+FROM nginx:1.29.4-alpine
 #RUN addgroup app && adduser -S -G app app
 #USER app
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
