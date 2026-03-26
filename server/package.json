@@ -27,7 +27,7 @@
     "bcryptjs": "^3.0.3",
     "bs-logger": "^0.2.6",
     "compression": "^1.8.1",
-    "convict": "^6.2.4",
+    "convict": "^6.2.5",
     "core-js": "^3.48.0",
     "cors": "^2.8.6",
     "date-easter": "^1.0.3",
