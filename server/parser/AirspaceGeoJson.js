@@ -8,16 +8,20 @@
  */
 
 const fs = require("fs");
+const path = require("path");
 const axios = require("axios");
 
 const scriptOption = process.argv[2];
 const sourcePath = process.argv[3];
 const email = process.argv[4];
 const password = process.argv[5];
+
 const useProd = process.argv[6];
 
 const devUrl = "http://localhost:3000/api";
 const prodUrl = "https://xccup.net/api";
+
+const BLACKLIST_NAMES = ["EDGG", "FIS LANGEN", "AREA"];
 
 const targetUrl = useProd === "true" ? prodUrl : devUrl;
 
@@ -36,7 +40,7 @@ if (scriptOption === "upload") {
 async function uploadToServer() {
   console.log("Will upload data to " + targetUrl);
 
-  const airspaces = require(sourcePath);
+  const airspaces = readJsonFile(sourcePath);
 
   const token = await loginToApi(email, password);
   if (!token) return;
@@ -90,7 +94,7 @@ function parseGeoJSONFile() {
 
   console.log("Will parse GeoJSON from " + checkedPath);
 
-  const airspacesFromGeoJSON = require(checkedPath);
+  const airspacesFromGeoJSON = readJsonFile(checkedPath);
 
   const airspacesForDb = [];
 
@@ -113,6 +117,11 @@ function parseGeoJSONFile() {
       console.log("done");
     }
   );
+}
+
+function readJsonFile(filePath) {
+  const absolutePath = path.resolve(filePath);
+  return JSON.parse(fs.readFileSync(absolutePath, "utf8"));
 }
 
 function checkFileEndingConvertIfNecessary(path) {

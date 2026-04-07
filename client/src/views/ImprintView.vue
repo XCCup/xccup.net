@@ -6,16 +6,14 @@
       <p>
         <strong> Angaben Gemäß §5 TMG</strong> <br />
         XCCup (nicht eingetragener Verein)<br />
-        Heinrich-Brauns-Straße 1 <br />
-        54296 Trier <br />
+        Im Seufen 5 <br />
+        56761 Müllenbach <br />
 
         <a href="mailto:info@xccup.net">info@xccup.net</a>
       </p>
 
       <p>
         <strong>Gemeinschaftlich vertreten durch</strong> <br />
-        Bärbel Ellwanger -
-        <a href="mailto:baerbel@xccup.net">baerbel@xccup.net</a><br />
         Kai Wissel - <a href="mailto:kai@xccup.net">kai@xccup.net</a><br />
         Stephan Schöpe -
         <a href="mailto:steph@xccup.net">steph@xccup.net</a><br /><br />
