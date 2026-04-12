@@ -24,7 +24,7 @@
     "@vue-leaflet/vue-leaflet": "^0.10.1",
     "@vueuse/core": "^14.1.0",
     "@vueuse/integrations": "^14.1.0",
-    "axios": "^1.13.3",
+    "axios": "^1.15.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "chart.js": "^4.5.1",
