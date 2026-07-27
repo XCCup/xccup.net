@@ -136,7 +136,8 @@ const nextSeasonAlreadyDefined = computed(() => {
 
 const isUpdate = computed(() => {
   return (
-    (isActiveSeason.value || nextSeasonAlreadyDefined) && !isAfterSeasonEnd.value
+    (isActiveSeason.value || nextSeasonAlreadyDefined.value) &&
+    !isAfterSeasonEnd.value
   );
 });
 
