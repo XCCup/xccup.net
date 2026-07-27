@@ -1,5 +1,6 @@
 import axios from "axios";
 import NodeCache from "node-cache";
+import cron from "node-cron";
 import sequelize from "sequelize";
 import config from "../config/env-config";
 import logger from "../config/logger";
@@ -13,6 +14,7 @@ const IGC_XC_SCORE_HOST = config.get("igcXcScoreHost");
 
 const CACHE_INDEFINITELY = 0;
 const CACHE_10_MINUTES = 600;
+const EXTERNAL_REQUEST_TIMEOUT_MS = 20_000;
 
 const cache = new NodeCache({ stdTTL: CACHE_10_MINUTES });
 
@@ -47,9 +49,12 @@ const TRACK_RESOLUTION = 10; // 10 seconds (s not ms)
 const TRACK_RESOLUTION_HOME = 60; // 60 seconds (s not ms)
 
 // Run the job every 60 seconds between 8 in the morning and 9 in the evening
-// TODO: Re-enable cron job for live tracking: Skipped for now due to errors on server
-// const task = cron.schedule("* 8-21 * * *", fetchFlarmData);
-// task.start();
+const task = cron.schedule("* 8-21 * * *", fetchFlarmData, {
+  noOverlap: true,
+  timezone: config.get("timezone"),
+});
+
+logger.info("LT: Live tracking cron job enabled");
 
 const service = {
   getActive: () => cache.get<ReducedFlightData>("flarm") || [],
@@ -90,10 +95,17 @@ async function fetchFlarmData() {
     const idsWithNames = await getUserFlarmIds();
     const ids = idsWithNames.map((user) => user.flarmId);
 
+    if (ids.length === 0) {
+      logger.debug("LT: No FLARM IDs configured");
+      cache.set<ReducedFlightData>("flarm", []);
+      return;
+    }
+
     const url = `${FLARM_URL}/${ids.join(",")}`;
 
     const { data } = await axios.get<ResponseType>(url, {
       headers: { "API-Key": FLARM_API_KEY },
+      timeout: EXTERNAL_REQUEST_TIMEOUT_MS,
     });
 
     logger.debug(`LT: Active FLARM IDs: ${Object.keys(data.tracks)}`);
@@ -139,7 +151,8 @@ async function calculateLiveTrackDistance(fixes: FlightData[]) {
   try {
     const { data } = await axios.post(
       `http://${IGC_XC_SCORE_HOST}:3030`,
-      transformedFixes
+      transformedFixes,
+      { timeout: EXTERNAL_REQUEST_TIMEOUT_MS }
     );
 
     if (typeof data === "number") return data;
@@ -162,7 +175,7 @@ function reduceResolution(array: FlightData[], resolution: number) {
 }
 
 type FlarmIdWithName = {
-  flarmId: string | null | undefined;
+  flarmId: string;
   name: string;
 };
 
@@ -176,12 +189,17 @@ async function getUserFlarmIds(): Promise<FlarmIdWithName[]> {
     attributes: ["flarmId", "firstName", "lastName"],
   });
 
-  const arrangedIds = ids.map((user) => {
-    return {
-      flarmId: user.flarmId,
-      name: `${user.firstName} ${user.lastName}`,
-    };
-  });
+  const arrangedIds = ids
+    .filter(
+      (user): user is typeof user & { flarmId: string } =>
+        typeof user.flarmId === "string" && user.flarmId.length === 6
+    )
+    .map((user) => {
+      return {
+        flarmId: user.flarmId,
+        name: `${user.firstName} ${user.lastName}`,
+      };
+    });
   cache.set(FLARM_USER_IDS_KEY, arrangedIds, CACHE_INDEFINITELY);
   return arrangedIds;
 }
