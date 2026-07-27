@@ -170,9 +170,9 @@
           </div>
         </button>
         <BaseError
-          class="mt-3"
           v-if="flightId"
           id="upload-error"
+          class="mt-3"
           :error-message="errorMessage"
         />
       </div>

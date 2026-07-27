@@ -7,8 +7,10 @@ export const cache = new NodeCache({
   checkperiod: 60 * 60 * 6,
 });
 
-export const getCache = (req: { originalUrl: string }) => {
-  const value = cache.get(req.originalUrl);
+export const getCache = <T = unknown>(req: {
+  originalUrl: string;
+}): T | undefined => {
+  const value = cache.get<T>(req.originalUrl);
   if (value) {
     logger.debug("access from cache: " + req.originalUrl);
     return value;

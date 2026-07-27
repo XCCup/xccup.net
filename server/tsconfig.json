@@ -5,10 +5,12 @@
     "sourceMap": true,
     "outDir": "./dist",
     "strict": true,
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "checkJs": false
-  }
+  },
+  "exclude": ["dist", "node_modules", "igc-xc-score"]
 }

@@ -36,14 +36,20 @@ const service = {
     });
   },
 
-  getCurrentActive: async () => {
+  getCurrentActive: async (): Promise<SeasonDetailAttributes> => {
     const cacheKey = { originalUrl: "currentSeasonDetails" };
 
-    const cachedDetails = getCache(cacheKey);
+    const cachedDetails = getCache<SeasonDetailAttributes>(cacheKey);
 
     if (cachedDetails) return cachedDetails;
 
     const currentSeasonDetails = await service.refreshCurrentSeasonDetails();
+    if (!currentSeasonDetails) {
+      throw new XccupHttpError(
+        500,
+        `There is no valid configuration for the current year of ${getCurrentYear()}`
+      );
+    }
     setCache(cacheKey, currentSeasonDetails);
 
     return currentSeasonDetails;

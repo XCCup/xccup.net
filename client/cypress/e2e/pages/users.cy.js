@@ -198,26 +198,28 @@ describe("check users page", () => {
 
     cy.get(".cy-user-name-label").should("not.contain", userToDelete);
 
+    cy.intercept("GET", `**/api/flights/${flightWithPhotosOfUser}`).as(
+      "deletedUserFlight"
+    );
     cy.visit(`flug/${flightWithPhotosOfUser}`);
 
-    // TODO: Test will fail if running off season. Find a way to get around that.
+    cy.wait("@deletedUserFlight").then(({ response }) => {
+      if (response?.statusCode === 404) {
+        // During an active season, the pilot's flights are removed so they do
+        // not affect the ranking.
+        cy.url().should("include", "/404/");
+        return;
+      }
 
-    // ----- Code for on season ------
-    // Flights of pilot will be complexly removed to not intervene with ranking
-    // cy.url().should("include", "/404");
-    // -------------------------------
-
-    // ----- Code for off season -----
-    // Pilot name in flight should not be deleted
-    // Photos of user should be deleted
-    cy.get("h4").should("not.include.text", userToDelete);
-    cy.get("h4").should("include.text", expectedName);
-
-    cy.get("photo-0").should("not.exist");
-    cy.get("photo-1").should("not.exist");
-    cy.get("photo-2").should("not.exist");
-    cy.get("photo-3").should("not.exist");
-    // -------------------------------
+      // Outside an active season, historical flights remain anonymized while
+      // the pilot's photos are removed.
+      cy.get("h4").should("not.include.text", userToDelete);
+      cy.get("h4").should("include.text", expectedName);
+      cy.get("photo-0").should("not.exist");
+      cy.get("photo-1").should("not.exist");
+      cy.get("photo-2").should("not.exist");
+      cy.get("photo-3").should("not.exist");
+    });
 
     // Check for side effects:
     cy.visit(`flug/${flightNotRelated}`);

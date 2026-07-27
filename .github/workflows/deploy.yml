@@ -1,21 +1,34 @@
 name: XCCup Deployment
-on: workflow_dispatch
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production
+  cancel-in-progress: false
+
 jobs:
-  build:
+  deploy:
     name: Deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
     steps:
-      - name: Login via SSH, pull changes from "main", build docker images and check afterwards the log
-        uses: appleboy/ssh-action@master
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            set -e
+            set -eu
             cd ~/xccup.net
-            git pull
-            docker compose -f docker-compose-prod.yml up -d --force-recreate --build
-            docker logs -n 10 xccup-server
-            docker logs -n 10 xccup-client
+            git pull --ff-only origin main
+            docker compose -f docker-compose-prod.yml up -d --build --remove-orphans
+            docker compose -f docker-compose-prod.yml ps
+            docker logs --tail 10 xccup-server
+            docker logs --tail 10 xccup-client

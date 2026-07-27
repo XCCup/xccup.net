@@ -28,8 +28,10 @@ export async function retrieveTestMail(url: string) {
 }
 
 function parseMessageHeader(root: HTMLElement, element: string) {
-  const divs = root.querySelector("#message-header")?.querySelectorAll("div");
+  const header = root.querySelector("#message-header");
+  const labels = header?.querySelectorAll("dt");
+  const values = header?.querySelectorAll("dd");
+  const index = labels?.findIndex((label) => label.text.trim() === element);
 
-  const found = divs?.find((d) => d.text.includes(element));
-  if (found) return found.querySelector("span")?.text.trim();
+  if (index != null && index >= 0) return values?.[index]?.text.trim();
 }

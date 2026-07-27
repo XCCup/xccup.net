@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import service from "../service/ResultService";
 import { query } from "express-validator";
 import { validationHasErrors, checkParamIsOnlyOfValue } from "./Validation";
@@ -7,7 +7,6 @@ import { STATE, COUNTRY } from "../constants/user-constants";
 import { XccupHttpError } from "../helper/ErrorHandler";
 import { NOT_FOUND } from "../constants/http-status-constants";
 import { getSiteRecords } from "../service/SiteRecordCache";
-import { NextFunction } from "express-serve-static-core";
 
 const router = express.Router();
 

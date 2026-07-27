@@ -29,7 +29,7 @@ const props = defineProps({
 
 // Width of the dialog
 const wide = "col-11 col-lg-9 col-xl-7";
-const narrow = "col-12 col-md-9 col-lg-7 col-xl-5";
-const widthClass = computed(() => (props.narrow ? narrow : wide));
+const narrowClass = "col-12 col-md-9 col-lg-7 col-xl-5";
+const widthClass = computed(() => (props.narrow ? narrowClass : wide));
 </script>
 <style scoped></style>

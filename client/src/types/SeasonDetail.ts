@@ -6,17 +6,17 @@ export interface SeasonDetail {
   isPaused: boolean;
   pointThresholdForFlight: number;
   numberOfFlightsForShirt: number;
-  gliderClasses: Object;
+  gliderClasses: object;
   flightTypeFactors: {
     FAI: number;
     FREE: number;
     FLAT: number;
   };
-  rankingClasses: Object;
+  rankingClasses: object;
   seniorStartAge: number;
   seniorBonusPerAge: number;
-  activeRankings: Object;
-  misc: Object;
+  activeRankings: object;
+  misc: object;
   createdAt?: string;
   updatedAt?: string;
 }

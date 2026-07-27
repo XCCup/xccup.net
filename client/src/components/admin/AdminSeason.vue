@@ -136,7 +136,7 @@ const nextSeasonAlreadyDefined = computed(() => {
 
 const isUpdate = computed(() => {
   return (
-    (isActiveSeason || nextSeasonAlreadyDefined) && !isAfterSeasonEnd.value
+    (isActiveSeason.value || nextSeasonAlreadyDefined) && !isAfterSeasonEnd.value
   );
 });
 
@@ -188,7 +188,7 @@ async function onCreateEditSeason() {
   }
 }
 
-function stringify(object: Object) {
+function stringify(object: object) {
   return JSON.stringify(object, null, 2);
 }
 

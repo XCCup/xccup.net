@@ -4,7 +4,7 @@
     <DailyResults
       :max-rows="10"
       :flights="dailyResults"
-      :liveFlights="liveFlights"
+      :live-flights="liveFlights"
     />
     <NewsPanel v-if="newsItems?.length > 0" :news-items="newsItems" />
     <PhotoCarousel :photos="randomPhotos" />

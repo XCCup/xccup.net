@@ -4,7 +4,7 @@ import FormData from "form-data";
 import logger from "../config/logger";
 import fs from "fs";
 
-axiosRetry(axios, { retries: 2 });
+axiosRetry(axios as Parameters<typeof axiosRetry>[0], { retries: 2 });
 
 export type FaiResponse = "PASSED" | "FAILED" | "ERROR";
 

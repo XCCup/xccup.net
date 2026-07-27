@@ -1,4 +1,3 @@
-import "cypress-file-upload";
 import axios from "axios";
 import { delay } from "./utils";
 

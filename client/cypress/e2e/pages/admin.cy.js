@@ -228,7 +228,7 @@ describe("check admin page", () => {
     cy.intercept("GET", "/api/clubs").as("get-clubs");
     cy.get("Button").filter(":visible").contains("Speichern").click();
     // Wait till modal is gone…
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
+
     cy.wait("@get-clubs");
     cy.get("[data-cy=currentClubTable").find("td").contains(expectedName);
     cy.get("[data-cy=currentClubTable").find("td").contains(expectedWebsite);
@@ -282,8 +282,8 @@ describe("check admin page", () => {
     cy.get("button").contains("Flug hochladen").click();
     const igcFileName = "73320_LA9ChMu1.igc";
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -313,8 +313,8 @@ describe("check admin page", () => {
     cy.get("button").contains("Flug absenden").should("be.disabled");
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -349,8 +349,8 @@ describe("check admin page", () => {
     cy.get("button").contains("Flug absenden").should("be.disabled");
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -434,8 +434,8 @@ describe("check admin page", () => {
     cy.get('input[type="file"]#igcUploadForm').should("be.visible");
 
     cy.fixture(fileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName,
         mimeType: "text/plain",
       });
