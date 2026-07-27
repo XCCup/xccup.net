@@ -1,5 +1,3 @@
-import axios from "axios";
-
 describe("check siteRecords page", () => {
   before(() => {
     cy.seedDb();
@@ -10,24 +8,24 @@ describe("check siteRecords page", () => {
   });
 
   it("Upload new record for site", () => {
-    const form = new FormData();
-
     const igcFileName = "68090_K3EThSc1.igc";
     const expectedTakeoff = "Niederzissen/Bausenberg";
     const expectedUserName = "Melinda Tremblay";
     const expectedDistance = "14 km";
 
-    cy.fixture(igcFileName).then(async (fileContent) => {
-      form.append("user", "blackhole+melinda@xccup.net");
-      form.append("pass", "PW_MelindaTremblay");
-      form.append("IGCigcIGC", fileContent.toString());
-      form.append("igcfn", igcFileName);
+    cy.fixture(igcFileName).then((fileContent) => {
+      cy.request({
+        url: "http://localhost:3000/api/flights/leonardo",
+        method: "POST",
+        body: {
+          user: "blackhole+melinda@xccup.net",
+          pass: "PW_MelindaTremblay",
+          IGCigcIGC: fileContent.toString(),
+          igcfn: igcFileName,
+        },
+        form: true,
+      });
 
-      await axios.post("http://localhost:3000/api/flights/leonardo", form);
-
-      // Wait till flight was fully calculated
-
-      // cy.wait(3000);
       cy.visit(`/fluggebietsrekorde/`);
 
       cy.get("table")
