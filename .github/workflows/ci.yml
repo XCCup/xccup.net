@@ -84,7 +84,7 @@ jobs:
           package-manager-cache: false
           working-directory: client
           start: pnpm run serve
-          wait-on: "http://localhost:3000/api/home, http://localhost:4173"
+          wait-on: "http://localhost:3000/api, http://localhost:4173"
           wait-on-timeout: 120
           config: baseUrl=http://localhost:4173
           browser: chrome
