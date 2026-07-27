@@ -60,7 +60,7 @@ jobs:
         env:
           NODE_ENV: CI
           METAR_API_KEY: ${{ secrets.METAR_API_KEY }}
-        run: pnpm --dir server test -- --runInBand
+        run: pnpm --dir server test --runInBand
 
       - name: 💻 Install client dependencies
         run: pnpm --dir client install --frozen-lockfile
