@@ -2,6 +2,7 @@ const mockSchedule = jest.fn();
 const mockFindAll = jest.fn();
 const mockAxiosGet = jest.fn();
 const mockAxiosPost = jest.fn();
+let mockLiveTrackingEnabled = true;
 
 jest.mock("node-cron", () => ({
   __esModule: true,
@@ -36,9 +37,10 @@ jest.mock("../config/env-config", () => ({
   __esModule: true,
   default: {
     get: jest.fn((key: string) => {
-      const values: Record<string, string> = {
+      const values: Record<string, string | boolean> = {
         flarmUrl: "https://flarm.example/flarm",
         flarmApiKey: "test-key",
+        liveTrackingEnabled: mockLiveTrackingEnabled,
         igcXcScoreHost: "igc-xc-score",
         timezone: "Europe/Berlin",
       };
@@ -131,4 +133,19 @@ test("fetches, scores, and caches configured live tracks", async () => {
       ],
     },
   ]);
+});
+
+test("does not schedule collection when live tracking is disabled", () => {
+  mockSchedule.mockClear();
+  mockLiveTrackingEnabled = false;
+
+  jest.isolateModules(() => {
+    const disabledModule = require("../service/LivetrackingService");
+    const disabledService = disabledModule.default ?? disabledModule;
+
+    expect(disabledService.getActive()).toEqual([]);
+  });
+
+  expect(mockSchedule).not.toHaveBeenCalled();
+  mockLiveTrackingEnabled = true;
 });

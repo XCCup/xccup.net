@@ -8,6 +8,7 @@ import db from "../db";
 
 const FLARM_URL = config.get("flarmUrl");
 const FLARM_API_KEY = config.get("flarmApiKey");
+const LIVE_TRACKING_ENABLED = config.get("liveTrackingEnabled");
 const FLARM_USER_IDS_KEY = "user-flarm-ids";
 
 const IGC_XC_SCORE_HOST = config.get("igcXcScoreHost");
@@ -49,12 +50,15 @@ const TRACK_RESOLUTION = 10; // 10 seconds (s not ms)
 const TRACK_RESOLUTION_HOME = 60; // 60 seconds (s not ms)
 
 // Run the job every 60 seconds between 8 in the morning and 9 in the evening
-const task = cron.schedule("* 8-21 * * *", fetchFlarmData, {
-  noOverlap: true,
-  timezone: config.get("timezone"),
-});
-
-logger.info("LT: Live tracking cron job enabled");
+if (LIVE_TRACKING_ENABLED) {
+  cron.schedule("* 8-21 * * *", fetchFlarmData, {
+    noOverlap: true,
+    timezone: config.get("timezone"),
+  });
+  logger.info("LT: Live tracking cron job enabled");
+} else {
+  logger.info("LT: Live tracking disabled by configuration");
+}
 
 const service = {
   getActive: () => cache.get<ReducedFlightData>("flarm") || [],
