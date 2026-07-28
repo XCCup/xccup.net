@@ -55,7 +55,7 @@ const highlightTrack = (flightId?: string) => {
   if (!flightId) return; // @mouseleave in parent sends "null"
 
   // Find highlighted track
-  let index = props.tracks.findIndex((e) => e.flightId.toString() === flightId);
+  const index = props.tracks.findIndex((e) => e.flightId.toString() === flightId);
   if (index < 0 || index == null) return; // (!index) does not work because "0" is falsy
 
   // Highlight track

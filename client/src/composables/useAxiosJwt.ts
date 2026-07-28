@@ -217,7 +217,6 @@ export default () => {
       throw new Error(
         "requestRefresh must either return a string or an object with an accessToken"
       );
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       // Failed to refresh token
       const status = error?.response?.status;

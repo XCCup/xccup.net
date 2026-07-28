@@ -3,9 +3,9 @@
   <section class="pb-3">
     <div
       v-if="flights?.length > 0"
+      id="cy-parent-table"
       v-memo="[flights]"
       class="table-responsive"
-      id="cy-parent-table"
     >
       <table class="table table-striped table-hover text-sm">
         <thead>

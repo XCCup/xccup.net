@@ -202,7 +202,7 @@ const service = {
     // The max number of flights which will be scored for one club.
     const MAX_NUMBER_OF_FLIGHTS_PER_CLUB =
       seasonDetail?.misc?.rankingConstants?.club
-        ?.MAX_NUMBER_OF_FLIGHTS_PER_CLUB;
+        ?.MAX_NUMBER_OF_FLIGHTS_PER_CLUB ?? Number.POSITIVE_INFINITY;
     // The remarks text which will be displayed in the view.
     const remarks = createRemarks(
       seasonDetail?.misc?.textMessages?.resultsClub,

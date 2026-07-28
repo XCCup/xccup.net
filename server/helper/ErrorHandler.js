@@ -59,7 +59,7 @@ class XccupHttpError extends Error {
 }
 
 function sanitizeRequestBeforeLogging(req) {
-  if (Object.keys(req.body).length == 0) return;
+  if (!req.body || Object.keys(req.body).length == 0) return;
   // Delete these params before logging because of security or size
   const blacklist = ["pw", "password", "pass", "token", "IGCigcIGC"];
   blacklist.forEach((e) => {

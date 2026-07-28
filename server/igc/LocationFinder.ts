@@ -14,7 +14,7 @@ interface GoogleLocation {
 
 const isApiDisabled = config.get("useGoogleApi") == false;
 
-axiosRetry(axios, { retries: 2 });
+axiosRetry(axios as Parameters<typeof axiosRetry>[0], { retries: 2 });
 
 const byLatLong = async (location: string) => {
   if (isApiDisabled) {

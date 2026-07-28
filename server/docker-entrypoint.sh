@@ -6,8 +6,8 @@ echo "Waiting for DB to start..."
 echo "Starting the API server..."
 # "exec" is here to replace the current bash script's process with the node's process.
 # Otherwise interupts like SIGINT might not make it through to the node process.
-if [ $NODE_ENV == "development" ]; then
-    exec pnpm run dev
+if [ "$NODE_ENV" = "development" ]; then
+    exec ./node_modules/.bin/ts-node-dev --poll --respawn --pretty --transpile-only app.ts
 else
-    exec pnpm run start
+    exec node dist/app.js
 fi

@@ -7,7 +7,6 @@ Sentry.init({
   dsn: config.get("sentryUrl"),
   integrations: [
     // Add our Profiling integration
-    // @ts-expect-error
     nodeProfilingIntegration(),
   ],
   // Add Tracing by setting tracesSampleRate

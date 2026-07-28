@@ -439,7 +439,7 @@ const selectedFilters = computed(() => {
 });
 
 onMounted(() => {
-  var tooltipTriggerList = [].slice.call(
+  const tooltipTriggerList = [].slice.call(
     document.querySelectorAll('[data-bs-toggle="tooltip"]')
   );
   tooltipTriggerList.map(function (tooltipTriggerEl) {

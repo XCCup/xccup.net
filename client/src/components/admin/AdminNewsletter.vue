@@ -49,7 +49,7 @@ const emailBody = computed(() => {
 
   const linebreak = "%0D%0A";
 
-  let message = `Mit Stand 11.02.2024 ermöglicht unser Webhosting nur den Versand von ${maxHour} E-Mails pro Stunde und ${maxDay} E-Mails pro Tag.${linebreak}
+  const message = `Mit Stand 11.02.2024 ermöglicht unser Webhosting nur den Versand von ${maxHour} E-Mails pro Stunde und ${maxDay} E-Mails pro Tag.${linebreak}
 D.h. Newsletter-Mails müssen in mehreren Chargen versendet werden.${linebreak}
 Nachfolgend finden sich alle E-Mail-Adressen entsprechend der obigen Vorgaben in Gruppen aufgetrennt.${linebreak}${linebreak}
 `;
@@ -61,8 +61,4 @@ Nachfolgend finden sich alle E-Mail-Adressen entsprechend der obigen Vorgaben in
 
   return message + mailGroups;
 });
-
-const onIncludeAllChanged = () => {
-  fetchEmails();
-};
 </script>

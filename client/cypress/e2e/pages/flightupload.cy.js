@@ -40,8 +40,8 @@ describe("check flight upload page", () => {
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm', {
         timeout: 10_000,
-      }).attachFile({
-        fileContent: fileContent.toString(),
+      }).selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -53,15 +53,16 @@ describe("check flight upload page", () => {
     }).should("have.value", expectedTakeoff);
 
     // Add photos
-    cy.fixture(photo1)
-      .then(Cypress.Blob.base64StringToBlob)
-      .then((fileContent) => {
-        cy.get('input[type="file"]#photo-input').attachFile({
-          fileContent,
+    cy.fixture(photo1, null).then((fileContent) => {
+      cy.get('input[type="file"]#photo-input').selectFile(
+        {
+          contents: fileContent,
           fileName: photo1,
           mimeType: "image/jpg",
-        });
-      });
+        },
+        { force: true }
+      );
+    });
 
     cy.get("#photo-0", {
       timeout: 10000,
@@ -73,15 +74,16 @@ describe("check flight upload page", () => {
         expect($img[0].naturalWidth).to.be.greaterThan(0);
       });
 
-    cy.fixture(photo2)
-      .then(Cypress.Blob.base64StringToBlob)
-      .then((fileContent) => {
-        cy.get('input[type="file"]#photo-input').attachFile({
-          fileContent,
+    cy.fixture(photo2, null).then((fileContent) => {
+      cy.get('input[type="file"]#photo-input').selectFile(
+        {
+          contents: fileContent,
           fileName: photo2,
           mimeType: "image/jpg",
-        });
-      });
+        },
+        { force: true }
+      );
+    });
 
     cy.get("#photo-1", {
       timeout: 10000,
@@ -92,15 +94,16 @@ describe("check flight upload page", () => {
 
     // Upload 7 more
     for (let i = 0; i < 7; i++) {
-      cy.fixture(photo2)
-        .then(Cypress.Blob.base64StringToBlob)
-        .then((fileContent) => {
-          cy.get('input[type="file"]#photo-input').attachFile({
-            fileContent,
+      cy.fixture(photo2, null).then((fileContent) => {
+        cy.get('input[type="file"]#photo-input').selectFile(
+          {
+            contents: fileContent,
             fileName: photo2,
             mimeType: "image/jpg",
-          });
-        });
+          },
+          { force: true }
+        );
+      });
     }
 
     cy.get("#add-photo", {
@@ -110,15 +113,16 @@ describe("check flight upload page", () => {
     cy.get("[data-cy=error-message]").should("not.exist");
 
     //  Try one more time (should fail)
-    cy.fixture(photo2)
-      .then(Cypress.Blob.base64StringToBlob)
-      .then((fileContent) => {
-        cy.get('input[type="file"]#photo-input').attachFile({
-          fileContent,
+    cy.fixture(photo2, null).then((fileContent) => {
+      cy.get('input[type="file"]#photo-input').selectFile(
+        {
+          contents: fileContent,
           fileName: photo2,
           mimeType: "image/jpg",
-        });
-      });
+        },
+        { force: true }
+      );
+    });
     cy.get("[data-cy=error-message]").contains(expectedMaxPhotosMessage);
 
     // Add data to different inputs
@@ -255,8 +259,8 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -309,8 +313,8 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName2).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -351,8 +355,8 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -384,8 +388,8 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -410,8 +414,8 @@ describe("check flight upload page", () => {
 
     // Try to upload the same flight a second time
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -435,8 +439,8 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -514,8 +518,8 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -537,8 +541,8 @@ describe("check flight upload page", () => {
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -570,8 +574,8 @@ Euer Server-Knecht`;
     cy.fixture(igcFileName).then((fileContent) => {
       cy.get('input[type="file"]#igcUploadForm', {
         timeout: 10_000,
-      }).attachFile({
-        fileContent: fileContent.toString(),
+      }).selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -598,8 +602,8 @@ Euer Server-Knecht`;
     cy.get("button").contains("Flug hochladen").click();
 
     cy.fixture(igcFileName).then((fileContent) => {
-      cy.get('input[type="file"]#igcUploadForm').attachFile({
-        fileContent: fileContent.toString(),
+      cy.get('input[type="file"]#igcUploadForm').selectFile({
+        contents: Cypress.Buffer.from(fileContent.toString()),
         fileName: igcFileName,
         mimeType: "text/plain",
       });
@@ -612,8 +616,6 @@ Euer Server-Knecht`;
   });
 
   it("Test upload with leonardo interface", () => {
-    const form = new FormData();
-
     const igcFileName = "73883_2022-04-19_13.39_Donnersberg__Baeren.igc";
     const expectedTakeoff = "Donnersberg";
     const expectedUserName = "Melinda Tremblay";
@@ -623,7 +625,7 @@ Euer Server-Knecht`;
       "Der Flug wurde mit dem Gerät Flow XC Racer eingereicht. Du findest deinen Flug unter http://localhost:8000/flug/";
 
     cy.fixture(igcFileName).then(async (fileContent) => {
-      const data = await cy
+      await cy
         .request({
           url: "http://localhost:3000/api/flights/leonardo",
           method: "POST",
@@ -646,7 +648,7 @@ Euer Server-Knecht`;
           const flightId = data.match(regex)[1];
 
           // Wait till flight was fully calculated
-          // eslint-disable-next-line cypress/no-unnecessary-waiting
+
           // cy.wait(5000);
 
           cy.visit(`/flug/${flightId}`);
@@ -691,7 +693,7 @@ Euer Server-Knecht`;
       const flightId = data.match(regex)[1];
 
       // Wait till flight was fully calculated
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
+
       // cy.wait(5000);
       cy.login(payload.user, payload.pass);
 
@@ -780,8 +782,8 @@ Euer Server-Knecht`;
   //   cy.get("button").contains("Flug hochladen").click();
 
   //   cy.fixture(igcFileName).then((fileContent) => {
-  //     cy.get('input[type="file"]#igcUploadForm').attachFile({
-  //       fileContent: fileContent.toString(),
+  //     cy.get('input[type="file"]#igcUploadForm').selectFile({
+  //       contents: Cypress.Buffer.from(fileContent.toString()),
   //       fileName: igcFileName,
   //       mimeType: "text/plain",
   //     });

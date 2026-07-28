@@ -1,0 +1,15 @@
+allowBuilds:
+  '@sentry/node-cpu-profiler': true
+  core-js: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - express-rate-limit@8.6.1
+supportedArchitectures:
+  os:
+    - win32
+    - darwin
+    - linux
+    - current
+  cpu:
+    - x64
+    - arm64

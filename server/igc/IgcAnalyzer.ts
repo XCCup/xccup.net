@@ -275,12 +275,13 @@ async function runOlc(filePath: string, flightTypeFactors: FlightTypeFactors) {
   logger.debug(`IA: CWD of process: ${process.cwd()}`);
 
   const binary = determineOlcBinary();
-  const pathToBinary = path.resolve(__dirname, "..", "igc", binary);
+  const rootDir = process.cwd();
+  const pathToBinary = path.resolve(rootDir, "igc", binary);
 
   try {
     const asyncExec = util.promisify(exec);
     const { stdout, stderr } = await asyncExec(pathToBinary + filePath, {
-      cwd: path.resolve(__dirname, ".."),
+      cwd: rootDir,
     });
     logger.info(stderr); // Throw won't work as stderr is always defined
 

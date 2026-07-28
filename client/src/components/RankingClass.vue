@@ -23,8 +23,8 @@ const props = defineProps<{
     shortDescription?: string;
     description?: string;
   };
-  short?: Boolean;
-  showDescription?: Boolean;
+  short?: boolean;
+  showDescription?: boolean;
 }>();
 
 const displayedDescription = computed(() =>

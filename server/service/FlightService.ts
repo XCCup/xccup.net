@@ -774,7 +774,8 @@ function countRelatedObjects(
  */
 async function calcFlightPoints(flight: FlightInstance, glider: Glider) {
   const currentSeason = await getCurrentActive();
-  const gliderClassKey = glider.gliderClass.key;
+  const gliderClassKey = glider.gliderClass
+    .key as keyof typeof currentSeason.gliderClasses;
   const gliderClassDB = currentSeason.gliderClasses[gliderClassKey];
 
   logger.info(
@@ -830,7 +831,9 @@ async function calcFlightStatus(
 
 async function createGliderObject(flight: FlightInstance, glider: Glider) {
   const currentSeason = await getCurrentActive();
-  const gliderClassDB = currentSeason.gliderClasses[glider.gliderClass.key];
+  const gliderClassKey = glider.gliderClass
+    .key as keyof typeof currentSeason.gliderClasses;
+  const gliderClassDB = currentSeason.gliderClasses[gliderClassKey];
 
   flight.glider = {
     ...glider,

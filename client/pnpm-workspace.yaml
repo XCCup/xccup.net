@@ -1,0 +1,17 @@
+allowBuilds:
+  '@parcel/watcher': true
+  '@sentry/cli': true
+  cypress: true
+  esbuild: true
+minimumReleaseAgeExclude:
+  - baseline-browser-mapping@2.11.4
+  - globals@17.8.0
+supportedArchitectures:
+  os:
+    - win32
+    - darwin
+    - linux
+    - current
+  cpu:
+    - x64
+    - arm64
