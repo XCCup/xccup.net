@@ -113,7 +113,7 @@ router.put(
   checkFieldNotEmpty("activeRankings"),
   checkFieldNotEmpty("misc"),
   requesterMustBeAdmin,
-  async (req, res, next) => {
+  async (req: Request<{ id: string }>, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
 
     try {

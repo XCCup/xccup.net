@@ -163,7 +163,7 @@ router.get(
 router.get(
   "/:id",
   checkParamIsInt("id"),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     if (paramIdIsLeonardo(req, res)) return;
 
     if (validationHasErrors(req, res)) return;
@@ -187,7 +187,7 @@ router.get(
 router.get(
   "/igc/:id",
   checkParamIsUuid("id"),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
 
@@ -222,7 +222,7 @@ router.delete(
   "/:id",
   checkParamIsInt("id"),
   requesterMustBeLoggedIn,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
     const flightId = req.params.id;
 
@@ -408,7 +408,7 @@ router.get(
   "/admin/rerun/:id",
   checkParamIsUuid("id"),
   requesterMustBeModerator,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     try {
       const flight = await FlightService.getById(req.params.id);
       if (!flight) return res.sendStatus(NOT_FOUND);
@@ -448,7 +448,7 @@ router.put(
   "/admin/change-prop/:id",
   checkParamIsUuid("id"),
   requesterMustBeAdmin,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     try {
       const flightStatus = await FlightService.changeFlightProps(
         req.params.id,
@@ -472,7 +472,7 @@ router.get(
   "/admin/fetch-metar/:id",
   checkParamIsUuid("id"),
   requesterMustBeModerator,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     try {
       const flight = await FlightService.getById(req.params.id);
       if (!flight || !flight.fixes) return res.sendStatus(NOT_FOUND);
@@ -602,7 +602,7 @@ router.put(
   checkStringObjectNotEmpty("glider.model"),
   checkStringObjectNotEmpty("glider.gliderClass.key"),
   checkOptionalIsBoolean("hikeAndFly"),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const userId = req.user?.id;
@@ -662,7 +662,7 @@ router.put(
   "/acceptViolation/:id",
   requesterMustBeModerator,
   checkParamIsUuid("id"),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const flight = await FlightService.getById(req.params.id, true);
@@ -688,7 +688,7 @@ router.put(
   "/rejectViolation/:id",
   requesterMustBeModerator,
   checkParamIsInt("id"),
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     if (validationHasErrors(req, res)) return;
 
     const flight = await FlightService.getByExternalId(+req.params.id);
