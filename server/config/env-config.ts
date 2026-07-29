@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "CI") {
   require("dotenv").config();
 }
 
-const rootDirPath = resolve(__dirname, "..");
+const rootDirPath = resolve(process.cwd());
 
 const config = convict({
   env: {

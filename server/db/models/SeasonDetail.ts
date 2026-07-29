@@ -16,6 +16,12 @@ export interface SeasonDetailAttributes {
   seniorBonusPerAge: number;
   activeRankings: RankingTypes[];
   misc?: {
+    rankingConstants?: {
+      club?: {
+        NUMBER_OF_SCORED_FLIGHTS?: number;
+        MAX_NUMBER_OF_FLIGHTS_PER_CLUB?: number;
+      };
+    };
     textMessages?: {
       [key: string]: string;
     };

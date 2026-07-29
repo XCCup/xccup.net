@@ -36,7 +36,8 @@ await initData(ApiService.getResultsOverall, {
           <FilterPanel />
         </div>
       </div>
-      <ResultsTableGeneric :results="results" :no-data-flag="noDataFlag"
+      <ResultsTableGeneric
+:results="results" :no-data-flag="noDataFlag"
         :max-flights="dataConstants?.NUMBER_OF_SCORED_FLIGHTS ?? 0" />
     </div>
     <GenericError v-else />

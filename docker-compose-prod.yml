@@ -22,6 +22,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
+      target: production
     image: xccup-server
     container_name: xccup-server
     restart: always

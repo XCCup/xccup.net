@@ -23,14 +23,18 @@ process.env.TZ = config.get("timezone");
 
 const app = express();
 
+// Express 5 defaults to the simple query parser, but the API accepts bracketed
+// array parameters such as userIds[]=... throughout the existing client.
+app.set("query parser", "extended");
+
 // Start Cron Jobs
 import "./cron/CleanIgcStore";
 import "./cron/DailyWinnerEMail";
 import "./cron/CleanTokenStore";
 
-// When running an Express app behind a reverse proxy, some of the Express APIs may return different values than expected.
-// In order to adjust for this, the trust proxy application setting may be used to expose information provided by the reverse proxy in the Express APIs.
-app.enable("trust proxy");
+// The production service runs behind one reverse proxy. Using a bounded hop count
+// also lets express-rate-limit identify clients without accepting spoofed headers.
+app.set("trust proxy", 1);
 
 // Log all requests
 app.use(requestLogger);
@@ -77,7 +81,7 @@ app.get(
 app.use("/api", routes);
 
 // Handle calls to non existing routes
-app.use("*", (req, res) => {
+app.use((_req, res) => {
   res.status(404).json({
     success: "false",
     message: "Endpoint not found",

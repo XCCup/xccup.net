@@ -82,7 +82,7 @@ interface TrackPoint {
 
 const drawTrack = (track: TrackPoint[]) => {
   if (!track.length) return;
-  let linePoints: L.LatLngExpression[] = [];
+  const linePoints: L.LatLngExpression[] = [];
   track.forEach((point) => {
     linePoints.push([point.latitude, point.longitude]);
   });

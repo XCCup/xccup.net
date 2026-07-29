@@ -7,7 +7,7 @@ import { onMounted, ref } from "vue";
 import type { PropType } from "vue";
 
 type ReferenceType = "Sponsor" | "Club";
-type LogoIdType = String | undefined;
+type LogoIdType = string | undefined;
 
 const props = defineProps({
   logoId: {

@@ -182,7 +182,7 @@ const editAvatarModal = ref(null);
 onMounted(() => {
   editAvatarModal.value = new Modal(document.getElementById("userAvatarModal"));
   // Navigate to hangar tab via props
-  let hangarTab = new Tab(document.querySelector("#nav-hangar-tab"));
+  const hangarTab = new Tab(document.querySelector("#nav-hangar-tab"));
   if (props.showHangar) hangarTab.show();
 });
 

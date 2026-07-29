@@ -26,7 +26,7 @@
 
 <script setup>
 import { computed, ref } from "vue";
-import { isEmail, isStrongPassword } from "../helper/utils";
+import { isEmail as validateEmail, isStrongPassword } from "../helper/utils";
 defineEmits(["update:modelValue"]);
 
 const isFocused = ref(false);
@@ -92,7 +92,7 @@ const isInvalid = computed(() => {
   return (
     props.externalValidationResult ||
     (props.isRequired && props.modelValue?.length == 0) ||
-    (props.isEmail && !isEmail(props.modelValue)) ||
+    (props.isEmail && !validateEmail(props.modelValue)) ||
     (props.isPassword && !isStrongPassword(props.modelValue))
   );
 });

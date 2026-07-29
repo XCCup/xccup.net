@@ -1,24 +1,24 @@
 import NotFound from "@/components/NotFound.vue";
 import NetworkError from "@/components/NetworkError.vue";
 
-const validateRouteParamYear = (to, from, next) => {
+const validateRouteParamYear = (to) => {
   if (isNaN(Number(to.params.year))) {
-    return next({
+    return {
       name: "404Resource",
       params: { resource: "Dies ist kein gültiges Jahr" },
-    });
+    };
   }
-  next();
+  return true;
 };
 
-const validateRouteParamFlightId = (to, from, next) => {
+const validateRouteParamFlightId = (to) => {
   if (isNaN(Number(to.params.flightId))) {
-    return next({
+    return {
       name: "404Resource",
       params: { resource: "Dies ist keine gültige Flugnummer" },
-    });
+    };
   }
-  next();
+  return true;
 };
 
 export const Routes = [
@@ -277,7 +277,7 @@ export const Routes = [
     component: NotFound,
   },
   {
-    path: "/404/",
+    path: "/404/:resource?",
     name: "404Resource",
     component: NotFound,
     props: true,

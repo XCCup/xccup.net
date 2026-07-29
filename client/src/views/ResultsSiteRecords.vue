@@ -2,13 +2,15 @@
   <div v-if="results" class="container-lg">
     <h3>Flugebietsrekorde</h3>
     <div class="table-responsive">
-      <table class="table table-striped table-hover text-sm">
-        <thead>
-          <th>Startplatz</th>
-          <th>Freie Strecke</th>
-          <th>Flaches Dreieck</th>
-          <th>FAI Dreieck</th>
-        </thead>
+        <table class="table table-striped table-hover text-sm">
+          <thead>
+            <tr>
+              <th>Startplatz</th>
+              <th>Freie Strecke</th>
+              <th>Flaches Dreieck</th>
+              <th>FAI Dreieck</th>
+            </tr>
+          </thead>
         <tbody>
           <tr v-for="result in results" :key="result.takeoff.id">
             <td>

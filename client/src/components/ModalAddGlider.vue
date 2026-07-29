@@ -95,9 +95,6 @@
 import ApiService from "@/services/ApiService";
 import { ref, computed, reactive, onMounted, onUnmounted } from "vue";
 import { Modal } from "bootstrap";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
 
 const emit = defineEmits(["add-glider"]);
 

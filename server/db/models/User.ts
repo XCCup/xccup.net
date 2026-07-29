@@ -52,6 +52,8 @@ export interface UserInstance
     UserAttributes {
   createdAt?: Date;
   updatedAt?: Date;
+  getAge(): number;
+  validPassword(password: string): boolean;
 }
 
 export function initUser(sequelize: Sequelize): Models["User"] {
@@ -152,16 +154,18 @@ export function initUser(sequelize: Sequelize): Models["User"] {
   ) as Models["User"];
 
   // Define instance level methods for user
-  User.prototype.validPassword = function (password: string) {
+  const userPrototype = User.prototype as UserInstance;
+  userPrototype.validPassword = function (password: string) {
+    if (!this.password) return false;
     return (
       bcrypt.compareSync(password, this.password) && this.role != ROLE.INACTIVE
     );
   };
 
-  User.prototype.getAge = function () {
+  userPrototype.getAge = function () {
     if (!this.birthday) return 0;
 
-    const birthYear = new Date(Date.parse(this.birthday)).getFullYear();
+    const birthYear = new Date(this.birthday).getFullYear();
     const currentYear = new Date().getFullYear();
     return currentYear - birthYear;
   };

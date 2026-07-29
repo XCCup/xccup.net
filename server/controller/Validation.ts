@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { check, param, query, validationResult } from "express-validator";
-import { MinMaxOptions } from "express-validator/src/options";
+import { MinMaxOptions } from "express-validator/lib/options";
 import { sanitizeHtml } from "../helper/Utils";
 
 /**

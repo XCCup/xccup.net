@@ -1,24 +1,24 @@
 <template>
   <div class="row user-select-none">
     <button
-      class="btn btn-primary leaflet-control col-auto user-select-none"
-      @click="isOnReplay ? pauseReplay() : startReplay()"
       v-if="isOnReplay || (!isOnReplay && !isStopped)"
-      @dblclick.stop
+      class="btn btn-primary leaflet-control col-auto user-select-none"
       title="Start/Pause (Strg + Leertaste)"
+      @click="isOnReplay ? pauseReplay() : startReplay()"
+      @dblclick.stop
     >
       <i :class="isOnReplay ? 'bi bi-pause-fill' : 'bi bi-play-fill'"></i>
     </button>
     <select
-      class="btn btn-primary dropdown-toggle leaflet-control col-auto user-select-none"
       v-if="!isStopped"
-      @change="changeReplaySpeed($event)"
+      class="btn btn-primary dropdown-toggle leaflet-control col-auto user-select-none"
       title="Langsamer (Strg + ,) / Schneller (Strg + .)"
+      @change="changeReplaySpeed($event)"
     >
       <option
         v-for="option in replayFactors"
-        class="dropdown-item user-select-none"
         :key="option.value"
+        class="dropdown-item user-select-none"
         :value="option.value"
         :selected="option.value === replayFactor"
       >
@@ -26,22 +26,22 @@
       </option>
     </select>
     <button
+      v-if="isOnReplay || (!isOnReplay && !isStopped)"
       class="btn btn-primary leaflet-control col-auto user-select-none"
+      title="Beende Wiedergabe"
       @click="stopReplay"
       @dblclick.stop
-      v-if="isOnReplay || (!isOnReplay && !isStopped)"
-      title="Beende Wiedergabe"
     >
       <i class="bi bi-stop-fill"></i>
     </button>
     <button
+      v-if="isOnReplay || (!isOnReplay && !isStopped)"
       class="btn btn-primary leaflet-control col-auto user-select-none"
+      title="Halte Position in Kartenmitte"
       @click="
         isFollowReplay ? followReplayOnMap(false) : followReplayOnMap(true)
       "
       @dblclick.stop
-      v-if="isOnReplay || (!isOnReplay && !isStopped)"
-      title="Halte Position in Kartenmitte"
     >
       <i
         class="bi user-select-none"

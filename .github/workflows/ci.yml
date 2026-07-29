@@ -6,94 +6,113 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CI: "true"
+      TZ: Europe/Berlin
+
     steps:
-      - name: 👀 Checkout repo
-        uses: actions/checkout@v4
+      - name: 👀 Checkout repository
+        uses: actions/checkout@v7
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v6
         with:
-          version: 9
+          version: 11.17.0
 
-      - name: 🕸 Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: 🕸 Install Node.js
+        uses: actions/setup-node@v7
         with:
-          node-version: ${{ matrix.node-version }}
-          #cache: "pnpm"
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: |
+            client/pnpm-lock.yaml
+            server/pnpm-lock.yaml
 
-      - name: 🙄 Check for "only" in test files (client)
-        working-directory: ./client/cypress/e2e
-        # Grep will exit with 1 if no matching line in any file was found
-        # Therefore we will invert the result of grep
-        # Exit codes !0 will fail the whole workflow
-        run: (! grep -r "it.only" .)
+      - name: 🙄 Reject focused tests
+        shell: bash
+        run: |
+          if grep -R --line-number -E '(^|[^[:alnum:]_])(describe|it|test)\.only[[:space:]]*\(' client/cypress/e2e server/test; then
+            echo "Focused tests must not be committed."
+            exit 1
+          fi
 
-      - name: Check for "only" in test files (server)
-        working-directory: ./server/test
-        run: (! grep -r "test.only" .)
+      - name: 🖥 Install server dependencies
+        run: pnpm --dir server install --frozen-lockfile
 
-      - name: 🖥 Install backend
-        run: chmod -R 777 . && docker compose -f docker-compose-ci.yml run --rm pnpm install
-        working-directory: ./server
+      - name: 🔍 Lint, typecheck and build server
+        run: |
+          pnpm --dir server lint
+          pnpm --dir server typecheck
+          pnpm --dir server build
 
-      - name: 🚿 Lint backend
-        run: docker compose -f docker-compose-ci.yml run --rm pnpm run lint
-        working-directory: ./server
+      - name: 🧪 Test server
+        env:
+          NODE_ENV: CI
+          METAR_API_KEY: ${{ secrets.METAR_API_KEY }}
+        run: pnpm --dir server test --runInBand
 
-      - name: 🕵️ Add secrets to ENV
-        run: echo "METAR_API_KEY=${{ secrets.METAR_API_KEY }}" >> ./.env.ci
-        working-directory: ./server
+      - name: 💻 Install client dependencies
+        run: pnpm --dir client install --frozen-lockfile
 
-      - name: 🧪 Test backend
-        run: docker compose -f docker-compose-ci.yml run --rm -e NODE_ENV=CI pnpm run test
-        working-directory: ./server
+      - name: 🛠 Lint, typecheck and build client
+        run: |
+          pnpm --dir client lint
+          pnpm --dir client typecheck
+          pnpm --dir client build-local
 
-      - name: 🐳 Start Docker Backend Environment
-        run: docker compose -f docker-compose-ci.yml --env-file ./.env.ci up -d
-        working-directory: ./server
+      - name: 🐳 Start backend
+        working-directory: server
+        env:
+          METAR_API_KEY: ${{ secrets.METAR_API_KEY }}
+        run: docker compose --env-file .env.ci -f docker-compose-ci.yml up -d --build
 
-      - name: 📝 List all databases (just for debugging)
-        run: sleep 10 && docker exec db psql -U xccup_user -l
-
-      - name: 🛠 Setup DB (enable PostGIS and set correct timezone)
-        run: docker exec db psql -U xccup_user xccup_db -c "set timezone='Europe/Berlin'"
-        working-directory: ./server
-
-      - name: 💻 Install and build frontend
-        run: pnpm install && pnpm run build-local
-        working-directory: ./client
-
-      - name: 🖨 Print current server log before testing (just for debugging)
-        run: docker logs server
-
-      - name: 🏃‍♀️ Cypress run
-        uses: cypress-io/github-action@v6
+      - name: 🏃‍♀️ Run Cypress
+        uses: cypress-io/github-action@v7
         with:
           install: false
-          start: docker compose -f docker-compose-ci.yml up -d
-          wait-on: http://localhost:4173
-          working-directory: ./client
+          package-manager-cache: false
+          working-directory: client
+          start: pnpm run serve
+          wait-on: "http://localhost:3000/api, http://localhost:4173"
+          wait-on-timeout: 120
           config: baseUrl=http://localhost:4173
           browser: chrome
-          env: TZ=Europe/Berlin
 
-      - name: 😩 Store artifacts of test failures
-        uses: actions/upload-artifact@v4
+      - name: 😩 Upload Cypress screenshots
         if: failure()
+        uses: actions/upload-artifact@v7
         with:
           name: cypress-screenshots
-          path: ./client/cypress/screenshots
+          path: client/cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 7
 
-      - name: 🤨 Store artifacts of server logs
-        uses: actions/upload-artifact@v4
+      - name: 📝 Collect backend logs
         if: always()
+        working-directory: server
+        run: docker compose --env-file .env.ci -f docker-compose-ci.yml logs --no-color > docker-compose.log
+
+      - name: 📤 Upload backend logs
+        if: always()
+        uses: actions/upload-artifact@v7
         with:
-          name: server-logs
-          path: ./server/data/logs
+          name: backend-logs
+          path: server/docker-compose.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: 🧹 Stop backend
+        if: always()
+        working-directory: server
+        run: docker compose --env-file .env.ci -f docker-compose-ci.yml down --remove-orphans

@@ -24,20 +24,20 @@ const router = createRouter({
 
 const { loggedIn, hasElevatedRole } = useAuth();
 
-router.beforeEach(async (to, _, next) => {
+router.beforeEach((to) => {
   // Always allow to go to home
-  if (to.fullPath == "/") return next();
+  if (to.fullPath == "/") return true;
 
   // Redirect non elevated users (admins and mods) to home when they try to access protected views (e.g. AdminDashboard)
-  if (to.meta.requiredElevated && !hasElevatedRole.value) return next("/");
+  if (to.meta.requiredElevated && !hasElevatedRole.value) return "/";
 
   // If a route needs auth and there is no active token => login
   // A redirect query is added. The calling component itself decides wether to use it or not
   if (!loggedIn.value && to.meta.requiredAuth) {
-    return next({ path: "/login", query: { redirect: to.fullPath } });
+    return { path: "/login", query: { redirect: to.fullPath } };
   }
   // In all other cases just go on to not freeze routing. Just pray.
-  return next();
+  return true;
 });
 
 export default router;

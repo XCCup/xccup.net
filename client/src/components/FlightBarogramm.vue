@@ -148,7 +148,7 @@ watchEffect(() => {
 onMounted(() => {
   // Create a new chart
   if (!ctx.value) return;
-  let plainChartObject = new Chart<ChartType>(ctx.value, config);
+  const plainChartObject = new Chart<ChartType>(ctx.value, config);
   chart.value = plainChartObject;
 
   if (!plainChartObject) return;
@@ -212,7 +212,7 @@ const config: ChartConfiguration<ChartType> = {
 
     <!-- Baro -->
     <div class="container mt-3 user-select-none">
-      <canvas :class="canvasClass" ref="ctx"></canvas>
+      <canvas ref="ctx" :class="canvasClass"></canvas>
     </div>
     <!-- Baro Switch -->
     <div

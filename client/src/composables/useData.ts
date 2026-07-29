@@ -42,7 +42,7 @@ function createInstance(viewComponentName: RouteRecordName) {
   const numberOfTotalEntries = ref(0);
   const isLoading = ref(false);
   const currentRange = ref({ start: 1, end: DEFAULT_LIMIT });
-  const selectedSeason = ref<Number>(+(route.params.year ?? ""));
+  const selectedSeason = ref<number>(+(route.params.year ?? ""));
   const errorMessage = ref(null);
   const noDataFlag = ref(false);
   const dataConstants = ref(null);

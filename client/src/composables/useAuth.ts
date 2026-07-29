@@ -1,4 +1,4 @@
-import { computed } from "vue";
+import { computed, type ComputedRef } from "vue";
 import { getbaseURL } from "@/helper/baseUrlHelper";
 import { useJwt } from "@vueuse/integrations/useJwt";
 
@@ -7,7 +7,6 @@ import useAxiosJwt from "@/composables/useAxiosJwt";
 import { apiClient } from "../services/ApiService";
 
 import type { JwtPayload } from "jwt-decode";
-import type { ComputedRef } from "vue-demi";
 
 interface AuthData extends JwtPayload {
   id?: string;
@@ -53,13 +52,20 @@ export default () => {
     return payload.value;
   };
 
+  const saveTokenData = (tokens: {
+    accessToken: string;
+    refreshToken: string;
+  }) => {
+    setAuthTokens(tokens);
+  };
+
   const login = async (email: string, password: string) => {
     const response = await apiClient.post("users/login", {
       email,
       password,
     });
 
-    setAuthTokens({
+    saveTokenData({
       accessToken: response.data.accessToken,
       refreshToken: response.data.refreshToken,
     });
@@ -80,6 +86,7 @@ export default () => {
   return {
     login,
     logout,
+    saveTokenData,
     loggedIn,
     getAuthData,
     getUserId,

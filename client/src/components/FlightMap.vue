@@ -7,8 +7,8 @@
             <div class="row">
               <button
                 class="btn btn-primary leaflet-control col-auto"
-                @click="toggleMapSize"
                 title="Vergrößere Kartenausschnitt"
+                @click="toggleMapSize"
               >
                 <i
                   class="bi"
@@ -19,9 +19,9 @@
               </button>
               <button
                 class="btn btn-primary leaflet-control col-auto"
+                title="Fokussiere Karte auf aktuelle Position"
                 @click="centerMapOnClickListener"
                 @dblclick.stop
-                title="Fokussiere Karte auf aktuelle Position"
               >
                 <i class="bi bi-crosshair"></i>
               </button>
@@ -85,7 +85,7 @@ const { getPositions } = useMapPosition();
 
 const { updateReplayPosition } = useFlightReplay();
 
-let landingMarker = L.icon({
+const landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,
   iconUrl: landingIconUrl,
   iconSize: [25, 41],
@@ -95,7 +95,7 @@ let landingMarker = L.icon({
   shadowAnchor: [12, 41],
 });
 
-let photoMarker = L.icon({
+const photoMarker = L.icon({
   iconRetinaUrl: photoIconRetinaUrl,
   iconUrl: photoIconUrl,
   iconSize: [25, 41],
@@ -190,8 +190,8 @@ onBeforeUnmount(() => {
 
 // Update map
 const drawTracks = (tracklogs: SimpleFix[][]) => {
-  let lines: L.Polyline[] = [];
-  let tmpPositionMarkers: L.CircleMarker[] = [];
+  const lines: L.Polyline[] = [];
+  const tmpPositionMarkers: L.CircleMarker[] = [];
 
   // Remove all trackLines & position markers to prevet orphaned ones
   if (positionMarkers.value.length > 0) {

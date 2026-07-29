@@ -24,6 +24,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 node_modules
+.pnpm-store/
 XCCup_DB_Schema/
 
 client/cypress/videos/
@@ -35,4 +36,3 @@ server/import/
 *convertTo*.json
 *Import.json
 archiv/
-

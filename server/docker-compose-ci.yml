@@ -10,40 +10,36 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - xccup-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
 
   server:
     build:
       context: .
       dockerfile: Dockerfile
+      target: ci
     image: xccup/server
     container_name: server
+    env_file:
+      - .env.ci
     environment:
       - SERVER_PORT=$SERVER_PORT
       - NODE_ENV=CI
+      - CI=true
+      - METAR_API_KEY=${METAR_API_KEY:-}
     ports:
       - "3000:65090"
-    volumes:
-      - .:/home/node/app
     networks:
       - xccup-network
     depends_on:
-      - db
-    command: ./docker-entrypoint.sh
-
-  pnpm:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: xccup/pnpm
-    profiles: ["cli"]
-    volumes:
-      - .:/home/node/app
-    command: "apk add --no-cache && libc6-compat && libstdc++"
-    entrypoint: ["pnpm"]
+      db:
+        condition: service_healthy
 
 volumes:
   db:
-  pgadmin-data:
 
 networks:
   xccup-network:

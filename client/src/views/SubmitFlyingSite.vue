@@ -78,7 +78,7 @@ const newSite = reactive({
   long: "",
 });
 
-const clubs: Ref<String[]> = ref([]);
+const clubs: Ref<string[]> = ref([]);
 const clubData: Ref<BaseClub[]> = ref([]);
 
 const latIsValid = computed(() => isCoordinate(newSite.lat));
