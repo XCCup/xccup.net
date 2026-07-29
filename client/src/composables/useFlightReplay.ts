@@ -1,10 +1,10 @@
 import { readonly, ref } from "vue";
-import useChartMouseOver from "./useChartMouseOver";
 import useFlight from "./useFlight";
+import useFlightCursor from "./useFlightCursor";
 
 const { flight } = useFlight();
 
-const { simulateMouseOver } = useChartMouseOver();
+const { setMainIndex, requestCenter } = useFlightCursor();
 
 const REPLAY_FACTORS = [1, 2, 5, 10, 20, 50, 100];
 const INTERVAL_MS = 1000;
@@ -43,18 +43,14 @@ function resetTimer() {
   timer = setInterval(() => {
     position += 1;
 
-    if (position == flight.value?.fixes?.length) {
+    if (position >= (flight.value?.fixes?.length ?? 0)) {
       resetReplay();
+      return;
     }
 
-    simulateMouseOver(position);
-    if (isFollowReplay.value) centerMapOnPosition();
+    setMainIndex(position);
+    if (isFollowReplay.value) requestCenter();
   }, INTERVAL_MS / REPLAY_FACTORS[replayFactor.value]);
-}
-
-function centerMapOnPosition() {
-  const centerMapEvent = new CustomEvent("centerMapOnClick");
-  document.dispatchEvent(centerMapEvent);
 }
 
 export default () => {
@@ -96,7 +92,8 @@ export default () => {
   };
 
   const updateReplayPosition = (newPosition: number) => {
-    position = newPosition;
+    const lastIndex = Math.max((flight.value?.fixes?.length ?? 1) - 1, 0);
+    position = Math.min(Math.max(newPosition, 0), lastIndex);
   };
 
   const followReplayOnMap = (follow: boolean) => {

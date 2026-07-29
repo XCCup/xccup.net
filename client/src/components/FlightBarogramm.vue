@@ -15,8 +15,7 @@ import {
   Filler,
   Legend,
   Title,
-  Tooltip,
-  // Interaction,
+  Decimation,
 } from "chart.js";
 import {
   ref,
@@ -32,12 +31,11 @@ import useAirbuddies from "@/composables/useAirbuddies";
 import "chartjs-adapter-luxon";
 import { Collapse } from "bootstrap";
 import { options } from "@/config/chartOptions";
-import useMapPosition from "@/composables/useMapPosition";
 
 import type { ChartConfiguration } from "chart.js";
 import { roundWithDigits } from "@/helper/utils";
-import useChartMouseOver from "@/composables/useChartMouseOver";
 import useFlightReplay from "@/composables/useFlightReplay";
+import useFlightCursor from "@/composables/useFlightCursor";
 
 Chart.register(
   LineElement,
@@ -48,15 +46,18 @@ Chart.register(
   Filler,
   Legend,
   Title,
-  Tooltip
+  Decimation
 );
-// Interaction.modes.interpolate = Interpolate;
 
 const { flight } = useFlight();
 const { activeAirbuddyFlights, airbuddiesInUse } = useAirbuddies();
-const { getPositions } = useMapPosition();
-const { initChartMouseOver } = useChartMouseOver();
-const { isOnReplay } = useFlightReplay();
+const { isOnReplay, updateReplayPosition } = useFlightReplay();
+const {
+  mainSelection,
+  setCursorTimestamp,
+  requestCenter,
+  resetCursor,
+} = useFlightCursor();
 
 // UI Elements
 const pressureAltToggle = ref(false);
@@ -72,13 +73,14 @@ const usePressureAlt = computed(() =>
 );
 
 const altitudeToShow = computed(() => {
+  const mainFix = mainSelection.value?.fix;
   if (usePressureAlt.value && !airbuddiesInUse.value)
-    return getPositions.value[0]?.positionDetails?.pressureAltitude
-      ? Math.floor(getPositions.value[0]?.positionDetails?.pressureAltitude)
+    return mainFix?.pressureAltitude
+      ? Math.floor(mainFix.pressureAltitude)
       : 0;
 
-  return getPositions.value[0]?.positionDetails?.gpsAltitude
-    ? Math.floor(getPositions.value[0]?.positionDetails?.gpsAltitude)
+  return mainFix?.gpsAltitude
+    ? Math.floor(mainFix.gpsAltitude)
     : 0;
 });
 
@@ -130,7 +132,42 @@ watchEffect(() => {
 // Chart setup
 type ChartType = "line";
 const chart = shallowRef<Chart<ChartType>>();
-const ctx = ref(null);
+const ctx = ref<HTMLCanvasElement | null>(null);
+
+const cursorTimestampFromPointer = (event: PointerEvent | MouseEvent) => {
+  const chartInstance = chart.value;
+  if (!chartInstance) return;
+
+  const rect = chartInstance.canvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const chartX = Math.min(
+    Math.max(x, chartInstance.chartArea.left),
+    chartInstance.chartArea.right
+  );
+  const timestamp = chartInstance.scales.x.getValueForPixel(chartX);
+  if (typeof timestamp === "number") return timestamp;
+};
+
+const onPointerMove = (event: PointerEvent) => {
+  if (!event.isPrimary) return;
+  const timestamp = cursorTimestampFromPointer(event);
+  if (timestamp !== undefined) setCursorTimestamp(timestamp);
+};
+
+const onPointerDown = (event: PointerEvent) => {
+  if (!event.isPrimary) return;
+  const timestamp = cursorTimestampFromPointer(event);
+  if (timestamp !== undefined) setCursorTimestamp(timestamp);
+};
+
+const onChartClick = (event: MouseEvent) => {
+  const timestamp = cursorTimestampFromPointer(event);
+  if (timestamp === undefined) return;
+
+  setCursorTimestamp(timestamp, true);
+  updateReplayPosition(mainSelection.value?.index ?? 0);
+  requestCenter();
+};
 
 // Watch and update the chart
 watchEffect(() => {
@@ -141,7 +178,7 @@ watchEffect(() => {
     chart.value.options.scales.y.title.text = usePressureAlt.value
       ? "Baro Höhe"
       : "GPS Höhe";
-    chart.value.update();
+    chart.value.update("none");
   }
 });
 
@@ -150,17 +187,19 @@ onMounted(() => {
   if (!ctx.value) return;
   const plainChartObject = new Chart<ChartType>(ctx.value, config);
   chart.value = plainChartObject;
-
-  if (!plainChartObject) return;
-  // We simulate a first mouseover so that we can pre fill the positionDetailsCollapse and have the first context objects for the track replay feature.
-  // Otherwise replay would only start if we mouseover manually over the graph.
-  initChartMouseOver(plainChartObject);
+  plainChartObject.canvas.addEventListener("pointermove", onPointerMove);
+  plainChartObject.canvas.addEventListener("pointerdown", onPointerDown);
+  plainChartObject.canvas.addEventListener("click", onChartClick);
 });
 
 onBeforeUnmount(() => {
   if (chart.value) {
+    chart.value.canvas.removeEventListener("pointermove", onPointerMove);
+    chart.value.canvas.removeEventListener("pointerdown", onPointerDown);
+    chart.value.canvas.removeEventListener("click", onChartClick);
     chart.value.destroy();
   }
+  resetCursor();
 });
 
 const canvasClass = computed(() => {
@@ -188,8 +227,8 @@ const config: ChartConfiguration<ChartType> = {
         <div class="col">
           <i class="bi bi-arrows-expand"></i>
           {{
-            getPositions[0]?.positionDetails?.speed
-              ? roundWithDigits(getPositions[0]?.positionDetails?.climb ?? 0, 1)
+            mainSelection?.fix?.speed
+              ? roundWithDigits(mainSelection?.fix?.climb ?? 0, 1)
               : "0"
           }}
           m/s
@@ -197,15 +236,15 @@ const config: ChartConfiguration<ChartType> = {
         <div class="col">
           <i class="bi bi-speedometer2"></i>
           {{
-            getPositions[0]?.positionDetails?.speed
-              ? Math.floor(getPositions[0]?.positionDetails?.speed)
+            mainSelection?.fix?.speed
+              ? Math.floor(mainSelection?.fix?.speed)
               : "0"
           }}
           km/h
         </div>
         <div class="col">
           <i class="bi bi-clock"></i>
-          {{ getPositions[0]?.positionDetails?.time }}
+          {{ mainSelection?.fix?.time }}
         </div>
       </div>
     </div>
@@ -242,5 +281,9 @@ const config: ChartConfiguration<ChartType> = {
 <style scoped>
 .deactivate-mouse-hover {
   pointer-events: none;
+}
+
+canvas {
+  touch-action: pan-y;
 }
 </style>

@@ -20,7 +20,7 @@
               <button
                 class="btn btn-primary leaflet-control col-auto"
                 title="Fokussiere Karte auf aktuelle Position"
-                @click="centerMapOnClickListener"
+                @click="requestCenter"
                 @dblclick.stop
               >
                 <i class="bi bi-crosshair"></i>
@@ -38,21 +38,21 @@
 <script setup lang="ts">
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import { ADDITIONAL_COLORS } from "@/common/Constants";
 import useFlight from "@/composables/useFlight";
 import useAirbuddies from "@/composables/useAirbuddies";
 import useAuth from "@/composables/useAuth";
+import useFlightCursor, {
+  type FlightCursorSnapshot,
+} from "@/composables/useFlightCursor";
 import { getTime, parseISO } from "date-fns";
-
 import {
   convertMapBoundsToQueryString,
   drawAirspaces,
   drawAirspaceViolationMarkers,
   processTracklogs,
 } from "@/helper/mapHelpers";
-
 import {
   watch,
   onMounted,
@@ -61,276 +61,238 @@ import {
   computed,
   type DeepReadonly,
 } from "vue";
-
 import type { SimpleFix } from "@/helper/mapHelpers";
-
-// Fix for default marker image paths
 import shadowUrl from "leaflet/dist/images/marker-shadow.png?url";
-
-// Landing marker
 import landingIconRetinaUrl from "@/assets/images/landing-marker-2x.png?url";
 import landingIconUrl from "@/assets/images/landing-marker.png?url";
-
-// Photo marker
 import photoIconRetinaUrl from "@/assets/images/photo-marker-2x.png?url";
 import photoIconUrl from "@/assets/images/photo-marker.png?url";
 import { tileOptionsSatellite, tileOptions } from "../config/mapbox";
 import type { FlightTurnpoint } from "@/types/Flight";
-
-import useMapPosition, { type MapPosition } from "@/composables/useMapPosition";
 import { retrieveYearOnly } from "@/helper/utils";
-import useFlightReplay from "@/composables/useFlightReplay";
+import { registerLeafletGestureHandling } from "@/helper/leafletGestureHandling";
 
-const { getPositions } = useMapPosition();
+const { flight } = useFlight();
+const { activeAirbuddyFlights } = useAirbuddies();
+const { isAdmin } = useAuth();
+const { onCommit, onCenter, requestCenter, snapshot } = useFlightCursor();
 
-const { updateReplayPosition } = useFlightReplay();
-
+const trackColors = ADDITIONAL_COLORS;
 const landingMarker = L.icon({
   iconRetinaUrl: landingIconRetinaUrl,
   iconUrl: landingIconUrl,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
-  shadowUrl: shadowUrl,
+  shadowUrl,
   shadowSize: [41, 41],
   shadowAnchor: [12, 41],
 });
-
 const photoMarker = L.icon({
   iconRetinaUrl: photoIconRetinaUrl,
   iconUrl: photoIconUrl,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
-  shadowUrl: shadowUrl,
+  shadowUrl,
   shadowSize: [41, 41],
   shadowAnchor: [12, 41],
 });
 
-const { flight } = useFlight();
-const { activeAirbuddyFlights } = useAirbuddies();
-const { isAdmin } = useAuth();
+let map: L.Map | undefined;
+let trackLines: Array<L.Polyline | undefined> = [];
+let positionMarkers: Array<L.CircleMarker | undefined> = [];
+let markerIndexes: Array<number | undefined> = [];
+let staticLayers: L.Layer[] = [];
+let renderedFlightId: string | undefined;
+let fitBoundsTimer: ReturnType<typeof setTimeout> | undefined;
+let stopTrackWatch: (() => void) | undefined;
+let stopCursorCommit: (() => void) | undefined;
+let stopCenterListener: (() => void) | undefined;
 
-const trackColors = ADDITIONAL_COLORS;
-
-// Leaflet objects
-let map: L.Map;
-const trackLines = ref();
-const positionMarkers = ref<L.CircleMarker[]>([]);
-const takeoffAndLandingMarkers: L.Marker[] = [];
-const photoMarkers: L.Marker[] = [];
-
-// All tracklogs that shall be drawn on map
 const tracklogs = computed(() => {
   if (!flight.value) return [];
   return processTracklogs(flight.value, activeAirbuddyFlights.value);
 });
 
-onMounted(() => {
-  // Setup leaflet
-  L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
+function removeTrackLayer(index: number) {
+  trackLines[index]?.remove();
+  positionMarkers[index]?.remove();
+  trackLines[index] = undefined;
+  positionMarkers[index] = undefined;
+  markerIndexes[index] = undefined;
+}
 
+function clearLayers() {
+  trackLines.forEach((_, index) => removeTrackLayer(index));
+  trackLines = [];
+  positionMarkers = [];
+  markerIndexes = [];
+  staticLayers.forEach((layer) => layer.remove());
+  staticLayers = [];
+}
+
+function drawTurnpoints(turnpointData: DeepReadonly<FlightTurnpoint[]>) {
+  if (!map || !turnpointData?.length) return;
+  const turnpoints: L.LatLngTuple[] = turnpointData.map((tp) => [
+    tp.lat,
+    tp.long,
+  ]);
+  staticLayers.push(L.polyline(turnpoints, { color: "grey" }).addTo(map));
+}
+
+function drawPrimaryStaticLayers(track: SimpleFix[]) {
+  if (!map || !track.length) return;
+
+  staticLayers.push(
+    L.marker(track[0].position, { title: "Start" }).addTo(map),
+    L.marker(track[track.length - 1].position, {
+      title: "Landeplatz",
+      icon: landingMarker,
+    }).addTo(map)
+  );
+
+  const roundBy = 5000;
+  const photoTimestamps = flight.value?.photos
+    ?.filter((photo) => photo.timestamp)
+    .map((photo) => ({
+      time: getTime(parseISO(photo.timestamp!.toString())),
+      id: photo.id,
+    }));
+
+  photoTimestamps?.forEach((photo) => {
+    const location = track.find(
+      (fix) =>
+        Math.floor(fix.timestamp / roundBy) === Math.floor(photo.time / roundBy)
+    );
+    if (!location) return;
+    staticLayers.push(
+      L.marker(location.position, { title: "Photo", icon: photoMarker })
+        .on("click", () => document.getElementById(photo.id)?.click())
+        .addTo(map!)
+    );
+  });
+}
+
+function addTrackLayer(track: SimpleFix[], index: number) {
+  if (!map || !track.length) return;
+  trackLines[index] = L.polyline(
+    track.map((fix) => fix.position),
+    { color: trackColors[index] }
+  ).addTo(map);
+  positionMarkers[index] = L.circleMarker(track[0].position, {
+    color: "#fff",
+    fillColor: trackColors[index],
+    fillOpacity: 0.8,
+    radius: 8,
+    weight: 2,
+    stroke: true,
+  }).addTo(map);
+  markerIndexes[index] = 0;
+
+  if (index === 0) drawPrimaryStaticLayers(track);
+}
+
+function scheduleInitialFit() {
+  if (!map || !trackLines[0]) return;
+  clearTimeout(fitBoundsTimer);
+  fitBoundsTimer = setTimeout(() => {
+    if (!map || !trackLines[0]) return;
+    map.invalidateSize();
+    map.fitBounds(trackLines[0].getBounds());
+  }, 100);
+}
+
+function updateMarkerPositions(cursorSnapshot: FlightCursorSnapshot) {
+  cursorSnapshot.selections.forEach((selection) => {
+    const marker = positionMarkers[selection.slot];
+    if (!marker || markerIndexes[selection.slot] === selection.index) return;
+    marker.setLatLng([selection.fix.latitude, selection.fix.longitude]);
+    markerIndexes[selection.slot] = selection.index;
+  });
+}
+
+function syncTrackLayers() {
+  if (!map) return;
+  const nextFlightId = flight.value?.id;
+  const flightChanged = nextFlightId !== renderedFlightId;
+
+  if (flightChanged) {
+    clearLayers();
+    renderedFlightId = nextFlightId;
+    if (flight.value?.flightTurnpoints) drawTurnpoints(flight.value.flightTurnpoints);
+  }
+
+  const nextTracklogs = tracklogs.value;
+  const maxLength = Math.max(trackLines.length, nextTracklogs.length);
+  for (let index = 0; index < maxLength; index += 1) {
+    const track = nextTracklogs[index] ?? [];
+    if (!track.length) {
+      removeTrackLayer(index);
+      continue;
+    }
+    if (!trackLines[index]) addTrackLayer(track, index);
+  }
+
+  if (flightChanged) scheduleInitialFit();
+  if (snapshot.value) updateMarkerPositions(snapshot.value);
+}
+
+function centerMapOnCursor() {
+  const marker = positionMarkers[0];
+  if (map && marker) map.setView(marker.getLatLng());
+}
+
+onMounted(() => {
+  registerLeafletGestureHandling();
   const terrain = L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptions
   );
-
   const satellite = L.tileLayer(
     "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}{r}?access_token={accessToken}",
     tileOptionsSatellite
   );
 
-  const baseMaps = {
-    Gelände: terrain,
-    Satellit: satellite,
-  };
-
-  /**
-   * Vue 3 with leaflet causes some errors when zooming.
-   * Therefore zoomAnimation was disabled.
-   * See: https://stackoverflow.com/questions/65981712/uncaught-typeerror-this-map-is-null-vue-js-3-leaflet
-   * TODO: Reevaluated with error is still present in future versions (2022-01-31)
-   */
   map = L.map("mapContainer", {
-    // @ts-expect-error
+    // @ts-expect-error Leaflet gesture-handling extends map options.
     gestureHandling: true,
     zoomAnimation: false,
   });
-
   terrain.addTo(map);
-  L.control.layers(baseMaps).addTo(map);
+  L.control.layers({ Gelände: terrain, Satellit: satellite }).addTo(map);
   map.setView([50.143, 7.146], 8);
 
-  // Draw tracklogs and Airspaces
-  if (flight.value?.flightTurnpoints)
-    drawTurnpoints(flight.value?.flightTurnpoints);
-
-  if (tracklogs.value) {
-    drawTracks(tracklogs.value);
+  syncTrackLayers();
+  if (trackLines[0]) {
+    drawAirspaces(
+      map,
+      convertMapBoundsToQueryString(trackLines[0]),
+      retrieveYearOnly(flight.value?.takeoffTime)
+    );
   }
-
-  const yearOfFlight = retrieveYearOnly(flight.value?.takeoffTime);
-
-  drawAirspaces(
-    map,
-    convertMapBoundsToQueryString(trackLines.value[0]),
-    yearOfFlight
-  );
-
   if (isAdmin.value && flight.value?.airspaceViolations) {
-    drawAirspaceViolationMarkers(map, flight.value?.airspaceViolations);
+    drawAirspaceViolationMarkers(map, flight.value.airspaceViolations);
   }
 
-  // Watch the tracklogs for updated content like airbuddy flights
-  watch(tracklogs, () => drawTracks(tracklogs.value));
+  stopTrackWatch = watch(tracklogs, syncTrackLayers);
+  stopCursorCommit = onCommit(updateMarkerPositions);
+  stopCenterListener = onCenter(centerMapOnCursor);
 });
 
 onBeforeUnmount(() => {
-  // Remove all click listener and terminate possible going replay
-  document.removeEventListener("centerMapOnClick", centerMapOnClickListener);
+  clearTimeout(fitBoundsTimer);
+  stopTrackWatch?.();
+  stopCursorCommit?.();
+  stopCenterListener?.();
+  clearLayers();
+  map?.remove();
+  map = undefined;
 });
-
-// Update map
-const drawTracks = (tracklogs: SimpleFix[][]) => {
-  const lines: L.Polyline[] = [];
-  const tmpPositionMarkers: L.CircleMarker[] = [];
-
-  // Remove all trackLines & position markers to prevet orphaned ones
-  if (positionMarkers.value.length > 0) {
-    positionMarkers.value.forEach((_, index) => {
-      trackLines.value[index].remove();
-      positionMarkers.value[index].remove();
-    });
-  }
-
-  tracklogs.forEach((track, index) => {
-    if (!map) return;
-    // Check if a previously drawn track is removed
-    if (track.length > 0) {
-      // Create a line for every track
-      lines[index] = L.polyline(
-        track.map((u) => u.position),
-        {
-          color: trackColors[index],
-        }
-      ).addTo(map);
-
-      // Only for main tracklog:
-      if (index === 0) {
-        // Create takeoff & landing markers
-        takeoffAndLandingMarkers.push(
-          L.marker(track[0].position, { title: "Start" }).addTo(map),
-          L.marker(track[track.length - 1].position, {
-            title: "Landeplatz",
-            icon: landingMarker,
-          }).addTo(map)
-        );
-
-        // Create Photomarkers
-        const roundBy = 5000; // Approximate values of GPS fix and photo timestamp
-        const photoTimestamps = flight.value?.photos?.map((e) => {
-          if (!e.timestamp) return;
-          return { time: getTime(parseISO(e.timestamp.toString())), id: e.id };
-        });
-        if (!photoTimestamps) return;
-        // Find matching GPS and photo timestamps
-        photoTimestamps.forEach((photo) => {
-          if (!photo) return;
-          const location = track.find((fix) => {
-            const minuteOfFix = Math.floor(fix.timestamp / roundBy);
-            const minuteOfPhoto = Math.floor(photo.time / roundBy);
-            return minuteOfFix === minuteOfPhoto;
-          });
-          if (!location) return;
-          photoMarkers.push(
-            L.marker(location.position, { title: "Photo", icon: photoMarker })
-              .on("click", () => {
-                // TODO: There may be a smarter way to do this
-                const el = document.getElementById(photo.id);
-                // Simulate click on photo element to open the lightbox modal
-                if (!el) return;
-                el.click();
-              })
-              .addTo(map)
-          );
-        });
-      }
-      // Create position markers for every track
-      tmpPositionMarkers[index] = L.circleMarker(track[0].position, {
-        color: "#fff",
-        fillColor: trackColors[index],
-        fillOpacity: 0.8,
-        radius: 8,
-        weight: 2,
-        stroke: true,
-      }).addTo(map);
-    }
-  });
-
-  // TODO: Why is this out of the sudden necessary? Otherwise nothing will render on the map.
-  setTimeout(() => {
-    map.invalidateSize();
-    // Fit bounds to the first track
-    map.fitBounds(lines[0].getBounds());
-  }, 100);
-
-  // Update data
-  trackLines.value = lines;
-  positionMarkers.value = tmpPositionMarkers;
-};
-// Turnpoints of the scored flight
-const drawTurnpoints = (turnpointData: DeepReadonly<FlightTurnpoint[]>) => {
-  if (!turnpointData) return;
-  const turnpoints: L.LatLngTuple[] = [];
-  turnpointData.forEach((tp) => {
-    turnpoints.push([tp.lat, tp.long]);
-  });
-  L.polyline(turnpoints, {
-    color: "grey",
-  }).addTo(map);
-};
-
-// Center map on baro click listener
-const centerMapOnClickListener = (event: Event) => {
-  if (!map) return;
-  map.setView(positionMarkers.value[0].getLatLng());
-  // @ts-ignore
-  if (event?.detail?.x)
-    // @ts-ignore
-    updateReplayPosition(event.detail.x);
-};
-document.addEventListener("centerMapOnClick", centerMapOnClickListener);
-
-const updateMarkerPosition = (position: MapPosition[]) => {
-  if (!map) return;
-  position.forEach((pos, index) => {
-    const setIndex = index;
-    const trackLog = tracklogs.value[setIndex];
-    const marker = positionMarkers.value[setIndex];
-
-    if (!trackLog) return;
-    const logPosition = trackLog[pos.position];
-    if (logPosition && marker) {
-      marker.setLatLng(logPosition.position);
-    }
-  });
-};
-
-watch(getPositions, () => updateMarkerPosition(getPositions.value), {
-  deep: true,
-});
-
-// Toggle map size
 
 const mapExpanded = ref(false);
-
 const toggleMapSize = () => {
   mapExpanded.value = !mapExpanded.value;
-  setTimeout(() => {
-    // Invalidation has to be called after the resizing of the map has finished
-    // Otherwise layers like airspace will not be drawn correctly in the additional space
-    map.invalidateSize();
-  }, 100);
+  setTimeout(() => map?.invalidateSize(), 100);
 };
-
 const mapHeight = computed(() => (mapExpanded.value ? "70vh" : "430px"));
 </script>
 
