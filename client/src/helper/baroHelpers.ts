@@ -13,9 +13,9 @@ export function processBaroData(
   buddyTracks: BuddyTrack[],
   options: Options
 ): ChartDataset<"line">[] {
-  const chartData = [];
-  const baroData = [];
-  const elevation = [];
+  const chartData: ChartDataset<"line">[] = [];
+  const baroData: { x: number; y: number | null }[] = [];
+  const elevation: { x: number; y: number }[] = [];
   if (!flight || !flight.fixes) return [];
   for (let i = 0; i < flight.fixes.length; i++) {
     elevation.push({
@@ -27,11 +27,6 @@ export function processBaroData(
       y: options.usePressureAlt
         ? flight.fixes[i].pressureAltitude
         : flight.fixes[i].gpsAltitude,
-      // This may seem duplicate but is needed for for the stats to update
-      gpsAltitude: flight.fixes[i].gpsAltitude,
-      pressureAltitude: flight.fixes[i].pressureAltitude,
-      speed: flight.fixes[i].speed,
-      climb: flight.fixes[i].climb,
     });
   }
   let hideGND = false;
@@ -64,15 +59,13 @@ export function processBaroData(
   // Datasets for all aribuddies
   if (buddyTracks) {
     buddyTracks.forEach((element, index) => {
-      const buddyBaro = [];
+      const buddyBaro: { x: number; y: number }[] = [];
       // Check if this track is activated and has fixes
       if (element.isActive && element.fixes) {
         for (let i = 0; i < element.fixes.length; i++) {
           buddyBaro.push({
             x: element.fixes[i].timestamp,
             y: element.fixes[i].gpsAltitude,
-            speed: element.fixes[i].speed,
-            climb: element.fixes[i].climb,
           });
         }
       }
