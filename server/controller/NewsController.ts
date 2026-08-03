@@ -103,7 +103,7 @@ router.put(
   checkStringObjectNotEmptyNoEscaping("message"),
   checkIsISO8601("from"),
   checkIsISO8601("till"),
-  async (req: Request, res: Response, next) => {
+  async (req: Request<{ id: string }>, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
     const { title, icon, message, from, till, meta } = req.body;
@@ -137,7 +137,7 @@ router.delete(
   "/:id",
   checkParamIsUuid("id"),
   requesterMustBeModerator,
-  async (req: Request, res: Response, next) => {
+  async (req: Request<{ id: string }>, res: Response, next) => {
     if (validationHasErrors(req, res)) return;
     const id = req.params.id;
 
