@@ -4,6 +4,7 @@ import { addDays, isAfter } from "date-fns";
 import fs from "fs";
 import multer from "multer";
 import FlightService from "../service/FlightService";
+import ResultService from "../service/ResultService";
 import UserService from "../service/UserService";
 import MailService from "../service/MailService";
 import { FlightInstance } from "../db/models/Flight";
@@ -63,6 +64,19 @@ import { Glider } from "../types/Glider";
 const CACHE_RELEVANT_KEYS = ["home", "results", "flights"];
 
 const router = express.Router();
+
+// Recomputes the "last point gain" / "rank change" snapshot for the overall
+// ranking. Called after anything that can change a flight's contribution to
+// the ranking. Failures are only logged - a snapshot hiccup shouldn't break
+// the actual flight action for the requesting user.
+async function refreshRankingSnapshot(affectedUserId?: string) {
+  if (!affectedUserId) return;
+  try {
+    await ResultService.refreshOverallRankingSnapshot(affectedUserId);
+  } catch (error) {
+    logger.error("FC: Failed to refresh overall ranking snapshot", error);
+  }
+}
 
 const uploadLimiter = createLimiter(60, 10);
 const flightRequestLimiter = createLimiter(200, 50);
@@ -239,6 +253,7 @@ router.delete(
       );
 
       deleteCache(CACHE_RELEVANT_KEYS);
+      await refreshRankingSnapshot(flight.userId);
 
       res.json(numberOfDestroyedRows);
     } catch (error) {
@@ -458,6 +473,8 @@ router.put(
       if (!flightStatus) return res.sendStatus(NOT_FOUND);
 
       deleteCache(CACHE_RELEVANT_KEYS);
+      const changedFlight = await FlightService.getById(req.params.id, true);
+      await refreshRankingSnapshot(changedFlight?.userId);
       res.sendStatus(OK);
     } catch (error) {
       next(error);
@@ -564,6 +581,7 @@ router.post(
 
       // Cache
       deleteCache(CACHE_RELEVANT_KEYS);
+      await refreshRankingSnapshot(userId);
 
       // User feedback
       let message = `Der Flug wurde mit dem Gerät ${glider.brand} ${
@@ -646,6 +664,7 @@ router.put(
       }
 
       deleteCache(CACHE_RELEVANT_KEYS);
+      await refreshRankingSnapshot(flight.userId);
 
       res.sendStatus(OK);
     } catch (error) {
@@ -672,6 +691,7 @@ router.put(
       await FlightService.acceptViolation(flight);
 
       deleteCache(CACHE_RELEVANT_KEYS);
+      await refreshRankingSnapshot(flight.userId);
 
       res.sendStatus(OK);
     } catch (error) {
@@ -705,6 +725,7 @@ router.put(
       );
 
       deleteCache(CACHE_RELEVANT_KEYS);
+      await refreshRankingSnapshot(flight.userId);
 
       res.sendStatus(OK);
     } catch (error) {

@@ -19,6 +19,7 @@ export function limitFlightsForUserAndCalcTotals(
 
   return resultArray.map((entry) => {
     const flights = limitFunction(entry.flights, maxNumberOfFlights);
+    markLatestSubmission(flights);
 
     return {
       ...entry,
@@ -28,6 +29,24 @@ export function limitFlightsForUserAndCalcTotals(
       totalPoints: sumUp(flights, "flightPoints"),
     };
   });
+}
+
+/**
+ * Flags the most recently submitted flight among a user's scored top flights
+ * (isLatestSubmission), so the UI can highlight it (e.g. a small "L" badge).
+ */
+function markLatestSubmission(flights: UserResultFlight[]) {
+  if (flights.length === 0) return;
+
+  let latest = flights[0];
+  for (const flight of flights) {
+    if (!flight.createdAt) continue;
+    const isNewer =
+      !latest.createdAt ||
+      new Date(flight.createdAt).getTime() > new Date(latest.createdAt).getTime();
+    if (isNewer) latest = flight;
+  }
+  latest.isLatestSubmission = true;
 }
 
 function selectTopFlightsOnlyByPoints(

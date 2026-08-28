@@ -16,6 +16,7 @@ import { GENDER } from "../constants/user-constants";
 import { SeasonDetailAttributes } from "../db/models/SeasonDetail";
 import { XccupHttpError } from "../helper/ErrorHandler";
 import { getCurrentYear } from "../helper/Utils";
+import rankingSnapshotService from "./RankingSnapshotService";
 
 import { addMonths, subMonths } from "date-fns";
 import logger from "../config/logger";
@@ -81,6 +82,31 @@ interface OptionsYearLimitRegion {
 }
 
 const service = {
+  /**
+   * Recomputes the default overall ranking and updates the "last point gain" /
+   * "rank change" snapshot from it. Call this once after any change that could
+   * affect the ranking (new flight, edited flight, deleted flight, accepted/
+   * rejected airspace violation, ...) - see FlightController.
+   */
+  refreshOverallRankingSnapshot: async (affectedUserId: string) => {
+    const seasonDetail = await retrieveSeasonDetails();
+    const where = createDefaultWhereForFlight({ seasonDetail });
+    const resultQuery = (await queryDb({ where })) as unknown as QueryResult[];
+
+    const result = aggregateFlightsOverUser(resultQuery);
+    const resultsWithTotals = limitFlightsForUserAndCalcTotals(
+      result,
+      NUMBER_OF_SCORED_FLIGHTS
+    );
+    sortDescendingByTotalPoints(resultsWithTotals);
+
+    await rankingSnapshotService.updateSnapshot(
+      resultsWithTotals,
+      seasonDetail?.year ?? getCurrentYear(),
+      affectedUserId
+    );
+  },
+
   getOverall: async ({
     year,
     rankingClass,
@@ -183,6 +209,24 @@ const service = {
       NUMBER_OF_SCORED_FLIGHTS
     );
     sortDescendingByTotalPoints(resultsWithTotals);
+
+    // "Last point gain" / "rank change" is only meaningful for the default,
+    // unfiltered overall ranking - the many filter combinations below would
+    // each need their own snapshot, which is out of scope for now.
+    if (
+      nonShouldBeDefined(
+        rankingClass,
+        gender,
+        homeStateOfUser,
+        isSenior,
+        isWeekend,
+        isHikeAndFly,
+        siteId,
+        clubId
+      )
+    ) {
+      await attachRankingChanges(resultsWithTotals, seasonDetail?.year);
+    }
 
     return addConstantInformationToResult(
       resultsWithTotals,
@@ -914,6 +958,7 @@ async function queryDb({
       "flightPoints",
       "flightDistance",
       "takeoffTime",
+      "createdAt",
       "glider",
       "flightType",
       "ageOfUser",
@@ -1132,6 +1177,7 @@ function aggregateFlightsOverUser(resultQuery: QueryResult[]) {
       takeoffId: entry.takeoff?.id,
       takeoffRegion: entry.takeoff?.region,
       ageOfUser: entry.ageOfUser,
+      createdAt: entry.createdAt,
     };
     if (found) {
       found.flights.push(flightEntry);
@@ -1281,6 +1327,31 @@ async function findOldResult(season: number, type: string) {
 
 function nonShouldBeDefined(...params: any[]) {
   return params.every((p) => !p);
+}
+
+async function attachRankingChanges(
+  results: UserResultsWithTotals[],
+  season?: number
+) {
+  const changes = await rankingSnapshotService.getChanges(
+    season ?? getCurrentYear()
+  );
+
+  results.forEach((result) => {
+    const change = changes.get(result.user.id);
+    result.lastPointGain = change?.lastGain ?? 0;
+    result.rankChange = change?.lastRankChange ?? 0;
+
+    // The "latest submission" highlight (see markLatestSubmission) should
+    // only show while there's a tendenz that this user's own flight caused -
+    // not for a passive push by someone else, and not once it's neutral
+    // again (own no-op flight, or the 7-day weekly-trend expiry).
+    if (!change?.causedByOwnEvent) {
+      result.flights.forEach((flight) => {
+        flight.isLatestSubmission = false;
+      });
+    }
+  });
 }
 
 module.exports = service;
