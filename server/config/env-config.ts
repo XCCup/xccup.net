@@ -108,6 +108,12 @@ const config = convict({
     default: "qwertz12345",
     env: "FLARM_API_KEY",
   },
+  liveTrackingEnabled: {
+    doc: "Whether live FLARM tracking is enabled",
+    format: Boolean,
+    default: true,
+    env: "LIVE_TRACKING_ENABLED",
+  },
   jwtLogin: {
     doc: "The login token for the jwt authentication mechanism",
     format: check128Hex,

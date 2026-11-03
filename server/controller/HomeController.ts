@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import service from "../service/HomeService";
+import liveTrackingService from "../service/LivetrackingService";
 import { getCache, setCache } from "./CacheManager";
 
 const router = express.Router();
@@ -10,24 +11,21 @@ const router = express.Router();
  * @route GET /
  */
 router.get("/", async (req: Request, res: Response, next) => {
-  // const liveFlights =
-  //   req.authStatus === "VALID" ? liveTrackingService.getActiveDistances() : [];
+  const liveFlights =
+    req.authStatus === "VALID" ? liveTrackingService.getActiveDistances() : [];
 
   try {
     const cached = getCache(req);
-    if (cached) return res.json(cached);
-    // if (cached) return res.json({ ...cached, liveFlights });
+    if (cached) return res.json({ ...cached, liveFlights });
 
     const homeData = await service.get();
 
     setCache(req, homeData);
 
-    res.json(homeData);
-    // res.json({ ...homeData, liveFlights });
+    res.json({ ...homeData, liveFlights });
   } catch (error) {
     next(error);
   }
 });
 
 export default router;
-module.exports = router;
