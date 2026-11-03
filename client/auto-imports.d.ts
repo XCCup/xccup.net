@@ -150,7 +150,6 @@ declare global {
   const useBrowserLocation: typeof import('@vueuse/core').useBrowserLocation
   const useCached: typeof import('@vueuse/core').useCached
   const useChart: typeof import('./src/composables/useChart')['default']
-  const useChartMouseOver: typeof import('./src/composables/useChartMouseOver').default
   const useClipboard: typeof import('@vueuse/core').useClipboard
   const useClipboardItems: typeof import('@vueuse/core').useClipboardItems
   const useCloned: typeof import('@vueuse/core').useCloned
@@ -194,6 +193,7 @@ declare global {
   const useFileSystemAccess: typeof import('@vueuse/core').useFileSystemAccess
   const useFilterOptions: typeof import('./src/composables/useFilterOptions').default
   const useFlight: typeof import('./src/composables/useFlight').default
+  const useFlightCursor: typeof import('./src/composables/useFlightCursor').default
   const useFlightEdit: typeof import('./src/composables/useFlightEdit').default
   const useFlightReplay: typeof import('./src/composables/useFlightReplay').default
   const useFocus: typeof import('@vueuse/core').useFocus
@@ -215,7 +215,6 @@ declare global {
   const useLocalStorage: typeof import('@vueuse/core').useLocalStorage
   const useMagicKeys: typeof import('@vueuse/core').useMagicKeys
   const useManualRefHistory: typeof import('@vueuse/core').useManualRefHistory
-  const useMapPosition: typeof import('./src/composables/useMapPosition').default
   const useMediaControls: typeof import('@vueuse/core').useMediaControls
   const useMediaQuery: typeof import('@vueuse/core').useMediaQuery
   const useMemoize: typeof import('@vueuse/core').useMemoize
@@ -336,8 +335,8 @@ declare global {
   export type { SortOptions } from './src/composables/useData'
   import('./src/composables/useData')
   // @ts-ignore
-  export type { MapPosition, BaroTooltipItem } from './src/composables/useMapPosition'
-  import('./src/composables/useMapPosition')
+  export type { FlightCursorSelection, FlightCursorSnapshot } from './src/composables/useFlightCursor'
+  import('./src/composables/useFlightCursor')
 }
 
 // for vue template auto import
@@ -486,7 +485,6 @@ declare module 'vue' {
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
-    readonly useChartMouseOver: UnwrapRef<typeof import('./src/composables/useChartMouseOver')['default']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
@@ -530,6 +528,7 @@ declare module 'vue' {
     readonly useFileSystemAccess: UnwrapRef<typeof import('@vueuse/core')['useFileSystemAccess']>
     readonly useFilterOptions: UnwrapRef<typeof import('./src/composables/useFilterOptions')['default']>
     readonly useFlight: UnwrapRef<typeof import('./src/composables/useFlight')['default']>
+    readonly useFlightCursor: UnwrapRef<typeof import('./src/composables/useFlightCursor')['default']>
     readonly useFlightEdit: UnwrapRef<typeof import('./src/composables/useFlightEdit')['default']>
     readonly useFlightReplay: UnwrapRef<typeof import('./src/composables/useFlightReplay')['default']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
@@ -551,7 +550,6 @@ declare module 'vue' {
     readonly useLocalStorage: UnwrapRef<typeof import('@vueuse/core')['useLocalStorage']>
     readonly useMagicKeys: UnwrapRef<typeof import('@vueuse/core')['useMagicKeys']>
     readonly useManualRefHistory: UnwrapRef<typeof import('@vueuse/core')['useManualRefHistory']>
-    readonly useMapPosition: UnwrapRef<typeof import('./src/composables/useMapPosition')['default']>
     readonly useMediaControls: UnwrapRef<typeof import('@vueuse/core')['useMediaControls']>
     readonly useMediaQuery: UnwrapRef<typeof import('@vueuse/core')['useMediaQuery']>
     readonly useMemoize: UnwrapRef<typeof import('@vueuse/core')['useMemoize']>

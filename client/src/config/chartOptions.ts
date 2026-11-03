@@ -1,22 +1,15 @@
-import useMapPosition from "@/composables/useMapPosition";
 import type { ChartOptions } from "chart.js";
-import type { BaroTooltipItem } from "@/composables/useMapPosition";
 import { getXccupTimezone } from "@/helper/utils";
-
-const { updatePosition } = useMapPosition();
 
 export const options: ChartOptions<"line"> = {
   responsive: true,
-  onClick: (evt) => {
-    // Center map at current position
-    const centerMapEvent = new CustomEvent("centerMapOnClick", {
-      detail: {
-        x: evt.x,
-      },
-    });
-    document.dispatchEvent(centerMapEvent);
-  },
   maintainAspectRatio: false,
+  animation: false,
+  parsing: false,
+  // Airbuddy tracks have independent timestamps, so they cannot use the
+  // normalized fast-path which assumes matching indexes across datasets.
+  normalized: false,
+  events: [],
   plugins: {
     title: {
       display: false,
@@ -27,21 +20,10 @@ export const options: ChartOptions<"line"> = {
     },
     tooltip: {
       enabled: false,
-      mode: "x",
-      intersect: false,
-      animation: {
-        duration: 5,
-      },
-      // This does nothing but it is needed to trigger the callback
-      // even if the tooltip is disabled
-      external: function () {},
-      callbacks: {
-        label: (context: BaroTooltipItem) => {
-          if (context.datasetIndex === 0) return "";
-          updatePosition(context);
-          return "";
-        },
-      },
+    },
+    decimation: {
+      enabled: true,
+      algorithm: "min-max",
     },
   },
   scales: {

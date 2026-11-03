@@ -3,13 +3,13 @@
 import metarParser from "metar-parser";
 import { computed, type DeepReadonly } from "vue";
 import type { METAR } from "@/types/METAR";
-import useMapPosition from "@/composables/useMapPosition";
 import useFlight from "@/composables/useFlight";
 import useSwal from "@/composables/useSwal";
+import useFlightCursor from "@/composables/useFlightCursor";
 
 const { showInfoBox } = useSwal();
 const { flight } = useFlight();
-const { getPositions } = useMapPosition();
+const { mainSelection } = useFlightCursor();
 
 const decodedMetars = computed(() => {
   if (!flight.value?.flightMetarData) {
@@ -29,9 +29,22 @@ function decodeMetars(data: DeepReadonly<string[]>): METAR[] {
   }
 }
 
+let cachedMinute: number | undefined;
+let cachedMetars: readonly METAR[] | undefined;
+let cachedMetar: METAR | undefined;
+
 const currentMetar = computed(() => {
-  if (!getPositions?.value[0]?.time) return;
-  return findClosestMetar(getPositions.value[0].time, decodedMetars.value);
+  const timestamp = mainSelection.value?.fix.timestamp;
+  const metars = decodedMetars.value;
+  if (!timestamp || !metars.length) return;
+
+  const minute = getElapsedMinutesOfDay(timestamp);
+  if (cachedMinute !== minute || cachedMetars !== metars) {
+    cachedMinute = minute;
+    cachedMetars = metars;
+    cachedMetar = findClosestMetar(timestamp, metars);
+  }
+  return cachedMetar;
 });
 
 // METAR only contains the day of the month not a complete date.

@@ -12,15 +12,10 @@
 </template>
 
 <script setup lang="ts">
-// TODO: Note to my future self:
-// The connection between Airbuddies, FlightBarogramm and Map needs refactoring.
-// It's to ineffective and you can do better now.
-
-import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { getXccupTimezone, setWindowName } from "../helper/utils";
 import useFlight from "@/composables/useFlight";
-import useAirbuddies from "@/composables/useAirbuddies";
+import useFlightCursor from "@/composables/useFlightCursor";
 import { formatFlightDuration } from "@/helper/formatFlightDuration";
 import { formatInTimeZone } from "date-fns-tz";
 import { addMetaTag } from "@/helper/addHtmlMetaTag";
@@ -29,6 +24,9 @@ import axios from "axios";
 const route = useRoute();
 const router = useRouter();
 const { fetchOne, flight } = useFlight();
+const { resetCursor } = useFlightCursor();
+
+resetCursor();
 
 try {
   // @ts-ignore
@@ -80,9 +78,4 @@ function flightTypeToString(flightType: string | undefined) {
   return "";
 }
 
-// TODO: This is a workaround to trigger a re-render of the barogramm.
-// One day i will find out how to do this from the baro component itself…
-const { checkedAirbuddyFlightIds } = useAirbuddies();
-const baroDataUpdated = ref(0);
-watch(checkedAirbuddyFlightIds, () => baroDataUpdated.value++);
 </script>
