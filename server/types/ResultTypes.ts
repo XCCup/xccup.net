@@ -46,6 +46,10 @@ export interface UserResults {
 
 export interface UserResultsWithTotals extends UserResults, Totals {
   totalFlights: number;
+  // Only populated for the default (unfiltered, current season) overall ranking.
+  // See RankingSnapshotService.
+  lastPointGain?: number;
+  rankChange?: number;
 }
 
 export interface Totals {
@@ -74,6 +78,10 @@ export interface UserResultFlight {
   takeoffRegion: string;
   takeoffId: string;
   ageOfUser: number;
+  createdAt?: string | Date;
+  // Marks the most recently submitted flight among a user's scored top
+  // flights (see markLatestSubmission in ResultUtils).
+  isLatestSubmission?: boolean;
 }
 
 export interface QueryResult extends UserResultFlight {

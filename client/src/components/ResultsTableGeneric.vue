@@ -5,6 +5,12 @@
         <thead>
           <tr>
             <th>Platz</th>
+            <th
+              class="hide-on-sm"
+              title="Platz- und Punkte-Veränderung seit dem letzten relevanten Ereignis, maximal 7 Tage sichtbar"
+            >
+              7-Tage-Trend
+            </th>
 
             <th>Name</th>
             <th scope="col" class="hide-on-sm">Verein</th>
@@ -20,6 +26,31 @@
         <tbody>
           <tr v-for="(result, index) in results" :key="result.user.id">
             <td>{{ index + 1 }}</td>
+            <td class="hide-on-sm no-line-break">
+              <span
+                v-if="result.rankChange > 0"
+                class="text-success"
+                :title="`${result.rankChange} Platz${result.rankChange === 1 ? '' : 'e'} nach oben`"
+              >
+                <i class="bi bi-caret-up-fill"></i>{{ result.rankChange }}
+              </span>
+              <span
+                v-else-if="result.rankChange < 0"
+                class="text-danger"
+                :title="`${Math.abs(result.rankChange)} Platz${Math.abs(result.rankChange) === 1 ? '' : 'e'} nach unten`"
+              >
+                <i class="bi bi-caret-down-fill"></i>{{ Math.abs(result.rankChange) }}
+              </span>
+              <span v-else class="text-muted">–</span>
+
+              <span
+                v-if="result.lastPointGain > 0"
+                class="badge bg-success ms-1"
+                title="Letzter Punktgewinn"
+              >
+                +{{ result.lastPointGain }} P
+              </span>
+            </td>
             <td>
               <strong>{{
                 result.user.firstName + " " + result.user.lastName
@@ -39,6 +70,14 @@
               />
               <router-link
                 v-if="result.flights[n - 1]"
+                :class="{
+                  'fw-bold': result.flights[n - 1].isLatestSubmission,
+                }"
+                :title="
+                  result.flights[n - 1].isLatestSubmission
+                    ? 'Zuletzt eingereichter Flug'
+                    : undefined
+                "
                 :to="{
                   name: 'Flight',
                   params: { flightId: result.flights[n - 1].externalId },
