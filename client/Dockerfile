@@ -13,7 +13,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
 # Production build
-FROM nginx:1.29.4-alpine
+FROM nginx:1.31.9-alpine
 #RUN addgroup app && adduser -S -G app app
 #USER app
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
